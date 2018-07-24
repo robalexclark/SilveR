@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<h2>@ViewBag.Title</h2>
+
+@if (ViewBag.InfoMessage != null)
+{
+    <div class="alert alert-dismissible alert-info">
+        <button class="close" type="button" data-dismiss="alert">×</button>
+        <strong>OK!</strong>
+        <br />
+        @Html.Raw(@ViewBag.InfoMessage)
+    </div>
+}
+
+    <h2>
+        What Is @Startup.AppName?
+    </h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="text-block">
+            <p>
+                @Startup.AppName is a powerful, free to use, statistical software package which uses <a href="http://www.r-project.org/">R</a>
+                as its statistics engine. The package combines complex and powerful statistical tools
+                (within R) with a user interface that is both easy to use and intuitive to the non-statistician.
+            </p>
+            <p>
+                While no package can comment on the suitability of a statistical analysis, @Startup.AppName
+                has many dataset checks so errors within the data, that may invalidate the results
+                of the analysis, are identified prior to analysis.
+            </p>
+        </div>
+        <div class="text-block">
+            The authors of @Startup.AppName have between them over 20 years of experience supporting scientists in the pharmaceutical industry and academia.
+            They have been involved in developing in-house software solutions and training scientists in using the software.
+        </div>
+
+        <div class="text-block">
+            For more information contact:<br>
+            <a href="mailto:robalexclark@hotmail.com">robalexclark@hotmail.com</a>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <img src="~/images/SilveR.png" class="img-responsive" />
+    </div>
+</div>

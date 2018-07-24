@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Startup.AppName</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="~/lib/kendo-ui/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/kendo-ui/styles/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/site.css" rel="stylesheet" type="text/css" />
+
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <noscript>
+        <div class="noscript-warning">
+            This site will not function correctly with JavaScript disabled. Please re-enable JavaScript in your browser and try again.
+            To enable Javascript follow this link http://enable-javascript.com/ or contact our helpdesk helpdesk@envigo.com
+        </div>
+    </noscript>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(@Startup.AppName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("My Data", "Index", "Data")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Statistics<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li class="menu-item dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Parametric Analysis</a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Single Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Single Measures Parametric Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Repeated Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Repeated Measures Parametric Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("P-value Adjustment", "Analysis", "Analyses", new { analysisType = "P-value Adjustment" }, null)</li>
+                                    <li>@Html.ActionLink("Paired t-Test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Paired t-Test Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Two-Sample t-Test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Two-Sample t-Test Analysis" }, null)</li>
+                                </ul>
+                            </li>
+
+                            <li class="menu-item dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Additional Analysis</a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Summary Statistics", "AnalysisDataSelector", "Analyses", new { analysisType = "Summary Statistics" }, null)</li>
+                                    <li>@Html.ActionLink("Non-parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Non-Parametric Analysis" }, null)</li>
+                                </ul>
+                            </li>
+
+                            <li>@Html.ActionLink("Graphical Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Graphical Analysis" }, null)</li>
+
+                            <li class="menu-item dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Power Analysis</a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Means comparison Power Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Means Comparison" }, null)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>@Html.ActionLink("My Analyses", "Index", "Analyses")</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content mt20">
+        @RenderBody()
+    </div>
+</body>
+</html>

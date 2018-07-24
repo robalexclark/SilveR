@@ -1,0 +1,148 @@
+﻿@model SilveRModel.StatsModel.PairedTTestModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/stats/pairedTTestAnalysis.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/stats/pairedTTestAnalysis.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Paired t-test Analysis";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form action="/Analyses/PairedTTestAnalysis" class="form-horizontal" method="post">
+
+    @if (ViewBag.HasError == true)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong>
+            <br />
+            @Html.ValidationSummary(false)
+        </div>
+    }
+    else if (ViewBag.HasWarnings == true)
+    {
+        <div class="alert alert-warning">
+            <strong>Warning!</strong>
+            <br />
+            @ViewBag.WarningMessages
+            <br />
+            <br />
+            <button class="btn btn-warning" name="submitButton" type="submit" value="SubmitAnyway">Submit Anyway</button>
+        </div>
+    }
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-sm-6">
+
+            <h3>Input</h3>
+            <h4>Response</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Response</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Response" />
+                </div>
+                <span asp-validation-for="Response"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Response Transformation</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="ResponseTransformation" />
+                </div>
+                <span asp-validation-for="ResponseTransformation"></span>
+            </div>
+            <br />
+
+            <h4>Treatment</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Treatment</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Treatment" />
+                </div>
+                <span asp-validation-for="Treatment"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Subject</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Subject" />
+                </div>
+                <span asp-validation-for="Subject"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Other Design Factors</label>
+                <div class="col-sm-8">
+                    <select class="form-control" asp-for="OtherDesignFactors"></select>
+                </div>
+                <span asp-validation-for="OtherDesignFactors"></span>
+            </div>
+            <br />
+
+            <h4>Covariate</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Covariate</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Covariate" />
+                </div>
+                <span asp-validation-for="Covariate"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Covariate Transformation</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="CovariateTransformation" />
+                </div>
+                <span asp-validation-for="CovariateTransformation"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Analysis Results</h3>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">ANOVA Table</label>
+                    <div class="col-sm-6">
+                        <input checked="checked" class="checkbox" asp-for="ANOVASelected" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Predicted vs. Residuals Plot</label>
+                    <div class="col-sm-6">
+                        <input checked="checked" class="checkbox" asp-for="PRPlotSelected" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Normal Probability Plot</label>
+                    <div class="col-sm-6">
+                        <input class="checkbox" asp-for="NormalPlotSelected" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Least Square (predicted) means</label>
+                    <div class="col-sm-6">
+                        <input class="checkbox" asp-for="LSMeansSelected" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Significance</label>
+                    <div class="col-sm-6">
+                        <input asp-for="Significance" />
+                    </div>
+                    <span asp-validation-for="Significance"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt20">
+        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    </div>
+</form>

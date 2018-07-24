@@ -1,0 +1,24 @@
+﻿@section Scripts {
+    <environment names="Development">
+        <script src="~/js/data/dataUploader.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/data/dataUploader.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Data Uploader";
+}
+<h2>@ViewBag.Title</h2>
+
+<form method="post">
+
+    <div class="mt20">
+        <input name="files" id="files" type="file" />
+    </div>
+
+    <div class="mt20">
+        <button class="btn btn-primary" type="submit">Upload</button>
+    </div>
+</form>

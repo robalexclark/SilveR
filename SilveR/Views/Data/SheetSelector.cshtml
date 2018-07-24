@@ -1,0 +1,31 @@
+﻿@section Scripts {
+
+    <script>
+        var sheetList = @Html.Raw(Json.Serialize(ViewBag.SheetList))
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/data/sheetSelector.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/data/sheetSelector.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Excel Sheet Selector";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form method="post">
+
+    <input id="fileName" value="@ViewBag.FileName" hidden />
+
+    <div class="mt30">
+        <input id="sheetSelection" name="sheetSelection" style="width:340px" />
+    </div>
+    <div class="mt30">
+        <button class="btn btn-primary" type="submit">Select</button>
+    </div>
+</form>

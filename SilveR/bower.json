@@ -1,0 +1,12 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "jquery": "3.1.1",
+    "kendo-ui": "https://bower.telerik.com/bower-kendo-ui.git#~2018.2.516"
+  },
+  "resolutions": {
+    "jquery": ">= 1.9.0"
+  }
+}

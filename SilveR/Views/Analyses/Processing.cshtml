@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Processing";
+}
+<h2>@ViewBag.Title</h2>
+
+You will automatically be redirected when processing is complete.
+
+<script src="@Url.Content("~/js/analysis/processing.js")" type="text/javascript"></script>
+<script>
+    var analysisGuid = "@ViewBag.AnalysisGuid";
+</script>

@@ -1,0 +1,61 @@
+﻿@section Scripts {
+    <environment names="Development">
+        <script src="~/js/data/index.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/data/index.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "My Data";
+}
+<h2>@ViewBag.Title</h2>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button>
+        <strong>Error!</strong>
+        <br />
+        @ViewBag.ErrorMessage
+    </div>
+}
+else if (ViewBag.InfoMessage != null)
+{
+    <div class="alert alert-dismissible alert-info">
+        <button class="close" type="button" data-dismiss="alert">×</button>
+        <strong>OK!</strong>
+        <br />
+        @ViewBag.InfoMessage
+    </div>
+}
+@if (ViewBag.WarningMessage != null)
+{
+    <div class="alert alert-warning">
+        <strong>Warning!</strong>
+        <br />
+        @ViewBag.WarningMessage
+    </div>
+}
+
+<form method="get" action="~/Data/DataUploader">
+    <input type="submit" value="Upload Data" class="btn btn-primary" />
+</form>
+<br />
+
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.HasDatasets == true)
+        {
+            <div id="grid" />
+        }
+        else //not got data, display message
+        {
+            <div class="alert alert-dismissible alert-info">
+                <button class="close" type="button" data-dismiss="alert">×</button>
+                <p>You have not uploaded any data. You will need to <a class="alert-link" href="~/Data/DataUploader">upload some data</a> and view these datasets on this page.</p>
+            </div>
+        }
+    </div>
+</div>

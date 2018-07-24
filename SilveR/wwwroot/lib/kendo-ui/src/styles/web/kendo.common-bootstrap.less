@@ -1,0 +1,277 @@
+/** 
+ * Kendo UI v2018.2.613 (http://www.telerik.com/kendo-ui)                                                                                                                                               
+ * Copyright 2018 Telerik AD. All rights reserved.                                                                                                                                                      
+ *                                                                                                                                                                                                      
+ * Kendo UI commercial licenses may be obtained at                                                                                                                                                      
+ * http://www.telerik.com/purchase/license-agreement/kendo-ui-complete                                                                                                                                  
+ * If you do not own a commercial license, this file shall be governed by the trial license terms.                                                                                                      
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+                                                                                                                                                                                                       
+
+*/
+@input-height: 1.93571428em;
+@input-padding-y: 0.17857143em;
+@input-indent: .8em;
+@editor-icon-size: 32px;
+@menu-link-padding: 1.2em 1.2em 1.1em;
+@button-padding-x: 14px;
+@button-padding-y: 4px;
+@button-padding: @button-padding-y @button-padding-x;
+@treeview-inner-padding: 0.4167em 0.6667em 0.3333em 0.5833em;
+@treeview-inner-margin: 1px 0 1px 0.3333em;
+@scheduler-link-padding: .16666em 1.1em;
+@grid-header-padding: .75em .2em .8333em 1em;
+@icon-positioning: "default";
+
+@import "common/all.less";
+
+.k-widget.k-tabstrip
+{
+    background-color: transparent;
+    background-image: none;
+    border-style: none;
+    .box-shadow(none);
+}
+
+.k-tabstrip .k-tabstrip-items
+{
+    padding: 0;
+}
+
+.k-tabstrip-items .k-link {
+    padding: 8px .92em;
+}
+
+.k-tabstrip > .k-button {
+    top: 0;
+
+    &.k-bare {
+        top: 0;
+    }
+}
+
+.k-tabstrip-bottom > .k-button.k-bare
+{
+    top: auto;
+}
+
+.k-tabstrip > .k-content,
+.k-panelbar .k-tabstrip > .k-content
+{
+    margin: 0;
+}
+
+.k-slider-track
+{
+    border-width: 1px;
+    border-style: solid;
+}
+
+.k-grouping-dropclue
+{
+    margin-top: 10px;
+}
+
+.k-grid tr td
+{
+    border-width: 0 0 1px 1px;
+    border-style: solid;
+}
+
+.k-slider-horizontal .k-slider-track,
+.k-slider-horizontal .k-slider-selection
+{
+    margin-top: -5px;
+}
+
+.k-slider-vertical .k-slider-track,
+.k-slider-vertical .k-slider-selection
+{
+    margin-left: -5px;
+}
+
+input.k-textbox {
+  height: 2.43em;
+}
+
+.k-textbox > input,
+.k-autocomplete .k-input,
+.k-picker-wrap .k-input,
+.k-numeric-wrap .k-input,
+.k-dropdown-wrap .k-input,
+.k-selectbox .k-input {
+      padding: 0.167em 0;
+}
+
+.k-combobox-clearable {
+    .k-input {
+        padding-right: 1.9em;
+    }
+}
+
+.k-autocomplete > .k-i-close  {
+    margin-right: 8px;
+}
+
+.k-colorpicker {
+    @picker-icon-height: 2.28571428em;
+    .k-selected-color {
+        width: @picker-icon-height;
+        height: @picker-icon-height;
+
+        .k-i-line {
+            font-size: @picker-icon-height;
+        }
+    }
+}
+
+.k-combobox > .k-dropdown-wrap > .k-i-close {
+    right: 2.55em;
+}
+
+.k-multiselect > .k-multiselect-wrap > .k-i-close {
+    top: (@grid-size/2 - 1px);
+}
+
+.k-numerictextbox .k-link {
+    height: 1.167em;
+}
+
+.k-toolbar {
+    padding: 0.57142857em calc(0.57142857em - 0.2em);
+    border-radius: 4px;
+}
+
+.k-toolbar .k-overflow-anchor {
+    width: calc((52/14)*1em);
+}
+
+.k-webkit .k-rtl .k-widget .k-dropdown-wrap .k-input,
+.k-webkit .k-rtl .k-widget .k-numeric-wrap .k-input {
+    margin-right: 0;
+}
+
+.k-rtl .k-widget.k-autocomplete > .k-i-close,
+.k-rtl .k-widget.k-multiselect > .k-multiselect-wrap > .k-i-close {
+    left: 0;
+    right: initial;
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+.k-rtl .k-widget.k-combobox > .k-dropdown-wrap > .k-i-close {
+    left: 2.55em;
+    right: initial;
+}
+
+.k-pager-wrap,
+.k-pager-numbers .k-link {
+    line-height: 2.3em;
+}
+
+.k-pager-wrap > .k-link {
+    height: 2.3em;
+    line-height: 2.3em;
+}
+
+.k-pager-numbers {
+    .k-link,
+    .k-state-selected {
+        height: 2.3em;
+    }
+}
+
+.k-pager-wrap > .k-link,
+.k-pager-numbers .k-link,
+.k-pager-numbers .k-state-selected {
+    min-width: 2.3em;
+}
+
+.k-pager-sizes .k-dropdown-wrap .k-input {
+    line-height: 2em;
+}
+
+.k-checkbox-label:before,
+.k-checkbox-label:after,
+.k-radio-label:before,
+.k-radio-label:after {
+    box-sizing: content-box;
+}
+
+.k-spreadsheet-sheets-bar .k-spreadsheet-sheets-remove {
+    margin: 0 0 0 -.5em;
+    padding: .65em .92em .65em .32em;
+}
+
+.k-button.k-spreadsheet-sheets-bar-add {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    top: 2px;
+    bottom: 4px;
+}
+
+.k-spreadsheet .k-spreadsheet-sheets-bar .k-tabstrip-items {
+    padding-bottom: 4px;
+}
+
+.k-gantt .k-grid-content tr,
+.k-gantt-rows tr,
+.k-gantt-tasks tr {
+    height: 2.4em;
+}
+
+.k-editor-dialog.k-editor-table-wizard-dialog .k-tabstrip-wrapper .k-content {
+    min-height: 510px;
+    height: 38em;
+}
+
+.k-edit-label,
+.k-edit-form-container .editor-label {
+    padding: 0.65em 0 1em;
+}
+
+.k-editor-dialog.k-editor-table-wizard-dialog .k-dropdown.k-align {
+    min-width: 56px;
+}
+
+.k-grid {
+    .k-edit-cell {
+        input[type='checkbox'],
+        input.k-checkbox {
+            margin-left: calc(.3em + 3px);
+
+            + label.k-checkbox-label {
+                margin-left: .3em;
+            }
+        }
+    }
+}
+
+// RTL
+.k-rtl {
+
+    .k-combobox-clearable {
+        .k-input {
+            padding-left: 1.9em;
+            padding-right: 0.167em;
+        }
+    }
+}
+
+.k-safari.k-mobile .k-picker-wrap .k-input,
+.k-safari.k-mobile .k-numeric-wrap .k-input {
+    height: 1.88em;
+}

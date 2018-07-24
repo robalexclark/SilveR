@@ -1,0 +1,110 @@
+﻿@model SilveRModel.StatsModel.NonParametricModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/stats/nonParametricAnalysis.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/stats/nonParametricAnalysis.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Non-Parametric Analysis";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form action="/Analyses/NonParametricAnalysis" class="form-horizontal" method="post">
+
+    @if (ViewBag.HasError == true)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong>
+            <br />
+            @Html.ValidationSummary(false)
+        </div>
+    }
+    else if (ViewBag.HasWarnings == true)
+    {
+        <div class="alert alert-warning">
+            <strong>Warning!</strong>
+            <br />
+            @ViewBag.WarningMessages
+            <br />
+            <br />
+            <button class="btn btn-warning" name="submitButton" type="submit" value="SubmitAnyway">Submit Anyway</button>
+        </div>
+    }
+    <input asp-for="DatasetID" hidden />
+
+    <div class=" row">
+        <div class="col-sm-6">
+            <h3>Input</h3>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Response</label>
+                <div class="col-sm-6">
+                    <input class="form-control" asp-for="Response" />
+                </div>
+                <span asp-validation-for="Response"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Treatment</label>
+                <div class="col-sm-6">
+                    <input class="form-control" asp-for="Treatment" />
+                </div>
+                <span asp-validation-for="Treatment"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Analysis</h3>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Analysis Type</label>
+                <div class="col-sm-6">
+                    <div class="radio">
+                        <label>
+                            <input asp-for="AnalysisType" type="radio" onclick="enableDisableControlLevels();" value="MannWhitney" checked="checked" />
+                            <label>Overall test (Kruskal- Wallis &amp; Mann-Whitney)</label>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input asp-for="AnalysisType" onclick="enableDisableControlLevels();" type="radio" value="AllComparisons" />
+                            <label>All treatment comparisons</label>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input asp-for="AnalysisType" onclick="enableDisableControlLevels();" type="radio" value="CompareToControl" />
+                            <label>Comparisons back to control</label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Significance</label>
+                <div class="col-sm-6">
+                    <input class="form-control" asp-for="Significance" />
+                </div>
+                <span asp-validation-for="Significance"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Control</label>
+                <div class="col-sm-6">
+                    <input class="form-control" asp-for="Control" />
+                </div>
+                <span asp-validation-for="Control"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt20">
+        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    </div>
+</form>

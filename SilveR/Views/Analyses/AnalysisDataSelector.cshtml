@@ -1,0 +1,56 @@
+﻿@model SilveR.ViewModels.AnalysisDataSelectorViewModel
+
+@section Scripts {
+
+    <script>
+        var scriptList = @Html.Raw(Json.Serialize(ViewBag.ScriptList));
+        var datasets = @Html.Raw(Json.Serialize(ViewBag.Datasets));
+        var selectedAnalysisType = @Html.Raw(Json.Serialize(Model.AnalysisType));
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/analysis/analysisDataSelector.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/analysis/analysisDataSelector.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Select the Analysis and Data";
+}
+
+@if (ViewBag.HasDatasets == true)
+{
+    <form method="post" action="~/Analyses/AnalysisDataSelector">
+
+        @if (Model.AnalysisType == null)
+        {
+            <div id="analysisSelectionBlock" class="mt30">
+                <h4>Select the type of analysis to run</h4>
+                <input asp-for="AnalysisType" style="width:340px" />
+            </div>
+        }
+        else
+        {
+            <h3>@Model.AnalysisType</h3>
+            <input asp-for="AnalysisType" type="hidden" />
+        }
+
+        <div id="dataSelectionBlock" class="mt30">
+            <h4>Select the file to analyse</h4>
+            <input asp-for="DatasetID" style="width:340px" />
+        </div>
+
+        <div class="mt20">
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button>
+        <p>You have not uploaded any data. You need to <a class="alert-link" href="~/Data/DataUploader">upload some data</a> before you can run an analysis.</p>
+    </div>
+}

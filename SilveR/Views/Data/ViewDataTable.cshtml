@@ -1,0 +1,53 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewBag.Title = "View Data";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-dismissible alert-danger">
+        <button class="close" type="button" data-dismiss="alert">×</button>
+        <strong>Error</strong> @ViewBag.ErrorMessage
+    </div>
+}
+
+<div>
+    @*@(Html.Kendo().Grid<dynamic>()
+                    .Name("grid")
+                    .Columns(columns =>
+                    {
+                        bool firstCol = true;
+                        foreach (System.Data.DataColumn column in Model.Columns)
+                        {
+                            if (column.ColumnName == "SilveRSelected" && firstCol)
+                            {
+                                columns.Bound(System.Type.GetType("System.Boolean"), column.ColumnName).ClientTemplate("<input type='checkbox' #= SilveRSelected ? checked='checked' :'' # disabled/>").Title("Selected");
+                            }
+                            else if (column.ColumnName == Model.PrimaryKey[0].ColumnName)
+                            {
+                                columns.Bound(column.ColumnName).Hidden(true);
+                            }
+                            else
+                            {
+                                columns.Bound(column.ColumnName).Title(column.Caption);
+                            }
+                            firstCol = false;
+                        }
+                        columns.Command(cmd => cmd.Edit());
+                    })
+                    .Editable(ed => ed.Mode(GridEditMode.PopUp))
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Model(model =>
+                    {
+                        model.Id(Model.PrimaryKey[0].ColumnName);
+                    }
+                    )
+                    .Read(read => read.Action("Read", "Data"))
+                    .Update(update => update.Action("Update", "Data"))
+                    )
+    )*@
+</div>

@@ -1,0 +1,198 @@
+﻿@model SilveRModel.StatsModel.RepeatedMeasuresModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/stats/repeatedMeasuresParametricAnalysis.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/stats/repeatedMeasuresParametricAnalysis.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Repeated Measures Parametric Analysis";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form action="/Analyses/RepeatedMeasuresParametricAnalysis" class="form-horizontal" method="post">
+
+    @if (ViewBag.HasError == true)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong>
+            <br />
+            @Html.ValidationSummary(false)
+        </div>
+    }
+    else if (ViewBag.HasWarnings == true)
+    {
+        <div class="alert alert-warning">
+            <strong>Warning!</strong>
+            <br />
+            @ViewBag.WarningMessages
+            <br />
+            <br />
+            <button class="btn btn-warning" name="submitButton" type="submit" value="SubmitAnyway">Submit Anyway</button>
+        </div>
+    }
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Input</h3>
+            <h4>Responses</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Response</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Response" />
+                </div>
+                <span asp-validation-for="Response"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Response Transformation</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="ResponseTransformation" />
+                </div>
+                <span asp-validation-for="ResponseTransformation"></span>
+            </div>
+            <br />
+            <h4>Treatments</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Treatments</label>
+                <div class="col-sm-8">
+                    <select class="form-control" asp-for="Treatments" />
+                </div>
+                <span asp-validation-for="Treatments"></span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-4 control-label">Interactions</div>
+                <div class="col-sm-8">
+                    <select id="Interactions" name="Interactions" size="4" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Repeated factor</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="RepeatedFactor" />
+                </div>
+                <span asp-validation-for="RepeatedFactor"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Subject factor</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Subject" />
+                </div>
+                <span asp-validation-for="Subject"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Other design (blocks)</label>
+                <div class="col-sm-8">
+                    <select class="form-control" asp-for="OtherDesignFactors"></select>
+                </div>
+                <span asp-validation-for="OtherDesignFactors"></span>
+            </div>
+            <br />
+            <h4>Covariate</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Covariate</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Covariate" />
+                </div>
+                <span asp-validation-for="Covariate"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="PrimaryFactor">Primary factor</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="PrimaryFactor" />
+                </div>
+                <span asp-validation-for="PrimaryFactor"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="CovariateTransformation">Covariate transformation</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="CovariateTransformation" />
+                </div>
+                <span asp-validation-for="CovariateTransformation"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="Covariance">Covariance</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Covariance" />
+                </div>
+                <span asp-validation-for="Covariance"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Analysis Results</h3>
+            <h4>Overall results</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">ANOVA table</label>
+                <div class="col-sm-8">
+                    <input checked="checked" class="checkbox" asp-for="ANOVASelected" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Predicted vs. residuals plot</label>
+                <div class="col-sm-8">
+                    <input checked="checked" class="checkbox" asp-for="PRPlotSelected" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Normal probability plot</label>
+                <div class="col-sm-8">
+                    <input class="checkbox" asp-for="NormalPlotSelected" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Least Square (predicted) means</label>
+                <div class="col-sm-8">
+                    <input class="checkbox" asp-for="LSMeansSelected" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="Significance">Significance</label>
+                <div class="col-sm-8">
+                    <input asp-for="Significance" />
+                </div>
+                <span asp-validation-for="Significance"></span>
+            </div>
+            <br />
+            <h4>Selected Effect Results</h4>
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="SelectedEffect">Effect</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="SelectedEffect" />
+                </div>
+                <span asp-validation-for="SelectedEffect"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Post-Hoc Tests</label>
+                <div class="col-sm-8">
+                    <div class="radio">
+                        <label>
+                            <input asp-for="ComparisonType" type="radio" value="AllComparisonsWithinSelected" checked="checked" />
+                            <label>All comparisons within repeated factor levels</label>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input asp-for="ComparisonType" type="radio" value="AllPairwiseComparisons" checked="checked" />
+                            <label>All pairwise comparisons</label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt20">
+        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    </div>
+</form>

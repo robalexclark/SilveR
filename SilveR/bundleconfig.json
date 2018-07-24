@@ -1,0 +1,104 @@
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/analysis/index.min.js",
+    "inputFiles": [
+      "wwwroot/js/analysis/index.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/analysis/analysisDataSelector.min.js",
+    "inputFiles": [
+      "wwwroot/js/analysis/analysisDataSelector.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/analysis/processing.min.js",
+    "inputFiles": [
+      "wwwroot/js/analysis/processing.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/data/dataUploader.min.js",
+    "inputFiles": [
+      "wwwroot/js/data/dataUploader.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/data/sheetSelector.min.js",
+    "inputFiles": [
+      "wwwroot/js/data/sheetSelector.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/data/viewDataTable.min.js",
+    "inputFiles": [
+      "wwwroot/js/data/viewDataTable.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/graphicalAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/graphicalAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/nonParametricAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/nonParametricAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/pairedTTestAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/pairedTTestAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/meansComparison.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/meansComparison.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/pValueAdjustment.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/pValueAdjustment.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/repeatedMeasuresParametricAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/repeatedMeasuresParametricAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/singleMeasuresParametricAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/singleMeasuresParametricAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/summaryStatistics.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/summaryStatistics.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/twoSampleTTestAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/twoSampleTTestAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/data/index.min.js",
+    "inputFiles": [
+      "wwwroot/js/data/index.js"
+    ]
+  }
+]

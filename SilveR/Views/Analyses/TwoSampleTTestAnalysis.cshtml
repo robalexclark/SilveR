@@ -1,0 +1,111 @@
+﻿@model SilveRModel.StatsModel.TwoSampleTTestModel
+
+@section Scripts {
+
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/stats/twoSampleTTestAnalysis.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/stats/twoSampleTTestAnalysis.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Two-Sample t-Test Analysis";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form action="/Analyses/TwoSampleTTestAnalysis" class="form-horizontal" method="post">
+
+    @if (ViewBag.HasError == true)
+    {
+        <div class="alert alert-danger">
+            <strong>Error!</strong>
+            <br />
+            @Html.ValidationSummary(false)
+        </div>
+    }
+    else if (ViewBag.HasWarnings == true)
+    {
+        <div class="alert alert-warning">
+            <strong>Warning!</strong>
+            <br />
+            @ViewBag.WarningMessages
+            <br />
+            <br />
+            <button class="btn btn-warning" name="submitButton" type="submit" value="SubmitAnyway">Submit Anyway</button>
+        </div>
+    }
+    <input asp-for="DatasetID" type="hidden" />
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Input</h3>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Response</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Response" />
+                </div>
+                <span asp-validation-for="Response"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Response Transformation</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="ResponseTransformation" value="None" />
+                </div>
+                <span asp-validation-for="ResponseTransformation"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Treatment</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Treatment" />
+                </div>
+                <span asp-validation-for="Treatment"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Analysis Results</h3>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Equal variance case</label>
+                <div class="col-sm-6">
+                    <input checked="checked" class="checkbox" asp-for="EqualVariance" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Unequal variance case</label>
+                <div class="col-sm-6">
+                    <input class="checkbox" asp-for="UnequalVariance" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Predicated vs. residuals plot</label>
+                <div class="col-sm-6">
+                    <input checked="checked" class="checkbox" asp-for="PRPlot" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Normal probability plot</label>
+                <div class="col-sm-6">
+                    <input class="checkbox" asp-for="NormalPlot" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-6 control-label">Significance</label>
+                <div class="col-sm-6">
+                    <input class="form-control" asp-for="Significance" />
+                </div>
+                <span asp-validation-for="Significance"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt20">
+        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    </div>
+</form>
