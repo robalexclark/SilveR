@@ -33,138 +33,139 @@ namespace SilveR.Services
             {
                 SilveRRepository repository = scope.ServiceProvider.GetRequiredService<SilveRRepository>();
 
+#if !DEBUG
                 try
                 {
-                    Stopwatch sw = Stopwatch.StartNew();
+#endif
+                Stopwatch sw = Stopwatch.StartNew();
 
-                    string workingDir = Path.GetTempPath();
+                string workingDir = Path.GetTempPath();
 
-                    //get analysis
-                    Analysis analysis = await repository.GetAnalysisComplete(analysisGuid);
+                //get analysis
+                Analysis analysis = await repository.GetAnalysisComplete(analysisGuid);
 
-                    //combine script files into analysisGuid.R
-                    string scriptFileName = Path.Combine(workingDir, analysisGuid + ".R");
-                    string[] commonFunctionsContents = File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", "Common_Functions.R"));
-                    string[] mainScriptContents = File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", analysis.Script.ScriptFileName + ".R"));
+                //combine script files into analysisGuid.R
+                string scriptFileName = Path.Combine(workingDir, analysisGuid + ".R");
+                string[] commonFunctionsContents = File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", "Common_Functions.R"));
+                string[] mainScriptContents = File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", analysis.Script.ScriptFileName + ".R"));
 
-                    File.WriteAllLines(scriptFileName, commonFunctionsContents);
-                    File.AppendAllLines(scriptFileName, mainScriptContents);
+                File.WriteAllLines(scriptFileName, commonFunctionsContents);
+                File.AppendAllLines(scriptFileName, mainScriptContents);
 
-                    //load the analysis entity into the model so that arguments can be extracted
-                    IAnalysisModel analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
-                    analysisModel.LoadArguments(analysis.Arguments);
+                //load the analysis entity into the model so that arguments can be extracted
+                IAnalysisModel analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
+                analysisModel.LoadArguments(analysis.Arguments);
 
-                    string csvFileName = null;
-                    string[] csvData = analysisModel.ExportData();
-                    if (csvData != null)
+                string csvFileName = null;
+                string[] csvData = analysisModel.ExportData();
+                if (csvData != null)
+                {
+                    csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
+                    Dictionary<string, string> charConverterLines = ArgumentConverters.GetCharConversionList();
+
+                    //go through and replace the first line...
+                    foreach (KeyValuePair<string, string> kp in charConverterLines)
                     {
-                        csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
-                        Dictionary<string, string> charConverterLines = ArgumentConverters.GetCharConversionList();
-
-                        //go through and replace the first line...
-                        foreach (KeyValuePair<string, string> kp in charConverterLines)
-                        {
-                            csvData[0] = csvData[0].Replace(kp.Key, kp.Value);
-                        }
-
-                        File.WriteAllLines(csvFileName, csvData);
+                        csvData[0] = csvData[0].Replace(kp.Key, kp.Value);
                     }
 
-                    //setup the r process (way of calling rscript.exe is slightly different for each OS)
-                    string rscriptPath = null;
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    {
-                        rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.1.2", "bin", "Rscript.exe");
-                    }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                    {
-                        rscriptPath = "Rscript";
-                    }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                    {
-                        rscriptPath = "Rscript";
-                    }
+                    File.WriteAllLines(csvFileName, csvData);
+                }
 
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.FileName = rscriptPath;
-                    psi.WorkingDirectory = workingDir;
+                //setup the r process (way of calling rscript.exe is slightly different for each OS)
+                string rscriptPath = null;
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.1.2", "bin", "Rscript.exe");
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    rscriptPath = "Rscript";
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    rscriptPath = "Rscript";
+                }
 
-                    string theArguments = analysisModel.GetCommandLineArguments();
-                    psi.Arguments = scriptFileName.WrapInDoubleQuotes() + " --vanilla --args " + csvFileName.WrapInDoubleQuotes() + theArguments;
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = rscriptPath;
+                psi.WorkingDirectory = workingDir;
 
-                    //Configure some options for the R process
-                    psi.UseShellExecute = false;
-                    psi.CreateNoWindow = true;
-                    psi.RedirectStandardOutput = true;
-                    psi.RedirectStandardError = true;
+                string theArguments = analysisModel.GetCommandLineArguments();
+                psi.Arguments = scriptFileName.WrapInDoubleQuotes() + " --vanilla --args " + csvFileName.WrapInDoubleQuotes() + theArguments;
 
-                    //start rscript.exe
-                    Process R = Process.Start(psi);
+                //Configure some options for the R process
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardError = true;
 
-                    //create a stringbuilder to hold the output, and get the output line by line until R process finishes
-                    StringBuilder output = new StringBuilder();
+                //start rscript.exe
+                Process R = Process.Start(psi);
 
-                    bool completedOK = R.WaitForExit(60 * 1000);
+                //create a stringbuilder to hold the output, and get the output line by line until R process finishes
+                StringBuilder output = new StringBuilder();
 
-                    //if R didn't complete in time then add message and kill it
-                    if (!completedOK)
-                    {
-                        output.AppendLine("WARNING! The R process timed out before the script could complete");
-                        output.AppendLine();
+                bool completedOK = R.WaitForExit(60 * 1000);
 
-                        R.Kill();
-                    }
-
-                    //need to make sure that we have got all the output so do a readtoend here
-                    output.AppendLine(R.StandardOutput.ReadToEnd());
+                //if R didn't complete in time then add message and kill it
+                if (!completedOK)
+                {
+                    output.AppendLine("WARNING! The R process timed out before the script could complete");
                     output.AppendLine();
 
-                    //output the errors from R
-                    string errorsFromR = R.StandardError.ReadToEnd().Trim();
+                    R.Kill();
+                }
 
-                    R.Close();
-                    R.Dispose();
+                //need to make sure that we have got all the output so do a readtoend here
+                output.AppendLine(R.StandardOutput.ReadToEnd());
+                output.AppendLine();
 
-                    if (!String.IsNullOrEmpty(errorsFromR))
-                    {
-                        output.AppendLine();
-                        output.Append(errorsFromR);
-                        output.AppendLine();
-                    }
+                //output the errors from R
+                string errorsFromR = R.StandardError.ReadToEnd().Trim();
 
-                    TimeSpan timeElapsed = sw.Elapsed;
+                R.Close();
+                R.Dispose();
+
+                if (!String.IsNullOrEmpty(errorsFromR))
+                {
                     output.AppendLine();
-                    output.AppendLine("Analysis by the R Processor took " + Math.Round(timeElapsed.TotalSeconds, 2) + " seconds.");
+                    output.Append(errorsFromR);
+                    output.AppendLine();
+                }
 
-                    analysis.RProcessOutput = output.ToString().Trim();
+                TimeSpan timeElapsed = sw.Elapsed;
+                output.AppendLine();
+                output.AppendLine("Analysis by the R Processor took " + Math.Round(timeElapsed.TotalSeconds, 2) + " seconds.");
 
-                    //assemble the entire path and file to the html output
-                    string htmlFile = Path.Combine(workingDir, analysisGuid + ".html");
+                analysis.RProcessOutput = output.ToString().Trim();
 
-                    if (File.Exists(htmlFile)) //wont exist if there is an error!
+                //assemble the entire path and file to the html output
+                string htmlFile = Path.Combine(workingDir, analysisGuid + ".html");
+
+                if (File.Exists(htmlFile)) //wont exist if there is an error!
+                {
+                    //get the output files
+                    List<string> resultsFiles = new List<string>();
+                    string[] outputFiles = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
+                    foreach (string file in outputFiles)
                     {
-                        //get the output files
-                        List<string> resultsFiles = new List<string>();
-                        string[] outputFiles = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
-                        foreach (string file in outputFiles)
-                        {
-                            if (file.EndsWith(".R") || file.EndsWith(".csv")) continue;
+                        if (file.EndsWith(".R") || file.EndsWith(".csv")) continue;
 
-                            resultsFiles.Add(file);
-                        }
-
-                        string inlineHtml = InlineHtmlCreator.CreateInlineHtml(resultsFiles);
-
-                        analysis.HtmlOutput = inlineHtml;
+                        resultsFiles.Add(file);
                     }
 
-                    await repository.SaveChangesAsync();
+                    string inlineHtml = InlineHtmlCreator.CreateInlineHtml(resultsFiles);
+
+                    analysis.HtmlOutput = inlineHtml;
+                }
+
+                await repository.SaveChangesAsync();
 
 #if !DEBUG
                     string[] filesToClean = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
                     foreach (string file in filesToClean)
                         File.Delete(file);
-#endif
                 }
                 catch (Exception ex)
                 {
@@ -185,6 +186,7 @@ namespace SilveR.Services
 
                     throw ex;
                 }
+#endif
             }
         }
     }

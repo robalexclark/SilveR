@@ -1,8 +1,7 @@
-﻿using System;
+﻿using SilveRModel.StatsModel;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using SilveRModel.StatsModel;
 
 namespace SilveRModel.Validators
 {
@@ -19,7 +18,7 @@ namespace SilveRModel.Validators
         public override ValidationInfo Validate()
         {
             //first just check to ensure that the user has actually selected something to output!
-            if (!ssVariables.Mean && !ssVariables.N && !ssVariables.StandardDeviation && !ssVariables.Variances && !ssVariables.StandardErrorOfMean && !ssVariables.MinAndMax && !ssVariables.MedianAndQuartile && !ssVariables.CoefficientOfVariation
+            if (!ssVariables.Mean && !ssVariables.N && !ssVariables.StandardDeviation && !ssVariables.Variance && !ssVariables.StandardErrorOfMean && !ssVariables.MinAndMax && !ssVariables.MedianAndQuartiles && !ssVariables.CoefficientOfVariation
                 && !ssVariables.NormalProbabilityPlot && !ssVariables.CoefficientOfVariation && !ssVariables.ByCategoriesAndOverall)
             {
                 ValidationInfo.AddErrorMessage("You have not selected anything to output!");

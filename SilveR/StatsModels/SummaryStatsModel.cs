@@ -71,7 +71,7 @@ namespace SilveRModel.StatsModel
 
         [DisplayName("Standard deviation")]
         public bool StandardDeviation { get; set; } = true;
-        public bool Variances { get; set; }
+        public bool Variance { get; set; }
 
         [DisplayName("Standard error of mean")]
         public bool StandardErrorOfMean { get; set; }
@@ -79,14 +79,14 @@ namespace SilveRModel.StatsModel
         [DisplayName("Min and Max")]
         public bool MinAndMax { get; set; }
 
-        [DisplayName("Median and quartile")]
-        public bool MedianAndQuartile { get; set; }
+        [DisplayName("Median and quartiles")]
+        public bool MedianAndQuartiles { get; set; }
 
         [DisplayName("% coefficient of variation")]
         public bool CoefficientOfVariation { get; set; }
 
-        [DisplayName("Confidence intervals")]
-        public bool ConfidenceIntervals { get; set; } = true;
+        [DisplayName("Confidence interval")]
+        public bool ConfidenceInterval { get; set; } = true;
 
         [DisplayName("Significance level")]
         [Required(ErrorMessage = "Significance is Required")]
@@ -177,24 +177,24 @@ namespace SilveRModel.StatsModel
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("Responses", Responses));
-            args.Add(ArgumentHelper.ArgumentFactory("Transformation", Transformation));
-            args.Add(ArgumentHelper.ArgumentFactory("FirstCatFactor", FirstCatFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("SecondCatFactor", SecondCatFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("ThirdCatFactor", ThirdCatFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("FourthCatFactor", FourthCatFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("Mean", Mean));
-            args.Add(ArgumentHelper.ArgumentFactory("N", N));
-            args.Add(ArgumentHelper.ArgumentFactory("StandardDeviation", StandardDeviation));
-            args.Add(ArgumentHelper.ArgumentFactory("Variances", Variances));
-            args.Add(ArgumentHelper.ArgumentFactory("StandardErrorOfMean", StandardErrorOfMean));
-            args.Add(ArgumentHelper.ArgumentFactory("MinAndMax", MinAndMax));
-            args.Add(ArgumentHelper.ArgumentFactory("MedianAndQuartile", MedianAndQuartile));
-            args.Add(ArgumentHelper.ArgumentFactory("CoefficientOfVariation", CoefficientOfVariation));
-            args.Add(ArgumentHelper.ArgumentFactory("ConfidenceIntervals", ConfidenceIntervals));
-            args.Add(ArgumentHelper.ArgumentFactory("Significance", Significance));
-            args.Add(ArgumentHelper.ArgumentFactory("NormalProbabilityPlot", NormalProbabilityPlot));
-            args.Add(ArgumentHelper.ArgumentFactory("ByCategoriesAndOverall", ByCategoriesAndOverall));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Responses), Responses));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Transformation), Transformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(FirstCatFactor), FirstCatFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SecondCatFactor), SecondCatFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ThirdCatFactor), ThirdCatFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(FourthCatFactor), FourthCatFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Mean), Mean));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(N), N));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardDeviation), StandardDeviation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Variance), Variance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardErrorOfMean), StandardErrorOfMean));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(MinAndMax), MinAndMax));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(MedianAndQuartiles), MedianAndQuartiles));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CoefficientOfVariation), CoefficientOfVariation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ConfidenceInterval), ConfidenceInterval));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalProbabilityPlot), NormalProbabilityPlot));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ByCategoriesAndOverall), ByCategoriesAndOverall));
 
             return args;
         }
@@ -203,24 +203,24 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Responses = argHelper.ArgumentLoader("Responses", Responses);
-            this.FirstCatFactor = argHelper.ArgumentLoader("FirstCatFactor", FirstCatFactor);
-            this.SecondCatFactor = argHelper.ArgumentLoader("SecondCatFactor", SecondCatFactor);
-            this.ThirdCatFactor = argHelper.ArgumentLoader("ThirdCatFactor", ThirdCatFactor);
-            this.FourthCatFactor = argHelper.ArgumentLoader("FourthCatFactor", FourthCatFactor);
-            this.Transformation = argHelper.ArgumentLoader("Transformation", Transformation);
-            this.ByCategoriesAndOverall = argHelper.ArgumentLoader("ByCategoriesAndOverall", ByCategoriesAndOverall);
-            this.CoefficientOfVariation = argHelper.ArgumentLoader("CoefficientOfVariation", CoefficientOfVariation);
-            this.ConfidenceIntervals = argHelper.ArgumentLoader("ConfidenceIntervals", ConfidenceIntervals);
-            this.Mean = argHelper.ArgumentLoader("Mean", Mean);
-            this.MedianAndQuartile = argHelper.ArgumentLoader("MedianAndQuartile", MedianAndQuartile);
-            this.MinAndMax = argHelper.ArgumentLoader("MinAndMax", MinAndMax);
-            this.N = argHelper.ArgumentLoader("N", N);
-            this.NormalProbabilityPlot = argHelper.ArgumentLoader("NormalProbabilityPlot", NormalProbabilityPlot);
-            this.Significance = argHelper.ArgumentLoader("Significance", Significance);
-            this.StandardDeviation = argHelper.ArgumentLoader("StandardDeviation", StandardDeviation);
-            this.StandardErrorOfMean = argHelper.ArgumentLoader("StandardErrorOfMean", StandardErrorOfMean);
-            this.Variances = argHelper.ArgumentLoader("Variances", Variances);
+            this.Responses = argHelper.ArgumentLoader(nameof(Responses), Responses);
+            this.FirstCatFactor = argHelper.ArgumentLoader(nameof(FirstCatFactor), FirstCatFactor);
+            this.SecondCatFactor = argHelper.ArgumentLoader(nameof(SecondCatFactor), SecondCatFactor);
+            this.ThirdCatFactor = argHelper.ArgumentLoader(nameof(ThirdCatFactor), ThirdCatFactor);
+            this.FourthCatFactor = argHelper.ArgumentLoader(nameof(FourthCatFactor), FourthCatFactor);
+            this.Transformation = argHelper.ArgumentLoader(nameof(Transformation), Transformation);
+            this.ByCategoriesAndOverall = argHelper.ArgumentLoader(nameof(ByCategoriesAndOverall), ByCategoriesAndOverall);
+            this.CoefficientOfVariation = argHelper.ArgumentLoader(nameof(CoefficientOfVariation), CoefficientOfVariation);
+            this.ConfidenceInterval = argHelper.ArgumentLoader(nameof(ConfidenceInterval), ConfidenceInterval);
+            this.Mean = argHelper.ArgumentLoader(nameof(Mean), Mean);
+            this.MedianAndQuartiles = argHelper.ArgumentLoader(nameof(MedianAndQuartiles), MedianAndQuartiles);
+            this.MinAndMax = argHelper.ArgumentLoader(nameof(MinAndMax), MinAndMax);
+            this.N = argHelper.ArgumentLoader(nameof(N), N);
+            this.NormalProbabilityPlot = argHelper.ArgumentLoader(nameof(NormalProbabilityPlot), NormalProbabilityPlot);
+            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.StandardDeviation = argHelper.ArgumentLoader(nameof(StandardDeviation), StandardDeviation);
+            this.StandardErrorOfMean = argHelper.ArgumentLoader(nameof(StandardErrorOfMean), StandardErrorOfMean);
+            this.Variance = argHelper.ArgumentLoader(nameof(Variance), Variance);
         }
 
         public string GetCommandLineArguments()
@@ -261,7 +261,7 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(StandardDeviation)); //12
 
             //Variances
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Variances)); //13
+            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Variance)); //13
 
             //St Err
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(StandardErrorOfMean)); //14
@@ -270,13 +270,13 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(MinAndMax)); //15
 
             //Median Quartile
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(MedianAndQuartile)); //16
+            arguments.Append(" " + ArgumentConverters.GetYesOrNo(MedianAndQuartiles)); //16
 
             //Coefficient Variation
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(CoefficientOfVariation)); //17
 
             //Confidence Limits
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ConfidenceIntervals)); //18
+            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ConfidenceInterval)); //18
 
             //Confidence Limits
             arguments.Append(" " + Significance.ToString()); //19

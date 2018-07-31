@@ -332,46 +332,46 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader("Response", Response);
-            this.Treatments = argHelper.ArgumentLoader("Treatments", Treatments);
-            this.OtherDesignFactors = argHelper.ArgumentLoader("OtherDesignFactors", OtherDesignFactors);
-            this.ResponseTransformation = argHelper.ArgumentLoader("ResponseTransformation", ResponseTransformation);
-            this.Covariate = argHelper.ArgumentLoader("Covariate", Covariate);
-            this.PrimaryFactor = argHelper.ArgumentLoader("PrimaryFactor", PrimaryFactor);
-            this.CovariateTransformation = argHelper.ArgumentLoader("CovariateTransformation", CovariateTransformation);
-            this.ANOVASelected = argHelper.ArgumentLoader("ANOVASelected", ANOVASelected);
-            this.PRPlotSelected = argHelper.ArgumentLoader("PRPlotSelected", PRPlotSelected);
-            this.NormalPlotSelected = argHelper.ArgumentLoader("NormalPlotSelected", NormalPlotSelected);
-            this.StandardisedEffectsSelected = argHelper.ArgumentLoader("StandardisedEffectsSelected", StandardisedEffectsSelected);
-            this.Significance = argHelper.ArgumentLoader("Significance", Significance);
-            this.SelectedEffect = argHelper.ArgumentLoader("SelectedEffect", SelectedEffect);
-            this.LSMeansSelected = argHelper.ArgumentLoader("LSMeansSelected", LSMeansSelected);
-            this.AllPairwise = argHelper.ArgumentLoader("AllPairwise", AllPairwise);
-            this.ComparisonsBackToControl = argHelper.ArgumentLoader("ComparisonsBackToControl", ComparisonsBackToControl);
-            this.ControlGroup = argHelper.ArgumentLoader("ControlGroup", ControlGroup);
+            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
+            this.Treatments = argHelper.ArgumentLoader(nameof(Treatments), Treatments);
+            this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
+            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
+            this.Covariate = argHelper.ArgumentLoader(nameof(Covariate), Covariate);
+            this.PrimaryFactor = argHelper.ArgumentLoader(nameof(PrimaryFactor), PrimaryFactor);
+            this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
+            this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
+            this.PRPlotSelected = argHelper.ArgumentLoader(nameof(PRPlotSelected), PRPlotSelected);
+            this.NormalPlotSelected = argHelper.ArgumentLoader(nameof(NormalPlotSelected), NormalPlotSelected);
+            this.StandardisedEffectsSelected = argHelper.ArgumentLoader(nameof(StandardisedEffectsSelected), StandardisedEffectsSelected);
+            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.SelectedEffect = argHelper.ArgumentLoader(nameof(SelectedEffect), SelectedEffect);
+            this.LSMeansSelected = argHelper.ArgumentLoader(nameof(LSMeansSelected), LSMeansSelected);
+            this.AllPairwise = argHelper.ArgumentLoader(nameof(AllPairwise), AllPairwise);
+            this.ComparisonsBackToControl = argHelper.ArgumentLoader(nameof(ComparisonsBackToControl), ComparisonsBackToControl);
+            this.ControlGroup = argHelper.ArgumentLoader(nameof(ControlGroup), ControlGroup);
         }
 
         public IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("Response", Response));
-            args.Add(ArgumentHelper.ArgumentFactory("Treatments", Treatments));
-            args.Add(ArgumentHelper.ArgumentFactory("OtherDesignFactors", OtherDesignFactors));
-            args.Add(ArgumentHelper.ArgumentFactory("ResponseTransformation", ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory("Covariate", Covariate));
-            args.Add(ArgumentHelper.ArgumentFactory("PrimaryFactor", PrimaryFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("CovariateTransformation", CovariateTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory("ANOVASelected", ANOVASelected));
-            args.Add(ArgumentHelper.ArgumentFactory("PRPlotSelected", PRPlotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("NormalPlotSelected", NormalPlotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("StandardisedEffectsSelected", StandardisedEffectsSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("Significance", Significance));
-            args.Add(ArgumentHelper.ArgumentFactory("SelectedEffect", SelectedEffect));
-            args.Add(ArgumentHelper.ArgumentFactory("LSMeansSelected", LSMeansSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("AllPairwise", AllPairwise));
-            args.Add(ArgumentHelper.ArgumentFactory("ComparisonsBackToControl", ComparisonsBackToControl));
-            args.Add(ArgumentHelper.ArgumentFactory("ControlGroup", ControlGroup));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatments), Treatments));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(OtherDesignFactors), OtherDesignFactors));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariate), Covariate));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PrimaryFactor), PrimaryFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ANOVASelected), ANOVASelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlotSelected), PRPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlotSelected), NormalPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardisedEffectsSelected), StandardisedEffectsSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedEffect), SelectedEffect));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(AllPairwise), AllPairwise));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ComparisonsBackToControl), ComparisonsBackToControl));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
 
             return args;
         }

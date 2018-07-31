@@ -136,14 +136,14 @@ namespace SilveRModel.StatsModel
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("Response", Response));
-            args.Add(ArgumentHelper.ArgumentFactory("ResponseTransformation", ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory("Treatment", Treatment));
-            args.Add(ArgumentHelper.ArgumentFactory("EqualVariance", EqualVariance));
-            args.Add(ArgumentHelper.ArgumentFactory("UnequalVariance", UnequalVariance));
-            args.Add(ArgumentHelper.ArgumentFactory("PRPlot", PRPlot));
-            args.Add(ArgumentHelper.ArgumentFactory("NormalPlot", NormalPlot));
-            args.Add(ArgumentHelper.ArgumentFactory("Significance", Significance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(EqualVariance), EqualVariance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(UnequalVariance), UnequalVariance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlot), PRPlot));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlot), NormalPlot));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
 
             return args;
         }
@@ -152,14 +152,14 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader("Response", Response);
-            this.ResponseTransformation = argHelper.ArgumentLoader("ResponseTransformation", ResponseTransformation);
-            this.Treatment = argHelper.ArgumentLoader("Treatment", Treatment);
-            this.EqualVariance = argHelper.ArgumentLoader("EqualVariance", EqualVariance);
-            this.UnequalVariance = argHelper.ArgumentLoader("UnequalVariance", UnequalVariance);
-            this.PRPlot = argHelper.ArgumentLoader("PRPlot", PRPlot);
-            this.NormalPlot = argHelper.ArgumentLoader("NormalPlot", NormalPlot);
-            this.Significance = argHelper.ArgumentLoader("Significance", Significance);
+            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
+            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
+            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
+            this.EqualVariance = argHelper.ArgumentLoader(nameof(EqualVariance), EqualVariance);
+            this.UnequalVariance = argHelper.ArgumentLoader(nameof(UnequalVariance), UnequalVariance);
+            this.PRPlot = argHelper.ArgumentLoader(nameof(PRPlot), PRPlot);
+            this.NormalPlot = argHelper.ArgumentLoader(nameof(NormalPlot), NormalPlot);
+            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
         public string GetCommandLineArguments()

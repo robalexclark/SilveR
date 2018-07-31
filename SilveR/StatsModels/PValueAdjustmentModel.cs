@@ -30,10 +30,9 @@ namespace SilveRModel.StatsModel
         [DisplayName("Multiple comparison adjustment")]
         public string SelectedTest { get; set; }
 
-        private List<string> multipleComparisonTests = new List<string>() { "Holm", "Hochberg", "Hommel", "Benjamini-Hochberg", "Bonferroni" };
         public List<string> MultipleComparisonTests
         {
-            get { return multipleComparisonTests; }
+            get { return new List<string>() { "Holm", "Hochberg", "Hommel", "Benjamini-Hochberg", "Bonferroni" }; }
         }
 
         public string Significance { get; set; } = "0.05";
@@ -64,18 +63,18 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.PValues = argHelper.ArgumentLoader("PValues", PValues);
-            this.SelectedTest = argHelper.ArgumentLoader("SelectedTest", SelectedTest);
-            this.Significance = argHelper.ArgumentLoader("Significance", Significance);
+            this.PValues = argHelper.ArgumentLoader(nameof(PValues), PValues);
+            this.SelectedTest = argHelper.ArgumentLoader(nameof(SelectedTest), SelectedTest);
+            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
         public IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("PValues", PValues));
-            args.Add(ArgumentHelper.ArgumentFactory("SelectedTest", SelectedTest));
-            args.Add(ArgumentHelper.ArgumentFactory("Significance", Significance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PValues), PValues));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedTest), SelectedTest));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
 
             return args;
         }

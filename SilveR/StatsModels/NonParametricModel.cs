@@ -125,22 +125,22 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader("Response", Response);
-            this.Treatment = argHelper.ArgumentLoader("Treatment", Treatment);
-            this.Significance = argHelper.ArgumentLoader("Significance", Significance);
-            this.AnalysisType = (AnalysisOption)Enum.Parse(typeof(AnalysisOption), argHelper.ArgumentLoader("AnalysisType", String.Empty), true);
-            this.Control = argHelper.ArgumentLoader("Control", Control);
+            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
+            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
+            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.AnalysisType = (AnalysisOption)Enum.Parse(typeof(AnalysisOption), argHelper.ArgumentLoader(nameof(AnalysisType), String.Empty), true);
+            this.Control = argHelper.ArgumentLoader(nameof(Control), Control);
         }
 
         public IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("Response", Response));
-            args.Add(ArgumentHelper.ArgumentFactory("Treatment", Treatment));
-            args.Add(ArgumentHelper.ArgumentFactory("Significance", Significance));
-            args.Add(ArgumentHelper.ArgumentFactory("AnalysisType", AnalysisType.ToString()));
-            args.Add(ArgumentHelper.ArgumentFactory("Control", Control));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(AnalysisType), AnalysisType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Control), Control));
 
             return args;
         }

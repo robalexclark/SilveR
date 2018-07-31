@@ -173,19 +173,19 @@ namespace SilveRModel.StatsModel
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("Response", Response));
-            args.Add(ArgumentHelper.ArgumentFactory("ResponseTransformation", ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory("Treatment", Treatment));
-            args.Add(ArgumentHelper.ArgumentFactory("Subject", Subject));
-            args.Add(ArgumentHelper.ArgumentFactory("OtherDesignFactors", OtherDesignFactors));
-            args.Add(ArgumentHelper.ArgumentFactory("Covariate", Covariate));
-            args.Add(ArgumentHelper.ArgumentFactory("CovariateTransformation", CovariateTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory("Covariance", Covariance));
-            args.Add(ArgumentHelper.ArgumentFactory("ANOVASelected", ANOVASelected));
-            args.Add(ArgumentHelper.ArgumentFactory("PRPlotSelected", PRPlotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("NormalPlotSelected", NormalPlotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("LSMeansSelected", LSMeansSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("Significance", Significance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Subject), Subject));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(OtherDesignFactors), OtherDesignFactors));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariate), Covariate));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariance), Covariance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ANOVASelected), ANOVASelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlotSelected), PRPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlotSelected), NormalPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
 
             return args;
         }
@@ -194,19 +194,19 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader("Response", Response);
-            this.ResponseTransformation = argHelper.ArgumentLoader("ResponseTransformation", ResponseTransformation);
-            this.Treatment = argHelper.ArgumentLoader("Treatment", Treatment);
-            this.Subject = argHelper.ArgumentLoader("Subject", Subject);
-            this.OtherDesignFactors = argHelper.ArgumentLoader("OtherDesignFactors", OtherDesignFactors);
-            this.Covariate = argHelper.ArgumentLoader("Covariate", Covariate);
-            this.Covariance = argHelper.ArgumentLoader("Covariance", Covariance);
-            this.CovariateTransformation = argHelper.ArgumentLoader("CovariateTransformation", CovariateTransformation);
-            this.ANOVASelected = argHelper.ArgumentLoader("ANOVASelected", ANOVASelected);
-            this.PRPlotSelected = argHelper.ArgumentLoader("PRPlotSelected", PRPlotSelected);
-            this.NormalPlotSelected = argHelper.ArgumentLoader("NormalPlotSelected", NormalPlotSelected);
-            this.LSMeansSelected = argHelper.ArgumentLoader("LSMeansSelected", LSMeansSelected);
-            this.Significance = argHelper.ArgumentLoader("Significance", Significance);
+            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
+            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
+            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
+            this.Subject = argHelper.ArgumentLoader(nameof(Subject), Subject);
+            this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
+            this.Covariate = argHelper.ArgumentLoader(nameof(Covariate), Covariate);
+            this.Covariance = argHelper.ArgumentLoader(nameof(Covariance), Covariance);
+            this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
+            this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
+            this.PRPlotSelected = argHelper.ArgumentLoader(nameof(PRPlotSelected), PRPlotSelected);
+            this.NormalPlotSelected = argHelper.ArgumentLoader(nameof(NormalPlotSelected), NormalPlotSelected);
+            this.LSMeansSelected = argHelper.ArgumentLoader(nameof(LSMeansSelected), LSMeansSelected);
+            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
         public string GetCommandLineArguments()

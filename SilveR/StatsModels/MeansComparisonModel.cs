@@ -192,23 +192,23 @@ namespace SilveRModel.StatsModel
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("GroupMean", GroupMean));
-            args.Add(ArgumentHelper.ArgumentFactory("StandardDeviation", StandardDeviation));
-            args.Add(ArgumentHelper.ArgumentFactory("Variance", Variance));
-            args.Add(ArgumentHelper.ArgumentFactory("ValueType", ValueType.ToString()));
-            args.Add(ArgumentHelper.ArgumentFactory("Response", Response));
-            args.Add(ArgumentHelper.ArgumentFactory("Treatment", Treatment));
-            args.Add(ArgumentHelper.ArgumentFactory("Significance", Significance));
-            args.Add(ArgumentHelper.ArgumentFactory("ControlGroup", ControlGroup));
-            args.Add(ArgumentHelper.ArgumentFactory("ChangeType", ChangeType.ToString()));
-            args.Add(ArgumentHelper.ArgumentFactory("PercentChange", PercentChange));
-            args.Add(ArgumentHelper.ArgumentFactory("AbsoluteChange", AbsoluteChange));
-            args.Add(ArgumentHelper.ArgumentFactory("PlottingRangeType", PlottingRangeType.ToString()));
-            args.Add(ArgumentHelper.ArgumentFactory("SampleSizeFrom", SampleSizeFrom));
-            args.Add(ArgumentHelper.ArgumentFactory("SampleSizeTo", SampleSizeTo));
-            args.Add(ArgumentHelper.ArgumentFactory("PowerFrom", PowerFrom));
-            args.Add(ArgumentHelper.ArgumentFactory("PowerTo", PowerTo));
-            args.Add(ArgumentHelper.ArgumentFactory("GraphTitle", GraphTitle));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(GroupMean), GroupMean));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardDeviation), StandardDeviation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Variance), Variance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ValueType), ValueType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ChangeType), ChangeType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PercentChange), PercentChange));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(AbsoluteChange), AbsoluteChange));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PlottingRangeType), PlottingRangeType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SampleSizeFrom), SampleSizeFrom));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SampleSizeTo), SampleSizeTo));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PowerFrom), PowerFrom));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(PowerTo), PowerTo));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(GraphTitle), GraphTitle));
 
             return args;
         }
@@ -217,23 +217,23 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.GroupMean = argHelper.ArgumentLoader("GroupMean", GroupMean);
-            this.StandardDeviation = argHelper.ArgumentLoader("StandardDeviation", StandardDeviation);
-            this.Variance = argHelper.ArgumentLoader("Variance", Variance);
-            this.ValueType = (ValueTypeOption)Enum.Parse(typeof(ValueTypeOption), argHelper.ArgumentLoader("ValueType", String.Empty), true);
-            this.Response = argHelper.ArgumentLoader("Response", Response);
-            this.Treatment = argHelper.ArgumentLoader("Treatment", Treatment);
-            this.Significance = argHelper.ArgumentLoader("Significance", Significance);
-            this.ControlGroup = argHelper.ArgumentLoader("ControlGroup", ControlGroup);
-            this.ChangeType = (ChangeTypeOption)Enum.Parse(typeof(ChangeTypeOption), argHelper.ArgumentLoader("ChangeType", String.Empty), true);
-            this.PercentChange = argHelper.ArgumentLoader("PercentChange", PercentChange);
-            this.AbsoluteChange = argHelper.ArgumentLoader("AbsoluteChange", AbsoluteChange);
-            this.PlottingRangeType = (PlottingRangeTypeOption)Enum.Parse(typeof(PlottingRangeTypeOption), argHelper.ArgumentLoader("PlottingRangeType", String.Empty), true);
-            this.SampleSizeFrom = argHelper.ArgumentLoader("SampleSizeFrom", SampleSizeFrom);
-            this.SampleSizeTo = argHelper.ArgumentLoader("SampleSizeTo", SampleSizeTo);
-            this.PowerFrom = argHelper.ArgumentLoader("PowerFrom", PowerFrom);
-            this.PowerTo = argHelper.ArgumentLoader("PowerTo", PowerTo);
-            this.GraphTitle = argHelper.ArgumentLoader("GraphTitle", GraphTitle);
+            this.GroupMean = argHelper.ArgumentLoader(nameof(GroupMean), GroupMean);
+            this.StandardDeviation = argHelper.ArgumentLoader(nameof(StandardDeviation), StandardDeviation);
+            this.Variance = argHelper.ArgumentLoader(nameof(Variance), Variance);
+            this.ValueType = (ValueTypeOption)Enum.Parse(typeof(ValueTypeOption), argHelper.ArgumentLoader(nameof(ValueType), String.Empty), true);
+            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
+            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
+            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.ControlGroup = argHelper.ArgumentLoader(nameof(ControlGroup), ControlGroup);
+            this.ChangeType = (ChangeTypeOption)Enum.Parse(typeof(ChangeTypeOption), argHelper.ArgumentLoader(nameof(ChangeType), String.Empty), true);
+            this.PercentChange = argHelper.ArgumentLoader(nameof(PercentChange), PercentChange);
+            this.AbsoluteChange = argHelper.ArgumentLoader(nameof(AbsoluteChange), AbsoluteChange);
+            this.PlottingRangeType = (PlottingRangeTypeOption)Enum.Parse(typeof(PlottingRangeTypeOption), argHelper.ArgumentLoader(nameof(PlottingRangeType), String.Empty), true);
+            this.SampleSizeFrom = argHelper.ArgumentLoader(nameof(SampleSizeFrom), SampleSizeFrom);
+            this.SampleSizeTo = argHelper.ArgumentLoader(nameof(SampleSizeTo), SampleSizeTo);
+            this.PowerFrom = argHelper.ArgumentLoader(nameof(PowerFrom), PowerFrom);
+            this.PowerTo = argHelper.ArgumentLoader(nameof(PowerTo), PowerTo);
+            this.GraphTitle = argHelper.ArgumentLoader(nameof(GraphTitle), GraphTitle);
         }
 
         public string GetCommandLineArguments()

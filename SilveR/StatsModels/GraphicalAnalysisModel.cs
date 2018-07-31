@@ -204,31 +204,31 @@ namespace SilveRModel.StatsModel
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory("Response", Response));
-            args.Add(ArgumentHelper.ArgumentFactory("ResponseTransformation", ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory("XAxis", XAxis));
-            args.Add(ArgumentHelper.ArgumentFactory("XAxisTransformation", XAxisTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory("FirstCatFactor", FirstCatFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("SecondCatFactor", SecondCatFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("StyleType", StyleType.ToString()));
-            args.Add(ArgumentHelper.ArgumentFactory("DisplayLegend", DisplayLegend));
-            args.Add(ArgumentHelper.ArgumentFactory("BoxPlotIncludeData", BoxPlotIncludeData));
-            args.Add(ArgumentHelper.ArgumentFactory("SEMPlotIncludeData", SEMPlotIncludeData));
-            args.Add(ArgumentHelper.ArgumentFactory("MainTitle", MainTitle));
-            args.Add(ArgumentHelper.ArgumentFactory("XAxisTitle", XAxisTitle));
-            args.Add(ArgumentHelper.ArgumentFactory("YAxisTitle", YAxisTitle));
-            args.Add(ArgumentHelper.ArgumentFactory("ScatterplotSelected", ScatterplotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("LinearFitSelected", LinearFitSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("JitterSelected", JitterSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("BoxplotSelected", BoxplotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("OutliersSelected", OutliersSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("SEMPlotSelected", SEMPlotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("SEMType", SEMType.ToString()));
-            args.Add(ArgumentHelper.ArgumentFactory("HistogramSelected", HistogramSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("NormalDistSelected", NormalDistSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("CaseProfilesPlotSelected", CaseProfilesPlotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory("CaseIDFactor", CaseIDFactor));
-            args.Add(ArgumentHelper.ArgumentFactory("ReferenceLine", ReferenceLine));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxis), XAxis));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisTransformation), XAxisTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(FirstCatFactor), FirstCatFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SecondCatFactor), SecondCatFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(StyleType), StyleType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(DisplayLegend), DisplayLegend));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(BoxPlotIncludeData), BoxPlotIncludeData));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMPlotIncludeData), SEMPlotIncludeData));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(MainTitle), MainTitle));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisTitle), XAxisTitle));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(YAxisTitle), YAxisTitle));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ScatterplotSelected), ScatterplotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(LinearFitSelected), LinearFitSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(JitterSelected), JitterSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(BoxplotSelected), BoxplotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(OutliersSelected), OutliersSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMPlotSelected), SEMPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMType), SEMType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(HistogramSelected), HistogramSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalDistSelected), NormalDistSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CaseProfilesPlotSelected), CaseProfilesPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CaseIDFactor), CaseIDFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ReferenceLine), ReferenceLine));
 
             return args;
         }
@@ -237,31 +237,31 @@ namespace SilveRModel.StatsModel
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader("Response", Response);
-            this.ResponseTransformation = argHelper.ArgumentLoader("ResponseTransformation", ResponseTransformation);
-            this.XAxis = argHelper.ArgumentLoader("XAxis", XAxis);
-            this.XAxisTransformation = argHelper.ArgumentLoader("XAxisTransformation", XAxisTransformation);
-            this.FirstCatFactor = argHelper.ArgumentLoader("FirstCatFactor", FirstCatFactor);
-            this.SecondCatFactor = argHelper.ArgumentLoader("SecondCatFactor", SecondCatFactor);
-            this.StyleType = (GraphStyleType)Enum.Parse(typeof(GraphStyleType), argHelper.ArgumentLoader("StyleType", String.Empty), true);
-            this.DisplayLegend = argHelper.ArgumentLoader("DisplayLegend", DisplayLegend);
-            this.BoxPlotIncludeData = argHelper.ArgumentLoader("BoxPlotIncludeData", BoxPlotIncludeData);
-            this.SEMPlotIncludeData = argHelper.ArgumentLoader("SEMPlotIncludeData", SEMPlotIncludeData);
-            this.MainTitle = argHelper.ArgumentLoader("MainTitle", MainTitle);
-            this.XAxisTitle = argHelper.ArgumentLoader("XAxisTitle", XAxisTitle);
-            this.YAxisTitle = argHelper.ArgumentLoader("YAxisTitle", YAxisTitle);
-            this.ScatterplotSelected = argHelper.ArgumentLoader("ScatterplotSelected", ScatterplotSelected);
-            this.LinearFitSelected = argHelper.ArgumentLoader("LinearFitSelected", LinearFitSelected);
-            this.JitterSelected = argHelper.ArgumentLoader("JitterSelected", JitterSelected);
-            this.BoxplotSelected = argHelper.ArgumentLoader("BoxplotSelected", BoxplotSelected);
-            this.OutliersSelected = argHelper.ArgumentLoader("OutliersSelected", OutliersSelected);
-            this.SEMPlotSelected = argHelper.ArgumentLoader("SEMPlotSelected", SEMPlotSelected);
-            this.SEMType = (SEMPlotType)Enum.Parse(typeof(SEMPlotType), argHelper.ArgumentLoader("SEMType", String.Empty), true);
-            this.HistogramSelected = argHelper.ArgumentLoader("HistogramSelected", HistogramSelected);
-            this.NormalDistSelected = argHelper.ArgumentLoader("NormalDistSelected", NormalDistSelected);
-            this.CaseProfilesPlotSelected = argHelper.ArgumentLoader("CaseProfilesPlotSelected", CaseProfilesPlotSelected);
-            this.CaseIDFactor = argHelper.ArgumentLoader("CaseIDFactor", CaseIDFactor);
-            this.ReferenceLine = argHelper.ArgumentLoader("ReferenceLine", ReferenceLine);
+            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
+            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
+            this.XAxis = argHelper.ArgumentLoader(nameof(XAxis), XAxis);
+            this.XAxisTransformation = argHelper.ArgumentLoader(nameof(XAxisTransformation), XAxisTransformation);
+            this.FirstCatFactor = argHelper.ArgumentLoader(nameof(FirstCatFactor), FirstCatFactor);
+            this.SecondCatFactor = argHelper.ArgumentLoader(nameof(SecondCatFactor), SecondCatFactor);
+            this.StyleType = (GraphStyleType)Enum.Parse(typeof(GraphStyleType), argHelper.ArgumentLoader(nameof(StyleType), String.Empty), true);
+            this.DisplayLegend = argHelper.ArgumentLoader(nameof(DisplayLegend), DisplayLegend);
+            this.BoxPlotIncludeData = argHelper.ArgumentLoader(nameof(BoxPlotIncludeData), BoxPlotIncludeData);
+            this.SEMPlotIncludeData = argHelper.ArgumentLoader(nameof(SEMPlotIncludeData), SEMPlotIncludeData);
+            this.MainTitle = argHelper.ArgumentLoader(nameof(MainTitle), MainTitle);
+            this.XAxisTitle = argHelper.ArgumentLoader(nameof(XAxisTitle), XAxisTitle);
+            this.YAxisTitle = argHelper.ArgumentLoader(nameof(YAxisTitle), YAxisTitle);
+            this.ScatterplotSelected = argHelper.ArgumentLoader(nameof(ScatterplotSelected), ScatterplotSelected);
+            this.LinearFitSelected = argHelper.ArgumentLoader(nameof(LinearFitSelected), LinearFitSelected);
+            this.JitterSelected = argHelper.ArgumentLoader(nameof(JitterSelected), JitterSelected);
+            this.BoxplotSelected = argHelper.ArgumentLoader(nameof(BoxplotSelected), BoxplotSelected);
+            this.OutliersSelected = argHelper.ArgumentLoader(nameof(OutliersSelected), OutliersSelected);
+            this.SEMPlotSelected = argHelper.ArgumentLoader(nameof(SEMPlotSelected), SEMPlotSelected);
+            this.SEMType = (SEMPlotType)Enum.Parse(typeof(SEMPlotType), argHelper.ArgumentLoader(nameof(SEMType), String.Empty), true);
+            this.HistogramSelected = argHelper.ArgumentLoader(nameof(HistogramSelected), HistogramSelected);
+            this.NormalDistSelected = argHelper.ArgumentLoader(nameof(NormalDistSelected), NormalDistSelected);
+            this.CaseProfilesPlotSelected = argHelper.ArgumentLoader(nameof(CaseProfilesPlotSelected), CaseProfilesPlotSelected);
+            this.CaseIDFactor = argHelper.ArgumentLoader(nameof(CaseIDFactor), CaseIDFactor);
+            this.ReferenceLine = argHelper.ArgumentLoader(nameof(ReferenceLine), ReferenceLine);
         }
 
         public string GetCommandLineArguments()
