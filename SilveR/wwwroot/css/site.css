@@ -353,3 +353,9 @@ table.dataframe {
             padding: 2px 8px;
             border-radius: 5px;
         }
+
+td.firstcolumn {
+    background: #C0C0C0;
+    text-align: center;
+    font-weight: bold;
+}

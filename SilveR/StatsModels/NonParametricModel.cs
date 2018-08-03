@@ -46,6 +46,10 @@ namespace SilveRModel.StatsModel
         [CheckUsedOnceOnly]
         public string Treatment { get; set; }
 
+        [Required]
+        [CheckUsedOnceOnly]
+        public string OtherDesignFactor { get; set; }
+
         public string Significance { get; set; } = "0.05";
 
         public List<string> SignificancesList
@@ -105,7 +109,7 @@ namespace SilveRModel.StatsModel
             //Get the response and treatment columns
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (Response != columnName && Treatment != columnName)
+                if (Response != columnName && Treatment != columnName && OtherDesignFactor != columnName)
                 {
                     dtNew.Columns.Remove(columnName);
                 }
@@ -127,6 +131,7 @@ namespace SilveRModel.StatsModel
 
             this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
             this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
+            this.OtherDesignFactor = argHelper.ArgumentLoader(nameof(OtherDesignFactor), OtherDesignFactor);
             this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
             this.AnalysisType = (AnalysisOption)Enum.Parse(typeof(AnalysisOption), argHelper.ArgumentLoader(nameof(AnalysisType), String.Empty), true);
             this.Control = argHelper.ArgumentLoader(nameof(Control), Control);
@@ -138,6 +143,7 @@ namespace SilveRModel.StatsModel
 
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(OtherDesignFactor), OtherDesignFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AnalysisType), AnalysisType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Control), Control));
@@ -151,6 +157,7 @@ namespace SilveRModel.StatsModel
 
             arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Response));
             arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Treatment));
+            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(OtherDesignFactor));
             arguments.Append(" " + Significance);
             arguments.Append(" " + AnalysisType.ToString());
             arguments.Append(" " + ArgumentConverters.GetNULLOrText(Control));
@@ -173,6 +180,9 @@ namespace SilveRModel.StatsModel
 
                 if (memberName != "Treatment")
                     checker.AddVar(this.Treatment);
+
+                if (memberName != "OtherDesignFactor")
+                    checker.AddVar(this.OtherDesignFactor);
 
                 return checker.DoCheck(varToBeChecked);
             }

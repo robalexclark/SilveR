@@ -10,6 +10,10 @@ $(function () {
         change: enableDisableControlLevels()
     });
 
+    $("#OtherDesignFactor").kendoDropDownList({
+        dataSource: theModel.availableVariablesAllowNull
+    });
+
     $("#Significance").kendoDropDownList({
         dataSource: theModel.significancesList
     });

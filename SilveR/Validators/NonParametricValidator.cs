@@ -19,6 +19,7 @@ namespace SilveRModel.Validators
             List<string> allVars = new List<string>();
             allVars.Add(npVariables.Treatment);
             allVars.Add(npVariables.Response);
+            allVars.Add(npVariables.OtherDesignFactor);
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
             if (!CheckIsNumeric(npVariables.Response))
