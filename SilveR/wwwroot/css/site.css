@@ -303,59 +303,29 @@ body {
 
 table.dataframe {
     border: 1px solid #1C6EA4;
-    background-color: #EEEEEE;
+    background-color: #ffffff;
     width: 100%;
-    text-align: left;
+    text-align: center;
     border-collapse: collapse;
 }
 
     table.dataframe td, table.dataframe th {
         border: 1px solid #AAAAAA;
-        padding: 3px 2px;
+        padding: 3px 13px;
     }
 
     table.dataframe tbody td {
         font-size: 13px;
+        text-align: center;
+        padding: 3px 13px;
     }
 
-    table.dataframe tr:nth-child(even) {
-        background: #D0E4F5;
-    }
+td:nth-child(1) {
+    background: #cccccc;
+}
 
-    table.dataframe thead {
-        background: #1C6EA4;
-        border-bottom: 2px solid #444444;
-    }
-
-        table.dataframe thead th {
-            font-size: 15px;
-            font-weight: bold;
-            color: #FFFFFF;
-            border-left: 2px solid #D0E4F5;
-        }
-
-            table.dataframe thead th:first-child {
-                border-left: none;
-            }
-
-    table.dataframe tfoot td {
-        font-size: 14px;
-    }
-
-    table.dataframe tfoot .links {
-        text-align: right;
-    }
-
-        table.dataframe tfoot .links a {
-            display: inline-block;
-            background: #1C6EA4;
-            color: #FFFFFF;
-            padding: 2px 8px;
-            border-radius: 5px;
-        }
-
-td.firstcolumn {
-    background: #C0C0C0;
-    text-align: center;
-    font-weight: bold;
+table.dataframe th {
+    font-size: 15px;
+    background-color: #cccccc;
+    border-left: 2px solid #D0E4F5;
 }

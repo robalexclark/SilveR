@@ -46,7 +46,6 @@ namespace SilveRModel.StatsModel
         [CheckUsedOnceOnly]
         public string Treatment { get; set; }
 
-        [Required]
         [CheckUsedOnceOnly]
         public string OtherDesignFactor { get; set; }
 
@@ -157,7 +156,12 @@ namespace SilveRModel.StatsModel
 
             arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Response));
             arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Treatment));
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(OtherDesignFactor));
+
+            if (String.IsNullOrEmpty(OtherDesignFactor)) //
+                arguments.Append(" " + "NULL");
+            else
+                arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(OtherDesignFactor));
+
             arguments.Append(" " + Significance);
             arguments.Append(" " + AnalysisType.ToString());
             arguments.Append(" " + ArgumentConverters.GetNULLOrText(Control));

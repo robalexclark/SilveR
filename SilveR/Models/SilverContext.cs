@@ -11,7 +11,6 @@ namespace SilveRModel.Models
 
         public virtual DbSet<Analysis> Analyses { get; set; }
         public virtual DbSet<Argument> Arguments { get; set; }
-
         public virtual DbSet<Dataset> Datasets { get; set; }
         public virtual DbSet<Script> Scripts { get; set; }
 
