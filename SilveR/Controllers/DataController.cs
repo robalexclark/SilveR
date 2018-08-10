@@ -12,6 +12,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SilveR.Controllers
@@ -78,8 +79,6 @@ namespace SilveR.Controllers
                 return await LoadFile(new FileInfo(filePath));
             }
         }
-
-
 
         private async Task<IActionResult> LoadFile(FileInfo selectedFile)
         {
@@ -352,50 +351,44 @@ namespace SilveR.Controllers
         }
 
 
+        public async Task<IActionResult> ViewDataTable(int datasetID)
+        {
+            Dataset dataset = await repository.GetDatasetByID(datasetID);
 
-        //VIEW STUFF BELOW NEEDS REDOING
+            //check dataset owner
+            //if (dataset.AspNetUserID != userManager.GetUserId(User))
+            //{
+            //    RedirectToAction("Index");
+            //}
 
-        //public async Task<IActionResult> ViewDataTable(int datasetID)
-        //{
-        //    Dataset dataset = await repository.GetDatasetByID(datasetID);
+            // convert string to stream
+            byte[] byteArray = Encoding.UTF8.GetBytes(dataset.TheData);
 
-        //    //check dataset owner
-        //    if (dataset.AspNetUserID != userManager.GetUserId(User))
-        //    {
-        //        RedirectToAction("Index");
-        //    }
+            using (MemoryStream stream = new MemoryStream(byteArray))
+            {
+                DataTable csvData = CSVHelper.CSVDataToDataTable(stream);
 
-        //    // convert string to stream
-        //    byte[] byteArray = Encoding.UTF8.GetBytes(dataset.TheData);
+                //foreach (DataColumn col in csvData.Columns)
+                //{
+                //    col.Caption = col.ColumnName;
+                //    col.ColumnName = col.ColumnName.Replace(" ", String.Empty);
+                //}
 
-        //    using (MemoryStream stream = new MemoryStream(byteArray))
-        //    {
-        //        DataTable csvData = CSVHelper.CSVDataToDataTable(stream);
+                DataColumn primaryKey = new DataColumn("TempRowID");
+                csvData.Columns.Add(primaryKey);
+                for (int i = 0; i < csvData.Rows.Count; i++)
+                {
+                    csvData.Rows[i]["TempRowID"] = i;
+                }
 
-        //        foreach (DataColumn col in csvData.Columns)
-        //        {
-        //            col.Caption = col.ColumnName;
-        //            col.ColumnName = col.ColumnName.Replace(" ", String.Empty);
-        //        }
+                csvData.PrimaryKey = new DataColumn[] { csvData.Columns["TempRowID"] };
 
-        //        DataColumn primaryKey = new DataColumn("TempRowID");
-        //        csvData.Columns.Add(primaryKey);
-        //        for (int i = 0; i < csvData.Rows.Count; i++)
-        //        {
-        //            csvData.Rows[i]["TempRowID"] = i;
-        //        }
+                csvData.TableName = dataset.DatasetName;
+                csvData.ExtendedProperties.Add("DatasetID", dataset.DatasetID);
 
-        //        csvData.PrimaryKey = new DataColumn[] { csvData.Columns["TempRowID"] };
-
-        //        csvData.TableName = dataset.DatasetName;
-        //        csvData.ExtendedProperties.Add("DatasetID", dataset.DatasetID);
-
-        //        //using tempdata here as a cache
-        //        TempData["Dataset"] = csvData;
-
-        //        return View(csvData);
-        //    }
-        //}
+                return View(Json( csvData));
+            }
+        }
 
         //public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         //{

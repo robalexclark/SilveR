@@ -302,7 +302,7 @@ body {
 
 
 table.dataframe {
-    border: 1px solid #1C6EA4;
+    border: 1px solid #808080;
     background-color: #ffffff;
     width: 100%;
     text-align: center;
@@ -310,7 +310,7 @@ table.dataframe {
 }
 
     table.dataframe td, table.dataframe th {
-        border: 1px solid #AAAAAA;
+        border: 1px solid #808080;
         padding: 3px 13px;
     }
 
@@ -327,5 +327,4 @@ td:nth-child(1) {
 table.dataframe th {
     font-size: 15px;
     background-color: #cccccc;
-    border-left: 2px solid #D0E4F5;
 }

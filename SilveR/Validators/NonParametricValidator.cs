@@ -37,7 +37,7 @@ namespace SilveRModel.Validators
             if (!CheckResponseAndTreatmentsNotBlank(npVariables.Response, npVariables.Treatment, "treatment factor")) return ValidationInfo;
 
             //if only two levels and all treats or to control selected, then need to only do KW
-            if (CountDistinctLevels(npVariables.Treatment) == 2 && !String.IsNullOrEmpty(npVariables.OtherDesignFactor) && npVariables.AnalysisType != NonParametricModel.AnalysisOption.MannWhitney)
+            if (CountDistinctLevels(npVariables.Treatment) == 2 && String.IsNullOrEmpty(npVariables.OtherDesignFactor) && npVariables.AnalysisType != NonParametricModel.AnalysisOption.MannWhitney)
             {
                 string message = "The treatment factor selected has only two levels so a Mann-Whitney test will be presented.";
                 ValidationInfo.AddWarningMessage(message);

@@ -14,40 +14,70 @@
     </div>
 }
 
-<div>
-    @*@(Html.Kendo().Grid<dynamic>()
-                    .Name("grid")
-                    .Columns(columns =>
-                    {
-                        bool firstCol = true;
-                        foreach (System.Data.DataColumn column in Model.Columns)
-                        {
-                            if (column.ColumnName == "SilveRSelected" && firstCol)
-                            {
-                                columns.Bound(System.Type.GetType("System.Boolean"), column.ColumnName).ClientTemplate("<input type='checkbox' #= SilveRSelected ? checked='checked' :'' # disabled/>").Title("Selected");
-                            }
-                            else if (column.ColumnName == Model.PrimaryKey[0].ColumnName)
-                            {
-                                columns.Bound(column.ColumnName).Hidden(true);
-                            }
-                            else
-                            {
-                                columns.Bound(column.ColumnName).Title(column.Caption);
-                            }
-                            firstCol = false;
-                        }
-                        columns.Command(cmd => cmd.Edit());
-                    })
-                    .Editable(ed => ed.Mode(GridEditMode.PopUp))
-                    .DataSource(dataSource => dataSource
-                    .Ajax()
-                    .Model(model =>
-                    {
-                        model.Id(Model.PrimaryKey[0].ColumnName);
+<div id="example">
+    <div class="box wide">
+        <div class="box-col">
+        <h4>Save data changes</h4>
+        <ul class="options">
+            <li>
+                <button class="k-button" id="save">Save changes</button>
+                <button class="k-button" id="cancel">Cancel changes</button>
+            </li>
+        </ul>
+        </div>
+    </div>
+
+    <div id="spreadsheet" style="width: 100%"></div>
+    <script>
+        $(function() {
+            var crudServiceBaseUrl = "https://demos.telerik.com/kendo-ui/service";
+
+            var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: onRead
+                },
+                batch: true,
+                change: function() {
+                   $("#cancel, #save").toggleClass("k-state-disabled", !this.hasChanges());
+                }
+            });
+
+            $("#spreadsheet").kendoSpreadsheet({
+                columns: 20,
+                rows: 100,
+                toolbar: false,
+                sheetsbar: false,
+                sheets: [{
+                    name: "Products",
+                    dataSource: dataSource
+                }]
+            });
+
+
+            function onRead(options) {
+                $.ajax({
+                    url: crudServiceBaseUrl + "/Products",
+                    dataType: "jsonp",
+                    success: function (result) {
+                        options.success(result);
+                    },
+                    error: function (result) {
+                        options.error(result);
                     }
-                    )
-                    .Read(read => read.Action("Read", "Data"))
-                    .Update(update => update.Action("Update", "Data"))
-                    )
-    )*@
+                });
+            }
+
+            $("#save").click(function() {
+                if (!$(this).hasClass("k-state-disabled")) {
+                    dataSource.sync();
+                }
+            });
+
+            $("#cancel").click(function() {
+                if (!$(this).hasClass("k-state-disabled")) {
+                    dataSource.cancelChanges();
+                }
+            });
+        });
+    </script>
 </div>

@@ -1,0 +1,21 @@
+﻿@if (ViewBag.HasError == true)
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>
+        <br />
+        @Html.ValidationSummary(false)
+    </div>
+}
+else if (ViewBag.HasWarnings == true)
+{
+    <div class="alert alert-warning">
+        <strong>Warning!</strong>
+        <br />
+        @foreach (string warningMessage in ViewBag.WarningMessages)
+        {
+            <p>@warningMessage</p>
+        }
+        <br />
+        <button class="btn btn-warning" name="submitButton" type="submit" value="SubmitAnyway">Submit Anyway</button>
+    </div>
+}

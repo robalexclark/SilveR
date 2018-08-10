@@ -21,25 +21,8 @@
 
 <form action="/Analyses/PValueAdjustment" class="form-horizontal" method="post">
 
-    @if (ViewBag.HasError == true)
-    {
-        <div class="alert alert-danger">
-            <strong>Error!</strong>
-            <br />
-            @Html.ValidationSummary(false)
-        </div>
-    }
-    else if (ViewBag.HasWarnings == true)
-    {
-        <div class="alert alert-warning">
-            <strong>Warning!</strong>
-            <br />
-            @ViewBag.WarningMessages
-            <br />
-            <br />
-            <button class="btn btn-warning" name="submitButton" type="submit" value="SubmitAnyway">Submit Anyway</button>
-        </div>
-    }
+    @await Html.PartialAsync("AnalysisErrors")
+
     <input asp-for="DatasetID" hidden />
 
     <div class="row">

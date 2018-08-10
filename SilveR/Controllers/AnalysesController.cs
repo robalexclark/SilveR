@@ -189,7 +189,7 @@ namespace SilveR.Controllers
                 }
                 else if (submitButton != "SubmitAnyway" && validationInfo.WarningMessages.Any())
                 {
-                    ViewBag.WarningMessages = String.Join("<br/>\n", validationInfo.WarningMessages);
+                    ViewBag.WarningMessages = validationInfo.WarningMessages;
                     ViewBag.HasWarnings = true;
 
                     return View(model);
@@ -204,8 +204,8 @@ namespace SilveR.Controllers
 
                     if (dataset != null)
                     {
-                    newAnalysis.DatasetID = dataset.DatasetID;
-                    newAnalysis.DatasetName = dataset.DatasetName;
+                        newAnalysis.DatasetID = dataset.DatasetID;
+                        newAnalysis.DatasetName = dataset.DatasetName;
                     }
 
                     newAnalysis.Script = await repository.GetScriptByName(model.ScriptFileName);
