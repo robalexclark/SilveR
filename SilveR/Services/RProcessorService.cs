@@ -76,7 +76,7 @@ namespace SilveR.Services
                 string rscriptPath = null;
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.1.2", "bin", "Rscript.exe");
+                    rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript.exe");
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {

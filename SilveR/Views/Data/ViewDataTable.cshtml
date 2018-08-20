@@ -1,10 +1,24 @@
-﻿@model System.Data.DataTable
+﻿@model SilveR.ViewModels.Sheet
+
+@section Scripts {
+
+    <script>
+        var spreadsheet = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/data/viewDataTable.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/data/viewDataTable.min.js"></script>
+    </environment>
+}
 
 @{
     ViewBag.Title = "View Data";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>@ViewBag.TableName</h2>
 
 @if (ViewBag.ErrorMessage != null)
 {
@@ -17,67 +31,14 @@
 <div id="example">
     <div class="box wide">
         <div class="box-col">
-        <h4>Save data changes</h4>
-        <ul class="options">
-            <li>
-                <button class="k-button" id="save">Save changes</button>
-                <button class="k-button" id="cancel">Cancel changes</button>
-            </li>
-        </ul>
+            <ul class="options">
+                <li>
+                    <button class="k-button" id="save">Save changes</button>
+                    <button class="k-button" id="cancel">Cancel changes</button>
+                </li>
+            </ul>
         </div>
     </div>
 
-    <div id="spreadsheet" style="width: 100%"></div>
-    <script>
-        $(function() {
-            var crudServiceBaseUrl = "https://demos.telerik.com/kendo-ui/service";
-
-            var dataSource = new kendo.data.DataSource({
-                transport: {
-                    read: onRead
-                },
-                batch: true,
-                change: function() {
-                   $("#cancel, #save").toggleClass("k-state-disabled", !this.hasChanges());
-                }
-            });
-
-            $("#spreadsheet").kendoSpreadsheet({
-                columns: 20,
-                rows: 100,
-                toolbar: false,
-                sheetsbar: false,
-                sheets: [{
-                    name: "Products",
-                    dataSource: dataSource
-                }]
-            });
-
-
-            function onRead(options) {
-                $.ajax({
-                    url: crudServiceBaseUrl + "/Products",
-                    dataType: "jsonp",
-                    success: function (result) {
-                        options.success(result);
-                    },
-                    error: function (result) {
-                        options.error(result);
-                    }
-                });
-            }
-
-            $("#save").click(function() {
-                if (!$(this).hasClass("k-state-disabled")) {
-                    dataSource.sync();
-                }
-            });
-
-            $("#cancel").click(function() {
-                if (!$(this).hasClass("k-state-disabled")) {
-                    dataSource.cancelChanges();
-                }
-            });
-        });
-    </script>
+    <div id="spreadsheet"></div>
 </div>

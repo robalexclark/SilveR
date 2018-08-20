@@ -1,51 +1,53 @@
-﻿
-$(function () {
-    var crudServiceBaseUrl = "https://demos.telerik.com/kendo-ui/service";
+﻿$(function () {
 
-    var dataSource = new kendo.data.DataSource({
-        transport: {
-            read: onRead
-        },
-        batch: true,
-        change: function () {
-            $("#cancel, #save").toggleClass("k-state-disabled", !this.hasChanges());
-        }
-    });
+    //var dataSource = new kendo.data.DataSource({
+    //    transport: {
+    //        read: onRead
+    //    },
+    //    batch: true,
+    //    change: function () {
+    //        $("#cancel, #save").toggleClass("k-state-disabled", !this.hasChanges());
+    //    }
+    //});
 
-    $("#spreadsheet").kendoSpreadsheet({
-        columns: 20,
-        rows: 100,
+    var spreadSheet = $("#spreadsheet").kendoSpreadsheet({
+        //columns: 20,
         toolbar: false,
         sheetsbar: false,
-        sheets: [{
-            name: "Products",
-            dataSource: dataSource
-        }]
+        sheets: [spreadsheet]
     });
 
-
-    function onRead(options) {
-        $.ajax({
-            url: crudServiceBaseUrl + "/Products",
-            dataType: "jsonp",
-            success: function (result) {
-                options.success(result);
-            },
-            error: function (result) {
-                options.error(result);
-            }
-        });
-    }
+    //function onRead(options) {
+    //    $.ajax({
+    //        url: crudServiceBaseUrl,
+    //        dataType: "json",
+    //        success: function (result) {
+    //            options.success(result);
+    //        },
+    //        error: function (result) {
+    //            options.error(result);
+    //        }
+    //    });
+    //}
 
     $("#save").click(function () {
         if (!$(this).hasClass("k-state-disabled")) {
-            dataSource.sync();
+            //dataSource.sync();
+            var data = spreadSheet.data("kendoSpreadsheet").toJSON();
+
+            $.ajax({
+                type: "POST",
+                url: "/data/UpdateDataSet",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            });
         }
     });
 
     $("#cancel").click(function () {
         if (!$(this).hasClass("k-state-disabled")) {
-            dataSource.cancelChanges();
+            location.reload(true)
         }
     });
 });

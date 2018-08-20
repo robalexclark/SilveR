@@ -1,6 +1,8 @@
 ﻿using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using SilveR.Models;
 using SilveR.ViewModels;
 using SilveRModel.Helpers;
@@ -220,7 +222,7 @@ namespace SilveR.Controllers
             dataset.VersionNo = lastVersionNo + 1;
             dataset.DateUpdated = DateTime.Now;
 
-            await repository.SaveDataset(dataset);
+            await repository.CreateDataset(dataset);
         }
 
         private void AddSelectedColumn(DataTable dataTable)
@@ -354,12 +356,7 @@ namespace SilveR.Controllers
         public async Task<IActionResult> ViewDataTable(int datasetID)
         {
             Dataset dataset = await repository.GetDatasetByID(datasetID);
-
-            //check dataset owner
-            //if (dataset.AspNetUserID != userManager.GetUserId(User))
-            //{
-            //    RedirectToAction("Index");
-            //}
+            ViewBag.TableName = dataset.DatasetNameVersion;
 
             // convert string to stream
             byte[] byteArray = Encoding.UTF8.GetBytes(dataset.TheData);
@@ -368,83 +365,64 @@ namespace SilveR.Controllers
             {
                 DataTable csvData = CSVHelper.CSVDataToDataTable(stream);
 
-                //foreach (DataColumn col in csvData.Columns)
-                //{
-                //    col.Caption = col.ColumnName;
-                //    col.ColumnName = col.ColumnName.Replace(" ", String.Empty);
-                //}
+                csvData.TableName = dataset.DatasetID.ToString();
 
-                DataColumn primaryKey = new DataColumn("TempRowID");
-                csvData.Columns.Add(primaryKey);
-                for (int i = 0; i < csvData.Rows.Count; i++)
-                {
-                    csvData.Rows[i]["TempRowID"] = i;
-                }
-
-                csvData.PrimaryKey = new DataColumn[] { csvData.Columns["TempRowID"] };
-
-                csvData.TableName = dataset.DatasetName;
-                csvData.ExtendedProperties.Add("DatasetID", dataset.DatasetID);
-
-                return View(Json( csvData));
+                Sheet sheet = new Sheet(csvData);
+                return View(sheet);
             }
         }
 
-        //public ActionResult Read([DataSourceRequest] DataSourceRequest request)
-        //{
-        //    DataTable csvData = (DataTable)TempData["Dataset"];
+        [HttpPost]
+        [RequestSizeLimit(valueCountLimit: int.MaxValue)] // e.g. 2 GB request limit
+        public async Task<JsonResult> UpdateDataset([FromBody] Sheets sheets)
+        {
+            Sheet sheet = sheets.sheets.Single();
 
-        //    TempData["Dataset"] = csvData;
+            DataTable dataTable = sheet.ToDataTable();
 
-        //    return Json(csvData.ToDataSourceResult(request));
-        //}
+            Dataset dataset = new Dataset();
+            dataset.DatasetID = int.Parse(sheet.Name);
+            string[] csvArray = dataTable.GetCSVArray();
+            dataset.TheData = String.Join(Environment.NewLine, csvArray);
+            dataset.DateUpdated = DateTime.Now;
 
-        //public async Task<IActionResult> Update([DataSourceRequest] DataSourceRequest request, FormCollection formCollection)
-        //{
-        //    DataTable dataTable = (DataTable)TempData["Dataset"];
+            await repository.UpdateDataset(dataset);
 
-        //    string primaryKeyValue = formCollection["TempRowID"];
+            return Json(true);
+        }
+    }
 
-        //    DataColumnCollection columns = dataTable.Columns;
-        //    DataRow rowToUpdate = dataTable.Rows.Find(primaryKeyValue);
 
-        //    foreach (var fc in formCollection)
-        //    {
-        //        if (columns.Contains(fc.Key))
-        //        {
-        //            if (fc.Key == "SilveRSelected")
-        //            {
-        //                rowToUpdate[fc.Key] = (fc.Value == "true");
-        //            }
-        //            else
-        //            {
-        //                rowToUpdate[fc.Key] = fc.Value;
-        //            }
-        //        }
-        //    }
 
-        //    //DO SAVE
-        //    int datasetID = int.Parse(dataTable.ExtendedProperties["DatasetID"].ToString());
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class RequestSizeLimitAttribute : Attribute, IAuthorizationFilter, IOrderedFilter
+    {
+        private readonly FormOptions _formOptions;
 
-        //    DataTable dataTableToUpdate = dataTable.Copy();
-        //    dataTableToUpdate.PrimaryKey = null;
-        //    dataTableToUpdate.Columns.Remove("TempRowID");
+        public RequestSizeLimitAttribute(int valueCountLimit)
+        {
+            _formOptions = new FormOptions()
+            {
+                // tip: you can use different arguments to set each properties instead of single argument
+                KeyLengthLimit = valueCountLimit,
+                ValueCountLimit = valueCountLimit,
+                ValueLengthLimit = valueCountLimit
+            };
+        }
 
-        //    string message = CheckDataTable(dataTableToUpdate);
-        //    if (message != null)
-        //    {
-        //        ViewBag.ErrorMessage = message;
-        //        return View("ViewDataTable", dataTable);
-        //    }
-        //    else
-        //    {
-        //        string[] csvArray = dataTableToUpdate.GetCSVArray();
+        public int Order { get; set; }
 
-        //        string csvData = String.Join(Environment.NewLine, csvArray);
-        //        await repository.UpdateDataset(datasetID, csvData);
-        //    }
+        // taken from /a/38396065
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            var contextFeatures = context.HttpContext.Features;
+            var formFeature = contextFeatures.Get<IFormFeature>();
 
-        //    return Json(new object());
-        //}
+            if (formFeature == null || formFeature.Form == null)
+            {
+                // Setting length limit when the form request is not yet being read
+                contextFeatures.Set<IFormFeature>(new FormFeature(context.HttpContext.Request, _formOptions));
+            }
+        }
     }
 }

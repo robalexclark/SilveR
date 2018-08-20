@@ -32,23 +32,35 @@ namespace SilveR.Models
         public async Task<bool> HasDatasets()
         {
             return await context.Datasets.AnyAsync();
-        }     
+        }
 
         public async Task<IList<Dataset>> GetExistingDatasets(string fileName)
         {
             return await context.Datasets.Where(x => x.DatasetName == fileName).ToListAsync();
         }
 
-        public async Task SaveDataset(Dataset dataset)
+        public async Task CreateDataset(Dataset dataset)
         {
             context.Datasets.Add(dataset);
             await context.SaveChangesAsync();
         }
 
+        public async Task UpdateDataset(Dataset dataset)
+        {
+            context.Datasets.Attach(dataset);
+
+            //update certain fields only
+            context.Entry(dataset).Property(x => x.TheData).IsModified = true;
+            context.Entry(dataset).Property(x => x.DateUpdated).IsModified = true;
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task DeleteDataset(int datasetID)
         {
-            Dataset dataset = context.Datasets.Single(x => x.DatasetID == datasetID);
-            context.Datasets.Remove(dataset);
+            Dataset dataset = new Dataset();
+            dataset.DatasetID = datasetID;
+            context.Entry(dataset).State = EntityState.Deleted;
 
             //because not cascading, doing manual update on any analyses referening this dataset
             var analyses = context.Analyses.Where(a => a.DatasetID == datasetID);
@@ -70,13 +82,13 @@ namespace SilveR.Models
             return await context.Analyses.Include("Script").OrderByDescending(x => x.DateAnalysed).ToListAsync();
         }
 
-        public async Task UpdateDataset(int datasetID, string csvData)
-        {
-            Dataset existingDataset = await this.GetDatasetByID(datasetID);
-            existingDataset.TheData = csvData;
+        //public async Task UpdateDataset(int datasetID, string csvData)
+        //{
+        //    Dataset existingDataset = await this.GetDatasetByID(datasetID);
+        //    existingDataset.TheData = csvData;
 
-            await context.SaveChangesAsync();
-        }
+        //    await context.SaveChangesAsync();
+        //}
 
         public async Task<IList<DatasetViewModel>> GetDatasetViewModels()
         {
