@@ -40,7 +40,15 @@
                 url: "/data/UpdateDataSet",
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
-                dataType: "json"
+                dataType: "json",
+                success: function (response) {
+                    if (response === true) {
+                        alert("Details saved successfully!!!");
+                    }
+                    else {
+                        alert(response);
+                    }
+                }
             });
         }
     });

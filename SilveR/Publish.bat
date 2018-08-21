@@ -8,7 +8,7 @@ rmdir /s /q c:\dumpit\Silver-linux
 rmdir /s /q c:\dumpit\Silver-osx
 
 dotnet publish -c Release -r win-x64 -o c:\dumpit\Silver-win
-XCOPY ".\R-3.5.1\*.*" "c:\dumpit\Silver-win\R-3.5.1\*.*" /d /y /s
+REM XCOPY ".\R-3.5.1\*.*" "c:\dumpit\Silver-win\R-3.5.1\*.*" /d /y /s
 
 dotnet publish -c Release -r linux-x64 -o c:\dumpit\Silver-linux
 dotnet publish -c Release -r osx-x64 -o c:\dumpit\Silver-osx

@@ -363,11 +363,11 @@ namespace SilveR.Controllers
 
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
-                DataTable csvData = CSVHelper.CSVDataToDataTable(stream);
+                DataTable dataTable = CSVHelper.CSVDataToDataTable(stream);
 
-                csvData.TableName = dataset.DatasetID.ToString();
+                dataTable.TableName = dataset.DatasetID.ToString();
 
-                Sheet sheet = new Sheet(csvData);
+                Sheet sheet = new Sheet(dataTable);
                 return View(sheet);
             }
         }
@@ -378,15 +378,24 @@ namespace SilveR.Controllers
         {
             Sheet sheet = sheets.sheets.Single();
 
-            DataTable dataTable = sheet.ToDataTable();
+            try
+            {
+                DataTable dataTable = sheet.ToDataTable();
 
-            Dataset dataset = new Dataset();
-            dataset.DatasetID = int.Parse(sheet.Name);
-            string[] csvArray = dataTable.GetCSVArray();
-            dataset.TheData = String.Join(Environment.NewLine, csvArray);
-            dataset.DateUpdated = DateTime.Now;
+                CheckDataTable(dataTable);
 
-            await repository.UpdateDataset(dataset);
+                Dataset dataset = new Dataset();
+                dataset.DatasetID = int.Parse(sheet.Name);
+                string[] csvArray = dataTable.GetCSVArray();
+                dataset.TheData = String.Join(Environment.NewLine, csvArray);
+                dataset.DateUpdated = DateTime.Now;
+
+                await repository.UpdateDataset(dataset);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
 
             return Json(true);
         }

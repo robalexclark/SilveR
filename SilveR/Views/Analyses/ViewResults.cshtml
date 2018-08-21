@@ -5,22 +5,7 @@
 }
 <br />
 
-@if (ViewBag.HasError == true)
-{
-    <div class="alert alert-danger">
-        <strong>Error!</strong>
-        <br />
-        @Html.ValidationSummary(false)
-    </div>
-}
-else if (ViewBag.HasWarnings == true)
-{
-    <div class="alert alert-warning">
-        <strong>Warning!</strong>
-        <br />
-        @ViewBag.WarningMessages
-    </div>
-}
+@await Html.PartialAsync("AnalysisErrors")
 
 <form method="post" action="~/Analyses/ViewResults">
 
@@ -31,7 +16,7 @@ else if (ViewBag.HasWarnings == true)
             <button class="btn btn-info" name="submitButton" type="submit" value="ViewLog">View Analysis Log</button>
         </div>
         <div class="col-sm-2 mt10">
-            <button class="btn btn-default" name="submitButton" type="submit" value="ReAnalyse">Re-analyse</button>
+            <button class="btn btn-primary" name="submitButton" type="submit" value="ReAnalyse">Re-analyse</button>
         </div>
     </div>
 </form>

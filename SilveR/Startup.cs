@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SilveR.Models;
 using SilveR.Services;
@@ -30,7 +31,16 @@ namespace SilveR
                 AppName = "ƩilveR";
             else
                 AppName = appName;
+
+            // Set up configuration sources.
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            configuration = builder.Build();
         }
+
+        private readonly IConfigurationRoot configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,6 +52,8 @@ namespace SilveR
             services.AddSingleton<IRProcessorService, RProcessorService>();
             services.AddHostedService<QueuedHostedService>();
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+
+            services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
             services.AddMvc();
         }
@@ -139,5 +151,10 @@ namespace SilveR
                 context.SaveChanges();
             }
         }
+    }
+
+    public class AppSettings
+    {
+        public string CustomRScriptLocation { get; set; }
     }
 }

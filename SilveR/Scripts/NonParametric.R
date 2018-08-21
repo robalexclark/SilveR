@@ -3,6 +3,7 @@
 
 suppressWarnings(library(mvtnorm))
 suppressWarnings(library(R2HTML))
+suppressWarnings(library(coin))
 #===================================================================================================================
 # retrieve args
 
@@ -233,7 +234,13 @@ if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparis
         comm <- c("You have selected a factor with only two levels, hence a Mann-Whitney test, also know as a Wilcoxon rank sum test, has been used to analyse the data rather than a Kruskal-Wallis test.")
         HTML(comm, align = "left")
 
-        wilcoxOut <- wilcox.test(as.formula(respVTreat), data = statdata, exact = TRUE, conf.int = TRUE, conf.level = sig)
+        wilcoxOut <- wilcox.test(as.formula(respVTreat), data = statdata, exact = TRUE)
+
+        #Assessing test type
+        TestTp <- "Exact"
+        if ((length(unique(eval(parse(text = paste("statdata$", response))))) < length((eval(parse(text = paste("statdata$", treatment))))) || (length(eval(parse(text = paste("statdata$", response)))) > 49))) {
+            TestTp <- "Asymptotic"
+        }
 
         #Reformat p-values
         pvalue <- format(round(wilcoxOut$p.value, 4), nsmall = 4, scientific = FALSE)
@@ -248,18 +255,18 @@ if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparis
 
         Wstat <- format(round(wilcoxOut$statistic, 2), nsmall = 2)
         rowname <- c("Test result")
-        temptab <- data.frame(cbind(rowname, Wstat, pvalue))
-        colname <- c(" ", "Test statistic", "p-value")
+        temptab <- data.frame(cbind(rowname, Wstat, pvalue, TestTp))
+        colname <- c(" ", "Test statistic", "p-value", "p-value type")
         colnames(temptab) <- colname
 
         HTML(temptab, classfirstline = "second", align = "left", row.names = "FALSE")
 
-        if (length(unique(eval(parse(text = paste("statdata$", response))))) == length((eval(parse(text = paste("statdata$", treatment)))))) {
-            HTML("As there are no ties in the responses, the exact test result has been calculated.", align = "left")
+        if ((length(unique(eval(parse(text = paste("statdata$", response))))) == length((eval(parse(text = paste("statdata$", treatment)))))) && (length(eval(parse(text = paste("statdata$", response)))) < 50)) {
+            HTML("As there are no ties in the responses, and the number of responses is less than 50, the exact test result has been calculated.", align = "left")
         }
 
-        if (length(unique(eval(parse(text = paste("statdata$", response))))) < length((eval(parse(text = paste("statdata$", treatment)))))) {
-            HTML("As there are ties in some of the responses, the asymptotic test result has been calculated in these cases.", HR = 0, align = "left")
+        if ((length(unique(eval(parse(text = paste("statdata$", response))))) < length((eval(parse(text = paste("statdata$", treatment))))) || (length(eval(parse(text = paste("statdata$", response)))) > 49))) {
+            HTML("As there are ties in some of the responses, and/or the number of responses is greater than 50, the asymptotic test result has been calculated.", HR = 0, align = "left")
         }
     }
 }
@@ -392,7 +399,12 @@ if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
 
 
     # Mann-Whitney all pairwise tests
-    HTML.title("<bf>All pairwise comparisons - Asymptotic Mann-Whitney tests", HR = 2, align = "left")
+    HTML.title("<bf>All pairwise comparisons - Mann-Whitney tests", HR = 2, align = "left")
+
+    INDEX <- 1
+    pv_list <- c()
+    pvzzz_list <- c()
+    TestTpe_list <- c()
 
     #Generate the dataset to make all pairwise comparisons
     for (s in 1:(length(unique(eval(parse(text = paste("statdata$", treatment))))) - 1)) {
@@ -422,7 +434,14 @@ if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
             finaldata <- data.frame(comb1)
 
             #Wilcoxon test
-            wilcox <- wilcox.test(resp ~ grou, exact = FALSE)
+            wilcox <- wilcox.test(resp ~ grou, exact = TRUE)
+
+            #Generating regarding exact tests
+            TestTpe <- "Exact"
+            if ((length(unique(resp)) < length((grou)) || (length(resp) > 49))) {
+                INDEX <- INDEX + 1
+                TestTpe <- "Asymptotic"
+            }
 
             #Reformat p-values
             pv <- format(round(wilcox$p.value, 4), nsmall = 4, scientific = FALSE)
@@ -433,23 +452,33 @@ if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
                     #pv[i]<-0.0001
                     pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
                     pv[i] <- paste("<", pv[i])
+                } else {
+                    pv[i] <- paste(" ", pv[i])
                 }
             }
 
             #merge results for all pairwise tests
-            lines <- c(pv)
-            blank <- rbind(blank, lines)
+            pv_list[index] <- pv
+            pvzzz_list[index] <- pvzzz
+            TestTpe_list[index] <- TestTpe
             index <- index + 1
         }
     }
 
     #create final table
-    blank <- blank[-1,]
-    tabletemp <- data.frame(good3, allgroup1, allvs, allgroup2, blank)
-    temp16 <- c("Comparison Number", "Gp 1", "vs.", "Gp 2", "p-value")
+    tabletemp <- data.frame(good3, allgroup1, allvs, allgroup2, pv_list, TestTpe_list)
+    temp16 <- c("Comparison Number", "Gp 1", "vs.", "Gp 2", "p-value", "p-value type")
     colnames(tabletemp) <- temp16
 
     HTML(tabletemp, classfirstline = "second", align = "left", row.names = "FALSE")
+
+    #Message regarding exact tests
+    if (INDEX == 1) {
+        HTML("As there are no ties in the responses, and the number of responses in each group is less than 50, the exact Mann-Whitney test results has been calculated.", align = "left")
+    } else {
+        HTML("As there are ties in some of the responses, and/or some of the groups have more than 50 responses, the asymptotic Mann-Whitney test results has been calculated in these cases.", align = "left")
+    }
+
     HTML("Why are there two different tests presented? The Behrens Fisher tests are the recommended approach, although we still need to independently verify these results.", align = "left")
 }
 
@@ -463,7 +492,11 @@ if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
 
 if (block != "NULL" && statstest == "AllComparisons") {
     # Wilcoxon signed rank tests
-    HTML.title("<bf>All pairwise comparisons - Wilcoxon signed rank tests", HR = 2, align = "left")
+    if (int > 2) {
+        HTML.title("<bf>All pairwise comparisons - Wilcoxon Signed Rank tests", HR = 2, align = "left")
+    } else {
+        HTML.title("<bf>All pairwise comparisons - Wilcoxon Signed Rank test", HR = 2, align = "left")
+    }
 
     if (RunFried == "Na") {
         HTML("As not all combinations of the treatment factor and the other design (blocking) factor are present in the design, all pairwise comparisons have not been performed. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
@@ -475,6 +508,9 @@ if (block != "NULL" && statstest == "AllComparisons") {
 
     if (RunFried == "Y") {
         INDEX <- 1
+        pv_list <- c()
+        pvzzz_list <- c()
+        TestTpe_list <- c()
 
         #Generate the dataset to make all pairwise comparisons
         for (s in 1:(length(unique(eval(parse(text = paste("statdata$", treatment))))) - 1)) {
@@ -497,49 +533,55 @@ if (block != "NULL" && statstest == "AllComparisons") {
 
                 #Wilcoxon test
 
-                wilcox <- wilcox.test(interdata$X1, interdata$X2, exact = TRUE, paired = TRUE, correct = TRUE)
+                if (length(interdata$X1) < 20) {
+                    wilcox <- wilcoxsign_test(interdata$X1 ~ interdata$X2, distribution = "exact", zero.method = "Wilcoxon")
+                } else {
+                    wilcox <- wilcoxsign_test(interdata$X1 ~ interdata$X2, distribution = "asymptotic", zero.method = "Wilcoxon")
+                }
 
                 #Generating regarding exact tests
                 interdataX3 <- interdata$X1 - interdata$X2
-                if (length(unique(interdataX3)) < length((interdataX3))) {
+                TestTpe <- "Exact"
+                if ((length(unique(interdataX3)) < length((interdataX3))) || (length((interdataX3)) > 19)) {
                     INDEX <- INDEX + 1
+                    TestTpe <- "Asymptotic"
                 }
 
-
                 #Reformat p-values
-                pv <- format(round(wilcox$p.value, 4), nsmall = 4, scientific = FALSE)
-                pvzzz <- wilcox$p.value
+                pv <- format(round(pvalue(wilcox), 4), nsmall = 4, scientific = FALSE)
+                pvzzz <- pvalue(wilcox)
                 for (i in 1:(length(pv))) {
                     if (pvzzz[i] < 0.0001) {
                         #STB March 2011 - formatting p-values p<0.0001
                         #pv[i]<-0.0001
                         pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
                         pv[i] <- paste("<", pv[i])
+                    } else {
+                        pv[i] <- paste(" ", pv[i])
                     }
                 }
 
                 #merge results for all pairwise tests
-                lines <- c(pv)
-                blank <- rbind(blank, lines)
+                pv_list[index] <- pv
+                pvzzz_list[index] <- pvzzz
+                TestTpe_list[index] <- TestTpe
                 index <- index + 1
             }
         }
 
         #create final table
-        blank <- blank[-1,]
-
-        tabletemp <- data.frame(good3, allgroup1, allvs, allgroup2, blank)
-        temp16 <- c("Comparison Number", "Gp 1", "vs.", "Gp 2", "p-value")
+        tabletemp <- data.frame(good3, allgroup1, allvs, allgroup2, pv_list, TestTpe_list)
+        temp16 <- c("Comparison Number", "Gp 1", "vs.", "Gp 2", "p-value", "p-value type")
         colnames(tabletemp) <- temp16
 
         HTML(tabletemp, classfirstline = "second", align = "left", row.names = "FALSE")
 
 
         #Message regarding exact tests
-        if (index == 1) {
-            HTML("As there are no ties in the response differences, the exact test result has been calculated.", align = "left")
+        if (INDEX == 1) {
+            HTML("As there are no ties in the response differences, and the number of responses in each group is less than 20, the exact test result has been calculated.", align = "left")
         } else {
-            HTML("As there are ties in some of the response differences, the asymptotic test result has been calculated in these cases.", align = "left")
+            HTML("As there are ties in some of the response differences, and/or some of the groups have more than 20 responses, the asymptotic test result has been calculated in these cases.", align = "left")
         }
     }
 }
@@ -666,7 +708,8 @@ if (RunFried == "Y") {
             }
 
             HTML.title("<bf>Analysis description", HR = 2, align = "left")
-            HTML("The difference between the two treatments was assessed using the non-parametric Mann-Whitney test, see Wilcoxon (1945), Mann and Whitney (1947).", align = "left")
+            HTML("The difference between the two treatments was assessed using the non-parametric Mann-Whitney test with continuity correction, see Wilcoxon (1945), Mann and Whitney (1947). ", align = "left")
+            HTML("Note that the literature is not unanimous about the definition of the Mann-Whitney test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
             HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
 
             #Bate and Clark comment
@@ -733,7 +776,7 @@ if (RunFried == "Y") {
         textindex2 <- 1
         add2 <- c(" ")
         for (q in 1:(int - 1)) {
-            if (blank[q] <= (1 - sig)) {
+            if (pvzzz_list <= (1 - sig)) {
                 add2 <- paste(add2, "The difference between groups ", sep = "")
                 add2 <- paste(add2, tabletemp[q, 2], sep = "")
                 add2 <- paste(add2, " and ", sep = "")
@@ -765,7 +808,8 @@ if (RunFried == "Y") {
         }
 
         HTML.title("<bf>Analysis description", HR = 2, align = "left")
-        HTML("All pairwise differences between the treatments were assessed using Behrens Fisher tests, see Munzel and Hothorn (2001) and Mann-Whitney tests, see Mann and Whitney (1947).", align = "left")
+        HTML("All pairwise differences between the treatments were assessed using Behrens Fisher tests, see Munzel and Hothorn (2001) and Mann-Whitney tests with continuity correction, see Mann and Whitney (1947).", align = "left")
+        HTML("Note that the literature is not unanimous about the definition of the Mann-Whitney test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
         HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
 
         #Bate and Clark comment
@@ -783,7 +827,7 @@ if (RunFried == "Y") {
         textindex2 <- 1
         add2 <- c(" ")
         for (q in 1:(int - 1)) {
-            if (blank[q] <= (1 - sig)) {
+            if (pvzzz_list <= (1 - sig)) {
                 add2 <- paste(add2, "The difference between groups ", sep = "")
                 add2 <- paste(add2, tabletemp[q, 2], sep = "")
                 add2 <- paste(add2, " and ", sep = "")
@@ -797,7 +841,12 @@ if (RunFried == "Y") {
             }
         }
 
-        if (textindex2 == 1) {
+        if (textindex2 == 1 && int == 2) {
+            add3 <- c("The pairwise Wilcoxon Signed Rank test was not statistically significant at the ")
+            add3 <- paste(add3, 1 - sig, sep = "")
+            add3 <- paste(add3, " level.", sep = "")
+            HTML(add3, align = "left")
+        } else if (textindex2 == 1 && int > 2) {
             add3 <- c("None of the pairwise Wilcoxon Signed Rank tests were statistically significant at the ")
             add3 <- paste(add3, 1 - sig, sep = "")
             add3 <- paste(add3, " level.", sep = "")
@@ -807,7 +856,12 @@ if (RunFried == "Y") {
         }
 
         HTML.title("<bf>Analysis description", HR = 2, align = "left")
-        HTML("All pairwise differences between the treatments were assessed using Wilcoxon Signed Rank tests, see Hollander and Wolfe (1973).", align = "left")
+        if (int > 2) {
+            HTML("All pairwise differences between the treatments were assessed using Wilcoxon Signed Rank tests with continuity correction, see Hollander and Wolfe (1973).", align = "left")
+        } else {
+            HTML("All pairwise differences between the treatments were assessed using a Wilcoxon Signed Rank test with continuity correction, see Hollander and Wolfe (1973).", align = "left")
+        }
+        HTML("Note that the literature is not unanimous about the definition of the Wilcoxon Signed Rank test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
         HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
 
         #Bate and Clark comment

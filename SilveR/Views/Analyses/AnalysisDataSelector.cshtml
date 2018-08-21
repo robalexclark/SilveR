@@ -1,7 +1,6 @@
 ﻿@model SilveR.ViewModels.AnalysisDataSelectorViewModel
 
 @section Scripts {
-
     <script>
         var scriptList = @Html.Raw(Json.Serialize(ViewBag.ScriptList));
         var datasets = @Html.Raw(Json.Serialize(ViewBag.Datasets));

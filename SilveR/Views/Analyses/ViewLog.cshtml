@@ -4,15 +4,7 @@
 <h2>@ViewBag.Title</h2>
 <br />
 
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-dismissible alert-danger">
-        <button class="close" type="button" data-dismiss="alert">×</button>
-        <strong>Error!</strong>
-        <br />
-        @ViewBag.ErrorMessage
-    </div>
-}
+@await Html.PartialAsync("AnalysisErrors")
 
 @if (ViewBag.AnalysisLog != null)
 {

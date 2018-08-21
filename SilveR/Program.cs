@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace SilveR
 {

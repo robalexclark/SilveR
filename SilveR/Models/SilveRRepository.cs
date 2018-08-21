@@ -82,14 +82,6 @@ namespace SilveR.Models
             return await context.Analyses.Include("Script").OrderByDescending(x => x.DateAnalysed).ToListAsync();
         }
 
-        //public async Task UpdateDataset(int datasetID, string csvData)
-        //{
-        //    Dataset existingDataset = await this.GetDatasetByID(datasetID);
-        //    existingDataset.TheData = csvData;
-
-        //    await context.SaveChangesAsync();
-        //}
-
         public async Task<IList<DatasetViewModel>> GetDatasetViewModels()
         {
             return await context.Datasets.Select(x => new DatasetViewModel { DatasetID = x.DatasetID, DatasetName = x.DatasetName, VersionNo = x.VersionNo, DateUpdated = x.DateUpdated }).ToListAsync();

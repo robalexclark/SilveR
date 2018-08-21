@@ -20,13 +20,13 @@ namespace SilveR.ViewModels
         {
         }
 
-        public Sheet(DataTable csvData)
+        public Sheet(DataTable dataTable)
         {
-            Name = csvData.TableName;
+            Name = dataTable.TableName;
 
             Row headerRow = new Row();
 
-            foreach (DataColumn c in csvData.Columns)
+            foreach (DataColumn c in dataTable.Columns)
             {
                 Cell cell = new Cell();
                 cell.Value = c.ToString();
@@ -37,22 +37,39 @@ namespace SilveR.ViewModels
             Rows.Add(headerRow);
 
 
-            foreach (DataRow dataRow in csvData.Rows)
+            foreach (DataRow dataRow in dataTable.Rows)
             {
                 Row row = new Row();
                 row.Cells = new List<Cell>();
 
+                bool silverSelectedColumn = true;
                 foreach (var c in dataRow.ItemArray)
                 {
                     Cell cell = new Cell();
 
-                    double doubleVal;
-                    bool isNumeric = Double.TryParse(c.ToString(), out doubleVal);
+                    if (silverSelectedColumn)
+                    {
+                        cell.Validation = new Validation();
+                        cell.Validation.DataType = "list";
+                        cell.Validation.From = "{True, False}";
+                        cell.Validation.ShowButton = true;
+                        cell.Validation.Type = "reject";
+                        cell.Validation.ComparerType = "list";
 
-                    if (isNumeric)
-                        cell.Value = doubleVal;
-                    else
                         cell.Value = c.ToString();
+
+                        silverSelectedColumn = false;
+                    }
+                    else
+                    {
+                        double doubleVal;
+                        bool isNumeric = Double.TryParse(c.ToString(), out doubleVal);
+
+                        if (isNumeric)
+                            cell.Value = doubleVal;
+                        else
+                            cell.Value = c.ToString();
+                    }
 
                     row.Cells.Add(cell);
                 }
@@ -72,6 +89,9 @@ namespace SilveR.ViewModels
                 {
                     foreach (Cell cell in row.Cells)
                     {
+                        if (cell.Value == null || String.IsNullOrWhiteSpace(cell.Value.ToString()))
+                            throw new Exception("Header cannot be empty");
+
                         DataColumn dataColumn;
 
                         if (cell.Value.ToString() == "SilveRSelected")
@@ -124,6 +144,17 @@ namespace SilveR.ViewModels
 
         public bool Bold { get; set; }
 
+        public Validation Validation { get; set; }
         //public string Format { get; set; }
+    }
+
+    public class Validation
+    {
+        public string DataType { get; set; }
+        public string ComparerType { get; set; }
+        public string From { get; set; }
+        public bool ShowButton { get; set; }
+        public bool AllowNulls { get; set; }
+        public string Type { get; set; }
     }
 }

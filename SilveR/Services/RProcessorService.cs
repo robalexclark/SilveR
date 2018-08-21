@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SilveR.Models;
 using SilveRModel.Helpers;
 using SilveRModel.Models;
@@ -32,6 +33,7 @@ namespace SilveR.Services
             using (IServiceScope scope = services.CreateScope())
             {
                 SilveRRepository repository = scope.ServiceProvider.GetRequiredService<SilveRRepository>();
+                AppSettings appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
 
 #if !DEBUG
                 try
@@ -76,7 +78,14 @@ namespace SilveR.Services
                 string rscriptPath = null;
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript.exe");
+                    if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
+                    {
+                        rscriptPath = appSettings.CustomRScriptLocation;
+                    }
+                    else
+                    {
+                        rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript.exe");
+                    }
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {

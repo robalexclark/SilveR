@@ -332,3 +332,69 @@ table.dataframe th {
     font-size: 15px;
     background-color: #cccccc;
 }
+
+
+.k-button {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.k-button:focus,
+.k-button.focus {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #255625;
+}
+
+.k-button:hover {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+
+.k-button:active,
+.k-button.active,
+.open > .dropdown-toggle.k-button {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+
+    .k-button:active:hover,
+    .k-button.active:hover,
+    .open > .dropdown-toggle.k-button:hover,
+    .k-button:active:focus,
+    .k-button.active:focus,
+    .open > .dropdown-toggle.k-button:focus,
+    .k-button:active.focus,
+    .k-button.active.focus,
+    .open > .dropdown-toggle.k-button.focus {
+        color: #fff;
+        background-color: #398439;
+        border-color: #255625;
+    }
+
+.k-button:active,
+.k-button.active,
+.open > .dropdown-toggle.k-button {
+    background-image: none;
+}
+
+.k-button.disabled:hover,
+.k-button[disabled]:hover,
+fieldset[disabled] .k-button:hover,
+.k-button.disabled:focus,
+.k-button[disabled]:focus,
+fieldset[disabled] .k-button:focus,
+.k-button.disabled.focus,
+.k-button[disabled].focus,
+fieldset[disabled] .k-button.focus {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.k-button .badge {
+    color: #5cb85c;
+    background-color: #fff;
+}
