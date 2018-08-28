@@ -11,9 +11,9 @@ using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
-    public class SummaryStatsModel : IAnalysisModel
+    public class SummaryStatisticsModel : IAnalysisModel
     {
-        public string ScriptFileName { get { return "SummaryStats"; } }
+        public string ScriptFileName { get { return "SummaryStatistics"; } }
 
         private DataTable dataTable;
         public DataTable DataTable
@@ -99,9 +99,9 @@ namespace SilveRModel.StatsModel
         [DisplayName("By categories and overall")]
         public bool ByCategoriesAndOverall { get; set; }
 
-        public SummaryStatsModel() { }
+        public SummaryStatisticsModel() { }
 
-        public SummaryStatsModel(Dataset dataset)
+        public SummaryStatisticsModel(Dataset dataset)
         {
             //setup model
             ReInitialize(dataset);
@@ -117,8 +117,8 @@ namespace SilveRModel.StatsModel
 
         public ValidationInfo Validate()
         {
-            SummaryStatsValidator summaryStatsValidator = new SummaryStatsValidator(this);
-            return summaryStatsValidator.Validate();
+            SummaryStatisticsValidator summaryStatisticsValidator = new SummaryStatisticsValidator(this);
+            return summaryStatisticsValidator.Validate();
         }
 
         public string[] ExportData()

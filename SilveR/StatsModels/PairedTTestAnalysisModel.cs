@@ -11,9 +11,9 @@ using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
-    public class PairedTTestModel : IAnalysisModel
+    public class PairedTTestAnalysisModel : IAnalysisModel
     {
-        public string ScriptFileName { get { return "PairedTTest"; } }
+        public string ScriptFileName { get { return "PairedTTestAnalysis"; } }
 
         private DataTable dataTable;
         public DataTable DataTable
@@ -101,9 +101,9 @@ namespace SilveRModel.StatsModel
         }
 
 
-        public PairedTTestModel() { }
+        public PairedTTestAnalysisModel() { }
 
-        public PairedTTestModel(Dataset dataset)
+        public PairedTTestAnalysisModel(Dataset dataset)
         {
             //setup model
             ReInitialize(dataset);
@@ -119,8 +119,8 @@ namespace SilveRModel.StatsModel
 
         public ValidationInfo Validate()
         {
-            PairedTTestValidator pairedTTestValidator = new PairedTTestValidator(this);
-            return pairedTTestValidator.Validate();
+            PairedTTestAnalysisValidator pairedTTestAnalysisValidator = new PairedTTestAnalysisValidator(this);
+            return pairedTTestAnalysisValidator.Validate();
         }
 
         public string[] ExportData()

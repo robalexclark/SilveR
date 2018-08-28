@@ -76,9 +76,9 @@ namespace SilveRModel.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            NonParametricModel model = (NonParametricModel)validationContext.ObjectInstance;
+            NonParametricAnalysisModel model = (NonParametricAnalysisModel)validationContext.ObjectInstance;
 
-            if (model.AnalysisType == NonParametricModel.AnalysisOption.CompareToControl && String.IsNullOrEmpty(model.Control))
+            if (model.AnalysisType == NonParametricAnalysisModel.AnalysisOption.CompareToControl && String.IsNullOrEmpty(model.Control))
             {
                 return new ValidationResult("Control level is a required variable when comparing to control");
             }
@@ -131,7 +131,7 @@ namespace SilveRModel.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            SummaryStatsModel model = (SummaryStatsModel)validationContext.ObjectInstance;
+            SummaryStatisticsModel model = (SummaryStatisticsModel)validationContext.ObjectInstance;
 
             if (model.Significance < 0 || model.Significance > 100)
             {
@@ -466,7 +466,7 @@ namespace SilveRModel.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            SingleMeasuresModel model = (SingleMeasuresModel)validationContext.ObjectInstance;
+            SingleMeasuresParametricAnalysisModel model = (SingleMeasuresParametricAnalysisModel)validationContext.ObjectInstance;
 
             if (!String.IsNullOrEmpty(model.Covariate) && String.IsNullOrEmpty(model.PrimaryFactor))
             {
@@ -483,7 +483,7 @@ namespace SilveRModel.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            SingleMeasuresModel model = (SingleMeasuresModel)validationContext.ObjectInstance;
+            SingleMeasuresParametricAnalysisModel model = (SingleMeasuresParametricAnalysisModel)validationContext.ObjectInstance;
 
             if (!String.IsNullOrEmpty(model.ComparisonsBackToControl) && String.IsNullOrEmpty(model.ControlGroup))
             {

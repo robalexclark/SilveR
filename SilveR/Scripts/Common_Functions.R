@@ -10,120 +10,236 @@ suppressWarnings(library(GGally))
 suppressWarnings(library(proto))
 suppressWarnings(library(grid))
 #suppressWarnings(library(extrafont))
-#-------------------------------------------------------------------------------------------------------------------
+
+#===================================================================================================================
 #Numerical parameters
-#-------------------------------------------------------------------------------------------------------------------
-#grpara = data.frame(read.table(paste(getwd(),"/OutputOptionsNumeric.txt", sep="")))
+#===================================================================================================================
+#if (file.exists(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsNumeric.txt", sep="")) == TRUE)
+#{
+#	grpara = data.frame(read.table(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsNumeric.txt", sep="")))
 
 #Font size for the main title
-Title_size <- 20
+#	Title_size  		<- as.numeric(grpara$V2[1])
 
 #Y and X axis titles font size
-X_Title_size <- 15
-Y_Title_size <- 15
+#	X_Title_size		<- as.numeric(grpara$V2[2])
+#	Y_Title_size		<- as.numeric(grpara$V2[3])
 
 #Y and X axis titles font size
-Y_Label_size <- 15
-X_Label_size <- 15
+#	Y_Label_size		<- as.numeric(grpara$V2[4])
+#	X_Label_size		<- as.numeric(grpara$V2[5])
 
 #X-axis labels angle and horizontal adjustment
-Gr_x_angle <- 0
-Gr_x_hjust <- 0.5
+#	Gr_x_angle		<- as.numeric(grpara$V2[6])
+#	Gr_x_hjust		<- as.numeric(grpara$V2[7])
 
 #Y-axis labels angle and vertical adjustment
-Gr_y_angle <- 0
-Gr_y_vjust <- 0.5
+#	Gr_y_angle		<- as.numeric(grpara$V2[8])
+#	Gr_y_vjust		<- as.numeric(grpara$V2[9])
 
 #Size of points on plots
-Point_size <- 4
+#	Point_size		<- as.numeric(grpara$V2[10])
 
 #Shape of points on plot
-Point_shape <- 21
+#	Point_shape		<- as.numeric(grpara$V2[11])
 
 #Size of the lines on the plots
-Line_size <- 1
+#	Line_size		<- as.numeric(grpara$V2[12])
 
 #Legend text size
-legend_font_size <- 15
+#	legend_font_size  	<- as.numeric(grpara$V2[13])
 
 #graphics sizes
-pdfwidth <- 11
-pdfheight <- 8
-jpegwidth <- 480
-jpegheight <- 480
+#	pdfwidth		<- as.numeric(grpara$V2[14])
+#	pdfheight		<- as.numeric(grpara$V2[15])
+#	jpegwidth		<- as.numeric(grpara$V2[16])
+#	jpegheight		<- as.numeric(grpara$V2[17])
 
 # When using black and white range - these are the limits (0 = white and 1 = black)
-gr_bw_low <- 0.1
-gr_bw_high <- 0.8
+#	gr_bw_low		<- as.numeric(grpara$V2[18])
+#	gr_bw_high		<- as.numeric(grpara$V2[19])
 
 #Horizontal jitter on scatterplot
-Gr_w_Gr_jit <- 0.1
+#	Gr_w_Gr_jit		<- as.numeric(grpara$V2[20])
 
 #Vertical jitter on scatterplot
-Gr_h_Gr_jit <- 0.1
+#	Gr_h_Gr_jit		<- as.numeric(grpara$V2[21])
 
 #Error bar width for LSMeans plots and line SEM plots
-ErrorBarWidth <- 0.7
+#	ErrorBarWidth 		<- as.numeric(grpara$V2[22])
 
 #Width of bars for means with SEM column plots
-ErrorBarWidth2 <- ErrorBarWidth / 2
+#	ErrorBarWidth2 <- ErrorBarWidth /2
 
-#-------------------------------------------------------------------------------------------------------------------
+#} else {
+#	print("Unfortunately, due to the Windows installation, InVivoStat is not able to load the Output Options file. The default options will be used instead.")
+
+#Font size for the main title
+	Title_size  		<- 20
+
+#Y and X axis titles font size
+	X_Title_size		<- 15
+	Y_Title_size		<- 15
+
+#Y and X axis titles font size
+	Y_Label_size		<- 15
+	X_Label_size		<- 15
+
+#X-axis labels angle and horizontal adjustment
+	Gr_x_angle		<- 0
+	Gr_x_hjust		<- 0.5
+
+#Y-axis labels angle and vertical adjustment
+	Gr_y_angle		<- 0
+	Gr_y_vjust		<- 0.5
+
+#Size of points on plots
+	Point_size		<- 4
+
+#Shape of points on plot
+	Point_shape		<-21
+
+#Size of the lines on the plots
+	Line_size		<- 1
+
+#Legend text size
+	legend_font_size  	<- 15
+
+#graphics sizes
+	pdfwidth		<- 11
+	pdfheight		<- 8
+	jpegwidth		<- 480
+	jpegheight		<- 480
+
+# When using black and white range - these are the limits (0 = white and 1 = black)
+	gr_bw_low		<- 0.1
+	gr_bw_high		<- 0.8
+
+#Horizontal jitter on scatterplot
+	Gr_w_Gr_jit		<- 0.1
+
+#Vertical jitter on scatterplot
+	Gr_h_Gr_jit		<- 0.1
+
+#Error bar width for LSMeans plots and line SEM plots
+
+	ErrorBarWidth 		<- 0.7
+
+#Width of bars for means with SEM column plots
+	ErrorBarWidth2 <- ErrorBarWidth /2
+#}
+
+#===================================================================================================================
 #Text parameters
-#-------------------------------------------------------------------------------------------------------------------
-#grpara = data.frame(read.table(paste(getwd(),"/OutputOptionsText.txt", sep="")))
+#===================================================================================================================
+
+branding <- "InVivoStat"
+
+#if (file.exists(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsText.txt", sep="")) == TRUE)
+#{
+#	grpara = data.frame(read.table(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsText.txt", sep="")))
 
 #Line types used - solid, blank and dashed
-Line_type_solid <- "solid"
-Line_type_dashed <- "dashed"
+#	Line_type_solid		<- paste(grpara$V2[1],sep="")
+#	Line_type_dashed	<- paste(grpara$V2[2],sep="")
 
 #Font for plots
-gr_font <- "Helvetica"
+#	gr_font			<- paste(grpara$V2[3],sep="")
 
 #Font style for plots
-gr_fontface <- "plain"
+#	gr_fontface		<- paste(grpara$V2[4],sep="")
 
 #Font colour
-gr_textcolour <- "Black"
+#	gr_textcolour		<- paste(grpara$V2[5],sep="")
 
 #Colour fill colour
-Col_fill <- "royalblue1"
-BW_fill <- "grey"
+#	Col_fill		<- paste(grpara$V2[6],sep="")
+#	BW_fill			<- paste(grpara$V2[7],sep="")
 
 #Colour for the header bar on the seperate categorised plots
-Catbar_fill <- "ivory2"
+#	Catbar_fill		<- paste(grpara$V2[8],sep="")
 
 #Individual lines colour
-Col_line <- "red"
-BW_line <- "black"
+#	Col_line		<- paste(grpara$V2[9],sep="")
+#	BW_line			<- paste(grpara$V2[10],sep="")
 
 #Legend parameters
-Legend_text_col <- "white"
-Legend_pos <- "Default"
+#	Legend_text_col		<- paste(grpara$V2[11],sep="")
+#	Legend_pos		<- paste(grpara$V2[12],sep="")
 
 #Categorised plot set default
-Palette_set <- "Set1"
+#	Palette_set		<- paste(grpara$V2[13],sep="")
 
 #Output dataset
-showdataset <- "Y"
+#	showdataset 		<- paste(grpara$V2[14],sep="")
 
 #pdf output
-pdfout <- "N"
+#	pdfout			<- paste(grpara$V2[15],sep="")
 
 #plot colour
-bandw <- "N"
+#	bandw			<- paste(grpara$V2[16],sep="")
 
 #Display back-transformed geometric means
-GeomDisplay <- "N"
+#	GeomDisplay		<- paste(grpara$V2[17],sep="")
 
 #Display covariate regression coefficients
-CovariateRegressionCoefficients <- "N"
-
+#	CovariateRegressionCoefficients		<- paste(grpara$V2[18],sep="")
 
 #Display covariate interaction tests 
-AssessCovariateInteractions <- "N"
+#	AssessCovariateInteractions		<- paste(grpara$V2[19],sep="")
 
-#==================================================================================================================
+#} else {
+#Line types used - solid, blank and dashed
+	Line_type_solid		<- "solid"
+	Line_type_dashed	<- "dashed"
+
+#Font for plots
+	gr_font			<- "Helvetica"
+
+#Font style for plots
+	gr_fontface		<- "plain"
+
+#Font colour
+	gr_textcolour		<- "Black"
+
+#Colour fill colour
+	Col_fill		<- "royalblue1"
+	BW_fill			<- "grey"
+
+#Colour for the header bar on the seperate categorised plots
+	Catbar_fill		<- "ivory2"
+
+#Individual lines colour
+	Col_line		<- "red"
+	BW_line			<- "black"
+
+#Legend parameters
+	Legend_text_col		<- "white"
+	Legend_pos		<- "Default"
+
+#Categorised plot set default
+	Palette_set		<- "Set1"
+
+#Output dataset
+	showdataset 		<- "Y"
+
+#pdf output
+	pdfout			<- "Y"
+
+#plot colour
+	bandw			<- "N"
+
+#Display back-transformed geometric means
+	GeomDisplay		<- "N"
+
+#Display covariate regression coefficients
+	CovariateRegressionCoefficients		<- "N"
+
+#Display covariate interaction tests 
+	AssessCovariateInteractions		<- "N"
+#}
+
+#===================================================================================================================
 #Defining the GGPLOT options
 
 theme_set(theme_bw())
@@ -149,7 +265,7 @@ if (Legend_pos == "Default") {
 }
 
 
-#==================================================================================================================
+#===================================================================================================================
 #Font options
 
 if (gr_font == "Courier") { gr_fontfamily <- "mono" }
@@ -224,11 +340,9 @@ mytheme <- theme(
     )
 
 
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
 #FUNCTIONS TO REPLACE ILLEGAL CHARACTERS
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
 
 namereplace2 <- function(axistitle) {
 
@@ -314,449 +428,9 @@ namereplaceGSUB <- function(axistitle) {
     return(axistitle)
 }
 
-#===================================================================================================
-#===================================================================================================
-#Steels function from package
-#===================================================================================================
-#===================================================================================================
-
-"npmc" <-
-function(dataset, control=NULL, df=2, alpha=0.05)
-{
-	mvtnorm <- require(mvtnorm, quietly=TRUE);
-	if (!mvtnorm)
-	{
-    		msg <- paste("npmc requires the mvtnorm-package to calculate",
-                	"p-values for the test-statistics. This package is not",
-                 	"available on your system, so these values and the",
-                 	"confidence-limits will be missing values in the output!\n",
-                 	sep="\n");
-   		warning(msg);
-  	}
-  
-  	if (any(df==0:2)) 
-    		dfm <- c(3,2,1)[df+1]
-  	else
-  	{
-    		warning("Wrong value for df\nUsing Satterthwaite t-approximation\n");
-    		dfm <- 1;
-  	}
-
-  	if (alpha<=0 || alpha>=1)
-    		stop("alpha must be a value between 0 and 1");
-
-	name <- attr(dataset, "name");
-  	desc <- attr(dataset, "description");
-
-#=== Function definitions ===================================================
-
-# ssq: Calculates a vector's sum of squares
-  	ssq <- function(x) sum(x*x);
-
-# force.ps: Forces a matrix to be positive semidefinite by replacing all negative eigenvalues by zero.
-    	force.ps <- function(M.in)
-  	{
-    		eig <- eigen(M.in, symmetric=TRUE);
-    		spec <- eig$values;
-    		if (adjusted <- any(spec<0))
-    		{
-      			spec[spec<0] <- 0;
-      			M <- eig$vectors %*% diag(spec) %*% t(eig$vectors);
-      			ginv <- diag(1/sqrt(diag(M)));
-      			M.out <- ginv %*% M %*% ginv;
-      			##if ((msg <- all.equal(M.in,M.out))!=TRUE) attr(M.out, "msg") <- msg;
-    		} else
-    		{
-      			M.out <- M.in;
-    		}
-    		attr(M.out,"adjusted") <- adjusted; 
-    		return (M.out);
-  	}
-
-# z.dist: Calculates the p-values for the teststatistics using the mvtnorm-package.
-# The 'sides' parameter determines whether the p-values for the one-or two-sided test are calculated.
-# The statistic is supposed to follow a multivariate t-statistic with correlation-matrix 'corr' and 'df' degrees of freedom. If df=0, the
-# multivariate normal-distribution is used.
-# We use the mvtnorm-package by Frank Bretz (www.bioinf.uni-hannover.de) to calculate the corresponding p-values. These algorithms originally 
-# calculate the value P(X<=stat) for the mentioned multivariate distributions, i.e. the 1-sided p-value. In order to gain the 2-sided p-value as well, 
-# we used the algorithms on the absolute value of the teststatistic in combination with the inflated correlation-matrix kronecker(matrix(c(1,-1,-1,1),ncol=2), corr)
-
-  	z.dist <- function(stat, corr, df=0, sides=2)
-  	{
-    		if (!mvtnorm) return (NA);
-    
-    		if (sides==2)
-    		{
-      			corr <- kronecker(matrix(c(1,-1,-1,1),ncol=2), corr);
-      			stat <- abs(stat);
-    		}
-    		n <- ncol(corr);
-    		sapply(stat, function(arg) 
-         	{
-          		mvtnorm::: mvt(
-               		lower=rep(-Inf, n), 
-               		upper=rep(arg, n), 
-               		df=df, 
-               		corr=corr, 
-               		delta=rep(0,n)
-               		)$value;
-         	});     
-  	} 
-
-# z.quantile: Calculates the corresponding quantiles of z.dist p-values (used for the confidence-intervals)
- 
-  	z.quantile <- function(p=0.95, start=0, corr, df=0, sides=2)
-  	{
-    		if (!mvtnorm) return (NA);
-
-    		if (z.dist(start,corr=corr,df=df,sides=sides) < p)
-    		{
-      			lower <- start;
-      			upper <- lower+1;
-      			while(z.dist(upper,corr=corr,df=df,sides=sides) < p)
-        		upper <- upper+1;
-    		} else  {
-      			upper <- start;
-      			lower <- upper-1;
-      			while(z.dist(lower,corr=corr,df=df,sides=sides) > p)
-        		lower <- lower-1;
-    			}
-    		ur <- uniroot(f=function(arg) p-z.dist(arg,corr=corr,df=df,sides=sides), upper=upper, lower=lower);
-    		ur$root;
-  	}
- 
-#=== Calculations ===========================================================
-      
-# sort the dataset by factor
-  	dataset$class <- factor(dataset$class);
-  	datord <- order(dataset$class);
-  	attrs <- attributes(dataset);
-  	dataset <- data.frame(lapply(dataset, "[", datord));
-  	attributes(dataset) <- attrs;
-  
-# general data characteristics
-  	attach(dataset);
-  	fl <- levels(class);             # factor-levels
-  	a <- nlevels(class);             # number of factor-levels
-  	samples <- split(var, class);    # split the data in separate sample-vectors
-  	n <- sapply(samples, length);    # sample sizes
-  	detach(dataset);
-
-  	if (is.null(control))
-  	{
-    		# create indexing vectors for the all-pairs situation
-    		tmp <- expand.grid(1:a, 1:a);
-    		ind <- tmp[[1]] > tmp[[2]];
-    		vi <- tmp[[2]][ind];
-    		vj <- tmp[[1]][ind];
-  	} else 
-	{
-    		## create indexing vectors for the many-to-one situation
-    		if (!any(fl==control))
-    		{
-      			msg <- paste("Wrong control-group specification\n",
-                   	"The data does not contain a group with factor-level ", control, sep="");
-      			stop(msg, FALSE);
-    		}
-    		cg <- which(fl==control);
-    		vi <- which((1:a)!=cg);
-    		vj <- rep(cg, a-1);
-  	}
-
- # number of comparisons ( a*(a-1)/2 for all-pairs, (a-1) for many-to-one )
-  	nc <- length(vi);              
-  
- # labels describing the compared groups 
-  	cmpid <- paste(vi, "-", vj, sep="");
-  
- # pairwise pooled sample-sizes
-  	gn <- n[vi]+n[vj];
- 
-# internal rankings
-  	intRanks <- lapply(samples, rank);
- 
-# pairwise rankings
-  	pairRanks <- lapply(1:nc, function(arg) 
-                    {
-                      rank(c(samples[[vi[arg]]], samples[[vj[arg]]]));  
-                    });
-
-# estimators for the relative effects
-  	pd <- sapply(1:nc, function(arg)
-        	{
-               		i <- vi[arg]; 
-               		j <- vj[arg];
-               		(sum(pairRanks[[arg]][(n[i]+1):gn[arg]])/n[j]-(n[j]+1)/2)/n[i];  
-             	});
-    
-# Calculations for the BF-test ###################################
-	dij <- dji <- list(0);
-
-  	sqij <- sapply(1:nc, function(arg) 
-               	{
-                 	i <- vi[arg]; 
-                 	j <- vj[arg];
-                 	pr <- pairRanks[[arg]][(n[i]+1):gn[arg]];
-                 	dij[[arg]] <<- pr - sum(pr)/n[j] - intRanks[[j]] + (n[j]+1)/2;
-                 	ssq(dij[[arg]])/(n[i]*n[i]*(n[j]-1));
-               });
-  
-  	sqji <- sapply(1:nc, function(arg)
-               {
-                 	i <- vi[arg];  
-                 	j <- vj[arg];
-                 	pr <- pairRanks[[arg]][1:n[i]];
-                 	dji[[arg]] <<- pr - sum(pr)/n[i] - intRanks[[i]] + (n[i]+1)/2;
-                 	ssq(dji[[arg]])/(n[j]*n[j]*(n[i]-1));
-               });
-
-# diagonal elements of the covariance-matrix
-  	vd.bf <- gn*(sqij/n[vj] + sqji/n[vi]);
-
-# mark and correct zero variances for further calculations
-  	singular.bf <- (vd.bf==0);
-  	vd.bf[singular.bf] <- 0.00000001;
-  
-# standard-deviation
-  	std.bf <- sqrt(vd.bf/gn);
-
-# teststatistic
-  	t.bf <- (pd-0.5)*sqrt(gn/vd.bf);
-  
-# Satterthwaite approxiamtion for the degrees of freedom
-  	df.sw <- (n[vi]*sqij + n[vj]*sqji)^2 / ((n[vi]*sqij)^2/(n[vj]-1) + (n[vj]*sqji)^2/(n[vi]-1));
-  	df.sw[is.nan(df.sw)] <- Inf;
-
-# choose degrees of freedom 
-  	df <- if (dfm<3) max(1, if (dfm==2) min(gn-2) else min(df.sw)) else 0;
-
-# Calculations for the Steel-test ################################
-# the Steel-type correlation factors
-  	lambda <- sqrt(n[vi]/(gn+1));
-      
-# diagonal elements of the covariance-matrix
-  	vd.st <- sapply(1:nc, function(arg) ssq(pairRanks[[arg]]-(gn[arg]+1)/2)) / (n[vi]*n[vj]*(gn-1));
-
-# mark and correct zero variances for further calculations
-  	singular.st <- (vd.st==0);
-  	vd.st[singular.st] <- 0.00000001;
-  
-# standard-deviation
-  	std.st <- sqrt(vd.st/gn);
-
-# teststatistic
-  	t.st <- (pd-0.5)*sqrt(gn/vd.st);
-  
-# Calculate the correlation-matrices (for both, BF and Steel) ####
-	rho.bf <- rho.st <- diag(nc);
-  	for (x in 1:(nc-1))
-  	{
-    		for (y in (x+1):nc)
-    		{
-      			i <- vi[x]; j <- vj[x];
-      			v <- vi[y]; w <- vj[y];
-      			p <- c(i==v, j==w, i==w, j==v);
-      			if (sum(p)==1) 
-      			{      
-        			cl <- list(
-                   			function()  (t(dji[[x]]) %*% dji[[y]]) / (n[j]*n[w]*n[i]*(n[i]-1)),
-                   			function()  (t(dij[[x]]) %*% dij[[y]]) / (n[i]*n[v]*n[j]*(n[j]-1)),
-                   			function() -(t(dji[[x]]) %*% dij[[y]]) / (n[i]*n[w]*n[i]*(n[i]-1)),
-                   			function() -(t(dij[[x]]) %*% dji[[y]]) / (n[j]*n[v]*n[j]*(n[j]-1))
-                   			);
-        			case <- (1:4)[p];
-        			rho.bf[x,y] <- rho.bf[y,x] <- 
-          			sqrt(gn[x]*gn[y]) / sqrt(vd.bf[x]*vd.bf[y]) * cl[[case]]()
-        			;
-        			rho.st[x,y] <- rho.st[y,x] <- 
-        			{
-					if (case>2) -1 else 1}*lambda[x]*lambda[y]
-        				;
-      			}
-    		}
-  	}
-  	rho.bf <- force.ps(rho.bf);
-  	rho.st <- force.ps(rho.st);
-      
-
-# Calculate the p-values     (BF and Steel) ######################
-	p1s.bf <- 1 - z.dist(t.bf, corr=rho.bf, df=df, sides=1);
-  	p2s.bf <- 1 - z.dist(t.bf, corr=rho.bf, df=df, sides=2);
-   
-  	p1s.st <- 1 - z.dist(t.st, corr=rho.st, sides=1);
-  	p2s.st <- 1 - z.dist(t.st, corr=rho.st, sides=2);
-
-# Calculate the confidence-limits (BF and Steel) #################
-	z.bf <- z.quantile(1-alpha, corr=rho.bf, df=df, sides=2);
-  	lcl.bf <- pd - std.bf*z.bf;
-  	ucl.bf <- pd + std.bf*z.bf;
-
-  	z.st <- z.quantile(1-alpha, corr=rho.st, sides=2);
-  	lcl.st <- pd - std.st*z.st;
-  	ucl.st <- pd + std.st*z.st;
- 
-#=== Output ==================================================================
-    
-# Create the result-datastructures ###############################
-  	dataStructure <- data.frame("group index"=1:a, 
-                              "class level"=fl, 
-                              "nobs"=n
-                              );
-  
-  	test.bf <- data.frame("cmp"=cmpid, 
-                        "gn"=gn, 
-                        "effect"=pd,
-                        "lower.cl"=lcl.bf,
-                        "upper.cl"=ucl.bf,
-                        "variance"=vd.bf, 
-                        "std"=std.bf, 
-                        "statistic"=t.bf, 
-                        "p-value 1s"=p1s.bf, 
-                        "p-value 2s"=p2s.bf, 
-                        "zero"=singular.bf
-                        ); 
-
-  	test.st <- data.frame("cmp"=cmpid, 
-                        "gn"=gn, 
-                        "effect"=pd, 
-                        "lower.cl"=lcl.st,
-                        "upper.cl"=ucl.st,
-                        "variance"=vd.st, 
-                        "std"=std.st, 
-                        "statistic"=t.st, 
-                        "p-value 1s"=p1s.st, 
-                        "p-value 2s"=p2s.st, 
-                        "zero"=singular.st
-                        ); 
-
-  	result <- list("data"=dataset,
-                 "info"=dataStructure, 
-                 "corr"=list("BF"=rho.bf, "Steel"=rho.st),
-                 "test"=list("BF"=test.bf, "Steel"=test.st),
-                 "control"=control,
-                 "df.method"=dfm,
-                 "df"=df,
-                 "alpha"=alpha
-                 );
-  
-  	class(result) <- "npmc";
-  
-  	return (result);
- 
-}
-
-"print.npmc" <- function(x, ...)
-{
-	print(x$test, ...)
-}
-
-"report" <- function(msg=NULL, style=0, char="-")
-{
-	if (is.null(msg)) msg <- "";
- 
-	if (is.vector(msg))
-	msg <- unlist(msg)
- 
-	else
- 	stop("msg must be of type vector");
-  
-  	char <- substr(char, 1, 1);
-  	underlined <- function (arg)
-  	{
-    		c(arg, paste(rep(char, max(nchar(msg))), collapse=""));
-  	}
-
-  	border <- function(arg) 
-  	{
-    		n <- length(msg);
-    		ml <- max(nchar(msg));
-    		space <- paste(rep(" ", ml), collapse="");
-    		line <- paste(rep(char, ml+4), collapse="");
-    		msg <- paste(msg, substr(rep(space, n), rep(1, n), ml-nchar(msg)), sep=""); 
-    		c(line, paste(char, msg, char), line);          
-  	}
-
-  	sfun <- list(underlined = underlined, border = border);
-  
-  	if (is.numeric(style) && length(style)==1 && any(style==1:length(sfun)))
-    	msg <- sfun[[style]](msg)
-  	else if (is.character(style) && length(style)==1 && !is.null(sfun[[style]]))
-    	msg <- sfun[[style]](msg)
-  
-  	m <- matrix(msg, ncol=1);
-  	colnames(m) <- "";
-  	rownames(m) <- rep("", length(msg));
-  	print.noquote(m); 
-}
-
-
-
-"summary.npmc" <- function(object, type="both", info=FALSE, short=TRUE, corr=FALSE, ...)
-{
-  	x <- object;
-  	if (info)
-  	{
-    		name <- attr(data, "name");
-    		desc <- attr(data, "desc");
-    		df <- x$df;
-    		df.method <- x$df.method;
-    		alpha <- x$alpha;
-  
-    		apm <- c(paste("Satterthwaite t-approximation (df=",df,")",sep=""),
-             		paste("simple t-approximation (df=",df,")",sep=""),
-             		"standard normal approximation");
-    		msg <- c(paste("npmc executed", if (!is.null(name)) paste("on", name)),
-             		if (is.null(desc)) "" else c("","Description:",desc,""),
-             		"NOTE:",
-             		paste("-Used", apm[df.method]),
-             		paste("-Calculated simultaneous (1-", alpha, ") confidence intervals",sep=""),
-             		"-The one-sided tests 'a-b' reject if group 'a' tends to",
-             		" smaller values than group 'b'"
-             		);
-    		report(msg, style=2, char="/");
-    		report();
-  	}
-
-  	if (short)
- 	 {
-    		bf <- st <- c("cmp","effect","lower.cl","upper.cl","p.value.1s","p.value.2s");
- 	 }
- 	 else
- 	 {
-    		bf  <- names(x$test$BF);
-    		st <- names(x$test$Steel);
- 	 }
-
-  
-  	content <- list();
-  	if (info)
-    		content <- c(content, list("Data-structure"=x$info));
-  	if (corr && type!="Steel")
-    		content <- c(content, list("Behrens-Fisher type correlation-matrix"=x$corr$BF));
-  	if (corr && type!="BF")
-   		 content <- c(content, list("Steel type correlation-matrix"=x$corr$Steel));
-  	if (type!="Steel")
-    		content <- c(content, list("Results of the multiple Behrens-Fisher-Test"=x$test$BF[bf]));
- 	 if (type!="BF")
-    		content <- c(content, list("Results of the multiple Steel-Test"=x$test$Steel[st]));
-  
-  	#h <- (list("Data-structure"=x$info, 
-  	#           "Behrens-Fisher type correlation-matrix"=x$corr$BF, 
-  	#           "Steel type correlation-matrix"=x$corr$Steel,
-  	#           "Results of the multiple Behrens-Fisher-Test"=x$test$BF[bf], 
-  	#           "Results of the multiple Steel-Test"=x$test$Steel[st]
-  	#           ));
-#  print(content);
-content
-}
-
-
-
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
 #Graphical functions - shared code across modules
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
 
 
 #Function for all modules other than Correlation module
@@ -995,15 +669,17 @@ IVS_F_cpplot_colour <- function(subject) {
 
 
 
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
+#===================================================================================================================
 #Graphical GGPlot2 functions
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
+#===================================================================================================================
 
-#-------------------------------------------------------------------------------------------
+
+#===================================================================================================================
 #Scatterplots (Graphics, Correlation modules, resid plots, QQplots)
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
+
 NONCAT_SCAT <- function(typez) {
     g <- ggplot(graphdata, aes(x = xvarrr_IVS, y = yvarrr_IVS)) +
         theme_map +
@@ -1134,9 +810,9 @@ OVERLAID_SCAT <- function() {
     suppressWarnings(print(g2))
 }
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #SEM plots (Graphics module)
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 NONCAT_SEM <- function() {
     g <- ggplot(graphdata, aes(x = xvarrr_IVS_SEM, y = yvarrr_IVS)) +
         theme_map +
@@ -1146,7 +822,7 @@ NONCAT_SEM <- function() {
         xlab(XAxisTitle) +
         ggtitle(MainTitle2)
 
-    if (SEMPlotType == "ColumnPlot") {
+    if (SEMPlotType == "Column") {
         g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
             geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black") +
             geom_hline(yintercept = 0)
@@ -1176,7 +852,7 @@ ONECATSEP_SEM <- function() {
         ggtitle(MainTitle2)
 
 
-    if (SEMPlotType == "ColumnPlot") {
+    if (SEMPlotType == "Column") {
         g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
             geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge') +
             facet_wrap(~l_l) +
@@ -1208,7 +884,7 @@ TWOCATSEP_SEM <- function() {
         xlab(XAxisTitle) +
         ggtitle(MainTitle2)
 
-    if (SEMPlotType == "ColumnPlot") {
+    if (SEMPlotType == "Column") {
         g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
             geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge') +
           facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
@@ -1244,7 +920,7 @@ OVERLAID_SEM <- function() {
       scale_color_manual(values = Gr_palette) +
       scale_fill_manual(values = Gr_palette)
 
-    if (SEMPlotType == "ColumnPlot") {
+    if (SEMPlotType == "Column") {
         g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") +
             geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge') +
             geom_hline(yintercept = 0)
@@ -1254,11 +930,11 @@ OVERLAID_SEM <- function() {
             geom_point(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, fill = l_l), colour = "black", size = Point_size, shape = Point_shape, pos = position_dodge(w = 0.1))
     }
 
-    if (displaypointSEM == "Y" && SEMPlotType == "ColumnPlot") {
+    if (displaypointSEM == "Y" && SEMPlotType == "Column") {
         Point_size2 <- Point_size / 1.5
         g2 <- g1 + geom_point(data = graphdataSEM_overall, pos = position_dodge(w = 0.9), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
     }
-    if (displaypointSEM == "Y" && SEMPlotType == "LinePlot") {
+    if (displaypointSEM == "Y" && SEMPlotType == "Line") {
         Point_size2 <- Point_size / 1.5
         g2 <- g1 + geom_point(data = graphdataSEM, pos = position_dodge(w = 0.1), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
     }
@@ -1271,9 +947,9 @@ OVERLAID_SEM <- function() {
 
 #graphdataSEM_overall=subset(graphdataSEM_overall, graphdataSEM_overall$Type != "Blanks")
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #case profiles plot (Graphics module)
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 NONCAT_CPP <- function() {
     g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
         theme_map +
@@ -1368,9 +1044,9 @@ OVERLAID_CPP <- function() {
     suppressWarnings(print(g1))
 }
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Box plot (Graphics module)
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 NONCAT_BOX <- function() {
     g <- ggplot() +
         theme_map +
@@ -1503,9 +1179,9 @@ OVERLAID_BOX <- function() {
     suppressWarnings(print(g2))
 }
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Histograms plot (Graphics module)
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 NONCAT_HIS <- function() {
     g <- ggplot(graphdata, aes(x = yvarrr_IVS)) +
         theme_map +
@@ -1578,9 +1254,9 @@ OVERLAID_HIS <- function() {
 
 
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Matrix plot (correlation module)
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 NONCAT_MAT <- function() {
     g <- ggplot(graphdata, aes(xvarrr_IVS, yvarrr_IVS)) +
@@ -1630,9 +1306,9 @@ OVERLAID_MAT <- function() {
 
 
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Dose response plots       
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 Dose_Resp_ExQC <- function() {
     g <- ggplot(finaldata, aes(x = Dose, y = Response, fill = Type)) +
@@ -1669,9 +1345,9 @@ Dose_Resp_IncQC <- function() {
 }
 
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #LSMeans plot       
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 LSMPLOT_1 <- function() {
     g <- ggplot(graphdata, aes(x = Group_IVSq_, y = Mean)) +
@@ -1739,9 +1415,9 @@ LSMPLOT_diff <- function() {
 }
 
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Power plot       
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 #Nested design analysis plots
 POWERPLOT_ORIGINAL <- function() {
@@ -1824,9 +1500,9 @@ POWERPLOT_PERCENT <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr_
 }
 
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Survival plot       
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 SURVIVALPLOT <- function() {
     p <- ggplot(grdata2, aes(time, surv, group = V3)) +
@@ -1856,9 +1532,10 @@ SURVIVALPLOT <- function() {
 
 
 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Multivariate plots 
-#-------------------------------------------------------------------------------------------
+#===================================================================================================================
+
 #Line plot of the variances
 NONCAT_SEMx <- function() {
     g <- ggplot(graphdata_SEM, aes(x = xvarrr_IVS_SEM, y = yvarrr_IVS_SEM)) +
@@ -1963,11 +1640,10 @@ PLSloadingsplot <- function() {
 }
 
 
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
 #References
-#===================================================================================================
-#===================================================================================================
+#===================================================================================================================
+
 refxx <- c("For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).")
 
 
@@ -1991,7 +1667,7 @@ R_refs <- function() {
     Survival_ref <- "Therneau T (2014). _A Package for Survival Analysis in S_. R package version 2.37-7, URL: http://CRAN.R-project.org/package=survival."
     multcomp_ref <- "Torsten Hothorn, Frank Bretz and Peter Westfall (2008). Simultaneous  Inference in General Parametric Models. Biometrical Journal 50(3),  346--363."
     extrafont_ref <- "Winston Chang, (2014). extrafont: Tools for using fonts. R package version 0.17. http://CRAN.R-project.org/package=extrafont"
-
+    COIN_ref <- "Torsten Hothorn, Kurt Hornik, Mark A. van de Wiel, Achim Zeileis (2008). Implementing a Class of Permutation Tests: The coin Package. Journal of Statistical Software 28(8), 1-23. URL http://www.jstatsoft.org/v28/i08/."
 
     cluster_ref <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2013).  cluster: Cluster Analysis Basics and Extensions. R package version 1.14.4."
     ggdendro_ref <- "Andrie de Vries and Brian D. Ripley (2013). ggdendro: Tools for extracting dendrogram and tree diagram plot data for use with ggplot.. R package version 0.1-14. http://CRAN.R-project.org/package=ggdendro"
@@ -2026,7 +1702,8 @@ R_refs <- function() {
             mixOmics_ref = mixOmics_ref,
             BateClark_ref = BateClark_ref,
             Barnard_ref = Barnard_ref,
-            extrafont_ref = extrafont_ref
+            extrafont_ref = extrafont_ref,
+            COIN_ref=COIN_ref
                )
 
     return(Refs)

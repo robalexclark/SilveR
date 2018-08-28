@@ -1,34 +1,10 @@
 ﻿$(function () {
 
-    //var dataSource = new kendo.data.DataSource({
-    //    transport: {
-    //        read: onRead
-    //    },
-    //    batch: true,
-    //    change: function () {
-    //        $("#cancel, #save").toggleClass("k-state-disabled", !this.hasChanges());
-    //    }
-    //});
-
     var spreadSheet = $("#spreadsheet").kendoSpreadsheet({
-        //columns: 20,
         toolbar: false,
         sheetsbar: false,
         sheets: [spreadsheet]
     });
-
-    //function onRead(options) {
-    //    $.ajax({
-    //        url: crudServiceBaseUrl,
-    //        dataType: "json",
-    //        success: function (result) {
-    //            options.success(result);
-    //        },
-    //        error: function (result) {
-    //            options.error(result);
-    //        }
-    //    });
-    //}
 
     $("#save").click(function () {
         if (!$(this).hasClass("k-state-disabled")) {
@@ -43,7 +19,7 @@
                 dataType: "json",
                 success: function (response) {
                     if (response === true) {
-                        alert("Details saved successfully!!!");
+                        alert("Data saved successfully!!");
                     }
                     else {
                         alert(response);

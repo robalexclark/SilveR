@@ -4,6 +4,7 @@
 suppressWarnings(library(mvtnorm))
 suppressWarnings(library(R2HTML))
 suppressWarnings(library(coin))
+
 #===================================================================================================================
 # retrieve args
 
@@ -37,6 +38,8 @@ for (i in 1:10) {
     XAxisTitle <- namereplace(XAxisTitle)
 }
 
+#source(paste(getwd(),"/Common_Functions.R", sep=""))
+
 #===================================================================================================================
 #Setup the html file and associated css file
 
@@ -44,43 +47,19 @@ htmlFile <- sub(".csv", ".html", Args[3])
 #determine the file name of the html file
 HTMLSetFile(file = htmlFile)
 .HTML.file = htmlFile
+
 #===================================================================================================================
 #Overall Graphical parameter setup
 
 graphdata <- statdata
 displaypointBOX <- "N"
+
 #===================================================================================================================
-
-#Checking the design is a complete block design for the Friedmans and Wilcoxon tests
-RunFried <- "Y"
-if (block != "NULL") {
-    #Testing the design is a complete block design
-    dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
-    dimblock <- length(unique(eval(parse(text = paste("statdata$", block)))))
-    tempdata <- statdata[!(is.na(eval(parse(text = paste("statdata$", response))))),]
-    tempdata$cat <- paste(eval(parse(text = paste("statdata$", treatment))), eval(parse(text = paste("statdata$", block))))
-    if (dim * dimblock != length(unique(tempdata$cat))) {
-        RunFried <- "Na"
-    }
-
-    #Testing to make sure there is only one replicate of each combination
-    vectorN <- c(1:length(unique(tempdata$cat)))
-    for (i in 1:length(unique(tempdata$cat))) {
-        sub <- data.frame(subset(tempdata, tempdata$cat == unique(levels(as.factor(tempdata$cat)))[i]))
-        vectorN[i] = dim(sub)[1]
-        if (vectorN[i] >= 2) {
-            RunFried <- "Nb"
-        }
-    }
-}
-
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
 #Titles and description
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Module Title
-HTML.title("<bf>Non-Parametric Analysis", HR = 1, align = "left")
+Title <-paste(branding, " Non-Parametric Analysis", sep="")
+HTML.title(Title, HR = 1, align = "left")
 
 #Response title
 title <- c("Response")
@@ -105,12 +84,465 @@ if (block != "NULL") {
 add <- paste(add, ".", sep = "")
 HTML(add, align = "left")
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-#Summary stats table
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#Checking the design is a complete block design for the Friedmans and Wilcoxon tests
+RunFried <- "Y"
+if (block != "NULL") {
+    #Testing the design is a complete block design
+    dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
+    dimblock <- length(unique(eval(parse(text = paste("statdata$", block)))))
+    tempdata <- statdata[!(is.na(eval(parse(text = paste("statdata$", response))))),]
+    tempdata$cat <- paste(eval(parse(text = paste("statdata$", treatment))), eval(parse(text = paste("statdata$", block))))
+    if (dim * dimblock != length(unique(tempdata$cat))) {
+        RunFried <- "Na"
+    }
 
+    #Testing to make sure there is only one replicate of each combination
+    vectorN <- c(1:length(unique(tempdata$cat)))
+    for (i in 1:length(unique(tempdata$cat))) {
+        sub <- data.frame(subset(tempdata, tempdata$cat == unique(levels(as.factor(tempdata$cat)))[i]))
+        vectorN[i] = dim(sub)[1]
+        if (vectorN[i] >= 2) {
+            RunFried <- "Nb"
+        }
+    }
+}
+
+#===================================================================================================================
+#Steels function from package
+#===================================================================================================================
+"npmc" <-
+function(dataset, control=NULL, df=2, alpha=0.05)
+{
+	mvtnorm <- require(mvtnorm, quietly=TRUE);
+	if (!mvtnorm)
+	{
+    		msg <- paste("npmc requires the mvtnorm-package to calculate",
+                	"p-values for the test-statistics. This package is not",
+                 	"available on your system, so these values and the",
+                 	"confidence-limits will be missing values in the output!\n",
+                 	sep="\n");
+   		warning(msg);
+  	}
+  
+  	if (any(df==0:2)) 
+    		dfm <- c(3,2,1)[df+1]
+  	else
+  	{
+    		warning("Wrong value for df\nUsing Satterthwaite t-approximation\n");
+    		dfm <- 1;
+  	}
+
+  	if (alpha<=0 || alpha>=1)
+    		stop("alpha must be a value between 0 and 1");
+
+	name <- attr(dataset, "name");
+  	desc <- attr(dataset, "description");
+
+#=== Function definitions ===================================================
+
+# ssq: Calculates a vector's sum of squares
+  	ssq <- function(x) sum(x*x);
+
+# force.ps: Forces a matrix to be positive semidefinite by replacing all negative eigenvalues by zero.
+    	force.ps <- function(M.in)
+  	{
+    		eig <- eigen(M.in, symmetric=TRUE);
+    		spec <- eig$values;
+    		if (adjusted <- any(spec<0))
+    		{
+      			spec[spec<0] <- 0;
+      			M <- eig$vectors %*% diag(spec) %*% t(eig$vectors);
+      			ginv <- diag(1/sqrt(diag(M)));
+      			M.out <- ginv %*% M %*% ginv;
+      			##if ((msg <- all.equal(M.in,M.out))!=TRUE) attr(M.out, "msg") <- msg;
+    		} else
+    		{
+      			M.out <- M.in;
+    		}
+    		attr(M.out,"adjusted") <- adjusted; 
+    		return (M.out);
+  	}
+
+# z.dist: Calculates the p-values for the teststatistics using the mvtnorm-package.
+# The 'sides' parameter determines whether the p-values for the one-or two-sided test are calculated.
+# The statistic is supposed to follow a multivariate t-statistic with correlation-matrix 'corr' and 'df' degrees of freedom. If df=0, the
+# multivariate normal-distribution is used.
+# We use the mvtnorm-package by Frank Bretz (www.bioinf.uni-hannover.de) to calculate the corresponding p-values. These algorithms originally 
+# calculate the value P(X<=stat) for the mentioned multivariate distributions, i.e. the 1-sided p-value. In order to gain the 2-sided p-value as well, 
+# we used the algorithms on the absolute value of the teststatistic in combination with the inflated correlation-matrix kronecker(matrix(c(1,-1,-1,1),ncol=2), corr)
+
+  	z.dist <- function(stat, corr, df=0, sides=2)
+  	{
+    		if (!mvtnorm) return (NA);
+    
+    		if (sides==2)
+    		{
+      			corr <- kronecker(matrix(c(1,-1,-1,1),ncol=2), corr);
+      			stat <- abs(stat);
+    		}
+    		n <- ncol(corr);
+    		sapply(stat, function(arg) 
+         	{
+          		mvtnorm::: mvt(
+               		lower=rep(-Inf, n), 
+               		upper=rep(arg, n), 
+               		df=df, 
+               		corr=corr, 
+               		delta=rep(0,n)
+               		)$value;
+         	});     
+  	} 
+
+# z.quantile: Calculates the corresponding quantiles of z.dist p-values (used for the confidence-intervals)
+ 
+  	z.quantile <- function(p=0.95, start=0, corr, df=0, sides=2)
+  	{
+    		if (!mvtnorm) return (NA);
+
+    		if (z.dist(start,corr=corr,df=df,sides=sides) < p)
+    		{
+      			lower <- start;
+      			upper <- lower+1;
+      			while(z.dist(upper,corr=corr,df=df,sides=sides) < p)
+        		upper <- upper+1;
+    		} else  {
+      			upper <- start;
+      			lower <- upper-1;
+      			while(z.dist(lower,corr=corr,df=df,sides=sides) > p)
+        		lower <- lower-1;
+    			}
+    		ur <- uniroot(f=function(arg) p-z.dist(arg,corr=corr,df=df,sides=sides), upper=upper, lower=lower);
+    		ur$root;
+  	}
+ 
+#=== Calculations ===========================================================
+      
+# sort the dataset by factor
+  	dataset$class <- factor(dataset$class);
+  	datord <- order(dataset$class);
+  	attrs <- attributes(dataset);
+  	dataset <- data.frame(lapply(dataset, "[", datord));
+  	attributes(dataset) <- attrs;
+  
+# general data characteristics
+  	attach(dataset);
+  	fl <- levels(class);             # factor-levels
+  	a <- nlevels(class);             # number of factor-levels
+  	samples <- split(var, class);    # split the data in separate sample-vectors
+  	n <- sapply(samples, length);    # sample sizes
+  	detach(dataset);
+
+  	if (is.null(control))
+  	{
+    		# create indexing vectors for the all-pairs situation
+    		tmp <- expand.grid(1:a, 1:a);
+    		ind <- tmp[[1]] > tmp[[2]];
+    		vi <- tmp[[2]][ind];
+    		vj <- tmp[[1]][ind];
+  	} else 
+	{
+    		## create indexing vectors for the many-to-one situation
+    		if (!any(fl==control))
+    		{
+      			msg <- paste("Wrong control-group specification\n",
+                   	"The data does not contain a group with factor-level ", control, sep="");
+      			stop(msg, FALSE);
+    		}
+    		cg <- which(fl==control);
+    		vi <- which((1:a)!=cg);
+    		vj <- rep(cg, a-1);
+  	}
+
+ # number of comparisons ( a*(a-1)/2 for all-pairs, (a-1) for many-to-one )
+  	nc <- length(vi);              
+  
+ # labels describing the compared groups 
+  	cmpid <- paste(vi, "-", vj, sep="");
+  
+ # pairwise pooled sample-sizes
+  	gn <- n[vi]+n[vj];
+ 
+# internal rankings
+  	intRanks <- lapply(samples, rank);
+ 
+# pairwise rankings
+  	pairRanks <- lapply(1:nc, function(arg) 
+                    {
+                      rank(c(samples[[vi[arg]]], samples[[vj[arg]]]));  
+                    });
+
+# estimators for the relative effects
+  	pd <- sapply(1:nc, function(arg)
+        	{
+               		i <- vi[arg]; 
+               		j <- vj[arg];
+               		(sum(pairRanks[[arg]][(n[i]+1):gn[arg]])/n[j]-(n[j]+1)/2)/n[i];  
+             	});
+    
+# Calculations for the BF-test ###################################
+	dij <- dji <- list(0);
+
+  	sqij <- sapply(1:nc, function(arg) 
+               	{
+                 	i <- vi[arg]; 
+                 	j <- vj[arg];
+                 	pr <- pairRanks[[arg]][(n[i]+1):gn[arg]];
+                 	dij[[arg]] <<- pr - sum(pr)/n[j] - intRanks[[j]] + (n[j]+1)/2;
+                 	ssq(dij[[arg]])/(n[i]*n[i]*(n[j]-1));
+               });
+  
+  	sqji <- sapply(1:nc, function(arg)
+               {
+                 	i <- vi[arg];  
+                 	j <- vj[arg];
+                 	pr <- pairRanks[[arg]][1:n[i]];
+                 	dji[[arg]] <<- pr - sum(pr)/n[i] - intRanks[[i]] + (n[i]+1)/2;
+                 	ssq(dji[[arg]])/(n[j]*n[j]*(n[i]-1));
+               });
+
+# diagonal elements of the covariance-matrix
+  	vd.bf <- gn*(sqij/n[vj] + sqji/n[vi]);
+
+# mark and correct zero variances for further calculations
+  	singular.bf <- (vd.bf==0);
+  	vd.bf[singular.bf] <- 0.00000001;
+  
+# standard-deviation
+  	std.bf <- sqrt(vd.bf/gn);
+
+# teststatistic
+  	t.bf <- (pd-0.5)*sqrt(gn/vd.bf);
+  
+# Satterthwaite approxiamtion for the degrees of freedom
+  	df.sw <- (n[vi]*sqij + n[vj]*sqji)^2 / ((n[vi]*sqij)^2/(n[vj]-1) + (n[vj]*sqji)^2/(n[vi]-1));
+  	df.sw[is.nan(df.sw)] <- Inf;
+
+# choose degrees of freedom 
+  	df <- if (dfm<3) max(1, if (dfm==2) min(gn-2) else min(df.sw)) else 0;
+
+# Calculations for the Steel-test ################################
+# the Steel-type correlation factors
+  	lambda <- sqrt(n[vi]/(gn+1));
+      
+# diagonal elements of the covariance-matrix
+  	vd.st <- sapply(1:nc, function(arg) ssq(pairRanks[[arg]]-(gn[arg]+1)/2)) / (n[vi]*n[vj]*(gn-1));
+
+# mark and correct zero variances for further calculations
+  	singular.st <- (vd.st==0);
+  	vd.st[singular.st] <- 0.00000001;
+  
+# standard-deviation
+  	std.st <- sqrt(vd.st/gn);
+
+# teststatistic
+  	t.st <- (pd-0.5)*sqrt(gn/vd.st);
+  
+# Calculate the correlation-matrices (for both, BF and Steel) ####
+	rho.bf <- rho.st <- diag(nc);
+  	for (x in 1:(nc-1))
+  	{
+    		for (y in (x+1):nc)
+    		{
+      			i <- vi[x]; j <- vj[x];
+      			v <- vi[y]; w <- vj[y];
+      			p <- c(i==v, j==w, i==w, j==v);
+      			if (sum(p)==1) 
+      			{      
+        			cl <- list(
+                   			function()  (t(dji[[x]]) %*% dji[[y]]) / (n[j]*n[w]*n[i]*(n[i]-1)),
+                   			function()  (t(dij[[x]]) %*% dij[[y]]) / (n[i]*n[v]*n[j]*(n[j]-1)),
+                   			function() -(t(dji[[x]]) %*% dij[[y]]) / (n[i]*n[w]*n[i]*(n[i]-1)),
+                   			function() -(t(dij[[x]]) %*% dji[[y]]) / (n[j]*n[v]*n[j]*(n[j]-1))
+                   			);
+        			case <- (1:4)[p];
+        			rho.bf[x,y] <- rho.bf[y,x] <- 
+          			sqrt(gn[x]*gn[y]) / sqrt(vd.bf[x]*vd.bf[y]) * cl[[case]]()
+        			;
+        			rho.st[x,y] <- rho.st[y,x] <- 
+        			{
+					if (case>2) -1 else 1}*lambda[x]*lambda[y]
+        				;
+      			}
+    		}
+  	}
+  	rho.bf <- force.ps(rho.bf);
+  	rho.st <- force.ps(rho.st);
+      
+
+# Calculate the p-values     (BF and Steel) ######################
+	p1s.bf <- 1 - z.dist(t.bf, corr=rho.bf, df=df, sides=1);
+  	p2s.bf <- 1 - z.dist(t.bf, corr=rho.bf, df=df, sides=2);
+   
+  	p1s.st <- 1 - z.dist(t.st, corr=rho.st, sides=1);
+  	p2s.st <- 1 - z.dist(t.st, corr=rho.st, sides=2);
+
+# Calculate the confidence-limits (BF and Steel) #################
+	z.bf <- z.quantile(1-alpha, corr=rho.bf, df=df, sides=2);
+  	lcl.bf <- pd - std.bf*z.bf;
+  	ucl.bf <- pd + std.bf*z.bf;
+
+  	z.st <- z.quantile(1-alpha, corr=rho.st, sides=2);
+  	lcl.st <- pd - std.st*z.st;
+  	ucl.st <- pd + std.st*z.st;
+ 
+#=== Output ==================================================================
+    
+# Create the result-datastructures ###############################
+  	dataStructure <- data.frame("group index"=1:a, 
+                              "class level"=fl, 
+                              "nobs"=n
+                              );
+  
+  	test.bf <- data.frame("cmp"=cmpid, 
+                        "gn"=gn, 
+                        "effect"=pd,
+                        "lower.cl"=lcl.bf,
+                        "upper.cl"=ucl.bf,
+                        "variance"=vd.bf, 
+                        "std"=std.bf, 
+                        "statistic"=t.bf, 
+                        "p-value 1s"=p1s.bf, 
+                        "p-value 2s"=p2s.bf, 
+                        "zero"=singular.bf
+                        ); 
+
+  	test.st <- data.frame("cmp"=cmpid, 
+                        "gn"=gn, 
+                        "effect"=pd, 
+                        "lower.cl"=lcl.st,
+                        "upper.cl"=ucl.st,
+                        "variance"=vd.st, 
+                        "std"=std.st, 
+                        "statistic"=t.st, 
+                        "p-value 1s"=p1s.st, 
+                        "p-value 2s"=p2s.st, 
+                        "zero"=singular.st
+                        ); 
+
+  	result <- list("data"=dataset,
+                 "info"=dataStructure, 
+                 "corr"=list("BF"=rho.bf, "Steel"=rho.st),
+                 "test"=list("BF"=test.bf, "Steel"=test.st),
+                 "control"=control,
+                 "df.method"=dfm,
+                 "df"=df,
+                 "alpha"=alpha
+                 );
+  
+  	class(result) <- "npmc";
+  
+  	return (result);
+ 
+}
+
+"print.npmc" <- function(x, ...)
+{
+	print(x$test, ...)
+}
+
+"report" <- function(msg=NULL, style=0, char="-")
+{
+	if (is.null(msg)) msg <- "";
+ 
+	if (is.vector(msg))
+	msg <- unlist(msg)
+ 
+	else
+ 	stop("msg must be of type vector");
+  
+  	char <- substr(char, 1, 1);
+  	underlined <- function (arg)
+  	{
+    		c(arg, paste(rep(char, max(nchar(msg))), collapse=""));
+  	}
+
+  	border <- function(arg) 
+  	{
+    		n <- length(msg);
+    		ml <- max(nchar(msg));
+    		space <- paste(rep(" ", ml), collapse="");
+    		line <- paste(rep(char, ml+4), collapse="");
+    		msg <- paste(msg, substr(rep(space, n), rep(1, n), ml-nchar(msg)), sep=""); 
+    		c(line, paste(char, msg, char), line);          
+  	}
+
+  	sfun <- list(underlined = underlined, border = border);
+  
+  	if (is.numeric(style) && length(style)==1 && any(style==1:length(sfun)))
+    	msg <- sfun[[style]](msg)
+  	else if (is.character(style) && length(style)==1 && !is.null(sfun[[style]]))
+    	msg <- sfun[[style]](msg)
+  
+  	m <- matrix(msg, ncol=1);
+  	colnames(m) <- "";
+  	rownames(m) <- rep("", length(msg));
+  	print.noquote(m); 
+}
+
+
+
+"summary.npmc" <- function(object, type="both", info=FALSE, short=TRUE, corr=FALSE, ...)
+{
+  	x <- object;
+  	if (info)
+  	{
+    		name <- attr(data, "name");
+    		desc <- attr(data, "desc");
+    		df <- x$df;
+    		df.method <- x$df.method;
+    		alpha <- x$alpha;
+  
+    		apm <- c(paste("Satterthwaite t-approximation (df=",df,")",sep=""),
+             		paste("simple t-approximation (df=",df,")",sep=""),
+             		"standard normal approximation");
+    		msg <- c(paste("npmc executed", if (!is.null(name)) paste("on", name)),
+             		if (is.null(desc)) "" else c("","Description:",desc,""),
+             		"NOTE:",
+             		paste("-Used", apm[df.method]),
+             		paste("-Calculated simultaneous (1-", alpha, ") confidence intervals",sep=""),
+             		"-The one-sided tests 'a-b' reject if group 'a' tends to",
+             		" smaller values than group 'b'"
+             		);
+    		report(msg, style=2, char="/");
+    		report();
+  	}
+
+  	if (short)
+ 	 {
+    		bf <- st <- c("cmp","effect","lower.cl","upper.cl","p.value.1s","p.value.2s");
+ 	 }
+ 	 else
+ 	 {
+    		bf  <- names(x$test$BF);
+    		st <- names(x$test$Steel);
+ 	 }
+
+  
+  	content <- list();
+  	if (info)
+    		content <- c(content, list("Data-structure"=x$info));
+  	if (corr && type!="Steel")
+    		content <- c(content, list("Behrens-Fisher type correlation-matrix"=x$corr$BF));
+  	if (corr && type!="BF")
+   		 content <- c(content, list("Steel type correlation-matrix"=x$corr$Steel));
+  	if (type!="Steel")
+    		content <- c(content, list("Results of the multiple Behrens-Fisher-Test"=x$test$BF[bf]));
+ 	 if (type!="BF")
+    		content <- c(content, list("Results of the multiple Steel-Test"=x$test$Steel[st]));
+  
+  	#h <- (list("Data-structure"=x$info, 
+  	#           "Behrens-Fisher type correlation-matrix"=x$corr$BF, 
+  	#           "Steel type correlation-matrix"=x$corr$Steel,
+  	#           "Results of the multiple Behrens-Fisher-Test"=x$test$BF[bf], 
+  	#           "Results of the multiple Steel-Test"=x$test$Steel[st]
+  	#           ));
+#  print(content);
+content
+}
+
+#===================================================================================================================
+#Summary stats table
+#===================================================================================================================
 #Setting up parameters
 #Decimal places
 DP <- 3
@@ -135,16 +567,13 @@ for (i in 1:lev) {
 table <- data.frame(sumtable)
 colnames(table) <- c("Group", "Min", "Lower quartile", "Median", "Upper quartile", "Max")
 
-HTML.title("<bf>Summary data", HR = 2, align = "left")
+HTML.title("Summary data", HR = 2, align = "left")
 HTML(table, classfirstline = "second", align = "left", row.names = "FALSE")
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Boxplot of data
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-
-HTML.title("<bf>Box-plot", HR = 2, align = "left")
+#===================================================================================================================
+HTML.title("Box-plot", HR = 2, align = "left")
 
 #Graphics parameter setup
 graphdata$xvarrr_IVS_BP <- as.factor(eval(parse(text = paste("graphdata$", treatment))))
@@ -186,25 +615,20 @@ if (pdfout == "Y") {
 }
 
 #Footnote to box-plot
-footnote <- c("On the box-plot the median is denoted by the horizontal line within the box. 
+HTML("On the box-plot the median is denoted by the horizontal line within the box. 
 The box indicates the interquartile range, where the lower and upper quartiles are calculated using the type 2 method, see Hyndman and Fan (1996). 
 The whiskers extend to the most extreme data point which is no more than 1.5 times the length of the box away from the box. 
-Individual observations that lie outside the outlier range are included on the plot using circles.")
-HTML("</bf>")
-HTML(footnote, align = "left")
+Individual observations that lie outside the outlier range are included on the plot using circles.", align = "left")
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Kruskall-Wallis and Mann Whitney
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-
+#===================================================================================================================
 if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparisons" && leng == 2) || (statstest == "CompareToControl" && leng == 2))) {
     #Kruskal Wallis and Mann Whitney
     dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
     if (dim > 2) {
-        HTML.title("<bf>Kruskal-Wallis test", HR = 2, align = "left")
+        HTML.title("Kruskal-Wallis test", HR = 2, align = "left")
 
         options <- (scipen = 20)
         kruskalOut <- kruskal.test(as.formula(respVTreat), data = statdata)
@@ -230,7 +654,7 @@ if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparis
         row.names(temptable) <- rowname
         HTML(temptable, classfirstline = "second", align = "left", row.names = "FALSE")
     } else if (dim == 2) {
-        HTML.title("<bf> Mann-Whitney test", HR = 2, align = "left")
+        HTML.title("Mann-Whitney test", HR = 2, align = "left")
         comm <- c("You have selected a factor with only two levels, hence a Mann-Whitney test, also know as a Wilcoxon rank sum test, has been used to analyse the data rather than a Kruskal-Wallis test.")
         HTML(comm, align = "left")
 
@@ -271,24 +695,19 @@ if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparis
     }
 }
 
-
-
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Friedmans test
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-
+#===================================================================================================================
 if (block != "NULL" && statstest == "MannWhitney") {
     #Friedmans test
-    HTML.title("<bf>Friedman Rank Sum test", HR = 2, align = "left")
+    HTML.title("Friedman Rank Sum test", HR = 2, align = "left")
 
     if (RunFried == "Na") {
-        HTML("As not all combinations of the treatment factor and the other design (blocking) factor are present in the design, Friedman's test cannot be performed using InVivoStat. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
+        HTML("As not all combinations of the treatment factor and the other design (blocking) factor are present in the design, Friedman's test cannot be performed using this module. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
     }
 
     if (RunFried == "Nb") {
-        HTML("As one of the treatment factor levels occurs multiple times with one of the other design (blocking) factor levels, Friedman's test cannot be performed using InVivoStat. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
+        HTML("As one of the treatment factor levels occurs multiple times with one of the other design (blocking) factor levels, Friedman's test cannot be performed using this module. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
     }
 
     if (RunFried == "Y") {
@@ -318,12 +737,9 @@ if (block != "NULL" && statstest == "MannWhitney") {
     }
 }
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #All comparisons tests - generating comparison labels
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-
+#===================================================================================================================
 if (statstest == "AllComparisons") {
     #Generating comparison labels 
     y <- 1
@@ -358,15 +774,12 @@ if (statstest == "AllComparisons") {
     }
 }
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #All comparisons tests - no blocks
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-
+#===================================================================================================================
 if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
     # Behrens Fisher test results
-    HTML.title("<bf>All pairwise comparisons - Behrens Fisher tests", HR = 2, align = "left")
+    HTML.title("All pairwise comparisons - Behrens Fisher tests", HR = 2, align = "left")
 
     dataset <- data.frame(var = eval(parse(text = paste("statdata$", response))), class = eval(parse(text = paste("statdata$", treatment))))
     allpair <- summary(npmc(dataset, df = 1, alpha = sig), type = "BF")
@@ -399,7 +812,7 @@ if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
 
 
     # Mann-Whitney all pairwise tests
-    HTML.title("<bf>All pairwise comparisons - Mann-Whitney tests", HR = 2, align = "left")
+    HTML.title("All pairwise comparisons - Mann-Whitney tests", HR = 2, align = "left")
 
     INDEX <- 1
     pv_list <- c()
@@ -482,20 +895,15 @@ if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
     HTML("Why are there two different tests presented? The Behrens Fisher tests are the recommended approach, although we still need to independently verify these results.", align = "left")
 }
 
-
-
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #All comparisons tests - blocks
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-
+#===================================================================================================================
 if (block != "NULL" && statstest == "AllComparisons") {
     # Wilcoxon signed rank tests
     if (int > 2) {
-        HTML.title("<bf>All pairwise comparisons - Wilcoxon Signed Rank tests", HR = 2, align = "left")
+        HTML.title("All pairwise comparisons - Wilcoxon Signed Rank tests", HR = 2, align = "left")
     } else {
-        HTML.title("<bf>All pairwise comparisons - Wilcoxon Signed Rank test", HR = 2, align = "left")
+        HTML.title("All pairwise comparisons - Wilcoxon Signed Rank test", HR = 2, align = "left")
     }
 
     if (RunFried == "Na") {
@@ -586,20 +994,17 @@ if (block != "NULL" && statstest == "AllComparisons") {
     }
 }
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Comparisons back to control
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
-
+#===================================================================================================================
 if (block != "NULL" && statstest == "CompareToControl") {
-    HTML.title("<bf>All comparisons back to one", HR = 2, align = "left")
+    HTML.title("All comparisons back to one", HR = 2, align = "left")
     HTML("The 'all comparisons back to one' is not available as an 'Other design (block)' factor has been selected. Please use the  'all pairwise comparisons' option to generate the required results.", align = "left")
 }
 
 if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
     #Steels all to one comparison
-    HTML.title("<bf>Steel's all comparisons back to one", HR = 2, align = "left")
+    HTML.title("Steel's all comparisons back to one", HR = 2, align = "left")
 
     dataset <- data.frame(var = eval(parse(text = paste("statdata$", response))), class = eval(parse(text = paste("statdata$", treatment))))
     steel <- summary(npmc(dataset, df = 1, alpha = sig, control = contlevel), type = "Steels")
@@ -646,18 +1051,14 @@ if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
     HTML(steeltable2, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Text for conclusions and comments 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 Ref_list <- R_refs()
 
 if (RunFried == "Y") {
+        HTML.title("Analysis conclusions", HR = 2, align = "left")
 
-    if (block == "NULL") {
-        HTML.title("<bf>Analysis conclusions", HR = 2, align = "left")
-    }
     if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparisons" && leng == 2) || (statstest == "CompareToControl" && leng == 2))) {
         dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
@@ -678,14 +1079,14 @@ if (RunFried == "Y") {
                 HTML(add, align = "left")
             }
 
-            HTML.title("<bf>Analysis description", HR = 2, align = "left")
+            HTML.title("Analysis description", HR = 2, align = "left")
             HTML("The overall treatment effect was assessed using the non-parametric Kruskal-Wallis test, see Kruskal and Wallis (1952, 1953).", align = "left")
             HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
 
             #Bate and Clark comment
             HTML(refxx, align = "left")
 
-            HTML.title("<bf>Statistical references", HR = 2, align = "left")
+            HTML.title("Statistical references", HR = 2, align = "left")
             HTML(Ref_list$BateClark_ref, align = "left")
             HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
             HTML("Kruskal, WH and Wallis, WA (1952). Use of ranks in one criterion variance analysis. JASA, 47, 583-621.", align = "left")
@@ -707,7 +1108,7 @@ if (RunFried == "Y") {
                 HTML(add, align = "left")
             }
 
-            HTML.title("<bf>Analysis description", HR = 2, align = "left")
+            HTML.title("Analysis description", HR = 2, align = "left")
             HTML("The difference between the two treatments was assessed using the non-parametric Mann-Whitney test with continuity correction, see Wilcoxon (1945), Mann and Whitney (1947). ", align = "left")
             HTML("Note that the literature is not unanimous about the definition of the Mann-Whitney test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
             HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
@@ -742,14 +1143,14 @@ if (RunFried == "Y") {
             HTML(add, align = "left")
         }
 
-        HTML.title("<bf>Analysis description", HR = 2, align = "left")
+        HTML.title("Analysis description", HR = 2, align = "left")
         HTML("The overall treatment effect was assessed using the non-parametric Friedman test, see Hollander and Wolfe (1973).", align = "left")
         HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
 
         #Bate and Clark comment
         HTML(refxx, align = "left")
 
-        HTML.title("<bf>Statistical references", HR = 2, align = "left")
+        HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Hollander, M and Wolfe DA (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
@@ -807,7 +1208,7 @@ if (RunFried == "Y") {
             HTML(add2, align = "left")
         }
 
-        HTML.title("<bf>Analysis description", HR = 2, align = "left")
+        HTML.title("Analysis description", HR = 2, align = "left")
         HTML("All pairwise differences between the treatments were assessed using Behrens Fisher tests, see Munzel and Hothorn (2001) and Mann-Whitney tests with continuity correction, see Mann and Whitney (1947).", align = "left")
         HTML("Note that the literature is not unanimous about the definition of the Mann-Whitney test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
         HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
@@ -815,7 +1216,7 @@ if (RunFried == "Y") {
         #Bate and Clark comment
         HTML.title(refxx, HR = 0, align = "left")
 
-        HTML.title("<bf>Statistical references", HR = 2, align = "left")
+        HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Mann, HB and Whitney, DR (1947). On a test of whether one of two random variables is stochastically larger than the other. Annals of Mathematical Statistics, 18, 50-60.", align = "left")
@@ -855,7 +1256,7 @@ if (RunFried == "Y") {
             HTML(add2, align = "left")
         }
 
-        HTML.title("<bf>Analysis description", HR = 2, align = "left")
+        HTML.title("Analysis description", HR = 2, align = "left")
         if (int > 2) {
             HTML("All pairwise differences between the treatments were assessed using Wilcoxon Signed Rank tests with continuity correction, see Hollander and Wolfe (1973).", align = "left")
         } else {
@@ -867,7 +1268,7 @@ if (RunFried == "Y") {
         #Bate and Clark comment
         HTML.title(refxx, HR = 0, align = "left")
 
-        HTML.title("<bf>Statistical references", HR = 2, align = "left")
+        HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Hollander, M and Wolfe DA (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
@@ -903,14 +1304,14 @@ if (RunFried == "Y") {
         #Bate and Clark comment
         HTML.title(refxx, HR = 0, align = "left")
 
-        HTML.title("<bf>Statistical references", HR = 2, align = "left")
+        HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Steel, RGD (1959). A multiple comparison rank sum test: treatments versus control. Biometrics, 15, 560-572. ", align = "left")
     }
 
     if (block != "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
-        HTML.title("<bf>Statistical references", HR = 2, align = "left")
+        HTML.title("Statistical references", HR = 2, align = "left")
         HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
     }
 
@@ -918,15 +1319,13 @@ if (RunFried == "Y") {
 }
 
 if (RunFried != "Y") {
-    HTML.title("<bf>Statistical reference", HR = 2, align = "left")
+    HTML.title("Statistical reference", HR = 2, align = "left")
     HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
 }
 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #References 
-#-------------------------------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 HTML.title("R references", HR = 2, align = "left")
 
 HTML(Ref_list$R_ref, align = "left")
@@ -940,31 +1339,30 @@ HTML(Ref_list$scales_ref, align = "left")
 HTML(Ref_list$NPMC_ref, align = "left")
 HTML(Ref_list$R2HTML_ref, align = "left")
 HTML(Ref_list$PROTO_ref, align = "left")
+HTML(Ref_list$COIN_ref, align = "left")
 
-
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Show dataset
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 if (showdataset == "Y") {
     statdata2 <- data.frame(eval(parse(text = paste("statdata$", response))))
     statdata3 <- data.frame(eval(parse(text = paste("statdata$", treatment))))
 
     if (block != "NULL") {
         statdata4 <- data.frame(eval(parse(text = paste("statdata$", block))))
-        statdata2 <- cbind(statdata2, statdata3, statdata4)
+        statdata5 <- cbind(statdata2, statdata3, statdata4)
         names <- c(response, treatment, block)
     } else {
-        statdata2 <- cbind(statdata2, statdata3)
+        statdata5 <- cbind(statdata2, statdata3)
         names <- c(response, treatment)
     }
+    colnames(statdata5) <- names
+    observ <- data.frame(c(1:dim(statdata5)[1]))
+    colnames(observ) <- c("Observation")
+    statdata6 <- cbind(observ, statdata5)
 
-    observ <- c(1:dim(statdata2)[1])
-    statdata2 <- cbind(observ, statdata2)
-    colnames(statdata2) <- c("Observation", names)
-
-    HTMLbr()
     HTML.title("Analysis dataset", HR = 2, align = "left")
-    HTML(statdata2, classfirstline = "second", align = "left", row.names = "FALSE")
+    HTML(statdata6, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
 
@@ -972,9 +1370,9 @@ if (showdataset == "Y") {
 
 
 
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Show arguments
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 HTML.title("Analysis options", HR = 2, align = "left")
 HTML(paste("Response variable: ", response, sep = ""), align = "left")

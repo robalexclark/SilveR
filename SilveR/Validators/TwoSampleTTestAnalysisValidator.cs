@@ -5,11 +5,11 @@ using System.Data;
 
 namespace SilveRModel.Validators
 {
-    public class TwoSampleTTestValidator : ValidatorBase
+    public class TwoSampleTTestAnalysisValidator : ValidatorBase
     {
-        private readonly TwoSampleTTestModel upttVariables;
+        private readonly TwoSampleTTestAnalysisModel upttVariables;
 
-        public TwoSampleTTestValidator(TwoSampleTTestModel uptt)
+        public TwoSampleTTestAnalysisValidator(TwoSampleTTestAnalysisModel uptt)
             : base(uptt.DataTable)
         {
             upttVariables = uptt;

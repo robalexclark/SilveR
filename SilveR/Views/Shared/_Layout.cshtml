@@ -43,22 +43,29 @@
                         <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Statistics<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
 
+                            <li>@Html.ActionLink("Summary Statistics", "AnalysisDataSelector", "Analyses", new { analysisType = "Summary Statistics" }, null)</li>
+
                             <li class="menu-item dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Parametric Analysis</a>
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("Single Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Single Measures Parametric Analysis" }, null)</li>
                                     <li>@Html.ActionLink("Repeated Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Repeated Measures Parametric Analysis" }, null)</li>
                                     <li>@Html.ActionLink("P-value Adjustment", "Analysis", "Analyses", new { analysisType = "P-value Adjustment" }, null)</li>
-                                    <li>@Html.ActionLink("Paired t-Test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Paired t-Test Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Two-Sample t-Test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Two-Sample t-Test Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Paired t-test Analysis & Within-Subject Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Paired t-test Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Unpaired t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Unpaired t-test Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Correlation Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Correlation Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Linear Regression Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Dose-response & Non-Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Dose-response Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Two-Sample t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Two-Sample t-test Analysis" }, null)</li>
                                 </ul>
                             </li>
 
                             <li class="menu-item dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Additional Analysis</a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Summary Statistics", "AnalysisDataSelector", "Analyses", new { analysisType = "Summary Statistics" }, null)</li>
                                     <li>@Html.ActionLink("Non-parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Non-Parametric Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Chi-squared & Fisher's Exact test", "AnalysisDataSelector", "Analyses", new { analysisType = "Chi-Squared Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Survival Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Survival Analysis" }, null)</li>
                                 </ul>
                             </li>
 
@@ -67,7 +74,16 @@
                             <li class="menu-item dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Power Analysis</a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Means comparison Power Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Means Comparison" }, null)</li>
+                                    <li>@Html.ActionLink("Comparison of Means", "AnalysisDataSelector", "Analyses", new { analysisType = "Means Comparison" }, null)</li>
+                                </ul>
+                            </li>
+
+                            <li class="menu-item dropdown dropdown-submenu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Unvalidated Analyses</a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Multivariate Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Multivariate Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Nested Design Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Nested Design Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Incomplete Factorial Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Incomplete Factorial Parametric Analysis" }, null)</li>
                                 </ul>
                             </li>
                         </ul>

@@ -26,10 +26,20 @@ namespace SilveR.ViewModels
 
             Row headerRow = new Row();
 
+            //header row
             foreach (DataColumn c in dataTable.Columns)
             {
                 Cell cell = new Cell();
-                cell.Value = c.ToString();
+
+                if (c.ToString() != "SilveRSelected")
+                {
+                    cell.Value = c.ToString();
+                }
+                else //else leave blank
+                {
+                    cell.Enable = false;
+                }
+
                 cell.Bold = true;
 
                 headerRow.Cells.Add(cell);
@@ -89,17 +99,17 @@ namespace SilveR.ViewModels
                 {
                     foreach (Cell cell in row.Cells)
                     {
-                        if (cell.Value == null || String.IsNullOrWhiteSpace(cell.Value.ToString()))
-                            throw new Exception("Header cannot be empty");
-
                         DataColumn dataColumn;
 
-                        if (cell.Value.ToString() == "SilveRSelected")
+                        if (cell.Value == null && cell.Enable == false) //then its the SilveRSelected header cell
                         {
                             dataColumn = new DataColumn("SilveRSelected", System.Type.GetType("System.Boolean"));
                         }
                         else
                         {
+                            if (cell.Value == null || String.IsNullOrWhiteSpace(cell.Value.ToString()))
+                                throw new Exception("Header cannot be empty");
+
                             dataColumn = new DataColumn(cell.Value.ToString());
                         }
 
@@ -114,9 +124,19 @@ namespace SilveR.ViewModels
 
                     for (int i = 0; i < row.Cells.Count; i++)
                     {
-                        if (i == 0)
+                        if (i == 0) //then its the SilverSelected column
                         {
-                            dataRow[i] = Boolean.Parse(row.Cells[0].Value.ToString());
+                            bool isSilverSelected;
+                            bool parsedOK = Boolean.TryParse(row.Cells[0].Value.ToString(), out isSilverSelected);
+
+                            if (parsedOK)
+                            {
+                                dataRow[i] = isSilverSelected;
+                            }
+                            else //not parsed but default to selected = true
+                            {
+                                dataRow[i] = true;
+                            }
                         }
                         else
                         {
@@ -146,6 +166,8 @@ namespace SilveR.ViewModels
 
         public Validation Validation { get; set; }
         //public string Format { get; set; }
+
+        public bool Enable { get; set; } = true;
     }
 
     public class Validation

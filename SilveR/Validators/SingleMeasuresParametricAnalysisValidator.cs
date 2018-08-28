@@ -6,11 +6,11 @@ using SilveRModel.StatsModel;
 
 namespace SilveRModel.Validators
 {
-    public class SingleMeasuresValidator : ValidatorBase
+    public class SingleMeasuresParametricAnalysisValidator : ValidatorBase
     {
-        private readonly SingleMeasuresModel smVariables;
+        private readonly SingleMeasuresParametricAnalysisModel smVariables;
 
-        public SingleMeasuresValidator(SingleMeasuresModel sm)
+        public SingleMeasuresParametricAnalysisValidator(SingleMeasuresParametricAnalysisModel sm)
             : base(sm.DataTable)
         {
             smVariables = sm;

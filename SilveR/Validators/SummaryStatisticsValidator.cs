@@ -5,11 +5,11 @@ using System.Data;
 
 namespace SilveRModel.Validators
 {
-    public class SummaryStatsValidator : ValidatorBase
+    public class SummaryStatisticsValidator : ValidatorBase
     {
-        private readonly SummaryStatsModel ssVariables;
+        private readonly SummaryStatisticsModel ssVariables;
 
-        public SummaryStatsValidator(SummaryStatsModel ss)
+        public SummaryStatisticsValidator(SummaryStatisticsModel ss)
             : base(ss.DataTable)
         {
             ssVariables = ss;

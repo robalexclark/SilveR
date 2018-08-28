@@ -65,7 +65,7 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null && selectedTreatments.Any())
             {
-                List<string> interactions = SingleMeasuresModel.DetermineInteractions(selectedTreatments);
+                List<string> interactions = SingleMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
             }
             else
@@ -79,7 +79,7 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null && selectedTreatments.Any())
             {
-                List<string> selectedEffectsList = SingleMeasuresModel.DetermineSelectedEffectsList(selectedTreatments);
+                List<string> selectedEffectsList = SingleMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments);
                 return Json(selectedEffectsList);
             }
             else

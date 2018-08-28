@@ -11,9 +11,9 @@ using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
-    public class TwoSampleTTestModel : IAnalysisModel
+    public class TwoSampleTTestAnalysisModel : IAnalysisModel
     {
-        public string ScriptFileName { get { return "TwoSampleTTest"; } }
+        public string ScriptFileName { get { return "TwoSampleTTestAnalysis"; } }
 
         private DataTable dataTable;
         public DataTable DataTable
@@ -78,9 +78,9 @@ namespace SilveRModel.StatsModel
         public bool NormalPlot { get; set; }
 
 
-        public TwoSampleTTestModel() { }
+        public TwoSampleTTestAnalysisModel() { }
 
-        public TwoSampleTTestModel(Dataset dataset)
+        public TwoSampleTTestAnalysisModel(Dataset dataset)
         {
             //setup model
             ReInitialize(dataset);
@@ -96,8 +96,8 @@ namespace SilveRModel.StatsModel
 
         public ValidationInfo Validate()
         {
-            TwoSampleTTestValidator twoSampleTTestValidator = new TwoSampleTTestValidator(this);
-            return twoSampleTTestValidator.Validate();
+            TwoSampleTTestAnalysisValidator twoSampleTTestAnalysisValidator = new TwoSampleTTestAnalysisValidator(this);
+            return twoSampleTTestAnalysisValidator.Validate();
         }
 
         public string[] ExportData()

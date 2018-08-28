@@ -12,11 +12,11 @@ using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
-    public class RepeatedMeasuresModel : IAnalysisModel
+    public class RepeatedMeasuresParametricAnalysisModel : IAnalysisModel
     {
         private const string MAIN_EFFECT_SEPERATOR = "_.._";
 
-        public string ScriptFileName { get { return "RepeatedMeasures"; } }
+        public string ScriptFileName { get { return "RepeatedMeasuresParametricAnalysis"; } }
 
         private DataTable dataTable;
         public DataTable DataTable
@@ -125,9 +125,9 @@ namespace SilveRModel.StatsModel
         }
 
 
-        public RepeatedMeasuresModel() { }
+        public RepeatedMeasuresParametricAnalysisModel() { }
 
-        public RepeatedMeasuresModel(Dataset dataset)
+        public RepeatedMeasuresParametricAnalysisModel(Dataset dataset)
         {
             //setup model
             ReInitialize(dataset);
@@ -143,8 +143,8 @@ namespace SilveRModel.StatsModel
 
         public ValidationInfo Validate()
         {
-            RepeatedMeasuresValidator repeatedMeasuresValidator = new RepeatedMeasuresValidator(this);
-            return repeatedMeasuresValidator.Validate();
+            RepeatedMeasuresParametricAnalysisValidator repeatedMeasuresParametricAnalysisValidator = new RepeatedMeasuresParametricAnalysisValidator(this);
+            return repeatedMeasuresParametricAnalysisValidator.Validate();
         }
 
         public string[] ExportData()

@@ -26,6 +26,9 @@ namespace SilveRModel.Models
 
         public int ScriptID { get; set; }
 
+        [StringLength(200)]
+        public string Tag { get; set; }
+
         public string RProcessOutput { get; set; }
 
         public string HtmlOutput { get; set; }

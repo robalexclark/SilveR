@@ -91,37 +91,63 @@ namespace SilveR.Controllers
 
             IAnalysisModel analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisType, dataset);
 
+            //the method name is the same as the display name after spaces and hyphens removed
             string analysisViewName = viewModel.AnalysisType.Replace(" ", String.Empty).Replace("-", String.Empty);
             return View(analysisViewName, analysisModel);
         }
 
         [HttpGet]
-        public ActionResult NonParametricAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
         public ActionResult SummaryStatistics() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult PValueAdjustment() { return RedirectToAction("Index"); }
         [HttpGet]
         public ActionResult SingleMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
         [HttpGet]
-        public ActionResult TwoSampleTTestAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
         public ActionResult RepeatedMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
         [HttpGet]
+        public ActionResult PValueAdjustment() { return RedirectToAction("Index"); }
+        [HttpGet]
         public ActionResult PairedTTestAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult UnpairedTTestAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult TwoSampleTTestAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult CorrelationAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult LinearRegressionAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult DoseResponseAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult NonParametricAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult ChiSquaredAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult SurvivalAnalysis() { return RedirectToAction("Index"); }
         [HttpGet]
         public ActionResult GraphicalAnalysis() { return RedirectToAction("Index"); }
         [HttpGet]
         public ActionResult MeansComparison() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult MultivariateAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult NestedDesignAnalysis() { return RedirectToAction("Index"); }
+        [HttpGet]
+        public ActionResult IncompleteFactorialParametricAnalysis() { return RedirectToAction("Index"); }
+
 
         [HttpPost]
-        public async Task<IActionResult> SummaryStatistics(SummaryStatsModel model, string submitButton)
+        public async Task<IActionResult> SummaryStatistics(SummaryStatisticsModel model, string submitButton)
         {
             return await RunAnalysis(model, submitButton);
         }
 
         [HttpPost]
-        public async Task<IActionResult> NonParametricAnalysis(NonParametricModel model, string submitButton)
+        public async Task<IActionResult> SingleMeasuresParametricAnalysis(SingleMeasuresParametricAnalysisModel model, string submitButton)
+        {
+            return await RunAnalysis(model, submitButton);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RepeatedMeasuresParametricAnalysis(RepeatedMeasuresParametricAnalysisModel model, string submitButton)
         {
             return await RunAnalysis(model, submitButton);
         }
@@ -133,28 +159,58 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SingleMeasuresParametricAnalysis(SingleMeasuresModel model, string submitButton)
+        public async Task<IActionResult> PairedTTestAnalysis(PairedTTestAnalysisModel model, string submitButton)
         {
             return await RunAnalysis(model, submitButton);
         }
 
         [HttpPost]
-        public async Task<IActionResult> TwoSampleTTestAnalysis(TwoSampleTTestModel model, string submitButton)
+        public async Task<IActionResult> UnpairedTTestAnalysis(UnpairedTTestAnalysisModel model, string submitButton)
         {
             return await RunAnalysis(model, submitButton);
         }
 
         [HttpPost]
-        public async Task<IActionResult> RepeatedMeasuresParametricAnalysis(RepeatedMeasuresModel model, string submitButton)
+        public async Task<IActionResult> TwoSampleTTestAnalysis(TwoSampleTTestAnalysisModel model, string submitButton)
         {
             return await RunAnalysis(model, submitButton);
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> CorrelationAnalysis(CorrelationModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> LinearRegressionAnalysis(LinearRegressionModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> DoseResponseAnalysis(DoseResponseModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> PairedTTestAnalysis(PairedTTestModel model, string submitButton)
+        public async Task<IActionResult> NonParametricAnalysis(NonParametricAnalysisModel model, string submitButton)
         {
             return await RunAnalysis(model, submitButton);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> ChiSquaredAnalysis(ChiSquaredModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> SurvivalAnalysis(SurvivalModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> GraphicalAnalysis(GraphicalAnalysisModel model, string submitButton)
@@ -167,6 +223,24 @@ namespace SilveR.Controllers
         {
             return await RunAnalysis(model, submitButton);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> MultivariateAnalysis(MultivariateModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> NestedDesignAnalysis(NestedDesignModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> IncompleteFactorialParametricAnalysis(IncompleteFactorialParametricModel model, string submitButton)
+        //{
+        //    return await RunAnalysis(model, submitButton);
+        //}
 
         private async Task<IActionResult> RunAnalysis(IAnalysisModel model, string submitButton)
         {

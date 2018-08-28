@@ -29,13 +29,13 @@ CIval<-1- as.numeric(Args[17])
 ByCategoriesAndOverall<-Args[18]
 
 
-source(paste(getwd(),"/InVivoStat_functions.R", sep=""))
-#===================================================================================================
+#source(paste(getwd(),"/Common_Functions.R", sep=""))
+#===================================================================================================================
 #Graphics parameter setup
 
 graphdata<-statdata
 Labelz_IVS_ <- "N"
-#===================================================================================================
+#===================================================================================================================
 
 
 if (method == "Pearson") {method2="pearson"} 
@@ -47,7 +47,7 @@ if (hypothesis == "Less than") {hypothesis2="less"}
 if (hypothesis == "Greater than") {hypothesis2="greater"} 
 
 
-#===================================================================================================
+#===================================================================================================================
 #Setup the html file and associated css file
 htmlFile <- sub(".csv", ".html", Args[3]); #determine the file name of the html file
 HTMLSetFile(file=htmlFile) 
@@ -55,10 +55,10 @@ cssFile <- "r2html.css"
 cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path has spaces in it
 HTMLCSS(CSSfile = cssFile)
 
-#===================================================================================================
+#===================================================================================================================
 #Output HTML header
-HTML.title("<bf>InVivoStat Correlation Analysis", HR=1, align="left")
-HTML.title("</bf> ", HR=2, align="left")
+Title <-paste(branding, " Correlation Analysis", sep="")
+HTML.title(Title, HR = 1, align = "left")
 
 #Title text
 add<-paste(c("This module calculates the correlation between the response variables using "), method, sep="")
@@ -86,7 +86,7 @@ if (transformation != "None")
 	add<-paste(add, " transformed prior to analysis.", sep="")
 }
 HTML.title(add, HR=0, align="left")
-#===================================================================================================
+#===================================================================================================================
 
 
 #Breakdown the list of responses
@@ -111,11 +111,12 @@ for (i in 2:resplength)
 	responses<- paste(responses, resplist[i], sep="")
 }
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
+#===================================================================================================================
 #Non-Categorised analysis
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
+#===================================================================================================================
+
 if ( (firstCat == "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat == "NULL") || ((firstCat != "NULL"  ||  secondCat != "NULL" ||  thirdCat != "NULL"  ||  fourthCat != "NULL") && ByCategoriesAndOverall == "Y"))
 { 
 
@@ -174,9 +175,9 @@ if (scatterplotSelected != "N")
 				plotFilepdf1 <- sub(".html", paste(i,j,"scatterPlot.pdf",sep=""), htmlFile)
 				dev.control("enable") 
 
-#====================================================================================================================================================
+#===================================================================================================================
 #Graphical plot options
-#====================================================================================================================================================
+#===================================================================================================================
 				graphdata <-statdata
 				graphdata$xvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][i])))
 				graphdata$yvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][j])))
@@ -205,7 +206,7 @@ if (scatterplotSelected != "N")
 
 #GGPLOT2 code
 				NONCAT_SCAT("NORMAL")
-#====================================================================================================================================================
+#===================================================================================================================
 				void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
 
 #STB July2013
@@ -233,9 +234,9 @@ if (scatterplotSelected != "N")
 	}
 }
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Matrixplot
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 if (matrixPlotSelected != "N")
 {
@@ -253,9 +254,9 @@ if (matrixPlotSelected != "N")
 	plotFilepdf2 <- sub(".html", "scatterPlotx.pdf", htmlFile)
 	dev.control("enable") 
 
-#====================================================================================================================================================
+#===================================================================================================================
 #Matrixplot parameters and dataset setup
-#====================================================================================================================================================
+#===================================================================================================================
 	matrixdata <- data.frame(xvarrr_IVS = NA, yvarrr_IVS = NA, firstcatvarrr_IVS = NA, secondcatvarrr_IVS=NA)
 
 	for (i in 1:resplength)
@@ -304,7 +305,7 @@ if (matrixPlotSelected != "N")
 
 #GGPLOT2 code
 	NONCAT_MAT()
-#====================================================================================================================================================
+#===================================================================================================================
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlotx), Align="centre")
 
@@ -323,9 +324,9 @@ if (matrixPlotSelected != "N")
 }
 
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Correlation table
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 
 index<-1
 colsno <-4
@@ -534,11 +535,11 @@ if (k>1)
 
 
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
+#===================================================================================================================
 #Categorised analysis
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
+#===================================================================================================================
 
 if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL")
 {
@@ -577,9 +578,9 @@ for (d in 1:resplength)
 #STB July2013
 			plotFilepdf3 <- sub(".html", paste(d,f,"ncscatterplot3.pdf",sep=""), htmlFile)
 			dev.control("enable") 
-#====================================================================================================================================================
+#===================================================================================================================
 #Graphical plot options
-#====================================================================================================================================================
+#===================================================================================================================
 			graphdata <-statdata
 
 			Gr_palette<-palette_FUN("catfact")
@@ -622,7 +623,7 @@ for (d in 1:resplength)
 
 #GGPLOT2 code
 			OVERLAID_SCAT()
-#====================================================================================================================================================
+#===================================================================================================================
 
 			void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
 
@@ -664,9 +665,9 @@ if (qt == 2)
 
 }
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Matrixplot
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 if (matrixPlotSelected != "N")
 {
 	YAxisTitle<-csResponses
@@ -683,9 +684,9 @@ if (matrixPlotSelected != "N")
 	plotFilepdf4 <- sub(".html", "xscatterPlotx.pdf", htmlFile)
 	dev.control("enable") 
 
-#====================================================================================================================================================
+#===================================================================================================================
 #Matrixplot parameters and dataset setup
-#====================================================================================================================================================
+#===================================================================================================================
 matrixdata <- data.frame(xvarrr_IVS = NA, yvarrr_IVS = NA, firstcatvarrr_IVS = NA, secondcatvarrr_IVS=NA, l_li=NA)
 
 for (s in 1:length(levels(as.factor(statdata$catfact))))
@@ -749,7 +750,7 @@ for (s in 1:length(levels(as.factor(statdata$catfact))))
 
 #GGplot2 code
 	OVERLAID_MAT()
-#====================================================================================================================================================
+#===================================================================================================================
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", xscatterPlotx), Align="centre")
 
@@ -768,9 +769,9 @@ for (s in 1:length(levels(as.factor(statdata$catfact))))
 }
 
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Correlation table
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 colsno <-5
 if (estimate=="Y") {colsno = colsno+1}
 if (statistic=="Y") {colsno = colsno+1}
@@ -1052,83 +1053,48 @@ if (k>2)
 #End of If statement for cat analyisis
 }
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #References
-#-----------------------------------------------------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 Ref_list<-R_refs()
 
 #Bate and Clark comment
-HTML.title("<bf> ", HR=2, align="left")
 HTML.title(refxx, HR=0, align="left")	
-HTML.title("<bf> ", HR=2, align="left")
 
-
-HTMLbr()
-HTML.title("<bf>Statistical references", HR=2, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$BateClark_ref, HR=0, align="left")
-
-if (method == "Pearson")
-{
-	HTML.title("<bf> ", HR=2, align="left")
-	HTML.title("<bf> Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition; Iowa State University Press, Iowa, USA.", HR=0, align="left") 
+HTML.title("Statistical references", HR=2, align="left")
+HTML(Ref_list$BateClark_ref, align="left")
+if (method == "Pearson") {
+	HTML("Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition; Iowa State University Press, Iowa, USA.", align="left") 
 }
-
-if (method == "Spearman") 
-{
-	HTML.title("<bf> ", HR=2, align="left")
-	HTML.title("<bf> Best DJ and Roberts DE. (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho. Applied Statistics, 24, 377-379. ", HR=0, align="left")
+if (method == "Spearman") {
+	HTML("Best DJ and Roberts DE. (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho. Applied Statistics, 24, 377-379. ", align="left")
 }
-
-if (method == "Spearman" || method == "Kendall") 
-{
-	HTML.title("<bf> ", HR=2, align="left")
-	HTML.title("<bf> Hollander M and Wolfe DA. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons. P185-194. ", HR=0, align="left")
+if (method == "Spearman" || method == "Kendall") {
+	HTML("Hollander M and Wolfe DA. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons. P185-194. ", align="left")
 }
+HTML.title("R references", HR=2, align="left")
+HTML(Ref_list$R_ref , align="left")
+HTML(Ref_list$GGally_ref, align="left")
+HTML(Ref_list$RColorBrewers_ref, align="left")
+HTML(Ref_list$GGPLot2_ref, align="left")
+HTML(Ref_list$reshape_ref, align="left")
+HTML(Ref_list$plyr_ref, align="left")
+HTML(Ref_list$scales_ref, align="left")
+HTML(Ref_list$R2HTML_ref, align="left")
+HTML(Ref_list$PROTO_ref, align="left")
 
 
-HTMLbr()
-HTML.title("<bf>R references", HR=2, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$R_ref , HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$GGally_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$RColorBrewers_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$GGPLot2_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$reshape_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$plyr_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$scales_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$R2HTML_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$PROTO_ref, HR=0, align="left")
-
-
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Show dataset
-#----------------------------------------------------------------------------------------------------------
-if (showdataset=="Y")
-{
-	HTMLbr()
-	HTML.title("<bf>Analysis dataset", HR=2, align="left")
+#===================================================================================================================
+if (showdataset=="Y") {
+
+	HTML.title("Analysis dataset", HR=2, align="left")
 	statdata2<-subset(statdata, select = -c(catfact))
 	statdata3<-subset(statdata2, select = -c(i))
 	statdata4<-subset(statdata3, select = -c(j))
+        observ <- data.frame(c(1:dim(statdata4)[1]))
+        colnames(observ) <- c("Observation")
 
 	if (ByCategoriesAndOverall == "Y"|| ((firstCat == "NULL"  &&  secondCat == "NULL" &&  thirdCat == "NULL"  &&  fourthCat == "NULL") && ByCategoriesAndOverall == "N"))
 	{ 
@@ -1136,11 +1102,45 @@ if (showdataset=="Y")
 		statdata6<-subset(statdata5, select = -c(y))
 		statdata7<-subset(statdata6, select = -c(ij))
 		statdata8<-subset(statdata7, select = -c(xy))
-		HTML(statdata8, classfirstline="second", align="left")
+                statdata9 <- cbind(observ, statdata8)
+		HTML(statdata9, classfirstline="second", align="left", row.names = "FALSE")
 	} else {
-		HTML(statdata4, classfirstline="second", align="left")
+                statdata10 <- cbind(observ, statdata4)
+		HTML(statdata10, classfirstline="second", align="left", row.names = "FALSE")
 		}
 }
 
+
+#===================================================================================================================
+#Show arguments
+#===================================================================================================================
+
+#Copy Args
+HTML.title("Analysis options", HR=2, align="left")
+HTML(paste("Response variables: ", csResponses, sep=""), align="left")
+if (transformation != "None") {
+	HTML(paste("Transformation: ", transformation, sep=""), align="left")
+}
+if (firstCat != "NULL") {
+	HTML(paste("First categorisation factor: ", firstCat, sep=""), align="left")
+}
+if (secondCat != "NULL") {
+	HTML(paste("Second categorisation factor: ", secondCat, sep=""), align="left")
+}
+if (thirdCat != "NULL") {	
+	HTML(paste("Third categorisation factor: ", thirdCat, sep=""), align="left")
+}
+if (fourthCat != "NULL") {	
+	HTML(paste("Fourth categorisation factor: ", fourthCat, sep=""), align="left")
+}
+HTML(paste("Significance level: ", 1-CIval, sep=""),  align="left")
+HTML(paste("Method used: ", method, sep=""),  align="left")
+HTML(paste("Hypotheses type: ", hypothesis, sep=""),  align="left")
+HTML(paste("Display correlation coefficient (Y/N): ", estimate, sep=""),  align="left")
+HTML(paste("Display test statistic (Y/N): ", statistic, sep=""),  align="left")
+HTML(paste("Display p-values (Y/N): ", pValueSelected, sep=""),  align="left")
+HTML(paste("Generate scatterplots (Y/N): ", scatterplotSelected, sep=""),  align="left")
+HTML(paste("Generate matrixplot (Y/N): ", matrixPlotSelected, sep=""),  align="left")
+HTML(paste("Generate categorised output (Y/N): ", ByCategoriesAndOverall, sep=""),  align="left")
 
 

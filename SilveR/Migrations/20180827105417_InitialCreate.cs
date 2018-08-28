@@ -47,6 +47,7 @@ namespace SilveR.Migrations
                     DatasetID = table.Column<int>(nullable: true),
                     DatasetName = table.Column<string>(maxLength: 50, nullable: true),
                     ScriptID = table.Column<int>(nullable: false),
+                    Tag = table.Column<string>(unicode: false, maxLength: 200, nullable: true),
                     RProcessOutput = table.Column<string>(nullable: true),
                     HtmlOutput = table.Column<string>(nullable: true),
                     DateAnalysed = table.Column<DateTime>(type: "datetime", nullable: false)

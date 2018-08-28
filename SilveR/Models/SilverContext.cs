@@ -30,6 +30,8 @@ namespace SilveRModel.Models
                     .HasForeignKey(d => d.ScriptID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Analyses_Scripts");
+
+                entity.Property(e => e.Tag).IsUnicode(false);
             });
 
             modelBuilder.Entity<Argument>(entity =>

@@ -12,9 +12,9 @@ using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
-    public class SingleMeasuresModel : IAnalysisModel
+    public class SingleMeasuresParametricAnalysisModel : IAnalysisModel
     {
-        public string ScriptFileName { get { return "SingleMeasureGLM"; } }
+        public string ScriptFileName { get { return "SingleMeasuresParametricAnalysis"; } }
 
         private DataTable dataTable;
         public DataTable DataTable
@@ -113,9 +113,9 @@ namespace SilveRModel.StatsModel
         public List<string> ControlGroupList { get; set; }
 
 
-        public SingleMeasuresModel() { }
+        public SingleMeasuresParametricAnalysisModel() { }
 
-        public SingleMeasuresModel(Dataset dataset)
+        public SingleMeasuresParametricAnalysisModel(Dataset dataset)
         {
             //setup model
             ReInitialize(dataset);
@@ -131,8 +131,8 @@ namespace SilveRModel.StatsModel
 
         public ValidationInfo Validate()
         {
-            SingleMeasuresValidator singleMeasuresValidator = new SingleMeasuresValidator(this);
-            return singleMeasuresValidator.Validate();
+            SingleMeasuresParametricAnalysisValidator singleMeasuresParametricAnalysisValidator = new SingleMeasuresParametricAnalysisValidator(this);
+            return singleMeasuresParametricAnalysisValidator.Validate();
         }
 
         public string[] ExportData()

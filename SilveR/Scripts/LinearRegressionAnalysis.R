@@ -53,7 +53,7 @@ if (FirstCatFactor == "NULL")
 	FirstCatFactor<-"FirstCatFactor"
 }
 
-source(paste(getwd(),"/InVivoStat_functions.R", sep=""))
+#source(paste(getwd(),"/Common_Functions.R", sep=""))
 
 #STB 14OCT2015
 #Set contrast options for Marginal overall tests
@@ -78,14 +78,15 @@ HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
 #Output HTML header
-HTML.title("<bf>InVivoStat Linear Regression Analysis", HR=1, align="left")
+Title <-paste(branding, " Linear Regression Analysis", sep="")
+HTML.title(Title, HR = 1, align = "left")
 
 if (is.numeric(statdata$mainEffect) == TRUE)
 {
 	cntrlGroup <- paste ("'",cntrlGroup,"'",sep="")
 }
 
-#============================================================================================================================
+#===================================================================================================================
 
 #Parameter setup
 
@@ -229,9 +230,9 @@ if (noblockfactors > 0)
 threewayfull<-lm(model, data=statdata, na.action = na.omit)
 
 
-#============================================================================================================================
+#===================================================================================================================
 #Titles and description
-#============================================================================================================================
+#===================================================================================================================
 #Response
 
 title<-c("Response")
@@ -275,9 +276,9 @@ if (covariateTransform != "None")
 	HTML.title(add3, HR=0, align="left")
 }
 
-#============================================================================================================================
+#===================================================================================================================
 #Scatterplot
-#============================================================================================================================
+#===================================================================================================================
 
 HTMLbr()
 title<-c("Scatterplots of the raw data, including best-fit regression lines")
@@ -289,8 +290,7 @@ if(responseTransform != "None" || contFactorTransform != "None")
 
 HTML.title(title, HR=2, align="left")
 
-#==================================================================================================================================================
-#==================================================================================================================================================
+#===================================================================================================================
 #Graphical parameters
 
 graphdata<-statdata
@@ -326,8 +326,7 @@ for (i in 1: length(ContinuousList))
 		NONCAT_SCAT("none")
 		}
 
-#==================================================================================================================================================
-#==================================================================================================================================================
+#===================================================================================================================
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
 
 #STB July2013
@@ -373,9 +372,9 @@ if(covariateModel != "NULL" && noblockfactors > 1)
 
 
 
-#============================================================================================================================
+#===================================================================================================================
 #Slope estimation
-#============================================================================================================================
+#===================================================================================================================
 
 if (nocontfactors == 1)
 {
@@ -548,9 +547,9 @@ if(covariateModel != "NULL" && noblockfactors > 1)
 	HTML.title("</bf> Note: The estimates of the regression coefficients are not adjusted for the covariate or the blocking factors.", HR=0, align="left")
 }
 
-#============================================================================================================================
+#===================================================================================================================
 #Covariate plot
-#============================================================================================================================
+#===================================================================================================================
 
 if(covariateModel != "NULL")
 {
@@ -575,8 +574,7 @@ if(covariateModel != "NULL")
 	plotFilepdf2 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
 	dev.control("enable") 
 
-#================================================================================================================================================
-#================================================================================================================================================
+#===================================================================================================================
 #Graphical parameters
 	graphdata<-statdata
 	graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",unlist(strsplit(covariateModel, "~"))[2])))
@@ -614,8 +612,7 @@ if(covariateModel != "NULL")
 	} else {
 		NONCAT_SCAT("none")
 		}
-#================================================================================================================================================
-#================================================================================================================================================
+#===================================================================================================================
 	
 	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
 
@@ -662,9 +659,9 @@ if(covariateModel != "NULL")
 }
 
 
-#============================================================================================================================
+#===================================================================================================================
 #building the covariate interaction model
-#============================================================================================================================
+#===================================================================================================================
 if(AssessCovariateInteractions == "Y" &&covariateModel != "NULL")
 {
 
@@ -712,7 +709,7 @@ Covintfull<-lm(as.formula(model2), data=statdata, na.action = na.omit)
 
 #Printing ANCOVA Table - note this code is reused from below - Type III SS included
 
-#==================================================================================================================================================
+#===================================================================================================================
 #Testing the degrees of freedom
 
 	if (df.residual(Covintfull)<1)
@@ -774,9 +771,9 @@ Covintfull<-lm(as.formula(model2), data=statdata, na.action = na.omit)
 		} 
 	}
 }
-#============================================================================================================================
+#===================================================================================================================
 #ANOVA table
-#============================================================================================================================
+#===================================================================================================================
 
 #ANOVA Table
 if(showANOVA=="Y")
@@ -792,7 +789,7 @@ if(showANOVA=="Y")
 	}
 
 
-#==================================================================================================================================================
+#===================================================================================================================
 #Testing the degrees of freedom
 
 if (df.residual(threewayfull)<5)
@@ -801,7 +798,7 @@ if (df.residual(threewayfull)<5)
 	HTML.title("</bf> ", HR=2, align="left")
 	HTML.title(add, HR=0, align="left")
 }
-#==================================================================================================================================================
+#===================================================================================================================
 
 
 #STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
@@ -911,9 +908,9 @@ if (df.residual(threewayfull)<5)
 		HTML.title(add, HR=0, align="left")
 	}
 }
-#============================================================================================================================
+#===================================================================================================================
 #Table of regression coefficients
-#============================================================================================================================
+#===================================================================================================================
 options(contrasts=c("contr.SAS", "contr.SAS"))
 threewayfull2<-lm(model, data=statdata, na.action = na.omit)
 
@@ -949,9 +946,9 @@ if (showCoefficients == "Y")
 
 
 
-#============================================================================================================================
+#===================================================================================================================
 #Covariate correlation table
-#============================================================================================================================
+#===================================================================================================================
 
 if (CovariateRegressionCoefficients == "Y" && covariateModel != "NULL")
 {
@@ -987,9 +984,9 @@ if (CovariateRegressionCoefficients == "Y" && covariateModel != "NULL")
 
 
 
-#============================================================================================================================
+#===================================================================================================================
 #R squared
-#============================================================================================================================
+#===================================================================================================================
 
 if (showAdjustedRSquared =="Y")
 {
@@ -1013,9 +1010,9 @@ if (showAdjustedRSquared =="Y")
 }
 
 
-#============================================================================================================================
+#===================================================================================================================
 #Diagnostic plots
-#============================================================================================================================
+#===================================================================================================================
 
 #Diagnostic plot titles
 if(residualsVsPredictedPlot=="Y" || normalProbabilityPlot == "Y")
@@ -1040,8 +1037,7 @@ if(residualsVsPredictedPlot=="Y")
 	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
 	dev.control("enable") 
 
-#==================================================================================================================================================
-#==================================================================================================================================================
+#===================================================================================================================
 #Graphical parameters
 graphdata<-data.frame(cbind(predict(threewayfull),rstudent(threewayfull)))
 
@@ -1071,8 +1067,7 @@ Line_size <- 0.5
 NONCAT_SCAT("RESIDPLOT")
 
 MainTitle2 <- ""
-#==================================================================================================================================================
-#==================================================================================================================================================
+#===================================================================================================================
 
 	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", residualPlot), Align="centre")
 
@@ -1107,8 +1102,7 @@ if(normalProbabilityPlot=="Y")
 	dev.control("enable") 
 
 
-#==================================================================================================================================================
-#==================================================================================================================================================
+#===================================================================================================================
 #Graphical parameters
 
 	te<-qqnorm(resid(threewayfull))
@@ -1132,8 +1126,7 @@ if(normalProbabilityPlot=="Y")
 	NONCAT_SCAT("QQPLOT")
 
 	MainTitle2 <- ""
-#==================================================================================================================================================
-#==================================================================================================================================================
+#===================================================================================================================
 	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
 
 #STB July2013
@@ -1159,9 +1152,9 @@ if(normalProbabilityPlot=="Y")
 
 
 
-#============================================================================================================================
+#===================================================================================================================
 #Cooks distance
-#============================================================================================================================
+#===================================================================================================================
 
 if (cooksDistancePlot =="Y")
 {
@@ -1220,9 +1213,9 @@ if (cooksDistancePlot =="Y")
 }
 
 
-#============================================================================================================================
+#===================================================================================================================
 #Leverage plot
-#============================================================================================================================
+#===================================================================================================================
 
 if (leveragesPlot =="Y")
 {
@@ -1276,9 +1269,9 @@ if (leveragesPlot =="Y")
 
 
 
-#============================================================================================================================
+#===================================================================================================================
 #Analysis description
-#============================================================================================================================
+#===================================================================================================================
 HTMLbr()
 HTML.title("<bf>Analysis description", HR=2, align="left")
 
@@ -1397,91 +1390,98 @@ HTML.title("</bf> ", HR=2, align="left")
 HTML.title(add, HR=0, align="left")
 
 
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #References
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 Ref_list<-R_refs()
 
 #Bate and Clark comment
-HTML.title("<bf> ", HR=2, align="left")
 HTML.title(refxx, HR=0, align="left")	
-HTML.title("<bf> ", HR=2, align="left")
 
-HTMLbr()
-HTML.title("<bf>Statistical references", HR=2, align="left")
+HTML.title("Statistical references", HR=2, align="left")
+HTML(Ref_list$BateClark_ref, align="left")
 
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$BateClark_ref, HR=0, align="left")
-
-if(showANOVA=="Y")
-{
-	HTML.title("<bf> ", HR=2, align="left")
-	HTML.title("<bf> Armitage P, Matthews JNS and Berry G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.", HR=0, align="left")
+if(showANOVA=="Y") {
+	HTML("Armitage P, Matthews JNS and Berry G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.", align="left")
 }
 
-if(showCoefficients == "Y")
-{
-	HTML.title("<bf> ", HR=2, align="left")
-	HTML.title("<bf> Chambers JM and Hastie TJ. (1992). Statistical Models in S. Wadsworth and Brooks-Cole advanced books and software.", HR=0, align="left")
+if(showCoefficients == "Y") {
+	HTML("Chambers JM and Hastie TJ. (1992). Statistical Models in S. Wadsworth and Brooks-Cole advanced books and software.", align="left")
 }
 
-if(covariateModel != "NULL")
-{
-	HTML.title("<bf> ", HR=2, align="left")
-	HTML.title("<bf> Morris TR. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", HR=0, align="left")
+if(covariateModel != "NULL") {
+	HTML("Morris TR. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
 }
 
+HTML.title("R references", HR=2, align="left")
+HTML(Ref_list$R_ref ,  align="left")
+HTML(Ref_list$GGally_ref,  align="left")
+HTML(Ref_list$RColorBrewers_ref,  align="left")
+HTML(Ref_list$GGPLot2_ref,  align="left")
+HTML(Ref_list$reshape_ref,  align="left")
+HTML(Ref_list$plyr_ref,  align="left")
+HTML(Ref_list$scales_ref,  align="left")
+HTML(Ref_list$car_ref,  align="left")
+HTML(Ref_list$R2HTML_ref,  align="left")
+HTML(Ref_list$PROTO_ref,  align="left")
 
-HTMLbr()
-HTML.title("<bf>R references", HR=2, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$R_ref , HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$GGally_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$RColorBrewers_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$GGPLot2_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$reshape_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$plyr_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$scales_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$car_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$R2HTML_ref, HR=0, align="left")
-
-HTML.title("<bf> ", HR=2, align="left")
-HTML.title(Ref_list$PROTO_ref, HR=0, align="left")
-
-
-#----------------------------------------------------------------------------------------------------------
+#===================================================================================================================
 #Show dataset
-#----------------------------------------------------------------------------------------------------------
-
-
-if (showdataset=="Y")
-{
-
+#===================================================================================================================
+if (showdataset=="Y") {
 	statdata$scatterPlotColumn <-NULL
 	statdata$FirstCatFactor <-NULL
-	HTMLbr()
-	HTML.title("<bf>Analysis dataset", HR=2, align="left")
-	HTML(statdata, classfirstline="second", align="left")
+
+	observ <- data.frame(c(1:dim(statdata)[1]))
+	colnames(observ) <- c("Observation")
+	statdata2 <- cbind(observ, statdata)
+
+    	HTML.title("Analysis dataset", HR = 2, align = "left")
+    	HTML(statdata2, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
+#===================================================================================================================
+#Show arguments
+#===================================================================================================================
+HTML.title("Analysis options", HR=2, align="left")
 
+HTML(paste("Response variable: ", resp, sep=""),  align="left")
+if (responseTransform != "None") {
+	HTML(paste("Response transformation: ", responseTransform, sep=""),  align="left")
+}
+
+if(covariateModel != "NULL") {
+	HTML(paste("Covariate: ", unlist(strsplit(covariateModel, "~"))[2], sep=""),  align="left")
+}
+
+if (covariateModel != "NULL" && covariateTransform != "None") {
+	HTML(paste("Covariate transformation: ", covariateTransform, sep=""),  align="left")
+}
+
+if (covariateModel != "NULL" ) {
+	HTML(paste("Categorisation factor used on covariate scatterplots: ", FirstCatFactor, sep=""),  align="left")
+}
+
+if(treatFactors != "NULL") {
+	HTML(paste("Categorical treatment factors included in model: ", treatFactors, sep=""),  align="left")
+}
+
+if(contFactors != "NULL") {
+	HTML(paste("Continuous treatment factors included in model: ", contFactors, sep=""),  align="left")
+}
+
+if (blockFactors != "NULL") {
+	HTML(paste("Blocking factor(s) selected: ", blockFactors, sep=""),  align="left")
+}
+HTML(paste("Model fitted: ", model, sep=""),  align="left")
+HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""),  align="left")
+HTML(paste("Output model coefficients (Y/N): ", showCoefficients, sep=""),  align="left")
+HTML(paste("Output Adjusted R-squared (Y/N): ", showAdjustedRSquared, sep=""),  align="left")
+HTML(paste("Output predicted vs. residual plot (Y/N): ", residualsVsPredictedPlot, sep=""),  align="left")
+HTML(paste("Output normal probability plot (Y/N): ", normalProbabilityPlot, sep=""),  align="left")
+HTML(paste("Output Cook's distance plot (Y/N): ", cooksDistancePlot, sep=""),  align="left")
+HTML(paste("Output leverage plot (Y/N): ", leveragesPlot, sep=""),  align="left")
+HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
 
 
 

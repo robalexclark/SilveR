@@ -94,16 +94,22 @@ namespace SilveR
 
                 IEnumerable<Script> existingScripts = context.Scripts.ToList();
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "SummaryStats"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "SummaryStatistics"))
                 {
-                    Script summaryStatistics = new Script() { ScriptDisplayName = "Summary Statistics", ScriptFileName = "SummaryStats" };
+                    Script summaryStatistics = new Script() { ScriptDisplayName = "Summary Statistics", ScriptFileName = "SummaryStatistics" };
                     context.Scripts.Add(summaryStatistics);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "NonParametric"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "SingleMeasuresParametricAnalysis"))
                 {
-                    Script nonParametrics = new Script() { ScriptDisplayName = "Non-Parametric Analysis", ScriptFileName = "NonParametric" };
-                    context.Scripts.Add(nonParametrics);
+                    Script singleMeasureGLM = new Script() { ScriptDisplayName = "Single Measures Parametric Analysis", ScriptFileName = "SingleMeasuresParametricAnalysis" };
+                    context.Scripts.Add(singleMeasureGLM);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "RepeatedMeasuresParametricAnalysis"))
+                {
+                    Script repeatedMeasures = new Script() { ScriptDisplayName = "Repeated Measures Parametric Analysis", ScriptFileName = "RepeatedMeasuresParametricAnalysis" };
+                    context.Scripts.Add(repeatedMeasures);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "PValueAdjustment"))
@@ -112,28 +118,58 @@ namespace SilveR
                     context.Scripts.Add(pValueAdjustment);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "SingleMeasureGLM"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "PairedTTestAnalysis"))
                 {
-                    Script singleMeasureGLM = new Script() { ScriptDisplayName = "Single Measures Parametric Analysis", ScriptFileName = "SingleMeasureGLM" };
-                    context.Scripts.Add(singleMeasureGLM);
+                    Script pairedTTest = new Script() { ScriptDisplayName = "Paired t-test Analysis", ScriptFileName = "PairedTTestAnalysis" };
+                    context.Scripts.Add(pairedTTest);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "UnpairedTTest"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "UnpairedTTestAnalysis"))
                 {
-                    Script twoSampleTTest = new Script() { ScriptDisplayName = "Two-Sample t-Test Analysis", ScriptFileName = "TwoSampleTTest" };
+                    Script unpairedTTest = new Script() { ScriptDisplayName = "Unpaired t-test Analysis", ScriptFileName = "UnpairedTTestAnalysis" };
+                    context.Scripts.Add(unpairedTTest);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "TwoSampleTTestAnalysis"))
+                {
+                    Script twoSampleTTest = new Script() { ScriptDisplayName = "Two-Sample t-test Analysis", ScriptFileName = "TwoSampleTTestAnalysis" };
                     context.Scripts.Add(twoSampleTTest);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "RepeatedMeasures"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "CorrelationAnalysis"))
                 {
-                    Script repeatedMeasures = new Script() { ScriptDisplayName = "Repeated Measures Parametric Analysis", ScriptFileName = "RepeatedMeasures" };
-                    context.Scripts.Add(repeatedMeasures);
+                    Script correlation = new Script() { ScriptDisplayName = "Correlation Analysis", ScriptFileName = "CorrelationAnalysis" };
+                    context.Scripts.Add(correlation);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "PairedTTest"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "LinearRegressionAnalysis"))
                 {
-                    Script pairedTTest = new Script() { ScriptDisplayName = "Paired t-test Analysis", ScriptFileName = "PairedTTest" };
-                    context.Scripts.Add(pairedTTest);
+                    Script linearRegression = new Script() { ScriptDisplayName = "Linear Regression Analysis", ScriptFileName = "LinearRegressionAnalysis" };
+                    context.Scripts.Add(linearRegression);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "DoseResponseAnalysis"))
+                {
+                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-response Analysis", ScriptFileName = "DoseResponseAnalysis" };
+                    context.Scripts.Add(doseResponse);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "NonParametricAnalysis"))
+                {
+                    Script nonParametrics = new Script() { ScriptDisplayName = "Non-Parametric Analysis", ScriptFileName = "NonParametricAnalysis" };
+                    context.Scripts.Add(nonParametrics);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "ChiSquaredAnalysis"))
+                {
+                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-Squared Analysis", ScriptFileName = "ChiSquaredAnalysis" };
+                    context.Scripts.Add(chiSquared);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "SurvivalAnalysis"))
+                {
+                    Script survivalAnalysis = new Script() { ScriptDisplayName = "Survival Analysis", ScriptFileName = "SurvivalAnalysis" };
+                    context.Scripts.Add(survivalAnalysis);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "GraphicalAnalysis"))
@@ -146,6 +182,24 @@ namespace SilveR
                 {
                     Script meansComparison = new Script() { ScriptDisplayName = "Means Comparison", ScriptFileName = "MeansComparison" };
                     context.Scripts.Add(meansComparison);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "MultivariateAnalysis"))
+                {
+                    Script multivariate = new Script() { ScriptDisplayName = "Multivariate Analysis", ScriptFileName = "MultivariateAnalysis" };
+                    context.Scripts.Add(multivariate);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "NestedDesignAnalysis"))
+                {
+                    Script nestedDesign = new Script() { ScriptDisplayName = "Nested Design Analysis", ScriptFileName = "NestedDesignAnalysis" };
+                    context.Scripts.Add(nestedDesign);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "IncompleteFactorialParametricAnalysis"))
+                {
+                    Script incompleteFactorialAnalysis = new Script() { ScriptDisplayName = "Incomplete Factorial Parametric Analysis", ScriptFileName = "IncompleteFactorialParametricAnalysis" };
+                    context.Scripts.Add(incompleteFactorialAnalysis);
                 }
 
                 context.SaveChanges();

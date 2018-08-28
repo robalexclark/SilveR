@@ -60,6 +60,12 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/unpairedTTestAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/unpairedTTestAnalysis.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/stats/meansComparison.min.js",
     "inputFiles": [
       "wwwroot/js/stats/meansComparison.js"

@@ -10,9 +10,9 @@ using System.Text;
 
 namespace SilveRModel.StatsModel
 {
-    public class NonParametricModel : IAnalysisModel
+    public class NonParametricAnalysisModel : IAnalysisModel
     {
-        public string ScriptFileName { get { return "NonParametric"; } }
+        public string ScriptFileName { get { return "NonParametricAnalysis"; } }
 
         private DataTable dataTable;
         public DataTable DataTable
@@ -79,9 +79,9 @@ namespace SilveRModel.StatsModel
             }
         }
 
-        public NonParametricModel() { }
+        public NonParametricAnalysisModel() { }
 
-        public NonParametricModel(Dataset dataset)
+        public NonParametricAnalysisModel(Dataset dataset)
         {
             //setup model
             ReInitialize(dataset);
@@ -97,8 +97,8 @@ namespace SilveRModel.StatsModel
 
         public ValidationInfo Validate()
         {
-            NonParametricsValidator nonParametricsValidator = new NonParametricsValidator(this);
-            return nonParametricsValidator.Validate();
+            NonParametricAnalysisValidator nonParametricAnalysisValidator = new NonParametricAnalysisValidator(this);
+            return nonParametricAnalysisValidator.Validate();
         }
 
         public string[] ExportData()

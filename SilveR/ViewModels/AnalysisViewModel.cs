@@ -18,6 +18,7 @@ namespace SilveR.ViewModels
             DatasetName = analysis.DatasetName;
             ScriptID = analysis.ScriptID;
             ScriptDisplayName = analysis.Script.ScriptDisplayName;
+            Tag = analysis.Tag;
             RProcessOutput = analysis.RProcessOutput;
             HtmlOutput = analysis.HtmlOutput;
             DateAnalysed = analysis.DateAnalysed;
@@ -38,6 +39,9 @@ namespace SilveR.ViewModels
         public int ScriptID { get; set; }
 
         public string ScriptDisplayName { get; set; }
+
+        [StringLength(200)]
+        public string Tag { get; set; }
 
         public string RProcessOutput { get; set; }
 

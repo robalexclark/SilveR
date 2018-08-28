@@ -1,16 +1,16 @@
 ﻿using SilveRModel.StatsModel;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace SilveRModel.Validators
 {
-    public class PairedTTestValidator : ValidatorBase
+    public class PairedTTestAnalysisValidator : ValidatorBase
     {
-        private readonly PairedTTestModel pttVariables;
+        private readonly PairedTTestAnalysisModel pttVariables;
 
-        public PairedTTestValidator(PairedTTestModel ptt)
+        public PairedTTestAnalysisValidator(PairedTTestAnalysisModel ptt)
             : base(ptt.DataTable)
         {
             pttVariables = ptt;
