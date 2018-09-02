@@ -1,0 +1,92 @@
+﻿@model SilveRModel.StatsModel.SurvivalAnalysisModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script src="~/js/stats/survivalAnalysis.js"></script>
+    </environment>
+    <environment names="Production">
+        <script src="~/js/stats/survivalAnalysis.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Survival Analysis";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form action="/Analyses/SurvivalAnalysis" class="form-horizontal" method="post">
+
+    @await Html.PartialAsync("AnalysisErrors")
+
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-sm-6">
+
+            <h3>Input</h3>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Response</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Response" />
+                </div>
+                <span asp-validation-for="Response"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Grouping</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Grouping" />
+                </div>
+                <span asp-validation-for="Grouping"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Censorship</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Censorship" />
+                </div>
+                <span asp-validation-for="Censorship"></span>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Analysis Results</h3>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Summary results</label>
+                    <div class="col-sm-6">
+                        <input checked="checked" class="checkbox" asp-for="SummaryResults" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Survival plot</label>
+                    <div class="col-sm-6">
+                        <input checked="checked" class="checkbox" asp-for="SurvivalPlot" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Compare survival curves</label>
+                    <div class="col-sm-6">
+                        <input class="checkbox" asp-for="CompareSurvivalCurves" type="checkbox" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-6 control-label">Significance</label>
+                    <div class="col-sm-6">
+                        <input asp-for="Significance" />
+                    </div>
+                    <span asp-validation-for="Significance"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt20">
+        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    </div>
+</form>

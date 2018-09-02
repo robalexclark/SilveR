@@ -17,6 +17,10 @@ start "" "c:\dumpit\Silver-win\InvivoStat.exe"
 ping 127.0.0.1 -n 6 > nul
 start "" "http://localhost:5000"
 
+erase c:\dumpit\Silver-win\InVivoStat.db
+erase c:\dumpit\Silver-linux\InVivoStat.db
+erase c:\dumpit\Silver-osx\InVivoStat.db
+
 7z a -tzip -mx9 c:\dumpit\InVivoStat-Win.zip c:\dumpit\Silver-win\*
 7z a -tzip -mx9 c:\dumpit\InVivoStat-Linux.zip c:\dumpit\Silver-linux\*
 7z a -tzip -mx9 c:\dumpit\InVivoStat-OSx.zip c:\dumpit\Silver-osx\*

@@ -66,6 +66,18 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/correlationAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/correlationAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/linearRegressionAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/linearRegressionAnalysis.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/stats/meansComparison.min.js",
     "inputFiles": [
       "wwwroot/js/stats/meansComparison.js"
@@ -75,6 +87,18 @@
     "outputFileName": "wwwroot/js/stats/pValueAdjustment.min.js",
     "inputFiles": [
       "wwwroot/js/stats/pValueAdjustment.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/chiSquaredAndFishersExactTest.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/chiSquaredAndFishersExactTest.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/survivalAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/survivalAnalysis.js"
     ]
   },
   {
@@ -99,6 +123,18 @@
     "outputFileName": "wwwroot/js/stats/twoSampleTTestAnalysis.min.js",
     "inputFiles": [
       "wwwroot/js/stats/twoSampleTTestAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/incompleteFactorialParametricAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/incompleteFactorialParametricAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/nestedDesignAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/nestedDesignAnalysis.js"
     ]
   },
   {

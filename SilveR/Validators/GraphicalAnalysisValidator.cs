@@ -1,8 +1,7 @@
-﻿using System;
+﻿using SilveRModel.StatsModel;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using SilveRModel.StatsModel;
 
 namespace SilveRModel.Validators
 {

@@ -167,6 +167,25 @@ namespace SilveRModel.Validators
     }
 
 
+    //CORRELATION
+    public class HasAtLeastTwoEntries : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            IEnumerable<object> iEnumerable = (IEnumerable<object>)value;
+
+            if (iEnumerable == null || iEnumerable.Count() < 2)
+            {
+                return new ValidationResult(validationContext.DisplayName + " requires at least two entries");
+            }
+            else
+            {
+                return ValidationResult.Success;
+            }
+        }
+    }
+
+
     public class ValidateStandardDeviation : ValidationAttribute
     {
         private bool IsNumeric(string value)
@@ -459,43 +478,6 @@ namespace SilveRModel.Validators
             }
         }
     }
-
-
-    //SINGLE MEASURES
-    public class ValidatePrimaryFactorSetWhenCovariateSelected : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            SingleMeasuresParametricAnalysisModel model = (SingleMeasuresParametricAnalysisModel)validationContext.ObjectInstance;
-
-            if (!String.IsNullOrEmpty(model.Covariate) && String.IsNullOrEmpty(model.PrimaryFactor))
-            {
-                return new ValidationResult("You have selected a covariate but no primary factor is selected.");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
-
-    public class ValidateControlLevelSetWhenComparingToControl : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            SingleMeasuresParametricAnalysisModel model = (SingleMeasuresParametricAnalysisModel)validationContext.ObjectInstance;
-
-            if (!String.IsNullOrEmpty(model.ComparisonsBackToControl) && String.IsNullOrEmpty(model.ControlGroup))
-            {
-                return new ValidationResult("You have selected to compare back to a control but no control group is selected");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
-
 
 
     public class UniqueVariableChecker

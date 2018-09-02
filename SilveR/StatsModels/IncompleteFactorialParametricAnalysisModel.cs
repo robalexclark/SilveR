@@ -12,9 +12,9 @@ using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
-    public class SingleMeasuresParametricAnalysisModel : IAnalysisModel
+    public class IncompleteFactorialParametricAnalysisModel : IAnalysisModel
     {
-        public string ScriptFileName { get { return "SingleMeasuresParametricAnalysis"; } }
+        public string ScriptFileName { get { return "IncompleteFactorialParametricAnalysis"; } }
 
         private DataTable dataTable;
         public DataTable DataTable
@@ -111,9 +111,9 @@ namespace SilveRModel.StatsModel
         public List<string> ControlGroupList { get; set; }
 
 
-        public SingleMeasuresParametricAnalysisModel() { }
+        public IncompleteFactorialParametricAnalysisModel() { }
 
-        public SingleMeasuresParametricAnalysisModel(Dataset dataset)
+        public IncompleteFactorialParametricAnalysisModel(Dataset dataset)
         {
             //setup model
             ReInitialize(dataset);
@@ -129,7 +129,7 @@ namespace SilveRModel.StatsModel
 
         public ValidationInfo Validate()
         {
-            SingleMeasuresParametricAnalysisValidator singleMeasuresParametricAnalysisValidator = new SingleMeasuresParametricAnalysisValidator(this);
+            IncompleteFactorialParametricAnalysisValidator singleMeasuresParametricAnalysisValidator = new IncompleteFactorialParametricAnalysisValidator(this);
             return singleMeasuresParametricAnalysisValidator.Validate();
         }
 

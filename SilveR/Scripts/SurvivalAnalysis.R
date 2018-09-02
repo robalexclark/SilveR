@@ -19,8 +19,8 @@ Groupqq <- Args[5]
 Grouprr <- Args[5]
 Censorshipqq <- Args[6]
 SummaryResults <- Args[7]
-ComparingCurves <- Args[9]
 ShowPlot <- Args[8]
+ComparingCurves <- Args[9]
 sig <- 1 - as.numeric(Args[10])
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))

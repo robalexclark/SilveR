@@ -5,65 +5,51 @@ using System.Data;
 
 namespace SilveRModel.Validators
 {
-    public class SingleMeasuresParametricAnalysisValidator : ValidatorBase
+    public class NestedDesignAnalysisValidator : ValidatorBase
     {
-        private readonly SingleMeasuresParametricAnalysisModel smVariables;
+        private readonly NestedDesignAnalysisModel ndaVariables;
 
-        public SingleMeasuresParametricAnalysisValidator(SingleMeasuresParametricAnalysisModel sm)
-            : base(sm.DataTable)
+        public NestedDesignAnalysisValidator(NestedDesignAnalysisModel nda)
+            : base(nda.DataTable)
         {
-            smVariables = sm;
+            ndaVariables = nda;
         }
 
         public override ValidationInfo Validate()
         {
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
-            allVars.AddRange(smVariables.Treatments);
+            allVars.AddRange(ndaVariables.Treatments);
 
-            if (smVariables.OtherDesignFactors != null)
-                allVars.AddRange(smVariables.OtherDesignFactors);
+            if (ndaVariables.OtherDesignFactors != null)
+                allVars.AddRange(ndaVariables.OtherDesignFactors);
 
-            allVars.Add(smVariables.Response);
-            allVars.Add(smVariables.Covariate);
+            allVars.Add(ndaVariables.Response);
+            allVars.Add(ndaVariables.Covariate);
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(smVariables.Treatments, true)) return ValidationInfo;
+            if (!CheckTreatmentsHaveLevels(ndaVariables.Treatments, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(smVariables.Treatments, smVariables.Response)) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ndaVariables.Treatments, ndaVariables.Response)) return ValidationInfo;
 
-            if (smVariables.OtherDesignFactors != null)
-                if (!CheckResponsesPerLevel(smVariables.OtherDesignFactors, smVariables.Response, "other treatment")) return ValidationInfo;
+            if (ndaVariables.OtherDesignFactors != null)
+                if (!CheckResponsesPerLevel(ndaVariables.OtherDesignFactors, ndaVariables.Response, "other treatment")) return ValidationInfo;
 
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
-            categorical.AddRange(smVariables.Treatments);
+            categorical.AddRange(ndaVariables.Treatments);
 
-            if (smVariables.OtherDesignFactors != null)
-                categorical.AddRange(smVariables.OtherDesignFactors);
+            if (ndaVariables.OtherDesignFactors != null)
+                categorical.AddRange(ndaVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, smVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Response)) return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
-            if (!String.IsNullOrEmpty(smVariables.Covariate))
+            if (!String.IsNullOrEmpty(ndaVariables.Covariate))
             {
-                if (!FactorAndResponseCovariateChecks(categorical, smVariables.Covariate)) return ValidationInfo;
-            }
-
-            //check that the effect selected is the highest order interaction possible from selected factors, else output warning
-            CheckEffectSelectedIsHighestOrderInteraction();
-
-            //
-            if (!String.IsNullOrEmpty(smVariables.Covariate) && String.IsNullOrEmpty(smVariables.PrimaryFactor))
-            {
-                ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
-            }
-
-            if (!String.IsNullOrEmpty(smVariables.ComparisonsBackToControl) && String.IsNullOrEmpty(smVariables.ControlGroup))
-            {
-                ValidationInfo.AddErrorMessage("You have selected to compare back to a control but no control group is selected");
+                if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Covariate)) return ValidationInfo;
             }
 
             //if get here then no errors so return true
@@ -75,7 +61,7 @@ namespace SilveRModel.Validators
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {
                 string factorType;
-                if (smVariables.Treatments.Contains(catFactor))
+                if (ndaVariables.Treatments.Contains(catFactor))
                 {
                     factorType = "treatment";
                 }
@@ -85,7 +71,7 @@ namespace SilveRModel.Validators
                 }
 
                 string responseType;
-                if (smVariables.Response.Contains(continuous))
+                if (ndaVariables.Response.Contains(continuous))
                 {
                     responseType = "response";
                 }
@@ -111,7 +97,7 @@ namespace SilveRModel.Validators
                     bool parsedOK = Double.TryParse(continuousRow[i], out parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + smVariables.Response + ") selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + ndaVariables.Response + ") selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
@@ -139,40 +125,14 @@ namespace SilveRModel.Validators
                 //check transformations
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, smVariables.ResponseTransformation, smVariables.Response, "response");
+                    CheckTransformations(row, ndaVariables.ResponseTransformation, ndaVariables.Response, "response");
 
-                    CheckTransformations(row, smVariables.CovariateTransformation, smVariables.Covariate, "covariate");
+                    CheckTransformations(row, ndaVariables.CovariateTransformation, ndaVariables.Covariate, "covariate");
                 }
             }
 
             //if got here then all checks ok, return true
             return true;
-        }
-
-        private void CheckEffectSelectedIsHighestOrderInteraction()
-        {
-            if (!String.IsNullOrEmpty(smVariables.SelectedEffect))
-            {
-                string[] splittedEffect = smVariables.SelectedEffect.Split('*');
-
-                if (splittedEffect.GetLength(0) < smVariables.Treatments.Count)
-                {
-                    string mainEffectOrInteraction;
-
-                    if (splittedEffect.GetLength(0) == 1) //then only one factor
-                    {
-                        mainEffectOrInteraction = "a main effect";
-                    }
-                    else // then an interaction
-                    {
-                        mainEffectOrInteraction = "an interaction";
-                    }
-
-                    ValidationInfo.AddWarningMessage("You have selected to plot/compare levels of " + mainEffectOrInteraction +
-                        " in the presence of a higher order interaction(s). This should only be carried out if the higher order interaction(s) are not statistically significant. In the following we have removed these interaction(s) from the model prior to making the comparisons. The actual model fitted is " +
-                        smVariables.GetEffectModel().Replace("mainEffect", " selected effect"));
-                }
-            }
         }
     }
 }

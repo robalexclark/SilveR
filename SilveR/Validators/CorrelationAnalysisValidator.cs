@@ -5,21 +5,20 @@ using System.Data;
 
 namespace SilveRModel.Validators
 {
-    public class SummaryStatisticsValidator : ValidatorBase
+    public class CorrelationAnalysisValidator : ValidatorBase
     {
-        private readonly SummaryStatisticsModel ssVariables;
+        private readonly CorrelationAnalysisModel caVariables;
 
-        public SummaryStatisticsValidator(SummaryStatisticsModel ss)
-            : base(ss.DataTable)
+        public CorrelationAnalysisValidator(CorrelationAnalysisModel ca)
+            : base(ca.DataTable)
         {
-            ssVariables = ss;
+            caVariables = ca;
         }
 
         public override ValidationInfo Validate()
         {
             //first just check to ensure that the user has actually selected something to output!
-            if (!ssVariables.Mean && !ssVariables.N && !ssVariables.StandardDeviation && !ssVariables.Variance && !ssVariables.StandardErrorOfMean && !ssVariables.MinAndMax && !ssVariables.MedianAndQuartiles && !ssVariables.CoefficientOfVariation
-                && !ssVariables.NormalProbabilityPlot && !ssVariables.CoefficientOfVariation && !ssVariables.ByCategoriesAndOverall)
+            if (!caVariables.Estimate && !caVariables.Statistic && !caVariables.PValue && !caVariables.Scatterplot && !caVariables.Matrixplot && !caVariables.ByCategoriesAndOverall)
             {
                 ValidationInfo.AddErrorMessage("You have not selected anything to output!");
                 return ValidationInfo;
@@ -27,23 +26,24 @@ namespace SilveRModel.Validators
 
             //Create a list of all variables
             List<string> allVars = new List<string>();
-            allVars.AddRange(ssVariables.Responses);
-            allVars.Add(ssVariables.FirstCatFactor);
-            allVars.Add(ssVariables.SecondCatFactor);
-            allVars.Add(ssVariables.ThirdCatFactor);
-            allVars.Add(ssVariables.FourthCatFactor);
+            allVars.AddRange(caVariables.Responses);
+            allVars.Add(caVariables.FirstCatFactor);
+            allVars.Add(caVariables.SecondCatFactor);
+            allVars.Add(caVariables.ThirdCatFactor);
+            allVars.Add(caVariables.FourthCatFactor);
+
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
             //Create a list of categorical variables selected (i.e. the cat factors)
             List<string> categorical = new List<string>();
-            if (!String.IsNullOrEmpty(ssVariables.FirstCatFactor)) categorical.Add(ssVariables.FirstCatFactor);
-            if (!String.IsNullOrEmpty(ssVariables.SecondCatFactor)) categorical.Add(ssVariables.SecondCatFactor);
-            if (!String.IsNullOrEmpty(ssVariables.ThirdCatFactor)) categorical.Add(ssVariables.ThirdCatFactor);
-            if (!String.IsNullOrEmpty(ssVariables.FourthCatFactor)) categorical.Add(ssVariables.FourthCatFactor);
+            if (!String.IsNullOrEmpty(caVariables.FirstCatFactor)) categorical.Add(caVariables.FirstCatFactor);
+            if (!String.IsNullOrEmpty(caVariables.SecondCatFactor)) categorical.Add(caVariables.SecondCatFactor);
+            if (!String.IsNullOrEmpty(caVariables.ThirdCatFactor)) categorical.Add(caVariables.ThirdCatFactor);
+            if (!String.IsNullOrEmpty(caVariables.FourthCatFactor)) categorical.Add(caVariables.FourthCatFactor);
 
             //Go through each response
-            foreach (string response in ssVariables.Responses)
+            foreach (string response in caVariables.Responses)
             {
                 if (!CheckIsNumeric(response))
                 {
@@ -53,7 +53,7 @@ namespace SilveRModel.Validators
 
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, ssVariables.Transformation, response, "response");
+                    CheckTransformations(row, caVariables.Transformation, response, "response");
                 }
 
                 foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
