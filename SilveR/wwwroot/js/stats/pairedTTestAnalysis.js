@@ -30,6 +30,10 @@ $(function () {
         dataSource: theModel.transformationsList
     });
 
+    $("#Covariance").kendoDropDownList({
+        dataSource: theModel.covarianceList
+    });
+
     $("#Significance").kendoDropDownList({
         dataSource: theModel.significancesList
     });

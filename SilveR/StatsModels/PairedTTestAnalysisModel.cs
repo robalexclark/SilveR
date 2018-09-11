@@ -1,13 +1,13 @@
-﻿using System;
+﻿using SilveRModel.Helpers;
+using SilveRModel.Models;
+using SilveRModel.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
@@ -76,7 +76,6 @@ namespace SilveRModel.StatsModel
             get { return new List<string>() { "Compound Symmetric", "Unstructured", "Autoregressive(1)" }; }
         }
 
-
         public string Covariance = "Compound Symmetric";
 
 
@@ -94,6 +93,9 @@ namespace SilveRModel.StatsModel
 
         [Display(Name = "Significance")]
         public string Significance { get; set; } = "0.05";
+
+        [DisplayName("All Pairwise Comparisons")]
+        public bool AllPairwiseComparisons { get; set; }
 
         public List<string> SignificancesList
         {
@@ -185,6 +187,7 @@ namespace SilveRModel.StatsModel
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlotSelected), PRPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlotSelected), NormalPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(AllPairwiseComparisons), AllPairwiseComparisons));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
 
             return args;
@@ -206,6 +209,7 @@ namespace SilveRModel.StatsModel
             this.PRPlotSelected = argHelper.ArgumentLoader(nameof(PRPlotSelected), PRPlotSelected);
             this.NormalPlotSelected = argHelper.ArgumentLoader(nameof(NormalPlotSelected), NormalPlotSelected);
             this.LSMeansSelected = argHelper.ArgumentLoader(nameof(LSMeansSelected), LSMeansSelected);
+            this.AllPairwiseComparisons = argHelper.ArgumentLoader(nameof(AllPairwiseComparisons), AllPairwiseComparisons);
             this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
@@ -251,12 +255,11 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(ANOVASelected)); //12
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(PRPlotSelected)); //13
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalPlotSelected)); //14
+            arguments.Append(" " + ArgumentConverters.GetYesOrNo(AllPairwiseComparisons)); //15
 
-            arguments.Append(" " + Significance); //15
+            arguments.Append(" " + Significance); //16
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LSMeansSelected)); //16
-
-            arguments.Append(" " + "N");
+            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LSMeansSelected)); //17
 
             return arguments.ToString();
         }

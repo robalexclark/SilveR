@@ -215,8 +215,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(DesignOption3))); //17
             arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(DesignOption4))); //18
 
-            arguments.Append(" " + "N");
-
             return arguments.ToString();
         }
 

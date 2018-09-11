@@ -179,8 +179,6 @@ namespace SilveRModel.StatsModel
 
             arguments.Append(" " + Significance);
 
-            arguments.Append(" " + "N");
-
             return arguments.ToString();
         }
 

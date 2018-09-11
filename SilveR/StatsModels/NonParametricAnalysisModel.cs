@@ -166,8 +166,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + AnalysisType.ToString());
             arguments.Append(" " + ArgumentConverters.GetNULLOrText(Control));
 
-            arguments.Append(" " + "N");
-
             return arguments.ToString();
         }
 

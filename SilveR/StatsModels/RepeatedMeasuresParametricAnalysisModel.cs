@@ -331,8 +331,6 @@ namespace SilveRModel.StatsModel
             if (ComparisonType == ComparisonOption.AllComparisonsWithinSelected) arguments.Append(" " + "Reduced"); //21
             else if (ComparisonType == ComparisonOption.AllPairwiseComparisons) arguments.Append(" " + "All"); //21
 
-            arguments.Append(" " + "N"); //22
-
             return arguments.ToString();
         }
 

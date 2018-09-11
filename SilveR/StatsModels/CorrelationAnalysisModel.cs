@@ -272,8 +272,6 @@ namespace SilveRModel.StatsModel
             //By Categories and Overall
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(ByCategoriesAndOverall)); //18
 
-            arguments.Append(" " + "N");
-
             return arguments.ToString();
         }
 

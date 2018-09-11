@@ -166,8 +166,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(BarnardsTest)); //10
             arguments.Append(" " + Significance); //11
 
-            arguments.Append(" " + "N");
-
             return arguments.ToString();
         }
                

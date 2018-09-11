@@ -295,7 +295,6 @@ namespace SilveRModel.StatsModel
             }
 
             arguments.Append(" " + ArgumentConverters.GetNULLOrText(GraphTitle)); //14
-            arguments.Append(" " + "N");
 
             return arguments.ToString();
         }

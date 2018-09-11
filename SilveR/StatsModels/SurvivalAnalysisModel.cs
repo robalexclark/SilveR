@@ -155,8 +155,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(CompareSurvivalCurves)); //9
             arguments.Append(" " + Significance); //10
 
-            arguments.Append(" " + "N");
-
             return arguments.ToString();
         }
                

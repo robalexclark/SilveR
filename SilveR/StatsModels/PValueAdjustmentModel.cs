@@ -86,7 +86,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + PValues.Replace(" ", "").Replace("<", "^<")); //4
             arguments.Append(" " + SelectedTest); //5
             arguments.Append(" " + Significance.Replace("<", "^<")); //6
-            arguments.Append(" " + "N");
 
             return arguments.ToString();
         }

@@ -318,12 +318,8 @@ namespace SilveRModel.StatsModel
 
             arguments.Append(" " + "\"" + ControlGroup + "\""); //22
 
-            arguments.Append(" " + "N"); //23
-
-
             return arguments.ToString();
         }
-
 
 
         public void LoadArguments(IEnumerable<Argument> arguments)
