@@ -46,6 +46,11 @@ if (valueType=="DatasetValues") {
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
+#Print args
+if (Diplayargs == "Y"){
+	print(Args)
+}
+
 #===================================================================================================================
 #Setup the html file and associated css file
 htmlFile <- sub(".csv", ".html", Args[3]); #determine the file name of the html file
@@ -55,6 +60,8 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
+#Parameter setup 
+
 #Variables set up
 powerFrom <- 0
 powerTo <- 105

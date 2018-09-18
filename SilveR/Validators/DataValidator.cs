@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SilveRModel.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using SilveRModel.Helpers;
 
 namespace SilveRModel.Validators
 {
@@ -283,17 +283,16 @@ namespace SilveRModel.Validators
                     if (transformation.StartsWith("Log") && respValue <= 0) //must not be <= 0
                     {
                         tempMessage = "You have " + transformation +
-                               " transformed the " + text + " variable. Unfortunately some of the " + text + " values are either zero or negative or both. These values have been ignored in the analysis as it is not possible to transform them.";
+                               " transformed the " + column + " variable. Unfortunately some of the " + column + " values are either zero or negative or both. These values have been ignored in the analysis as it is not possible to transform them.";
                     }
                     else if (transformation.StartsWith("Square") && respValue < 0) //must not be < 0
                     {
                         tempMessage = "You have " + transformation +
-                               " transformed the " + text + " variable. Unfortunately some of the " + text + " values are negative. These values have been ignored in the analysis as it is not possible to transform them.";
+                               " transformed the " + column + " variable. Unfortunately some of the " + column + " values are negative. These values have been ignored in the analysis as it is not possible to transform them.";
                     }
                     else if (transformation == "ArcSine" && (respValue < 0 || respValue > 1)) //must be between 0 and 1
                     {
-                        tempMessage = "You have " + transformation +
-                       " transformed the " + text + " variable. Unfortunately some of the " + text + " values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.";
+                        tempMessage = "You have " + transformation + " transformed the " + column + " variable. Unfortunately some of the " + column + " values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.";
                     }
 
                     if (tempMessage != null && text == "covariate")

@@ -2,6 +2,7 @@
 #Import Graphical parameters from file
 #===================================================================================================================
 suppressWarnings(library(ggplot2))
+suppressWarnings(library(ggrepel))
 suppressWarnings(library(RColorBrewer))
 suppressWarnings(library(plyr))
 suppressWarnings(library(scales))
@@ -10,6 +11,10 @@ suppressWarnings(library(GGally))
 suppressWarnings(library(proto))
 suppressWarnings(library(grid))
 #suppressWarnings(library(extrafont))
+
+#===================================================================================================================
+#Display arguments
+Diplayargs <- "Y"
 
 #===================================================================================================================
 #Numerical parameters
@@ -134,6 +139,8 @@ suppressWarnings(library(grid))
 #===================================================================================================================
 
 branding <- "InVivoStat"
+scatterlabels <- "Y"
+
 
 #if (file.exists(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsText.txt", sep="")) == TRUE)
 #{
@@ -230,13 +237,13 @@ branding <- "InVivoStat"
 	bandw			<- "N"
 
 #Display back-transformed geometric means
-	GeomDisplay		<- "N"
+	GeomDisplay		<- "Y"
 
 #Display covariate regression coefficients
-	CovariateRegressionCoefficients		<- "N"
+	CovariateRegressionCoefficients		<- "Y"
 
 #Display covariate interaction tests 
-	AssessCovariateInteractions		<- "N"
+	AssessCovariateInteractions		<- "Y"
 #}
 
 #===================================================================================================================
@@ -735,8 +742,12 @@ NONCAT_SCAT <- function(typez) {
     }
     g7 <- g6 + geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jit, h = h_Gr_jit))
 
-
-    suppressWarnings(print(g7))
+    if (scatterlabels == "Y") {
+ 	   g8 <- g7 + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5,force = 10, point.padding=1)
+    } else {
+	    g8 <- g7
+    }
+    suppressWarnings(print(g8))
 }
 
 
@@ -757,7 +768,13 @@ ONECATSEP_SCAT <- function() {
     } else {
         g1 <- g
     }
-    suppressWarnings(print(g1))
+
+    if (scatterlabels == "Y") {
+ 	   g2 <- g1 + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5, force = 10, point.padding=1)
+    } else {
+	    g2 <- g1
+    }
+    suppressWarnings(print(g2))
 }
 
 
@@ -778,7 +795,12 @@ TWOCATSEP_SCAT <- function() {
     } else {
         g1 <- g
     }
-    suppressWarnings(print(g1))
+    if (scatterlabels == "Y") {
+ 	   g2 <- g1 + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5, force = 10, point.padding=1)
+    } else {
+	    g2 <- g1
+    }
+    suppressWarnings(print(g2))
 }
 
 OVERLAID_SCAT <- function() {
@@ -806,8 +828,12 @@ OVERLAID_SCAT <- function() {
     } else {
         g2 <- g1
     }
-
-    suppressWarnings(print(g2))
+    if (scatterlabels == "Y") {
+ 	   g3 <- g2 + geom_text_repel(aes(label = rownames(graphdata), color = graphdata$l_l), size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+    } else {
+	    g3 <- g2
+    }
+    suppressWarnings(print(g3))
 }
 
 #===================================================================================================================

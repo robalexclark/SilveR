@@ -43,6 +43,11 @@ namespace SilveRModel.Helpers
                 int num = (int)value;
                 newArgument.Value = num.ToString();
             }
+            else if (value is decimal)
+            {
+                decimal num = (decimal)value;
+                newArgument.Value = num.ToString();
+            }
             else throw new Exception("Type not found!");
 
             return newArgument;
@@ -88,6 +93,13 @@ namespace SilveRModel.Helpers
             Argument arg = arguments.Single(x => x.Name == targetName);
 
             return int.Parse(arg.Value);
+        }
+
+        public decimal ArgumentLoader(string targetName, decimal target)
+        {
+            Argument arg = arguments.Single(x => x.Name == targetName);
+
+            return decimal.Parse(arg.Value);
         }
     }
 }

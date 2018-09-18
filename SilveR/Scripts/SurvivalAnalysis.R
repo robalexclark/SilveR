@@ -19,21 +19,17 @@ Groupqq <- Args[5]
 Grouprr <- Args[5]
 Censorshipqq <- Args[6]
 SummaryResults <- Args[7]
-ShowPlot <- Args[8]
 ComparingCurves <- Args[9]
+ShowPlot <- Args[8]
 sig <- 1 - as.numeric(Args[10])
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
-#===================================================================================================================
-#Graphics parameter setup
+#Print args
+if (Diplayargs == "Y"){
+	print(Args)
+}
 
-graphdata<-statdata
-Gr_palette<-palette_FUN(Groupqq)
-
-YAxisTitle = "Proportion surviving"
-MainTitle2 = ""
-Line_type<-Line_type_solid
 #===================================================================================================================
 #Setup the html file and associated css file
 htmlFile <- sub(".csv", ".html", Args[3]); #determine the file name of the html file
@@ -41,6 +37,40 @@ HTMLSetFile(file=htmlFile)
 cssFile <- "r2html.css"
 cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path has spaces in it
 HTMLCSS(CSSfile = cssFile)
+
+#===================================================================================================================
+#Parameter setup
+
+#Graphics parameter setup
+graphdata<-statdata
+Gr_palette<-palette_FUN(Groupqq)
+YAxisTitle = "Proportion surviving"
+MainTitle2 = ""
+Line_type<-Line_type_solid
+
+#replace illegal characters in variable names
+XAxisTitle <-Responseqq
+
+for (i in 1:10) {
+	XAxisTitle<-namereplace(XAxisTitle)
+}
+
+for (i in 1:10) {
+	Grouprr<-namereplace(Grouprr)
+}
+
+statdata$Groupzzz <-eval(parse(text = paste("statdata$", Groupqq)))
+
+mfit <- survfit(Surv(time=eval(parse(text = paste("statdata$", Responseqq))), event = eval(parse(text = paste("statdata$", Censorshipqq)))) ~ statdata$Groupzzz, conf.type = "plain")
+
+nogps<-length(unique(eval(parse(text = paste("statdata$", Groupqq)))))
+
+#vector of Group names
+gpnames<-levels(as.factor(eval(parse(text = paste("statdata$", Groupqq)))))
+rnms<-c(1:(length(gpnames)))
+for (i in 1:length(rnms)) {
+	rnms[i]=gpnames[i]
+}
 
 #===================================================================================================================
 #Output HTML header
@@ -61,46 +91,21 @@ title<-paste("Note, in this analysis ", branding , " assumes that censored obser
 HTML(title, align="left")
 
 #===================================================================================================================
-#Variable manipulation
-
-#replace illegal characters in variable names
-XAxisTitle <-Responseqq
-
-for (i in 1:10) {
-	XAxisTitle<-namereplace(XAxisTitle)
-}
-
-for (i in 1:10) {
-	Grouprr<-namereplace(Grouprr)
-}
-
-statdata$Groupzzz <-eval(parse(text = paste("statdata$", Groupqq)))
-
-mfit <- survfit(Surv(time=eval(parse(text = paste("statdata$", Responseqq))), event = eval(parse(text = paste("statdata$", Censorshipqq)))) ~ statdata$Groupzzz, conf.type = "plain")
-
-nogps<-length(unique(eval(parse(text = paste("statdata$", Groupqq)))))
-
-#vector of Group names
-gpnames<-unique(as.factor(eval(parse(text = paste("statdata$", Groupqq)))))
-rnms<-c(1:(length(gpnames)+1))
-rnms[1] ="Group"
-for (i in 2:length(rnms)) {
-	rnms[i]=gpnames[i-1]
-}
-
-#===================================================================================================================
 #Statistical results
 #===================================================================================================================
-
 if (SummaryResults == "Y") {
 	HTML.title("Summary results", HR=2, align="left")
 
 	#Creating a simple table to output
-
 	table1<-data.frame(summary(mfit)$table)
-	table1<- cbind(rnms, table1)
-	colnames(table1)<-c("Group" , "Records","n","Start size","Events","Median", "Lower 95% CI", "Upper 95% CI")
-	HTML(table1, classfirstline = "second", align = "left", row.names = "FALSE")
+	table2 <- table1
+	for (i in 1:nogps) {
+		table2[i,7] = format(round(table1[i,7],1),nsmall=1)
+	}
+	table2<-subset(table2, select = -c(X.rmean, X.se.rmean.))
+	table2<- cbind(rnms, table2)
+	colnames(table2)<-c("Group" , "Records","n","Start size","Events","Median", "Lower 95% CI", "Upper 95% CI")
+	HTML(table2, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
 if (ComparingCurves == "Y") {
@@ -109,13 +114,13 @@ if (ComparingCurves == "Y") {
 
 	testresults<-matrix(nrow=nogps,ncol=7)
 	for (i in 1:nogps) {
-	testresults[i,1] = diff$n[i]
-	testresults[i,2] = diff$obs[i]
-	testresults[i,3] = format(round(diff$exp[i],2),nsmall=2)
-	testresults[i,4] = format(round(((diff$obs[i] - diff$exp[i])^2)/diff$exp[i],2),nsmall=2)
-	testresults[i,5] = format(round(((diff$obs[i] - diff$exp[i])^2)/diff$var[i,i],2),nsmall=2)
-	testresults[1,6] = format(round(diff$chi,2),nsmall=2)
-	testresults[1,7] = format(round(1-pchisq(diff$chi,(nogps-1)),4),nsmall=4)
+		testresults[i,1] = diff$n[i]
+		testresults[i,2] = diff$obs[i]
+		testresults[i,3] = format(round(diff$exp[i],2),nsmall=2)
+		testresults[i,4] = format(round(((diff$obs[i] - diff$exp[i])^2)/diff$exp[i],2),nsmall=2)
+		testresults[i,5] = format(round(((diff$obs[i] - diff$exp[i])^2)/diff$var[i,i],2),nsmall=2)
+		testresults[1,6] = format(round(diff$chi,2),nsmall=2)
+		testresults[1,7] = format(round(1-pchisq(diff$chi,(nogps-1)),4),nsmall=4)
 	}
 	zzz<-testresults[1,7]
 
@@ -130,7 +135,7 @@ if (ComparingCurves == "Y") {
 	colnames(testresults)<-c("Group", "N", "Observed", "Expected", "(O-E)^2/E", " (O-E)^2/V", "Chi-sq", "p-value")
 
 	HTML.title("Comparing survival curves", HR=2, align="left")
-	HTML(testresults, classfirstline="second", align="left")
+	HTML(testresults, classfirstline="second", align="left", row.names = "FALSE")
 
 	if(as.numeric(zzz) < (1-sig)) {
 		HTML("Conclusion: There was a significant difference between the survival curves.", align="left")

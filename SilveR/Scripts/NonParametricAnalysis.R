@@ -19,6 +19,28 @@ sig <- 1 - as.numeric(Args[7])
 statstest <- Args[8]
 contlevel <- Args[9]
 
+#source(paste(getwd(),"/Common_Functions.R", sep=""))
+
+#Print args
+if (Diplayargs == "Y"){
+	print(Args)
+}
+
+#===================================================================================================================
+#Setup the html file and associated css file
+
+htmlFile <- sub(".csv", ".html", Args[3])
+#determine the file name of the html file
+HTMLSetFile(file = htmlFile)
+.HTML.file = htmlFile
+
+#===================================================================================================================
+#Parameter setup 
+
+#Graphical parameter setup
+graphdata <- statdata
+displaypointBOX <- "N"
+
 #STB CC28 Oct 2011
 statdata <- statdata[order(eval(parse(text = paste("statdata$", treatment)))),]
 
@@ -37,23 +59,6 @@ for (i in 1:10) {
     YAxisTitle <- namereplace(YAxisTitle)
     XAxisTitle <- namereplace(XAxisTitle)
 }
-
-#source(paste(getwd(),"/Common_Functions.R", sep=""))
-
-#===================================================================================================================
-#Setup the html file and associated css file
-
-htmlFile <- sub(".csv", ".html", Args[3])
-#determine the file name of the html file
-HTMLSetFile(file = htmlFile)
-.HTML.file = htmlFile
-
-#===================================================================================================================
-#Overall Graphical parameter setup
-
-graphdata <- statdata
-displaypointBOX <- "N"
-
 #===================================================================================================================
 #Titles and description
 #===================================================================================================================

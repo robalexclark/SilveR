@@ -35,9 +35,10 @@ PCA_scale <- Args[16]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
-#===================================================================================================================
-#Graphical parameters
-Labelz_IVS_ <- "Y"
+#Print args
+if (Diplayargs == "Y"){
+	print(Args)
+}
 
 #===================================================================================================================
 #Setup the html file and associated css file
@@ -48,6 +49,9 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 
 #===================================================================================================================
 #Variable set-up
+
+#Graphical parameters
+Labelz_IVS_ <- "Y"
 
 #Setting up the Case ID variable
 if (caseid_IVS_ == "NULL") {

@@ -40,8 +40,10 @@ displaypointSEM<-Args[28]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
-#V3.2 STB OCT2015
-set.seed(5041975)
+#Print args
+if (Diplayargs == "Y"){
+	print(Args)
+}
 
 #===================================================================================================================
 #Setup the html file and associated css file
@@ -53,8 +55,12 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
-#Graphics variable management
-#===================================================================================================================
+#Parameter setup
+
+#V3.2 STB OCT2015
+set.seed(5041975)
+
+#Graphical parameters
 #add in a catfactor 
 if(!"catfact" %in% colnames(graphdata)) {
 	graphdata$catfact <- c(NA)

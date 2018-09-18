@@ -1,8 +1,8 @@
 ﻿using HtmlAgilityPack;
 using SilveRModel.Helpers;
+using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -48,11 +48,11 @@ namespace SilveR.Services
 
                 string imageFile = resultsFiles.Single(x => Path.GetFileName(x) == Path.GetFileName(src));
 
-                using (Image image = Image.FromFile(imageFile))
+                using (var image = Image.Load(imageFile))
                 {
                     using (MemoryStream m = new MemoryStream())
                     {
-                        image.Save(m, image.RawFormat);
+                        image.Save(m, ImageFormats.Png);
                         byte[] imageBytes = m.ToArray();
 
                         // Convert byte[] to Base64 String

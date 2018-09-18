@@ -32,24 +32,25 @@ ByCategoriesAndOverall <- Args[21]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
-#===================================================================================================================
-#Graphics parameter setup
-
-graphdata <- statdata
+#Print args
+if (Diplayargs == "Y"){
+	print(Args)
+}
 
 #===================================================================================================================
 #Setup the html file and associated css file
-
 htmlFile <- sub(".csv", ".html", Args[3]);
 #determine the file name of the html file
 HTMLSetFile(file = htmlFile)
 .HTML.file = htmlFile
 
 #===================================================================================================================
-#Responses manipulation
-#===================================================================================================================
-#Breakdown the list of responses
+#Parameter setup
 
+#Graphics parameter setup
+graphdata <- statdata
+
+#Breakdown the list of responses
 resplist <- c()
 tempChanges <- strsplit(csResponses, ",")
 expectedChanges <- c(0)
@@ -75,7 +76,7 @@ for (i in 1:10) {
 #Module Title
 Title <-paste(branding, " Summary Statistics", sep="")
 HTML.title(Title, HR = 1, align = "left")
-HTML.title("Analysis selection", HR=2, align="left")
+HTML.title("Variable selection", HR=2, align="left")
 
 add2<-c("Response")
 if (length(expectedChanges) >2) {
@@ -121,10 +122,9 @@ HTML(add2, align="left")
 #===================================================================================================================
 #Categorisation analysis
 #===================================================================================================================
-if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") {
- 
+if ((firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") && resplength > 1 ) {
       #Overall title
-      HTML.title("Categorised results", HR=2, align="left")
+      HTML.title("Categorised summary statistics", HR=2, align="left")
 }
 
 for (i in 1:resplength) {
@@ -213,17 +213,29 @@ for (i in 1:resplength) {
                 #vectorN<-format(round(vectormean, 4), nsmall=4, scientific=FALSE)
                 table <- cbind(table, vectorN)
             }
-            if (StDev == "Y") {
-                vectorStDev <- format(round(vectorStDev, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorStDev)
-            }
             if (Variances == "Y") {
                 vectorVariances <- format(round(vectorVariances, 4), nsmall = 4, scientific = FALSE)
                 table <- cbind(table, vectorVariances)
             }
+            if (StDev == "Y") {
+                vectorStDev <- format(round(vectorStDev, 4), nsmall = 4, scientific = FALSE)
+                table <- cbind(table, vectorStDev)
+            }
             if (StErr == "Y") {
                 vectorStErr <- format(round(vectorStErr, 4), nsmall = 4, scientific = FALSE)
                 table <- cbind(table, vectorStErr)
+            }
+            if (CoeffVariation == "Y") {
+                vectorCoeffVariation <- format(round(vectorCoeffVariation, 1), nsmall = 1, scientific = FALSE)
+                table <- cbind(table, vectorCoeffVariation)
+            }
+            if (confidenceLimits == "Y") {
+                vectorLCI <- format(round(vectorLCI, 4), nsmall = 4, scientific = FALSE)
+                table <- cbind(table, vectorLCI)
+            }
+            if (confidenceLimits == "Y") {
+                vectorUCI <- format(round(vectorUCI, 4), nsmall = 4, scientific = FALSE)
+                table <- cbind(table, vectorUCI)
             }
             if (MinMax == "Y") {
                 vectorMin <- format(round(vectorMin, 4), nsmall = 4, scientific = FALSE)
@@ -245,18 +257,6 @@ for (i in 1:resplength) {
                 vectorUQ <- format(round(vectorUQ, 4), nsmall = 4, scientific = FALSE)
                 table <- cbind(table, vectorUQ)
             }
-            if (CoeffVariation == "Y") {
-                vectorCoeffVariation <- format(round(vectorCoeffVariation, 1), nsmall = 1, scientific = FALSE)
-                table <- cbind(table, vectorCoeffVariation)
-            }
-            if (confidenceLimits == "Y") {
-                vectorLCI <- format(round(vectorLCI, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorLCI)
-            }
-            if (confidenceLimits == "Y") {
-                vectorUCI <- format(round(vectorUCI, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorUCI)
-            }
 
             #Generating column names
             temp6 <- c("Categorisation Factor levels")
@@ -268,19 +268,35 @@ for (i in 1:resplength) {
                 hed2 <- c("N")
                 temp6 <- cbind(temp6, hed2)
             }
+            if (Variances == "Y") {
+                hed4 <- c("Variance")
+                temp6 <- cbind(temp6, hed4)
+            }
             if (StDev == "Y") {
                 #STB May 2012 changing header
                 hed3 <- c("Std dev")
                 temp6 <- cbind(temp6, hed3)
             }
-            if (Variances == "Y") {
-                hed4 <- c("Variance")
-                temp6 <- cbind(temp6, hed4)
-            }
             if (StErr == "Y") {
                 #STB May 2012 changing header
                 hed5 <- c("Std error")
                 temp6 <- cbind(temp6, hed5)
+            }
+           if (CoeffVariation == "Y") {
+                hed11 <- c("%CV")
+                temp6 <- cbind(temp6, hed11)
+            }
+            if (confidenceLimits == "Y") {
+                CIlow <- paste("Lower ", 100 * CIval, sep = "")
+                CIlow <- paste(CIlow, "% CI", sep = "")
+                hed12 <- c(CIlow)
+                temp6 <- cbind(temp6, hed12)
+            }
+            if (confidenceLimits == "Y") {
+                CIhigh <- paste("Upper ", 100 * CIval, sep = "")
+                CIhigh <- paste(CIhigh, "% CI", sep = "")
+                hed13 <- c(CIhigh)
+                temp6 <- cbind(temp6, hed13)
             }
             if (MinMax == "Y") {
                 hed6 <- c("Min")
@@ -301,22 +317,6 @@ for (i in 1:resplength) {
             if (MedianQuartile == "Y") {
                 hed10 <- c("Upper quartile")
                 temp6 <- cbind(temp6, hed10)
-            }
-            if (CoeffVariation == "Y") {
-                hed11 <- c("%CV")
-                temp6 <- cbind(temp6, hed11)
-            }
-            if (confidenceLimits == "Y") {
-                CIlow <- paste("Lower ", 100 * CIval, sep = "")
-                CIlow <- paste(CIlow, "% CI", sep = "")
-                hed12 <- c(CIlow)
-                temp6 <- cbind(temp6, hed12)
-            }
-            if (confidenceLimits == "Y") {
-                CIhigh <- paste("Upper ", 100 * CIval, sep = "")
-                CIhigh <- paste(CIhigh, "% CI", sep = "")
-                hed13 <- c(CIhigh)
-                temp6 <- cbind(temp6, hed13)
             }
 
   	    #Generating row names
@@ -378,25 +378,34 @@ for (i in 1:resplength) {
                add <- paste(add, firstCat, ", ", secondCat, ", ", thirdCat, " and ", fourthCat, sep = "")
             }
 
-            #Output tables 
-            HTML(add, align = "left")
-            HTML(table, align = "left", classfirstline = "second", row.names = "FALSE")
+	    #Removing blank rows
+	    if (rownms[1] == "") {
+		table2 <-table[-1,]
+	    } else {
+		table2 <-table
+	    }
+
+	    if (resplength == 1){
+            	#Output tables 
+            	HTML.title(add, HR = 2, align = "left")
+            } else {
+            	HTML.title(add, HR = 3, align = "left")
+	   }
+	    HTML(table2, align = "left", classfirstline = "second", row.names = "FALSE")
 	}
 }
 
 #===================================================================================================================
 #Non-categorisation analysis
 #===================================================================================================================
-if ((firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") && ByCategoriesAndOverall == "Y") {
-
-        #Overall title
-        HTML.title("Non-categorised results", HR=2, align="left")
+#Overall title
+if ((firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") && ByCategoriesAndOverall == "Y" && resplength > 1) {
+        HTML.title("Non-categorised summary statistics", HR=2, align="left")
 }
 
-if ((firstCat == "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat == "NULL") ) {
-
+if ((firstCat == "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat == "NULL") && resplength > 1) {
         #Overall title
-        HTML.title("Results", HR=2, align="left")
+        HTML.title("Summary statistics", HR=2, align="left")
 }
 
 for (i in 1:resplength) {
@@ -482,17 +491,29 @@ for (i in 1:resplength) {
         if (N == "Y") {
             table <- cbind(table, vectorN)
         }
-        if (StDev == "Y") {
-            vectorStDev <- format(round(vectorStDev, 4), nsmall = 4, scientific = FALSE)
-            table <- cbind(table, vectorStDev)
-        }
         if (Variances == "Y") {
             vectorVariances <- format(round(vectorVariances, 4), nsmall = 4, scientific = FALSE)
             table <- cbind(table, vectorVariances)
         }
+        if (StDev == "Y") {
+            vectorStDev <- format(round(vectorStDev, 4), nsmall = 4, scientific = FALSE)
+            table <- cbind(table, vectorStDev)
+        }
         if (StErr == "Y") {
             vectorStErr <- format(round(vectorStErr, 4), nsmall = 4, scientific = FALSE)
             table <- cbind(table, vectorStErr)
+        }
+        if (CoeffVariation == "Y") {
+            vectorCoeffVariation <- format(round(vectorCoeffVariation, 1), nsmall = 1, scientific = FALSE)
+            table <- cbind(table, vectorCoeffVariation)
+        }
+        if (confidenceLimits == "Y") {
+            vectorLCI <- format(round(vectorLCI, 4), nsmall = 4, scientific = FALSE)
+            table <- cbind(table, vectorLCI)
+        }
+        if (confidenceLimits == "Y") {
+            vectorUCI <- format(round(vectorUCI, 4), nsmall = 4, scientific = FALSE)
+            table <- cbind(table, vectorUCI)
         }
         if (MinMax == "Y") {
             vectorMin <- format(round(vectorMin, 4), nsmall = 4, scientific = FALSE)
@@ -514,18 +535,6 @@ for (i in 1:resplength) {
             vectorUQ <- format(round(vectorUQ, 4), nsmall = 4, scientific = FALSE)
             table <- cbind(table, vectorUQ)
         }
-        if (CoeffVariation == "Y") {
-            vectorCoeffVariation <- format(round(vectorCoeffVariation, 1), nsmall = 1, scientific = FALSE)
-            table <- cbind(table, vectorCoeffVariation)
-        }
-        if (confidenceLimits == "Y") {
-            vectorLCI <- format(round(vectorLCI, 4), nsmall = 4, scientific = FALSE)
-            table <- cbind(table, vectorLCI)
-        }
-        if (confidenceLimits == "Y") {
-            vectorUCI <- format(round(vectorUCI, 4), nsmall = 4, scientific = FALSE)
-            table <- cbind(table, vectorUCI)
-        }
 
         #creating final output table
 
@@ -540,19 +549,35 @@ for (i in 1:resplength) {
             hed2 <- c("N")
             temp6 <- cbind(temp6, hed2)
         }
+	if (Variances == "Y") {
+            hed4 <- c("Variance")
+            temp6 <- cbind(temp6, hed4)
+        }
         if (StDev == "Y") {
             #STB May 2012 changing header
             hed3 <- c("Std dev")
             temp6 <- cbind(temp6, hed3)
         }
-        if (Variances == "Y") {
-            hed4 <- c("Variance")
-            temp6 <- cbind(temp6, hed4)
-        }
         if (StErr == "Y") {
             #STB May 2012 changing header
             hed5 <- c("Std error")
             temp6 <- cbind(temp6, hed5)
+        }
+        if (CoeffVariation == "Y") {
+            hed11 <- c("%CV")
+            temp6 <- cbind(temp6, hed11)
+        }
+        if (confidenceLimits == "Y") {
+            CIlow <- paste("Lower ", 100 * CIval, sep = "")
+            CIlow <- paste(CIlow, "% CI", sep = "")
+            hed12 <- c(CIlow)
+            temp6 <- cbind(temp6, hed12)
+        }
+        if (confidenceLimits == "Y") {
+            CIhigh <- paste("Upper ", 100 * CIval, sep = "")
+            CIhigh <- paste(CIhigh, "% CI", sep = "")
+            hed13 <- c(CIhigh)
+            temp6 <- cbind(temp6, hed13)
         }
         if (MinMax == "Y") {
             hed6 <- c("Min")
@@ -574,22 +599,7 @@ for (i in 1:resplength) {
             hed10 <- c("Upper quartile")
             temp6 <- cbind(temp6, hed10)
         }
-        if (CoeffVariation == "Y") {
-            hed11 <- c("%CV")
-            temp6 <- cbind(temp6, hed11)
-        }
-        if (confidenceLimits == "Y") {
-            CIlow <- paste("Lower ", 100 * CIval, sep = "")
-            CIlow <- paste(CIlow, "% CI", sep = "")
-            hed12 <- c(CIlow)
-            temp6 <- cbind(temp6, hed12)
-        }
-        if (confidenceLimits == "Y") {
-            CIhigh <- paste("Upper ", 100 * CIval, sep = "")
-            CIhigh <- paste(CIhigh, "% CI", sep = "")
-            hed13 <- c(CIhigh)
-            temp6 <- cbind(temp6, hed13)
-        }
+
 
         #Generating row names
         colnames(table) <- temp6
@@ -597,22 +607,31 @@ for (i in 1:resplength) {
         #Output print
         if ((firstCat == "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat == "NULL")) {
             add <- paste(c("Summary statistics for "), csResponses, sep = "")
-            HTML(add, align = "left")
-         } else
-         if ((firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") && ByCategoriesAndOverall == "Y") {
-             add <- paste(c("Overall summary statistics, ignoring the categorisation factor(s), for "), csResponses, sep = "")
-             HTML(add, align = "left")
-         }
-         HTML(table, align = "left", classfirstline = "second", row.names = "FALSE")
+        } else {
+        	if ((firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") && ByCategoriesAndOverall == "Y") {
+             		add <- paste("Overall summary statistics for " , csResponses, ", ignoring the categorisation factor", sep = "")
+		}
+		if ((firstCat != "NULL" && secondCat != "NULL") || (firstCat != "NULL" && thirdCat != "NULL") || (firstCat != "NULL" && fourthCat != "NULL") || (secondCat != "NULL" && thirdCat != "NULL") || (secondCat != "NULL" && fourthCat != "NULL") || (thirdCat != "NULL" && fourthCat != "NULL") ) {
+            		add <- paste(add, "s", sep = "")
+		}
+ 	}
+
+	if (resplength == 1) {
+		HTML.title(add, HR = 2, align = "left")
+	} else {
+		HTML.title(add, HR = 3, align = "left")
+	}
+        HTML(table, align = "left", classfirstline = "second", row.names = "FALSE")
     }
 }
 
 #===================================================================================================================
 #Normal probability plot
 #===================================================================================================================
-if (NormalProbabilityPlot != "N") {
-    HTML.title("Normal probability plot", HR = 1, align = "left")
-
+if (NormalProbabilityPlot != "N" && resplength > 1) {
+    HTML.title("Normal probability plots", HR = 2, align = "left")
+}
+if (NormalProbabilityPlot != "N" ) {
 #===================================================================================================================
     #Graphical plot options
     YAxisTitle <- "Sample Quantiles"
@@ -638,10 +657,25 @@ if (NormalProbabilityPlot != "N") {
     	plotFilepdf4 <- paste(plotFilepdf4, index, "normplot.pdf", sep = "")
     	dev.control("enable")
 
+	#Plot title text
     	csResponses <- resplist[index]
     	csResponsesqq <- resplistqq[index]
-    	adda <- paste(c("Normal probability plot for "), csResponsesqq, " \n", sep = "")
-    	MainTitle2 <- adda
+    	adda <- paste(c("Normal probability plot for "), csResponsesqq ,  sep = "")
+
+	if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") {
+		adda <- paste(adda, ", ignoring the categorisation factor", sep = "")
+	}
+	if ((firstCat != "NULL" && secondCat != "NULL") || (firstCat != "NULL" && thirdCat != "NULL") || (firstCat != "NULL" && fourthCat != "NULL") || (secondCat != "NULL" && thirdCat != "NULL") || (secondCat != "NULL" && fourthCat != "NULL") || (thirdCat != "NULL" && fourthCat != "NULL") ) {
+        	adda <- paste(adda, "s", sep = "")
+	}
+
+	if (resplength == 1) {
+		HTML.title(adda, HR = 2, align = "left")
+	} else {
+		HTML.title(adda, HR = 3, align = "left")
+	}
+
+    	MainTitle2 <- ""
     	te <- qqnorm(eval(parse(text = paste("statdata$", csResponses))))
     	graphdata <- data.frame(te$x, te$y)
     	graphdata$xvarrr_IVS <- graphdata$te.x

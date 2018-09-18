@@ -117,7 +117,7 @@ namespace SilveRModel.Validators
                     }
                     else if (number > 1)
                     {
-                        return new ValidationResult("All p-values must be greater than zero");
+                        return new ValidationResult("All p-values must be less than 1.");
                     }
                 }
 
@@ -135,7 +135,7 @@ namespace SilveRModel.Validators
 
             if (model.Significance < 0 || model.Significance > 100)
             {
-                return new ValidationResult("You have selected a confidence limit that is less than 0 or greater than 100. Values should be entered as percentages and not fractions.");
+                return new ValidationResult("You have selected a confidence limit that is less than 1. Note that this value should be entered as percentage and not a fraction.");
             }
             else
                 return ValidationResult.Success;

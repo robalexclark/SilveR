@@ -91,7 +91,7 @@ namespace SilveRModel.StatsModel
         [DisplayName("Significance level")]
         [Required(ErrorMessage = "Significance is Required")]
         [ValidateConfidenceLimits]
-        public int Significance { get; set; } = 95;
+        public decimal Significance { get; set; } = 95;
 
         [DisplayName("Normal probability plot")]
         public bool NormalProbabilityPlot { get; set; }
