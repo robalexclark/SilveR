@@ -25,7 +25,10 @@ namespace SilveRModel.Validators
                 allVars.AddRange(smVariables.OtherDesignFactors);
 
             allVars.Add(smVariables.Response);
-            allVars.Add(smVariables.Covariate);
+
+            if (smVariables.Covariates != null)
+                allVars.AddRange(smVariables.Covariates);
+
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
             if (!CheckTreatmentsHaveLevels(smVariables.Treatments, true)) return ValidationInfo;
@@ -47,16 +50,18 @@ namespace SilveRModel.Validators
             if (!FactorAndResponseCovariateChecks(categorical, smVariables.Response)) return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
-            if (!String.IsNullOrEmpty(smVariables.Covariate))
+            if (smVariables.Covariates != null)
             {
-                if (!FactorAndResponseCovariateChecks(categorical, smVariables.Covariate)) return ValidationInfo;
+                foreach (string covariate in smVariables.Covariates)
+                {
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                }
             }
 
             //check that the effect selected is the highest order interaction possible from selected factors, else output warning
             CheckEffectSelectedIsHighestOrderInteraction();
 
-            //
-            if (!String.IsNullOrEmpty(smVariables.Covariate) && String.IsNullOrEmpty(smVariables.PrimaryFactor))
+            if (smVariables.Covariates != null && String.IsNullOrEmpty(smVariables.PrimaryFactor))
             {
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
             }
@@ -107,8 +112,7 @@ namespace SilveRModel.Validators
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
                     //Check that the "response" does not contain non-numeric data
-                    double parsedValue;
-                    bool parsedOK = Double.TryParse(continuousRow[i], out parsedValue);
+                    bool parsedOK = Double.TryParse(continuousRow[i], out var parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
                         ValidationInfo.AddErrorMessage("The " + responseType + " (" + smVariables.Response + ") selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
@@ -141,7 +145,13 @@ namespace SilveRModel.Validators
                 {
                     CheckTransformations(row, smVariables.ResponseTransformation, smVariables.Response, "response");
 
-                    CheckTransformations(row, smVariables.CovariateTransformation, smVariables.Covariate, "covariate");
+                    if (smVariables.Covariates != null)
+                    {
+                        foreach (string covariate in smVariables.Covariates)
+                        {
+                            CheckTransformations(row, smVariables.CovariateTransformation, covariate, "covariate");
+                        }
+                    }
                 }
             }
 

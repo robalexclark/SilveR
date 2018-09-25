@@ -133,7 +133,7 @@ namespace SilveRModel.StatsModel
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (Response != columnName && !Treatments.Contains(columnName) && ContinuousFactors != null && !ContinuousFactors.Contains(columnName) && OtherDesignFactors != null && !OtherDesignFactors.Contains(columnName) && Covariate != columnName)
+                if (Response != columnName && !Treatments.Contains(columnName) && (ContinuousFactors == null || !ContinuousFactors.Contains(columnName)) && (OtherDesignFactors == null || !OtherDesignFactors.Contains(columnName)) && Covariate != columnName)
                 {
                     dtNew.Columns.Remove(columnName);
                 }

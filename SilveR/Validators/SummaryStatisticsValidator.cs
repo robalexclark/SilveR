@@ -70,7 +70,7 @@ namespace SilveRModel.Validators
                         }
                         else if (level.Value < 2)
                         {
-                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the categorical factor (" + catFactor + ").  Please amend the dataset prior to running the analysis.");
+                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the categorical factor (" + catFactor + "). Please amend the dataset prior to running the analysis.");
                             return ValidationInfo;
                         }
                     }

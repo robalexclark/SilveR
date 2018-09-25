@@ -25,16 +25,15 @@ blockFactors <- Args[11]
 showANOVA <- Args[12]
 showPRPlot <- Args[13]
 showNormPlot <- Args[14]
-#What is AGR[15]?
-sig <- 1 - as.numeric(Args[16])
-sig2 <- 1 - as.numeric(Args[16])/2
-effectModel <- as.formula(Args[17])
-effectModel2 <- Args[17]
-selectedEffect <- Args[18]
-showLSMeans <- Args[19]
-allPairwiseTest <- Args[20]
-backToControlTest <- Args[21]
-cntrlGroup <- Args[22]
+sig <- 1 - as.numeric(Args[15])
+sig2 <- 1 - as.numeric(Args[15])/2
+effectModel <- as.formula(Args[16])
+effectModel2 <- Args[16]
+selectedEffect <- Args[17]
+showLSMeans <- Args[18]
+allPairwiseTest <- Args[19]
+backToControlTest <- Args[20]
+cntrlGroup <- Args[21]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 

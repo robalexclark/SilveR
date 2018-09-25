@@ -1,4 +1,7 @@
 ﻿using Combinatorics;
+using SilveRModel.Helpers;
+using SilveRModel.Models;
+using SilveRModel.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,9 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
@@ -46,9 +46,10 @@ namespace SilveRModel.StatsModel
 
         [HasAtLeastOneEntry]
         [CheckUsedOnceOnly]
+        [DisplayName("Treatment factors")]
         public List<string> Treatments { get; set; }
 
-        [DisplayName("Other design (blocks)")]
+        [DisplayName("Other design (block) factors")]
         [CheckUsedOnceOnly]
         public List<string> OtherDesignFactors { get; set; }
 
@@ -61,7 +62,7 @@ namespace SilveRModel.StatsModel
         }
 
         [CheckUsedOnceOnly]
-        public string Covariate { get; set; }
+        public List<string> Covariates { get; set; }
 
         [DisplayName("Primary factor")]
         public string PrimaryFactor { get; set; }
@@ -78,9 +79,7 @@ namespace SilveRModel.StatsModel
         [DisplayName("Normal probability plot")]
         public bool NormalPlotSelected { get; set; }
 
-        [DisplayName("Standardised effects")]
-        public bool StandardisedEffectsSelected { get; set; }
-
+        [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
         public List<string> SignificancesList
@@ -91,19 +90,24 @@ namespace SilveRModel.StatsModel
         [DisplayName("Effect")]
         public string SelectedEffect { get; set; }
 
-        [DisplayName("Least Square (predicted) means")]
+        [DisplayName("Least square (predicted) means")]
         public bool LSMeansSelected { get; set; }
 
         [DisplayName("All pairwise comparisons")]
         public string AllPairwise { get; set; }
 
-        public List<string> PostHocTestList
+        public List<string> PairwiseTestList
         {
-            get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Tukey", "Holm", "Hochberg", "Hommel", "Bonferonni", "Benjamini-Hochberg" }; }
+            get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Tukey", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }; }
         }
 
         [DisplayName("Comparisons back to control")]
         public string ComparisonsBackToControl { get; set; }
+
+        public List<string> ComparisonsBackToControlTestList
+        {
+            get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Dunnett", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }; }
+        }
 
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
@@ -140,7 +144,7 @@ namespace SilveRModel.StatsModel
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (Response != columnName && !Treatments.Contains(columnName) && OtherDesignFactors != null && !OtherDesignFactors.Contains(columnName) && Covariate != columnName)
+                if (Response != columnName && !Treatments.Contains(columnName) && (OtherDesignFactors == null || !OtherDesignFactors.Contains(columnName)) && (Covariates == null || !Covariates.Contains(columnName)))
                 {
                     dtNew.Columns.Remove(columnName);
                 }
@@ -206,9 +210,12 @@ namespace SilveRModel.StatsModel
             //Now do transformations...
             dtNew.TransformColumn(Response, ResponseTransformation);
 
-            if (!String.IsNullOrEmpty(Covariate)) //check that a covariate is selected
+            if (Covariates != null)
             {
-                dtNew.TransformColumn(Covariate, CovariateTransformation);
+                foreach (string covariate in Covariates)
+                {
+                    dtNew.TransformColumn(covariate, CovariateTransformation);
+                }
             }
 
             //Finally, as numeric categorical variables get misinterpreted by r, we need to go through
@@ -253,14 +260,16 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + scatterplotModel); //5
 
             //assemble a model for the covariate plot (if a covariate has been chosen)...
-            if (String.IsNullOrEmpty(Covariate)) //6
+            if (Covariates == null) //6
             {
                 arguments.Append(" " + "NULL");
             }
             else
             {
-                string covariateModel = ArgumentConverters.ConvertIllegalChars(Response) + "~" + ArgumentConverters.ConvertIllegalChars(Covariate);
-                arguments.Append(" " + covariateModel);
+                string covariates = null;
+                foreach (string covariate in Covariates) covariates = covariates + "," + ArgumentConverters.ConvertIllegalChars(covariate);
+
+                arguments.Append(" " + covariates.TrimStart(','));
             }
 
             //get transforms
@@ -288,12 +297,11 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(ANOVASelected)); //12
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(PRPlotSelected)); //13
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalPlotSelected)); //14
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(StandardisedEffectsSelected)); //15
 
-            arguments.Append(" " + Significance); //16
+            arguments.Append(" " + Significance); //15
 
             //assemble the effect model
-            if (String.IsNullOrEmpty(SelectedEffect)) //17, 18
+            if (String.IsNullOrEmpty(SelectedEffect)) //16, 17
             {
                 arguments.Append(" " + "NULL");
                 arguments.Append(" " + "NULL");
@@ -304,19 +312,19 @@ namespace SilveRModel.StatsModel
                 arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(SelectedEffect));
             }
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LSMeansSelected)); //19
+            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LSMeansSelected)); //18
 
             if (!String.IsNullOrEmpty(AllPairwise))
-                arguments.Append(" " + "\"" + AllPairwise + "\""); //20
+                arguments.Append(" " + "\"" + AllPairwise + "\""); //19
             else
                 arguments.Append(" " + "NULL");
 
             if (!String.IsNullOrEmpty(ComparisonsBackToControl))
-                arguments.Append(" " + "\"" + ComparisonsBackToControl + "\""); //21
+                arguments.Append(" " + "\"" + ComparisonsBackToControl + "\""); //20
             else
                 arguments.Append(" " + "NULL");
 
-            arguments.Append(" " + "\"" + ControlGroup + "\""); //22
+            arguments.Append(" " + "\"" + ControlGroup + "\""); //21
 
             return arguments.ToString();
         }
@@ -330,13 +338,12 @@ namespace SilveRModel.StatsModel
             this.Treatments = argHelper.ArgumentLoader(nameof(Treatments), Treatments);
             this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
             this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Covariate = argHelper.ArgumentLoader(nameof(Covariate), Covariate);
+            this.Covariates = argHelper.ArgumentLoader(nameof(Covariates), Covariates);
             this.PrimaryFactor = argHelper.ArgumentLoader(nameof(PrimaryFactor), PrimaryFactor);
             this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
             this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
             this.PRPlotSelected = argHelper.ArgumentLoader(nameof(PRPlotSelected), PRPlotSelected);
             this.NormalPlotSelected = argHelper.ArgumentLoader(nameof(NormalPlotSelected), NormalPlotSelected);
-            this.StandardisedEffectsSelected = argHelper.ArgumentLoader(nameof(StandardisedEffectsSelected), StandardisedEffectsSelected);
             this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
             this.SelectedEffect = argHelper.ArgumentLoader(nameof(SelectedEffect), SelectedEffect);
             this.LSMeansSelected = argHelper.ArgumentLoader(nameof(LSMeansSelected), LSMeansSelected);
@@ -353,13 +360,12 @@ namespace SilveRModel.StatsModel
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatments), Treatments));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(OtherDesignFactors), OtherDesignFactors));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariate), Covariate));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PrimaryFactor), PrimaryFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ANOVASelected), ANOVASelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlotSelected), PRPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlotSelected), NormalPlotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardisedEffectsSelected), StandardisedEffectsSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedEffect), SelectedEffect));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
@@ -377,8 +383,9 @@ namespace SilveRModel.StatsModel
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
             string model = Response + "~";
 
-            if (!String.IsNullOrEmpty(Covariate))
-                model = model + Covariate + "+";
+            if (Covariates != null)
+                foreach (string covariate in Covariates)
+                    model = model + covariate + "+";
 
             if (OtherDesignFactors != null)
             {
@@ -405,8 +412,11 @@ namespace SilveRModel.StatsModel
             //assemble the effect model
             string effectModel = Response + "~"; //add in the response
 
-            if (!String.IsNullOrEmpty(Covariate)) //add in a covariate if one is selected
-                effectModel = effectModel + Covariate + "+";
+            if (Covariates != null)
+            {
+                foreach (string covariate in Covariates) //add in a covariate if one is selected
+                    effectModel = effectModel + covariate + "+";
+            }
 
             if (OtherDesignFactors != null)
             {
@@ -415,7 +425,6 @@ namespace SilveRModel.StatsModel
             }
 
             //complicated business of assembling the other part of the model from the interactions etc...
-
             string[] splitter = { " * " };
             List<string> interactionEffects = new List<string>(SelectedEffect.Split(splitter, StringSplitOptions.RemoveEmptyEntries));
 
@@ -503,8 +512,8 @@ namespace SilveRModel.StatsModel
                 if (memberName != "OtherDesignFactors")
                     checker.AddVars(this.OtherDesignFactors);
 
-                if (memberName != "Covariate")
-                    checker.AddVar(this.Covariate);
+                if (memberName != "Covariates")
+                    checker.AddVars(this.Covariates);
 
                 return checker.DoCheck(varToBeChecked);
             }

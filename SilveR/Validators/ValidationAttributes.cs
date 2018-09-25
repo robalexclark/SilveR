@@ -34,7 +34,7 @@ namespace SilveRModel.Validators
 
             if (!result)
             {
-                return new ValidationResult(validationContext.MemberName + " is selected more than once. Please amend the dataset prior to running the analysis.");
+                return new ValidationResult(validationContext.MemberName + " have been selected in more than one input category, please change your input options.");
             }
             else
             {

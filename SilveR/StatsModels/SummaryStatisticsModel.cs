@@ -76,7 +76,7 @@ namespace SilveRModel.StatsModel
         [DisplayName("Standard error of mean")]
         public bool StandardErrorOfMean { get; set; }
 
-        [DisplayName("Min and Max")]
+        [DisplayName("Min and max")]
         public bool MinAndMax { get; set; }
 
         [DisplayName("Median and quartiles")]
@@ -85,11 +85,11 @@ namespace SilveRModel.StatsModel
         [DisplayName("% coefficient of variation")]
         public bool CoefficientOfVariation { get; set; }
 
-        [DisplayName("Confidence interval")]
+        [DisplayName("Confidence interval of the mean")]
         public bool ConfidenceInterval { get; set; } = true;
 
-        [DisplayName("Significance level")]
-        [Required(ErrorMessage = "Significance is Required")]
+        [DisplayName("Level (%)")]
+        [Required(ErrorMessage = "Level (%) is Required")]
         [ValidateConfidenceLimits]
         public decimal Significance { get; set; } = 95;
 

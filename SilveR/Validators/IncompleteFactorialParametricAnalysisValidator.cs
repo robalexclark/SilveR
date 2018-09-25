@@ -25,7 +25,10 @@ namespace SilveRModel.Validators
                 allVars.AddRange(ifpVariables.OtherDesignFactors);
 
             allVars.Add(ifpVariables.Response);
-            allVars.Add(ifpVariables.Covariate);
+
+            if (ifpVariables.Covariates != null)
+                allVars.AddRange(ifpVariables.Covariates);
+
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
             if (!CheckTreatmentsHaveLevels(ifpVariables.Treatments, true)) return ValidationInfo;
@@ -47,16 +50,19 @@ namespace SilveRModel.Validators
             if (!FactorAndResponseCovariateChecks(categorical, ifpVariables.Response)) return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
-            if (!String.IsNullOrEmpty(ifpVariables.Covariate))
+            if (ifpVariables.Covariates != null)
             {
-                if (!FactorAndResponseCovariateChecks(categorical, ifpVariables.Covariate)) return ValidationInfo;
+                foreach (string covariate in ifpVariables.Covariates)
+                {
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                }
             }
 
             //check that the effect selected is the highest order interaction possible from selected factors, else output warning
             CheckEffectSelectedIsHighestOrderInteraction();
 
             //
-            if (!String.IsNullOrEmpty(ifpVariables.Covariate) && String.IsNullOrEmpty(ifpVariables.PrimaryFactor))
+            if (ifpVariables.Covariates != null && String.IsNullOrEmpty(ifpVariables.PrimaryFactor))
             {
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
             }
@@ -141,7 +147,13 @@ namespace SilveRModel.Validators
                 {
                     CheckTransformations(row, ifpVariables.ResponseTransformation, ifpVariables.Response, "response");
 
-                    CheckTransformations(row, ifpVariables.CovariateTransformation, ifpVariables.Covariate, "covariate");
+                    if (ifpVariables.Covariates != null)
+                    {
+                        foreach (string covariate in ifpVariables.Covariates)
+                        {
+                            CheckTransformations(row, ifpVariables.CovariateTransformation, covariate, "covariate");
+                        }
+                    }
                 }
             }
 

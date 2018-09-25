@@ -6,7 +6,11 @@ $(function () {
     });
 
     $("#ResponseTransformation").kendoDropDownList({
-        dataSource: theModel.transformationsList
+        dataSource: theModel.transformationsList,
+        change: function () {
+            var covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
+            covariateTransformation.value($("#ResponseTransformation").val());
+        }
     });
 
     $("#Treatments").kendoMultiSelect({
@@ -20,8 +24,9 @@ $(function () {
         value: theModel.otherDesignFactors
     });
 
-    $("#Covariate").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull,
+    $("#Covariates").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.covariates,
         change: covariateBlockEnableDisable
     });
 
@@ -68,14 +73,16 @@ $(function () {
         }
 
         selectedEffect.enable(true);
+
+        selectedEffectChanged();
     });
 
     $("#AllPairwise").kendoDropDownList({
-        dataSource: theModel.postHocTestList
+        dataSource: theModel.pairwiseTestList
     });
 
     $("#ComparisonsBackToControl").kendoDropDownList({
-        dataSource: theModel.postHocTestList
+        dataSource: theModel.comparisonsBackToControlTestList
     });
 
     var controlGroup = $("#ControlGroup").kendoDropDownList({
@@ -92,7 +99,7 @@ $(function () {
         controlGroup.value(theModel.controlGroup);
     });
 
-    treatmentsChanged({ currentPrimaryFactor: theModel.primaryFactor, currentSelectedEffect: theModel.selectedEffect });
+    treatmentsChanged();
 
     covariateBlockEnableDisable();
 });
@@ -117,22 +124,24 @@ function treatmentsChanged() {
 
     var currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
 
-    //treatments have changed so fill in the primary factor and the selected effect
+    //treatments have changed so fill in the primary factor...
     var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
     primaryFactorDropDown.dataSource.read({
         selectedTreatments: currentlySelectedTreatments
     });
 
+    //...and the selected effect
     var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
     selectedEffectDropDown.dataSource.read({
         selectedTreatments: currentlySelectedTreatments
     });
 
-    selectedEffectsBlockEnableDisable();
+    //selectedEffectsBlockEnableDisable();
 }
 
 //if the selected effect is changed then fill in the control group
 function selectedEffectChanged() {
+
     var controlGroup = $("#ControlGroup").data("kendoDropDownList");
 
     controlGroup.value(null);
@@ -142,7 +151,7 @@ function selectedEffectChanged() {
 }
 
 function covariateBlockEnableDisable() {
-    var covariateDropDown = $("#Covariate");
+    var covariateDropDown = $("#Covariates");
     var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
     var covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 
@@ -161,33 +170,17 @@ function covariateBlockEnableDisable() {
 function selectedEffectsBlockEnableDisable() {
     var treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
     var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
-    var lsMeansSelectedCheckBox = $("#LSMeansSelected");
-    var allPairwise = $('#AllPairwise').data("kendoDropDownList");
     var comparisonsBackToControl = $('#ComparisonsBackToControl').data("kendoDropDownList");
     var controlGroup = $('#ControlGroup').data("kendoDropDownList");
 
     if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 0 && selectedEffectDropDown.value().indexOf("*") == -1) {
-        //selectedEffectDropDown.enable(true);
-        lsMeansSelectedCheckBox.prop("disabled", false);
-        allPairwise.enable(true);
         comparisonsBackToControl.enable(true);
         controlGroup.enable(true);
     }
     else {
-        //selectedEffectDropDown.enable(false);
-        lsMeansSelectedCheckBox.prop("disabled", true);
-        allPairwise.enable(false);
         comparisonsBackToControl.enable(false);
         controlGroup.enable(false);
-        allPairwise.value(null);
         comparisonsBackToControl.value(null);
         controlGroup.value(null);
     }
-
-    //if (selectedEffectDropDown.value().indexOf("*") >= 0) {
-    //    comparisonsBackToControl.enable(false);
-    //    controlGroup.enable(false);
-    //    comparisonsBackToControl.value(null);
-    //    controlGroup.value(null);
-    //}
 }

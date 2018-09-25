@@ -16,7 +16,7 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 #Copy Args
 model <- Args[4]
 scatterplotModel <- as.formula(Args[5])
-covariateModel <- Args[6]
+covariates <- Args[6]
 responseTransform <- Args[7]
 covariateTransform <- Args[8]
 FirstCatFactor <- Args[9]
@@ -25,16 +25,15 @@ blockFactors <- Args[11]
 showANOVA <- Args[12]
 showPRPlot <- Args[13]
 showNormPlot <- Args[14]
-showEffectSize <- Args[15] #SHow standardised effect size,  not currently implemented
-sig <- 1 - as.numeric(Args[16])
-sig2 <- 1 - as.numeric(Args[16])/2
-effectModel <- as.formula(Args[17])
-effectModel2 <- Args[17]
-selectedEffect <- Args[18]
-showLSMeans <- Args[19]
-allPairwiseTest <- Args[20]
-backToControlTest <- Args[21]
-cntrlGroup <- Args[22]
+sig <- 1 - as.numeric(Args[15])
+sig2 <- 1 - as.numeric(Args[15])/2
+effectModel <- as.formula(Args[16])
+effectModel2 <- Args[16]
+selectedEffect <- Args[17]
+showLSMeans <- Args[18]
+allPairwiseTest <- Args[19]
+backToControlTest <- Args[20]
+cntrlGroup <- Args[21]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -86,7 +85,7 @@ statdata$mainEffect<-as.factor(statdata$mainEffect)
 statdata$scatterPlotColumn<-as.factor(statdata$scatterPlotColumn)
 
 #Response
-resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
+resp <- unlist(strsplit(model ,"~"))[1] #get the response variable from the main model
 
 #Number of factors in Selected effect
 factno<-length(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]]))
@@ -99,20 +98,34 @@ statdata_temp <-statdata
 noblockfactors=0
 if (blockFactors !="NULL") {
 	tempblockChanges <-strsplit(blockFactors, ",")
-	txtexpectedblockChanges <- c("")
+	blocklistx <- c("")
 	for(i in 1:length(tempblockChanges[[1]]))  {
-		txtexpectedblockChanges [length(txtexpectedblockChanges )+1]=(tempblockChanges[[1]][i]) 
+		blocklistx [length(blocklistx )+1]=(tempblockChanges[[1]][i]) 
 	}
-	noblockfactors<-length(txtexpectedblockChanges)-1
+	blocklist <- blocklistx[-1]
+	noblockfactors<-length(blocklist)
 }
 
 #calculating number of treatment factors
 tempChanges <-strsplit(treatFactors, ",")
-txtexpectedChanges <- c("")
+treatlistx <- c("")
 for(i in 1:length(tempChanges[[1]]))  { 
-	txtexpectedChanges [length(txtexpectedChanges )+1]=(tempChanges[[1]][i]) 
+	treatlistx [length(treatlistx )+1]=(tempChanges[[1]][i]) 
 }
-notreatfactors<-length(txtexpectedChanges)-1
+treatlist <- treatlistx[-1]
+notreatfactors<-length(treatlist)
+
+#calculating number of covariates
+nocovars=0
+if (covariates !="NULL") {
+	tempcovChanges <-strsplit(covariates, ",")
+	txtexpectedcovChanges <- c("")
+	for(i in 1:length(tempcovChanges[[1]]))  {
+		txtexpectedcovChanges [length(txtexpectedcovChanges )+1]=(tempcovChanges[[1]][i]) 
+	}
+	covlist <- txtexpectedcovChanges[-1]
+	nocovars<-length(covlist)
+}
 
 #Removing illegal characters
 selectedEffect<- namereplace2(selectedEffect)
@@ -121,7 +134,7 @@ selectedEffectx<- namereplace(selectedEffect)
 #replace illegal characters in variable names
 YAxisTitle <-resp
 if(FirstCatFactor != "NULL") {
-	XAxisTitle<-unlist(strsplit(covariateModel, "~"))[2]
+	XAxisTitleCov<-covlist
 }
 
 #replace illegal characters in variable names
@@ -129,7 +142,9 @@ for (i in 1:10) {
 	YAxisTitle<-namereplace(YAxisTitle)
 
 	if(FirstCatFactor != "NULL") {
-		XAxisTitle<-namereplace(XAxisTitle)
+		for (i in 1: nocovars) {
+			XAxisTitleCov[i]<-namereplace(XAxisTitleCov[i])
+		}
 	}
 }
 LS_YAxisTitle<-YAxisTitle
@@ -137,7 +152,7 @@ LS_YAxisTitle<-YAxisTitle
 # Code to create varibale to test if the highest order interaction is selected
 testeffects = noblockfactors
 if(FirstCatFactor != "NULL") {
-	testeffects = noblockfactors+1
+	testeffects = noblockfactors+nocovars
 }
 emodel <-strsplit(effectModel2, "+", fixed = TRUE)
 
@@ -157,7 +172,7 @@ HTML.title(Title, HR = 1, align = "left")#Response
 # Testing the factorial combinations
 ind<-1
 for (i in 1:notreatfactors) {
-	ind=ind*length(unique(eval(parse(text = paste("statdata$",txtexpectedChanges[i+1])))))
+	ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
 }
 
 if((length(unique(statdata$scatterPlotColumn))) != ind) {
@@ -174,7 +189,19 @@ HTML.title(title, HR=2, align="left")
 
 add<-paste(c("The  "), resp, " response is currently being analysed by the Single Measures Parametric Analysis module", sep="")
 if(FirstCatFactor != "NULL") {
-	add<-paste(add, c(", with  "), unlist(strsplit(covariateModel, "~"))[2], " fitted as a covariate.", sep="")
+	if (nocovars == 1) {
+		add<-paste(add, ", with ", covlist[1] , " fitted as a covariate.", sep="")
+	} 
+	if (nocovars == 2) {
+		add<-paste(add, ", with ", covlist[1] , " and ", covlist[2] ," fitted as covariates.", sep="")
+	}
+	if (nocovars > 2) {	
+		add<-paste(add, ", with ", sep="")	
+		for (i in 1: (nocovars -2)) {
+		add <- paste (add, covlist[i],  ", " , sep="")
+		}
+		add<-paste(add, covlist[(nocovars -1)] , " and ", covlist[nocovars] , " fitted as covariates.", sep="")
+	}
 } else {
 	add<-paste(add, ".", sep="")
 }
@@ -183,8 +210,12 @@ if (responseTransform != "None") {
 	add<-paste(add, c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
 }
 
-if (covariateTransform != "None") {
-	ad3<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
+if (covariates !="NULL" && covariateTransform != "None") {
+	if (nocovars == 1) {
+		add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
+	} else {
+		add<-paste(add, c("The covariates have been "), covariateTransform, " transformed prior to analysis.", sep="")
+	}
 }
 HTML(add, align="left")
 
@@ -236,61 +267,68 @@ HTML("Tip: Use this plot to identify possible outliers.", align="left")
 #Covariate plot
 #===================================================================================================================
 if(FirstCatFactor != "NULL") {
-	title<-c("Covariate plot of the raw data")
+
+	if (nocovars == 1) {
+		title<-c("Plot of the response vs. the covariate, categorised by the primary factor")
+	} else {
+		title<-c("Plot of the response vs. the covariates, categorised by the primary factor")
+	}
 	if(responseTransform != "None" || covariateTransform != "None") {
 		title<-paste(title, " (on the transformed scale)", sep="")
 	} 
 	HTML.title(title, HR=2, align="left")
 
-	ncscatterplot3 <- sub(".html", "ncscatterplot3.jpg", htmlFile)
-	jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	index <- 1
+	for (i in 1:nocovars) {
+		ncscatterplot3 <- sub(".html", "IVS", htmlFile)
+	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.jpg", sep = "")
+		jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
 
-	#STB July2013
-	plotFilepdf2 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
-	dev.control("enable") 
+		#STB July2013
+		plotFilepdf2 <- sub(".html", "IVS", htmlFile)
+		plotFilepdf2 <- paste(plotFilepdf2, index, "ncscatterplot3.pdf", sep="")
+		dev.control("enable") 
 
-	#Graphical parameters
-	graphdata<-statdata
-	graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",unlist(strsplit(covariateModel, "~"))[2])))
-	graphdata$yvarrr_IVS <- eval(parse(text = paste("statdata$",resp)))
-	graphdata$l_l <- eval(parse(text = paste("statdata$",FirstCatFactor))) 
-	graphdata$catfact <-eval(parse(text = paste("statdata$",FirstCatFactor))) 
-	XAxisTitle <- unlist(strsplit(covariateModel, "~"))[2]
-	XAxisTitle<-namereplace(XAxisTitle)
-	MainTitle2 <-""
+		#Graphical parameters
+		graphdata<-statdata
+		graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",covlist[i])))
+		graphdata$yvarrr_IVS <- eval(parse(text = paste("statdata$",resp)))
+		graphdata$l_l <- eval(parse(text = paste("statdata$",FirstCatFactor))) 
+		graphdata$catfact <-eval(parse(text = paste("statdata$",FirstCatFactor))) 
+		XAxisTitle <- XAxisTitleCov[i]
+		MainTitle2 <-""
+		w_Gr_jit <- 0
+		h_Gr_jit <- 0
+		Legendpos <- "right"
+		Gr_alpha <- 1
+		Line_type <-Line_type_solid
 
-	w_Gr_jit <- 0
-	h_Gr_jit <- 0
+		LinearFit <- "Y"
+		GraphStyle <- "Overlaid"
+		ScatterPlot <- "Y"
 
-	Legendpos <- "right"
+		#Testing for with infinite slopes on scatterplot and re-ordering dataset if necessary
+		inf_slope<-IVS_F_infinite_slope()
+		infiniteslope <- inf_slope$infiniteslope
+		graphdata<-inf_slope$graphdata
 
-	Gr_alpha <- 1
-	Line_type <-Line_type_solid
-
-	LinearFit <- "Y"
-	GraphStyle <- "Overlaid"
-	ScatterPlot <- "Y"
-
-	#Testing for with infinite slopes on scatterplot and re-ordering dataset if necessary
-	inf_slope<-IVS_F_infinite_slope()
-	infiniteslope <- inf_slope$infiniteslope
-	graphdata<-inf_slope$graphdata
-
-	#GGPLOT2 code
-	OVERLAID_SCAT()
+		#GGPLOT2 code
+		OVERLAID_SCAT()
 	
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
 
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf2), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_2<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf2)
-		linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the covariate plot</a>", sep = "")
-		HTML(linkToPdf2)
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf2), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_2<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf2)
+			linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the covariate plot</a>", sep = "")
+			HTML(linkToPdf2)
+		}
+		index <- index +1
 	}
 
 	#STB Aug 2011 - removing lines with infinite slope
@@ -310,59 +348,18 @@ if(FirstCatFactor != "NULL") {
 #===================================================================================================================
 if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 
-	# Defining the Response
-	Resplist <-unlist(strsplit(covariateModel, "~"))[1]
-	
-	# Defining the covariate
-	Covlist <-unlist(strsplit(covariateModel, "~"))[2]
-
 	#Creating the list of model terms
-	listmodel <- unlist(strsplit(model,"~"))[2] #get the main model
-	temChanges <-strsplit(listmodel, "+", fixed = TRUE)
-	Modellist <- c("")
-	for(i in 1:length(temChanges[[1]]))  { 
-		Modellist[i]=(temChanges[[1]][i]) 
-	}
+	CovIntModel <- c(model)
 
-	#Creating list of blocking factor
-	if (noblockfactors > 0) {
-		Blocklist <- c()
-		for (i in 2:length(txtexpectedblockChanges)) {
-			Blocklist[i-1] = txtexpectedblockChanges [i]
+	#Adding in additional interactions
+	for (i in 1:notreatfactors) {
+		for (j in 1: nocovars) {
+			CovIntModel <- paste(CovIntModel, " + ",  treatlist[i], " * ", covlist[j], sep="")
 		}
 	}
-
-	#Creating the list of treatment terms
-	Treatlist<-c()
-	for (i in (1+noblockfactors+1):length(Modellist)) {
-		Treatlist[i-(1+noblockfactors+1)+1] = Modellist[i]
-	}
-
-	#Creating the list of interaction terms
-	Intlist <- c()
-	for (i in 1:(length(Treatlist))) {
-		Intlist[i] = paste (Covlist , "*" , Treatlist[i], sep = "" )
-	}
-
-	#Creating the covariate interaction model
-	Fulllist <- c(Treatlist,Intlist)
-	CovIntModela<-c(Covlist)
-	if (noblockfactors > 0) {
-		for (i in 1:noblockfactors) {
-			CovIntModela[i+1] <- paste(CovIntModela[i] , " + " , Blocklist[i])
-		}
-	}
-	CovIntModelb <- CovIntModela
-	for (i in 1:length(Fulllist)) {
-		CovIntModelb[i+length(CovIntModela)] <- paste(CovIntModelb[i+length(CovIntModela)-1] , " + " , Fulllist[i])
-	}
-	CovIntModel <- CovIntModelb[length(CovIntModelb)]
-	
-	#Creating the formula
-	CovIntForm <- paste(Resplist , " ~ ", CovIntModel , sep = "")
 
 	#Performing the ANCOVA analysis
-	Covintfull<-lm(as.formula(CovIntForm), data=statdata, na.action = na.omit)
+	Covintfull<-lm(as.formula(CovIntModel), data=statdata, na.action = na.omit)
 
 	#Title + warning
 	HTML.title("Analysis of Covariance (ANCOVA) table for assessing covariate interactions", HR=2, align="left")
@@ -514,25 +511,23 @@ if (CovariateRegressionCoefficients == "Y" && FirstCatFactor != "NULL") {
 	HTML.title("Covariate regression coefficient", HR=2, align="left")
 
 	covtable_1<-coef(summary(threewayfull))
-	covtable<-data.frame(covtable_1)[c(2),]
-	covtable_2<- covtable
-	covtable$Estimate <-format(round(covtable$Estimate, 3), nsmall=3, scientific=FALSE) 
-	covtable$Std..Error <-format(round(covtable$Std..Error, 3), nsmall=3, scientific=FALSE) 
-	covtable$t.value <-format(round(covtable$t.value, 2), nsmall=2, scientific=FALSE) 
-	covtable$Pr...t.. <-format(round(covtable$Pr...t.., 4), nsmall=4, scientific=FALSE) 
-	covtable_1<- covtable
+	covtable<-data.frame(covtable_1)[c(2:(nocovars+1)),]
 
-	if (as.numeric(covtable_2[1,4])<0.0001)  {
+	names <- rownames(covtable)
+	Estimate <-format(round(covtable$Estimate, 3), nsmall=3, scientific=FALSE) 
+	StdError <-format(round(covtable$Std..Error, 3), nsmall=3, scientific=FALSE) 
+	tvalue <-format(round(covtable$t.value, 2), nsmall=2, scientific=FALSE) 
+	Prt <-format(round(covtable$Pr...t.., 4), nsmall=4, scientific=FALSE) 
+	
+	covtable2 <-cbind(names, Estimate, StdError, tvalue, Prt)
+
+	if (as.numeric(covtable[1,4])<0.0001)  {
 		#STB March 2011 formatting p-values p<0.0001
 		#ivsanova[i,9]<-0.0001
-		covtable_1[1,4]= "<0.0001"
+		covtable2[1,5]= "<0.0001"
 	}
-
-	rz<-rownames(covtable)[1]
-	rownames(covtable_1)<-c(rz)
-
-	colnames(covtable_1)<-c("Estimate", "Std error", "t-value", "p-value")
-	HTML(covtable_1, classfirstline="second", align="left", row.names = "FALSE")
+	colnames(covtable2)<-c("Covariate", "Estimate", "Std error", "t-value", "p-value")
+	HTML(covtable2, classfirstline="second", align="left", row.names = "FALSE")
 }
 
 #===================================================================================================================
@@ -1269,18 +1264,20 @@ if(allPairwiseTest != "NULL") {
 		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table we have assumed that certain higher-order interactions are not significant and have removed them from the statistical model, see log for more details.", align="left")
 	}
 
+print("test1")
 	if (tablen >1) {
 		if (allPairwiseTest == "none") {
 			HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of generating false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called planned comparisons, see Snedecor and Cochran (1989).", align="left")
 		} else {
-			HTML("Warning: This procedure makes an adjustment assuming you want to make all pairwise comparisons. If this is not the case then these tests may be unduly conservative. You may wish to use planned comparisons (using unadjusted p-values) instead, see Snedecor and Cochran (1989), or make a manual adjustment to the unadjusted p-values using the ", branding , " P-value Adjustment module.", align="left")
+			addx <- paste("Warning: This procedure makes an adjustment assuming you want to make all pairwise comparisons. If this is not the case then these tests may be unduly conservative. You may wish to use planned comparisons (using unadjusted p-values) instead, see Snedecor and Cochran (1989), or make a manual adjustment to the unadjusted p-values using the ", branding , " P-value Adjustment module.", sep="")
+			HTML(addx, align="left")
 		}
 	}
-	if (allPairwiseTest!= "none") {
+	if (allPairwiseTest != "none") {
 		HTML("Note: The confidence intervals quoted are not adjusted for multiplicity.", align="left")
 	}
 } 
-
+print("test2")
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
@@ -1712,11 +1709,11 @@ if (notreatfactors==1)  {
 	}
 	for (i in 1:notreatfactors) {
 		if (i<notreatfactors-1)	{
-			add<-paste(add, txtexpectedChanges[i+1], ", ", sep="")
+			add<-paste(add, treatlist[i], ", ", sep="")
 		} else 	if (i<notreatfactors) {
-			add<-paste(add, txtexpectedChanges[i+1], " and ", sep="")
+			add<-paste(add, treatlist[i], " and ", sep="")
 		} else if (i==notreatfactors) {
-			add<-paste(add, txtexpectedChanges[i+1], " as treatment factors", sep="")
+			add<-paste(add, treatlist[i], " as treatment factors", sep="")
 		}
 	}
 }
@@ -1736,11 +1733,11 @@ if (noblockfactors==1 && blockFactors != "NULL")  {
 		}
 		for (i in 1:noblockfactors) {
 			if (i<noblockfactors-1) {
-				add<-paste(add, txtexpectedblockChanges[i+1], ", ", sep="")
+				add<-paste(add, blocklist[i], ", ", sep="")
 			} else	if (i<noblockfactors) {
-				add<-paste(add, txtexpectedblockChanges[i+1], " and ", sep="")
+				add<-paste(add, blocklist[i], " and ", sep="")
 			} else if (i==noblockfactors) {
-				add<-paste(add, txtexpectedblockChanges[i+1], sep="")
+				add<-paste(add, blocklist[i], sep="")
 			}
 		}
 		add<-paste(add, " as blocking factors", sep="")
@@ -1748,8 +1745,18 @@ if (noblockfactors==1 && blockFactors != "NULL")  {
 }
 if (FirstCatFactor == "NULL") {
 	add<-paste(add, ". ", sep="")
-} else if(FirstCatFactor != "NULL")	{
-	add<-paste(add, " and  ", unlist(strsplit(covariateModel, "~"))[2], " as the covariate. ", sep="")
+} else {
+
+
+	for (i in 1:nocovars) {
+		if (i<nocovars-1)	{
+			add<-paste(add, covlist[i], ", ", sep="")
+		} else 	if (i<nocovars) {
+			add<-paste(add, covlist[i], " and ", sep="")
+		} else if (i==nocovars) {
+			add<-paste(add, covlist[i], " as covariates.", sep="")
+		}
+	}
 }
 
 if (allPairwiseTest== "none" | backToControlTest== "none") {
@@ -1881,7 +1888,7 @@ if (showdataset=="Y")
 #===================================================================================================================
 HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", unlist(strsplit(Args[4],"~"))[1], sep=""), align="left")
+HTML(paste("Response variable: ", resp, sep=""), align="left")
 
 if (responseTransform != "None") {
 	HTML(paste("Response transformation: ", responseTransform, sep=""), align="left")
@@ -1894,7 +1901,7 @@ if (blockFactors != "NULL") {
 }
 
 if(FirstCatFactor != "NULL") {
-	HTML(paste("Covariate: ", unlist(strsplit(covariateModel, "~"))[2], sep=""), align="left")
+	HTML(paste("Covariate(s): ", covariates, sep=""), align="left")
 }
 
 if (FirstCatFactor != "NULL" && covariateTransform != "None") {
@@ -1905,7 +1912,7 @@ if (FirstCatFactor != "NULL" ) {
 	HTML(paste("Categorisation factor used on covariate scatterplots: ", FirstCatFactor, sep=""), align="left")
 }
 
-HTML(paste("Model fitted: ", unlist(strsplit(Args[4],"~"))[-1], sep=""), align="left")
+HTML(paste("Model fitted: ", unlist(strsplit(model,"~"))[-1], sep=""), align="left")
 HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""), align="left")
 HTML(paste("Output predicted vs. residual plot (Y/N): ", showPRPlot, sep=""), align="left")
 HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
@@ -1916,7 +1923,7 @@ if (showLSMeans != "N" && (Args[19] != "NULL" | backToControlTest != "NULL" ) ) 
 }
 
 if (Args[19] != "NULL") {
-	HTML(paste("All pairwise tests procedure: ", Args[19], sep=""), align="left")
+	HTML(paste("All pairwise tests procedure: ", allPairwiseTest, sep=""), align="left")
 }
 
 if (backToControlTest != "NULL" && backToControlTest != "none") {
