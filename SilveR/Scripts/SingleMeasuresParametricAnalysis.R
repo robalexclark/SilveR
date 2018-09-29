@@ -2,6 +2,7 @@
 #R Libraries
 
 suppressWarnings(library(multcomp))
+suppressWarnings(library(multcompView))
 suppressWarnings(library(car))
 suppressWarnings(library(R2HTML))
 suppressWarnings(library(lsmeans))
@@ -161,6 +162,7 @@ for(i in 1:length(emodel[[1]]))  {
 	emodelChanges [length(emodelChanges )+1]=(emodel[[1]][i]) 
 }
 noeffects<-length(emodelChanges)-2
+
 #===================================================================================================================
 #Titles and description
 #===================================================================================================================
@@ -1153,20 +1155,28 @@ if(allPairwiseTest != "NULL") {
 
 	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
 	multci<-confint(mult, level=sig, calpha = univariate_calpha())
+	tablen<-length(unique(rownames(multci$confint)))
 
 	if (allPairwiseTest== "Tukey") {
-		set.seed(3)	
-		mult<-glht(lm(model, data=statdata, na.action = na.omit),  linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
-		multci<-confint(mult, level=sig, calpha = univariate_calpha())
-		multp<-summary(mult)
+		if ( tablen >1 ) {
+			set.seed(3)	
+			mult<-glht(lm(model, data=statdata, na.action = na.omit),  linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
+			pwc = lsmeans(lm(model, data=statdata, na.action = na.omit) , eval(parse(text = paste("pairwise ~",selectedEffect))),   adjust = "tukey")
+			pvals<-cld(pwc$contrast, sort=FALSE)[,6]
+			sigma<-cld(pwc$contrast, sort=FALSE)[,3]
+		} else {
+			# Bug if Tukey selected and only 2 levels of selected effect
+			multp<-summary(mult, test=adjusted("none"))
+			pvals<-multp$test$pvalues
+			sigma<-multp$test$sigma
+		}
 	} else {
 		multp<-summary(mult, test=adjusted(allPairwiseTest))
+		pvals<-multp$test$pvalues
+		sigma<-multp$test$sigma
 	}
-	pvals<-multp$test$pvalues
-	sigma<-multp$test$sigma
-	tablen<-length(unique(rownames(multci$confint)))
-	tabs<-matrix(nrow=tablen, ncol=5)
 
+	tabs<-matrix(nrow=tablen, ncol=5)
 	for (i in 1:tablen) {
 		#STB Dec 2011 increasing means to 3dp
 		tabs[i,1]=format(round(multci$confint[i], 3), nsmall=3, scientific=FALSE)
@@ -1264,7 +1274,7 @@ if(allPairwiseTest != "NULL") {
 		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table we have assumed that certain higher-order interactions are not significant and have removed them from the statistical model, see log for more details.", align="left")
 	}
 
-print("test1")
+
 	if (tablen >1) {
 		if (allPairwiseTest == "none") {
 			HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of generating false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called planned comparisons, see Snedecor and Cochran (1989).", align="left")
@@ -1277,7 +1287,7 @@ print("test1")
 		HTML("Note: The confidence intervals quoted are not adjusted for multiplicity.", align="left")
 	}
 } 
-print("test2")
+
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
@@ -1431,59 +1441,19 @@ if(backToControlTest != "NULL") {
 	tabs3<-subset(tabs2, V13 == cntrlGroup)
 
 	if (backToControlTest== "Dunnett") { 
-		ntrgps<-length(unique(eval(parse(text = paste("statdata$",selectedEffect)))))-1
 
-		if (ntrgps!=1)	{
 
-			#Dunnetts code
-			# remove blank rows form the data, then calculate number of groups
-			nallgps<-length(unique(eval(parse(text = paste("statdata$",selectedEffect)))))
-			samplesize<-c(1:nallgps)
-			
-			#calculate the sample sizes
-			for (i in 1:nallgps) {
-				samplesize[i]<- sum(eval(parse(text = paste("statdata$",selectedEffect))) == levels(eval(parse(text = paste("statdata$",selectedEffect))))[i])
+		for (i in 1:(length(levels(  eval(parse(text = paste("statdata$",selectedEffect))))))) {
+			if ( levels(eval(parse(text = paste("statdata$",selectedEffect))))[i] == cntrlGroup) {
+				refno=i
 			}
-
-			# calculate the total number of obs and the DF for the Dunnetts test (get this from ANOVA?)
-			totalobs<-sum(samplesize)
-			dfree<-df.residual(lm(model, data=statdata, na.action = na.omit))
-
-			# calculation of correlation coefficient (according to Dunnett)
-			cormat<-diag(ntrgps)
-			for (j in 1:(ntrgps-1)) {
-				for (k in (j+1):ntrgps) {
-					cormat[j,k]<-1/(sqrt(((samplesize[1]/samplesize[j+1])+1)*((samplesize[1]/samplesize[k+1])+1)))
-					cormat[k,j]<-cormat[j,k]	
-				}
-			}
-
-			#call to get critical value
-			critval95<-qmvt(0.95, df = dfree, tail = "both", corr=cormat, abseps=0.0001)[1]
-			critval99<-qmvt(0.99, df = dfree, tail = "both", corr=cormat, abseps=0.0001)[1]
-			critval999<-qmvt(0.999, df = dfree, tail = "both", corr=cormat, abseps=0.0001)[1]
-			critvalsig<-qmvt(sig, df = dfree, tail = "both", corr=cormat, abseps=0.0001)[1]
-			pvals <-tabs3$V5
-			tstats<-tabs3$V8
-			sigma <-tabs3$V4
-
-			#Calculate p-value
-			dunnett <- function(data,  group)  {
-				pdunnett <- function(x, nallgps, dfree, cormat) {
-					1-pmvt(lower=-x, upper=x, delta=numeric(nallgps-1), df=dfree, corr=cormat, abseps=0.00000001)
-				}
-				t<-tstats
-				p <- sapply(t, pdunnett, nallgps, dfree, cormat)      
-				return(p)
-			}
-			dunnp<-dunnett()
-			tabs3$V15<-dunnp
-			adjpval<-dunnp
-		
-		} else {
-			tabs3$V15<-tabs3$V5
-			adjpval<-tabs3$V5
 		}
+
+		mult<-glht(lm(model, data=statdata, na.action = na.omit),  linfct=lsm(eval(parse(text = paste("trt.vs.ctrl ~",selectedEffect))), ref = refno ))
+		multci<-confint(mult, level=0.95, calpha = univariate_calpha())
+		multp<-summary(mult)
+		adjpval<-multp$test$pvalues
+		tabs3$V15<-adjpval
 	} else {
 		#Adjusting the p-values
 		unadjpval<-tabs3$V5

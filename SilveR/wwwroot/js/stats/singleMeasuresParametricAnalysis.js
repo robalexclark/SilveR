@@ -31,17 +31,13 @@ $(function () {
     });
 
     var primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
-        dataSource: {
-            transport: {
-                read: {
-                    url: "/Values/GetSelectedTreatments"
-                }
-            }
-        }
-
+        dataSource: theModel.treatments,
+        value: theModel.primaryFactor
     }).data("kendoDropDownList");
     primaryFactorDropdown.bind("dataBound", function (e) {
-        primaryFactorDropdown.value(theModel.primaryFactor);
+        if (!this.value()) {
+            this.select(0);
+        }
     });
 
     $("#CovariateTransformation").kendoDropDownList({
@@ -56,7 +52,7 @@ $(function () {
         dataSource: {
             transport: {
                 read: {
-                    url: "/Values/GetSelectedEffectsList"
+                    url: "/Values/GetSMPASelectedEffectsList"
                 }
             }
         },
@@ -109,7 +105,7 @@ function treatmentsChanged() {
 
     $.ajax({
         type: 'GET',
-        url: "/Values/GetInteractions",
+        url: "/Values/GetSMPAInteractions",
         data: { selectedTreatments: treatmentMultiSelect.dataItems() },
         success: function (data) {
             var markup = '';
@@ -122,21 +118,15 @@ function treatmentsChanged() {
     });
 
 
-    var currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
-
     //treatments have changed so fill in the primary factor...
     var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
-    primaryFactorDropDown.dataSource.read({
-        selectedTreatments: currentlySelectedTreatments
-    });
+    primaryFactorDropDown.setDataSource($("#Treatments").data("kendoMultiSelect").dataItems());
 
     //...and the selected effect
     var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
     selectedEffectDropDown.dataSource.read({
-        selectedTreatments: currentlySelectedTreatments
+        selectedTreatments: $("#Treatments").data("kendoMultiSelect").dataItems()
     });
-
-    //selectedEffectsBlockEnableDisable();
 }
 
 //if the selected effect is changed then fill in the control group

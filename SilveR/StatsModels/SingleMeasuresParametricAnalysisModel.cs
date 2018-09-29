@@ -267,7 +267,8 @@ namespace SilveRModel.StatsModel
             else
             {
                 string covariates = null;
-                foreach (string covariate in Covariates) covariates = covariates + "," + ArgumentConverters.ConvertIllegalChars(covariate);
+                foreach (string covariate in Covariates)
+                    covariates = covariates + "," + ArgumentConverters.ConvertIllegalChars(covariate);
 
                 arguments.Append(" " + covariates.TrimStart(','));
             }
@@ -280,19 +281,22 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(PrimaryFactor))); //9
 
             string treats = null;
-            foreach (string treat in Treatments) treats = treats + "," + ArgumentConverters.ConvertIllegalChars(treat);
-            arguments.Append(" " + treats.TrimStart(',')); //10
+            foreach (string treat in Treatments)
+                treats = treats + "," + ArgumentConverters.ConvertIllegalChars(treat);
+            arguments.Append(" " + treats.TrimStart(',')); //10           
 
-            string blocks = null;
-            if (OtherDesignFactors != null)
+            if (OtherDesignFactors == null) //11
             {
-                foreach (string otherDesign in OtherDesignFactors) blocks = blocks + "," + ArgumentConverters.ConvertIllegalChars(otherDesign);
-            }
-
-            if (String.IsNullOrEmpty(blocks)) //11
                 arguments.Append(" " + "NULL");
+            }
             else
+            {
+                string blocks = null;
+                foreach (string otherDesign in OtherDesignFactors)
+                    blocks = blocks + "," + ArgumentConverters.ConvertIllegalChars(otherDesign);
+
                 arguments.Append(" " + blocks.TrimStart(','));
+            }
 
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(ANOVASelected)); //12
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(PRPlotSelected)); //13
@@ -314,17 +318,11 @@ namespace SilveRModel.StatsModel
 
             arguments.Append(" " + ArgumentConverters.GetYesOrNo(LSMeansSelected)); //18
 
-            if (!String.IsNullOrEmpty(AllPairwise))
-                arguments.Append(" " + "\"" + AllPairwise + "\""); //19
-            else
-                arguments.Append(" " + "NULL");
+            arguments.Append(" " + ArgumentConverters.GetNULLOrText(AllPairwise)); //19
 
-            if (!String.IsNullOrEmpty(ComparisonsBackToControl))
-                arguments.Append(" " + "\"" + ComparisonsBackToControl + "\""); //20
-            else
-                arguments.Append(" " + "NULL");
+            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ComparisonsBackToControl)); //20
 
-            arguments.Append(" " + "\"" + ControlGroup + "\""); //21
+            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ControlGroup)); //21
 
             return arguments.ToString();
         }

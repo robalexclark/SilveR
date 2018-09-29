@@ -220,7 +220,8 @@ if (equalCase == "Y") {
 
 	#===================================================================================================================
 	#Calculating the size of the arithmetic difference with 95%CI
-	HTML.title("Comparison of the  least square (predicted) means with 95% confidence interval (assuming equal variances)", HR=2, align="left")
+	add <- paste("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval (assuming equal variances)",sep="")
+	HTML.title(add, HR=2, align="left")
 
 	mult2<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 	multci2<-confint(mult2, level=sig, calpha = univariate_calpha())
@@ -440,7 +441,8 @@ if (unequalCase == "Y") {
 #===================================================================================================================
 #Calculating the size of the arithmetic difference with 95%CI
 #===================================================================================================================
-	HTML.title("Comparison of the  least square (predicted) means with 95% confidence interval (assuming unequal variances)", HR=2, align="left")
+	add <-paste ("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval (assuming unequal variances)" , sep="") 
+	HTML.title(add, HR=2, align="left")
 
 	#Required to generate table label only
 	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))

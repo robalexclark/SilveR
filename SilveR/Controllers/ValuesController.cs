@@ -47,21 +47,7 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetSelectedTreatments(List<string> selectedTreatments)
-        {
-            if (selectedTreatments != null && selectedTreatments.Any())
-            {
-                selectedTreatments.Insert(0, String.Empty);
-                return Json(selectedTreatments);
-            }
-            else
-            {
-                return Json(selectedTreatments);
-            }
-        }
-
-        [HttpGet]
-        public JsonResult GetInteractions(List<string> selectedTreatments)
+        public JsonResult GetSMPAInteractions(List<string> selectedTreatments)
         {
             if (selectedTreatments != null && selectedTreatments.Any())
             {
@@ -75,11 +61,41 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetSelectedEffectsList(List<string> selectedTreatments)
+        public JsonResult GetSMPASelectedEffectsList(List<string> selectedTreatments)
         {
             if (selectedTreatments != null && selectedTreatments.Any())
             {
                 List<string> selectedEffectsList = SingleMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments);
+                return Json(selectedEffectsList);
+            }
+            else
+            {
+                return Json(new List<string>());
+            }
+        }
+
+
+
+        [HttpGet]
+        public JsonResult GetRMPAInteractions(List<string> selectedTreatments)
+        {
+            if (selectedTreatments != null && selectedTreatments.Any())
+            {
+                List<string> interactions = RepeatedMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
+                return Json(interactions);
+            }
+            else
+            {
+                return Json(new List<string>());
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetRMPASelectedEffectsList(List<string> selectedTreatments, string repeatedFactor)
+        {
+            if (selectedTreatments != null && selectedTreatments.Any() && !String.IsNullOrEmpty(repeatedFactor))
+            {
+                List<string> selectedEffectsList = RepeatedMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments, repeatedFactor);
                 return Json(selectedEffectsList);
             }
             else

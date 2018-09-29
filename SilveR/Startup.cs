@@ -160,7 +160,7 @@ namespace SilveR
                     context.Scripts.Add(nonParametrics);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "ChiSquaredAnalysis"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "ChiSquaredAndFishersExactTest"))
                 {
                     Script chiSquared = new Script() { ScriptDisplayName = "Chi-Squared and Fishers Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest" };
                     context.Scripts.Add(chiSquared);

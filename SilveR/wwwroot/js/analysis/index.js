@@ -11,11 +11,6 @@ $(function () {
             { command: { text: "View Results", click: viewResults }, title: " " },
             { command: { text: "Re-Analyse", click: reAnalyse }, title: " " },
             {
-
-
-
-
-
                 command: [{ text: "Delete", name: "destroy" }]
             }
         ],

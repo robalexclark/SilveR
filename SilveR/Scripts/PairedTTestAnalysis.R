@@ -981,7 +981,7 @@ if (showComps == "Y") {
 	if(dimfact > 2) {
 		add<-paste(c("All pairwise comparisons, without adjustment for multiplicity"))
 	} else {
-		add<-paste(c("Comparison between the least square (predicted) means, with 95% confidence interval"))
+		add<-paste("Comparison between the least square (predicted) means, with " ,(sig*100),"% confidence interval",sep="")
 	}
 	HTML.title(add, HR=2, align="left")
 

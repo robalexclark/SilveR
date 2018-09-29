@@ -10,7 +10,7 @@ suppressWarnings(library(lsmeans))
 #===================================================================================================================
 # retrieve args
 Args <- commandArgs(TRUE)
-print(Args)
+
 #Read in data
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
@@ -18,13 +18,13 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 model <- as.formula(Args[4])
 timeFactor <- Args[5]
 subjectFactor <- Args[6]
-covariateModel <- Args[7]
+covariatelist <- Args[7]
 covariance <- Args[8]
 responseTransform <- Args[9]
 covariateTransform <- Args[10]
 FirstCatFactor <- Args[11]
-treatFactors <- Args[12]
-blockFactors <- Args[13]
+treatlist <- Args[12]
+blocklist <- Args[13]
 showANOVA <- Args[14]
 showPRPlot <- Args[15]
 showNormPlot <- Args[16]
@@ -34,6 +34,7 @@ effectModel2 <- Args[18]
 selectedEffect <- Args[19]
 showLSMeans <- Args[20]
 allPairwiseTest <- Args[21]
+reducedTest <- Args[22]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -64,6 +65,7 @@ if (FirstCatFactor != "NULL") {
 }
 Labelz_IVS_ <- "N"
 Line_size2 <- Line_size
+DisplayLSMeanslines <- "Y"
 
 #working directory
 direct2<- unlist(strsplit(Args[3],"/"))
@@ -78,11 +80,44 @@ statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFa
 statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
 statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
 
-YAxisTitle <-resp
-CPXAxisTitle <-timeFactor
-if(FirstCatFactor != "NULL") {
-	XAxisTitle<-unlist(strsplit(covariateModel, "~"))[2]
+#calculating number of block factors
+noblocklist=0
+if (blocklist !="NULL") {
+	tempblockChanges <-strsplit(blocklist, ",")
+	blocklistx <- c("")
+	for(i in 1:length(tempblockChanges[[1]]))  {
+		blocklistx [length(blocklistx )+1]=(tempblockChanges[[1]][i]) 
+	}
+	blocklistsep <- blocklistx[-1]
+	noblockfactors<-length(blocklistsep)
 }
+
+#calculating number of treatment factors
+tempChanges <-strsplit(treatlist, ",")
+txtexpectedChanges <- c("")
+for(i in 1:length(tempChanges[[1]])) { 
+	txtexpectedChanges [length(txtexpectedChanges )+1]=(tempChanges[[1]][i]) 
+}
+treatlistsep <- txtexpectedChanges[-1]
+notreatlist<-length(treatlistsep)
+
+#calculating number of covariates
+nocovars=0
+if (covariatelist !="NULL") {
+	tempcovChanges <-strsplit(covariatelist, ",")
+	txtexpectedcovChanges <- c("")
+	for(i in 1:length(tempcovChanges[[1]]))  {
+		txtexpectedcovChanges [length(txtexpectedcovChanges )+1]=(tempcovChanges[[1]][i]) 
+	}
+	covlistsep <- txtexpectedcovChanges[-1]
+	nocovlist<-length(covlistsep)
+}
+
+YAxisTitle <-resp
+if(covariatelist !="NULL") {
+	XAxisTitleCov<-covlistsep
+}
+CPXAxisTitle <-timeFactor
 
 #STB June 2015 - Takign a copy of the dataset
 statdata_temp <-statdata
@@ -93,8 +128,10 @@ for (i in 1:10) {
 	CPXAxisTitle<-namereplace(CPXAxisTitle)
 	timeFactor_plot <- namereplace(timeFactor)
 
-	if(FirstCatFactor != "NULL") {
-		XAxisTitle<-namereplace(XAxisTitle)
+	if(covariatelist != "NULL") {
+		for (i in 1: nocovlist) {
+			XAxisTitleCov[i]<-namereplace(XAxisTitleCov[i])
+		}
 	}
 }
 LS_YAxisTitle<-YAxisTitle
@@ -103,41 +140,20 @@ LS_YAxisTitle<-YAxisTitle
 selectedEffect<-gsub(eval(timeFactor), "Timezzz",selectedEffect) 
 selectedEffect<-gsub("ivs_sp_ivs*ivs_sp_ivs", "*",selectedEffect,fixed=TRUE) 
 
-#calculating number of block and treatment factors
-tempblockChanges <-strsplit(blockFactors, ",")
-txtexpectedblockChanges <- c("")
-for(i in 1:length(tempblockChanges[[1]]))  {
-	txtexpectedblockChanges [length(txtexpectedblockChanges )+1]=(tempblockChanges[[1]][i]) 
-}
-noblockfactors<-length(txtexpectedblockChanges)-1
-if (tempblockChanges == "NULL") {
-	noblockfactors = 0
-}
-
-tempChanges <-strsplit(treatFactors, ",")
-txtexpectedChanges <- c("")
-for(i in 1:length(tempChanges[[1]])) { 
-	txtexpectedChanges [length(txtexpectedChanges )+1]=(tempChanges[[1]][i]) 
-}
-notreatfactors<-length(txtexpectedChanges)-1
-
 # Testing the factorial combinations, stop if not all present
 intindex<-length(unique(statdata$betweenwithin))
 timeindex<-length(unique(eval(parse(text = paste("statdata$", timeFactor)))))
 ind<-1
-for (i in 1:notreatfactors) {
+for (i in 1:notreatlist) {
 	ind=ind*length(unique(eval(parse(text = paste("statdata$", txtexpectedChanges[i+1])))))
 }
 ind=ind*timeindex
-if(intindex != ind) {
-	HTML.title("Unfortunately not all combinations of the levels of the treatment factors are present, or not all combinations are present at each level of the repeated factor, in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors or remove the incomplete levels of the repeated factors from the analysis.", align="left")
-	quit()
-}
 
-# Code to create varibale to test if the highest order interaction is selected
-testeffects = noblockfactors
+
+# Code to create variable to test if the highest order interaction is selected
+testeffects = noblocklist
 if(FirstCatFactor != "NULL") {
-	testeffects = noblockfactors+1
+	testeffects = noblocklist+nocovlist
 }
 emodel <-strsplit(effectModel2, "+", fixed = TRUE)
 emodelChanges <- c("")
@@ -153,29 +169,55 @@ noeffects<-length(emodelChanges)-2
 Title <-paste(branding, " Repeated Measures Parametric Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
+#Testing if full factorial design is being analysed
+if(intindex != ind) {
+	HTML.title("Unfortunately not all combinations of the levels of the treatment factors are present, or not all combinations are present at each level of the repeated factor, in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors or remove the incomplete levels of the repeated factors from the analysis.", align="left")
+	quit()
+}
+
 #Response and covariate title
 title<-c("Response")
-if(FirstCatFactor != "NULL") {
-	title<-paste(title, ", covariate", sep="")
+if(covariatelist !="NULL") {
+	if (nocovlist == 1) {
+		title<-paste(title, ", covariate", sep="")
+	} else {
+		title<-paste(title, ", covariates", sep="")
+	}
 }
 title<-paste(title, " and covariance structure", sep="")
 HTML.title(title, HR=2, align="left")
 
 #Description
 add<-paste(c("The  "), resp, " response is currently being analysed by the Repeated Measures Parametric Analysis module", sep="")
-if(FirstCatFactor != "NULL") {
-	add<-paste(add, c(", with  "), unlist(strsplit(covariateModel, "~"))[2], " fitted as a covariate", sep="")
-} 
-add<-paste(add, ".", sep="")
+if(covariatelist !="NULL") {
+	if (nocovlist == 1) {
+		add<-paste(add, ", with ", covlistsep[1] , " fitted as a covariate.", sep="")
+	} 
+	if (nocovlist == 2) {
+		add<-paste(add, ", with ", covlistsep[1] , " and ", covlistsep[2] ," fitted as covariates.", sep="")
+	}
+	if (nocovlist > 2) {	
+		add<-paste(add, ", with ", sep="")	
+		for (i in 1: (nocovlist -2)) {
+		add <- paste (add, covlistsep[i],  ", " , sep="")
+		}
+		add<-paste(add, covlistsep[(nocovlist -1)] , " and ", covlistsep[nocovlist] , " fitted as covariates.", sep="")
+	}
+} else {
+	add<-paste(add, ".", sep="")
+}
 HTML(add, align="left")
 
 if (responseTransform != "None") {
 	add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
 	HTML(add2, align="left")
 }
-if (covariateTransform != "None") {
-	add3<-paste(c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
-	HTML(add3, align="left")
+if (covariatelist !="NULL" && covariateTransform != "None") {
+	if (nocovlist == 1) {
+		add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
+	} else {
+		add<-paste(add, c("The covariates have been "), covariateTransform, " transformed prior to analysis.", sep="")
+	}
 }
 
 if(covariance=="Compound Symmetric") {
@@ -244,77 +286,81 @@ if (pdfout=="Y") {
 #===================================================================================================================
 #Covariate plot
 #===================================================================================================================
-if(FirstCatFactor != "NULL") {
-	title<-c("Covariate plot of the raw data")
+if(covariatelist != "NULL") {
+
+	if (nocovlist == 1) {
+		title<-c("Plot of the response vs. the covariate, categorised by the primary factor")
+	} else {
+		title<-c("Plot of the response vs. the covariates, categorised by the primary factor")
+	}
 	if(responseTransform != "None" || covariateTransform != "None") {
 		title<-paste(title, " (on the transformed scale)", sep="")
 	} 
 	HTML.title(title, HR=2, align="left")
 
-    	ncscatterplot3 <- sub(".html", "ncscatterplot3.jpg", htmlFile)
-    	jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	index <- 1
+	for (i in 1:nocovlist) {
+		ncscatterplot3 <- sub(".html", "IVS", htmlFile)
+	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.jpg", sep = "")
+	    	jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
 
-	#STB July2013
-	plotFilepdf2 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
-	dev.control("enable") 
+		#STB July2013
+		plotFilepdf2 <- sub(".html", "IVS", htmlFile)
+		plotFilepdf2 <- paste(plotFilepdf2, index, "ncscatterplot3.pdf", sep="")
+		dev.control("enable") 
 
-	#Graphical parameters
-	graphdata<-statdata
-	graphdata$xvarrr_IVS <- eval(parse(text = paste("graphdata$",unlist(strsplit(covariateModel, "~"))[2])))
-	graphdata$yvarrr_IVS <- eval(parse(text = paste("graphdata$",resp)))
-	graphdata$Time_IVS <- as.factor(eval(parse(text = paste("graphdata$", timeFactor))))
-	graphdata$tempvariable_ivs <- paste(eval(parse(text = paste("graphdata$",FirstCatFactor))), graphdata$Time_IVS, sep = " ")
-	graphdata$l_l <- graphdata$tempvariable_ivs
-	graphdata$catfact <-graphdata$tempvariable_ivs
+		#Graphical parameters
+		graphdata<-statdata
+		graphdata$xvarrr_IVS <- eval(parse(text = paste("graphdata$", covlistsep[i] )))
+		graphdata$yvarrr_IVS <- eval(parse(text = paste("graphdata$",resp)))
+		graphdata$Time_IVS <- as.factor(eval(parse(text = paste("graphdata$", timeFactor))))
+		graphdata$tempvariable_ivs <- paste(eval(parse(text = paste("graphdata$",FirstCatFactor))), graphdata$Time_IVS, sep = " ")
+		graphdata$l_l <- graphdata$tempvariable_ivs
+		graphdata$catfact <-graphdata$tempvariable_ivs
 
-	XAxisTitle <- unlist(strsplit(covariateModel, "~"))[2]
-	XAxisTitle<-namereplace(XAxisTitle)
-	MainTitle2 <-""
+		XAxisTitle <- XAxisTitleCov[i]
+		XAxisTitle<-namereplace(XAxisTitle)
+		MainTitle2 <-""
+		w_Gr_jit <- 0
+		h_Gr_jit <- 0
+		Legendpos <- "right"
+		Gr_alpha <- 1
+		Line_type <-Line_type_solid
+		LinearFit <- "Y"
+		GraphStyle <- "Overlaid"
+		ScatterPlot <- "Y"
 
-	w_Gr_jit <- 0
-	h_Gr_jit <- 0
+		#Testing for with infinite slopes on scatterplot and re-ordering dataset if necessary
+		inf_slope<-IVS_F_infinite_slope()
+		infiniteslope <- inf_slope$infiniteslope
+		graphdata<-inf_slope$graphdata
+		Gr_palette<-palette_FUN("catfact")
 
-	Legendpos <- "right"
+		#GGPLOT2 code
+		OVERLAID_SCAT()
 
-	Gr_alpha <- 1
-	Line_type <-Line_type_solid
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
 
-	LinearFit <- "Y"
-	GraphStyle <- "Overlaid"
-	ScatterPlot <- "Y"
+		#STB July2013
+		if (pdfout=="Y") {
+				pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf2), height = pdfheight, width = pdfwidth) 
+				dev.set(2) 
+				dev.copy(which=3) 
+				dev.off(2)
+				dev.off(3)
+				pdfFile_2<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf2)
+				linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the covariate plot</a>", sep = "")
+				HTML(linkToPdf2)
+		}
+		index <- index + 1
 
+		#STB Aug 2011 - removing lines with infinite slope
+		if (infiniteslope != "N") {
+			title<-paste("Warning: The covariate has the same value for all subjects in one or more levels of the ", FirstCatFactor, " factor. Care should be taken if you want to include this covariate in the analysis.", sep="")
+			HTML(title, align="left")
+		}
 
-	#Testing for with infinite slopes on scatterplot and re-ordering dataset if necessary
-	inf_slope<-IVS_F_infinite_slope()
-	infiniteslope <- inf_slope$infiniteslope
-	graphdata<-inf_slope$graphdata
-
-	Gr_palette<-palette_FUN("catfact")
-
-	#GGPLOT2 code
-	OVERLAID_SCAT()
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
-
-	#STB July2013
-	if (pdfout=="Y") {
-			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf2), height = pdfheight, width = pdfwidth) 
-			dev.set(2) 
-			dev.copy(which=3) 
-			dev.off(2)
-			dev.off(3)
-			pdfFile_2<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf2)
-			linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the covariate plot</a>", sep = "")
-			HTML(linkToPdf2)
 	}
-
-
-	#STB Aug 2011 - removing lines with infinite slope
-	if (infiniteslope != "N") {
-		title<-paste("Warning: The covariate has the same value for all subjects in one or more levels of the ", FirstCatFactor, " factor. Care should be taken if you want to include this covariate in the analysis.", sep="")
-		HTML(title, align="left")
-	}
-
 	HTML("Tip: In order to decide whether it is helpful to fit the covariate, the following should be considered:", align="left")
 	HTML("a) Is there a relationship between the response and the covariate? (N.B., It is only worth fitting the covariate if there is a strong positive (or negative) relationship between them: i.e., the lines on the plot should not be horizontal).", align="left")
 	HTML("b) Is the relationship similar for all treatments? (The lines on the plot should be approximately parallel).", align="left")
@@ -325,63 +371,20 @@ if(FirstCatFactor != "NULL") {
 #===================================================================================================================
 #building the covariate interaction model
 #===================================================================================================================
-if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
-
-	# Defining the Response
-	Resplist <-unlist(strsplit(covariateModel, "~"))[1]
-	
-	# Defining the covariate
-	Covlist <-unlist(strsplit(covariateModel, "~"))[2]
+if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 
 	#Creating the list of model terms
-	listmodel <- unlist(strsplit(Args[4],"~"))[2] #get the main model
-	temChanges <-strsplit(listmodel, "+", fixed = TRUE)
-	Modellist <- c("")
-	for(i in 1:length(temChanges[[1]]))  { 
-		Modellist[i]=(temChanges[[1]][i]) 
-	}
+	CovIntModel <- c(model)
 
-	#Creating list of blocking factor
-	if (noblockfactors > 0) {
-		Blocklist <- c()
-		for (i in 2:length(txtexpectedblockChanges)) {
-			Blocklist[i-1] = txtexpectedblockChanges [i]
+	#Adding in additional interactions
+	for (i in 1:notreatlist) {
+		for (j in 1: nocovlist) {
+			CovIntModel <- paste(CovIntModel, " + ",  treatlistsep[i], " * ", covlistsep[j], sep="")
 		}
 	}
-
-	#Creating the list of treatment terms
-	Treatlist<-c()
-	for (i in (1+noblockfactors+1):length(Modellist)) {
-		Treatlist[i-(1+noblockfactors+1)+1] = Modellist[i]
-	}
-
-	#Creating the list of interaction terms
-	Intlist <- c()
-	for (i in 1:(length(Treatlist))) {
-		Intlist[i] = paste (Covlist , "*" , Treatlist[i], sep = "" )
-	}
-
-	#Creating the covariate interaction model
-	Fulllist <- c(Treatlist,Intlist)
-
-	CovIntModela<-c(Covlist)
-
-	if (noblockfactors > 0) {
-		for (i in 1:noblockfactors) {
-			CovIntModela[i+1] <- paste(CovIntModela[i] , " + " , Blocklist[i])
-		}
-	}
-	CovIntModelb <- CovIntModela
-	for (i in 1:length(Fulllist)) {
-		CovIntModelb[i+length(CovIntModela)] <- paste(CovIntModelb[i+length(CovIntModela)-1] , " + " , Fulllist[i])
-	}
-	CovIntModel <- CovIntModelb[length(CovIntModelb)]
-	
-	#Creating the formula
-	CovIntForm <- paste(Resplist , " ~ ", CovIntModel , sep = "")
 
 	#Test to see if there are 0 df, in which case end module
-	modelxx <- paste(CovIntForm , " + ", subjectFactor , sep = "")
+	modelxx <- paste(CovIntModel , " + ", subjectFactor , sep = "")
 	threewayfullxx<-lm(as.formula(modelxx) , data=statdata, na.action = (na.omit))
 	if (df.residual(threewayfullxx) < 1) {
 		HTML.title("Table of overall tests of model effects, for assessing covariate interactions", HR=2, align="left")
@@ -390,13 +393,13 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 
 		#Creating the analysis including covariates
 		if(covariance=="Compound Symmetric") {
-			threewayfullx<-lme(as.formula(CovIntForm), random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
+			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
 		}
 		if(covariance=="Autoregressive(1)") {
-			threewayfullx<-lme(as.formula(CovIntForm), random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
+			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
 		}
 		if(covariance=="Unstructured") {
-			threewayfullx<-lme(as.formula(CovIntForm), random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 		}
 
 		#STB Aug 2014 add in marginal sums of squares
@@ -484,7 +487,7 @@ col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
 source2<-rownames(temp)
 tempy<-gsub(pattern="Timezzz", replacement=timeFactor, source2)
 #STB March 2014 - Replacing : with * in ANOVA table
-for (q in 1:notreatfactors) {
+for (q in 1:notreatlist) {
 	tempy<-sub(":"," * ", tempy) 
 }
 
@@ -549,7 +552,7 @@ if(showANOVA=="Y") {
 #===================================================================================================================
 #Covariate correlation table
 #===================================================================================================================
-if (CovariateRegressionCoefficients == "Y"  && covariateModel != "NULL") {
+if (CovariateRegressionCoefficients == "Y"  && covariatelist != "NULL") {
 	HTML.title("Covariate regression coefficient", HR=2, align="left")
 
 	covtable_1<-summary(threewayfull)$tTable
@@ -725,7 +728,6 @@ df<-anova(threewayfull)[dim(anova(threewayfull))[1],2]
 
 #Calculate LS Means
 tabs<-lsmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
-HTML(tabs, classfirstline="second", align="left")
 x<-summary(tabs)
 LSM<-data.frame(x)
 leng<-dim(LSM)[1]
@@ -955,24 +957,21 @@ if(showLSMeans=="Y") {
 	LSDATA$Mean<-format(round(LSM$lsmean,3),nsmall=3)
 	LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
 	LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
-	LSDATA2<-subset(LSDATA, select = -c(df, SE, asymp.LCL, asymp.UCL,DDF, lsmean, Group_IVSq_)) 
+	LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, lsmean, Group_IVSq_)) 
 
-	blanq<-c(" ")
-	for (i in 1:dim(LSDATA2)[2]) { 
-		blanq[i]=" "
-	}
-	
-	LSDATA3<-suppressWarnings(rbind(blanq,LSDATA2))
+	observ <- data.frame(c(1:dim(LSDATA2)[1]))
+	LSDATA3 <- cbind(observ, LSDATA2)
 
 	names <- c()
 	for (l in 1:nosefactors) {
-		names[l] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+		names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
 	}
 
-	names[nosefactors+1]<-timeFactor
-	names[nosefactors+2]<-"Mean"
-	names[nosefactors+3]<-paste("Lower ",(sig*100),"% CI",sep="")
-	names[nosefactors+4]<-paste("Upper ",(sig*100),"% CI",sep="")
+	names[1]<-"Mean ID"
+	names[nosefactors+2]<-timeFactor
+	names[nosefactors+3]<-"Mean"
+	names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
+	names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
 
 	colnames(LSDATA3)<-names
 	rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
@@ -1223,24 +1222,21 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
 			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
 		}
-		LSDATA2<-subset(LSDATA, select = -c(df, SE, asymp.LCL, asymp.UCL,DDF, lsmean, Group_IVSq_)) 
+		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, lsmean, Group_IVSq_)) 
 
-		blanq<-c(" ")
-		for (i in 1:dim(LSDATA2)[2]) { 
-			blanq[i]=" "
-		}
-
-		LSDATA3<-suppressWarnings(rbind(blanq,LSDATA2))
+		observ <- data.frame(c(1:dim(LSDATA2)[1]))
+		LSDATA3 <- cbind(observ, LSDATA2)
 
 		names <- c()
 		for (l in 1:nosefactors) {
-			names[l] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
 		}
 	
-		names[nosefactors+1]<-timeFactor
-		names[nosefactors+2]<-"Mean"
-		names[nosefactors+3]<-paste("Lower ",(sig*100),"% CI",sep="")
-		names[nosefactors+4]<-paste("Upper ",(sig*100),"% CI",sep="")
+		names[1]<-"Mean ID"
+		names[nosefactors+2]<-timeFactor
+		names[nosefactors+3]<-"Mean"
+		names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
+		names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
 		colnames(LSDATA3)<-names
 		rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
 	
@@ -1379,7 +1375,7 @@ tell1b<-tell1a[,dim(tell1a)[2]]
 tell2b<-tell2a[,dim(tell2a)[2]]
 tellfinal<-cbind(tell1b,tell2b)
 
-if(allPairwiseTest == "All") {
+if(allPairwiseTest == "Y") {
 	#Creatng dataset for printing
 	tabs_final<-tabs
 
@@ -1391,9 +1387,7 @@ if(allPairwiseTest == "All") {
 	tabs_final[3]=format(round(tabs_final[3], 3), nsmall=3, scientific=FALSE)
 
 	#creating the final dataset for printing
-	header<-c(" ", " "," ", " "," ", " ")
-	tabs_final<-data.frame(rbind(header, tabs_final))
-
+	rows<-rownames(tabs_final)
 	for (i in 1:100) {
 		rows<-sub("_.._"," ", rows, fixed=TRUE)
 	}
@@ -1404,10 +1398,10 @@ if(allPairwiseTest == "All") {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
 	}
 
-	rownames(tabs_final)<-c("Comparison", rows)
+	tabs_final <- cbind(rows, tabs_final)
 	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-	colnames(tabs_final)<-c("   Difference   ", lowerCI, upperCI, "   Std error   ", "   p-value   ", "temp")
+	colnames(tabs_final)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 	tabs_final2<-subset(tabs_final, select = -c(temp)) 
 	
 	#print table
@@ -1440,10 +1434,8 @@ if(allPairwiseTest == "All") {
 		}
 
 		#creating the final dataset for printing
-		header<-c(" "," "," ", " "," "," ")
 		tabs_final_log <- data.frame(tabs_final_log)
-		tabs_final_log <- data.frame(rbind(header, tabs_final_log))
-
+		rows<-rownames(tabs_final_log)
 		for (i in 1:100) {
 			rows<-sub("_.._"," ", rows, fixed=TRUE)
 		}
@@ -1451,23 +1443,55 @@ if(allPairwiseTest == "All") {
 
 		#STB June 2015	
 		for (i in 1:100) {
-		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+			rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
 		}
 
-		rownames(tabs_final_log)<-c("Comparison", rows)
+		tabs_final_log <- cbind(rows, tabs_final_log)
 		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-		colnames(tabs_final_log)<-c("   Ratio   ", lowerCI, upperCI, "Stderror", "pvalue", "temp")
+		colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
 		tabs_final_log<-subset(tabs_final_log, select = -c(Stderror, pvalue , temp)) 
 	
 		#print table
 		HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
 	}
+
+	#Conclusion
+	add<-paste(c("Conclusion"))
+	inte<-1
+	tempnames<-rownames(tabs_final)
+
+	for(i in 1:(dim(tabs)[1])) {
+		if (tabs$V6[i] <= (1-sig)) {
+			if (inte==1) {
+				inte<-inte+1
+				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
+				add<-paste(add, 100*(1-sig), sep="")
+				add<-paste(add, "% level: ", sep="")
+				add<-paste(add, tempnames[i+1], sep="")
+			} else {
+				inte<-inte+1
+				add<-paste(add, ", ", sep="")
+				add<-paste(add, tempnames[i+1], sep="")
+			}
+		} 
+	}
+	if (inte==1) {
+		if (tablen >1) {
+			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+		} else {
+			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+		}
+	} else {
+		add<-paste(add, ". ", sep="")
+	}
+	HTML(add, align="left")
+
 }
 
 #===================================================================================================================
 
-if(allPairwiseTest == "Reduced") {
+if(reducedTest == "Y") {
 	HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
 
 	#Creating the subsetted version of tabs dataset
@@ -1484,8 +1508,6 @@ if(allPairwiseTest == "Reduced") {
 
 	#creating the final dataset for printing
 	temp<-rownames(tabs_final)
-	header<-c(" ", " "," ", " "," ", " ")
-	tabs_final<-data.frame(rbind(header, tabs_final))
 
 	#STB June 2015
 	temp<-sub(" - "," vs. ", temp, fixed=TRUE)
@@ -1495,11 +1517,11 @@ if(allPairwiseTest == "Reduced") {
 		temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
 	}
 
-	rownames(tabs_final)<-c("Comparison", temp)
+	tabs_final <- cbind(temp, tabs_final)
 
 	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-	colnames(tabs_final)<-c("   Difference   ", lowerCI, upperCI, "   Std error   ", "   p-value   ", "temp")
+	colnames(tabs_final)<-c("Comparison","Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 
 	tabs_final2<-subset(tabs_final, select = -c(temp)) 
 
@@ -1529,10 +1551,6 @@ if(allPairwiseTest == "Reduced") {
 
 		#creating the final dataset for printing
 		temp<-rownames(tabs_final_log)
-
-		header<-c(" ", " "," ", " "," ", " ")
-		tabs_final_log<-data.frame(tabs_final_log)
-
 		temp<-sub(" - "," / ", temp, fixed=TRUE)
 
 		#STB June 2015	
@@ -1540,61 +1558,60 @@ if(allPairwiseTest == "Reduced") {
 		temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
 		}
 
-		rownames(tabs_final_log)<-temp
+		tabs_final_log <- cbind(temp, tabs_final_log)
 		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-		colnames(tabs_final_log)<-c("   Ratio   ", lowerCI, upperCI, "Stderror", "pvalue", "temp")
+		colnames(tabs_final_log)<-c("Comparison", "Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
 		tabs_final_log<-subset(tabs_final_log, select = -c(Stderror, pvalue, temp)) 
 	
 		HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
 	}
+
+	#Conclusion
+	add<-paste(c("Conclusion"))
+	inte<-1
+	tempnames<-rownames(tabs_final)
+
+	for(i in 1:(dim(tabs)[1])) {
+		if (tabs$V6[i] <= (1-sig)) {
+			if (inte==1) {
+				inte<-inte+1
+				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
+				add<-paste(add, 100*(1-sig), sep="")
+				add<-paste(add, "% level: ", sep="")
+				add<-paste(add, tempnames[i+1], sep="")
+			} else {
+				inte<-inte+1
+				add<-paste(add, ", ", sep="")
+				add<-paste(add, tempnames[i+1], sep="")
+			}
+		} 
+	}
+	if (inte==1) {
+		if (tablen >1) {
+			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+		} else {
+			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+		}
+	} else {
+		add<-paste(add, ". ", sep="")
+	}
+	HTML(add, align="left")
 }
 
 #===================================================================================================================
 #STB March 2014 - Creating a dataset of p-values
-comparisons <-paste(direct, "/Comparisons.csv", sep = "")
-tabsx<- data.frame(tabs_final[,6])
-row <-rownames(tabs_final)
-
-for (i in 1:100) {
-	row<-sub(","," and ", row, fixed=TRUE)
-}
-tabsx<-cbind(row, tabsx)
-colnames(tabsx)<-c("Comparison", "p-value")
-row.names(tabsx) <- seq(nrow(tabsx)) 
-tabsx <-tabsx[-1,]
-
-#===================================================================================================================
-#Conclusion
-add<-paste(c("Conclusion"))
-inte<-1
-tempnames<-rownames(tabs_final)
-
-for(i in 1:(dim(tabs)[1])) {
-	if (tabs$V6[i] <= (1-sig)) {
-		if (inte==1) {
-			inte<-inte+1
-			add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
-			add<-paste(add, 100*(1-sig), sep="")
-			add<-paste(add, "% level: ", sep="")
-			add<-paste(add, tempnames[i+1], sep="")
-		} else {
-			inte<-inte+1
-			add<-paste(add, ", ", sep="")
-			add<-paste(add, tempnames[i+1], sep="")
-		}
-	} 
-}
-if (inte==1) {
-	if (tablen >1) {
-		add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
-	} else {
-		add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
-	}
-} else {
-	add<-paste(add, ". ", sep="")
-}
-HTML(add, align="left")
+#comparisons <-paste(direct, "/Comparisons.csv", sep = "")
+#tabsx<- data.frame(tabs_final[,6])
+#row <-rownames(tabs_final)
+#
+#for (i in 1:100) {
+#	row<-sub(","," and ", row, fixed=TRUE)
+#}
+#tabsx<-cbind(row, tabsx)
+#colnames(tabsx)<-c("Comparison", "p-value")
+#row.names(tabsx) <- seq(nrow(tabsx)) 
+#tabsx <-tabsx[-1,]
 
 #===================================================================================================================
 #Analysis description
@@ -1602,21 +1619,21 @@ HTML(add, align="left")
 HTML.title("Analysis description", HR=2, align="left")
 
 add<-c("The data were analysed using a ")
-if (notreatfactors==1)  {
-	add<-paste(add, "2-way repeated measures mixed model approach, with treatment factor ", treatFactors, ", repeated factor ", timeFactor, sep="")
+if (notreatlist==1)  {
+	add<-paste(add, "2-way repeated measures mixed model approach, with treatment factor ", treatlist, ", repeated factor ", timeFactor, sep="")
 } else {
-	factorz<-notreatfactors+1
+	factorz<-notreatlist+1
 	add<-paste(add, factorz, "-way repeated measures mixed model approach, with ", sep="")
 
-	for (i in 1:notreatfactors) {
-		if (i<notreatfactors-1) {
+	for (i in 1:notreatlist) {
+		if (i<notreatlist-1) {
 			add<-paste(add, txtexpectedChanges[i+1], ", ", sep="")
-		} else if (i<notreatfactors) {
+		} else if (i<notreatlist) {
 			add<-paste(add, txtexpectedChanges[i+1], " and ", sep="")
-		} else if (i==notreatfactors) {
+		} else if (i==notreatlist) {
 	    		add<-paste(add, txtexpectedChanges[i+1], " as treatment factors", sep="")
 
-			if (blockFactors != "NULL" | FirstCatFactor != "NULL")  {
+			if (blocklist != "NULL" || covariatelist != "NULL")  {
 				add<-paste(add, ", ", sep="")
 			} else {
 				add<-paste(add, " and ", sep="")
@@ -1626,24 +1643,24 @@ if (notreatfactors==1)  {
 	}
 }
 
-if (blockFactors != "NULL" && FirstCatFactor != "NULL")  {
+if (blocklist != "NULL" && covariatelist != "NULL")  {
 	add<-paste(add, ", ", sep="")
-} else if (noblockfactors==1 && blockFactors != "NULL" && FirstCatFactor == "NULL")  {
+} else if (noblocklist==1 && blocklist != "NULL" && covariatelist == "NULL")  {
 	add<-paste(add, " and ", sep="")
-} else if (noblockfactors>1 && blockFactors != "NULL" && FirstCatFactor == "NULL")  {
+} else if (noblocklist>1 && blocklist != "NULL" && covariatelist == "NULL")  {
 	add<-paste(add, ", ", sep="")
 } 
-	
-if (noblockfactors==1 && blockFactors != "NULL")  {
-	add<-paste(add, blockFactors, " as a blocking factor", sep="")
+
+if (noblocklist==1 && blocklist != "NULL")  {
+	add<-paste(add, blocklist, " as a blocking factor", sep="")
 } else {
-	if(noblockfactors>1) # there is two or more blocking factors {
-		for (i in 1:noblockfactors) {
-			if (i<noblockfactors-1) {
+	if(noblocklist>1) {
+		for (i in 1:noblocklist) {
+			if (i<noblocklist-1) {
     				add<-paste(add, txtexpectedblockChanges[i+1], ", ", sep="")
-			} else	if (i<noblockfactors) {
+			} else	if (i<noblocklist) {
     				add<-paste(add, txtexpectedblockChanges[i+1], " and ", sep="")
-			} else if (i==noblockfactors) {
+			} else if (i==noblocklist) {
     				add<-paste(add, txtexpectedblockChanges[i+1], sep="")
 			}
 		}
@@ -1651,13 +1668,21 @@ if (noblockfactors==1 && blockFactors != "NULL")  {
 	}
 }
 
-if (FirstCatFactor == "NULL")  {
+if (covariatelist == "NULL") {
 	add<-paste(add, ". ", sep="")
-} else if (FirstCatFactor != "NULL")	{
-	add<-paste(add, " and  ", unlist(strsplit(covariateModel, "~"))[2], " as the covariate. ", sep="")
+} else {
+	for (i in 1:nocovlist) {
+		if (i<nocovlist-1)	{
+			add<-paste(add, covlistsep[i], ", ", sep="")
+		} else 	if (i<nocovlist) {
+			add<-paste(add, covlistsep[i], " and ", sep="")
+		} else if (i==nocovlist) {
+			add<-paste(add, covlistsep[i], " as covariates.", sep="")
+		}
+	}
 }
 
-if (allPairwiseTest== "Y") {
+if (allPairwiseTest== "Y" || reducedTest== "Y") {
 	#STB May 2012 Updating "Selected"
 	add<-paste(add, "This was followed by planned comparisons on the predicted means to compare the levels of the Selected effect. ", sep="")
 }
@@ -1759,24 +1784,24 @@ if (responseTransform != "None") {
 	HTML(paste("Response transformation: ", responseTransform, sep=""),  align="left")
 }
 
-if(FirstCatFactor != "NULL") {
-	HTML(paste("Covariate: ", unlist(strsplit(covariateModel, "~"))[2], sep=""),  align="left")
+if(covariatelist != "NULL") {
+	HTML(paste("Covariate(s): ", covariatelist, sep=""),  align="left")
 }
 
-if (FirstCatFactor != "NULL" && covariateTransform != "None") {
+if (covariatelist != "NULL" && covariateTransform != "None") {
 	HTML(paste("Covariate transformation: ", covariateTransform, sep=""),  align="left")
 }
 
-if (FirstCatFactor != "NULL" ) {
+if (covariatelist != "NULL" ) {
 	HTML(paste("Categorisation factor used on covariate scatterplots: ", FirstCatFactor, sep=""),  align="left")
 }
 
-HTML(paste("Treatment factors: ", treatFactors, sep=""),  align="left")
+HTML(paste("Treatment factors: ", treatlist, sep=""),  align="left")
 HTML(paste("Repeated factor: ", timeFactor, sep=""),  align="left")
 HTML(paste("Subject factor: ", subjectFactor, sep=""),  align="left")
 
-if (blockFactors != "NULL") {
-	HTML(paste("Blocking factor(s) selected: ", blockFactors, sep=""),  align="left")
+if (blocklist != "NULL") {
+	HTML(paste("Blocking factor(s) selected: ", blocklist, sep=""),  align="left")
 }
 
 HTML(paste("Covariance structure fitted: ", covariance, sep=""),  align="left")

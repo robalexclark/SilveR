@@ -16,9 +16,6 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="ElectronNET.CLI" Version="0.0.9" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Update="CharacterConversion.txt">

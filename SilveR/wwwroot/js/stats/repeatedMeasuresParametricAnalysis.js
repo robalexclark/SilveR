@@ -7,7 +7,11 @@ $(function () {
     });
 
     $("#ResponseTransformation").kendoDropDownList({
-        dataSource: theModel.transformationsList
+        dataSource: theModel.transformationsList,
+        change: function () {
+            var covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
+            covariateTransformation.value($("#ResponseTransformation").val());
+        }
     });
 
     $("#Treatments").kendoMultiSelect({
@@ -17,7 +21,8 @@ $(function () {
     });
 
     $("#RepeatedFactor").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull
+        dataSource: theModel.availableVariablesAllowNull,
+        change: updateSelectedEffects
     });
 
     $("#Subject").kendoDropDownList({
@@ -29,23 +34,20 @@ $(function () {
         value: theModel.otherDesignFactors
     });
 
-    $("#Covariate").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull,
+    $("#Covariates").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.covariates,
         change: covariateBlockEnableDisable
     });
 
     var primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
-        dataSource: {
-            transport: {
-                read: {
-                    url: "/Values/GetSelectedTreatments"
-                }
-            }
-        }
-
+        dataSource: theModel.treatments,
+        value: theModel.primaryFactor
     }).data("kendoDropDownList");
     primaryFactorDropdown.bind("dataBound", function (e) {
-        primaryFactorDropdown.value(theModel.primaryFactor);
+        if (!this.value()) {
+            this.select(0);
+        }
     });
 
     $("#CovariateTransformation").kendoDropDownList({
@@ -64,7 +66,7 @@ $(function () {
         dataSource: {
             transport: {
                 read: {
-                    url: "/Values/GetSelectedEffectsList"
+                    url: "/Values/GetRMPASelectedEffectsList"
                 }
             }
         }
@@ -82,7 +84,7 @@ $(function () {
         selectedEffect.enable(true);
     });
 
-    treatmentsChanged({ currentPrimaryFactor: theModel.primaryFactor, currentSelectedEffect: theModel.selectedEffect });
+    treatmentsChanged();
 
     covariateBlockEnableDisable();
 });
@@ -92,7 +94,7 @@ function treatmentsChanged() {
 
     $.ajax({
         type: 'GET',
-        url: "/Values/GetInteractions",
+        url: "/Values/GetRMPAInteractions",
         data: { selectedTreatments: treatmentMultiSelect.dataItems() },
         success: function (data) {
             var markup = '';
@@ -105,25 +107,25 @@ function treatmentsChanged() {
     });
 
 
-    var currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
-
-    //treatments have changed so fill in the primary factor and the selected effect
+    //treatments have changed so fill in the primary factor...
     var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
-    primaryFactorDropDown.dataSource.read({
-        selectedTreatments: currentlySelectedTreatments
-    });
+    primaryFactorDropDown.setDataSource($("#Treatments").data("kendoMultiSelect").dataItems());
 
+    //...and the selected effect
+    updateSelectedEffects();
+}
+
+function updateSelectedEffects() {
     var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
     selectedEffectDropDown.dataSource.read({
-        selectedTreatments: currentlySelectedTreatments
+        selectedTreatments: $("#Treatments").data("kendoMultiSelect").dataItems(),
+        repeatedFactor: $("#RepeatedFactor").data("kendoDropDownList").value()
     });
-
-    selectedEffectsBlockEnableDisable();
 }
 
 
 function covariateBlockEnableDisable() {
-    var covariateDropDown = $("#Covariate");
+    var covariateDropDown = $("#Covariates");
     var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
     var covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 
@@ -134,22 +136,7 @@ function covariateBlockEnableDisable() {
     else {
         primaryFactorDropDown.enable(false);
         covariateTransformationDropDown.enable(false);
-        primaryFactorDropDown.enable(false);
         covariateTransformationDropDown.value("None");
-    }
-}
-
-function selectedEffectsBlockEnableDisable() {
-    var treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
-    var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
-    var lsMeansSelectedCheckBox = $("#LSMeansSelected");
-
-    if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 0 && selectedEffectDropDown.value().indexOf("*") == -1) {
-        selectedEffectDropDown.enable(true);
-        lsMeansSelectedCheckBox.prop("disabled", false);
-    }
-    else {
-        selectedEffectDropDown.enable(false);
-        lsMeansSelectedCheckBox.prop("disabled", true);
+        primaryFactorDropDown.value(null);
     }
 }

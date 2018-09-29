@@ -298,8 +298,7 @@ if (equalCase == "Y")
 #Calculating the size of the arithmetic difference with 95%CI
 #V3.2 STB NOV2015
 
-	add<-paste(c("Comparison of the  least square (predicted) means with 95% confidence interval (assuming equal variances)"))
-	HTMLbr()
+	add<-paste("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval (assuming equal variances)")
 	HTML.title(add, HR=2, align="left")
 
 	mult2<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
@@ -375,7 +374,7 @@ if (equalCase == "Y")
 	{
 #Table of LS Means
 		HTMLbr()
-		CITitle2<-paste("<bf>Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 		HTML.title(CITitle2, HR=2, align="left")
 
 		add<-c("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.")
@@ -679,7 +678,7 @@ if (unequalCase == "Y")
 #Calculating the size of the arithmetic difference with 95%CI
 #V3.2 STB NOV2015
 
-	add<-paste(c("Comparison of the  least square (predicted) means with 95% confidence interval (assuming unequal variances)"))
+	add<-paste(c("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval (assuming unequal variances)"))
 	HTMLbr()
 	HTML.title(add, HR=2, align="left")
 

@@ -27,7 +27,10 @@ namespace SilveRModel.Validators
             allVars.Add(rmVariables.RepeatedFactor);
             allVars.Add(rmVariables.Subject);
             allVars.Add(rmVariables.Response);
-            allVars.Add(rmVariables.Covariate);
+
+            if (rmVariables.Covariates != null)
+                allVars.AddRange(rmVariables.Covariates);
+
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
             if (!CheckTreatmentsHaveLevels(rmVariables.Treatments, true)) return ValidationInfo;
@@ -57,9 +60,12 @@ namespace SilveRModel.Validators
             if (!FactorAndResponseCovariateChecks(categorical, rmVariables.Response)) return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
-            if (!String.IsNullOrEmpty(rmVariables.Covariate))
+            if (rmVariables.Covariates != null)
             {
-                if (!FactorAndResponseCovariateChecks(categorical, rmVariables.Covariate)) return ValidationInfo;
+                foreach (string covariate in rmVariables.Covariates)
+                {
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                }
             }
 
             //Check that each subject is only present in one treatment factor
@@ -136,7 +142,7 @@ namespace SilveRModel.Validators
                     {
                         if (row[rmVariables.Subject].ToString() == subject && !String.IsNullOrEmpty(row[factor].ToString()) && !String.IsNullOrEmpty(row[rmVariables.Response].ToString()))
                         {
-                            distinctLevels.Add(factor);
+                            distinctLevels.Add(row[factor].ToString());
                         }
                     }
 
@@ -324,7 +330,13 @@ namespace SilveRModel.Validators
                 {
                     CheckTransformations(row, rmVariables.ResponseTransformation, rmVariables.Response, "response");
 
-                    CheckTransformations(row, rmVariables.CovariateTransformation, rmVariables.Covariate, "covariate");
+                    if (rmVariables.Covariates != null)
+                    {
+                        foreach (string covariate in rmVariables.Covariates)
+                        {
+                            CheckTransformations(row, rmVariables.CovariateTransformation, covariate, "covariate");
+                        }
+                    }
                 }
             }
 
