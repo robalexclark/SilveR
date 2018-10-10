@@ -26,7 +26,6 @@ erase c:\dumpit\Silver-osx\InVivoStat.db
 7z a -tzip -mx9 c:\dumpit\InVivoStat-OSx.zip c:\dumpit\Silver-osx\*
 
 
-
 pause
 xcopy /y c:\dumpit\InVivoStat-Win.zip \\floodiis\wwwroot
 xcopy /y c:\dumpit\InVivoStat-Linux.zip \\floodiis\wwwroot
@@ -35,3 +34,8 @@ xcopy /y c:\dumpit\InVivoStat-OSx.zip \\floodiis\wwwroot
 xcopy /y c:\dumpit\InVivoStat-Win.zip \\floodiis\wwwroot\FloodLive\wwwroot\fileshare
 xcopy /y c:\dumpit\InVivoStat-Linux.zip \\floodiis\wwwroot\FloodLive\wwwroot\fileshare
 xcopy /y c:\dumpit\InVivoStat-OSx.zip \\floodiis\wwwroot\FloodLive\wwwroot\fileshare
+
+erase c:\dumpit\InVivoStat-Win.zip
+erase c:\dumpit\InVivoStat-Linux.zip
+erase c:\dumpit\InVivoStat-OSx.zip
+

@@ -228,7 +228,7 @@ if(covariance=="Compound Symmetric") {
 if(covariance=="Autoregressive(1)") {
 	add4<-paste("The repeated measures mixed model analysis is using the first order autoregressive covariance structure to model the within-subject correlations. When using this structure you are assuming the levels of ", timeFactor, " are equally spaced and also that the variability of responses are the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
 	HTML(add4, align="left")
-	HTML.title("Warning: Make sure that the levels of the repeated factor occur in the correct order in the least square (predicted) means table. If they do not then this analysis may not be valid. The autoregressive covariance structure assumes that the order of the repeated factor levels is as defined in the least square (predicted) means table.", align="left")
+	HTML("Warning: Make sure that the levels of the repeated factor occur in the correct order in the least square (predicted) means table. If they do not then this analysis may not be valid. The autoregressive covariance structure assumes that the order of the repeated factor levels is as defined in the least square (predicted) means table.", align="left")
 }
 if(covariance=="Unstructured") {
 	HTML("The repeated measures mixed model analysis is using the unstructured covariance structure to model the within-subject correlations. When using this structure you are estimating many parameters. If the numbers of subject used is small then these estimates may be unreliable, see Pinherio and Bates (2002).", align="left")
@@ -289,13 +289,14 @@ if (pdfout=="Y") {
 if(covariatelist != "NULL") {
 
 	if (nocovlist == 1) {
-		title<-c("Plot of the response vs. the covariate, categorised by the primary factor")
+		title<-c("Plot of the response vs. the covariate")
 	} else {
-		title<-c("Plot of the response vs. the covariates, categorised by the primary factor")
+		title<-c("Plot of the response vs. the covariates")
 	}
 	if(responseTransform != "None" || covariateTransform != "None") {
 		title<-paste(title, " (on the transformed scale)", sep="")
 	} 
+	title<-paste(title, ", categorised by the primary factor", sep="")
 	HTML.title(title, HR=2, align="left")
 
 	index <- 1
@@ -516,21 +517,33 @@ if(showANOVA=="Y") {
 	#STB August 2014 change in message
 	HTML("Comment: The overall tests in this table are marginal likelihood ratio tests, where the order they appear in the table does not influence the results.", align="left")
 
+
+
+	#Number of signficiant terms 
+	nosigs <- 0
+	for(i in 1:(dim(ivsanova)[1]))	{
+		if (ivsanova[i,5]<= (1-sig)) {
+			nosigs <- nosigs+1
+		}
+	}
+
 	add<-"Conclusion"
-	inte<-1
+	index <- 0
 	for(i in 1:(dim(ivsanova)[1]))	{
 	#STB May 2012 correcting table reference
 		if (ivsanova[i,5]<= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": At the ", 100*(1-sig), "% level", " there is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", rownames(ivsanova)[i], sep="")
+			index <- index+1
+			if (index == 1) {
+				add<-paste(add, ": At the ", 100*(1-sig), "% level", " there is a statistically significant overall difference between the levels of ", tempy[i+1], sep="")
+			} 
+			if (index > 1 && index < nosigs) {
+				add<-paste(add, ", ", tempy[i+1], sep="")
+			} else if (index > 1 && index == nosigs) {
+				add<-paste(add, " and ", tempy[i+1], sep="")
 			}
 		} 
 	}
-	if (inte==1) {
+	if (nosigs==0) {
 		if (dim(ivsanova)[1]>2) {
 			add<-paste(add, ": There are no statistically significant overall differences, at the ", 100*(1-sig), "% level, ", "between the levels of any of the terms in the table of overall tests", sep="")
 		} else {
@@ -1320,7 +1333,7 @@ if (covariance == "Unstructured") {
 			# STB - March 2011 formatting p<0.0001
 			tabs$V5[i]<-0.0001
 			tabs$V5[i]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			tabs$V5[i]<- paste("<",tabs$V5)
+			tabs$V5[i]<- paste("<",tabs$V5[i])
 		}
 	}
 
@@ -1387,7 +1400,6 @@ if(allPairwiseTest == "Y") {
 	tabs_final[3]=format(round(tabs_final[3], 3), nsmall=3, scientific=FALSE)
 
 	#creating the final dataset for printing
-	rows<-rownames(tabs_final)
 	for (i in 1:100) {
 		rows<-sub("_.._"," ", rows, fixed=TRUE)
 	}
@@ -1399,14 +1411,45 @@ if(allPairwiseTest == "Y") {
 	}
 
 	tabs_final <- cbind(rows, tabs_final)
-	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
+	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 	colnames(tabs_final)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 	tabs_final2<-subset(tabs_final, select = -c(temp)) 
 	
 	#print table
 	HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called planned comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
+
+	#Conclusion
+	add<-paste(c("Conclusion"))
+	inte<-1
+	tempnames<-rownames(tabs_final)
+
+	for(i in 1:(dim(tabs)[1])) {
+		if (tabs$V6[i] <= (1-sig)) {
+			if (inte==1) {
+				inte<-inte+1
+				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
+				add<-paste(add, 100*(1-sig), sep="")
+				add<-paste(add, "% level: ", sep="")
+				add<-paste(add, rows[i], sep="")
+			} else {
+				inte<-inte+1
+				add<-paste(add, ", ", sep="")
+				add<-paste(add, rows[i], sep="")
+			}
+		} 
+	}
+	if (inte==1) {
+		if (tablen >1) {
+			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+		} else {
+			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+		}
+	} else {
+		add<-paste(add, ". ", sep="")
+	}
+	HTML(add, align="left")
+	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1435,58 +1478,26 @@ if(allPairwiseTest == "Y") {
 
 		#creating the final dataset for printing
 		tabs_final_log <- data.frame(tabs_final_log)
-		rows<-rownames(tabs_final_log)
+
 		for (i in 1:100) {
-			rows<-sub("_.._"," ", rows, fixed=TRUE)
+			rowslg<-sub("_.._"," ", rows, fixed=TRUE)
 		}
-		rows<-sub(" vs. "," / ", rows, fixed=TRUE)
+		rowslg<-sub(" vs. "," / ", rowslg, fixed=TRUE)
 
 		#STB June 2015	
 		for (i in 1:100) {
-			rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+			rowslg<-sub("_ivs_dash_ivs_"," - ", rowslg, fixed=TRUE)
 		}
 
-		tabs_final_log <- cbind(rows, tabs_final_log)
-		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
+		tabs_final_log <- cbind(rowslg, tabs_final_log)
+		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 		colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
 		tabs_final_log<-subset(tabs_final_log, select = -c(Stderror, pvalue , temp)) 
 	
 		#print table
 		HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
 	}
-
-	#Conclusion
-	add<-paste(c("Conclusion"))
-	inte<-1
-	tempnames<-rownames(tabs_final)
-
-	for(i in 1:(dim(tabs)[1])) {
-		if (tabs$V6[i] <= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
-				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: ", sep="")
-				add<-paste(add, tempnames[i+1], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", sep="")
-				add<-paste(add, tempnames[i+1], sep="")
-			}
-		} 
-	}
-	if (inte==1) {
-		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
-		} else {
-			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
-		}
-	} else {
-		add<-paste(add, ". ", sep="")
-	}
-	HTML(add, align="left")
-
 }
 
 #===================================================================================================================
@@ -1519,14 +1530,44 @@ if(reducedTest == "Y") {
 
 	tabs_final <- cbind(temp, tabs_final)
 
-	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
+	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 	colnames(tabs_final)<-c("Comparison","Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 
 	tabs_final2<-subset(tabs_final, select = -c(temp)) 
-
 	HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called planned comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
+
+	#Conclusion
+	add<-paste(c("Conclusion"))
+	inte<-1
+	tempnames<-rownames(tabs_final)
+
+	for(i in 1:(dim(tabs)[1])) {
+		if (tabs$V6[i] <= (1-sig)) {
+			if (inte==1) {
+				inte<-inte+1
+				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
+				add<-paste(add, 100*(1-sig), sep="")
+				add<-paste(add, "% level: ", sep="")
+				add<-paste(add, temp[i], sep="")
+			} else {
+				inte<-inte+1
+				add<-paste(add, ", ", sep="")
+				add<-paste(add, temp[i], sep="")
+			}
+		} 
+	}
+	if (inte==1) {
+		if (tablen >1) {
+			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+		} else {
+			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+		}
+	} else {
+		add<-paste(add, ". ", sep="")
+	}
+	HTML(add, align="left")
+	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1550,53 +1591,22 @@ if(reducedTest == "Y") {
 		}
 
 		#creating the final dataset for printing
-		temp<-rownames(tabs_final_log)
-		temp<-sub(" - "," / ", temp, fixed=TRUE)
+		templg<-rownames(tabs_final_log)
+		templg<-sub(" - "," / ", templg, fixed=TRUE)
 
 		#STB June 2015	
 		for (i in 1:100) {
-		temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
+		templg<-sub("_ivs_dash_ivs_"," - ", templg, fixed=TRUE)
 		}
 
-		tabs_final_log <- cbind(temp, tabs_final_log)
-		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
+		tabs_final_log <- cbind(templg, tabs_final_log)
+		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 		colnames(tabs_final_log)<-c("Comparison", "Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
 		tabs_final_log<-subset(tabs_final_log, select = -c(Stderror, pvalue, temp)) 
 	
 		HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
 	}
-
-	#Conclusion
-	add<-paste(c("Conclusion"))
-	inte<-1
-	tempnames<-rownames(tabs_final)
-
-	for(i in 1:(dim(tabs)[1])) {
-		if (tabs$V6[i] <= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
-				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: ", sep="")
-				add<-paste(add, tempnames[i+1], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", sep="")
-				add<-paste(add, tempnames[i+1], sep="")
-			}
-		} 
-	}
-	if (inte==1) {
-		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
-		} else {
-			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
-		}
-	} else {
-		add<-paste(add, ". ", sep="")
-	}
-	HTML(add, align="left")
 }
 
 #===================================================================================================================
@@ -1620,11 +1630,10 @@ HTML.title("Analysis description", HR=2, align="left")
 
 add<-c("The data were analysed using a ")
 if (notreatlist==1)  {
-	add<-paste(add, "2-way repeated measures mixed model approach, with treatment factor ", treatlist, ", repeated factor ", timeFactor, sep="")
+	add<-paste(add, "2-way repeated measures mixed model approach, with ", treatlist, " as the treatment factor", sep="")
 } else {
 	factorz<-notreatlist+1
 	add<-paste(add, factorz, "-way repeated measures mixed model approach, with ", sep="")
-
 	for (i in 1:notreatlist) {
 		if (i<notreatlist-1) {
 			add<-paste(add, txtexpectedChanges[i+1], ", ", sep="")
@@ -1632,59 +1641,62 @@ if (notreatlist==1)  {
 			add<-paste(add, txtexpectedChanges[i+1], " and ", sep="")
 		} else if (i==notreatlist) {
 	    		add<-paste(add, txtexpectedChanges[i+1], " as treatment factors", sep="")
-
-			if (blocklist != "NULL" || covariatelist != "NULL")  {
-				add<-paste(add, ", ", sep="")
-			} else {
-				add<-paste(add, " and ", sep="")
-			}
-			add<-paste(add, timeFactor, " as the repeated factor", sep="")
 		}
 	}
 }
+if (blocklist != "NULL" || covariatelist != "NULL")  {
+	add<-paste(add, ", ", sep="")
+} else {
+		add<-paste(add, " and ", sep="")
+}
+add<-paste(add, timeFactor, " as the repeated factor", sep="")
 
 if (blocklist != "NULL" && covariatelist != "NULL")  {
 	add<-paste(add, ", ", sep="")
-} else if (noblocklist==1 && blocklist != "NULL" && covariatelist == "NULL")  {
+} else if (blocklist != "NULL" && covariatelist == "NULL")  {
 	add<-paste(add, " and ", sep="")
-} else if (noblocklist>1 && blocklist != "NULL" && covariatelist == "NULL")  {
-	add<-paste(add, ", ", sep="")
 } 
 
-if (noblocklist==1 && blocklist != "NULL")  {
-	add<-paste(add, blocklist, " as a blocking factor", sep="")
-} else {
-	if(noblocklist>1) {
-		for (i in 1:noblocklist) {
-			if (i<noblocklist-1) {
-    				add<-paste(add, txtexpectedblockChanges[i+1], ", ", sep="")
-			} else	if (i<noblocklist) {
-    				add<-paste(add, txtexpectedblockChanges[i+1], " and ", sep="")
-			} else if (i==noblocklist) {
-    				add<-paste(add, txtexpectedblockChanges[i+1], sep="")
+if (blocklist != "NULL") {
+	if (noblockfactors==1)  {
+		add<-paste(add, blocklist, " as the blocking factor", sep="")
+	} 
+
+	if(noblockfactors>1) {
+		for (i in 1:noblockfactors) {
+			if (i<(noblockfactors-1)) {
+	   				add<-paste(add, blocklistsep[i], ", ", sep="")
+			} else	if (i==(noblockfactors-1)) {
+	   				add<-paste(add, blocklistsep[i], " and ", sep="")
+			} else if (i==noblockfactors) {
+	   				add<-paste(add, blocklistsep[i], sep="")
 			}
 		}
 		add<-paste(add, " as blocking factors", sep="")
-	}
+	} 
 }
 
 if (covariatelist == "NULL") {
 	add<-paste(add, ". ", sep="")
 } else {
-	for (i in 1:nocovlist) {
-		if (i<nocovlist-1)	{
-			add<-paste(add, covlistsep[i], ", ", sep="")
-		} else 	if (i<nocovlist) {
-			add<-paste(add, covlistsep[i], " and ", sep="")
-		} else if (i==nocovlist) {
-			add<-paste(add, covlistsep[i], " as covariates.", sep="")
+	if (nocovlist==1) {
+		add<-paste(add, " and ", covlistsep[1], " as the covariate.", sep="")
+	} else {
+		add<-paste(add, " and ", sep="")
+		for (i in 1:nocovlist) {
+			if (i<(nocovlist-1))	{
+				add<-paste(add, covlistsep[i], ", ", sep="")
+			} else 	if (i==(nocovlist-1)) {
+				add<-paste(add, covlistsep[i], " and ", sep="")
+			} else if (i==nocovlist) {
+				add<-paste(add, covlistsep[i], " as covariates.", sep="")
+			}
 		}
 	}
 }
-
 if (allPairwiseTest== "Y" || reducedTest== "Y") {
 	#STB May 2012 Updating "Selected"
-	add<-paste(add, "This was followed by planned comparisons on the predicted means to compare the levels of the Selected effect. ", sep="")
+	add<-paste(add, "This was followed by Planned Comparisons on the predicted means to compare the levels of the Selected effect. ", sep="")
 }
 
 if (responseTransform != "None") {
@@ -1715,7 +1727,7 @@ if(covariance=="Unstructured") {
  	HTML(add2, align="left")
 }
 
-add<-c("A full description of mixed model theory, including information on the R nlme package used by ", branding , ", can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).")
+add<-paste("A full description of mixed model theory, including information on the R nlme package used by ", branding , ", can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
 HTML(add, align="left")
 
 #===================================================================================================================
@@ -1750,6 +1762,7 @@ HTML(Ref_list$R_ref ,  align="left")
 HTML(Ref_list$GGally_ref,  align="left")
 HTML(Ref_list$RColorBrewers_ref,  align="left")
 HTML(Ref_list$GGPLot2_ref,  align="left")
+HTML(Ref_list$ggrepel_ref,  align="left")
 HTML(Ref_list$reshape_ref,  align="left")
 HTML(Ref_list$plyr_ref,  align="left")
 HTML(Ref_list$scales_ref,  align="left")

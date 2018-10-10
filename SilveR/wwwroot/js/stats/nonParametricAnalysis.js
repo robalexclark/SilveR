@@ -43,9 +43,9 @@ $(function () {
 
 function enableDisableControlLevels() {
 
-    var analysisType = $('input:radio[name="AnalysisType"]:checked').val();
-    var treatmentDropDown = $("#Treatment").data("kendoDropDownList");
-    var controlDropDown = $("#Control").data("kendoDropDownList");
+    const analysisType = $('input:radio[name="AnalysisType"]:checked').val();
+    const treatmentDropDown = $("#Treatment").data("kendoDropDownList");
+    const controlDropDown = $("#Control").data("kendoDropDownList");
 
     if (treatmentDropDown && controlDropDown) {
         if (treatmentDropDown.select() > 0 && analysisType === "CompareToControl") {

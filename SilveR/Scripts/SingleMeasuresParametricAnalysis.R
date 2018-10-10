@@ -1544,10 +1544,10 @@ if(backToControlTest != "NULL") {
 		if (tabls[i,6]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", 100*(1-sig), "% level: ", rownames(tabls)[i], sep="")
+				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", 100*(1-sig), "% level: ", tabs3$V14[i], sep="")
 			} else {
 				inte<-inte+1
-				add<-paste(add, ", ", rownames(tabls)[i], sep="")
+				add<-paste(add, ", ", tabs3$V14[i], sep="")
 			}
 		} 
 	}
@@ -1666,9 +1666,9 @@ add<-c("The data were analysed using a ")
 
 if (notreatfactors==1)  {
 	if(FirstCatFactor != "NULL") {
-		add<-paste(add, "1-way ANCOVA approach, with treatment factor ", treatFactors, sep="")
+		add<-paste(add, "1-way ANCOVA approach, with ", treatFactors, " as the treatment factor", sep="")
 	} else {
-		add<-paste(add, "1-way ANOVA approach, with treatment factor ", treatFactors, sep="")
+		add<-paste(add, "1-way ANOVA approach, with ", treatFactors, " as the treatment factor", sep="")
 	}
 } else {
 	add<-paste(add, notreatfactors, sep="")
@@ -1683,7 +1683,7 @@ if (notreatfactors==1)  {
 		} else 	if (i<notreatfactors) {
 			add<-paste(add, treatlist[i], " and ", sep="")
 		} else if (i==notreatfactors) {
-			add<-paste(add, treatlist[i], " as treatment factors", sep="")
+			add<-paste(add, treatlist[i], " as the treatment factors", sep="")
 		}
 	}
 }
@@ -1710,28 +1710,30 @@ if (noblockfactors==1 && blockFactors != "NULL")  {
 				add<-paste(add, blocklist[i], sep="")
 			}
 		}
-		add<-paste(add, " as blocking factors", sep="")
+		add<-paste(add, " as the blocking factors", sep="")
 	}
 }
 if (FirstCatFactor == "NULL") {
 	add<-paste(add, ". ", sep="")
 } else {
-
-
-	for (i in 1:nocovars) {
-		if (i<nocovars-1)	{
-			add<-paste(add, covlist[i], ", ", sep="")
-		} else 	if (i<nocovars) {
-			add<-paste(add, covlist[i], " and ", sep="")
-		} else if (i==nocovars) {
-			add<-paste(add, covlist[i], " as covariates.", sep="")
+	add<-paste(add, " and ",  sep="")
+	if (nocovars == 1) {
+		add<-paste(add, covlist[1], " as the covariate.", sep="")
+	} else {
+		for (i in 1:nocovars) {
+			if (i<nocovars-1)	{
+				add<-paste(add, covlist[i], ", ", sep="")
+			} else 	if (i<nocovars) {
+				add<-paste(add, covlist[i], " and ", sep="")
+			} else if (i==nocovars) {
+				add<-paste(add, covlist[i], " as the covariates.", sep="")
+			}
 		}
 	}
 }
-
 if (allPairwiseTest== "none" | backToControlTest== "none") {
 	#STB May 2012 Updating "Selected"
-	add<-paste(add, "This was followed by planned comparisons of the predicted means to compare the levels of the ", selectedEffect , sep="")
+	add<-paste(add, "This was followed by Planned Comparisons of the predicted means to compare the levels of the ", selectedEffect , sep="")
 	if (factno == 1) {
 		add<-paste(add, " factor. ", sep="")
 	} else {
@@ -1825,6 +1827,7 @@ HTML(Ref_list$R_ref ,  align="left")
 HTML(Ref_list$GGally_ref,  align="left")
 HTML(Ref_list$RColorBrewers_ref,  align="left")
 HTML(Ref_list$GGPLot2_ref,  align="left")
+HTML(Ref_list$ggrepel_ref,  align="left")
 HTML(Ref_list$reshape_ref,  align="left")
 HTML(Ref_list$plyr_ref,  align="left")
 HTML(Ref_list$scales_ref,  align="left")
@@ -1833,6 +1836,7 @@ HTML(Ref_list$R2HTML_ref,  align="left")
 HTML(Ref_list$PROTO_ref,  align="left")
 HTML(Ref_list$LSMEANS_ref,  align="left")
 HTML(Ref_list$multcomp_ref,  align="left")
+HTML(Ref_list$mcview_ref,  align="left")
 
 
 #===================================================================================================================

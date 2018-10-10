@@ -34,7 +34,7 @@ $(function () {
         change: covariateBlockEnableDisable
     });
 
-    var primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
+    const primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
         dataSource: {
             transport: {
                 read: {
@@ -64,21 +64,21 @@ $(function () {
 
 
 function treatmentsChanged() {
-    var treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
+    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
 
-    var currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
+    const currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
 
     //treatments have changed so fill in the primary factor and the selected effect
-    var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
+    const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
     primaryFactorDropDown.dataSource.read({
         selectedTreatments: currentlySelectedTreatments
     });
 }
 
 function covariateBlockEnableDisable() {
-    var covariateDropDown = $("#Covariate");
-    var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
-    var covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
+    const covariateDropDown = $("#Covariate");
+    const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
+    const covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 
     if (covariateDropDown.val().length > 0) {
         primaryFactorDropDown.enable(true);

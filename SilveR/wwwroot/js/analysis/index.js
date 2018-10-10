@@ -49,13 +49,13 @@ $(function () {
     });
 
     function viewResults(e) {
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        const dataItem = this.dataItem($(e.currentTarget).closest("tr"));
 
         window.location.href = '/analyses/viewresults?analysisGuid=' + dataItem.analysisGuid;
     };
 
     function reAnalyse(e) {
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        const dataItem = this.dataItem($(e.currentTarget).closest("tr"));
 
         window.location.href = '/analyses/reanalyse?analysisGuid=' + dataItem.analysisGuid;
     };

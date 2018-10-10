@@ -15,7 +15,7 @@ $(function () {
     });
 
     function analysisSelectionChanged() {
-        var analysisSelector = $("#AnalysisType").data("kendoDropDownList");
+        const analysisSelector = $("#AnalysisType").data("kendoDropDownList");
         if (analysisSelector.value() != "P-value Adjustment") {
             $("#dataSelectionBlock").show();
         }

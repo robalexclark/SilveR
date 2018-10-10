@@ -1,6 +1,6 @@
 ﻿window.onload = function poll() {
     setTimeout(function () {
-        var url = "/Analyses/AnalysisCompleted?analysisGuid=" + analysisGuid;
+        const url = "/Analyses/AnalysisCompleted?analysisGuid=" + analysisGuid;
 
         $.ajax({
             url: url,
@@ -8,7 +8,7 @@
             type: "post",
             success: function (response) {
                 if (response) {
-                    var resultPath = "../Analyses/ViewResults?analysisGuid=" + analysisGuid;
+                    const resultPath = "../Analyses/ViewResults?analysisGuid=" + analysisGuid;
                     window.location = resultPath;
                 }
                 else {

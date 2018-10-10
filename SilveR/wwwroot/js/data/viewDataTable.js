@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    var spreadSheet = $("#spreadsheet").kendoSpreadsheet({
+    const spreadSheet = $("#spreadsheet").kendoSpreadsheet({
         toolbar: false,
         sheetsbar: false,
         sheets: [spreadsheet]
@@ -9,7 +9,7 @@
     $("#save").click(function () {
         if (!$(this).hasClass("k-state-disabled")) {
             //dataSource.sync();
-            var data = spreadSheet.data("kendoSpreadsheet").toJSON();
+            const data = spreadSheet.data("kendoSpreadsheet").toJSON();
 
             $.ajax({
                 type: "POST",

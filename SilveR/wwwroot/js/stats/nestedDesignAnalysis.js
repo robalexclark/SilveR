@@ -37,8 +37,8 @@ $(function () {
 
 
 function covariateBlockEnableDisable() {
-    var covariateDropDown = $("#Covariate");
-    var covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
+    const covariateDropDown = $("#Covariate");
+    const covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 
     if (covariateDropDown.val().length > 0) {
         covariateTransformationDropDown.enable(true);

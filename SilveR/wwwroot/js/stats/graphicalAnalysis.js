@@ -40,8 +40,8 @@ $(function () {
 
 
 function enableDisableXAxisTransformation() {
-    var xAxisDropdown = $("#XAxis").data("kendoDropDownList");
-    var xAxisTransformation = $("#XAxisTransformation").data("kendoDropDownList");
+    const xAxisDropdown = $("#XAxis").data("kendoDropDownList");
+    const xAxisTransformation = $("#XAxisTransformation").data("kendoDropDownList");
 
     if (xAxisDropdown && xAxisTransformation) { //need check because of change event...
         if (xAxisDropdown.select() > 0) {
@@ -55,9 +55,9 @@ function enableDisableXAxisTransformation() {
 }
 
 function enableDisableScatterplot() {
-    var scatterplot = $("#ScatterplotSelected");
-    var linearFit = $("#LinearFitSelected");
-    var jitter = $("#JitterSelected");
+    const scatterplot = $("#ScatterplotSelected");
+    const linearFit = $("#LinearFitSelected");
+    const jitter = $("#JitterSelected");
 
     if (scatterplot.prop('checked')) {
         linearFit.prop('disabled', false);
@@ -72,9 +72,9 @@ function enableDisableScatterplot() {
 }
 
 function enableDisableBoxplot() {
-    var boxplot = $("#BoxplotSelected");
-    var outliers = $("#OutliersSelected");
-    var includeData = $("#BoxPlotIncludeData");
+    const boxplot = $("#BoxplotSelected");
+    const outliers = $("#OutliersSelected");
+    const includeData = $("#BoxPlotIncludeData");
 
     if (boxplot.prop('checked')) {
         outliers.prop('disabled', false);
@@ -89,10 +89,10 @@ function enableDisableBoxplot() {
 }
 
 function enableDisableSEMplot() {
-    var semplot = $("#SEMPlotSelected");
-    var columnRadBtn = $("#Column");
-    var lineRadBtn = $("#Line");
-    var includeData = $("#SEMPlotIncludeData");
+    const semplot = $("#SEMPlotSelected");
+    const columnRadBtn = $("#Column");
+    const lineRadBtn = $("#Line");
+    const includeData = $("#SEMPlotIncludeData");
 
     if (semplot.prop('checked')) {
         columnRadBtn.prop('disabled', false);
@@ -108,8 +108,8 @@ function enableDisableSEMplot() {
 }
 
 function enableDisableHistogram() {
-    var histogram = $("#HistogramSelected");
-    var normalDist = $("#NormalDistSelected");
+    const histogram = $("#HistogramSelected");
+    const normalDist = $("#NormalDistSelected");
 
     if (histogram.prop('checked')) {
         normalDist.prop('disabled', false);
@@ -121,9 +121,9 @@ function enableDisableHistogram() {
 }
 
 function enableDisableCaseProfiles() {
-    var caseProfiles = $("#CaseProfilesPlotSelected");
-    var caseIDDropDown = $("#CaseIDFactor").data("kendoDropDownList");
-    var refLine = $("#ReferenceLine");
+    const caseProfiles = $("#CaseProfilesPlotSelected");
+    const caseIDDropDown = $("#CaseIDFactor").data("kendoDropDownList");
+    const refLine = $("#ReferenceLine");
 
     if (caseProfiles.prop('checked')) {
         caseIDDropDown.enable(true);

@@ -43,14 +43,14 @@ $(function () {
 
 function enableDisableValueType() {
 
-    var valueType = $('input:radio[name="ValueType"]:checked').val()
+    const valueType = $('input:radio[name="ValueType"]:checked').val()
 
-    var groupMean = $("#GroupMean");
-    var standardDeviation = $("#StandardDeviation");
-    var variance = $("#Variance");
-    var response = $("#Response").data("kendoDropDownList");
-    var treatment = $("#Treatment").data("kendoDropDownList");
-    var controlGroup = $("#ControlGroup").data("kendoDropDownList");
+    const groupMean = $("#GroupMean");
+    const standardDeviation = $("#StandardDeviation");
+    const variance = $("#Variance");
+    const response = $("#Response").data("kendoDropDownList");
+    const treatment = $("#Treatment").data("kendoDropDownList");
+    const controlGroup = $("#ControlGroup").data("kendoDropDownList");
 
     if (valueType === "Supplied") {
         groupMean.prop("disabled", false);
@@ -89,8 +89,8 @@ function treatmentInfo() {
 }
 
 function enableDisableControlLevels() {
-    var treatmentDropDown = $("#Treatment").data("kendoDropDownList");
-    var controlDropDown = $("#ControlGroup").data("kendoDropDownList");
+    const treatmentDropDown = $("#Treatment").data("kendoDropDownList");
+    const controlDropDown = $("#ControlGroup").data("kendoDropDownList");
 
     if (treatmentDropDown.select() > 0) {
         controlDropDown.enable(true);
@@ -103,7 +103,7 @@ function enableDisableControlLevels() {
 }
 
 //function controlGroupDataBound() {
-//    var controlGroupDropDown = $("#ControlGroup").data("kendoDropDownList");
+//    const controlGroupDropDown = $("#ControlGroup").data("kendoDropDownList");
 //    controlGroupDropDown.value(initialControlLevel);
 //    initialControlLevel = null;
 //    enableDisableControlLevels();
@@ -111,9 +111,9 @@ function enableDisableControlLevels() {
 
 function enableDisableChangeType() {
 
-    var changeType = $('input:radio[name="ChangeType"]:checked').val();
-    var percentChange = $("#PercentChange");
-    var absoluteChange = $("#AbsoluteChange");
+    const changeType = $('input:radio[name="ChangeType"]:checked').val();
+    const percentChange = $("#PercentChange");
+    const absoluteChange = $("#AbsoluteChange");
 
     if (changeType === "Percent") {
         percentChange.prop("disabled", false);
@@ -129,13 +129,13 @@ function enableDisableChangeType() {
 
 function enableDisablePlottingRangeType() {
 
-    var plottingRangeType = $('input:radio[name="PlottingRangeType"]:checked').val();
+    const plottingRangeType = $('input:radio[name="PlottingRangeType"]:checked').val();
 
-    var radioSampleSize = $("#SampleSize")[0];
-    var sampleSizeFrom = $("#SampleSizeFrom");
-    var sampleSizeTo = $("#SampleSizeTo");
-    var powerFrom = $("#PowerFrom");
-    var powerTo = $("#PowerTo");
+    const radioSampleSize = $("#SampleSize")[0];
+    const sampleSizeFrom = $("#SampleSizeFrom");
+    const sampleSizeTo = $("#SampleSizeTo");
+    const powerFrom = $("#PowerFrom");
+    const powerTo = $("#PowerTo");
 
     if (plottingRangeType === "SampleSize") {
         sampleSizeFrom.prop("disabled", false);

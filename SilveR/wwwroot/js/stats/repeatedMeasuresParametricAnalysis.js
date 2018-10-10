@@ -9,7 +9,7 @@ $(function () {
     $("#ResponseTransformation").kendoDropDownList({
         dataSource: theModel.transformationsList,
         change: function () {
-            var covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
+            const covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
             covariateTransformation.value($("#ResponseTransformation").val());
         }
     });
@@ -40,7 +40,7 @@ $(function () {
         change: covariateBlockEnableDisable
     });
 
-    var primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
+    const primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
         dataSource: theModel.treatments,
         value: theModel.primaryFactor
     }).data("kendoDropDownList");
@@ -62,7 +62,7 @@ $(function () {
         dataSource: theModel.significancesList
     });
 
-    var selectedEffect = $("#SelectedEffect").kendoDropDownList({
+    const selectedEffect = $("#SelectedEffect").kendoDropDownList({
         dataSource: {
             transport: {
                 read: {
@@ -90,7 +90,7 @@ $(function () {
 });
 
 function treatmentsChanged() {
-    var treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
+    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
 
     $.ajax({
         type: 'GET',
@@ -108,7 +108,7 @@ function treatmentsChanged() {
 
 
     //treatments have changed so fill in the primary factor...
-    var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
+    const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
     primaryFactorDropDown.setDataSource($("#Treatments").data("kendoMultiSelect").dataItems());
 
     //...and the selected effect
@@ -116,7 +116,7 @@ function treatmentsChanged() {
 }
 
 function updateSelectedEffects() {
-    var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
+    const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
     selectedEffectDropDown.dataSource.read({
         selectedTreatments: $("#Treatments").data("kendoMultiSelect").dataItems(),
         repeatedFactor: $("#RepeatedFactor").data("kendoDropDownList").value()
@@ -125,9 +125,9 @@ function updateSelectedEffects() {
 
 
 function covariateBlockEnableDisable() {
-    var covariateDropDown = $("#Covariates");
-    var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
-    var covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
+    const covariateDropDown = $("#Covariates");
+    const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
+    const covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 
     if (covariateDropDown.val().length > 0) {
         primaryFactorDropDown.enable(true);

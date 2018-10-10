@@ -80,7 +80,7 @@ namespace SilveRModel.StatsModel
 
         public string Covariance { get; set; } = "Compound Symmetric";
 
-[DisplayName("Covariate")]
+        [DisplayName("Covariate")]
         [CheckUsedOnceOnly]
         public List<string> Covariates { get; set; }
 
@@ -113,7 +113,7 @@ namespace SilveRModel.StatsModel
         public bool LSMeansSelected { get; set; }
 
         [DisplayName("All comparisons within repeated factor levels")]
-        public bool AllComparisonsWithinSelected { get; set; }
+        public bool AllComparisonsWithinSelected { get; set; } = true;
 
         [DisplayName("All pairwise comparisons")]
         public bool AllPairwiseComparisons { get; set; }

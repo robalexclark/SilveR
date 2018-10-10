@@ -1593,7 +1593,8 @@ R_refs <- function() {
 	multcomp_ref <- "Torsten Hothorn, Frank Bretz and Peter Westfall (2008). Simultaneous  Inference in General Parametric Models. Biometrical Journal 50(3),  346--363."
 	extrafont_ref <- "Winston Chang, (2014). extrafont: Tools for using fonts. R package version 0.17. http://CRAN.R-project.org/package=extrafont"
 	COIN_ref <- "Torsten Hothorn, Kurt Hornik, Mark A. van de Wiel, Achim Zeileis (2008). Implementing a Class of Permutation Tests: The coin Package. Journal of Statistical Software 28(8), 1-23. URL http://www.jstatsoft.org/v28/i08/."
-
+	ggrepel_ref <- "Kamil Slowikowski (2018). ggrepel: Automatically Position Non-Overlapping Text Labels with 'ggplot2'. R package version 0.8.0. https://CRAN.R-project.org/package=ggrepel"
+	mcview_ref<-  "Spencer Graves, Hans-Peter Piepho and Luciano Selzer with help from Sundar Dorai-Raj (2015). multcompView: Visualizations of Paired Comparisons. R package version 0.1-7. https://CRAN.R-project.org/package=multcompView"
 	cluster_ref <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2013).  cluster: Cluster Analysis Basics and Extensions. R package version 1.14.4."
 	ggdendro_ref <- "Andrie de Vries and Brian D. Ripley (2013). ggdendro: Tools for extracting dendrogram and tree diagram plot data for use with ggplot.. R package version 0.1-14. http://CRAN.R-project.org/package=ggdendro"
 	mixOmics_ref <- "Sebastien Dejean, Ignacio Gonzalez, Kim-Anh Le Cao with contributions from Pierre Monget, Jeff Coquery, FangZou Yao, Benoit Liquet and Florian Rohart (2013). mixOmics: Omics Data Integration Project. R package version 5.0-1. http://CRAN.R-project.org/package=mixOmics"
@@ -1601,6 +1602,7 @@ R_refs <- function() {
 	BateClark_ref <- "Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
 	
 	Barnard_ref <- "Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact."
+
 
 	Refs <- list(
 		R_ref = R_ref,
@@ -1627,7 +1629,9 @@ R_refs <- function() {
 		BateClark_ref = BateClark_ref,
 		Barnard_ref = Barnard_ref,
 		extrafont_ref = extrafont_ref,
-		COIN_ref=COIN_ref
+		COIN_ref=COIN_ref,
+		ggrepel_ref = ggrepel_ref,
+		mcview_ref = mcview_ref
 	)
 	return(Refs)
 }

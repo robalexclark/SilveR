@@ -41,7 +41,7 @@ $(function () {
     });
 
     function viewData(e) {
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        const dataItem = this.dataItem($(e.currentTarget).closest("tr"));
 
         window.location.href = window.location.protocol + '/Data/ViewDataTable?datasetId=' + dataItem.datasetID, true;
     };

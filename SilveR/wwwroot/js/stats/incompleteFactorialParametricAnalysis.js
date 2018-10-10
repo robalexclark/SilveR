@@ -8,7 +8,7 @@ $(function () {
     $("#ResponseTransformation").kendoDropDownList({
         dataSource: theModel.transformationsList,
         change: function () {
-            var covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
+            const covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
             covariateTransformation.value($("#ResponseTransformation").val());
         }
     });
@@ -30,7 +30,7 @@ $(function () {
         change: covariateBlockEnableDisable
     });
 
-    var primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
+    const primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
         dataSource: {
             transport: {
                 read: {
@@ -52,7 +52,7 @@ $(function () {
         dataSource: theModel.significancesList
     });
 
-    var selectedEffect = $("#SelectedEffect").kendoDropDownList({
+    const selectedEffect = $("#SelectedEffect").kendoDropDownList({
         dataSource: {
             transport: {
                 read: {
@@ -85,7 +85,7 @@ $(function () {
         dataSource: theModel.comparisonsBackToControlTestList
     });
 
-    var controlGroup = $("#ControlGroup").kendoDropDownList({
+    const controlGroup = $("#ControlGroup").kendoDropDownList({
         autoBind: false,
         dataSource: {
             transport: {
@@ -105,15 +105,15 @@ $(function () {
 });
 
 function treatmentsChanged() {
-    var treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
+    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
 
     $.ajax({
         type: 'GET',
         url: "/Values/GetInteractions",
         data: { selectedTreatments: treatmentMultiSelect.dataItems() },
         success: function (data) {
-            var markup = '';
-            for (var x = 0; x < data.length; x++) {
+            let markup = '';
+            for (let x = 0; x < data.length; x++) {
                 markup += '<option value="' + data[x] + '">' + data[x] + '</option>';
             }
 
@@ -122,16 +122,16 @@ function treatmentsChanged() {
     });
 
 
-    var currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
+    const currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
 
     //treatments have changed so fill in the primary factor...
-    var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
+    const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
     primaryFactorDropDown.dataSource.read({
         selectedTreatments: currentlySelectedTreatments
     });
 
     //...and the selected effect
-    var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
+    const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
     selectedEffectDropDown.dataSource.read({
         selectedTreatments: currentlySelectedTreatments
     });
@@ -142,7 +142,7 @@ function treatmentsChanged() {
 //if the selected effect is changed then fill in the control group
 function selectedEffectChanged() {
 
-    var controlGroup = $("#ControlGroup").data("kendoDropDownList");
+    const controlGroup = $("#ControlGroup").data("kendoDropDownList");
 
     controlGroup.value(null);
     controlGroup.dataSource.read({ treatment: $("#SelectedEffect").val(), datasetID: $("#DatasetID").val(), includeNull: true });
@@ -151,9 +151,9 @@ function selectedEffectChanged() {
 }
 
 function covariateBlockEnableDisable() {
-    var covariateDropDown = $("#Covariates");
-    var primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
-    var covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
+    const covariateDropDown = $("#Covariates");
+    const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
+    const covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 
     if (covariateDropDown.val().length > 0) {
         primaryFactorDropDown.enable(true);
@@ -168,12 +168,12 @@ function covariateBlockEnableDisable() {
 }
 
 function selectedEffectsBlockEnableDisable() {
-    var treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
-    var selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
-    var lsMeansSelectedCheckBox = $("#LSMeansSelected");
-    var allPairwise = $('#AllPairwise').data("kendoDropDownList");
-    var comparisonsBackToControl = $('#ComparisonsBackToControl').data("kendoDropDownList");
-    var controlGroup = $('#ControlGroup').data("kendoDropDownList");
+    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
+    const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
+    const lsMeansSelectedCheckBox = $("#LSMeansSelected");
+    const allPairwise = $('#AllPairwise').data("kendoDropDownList");
+    const comparisonsBackToControl = $('#ComparisonsBackToControl').data("kendoDropDownList");
+    const controlGroup = $('#ControlGroup').data("kendoDropDownList");
 
     if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 0 && selectedEffectDropDown.value().indexOf("*") == -1) {
         //selectedEffectDropDown.enable(true);
