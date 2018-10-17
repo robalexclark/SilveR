@@ -42,6 +42,7 @@ namespace SilveRModel.StatsModel
             }
         }
 
+        [Display(Name = "Response")]
         [Required]
         [CheckUsedOnceOnly]
         public string Response { get; set; }
@@ -80,7 +81,7 @@ namespace SilveRModel.StatsModel
 
         public string Covariance { get; set; } = "Compound Symmetric";
 
-        [DisplayName("Covariate")]
+        [DisplayName("Covariates")]
         [CheckUsedOnceOnly]
         public List<string> Covariates { get; set; }
 

@@ -27,8 +27,9 @@ showANOVA <- Args[12]
 showPRPlot <- Args[13]
 showNormPlot <- Args[14]
 showComps <- Args[15]
-sig <- 1 - as.numeric(Args[16])
-showLSMeans <- Args[17]
+controlGroup <- Args[16]
+sig <- 1 - as.numeric(Args[17])
+showLSMeans <- Args[18]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 

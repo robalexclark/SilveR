@@ -223,7 +223,7 @@ namespace SilveRModel.Validators
             return CheckResponsesPerLevel(treatments, response, "treatment");
         }
 
-        protected bool CheckResponsesPerLevel(List<string> treatments, string response, string text)
+        protected virtual bool CheckResponsesPerLevel(List<string> treatments, string response, string text)
         {
             //Check that the number of responses for each level is at least 2 for treatments
             foreach (string treatment in treatments)
@@ -280,7 +280,7 @@ namespace SilveRModel.Validators
                     if (transformation.StartsWith("Log") && respValue <= 0) //must not be <= 0
                     {
                         tempMessage = "You have " + transformation +
-                               " transformed the " + column + " variable. Unfortunately some of the " + column + " values are either zero or negative or both. These values have been ignored in the analysis as it is not possible to transform them.";
+                               " transformed the " + column + " variable. Unfortunately some of the " + column + " values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.";
                     }
                     else if (transformation.StartsWith("Square") && respValue < 0) //must not be < 0
                     {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @Startup.AppName</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"  />
     <link href="~/lib/kendo-ui/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/kendo-ui/styles/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/site.css" rel="stylesheet" type="text/css" />
@@ -13,9 +13,9 @@
     <!-- Insert this line above script imports  -->
     <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/kendo-ui/js/kendo.custom.min.js"></script>
 
     @RenderSection("scripts", required: false)
 </head>

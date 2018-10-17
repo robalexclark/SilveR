@@ -33,8 +33,8 @@ effectModel <- as.formula(Args[18])
 effectModel2 <- Args[18]
 selectedEffect <- Args[19]
 showLSMeans <- Args[20]
-allPairwiseTest <- Args[21]
-reducedTest <- Args[22]
+reducedTest <- Args[21]
+allPairwiseTest <- Args[22]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -381,6 +381,9 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 	for (i in 1:notreatlist) {
 		for (j in 1: nocovlist) {
 			CovIntModel <- paste(CovIntModel, " + ",  treatlistsep[i], " * ", covlistsep[j], sep="")
+		}
+		for (j in 1: nocovlist) {
+			CovIntModel <- paste(CovIntModel, " + ",   "Timezzz", " * ", covlistsep[j], sep="")
 		}
 	}
 

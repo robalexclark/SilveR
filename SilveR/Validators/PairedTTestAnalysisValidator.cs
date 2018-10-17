@@ -26,7 +26,10 @@ namespace SilveRModel.Validators
             allVars.Add(pttVariables.Treatment);
             allVars.Add(pttVariables.Subject);
             allVars.Add(pttVariables.Response);
-            allVars.Add(pttVariables.Covariate);
+
+            if (pttVariables.Covariates != null)
+                allVars.AddRange(pttVariables.Covariates);
+
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
             if (!CheckTreatmentsHaveLevels(pttVariables.Treatment, true)) return ValidationInfo;
@@ -48,14 +51,18 @@ namespace SilveRModel.Validators
             if (!FactorAndResponseCovariateChecks(categorical, pttVariables.Response)) return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
-            if (!String.IsNullOrEmpty(pttVariables.Covariate))
+            if (pttVariables.Covariates != null)
             {
-                if (!FactorAndResponseCovariateChecks(categorical, pttVariables.Covariate)) return ValidationInfo;
+                foreach (string covariate in pttVariables.Covariates)
+                {
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                }
             }
 
             //Check that each subject is only present in one blocking factor
             if (pttVariables.OtherDesignFactors != null && !CheckSubjectIsPresentInOnlyOneFactor(pttVariables.OtherDesignFactors, true))
                 return ValidationInfo;
+
             //check each subject has one response at each time point
             if (!CheckSubjectOnlyHasOneResponseForEachTreatment())
                 return ValidationInfo;
@@ -67,6 +74,26 @@ namespace SilveRModel.Validators
             //if get here then no errors so return true
             return ValidationInfo;
         }
+
+        protected override bool CheckResponsesPerLevel(List<string> treatments, string response, string text)
+        {
+            //Check that the number of responses for each level is at least 2 for treatments
+            foreach (string treatment in treatments)
+            {
+                Dictionary<string, int> levelResponses = ResponsesPerLevel(treatment, response);
+                foreach (KeyValuePair<string, int> level in levelResponses)
+                {
+                    if (level.Value < 2)
+                    {
+                        ValidationInfo.AddWarningMessage("There is no replication in one or more of the levels of the " + text + " factor. Please select another factor.");
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+        
 
         private bool CheckReplicationOfTreatmentFactors()
         {
@@ -242,7 +269,13 @@ namespace SilveRModel.Validators
                 {
                     CheckTransformations(row, pttVariables.ResponseTransformation, pttVariables.Response, "response");
 
-                    CheckTransformations(row, pttVariables.CovariateTransformation, pttVariables.Covariate, "covariate");
+                    if (pttVariables.Covariates != null)
+                    {
+                        foreach (string covariate in pttVariables.Covariates)
+                        {
+                            CheckTransformations(row, pttVariables.CovariateTransformation, covariate, "covariate");
+                        }
+                    }
                 }
             }
 
