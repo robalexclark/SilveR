@@ -1,4 +1,5 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
+using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -40,22 +41,25 @@ namespace SilveRModel.Validators
             if (pttVariables.OtherDesignFactors != null && !CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, "other treatment")) return ValidationInfo;
             if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, "subject ")) return ValidationInfo;
 
+            //check response and treatments contain values
+            if (!CheckFactorAndResponseNotBlank(pttVariables.Treatment, pttVariables.Response, "treatment factor")) return ValidationInfo;
+
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
-            List<string> categorical = new List<string>();
-            categorical.Add(pttVariables.Treatment);
+            List<string> categoricalVariables = new List<string>();
+            categoricalVariables.Add(pttVariables.Treatment);
             if (pttVariables.OtherDesignFactors != null)
-                categorical.AddRange(pttVariables.OtherDesignFactors);
-            categorical.Add(pttVariables.Subject);
+                categoricalVariables.AddRange(pttVariables.OtherDesignFactors);
+            categoricalVariables.Add(pttVariables.Subject);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, pttVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseCovariateChecks(categoricalVariables, pttVariables.Response)) return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
             if (pttVariables.Covariates != null)
             {
                 foreach (string covariate in pttVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                    if (!FactorAndResponseCovariateChecks(categoricalVariables, covariate)) return ValidationInfo;
                 }
             }
 
@@ -93,7 +97,7 @@ namespace SilveRModel.Validators
 
             return true;
         }
-        
+
 
         private bool CheckReplicationOfTreatmentFactors()
         {
@@ -135,7 +139,6 @@ namespace SilveRModel.Validators
         private bool CheckSubjectOnlyHasOneResponseForEachTreatment()
         {
             //check each subject only has one response for each treatment
-
             List<string> subjectsList = GetLevels(pttVariables.Subject);
             List<string> treatLevels = GetLevels(pttVariables.Treatment);
 
@@ -199,28 +202,14 @@ namespace SilveRModel.Validators
         {
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {
-                string factorType;
-                if (pttVariables.Treatment.Contains(catFactor))
-                {
-                    factorType = "treatment";
-                }
-                else if (pttVariables.Subject == catFactor)
-                {
-                    factorType = "subject factor";
-                }
-                else
-                {
-                    factorType = "other factor";
-                }
-
                 string responseType;
                 if (pttVariables.Response.Contains(continuous))
                 {
-                    responseType = "response";
+                    responseType = ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Response);
                 }
                 else
                 {
-                    responseType = "covariate";
+                    responseType = ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Covariates);
                 }
 
                 //Now that the whole column checks have been done, ensure that the treatment and response for each row is ok
@@ -235,26 +224,10 @@ namespace SilveRModel.Validators
 
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
-                    //Check that the "response" does not contain non-numeric data
-                    double parsedValue;
-                    bool parsedOK = Double.TryParse(continuousRow[i], out parsedValue);
-                    if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
-                    {
-                        ValidationInfo.AddErrorMessage("Error: The " + responseType + " selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
-                        return false;
-                    }
-
-                    //Check that there are no responses where the treatments are blank
-                    if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
-                    {
-                        ValidationInfo.AddErrorMessage("Error: The " + factorType + " (" + catFactor + ") selected contains missing data where there are observations present in the " + responseType + " variable. Please check the raw data and make sure the data was entered correctly.");
-                        return false;
-                    }
-
-                    //check that the "response" contains data for each "treatment" (not fatal)
+                    //check that the "response" contains data for each "covariate" (not fatal)
                     if (!String.IsNullOrEmpty(categoricalRow[i]) && String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        string mess = "The " + responseType + " selected contains missing data.";
+                        string mess = "The " + responseType + " selected (" + continuous + ") contains missing data.";
                         if (responseType == "covariate")
                         {
                             mess = mess + Environment.NewLine + " Any response that does not have a corresponding covariate will be excluded from the analysis.";

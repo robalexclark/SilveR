@@ -1,4 +1,5 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
+using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -82,21 +83,21 @@ namespace SilveRModel.Validators
                 string factorType;
                 if (smVariables.Treatments.Contains(catFactor))
                 {
-                    factorType = "treatment";
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Treatments);
                 }
                 else
                 {
-                    factorType = "other factor";
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors);
                 }
 
                 string responseType;
                 if (smVariables.Response.Contains(continuous))
                 {
-                    responseType = "response";
+                    responseType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Response);
                 }
                 else
                 {
-                    responseType = "covariate";
+                    responseType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Covariates);
                 }
 
                 //Now that the whole column checks have been done, ensure that the treatment and response for each row is ok
@@ -115,15 +116,14 @@ namespace SilveRModel.Validators
                     bool parsedOK = Double.TryParse(continuousRow[i], out var parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + smVariables.Response + ") selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " selected (" + continuous + ") contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") selected contains missing data where there are observations present in the " + responseType + " variable. Please check the raw data and make sure the data was entered correctly.");
-
+                        ValidationInfo.AddErrorMessage("The " + factorType + " selected (" + catFactor + ") contains missing data where there are observations present in the " + responseType + " variable. Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 

@@ -313,6 +313,8 @@ if(FirstCatFactor != "NULL") {
 		inf_slope<-IVS_F_infinite_slope()
 		infiniteslope <- inf_slope$infiniteslope
 		graphdata<-inf_slope$graphdata
+		graphdatax <- subset(graphdata, catvartest != "N")
+		graphdata<-graphdatax
 
 		#GGPLOT2 code
 		OVERLAID_SCAT()
@@ -510,8 +512,12 @@ if(showANOVA=="Y") {
 #Covariate correlation table
 #===================================================================================================================
 if (CovariateRegressionCoefficients == "Y" && FirstCatFactor != "NULL") {
-	HTML.title("Covariate regression coefficient", HR=2, align="left")
 
+	if (nocovars == 1) {
+		HTML.title("Covariate regression coefficient", HR=2, align="left")
+	} else {
+		HTML.title("Covariate regression coefficients", HR=2, align="left")
+	}
 	covtable_1<-coef(summary(threewayfull))
 	covtable<-data.frame(covtable_1)[c(2:(nocovars+1)),]
 

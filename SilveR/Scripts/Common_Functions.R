@@ -716,7 +716,12 @@ NONCAT_SCAT <- function(typez) {
 	} else {
 		g8 <- g7
 	}
-	suppressWarnings(print(g8))
+	if (typez == "paired") {
+		g9 <- g8 + geom_abline(slope=1, intercept=0, lty = Gr_line_type, size = Line_size, colour = Gr_line) 
+	} else {
+		g9 <- g8
+	}
+	suppressWarnings(print(g9))
 }
 
 

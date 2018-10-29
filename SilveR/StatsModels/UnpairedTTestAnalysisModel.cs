@@ -1,4 +1,5 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
 using System;
@@ -43,7 +44,7 @@ namespace SilveRModel.StatsModel
         [CheckUsedOnceOnly]
         public string Response { get; set; }
 
-        [DisplayName("Response Transformation")]
+        [DisplayName("Reponse transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
         public List<string> TransformationsList
@@ -65,11 +66,16 @@ namespace SilveRModel.StatsModel
         [DisplayName("Residuals vs. predicted plot")]
         public bool ResidualsVsPredictedPlotSelected { get; set; }
 
-        [DisplayName("Normal Probability Plot")]
+        [DisplayName("Normal probability plot")]
         public bool NormalProbabilityPlotSelected { get; set; }
 
-        [Display(Name = "Significance")]
+        [Display(Name = "Significance level")]
         public string Significance { get; set; } = "0.05";
+
+        [DisplayName("Control group")]
+        public string ControlGroup { get; set; }
+
+        public List<string> ControlGroupList { get; set; }
 
         public List<string> SignificancesList
         {
@@ -135,6 +141,7 @@ namespace SilveRModel.StatsModel
             args.Add(ArgumentHelper.ArgumentFactory(nameof(UnequalVarianceCaseSelected), UnequalVarianceCaseSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResidualsVsPredictedPlotSelected), ResidualsVsPredictedPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalProbabilityPlotSelected), NormalProbabilityPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
 
             return args;
@@ -151,27 +158,31 @@ namespace SilveRModel.StatsModel
             this.UnequalVarianceCaseSelected = argHelper.ArgumentLoader(nameof(UnequalVarianceCaseSelected), UnequalVarianceCaseSelected);
             this.ResidualsVsPredictedPlotSelected = argHelper.ArgumentLoader(nameof(ResidualsVsPredictedPlotSelected), ResidualsVsPredictedPlotSelected);
             this.NormalProbabilityPlotSelected = argHelper.ArgumentLoader(nameof(NormalProbabilityPlotSelected), NormalProbabilityPlotSelected);
+            this.ControlGroup = argHelper.ArgumentLoader(nameof(ControlGroup), ControlGroup);
             this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Response))); //4
-            arguments.Append(" " + "\"" + ResponseTransformation + "\""); //5
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Treatment))); //6          
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true)); //6          
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(EqualVarianceCaseSelected)); //7
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(UnequalVarianceCaseSelected)); //8
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ResidualsVsPredictedPlotSelected)); //9
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalProbabilityPlotSelected)); //10
-            arguments.Append(" " + Significance); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(EqualVarianceCaseSelected)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(UnequalVarianceCaseSelected)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResidualsVsPredictedPlotSelected)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlotSelected)); //10
+
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //12
 
             return arguments.ToString();
         }
 
-    
+
 
         public bool VariablesUsedOnceOnly(string memberName)
         {

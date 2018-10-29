@@ -46,7 +46,7 @@ namespace SilveRModel.Validators
                 //Check that the response does not contain non-numeric 
                 if (!CheckIsNumeric(paVariables.Response))
                 {
-                    ValidationInfo.AddErrorMessage("The response variable selected contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The response variable selected (" + paVariables.Response + ") contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.");
                     return ValidationInfo;
                 }
 
@@ -60,20 +60,22 @@ namespace SilveRModel.Validators
                     {
                         if (level.Value < 2)
                         {
-                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor. Please select another factor.");
+                            //ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor. Please select another factor.");
+                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor (" + paVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
+
                             return ValidationInfo;
                         }
                     }
 
                     //check response and doses contain values
-                    if (!CheckResponseAndTreatmentsNotBlank(paVariables.Response, paVariables.Treatment, "treatment factor")) return ValidationInfo;
+                    if (!CheckFactorAndResponseNotBlank(paVariables.Treatment, paVariables.Response, "treatment factor")) return ValidationInfo;
                 }
                 else if (String.IsNullOrEmpty(paVariables.Treatment) && !String.IsNullOrEmpty(paVariables.Response))
                 //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
                 {
                     if (NoOfResponses(paVariables.Response) == 1)
                     {
-                        ValidationInfo.AddErrorMessage("The response selected contains only 1 value. Please select another factor.");
+                        ValidationInfo.AddErrorMessage("The response selected (" + paVariables.Response + ") contains only 1 value. Please select another factor.");
                         return ValidationInfo;
                     }
                 }

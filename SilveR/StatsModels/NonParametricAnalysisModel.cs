@@ -1,4 +1,5 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
 using System;
@@ -59,7 +60,7 @@ namespace SilveRModel.StatsModel
         [ValidateControlLevelSet]
         public string Control { get; set; }
 
-        private IEnumerable<string> controlList = new List<string>();
+        private readonly IEnumerable<string> controlList = new List<string>();
         public IEnumerable<string> ControlList
         {
             get { return controlList; }
@@ -152,19 +153,16 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Response));
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Treatment));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactor, true));
 
-            if (String.IsNullOrEmpty(OtherDesignFactor)) //
-                arguments.Append(" " + "NULL");
-            else
-                arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(OtherDesignFactor));
-
-            arguments.Append(" " + Significance);
-            arguments.Append(" " + AnalysisType.ToString());
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(Control));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AnalysisType.ToString()));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Control, true));
 
             return arguments.ToString();
         }

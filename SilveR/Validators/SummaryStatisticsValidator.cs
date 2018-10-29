@@ -42,43 +42,46 @@ namespace SilveRModel.Validators
             if (!String.IsNullOrEmpty(ssVariables.ThirdCatFactor)) categorical.Add(ssVariables.ThirdCatFactor);
             if (!String.IsNullOrEmpty(ssVariables.FourthCatFactor)) categorical.Add(ssVariables.FourthCatFactor);
 
+
+
             //Go through each response
             foreach (string response in ssVariables.Responses)
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("The response variable (" + response + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The response variable selected (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
 
                 foreach (DataRow row in DataTable.Rows)
                 {
-
                     CheckTransformations(row, ssVariables.Transformation, response, "response");
                 }
 
-                foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
-                {
-                    //Check that each level has replication
-                    Dictionary<string, int> levelResponses = ResponsesPerLevel(catFactor, response);
-                    foreach (KeyValuePair<string, int> level in levelResponses)
-                    {
-                        if (level.Value == 0)
-                        {
-                            ValidationInfo.AddErrorMessage("There are no observations recorded on the levels of one of the factors. Please amend the dataset prior to running the analysis.");
-                            return ValidationInfo;
-                        }
-                        else if (level.Value < 2)
-                        {
-                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the categorical factor (" + catFactor + "). Please amend the dataset prior to running the analysis.");
-                            return ValidationInfo;
-                        }
-                    }
+                if (!CheckResponsesPerLevel(categorical, response, "categorical")) return ValidationInfo;
 
-                    //check response and cat factors contain values
-                    if (!CheckResponseAndTreatmentsNotBlank(response, catFactor, "categorisation factor"))
-                        return ValidationInfo;
-                }
+                //check response and cat factors contain values
+                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
+                    return ValidationInfo;
+
+                //foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
+                //{
+                //    //Check that each level has replication
+                //    Dictionary<string, int> levelResponses = ResponsesPerLevel(catFactor, response);
+                //    foreach (KeyValuePair<string, int> level in levelResponses)
+                //    {
+                //        if (level.Value == 0)
+                //        {
+                //            ValidationInfo.AddErrorMessage("There are no observations recorded on the levels of one of the factors. Please amend the dataset prior to running the analysis.");
+                //            return ValidationInfo;
+                //        }
+                //        else if (level.Value < 2)
+                //        {
+                //            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the categorical factor (" + catFactor + "). Please amend the dataset prior to running the analysis.");
+                //            return ValidationInfo;
+                //        }
+                //    }
+                //}
             }
 
             //if get here then no errors so return true

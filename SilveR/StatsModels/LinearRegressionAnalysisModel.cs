@@ -1,4 +1,5 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
 using System;
@@ -186,10 +187,11 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
             //first thing to do is to assemble the model (use the GetModel method)
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(GetModel())); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GetModel(), true)); //4
 
             //assemble a model for the covariate plot (if a covariate has been chosen)...
             if (String.IsNullOrEmpty(Covariate)) //5
@@ -199,48 +201,40 @@ namespace SilveRModel.StatsModel
             else
             {
                 string covariateModel = Response + "~" + Covariate;
-                arguments.Append(ArgumentConverters.ConvertIllegalChars(covariateModel));
+                arguments.Append(argFormatter.GetFormattedArgument(covariateModel));
             }
 
             //get transforms
-            arguments.Append(" " + "\"" + ResponseTransformation + "\""); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //6
 
-            arguments.Append(" " + "\"" + CovariateTransformation + "\""); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //7
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(PrimaryFactor))); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //8
 
-            string treats = null;
-            foreach (string treat in Treatments) treats = treats + "," + ArgumentConverters.ConvertIllegalChars(treat);
-            arguments.Append(" " + treats.TrimStart(',')); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatments)); //9
 
-            string contFactors = null;
-            foreach (string cont in ContinuousFactors) contFactors = contFactors + "," + ArgumentConverters.ConvertIllegalChars(cont);
-            arguments.Append(" " + contFactors.TrimStart(',')); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ContinuousFactors)); //10
 
-            arguments.Append(" " + "\"" + ContinuousFactorsTransformation + "\"");//11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ContinuousFactorsTransformation));//11
 
-            string otherFactors = null;
-            foreach (string other in Treatments) otherFactors = otherFactors + "," + ArgumentConverters.ConvertIllegalChars(other);
-            arguments.Append(" " + otherFactors.TrimStart(',')); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //12
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ANOVASelected)); //13
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Coefficients)); //14
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(AdjustedRSquared)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Coefficients)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AdjustedRSquared)); //15
 
             arguments.Append(Significance); //16
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ResidualsVsPredictedPlot)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResidualsVsPredictedPlot)); //17
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalProbabilityPlot)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlot)); //18
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(CooksDistancePlot)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CooksDistancePlot)); //19
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LeveragePlot)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LeveragePlot)); //20
 
             return arguments.ToString();
         }
-
-
 
         public void LoadArguments(IEnumerable<Argument> arguments)
         {

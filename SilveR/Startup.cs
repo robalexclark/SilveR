@@ -14,7 +14,7 @@ namespace SilveR
     public class Startup
     {
         public static string ContentRootPath { get; private set; }
-        public static string AppName { get; private set; }
+        //public static string AppName { get; private set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -26,11 +26,11 @@ namespace SilveR
 
             ContentRootPath = env.ContentRootPath;
 
-            string appName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
-            if (appName == "SilveR")
-                AppName = "ƩilveR";
-            else
-                AppName = appName;
+            //string appName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
+            //if (appName == "SilveR")
+            //    AppName = "ƩilveR";
+            //else
+            //    AppName = appName;
 
             // Set up configuration sources.
             IConfigurationBuilder builder = new ConfigurationBuilder()

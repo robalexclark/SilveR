@@ -1,4 +1,5 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
 using System;
@@ -44,7 +45,7 @@ namespace SilveRModel.StatsModel
         [CheckUsedOnceOnly]
         public string Response { get; set; }
 
-        [DisplayName("Response Transformation")]
+        [DisplayName("Reponse transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
         public List<string> TransformationsList
@@ -70,7 +71,7 @@ namespace SilveRModel.StatsModel
         [CheckUsedOnceOnly]
         public List<string> Covariates { get; set; }
 
-        [DisplayName("Covariate Transformation")]
+        [DisplayName("Covariate transformation")]
         public string CovariateTransformation { get; set; } = "None";
 
         public List<string> CovarianceList
@@ -78,7 +79,7 @@ namespace SilveRModel.StatsModel
             get { return new List<string>() { "Compound Symmetric", "Unstructured", "Autoregressive(1)" }; }
         }
 
-        public string Covariance = "Compound Symmetric";
+        public string Covariance { get; set; } = "Compound Symmetric";
 
 
         [DisplayName("ANOVA Table")]
@@ -93,7 +94,7 @@ namespace SilveRModel.StatsModel
         [DisplayName("Least Square (predicted) means")]
         public bool LSMeansSelected { get; set; }
 
-        [Display(Name = "Significance")]
+        [Display(Name = "Significance level")]
         public string Significance { get; set; } = "0.05";
 
         [DisplayName("All Pairwise Comparisons")]
@@ -104,7 +105,6 @@ namespace SilveRModel.StatsModel
         public string ControlGroup { get; set; }
 
         public List<string> ControlGroupList { get; set; }
-
 
         public List<string> SignificancesList
         {
@@ -229,58 +229,37 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
             //first thing to do is to assemble the model (use the GetModel method)
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(GetModel())); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GetModel(), true)); //4
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Treatment))); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true)); //5
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Subject))); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Subject, true)); //6
 
             //assemble a model for the covariate plot (if a covariate has been chosen)...
-            if (Covariates == null) //7
-            {
-                arguments.Append(" " + "NULL");
-            }
-            else
-            {
-                string covariates = null;
-                foreach (string covariate in Covariates)
-                    covariates = covariates + "," + ArgumentConverters.ConvertIllegalChars(covariate);
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //7
 
-                arguments.Append(" " + covariates.TrimStart(','));
-            }
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance)); //8
 
-            arguments.Append(" " + "\"" + Covariance + "\""); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //9
 
-            arguments.Append(" " + "\"" + ResponseTransformation + "\""); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //10
 
-            arguments.Append(" " + "\"" + CovariateTransformation + "\""); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //11
 
-            if (OtherDesignFactors == null) //11
-            {
-                arguments.Append(" " + "NULL");
-            }
-            else
-            {
-                string blocks = null;
-                foreach (string otherDesign in OtherDesignFactors)
-                    blocks = blocks + "," + ArgumentConverters.ConvertIllegalChars(otherDesign);
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwiseComparisons)); //15
 
-                arguments.Append(" " + blocks.TrimStart(','));
-            }
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //16
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ANOVASelected)); //12
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(PRPlotSelected)); //13
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalPlotSelected)); //14
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(AllPairwiseComparisons)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //17
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ControlGroup)); //16
-
-            arguments.Append(" " + Significance); //17
-
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LSMeansSelected)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //18
 
             return arguments.ToString();
         }

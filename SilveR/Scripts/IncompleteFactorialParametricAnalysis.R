@@ -254,6 +254,8 @@ if(FirstCatFactor != "NULL") {
 	inf_slope<-IVS_F_infinite_slope()
 	infiniteslope <- inf_slope$infiniteslope
 	graphdata<-inf_slope$graphdata
+	graphdatax <- subset(graphdata, catvartest != "N")
+	graphdata<-graphdatax
 
 	#GGPLOT2 code
 	OVERLAID_SCAT()

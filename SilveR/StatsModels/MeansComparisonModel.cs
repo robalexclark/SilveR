@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
+using SilveRModel.Models;
+using SilveRModel.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
@@ -238,22 +239,23 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
             if (ValueType == ValueTypeOption.Supplied)
             {
                 arguments.Append(" " + "SuppliedValues"); //4
-                arguments.Append(" " + ArgumentConverters.GetNULLOrText(GroupMean)); //5
+                arguments.Append(" " + argFormatter.GetFormattedArgument(GroupMean)); //5
 
                 if (!String.IsNullOrWhiteSpace(StandardDeviation))
                 {
                     arguments.Append(" " + "StandardDeviation"); //6
-                    arguments.Append(" " + StandardDeviation); //7
+                    arguments.Append(" " + argFormatter.GetFormattedArgument(StandardDeviation)); //7
                 }
                 else if (!String.IsNullOrEmpty(Variance))
                 {
                     arguments.Append(" " + "Variance"); //6
-                    arguments.Append(" " + Variance); //7
+                    arguments.Append(" " + argFormatter.GetFormattedArgument(Variance)); //7
                 }
                 else
                     throw new InvalidOperationException("no stdev or variance supplied!");
@@ -261,40 +263,40 @@ namespace SilveRModel.StatsModel
             else if (ValueType == ValueTypeOption.Dataset)
             {
                 arguments.Append(" " + "DatasetValues"); //4
-                arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Response)); //5
+                arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //5
 
-                arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Treatment)));
+                arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true));
 
-                arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(ControlGroup))); //7
+                arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //7
             }
 
-            arguments.Append(" " + Significance); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //8
 
             if (ChangeType == ChangeTypeOption.Percent)
             {
                 arguments.Append(" " + "Percent"); //9
-                arguments.Append(" " + PercentChange); //10
+                arguments.Append(" " + argFormatter.GetFormattedArgument(PercentChange)); //10
             }
             else
             {
                 arguments.Append(" " + "Absolute"); //9
-                arguments.Append(" " + AbsoluteChange); //10
+                arguments.Append(" " + argFormatter.GetFormattedArgument(AbsoluteChange)); //10
             }
 
             if (PlottingRangeType == PlottingRangeTypeOption.SampleSize)
             {
                 arguments.Append(" " + "SampleSize"); //11
-                arguments.Append(" " + SampleSizeFrom); //12
-                arguments.Append(" " + SampleSizeTo); //13
+                arguments.Append(" " + argFormatter.GetFormattedArgument(SampleSizeFrom)); //12
+                arguments.Append(" " + argFormatter.GetFormattedArgument(SampleSizeTo)); //13
             }
             else
             {
                 arguments.Append(" " + "PowerAxis"); //11
-                arguments.Append(" " + PowerFrom); //12
-                arguments.Append(" " + PowerTo); //13
+                arguments.Append(" " + argFormatter.GetFormattedArgument(PowerFrom)); //12
+                arguments.Append(" " + argFormatter.GetFormattedArgument(PowerTo)); //13
             }
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(GraphTitle)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(argFormatter.GetFormattedArgument(GraphTitle))); //14
 
             return arguments.ToString();
         }

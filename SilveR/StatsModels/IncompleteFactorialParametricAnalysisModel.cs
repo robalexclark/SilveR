@@ -1,4 +1,5 @@
 ﻿using Combinatorics;
+using SilveR.Helpers;
 using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
@@ -251,54 +252,34 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
             //first thing to do is to assemble the model (use the GetModel method)
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(GetModel())); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GetModel(), true)); //4
 
-            string scatterplotModel = ArgumentConverters.ConvertIllegalChars(Response) + "~scatterPlotColumn";
+            string scatterplotModel = argFormatter.GetFormattedArgument(Response + "~scatterPlotColumn", true);
             arguments.Append(" " + scatterplotModel); //5
 
             //assemble a model for the covariate plot (if a covariate has been chosen)...
-            if (Covariates == null) //6
-            {
-                arguments.Append(" " + "NULL");
-            }
-            else
-            {
-                string covariates = null;
-                foreach (string covariate in Covariates) covariates = covariates + "," + ArgumentConverters.ConvertIllegalChars(covariate);
-
-                arguments.Append(" " + covariates.TrimStart(','));
-            }
+            arguments.Append(" " + Covariates); //6
 
             //get transforms
-            arguments.Append(" " + "\"" + ResponseTransformation + "\""); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //7
 
-            arguments.Append(" " + "\"" + CovariateTransformation + "\""); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //8
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(PrimaryFactor))); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //9
 
-            string treats = null;
-            foreach (string treat in Treatments) treats = treats + "," + ArgumentConverters.ConvertIllegalChars(treat);
-            arguments.Append(" " + treats.TrimStart(',')); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatments)); //10
 
-            string blocks = null;
-            if (OtherDesignFactors != null)
-            {
-                foreach (string otherDesign in OtherDesignFactors) blocks = blocks + "," + ArgumentConverters.ConvertIllegalChars(otherDesign);
-            }
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //11
 
-            if (String.IsNullOrEmpty(blocks)) //11
-                arguments.Append(" " + "NULL");
-            else
-                arguments.Append(" " + blocks.TrimStart(','));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //14
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ANOVASelected)); //12
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(PRPlotSelected)); //13
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalPlotSelected)); //14
-
-            arguments.Append(" " + Significance); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //15
 
             //assemble the effect model
             if (String.IsNullOrEmpty(SelectedEffect)) //16, 17
@@ -308,23 +289,17 @@ namespace SilveRModel.StatsModel
             }
             else
             {
-                arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(GetEffectModel()));
-                arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(SelectedEffect));
+                arguments.Append(" " + argFormatter.GetFormattedArgument(GetEffectModel(), true));
+                arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedEffect, true));
             }
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LSMeansSelected)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //18
 
-            if (!String.IsNullOrEmpty(AllPairwise))
-                arguments.Append(" " + "\"" + AllPairwise + "\""); //19
-            else
-                arguments.Append(" " + "NULL");
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwise)); //19
 
-            if (!String.IsNullOrEmpty(ComparisonsBackToControl))
-                arguments.Append(" " + "\"" + ComparisonsBackToControl + "\""); //20
-            else
-                arguments.Append(" " + "NULL");
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonsBackToControl)); //20
 
-            arguments.Append(" " + "\"" + ControlGroup + "\""); //21
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //21
 
             return arguments.ToString();
         }

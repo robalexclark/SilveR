@@ -1,5 +1,5 @@
 ﻿using HtmlAgilityPack;
-using SilveRModel.Helpers;
+using SilveR.Helpers;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,8 @@ namespace SilveR.Services
 
             //read in the html and reconvert any dodhy characters back
             string theHTML = File.ReadAllText(htmlFile);
-            theHTML = ArgumentConverters.ConvertIVSCharactersBack(theHTML);
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            theHTML = argFormatter.ConvertIVSCharactersBack(theHTML);
 
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(theHTML);

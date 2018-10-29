@@ -573,6 +573,8 @@ Gr_legend_pos<-"none"
 inf_slope<-IVS_F_infinite_slope()
 infiniteslope <- inf_slope$infiniteslope
 graphdata<-inf_slope$graphdata
+graphdatax <- subset(graphdata, catvartest != "N")
+graphdata<-graphdatax
 
 Gr_palette<-palette_FUN("l_li")
 
@@ -656,6 +658,8 @@ for (d in 1:resplength) {
 			inf_slope<-IVS_F_infinite_slope()
 			infiniteslope <- inf_slope$infiniteslope
 			graphdata<-inf_slope$graphdata
+			graphdatax <- subset(graphdata, catvartest != "N")
+			graphdata<-graphdatax
 
 			#GGPLOT2 code
 			if (labellz == "Case_ID") {
@@ -1252,6 +1256,8 @@ if (noOfComponents == 0) {
 		inf_slope<-IVS_F_infinite_slope()
 		infiniteslope <- inf_slope$infiniteslope
 		graphdata<-inf_slope$graphdata
+		graphdatax <- subset(graphdata, catvartest != "N")
+		graphdata<-graphdatax
 
 		#GGPLOT2 code
 		NONCAT_MAT()

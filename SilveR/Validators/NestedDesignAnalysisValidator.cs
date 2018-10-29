@@ -1,4 +1,5 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
+using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -63,21 +64,21 @@ namespace SilveRModel.Validators
                 string factorType;
                 if (ndaVariables.Treatments.Contains(catFactor))
                 {
-                    factorType = "treatment";
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Treatments);
                 }
                 else
                 {
-                    factorType = "other factor";
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors);
                 }
 
                 string responseType;
                 if (ndaVariables.Response.Contains(continuous))
                 {
-                    responseType = "response";
+                    responseType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Response);
                 }
                 else
                 {
-                    responseType = "covariate";
+                    responseType = ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Covariates);
                 }
 
                 //Now that the whole column checks have been done, ensure that the treatment and response for each row is ok

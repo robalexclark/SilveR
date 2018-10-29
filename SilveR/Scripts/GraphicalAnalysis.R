@@ -144,6 +144,8 @@ if (CaseProfilesPlot == "N") {
 inf_slope<-IVS_F_infinite_slope()
 infiniteslope <- inf_slope$infiniteslope
 graphdata<-inf_slope$graphdata
+graphdatax <- subset(graphdata, catvartest != "N")
+graphdata<-graphdatax
 
 #Removing illegal characters
 # Bug fix Aug 2010 (STB)

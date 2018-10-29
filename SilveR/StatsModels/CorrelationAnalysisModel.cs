@@ -1,10 +1,10 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -83,12 +83,13 @@ namespace SilveRModel.StatsModel
         public bool Estimate { get; set; } = true;
         public bool Statistic { get; set; } = true;
 
-        [DisplayName("p-Value")]
+        [DisplayName("p-value")]
         public bool PValue { get; set; } = true;
         public bool Scatterplot { get; set; }
 
         public bool Matrixplot { get; set; }
 
+        [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
         public List<string> SignificancesList
@@ -219,58 +220,53 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
             //get responses, comma separated
-            string responses = null;
-            foreach (string resp in Responses)
-            {
-                responses = responses + "," + resp;
-            }
-
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(responses.TrimStart(','))); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Responses)); //4
 
             //get transforms
-            arguments.Append(" " + "\"" + Transformation + "\""); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Transformation)); //5
 
             //1st cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(FirstCatFactor))); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FirstCatFactor, true)); //6
 
             //2nd cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(SecondCatFactor))); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SecondCatFactor, true)); //7
 
             //3rd cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(ThirdCatFactor))); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ThirdCatFactor, true)); //8
 
             //4th cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(FourthCatFactor))); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FourthCatFactor, true)); //9
 
             //Method
-            arguments.Append(" " + Method); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Method)); //10
 
             //Hypothesis
-            arguments.Append(" " + Hypothesis); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Hypothesis)); //11
 
             //Mean
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Estimate)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Estimate)); //12
 
             //N
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Statistic)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Statistic)); //13
 
             //St Dev
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(PValue)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PValue)); //14
 
             //Variances
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Scatterplot)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Scatterplot)); //15
 
             //St Err
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Matrixplot)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Matrixplot)); //16
 
             //Min and Max
-            arguments.Append(" " + Significance); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //17
 
             //By Categories and Overall
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ByCategoriesAndOverall)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //18
 
             return arguments.ToString();
         }

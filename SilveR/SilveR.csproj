@@ -2,10 +2,18 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
-    <AssemblyName>InVivoStat</AssemblyName>
+    <AssemblyName>SilveR</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="R-3.5.1\library\webshot\casperjs\package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="InVivoStat.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="InVivoStat.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="R-3.5.1\library\webshot\casperjs\package.json" />

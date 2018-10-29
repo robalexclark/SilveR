@@ -1,4 +1,4 @@
-﻿using Combinatorics;
+﻿using SilveR.Helpers;
 using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
@@ -177,43 +177,33 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
             //first thing to do is to assemble the model (use the GetModel method)
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(GetModel())); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GetModel(), true)); //4
 
             //get transforms
-            arguments.Append(" " + "\"" + ResponseTransformation + "\""); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //5
 
-            arguments.Append(" " + "\"" + CovariateTransformation + "\""); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //6
 
-            string treats = null;
-            foreach (string treat in Treatments) treats = treats + "," + ArgumentConverters.ConvertIllegalChars(treat);
-            arguments.Append(" " + treats.TrimStart(',')); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatments)); //7
 
-            string blocks = null;
-            if (OtherDesignFactors != null)
-            {
-                foreach (string otherDesign in OtherDesignFactors) blocks = blocks + "," + ArgumentConverters.ConvertIllegalChars(otherDesign);
-            }
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //8
 
-            if (String.IsNullOrEmpty(blocks)) //8
-                arguments.Append(" " + "NULL");
-            else
-                arguments.Append(" " + blocks.TrimStart(','));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariate, true)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //10
 
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(Covariate))); //9
-            arguments.Append(" " + Significance); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(RandomFactor1, true)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(RandomFactor2, true)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(RandomFactor3, true)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(RandomFactor4, true)); //14
 
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(RandomFactor1))); //11
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(RandomFactor2))); //12
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(RandomFactor3))); //13
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(RandomFactor4))); //14
-
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(DesignOption1))); //15
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(DesignOption2))); //16
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(DesignOption3))); //17
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ArgumentConverters.GetNULLOrText(DesignOption4))); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DesignOption1, true)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DesignOption2, true)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DesignOption3, true)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DesignOption4, true)); //18
 
             return arguments.ToString();
         }
@@ -261,7 +251,7 @@ namespace SilveRModel.StatsModel
 
             return args;
         }
-               
+
         private string GetModel()
         {
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
@@ -314,7 +304,7 @@ namespace SilveRModel.StatsModel
 
                 if (memberName != "RandomFactor4")
                     checker.AddVar(this.RandomFactor4);
-                
+
                 return checker.DoCheck(varToBeChecked);
             }
             else

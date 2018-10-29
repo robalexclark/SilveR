@@ -25,7 +25,7 @@ namespace SilveRModel.Validators
 
             if (!CheckIsNumeric(npVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response selected contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The response selected (" + npVariables.Response + ") contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
@@ -34,7 +34,7 @@ namespace SilveRModel.Validators
             if (!CheckResponsesPerLevel(npVariables.Treatment, npVariables.Response)) return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckResponseAndTreatmentsNotBlank(npVariables.Response, npVariables.Treatment, "treatment factor")) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(npVariables.Treatment, npVariables.Response, "treatment factor")) return ValidationInfo;
 
             //if only two levels and all treats or to control selected, then need to only do KW
             if (CountDistinctLevels(npVariables.Treatment) == 2 && String.IsNullOrEmpty(npVariables.OtherDesignFactor) && npVariables.AnalysisType != NonParametricAnalysisModel.AnalysisOption.MannWhitney)

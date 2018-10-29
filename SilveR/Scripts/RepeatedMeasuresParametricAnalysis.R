@@ -81,7 +81,7 @@ statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
 statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
 
 #calculating number of block factors
-noblocklist=0
+noblockfactors=0
 if (blocklist !="NULL") {
 	tempblockChanges <-strsplit(blocklist, ",")
 	blocklistx <- c("")
@@ -102,7 +102,6 @@ treatlistsep <- txtexpectedChanges[-1]
 notreatlist<-length(treatlistsep)
 
 #calculating number of covariates
-nocovars=0
 if (covariatelist !="NULL") {
 	tempcovChanges <-strsplit(covariatelist, ",")
 	txtexpectedcovChanges <- c("")
@@ -149,12 +148,6 @@ for (i in 1:notreatlist) {
 }
 ind=ind*timeindex
 
-
-# Code to create variable to test if the highest order interaction is selected
-testeffects = noblocklist
-if(FirstCatFactor != "NULL") {
-	testeffects = noblocklist+nocovlist
-}
 emodel <-strsplit(effectModel2, "+", fixed = TRUE)
 emodelChanges <- c("")
 for(i in 1:length(emodel[[1]])) { 
@@ -335,6 +328,8 @@ if(covariatelist != "NULL") {
 		inf_slope<-IVS_F_infinite_slope()
 		infiniteslope <- inf_slope$infiniteslope
 		graphdata<-inf_slope$graphdata
+		graphdatax <- subset(graphdata, catvartest != "N")
+		graphdata<-graphdatax
 		Gr_palette<-palette_FUN("catfact")
 
 		#GGPLOT2 code
@@ -569,30 +564,29 @@ if(showANOVA=="Y") {
 #Covariate correlation table
 #===================================================================================================================
 if (CovariateRegressionCoefficients == "Y"  && covariatelist != "NULL") {
-	HTML.title("Covariate regression coefficient", HR=2, align="left")
-
-	covtable_1<-summary(threewayfull)$tTable
-	covtable<-data.frame(covtable_1)[c(2),]
-	colnames(covtable) <- c("Estimate", "Std..Error", "DF", "t.value", "Pr...t..")
-	covtable_2<- covtable
-	covtable$Estimate <-format(round(covtable$Estimate, 3), nsmall=3, scientific=FALSE) 
-	covtable$Std..Error <-format(round(covtable$Std..Error, 3), nsmall=3, scientific=FALSE) 
-	covtable$DF <-format(round(covtable$DF, 0), nsmall=0, scientific=FALSE) 
-	covtable$t.value <-format(round(covtable$t.value, 2), nsmall=2, scientific=FALSE) 
-	covtable$Pr...t.. <-format(round(covtable$Pr...t.., 4), nsmall=4, scientific=FALSE) 
-	covtable_1<- covtable
-
-	if (as.numeric(covtable_2[1,5])<0.0001)  {
-		#STB March 2011 formatting p-values p<0.0001
-		# ivsanova[i,9]<-0.0001
-		covtable_1[1,5]= "<0.0001"
+	if (nocovlist == 1) {
+		HTML.title("Covariate regression coefficient", HR=2, align="left")
+	} else {
+		HTML.title("Covariate regression coefficients", HR=2, align="left")
 	}
 
-	rz<-rownames(covtable)[1]
-	rownames(covtable_1)<-c(rz)
+	covtable_1<-summary(threewayfull)$tTable
+	covtable<-data.frame(covtable_1)[c(2:(nocovlist+1)),]
+	names <- rownames(covtable)
+	Estimate <-format(round(covtable$Value, 3), nsmall=3, scientific=FALSE) 
+	StdError <-format(round(covtable$Std.Error, 3), nsmall=3, scientific=FALSE) 
+	tvalue <-format(round(covtable$t.value, 2), nsmall=2, scientific=FALSE) 
+	Prt <-format(round(covtable$p.value, 4), nsmall=4, scientific=FALSE) 
+	
+	covtable2 <-cbind(names, Estimate, StdError, tvalue, Prt)
 
-	colnames(covtable_1)<-c("Estimate", "Std error", "DF", "t-value", "p-value")
-	HTML(covtable_1, classfirstline="second", align="left", row.names = "FALSE")
+	if (as.numeric(covtable[1,4])<0.0001)  {
+		#STB March 2011 formatting p-values p<0.0001
+		#ivsanova[i,9]<-0.0001
+		covtable2[1,5]= "<0.0001"
+	}
+	colnames(covtable2)<-c("Covariate", "Estimate", "Std error", "t-value", "p-value")
+	HTML(covtable2, classfirstline="second", align="left", row.names = "FALSE")
 }
 
 #===================================================================================================================

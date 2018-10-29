@@ -23,7 +23,8 @@ equalCase <-Args[7]
 unequalCase <- Args[8]
 showPRPlot <- Args[9]
 showNormPlot <- Args[10]
-sig <- 1 - as.numeric(Args[11])
+controlGroup <- Args[11]
+sig <- 1 - as.numeric(Args[12])
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -50,6 +51,16 @@ for (i in 1:10) {
 
 #Generate mainEffect factor
 statdata$mainEffect<-as.factor(eval(parse(text = paste("statdata$", treatFactor))))
+
+#Re-ordering factor levels based on control group
+if (controlGroup != "NULL") {
+	temp <- c(levels(statdata$mainEffect))
+	temp = temp[!(temp %in% controlGroup)]
+	levs_plot <- c(controlGroup, temp)
+	statdata$mainEffect <- factor(statdata$mainEffect, levels=levs_plot)
+}
+
+
 
 #===================================================================================================================
 #Setup the html file and associated css file
@@ -359,7 +370,7 @@ if (unequalCase == "Y") {
 
 	#STB - July 2012 rename response variable
 	# eqtest<-t.test(formula = eval(parse(text = paste("statdata$", response)))~eval(parse(text = paste("statdata$", treatFactor))), paired = FALSE, var.equal= FALSE, conf.level= sig)
-	eqtest<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~eval(parse(text = paste("statdata$", treatFactor))), paired = FALSE, var.equal= FALSE, conf.level= sig)
+	eqtest<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
 
 	col1<-format(round(as.numeric(eqtest[1]), 3), nsmall=3, scientific=FALSE)
 	col2<-format(round(as.numeric(eqtest[2]), 2), nsmall=2, scientific=FALSE)
@@ -447,7 +458,7 @@ if (unequalCase == "Y") {
 	#Required to generate table label only
 	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 	multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
-	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~eval(parse(text = paste("statdata$", treatFactor))), paired = FALSE, var.equal= FALSE, conf.level= sig)
+	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
 
 	pvals<-mult2$p.value
 	meandiff<- mult2$estimate[1] - mult2$estimate[2]
@@ -534,7 +545,7 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 	multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
 
-	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~eval(parse(text = paste("statdata$", treatFactor))), paired = FALSE, var.equal= FALSE, conf.level= sig)
+	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
 
 	meandiff<- mult2$estimate[1] - mult2$estimate[2]
 	lowerdiff<- mult2$conf.int[1]
@@ -755,6 +766,7 @@ if (responseTransform != "None")
 }
 
 HTML(paste("Treatment variable: ", treatFactor, sep=""),  align="left")
+HTML(paste("Control group: ", controlGroup, sep=""),  align="left")
 HTML(paste("Display equal variance case (Y/N): ", equalCase, sep=""),  align="left")
 HTML(paste("Display unequal variance case (Y/N): ", unequalCase, sep=""),  align="left")
 HTML(paste("Show residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")

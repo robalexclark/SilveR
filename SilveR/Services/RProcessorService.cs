@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using SilveR.Helpers;
 using SilveR.Models;
-using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.StatsModel;
 using System;
@@ -35,13 +35,15 @@ namespace SilveR.Services
                 SilveRRepository repository = scope.ServiceProvider.GetRequiredService<SilveRRepository>();
                 AppSettings appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
 
+                //declared here as used in exception handler
+                string workingDir = Path.GetTempPath();
+                string theArguments = null;
+
 #if !DEBUG
                 try
                 {
 #endif
                 Stopwatch sw = Stopwatch.StartNew();
-
-                string workingDir = Path.GetTempPath();
 
                 //get analysis
                 Analysis analysis = await repository.GetAnalysisComplete(analysisGuid);
@@ -63,13 +65,16 @@ namespace SilveR.Services
                 if (csvData != null)
                 {
                     csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
-                    Dictionary<string, string> charConverterLines = ArgumentConverters.GetCharConversionList();
 
-                    //go through and replace the first line...
-                    foreach (KeyValuePair<string, string> kp in charConverterLines)
-                    {
-                        csvData[0] = csvData[0].Replace(kp.Key, kp.Value);
-                    }
+                    ArgumentFormatter argFormatter = new ArgumentFormatter();
+                    csvData[0] = argFormatter.ConvertIllegalCharacters(csvData[0]);
+                    //Dictionary<string, string> charConverterLines = ArgumentConverters.GetCharConversionList();
+
+                    ////go through and replace the first line...
+                    //foreach (KeyValuePair<string, string> kp in charConverterLines)
+                    //{
+                    //    csvData[0] = csvData[0].Replace(kp.Key, kp.Value);
+                    //}
 
                     File.WriteAllLines(csvFileName, csvData);
                 }
@@ -89,7 +94,15 @@ namespace SilveR.Services
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
-                    rscriptPath = "Rscript";
+                    if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
+                    {
+                        rscriptPath = appSettings.CustomRScriptLocation;
+                    }
+                    else
+                    {
+                        rscriptPath = "Rscript";
+                        //rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript");
+                    }
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
@@ -100,7 +113,7 @@ namespace SilveR.Services
                 psi.FileName = rscriptPath;
                 psi.WorkingDirectory = workingDir;
 
-                string theArguments = analysisModel.GetCommandLineArguments();
+                theArguments = analysisModel.GetCommandLineArguments();
                 psi.Arguments = scriptFileName.WrapInDoubleQuotes() + " --vanilla --args " + csvFileName.WrapInDoubleQuotes() + theArguments;
 
                 //Configure some options for the R process
@@ -182,7 +195,11 @@ namespace SilveR.Services
                     {
                         Analysis analysis = await repository.GetAnalysis(analysisGuid);
 
-                        string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + ex.Message;
+                        string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
+                        message = message + "TempFolder=" + workingDir + Environment.NewLine + Environment.NewLine;
+                        message = message + "Arguments=" + theArguments + Environment.NewLine + Environment.NewLine;
+                        message = message + ex.Message;
+
                         if (ex.InnerException != null)
                         {
                             message = message + Environment.NewLine + "Inner Exception: " + ex.InnerException.Message;

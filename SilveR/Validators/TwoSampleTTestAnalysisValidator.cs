@@ -28,6 +28,9 @@ namespace SilveRModel.Validators
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
             if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
 
+            //check response and treatments contain values
+            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, "treatment factor")) return ValidationInfo;
+
             //do data checks on the treatments and response
             if (!TreatmentAndResponseChecks(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
 
@@ -41,12 +44,12 @@ namespace SilveRModel.Validators
             //if only 1 level then error
             if (CountDistinctLevels(treatmentVar) == 1)
             {
-                ValidationInfo.AddErrorMessage("The treatment (" + treatmentVar + ") selected has only one level, please select another factor.");
+                ValidationInfo.AddErrorMessage("The treatment selected (" + treatmentVar + ") has only one level, please select another factor.");
                 return false;
             }
             else if (CountDistinctLevels(treatmentVar) > 2) // if more than 2 levels then do anova instead...
             {
-                ValidationInfo.AddErrorMessage("The treatment (" + treatmentVar + ") selected has more than two levels, please analyse using Single Measure Parametric Analysis module.");
+                ValidationInfo.AddErrorMessage("The treatment selected (" + treatmentVar + ") has more than two levels, please analyse using Single Measure Parametric Analysis module.");
                 return false;
             }
 
@@ -68,23 +71,15 @@ namespace SilveRModel.Validators
                 bool parsedOK = Double.TryParse(responseRow[i], out parsedValue);
                 if (!String.IsNullOrEmpty(responseRow[i]) && !parsedOK)
                 {
-                    ValidationInfo.AddErrorMessage("The response (" + responseVar + ") selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The response selected (" + responseVar + ") contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                     return false;
                 }
 
                 //Check that there are no responses where the treatments are blank
                 if (String.IsNullOrEmpty(treatRow[i]) && !String.IsNullOrEmpty(responseRow[i]))
                 {
-                    ValidationInfo.AddErrorMessage("The treatment (" + treatmentVar + ") selected contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The treatment selected (" + treatmentVar + ") contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
                     return false;
-                }
-
-                //check that the "response" contains data for each "treatment" (not fatal)
-                if (!String.IsNullOrEmpty(treatRow[i]) && String.IsNullOrEmpty(responseRow[i]))
-                {
-                    string mess = "The response selected contains missing data.";
-
-                    ValidationInfo.AddWarningMessage(mess);
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
 using System;
@@ -154,21 +155,22 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Response))); //4
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(GroupingFactor))); //5
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(ResponseCategories))); //6          
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GroupingFactor, true)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseCategories, true)); //6          
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ChiSquaredTest)); //7
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(FishersExactTest)); //8
-            arguments.Append(" " + Hypothesis); //9
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(BarnardsTest)); //10
-            arguments.Append(" " + Significance); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ChiSquaredTest)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FishersExactTest)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Hypothesis)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(BarnardsTest)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //11
 
             return arguments.ToString();
         }
-               
+
         public bool VariablesUsedOnceOnly(string memberName)
         {
             object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);

@@ -438,11 +438,11 @@ if (k>1) {
 				add<-paste(add, ": The following pairwise correlations are statistically significantly at the  ", sep="")
 				add<-paste(add, CIval3, sep="")
 				add<-paste(add, "% level: ", sep="")
-				add<-paste(add, correlationTable2[i,1], " vs. ", correlationTable2[i,3], sep="")
+				add<-paste(add, correlationTable2[i,2], " vs. ", correlationTable2[i,4], sep="")
 			} else {
 				inte<-inte+1
 				add<-paste(add, ", ", sep="")
-				add<-paste(add, correlationTable2[i,1], " vs. ", correlationTable2[i,3], sep="")
+				add<-paste(add, correlationTable2[i,2], " vs. ", correlationTable2[i,4], sep="")
 			}
 		} 
 	}
@@ -502,7 +502,7 @@ if (scatterplotSelected != "N") {
 				graphdata$xvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][d])))
 				graphdata$yvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][f])))
 				graphdata$l_l <- as.factor(graphdata$catfact)
-	
+
 				MainTitle2<-""
 				w_Gr_jit <- 0
 				h_Gr_jit <- 0
@@ -532,6 +532,8 @@ if (scatterplotSelected != "N") {
 				inf_slope<-IVS_F_infinite_slope_Cor()
 				infiniteslope <- inf_slope$infiniteslope
 				graphdata<-inf_slope$graphdata
+				graphdatax <- subset(graphdata, catvartest != "N")
+				graphdata<-graphdatax
 
 				#GGPLOT2 code
 				OVERLAID_SCAT()
@@ -540,7 +542,7 @@ if (scatterplotSelected != "N") {
 
 				#reorder levels for categorised plot
 				if (infiniteslope == "Y" && GraphStyle == "Overlaid") {
-					HTML("Warning: The colours employed on this plot are not consistent with others within this module as it was not possible to fit a regression line for one or more groups.", align="left")
+					HTML("Warning: One or more of the lines have not been fitted as there is only one pair of responses available. The single point has also been excluded from the plot. Note the colours employed on this plot are not consistent with others within this module as it was not possible to fit a regression line for one or more groups.", align="left")
 				}
 
 				#STB July2013
@@ -556,12 +558,6 @@ if (scatterplotSelected != "N") {
 				}
 			}	
 		}
-	}
-
-	if (qt == 2) {
-		title<- 
-		title<-paste("Warning: One or more of the lines have not been fitted as there is only one pair of responses available at one or more of", " the level(s) of the categorisation factor.", sep="")
-		HTML(title, align="left")
 	}
 }
 

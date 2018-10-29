@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
+using SilveRModel.Models;
+using SilveRModel.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
@@ -225,67 +226,61 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            //get responses, comma separated
-            string responses = null;
-            foreach (string resp in Responses)
-            {
-                responses = responses + "," + resp;
-            }
-
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(responses.TrimStart(','))); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Responses)); //4
 
             //get transforms
-            arguments.Append(" " + "\"" + Transformation + "\""); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Transformation)); //5
 
             //1st cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(FirstCatFactor))); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FirstCatFactor, true)); //6
 
             //2nd cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(SecondCatFactor))); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SecondCatFactor, true)); //7
 
             //3rd cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(ThirdCatFactor))); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ThirdCatFactor, true)); //8
 
             //4th cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(FourthCatFactor))); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FourthCatFactor, true)); //9
 
             //Mean
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Mean)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Mean)); //10
 
             //N
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(N)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(N)); //11
 
             //St Dev
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(StandardDeviation)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StandardDeviation)); //12
 
             //Variances
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(Variance)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Variance)); //13
 
             //St Err
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(StandardErrorOfMean)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StandardErrorOfMean)); //14
 
             //Min and Max
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(MinAndMax)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MinAndMax)); //15
 
             //Median Quartile
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(MedianAndQuartiles)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MedianAndQuartiles)); //16
 
             //Coefficient Variation
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(CoefficientOfVariation)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CoefficientOfVariation)); //17
 
             //Confidence Limits
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ConfidenceInterval)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ConfidenceInterval)); //18
 
             //Confidence Limits
-            arguments.Append(" " + Significance.ToString()); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance.ToString())); //19
 
             //Normal Probability Plots
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalProbabilityPlot));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlot));
 
             //By Categories and Overall
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ByCategoriesAndOverall)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //20
 
             return arguments.ToString();
         }

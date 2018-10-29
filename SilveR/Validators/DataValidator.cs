@@ -50,33 +50,6 @@ namespace SilveRModel.Validators
             return GetLevels(column).Count;
         }
 
-        //protected Dictionary<string, int> ResponsesPerLevel(string treatCol, string responseCol)
-        //{
-        //    //determine the number of responses per level and return as dictionary
-        //    Dictionary<string, int> responseCounts = new Dictionary<string, int>();
-
-        //    if (String.IsNullOrEmpty(treatCol) || dataTable == null) return responseCounts; //i.e. empty list
-
-        //    List<string> levels = GetLevels(treatCol);
-
-        //    foreach (string level in levels)
-        //    {
-        //        int responseCount = 0;
-
-        //        foreach (DataRow row in dataTable.Rows)
-        //        {
-        //            if (!String.IsNullOrEmpty(row[treatCol].ToString()) && !String.IsNullOrEmpty(row[responseCol].ToString()) && row[treatCol].ToString() == level)
-        //            {
-        //                responseCount++;
-        //            }
-        //        }
-
-        //        responseCounts.Add(level, responseCount);
-        //    }
-
-        //    return responseCounts;
-        //}
-
         protected Dictionary<string, int> ResponsesPerLevel(string treatCol, string responseCol)
         {
             //determine the number of responses per level and return as dictionary
@@ -223,17 +196,17 @@ namespace SilveRModel.Validators
             return CheckResponsesPerLevel(treatments, response, "treatment");
         }
 
-        protected virtual bool CheckResponsesPerLevel(List<string> treatments, string response, string text)
+        protected virtual bool CheckResponsesPerLevel(List<string> factors, string response, string text)
         {
-            //Check that the number of responses for each level is at least 2 for treatments
-            foreach (string treatment in treatments)
+            //Check that the number of responses for each level is at least 2 for factors
+            foreach (string factor in factors)
             {
-                Dictionary<string, int> levelResponses = ResponsesPerLevel(treatment, response);
+                Dictionary<string, int> levelResponses = ResponsesPerLevel(factor, response);
                 foreach (KeyValuePair<string, int> level in levelResponses)
                 {
                     if (level.Value < 2)
                     {
-                        validationInfo.AddErrorMessage("There is no replication in one or more of the levels of the " + text + " factor. Please select another factor.");
+                        validationInfo.AddErrorMessage("There is no replication in one or more of the levels of the " + text + " factor (" + factor + "). Please select another factor.");
                         return false;
                     }
                 }
@@ -242,21 +215,21 @@ namespace SilveRModel.Validators
             return true;
         }
 
-        protected bool CheckResponseAndTreatmentsNotBlank(string response, string treatment, string text)
+        protected bool CheckFactorAndResponseNotBlank(string factor, string response, string text)
         {
-            if (String.IsNullOrEmpty(response) || String.IsNullOrEmpty(treatment)) return true;
+            if (String.IsNullOrEmpty(response) || String.IsNullOrEmpty(factor)) return true;
 
             foreach (DataRow row in DataTable.Rows)
             {
                 //Check that there are treatment levels for where there are response data
-                if (!String.IsNullOrEmpty(row[response].ToString()) && String.IsNullOrEmpty(row[treatment].ToString()))
+                if (!String.IsNullOrEmpty(row[response].ToString()) && String.IsNullOrEmpty(row[factor].ToString()))
                 {
                     validationInfo.AddErrorMessage("The " + text + " selected contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
                     return false;
                 }
 
                 //check that the response contains data for each treatment (not fatal)
-                if (String.IsNullOrEmpty(row[response].ToString()) && !String.IsNullOrEmpty(row[treatment].ToString()))
+                if (String.IsNullOrEmpty(row[response].ToString()) && !String.IsNullOrEmpty(row[factor].ToString()))
                 {
                     string message = "The response selected (" + response + ") contains missing data.";
 
@@ -266,6 +239,17 @@ namespace SilveRModel.Validators
 
             return true;
         }
+
+        protected bool CheckFactorsAndResponseNotBlank(IEnumerable<string> factors, string response, string text)
+        {
+            foreach (string factor in factors)
+            {
+                if (!CheckFactorAndResponseNotBlank(factor, response, text)) return false;
+            }
+
+            return true;
+        }
+
 
         protected void CheckTransformations(DataRow row, string transformation, string column, string text)
         {

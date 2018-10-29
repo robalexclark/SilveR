@@ -1,4 +1,5 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
 using SilveRModel.Models;
 using SilveRModel.Validators;
 using System;
@@ -144,20 +145,21 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Response))); //4
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Grouping))); //5
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(Censorship))); //6          
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Grouping, true)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Censorship, true)); //6          
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(SummaryResults)); //7
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(SurvivalPlot)); //8
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(CompareSurvivalCurves)); //9
-            arguments.Append(" " + Significance); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SummaryResults)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SurvivalPlot)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CompareSurvivalCurves)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //10
 
             return arguments.ToString();
         }
-               
+
         public bool VariablesUsedOnceOnly(string memberName)
         {
             object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);

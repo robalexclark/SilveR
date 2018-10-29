@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
+using SilveRModel.Models;
+using SilveRModel.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
@@ -44,7 +45,7 @@ namespace SilveRModel.StatsModel
         [Required]
         public string Response { get; set; }
 
-        [DisplayName("Response Transformation")]
+        [DisplayName("Reponse transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
         public List<string> TransformationsList
@@ -164,20 +165,21 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Response));
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(ResponseTransformation));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation));
 
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Treatment));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true));
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(EqualVariance));
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(UnequalVariance));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(EqualVariance));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(UnequalVariance));
 
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(PRPlot));
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalPlot));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlot));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlot));
 
-            arguments.Append(" " + Significance);
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance));
 
             return arguments.ToString();
         }

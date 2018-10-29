@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SilveR.Helpers;
+using SilveRModel.Helpers;
+using SilveRModel.Models;
+using SilveRModel.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Text;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
 
 namespace SilveRModel.StatsModel
 {
@@ -266,82 +267,83 @@ namespace SilveRModel.StatsModel
 
         public string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
             //X-Axis variable
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(XAxis))); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxis, true)); //4
 
             //X-Axis transformation
-            arguments.Append(" " + "\"" + XAxisTransformation + "\""); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisTransformation)); //5
 
             //Response variable
-            arguments.Append(" " + ArgumentConverters.ConvertIllegalChars(Response)); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //6
 
             //Response transformation
-            arguments.Append(" " + "\"" + ResponseTransformation + "\""); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //7
 
             //1st cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(FirstCatFactor))); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FirstCatFactor, true)); //8
 
             //2nd cat factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(SecondCatFactor))); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SecondCatFactor, true)); //9
 
             //Graph type
-            arguments.Append(" " + StyleType.ToString()); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StyleType.ToString())); //10
 
             //Main title
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(MainTitle)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MainTitle)); //11
 
             //X-Axis title
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(XAxisTitle)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisTitle)); //12
 
             //Y Axis title
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(YAxisTitle)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(YAxisTitle)); //13
 
             //Scatterplot
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(ScatterplotSelected)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ScatterplotSelected)); //14
 
             //Linear plot
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(LinearFitSelected)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LinearFitSelected)); //15
 
             //Jitter
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(JitterSelected)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(JitterSelected)); //16
 
             //Boxplot
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(BoxplotSelected)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxplotSelected)); //17
 
             //Outliers
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(OutliersSelected)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OutliersSelected)); //18
 
             //SEM Plot
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(SEMPlotSelected)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotSelected)); //19
 
             //Column plot type
-            arguments.Append(" " + SEMType.ToString()); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMType.ToString())); //20
 
             //Histogram plot
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(HistogramSelected)); //21
+            arguments.Append(" " + argFormatter.GetFormattedArgument(HistogramSelected)); //21
 
             //Normal distribution fit
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(NormalDistSelected)); //22
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalDistSelected)); //22
 
             //Case profiles plot
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(CaseProfilesPlotSelected)); //23
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseProfilesPlotSelected)); //23
 
             //Case ID Factor
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ArgumentConverters.ConvertIllegalChars(CaseIDFactor))); //24
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor)); //24
 
             //Reference Line
-            arguments.Append(" " + ArgumentConverters.GetNULLOrText(ReferenceLine)); //25
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine)); //25
 
             //Legend
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(DisplayLegend)); //26
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //26
 
             //Box Plot include data
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(BoxPlotIncludeData)); //27
+            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxPlotIncludeData)); //27
 
             //SEM Plot include data
-            arguments.Append(" " + ArgumentConverters.GetYesOrNo(SEMPlotIncludeData)); //28
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //28
 
             return arguments.ToString();
         }
