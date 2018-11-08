@@ -1,4 +1,4 @@
-﻿@model SilveRModel.StatsModel.UnpairedTTestAnalysisModel
+﻿@model SilveR.StatsModels.UnpairedTTestAnalysisModel
 
 @section Scripts {
     <script>
@@ -35,15 +35,15 @@
                         <label class="col-sm-4 control-label">Response</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="Response" />
+                            <div><span asp-validation-for="Response"></span></div>
                         </div>
-                        <span asp-validation-for="Response"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Response transformation</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="ResponseTransformation" />
+                            <div><span asp-validation-for="ResponseTransformation"></span></div>
                         </div>
-                        <span asp-validation-for="ResponseTransformation"></span>
                     </div>
                     <br />
 
@@ -52,8 +52,8 @@
                         <label class="col-sm-4 control-label">Treatment</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="Treatment" />
+                            <div><span asp-validation-for="Treatment"></span></div>
                         </div>
-                        <span asp-validation-for="Treatment"></span>
                     </div>
                 </div>
             </div>
@@ -95,15 +95,15 @@
                         <label class="col-sm-4 control-label">Control group</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="ControlGroup" />
+                            <div><span asp-validation-for="ControlGroup"></span></div>
                         </div>
-                        <span asp-validation-for="ControlGroup"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Significance level</label>
                         <div class="col-sm-8">
                             <input asp-for="Significance" />
+                            <div><span asp-validation-for="Significance"></span></div>
                         </div>
-                        <span asp-validation-for="Significance"></span>
                     </div>
                 </div>
             </div>
@@ -111,6 +111,8 @@
     </div>
 
     <div class="row mt20">
-        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        </div>
     </div>
 </form>

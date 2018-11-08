@@ -1,11 +1,10 @@
 ﻿using SilveR.StatsModels;
-using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class PairedTTestAnalysisValidator : ValidatorBase
     {
@@ -21,35 +20,32 @@ namespace SilveRModel.Validators
         {
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
-            if (pttVariables.OtherDesignFactors != null)
-                allVars.AddRange(pttVariables.OtherDesignFactors);
-
-            allVars.Add(pttVariables.Treatment);
-            allVars.Add(pttVariables.Subject);
-            allVars.Add(pttVariables.Response);
-
-            if (pttVariables.Covariates != null)
-                allVars.AddRange(pttVariables.Covariates);
+            allVars.AddVariables(pttVariables.OtherDesignFactors);
+            allVars.AddVariables(pttVariables.Treatment);
+            allVars.AddVariables(pttVariables.Subject);
+            allVars.AddVariables(pttVariables.Response);
+            allVars.AddVariables(pttVariables.Covariates);
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(pttVariables.Treatment, true)) return ValidationInfo;
-            if (!CheckTreatmentsHaveLevels(pttVariables.Subject, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(pttVariables.Treatment, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(pttVariables.Subject, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(pttVariables.Treatment, pttVariables.Response)) return ValidationInfo;
-            if (pttVariables.OtherDesignFactors != null && !CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, "other treatment")) return ValidationInfo;
-            if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, "subject ")) return ValidationInfo;
+            if (!CheckResponsesPerLevel(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+
+            if (!CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
+
+            if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Subject))) return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(pttVariables.Treatment, pttVariables.Response, "treatment factor")) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categoricalVariables = new List<string>();
-            categoricalVariables.Add(pttVariables.Treatment);
-            if (pttVariables.OtherDesignFactors != null)
-                categoricalVariables.AddRange(pttVariables.OtherDesignFactors);
-            categoricalVariables.Add(pttVariables.Subject);
+            categoricalVariables.AddVariables(pttVariables.Treatment);
+            categoricalVariables.AddVariables(pttVariables.OtherDesignFactors);
+            categoricalVariables.AddVariables(pttVariables.Subject);
 
             //do data checks on the treatments/other factors and response
             if (!FactorAndResponseCovariateChecks(categoricalVariables, pttVariables.Response)) return ValidationInfo;
@@ -64,48 +60,23 @@ namespace SilveRModel.Validators
             }
 
             //Check that each subject is only present in one blocking factor
-            if (pttVariables.OtherDesignFactors != null && !CheckSubjectIsPresentInOnlyOneFactor(pttVariables.OtherDesignFactors, true))
-                return ValidationInfo;
+            if (!CheckSubjectIsPresentInOnlyOneFactor(pttVariables.OtherDesignFactors, true)) return ValidationInfo;
 
             //check each subject has one response at each time point
-            if (!CheckSubjectOnlyHasOneResponseForEachTreatment())
-                return ValidationInfo;
+            if (!CheckSubjectOnlyHasOneResponseForEachTreatment()) return ValidationInfo;
 
             //check that the replication of treatment factors in each timepoint is greater than 1
-            if (!CheckReplicationOfTreatmentFactors())
-                return ValidationInfo;
+            if (!CheckReplicationOfTreatmentFactors()) return ValidationInfo;
 
             //if get here then no errors so return true
             return ValidationInfo;
         }
 
-        protected override bool CheckResponsesPerLevel(List<string> treatments, string response, string text)
-        {
-            //Check that the number of responses for each level is at least 2 for treatments
-            foreach (string treatment in treatments)
-            {
-                Dictionary<string, int> levelResponses = ResponsesPerLevel(treatment, response);
-                foreach (KeyValuePair<string, int> level in levelResponses)
-                {
-                    if (level.Value < 2)
-                    {
-                        ValidationInfo.AddWarningMessage("There is no replication in one or more of the levels of the " + text + " factor. Please select another factor.");
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-
         private bool CheckReplicationOfTreatmentFactors()
         {
             List<string> treatAndOtherFactors = new List<string>();
-            treatAndOtherFactors.Add(pttVariables.Treatment);
-
-            if (pttVariables.OtherDesignFactors != null)
-                treatAndOtherFactors.AddRange(pttVariables.OtherDesignFactors);
+            treatAndOtherFactors.AddVariables(pttVariables.Treatment);
+            treatAndOtherFactors.AddVariables(pttVariables.OtherDesignFactors);
 
             List<string> timePoints = GetLevels(pttVariables.Treatment);
 
@@ -165,8 +136,10 @@ namespace SilveRModel.Validators
             return true;
         }
 
-        private bool CheckSubjectIsPresentInOnlyOneFactor(List<string> factors, bool isBlockingFactor)
+        private bool CheckSubjectIsPresentInOnlyOneFactor(IEnumerable<string> factors, bool isBlockingFactor)
         {
+            if (factors == null) return true;
+
             List<string> subjectsList = GetLevels(pttVariables.Subject);
             foreach (string factor in factors)
             {
@@ -240,13 +213,13 @@ namespace SilveRModel.Validators
                 //check transformations
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, pttVariables.ResponseTransformation, pttVariables.Response, "response");
+                    CheckTransformations(row, pttVariables.ResponseTransformation, pttVariables.Response);
 
                     if (pttVariables.Covariates != null)
                     {
                         foreach (string covariate in pttVariables.Covariates)
                         {
-                            CheckTransformations(row, pttVariables.CovariateTransformation, covariate, "covariate");
+                            CheckTransformations(row, pttVariables.CovariateTransformation, covariate, true);
                         }
                     }
                 }

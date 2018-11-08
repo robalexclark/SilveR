@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SilveRModel.Models;
+using SilveR.Models;
 
-namespace SilveRModel.Helpers
+namespace SilveR.Helpers
 {
     public class ArgumentHelper
     {
@@ -74,7 +74,7 @@ namespace SilveRModel.Helpers
             return Boolean.Parse(arg.Value);
         }
 
-        public List<string> ArgumentLoader(string targetName, List<string> target)
+        public List<string> ArgumentLoader(string targetName, IEnumerable<string> target)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
 

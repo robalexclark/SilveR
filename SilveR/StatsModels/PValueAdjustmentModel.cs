@@ -1,65 +1,53 @@
-﻿using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+﻿using SilveR.Helpers;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class PValueAdjustmentModel : IAnalysisModel
+    public class PValueAdjustmentModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "PValueAdjustment"; } }
-
-        private DataTable dataTable = null;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        [DisplayName("Unadjusted p-Values")]
         [Required]
         [CheckPValue]
+        [DisplayName("Unadjusted p-Values")]
         public string PValues { get; set; }
 
         [DisplayName("Multiple comparison adjustment")]
         public string SelectedTest { get; set; }
 
-        public List<string> MultipleComparisonTests
+        public IEnumerable<string> MultipleComparisonTests
         {
             get { return new List<string>() { "Holm", "Hochberg", "Hommel", "Benjamini-Hochberg", "Bonferroni" }; }
         }
 
+        [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
-        public List<string> SignificancesList
+        public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
 
-        public PValueAdjustmentModel() { }
+        public PValueAdjustmentModel()
+            : base(null, "PValueAdjustment") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-        }
 
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             PValueAdjustmentValidator pValueAdjustmentValidator = new PValueAdjustmentValidator(this);
             return pValueAdjustmentValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
             return null;
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -68,7 +56,7 @@ namespace SilveRModel.StatsModel
             this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -79,7 +67,7 @@ namespace SilveRModel.StatsModel
             return args;
         }
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             StringBuilder arguments = new StringBuilder();
 
@@ -88,11 +76,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + Significance.Replace("<", "^<")); //6
 
             return arguments.ToString();
-        }
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            throw new NotImplementedException();
         }
     }
 }

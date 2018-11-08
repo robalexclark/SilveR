@@ -1,6 +1,6 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class PValueAdjustmentValidator : ValidatorBase
     {

@@ -28,15 +28,8 @@ namespace Combinatorics
     /// {A A B} {A A B} {A B B} {A B B}
     /// </remarks>
     /// <typeparam name="T">The type of the values within the list.</typeparam>
-    public class Combinations<T> : IMetaCollection<T>
+    public sealed class Combinations<T> : IMetaCollection<T>
     {
-        /// <summary>
-        /// No default constructor, must provided a list of values and size.
-        /// </summary>
-        protected Combinations()
-        {
-        }
-
         /// <summary>
         /// Create a combination set from the provided list of values.
         /// The upper index is calculated as values.Count, the lower index is specified.
@@ -82,7 +75,7 @@ namespace Combinatorics
         /// <summary>
         /// The enumerator that enumerates each meta-collection of the enclosing Combinations class.
         /// </summary>
-        public class Enumerator : IEnumerator<IList<T>>
+        public sealed class Enumerator : IEnumerator<IList<T>>
         {
             /// <summary>
             /// Construct a enumerator with the parent object.
@@ -429,7 +422,7 @@ namespace Combinatorics
         /// <summary>
         /// The enumerator that enumerates each meta-collection of the enclosing Permutations class.
         /// </summary>
-        public class Enumerator : IEnumerator<IList<T>>
+        public sealed class Enumerator : IEnumerator<IList<T>>
         {
             /// <summary>
             /// Construct a enumerator with the parent object.
@@ -523,7 +516,7 @@ namespace Combinatorics
             /// <summary>
             /// Cleans up non-managed resources, of which there are none used here.
             /// </summary>
-            public virtual void Dispose()
+            public void Dispose()
             {
             }
 
@@ -851,15 +844,8 @@ namespace Combinatorics
     /// The prime table contains all primes up to Sqrt(2^31) which are all of the primes
     /// requires to factorize any Int32 positive integer.
     /// </summary>
-    public class SmallPrimeUtility
+    public static class SmallPrimeUtility
     {
-        /// <summary>
-        /// Utility class, no instances allowed.
-        /// </summary>
-        private SmallPrimeUtility()
-        {
-        }
-
         /// <summary>
         /// Performs a prime factorization of a given integer using the table of primes in PrimeTable.
         /// Since this will only factor Int32 sized integers, a simple list of factors is returned instead

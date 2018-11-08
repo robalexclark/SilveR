@@ -1,7 +1,6 @@
 ﻿using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,68 +9,48 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class SummaryStatisticsModel : IAnalysisModel
+    public class SummaryStatisticsModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "SummaryStatistics"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
         [HasAtLeastOneEntry]
         [CheckUsedOnceOnly]
-        public List<string> Responses { get; set; }
+        [DisplayName("Responses")]
+        public IEnumerable<string> Responses { get; set; }
 
-        public List<string> TransformationsList
+        public IEnumerable<string> TransformationsList
         {
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine" }; }
         }
 
         public string Transformation { get; set; }
 
-        [DisplayName("1st factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("1st factor")]
         public string FirstCatFactor { get; set; }
 
-        [DisplayName("2nd factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("2nd factor")]
         public string SecondCatFactor { get; set; }
 
-        [DisplayName("3rd factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("3rd factor")]
         public string ThirdCatFactor { get; set; }
 
-        [DisplayName("4th factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("4th factor")]
         public string FourthCatFactor { get; set; }
 
+        [DisplayName("Mean")]
         public bool Mean { get; set; } = true;
+
+        [DisplayName("N")]
         public bool N { get; set; } = true;
 
         [DisplayName("Standard deviation")]
         public bool StandardDeviation { get; set; } = true;
+
+        [DisplayName("Variance")]
         public bool Variance { get; set; }
 
         [DisplayName("Standard error of mean")]
@@ -89,9 +68,9 @@ namespace SilveRModel.StatsModel
         [DisplayName("Confidence interval of the mean")]
         public bool ConfidenceInterval { get; set; } = true;
 
-        [DisplayName("Level (%)")]
         [Required(ErrorMessage = "Level (%) is Required")]
         [ValidateConfidenceLimits]
+        [DisplayName("Level (%)")]
         public decimal Significance { get; set; } = 95;
 
         [DisplayName("Normal probability plot")]
@@ -100,31 +79,21 @@ namespace SilveRModel.StatsModel
         [DisplayName("By categories and overall")]
         public bool ByCategoriesAndOverall { get; set; }
 
-        public SummaryStatisticsModel() { }
+        public SummaryStatisticsModel() : this(null) { }
 
-        public SummaryStatisticsModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public SummaryStatisticsModel(IDataset dataset)
+            : base(dataset, "SummaryStatistics") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
 
-            availableVariables = dataTable.GetVariableNames();
-        }
-
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             SummaryStatisticsValidator summaryStatisticsValidator = new SummaryStatisticsValidator(this);
             return summaryStatisticsValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
@@ -174,7 +143,7 @@ namespace SilveRModel.StatsModel
             return dtNew.GetCSVArray();
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -200,7 +169,7 @@ namespace SilveRModel.StatsModel
             return args;
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -224,7 +193,7 @@ namespace SilveRModel.StatsModel
             this.Variance = argHelper.ArgumentLoader(nameof(Variance), Variance);
         }
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -283,38 +252,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //20
 
             return arguments.ToString();
-        }
-
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Responses")
-                    checker.AddVars(this.Responses);
-
-                if (memberName != "FirstCatFactor")
-                    checker.AddVar(this.FirstCatFactor);
-
-                if (memberName != "SecondCatFactor")
-                    checker.AddVar(this.SecondCatFactor);
-
-                if (memberName != "ThirdCatFactor")
-                    checker.AddVar(this.ThirdCatFactor);
-
-                if (memberName != "FourthCatFactor")
-                    checker.AddVar(this.FourthCatFactor);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
-        }
+        }        
     }
 }

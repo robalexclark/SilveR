@@ -1,9 +1,8 @@
-﻿using SilveRModel.StatsModel;
-using System;
+﻿using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.Data;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class CorrelationAnalysisValidator : ValidatorBase
     {
@@ -26,11 +25,11 @@ namespace SilveRModel.Validators
 
             //Create a list of all variables
             List<string> allVars = new List<string>();
-            allVars.AddRange(caVariables.Responses);
-            allVars.Add(caVariables.FirstCatFactor);
-            allVars.Add(caVariables.SecondCatFactor);
-            allVars.Add(caVariables.ThirdCatFactor);
-            allVars.Add(caVariables.FourthCatFactor);
+            allVars.AddVariables(caVariables.Responses);
+            allVars.AddVariables(caVariables.FirstCatFactor);
+            allVars.AddVariables(caVariables.SecondCatFactor);
+            allVars.AddVariables(caVariables.ThirdCatFactor);
+            allVars.AddVariables(caVariables.FourthCatFactor);
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
@@ -45,10 +44,10 @@ namespace SilveRModel.Validators
 
             //Create a list of categorical variables selected (i.e. the cat factors)
             List<string> categorical = new List<string>();
-            if (!String.IsNullOrEmpty(caVariables.FirstCatFactor)) categorical.Add(caVariables.FirstCatFactor);
-            if (!String.IsNullOrEmpty(caVariables.SecondCatFactor)) categorical.Add(caVariables.SecondCatFactor);
-            if (!String.IsNullOrEmpty(caVariables.ThirdCatFactor)) categorical.Add(caVariables.ThirdCatFactor);
-            if (!String.IsNullOrEmpty(caVariables.FourthCatFactor)) categorical.Add(caVariables.FourthCatFactor);
+            categorical.AddVariables(caVariables.FirstCatFactor);
+            categorical.AddVariables(caVariables.SecondCatFactor);
+            categorical.AddVariables(caVariables.ThirdCatFactor);
+            categorical.AddVariables(caVariables.FourthCatFactor);
 
             foreach (string response in caVariables.Responses)
             {
@@ -60,7 +59,7 @@ namespace SilveRModel.Validators
 
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, caVariables.Transformation, response, "response");
+                    CheckTransformations(row, caVariables.Transformation, response);
                 }
 
                 if (!CheckResponsesPerLevel(categorical, response, "categorical")) return ValidationInfo;
@@ -69,33 +68,6 @@ namespace SilveRModel.Validators
                 if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
                     return ValidationInfo;
             }
-
-            //Go through each response
-            //foreach (string response in caVariables.Responses)
-            //{
-            //    foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
-            //    {
-            //        //Check that each level has replication
-            //        Dictionary<string, int> levelResponses = ResponsesPerLevel(catFactor, response);
-            //        foreach (KeyValuePair<string, int> level in levelResponses)
-            //        {
-            //            if (level.Value == 0)
-            //            {
-            //                ValidationInfo.AddErrorMessage("There are no observations recorded on the levels of one of the factors. Please amend the dataset prior to running the analysis.");
-            //                return ValidationInfo;
-            //            }
-            //            else if (level.Value < 2)
-            //            {
-            //                ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the categorical factor (" + catFactor + ").  Please amend the dataset prior to running the analysis.");
-            //                return ValidationInfo;
-            //            }
-            //        }
-
-            //        //check response and cat factors contain values
-            //        if (!CheckResponseAndTreatmentsNotBlank(response, catFactor, "categorisation factor"))
-            //            return ValidationInfo;
-            //    }
-            //}
 
             //if get here then no errors so return true
             return ValidationInfo;

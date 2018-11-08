@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Hosting;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SilveR.Services
 {
-    public class QueuedHostedService : IHostedService
+    public sealed class QueuedHostedService : IHostedService, IDisposable
     {
         private CancellationTokenSource _shutdown = new CancellationTokenSource();
         private Task _backgroundTask;
@@ -39,6 +40,11 @@ namespace SilveR.Services
 
             return Task.WhenAny(_backgroundTask,
                 Task.Delay(Timeout.Infinite, cancellationToken));
+        }
+
+        public void Dispose()
+        {
+            _shutdown.Dispose();
         }
     }
 }

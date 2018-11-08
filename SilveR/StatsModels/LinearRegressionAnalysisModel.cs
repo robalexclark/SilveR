@@ -1,7 +1,6 @@
 ﻿using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,51 +9,27 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class LinearRegressionAnalysisModel : IAnalysisModel
+    public class LinearRegressionAnalysisModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "LinearRegressionAnalysis"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Response")]
         public string Response { get; set; }
+
+        [CheckUsedOnceOnly]
+        [DisplayName("Categorical factors")]
+        public IEnumerable<string> CategoricalFactors { get; set; }
+
+        [CheckUsedOnceOnly]
+        [DisplayName("Other design (block) factors")]
+        public IEnumerable<string> OtherDesignFactors { get; set; }
 
         [HasAtLeastOneEntry]
         [CheckUsedOnceOnly]
-        public List<string> Treatments { get; set; }
-
-        [DisplayName("Other design (blocks)")]
-        [CheckUsedOnceOnly]
-        public List<string> OtherDesignFactors { get; set; }
-
         [DisplayName("Continuous factors")]
-        [CheckUsedOnceOnly]
-        public List<string> ContinuousFactors { get; set; }
+        public IEnumerable<string> ContinuousFactors { get; set; }
 
         [DisplayName("Continuous factors transformation")]
         public string ContinuousFactorsTransformation { get; set; } = "None";
@@ -62,13 +37,14 @@ namespace SilveRModel.StatsModel
         [DisplayName("Response transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
-        public List<string> TransformationsList
+        public IEnumerable<string> TransformationsList
         {
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine", "Rank" }; }
         }
 
         [CheckUsedOnceOnly]
-        public string Covariate { get; set; }
+        [DisplayName("Covariates")]
+        public IEnumerable<string> Covariates { get; set; }
 
         [DisplayName("Primary factor")]
         public string PrimaryFactor { get; set; }
@@ -80,14 +56,16 @@ namespace SilveRModel.StatsModel
         [DisplayName("ANOVA table")]
         public bool ANOVASelected { get; set; } = true;
 
+        [DisplayName("Coefficients")]
         public bool Coefficients { get; set; } = true;
 
         [DisplayName("Adjusted R-squared")]
         public bool AdjustedRSquared { get; set; }
 
+        [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
-        public List<string> SignificancesList
+        public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
@@ -105,36 +83,26 @@ namespace SilveRModel.StatsModel
         public bool LeveragePlot { get; set; }
 
 
-        public LinearRegressionAnalysisModel() { }
+        public LinearRegressionAnalysisModel() : this(null) { }
 
-        public LinearRegressionAnalysisModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public LinearRegressionAnalysisModel(IDataset dataset)
+            : base(dataset, "LinearRegressionAnalysis") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
 
-            availableVariables = dataTable.GetVariableNames();
-        }
-
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             LinearRegressionAnalysisValidator linearRegressionAnalysisValidator = new LinearRegressionAnalysisValidator(this);
             return linearRegressionAnalysisValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (Response != columnName && !Treatments.Contains(columnName) && (ContinuousFactors == null || !ContinuousFactors.Contains(columnName)) && (OtherDesignFactors == null || !OtherDesignFactors.Contains(columnName)) && Covariate != columnName)
+                if (Response != columnName && !ContinuousFactors.Contains(columnName) && (CategoricalFactors == null || !CategoricalFactors.Contains(columnName)) && (OtherDesignFactors == null || !OtherDesignFactors.Contains(columnName)) && (Covariates == null || !Covariates.Contains(columnName)))
                 {
                     dtNew.Columns.Remove(columnName);
                 }
@@ -149,20 +117,26 @@ namespace SilveRModel.StatsModel
             //Now do transformations...
             dtNew.TransformColumn(Response, ResponseTransformation);
 
-            if (!String.IsNullOrEmpty(Covariate)) //check that a covariate is selected
+            if (Covariates != null)
             {
-                dtNew.TransformColumn(Covariate, CovariateTransformation);
+                foreach (string covariate in Covariates)
+                {
+                    dtNew.TransformColumn(covariate, CovariateTransformation);
+                }
             }
 
             //Finally, as numeric categorical variables get misinterpreted by r, we need to go through
             //each column and put them in quotes...
-            foreach (string treat in Treatments)
+            if (CategoricalFactors != null)
             {
-                if (dtNew.ColumnIsNumeric(treat))
+                foreach (string factor in CategoricalFactors)
                 {
-                    foreach (DataRow row in dtNew.Rows)
+                    if (dtNew.ColumnIsNumeric(factor))
                     {
-                        row[treat] = "'" + row[treat] + "'";
+                        foreach (DataRow row in dtNew.Rows)
+                        {
+                            row[factor] = "'" + row[factor] + "'";
+                        }
                     }
                 }
             }
@@ -185,7 +159,7 @@ namespace SilveRModel.StatsModel
         }
 
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -194,15 +168,7 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + argFormatter.GetFormattedArgument(GetModel(), true)); //4
 
             //assemble a model for the covariate plot (if a covariate has been chosen)...
-            if (String.IsNullOrEmpty(Covariate)) //5
-            {
-                arguments.Append("NULL");
-            }
-            else
-            {
-                string covariateModel = Response + "~" + Covariate;
-                arguments.Append(argFormatter.GetFormattedArgument(covariateModel));
-            }
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //5
 
             //get transforms
             arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //6
@@ -211,7 +177,7 @@ namespace SilveRModel.StatsModel
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //8
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatments)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CategoricalFactors)); //9
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ContinuousFactors)); //10
 
@@ -223,7 +189,7 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + argFormatter.GetFormattedArgument(Coefficients)); //14
             arguments.Append(" " + argFormatter.GetFormattedArgument(AdjustedRSquared)); //15
 
-            arguments.Append(Significance); //16
+            arguments.Append(" " + Significance); //16
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ResidualsVsPredictedPlot)); //17
 
@@ -236,16 +202,16 @@ namespace SilveRModel.StatsModel
             return arguments.ToString();
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
             this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.Treatments = argHelper.ArgumentLoader(nameof(Treatments), Treatments);
+            this.CategoricalFactors = argHelper.ArgumentLoader(nameof(CategoricalFactors), CategoricalFactors);
             this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
             this.ContinuousFactors = argHelper.ArgumentLoader(nameof(ContinuousFactors), ContinuousFactors);
             this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Covariate = argHelper.ArgumentLoader(nameof(Covariate), Covariate);
+            this.Covariates = argHelper.ArgumentLoader(nameof(Covariates), Covariates);
             this.PrimaryFactor = argHelper.ArgumentLoader(nameof(PrimaryFactor), PrimaryFactor);
             this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
             this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
@@ -258,16 +224,16 @@ namespace SilveRModel.StatsModel
             this.LeveragePlot = argHelper.ArgumentLoader(nameof(LeveragePlot), LeveragePlot);
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatments), Treatments));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CategoricalFactors), CategoricalFactors));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(OtherDesignFactors), OtherDesignFactors));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ContinuousFactors), ContinuousFactors));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariate), Covariate));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PrimaryFactor), PrimaryFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ANOVASelected), ANOVASelected));
@@ -289,8 +255,14 @@ namespace SilveRModel.StatsModel
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
             string model = Response + "~";
 
-            if (!String.IsNullOrEmpty(Covariate))
-                model = model + Covariate + "+";
+            //if (!String.IsNullOrEmpty(Covariate))
+            //    model = model + Covariate + "+";
+
+            if (CategoricalFactors != null)
+            {
+                foreach (string factor in CategoricalFactors)
+                    model = model + factor + "+";
+            }
 
             if (OtherDesignFactors != null)
             {
@@ -298,44 +270,9 @@ namespace SilveRModel.StatsModel
                     model = model + otherDesign + "+";
             }
 
-            foreach (string treat in Treatments)
-                model = model + treat + "+";
-
             model = model.TrimEnd('+');
 
             return model;
-        }
-
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Response")
-                    checker.AddVar(this.Response);
-
-                if (memberName != "Treatments")
-                    checker.AddVars(this.Treatments);
-
-                if (memberName != "OtherDesignFactors")
-                    checker.AddVars(this.OtherDesignFactors);
-
-                if (memberName != "ContinuousFactors")
-                    checker.AddVars(this.ContinuousFactors);
-
-                if (memberName != "Covariate")
-                    checker.AddVar(this.Covariate);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }

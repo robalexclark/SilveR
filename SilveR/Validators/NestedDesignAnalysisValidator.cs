@@ -1,10 +1,10 @@
 ﻿using SilveR.StatsModels;
-using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class NestedDesignAnalysisValidator : ValidatorBase
     {
@@ -20,29 +20,24 @@ namespace SilveRModel.Validators
         {
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
-            allVars.AddRange(ndaVariables.Treatments);
+            allVars.AddVariables(ndaVariables.Treatments);
+            allVars.AddVariables(ndaVariables.OtherDesignFactors);
+            allVars.AddVariables(ndaVariables.Response);
+            allVars.AddVariables(ndaVariables.Covariate);
 
-            if (ndaVariables.OtherDesignFactors != null)
-                allVars.AddRange(ndaVariables.OtherDesignFactors);
-
-            allVars.Add(ndaVariables.Response);
-            allVars.Add(ndaVariables.Covariate);
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(ndaVariables.Treatments, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(ndaVariables.Treatments, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(ndaVariables.Treatments, ndaVariables.Response)) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ndaVariables.Treatments, ndaVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NestedDesignAnalysisModel>(i => i.Treatments))) return ValidationInfo;
 
-            if (ndaVariables.OtherDesignFactors != null)
-                if (!CheckResponsesPerLevel(ndaVariables.OtherDesignFactors, ndaVariables.Response, "other treatment")) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ndaVariables.OtherDesignFactors, ndaVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NestedDesignAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
 
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
-            categorical.AddRange(ndaVariables.Treatments);
-
-            if (ndaVariables.OtherDesignFactors != null)
-                categorical.AddRange(ndaVariables.OtherDesignFactors);
+            categorical.AddVariables(ndaVariables.Treatments);
+            categorical.AddVariables(ndaVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
             if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Response)) return ValidationInfo;
@@ -94,8 +89,7 @@ namespace SilveRModel.Validators
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
                     //Check that the "response" does not contain non-numeric data
-                    double parsedValue;
-                    bool parsedOK = Double.TryParse(continuousRow[i], out parsedValue);
+                    bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
                         ValidationInfo.AddErrorMessage("The " + responseType + " (" + ndaVariables.Response + ") selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
@@ -126,9 +120,9 @@ namespace SilveRModel.Validators
                 //check transformations
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, ndaVariables.ResponseTransformation, ndaVariables.Response, "response");
+                    CheckTransformations(row, ndaVariables.ResponseTransformation, ndaVariables.Response);
 
-                    CheckTransformations(row, ndaVariables.CovariateTransformation, ndaVariables.Covariate, "covariate");
+                    CheckTransformations(row, ndaVariables.CovariateTransformation, ndaVariables.Covariate, true);
                 }
             }
 

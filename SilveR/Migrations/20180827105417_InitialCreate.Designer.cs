@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SilveRModel.Models;
+using SilveR.Models;
 
 namespace SilveR.Migrations
 {
@@ -18,7 +18,7 @@ namespace SilveR.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.2-rtm-30932");
 
-            modelBuilder.Entity("SilveRModel.Models.Analysis", b =>
+            modelBuilder.Entity("SilveR.Models.Analysis", b =>
                 {
                     b.Property<int>("AnalysisID")
                         .ValueGeneratedOnAdd();
@@ -54,7 +54,7 @@ namespace SilveR.Migrations
                     b.ToTable("Analyses");
                 });
 
-            modelBuilder.Entity("SilveRModel.Models.Argument", b =>
+            modelBuilder.Entity("SilveR.Models.Argument", b =>
                 {
                     b.Property<int>("ArgumentID")
                         .ValueGeneratedOnAdd();
@@ -75,7 +75,7 @@ namespace SilveR.Migrations
                     b.ToTable("Arguments");
                 });
 
-            modelBuilder.Entity("SilveRModel.Models.Dataset", b =>
+            modelBuilder.Entity("SilveR.Models.Dataset", b =>
                 {
                     b.Property<int>("DatasetID")
                         .ValueGeneratedOnAdd();
@@ -98,7 +98,7 @@ namespace SilveR.Migrations
                     b.ToTable("Datasets");
                 });
 
-            modelBuilder.Entity("SilveRModel.Models.Script", b =>
+            modelBuilder.Entity("SilveR.Models.Script", b =>
                 {
                     b.Property<int>("ScriptID")
                         .ValueGeneratedOnAdd();
@@ -118,22 +118,22 @@ namespace SilveR.Migrations
                     b.ToTable("Scripts");
                 });
 
-            modelBuilder.Entity("SilveRModel.Models.Analysis", b =>
+            modelBuilder.Entity("SilveR.Models.Analysis", b =>
                 {
-                    b.HasOne("SilveRModel.Models.Dataset", "Dataset")
+                    b.HasOne("SilveR.Models.Dataset", "Dataset")
                         .WithMany("Analysis")
                         .HasForeignKey("DatasetID")
                         .HasConstraintName("FK_Analyses_Datasets");
 
-                    b.HasOne("SilveRModel.Models.Script", "Script")
+                    b.HasOne("SilveR.Models.Script", "Script")
                         .WithMany("Analysis")
                         .HasForeignKey("ScriptID")
                         .HasConstraintName("FK_Analyses_Scripts");
                 });
 
-            modelBuilder.Entity("SilveRModel.Models.Argument", b =>
+            modelBuilder.Entity("SilveR.Models.Argument", b =>
                 {
-                    b.HasOne("SilveRModel.Models.Analysis", "Analysis")
+                    b.HasOne("SilveR.Models.Analysis", "Analysis")
                         .WithMany("Arguments")
                         .HasForeignKey("AnalysisID")
                         .HasConstraintName("FK_Arguments_Analyses")

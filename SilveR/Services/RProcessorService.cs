@@ -2,8 +2,7 @@
 using Microsoft.Extensions.Options;
 using SilveR.Helpers;
 using SilveR.Models;
-using SilveRModel.Models;
-using SilveRModel.StatsModel;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -57,7 +56,7 @@ namespace SilveR.Services
                 File.AppendAllLines(scriptFileName, mainScriptContents);
 
                 //load the analysis entity into the model so that arguments can be extracted
-                IAnalysisModel analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
+                AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
                 analysisModel.LoadArguments(analysis.Arguments);
 
                 string csvFileName = null;

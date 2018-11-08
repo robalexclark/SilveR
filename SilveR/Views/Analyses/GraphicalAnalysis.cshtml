@@ -1,4 +1,4 @@
-﻿@model SilveRModel.StatsModel.GraphicalAnalysisModel
+﻿@model SilveR.StatsModels.GraphicalAnalysisModel
 
 @section Scripts {
     <script>
@@ -32,29 +32,29 @@
                 <label class="col-sm-4 control-label">Response</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="Response" />
+                    <div><span asp-validation-for="Response"></span></div>
                 </div>
-                <span asp-validation-for="Response"></span>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Reponse transformation</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="ResponseTransformation" />
-                </div>
-                <span asp-validation-for="ResponseTransformation"></span>
+                    <div><span asp-validation-for="ResponseTransformation"></span></div>
+                </div>              
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">X-axis variable</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="XAxis" />
-                </div>
-                <span asp-validation-for="XAxis"></span>
+                    <div><span asp-validation-for="XAxis"></span></div>
+                </div>  
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">X-axis transformation</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="XAxisTransformation" />
-                </div>
-                <span asp-validation-for="XAxisTransformation"></span>
+                    <div><span asp-validation-for="XAxisTransformation"></span></div>
+                </div>            
             </div>
             <br />
             <h4>Categorisation Factors</h4>
@@ -62,16 +62,16 @@
                 <label class="col-sm-4 control-label">1st categorisation factor</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="FirstCatFactor" />
+                    <div><span asp-validation-for="FirstCatFactor"></span></div>
                 </div>
-                <span asp-validation-for="FirstCatFactor"></span>
             </div>
             <br />
             <div class="form-group">
                 <label class="col-sm-4 control-label">2nd categorisation factor</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="SecondCatFactor" />
-                </div>
-                <span asp-validation-for="SecondCatFactor"></span>
+                    <div><span asp-validation-for="SecondCatFactor"></span></div>
+                </div>   
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Categorised graph style</label>
@@ -100,28 +100,27 @@
 
         <div class="col-sm-6">
             <h3>Output</h3>
-
             <h4>Plot Titles</h4>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Main graph title</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="MainTitle" />
-                </div>
-                <span asp-validation-for="MainTitle"></span>
+                    <div><span asp-validation-for="MainTitle"></span></div>
+                </div>      
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">X-axis title</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="XAxisTitle" />
-                </div>
-                <span asp-validation-for="XAxisTitle"></span>
+                    <div><span asp-validation-for="XAxisTitle"></span></div>
+                </div>      
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Y-axis title</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="YAxisTitle" />
-                </div>
-                <span asp-validation-for="YAxisTitle"></span>
+                    <div><span asp-validation-for="YAxisTitle"></span></div>
+                </div>   
             </div>
             <br />
             <h4>Plot Types</h4>
@@ -217,20 +216,22 @@
                 <label class="col-sm-4 control-label">Case ID factor</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="CaseIDFactor" />
-                </div>
-                <span asp-validation-for="CaseIDFactor"></span>
+                    <div><span asp-validation-for="CaseIDFactor"></span></div>
+                </div> 
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Reference line (y axis)</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="ReferenceLine" />
-                    <span asp-validation-for="ReferenceLine"></span>
+                    <div><span asp-validation-for="ReferenceLine"></span></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row mt20">
-        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        </div>
     </div>
 </form>

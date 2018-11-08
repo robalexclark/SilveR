@@ -1,18 +1,18 @@
-﻿using SilveRModel.Models;
+﻿using SilveR.Models;
 using System;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class AnalysisFactory
+    public static class AnalysisFactory
     {
-        public static IAnalysisModel CreateAnalysisModel(Analysis analysis)
+        public static AnalysisModelBase CreateAnalysisModel(Analysis analysis)
         {
             return CreateAnalysisModel(analysis.Script.ScriptDisplayName, analysis.Dataset);
         }
 
-        public static IAnalysisModel CreateAnalysisModel(string scriptName, Dataset dataset)
+        public static AnalysisModelBase CreateAnalysisModel(string scriptName, Dataset dataset)
         {
-            IAnalysisModel model;
+            AnalysisModelBase model;
             switch (scriptName)
             {
                 case "Summary Statistics":
@@ -70,7 +70,7 @@ namespace SilveRModel.StatsModel
                     model = new IncompleteFactorialParametricAnalysisModel(dataset);
                     break;
                 default:
-                    throw new Exception("Analysis type not found!");
+                    throw new ArgumentException("Analysis type not found!");
             }
 
             return model;

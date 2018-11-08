@@ -1,4 +1,4 @@
-﻿@model SilveRModel.StatsModel.MeansComparisonModel
+﻿@model SilveR.StatsModels.MeansComparisonModel
 
 @section Scripts {
     <script>
@@ -41,22 +41,22 @@
                 <label class="col-sm-4 control-label">Group Mean</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="GroupMean" />
-                </div>
-                <span asp-validation-for="GroupMean"></span>
+                    <div><span asp-validation-for="GroupMean"></span></div>
+                </div>          
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Standard Deviation</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="StandardDeviation" />
-                </div>
-                <span asp-validation-for="StandardDeviation"></span>
+                    <div><span asp-validation-for="StandardDeviation"></span></div>
+                </div>                
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Variance</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="Variance" />
-                </div>
-                <span asp-validation-for="Variance"></span>
+                    <div><span asp-validation-for="Variance"></span></div>
+                </div>             
             </div>
 
             <div class="form-group">
@@ -71,29 +71,29 @@
                 <label class="col-sm-4 control-label">Response</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="Response" />
+                    <div><span asp-validation-for="Response"></span></div>
                 </div>
-                <span asp-validation-for="Response"></span>
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Treatment</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="Treatment" />
-                </div>
-                <span asp-validation-for="Treatment"></span>
+                    <div><span asp-validation-for="Treatment"></span></div>
+                </div>            
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Control Group</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="ControlGroup" />
-                </div>
-                <span asp-validation-for="ControlGroup"></span>
+                    <div><span asp-validation-for="ControlGroup"></span></div>
+                </div>        
             </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label">Significance</label>
                 <div class="col-sm-8">
                     <input class="form-control" asp-for="Significance" />
-                </div>
-                <span asp-validation-for="Significance"></span>
+                    <div><span asp-validation-for="Significance"></span></div>
+                </div>          
             </div>
         </div>
 
@@ -116,8 +116,8 @@
                     <label class="col-sm-4 control-label">Percent Change</label>
                     <div class="col-sm-8">
                         <input class="form-control" asp-for="PercentChange" />
-                    </div>
-                    <span asp-validation-for="PercentChange"></span>
+                        <div><span asp-validation-for="PercentChange"></span></div>
+                    </div>        
                 </div>
                 <div class="form-group">
                     <div class="radio">
@@ -131,8 +131,8 @@
                     <label class="col-sm-4 control-label">Absolute Change</label>
                     <div class="col-sm-8">
                         <input class="form-control" asp-for="AbsoluteChange" />
-                    </div>
-                    <span asp-validation-for="AbsoluteChange"></span>
+                        <div><span asp-validation-for="AbsoluteChange"></span></div>
+                    </div>                   
                 </div>
             </div>
 
@@ -151,15 +151,15 @@
                     <label class="col-sm-4 control-label">Sample size from</label>
                     <div class="col-sm-8">
                         <input class="form-control" asp-for="SampleSizeFrom" />
-                    </div>
-                    <span asp-validation-for="SampleSizeFrom"></span>
+                        <div><span asp-validation-for="SampleSizeFrom"></span></div>
+                    </div>                  
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="SampleSizeTo">Sample size to</label>
                     <div class="col-sm-8">
                         <input class="form-control" asp-for="SampleSizeTo" />
-                    </div>
-                    <span asp-validation-for="SampleSizeTo"></span>
+                        <div><span asp-validation-for="SampleSizeTo"></span></div>
+                    </div>           
                 </div>
                 <div class="form-group">
                     <div class="radio">
@@ -173,29 +173,33 @@
                     <label class="col-sm-4 control-label">Power from</label>
                     <div class="col-sm-8">
                         <input class="form-control" asp-for="PowerFrom" />
+                        <div><span asp-validation-for="PowerFrom"></span></div>
                     </div>
-                    <span asp-validation-for="PowerFrom"></span>
+                 
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Power to</label>
                     <div class="col-sm-8">
                         <input class="form-control" asp-for="PowerTo" />
+                        <div><span asp-validation-for="PowerTo"></span></div>
                     </div>
-                    <span asp-validation-for="PowerTo"></span>
+         
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Graph title</label>
                     <div class="col-sm-8">
                         <input class="form-control" asp-for="GraphTitle" />
-                    </div>
-                    <span asp-validation-for="GraphTitle"></span>
+                        <div><span asp-validation-for="GraphTitle"></span></div>
+                    </div>                  
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row mt20">
-        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        </div>
     </div>
 </form>

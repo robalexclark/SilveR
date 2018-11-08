@@ -1,10 +1,10 @@
 ﻿using SilveR.StatsModels;
-using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class RepeatedMeasuresParametricAnalysisValidator : ValidatorBase
     {
@@ -20,40 +20,29 @@ namespace SilveRModel.Validators
         {
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
-            allVars.AddRange(rmVariables.Treatments);
-
-            if (rmVariables.OtherDesignFactors != null)
-                allVars.AddRange(rmVariables.OtherDesignFactors);
-
-            allVars.Add(rmVariables.RepeatedFactor);
-            allVars.Add(rmVariables.Subject);
-            allVars.Add(rmVariables.Response);
-
-            if (rmVariables.Covariates != null)
-                allVars.AddRange(rmVariables.Covariates);
+            allVars.AddVariables(rmVariables.Treatments);
+            allVars.AddVariables(rmVariables.OtherDesignFactors);
+            allVars.AddVariables(rmVariables.RepeatedFactor);
+            allVars.AddVariables(rmVariables.Subject);
+            allVars.AddVariables(rmVariables.Response);
+            allVars.AddVariables(rmVariables.Covariates);
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(rmVariables.Treatments, true)) return ValidationInfo;
-            if (!CheckTreatmentsHaveLevels(rmVariables.RepeatedFactor, true)) return ValidationInfo;
-            if (!CheckTreatmentsHaveLevels(rmVariables.Subject, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.Treatments, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.RepeatedFactor, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.Subject, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(rmVariables.Treatments, rmVariables.Response)) return ValidationInfo;
-
-            if (rmVariables.OtherDesignFactors != null)
-                if (!CheckResponsesPerLevel(rmVariables.OtherDesignFactors, rmVariables.Response, "other treatment")) return ValidationInfo;
-
-            if (!CheckResponsesPerLevel(rmVariables.RepeatedFactor, rmVariables.Response, "repeated")) return ValidationInfo;
-            if (!CheckResponsesPerLevel(rmVariables.Subject, rmVariables.Response, "subject ")) return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.Treatments, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Treatments))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.OtherDesignFactors, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.RepeatedFactor, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.RepeatedFactor))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.Subject, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Subject))) return ValidationInfo;
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
-            categorical.AddRange(rmVariables.Treatments);
-
-            if (rmVariables.OtherDesignFactors != null)
-                categorical.AddRange(rmVariables.OtherDesignFactors);
-
+            categorical.AddVariables(rmVariables.Treatments);
+            categorical.AddVariables(rmVariables.OtherDesignFactors);
             categorical.Add(rmVariables.RepeatedFactor);
             categorical.Add(rmVariables.Subject);
 
@@ -70,20 +59,16 @@ namespace SilveRModel.Validators
             }
 
             //Check that each subject is only present in one treatment factor
-            if (!CheckSubjectIsPresentInOnlyOneFactor(rmVariables.Treatments, false))
-                return ValidationInfo;
+            if (!CheckSubjectIsPresentInOnlyOneFactor(rmVariables.Treatments, false)) return ValidationInfo;
 
             //Check that each subject is only present in one blocking factor
-            if (rmVariables.OtherDesignFactors != null && !CheckSubjectIsPresentInOnlyOneFactor(rmVariables.OtherDesignFactors, true))
-                return ValidationInfo;
+            if (rmVariables.OtherDesignFactors != null && !CheckSubjectIsPresentInOnlyOneFactor(rmVariables.OtherDesignFactors, true)) return ValidationInfo;
 
             //check that the replication of treatment factors in each timepoint is greater than 1
-            if (!CheckReplicationOfTreatmentFactors())
-                return ValidationInfo;
+            if (!CheckReplicationOfTreatmentFactors()) return ValidationInfo;
 
             //Here we are checking that all treatment combinations are present at each time point in the design
-            if (!CheckTreatmentCombinations())
-                return ValidationInfo;
+            if (!CheckTreatmentCombinations()) return ValidationInfo;
 
             //check that the effect selected is the highest order interaction possible from selected factors, else output warning
             CheckEffectSelectedIsHighestOrderInteraction();
@@ -96,10 +81,8 @@ namespace SilveRModel.Validators
         private bool CheckReplicationOfTreatmentFactors()
         {
             List<string> treatAndOtherFactors = new List<string>();
-            treatAndOtherFactors.AddRange(rmVariables.Treatments);
-
-            if (rmVariables.OtherDesignFactors != null)
-                treatAndOtherFactors.AddRange(rmVariables.OtherDesignFactors);
+            treatAndOtherFactors.AddVariables(rmVariables.Treatments);
+            treatAndOtherFactors.AddVariables(rmVariables.OtherDesignFactors);
 
             List<string> timePoints = GetLevels(rmVariables.RepeatedFactor);
 
@@ -131,7 +114,7 @@ namespace SilveRModel.Validators
             return true;
         }
 
-        private bool CheckSubjectIsPresentInOnlyOneFactor(List<string> factors, bool isBlockingFactor)
+        private bool CheckSubjectIsPresentInOnlyOneFactor(IEnumerable<string> factors, bool isBlockingFactor)
         {
             List<string> subjectList = GetLevels(rmVariables.Subject);
             foreach (string factor in factors)
@@ -238,9 +221,9 @@ namespace SilveRModel.Validators
         private void CheckEffectSelectedIsHighestOrderInteraction()
         {
             if (!String.IsNullOrEmpty(rmVariables.SelectedEffect))
-                {
+            {
                 string[] splittedEffect = rmVariables.SelectedEffect.Split('*');
-                if (splittedEffect.GetLength(0) < rmVariables.Treatments.Count + 1) //add on one to account for subject factor
+                if (splittedEffect.GetLength(0) < rmVariables.Treatments.Count() + 1) //add on one to account for subject factor
                 {
                     string mainEffectOrInteraction;
 
@@ -328,13 +311,13 @@ namespace SilveRModel.Validators
                 //check transformations
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, rmVariables.ResponseTransformation, rmVariables.Response, "response");
+                    CheckTransformations(row, rmVariables.ResponseTransformation, rmVariables.Response);
 
                     if (rmVariables.Covariates != null)
                     {
                         foreach (string covariate in rmVariables.Covariates)
                         {
-                            CheckTransformations(row, rmVariables.CovariateTransformation, covariate, "covariate");
+                            CheckTransformations(row, rmVariables.CovariateTransformation, covariate, true);
                         }
                     }
                 }

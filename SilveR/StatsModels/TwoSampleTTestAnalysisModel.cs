@@ -1,109 +1,66 @@
 ﻿using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
-using System;
+using SilveR.Models;
+using SilveR.Validators;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class TwoSampleTTestAnalysisModel : IAnalysisModel
+    public class TwoSampleTTestAnalysisModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "TwoSampleTTestAnalysis"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
-        [Display(Name = "Response")]
         [CheckUsedOnceOnly]
-        [Required]
+        [DisplayName("Response")]
         public string Response { get; set; }
 
         [DisplayName("Reponse transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
-        public List<string> TransformationsList
+        public IEnumerable<string> TransformationsList
         {
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine", "Rank" }; }
         }
 
-        [Display(Name = "Treatment")]
         [CheckUsedOnceOnly]
-        [Required]
+        [DisplayName("Treatment")]
         public string Treatment { get; set; }
 
-        [Display(Name = "Significance")]
+        [DisplayName("Significance")]
         public string Significance { get; set; } = "0.05";
 
-        public List<string> SignificancesList
+        public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
 
-        [Display(Name = "Unequal variance case")]
+        [DisplayName("Unequal variance case")]
         public bool UnequalVariance { get; set; }
 
-        [Display(Name = "Equal variance case")]
+        [DisplayName("Equal variance case")]
         public bool EqualVariance { get; set; } = true;
 
-        [Display(Name = "Predicated vs. residuals plot")]
+        [DisplayName("Predicated vs. residuals plot")]
         public bool PRPlot { get; set; } = true;
 
-        [Display(Name = "Normal probability plot")]
+        [DisplayName("Normal probability plot")]
         public bool NormalPlot { get; set; }
 
 
-        public TwoSampleTTestAnalysisModel() { }
+        public TwoSampleTTestAnalysisModel() : this(null) { }
 
-        public TwoSampleTTestAnalysisModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public TwoSampleTTestAnalysisModel(IDataset dataset)
+            : base(dataset, "TwoSampleTTestAnalysis") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
-
-            availableVariables = dataTable.GetVariableNames();
-        }
-
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             TwoSampleTTestAnalysisValidator twoSampleTTestAnalysisValidator = new TwoSampleTTestAnalysisValidator(this);
             return twoSampleTTestAnalysisValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
@@ -133,7 +90,7 @@ namespace SilveRModel.StatsModel
             return dtNew.GetCSVArray();
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -149,7 +106,7 @@ namespace SilveRModel.StatsModel
             return args;
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -163,7 +120,7 @@ namespace SilveRModel.StatsModel
             this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -184,26 +141,5 @@ namespace SilveRModel.StatsModel
             return arguments.ToString();
         }
 
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Response")
-                    checker.AddVar(this.Response);
-
-                if (memberName != "Treatment")
-                    checker.AddVar(this.Treatment);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
-        }
     }
 }

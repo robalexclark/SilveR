@@ -9,38 +9,40 @@ namespace SilveR.StatsModels
 {
     public static class ReflectionExtensions
     {
-        public static string GetPropertyDisplayName<T>(Expression<Func<T, object>> propertyExpression)
+        public static string GetPropertyDisplayName<T>(Expression<Func<T, object>> propertyExpression, bool keepPlural = false)
         {
-            var memberInfo = GetPropertyInformation(propertyExpression.Body);
+            string displayName;
+
+            MemberInfo memberInfo = GetPropertyInformation(propertyExpression.Body);
             if (memberInfo == null)
             {
-                throw new ArgumentException(
-                    "No property reference expression was found.",
-                    "propertyExpression");
+                throw new ArgumentException("No property reference expression was found.", nameof(propertyExpression));
             }
 
-            var attr = memberInfo.GetAttribute<DisplayNameAttribute>(false);
+            DisplayNameAttribute attr = memberInfo.GetAttribute<DisplayNameAttribute>(false);
             if (attr == null)
             {
-                return memberInfo.Name;
+                displayName = memberInfo.Name;
+            }
+            else
+            {
+                displayName = attr.DisplayName;
             }
 
-            return attr.DisplayName;
+            if (!keepPlural)
+                displayName = displayName.TrimEnd('s');
+
+            return displayName;
         }
 
         public static T GetAttribute<T>(this MemberInfo member, bool isRequired)
             where T : Attribute
         {
-            var attribute = member.GetCustomAttributes(typeof(T), false).SingleOrDefault();
+            object attribute = member.GetCustomAttributes(typeof(T), false).SingleOrDefault();
 
             if (attribute == null && isRequired)
             {
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.InvariantCulture,
-                        "The {0} attribute must be defined on member {1}",
-                        typeof(T).Name,
-                        member.Name));
+                throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "The {0} attribute must be defined on member {1}", typeof(T).Name, member.Name));
             }
 
             return (T)attribute;

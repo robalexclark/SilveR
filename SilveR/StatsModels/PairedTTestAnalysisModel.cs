@@ -1,7 +1,6 @@
 ﻿using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,75 +9,50 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class PairedTTestAnalysisModel : IAnalysisModel
+    public class PairedTTestAnalysisModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "PairedTTestAnalysis"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
-        [Display(Name = "Response")]
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Response")]
         public string Response { get; set; }
 
         [DisplayName("Reponse transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
-        public List<string> TransformationsList
+        public IEnumerable<string> TransformationsList
         {
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine", "Rank" }; }
         }
 
-        [Display(Name = "Treatment")]
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Treatment")]
         public string Treatment { get; set; }
 
-        [Display(Name = "Subject")]
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Subject")]
         public string Subject { get; set; }
 
+        [CheckUsedOnceOnly]
         [DisplayName("Other design (block) factors")]
-        [CheckUsedOnceOnly]
-        public List<string> OtherDesignFactors { get; set; }
+        public IEnumerable<string> OtherDesignFactors { get; set; }
 
-        [DisplayName("Covariates")]
         [CheckUsedOnceOnly]
-        public List<string> Covariates { get; set; }
+        [DisplayName("Covariates")]
+        public IEnumerable<string> Covariates { get; set; }
 
         [DisplayName("Covariate transformation")]
         public string CovariateTransformation { get; set; } = "None";
 
-        public List<string> CovarianceList
+        public IEnumerable<string> CovarianceList
         {
             get { return new List<string>() { "Compound Symmetric", "Unstructured", "Autoregressive(1)" }; }
         }
 
+        [DisplayName("Covariance")]
         public string Covariance { get; set; } = "Compound Symmetric";
 
 
@@ -94,7 +68,7 @@ namespace SilveRModel.StatsModel
         [DisplayName("Least Square (predicted) means")]
         public bool LSMeansSelected { get; set; }
 
-        [Display(Name = "Significance level")]
+        [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
         [DisplayName("All Pairwise Comparisons")]
@@ -104,39 +78,30 @@ namespace SilveRModel.StatsModel
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
 
-        public List<string> ControlGroupList { get; set; }
+        public IEnumerable<string> ControlGroupList { get; set; }
 
-        public List<string> SignificancesList
+        public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
 
 
-        public PairedTTestAnalysisModel() { }
+        public PairedTTestAnalysisModel() : this(null) { }
 
-        public PairedTTestAnalysisModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public PairedTTestAnalysisModel(IDataset dataset)
+            : base(dataset, "PairedTTestAnalysis") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
 
-            availableVariables = dataTable.GetVariableNames();
-        }
 
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             PairedTTestAnalysisValidator pairedTTestAnalysisValidator = new PairedTTestAnalysisValidator(this);
             return pairedTTestAnalysisValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
@@ -183,7 +148,7 @@ namespace SilveRModel.StatsModel
             return dtNew.GetCSVArray();
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -206,7 +171,7 @@ namespace SilveRModel.StatsModel
             return args;
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -227,7 +192,7 @@ namespace SilveRModel.StatsModel
             this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
         }
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -285,37 +250,6 @@ namespace SilveRModel.StatsModel
             model = model.TrimEnd('+');
 
             return model;
-        }
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Response")
-                    checker.AddVar(this.Response);
-
-                if (memberName != "Treatment")
-                    checker.AddVar(this.Treatment);
-
-                if (memberName != "Subject")
-                    checker.AddVar(this.Subject);
-
-                if (memberName != "OtherDesignFactors")
-                    checker.AddVars(this.OtherDesignFactors);
-
-                if (memberName != "Covariates")
-                    checker.AddVars(this.Covariates);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }

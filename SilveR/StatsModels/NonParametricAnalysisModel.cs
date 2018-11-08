@@ -1,63 +1,41 @@
 ﻿using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class NonParametricAnalysisModel : IAnalysisModel
+    public class NonParametricAnalysisModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "NonParametricAnalysis"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Response")]
         public string Response { get; set; }
 
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Treatment")]
         public string Treatment { get; set; }
 
         [CheckUsedOnceOnly]
+        [DisplayName("Other design (block) factor")]
         public string OtherDesignFactor { get; set; }
 
+        [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
-        public List<string> SignificancesList
+        public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
 
         [ValidateControlLevelSet]
+        [DisplayName("Control")]
         public string Control { get; set; }
 
         private readonly IEnumerable<string> controlList = new List<string>();
@@ -68,6 +46,7 @@ namespace SilveRModel.StatsModel
 
         public enum AnalysisOption { MannWhitney = 0, AllComparisons = 1, CompareToControl = 2 }
         private AnalysisOption analysisType = AnalysisOption.MannWhitney;
+        [DisplayName("Analysis type")]
         public AnalysisOption AnalysisType
         {
             get { return analysisType; }
@@ -80,31 +59,20 @@ namespace SilveRModel.StatsModel
             }
         }
 
-        public NonParametricAnalysisModel() { }
+        public NonParametricAnalysisModel() : this(null) { }
 
-        public NonParametricAnalysisModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public NonParametricAnalysisModel(IDataset dataset)
+            : base(dataset, "NonParametricAnalysis") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
-
-            availableVariables = dataTable.GetVariableNames();
-        }
-
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             NonParametricAnalysisValidator nonParametricAnalysisValidator = new NonParametricAnalysisValidator(this);
             return nonParametricAnalysisValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response and treatment columns
             foreach (string columnName in dtNew.GetVariableNames())
@@ -125,7 +93,7 @@ namespace SilveRModel.StatsModel
             return dtNew.GetCSVArray();
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -137,7 +105,7 @@ namespace SilveRModel.StatsModel
             this.Control = argHelper.ArgumentLoader(nameof(Control), Control);
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -151,7 +119,7 @@ namespace SilveRModel.StatsModel
             return args;
         }
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -165,31 +133,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + argFormatter.GetFormattedArgument(Control, true));
 
             return arguments.ToString();
-        }
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Response")
-                    checker.AddVar(this.Response);
-
-                if (memberName != "Treatment")
-                    checker.AddVar(this.Treatment);
-
-                if (memberName != "OtherDesignFactor")
-                    checker.AddVar(this.OtherDesignFactor);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }

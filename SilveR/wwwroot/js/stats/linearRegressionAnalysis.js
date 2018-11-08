@@ -6,46 +6,47 @@ $(function () {
     });
 
     $("#ResponseTransformation").kendoDropDownList({
-        dataSource: theModel.transformationsList
+        dataSource: theModel.transformationsList,
+        change: function () {
+            const covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
+            covariateTransformation.value($("#ResponseTransformation").val());
+        }
     });
 
-    $("#Treatments").kendoMultiSelect({
+    $("#CategoricalFactors").kendoMultiSelect({
         dataSource: theModel.availableVariables,
-        value: theModel.treatments,
-        change: treatmentsChanged
+        value: theModel.categoricalFactors,
+        change: categoricalFactorsChanged
     });
 
     $("#OtherDesignFactors").kendoMultiSelect({
-        dataSource: theModel.availableVariables
-        //value: theModel.otherDesignFactors
+        dataSource: theModel.availableVariables,
+        value: theModel.otherDesignFactors
     });
 
     $("#ContinuousFactors").kendoMultiSelect({
-        dataSource: theModel.availableVariables
-        //value: theModel.otherDesignFactors
+        dataSource: theModel.availableVariables,
+        value: theModel.continuousFactors
     });
 
     $("#ContinuousFactorsTransformation").kendoDropDownList({
         dataSource: theModel.transformationsList
     });
 
-    $("#Covariate").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull,
+    $("#Covariates").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.covariates,
         change: covariateBlockEnableDisable
     });
 
     const primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
-        dataSource: {
-            transport: {
-                read: {
-                    url: "/Values/GetSelectedTreatments"
-                }
-            }
-        }
-
+        dataSource: getCategoricalFactors(),
+        value: theModel.primaryFactor
     }).data("kendoDropDownList");
     primaryFactorDropdown.bind("dataBound", function (e) {
-        primaryFactorDropdown.value(theModel.primaryFactor);
+        if (!this.value()) {
+            this.select(0);
+        }
     });
 
     $("#CovariateTransformation").kendoDropDownList({
@@ -57,26 +58,27 @@ $(function () {
     });
 
 
-    treatmentsChanged({ currentPrimaryFactor: theModel.primaryFactor });
+    categoricalFactorsChanged({ currentPrimaryFactor: theModel.primaryFactor });
 
     covariateBlockEnableDisable();
 });
 
 
-function treatmentsChanged() {
-    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
-
-    const currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
-
-    //treatments have changed so fill in the primary factor and the selected effect
+function categoricalFactorsChanged() {
+    //categorical factors have changed so fill in the primary factor...
     const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
-    primaryFactorDropDown.dataSource.read({
-        selectedTreatments: currentlySelectedTreatments
-    });
+    primaryFactorDropDown.setDataSource(getCategoricalFactors());
+}
+
+function getCategoricalFactors() {
+    const catFactors = $("#CategoricalFactors").data("kendoMultiSelect").dataItems();
+    catFactors.unshift("");
+
+    return catFactors;
 }
 
 function covariateBlockEnableDisable() {
-    const covariateDropDown = $("#Covariate");
+    const covariateDropDown = $("#Covariates");
     const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
     const covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 

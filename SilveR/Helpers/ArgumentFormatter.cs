@@ -37,7 +37,6 @@ namespace SilveR.Helpers
             return stringValue;
         }
 
-
         public string GetFormattedArgument(IEnumerable<string> listArguments)
         {
             if (listArguments == null) //6
@@ -54,7 +53,6 @@ namespace SilveR.Helpers
                 return formattedArgument.TrimStart(',');
             }
         }
-
 
         public string ConvertIllegalCharacters(string stringValue)
         {
@@ -74,6 +72,7 @@ namespace SilveR.Helpers
             string val = value ? "Y" : "N";
             return val;
         }
+
 
         public string ConvertIVSCharactersBack(string theString)
         {

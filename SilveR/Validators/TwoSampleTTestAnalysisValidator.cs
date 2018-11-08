@@ -1,9 +1,9 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class TwoSampleTTestAnalysisValidator : ValidatorBase
     {
@@ -23,13 +23,13 @@ namespace SilveRModel.Validators
             allVars.Add(upttVariables.Response);
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(upttVariables.Treatment, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(upttVariables.Treatment, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
+            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<TwoSampleTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, "treatment factor")) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<TwoSampleTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
 
             //do data checks on the treatments and response
             if (!TreatmentAndResponseChecks(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
@@ -67,8 +67,7 @@ namespace SilveRModel.Validators
             for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the treatment and response rows
             {
                 //Check that the "response" does not contain non-numeric data
-                double parsedValue;
-                bool parsedOK = Double.TryParse(responseRow[i], out parsedValue);
+                bool parsedOK = Double.TryParse(responseRow[i], out double parsedValue);
                 if (!String.IsNullOrEmpty(responseRow[i]) && !parsedOK)
                 {
                     ValidationInfo.AddErrorMessage("The response selected (" + responseVar + ") contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
@@ -86,7 +85,7 @@ namespace SilveRModel.Validators
             //check transformations
             foreach (DataRow row in DataTable.Rows)
             {
-                CheckTransformations(row, upttVariables.ResponseTransformation, upttVariables.Response, "response");
+                CheckTransformations(row, upttVariables.ResponseTransformation, upttVariables.Response);
             }
 
             //if got here then all checks ok, return true

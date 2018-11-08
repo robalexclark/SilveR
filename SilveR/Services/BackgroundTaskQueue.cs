@@ -12,7 +12,7 @@ namespace SilveR.Services
         Task<Func<CancellationToken, Task>> DequeueAsync(CancellationToken cancellationToken);
     }
 
-    public class BackgroundTaskQueue : IBackgroundTaskQueue
+    public sealed class BackgroundTaskQueue : IBackgroundTaskQueue, IDisposable
     {
         private ConcurrentQueue<Func<CancellationToken, Task>> _workItems = new ConcurrentQueue<Func<CancellationToken, Task>>();
         private SemaphoreSlim _signal = new SemaphoreSlim(0);
@@ -34,6 +34,11 @@ namespace SilveR.Services
             _workItems.TryDequeue(out var workItem);
 
             return workItem;
+        }
+
+        public void Dispose()
+        {
+            _signal.Dispose();
         }
     }
 }

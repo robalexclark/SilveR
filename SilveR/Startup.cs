@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SilveR.Models;
 using SilveR.Services;
-using SilveRModel.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +13,6 @@ namespace SilveR
     public class Startup
     {
         public static string ContentRootPath { get; private set; }
-        //public static string AppName { get; private set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -25,12 +23,6 @@ namespace SilveR
 #endif
 
             ContentRootPath = env.ContentRootPath;
-
-            //string appName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
-            //if (appName == "SilveR")
-            //    AppName = "ƩilveR";
-            //else
-            //    AppName = appName;
 
             // Set up configuration sources.
             IConfigurationBuilder builder = new ConfigurationBuilder()
@@ -45,7 +37,7 @@ namespace SilveR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=" + System.Reflection.Assembly.GetEntryAssembly().GetName().Name + ".db"));
+            services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=SilveR.db"));
             services.AddScoped<SilveRRepository>();
 
             //R processing services comprising of R processor and queue services

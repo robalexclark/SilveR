@@ -368,6 +368,12 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 	#Title + warning
 	HTML.title("Analysis of Covariance (ANCOVA) table for assessing covariate interactions", HR=2, align="left")
 
+	# Stop process if residual sums of squares are too close to zero
+	if (deviance(Covintfull)<sqrt(.Machine$double.eps)) {
+		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
+		quit()
+	}
+
 	#Printing ANCOVA Table - note this code is reused from below - Type III SS included
 	if (df.residual(Covintfull)<1) {
 		HTML("The covariate interactions have not been calculated as there are zero residual degrees of freedom when all terms are included in the statistical model." , align="left")
@@ -382,6 +388,10 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 			col4x<-format(round(temp2x[4], 4), nsmall=4, scientific=FALSE)
 
 			sourcex<-rownames(temp2x)
+
+			# Residual label in ANOVA
+			sourcex[length(sourcex)] <- "Residual"
+
 			#STB March 2014 - Replacing : with * in ANOVA table
 			for (q in 1:notreatfactors) {
 				sourcex<-sub(":"," * ", sourcex) 
@@ -430,6 +440,12 @@ if(showANOVA=="Y") {
 		HTML.title("Analysis of variance (ANOVA) table", HR=2, align="left")
 	}
 
+	# Stop process if residual sums of squares are too close to zero
+	if (deviance(threewayfull)<sqrt(.Machine$double.eps)) {
+		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
+		quit()
+	}
+
 	#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
 	temp<-Anova(threewayfull, type=c("III"))[-1,]
 	col1<-format(round(temp[1], 2), nsmall=2, scientific=FALSE)
@@ -438,6 +454,10 @@ if(showANOVA=="Y") {
 	col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
 
 	source<-rownames(temp)
+
+	# Residual label in ANOVA
+	source[length(source)] <- "Residual"
+
 	#STB March 2014 - Replacing : with * in ANOVA table
 	for (q in 1:notreatfactors) {
 		source<-sub(":"," * ", source) 

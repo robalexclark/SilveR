@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SilveRModel.Models
+namespace SilveR.Models
 {
     public partial class SilveRContext : DbContext
     {

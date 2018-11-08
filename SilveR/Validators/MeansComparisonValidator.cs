@@ -1,8 +1,8 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class MeansComparisonValidator : ValidatorBase
     {
@@ -31,17 +31,14 @@ namespace SilveRModel.Validators
                 }
             }
             else if (paVariables.ValueType == MeansComparisonModel.ValueTypeOption.Dataset) //only validate for datasets...
-            {         
+            {
                 //go through all the column names, if any are numeric then stop the analysis
                 List<string> allVars = new List<string>();
                 allVars.Add(paVariables.Treatment);
                 allVars.Add(paVariables.Response);
                 if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-                if (!String.IsNullOrEmpty(paVariables.Treatment))
-                {
-                    if (!CheckTreatmentsHaveLevels(paVariables.Treatment)) return ValidationInfo;
-                }
+                if (!CheckFactorsHaveLevels(paVariables.Treatment)) return ValidationInfo;
 
                 //Check that the response does not contain non-numeric 
                 if (!CheckIsNumeric(paVariables.Response))
@@ -50,7 +47,7 @@ namespace SilveRModel.Validators
                     return ValidationInfo;
                 }
 
-                if (!CheckResponsesPerLevel(paVariables.Treatment, paVariables.Response)) return ValidationInfo;
+                if (!CheckResponsesPerLevel(paVariables.Treatment, paVariables.Response, ReflectionExtensions.GetPropertyDisplayName<MeansComparisonModel>(i => i.Treatment))) return ValidationInfo;
 
                 if (!String.IsNullOrEmpty(paVariables.Treatment) && !String.IsNullOrEmpty(paVariables.Response)) //if a treat and response is selected...
                 {

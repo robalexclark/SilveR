@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SilveRModel.Models
+namespace SilveR.Models
 {
     public partial class Script
     {

@@ -1,72 +1,44 @@
 ﻿using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class GraphicalAnalysisModel : IAnalysisModel
+    public class GraphicalAnalysisModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "GraphicalAnalysis"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
-        [Display(Name = "Response")]
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Response")]
         public string Response { get; set; }
 
-        [Display(Name = "Response transformation")]
+        [DisplayName("Response transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
-        public List<string> TransformationsList
+        public IEnumerable<string> TransformationsList
         {
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine" }; }
         }
 
-        [Display(Name = "X-axis variable")]
         [ValidateXAxis]
         [CheckUsedOnceOnly]
+        [DisplayName("X-axis variable")]
         public string XAxis { get; set; }
 
-        [Display(Name = "X-axis transformation")]
+        [DisplayName("X-axis transformation")]
         public string XAxisTransformation { get; set; } = "None";
 
-        [DisplayName("1st categorisation factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("1st categorisation factor")]
         public string FirstCatFactor { get; set; }
 
-        [DisplayName("2nd categorisation factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("2nd categorisation factor")]
         public string SecondCatFactor { get; set; }
 
         public enum GraphStyleType { Overlaid = 0, Separate = 1 }
@@ -133,7 +105,7 @@ namespace SilveRModel.StatsModel
             }
         }
 
-        [DisplayName("Histogram plot ")]
+        [DisplayName("Histogram plot")]
         public bool HistogramSelected { get; set; }
 
         [DisplayName("Normal dist. fit")]
@@ -150,31 +122,21 @@ namespace SilveRModel.StatsModel
         public string ReferenceLine { get; set; }
 
 
-        public GraphicalAnalysisModel() { }
+        public GraphicalAnalysisModel() : this(null) { }
 
-        public GraphicalAnalysisModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public GraphicalAnalysisModel(IDataset dataset)
+            : base(dataset, "GraphicalAnalysis") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
 
-            availableVariables = dataTable.GetVariableNames();
-        }
-
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             GraphicalAnalysisValidator graphicalAnalysisValidator = new GraphicalAnalysisValidator(this);
             return graphicalAnalysisValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             foreach (string col in this.DataTable.GetVariableNames())
             {
@@ -201,7 +163,7 @@ namespace SilveRModel.StatsModel
             return dtNew.GetCSVArray();
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -234,7 +196,7 @@ namespace SilveRModel.StatsModel
             return args;
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -265,7 +227,7 @@ namespace SilveRModel.StatsModel
             this.ReferenceLine = argHelper.ArgumentLoader(nameof(ReferenceLine), ReferenceLine);
         }
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -346,34 +308,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //28
 
             return arguments.ToString();
-        }
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Response")
-                    checker.AddVar(this.Response);
-
-                if (memberName != "XAxis")
-                    checker.AddVar(this.XAxis);
-
-                if (memberName != "FirstCatFactor")
-                    checker.AddVar(this.FirstCatFactor);
-
-                if (memberName != "SecondCatFactor")
-                    checker.AddVar(this.SecondCatFactor);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }

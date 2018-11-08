@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace SilveR
 {
-    public class Program
+    public static class Program
     {
         public static string AppName { get; private set; } = "ƩilveR";
 
         public static void Main(string[] args)
         {
+            //if an argument specifying a different app name is given, use that instead of the default SilveR
             if (args.Length > 0)
                 AppName = args[0];
 

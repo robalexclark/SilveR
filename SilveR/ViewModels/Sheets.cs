@@ -6,13 +6,13 @@ namespace SilveR.ViewModels
 {
     public class Sheets
     {
-        public List<Sheet> sheets { get; set; } = new List<Sheet>();
+        public List<Sheet> sheets { get; } = new List<Sheet>();
     }
 
 
     public class Sheet
     {
-        public List<Row> Rows { get; set; } = new List<Row>();
+        public List<Row> Rows { get; } = new List<Row>();
 
         public string Name { get; set; }
 

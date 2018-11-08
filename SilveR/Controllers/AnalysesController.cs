@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SilveR.Models;
 using SilveR.Services;
+using SilveR.StatsModels;
 using SilveR.ViewModels;
-using SilveRModel.Models;
-using SilveRModel.StatsModel;
-using SilveRModel.Validators;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +88,7 @@ namespace SilveR.Controllers
         {
             Dataset dataset = await repository.GetDatasetByID(viewModel.DatasetID);
 
-            IAnalysisModel analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisType, dataset);
+            AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisType, dataset);
 
             //the method name is the same as the display name after spaces and hyphens removed
             string analysisViewName = viewModel.AnalysisType.Replace(" ", String.Empty).Replace("-", String.Empty);
@@ -242,7 +241,7 @@ namespace SilveR.Controllers
             return await RunAnalysis(model, submitButton);
         }
 
-        private async Task<IActionResult> RunAnalysis(IAnalysisModel model, string submitButton)
+        private async Task<IActionResult> RunAnalysis(AnalysisModelBase model, string submitButton)
         {
             Dataset dataset = await repository.GetDatasetByID(model.DatasetID);
             model.ReInitialize(dataset);
@@ -335,7 +334,7 @@ namespace SilveR.Controllers
             }
             else
             {
-                IAnalysisModel model = AnalysisFactory.CreateAnalysisModel(analysis.Script.ScriptDisplayName, analysis.Dataset);
+                AnalysisModelBase model = AnalysisFactory.CreateAnalysisModel(analysis.Script.ScriptDisplayName, analysis.Dataset);
 
                 model.LoadArguments(analysis.Arguments);
 

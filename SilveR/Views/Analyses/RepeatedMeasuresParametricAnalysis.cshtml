@@ -1,4 +1,4 @@
-﻿@model SilveRModel.StatsModel.RepeatedMeasuresParametricAnalysisModel
+﻿@model SilveR.StatsModels.RepeatedMeasuresParametricAnalysisModel
 
 @section Scripts {
     <script>
@@ -36,15 +36,15 @@
                         <label class="col-sm-4 control-label">Response</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="Response" />
+                            <div><span asp-validation-for="Response"></span></div>
                         </div>
-                        <span asp-validation-for="Response"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Response transformation</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="ResponseTransformation" />
+                            <div><span asp-validation-for="ResponseTransformation"></span></div>
                         </div>
-                        <span asp-validation-for="ResponseTransformation"></span>
                     </div>
                     <br />
                     <h4>Factors</h4>
@@ -52,8 +52,8 @@
                         <label class="col-sm-4 control-label">Treatment factors</label>
                         <div class="col-sm-8">
                             <select class="form-control" asp-for="Treatments" />
+                            <div><span asp-validation-for="Treatments"></span></div>
                         </div>
-                        <span asp-validation-for="Treatments"></span>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-4 control-label">Interactions</div>
@@ -65,22 +65,22 @@
                         <label class="col-sm-4 control-label">Repeated factor</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="RepeatedFactor" />
+                            <div><span asp-validation-for="RepeatedFactor"></span></div>
                         </div>
-                        <span asp-validation-for="RepeatedFactor"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Subject factor</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="Subject" />
+                            <div><span asp-validation-for="Subject"></span></div>
                         </div>
-                        <span asp-validation-for="Subject"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Other design (block) factors</label>
                         <div class="col-sm-8">
                             <select class="form-control" asp-for="OtherDesignFactors"></select>
+                            <div><span asp-validation-for="OtherDesignFactors"></span></div>
                         </div>
-                        <span asp-validation-for="OtherDesignFactors"></span>
                     </div>
                     <br />
                     <h4>Covariate</h4>
@@ -88,22 +88,22 @@
                         <label class="col-sm-4 control-label">Covariates</label>
                         <div class="col-sm-8">
                             <select class="form-control" asp-for="Covariates"></select>
+                            <div><span asp-validation-for="Covariates"></span></div>
                         </div>
-                        <span asp-validation-for="Covariates"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="PrimaryFactor">Primary factor</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="PrimaryFactor" />
+                            <div><span asp-validation-for="PrimaryFactor"></span></div>
                         </div>
-                        <span asp-validation-for="PrimaryFactor"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="CovariateTransformation">Covariate transformation</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="CovariateTransformation" />
+                            <div><span asp-validation-for="CovariateTransformation"></span></div>
                         </div>
-                        <span asp-validation-for="CovariateTransformation"></span>
                     </div>
                     <br />
                     <h4>Covariance Structure</h4>
@@ -112,8 +112,8 @@
                         <label class="col-sm-4 control-label" for="Covariance">Covariance</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="Covariance" />
+                            <div><span asp-validation-for="Covariance"></span></div>
                         </div>
-                        <span asp-validation-for="Covariance"></span>
                     </div>
                 </div>
             </div>
@@ -146,8 +146,8 @@
                         <label class="col-sm-4 control-label" for="Significance">Significance level</label>
                         <div class="col-sm-8">
                             <input asp-for="Significance" />
+                            <div><span asp-validation-for="Significance"></span></div>
                         </div>
-                        <span asp-validation-for="Significance"></span>
                     </div>
                     <br />
 
@@ -156,8 +156,8 @@
                         <label class="col-sm-4 control-label" for="SelectedEffect">Effect</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="SelectedEffect" />
+                            <div><span asp-validation-for="SelectedEffect"></span></div>
                         </div>
-                        <span asp-validation-for="SelectedEffect"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Least square (predicted) means</label>
@@ -186,6 +186,8 @@
     </div>
 
     <div class="row mt20">
-        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        </div>
     </div>
 </form>

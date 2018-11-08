@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class ValidationInfo
     {

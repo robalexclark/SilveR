@@ -1,9 +1,9 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class GraphicalAnalysisValidator : ValidatorBase
     {
@@ -106,10 +106,10 @@ namespace SilveRModel.Validators
             foreach (DataRow row in DataTable.Rows)
             {
                 //if the x-axis has been transformed check if the value is <= 0
-                CheckTransformations(row, gaVariables.XAxisTransformation, gaVariables.XAxis, "x-axis");
+                CheckTransformations(row, gaVariables.XAxisTransformation, gaVariables.XAxis);
 
                 //if the response has been transformed check if the value is <= 0
-                CheckTransformations(row, gaVariables.ResponseTransformation, gaVariables.Response, "response");
+                CheckTransformations(row, gaVariables.ResponseTransformation, gaVariables.Response);
 
                 //check that the x-axis has values for each response value
                 if (!String.IsNullOrEmpty(gaVariables.XAxis))

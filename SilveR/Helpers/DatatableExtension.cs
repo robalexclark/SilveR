@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace SilveRModel.Helpers
+namespace SilveR.Helpers
 {
     public static class DataTableExtensionMethods
     {

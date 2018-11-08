@@ -1,7 +1,6 @@
 ﻿using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,90 +8,74 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class CorrelationAnalysisModel : IAnalysisModel
+    public class CorrelationAnalysisModel : AnalysisModelBase
     {
-        public string ScriptFileName { get { return "CorrelationAnalysis"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
         [HasAtLeastTwoEntries]
         [CheckUsedOnceOnly]
-        public List<string> Responses { get; set; }
+        [DisplayName("Responses")]
+        public IEnumerable<string> Responses { get; set; }
 
-        public List<string> TransformationsList
+        public IEnumerable<string> TransformationsList
         {
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine" }; }
         }
 
+        [DisplayName("Response transformation")]
         public string Transformation { get; set; }
 
-        [DisplayName("1st factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("1st factor")]
         public string FirstCatFactor { get; set; }
 
-        [DisplayName("2nd factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("2nd factor")]
         public string SecondCatFactor { get; set; }
 
-        [DisplayName("3rd factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("3rd factor")]
         public string ThirdCatFactor { get; set; }
 
-        [DisplayName("4th factor")]
         [CheckUsedOnceOnly]
+        [DisplayName("4th factor")]
         public string FourthCatFactor { get; set; }
 
-        public List<string> MethodsList
+        public IEnumerable<string> MethodsList
         {
             get { return new List<string>() { "Pearson", "Kendall", "Spearman" }; }
         }
 
+        [DisplayName("Method")]
         public string Method { get; set; }
 
-        public List<string> HypothesesList
+        public IEnumerable<string> HypothesesList
         {
             get { return new List<string>() { "2-sided", "Less than", "Greater than" }; }
         }
 
+        [DisplayName("Hypothesis")]
         public string Hypothesis { get; set; }
 
+        [DisplayName("Estimate")]
         public bool Estimate { get; set; } = true;
+
+        [DisplayName("Statistic")]
         public bool Statistic { get; set; } = true;
 
         [DisplayName("p-value")]
         public bool PValue { get; set; } = true;
+
+        [DisplayName("Scatterplot")]
         public bool Scatterplot { get; set; }
 
+        [DisplayName("Matrixplot")]
         public bool Matrixplot { get; set; }
 
         [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
-        public List<string> SignificancesList
+        public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
@@ -100,31 +83,21 @@ namespace SilveRModel.StatsModel
         [DisplayName("By categories and overall")]
         public bool ByCategoriesAndOverall { get; set; }
 
-        public CorrelationAnalysisModel() { }
+        public CorrelationAnalysisModel() : this(null) { }
 
-        public CorrelationAnalysisModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public CorrelationAnalysisModel(IDataset dataset)
+            :base(dataset, "CorrelationAnalysis") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
 
-            availableVariables = dataTable.GetVariableNames();
-        }
-
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             CorrelationAnalysisValidator correlationAnalysisValidator = new CorrelationAnalysisValidator(this);
             return correlationAnalysisValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
@@ -174,7 +147,7 @@ namespace SilveRModel.StatsModel
             return dtNew.GetCSVArray();
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -197,7 +170,7 @@ namespace SilveRModel.StatsModel
             return args;
         }
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override  void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -218,7 +191,7 @@ namespace SilveRModel.StatsModel
             this.ByCategoriesAndOverall = argHelper.ArgumentLoader(nameof(ByCategoriesAndOverall), ByCategoriesAndOverall);
         }
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -269,38 +242,6 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //18
 
             return arguments.ToString();
-        }
-
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Responses")
-                    checker.AddVars(this.Responses);
-
-                if (memberName != "FirstCatFactor")
-                    checker.AddVar(this.FirstCatFactor);
-
-                if (memberName != "SecondCatFactor")
-                    checker.AddVar(this.SecondCatFactor);
-
-                if (memberName != "ThirdCatFactor")
-                    checker.AddVar(this.ThirdCatFactor);
-
-                if (memberName != "FourthCatFactor")
-                    checker.AddVar(this.FourthCatFactor);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SilveR.ViewModels;
-using SilveRModel.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SilveR.Models
 {
-    public class SilveRRepository : IDisposable
+    public sealed class SilveRRepository : IDisposable
     {
         private readonly SilveRContext context;
 

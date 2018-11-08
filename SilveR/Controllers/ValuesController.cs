@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SilveR.Helpers;
 using SilveR.Models;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.StatsModel;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;

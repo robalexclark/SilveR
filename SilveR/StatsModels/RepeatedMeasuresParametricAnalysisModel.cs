@@ -1,8 +1,7 @@
 ﻿using Combinatorics;
 using SilveR.Helpers;
-using SilveRModel.Helpers;
-using SilveRModel.Models;
-using SilveRModel.Validators;
+using SilveR.Models;
+using SilveR.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,80 +10,55 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace SilveRModel.StatsModel
+namespace SilveR.StatsModels
 {
-    public class RepeatedMeasuresParametricAnalysisModel : IAnalysisModel
+    public class RepeatedMeasuresParametricAnalysisModel : AnalysisModelBase
     {
-        private const string MAIN_EFFECT_SEPERATOR = "_.._";
+        private const string MAIN_EFFECT_SEPERATOR = "_.._";        
 
-        public string ScriptFileName { get { return "RepeatedMeasuresParametricAnalysis"; } }
-
-        private DataTable dataTable;
-        public DataTable DataTable
-        {
-            get { return dataTable; }
-        }
-
-        public Nullable<int> DatasetID { get; set; }
-
-        private IEnumerable<string> availableVariables = new List<string>();
-        public IEnumerable<string> AvailableVariables
-        {
-            get { return availableVariables; }
-        }
-
-        public IEnumerable<string> AvailableVariablesAllowNull
-        {
-            get
-            {
-                List<string> availableVars = availableVariables.ToList();
-                availableVars.Insert(0, String.Empty);
-                return availableVars.AsEnumerable();
-            }
-        }
-
-        [Display(Name = "Response")]
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Response")]
         public string Response { get; set; }
 
         [HasAtLeastOneEntry]
         [CheckUsedOnceOnly]
         [DisplayName("Treatment factors")]
-        public List<string> Treatments { get; set; }
+        public IEnumerable<string> Treatments { get; set; }
 
-        [DisplayName("Other design (block) factors")]
         [CheckUsedOnceOnly]
-        public List<string> OtherDesignFactors { get; set; }
+        [DisplayName("Other design (block) factors")]
+        public IEnumerable<string> OtherDesignFactors { get; set; }
 
-        [Display(Name = "Repeated factor")]
         [Required]
         [CheckUsedOnceOnly]
+        [DisplayName("Repeated factor")]
         public string RepeatedFactor { get; set; }
 
-        [Display(Name = "Subject factor")]
         [CheckUsedOnceOnly]
         [Required]
+        [DisplayName("Subject factor")]
         public string Subject { get; set; }
 
         [DisplayName("Response transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
-        public List<string> TransformationsList
+        public IEnumerable<string> TransformationsList
         {
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine", "Rank" }; }
         }
 
-        public List<string> CovariancesList
+        public IEnumerable<string> CovariancesList
         {
             get { return new List<string>() { "Compound Symmetric", "Unstructured", "Autoregressive(1)" }; }
         }
 
+        [DisplayName("Covariance")]
         public string Covariance { get; set; } = "Compound Symmetric";
 
-        [DisplayName("Covariates")]
         [CheckUsedOnceOnly]
-        public List<string> Covariates { get; set; }
+        [DisplayName("Covariates")]
+        public IEnumerable<string> Covariates { get; set; }
 
         [DisplayName("Primary factor")]
         public string PrimaryFactor { get; set; }
@@ -101,9 +75,10 @@ namespace SilveRModel.StatsModel
         [DisplayName("Normal probability plot")]
         public bool NormalPlotSelected { get; set; }
 
+        [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
 
-        public List<string> SignificancesList
+        public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
@@ -120,31 +95,20 @@ namespace SilveRModel.StatsModel
         [DisplayName("All pairwise comparisons")]
         public bool AllPairwiseComparisons { get; set; }
 
-        public RepeatedMeasuresParametricAnalysisModel() { }
+        public RepeatedMeasuresParametricAnalysisModel() : this(null) { }
 
-        public RepeatedMeasuresParametricAnalysisModel(Dataset dataset)
-        {
-            //setup model
-            ReInitialize(dataset);
-        }
+        public RepeatedMeasuresParametricAnalysisModel(IDataset dataset)
+            : base(dataset, "RepeatedMeasuresParametricAnalysis") { }
 
-        public void ReInitialize(Dataset dataset)
-        {
-            this.DatasetID = dataset.DatasetID;
-            dataTable = dataset.DatasetToDataTable();
-
-            availableVariables = dataTable.GetVariableNames();
-        }
-
-        public ValidationInfo Validate()
+        public override ValidationInfo Validate()
         {
             RepeatedMeasuresParametricAnalysisValidator repeatedMeasuresParametricAnalysisValidator = new RepeatedMeasuresParametricAnalysisValidator(this);
             return repeatedMeasuresParametricAnalysisValidator.Validate();
         }
 
-        public string[] ExportData()
+        public override string[] ExportData()
         {
-            DataTable dtNew = dataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
@@ -267,7 +231,7 @@ namespace SilveRModel.StatsModel
         }
 
 
-        public string GetCommandLineArguments()
+        public override string GetCommandLineArguments()
         {
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
@@ -280,7 +244,7 @@ namespace SilveRModel.StatsModel
             arguments.Append(" " + argFormatter.GetFormattedArgument(Subject, true)); //6
 
             //assemble a model for the covariate plot (if a covariate has been chosen)...
-            arguments.Append(" " + Covariates); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //7
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance)); //8
 
@@ -303,7 +267,7 @@ namespace SilveRModel.StatsModel
             //assemble the effect model
             arguments.Append(" " + argFormatter.GetFormattedArgument(GetEffectModel(), true)); //18
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedEffect,true)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedEffect, true)); //19
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //20
 
@@ -314,7 +278,7 @@ namespace SilveRModel.StatsModel
         }
 
 
-        public void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
@@ -338,7 +302,7 @@ namespace SilveRModel.StatsModel
             this.AllPairwiseComparisons = argHelper.ArgumentLoader(nameof(AllPairwiseComparisons), AllPairwiseComparisons);
         }
 
-        public IEnumerable<Argument> GetArguments()
+        public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
@@ -484,40 +448,6 @@ namespace SilveRModel.StatsModel
             }
 
             return effects;
-        }
-
-        public bool VariablesUsedOnceOnly(string memberName)
-        {
-            object varToBeChecked = this.GetType().GetProperty(memberName).GetValue(this, null);
-
-            if (varToBeChecked != null)
-            {
-                UniqueVariableChecker checker = new UniqueVariableChecker();
-
-                if (memberName != "Response")
-                    checker.AddVar(this.Response);
-
-                if (memberName != "Treatments")
-                    checker.AddVars(this.Treatments);
-
-                if (memberName != "RepeatedFactor")
-                    checker.AddVar(this.RepeatedFactor);
-
-                if (memberName != "Subject")
-                    checker.AddVar(this.Subject);
-
-                if (memberName != "OtherDesignFactors")
-                    checker.AddVars(this.OtherDesignFactors);
-
-                if (memberName != "Covariates")
-                    checker.AddVars(this.Covariates);
-
-                return checker.DoCheck(varToBeChecked);
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 }

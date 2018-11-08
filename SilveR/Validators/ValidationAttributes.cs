@@ -1,13 +1,14 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     //SHARED
-    public class HasAtLeastOneEntry : ValidationAttribute
+    public class HasAtLeastOneEntryAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -24,28 +25,67 @@ namespace SilveRModel.Validators
         }
     }
 
-    public class CheckUsedOnceOnly : ValidationAttribute
+
+    public class CheckUsedOnceOnlyAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            IAnalysisModel model = (IAnalysisModel)validationContext.ObjectInstance;
+            if (value == null)
+                return ValidationResult.Success;
 
-            bool result = model.VariablesUsedOnceOnly(validationContext.MemberName);
+            var properties = validationContext.ObjectInstance.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(CheckUsedOnceOnlyAttribute), false));
 
-            if (!result)
+            List<string> varList = new List<string>();
+            foreach (PropertyInfo p in properties.Where(x => x.Name != validationContext.MemberName))
             {
-                return new ValidationResult(validationContext.MemberName + " have been selected in more than one input category, please change your input options.");
+                object propertyValue = p.GetValue(validationContext.ObjectInstance);
+                if (propertyValue is String)
+                {
+                    varList.Add(propertyValue.ToString());
+                }
+                else if (propertyValue is IEnumerable<string>)
+                {
+                    varList.AddRange((IEnumerable<string>)propertyValue);
+                }
+            }
+
+            bool result = true;
+            if (value is String)
+            {
+                string stringVarToCheck = (String)value;
+                if (varList.Contains(value))
+                {
+                    result = false;
+                }
+            }
+            else if (value is List<string>)
+            {
+                List<string> varsToCheck = (List<string>)value;
+
+                if (varsToCheck.Intersect(varList).Any())
+                {
+                    result = false;
+                }
             }
             else
             {
+                throw new ArgumentException("Attempting to check unknown type!");
+            }
+
+            if (result)
+            {
                 return ValidationResult.Success;
+            }
+            else
+            {
+                return new ValidationResult(validationContext.MemberName + " have been selected in more than one input category, please change your input options.");
             }
         }
     }
 
 
     //GRAPHICAL ANALYSIS
-    public class ValidateXAxis : ValidationAttribute
+    public class ValidateXAxisAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -58,7 +98,7 @@ namespace SilveRModel.Validators
         }
     }
 
-    public class ValidateCaseIDFactor : ValidationAttribute
+    public class ValidateCaseIDFactorAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -72,7 +112,7 @@ namespace SilveRModel.Validators
     }
 
     //NON-PARAMETRIC
-    public class ValidateControlLevelSet : ValidationAttribute
+    public class ValidateControlLevelSetAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -90,7 +130,7 @@ namespace SilveRModel.Validators
     }
 
     //P-VALUE ADJUSTMENT
-    public class CheckPValue : ValidationAttribute
+    public class CheckPValueAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -127,7 +167,7 @@ namespace SilveRModel.Validators
     }
 
     //SUMMARY STATS
-    public class ValidateConfidenceLimits : ValidationAttribute
+    public class ValidateConfidenceLimitsAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -143,14 +183,8 @@ namespace SilveRModel.Validators
     }
 
     //MEANS COMPARISON
-    public class ValidateGroupMean : ValidationAttribute
+    public class ValidateGroupMeanAttribute : ValidationAttribute
     {
-        private bool IsNumeric(string value)
-        {
-            double val;
-            return double.TryParse(value, out val);
-        }
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
@@ -158,17 +192,23 @@ namespace SilveRModel.Validators
             if (model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset) return ValidationResult.Success;
 
             if (String.IsNullOrEmpty(model.GroupMean))
+            {
                 return new ValidationResult("Group Mean is a required variable");
-            else if (!IsNumeric(model.GroupMean))
+            }
+            else if (!double.TryParse(model.GroupMean, out double val))
+            {
                 return new ValidationResult("Group Mean is not numeric");
+            }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 
 
     //CORRELATION
-    public class HasAtLeastTwoEntries : ValidationAttribute
+    public class HasAtLeastTwoEntriesAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -186,14 +226,8 @@ namespace SilveRModel.Validators
     }
 
 
-    public class ValidateStandardDeviation : ValidationAttribute
+    public class ValidateStandardDeviationAttribute : ValidationAttribute
     {
-        private bool IsNumeric(string value)
-        {
-            double val;
-            return double.TryParse(value, out val);
-        }
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
@@ -202,22 +236,20 @@ namespace SilveRModel.Validators
             {
                 return ValidationResult.Success;
             }
-            else if (!String.IsNullOrEmpty(model.StandardDeviation) && !IsNumeric(model.StandardDeviation))
+            else if (!String.IsNullOrEmpty(model.StandardDeviation) && !double.TryParse(model.StandardDeviation, out double val))
+            {
                 return new ValidationResult("Standard Deviation entered is not numeric");
+            }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 
 
-    public class ValidateVariance : ValidationAttribute
+    public class ValidateVarianceAttribute : ValidationAttribute
     {
-        private bool IsNumeric(string value)
-        {
-            double val;
-            return double.TryParse(value, out val);
-        }
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
@@ -226,41 +258,53 @@ namespace SilveRModel.Validators
             {
                 return ValidationResult.Success;
             }
-            else if (!String.IsNullOrEmpty(model.Variance) && !IsNumeric(model.Variance))
+            else if (!String.IsNullOrEmpty(model.Variance) && !double.TryParse(model.Variance, out double val))
+            {
                 return new ValidationResult("Variance entered is not numeric");
+            }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 
 
-    public class ValidateResponseOrTreatment : ValidationAttribute
+    public class ValidateResponseOrTreatmentAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
 
             if (value == null && model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset)
+            {
                 return new ValidationResult(validationContext.DisplayName + " is a required variable");
+            }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 
-    public class ValidateControlGroup : ValidationAttribute
+    public class ValidateControlGroupAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
 
             if (String.IsNullOrEmpty(model.ControlGroup) && model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset && model.ChangeType.ToString() == "Percent")
+            {
                 return new ValidationResult("You have selected % change as expected changes from control, but as you have not defined the control group it is not possible to calculate the % change.");
+            }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 
-    public class ValidatePercentChanges : ValidationAttribute
+    public class ValidatePercentChangesAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -298,7 +342,7 @@ namespace SilveRModel.Validators
         }
     }
 
-    public class ValidateAbsoluteChanges : ValidationAttribute
+    public class ValidateAbsoluteChangesAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -337,7 +381,7 @@ namespace SilveRModel.Validators
     }
 
 
-    public class ValidateCustomFrom : ValidationAttribute
+    public class ValidateCustomFromAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -346,8 +390,7 @@ namespace SilveRModel.Validators
             if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.SampleSize)
                 return ValidationResult.Success;
 
-            double from;
-            bool fromOK = double.TryParse(model.PowerFrom, out from);
+            bool fromOK = double.TryParse(model.PowerFrom, out double from);
 
             if (!fromOK)
             {
@@ -359,8 +402,7 @@ namespace SilveRModel.Validators
             }
             else
             {
-                double to;
-                bool toOK = Double.TryParse(model.PowerTo, out to);
+                bool toOK = Double.TryParse(model.PowerTo, out double to);
 
                 if (!toOK || from > to)
                 {
@@ -373,7 +415,7 @@ namespace SilveRModel.Validators
     }
 
 
-    public class ValidateCustomTo : ValidationAttribute
+    public class ValidateCustomToAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -382,8 +424,7 @@ namespace SilveRModel.Validators
             if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.SampleSize)
                 return ValidationResult.Success;
 
-            double to;
-            bool toOK = double.TryParse(model.PowerTo, out to);
+            bool toOK = double.TryParse(model.PowerTo, out double to);
 
             if (!toOK)
             {
@@ -395,8 +436,7 @@ namespace SilveRModel.Validators
             }
             else
             {
-                double from;
-                bool fromOK = Double.TryParse(model.PowerFrom, out from);
+                bool fromOK = Double.TryParse(model.PowerFrom, out double from);
 
                 if (!fromOK || from > to)
                 {
@@ -408,7 +448,7 @@ namespace SilveRModel.Validators
         }
     }
 
-    public class ValidateSampleSizeFrom : ValidationAttribute
+    public class ValidateSampleSizeFromAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -417,8 +457,7 @@ namespace SilveRModel.Validators
             if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.Power)
                 return ValidationResult.Success;
 
-            double from;
-            bool fromOK = double.TryParse(model.SampleSizeFrom, out from);
+            bool fromOK = double.TryParse(model.SampleSizeFrom, out double from);
 
             if (!fromOK)
             {
@@ -430,8 +469,7 @@ namespace SilveRModel.Validators
             }
             else
             {
-                double to;
-                bool toOK = Double.TryParse(model.SampleSizeTo, out to);
+                bool toOK = Double.TryParse(model.SampleSizeTo, out double to);
 
                 if (!toOK || from > to)
                 {
@@ -444,7 +482,7 @@ namespace SilveRModel.Validators
     }
 
 
-    public class ValidateSampleSizeTo : ValidationAttribute
+    public class ValidateSampleSizeToAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -453,8 +491,7 @@ namespace SilveRModel.Validators
             if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.Power)
                 return ValidationResult.Success;
 
-            double to;
-            bool toOK = double.TryParse(model.SampleSizeTo, out to);
+            bool toOK = double.TryParse(model.SampleSizeTo, out double to);
 
             if (!toOK)
             {
@@ -466,8 +503,7 @@ namespace SilveRModel.Validators
             }
             else
             {
-                double from;
-                bool fromOK = Double.TryParse(model.SampleSizeFrom, out from);
+                bool fromOK = Double.TryParse(model.SampleSizeFrom, out double from);
 
                 if (!fromOK || from > to)
                 {
@@ -492,7 +528,7 @@ namespace SilveRModel.Validators
             }
         }
 
-        public void AddVars(List<string> items)
+        public void AddVars(IEnumerable<string> items)
         {
             if (items != null)
             {
@@ -502,11 +538,7 @@ namespace SilveRModel.Validators
 
         public bool DoCheck(object varToCheck)
         {
-            if (varToCheck == null)
-            {
-                return false;
-            }
-            else if (varToCheck is String)
+            if (varToCheck is String)
             {
                 string stringVarToCheck = (String)varToCheck;
                 return !varList.Contains(varToCheck);
@@ -517,7 +549,10 @@ namespace SilveRModel.Validators
 
                 return !varsToCheck.Intersect(varList).Any();
             }
-            else throw new ArgumentException();
+            else
+            {
+                throw new ArgumentException("Attempting to check unknown type!");
+            }
         }
     }
 }

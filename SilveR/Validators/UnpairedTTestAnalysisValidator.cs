@@ -1,10 +1,10 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class UnpairedTTestAnalysisValidator : ValidatorBase
     {
@@ -25,12 +25,12 @@ namespace SilveRModel.Validators
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(upttVariables.Treatment)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(upttVariables.Treatment)) return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
+            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<UnpairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, "treatment factor")) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<UnpairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
 
             //do data checks on the treatments and response
             if (!FactorAndResponseChecks(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
@@ -38,7 +38,7 @@ namespace SilveRModel.Validators
             //check transformations
             foreach (DataRow row in DataTable.Rows)
             {
-                CheckTransformations(row, upttVariables.ResponseTransformation, upttVariables.Response, "response");
+                CheckTransformations(row, upttVariables.ResponseTransformation, upttVariables.Response);
             }
 
             //if get here then no errors so return true
@@ -74,8 +74,7 @@ namespace SilveRModel.Validators
             for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the treatment and response rows
             {
                 //Check that the "response" does not contain non-numeric data
-                double parsedValue;
-                bool parsedOK = Double.TryParse(responseRow[i], (NumberStyles.Number | NumberStyles.AllowExponent), CultureInfo.CreateSpecificCulture("en-GB"), out parsedValue);
+                bool parsedOK = Double.TryParse(responseRow[i], (NumberStyles.Number | NumberStyles.AllowExponent), CultureInfo.CreateSpecificCulture("en-GB"), out double parsedValue);
                 if (!String.IsNullOrEmpty(responseRow[i]) && !parsedOK)
                 {
                     ValidationInfo.AddErrorMessage("Error: The response selected (" + responseVar + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");

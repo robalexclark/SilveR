@@ -1,7 +1,7 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 using System.Collections.Generic;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class ChiSquaredAndFishersExactTestValidator : ValidatorBase
     {

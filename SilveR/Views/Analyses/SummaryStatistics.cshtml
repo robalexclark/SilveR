@@ -1,4 +1,4 @@
-﻿@model SilveRModel.StatsModel.SummaryStatisticsModel
+﻿@model SilveR.StatsModels.SummaryStatisticsModel
 
 @section Scripts {
     <script>
@@ -36,15 +36,15 @@
                         <label class="col-sm-4 control-label">Responses</label>
                         <div class="col-sm-8">
                             <select class="form-control" asp-for="Responses"></select>
+                            <div><span asp-validation-for="Responses"></span></div>
                         </div>
-                        <span asp-validation-for="Responses"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Transformation</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="Transformation" />
+                            <div><span asp-validation-for="Transformation"></span></div>
                         </div>
-                        <span asp-validation-for="Transformation"></span>
                     </div>
                     <br />
 
@@ -53,29 +53,29 @@
                         <label class="col-sm-4 control-label">1st factor</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="FirstCatFactor" />
+                            <div><span asp-validation-for="FirstCatFactor"></span></div>
                         </div>
-                        <span asp-validation-for="FirstCatFactor"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">2nd factor</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="SecondCatFactor" />
-                        </div>
-                        <span asp-validation-for="SecondCatFactor"></span>
+                            <div><span asp-validation-for="SecondCatFactor"></span></div>
+                        </div>                       
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">3rd factor</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="ThirdCatFactor" />
-                        </div>
-                        <span asp-validation-for="ThirdCatFactor"></span>
+                            <div><span asp-validation-for="ThirdCatFactor"></span></div>
+                        </div>                        
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">4th factor</label>
                         <div class="col-sm-8">
                             <input class="form-control" asp-for="FourthCatFactor" />
-                        </div>
-                        <span asp-validation-for="FourthCatFactor"></span>
+                            <div><span asp-validation-for="FourthCatFactor"></span></div>
+                        </div>                      
                     </div>
                 </div>
             </div>
@@ -136,6 +136,7 @@
                         <div class="col-xs-3">
                             <div class="input-group">
                                 <input asp-for="Significance" class="form-control" type="number" step=".1" />
+                                <div><span asp-validation-for="Significance"></span></div>
                             </div>
                         </div>
                     </div>
@@ -170,8 +171,10 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row mt20">
+    <div class="row mt20">
+        <div class="col-md-12">
             <button class="btn btn-primary btn-lg" type="submit">Submit</button>
         </div>
     </div>

@@ -1,9 +1,9 @@
-﻿using SilveRModel.StatsModel;
+﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class SummaryStatisticsValidator : ValidatorBase
     {
@@ -27,11 +27,11 @@ namespace SilveRModel.Validators
 
             //Create a list of all variables
             List<string> allVars = new List<string>();
-            allVars.AddRange(ssVariables.Responses);
-            allVars.Add(ssVariables.FirstCatFactor);
-            allVars.Add(ssVariables.SecondCatFactor);
-            allVars.Add(ssVariables.ThirdCatFactor);
-            allVars.Add(ssVariables.FourthCatFactor);
+            allVars.AddVariables(ssVariables.Responses);
+            allVars.AddVariables(ssVariables.FirstCatFactor);
+            allVars.AddVariables(ssVariables.SecondCatFactor);
+            allVars.AddVariables(ssVariables.ThirdCatFactor);
+            allVars.AddVariables(ssVariables.FourthCatFactor);
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
@@ -41,7 +41,6 @@ namespace SilveRModel.Validators
             if (!String.IsNullOrEmpty(ssVariables.SecondCatFactor)) categorical.Add(ssVariables.SecondCatFactor);
             if (!String.IsNullOrEmpty(ssVariables.ThirdCatFactor)) categorical.Add(ssVariables.ThirdCatFactor);
             if (!String.IsNullOrEmpty(ssVariables.FourthCatFactor)) categorical.Add(ssVariables.FourthCatFactor);
-
 
 
             //Go through each response
@@ -55,33 +54,13 @@ namespace SilveRModel.Validators
 
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, ssVariables.Transformation, response, "response");
+                    CheckTransformations(row, ssVariables.Transformation, response);
                 }
 
-                if (!CheckResponsesPerLevel(categorical, response, "categorical")) return ValidationInfo;
+                if (!CheckResponsesPerLevel(categorical, response, ReflectionExtensions.GetPropertyDisplayName<SummaryStatisticsModel>(i => i.Responses))) return ValidationInfo;
 
                 //check response and cat factors contain values
-                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
-                    return ValidationInfo;
-
-                //foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
-                //{
-                //    //Check that each level has replication
-                //    Dictionary<string, int> levelResponses = ResponsesPerLevel(catFactor, response);
-                //    foreach (KeyValuePair<string, int> level in levelResponses)
-                //    {
-                //        if (level.Value == 0)
-                //        {
-                //            ValidationInfo.AddErrorMessage("There are no observations recorded on the levels of one of the factors. Please amend the dataset prior to running the analysis.");
-                //            return ValidationInfo;
-                //        }
-                //        else if (level.Value < 2)
-                //        {
-                //            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the categorical factor (" + catFactor + "). Please amend the dataset prior to running the analysis.");
-                //            return ValidationInfo;
-                //        }
-                //    }
-                //}
+                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor")) return ValidationInfo;
             }
 
             //if get here then no errors so return true

@@ -1,10 +1,10 @@
 ﻿using SilveR.StatsModels;
-using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class IncompleteFactorialParametricAnalysisValidator : ValidatorBase
     {
@@ -20,32 +20,24 @@ namespace SilveRModel.Validators
         {
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
-            allVars.AddRange(ifpVariables.Treatments);
-
-            if (ifpVariables.OtherDesignFactors != null)
-                allVars.AddRange(ifpVariables.OtherDesignFactors);
-
-            allVars.Add(ifpVariables.Response);
-
-            if (ifpVariables.Covariates != null)
-                allVars.AddRange(ifpVariables.Covariates);
+            allVars.AddVariables(ifpVariables.Treatments);
+            allVars.AddVariables(ifpVariables.OtherDesignFactors);
+            allVars.AddVariables(ifpVariables.Response);
+            allVars.AddVariables(ifpVariables.Covariates);
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(ifpVariables.Treatments, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(ifpVariables.Treatments, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(ifpVariables.Treatments, ifpVariables.Response)) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ifpVariables.Treatments, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.Treatments))) return ValidationInfo;
 
-            if (ifpVariables.OtherDesignFactors != null)
-                if (!CheckResponsesPerLevel(ifpVariables.OtherDesignFactors, ifpVariables.Response, "other treatment")) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ifpVariables.OtherDesignFactors, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
 
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
-            categorical.AddRange(ifpVariables.Treatments);
-
-            if (ifpVariables.OtherDesignFactors != null)
-                categorical.AddRange(ifpVariables.OtherDesignFactors);
+            categorical.AddVariables(ifpVariables.Treatments);
+            categorical.AddVariables(ifpVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
             if (!FactorAndResponseCovariateChecks(categorical, ifpVariables.Response)) return ValidationInfo;
@@ -147,13 +139,13 @@ namespace SilveRModel.Validators
                 //check transformations
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, ifpVariables.ResponseTransformation, ifpVariables.Response, "response");
+                    CheckTransformations(row, ifpVariables.ResponseTransformation, ifpVariables.Response);
 
                     if (ifpVariables.Covariates != null)
                     {
                         foreach (string covariate in ifpVariables.Covariates)
                         {
-                            CheckTransformations(row, ifpVariables.CovariateTransformation, covariate, "covariate");
+                            CheckTransformations(row, ifpVariables.CovariateTransformation, covariate, true);
                         }
                     }
                 }
@@ -169,7 +161,7 @@ namespace SilveRModel.Validators
             {
                 string[] splittedEffect = ifpVariables.SelectedEffect.Split('*');
 
-                if (splittedEffect.GetLength(0) < ifpVariables.Treatments.Count)
+                if (splittedEffect.GetLength(0) < ifpVariables.Treatments.Count())
                 {
                     string mainEffectOrInteraction;
 

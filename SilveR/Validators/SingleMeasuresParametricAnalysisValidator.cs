@@ -1,10 +1,10 @@
 ﻿using SilveR.StatsModels;
-using SilveRModel.StatsModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public class SingleMeasuresParametricAnalysisValidator : ValidatorBase
     {
@@ -20,32 +20,24 @@ namespace SilveRModel.Validators
         {
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
-            allVars.AddRange(smVariables.Treatments);
-
-            if (smVariables.OtherDesignFactors != null)
-                allVars.AddRange(smVariables.OtherDesignFactors);
-
+            allVars.AddVariables(smVariables.Treatments);
+            allVars.AddVariables(smVariables.OtherDesignFactors);
             allVars.Add(smVariables.Response);
-
-            if (smVariables.Covariates != null)
-                allVars.AddRange(smVariables.Covariates);
+            allVars.AddVariables(smVariables.Covariates);
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckTreatmentsHaveLevels(smVariables.Treatments, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(smVariables.Treatments, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(smVariables.Treatments, smVariables.Response)) return ValidationInfo;
+            if (!CheckResponsesPerLevel(smVariables.Treatments, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Treatments))) return ValidationInfo;
 
-            if (smVariables.OtherDesignFactors != null)
-                if (!CheckResponsesPerLevel(smVariables.OtherDesignFactors, smVariables.Response, "other treatment")) return ValidationInfo;
+            if (!CheckResponsesPerLevel(smVariables.OtherDesignFactors, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
 
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
-            categorical.AddRange(smVariables.Treatments);
-
-            if (smVariables.OtherDesignFactors != null)
-                categorical.AddRange(smVariables.OtherDesignFactors);
+            categorical.AddVariables(smVariables.Treatments);
+            categorical.AddVariables(smVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
             if (!FactorAndResponseCovariateChecks(categorical, smVariables.Response)) return ValidationInfo;
@@ -113,7 +105,7 @@ namespace SilveRModel.Validators
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
                     //Check that the "response" does not contain non-numeric data
-                    bool parsedOK = Double.TryParse(continuousRow[i], out var parsedValue);
+                    bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
                         ValidationInfo.AddErrorMessage("The " + responseType + " selected (" + continuous + ") contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
@@ -143,13 +135,13 @@ namespace SilveRModel.Validators
                 //check transformations
                 foreach (DataRow row in DataTable.Rows)
                 {
-                    CheckTransformations(row, smVariables.ResponseTransformation, smVariables.Response, "response");
+                    CheckTransformations(row, smVariables.ResponseTransformation, smVariables.Response);
 
                     if (smVariables.Covariates != null)
                     {
                         foreach (string covariate in smVariables.Covariates)
                         {
-                            CheckTransformations(row, smVariables.CovariateTransformation, covariate, "covariate");
+                            CheckTransformations(row, smVariables.CovariateTransformation, covariate, true);
                         }
                     }
                 }
@@ -165,7 +157,7 @@ namespace SilveRModel.Validators
             {
                 string[] splittedEffect = smVariables.SelectedEffect.Split('*');
 
-                if (splittedEffect.GetLength(0) < smVariables.Treatments.Count)
+                if (splittedEffect.GetLength(0) < smVariables.Treatments.Count())
                 {
                     string mainEffectOrInteraction;
 

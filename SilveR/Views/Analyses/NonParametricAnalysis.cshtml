@@ -1,4 +1,4 @@
-﻿@model SilveRModel.StatsModel.NonParametricAnalysisModel
+﻿@model SilveR.StatsModels.NonParametricAnalysisModel
 
 @section Scripts {
     <script>
@@ -32,22 +32,22 @@
                 <label class="col-sm-6 control-label">Response</label>
                 <div class="col-sm-6">
                     <input class="form-control" asp-for="Response" />
-                </div>
-                <span asp-validation-for="Response"></span>
+                    <div><span asp-validation-for="Response"></span></div>
+                </div>             
             </div>
             <div class="form-group">
                 <label class="col-sm-6 control-label">Treatment</label>
                 <div class="col-sm-6">
                     <input class="form-control" asp-for="Treatment" />
-                </div>
-                <span asp-validation-for="Treatment"></span>
+                    <div><span asp-validation-for="Treatment"></span></div>
+                </div>               
             </div>
             <div class="form-group">
                 <label class="col-sm-6 control-label">Other design (block)</label>
                 <div class="col-sm-6">
                     <input class="form-control" asp-for="OtherDesignFactor" />
-                </div>
-                <span asp-validation-for="OtherDesignFactor"></span>
+                    <div><span asp-validation-for="OtherDesignFactor"></span></div>
+                </div>      
             </div>
         </div>
 
@@ -81,20 +81,23 @@
                 <label class="col-sm-6 control-label">Significance</label>
                 <div class="col-sm-6">
                     <input class="form-control" asp-for="Significance" />
+                    <div><span asp-validation-for="Significance"></span></div>
                 </div>
-                <span asp-validation-for="Significance"></span>
+              
             </div>
             <div class="form-group">
                 <label class="col-sm-6 control-label">Control</label>
                 <div class="col-sm-6">
                     <input class="form-control" asp-for="Control" />
-                </div>
-                <span asp-validation-for="Control"></span>
+                    <div><span asp-validation-for="Control"></span></div>
+                </div>          
             </div>
         </div>
     </div>
 
     <div class="row mt20">
-        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        <div class="col-md-12">
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        </div>
     </div>
 </form>

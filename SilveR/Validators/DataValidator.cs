@@ -1,9 +1,9 @@
-﻿using SilveRModel.Helpers;
+﻿using SilveR.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace SilveRModel.Validators
+namespace SilveR.Validators
 {
     public abstract class ValidatorBase
     {
@@ -29,10 +29,6 @@ namespace SilveRModel.Validators
 
         public abstract ValidationInfo Validate();
 
-
-        //***
-        //the following functions are used by derived classes to check data etc.
-        //***
 
         protected List<string> GetLevels(string column)
         {
@@ -116,33 +112,33 @@ namespace SilveRModel.Validators
             return true;
         }
 
-        protected bool CheckTreatmentsHaveLevels(List<String> treatments)
-        {
-            return CheckTreatmentsHaveLevels(treatments, false);
-        }
 
-        protected bool CheckTreatmentsHaveLevels(List<String> treatments, bool multipleFactors)
+        protected bool CheckFactorsHaveLevels(IEnumerable<String> factors, bool multipleFactors)
         {
+            if (factors == null) return true;
+
             //Check to see if the number of treatment levels selected is at least 2
-            foreach (string treatment in treatments)
+            foreach (string factor in factors)
             {
-                if (!CheckTreatmentsHaveLevels(treatment, multipleFactors)) return false;
+                if (!CheckFactorsHaveLevels(factor, multipleFactors)) return false;
             }
 
             return true;
         }
 
-        protected bool CheckTreatmentsHaveLevels(string treatment)
+        protected bool CheckFactorsHaveLevels(string factors)
         {
-            return CheckTreatmentsHaveLevels(treatment, false);
+            return CheckFactorsHaveLevels(factors, false);
         }
 
-        protected bool CheckTreatmentsHaveLevels(string treatment, bool multipleFactors)
+        protected bool CheckFactorsHaveLevels(string factors, bool multipleFactors)
         {
+            if (factors == null) return true;
+
             string message = null;
 
             //Check to see if the number of treatment levels selected is at least 2
-            if (CountDistinctLevels(treatment) == 0)
+            if (CountDistinctLevels(factors) == 0)
             {
                 if (multipleFactors)
                 {
@@ -156,7 +152,7 @@ namespace SilveRModel.Validators
                 validationInfo.AddErrorMessage(message);
                 return false;
             }
-            else if (CountDistinctLevels(treatment) == 1)
+            else if (CountDistinctLevels(factors) == 1)
             {
                 if (multipleFactors)
                 {
@@ -174,30 +170,19 @@ namespace SilveRModel.Validators
             return true;
         }
 
-
-        protected bool CheckResponsesPerLevel(string treatment, string response)
+        protected bool CheckResponsesPerLevel(string factor, string response, string displayName)
         {
-            List<string> treatments = new List<string>();
-            treatments.Add(treatment);
+            List<string> factors = new List<string>();
+            factors.Add(factor);
 
-            return CheckResponsesPerLevel(treatments, response);
+            return CheckResponsesPerLevel(factors, response, displayName);
         }
 
-        protected bool CheckResponsesPerLevel(string treatment, string response, string text)
-        {
-            List<string> treatments = new List<string>();
-            treatments.Add(treatment);
 
-            return CheckResponsesPerLevel(treatments, response, text);
-        }
-
-        protected bool CheckResponsesPerLevel(List<string> treatments, string response)
+        protected virtual bool CheckResponsesPerLevel(IEnumerable<string> factors, string response, string displayName)
         {
-            return CheckResponsesPerLevel(treatments, response, "treatment");
-        }
+            if (factors == null) return true;
 
-        protected virtual bool CheckResponsesPerLevel(List<string> factors, string response, string text)
-        {
             //Check that the number of responses for each level is at least 2 for factors
             foreach (string factor in factors)
             {
@@ -206,7 +191,7 @@ namespace SilveRModel.Validators
                 {
                     if (level.Value < 2)
                     {
-                        validationInfo.AddErrorMessage("There is no replication in one or more of the levels of the " + text + " factor (" + factor + "). Please select another factor.");
+                        validationInfo.AddErrorMessage("There is no replication in one or more of the levels of the " + displayName + " (" + factor + "). Please select another factor.");
                         return false;
                     }
                 }
@@ -215,7 +200,7 @@ namespace SilveRModel.Validators
             return true;
         }
 
-        protected bool CheckFactorAndResponseNotBlank(string factor, string response, string text)
+        protected bool CheckFactorAndResponseNotBlank(string factor, string response, string displayName)
         {
             if (String.IsNullOrEmpty(response) || String.IsNullOrEmpty(factor)) return true;
 
@@ -224,7 +209,7 @@ namespace SilveRModel.Validators
                 //Check that there are treatment levels for where there are response data
                 if (!String.IsNullOrEmpty(row[response].ToString()) && String.IsNullOrEmpty(row[factor].ToString()))
                 {
-                    validationInfo.AddErrorMessage("The " + text + " selected contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
+                    validationInfo.AddErrorMessage("The " + displayName + " selected contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
                     return false;
                 }
 
@@ -240,27 +225,27 @@ namespace SilveRModel.Validators
             return true;
         }
 
-        protected bool CheckFactorsAndResponseNotBlank(IEnumerable<string> factors, string response, string text)
+        protected bool CheckFactorsAndResponseNotBlank(IEnumerable<string> factors, string response, string displayName)
         {
             foreach (string factor in factors)
             {
-                if (!CheckFactorAndResponseNotBlank(factor, response, text)) return false;
+                if (!CheckFactorAndResponseNotBlank(factor, response, displayName)) return false;
             }
 
             return true;
         }
 
 
-        protected void CheckTransformations(DataRow row, string transformation, string column, string text)
+        protected void CheckTransformations(DataRow row, string transformation, string column, bool isCovariate = false)
         {
-            if (!String.IsNullOrEmpty(column))
+            if (transformation != "None" && !String.IsNullOrEmpty(column))
             {
-                bool respParsedOK = Double.TryParse(row[column].ToString(), out var respValue);
+                bool respParsedOK = Double.TryParse(row[column].ToString(), out double respValue);
 
-                string tempMessage = null;
-
-                if (respParsedOK && transformation != "None")
+                if (respParsedOK)
                 {
+                    string tempMessage = null;
+
                     if (transformation.StartsWith("Log") && respValue <= 0) //must not be <= 0
                     {
                         tempMessage = "You have " + transformation +
@@ -276,13 +261,32 @@ namespace SilveRModel.Validators
                         tempMessage = "You have " + transformation + " transformed the " + column + " variable. Unfortunately some of the " + column + " values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.";
                     }
 
-                    if (tempMessage != null && text == "covariate")
+                    if (tempMessage != null && isCovariate)
                     {
                         tempMessage = tempMessage + Environment.NewLine + "Any response where the covariate has been removed will also be excluded from the analysis.";
                     }
 
                     validationInfo.AddWarningMessage(tempMessage);
                 }
+            }
+        }
+    }
+
+
+    public static class ListExtension
+    {
+        public static void AddVariables(this List<string> list, string variable)
+        {
+            if (variable != null)
+            {
+                list.Add(variable);
+            }
+        }
+        public static void AddVariables(this List<string> list, IEnumerable<string> variable)
+        {
+            if (variable != null)
+            {
+                list.AddRange(variable);
             }
         }
     }

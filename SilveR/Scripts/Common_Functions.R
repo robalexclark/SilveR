@@ -2,7 +2,7 @@
 
 #Display labels on scatterplot (needs argument)
 branding <- "InVivoStat"
-scatterlabels <- "Y"
+scatterlabels <- "N"
 
 #Display arguments
 Diplayargs <- "Y"
@@ -349,7 +349,9 @@ mytheme <- theme(
 	
 	legend.text = element_text(size = legend_font_size, 
 		family = gr_fontfamily, 
-		face = gr_fontface)
+		face = gr_fontface),
+
+	legend.key = element_blank()
 )
 
 

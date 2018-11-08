@@ -7,9 +7,9 @@ using System.Data;
 using System.IO;
 using System.Text;
 
-namespace SilveRModel.Models
+namespace SilveR.Models
 {
-    public partial class Dataset
+    public partial class Dataset : IDataset
     {
         public Dataset()
         {
