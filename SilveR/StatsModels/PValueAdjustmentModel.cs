@@ -51,9 +51,9 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.PValues = argHelper.ArgumentLoader(nameof(PValues), PValues);
-            this.SelectedTest = argHelper.ArgumentLoader(nameof(SelectedTest), SelectedTest);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.PValues = argHelper.LoadStringArgument(nameof(PValues));
+            this.SelectedTest = argHelper.LoadStringArgument(nameof(SelectedTest));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -75,7 +75,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + SelectedTest); //5
             arguments.Append(" " + Significance.Replace("<", "^<")); //6
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
     }
 }

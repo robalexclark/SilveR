@@ -28,13 +28,14 @@ namespace SilveR.Validators
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (NoOfResponses(lrVariables.Response) <= 1)
+            if (CountResponses(lrVariables.Response) <= 1)
             {
                 ValidationInfo.AddErrorMessage("Error: Unfortunately as there are less than two valid responses in the dataset no analysis has been performed.");
                 return ValidationInfo;
             }
 
-                if (!CheckFactorsHaveLevels(lrVariables.CategoricalFactors, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(lrVariables.CategoricalFactors, true))
+                return ValidationInfo;
 
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
@@ -43,7 +44,8 @@ namespace SilveR.Validators
             categorical.AddVariables(lrVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
-            if (categorical.Any() && !FactorAndResponseCovariateChecks(categorical, lrVariables.Response)) return ValidationInfo;
+            if (categorical.Any() && !FactorAndResponseCovariateChecks(categorical, lrVariables.Response))
+                return ValidationInfo;
 
             //need to seperately check continuous variables are numeric
             foreach (string contFactor in lrVariables.ContinuousFactors)
@@ -60,14 +62,17 @@ namespace SilveR.Validators
             {
                 foreach (string covariate in lrVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate))
+                        return ValidationInfo;
                 }
             }
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(lrVariables.CategoricalFactors, lrVariables.Response, ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.CategoricalFactors))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(lrVariables.CategoricalFactors, lrVariables.Response, ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.CategoricalFactors)))
+                return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(lrVariables.OtherDesignFactors, lrVariables.Response, ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(lrVariables.OtherDesignFactors, lrVariables.Response, ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.OtherDesignFactors)))
+                return ValidationInfo;
 
             if (lrVariables.Covariates != null && lrVariables.CategoricalFactors != null && String.IsNullOrEmpty(lrVariables.PrimaryFactor))
             {
@@ -112,7 +117,6 @@ namespace SilveR.Validators
                 {
                     factorType = ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.OtherDesignFactors);
                 }
-
 
                 string responseType = null;
                 if (lrVariables.Response.Contains(continuous))

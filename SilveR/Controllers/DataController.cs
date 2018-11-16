@@ -87,7 +87,7 @@ namespace SilveR.Controllers
             {
                 //use the CSVReader to read in the data
                 string message;
-                DataTable dataTable = CSVHelper.CSVDataToDataTable(selectedFile.OpenRead(), GetCulture());
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(selectedFile.OpenRead(), GetCulture());
 
                 if (dataTable == null) //then failed to be read
                 {
@@ -362,7 +362,7 @@ namespace SilveR.Controllers
 
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
-                DataTable dataTable = CSVHelper.CSVDataToDataTable(stream);
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream);
 
                 dataTable.TableName = dataset.DatasetID.ToString();
 

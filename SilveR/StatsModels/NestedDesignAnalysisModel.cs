@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -123,7 +123,7 @@ namespace SilveR.StatsModels
             //each column and put them in quotes...
             foreach (string treat in Treatments)
             {
-                if (dtNew.ColumnIsNumeric(treat))
+                if (dtNew.CheckIsNumeric(treat))
                 {
                     foreach (DataRow row in dtNew.Rows)
                     {
@@ -136,7 +136,7 @@ namespace SilveR.StatsModels
             {
                 foreach (string odf in OtherDesignFactors)
                 {
-                    if (dtNew.ColumnIsNumeric(odf))
+                    if (dtNew.CheckIsNumeric(odf))
                     {
                         foreach (DataRow row in dtNew.Rows)
                         {
@@ -159,16 +159,16 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(GetModel(), true)); //4
 
             //get transforms
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //5
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //6
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Treatments)); //7
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //8
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Covariate, true)); //9
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //10
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(RandomFactor1, true)); //11
             arguments.Append(" " + argFormatter.GetFormattedArgument(RandomFactor2, true)); //12
@@ -180,28 +180,28 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(DesignOption3, true)); //17
             arguments.Append(" " + argFormatter.GetFormattedArgument(DesignOption4, true)); //18
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
 
         public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.Treatments = argHelper.ArgumentLoader(nameof(Treatments), Treatments);
-            this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Covariate = argHelper.ArgumentLoader(nameof(Covariate), Covariate);
-            this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
-            this.RandomFactor1 = argHelper.ArgumentLoader(nameof(RandomFactor1), RandomFactor1);
-            this.RandomFactor2 = argHelper.ArgumentLoader(nameof(RandomFactor2), RandomFactor2);
-            this.RandomFactor3 = argHelper.ArgumentLoader(nameof(RandomFactor3), RandomFactor3);
-            this.RandomFactor4 = argHelper.ArgumentLoader(nameof(RandomFactor4), RandomFactor4);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
-            this.DesignOption1 = argHelper.ArgumentLoader(nameof(DesignOption1), DesignOption1);
-            this.DesignOption2 = argHelper.ArgumentLoader(nameof(DesignOption2), DesignOption2);
-            this.DesignOption3 = argHelper.ArgumentLoader(nameof(DesignOption3), DesignOption3);
-            this.DesignOption4 = argHelper.ArgumentLoader(nameof(DesignOption4), DesignOption4);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.Treatments = argHelper.LoadIEnumerableArgument(nameof(Treatments));
+            this.OtherDesignFactors = argHelper.LoadIEnumerableArgument(nameof(OtherDesignFactors));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Covariate = argHelper.LoadStringArgument(nameof(Covariate));
+            this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
+            this.RandomFactor1 = argHelper.LoadStringArgument(nameof(RandomFactor1));
+            this.RandomFactor2 = argHelper.LoadStringArgument(nameof(RandomFactor2));
+            this.RandomFactor3 = argHelper.LoadStringArgument(nameof(RandomFactor3));
+            this.RandomFactor4 = argHelper.LoadStringArgument(nameof(RandomFactor4));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
+            this.DesignOption1 = argHelper.LoadStringArgument(nameof(DesignOption1));
+            this.DesignOption2 = argHelper.LoadStringArgument(nameof(DesignOption2));
+            this.DesignOption3 = argHelper.LoadStringArgument(nameof(DesignOption3));
+            this.DesignOption4 = argHelper.LoadStringArgument(nameof(DesignOption4));
         }
 
         public override IEnumerable<Argument> GetArguments()

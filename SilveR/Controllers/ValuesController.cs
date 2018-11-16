@@ -30,7 +30,7 @@ namespace SilveR.Controllers
             DataTable datatable = dataset.DatasetToDataTable();
             if (datatable.GetVariableNames().Contains(treatment))
             {
-                List<string> levelsList = datatable.GetLevels(treatment);
+                List<string> levelsList = datatable.GetLevels(treatment).ToList();
 
                 if (includeNull)
                 {

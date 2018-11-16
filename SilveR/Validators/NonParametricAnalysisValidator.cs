@@ -32,10 +32,12 @@ namespace SilveR.Validators
 
             if (!CheckFactorsHaveLevels(npVariables.Treatment)) return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(npVariables.Treatment, npVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NonParametricAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(npVariables.Treatment, npVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NonParametricAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(npVariables.Treatment, npVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NonParametricAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(npVariables.Treatment, npVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NonParametricAnalysisModel>(i => i.Treatment))
+                return ValidationInfo;
 
             //if only two levels and all treats or to control selected, then need to only do KW
             if (CountDistinctLevels(npVariables.Treatment) == 2 && String.IsNullOrEmpty(npVariables.OtherDesignFactor) && npVariables.AnalysisType != NonParametricAnalysisModel.AnalysisOption.MannWhitney)

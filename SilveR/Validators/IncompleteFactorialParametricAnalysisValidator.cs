@@ -30,9 +30,11 @@ namespace SilveR.Validators
             if (!CheckFactorsHaveLevels(ifpVariables.Treatments, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(ifpVariables.Treatments, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.Treatments))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ifpVariables.Treatments, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.Treatments)))
+                return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(ifpVariables.OtherDesignFactors, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ifpVariables.OtherDesignFactors, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.OtherDesignFactors)))
+                return ValidationInfo;
 
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
@@ -40,14 +42,16 @@ namespace SilveR.Validators
             categorical.AddVariables(ifpVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, ifpVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseCovariateChecks(categorical, ifpVariables.Response))
+                return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
             if (ifpVariables.Covariates != null)
             {
                 foreach (string covariate in ifpVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate))
+                        return ValidationInfo;
                 }
             }
 
@@ -119,7 +123,6 @@ namespace SilveR.Validators
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
                         ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") selected contains missing data where there are observations present in the " + responseType + " variable. Please check the raw data and make sure the data was entered correctly.");
-
                         return false;
                     }
 

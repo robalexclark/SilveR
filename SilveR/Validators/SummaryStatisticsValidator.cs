@@ -33,7 +33,8 @@ namespace SilveR.Validators
             allVars.AddVariables(ssVariables.ThirdCatFactor);
             allVars.AddVariables(ssVariables.FourthCatFactor);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             //Create a list of categorical variables selected (i.e. the cat factors)
             List<string> categorical = new List<string>();
@@ -57,10 +58,12 @@ namespace SilveR.Validators
                     CheckTransformations(row, ssVariables.Transformation, response);
                 }
 
-                if (!CheckResponsesPerLevel(categorical, response, ReflectionExtensions.GetPropertyDisplayName<SummaryStatisticsModel>(i => i.Responses))) return ValidationInfo;
+                if (!CheckResponsesPerLevel(categorical, response, ReflectionExtensions.GetPropertyDisplayName<SummaryStatisticsModel>(i => i.Responses)))
+                    return ValidationInfo;
 
                 //check response and cat factors contain values
-                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor")) return ValidationInfo;
+                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
+                    return ValidationInfo;
             }
 
             //if get here then no errors so return true

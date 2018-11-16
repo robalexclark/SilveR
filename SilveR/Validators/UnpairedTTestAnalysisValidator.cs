@@ -27,13 +27,16 @@ namespace SilveR.Validators
 
             if (!CheckFactorsHaveLevels(upttVariables.Treatment)) return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<UnpairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<UnpairedTTestAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<UnpairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<UnpairedTTestAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
 
             //do data checks on the treatments and response
-            if (!FactorAndResponseChecks(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseChecks(upttVariables.Treatment, upttVariables.Response))
+                return ValidationInfo;
 
             //check transformations
             foreach (DataRow row in DataTable.Rows)

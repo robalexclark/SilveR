@@ -25,14 +25,18 @@ namespace SilveR.Validators
             allVars.Add(smVariables.Response);
             allVars.AddVariables(smVariables.Covariates);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
-            if (!CheckFactorsHaveLevels(smVariables.Treatments, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(smVariables.Treatments, true))
+                return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(smVariables.Treatments, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Treatments))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(smVariables.Treatments, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.Treatments)))
+                return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(smVariables.OtherDesignFactors, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(smVariables.OtherDesignFactors, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors)))
+                return ValidationInfo;
 
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
@@ -40,14 +44,16 @@ namespace SilveR.Validators
             categorical.AddVariables(smVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, smVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseCovariateChecks(categorical, smVariables.Response))
+                return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
             if (smVariables.Covariates != null)
             {
                 foreach (string covariate in smVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate))
+                        return ValidationInfo;
                 }
             }
 
@@ -61,7 +67,7 @@ namespace SilveR.Validators
 
             if (!String.IsNullOrEmpty(smVariables.ComparisonsBackToControl) && String.IsNullOrEmpty(smVariables.ControlGroup))
             {
-                ValidationInfo.AddErrorMessage("You have selected to compare back to a control but no control group is selected");
+                ValidationInfo.AddErrorMessage("You have selected to compare back to a control but no control group is selected.");
             }
 
             //if get here then no errors so return true

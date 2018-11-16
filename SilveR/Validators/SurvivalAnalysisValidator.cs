@@ -28,7 +28,7 @@ namespace SilveR.Validators
             //    return ValidationInfo;
             //}
 
-            //if (!CheckTreatmentsHaveLevels(csfetVariables.Treatment)) return ValidationInfo;
+            //if (!CheckTreatmentsHaveLevels(csfetVariables.Treatment))return ValidationInfo;
 
             //if (!CheckResponsesPerLevel(csfetVariables.Treatment, csfetVariables.Response)) return ValidationInfo;
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SilveR.Models;
 using SilveR.Services;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SilveR
@@ -124,8 +125,8 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "TwoSampleTTestAnalysis"))
                 {
-                    Script twoSampleTTest = new Script() { ScriptDisplayName = "Two-Sample t-test Analysis", ScriptFileName = "TwoSampleTTestAnalysis" };
-                    context.Scripts.Add(twoSampleTTest);
+                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-Sample t-test Analysis", ScriptFileName = "TwoSampleTTestAnalysis" };
+                    context.Scripts.Add(oneSampleTTest);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "CorrelationAnalysis"))
@@ -140,9 +141,9 @@ namespace SilveR
                     context.Scripts.Add(linearRegression);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "DoseResponseAnalysis"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "DoseResponseAndNonLinearRegressionAnalysis"))
                 {
-                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-response Analysis", ScriptFileName = "DoseResponseAnalysis" };
+                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-Response and Non-Linear Regression Analysis", ScriptFileName = "DoseResponseAndNonLinearRegressionAnalysis" };
                     context.Scripts.Add(doseResponse);
                 }
 

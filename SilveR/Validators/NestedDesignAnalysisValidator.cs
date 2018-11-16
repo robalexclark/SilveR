@@ -30,9 +30,11 @@ namespace SilveR.Validators
             if (!CheckFactorsHaveLevels(ndaVariables.Treatments, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(ndaVariables.Treatments, ndaVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NestedDesignAnalysisModel>(i => i.Treatments))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ndaVariables.Treatments, ndaVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NestedDesignAnalysisModel>(i => i.Treatments)))
+                return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(ndaVariables.OtherDesignFactors, ndaVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NestedDesignAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(ndaVariables.OtherDesignFactors, ndaVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NestedDesignAnalysisModel>(i => i.OtherDesignFactors)))
+                return ValidationInfo;
 
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
@@ -40,12 +42,14 @@ namespace SilveR.Validators
             categorical.AddVariables(ndaVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Response))
+                return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
             if (!String.IsNullOrEmpty(ndaVariables.Covariate))
             {
-                if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Covariate)) return ValidationInfo;
+                if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Covariate))
+                    return ValidationInfo;
             }
 
             //if get here then no errors so return true

@@ -30,7 +30,9 @@ namespace SilveR.Validators
             List<string> allVars = new List<string>();
             allVars.Add(gaVariables.XAxis);
             allVars.Add(gaVariables.Response);
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             //if the x-axis is selected then check if it is numeric
             bool xIsNumeric = false;

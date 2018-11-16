@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System.Collections.Generic;
@@ -48,8 +48,6 @@ namespace SilveR.StatsModels
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
 
-        public IEnumerable<string> ControlGroupList { get; set; }
-
         public IEnumerable<string> SignificancesList
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
@@ -90,7 +88,14 @@ namespace SilveR.StatsModels
             //Now do transformations...
             dtNew.TransformColumn(Response, ResponseTransformation);
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -114,15 +119,15 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
-            this.EqualVarianceCaseSelected = argHelper.ArgumentLoader(nameof(EqualVarianceCaseSelected), EqualVarianceCaseSelected);
-            this.UnequalVarianceCaseSelected = argHelper.ArgumentLoader(nameof(UnequalVarianceCaseSelected), UnequalVarianceCaseSelected);
-            this.ResidualsVsPredictedPlotSelected = argHelper.ArgumentLoader(nameof(ResidualsVsPredictedPlotSelected), ResidualsVsPredictedPlotSelected);
-            this.NormalProbabilityPlotSelected = argHelper.ArgumentLoader(nameof(NormalProbabilityPlotSelected), NormalProbabilityPlotSelected);
-            this.ControlGroup = argHelper.ArgumentLoader(nameof(ControlGroup), ControlGroup);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
+            this.EqualVarianceCaseSelected = argHelper.LoadBooleanArgument(nameof(EqualVarianceCaseSelected));
+            this.UnequalVarianceCaseSelected = argHelper.LoadBooleanArgument(nameof(UnequalVarianceCaseSelected));
+            this.ResidualsVsPredictedPlotSelected = argHelper.LoadBooleanArgument(nameof(ResidualsVsPredictedPlotSelected));
+            this.NormalProbabilityPlotSelected = argHelper.LoadBooleanArgument(nameof(NormalProbabilityPlotSelected));
+            this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
 
         public override string GetCommandLineArguments()
@@ -131,7 +136,7 @@ namespace SilveR.StatsModels
             StringBuilder arguments = new StringBuilder();
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //4
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //5
             arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true)); //6          
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(EqualVarianceCaseSelected)); //7
@@ -140,9 +145,9 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlotSelected)); //10
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //11
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //12
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
     }
 }

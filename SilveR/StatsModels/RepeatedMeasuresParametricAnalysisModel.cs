@@ -1,4 +1,5 @@
 ﻿using Combinatorics;
+using Combinatorics.Collections;
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
@@ -148,7 +149,9 @@ namespace SilveR.StatsModels
                 string combinedEffectValue = null;
 
                 List<string> factors = new List<string>(Treatments);
-                if (!String.IsNullOrEmpty(RepeatedFactor)) factors.Add(RepeatedFactor); //add in time to the factors
+
+                if (!String.IsNullOrEmpty(RepeatedFactor))
+                    factors.Add(RepeatedFactor); //add in time to the factors
 
                 foreach (string s in factors) //combine the values from each column into one string
                 {
@@ -205,7 +208,7 @@ namespace SilveR.StatsModels
             //each column and put them in quotes...
             foreach (string treat in Treatments)
             {
-                if (dtNew.ColumnIsNumeric(treat))
+                if (dtNew.CheckIsNumeric(treat))
                 {
                     foreach (DataRow row in dtNew.Rows)
                     {
@@ -217,7 +220,7 @@ namespace SilveR.StatsModels
             {
                 foreach (string odf in OtherDesignFactors)
                 {
-                    if (dtNew.ColumnIsNumeric(odf))
+                    if (dtNew.CheckIsNumeric(odf))
                     {
                         foreach (DataRow row in dtNew.Rows)
                         {
@@ -227,7 +230,14 @@ namespace SilveR.StatsModels
                 }
             }
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
 
@@ -246,11 +256,11 @@ namespace SilveR.StatsModels
             //assemble a model for the covariate plot (if a covariate has been chosen)...
             arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //7
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance, false)); //8
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //9
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //10
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //11
 
@@ -262,7 +272,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //15
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //16
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //17
 
             //assemble the effect model
             arguments.Append(" " + argFormatter.GetFormattedArgument(GetEffectModel(), true)); //18
@@ -274,7 +284,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(AllComparisonsWithinSelected)); //21
             arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwiseComparisons)); //22
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
 
 
@@ -282,24 +292,24 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.Treatments = argHelper.ArgumentLoader(nameof(Treatments), Treatments);
-            this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
-            this.RepeatedFactor = argHelper.ArgumentLoader(nameof(RepeatedFactor), RepeatedFactor);
-            this.Subject = argHelper.ArgumentLoader(nameof(Subject), Subject);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Covariance = argHelper.ArgumentLoader(nameof(Covariance), Covariance);
-            this.Covariates = argHelper.ArgumentLoader(nameof(Covariates), Covariates);
-            this.PrimaryFactor = argHelper.ArgumentLoader(nameof(PrimaryFactor), PrimaryFactor);
-            this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
-            this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
-            this.PRPlotSelected = argHelper.ArgumentLoader(nameof(PRPlotSelected), PRPlotSelected);
-            this.NormalPlotSelected = argHelper.ArgumentLoader(nameof(NormalPlotSelected), NormalPlotSelected);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
-            this.SelectedEffect = argHelper.ArgumentLoader(nameof(SelectedEffect), SelectedEffect);
-            this.LSMeansSelected = argHelper.ArgumentLoader(nameof(LSMeansSelected), LSMeansSelected);
-            this.AllComparisonsWithinSelected = argHelper.ArgumentLoader(nameof(AllComparisonsWithinSelected), AllComparisonsWithinSelected);
-            this.AllPairwiseComparisons = argHelper.ArgumentLoader(nameof(AllPairwiseComparisons), AllPairwiseComparisons);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.Treatments = argHelper.LoadIEnumerableArgument(nameof(Treatments));
+            this.OtherDesignFactors = argHelper.LoadIEnumerableArgument(nameof(OtherDesignFactors));
+            this.RepeatedFactor = argHelper.LoadStringArgument(nameof(RepeatedFactor));
+            this.Subject = argHelper.LoadStringArgument(nameof(Subject));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Covariance = argHelper.LoadStringArgument(nameof(Covariance));
+            this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
+            this.PrimaryFactor = argHelper.LoadStringArgument(nameof(PrimaryFactor));
+            this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
+            this.ANOVASelected = argHelper.LoadBooleanArgument(nameof(ANOVASelected));
+            this.PRPlotSelected = argHelper.LoadBooleanArgument(nameof(PRPlotSelected));
+            this.NormalPlotSelected = argHelper.LoadBooleanArgument(nameof(NormalPlotSelected));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
+            this.SelectedEffect = argHelper.LoadStringArgument(nameof(SelectedEffect));
+            this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
+            this.AllComparisonsWithinSelected = argHelper.LoadBooleanArgument(nameof(AllComparisonsWithinSelected));
+            this.AllPairwiseComparisons = argHelper.LoadBooleanArgument(nameof(AllPairwiseComparisons));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -327,7 +337,6 @@ namespace SilveR.StatsModels
 
             return args;
         }
-
 
         private string GetModel()
         {

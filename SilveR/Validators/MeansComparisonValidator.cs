@@ -36,9 +36,12 @@ namespace SilveR.Validators
                 List<string> allVars = new List<string>();
                 allVars.Add(paVariables.Treatment);
                 allVars.Add(paVariables.Response);
-                if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-                if (!CheckFactorsHaveLevels(paVariables.Treatment)) return ValidationInfo;
+                if (!CheckColumnNames(allVars))
+                    return ValidationInfo;
+
+                if (!CheckFactorsHaveLevels(paVariables.Treatment))
+                    return ValidationInfo;
 
                 //Check that the response does not contain non-numeric 
                 if (!CheckIsNumeric(paVariables.Response))
@@ -47,7 +50,8 @@ namespace SilveR.Validators
                     return ValidationInfo;
                 }
 
-                if (!CheckResponsesPerLevel(paVariables.Treatment, paVariables.Response, ReflectionExtensions.GetPropertyDisplayName<MeansComparisonModel>(i => i.Treatment))) return ValidationInfo;
+                if (!CheckResponsesPerLevel(paVariables.Treatment, paVariables.Response, ReflectionExtensions.GetPropertyDisplayName<MeansComparisonModel>(i => i.Treatment)))
+                    return ValidationInfo;
 
                 if (!String.IsNullOrEmpty(paVariables.Treatment) && !String.IsNullOrEmpty(paVariables.Response)) //if a treat and response is selected...
                 {
@@ -59,7 +63,6 @@ namespace SilveR.Validators
                         {
                             //ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor. Please select another factor.");
                             ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor (" + paVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
-
                             return ValidationInfo;
                         }
                     }
@@ -70,7 +73,7 @@ namespace SilveR.Validators
                 else if (String.IsNullOrEmpty(paVariables.Treatment) && !String.IsNullOrEmpty(paVariables.Response))
                 //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
                 {
-                    if (NoOfResponses(paVariables.Response) == 1)
+                    if (CountResponses(paVariables.Response) == 1)
                     {
                         ValidationInfo.AddErrorMessage("The response selected (" + paVariables.Response + ") contains only 1 value. Please select another factor.");
                         return ValidationInfo;

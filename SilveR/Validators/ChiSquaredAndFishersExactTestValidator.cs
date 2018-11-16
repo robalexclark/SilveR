@@ -20,7 +20,9 @@ namespace SilveR.Validators
             allVars.Add(csfetVariables.Response);
             allVars.Add(csfetVariables.GroupingFactor);
             allVars.Add(csfetVariables.ResponseCategories);
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             //if (!CheckIsNumeric(csfetVariables.Response))
             //{

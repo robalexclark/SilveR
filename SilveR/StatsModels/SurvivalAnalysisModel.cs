@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -77,7 +77,14 @@ namespace SilveR.StatsModels
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -99,13 +106,13 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.Grouping = argHelper.ArgumentLoader(nameof(Grouping), Grouping);
-            this.Censorship = argHelper.ArgumentLoader(nameof(Censorship), Censorship);
-            this.SummaryResults = argHelper.ArgumentLoader(nameof(SummaryResults), SummaryResults);
-            this.SurvivalPlot = argHelper.ArgumentLoader(nameof(SurvivalPlot), SurvivalPlot);
-            this.CompareSurvivalCurves = argHelper.ArgumentLoader(nameof(CompareSurvivalCurves), CompareSurvivalCurves);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.Grouping = argHelper.LoadStringArgument(nameof(Grouping));
+            this.Censorship = argHelper.LoadStringArgument(nameof(Censorship));
+            this.SummaryResults = argHelper.LoadBooleanArgument(nameof(SummaryResults));
+            this.SurvivalPlot = argHelper.LoadBooleanArgument(nameof(SurvivalPlot));
+            this.CompareSurvivalCurves = argHelper.LoadBooleanArgument(nameof(CompareSurvivalCurves));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
 
         public override  string GetCommandLineArguments()
@@ -120,9 +127,9 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(SummaryResults)); //7
             arguments.Append(" " + argFormatter.GetFormattedArgument(SurvivalPlot)); //8
             arguments.Append(" " + argFormatter.GetFormattedArgument(CompareSurvivalCurves)); //9
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //10
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
     }
 }

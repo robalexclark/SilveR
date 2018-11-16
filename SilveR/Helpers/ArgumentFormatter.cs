@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SilveR.Helpers
 {
@@ -10,15 +9,36 @@ namespace SilveR.Helpers
 
         public ArgumentFormatter()
         {
-            string[] conversionLines = File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "CharacterConversion.txt"));
-
-            foreach (string s in conversionLines)
-            {
-                charConversionList.Add(s.Substring(0, 1), s.Substring(2));
-            }
+            charConversionList.Add(" ", "ivs_sp_ivs");
+            charConversionList.Add("(", "ivs_ob_ivs");
+            charConversionList.Add(")", "ivs_cb_ivs");
+            charConversionList.Add("/", "ivs_div_ivs");
+            charConversionList.Add("%", "ivs_pc_ivs");
+            charConversionList.Add("#", "ivs_hash_ivs");
+            charConversionList.Add(".", "ivs_pt_ivs");
+            charConversionList.Add("-", "ivs_hyphen_ivs");
+            charConversionList.Add("@", "ivs_at_ivs");
+            charConversionList.Add(":", "ivs_colon_ivs");
+            charConversionList.Add("!", "ivs_exclam_ivs");
+            charConversionList.Add("\"", "ivs_dblquote_ivs");
+            charConversionList.Add("£", "ivs_pound_ivs");
+            charConversionList.Add("$", "ivs_dollar_ivs");
+            charConversionList.Add("^", "ivs_hat_ivs");
+            charConversionList.Add("&", "ivs_amper_ivs");
+            charConversionList.Add("{", "ivs_obrace_ivs");
+            charConversionList.Add("}", "ivs_cbrace_ivs");
+            charConversionList.Add(";", "ivs_semi_ivs");
+            charConversionList.Add("|", "ivs_pipe_ivs");
+            charConversionList.Add("\\", "ivs_slash_ivs");
+            charConversionList.Add("[", "ivs_osb_ivs");
+            charConversionList.Add("]", "ivs_csb_ivs");
+            charConversionList.Add("=", "ivs_eq_ivs");
+            charConversionList.Add("<", "ivs_lt_ivs");
+            charConversionList.Add(">", "ivs_gt_ivs");
+            charConversionList.Add("'", "ivs_quote_ivs");
         }
 
-        public string GetFormattedArgument(string stringValue, bool isVariable = false)
+        public string GetFormattedArgument(string stringValue, bool isVariable)
         {
             if (String.IsNullOrEmpty(stringValue))
             {
@@ -31,7 +51,10 @@ namespace SilveR.Helpers
                     stringValue = ConvertIllegalCharacters(stringValue);
                 }
 
-                stringValue = "\"" + stringValue + "\"";
+                if (stringValue.Contains(' ')) //then contains a space so wrap in quotes
+                {
+                    stringValue = "\"" + stringValue + "\"";
+                }
             }
 
             return stringValue;
@@ -48,7 +71,9 @@ namespace SilveR.Helpers
                 string formattedArgument = null;
 
                 foreach (string item in listArguments)
+                {
                     formattedArgument = formattedArgument + "," + this.ConvertIllegalCharacters(item);
+                }
 
                 return formattedArgument.TrimStart(',');
             }
@@ -74,7 +99,7 @@ namespace SilveR.Helpers
         }
 
 
-        public string ConvertIVSCharactersBack(string theString)
+        public string ConvertIllegalCharactersBack(string theString)
         {
             foreach (KeyValuePair<string, string> kp in charConversionList)
             {

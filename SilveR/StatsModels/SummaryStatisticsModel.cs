@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -140,7 +140,14 @@ namespace SilveR.StatsModels
                 dtNew.TransformColumn(resp, Transformation);
             }
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -173,24 +180,24 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Responses = argHelper.ArgumentLoader(nameof(Responses), Responses);
-            this.FirstCatFactor = argHelper.ArgumentLoader(nameof(FirstCatFactor), FirstCatFactor);
-            this.SecondCatFactor = argHelper.ArgumentLoader(nameof(SecondCatFactor), SecondCatFactor);
-            this.ThirdCatFactor = argHelper.ArgumentLoader(nameof(ThirdCatFactor), ThirdCatFactor);
-            this.FourthCatFactor = argHelper.ArgumentLoader(nameof(FourthCatFactor), FourthCatFactor);
-            this.Transformation = argHelper.ArgumentLoader(nameof(Transformation), Transformation);
-            this.ByCategoriesAndOverall = argHelper.ArgumentLoader(nameof(ByCategoriesAndOverall), ByCategoriesAndOverall);
-            this.CoefficientOfVariation = argHelper.ArgumentLoader(nameof(CoefficientOfVariation), CoefficientOfVariation);
-            this.ConfidenceInterval = argHelper.ArgumentLoader(nameof(ConfidenceInterval), ConfidenceInterval);
-            this.Mean = argHelper.ArgumentLoader(nameof(Mean), Mean);
-            this.MedianAndQuartiles = argHelper.ArgumentLoader(nameof(MedianAndQuartiles), MedianAndQuartiles);
-            this.MinAndMax = argHelper.ArgumentLoader(nameof(MinAndMax), MinAndMax);
-            this.N = argHelper.ArgumentLoader(nameof(N), N);
-            this.NormalProbabilityPlot = argHelper.ArgumentLoader(nameof(NormalProbabilityPlot), NormalProbabilityPlot);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
-            this.StandardDeviation = argHelper.ArgumentLoader(nameof(StandardDeviation), StandardDeviation);
-            this.StandardErrorOfMean = argHelper.ArgumentLoader(nameof(StandardErrorOfMean), StandardErrorOfMean);
-            this.Variance = argHelper.ArgumentLoader(nameof(Variance), Variance);
+            this.Responses = argHelper.LoadIEnumerableArgument(nameof(Responses));
+            this.FirstCatFactor = argHelper.LoadStringArgument(nameof(FirstCatFactor));
+            this.SecondCatFactor = argHelper.LoadStringArgument(nameof(SecondCatFactor));
+            this.ThirdCatFactor = argHelper.LoadStringArgument(nameof(ThirdCatFactor));
+            this.FourthCatFactor = argHelper.LoadStringArgument(nameof(FourthCatFactor));
+            this.Transformation = argHelper.LoadStringArgument(nameof(Transformation));
+            this.ByCategoriesAndOverall = argHelper.LoadBooleanArgument(nameof(ByCategoriesAndOverall));
+            this.CoefficientOfVariation = argHelper.LoadBooleanArgument(nameof(CoefficientOfVariation));
+            this.ConfidenceInterval = argHelper.LoadBooleanArgument(nameof(ConfidenceInterval));
+            this.Mean = argHelper.LoadBooleanArgument(nameof(Mean));
+            this.MedianAndQuartiles = argHelper.LoadBooleanArgument(nameof(MedianAndQuartiles));
+            this.MinAndMax = argHelper.LoadBooleanArgument(nameof(MinAndMax));
+            this.N = argHelper.LoadBooleanArgument(nameof(N));
+            this.NormalProbabilityPlot = argHelper.LoadBooleanArgument(nameof(NormalProbabilityPlot));
+            this.Significance = argHelper.LoadDecimalArgument(nameof(Significance));
+            this.StandardDeviation = argHelper.LoadBooleanArgument(nameof(StandardDeviation));
+            this.StandardErrorOfMean = argHelper.LoadBooleanArgument(nameof(StandardErrorOfMean));
+            this.Variance = argHelper.LoadBooleanArgument(nameof(Variance));
         }
 
         public override string GetCommandLineArguments()
@@ -201,7 +208,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Responses)); //4
 
             //get transforms
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Transformation)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Transformation, false)); //5
 
             //1st cat factor
             arguments.Append(" " + argFormatter.GetFormattedArgument(FirstCatFactor, true)); //6
@@ -243,7 +250,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(ConfidenceInterval)); //18
 
             //Confidence Limits
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance.ToString())); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance.ToString(), false)); //19
 
             //Normal Probability Plots
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlot));
@@ -251,7 +258,7 @@ namespace SilveR.StatsModels
             //By Categories and Overall
             arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //20
 
-            return arguments.ToString();
-        }        
+            return arguments.ToString().Trim();
+        }
     }
 }

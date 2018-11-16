@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SilveR.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SilveR.Models;
 
 namespace SilveR.Helpers
 {
@@ -60,21 +60,21 @@ namespace SilveR.Helpers
             this.arguments = arguments;
         }
 
-        public string ArgumentLoader(string targetName, string target)
+        public string LoadStringArgument(string targetName)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
 
             return arg.Value;
         }
 
-        public bool ArgumentLoader(string targetName, bool target)
+        public bool LoadBooleanArgument(string targetName)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
 
             return Boolean.Parse(arg.Value);
         }
 
-        public List<string> ArgumentLoader(string targetName, IEnumerable<string> target)
+        public List<string> LoadIEnumerableArgument(string targetName)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
 
@@ -88,18 +88,32 @@ namespace SilveR.Helpers
             }
         }
 
-        public int ArgumentLoader(string targetName, int target)
-        {
-            Argument arg = arguments.Single(x => x.Name == targetName);
+        //public int LoadIntArgument(string targetName)
+        //{
+        //    Argument arg = arguments.Single(x => x.Name == targetName);
 
-            return int.Parse(arg.Value);
-        }
+        //    return int.Parse(arg.Value);
+        //}
 
-        public decimal ArgumentLoader(string targetName, decimal target)
+        public decimal LoadDecimalArgument(string targetName)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
 
             return decimal.Parse(arg.Value);
+        }
+
+        public Nullable<decimal> LoadNullableDecimalArgument(string targetName)
+        {
+            Argument arg = arguments.Single(x => x.Name == targetName);
+
+            if (arg.Value != null)
+            {
+                return decimal.Parse(arg.Value);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

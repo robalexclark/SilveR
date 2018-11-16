@@ -31,7 +31,8 @@ namespace SilveR.Validators
             allVars.AddVariables(caVariables.ThirdCatFactor);
             allVars.AddVariables(caVariables.FourthCatFactor);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             if ((caVariables.FirstCatFactor != null && CountDistinctLevels(caVariables.FirstCatFactor) < 2)
                || (caVariables.SecondCatFactor != null && CountDistinctLevels(caVariables.SecondCatFactor) < 2)
@@ -62,7 +63,8 @@ namespace SilveR.Validators
                     CheckTransformations(row, caVariables.Transformation, response);
                 }
 
-                if (!CheckResponsesPerLevel(categorical, response, "categorical")) return ValidationInfo;
+                if (!CheckResponsesPerLevel(categorical, response, "categorical"))
+                    return ValidationInfo;
 
                 //check response and cat factors contain values
                 if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))

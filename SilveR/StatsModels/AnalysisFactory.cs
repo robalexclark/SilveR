@@ -42,9 +42,9 @@ namespace SilveR.StatsModels
                 case "Linear Regression Analysis":
                     model = new LinearRegressionAnalysisModel(dataset);
                     break;
-                //case "Dose Response Analysis":
-                //    model = new DoseResponseAnalysisModel(dataset);
-                //    break;
+                case "Dose-Response and Non-Linear Regression Analysis":
+                    model = new DoseResponseAndNonLinearRegesssionAnalysisModel(dataset);
+                    break;
                 case "Non-Parametric Analysis":
                     model = new NonParametricAnalysisModel(dataset);
                     break;

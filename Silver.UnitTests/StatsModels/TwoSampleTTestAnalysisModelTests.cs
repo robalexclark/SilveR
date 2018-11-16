@@ -1,31 +1,33 @@
 using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
 namespace Silver.UnitTests
 {
-    public class UnpairedTTestAnalysisModelTests
+    [ExcludeFromCodeCoverageAttribute]
+    public class TwoSampleTTestAnalysisModelTests
     {
         [Fact]
         public void ScriptFileName_ReturnsCorrectString()
         {
             //Arrange
-            UnpairedTTestAnalysisModel sut = new UnpairedTTestAnalysisModel();
+            TwoSampleTTestAnalysisModel sut = new TwoSampleTTestAnalysisModel();
 
             //Act
             string result = sut.ScriptFileName;
 
             //Assert
-            Assert.Equal("UnpairedTTestAnalysis", result);
+            Assert.Equal("TwoSampleTTestAnalysis", result);
         }
 
         [Fact]
         public void TransformationsList_ReturnsCorrectList()
         {
             //Arrange
-            UnpairedTTestAnalysisModel sut = new UnpairedTTestAnalysisModel();
+            TwoSampleTTestAnalysisModel sut = new TwoSampleTTestAnalysisModel();
 
             //Act
             IEnumerable<string> result = sut.TransformationsList;
@@ -34,5 +36,6 @@ namespace Silver.UnitTests
             Assert.IsAssignableFrom<IEnumerable<string>>(result);
             Assert.Equal(new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine", "Rank" }, result);
         }
+
     }
 }

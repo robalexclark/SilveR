@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -52,10 +52,10 @@ namespace SilveR.StatsModels
             get { return analysisType; }
             set
             {
-                if (analysisType != value)
-                {
+                //if (analysisType != value)
+                //{
                     analysisType = value;
-                }
+                //}
             }
         }
 
@@ -90,19 +90,25 @@ namespace SilveR.StatsModels
             dtNew.RemoveBlankRow(Response);
 
             //...and export them
-            return dtNew.GetCSVArray();
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
-            this.OtherDesignFactor = argHelper.ArgumentLoader(nameof(OtherDesignFactor), OtherDesignFactor);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
-            this.AnalysisType = (AnalysisOption)Enum.Parse(typeof(AnalysisOption), argHelper.ArgumentLoader(nameof(AnalysisType), String.Empty), true);
-            this.Control = argHelper.ArgumentLoader(nameof(Control), Control);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
+            this.OtherDesignFactor = argHelper.LoadStringArgument(nameof(OtherDesignFactor));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
+            this.AnalysisType = (AnalysisOption)Enum.Parse(typeof(AnalysisOption), argHelper.LoadStringArgument(nameof(AnalysisType)), true);
+            this.Control = argHelper.LoadStringArgument(nameof(Control));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -128,11 +134,11 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true));
             arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactor, true));
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance));
-            arguments.Append(" " + argFormatter.GetFormattedArgument(AnalysisType.ToString()));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AnalysisType.ToString(), false));
             arguments.Append(" " + argFormatter.GetFormattedArgument(Control, true));
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
     }
 }

@@ -29,15 +29,22 @@ namespace SilveR.Validators
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckFactorsHaveLevels(rmVariables.Treatments, true)) return ValidationInfo;
-            if (!CheckFactorsHaveLevels(rmVariables.RepeatedFactor, true)) return ValidationInfo;
-            if (!CheckFactorsHaveLevels(rmVariables.Subject, true)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.Treatments, true))
+                return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.RepeatedFactor, true))
+                return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.Subject, true))
+                return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(rmVariables.Treatments, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Treatments))) return ValidationInfo;
-            if (!CheckResponsesPerLevel(rmVariables.OtherDesignFactors, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
-            if (!CheckResponsesPerLevel(rmVariables.RepeatedFactor, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.RepeatedFactor))) return ValidationInfo;
-            if (!CheckResponsesPerLevel(rmVariables.Subject, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Subject))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.Treatments, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Treatments)))
+                return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.OtherDesignFactors, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors)))
+                return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.RepeatedFactor, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.RepeatedFactor)))
+                return ValidationInfo;
+            if (!CheckResponsesPerLevel(rmVariables.Subject, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Subject)))
+                return ValidationInfo;
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
@@ -47,28 +54,34 @@ namespace SilveR.Validators
             categorical.Add(rmVariables.Subject);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, rmVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseCovariateChecks(categorical, rmVariables.Response))
+                return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
             if (rmVariables.Covariates != null)
             {
                 foreach (string covariate in rmVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categorical, covariate)) return ValidationInfo;
+                    if (!FactorAndResponseCovariateChecks(categorical, covariate))
+                        return ValidationInfo;
                 }
             }
 
             //Check that each subject is only present in one treatment factor
-            if (!CheckSubjectIsPresentInOnlyOneFactor(rmVariables.Treatments, false)) return ValidationInfo;
+            if (!CheckSubjectIsPresentInOnlyOneFactor(rmVariables.Treatments, false))
+                return ValidationInfo;
 
             //Check that each subject is only present in one blocking factor
-            if (rmVariables.OtherDesignFactors != null && !CheckSubjectIsPresentInOnlyOneFactor(rmVariables.OtherDesignFactors, true)) return ValidationInfo;
+            if (rmVariables.OtherDesignFactors != null && !CheckSubjectIsPresentInOnlyOneFactor(rmVariables.OtherDesignFactors, true))
+                return ValidationInfo;
 
             //check that the replication of treatment factors in each timepoint is greater than 1
-            if (!CheckReplicationOfTreatmentFactors()) return ValidationInfo;
+            if (!CheckReplicationOfTreatmentFactors())
+                return ValidationInfo;
 
             //Here we are checking that all treatment combinations are present at each time point in the design
-            if (!CheckTreatmentCombinations()) return ValidationInfo;
+            if (!CheckTreatmentCombinations())
+                return ValidationInfo;
 
             //check that the effect selected is the highest order interaction possible from selected factors, else output warning
             CheckEffectSelectedIsHighestOrderInteraction();
@@ -84,11 +97,11 @@ namespace SilveR.Validators
             treatAndOtherFactors.AddVariables(rmVariables.Treatments);
             treatAndOtherFactors.AddVariables(rmVariables.OtherDesignFactors);
 
-            List<string> timePoints = GetLevels(rmVariables.RepeatedFactor);
+            IEnumerable<string> timePoints = GetLevels(rmVariables.RepeatedFactor);
 
             foreach (string factor in treatAndOtherFactors)
             {
-                List<string> factorLevels = GetLevels(factor);
+                IEnumerable<string> factorLevels = GetLevels(factor);
 
                 foreach (string point in timePoints)
                 {
@@ -116,7 +129,7 @@ namespace SilveR.Validators
 
         private bool CheckSubjectIsPresentInOnlyOneFactor(IEnumerable<string> factors, bool isBlockingFactor)
         {
-            List<string> subjectList = GetLevels(rmVariables.Subject);
+            IEnumerable<string> subjectList = GetLevels(rmVariables.Subject);
             foreach (string factor in factors)
             {
                 foreach (string subject in subjectList)

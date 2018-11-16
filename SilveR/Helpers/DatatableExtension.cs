@@ -14,8 +14,7 @@ namespace SilveR.Helpers
             {
                 foreach (DataRow r in dataTable.Rows)
                 {
-                    string newValue = r[c.ColumnName].ToString().Trim();
-                    r[c.ColumnName] = newValue;
+                    r[c.ColumnName] = r[c.ColumnName].ToString().Trim();
                 }
             }
         }
@@ -45,8 +44,7 @@ namespace SilveR.Helpers
                 int rank = 1;
                 foreach (double v in colData)
                 {
-                    rankingList.Add(new KeyValuePair<int, double>(rank, v)); //add in the rank along with the value 
-
+                    rankingList.Add(new KeyValuePair<int, double>(rank, v)); //add in the rank along with the value
                     rank++;
                 }
 
@@ -107,7 +105,7 @@ namespace SilveR.Helpers
                                 break;
                             case "ArcSine":
                                 if (val >= 0 && val <= 1)
-                                    r[column] = Math.Asin(Math.Sqrt(val));
+                                    r[column] = Math.Asin(val);
                                 else
                                     r[column] = null;
 
@@ -118,30 +116,29 @@ namespace SilveR.Helpers
             }
         }
 
-        public static void RemoveBlankRow(this DataTable dtNew, string blankColumn)
+        public static void RemoveBlankRow(this DataTable dtNew, string columnToCheck)
         {
-            if (!String.IsNullOrEmpty(blankColumn))
-            {
+            //if (!String.IsNullOrEmpty(columnToCheck))
+            //{
                 for (int i = dtNew.Rows.Count - 1; i >= 0; i--)
                 {
                     DataRow theRow = dtNew.Rows[i];
 
-                    if (String.IsNullOrEmpty(theRow[blankColumn].ToString()))
+                    if (String.IsNullOrEmpty(theRow[columnToCheck].ToString()))
                     {
                         dtNew.Rows.Remove(dtNew.Rows[i]);
                     }
                 }
-            }
+            //}
         }
 
-        public static bool CheckIsNumeric(this DataTable dtNew, string column)
+        public static bool CheckIsNumeric(this DataTable dataTable, string column)
         {
             if (!String.IsNullOrEmpty(column))
             {
-                foreach (DataRow row in dtNew.Rows)
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    double number;
-                    bool isNumeric = Double.TryParse(row[column].ToString(), out number);
+                    bool isNumeric = Double.TryParse(row[column].ToString(), out double number);
 
                     if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString())) return false;
                 }
@@ -149,7 +146,6 @@ namespace SilveR.Helpers
 
             return true;
         }
-
 
         public static string[] GetCSVArray(this DataTable dataTable)
         {
@@ -214,13 +210,16 @@ namespace SilveR.Helpers
             return variables;
         }
 
-        public static List<string> GetLevels(this DataTable dataTable, string column)
+        public static IEnumerable<string> GetLevels(this DataTable dataTable, string column)
         {
-            //Get a list of the distinct levels in a selected column
-            List<string> distinctlevels = new List<string>();
+            return GetValues(dataTable, column).Distinct();
+        }
 
-            if (String.IsNullOrEmpty(column))
-                return distinctlevels; //i.e. empty list
+        public static IEnumerable<string> GetValues(this DataTable dataTable, string column)
+        {
+            //Get a list of the levels in a selected column
+            //if (String.IsNullOrEmpty(column))
+            //    return new List<string>(); //i.e. empty list
 
             List<string> levels = new List<string>();
 
@@ -230,9 +229,7 @@ namespace SilveR.Helpers
                     levels.Add(row[column].ToString());
             }
 
-            IEnumerable<string> levelsAsIEnumerable = levels.Distinct();
-
-            return levelsAsIEnumerable.ToList();
+            return levels;
         }
 
         public static DataTable CopyForExport(this DataTable dataTable)
@@ -252,21 +249,6 @@ namespace SilveR.Helpers
             dtNew.Columns.Remove("SilveRSelected");
 
             return dtNew;
-        }
-
-        public static bool ColumnIsNumeric(this DataTable dataTable, string column)
-        {
-            if (!String.IsNullOrEmpty(column))
-            {
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    double number;
-                    bool isNumeric = Double.TryParse(row[column].ToString(), out number);
-
-                    if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString())) return false;
-                }
-            }
-            return true;
         }
     }
 }

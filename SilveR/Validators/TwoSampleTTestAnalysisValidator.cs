@@ -26,17 +26,21 @@ namespace SilveR.Validators
             if (!CheckFactorsHaveLevels(upttVariables.Treatment, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<TwoSampleTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<TwoSampleTTestAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<TwoSampleTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<TwoSampleTTestAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
 
             //do data checks on the treatments and response
-            if (!TreatmentAndResponseChecks(upttVariables.Treatment, upttVariables.Response)) return ValidationInfo;
+            if (!TreatmentAndResponseChecks(upttVariables.Treatment, upttVariables.Response))
+                return ValidationInfo;
 
             //if get here then no errors so return true
             return ValidationInfo;
         }
+
         private bool TreatmentAndResponseChecks(string treatmentVar, string responseVar)
         {
             int treatmentLevels = CountDistinctLevels(treatmentVar);

@@ -1,5 +1,4 @@
 ﻿using CsvHelper;
-using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -7,22 +6,21 @@ using System.Linq;
 
 namespace SilveR.Helpers
 {
-    public static class CSVHelper
+    public static class CSVConverter
     {
         public static DataTable CSVDataToDataTable(Stream stream, CultureInfo culture = null)
         {
-            List<string> headers = new List<string>();
             DataTable dataTable = new DataTable();
 
-            //try
-            //{
             //use the csvreader to read in the csv data
             TextReader textReader = new StreamReader(stream);
-
             CsvParser parser = new CsvParser(textReader);
+            if (culture != null && culture.NumberFormat.NumberDecimalSeparator == ",")
+            {
+                parser.Configuration.Delimiter = ";";// if comma then use semicolon
+            }
 
             string[] headerRow = parser.Read();
-
             for (int i = 0; i < headerRow.Count(); i++)
             {
                 DataColumn newCol;
@@ -44,10 +42,9 @@ namespace SilveR.Helpers
             textReader = new StreamReader(stream);
 
             CsvReader csv = new CsvReader(textReader);
-
             if (culture != null && culture.NumberFormat.NumberDecimalSeparator == ",")
             {
-                csv.Configuration.Delimiter = ";";// if comma then use semicolin
+                csv.Configuration.Delimiter = ";";// if comma then use semicolon
             }
 
             csv.Read();
@@ -66,11 +63,6 @@ namespace SilveR.Helpers
             csv.Dispose();
             textReader.Dispose();
             stream.Dispose();
-            //}
-            //catch (ArgumentException)
-            //{
-            //    return null;
-            //}
 
             return dataTable;
         }

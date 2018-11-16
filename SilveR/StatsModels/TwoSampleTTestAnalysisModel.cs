@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System.Collections.Generic;
@@ -87,7 +87,14 @@ namespace SilveR.StatsModels
                 }
             }
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -110,14 +117,14 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
-            this.EqualVariance = argHelper.ArgumentLoader(nameof(EqualVariance), EqualVariance);
-            this.UnequalVariance = argHelper.ArgumentLoader(nameof(UnequalVariance), UnequalVariance);
-            this.PRPlot = argHelper.ArgumentLoader(nameof(PRPlot), PRPlot);
-            this.NormalPlot = argHelper.ArgumentLoader(nameof(NormalPlot), NormalPlot);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
+            this.EqualVariance = argHelper.LoadBooleanArgument(nameof(EqualVariance));
+            this.UnequalVariance = argHelper.LoadBooleanArgument(nameof(UnequalVariance));
+            this.PRPlot = argHelper.LoadBooleanArgument(nameof(PRPlot));
+            this.NormalPlot = argHelper.LoadBooleanArgument(nameof(NormalPlot));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
 
         public override string GetCommandLineArguments()
@@ -126,7 +133,7 @@ namespace SilveR.StatsModels
             StringBuilder arguments = new StringBuilder();
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true));
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false));
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true));
 
@@ -136,10 +143,9 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlot));
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlot));
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false));
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
-
     }
 }

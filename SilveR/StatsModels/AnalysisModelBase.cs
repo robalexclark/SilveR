@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -14,7 +14,7 @@ namespace SilveR.StatsModels
 
         public DataTable DataTable { get; private set; }
 
-        public Nullable<int> DatasetID { get; set; }
+        public Nullable<int> DatasetID { get; set; } //needs to be public so view can update it
 
         public IEnumerable<string> AvailableVariables { get; private set; } = new List<string>();
 

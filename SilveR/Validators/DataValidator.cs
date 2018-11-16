@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace SilveR.Validators
 {
@@ -30,28 +31,33 @@ namespace SilveR.Validators
         public abstract ValidationInfo Validate();
 
 
-        protected List<string> GetLevels(string column)
+        protected IEnumerable<string> GetLevels(string column)
         {
             return dataTable.GetLevels(column);
         }
 
         protected int CountDistinctLevels(string column)
         {
-            List<string> levels = GetLevels(column);
-            return levels.Count;
+            return dataTable.GetLevels(column).Count();
         }
 
-        protected int NoOfResponses(string column)
+        //protected IEnumerable<string> GetValues(string column)
+        //{
+        //    return dataTable.GetValues(column);
+        //}
+
+        protected int CountResponses(string column)
         {
-            return GetLevels(column).Count;
+            return dataTable.GetValues(column).Count();
         }
+
 
         protected Dictionary<string, int> ResponsesPerLevel(string treatCol, string responseCol)
         {
             //determine the number of responses per level and return as dictionary
             Dictionary<string, int> responseCounts = new Dictionary<string, int>();
 
-            List<string> levels = GetLevels(treatCol);
+            IEnumerable<string> levels = GetLevels(treatCol);
 
             if (String.IsNullOrEmpty(treatCol) || dataTable == null) return responseCounts; //i.e. empty list
 
@@ -217,7 +223,6 @@ namespace SilveR.Validators
                 if (String.IsNullOrEmpty(row[response].ToString()) && !String.IsNullOrEmpty(row[factor].ToString()))
                 {
                     string message = "The response selected (" + response + ") contains missing data.";
-
                     validationInfo.AddWarningMessage(message);
                 }
             }

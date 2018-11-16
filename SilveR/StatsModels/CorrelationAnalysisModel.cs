@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -86,7 +86,7 @@ namespace SilveR.StatsModels
         public CorrelationAnalysisModel() : this(null) { }
 
         public CorrelationAnalysisModel(IDataset dataset)
-            :base(dataset, "CorrelationAnalysis") { }
+            : base(dataset, "CorrelationAnalysis") { }
 
 
         public override ValidationInfo Validate()
@@ -144,7 +144,14 @@ namespace SilveR.StatsModels
                 dtNew.TransformColumn(resp, Transformation);
             }
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -170,25 +177,30 @@ namespace SilveR.StatsModels
             return args;
         }
 
-        public override  void LoadArguments(IEnumerable<Argument> arguments)
+        public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Responses = argHelper.ArgumentLoader(nameof(Responses), Responses);
-            this.FirstCatFactor = argHelper.ArgumentLoader(nameof(FirstCatFactor), FirstCatFactor);
-            this.SecondCatFactor = argHelper.ArgumentLoader(nameof(SecondCatFactor), SecondCatFactor);
-            this.ThirdCatFactor = argHelper.ArgumentLoader(nameof(ThirdCatFactor), ThirdCatFactor);
-            this.FourthCatFactor = argHelper.ArgumentLoader(nameof(FourthCatFactor), FourthCatFactor);
-            this.Transformation = argHelper.ArgumentLoader(nameof(Transformation), Transformation);
-            this.Method = argHelper.ArgumentLoader(nameof(Method), Method);
-            this.Hypothesis = argHelper.ArgumentLoader(nameof(Hypothesis), Hypothesis);
-            this.Estimate = argHelper.ArgumentLoader(nameof(Estimate), Estimate);
-            this.Statistic = argHelper.ArgumentLoader(nameof(Statistic), Statistic);
-            this.PValue = argHelper.ArgumentLoader(nameof(PValue), PValue);
-            this.Scatterplot = argHelper.ArgumentLoader(nameof(Scatterplot), Scatterplot);
-            this.Matrixplot = argHelper.ArgumentLoader(nameof(Matrixplot), Matrixplot);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
-            this.ByCategoriesAndOverall = argHelper.ArgumentLoader(nameof(ByCategoriesAndOverall), ByCategoriesAndOverall);
+            this.Responses = argHelper.LoadIEnumerableArgument(nameof(Responses));
+            this.FirstCatFactor = argHelper.LoadStringArgument(nameof(FirstCatFactor));
+            this.SecondCatFactor = argHelper.LoadStringArgument(nameof(SecondCatFactor));
+            this.ThirdCatFactor = argHelper.LoadStringArgument(nameof(ThirdCatFactor));
+            this.FourthCatFactor = argHelper.LoadStringArgument(nameof(FourthCatFactor));
+            this.Transformation = argHelper.LoadStringArgument(nameof(Transformation));
+            this.Method = argHelper.LoadStringArgument(nameof(Method));
+            this.Hypothesis = argHelper.LoadStringArgument(nameof(Hypothesis));
+            this.Estimate = argHelper.LoadBooleanArgument(nameof(Estimate));
+            this.Statistic = argHelper.LoadBooleanArgument(nameof(Statistic));
+            this.PValue = argHelper.LoadBooleanArgument(nameof(PValue));
+            this.Scatterplot = argHelper.LoadBooleanArgument(nameof(Scatterplot));
+            this.Matrixplot = argHelper.LoadBooleanArgument(nameof(Matrixplot));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
+            this.ByCategoriesAndOverall = argHelper.LoadBooleanArgument(nameof(ByCategoriesAndOverall));
+        }
+
+        private object IEnumerable<T>(T v)
+        {
+            throw new NotImplementedException();
         }
 
         public override string GetCommandLineArguments()
@@ -200,7 +212,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Responses)); //4
 
             //get transforms
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Transformation)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Transformation, false)); //5
 
             //1st cat factor
             arguments.Append(" " + argFormatter.GetFormattedArgument(FirstCatFactor, true)); //6
@@ -215,10 +227,10 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(FourthCatFactor, true)); //9
 
             //Method
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Method)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Method, false)); //10
 
             //Hypothesis
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Hypothesis)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Hypothesis, false)); //11
 
             //Mean
             arguments.Append(" " + argFormatter.GetFormattedArgument(Estimate)); //12
@@ -236,12 +248,12 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Matrixplot)); //16
 
             //Min and Max
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //17
 
             //By Categories and Overall
             arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //18
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
     }
 }

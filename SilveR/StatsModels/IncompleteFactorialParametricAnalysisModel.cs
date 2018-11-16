@@ -1,4 +1,4 @@
-﻿using Combinatorics;
+using Combinatorics.Collections;
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
@@ -87,8 +87,6 @@ namespace SilveR.StatsModels
 
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
-
-        public IEnumerable<string> ControlGroupList { get; set; }
 
 
         public IncompleteFactorialParametricAnalysisModel() : this(null) { }
@@ -188,7 +186,7 @@ namespace SilveR.StatsModels
             //each column and put them in quotes...
             foreach (string treat in Treatments)
             {
-                if (dtNew.ColumnIsNumeric(treat))
+                if (dtNew.CheckIsNumeric(treat))
                 {
                     foreach (DataRow row in dtNew.Rows)
                     {
@@ -201,7 +199,7 @@ namespace SilveR.StatsModels
             {
                 foreach (string odf in OtherDesignFactors)
                 {
-                    if (dtNew.ColumnIsNumeric(odf))
+                    if (dtNew.CheckIsNumeric(odf))
                     {
                         foreach (DataRow row in dtNew.Rows)
                         {
@@ -230,9 +228,9 @@ namespace SilveR.StatsModels
             arguments.Append(" " + Covariates); //6
 
             //get transforms
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation,false)); //7
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation,false)); //8
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //9
 
@@ -244,7 +242,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //13
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //14
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance,false)); //15
 
             //assemble the effect model
             if (String.IsNullOrEmpty(SelectedEffect)) //16, 17
@@ -260,13 +258,13 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //18
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwise)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwise, false)); //19
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonsBackToControl)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonsBackToControl, false)); //20
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //21
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
 
 
@@ -274,22 +272,22 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.Treatments = argHelper.ArgumentLoader(nameof(Treatments), Treatments);
-            this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Covariates = argHelper.ArgumentLoader(nameof(Covariates), Covariates);
-            this.PrimaryFactor = argHelper.ArgumentLoader(nameof(PrimaryFactor), PrimaryFactor);
-            this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
-            this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
-            this.PRPlotSelected = argHelper.ArgumentLoader(nameof(PRPlotSelected), PRPlotSelected);
-            this.NormalPlotSelected = argHelper.ArgumentLoader(nameof(NormalPlotSelected), NormalPlotSelected);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
-            this.SelectedEffect = argHelper.ArgumentLoader(nameof(SelectedEffect), SelectedEffect);
-            this.LSMeansSelected = argHelper.ArgumentLoader(nameof(LSMeansSelected), LSMeansSelected);
-            this.AllPairwise = argHelper.ArgumentLoader(nameof(AllPairwise), AllPairwise);
-            this.ComparisonsBackToControl = argHelper.ArgumentLoader(nameof(ComparisonsBackToControl), ComparisonsBackToControl);
-            this.ControlGroup = argHelper.ArgumentLoader(nameof(ControlGroup), ControlGroup);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.Treatments = argHelper.LoadIEnumerableArgument(nameof(Treatments));
+            this.OtherDesignFactors = argHelper.LoadIEnumerableArgument(nameof(OtherDesignFactors));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
+            this.PrimaryFactor = argHelper.LoadStringArgument(nameof(PrimaryFactor));
+            this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
+            this.ANOVASelected = argHelper.LoadBooleanArgument(nameof(ANOVASelected));
+            this.PRPlotSelected = argHelper.LoadBooleanArgument(nameof(PRPlotSelected));
+            this.NormalPlotSelected = argHelper.LoadBooleanArgument(nameof(NormalPlotSelected));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
+            this.SelectedEffect = argHelper.LoadStringArgument(nameof(SelectedEffect));
+            this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
+            this.AllPairwise = argHelper.LoadStringArgument(nameof(AllPairwise));
+            this.ComparisonsBackToControl = argHelper.LoadStringArgument(nameof(ComparisonsBackToControl));
+            this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
         }
 
         public override IEnumerable<Argument> GetArguments()

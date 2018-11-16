@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.StatsModels;
 using System;
@@ -37,7 +36,7 @@ namespace SilveR.Services
                 //declared here as used in exception handler
                 string workingDir = Path.GetTempPath();
                 string theArguments = null;
-
+                string rscriptPath = null;
 #if !DEBUG
                 try
                 {
@@ -64,22 +63,10 @@ namespace SilveR.Services
                 if (csvData != null)
                 {
                     csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
-
-                    ArgumentFormatter argFormatter = new ArgumentFormatter();
-                    csvData[0] = argFormatter.ConvertIllegalCharacters(csvData[0]);
-                    //Dictionary<string, string> charConverterLines = ArgumentConverters.GetCharConversionList();
-
-                    ////go through and replace the first line...
-                    //foreach (KeyValuePair<string, string> kp in charConverterLines)
-                    //{
-                    //    csvData[0] = csvData[0].Replace(kp.Key, kp.Value);
-                    //}
-
                     File.WriteAllLines(csvFileName, csvData);
                 }
 
                 //setup the r process (way of calling rscript.exe is slightly different for each OS)
-                string rscriptPath = null;
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
@@ -113,7 +100,7 @@ namespace SilveR.Services
                 psi.WorkingDirectory = workingDir;
 
                 theArguments = analysisModel.GetCommandLineArguments();
-                psi.Arguments = scriptFileName.WrapInDoubleQuotes() + " --vanilla --args " + csvFileName.WrapInDoubleQuotes() + theArguments;
+                psi.Arguments = scriptFileName.WrapInDoubleQuotes() + " --vanilla --args " + csvFileName.WrapInDoubleQuotes() + " " + theArguments;
 
                 //Configure some options for the R process
                 psi.UseShellExecute = false;
@@ -197,6 +184,8 @@ namespace SilveR.Services
                         string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
                         message = message + "TempFolder=" + workingDir + Environment.NewLine + Environment.NewLine;
                         message = message + "Arguments=" + theArguments + Environment.NewLine + Environment.NewLine;
+                        message = message + "Rscript="+rscriptPath + Environment.NewLine + Environment.NewLine;
+
                         message = message + ex.Message;
 
                         if (ex.InnerException != null)

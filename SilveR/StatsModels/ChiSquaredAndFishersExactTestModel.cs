@@ -1,12 +1,10 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
 using System.Text;
 
 namespace SilveR.StatsModels
@@ -58,7 +56,7 @@ namespace SilveR.StatsModels
         public ChiSquaredAndFishersExactTestModel() : this(null) { }
 
         public ChiSquaredAndFishersExactTestModel(IDataset dataset)
-            :base(dataset, "ChiSquaredAndFishersExactTest") {   }
+            : base(dataset, "ChiSquaredAndFishersExactTest") { }
 
 
         public override ValidationInfo Validate()
@@ -69,7 +67,7 @@ namespace SilveR.StatsModels
 
         public override string[] ExportData()
         {
-            DataTable dtNew =DataTable.CopyForExport();
+            DataTable dtNew = DataTable.CopyForExport();
 
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string col in dtNew.GetVariableNames())
@@ -86,7 +84,14 @@ namespace SilveR.StatsModels
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -109,14 +114,14 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.GroupingFactor = argHelper.ArgumentLoader(nameof(GroupingFactor), GroupingFactor);
-            this.ResponseCategories = argHelper.ArgumentLoader(nameof(ResponseCategories), ResponseCategories);
-            this.ChiSquaredTest = argHelper.ArgumentLoader(nameof(ChiSquaredTest), ChiSquaredTest);
-            this.FishersExactTest = argHelper.ArgumentLoader(nameof(FishersExactTest), FishersExactTest);
-            this.Hypothesis = argHelper.ArgumentLoader(nameof(Hypothesis), Hypothesis);
-            this.BarnardsTest = argHelper.ArgumentLoader(nameof(BarnardsTest), BarnardsTest);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.GroupingFactor = argHelper.LoadStringArgument(nameof(GroupingFactor));
+            this.ResponseCategories = argHelper.LoadStringArgument(nameof(ResponseCategories));
+            this.ChiSquaredTest = argHelper.LoadBooleanArgument(nameof(ChiSquaredTest));
+            this.FishersExactTest = argHelper.LoadBooleanArgument(nameof(FishersExactTest));
+            this.Hypothesis = argHelper.LoadStringArgument(nameof(Hypothesis));
+            this.BarnardsTest = argHelper.LoadBooleanArgument(nameof(BarnardsTest));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
 
         public override string GetCommandLineArguments()
@@ -130,11 +135,11 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ChiSquaredTest)); //7
             arguments.Append(" " + argFormatter.GetFormattedArgument(FishersExactTest)); //8
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Hypothesis)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Hypothesis, false)); //9
             arguments.Append(" " + argFormatter.GetFormattedArgument(BarnardsTest)); //10
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //11
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
     }
 }

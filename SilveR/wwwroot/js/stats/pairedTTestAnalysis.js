@@ -33,7 +33,7 @@ $(function () {
     });
 
     $("#Covariance").kendoDropDownList({
-        dataSource: theModel.covarianceList
+        dataSource: theModel.covariancesList
     });
 
     const controlGroup = $("#ControlGroup").kendoDropDownList({

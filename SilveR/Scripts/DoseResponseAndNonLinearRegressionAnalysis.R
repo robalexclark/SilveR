@@ -62,7 +62,7 @@ if (DoseResponseType == "FourParameter") {
 	XAxisTitle<-DoseVar
 }
 
-if (DoseResponseType == "FromEquation") {
+if (DoseResponseType == "Equation") {
 	YAxisTitle<-EquationResponse
 	XAxisTitle<-EquationDose
 }
@@ -80,11 +80,11 @@ HTML.title(Title, HR = 1, align = "left")
 
 #===================================================================================================================
 #===================================================================================================================
-#Analysis based on a user eqation
+#Analysis based on a user equation
 #===================================================================================================================
 #===================================================================================================================
 #===================================================================================================================
-if (DoseResponseType == "FromEquation") {
+if (DoseResponseType == "Equation") {
 	#Titles and description
 	HTML.title("Variable selection", HR=2, align="left")
 	add<-paste(c("The  "), EquationResponse, " response is currently being analysed using the user defined equation in the Dose-Response Analysis module. ", sep="")
@@ -100,7 +100,7 @@ if (DoseResponseType == "FromEquation") {
 	#Dose fit equation
 	statdata$x = eval(parse(text = paste("statdata$", EquationDose)))
 	statdata$y = eval(parse(text = paste("statdata$", EquationResponse )))
-	Equation2 <- eval(parse(text = paste("y~", Equation)))
+	Equation2 <- sub("=", "~", Equation)
 
 	#Separate out the start values
 	#STB Jan 2016 remove trailing spaces
@@ -134,7 +134,6 @@ if (DoseResponseType == "FromEquation") {
 		nameparas[i]=tabs[i,1]
 	}
 	names(paras)<-nameparas
-
 	dosefit<-nls(Equation2, start=paras, data=statdata)
 
 	#STB Sept 2011 CC26
@@ -188,33 +187,34 @@ if (DoseResponseType == "FromEquation") {
 	#Table of parameter estimates
 	table<-summary(dosefit)$parameters
 	tablen<-length(unique(rownames(table)))
-	tabz<-matrix(nrow=tablen, ncol=4)
-	
+	tabz<-matrix(nrow=tablen, ncol=5)
+
 	for (i in 1:tablen) {
 		#STB Dec 2011 Formatting to 3dp
-		tabz[i,1]=format(round(table[i,1], 3), nsmall=3, scientific=FALSE)
+		tabz[i,1]=rownames(table)[i]
 	}
 	for (i in 1:tablen) {
-		tabz[i,2]=format(round(table[i,2], 3), nsmall=3, scientific=FALSE)
+		#STB Dec 2011 Formatting to 3dp
+		tabz[i,2]=format(round(table[i,1], 3), nsmall=3, scientific=FALSE)
 	}
 	for (i in 1:tablen) {
-		tabz[i,3]=format(round(table[i,3], 2), nsmall=2, scientific=FALSE)
+		tabz[i,3]=format(round(table[i,2], 3), nsmall=3, scientific=FALSE)
 	}
 	for (i in 1:tablen) {
-		tabz[i,4]=format(round(table[i,4], 4), nsmall=4, scientific=FALSE)
+		tabz[i,4]=format(round(table[i,3], 2), nsmall=2, scientific=FALSE)
+	}
+	for (i in 1:tablen) {
+		tabz[i,5]=format(round(table[i,4], 4), nsmall=4, scientific=FALSE)
 	}
 	for (i in 1:tablen) {
 		if (as.numeric(table[i,4])<0.0001) {
 			#STB - March 2011 formating p-value <0.0001
-			tabz[i,4]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			tabz[i,4]<- paste("<",tabz[i,4])
+			tabz[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+			tabz[i,5]<- paste("<",tabz[i,5])
 		}
 	}
 
-	header<-c(" ", " "," ", " ")
-	tabs<-rbind(header, tabz)
-	rownames(tabs)<-c("Parameter", rownames(table))
-	colnames(tabs)<-c("Estimate", "Std error", "t-value", "p-value")
+	colnames(tabz)<-c("Parameter", "Estimate", "Std error", "t-value", "p-value")
 
 	#DF test
 	df<-length(na.omit(eval(parse(text = paste("statdata$", EquationResponse )))))-tablen
@@ -299,7 +299,7 @@ if (DoseResponseType == "FromEquation") {
 
 	#Table of parameter estimates print
 	HTML.title("Table of model parameters and summary statistics", HR=2, align="left")
-	HTML(tabs, classfirstline="second", align="left", row.names = "FALSE")
+	HTML(tabz, classfirstline="second", align="left", row.names = "FALSE")
 }
 
 #===================================================================================================================
@@ -422,7 +422,7 @@ if (DoseResponseType == "FourParameter") {
 
 	add<-paste("The  ", ResponseVar, " response is currently being analysed by the Dose-Response Analysis module", sep="")
 	if(ResponseTransform != "None") {
-		add<-paste(add, " and has been ", ResponseTransform, " transformed prior to analysis"  sep="")
+		add<-paste(add, " and has been ", ResponseTransform, " transformed prior to analysis" , sep="")
 		add<-paste(add, ResponseTransform, sep="")
 	}
 	add<-paste(add, ".", sep="")
@@ -578,36 +578,36 @@ if (DoseResponseType == "FourParameter") {
 		} 
 	}
 
-	tabz<-matrix(nrow=tablen, ncol=4)
+	tabz<-matrix(nrow=tablen, ncol=5)
 	for (i in 1:tablen) {
 		#STB Dec 2011 Formatting to 3dp
-		tabz[i,1]=format(round(table[i,1], 3), nsmall=3, scientific=FALSE)
+		tabz[i,1]=rownames(table)[i]
+	}
+	for (i in 1:tablen) {
+		#STB Dec 2011 Formatting to 3dp
+		tabz[i,2]=format(round(table[i,1], 3), nsmall=3, scientific=FALSE)
 	}
 
 	for (i in 1:tablen) {
-		tabz[i,2]=format(round(table[i,2], 3), nsmall=3, scientific=FALSE)
+		tabz[i,3]=format(round(table[i,2], 3), nsmall=3, scientific=FALSE)
 	}
 	for (i in 1:tablen) {
-		tabz[i,3]=format(round(table[i,3], 2), nsmall=2, scientific=FALSE)
+		tabz[i,4]=format(round(table[i,3], 2), nsmall=2, scientific=FALSE)
 	}
 	for (i in 1:tablen) {
-		tabz[i,4]=format(round(table[i,4], 4), nsmall=4, scientific=FALSE)
+		tabz[i,5]=format(round(table[i,4], 4), nsmall=4, scientific=FALSE)
 	}
 	for (i in 1:tablen)  {
 		if (as.numeric(table[i,4])<0.0001)  {
 			#STB March 2011 - formatting p-value <0.00010
-	#		tabz[i,4]<-0.0001
-			tabz[i,4]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			tabz[i,4]<- paste("<",tabz[i,4])
+	#		tabz[i,5]<-0.0001
+			tabz[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+			tabz[i,5]<- paste("<",tabz[i,5])
 		}
 	}
 
-	header<-c(" ", " "," ", " ")
-	tabs<-rbind(header, tabz)
-
-	rownames(tabs)<-c("Parameter", paranams)
-	colnames(tabs)<-c("Estimate", "Std error", "t-value", "p-value")
-	HTML(tabs, classfirstline="second", align="left", row.names = "FALSE")
+	colnames(tabz)<-c("Parameter", "Estimate", "Std error", "t-value", "p-value")
+	HTML(tabz, classfirstline="second", align="left", row.names = "FALSE")
 
 	ictab<-data.frame(table)
 
@@ -949,43 +949,29 @@ if (DoseResponseType == "FourParameter") {
 		colnames(tempdata)<-c("True QC mean", "Back-transformed QC mean", "Std dev of QC samples", "No. of back-transformable QCs","Relative error (%)", "Coefficient of variation (%)")
 
 		ablen<-length(unique(rownames(tempdata)))
-		tab<-matrix(nrow=ablen, ncol=11)
+		tab<-matrix(nrow=ablen, ncol=7)
 
+   		tab[,1] <- c(1:ablen)
 		for (i in 1:ablen) {
 			#STB Dec 2011 Formatting to 3dp
-			tab[i,1]=format(round(tempdata[i,1],3), nsmall=3, scientific=FALSE)
-		}
-		for (i in 1:ablen) {
-			tab[i,2]=c(" ")
+			tab[i,2]=format(round(tempdata[i,1],3), nsmall=3, scientific=FALSE)
 		}
 		for (i in 1:ablen) {
 			tab[i,3]=format(round(tempdata[i,2], 3), nsmall=3, scientific=FALSE)
 		}
 		for (i in 1:ablen) {
-			tab[i,4]=c(" ")
+			tab[i,4]=format(round(tempdata[i,3], 3), nsmall=3, scientific=FALSE)
 		}
 		for (i in 1:ablen) {
-			tab[i,5]=format(round(tempdata[i,3], 3), nsmall=3, scientific=FALSE)
+			tab[i,5]=format(round(tempdata[i,4], 0), nsmall=0, scientific=FALSE)
 		}
 		for (i in 1:ablen) {
-			tab[i,6]=c(" ")
+			tab[i,6]=format(round(tempdata[i,5], 2), nsmall=2, scientific=FALSE)
 		}
 		for (i in 1:ablen) {
-			tab[i,7]=format(round(tempdata[i,4], 0), nsmall=0, scientific=FALSE)
+			tab[i,7]=format(round(tempdata[i,6], 2), nsmall=2, scientific=FALSE)
 		}
-		for (i in 1:ablen) {
-			tab[i,8]=c(" ")
-		}
-		for (i in 1:ablen) {
-			tab[i,9]=format(round(tempdata[i,5], 2), nsmall=2, scientific=FALSE)
-		}
-		for (i in 1:ablen) {
-			tab[i,10]=c(" ")
-		}
-		for (i in 1:ablen) {
-			tab[i,11]=format(round(tempdata[i,6], 2), nsmall=2, scientific=FALSE)
-		}
-		colnames(tab)<-c("True QC mean", "   ", "Back-calculated QC mean", "   ","Std dev of back-calculated QC mean", "   ", "No. of back-calculated QCs", "  ", "Relative error (%)", "   ", "Coefficient of variation (%)")
+		colnames(tab)<-c("QC ID number", "True QC mean", "Back-calculated QC mean", "Std dev of back-calculated QC mean",  "No. of back-calculated QCs",  "Relative error (%)",  "Coefficient of variation (%)")
 	
 		HTML(tab, classfirstline="second", align="left", row.names = "FALSE")
 		HTML("Note: The relative error (%) and coefficient of variation (%) for an individual QC are only reliable statistics if all the QCs can be back-calculated.", align="left")
@@ -1004,18 +990,14 @@ if (DoseResponseType == "FourParameter") {
 		if (DoseTransform == "Log10") {
 			statdata$backtranss<-format(round(10**(C-(1/B)*log10(((A-D)/(statdata$samplesresponsezzzz-D))-1))-offset, 3), nsmall=3, scientific=FALSE)
 		}
-		for (i in 1:length(statdata$samplesresponsezzzz)) {
-			statdata$blank[i]<-c(" ")	
-		}
 
-		samples<-cbind(statdata$samplesresponsezzzz, statdata$blank,statdata$backtranss)
-		row<-c(" "," "," ")
-		samples2<-rbind(row, samples)
-		samples2<-na.omit(samples2) 
-		samlen<-dim(samples2)[1]
-		index<-c("Sample ID",1:(samlen-1))
-		rownames(samples2)<-index
-		colnames(samples2)<-c("    Sample response    ", "      ","    Back-calculated response    ")
+		samples<-cbind(statdata$samplesresponsezzzz,statdata$backtranss)
+
+		samples<-na.omit(samples) 
+		samlen<-dim(samples)[1]
+		index<-c(1:samlen)
+		samples2<- cbind(index, samples)
+		colnames(samples2)<-c("Sample ID number", "Sample response", "Back-calculated response")
 		HTML(samples2, classfirstline="second", align="left", row.names = "FALSE")
 	}
 
@@ -1054,11 +1036,11 @@ if (showdataset == "Y") {
             statdata2 <- subset(statdata2, select = -c(QCresponsezzzz, logQCconczzzz, QCconczzzz))
         }
         if (Samples != "NULL") {
-            statdata2 <- subset(statdata2, select = -c(samplesresponsezzzz, backtranss, blank))
+            statdata2 <- subset(statdata2, select = -c(samplesresponsezzzz, backtranss))
         }
     }
 
-    if (DoseResponseType == "FromEquation") {
+    if (DoseResponseType == "Equation") {
         statdata2 <- subset(statdata, select = -c(respzzzz, x, y, conczzzz))
     }
 

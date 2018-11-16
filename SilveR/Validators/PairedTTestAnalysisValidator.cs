@@ -32,14 +32,18 @@ namespace SilveR.Validators
             if (!CheckFactorsHaveLevels(pttVariables.Subject, true)) return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.OtherDesignFactors))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.OtherDesignFactors)))
+                return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Subject))) return ValidationInfo;
+            if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Subject)))
+                return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment))) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categoricalVariables = new List<string>();
@@ -48,25 +52,30 @@ namespace SilveR.Validators
             categoricalVariables.AddVariables(pttVariables.Subject);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categoricalVariables, pttVariables.Response)) return ValidationInfo;
+            if (!FactorAndResponseCovariateChecks(categoricalVariables, pttVariables.Response))
+                return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
             if (pttVariables.Covariates != null)
             {
                 foreach (string covariate in pttVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categoricalVariables, covariate)) return ValidationInfo;
+                    if (!FactorAndResponseCovariateChecks(categoricalVariables, covariate))
+                        return ValidationInfo;
                 }
             }
 
             //Check that each subject is only present in one blocking factor
-            if (!CheckSubjectIsPresentInOnlyOneFactor(pttVariables.OtherDesignFactors, true)) return ValidationInfo;
+            if (!CheckSubjectIsPresentInOnlyOneFactor(pttVariables.OtherDesignFactors, true))
+                return ValidationInfo;
 
             //check each subject has one response at each time point
-            if (!CheckSubjectOnlyHasOneResponseForEachTreatment()) return ValidationInfo;
+            if (!CheckSubjectOnlyHasOneResponseForEachTreatment())
+                return ValidationInfo;
 
             //check that the replication of treatment factors in each timepoint is greater than 1
-            if (!CheckReplicationOfTreatmentFactors()) return ValidationInfo;
+            if (!CheckReplicationOfTreatmentFactors())
+                return ValidationInfo;
 
             //if get here then no errors so return true
             return ValidationInfo;
@@ -78,11 +87,11 @@ namespace SilveR.Validators
             treatAndOtherFactors.AddVariables(pttVariables.Treatment);
             treatAndOtherFactors.AddVariables(pttVariables.OtherDesignFactors);
 
-            List<string> timePoints = GetLevels(pttVariables.Treatment);
+            IEnumerable<string> timePoints = GetLevels(pttVariables.Treatment);
 
             foreach (string factor in treatAndOtherFactors)
             {
-                List<string> factorLevels = GetLevels(factor);
+                IEnumerable<string> factorLevels = GetLevels(factor);
 
                 foreach (string point in timePoints)
                 {
@@ -110,8 +119,8 @@ namespace SilveR.Validators
         private bool CheckSubjectOnlyHasOneResponseForEachTreatment()
         {
             //check each subject only has one response for each treatment
-            List<string> subjectsList = GetLevels(pttVariables.Subject);
-            List<string> treatLevels = GetLevels(pttVariables.Treatment);
+            IEnumerable<string> subjectsList = GetLevels(pttVariables.Subject);
+            IEnumerable<string> treatLevels = GetLevels(pttVariables.Treatment);
 
             foreach (string treat in treatLevels)
             {
@@ -140,7 +149,7 @@ namespace SilveR.Validators
         {
             if (factors == null) return true;
 
-            List<string> subjectsList = GetLevels(pttVariables.Subject);
+            IEnumerable<string> subjectsList = GetLevels(pttVariables.Subject);
             foreach (string factor in factors)
             {
                 foreach (string subject in subjectsList)

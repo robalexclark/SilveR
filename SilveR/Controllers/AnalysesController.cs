@@ -16,6 +16,7 @@ namespace SilveR.Controllers
         private readonly SilveRRepository repository;
         private readonly IBackgroundTaskQueue backgroundQueue;
         private readonly IRProcessorService rProcessorService;
+
         public AnalysesController(SilveRRepository repository, IBackgroundTaskQueue backgroundQueue, IRProcessorService rProcessorService)
         {
             this.repository = repository;
@@ -114,7 +115,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public ActionResult LinearRegressionAnalysis() { return RedirectToAction("Index"); }
         [HttpGet]
-        public ActionResult DoseResponseAnalysis() { return RedirectToAction("Index"); }
+        public ActionResult DoseResponseAndNonLinearRegressionAnalysis() { return RedirectToAction("Index"); }
         [HttpGet]
         public ActionResult NonParametricAnalysis() { return RedirectToAction("Index"); }
         [HttpGet]
@@ -187,11 +188,11 @@ namespace SilveR.Controllers
             return await RunAnalysis(model, submitButton);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> DoseResponseAnalysis(DoseResponseModel model, string submitButton)
-        //{
-        //    return await RunAnalysis(model, submitButton);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> DoseResponseAndNonLinearRegressionAnalysis(DoseResponseAndNonLinearRegesssionAnalysisModel model, string submitButton)
+        {
+            return await RunAnalysis(model, submitButton);
+        }
 
         [HttpPost]
         public async Task<IActionResult> NonParametricAnalysis(NonParametricAnalysisModel model, string submitButton)

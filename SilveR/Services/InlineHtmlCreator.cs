@@ -18,7 +18,7 @@ namespace SilveR.Services
             //read in the html and reconvert any dodhy characters back
             string theHTML = File.ReadAllText(htmlFile);
             ArgumentFormatter argFormatter = new ArgumentFormatter();
-            theHTML = argFormatter.ConvertIVSCharactersBack(theHTML);
+            theHTML = argFormatter.ConvertIllegalCharactersBack(theHTML);
 
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(theHTML);

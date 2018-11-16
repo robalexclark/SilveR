@@ -138,6 +138,12 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/doseResponseAndNonLinearRegesssionAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/doseResponseAndNonLinearRegesssionAnalysis.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/data/index.min.js",
     "inputFiles": [
       "wwwroot/js/data/index.js"

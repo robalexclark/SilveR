@@ -25,7 +25,6 @@ namespace SilveR.Validators
         }
     }
 
-
     public class CheckUsedOnceOnlyAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -111,6 +110,7 @@ namespace SilveR.Validators
         }
     }
 
+
     //NON-PARAMETRIC
     public class ValidateControlLevelSetAttribute : ValidationAttribute
     {
@@ -128,6 +128,7 @@ namespace SilveR.Validators
             }
         }
     }
+
 
     //P-VALUE ADJUSTMENT
     public class CheckPValueAttribute : ValidationAttribute
@@ -166,6 +167,7 @@ namespace SilveR.Validators
         }
     }
 
+
     //SUMMARY STATS
     public class ValidateConfidenceLimitsAttribute : ValidationAttribute
     {
@@ -181,6 +183,7 @@ namespace SilveR.Validators
                 return ValidationResult.Success;
         }
     }
+
 
     //MEANS COMPARISON
     public class ValidateGroupMeanAttribute : ValidationAttribute
@@ -205,26 +208,6 @@ namespace SilveR.Validators
             }
         }
     }
-
-
-    //CORRELATION
-    public class HasAtLeastTwoEntriesAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            IEnumerable<object> iEnumerable = (IEnumerable<object>)value;
-
-            if (iEnumerable == null || iEnumerable.Count() < 2)
-            {
-                return new ValidationResult(validationContext.DisplayName + " requires at least two entries");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
-
 
     public class ValidateStandardDeviationAttribute : ValidationAttribute
     {
@@ -268,7 +251,6 @@ namespace SilveR.Validators
             }
         }
     }
-
 
     public class ValidateResponseOrTreatmentAttribute : ValidationAttribute
     {
@@ -380,7 +362,6 @@ namespace SilveR.Validators
         }
     }
 
-
     public class ValidateCustomFromAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -413,7 +394,6 @@ namespace SilveR.Validators
             }
         }
     }
-
 
     public class ValidateCustomToAttribute : ValidationAttribute
     {
@@ -481,7 +461,6 @@ namespace SilveR.Validators
         }
     }
 
-
     public class ValidateSampleSizeToAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -516,43 +495,83 @@ namespace SilveR.Validators
     }
 
 
-    public class UniqueVariableChecker
+    //CORRELATION
+    public class HasAtLeastTwoEntriesAttribute : ValidationAttribute
     {
-        private List<string> varList = new List<string>();
-
-        public void AddVar(string item)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (!String.IsNullOrEmpty(item))
-            {
-                varList.Add(item);
-            }
-        }
+            IEnumerable<object> iEnumerable = (IEnumerable<object>)value;
 
-        public void AddVars(IEnumerable<string> items)
-        {
-            if (items != null)
+            if (iEnumerable == null || iEnumerable.Count() < 2)
             {
-                varList.AddRange(items);
-            }
-        }
-
-        public bool DoCheck(object varToCheck)
-        {
-            if (varToCheck is String)
-            {
-                string stringVarToCheck = (String)varToCheck;
-                return !varList.Contains(varToCheck);
-            }
-            else if (varToCheck is List<string>)
-            {
-                List<string> varsToCheck = (List<string>)varToCheck;
-
-                return !varsToCheck.Intersect(varList).Any();
+                return new ValidationResult(validationContext.DisplayName + " requires at least two entries");
             }
             else
             {
-                throw new ArgumentException("Attempting to check unknown type!");
+                return ValidationResult.Success;
             }
         }
     }
+
+
+    //DOSE RESPONSE
+
+    public class ValidateResponseOrDoseAttribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            DoseResponseAndNonLinearRegesssionAnalysisModel model = (DoseResponseAndNonLinearRegesssionAnalysisModel)validationContext.ObjectInstance;
+
+            if (value == null && model.AnalysisType == DoseResponseAndNonLinearRegesssionAnalysisModel.AnalysisOption.FourParameter)
+            {
+                return new ValidationResult(validationContext.DisplayName + " is a required variable");
+            }
+            else
+            {
+                return ValidationResult.Success;
+            }
+        }
+    }
+
+
+
+    //public class UniqueVariableChecker
+    //{
+    //    private List<string> varList = new List<string>();
+
+    //    public void AddVar(string item)
+    //    {
+    //        if (!String.IsNullOrEmpty(item))
+    //        {
+    //            varList.Add(item);
+    //        }
+    //    }
+
+    //    public void AddVars(IEnumerable<string> items)
+    //    {
+    //        if (items != null)
+    //        {
+    //            varList.AddRange(items);
+    //        }
+    //    }
+
+    //    public bool DoCheck(object varToCheck)
+    //    {
+    //        if (varToCheck is String)
+    //        {
+    //            string stringVarToCheck = (String)varToCheck;
+    //            return !varList.Contains(varToCheck);
+    //        }
+    //        else if (varToCheck is List<string>)
+    //        {
+    //            List<string> varsToCheck = (List<string>)varToCheck;
+
+    //            return !varsToCheck.Intersect(varList).Any();
+    //        }
+    //        else
+    //        {
+    //            throw new ArgumentException("Attempting to check unknown type!");
+    //        }
+    //    }
+    //}
 }

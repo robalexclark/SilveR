@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -48,10 +48,10 @@ namespace SilveR.StatsModels
             get { return styleType; }
             set
             {
-                if (styleType != value)
-                {
+                //if (styleType != value)
+                //{
                     styleType = value;
-                }
+               // }
             }
         }
 
@@ -98,10 +98,10 @@ namespace SilveR.StatsModels
             get { return semType; }
             set
             {
-                if (semType != value)
-                {
+                //if (semType != value)
+                //{
                     semType = value;
-                }
+               // }
             }
         }
 
@@ -160,7 +160,14 @@ namespace SilveR.StatsModels
                 dtNew.TransformColumn(XAxis, XAxisTransformation);
             }
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -200,31 +207,31 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.XAxis = argHelper.ArgumentLoader(nameof(XAxis), XAxis);
-            this.XAxisTransformation = argHelper.ArgumentLoader(nameof(XAxisTransformation), XAxisTransformation);
-            this.FirstCatFactor = argHelper.ArgumentLoader(nameof(FirstCatFactor), FirstCatFactor);
-            this.SecondCatFactor = argHelper.ArgumentLoader(nameof(SecondCatFactor), SecondCatFactor);
-            this.StyleType = (GraphStyleType)Enum.Parse(typeof(GraphStyleType), argHelper.ArgumentLoader(nameof(StyleType), String.Empty), true);
-            this.DisplayLegend = argHelper.ArgumentLoader(nameof(DisplayLegend), DisplayLegend);
-            this.BoxPlotIncludeData = argHelper.ArgumentLoader(nameof(BoxPlotIncludeData), BoxPlotIncludeData);
-            this.SEMPlotIncludeData = argHelper.ArgumentLoader(nameof(SEMPlotIncludeData), SEMPlotIncludeData);
-            this.MainTitle = argHelper.ArgumentLoader(nameof(MainTitle), MainTitle);
-            this.XAxisTitle = argHelper.ArgumentLoader(nameof(XAxisTitle), XAxisTitle);
-            this.YAxisTitle = argHelper.ArgumentLoader(nameof(YAxisTitle), YAxisTitle);
-            this.ScatterplotSelected = argHelper.ArgumentLoader(nameof(ScatterplotSelected), ScatterplotSelected);
-            this.LinearFitSelected = argHelper.ArgumentLoader(nameof(LinearFitSelected), LinearFitSelected);
-            this.JitterSelected = argHelper.ArgumentLoader(nameof(JitterSelected), JitterSelected);
-            this.BoxplotSelected = argHelper.ArgumentLoader(nameof(BoxplotSelected), BoxplotSelected);
-            this.OutliersSelected = argHelper.ArgumentLoader(nameof(OutliersSelected), OutliersSelected);
-            this.SEMPlotSelected = argHelper.ArgumentLoader(nameof(SEMPlotSelected), SEMPlotSelected);
-            this.SEMType = (SEMPlotType)Enum.Parse(typeof(SEMPlotType), argHelper.ArgumentLoader(nameof(SEMType), String.Empty), true);
-            this.HistogramSelected = argHelper.ArgumentLoader(nameof(HistogramSelected), HistogramSelected);
-            this.NormalDistSelected = argHelper.ArgumentLoader(nameof(NormalDistSelected), NormalDistSelected);
-            this.CaseProfilesPlotSelected = argHelper.ArgumentLoader(nameof(CaseProfilesPlotSelected), CaseProfilesPlotSelected);
-            this.CaseIDFactor = argHelper.ArgumentLoader(nameof(CaseIDFactor), CaseIDFactor);
-            this.ReferenceLine = argHelper.ArgumentLoader(nameof(ReferenceLine), ReferenceLine);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.XAxis = argHelper.LoadStringArgument(nameof(XAxis));
+            this.XAxisTransformation = argHelper.LoadStringArgument(nameof(XAxisTransformation));
+            this.FirstCatFactor = argHelper.LoadStringArgument(nameof(FirstCatFactor));
+            this.SecondCatFactor = argHelper.LoadStringArgument(nameof(SecondCatFactor));
+            this.StyleType = (GraphStyleType)Enum.Parse(typeof(GraphStyleType), argHelper.LoadStringArgument(nameof(StyleType)), true);
+            this.DisplayLegend = argHelper.LoadBooleanArgument(nameof(DisplayLegend));
+            this.BoxPlotIncludeData = argHelper.LoadBooleanArgument(nameof(BoxPlotIncludeData));
+            this.SEMPlotIncludeData = argHelper.LoadBooleanArgument(nameof(SEMPlotIncludeData));
+            this.MainTitle = argHelper.LoadStringArgument(nameof(MainTitle));
+            this.XAxisTitle = argHelper.LoadStringArgument(nameof(XAxisTitle));
+            this.YAxisTitle = argHelper.LoadStringArgument(nameof(YAxisTitle));
+            this.ScatterplotSelected = argHelper.LoadBooleanArgument(nameof(ScatterplotSelected));
+            this.LinearFitSelected = argHelper.LoadBooleanArgument(nameof(LinearFitSelected));
+            this.JitterSelected = argHelper.LoadBooleanArgument(nameof(JitterSelected));
+            this.BoxplotSelected = argHelper.LoadBooleanArgument(nameof(BoxplotSelected));
+            this.OutliersSelected = argHelper.LoadBooleanArgument(nameof(OutliersSelected));
+            this.SEMPlotSelected = argHelper.LoadBooleanArgument(nameof(SEMPlotSelected));
+            this.SEMType = (SEMPlotType)Enum.Parse(typeof(SEMPlotType), argHelper.LoadStringArgument(nameof(SEMType)), true);
+            this.HistogramSelected = argHelper.LoadBooleanArgument(nameof(HistogramSelected));
+            this.NormalDistSelected = argHelper.LoadBooleanArgument(nameof(NormalDistSelected));
+            this.CaseProfilesPlotSelected = argHelper.LoadBooleanArgument(nameof(CaseProfilesPlotSelected));
+            this.CaseIDFactor = argHelper.LoadStringArgument(nameof(CaseIDFactor));
+            this.ReferenceLine = argHelper.LoadStringArgument(nameof(ReferenceLine));
         }
 
         public override string GetCommandLineArguments()
@@ -236,13 +243,13 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(XAxis, true)); //4
 
             //X-Axis transformation
-            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisTransformation)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisTransformation, false)); //5
 
             //Response variable
             arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //6
 
             //Response transformation
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //7
 
             //1st cat factor
             arguments.Append(" " + argFormatter.GetFormattedArgument(FirstCatFactor, true)); //8
@@ -251,16 +258,16 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(SecondCatFactor, true)); //9
 
             //Graph type
-            arguments.Append(" " + argFormatter.GetFormattedArgument(StyleType.ToString())); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StyleType.ToString(), false)); //10
 
             //Main title
-            arguments.Append(" " + argFormatter.GetFormattedArgument(MainTitle)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MainTitle, false)); //11
 
             //X-Axis title
-            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisTitle)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisTitle, false)); //12
 
             //Y Axis title
-            arguments.Append(" " + argFormatter.GetFormattedArgument(YAxisTitle)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(YAxisTitle, false)); //13
 
             //Scatterplot
             arguments.Append(" " + argFormatter.GetFormattedArgument(ScatterplotSelected)); //14
@@ -281,7 +288,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotSelected)); //19
 
             //Column plot type
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMType.ToString())); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMType.ToString(), false)); //20
 
             //Histogram plot
             arguments.Append(" " + argFormatter.GetFormattedArgument(HistogramSelected)); //21
@@ -293,10 +300,10 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(CaseProfilesPlotSelected)); //23
 
             //Case ID Factor
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor)); //24
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, false)); //24
 
             //Reference Line
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine)); //25
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine, false)); //25
 
             //Legend
             arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //26
@@ -307,7 +314,7 @@ namespace SilveR.StatsModels
             //SEM Plot include data
             arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //28
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
     }
 }

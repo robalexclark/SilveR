@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -131,7 +131,7 @@ namespace SilveR.StatsModels
             {
                 foreach (string factor in CategoricalFactors)
                 {
-                    if (dtNew.ColumnIsNumeric(factor))
+                    if (dtNew.CheckIsNumeric(factor))
                     {
                         foreach (DataRow row in dtNew.Rows)
                         {
@@ -145,7 +145,7 @@ namespace SilveR.StatsModels
             {
                 foreach (string odf in OtherDesignFactors)
                 {
-                    if (dtNew.ColumnIsNumeric(odf))
+                    if (dtNew.CheckIsNumeric(odf))
                     {
                         foreach (DataRow row in dtNew.Rows)
                         {
@@ -155,7 +155,13 @@ namespace SilveR.StatsModels
                 }
             }
 
-            return dtNew.GetCSVArray();
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
 
@@ -171,9 +177,9 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //5
 
             //get transforms
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //6
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //7
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //8
 
@@ -181,7 +187,7 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ContinuousFactors)); //10
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ContinuousFactorsTransformation));//11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ContinuousFactorsTransformation, false));//11
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //12
 
@@ -199,29 +205,30 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(LeveragePlot)); //20
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
 
         public override void LoadArguments(IEnumerable<Argument> arguments)
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.CategoricalFactors = argHelper.ArgumentLoader(nameof(CategoricalFactors), CategoricalFactors);
-            this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
-            this.ContinuousFactors = argHelper.ArgumentLoader(nameof(ContinuousFactors), ContinuousFactors);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Covariates = argHelper.ArgumentLoader(nameof(Covariates), Covariates);
-            this.PrimaryFactor = argHelper.ArgumentLoader(nameof(PrimaryFactor), PrimaryFactor);
-            this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
-            this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
-            this.Coefficients = argHelper.ArgumentLoader(nameof(Coefficients), Coefficients);
-            this.AdjustedRSquared = argHelper.ArgumentLoader(nameof(AdjustedRSquared), AdjustedRSquared);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
-            this.ResidualsVsPredictedPlot = argHelper.ArgumentLoader(nameof(ResidualsVsPredictedPlot), ResidualsVsPredictedPlot);
-            this.NormalProbabilityPlot = argHelper.ArgumentLoader(nameof(NormalProbabilityPlot), NormalProbabilityPlot);
-            this.CooksDistancePlot = argHelper.ArgumentLoader(nameof(CooksDistancePlot), CooksDistancePlot);
-            this.LeveragePlot = argHelper.ArgumentLoader(nameof(LeveragePlot), LeveragePlot);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.CategoricalFactors = argHelper.LoadIEnumerableArgument(nameof(CategoricalFactors));
+            this.OtherDesignFactors = argHelper.LoadIEnumerableArgument(nameof(OtherDesignFactors));
+            this.ContinuousFactors = argHelper.LoadIEnumerableArgument(nameof(ContinuousFactors));
+            this.ContinuousFactorsTransformation = argHelper.LoadStringArgument(nameof(ContinuousFactorsTransformation));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
+            this.PrimaryFactor = argHelper.LoadStringArgument(nameof(PrimaryFactor));
+            this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
+            this.ANOVASelected = argHelper.LoadBooleanArgument(nameof(ANOVASelected));
+            this.Coefficients = argHelper.LoadBooleanArgument(nameof(Coefficients));
+            this.AdjustedRSquared = argHelper.LoadBooleanArgument(nameof(AdjustedRSquared));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
+            this.ResidualsVsPredictedPlot = argHelper.LoadBooleanArgument(nameof(ResidualsVsPredictedPlot));
+            this.NormalProbabilityPlot = argHelper.LoadBooleanArgument(nameof(NormalProbabilityPlot));
+            this.CooksDistancePlot = argHelper.LoadBooleanArgument(nameof(CooksDistancePlot));
+            this.LeveragePlot = argHelper.LoadBooleanArgument(nameof(LeveragePlot));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -232,6 +239,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CategoricalFactors), CategoricalFactors));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(OtherDesignFactors), OtherDesignFactors));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ContinuousFactors), ContinuousFactors));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ContinuousFactorsTransformation), ContinuousFactorsTransformation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PrimaryFactor), PrimaryFactor));

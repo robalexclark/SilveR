@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
 using System;
@@ -47,7 +47,7 @@ namespace SilveR.StatsModels
         [DisplayName("Covariate transformation")]
         public string CovariateTransformation { get; set; } = "None";
 
-        public IEnumerable<string> CovarianceList
+        public IEnumerable<string> CovariancesList
         {
             get { return new List<string>() { "Compound Symmetric", "Unstructured", "Autoregressive(1)" }; }
         }
@@ -77,8 +77,6 @@ namespace SilveR.StatsModels
 
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
-
-        public IEnumerable<string> ControlGroupList { get; set; }
 
         public IEnumerable<string> SignificancesList
         {
@@ -135,7 +133,7 @@ namespace SilveR.StatsModels
             {
                 foreach (string odf in OtherDesignFactors)
                 {
-                    if (dtNew.ColumnIsNumeric(odf))
+                    if (dtNew.CheckIsNumeric(odf))
                     {
                         foreach (DataRow row in dtNew.Rows)
                         {
@@ -145,7 +143,14 @@ namespace SilveR.StatsModels
                 }
             }
 
-            return dtNew.GetCSVArray();
+
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -175,21 +180,21 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.ArgumentLoader(nameof(Response), Response);
-            this.ResponseTransformation = argHelper.ArgumentLoader(nameof(ResponseTransformation), ResponseTransformation);
-            this.Treatment = argHelper.ArgumentLoader(nameof(Treatment), Treatment);
-            this.Subject = argHelper.ArgumentLoader(nameof(Subject), Subject);
-            this.OtherDesignFactors = argHelper.ArgumentLoader(nameof(OtherDesignFactors), OtherDesignFactors);
-            this.Covariates = argHelper.ArgumentLoader(nameof(Covariates), Covariates);
-            this.Covariance = argHelper.ArgumentLoader(nameof(Covariance), Covariance);
-            this.CovariateTransformation = argHelper.ArgumentLoader(nameof(CovariateTransformation), CovariateTransformation);
-            this.ANOVASelected = argHelper.ArgumentLoader(nameof(ANOVASelected), ANOVASelected);
-            this.PRPlotSelected = argHelper.ArgumentLoader(nameof(PRPlotSelected), PRPlotSelected);
-            this.NormalPlotSelected = argHelper.ArgumentLoader(nameof(NormalPlotSelected), NormalPlotSelected);
-            this.LSMeansSelected = argHelper.ArgumentLoader(nameof(LSMeansSelected), LSMeansSelected);
-            this.AllPairwiseComparisons = argHelper.ArgumentLoader(nameof(AllPairwiseComparisons), AllPairwiseComparisons);
-            this.ControlGroup = argHelper.ArgumentLoader(nameof(ControlGroup), ControlGroup);
-            this.Significance = argHelper.ArgumentLoader(nameof(Significance), Significance);
+            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
+            this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
+            this.Subject = argHelper.LoadStringArgument(nameof(Subject));
+            this.OtherDesignFactors = argHelper.LoadIEnumerableArgument(nameof(OtherDesignFactors));
+            this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
+            this.Covariance = argHelper.LoadStringArgument(nameof(Covariance));
+            this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
+            this.ANOVASelected = argHelper.LoadBooleanArgument(nameof(ANOVASelected));
+            this.PRPlotSelected = argHelper.LoadBooleanArgument(nameof(PRPlotSelected));
+            this.NormalPlotSelected = argHelper.LoadBooleanArgument(nameof(NormalPlotSelected));
+            this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
+            this.AllPairwiseComparisons = argHelper.LoadBooleanArgument(nameof(AllPairwiseComparisons));
+            this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
+            this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
 
         public override string GetCommandLineArguments()
@@ -207,11 +212,11 @@ namespace SilveR.StatsModels
             //assemble a model for the covariate plot (if a covariate has been chosen)...
             arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //7
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance, false)); //8
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //9
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //10
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //11
 
@@ -222,11 +227,11 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //16
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //17
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //18
 
-            return arguments.ToString();
+            return arguments.ToString().Trim();
         }
 
         private string GetModel()
