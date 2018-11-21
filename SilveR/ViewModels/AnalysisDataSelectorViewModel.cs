@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SilveR.ViewModels
 {
@@ -6,7 +7,10 @@ namespace SilveR.ViewModels
     {
         public string AnalysisType { get; set; }
 
-        public Nullable<int> DatasetID { get; set; }
+        public Nullable<int> SelectedDatasetID { get; set; }
 
+        public IEnumerable<string> Scripts { get; set; }
+
+        public IEnumerable<DatasetViewModel> Datasets { get; set; }
     }
 }

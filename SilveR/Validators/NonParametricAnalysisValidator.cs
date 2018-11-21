@@ -22,7 +22,8 @@ namespace SilveR.Validators
             allVars.Add(npVariables.Response);
             allVars.Add(npVariables.OtherDesignFactor);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             if (!CheckIsNumeric(npVariables.Response))
             {
@@ -30,13 +31,14 @@ namespace SilveR.Validators
                 return ValidationInfo;
             }
 
-            if (!CheckFactorsHaveLevels(npVariables.Treatment)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(npVariables.Treatment))
+                return ValidationInfo;
 
             if (!CheckResponsesPerLevel(npVariables.Treatment, npVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NonParametricAnalysisModel>(i => i.Treatment)))
                 return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(npVariables.Treatment, npVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NonParametricAnalysisModel>(i => i.Treatment))
+            if (!CheckFactorAndResponseNotBlank(npVariables.Treatment, npVariables.Response, ReflectionExtensions.GetPropertyDisplayName<NonParametricAnalysisModel>(i => i.Treatment)))
                 return ValidationInfo;
 
             //if only two levels and all treats or to control selected, then need to only do KW

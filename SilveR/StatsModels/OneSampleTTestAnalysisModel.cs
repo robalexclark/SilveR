@@ -3,16 +3,19 @@ using SilveR.Models;
 using SilveR.Validators;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class TwoSampleTTestAnalysisModel : AnalysisModelBase
+    public class OneSampleTTestAnalysisModel : AnalysisModelBase
     {
+        [HasAtLeastOneEntry]
         [CheckUsedOnceOnly]
-        [DisplayName("Response")]
-        public string Response { get; set; }
+        [DisplayName("Responses")]
+        public IEnumerable<string> Responses { get; set; }
 
         [DisplayName("Reponse transformation")]
         public string ResponseTransformation { get; set; } = "None";
@@ -22,9 +25,9 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine", "Rank" }; }
         }
 
-        [CheckUsedOnceOnly]
-        [DisplayName("Treatment")]
-        public string Treatment { get; set; }
+        [Required]
+        [DisplayName("Test value")]
+        public decimal TestValue { get; set; }
 
         [DisplayName("Significance")]
         public string Significance { get; set; } = "0.05";
@@ -34,28 +37,22 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
 
-        [DisplayName("Unequal variance case")]
-        public bool UnequalVariance { get; set; }
-
-        [DisplayName("Equal variance case")]
-        public bool EqualVariance { get; set; } = true;
-
-        [DisplayName("Predicated vs. residuals plot")]
-        public bool PRPlot { get; set; } = true;
+        [DisplayName("Confidence interval")]
+        public bool ConfidenceInterval { get; set; } = true;
 
         [DisplayName("Normal probability plot")]
         public bool NormalPlot { get; set; }
 
 
-        public TwoSampleTTestAnalysisModel() : this(null) { }
+        public OneSampleTTestAnalysisModel() : this(null) { }
 
-        public TwoSampleTTestAnalysisModel(IDataset dataset)
-            : base(dataset, "TwoSampleTTestAnalysis") { }
+        public OneSampleTTestAnalysisModel(IDataset dataset)
+            : base(dataset, "OneSampleTTestAnalysis") { }
 
         public override ValidationInfo Validate()
         {
-            TwoSampleTTestAnalysisValidator twoSampleTTestAnalysisValidator = new TwoSampleTTestAnalysisValidator(this);
-            return twoSampleTTestAnalysisValidator.Validate();
+            OneSampleTTestAnalysisValidator oneSampleTTestAnalysisValidator = new OneSampleTTestAnalysisValidator(this);
+            return oneSampleTTestAnalysisValidator.Validate();
         }
 
         public override string[] ExportData()
@@ -65,28 +62,17 @@ namespace SilveR.StatsModels
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (Response != columnName && Treatment != columnName)
+                if (!Responses.Contains(columnName))
                 {
                     dtNew.Columns.Remove(columnName);
                 }
             }
 
-            //if the response is blank then remove that row
-            dtNew.RemoveBlankRow(Response);
-
-            //Now do transformations...
-            dtNew.TransformColumn(Response, ResponseTransformation);
-
-            //Finally, as numeric categorical variables get misinterpreted by r, we need to go through
-            //each column and put them in quotes...
-            if (dtNew.CheckIsNumeric(Treatment))
+            //Now do transformations
+            foreach (string resp in Responses)
             {
-                foreach (DataRow row in dtNew.Rows)
-                {
-                    row[Treatment] = "'" + row[Treatment] + "'";
-                }
+                dtNew.TransformColumn(resp, ResponseTransformation);
             }
-
 
             string[] csvArray = dtNew.GetCSVArray();
 
@@ -101,12 +87,10 @@ namespace SilveR.StatsModels
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Responses), Responses));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(EqualVariance), EqualVariance));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(UnequalVariance), UnequalVariance));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlot), PRPlot));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(TestValue), TestValue));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ConfidenceInterval), ConfidenceInterval));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlot), NormalPlot));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
 
@@ -117,12 +101,10 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.LoadStringArgument(nameof(Response));
+            this.Responses = argHelper.LoadIEnumerableArgument(nameof(Responses));
             this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
-            this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
-            this.EqualVariance = argHelper.LoadBooleanArgument(nameof(EqualVariance));
-            this.UnequalVariance = argHelper.LoadBooleanArgument(nameof(UnequalVariance));
-            this.PRPlot = argHelper.LoadBooleanArgument(nameof(PRPlot));
+            this.TestValue = argHelper.LoadDecimalArgument(nameof(TestValue));
+            this.ConfidenceInterval = argHelper.LoadBooleanArgument(nameof(ConfidenceInterval));
             this.NormalPlot = argHelper.LoadBooleanArgument(nameof(NormalPlot));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
@@ -132,15 +114,12 @@ namespace SilveR.StatsModels
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Responses));
             arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false));
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(TestValue.ToString(), false));
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(EqualVariance));
-            arguments.Append(" " + argFormatter.GetFormattedArgument(UnequalVariance));
-
-            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlot));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ConfidenceInterval));
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlot));
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false));

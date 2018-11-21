@@ -147,7 +147,7 @@ namespace SilveR.StatsModels
             }
 
             //ensure that all data is trimmed
-            dtNew.TrimAllDataInDataTable();
+            //dtNew.TrimAllDataInDataTable();
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);

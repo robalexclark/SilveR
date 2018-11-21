@@ -33,8 +33,8 @@ namespace SilveR.StatsModels
                 case "Unpaired t-test Analysis":
                     model = new UnpairedTTestAnalysisModel(dataset);
                     break;
-                case "Two-Sample t-test Analysis":
-                    model = new TwoSampleTTestAnalysisModel(dataset);
+                case "One-Sample t-test Analysis":
+                    model = new OneSampleTTestAnalysisModel(dataset);
                     break;
                 case "Correlation Analysis":
                     model = new CorrelationAnalysisModel(dataset);

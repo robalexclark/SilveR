@@ -9,7 +9,6 @@ using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -20,9 +19,9 @@ namespace SilveR.Controllers
 {
     public class DataController : Controller
     {
-        private readonly SilveRRepository repository;
+        private readonly ISilveRRepository repository;
 
-        public DataController(SilveRRepository repository)
+        public DataController(ISilveRRepository repository)
         {
             this.repository = repository;
         }
@@ -39,7 +38,6 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-
         public async Task<ActionResult> GetDatasets()
         {
             IList<DatasetViewModel> datasets = await repository.GetDatasetViewModels();
@@ -56,7 +54,6 @@ namespace SilveR.Controllers
         [HttpPost]
         public async Task<IActionResult> DataUploader(IEnumerable<IFormFile> files)
         {
-            IEnumerable<string> fileInfo = new List<string>();
             if (files.Any() == false || files.Single().Length == 0)
             {
                 ViewBag.ErrorMessage = "File failed to load, please try again";
@@ -64,7 +61,8 @@ namespace SilveR.Controllers
             }
             else
             {
-                ContentDispositionHeaderValue fileContent = ContentDispositionHeaderValue.Parse(files.Single().ContentDisposition);
+                IFormFile formFile = files.Single();
+                ContentDispositionHeaderValue fileContent = ContentDispositionHeaderValue.Parse(formFile.ContentDisposition);
                 string fileName = Path.GetFileName(fileContent.FileName.ToString().Trim('"'));
 
                 string filePath = Path.Combine(Path.GetTempPath(), fileName);
@@ -74,7 +72,7 @@ namespace SilveR.Controllers
 
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    files.Single().CopyTo(fileStream);
+                    formFile.CopyTo(fileStream);
                 }
 
                 return await LoadFile(new FileInfo(filePath));
@@ -83,11 +81,11 @@ namespace SilveR.Controllers
 
         private async Task<IActionResult> LoadFile(FileInfo selectedFile)
         {
-            if (selectedFile.Extension.ToUpper() == ".CSV") //no necessary as already filtering...
+            if (selectedFile.Extension.ToUpper() == ".CSV") //not necessary as already filtering...
             {
                 //use the CSVReader to read in the data
                 string message;
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(selectedFile.OpenRead(), GetCulture());
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(selectedFile.OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
 
                 if (dataTable == null) //then failed to be read
                 {
@@ -95,7 +93,7 @@ namespace SilveR.Controllers
                 }
                 else //got datatable but need to check
                 {
-                    message = CheckDataTable(dataTable);
+                    message = dataTable.CheckDataTable();
                 }
 
                 if (message == null)
@@ -118,7 +116,7 @@ namespace SilveR.Controllers
 
                 return RedirectToAction("Index"); //return to file loader/loaded files display screen
             }
-            else if (selectedFile.Extension.ToUpper() == ".XLS" || selectedFile.Extension.ToUpper() == ".XLSX")
+            else if (selectedFile.Extension.ToUpper() == ".XLS" || selectedFile.Extension.ToUpper() == ".XLSX") //excel
             {
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
@@ -135,10 +133,10 @@ namespace SilveR.Controllers
                             TempData["ErrorMessage"] = "Error reading file. No sheets with valid data could be found in the Excel workbook.";
                             return RedirectToAction("Index");
                         }
-                        else if (excelDataSet.Tables.Count == 1)
+                        else if (excelDataSet.Tables.Count == 1) //one excel sheet
                         {
                             DataTable dataTable = excelDataSet.Tables[0];
-                            string message = CheckDataTable(dataTable);
+                            string message = dataTable.CheckDataTable();
 
                             if (message == null)
                             {
@@ -177,35 +175,15 @@ namespace SilveR.Controllers
             else throw new Exception("File format not recognised.");
         }
 
-        private void CleanUpDataTable(DataTable dataTable)
-        {
-            foreach (DataColumn dc in dataTable.Columns)
-            {
-                dc.ColumnName = dc.ColumnName.Trim();
-            }
-
-            CultureInfo culture = GetCulture();
-            string decSeparator = culture.NumberFormat.NumberDecimalSeparator;
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                foreach (DataColumn dc in dataTable.Columns)
-                {
-                    if (!String.IsNullOrEmpty(row[dc].ToString()))
-                    {
-                        row[dc] = row[dc].ToString().Replace(decSeparator, ".").Trim();
-                    }
-                }
-            }
-        }
-
         private async Task SaveDatasetToDatabase(string fileName, DataTable dataTable)
         {
-            CleanUpDataTable(dataTable);
+            //clean up the datatable, trimming spaces, and ensuring that decimal seperator is a .
+            dataTable.CleanUpDataTable();
 
-            AddSelectedColumn(dataTable);
+            //add the selected column to the dataset, setting all rows to "true"
+            dataTable.AddSelectedColumn();
 
-            //get last version no based on existing names
+            //get last version no based on existing dataset names
             int lastVersionNo = 0;
             IList<Dataset> existingDatasets = await repository.GetExistingDatasets(fileName);
             if (existingDatasets.Any())
@@ -224,69 +202,6 @@ namespace SilveR.Controllers
             await repository.CreateDataset(dataset);
         }
 
-        private void AddSelectedColumn(DataTable dataTable)
-        {
-            if (!dataTable.Columns.Contains("SilveRSelected"))
-            {
-                //add the selected column
-                DataColumn col = dataTable.Columns.Add("SilveRSelected", System.Type.GetType("System.Boolean"));
-                col.SetOrdinal(0);
-
-                //automatically set selected to true for each record/row
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    row["SilveRSelected"] = true;
-                }
-            }
-        }
-
-        private string CheckDataTable(DataTable dataTable)
-        {
-            string[] tabooColumnCharList = { "+", "*", "~", "`", "\\" };
-
-            //need to check here that no taboo characters are in the dataset
-            foreach (DataColumn col in dataTable.Columns)
-            {
-                bool illegalCharFound = false;
-                string illegalCharMessage = null;
-
-                //check column headers first...
-                foreach (string s in tabooColumnCharList)
-                {
-                    if (col.ColumnName.Contains(s))
-                    {
-                        illegalCharFound = true;
-                        illegalCharMessage = "The dataset contains characters in the column headers that we cannot handle (such as + * ` ~ \\)";
-                        break;
-                    }
-                }
-
-                if (!illegalCharFound)
-                {
-                    string[] tabooDataCharList = { "`" };
-
-                    foreach (DataRow row in dataTable.Rows)
-                    {
-                        foreach (string s in tabooDataCharList)
-                        {
-                            if (row[col.ColumnName] != null && row[col.ColumnName].ToString().Contains(s))
-                            {
-                                illegalCharFound = true;
-                                illegalCharMessage = "The dataset contains characters in the main body of the data that we cannot handle (such as `)";
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (illegalCharFound)
-                {
-                    return illegalCharMessage + Environment.NewLine + "You will need to remove any of these characters from the dataset and reimport.";
-                }
-            }
-
-            return null; //null means all ok
-        }
 
         [HttpGet]
         public ActionResult SheetSelector(string fileName)
@@ -303,7 +218,6 @@ namespace SilveR.Controllers
             FileInfo selectedFile = new FileInfo(fileName);
 
             //get the correct datatable out the excel file (again)
-            //read in xls file
             using (FileStream stream = selectedFile.OpenRead())
             {
                 using (IExcelDataReader excelReader = ExcelReaderFactory.CreateReader(stream))
@@ -312,7 +226,7 @@ namespace SilveR.Controllers
 
                     //save to database
                     DataTable dataTable = excelDataSet.Tables[sheetSelection];
-                    string message = CheckDataTable(dataTable);
+                    string message = dataTable.CheckDataTable();
 
                     if (message == null) //save to database
                     {
@@ -346,12 +260,6 @@ namespace SilveR.Controllers
             return RedirectToAction("Index");
         }
 
-        private CultureInfo GetCulture()
-        {
-            return System.Threading.Thread.CurrentThread.CurrentCulture;
-        }
-
-
         public async Task<IActionResult> ViewDataTable(int datasetID)
         {
             Dataset dataset = await repository.GetDatasetByID(datasetID);
@@ -363,7 +271,6 @@ namespace SilveR.Controllers
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
                 DataTable dataTable = CSVConverter.CSVDataToDataTable(stream);
-
                 dataTable.TableName = dataset.DatasetID.ToString();
 
                 Sheet sheet = new Sheet(dataTable);
@@ -381,15 +288,22 @@ namespace SilveR.Controllers
             {
                 DataTable dataTable = sheet.ToDataTable();
 
-                CheckDataTable(dataTable);
+                string message = dataTable.CheckDataTable();
 
-                Dataset dataset = new Dataset();
-                dataset.DatasetID = int.Parse(sheet.Name);
-                string[] csvArray = dataTable.GetCSVArray();
-                dataset.TheData = String.Join(Environment.NewLine, csvArray);
-                dataset.DateUpdated = DateTime.Now;
+                if (message == null) //then all ok
+                {
+                    Dataset dataset = new Dataset();
+                    dataset.DatasetID = int.Parse(sheet.Name);
+                    string[] csvArray = dataTable.GetCSVArray();
+                    dataset.TheData = String.Join(Environment.NewLine, csvArray);
+                    dataset.DateUpdated = DateTime.Now;
 
-                await repository.UpdateDataset(dataset);
+                    await repository.UpdateDataset(dataset);
+                }
+                else
+                {
+                    return Json(message);
+                }
             }
             catch (Exception ex)
             {
@@ -420,7 +334,6 @@ namespace SilveR.Controllers
 
         public int Order { get; set; }
 
-        // taken from /a/38396065
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var contextFeatures = context.HttpContext.Features;

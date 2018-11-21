@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using SilveR.Models;
 using SilveR.Services;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace SilveR
@@ -39,7 +38,7 @@ namespace SilveR
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=SilveR.db"));
-            services.AddScoped<SilveRRepository>();
+            services.AddScoped<ISilveRRepository, SilveRRepository>();
 
             //R processing services comprising of R processor and queue services
             services.AddSingleton<IRProcessorService, RProcessorService>();
@@ -123,9 +122,9 @@ namespace SilveR
                     context.Scripts.Add(unpairedTTest);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "TwoSampleTTestAnalysis"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "OneSampleTTestAnalysis"))
                 {
-                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-Sample t-test Analysis", ScriptFileName = "TwoSampleTTestAnalysis" };
+                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-Sample t-test Analysis", ScriptFileName = "OneSampleTTestAnalysis" };
                     context.Scripts.Add(oneSampleTTest);
                 }
 

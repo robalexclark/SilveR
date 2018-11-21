@@ -127,7 +127,7 @@ namespace SilveR.StatsModels
             }
 
             //ensure that all data is trimmed
-            dtNew.TrimAllDataInDataTable();
+            //dtNew.TrimAllDataInDataTable();
 
             if (AnalysisType == AnalysisOption.FourParameter)
             {

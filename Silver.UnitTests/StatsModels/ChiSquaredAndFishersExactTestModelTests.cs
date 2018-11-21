@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
-namespace Silver.UnitTests
+namespace Silver.UnitTests.StatsModels
 {
     [ExcludeFromCodeCoverageAttribute]
     public class ChiSquaredAndFishersExactTestModelTests

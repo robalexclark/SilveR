@@ -6,7 +6,7 @@ using System.Data;
 using System.Linq;
 using Xunit;
 
-namespace Silver.UnitTests
+namespace Silver.UnitTests.StatsModels
 {
     public class LinearRegressionAnalysisModelTests
     {

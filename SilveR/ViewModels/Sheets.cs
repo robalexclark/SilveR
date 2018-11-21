@@ -14,7 +14,7 @@ namespace SilveR.ViewModels
     {
         public List<Row> Rows { get; } = new List<Row>();
 
-        public string Name { get; set; }
+        public string Name { get; set; } //Name is actually the datasetID
 
         public Sheet()
         {

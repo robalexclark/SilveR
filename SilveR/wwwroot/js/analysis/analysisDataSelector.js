@@ -1,4 +1,3 @@
-
 $(function () {
 
     if (!selectedAnalysisType) {
@@ -8,7 +7,7 @@ $(function () {
         });
     }
 
-    $("#DatasetID").kendoDropDownList({
+    $("#SelectedDatasetID").kendoDropDownList({
         dataTextField: "datasetNameVersion",
         dataValueField: "datasetID",
         dataSource: datasets

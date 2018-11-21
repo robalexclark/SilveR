@@ -1,16 +1,19 @@
 ﻿
 $(function () {
 
-    $("#Response").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull
+    $("#Responses").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.responses
     });
 
     $("#ResponseTransformation").kendoDropDownList({
         dataSource: theModel.transformationsList
     });
 
-    $("#Treatment").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull
+    $("#TestValue").kendoNumericTextBox({
+        format: '#.######',
+        decimals: 6,
+        spinners: false
     });
 
     $("#Significance").kendoDropDownList({

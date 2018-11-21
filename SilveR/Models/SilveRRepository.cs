@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SilveR.Models
 {
-    public sealed class SilveRRepository : IDisposable
+    public sealed class SilveRRepository : IDisposable, ISilveRRepository
     {
         private readonly SilveRContext context;
 

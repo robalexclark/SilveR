@@ -2,8 +2,8 @@
 
 @section Scripts {
     <script>
-        var scriptList = @Html.Raw(Json.Serialize(ViewBag.ScriptList));
-        var datasets = @Html.Raw(Json.Serialize(ViewBag.Datasets));
+        var scriptList = @Html.Raw(Json.Serialize(Model.Scripts));
+        var datasets = @Html.Raw(Json.Serialize(Model.Datasets));
         var selectedAnalysisType = @Html.Raw(Json.Serialize(Model.AnalysisType));
     </script>
 
@@ -38,7 +38,7 @@
 
         <div id="dataSelectionBlock" class="mt30">
             <h4>Select the file to analyse</h4>
-            <input asp-for="DatasetID" style="width:340px" />
+            <input asp-for="SelectedDatasetID" style="width:340px" />
         </div>
 
         <div class="mt20">

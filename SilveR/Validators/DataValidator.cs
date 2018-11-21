@@ -101,7 +101,7 @@ namespace SilveR.Validators
             return true;
         }
 
-        protected bool CheckColumnNames(List<string> vars)
+        protected bool CheckColumnNames(IEnumerable<string> vars)
         {
             foreach (string s in vars)
             {

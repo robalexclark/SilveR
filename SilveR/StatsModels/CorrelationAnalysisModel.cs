@@ -109,7 +109,7 @@ namespace SilveR.StatsModels
             }
 
             //ensure that all data is trimmed
-            dtNew.TrimAllDataInDataTable();
+            //dtNew.TrimAllDataInDataTable();
 
             //Generate a "catfact" column from the CatFactors!
             DataColumn catFactor = new DataColumn("catfact");
@@ -143,7 +143,6 @@ namespace SilveR.StatsModels
             {
                 dtNew.TransformColumn(resp, Transformation);
             }
-
 
             string[] csvArray = dtNew.GetCSVArray();
 
@@ -196,11 +195,6 @@ namespace SilveR.StatsModels
             this.Matrixplot = argHelper.LoadBooleanArgument(nameof(Matrixplot));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
             this.ByCategoriesAndOverall = argHelper.LoadBooleanArgument(nameof(ByCategoriesAndOverall));
-        }
-
-        private object IEnumerable<T>(T v)
-        {
-            throw new NotImplementedException();
         }
 
         public override string GetCommandLineArguments()

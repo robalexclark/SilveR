@@ -120,9 +120,9 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/twoSampleTTestAnalysis.min.js",
+    "outputFileName": "wwwroot/js/stats/oneSampleTTestAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/twoSampleTTestAnalysis.js"
+      "wwwroot/js/stats/oneSampleTTestAnalysis.js"
     ]
   },
   {

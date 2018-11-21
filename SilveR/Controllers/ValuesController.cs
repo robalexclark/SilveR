@@ -12,9 +12,9 @@ namespace SilveR.Controllers
 {
     public class ValuesController : Controller
     {
-        private readonly SilveRRepository repository;
+        private readonly ISilveRRepository repository;
 
-        public ValuesController(SilveRRepository repository)
+        public ValuesController(ISilveRRepository repository)
         {
             this.repository = repository;
         }
@@ -45,10 +45,11 @@ namespace SilveR.Controllers
             }
         }
 
+
         [HttpGet]
         public JsonResult GetSMPAInteractions(List<string> selectedTreatments)
         {
-            if (selectedTreatments != null && selectedTreatments.Any())
+            if (selectedTreatments != null)// && selectedTreatments.Any())
             {
                 List<string> interactions = SingleMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
@@ -62,7 +63,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public JsonResult GetSMPASelectedEffectsList(List<string> selectedTreatments)
         {
-            if (selectedTreatments != null && selectedTreatments.Any())
+            if (selectedTreatments != null)// && selectedTreatments.Any())
             {
                 List<string> selectedEffectsList = SingleMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments);
                 return Json(selectedEffectsList);
@@ -74,11 +75,10 @@ namespace SilveR.Controllers
         }
 
 
-
         [HttpGet]
         public JsonResult GetRMPAInteractions(List<string> selectedTreatments)
         {
-            if (selectedTreatments != null && selectedTreatments.Any())
+            if (selectedTreatments != null)// && selectedTreatments.Any())
             {
                 List<string> interactions = RepeatedMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
@@ -92,7 +92,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public JsonResult GetRMPASelectedEffectsList(List<string> selectedTreatments, string repeatedFactor)
         {
-            if (selectedTreatments != null && selectedTreatments.Any() && !String.IsNullOrEmpty(repeatedFactor))
+            if (selectedTreatments != null  && repeatedFactor != null)//&& selectedTreatments.Any()
             {
                 List<string> selectedEffectsList = RepeatedMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments, repeatedFactor);
                 return Json(selectedEffectsList);

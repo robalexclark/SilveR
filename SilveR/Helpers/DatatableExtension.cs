@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -8,15 +9,101 @@ namespace SilveR.Helpers
 {
     public static class DataTableExtensionMethods
     {
-        public static void TrimAllDataInDataTable(this DataTable dataTable)
+        //public static void TrimAllDataInDataTable(this DataTable dataTable)
+        //{
+        //    foreach (DataColumn c in dataTable.Columns)
+        //    {
+        //        foreach (DataRow r in dataTable.Rows)
+        //        {
+        //            r[c.ColumnName] = r[c.ColumnName].ToString().Trim();
+        //        }
+        //    }
+        //}
+
+        public static void CleanUpDataTable(this DataTable dataTable)
         {
-            foreach (DataColumn c in dataTable.Columns)
+            foreach (DataColumn dc in dataTable.Columns)
             {
-                foreach (DataRow r in dataTable.Rows)
+                dc.ColumnName = dc.ColumnName.Trim();
+            }
+
+            CultureInfo culture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            string decSeparator = culture.NumberFormat.NumberDecimalSeparator;
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                foreach (DataColumn dc in dataTable.Columns)
                 {
-                    r[c.ColumnName] = r[c.ColumnName].ToString().Trim();
+                    if (!String.IsNullOrEmpty(row[dc].ToString()))
+                    {
+                        row[dc] = row[dc].ToString().Replace(decSeparator, ".").Trim();
+                    }
                 }
             }
+        }
+
+        public static void AddSelectedColumn(this DataTable dataTable)
+        {
+            if (!dataTable.Columns.Contains("SilveRSelected"))
+            {
+                //add the selected column
+                DataColumn col = dataTable.Columns.Add("SilveRSelected", System.Type.GetType("System.Boolean"));
+                col.SetOrdinal(0);
+
+                //automatically set selected to true for each record/row
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    row["SilveRSelected"] = true;
+                }
+            }
+        }
+
+        public static string CheckDataTable(this DataTable dataTable)
+        {
+            string[] tabooColumnCharList = { "+", "*", "~", "`", "\\" };
+
+            //need to check here that no taboo characters are in the dataset
+            foreach (DataColumn col in dataTable.Columns)
+            {
+                bool illegalCharFound = false;
+                string illegalCharMessage = null;
+
+                //check column headers first...
+                foreach (string s in tabooColumnCharList)
+                {
+                    if (col.ColumnName.Contains(s))
+                    {
+                        illegalCharFound = true;
+                        illegalCharMessage = "The dataset contains characters in the column headers that we cannot handle (such as + * ` ~ \\)";
+                        break;
+                    }
+                }
+
+                if (!illegalCharFound)
+                {
+                    string[] tabooDataCharList = { "`" };
+
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        foreach (string s in tabooDataCharList)
+                        {
+                            if (row[col.ColumnName] != null && row[col.ColumnName].ToString().Contains(s))
+                            {
+                                illegalCharFound = true;
+                                illegalCharMessage = "The dataset contains characters in the main body of the data that we cannot handle (such as `)";
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (illegalCharFound)
+                {
+                    return illegalCharMessage + Environment.NewLine + "You will need to remove any of these characters from the dataset and reimport.";
+                }
+            }
+
+            return null; //null means all ok
         }
 
         public static void TransformColumn(this DataTable data, string column, string transformation)
@@ -105,7 +192,7 @@ namespace SilveR.Helpers
                                 break;
                             case "ArcSine":
                                 if (val >= 0 && val <= 1)
-                                    r[column] = Math.Asin(val);
+                                    r[column] = Math.Asin(Math.Sqrt(val));
                                 else
                                     r[column] = null;
 

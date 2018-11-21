@@ -30,7 +30,7 @@ namespace SilveR.Services
         {
             using (IServiceScope scope = services.CreateScope())
             {
-                SilveRRepository repository = scope.ServiceProvider.GetRequiredService<SilveRRepository>();
+                ISilveRRepository repository = scope.ServiceProvider.GetRequiredService<ISilveRRepository>();
                 AppSettings appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
 
                 //declared here as used in exception handler

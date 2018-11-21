@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Silver.UnitTests
+namespace Silver.UnitTests.Helpers
 {
     [ExcludeFromCodeCoverageAttribute]
     public class ArgumentHelperTests

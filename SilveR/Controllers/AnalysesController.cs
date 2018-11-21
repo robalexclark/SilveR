@@ -2,8 +2,8 @@
 using SilveR.Models;
 using SilveR.Services;
 using SilveR.StatsModels;
-using SilveR.ViewModels;
 using SilveR.Validators;
+using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +13,11 @@ namespace SilveR.Controllers
 {
     public class AnalysesController : Controller
     {
-        private readonly SilveRRepository repository;
+        private readonly ISilveRRepository repository;
         private readonly IBackgroundTaskQueue backgroundQueue;
         private readonly IRProcessorService rProcessorService;
 
-        public AnalysesController(SilveRRepository repository, IBackgroundTaskQueue backgroundQueue, IRProcessorService rProcessorService)
+        public AnalysesController(ISilveRRepository repository, IBackgroundTaskQueue backgroundQueue, IRProcessorService rProcessorService)
         {
             this.repository = repository;
             this.backgroundQueue = backgroundQueue;
@@ -56,7 +56,7 @@ namespace SilveR.Controllers
             if (theDatasets.Any())
             {
                 //get the scripts
-                ViewBag.ScriptList = await repository.GetScriptNames();
+                viewModel.Scripts = await repository.GetScriptNames();
 
                 //add the last uploaded dataset in first
                 List<DatasetViewModel> datasetInfoList = new List<DatasetViewModel>();
@@ -69,8 +69,7 @@ namespace SilveR.Controllers
                     datasetInfoList.Add(dvm);
                 }
 
-                ViewBag.Datasets = datasetInfoList.AsEnumerable<DatasetViewModel>();
-
+                viewModel.Datasets = datasetInfoList.AsEnumerable<DatasetViewModel>();
 
                 viewModel.AnalysisType = analysisType;
             }
@@ -87,7 +86,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public async Task<IActionResult> Analysis(AnalysisDataSelectorViewModel viewModel)
         {
-            Dataset dataset = await repository.GetDatasetByID(viewModel.DatasetID);
+            Dataset dataset = await repository.GetDatasetByID(viewModel.SelectedDatasetID);
 
             AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisType, dataset);
 
@@ -96,42 +95,42 @@ namespace SilveR.Controllers
             return View(analysisViewName, analysisModel);
         }
 
-        [HttpGet]
-        public ActionResult SummaryStatistics() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult SingleMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult RepeatedMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult PValueAdjustment() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult PairedTTestAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult UnpairedTTestAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult TwoSampleTTestAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult CorrelationAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult LinearRegressionAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult DoseResponseAndNonLinearRegressionAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult NonParametricAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult ChiSquaredAndFishersExactTest() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult SurvivalAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult GraphicalAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult MeansComparison() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult MultivariateAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult NestedDesignAnalysis() { return RedirectToAction("Index"); }
-        [HttpGet]
-        public ActionResult IncompleteFactorialParametricAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult SummaryStatistics() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult SingleMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult RepeatedMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult PValueAdjustment() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult PairedTTestAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult UnpairedTTestAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult OneSampleTTestAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult CorrelationAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult LinearRegressionAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult DoseResponseAndNonLinearRegressionAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult NonParametricAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult ChiSquaredAndFishersExactTest() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult SurvivalAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult GraphicalAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult MeansComparison() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult MultivariateAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult NestedDesignAnalysis() { return RedirectToAction("Index"); }
+        //[HttpGet]
+        //public ActionResult IncompleteFactorialParametricAnalysis() { return RedirectToAction("Index"); }
 
 
         [HttpPost]
@@ -171,7 +170,7 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> TwoSampleTTestAnalysis(TwoSampleTTestAnalysisModel model, string submitButton)
+        public async Task<IActionResult> OneSampleTTestAnalysis(OneSampleTTestAnalysisModel model, string submitButton)
         {
             return await RunAnalysis(model, submitButton);
         }
@@ -295,14 +294,7 @@ namespace SilveR.Controllers
 
                     backgroundQueue.QueueBackgroundWorkItem(async cancellationToken =>
                     {
-                        try
-                        {
-                            await rProcessorService.Execute(analysisGuid);
-                        }
-                        catch (Exception ex)
-                        {
-                            string s = ex.Message;
-                        }
+                        await rProcessorService.Execute(analysisGuid);
                     });
 
                     //eventually work out how to return message that analysis complete, but for now...

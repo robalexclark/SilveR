@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using Xunit;
 
-namespace Silver.UnitTests
+namespace Silver.UnitTests.Helpers
 {
     [ExcludeFromCodeCoverageAttribute]
     public class CSVConverterTests

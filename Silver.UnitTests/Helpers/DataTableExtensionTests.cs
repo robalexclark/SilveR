@@ -5,25 +5,70 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Silver.UnitTests
+namespace Silver.UnitTests.Helpers
 {
     [ExcludeFromCodeCoverageAttribute]
     public class DataTableExtensionTests
     {
+        //[Fact]
+        //public void TrimAllDataInDataTable_ReturnsCorrectDataTable()
+        //{
+        //    //Arrange
+        //    DataTable dataTable = GetTestDataTable();
+
+        //    //Act
+        //    Assert.Equal("0.454828601  ", dataTable.Rows[0][1]);
+        //    Assert.Equal(" 0.574150302", dataTable.Rows[0][2]);
+        //    dataTable.TrimAllDataInDataTable();
+
+        //    //Assert
+        //    Assert.Equal("0.454828601", dataTable.Rows[0][1]);
+        //    Assert.Equal("0.574150302", dataTable.Rows[0][2]);
+        //}
+
         [Fact]
-        public void TrimAllDataInDataTable_ReturnsCorrectDataTable()
+        public void CleanUpDataTable_ReturnsCorrectDataTable()
         {
             //Arrange
             DataTable dataTable = GetTestDataTable();
 
             //Act
-            Assert.Equal("0.454828601  ", dataTable.Rows[0][1]);
+            Assert.Equal("Resp10 ", dataTable.Columns["Resp10 "].ColumnName);
             Assert.Equal(" 0.574150302", dataTable.Rows[0][2]);
-            dataTable.TrimAllDataInDataTable();
+            dataTable.CleanUpDataTable();
 
             //Assert
+            Assert.Equal("Resp10", dataTable.Columns[10].ColumnName);
             Assert.Equal("0.454828601", dataTable.Rows[0][1]);
             Assert.Equal("0.574150302", dataTable.Rows[0][2]);
+        }
+
+        [Fact]
+        public void AddSelectedColumn_ReturnsCorrectDataTable()
+        {
+            //Arrange
+            DataTable dataTable = GetTestDataTableNoSelectedCol();
+
+            //Act
+            Assert.Equal(18, dataTable.Columns.Count);
+            dataTable.AddSelectedColumn();
+
+            //Assert
+            Assert.Equal("SilveRSelected", dataTable.Columns[0].ColumnName);
+            Assert.True((bool)dataTable.Rows[0][0]);
+        }
+
+        [Fact]
+        public void CheckDataTable_ReturnsNullMessage()
+        {
+            //Arrange
+            DataTable dataTable = GetTestDataTable();
+
+            //Act
+            string message = dataTable.CheckDataTable();
+
+            //Assert
+            Assert.Null(message);
         }
 
         [Fact]
@@ -86,8 +131,8 @@ namespace Silver.UnitTests
             dataTable.TransformColumn("Resp3", "ArcSine");
 
             //Assert
-            Assert.Equal(0.57706339, Double.Parse(dataTable.Rows[0]["Resp3"].ToString()), 6);
-            Assert.Equal(0.20876114, Double.Parse(dataTable.Rows[1]["Resp3"].ToString()), 6);
+            Assert.Equal(0.831027, Double.Parse(dataTable.Rows[0]["Resp3"].ToString()), 6);
+            Assert.Equal(0.472647, Double.Parse(dataTable.Rows[1]["Resp3"].ToString()), 6);
         }
 
         [Fact]
@@ -105,7 +150,7 @@ namespace Silver.UnitTests
             Assert.Equal(19, int.Parse(dataTable.Rows[0]["Resp3"].ToString()));
             Assert.Equal(10, int.Parse(dataTable.Rows[1]["Resp3"].ToString()));
         }
-        
+
         [Fact]
         public void RemoveBlankRow_ReturnsCorrectDataTable()
         {
@@ -163,7 +208,7 @@ namespace Silver.UnitTests
             IEnumerable<string> variableNames = dataTable.GetVariableNames();
 
             //Assert
-            Assert.Equal(new List<string> { "Resp1", "Resp 2", "Resp3", "Resp4", "Resp5", "Resp6", "Resp7", "Resp8", "Resp9", "Resp10", "Resp11", "Cat1", "Cat2", "Cat3", "Cat4", "Cat5", "Cat6", "Cat456" }, variableNames);
+            Assert.Equal(new List<string> { "Resp1", "Resp 2", "Resp3", "Resp4", "Resp5", "Resp6", "Resp7", "Resp8", "Resp9", "Resp10 ", "Resp11", "Cat1", "Cat2", "Cat3", "Cat4", "Cat5", "Cat6", "Cat456" }, variableNames);
         }
 
         [Fact]
@@ -220,7 +265,7 @@ namespace Silver.UnitTests
             dt.Columns.Add("Resp7");
             dt.Columns.Add("Resp8");
             dt.Columns.Add("Resp9");
-            dt.Columns.Add("Resp10");
+            dt.Columns.Add("Resp10 ");
             dt.Columns.Add("Resp11");
             dt.Columns.Add("Cat1");
             dt.Columns.Add("Cat2");
@@ -263,6 +308,46 @@ namespace Silver.UnitTests
             dt.Rows.Add(new object[] { "True", "0.566303488", "0.004295257", "0.2571607", "0.520051132", "0.93257691", "0.203838981", "", "0.763706352", "0.571405707", "0.571405707", "0.571405707", "A", "A", "A", "A", "2", "2", "A_ 2_ 2", });
             dt.Rows.Add(new object[] { "False", "0.87788591", "0.395044092", "0.786559259", "0.633495523", "0.049161508", "0.113960207", "", "0.986776571", "0.344027501", "0.344027501", "0.344027501", "A", "A", "A", "A", "2", "1", "A_ 2_ 1", });
             dt.Rows.Add(new object[] { "True", "0.928850779", "0.939350659", "0.009809005", "0.770861279", "0.026496166", "0.414520232", "", "0.90541248", "0.267292424", "0.267292424", "0.267292424", "A", "A", "A", "A", "2", "2", "A_ 2_ 2", });
+
+            return dt;
+        }
+
+        private DataTable GetTestDataTableNoSelectedCol()
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("Resp1");
+            dt.Columns.Add("Resp 2");
+            dt.Columns.Add("Resp3");
+            dt.Columns.Add("Resp4");
+            dt.Columns.Add("Resp5");
+            dt.Columns.Add("Resp6");
+            dt.Columns.Add("Resp7");
+            dt.Columns.Add("Resp8");
+            dt.Columns.Add("Resp9");
+            dt.Columns.Add("Resp10");
+            dt.Columns.Add("Resp11");
+            dt.Columns.Add("Cat1");
+            dt.Columns.Add("Cat2");
+            dt.Columns.Add("Cat3");
+            dt.Columns.Add("Cat4");
+            dt.Columns.Add("Cat5");
+            dt.Columns.Add("Cat6");
+            dt.Columns.Add("Cat456");
+
+            dt.Rows.Add(new object[] { "0.454828601", "0.574150302", "0.545565209", "0.839947044", "0.430172879", "0.214525417", "", "0.290222444", "0.485945979", "0.485945979", "0.485945979", "B", "B", "B", "B", "1", "1", "B_ 1_ 1", });
+            dt.Rows.Add(new object[] { "0.083018553", "0.941443463", "0.207248092", "0.331249013", "0.939168473", "0.065447886", "", "0.686787854", "0.154836911", "0.154836911", "0.154836911", "B", "B", "B", "B", "1", "2", "B_ 1_ 2", });
+            dt.Rows.Add(new object[] { "0.536537397", "0.127579182", "0.594837833", "0.407886296", "0.784904525", "0.975016714", "", "0.864625851", "0.701805006", "0.701805006", "0.701805006", "B", "B", "B", "B", "1", "1", "B_ 1_ 1", });
+            dt.Rows.Add(new object[] { "0.545106442", "0.166476045", "0.113682087", "0.062638874", "0.758670961", "0.85047697", "", "0.638286435", "0.822402515", "0.822402515", "0.822402515", "B", "B", "B", "B", "1", "2", "B_ 1_ 2", });
+            dt.Rows.Add(new object[] { "0.701692321", "0.172561402", "0.68310622", "0.387706974", "0.118839154", "0.745646953", "", "0.026431414", "0.79424067", "0.79424067", "0.79424067", "B", "B", "B", "B", "2", "1", "B_ 2_ 1", });
+            dt.Rows.Add(new object[] { "0.531609662", "0.936855243", "0.997515555", "0.881514639", "0.330662508", "0.21005685", "", "0.448949747", "0.346793925", "0.346793925", "0.346793925", "B", "B", "B", "B", "2", "2", "B_ 2_ 2", });
+            dt.Rows.Add(new object[] { "0.149821174", "0.066668069", "0.81158844", "0.566594821", "0.647819088", "0.179648163", "", "0.074464567", "0.527835471", "0.527835471", "0.527835471", "B", "B", "B", "B", "2", "1", "B_ 2_ 1", });
+            dt.Rows.Add(new object[] { "0.605073208", "0.958433038", "0.821399839", "0.73906219", "0.442586814", "0.535938328", "", "0.08348995", "0.166124277", "0.166124277", "0.166124277", "B", "B", "B", "B", "2", "2", "B_ 2_ 2", });
+            dt.Rows.Add(new object[] { "0.635299468", "0.982195991", "0.179141844", "0.541093986", "0.856424619", "", "0.323740334", "0.71785102", "0.226198732", "0.226198732", "0.226198732", "C", "C", "C", "C", "1", "1", "C_ 1_ 1", });
+            dt.Rows.Add(new object[] { "0.487401155", "0.358152281", "0.563379317", "0.295360848", "0.157512625", "", "0.016099421", "0.709070114", "0.988917407", "0.988917407", "0.988917407", "C", "C", "C", "C", "1", "2", "C_ 1_ 2", });
+            dt.Rows.Add(new object[] { "0.978068231", "0.624878384", "0.159597596", "0.950215856", "0.142817129", "", "0.025944891", "0.369178959", "0.917880649", "0.917880649", "0.917880649", "C", "C", "C", "C", "1", "1", "C_ 1_ 1", });
+            dt.Rows.Add(new object[] { "0.819419988", "0.141932344", "0.61931814", "0.281248905", "0.818355472", "", "0.32448983", "0.717178627", "0.622627038", "", "0.622627038", "C", "C", "C", "C", "1", "2", "C_ 1_ 2", });
+            dt.Rows.Add(new object[] { "0.735025713", "0.128882289", "0.534777557", "0.356820109", "0.280416604", "", "0.251004293", "0.031471282", "0.290788106", "0.290788106", "0.290788106", "C", "C", "C", "C", "2", "1", "C_ 2_ 1", });
 
             return dt;
         }

@@ -105,7 +105,7 @@ namespace SilveR.StatsModels
             }
 
             //ensure that all data is trimmed
-            dtNew.TrimAllDataInDataTable();
+            //dtNew.TrimAllDataInDataTable();
 
             //Generate a "catfact" column from the CatFactors!
             DataColumn catFactor = new DataColumn("catfact");
