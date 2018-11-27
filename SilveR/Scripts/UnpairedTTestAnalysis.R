@@ -36,8 +36,10 @@ if (Diplayargs == "Y"){
 #===================================================================================================================
 #Parameter setup
 
+#Graphical parameters
 graphdata<-statdata
 Labelz_IVS_ <- "N"
+ReferenceLine <- "NULL"
 
 #Removing illegal characters
 YAxisTitle <-xxxresponsexxx
@@ -112,8 +114,8 @@ graphdata<-statdata
 graphdata$yvarrr_IVS <- eval(parse(text = paste("statdata$",xxxresponsexxx)))
 graphdata$xvarrr_IVS <- statdata$mainEffect
 MainTitle2 <- ""
-w_Gr_jit <- 0
-h_Gr_jit <-  0
+w_Gr_jitscat <- 0
+h_Gr_jitscat <-  0
 infiniteslope <- "Y"
 
 NONCAT_SCAT("Normal")
@@ -616,8 +618,8 @@ if(showPRPlot=="Y") {
 	XAxisTitle <- "Predicted values"
 	YAxisTitle <- "Externally Studentised residuals"
 	MainTitle2 <- " "
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "Y"
 
 	if (bandw != "N")  {
@@ -675,8 +677,8 @@ if(showNormPlot=="Y") {
 	YAxisTitle <-"Sample Quantiles"
 	XAxisTitle <-"Theoretical Quantiles"
 	MainTitle2 <- " "
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "N"
 	LinearFit <- "Y"
 

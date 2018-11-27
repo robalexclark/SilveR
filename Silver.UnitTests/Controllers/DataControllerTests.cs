@@ -154,10 +154,11 @@ namespace Silver.UnitTests.Controllers
             DataController sut = new DataController(mock.Object);
 
             //Act
-            IActionResult result = await sut.Destroy(0);
+            IActionResult result = await sut.Destroy(It.IsAny<int>());
 
             //Assert
-            RedirectToActionResult viewResult = Assert.IsType<RedirectToActionResult>(result);
+            JsonResult jsonResult = Assert.IsType<JsonResult>(result);
+            Assert.True((bool)jsonResult.Value);
         }
 
         [Fact]
@@ -170,7 +171,7 @@ namespace Silver.UnitTests.Controllers
             DataController sut = new DataController(mock.Object);
 
             //Act
-            IActionResult result = await sut.ViewDataTable(4);
+            IActionResult result = await sut.ViewDataTable(It.IsAny<int>());
 
             //Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);

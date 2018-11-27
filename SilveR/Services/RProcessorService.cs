@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.StatsModels;
 using System;
@@ -168,7 +169,7 @@ namespace SilveR.Services
                     analysis.HtmlOutput = inlineHtml;
                 }
 
-                await repository.SaveChangesAsync();
+                await repository.UpdateAnalysis(analysis);
 
 #if !DEBUG
                     string[] filesToClean = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
@@ -194,7 +195,7 @@ namespace SilveR.Services
                         }
 
                         analysis.RProcessOutput = message;
-                        await repository.SaveChangesAsync();
+                        await repository.UpdateAnalysis(analysis);
                     }
                     catch { }
 

@@ -30,10 +30,13 @@ namespace SilveR.StatsModels
 
         public void ReInitialize(IDataset dataset)
         {
-            this.DatasetID = dataset.DatasetID;
-            this.DataTable = dataset.DatasetToDataTable();
+            if (dataset != null)
+            {
+                this.DatasetID = dataset.DatasetID;
+                this.DataTable = dataset.DatasetToDataTable();
 
-            this.AvailableVariables = DataTable.GetVariableNames();
+                this.AvailableVariables = DataTable.GetVariableNames();
+            }
         }
 
         public AnalysisModelBase(IDataset dataset, string scriptFileName)

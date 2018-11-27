@@ -62,12 +62,12 @@ body {
 
 
 #grid {
-    height: calc(85vh)
+    height: calc(75vh)
 }
 
 #spreadsheet {
     width: 100%;
-    height: calc(85vh)
+    height: calc(75vh)
 }
 
 

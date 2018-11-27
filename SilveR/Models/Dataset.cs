@@ -16,6 +16,7 @@ namespace SilveR.Models
             Analysis = new HashSet<Analysis>();
         }
 
+        [Key]
         public int DatasetID { get; set; }
 
         [Required]
@@ -28,7 +29,6 @@ namespace SilveR.Models
         public string TheData { get; set; }
 
         public DateTime DateUpdated { get; set; }
-
 
         public ICollection<Analysis> Analysis { get; set; }
 

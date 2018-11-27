@@ -30,7 +30,9 @@ if (Diplayargs == "Y"){
 #===================================================================================================================
 #Parameter setup
 
+#Graphical parameters
 graphdata<-statdata
+ReferenceLine <- "NULL"
 
 #Breakdown the list of responses
 resplist <- c()
@@ -263,8 +265,8 @@ if (showNormPlot != "N" ) {
     #Graphical plot options
     YAxisTitle <- "Sample Quantiles"
     XAxisTitle <- "Theoretical Quantiles"
-    w_Gr_jit <- 0
-    h_Gr_jit <- 0
+    w_Gr_jitscat <- 0
+    h_Gr_jitscat <- 0
     infiniteslope <- "N"
     LinearFit <- "Y"
     Line_size <- 0.5

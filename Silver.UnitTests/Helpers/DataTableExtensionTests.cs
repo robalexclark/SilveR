@@ -72,6 +72,34 @@ namespace Silver.UnitTests.Helpers
         }
 
         [Fact]
+        public void CheckDataTable_IllegalColumn_ReturnsMessage()
+        {
+            //Arrange
+            DataTable dataTable = GetTestDataTable();
+            dataTable.Columns[0].ColumnName = "Column~Name";
+
+            //Act
+            string message = dataTable.CheckDataTable();
+
+            //Assert
+            Assert.StartsWith("The dataset contains characters in the column headers that we cannot handle (such as + * ` ~ \\)", message);
+        }
+
+        [Fact]
+        public void CheckDataTable_IllegalBody_ReturnsMessage()
+        {
+            //Arrange
+            DataTable dataTable = GetTestDataTable();
+            dataTable.Rows[0][0] = "`Value`";
+
+            //Act
+            string message = dataTable.CheckDataTable();
+
+            //Assert
+            Assert.StartsWith("The dataset contains characters in the main body of the data that we cannot handle (such as `)", message);
+        }
+
+        [Fact]
         public void TransformColumn_Log10_ReturnsCorrectDataTable()
         {
             //Arrange

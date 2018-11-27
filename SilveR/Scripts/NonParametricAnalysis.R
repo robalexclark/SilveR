@@ -40,6 +40,7 @@ HTMLSetFile(file = htmlFile)
 #Graphical parameter setup
 graphdata <- statdata
 displaypointBOX <- "N"
+ReferenceLine <- "NULL"
 
 #STB CC28 Oct 2011
 statdata <- statdata[order(eval(parse(text = paste("statdata$", treatment)))),]

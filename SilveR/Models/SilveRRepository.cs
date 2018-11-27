@@ -33,9 +33,17 @@ namespace SilveR.Models
             return await context.Datasets.AnyAsync();
         }
 
-        public async Task<IList<Dataset>> GetExistingDatasets(string fileName)
+        public async Task<int> GetLastVersionNumberForDataset(string fileName)
         {
-            return await context.Datasets.Where(x => x.DatasetName == fileName).ToListAsync();
+            var versionNumbers = await context.Datasets.Where(x => x.DatasetName == fileName).Select(x => x.VersionNo).ToListAsync();
+            if (versionNumbers.Any())
+            {
+                return versionNumbers.Max();
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public async Task CreateDataset(Dataset dataset)
@@ -61,7 +69,7 @@ namespace SilveR.Models
             dataset.DatasetID = datasetID;
             context.Entry(dataset).State = EntityState.Deleted;
 
-            //because not cascading, doing manual update on any analyses referening this dataset
+            //because not cascading, doing manual update on any analyses referencing this dataset
             var analyses = context.Analyses.Where(a => a.DatasetID == datasetID);
             foreach (Analysis analysis in analyses)
             {
@@ -86,15 +94,15 @@ namespace SilveR.Models
             return await context.Datasets.Select(x => new DatasetViewModel { DatasetID = x.DatasetID, DatasetName = x.DatasetName, VersionNo = x.VersionNo, DateUpdated = x.DateUpdated }).ToListAsync();
         }
 
-        public async Task<IEnumerable<string>> GetScriptNames()
+        public async Task<IEnumerable<string>> GetScriptDisplayNames()
         {
             return await context.Scripts.Select(x => x.ScriptDisplayName).ToListAsync();
         }
 
 
-        public async Task SaveAnalysis(Analysis newAnalysis)
+        public async Task AddAnalysis(Analysis analysis)
         {
-            context.Analyses.Add(newAnalysis);
+            context.Analyses.Add(analysis);
             await context.SaveChangesAsync();
         }
 
@@ -124,8 +132,9 @@ namespace SilveR.Models
             await context.SaveChangesAsync();
         }
 
-        public async Task SaveChangesAsync()
+        public async Task UpdateAnalysis(Analysis analysis)
         {
+            context.Entry(analysis).State = EntityState.Modified;
             await context.SaveChangesAsync();
         }
 

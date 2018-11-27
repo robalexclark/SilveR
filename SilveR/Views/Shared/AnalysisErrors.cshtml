@@ -1,4 +1,4 @@
-﻿@if (ViewBag.HasError == true)
+﻿@if (ViewContext.ViewData.ModelState.IsValid == false)
 {
     <div class="alert alert-danger">
         <strong>Error!</strong>
@@ -6,7 +6,7 @@
         @Html.ValidationSummary(false)
     </div>
 }
-else if (ViewBag.HasWarnings == true)
+else if (ViewBag.WarningMessages != null)
 {
     <div class="alert alert-warning">
         <strong>Warning!</strong>
@@ -16,6 +16,6 @@ else if (ViewBag.HasWarnings == true)
             <p>@warningMessage</p>
         }
         <br />
-        <button class="btn btn-warning" name="submitButton" type="submit" value="SubmitAnyway">Submit Anyway</button>
+        <button class="btn btn-warning" name="ignoreWarnings" type="submit" value="true">Submit Anyway</button>
     </div>
 }

@@ -133,11 +133,13 @@ if(plotSettingsType=="PowerAxis") {
 	sampleSizeTo <- plotSettingsTo;
 }
 
+#Graphical parameter setup
 if(graphTitle=="NULL") {
 	graphTitle <- ""
 } else {
 	graphTitle <- paste (graphTitle, " \n", sep = "")
 }
+ReferenceLine <- "NULL"
 
 #===================================================================================================================
 #Output HTML header

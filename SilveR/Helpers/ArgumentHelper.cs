@@ -38,17 +38,18 @@ namespace SilveR.Helpers
                 bool boo = (bool)value;
                 newArgument.Value = boo.ToString();
             }
-            else if (value is int)
-            {
-                int num = (int)value;
-                newArgument.Value = num.ToString();
-            }
+            //else if (value is int)
+            //{
+            //    int num = (int)value;
+            //    newArgument.Value = num.ToString();
+            //}
             else if (value is decimal)
             {
                 decimal num = (decimal)value;
                 newArgument.Value = num.ToString();
             }
-            else throw new Exception("Type not found!");
+            else
+                throw new ArgumentException("Type not found!");
 
             return newArgument;
         }
@@ -91,14 +92,12 @@ namespace SilveR.Helpers
         //public int LoadIntArgument(string targetName)
         //{
         //    Argument arg = arguments.Single(x => x.Name == targetName);
-
         //    return int.Parse(arg.Value);
         //}
 
         public decimal LoadDecimalArgument(string targetName)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
-
             return decimal.Parse(arg.Value);
         }
 

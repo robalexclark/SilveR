@@ -30,6 +30,12 @@ $(function () {
         dataSource: theModel.availableVariablesAllowNull
     });
 
+    $("#ReferenceLine").kendoNumericTextBox({
+        format: '#.######',
+        decimals: 6,
+        spinners: false
+    });
+
     enableDisableXAxisTransformation();
     enableDisableScatterplot();
     enableDisableBoxplot();
@@ -123,16 +129,12 @@ function enableDisableHistogram() {
 function enableDisableCaseProfiles() {
     const caseProfiles = $("#CaseProfilesPlotSelected");
     const caseIDDropDown = $("#CaseIDFactor").data("kendoDropDownList");
-    const refLine = $("#ReferenceLine");
 
     if (caseProfiles.prop('checked')) {
         caseIDDropDown.enable(true);
-        refLine.prop('disabled', false);
     }
     else {
         caseIDDropDown.value(null);
         caseIDDropDown.enable(false);
-        refLine.val("");
-        refLine.prop('disabled', true);
     }
 }

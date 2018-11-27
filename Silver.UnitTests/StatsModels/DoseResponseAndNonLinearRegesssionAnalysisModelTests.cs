@@ -43,7 +43,7 @@ namespace Silver.UnitTests.StatsModels
         {
             //Arrange
             Mock<IDataset> mockDataset = new Mock<IDataset>();
-            mockDataset.Setup(x => x.DatasetID).Returns(1);
+            mockDataset.Setup(x => x.DatasetID).Returns(It.IsAny<int>);
             mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
 
             DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelFourParameter(mockDataset.Object);
@@ -62,7 +62,7 @@ namespace Silver.UnitTests.StatsModels
         {
             //Arrange
             Mock<IDataset> mockDataset = new Mock<IDataset>();
-            mockDataset.Setup(x => x.DatasetID).Returns(1);
+            mockDataset.Setup(x => x.DatasetID).Returns(It.IsAny<int>);
             mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
 
             DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelEquation(mockDataset.Object);

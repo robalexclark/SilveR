@@ -184,12 +184,7 @@ namespace SilveR.Controllers
             dataTable.AddSelectedColumn();
 
             //get last version no based on existing dataset names
-            int lastVersionNo = 0;
-            IList<Dataset> existingDatasets = await repository.GetExistingDatasets(fileName);
-            if (existingDatasets.Any())
-            {
-                lastVersionNo = existingDatasets.Max(d => d.VersionNo);
-            }
+            int lastVersionNo = await repository.GetLastVersionNumberForDataset(fileName);
 
             //create entity and save...
             Dataset dataset = new Dataset();
@@ -253,11 +248,11 @@ namespace SilveR.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Destroy(int datasetID)
+        public async Task<JsonResult> Destroy(int datasetID)
         {
             await repository.DeleteDataset(datasetID);
 
-            return RedirectToAction("Index");
+            return Json(true);
         }
 
         public async Task<IActionResult> ViewDataTable(int datasetID)

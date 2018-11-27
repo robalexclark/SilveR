@@ -24,8 +24,6 @@ namespace SilveR.Validators
                 return ValidationInfo;
             }
 
-            string tempMessage = null; //used to temporarily hold message before added to the list
-
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
             allVars.Add(gaVariables.XAxis);
@@ -42,8 +40,7 @@ namespace SilveR.Validators
                 //if the x-axis has been transformed then check that all is numeric
                 if (!xIsNumeric && gaVariables.XAxisTransformation != "None")
                 {
-                    tempMessage = "You have " + gaVariables.XAxisTransformation + " transformed the x-axis variable. Unfortunately the x-axis variable is non-numerical and hence cannot be transformed. The transformation has been ignored.";
-                    ValidationInfo.AddWarningMessage(tempMessage);
+                    ValidationInfo.AddWarningMessage("You have " + gaVariables.XAxisTransformation + " transformed the x-axis variable. Unfortunately the x-axis variable is non-numerical and hence cannot be transformed. The transformation has been ignored.");
                 }
             }
 
@@ -64,8 +61,7 @@ namespace SilveR.Validators
 
             if (!yIsNumeric && gaVariables.ResponseTransformation != "None")
             {
-                tempMessage = "You have " + gaVariables.ResponseTransformation + " transformed the response variable. Unfortunately the response variable is non-numerical and hence cannot be transformed. The transformation has been ignored.";
-                ValidationInfo.AddWarningMessage(tempMessage);
+                ValidationInfo.AddWarningMessage("You have " + gaVariables.ResponseTransformation + " transformed the response variable. Unfortunately the response variable is non-numerical and hence cannot be transformed. The transformation has been ignored.");
             }
 
             if (!yIsNumeric && !String.IsNullOrEmpty(gaVariables.Response) && (gaVariables.HistogramSelected || gaVariables.CaseProfilesPlotSelected || gaVariables.BoxplotSelected || gaVariables.SEMPlotSelected))
@@ -95,7 +91,6 @@ namespace SilveR.Validators
             if ((!xIsNumeric || !yIsNumeric) && gaVariables.LinearFitSelected)
                 ValidationInfo.AddWarningMessage("As one of the axes is non-numeric, the best fit line is not included on the scatterplot.");
 
-
             //check if SEM or boxplot selected that x is numeric
             if (xIsNumeric && (gaVariables.SEMPlotSelected || gaVariables.BoxplotSelected))
                 ValidationInfo.AddWarningMessage("The selected x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.");
@@ -118,14 +113,13 @@ namespace SilveR.Validators
                 {
                     if (!String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && String.IsNullOrEmpty(row[gaVariables.XAxis].ToString()))
                     {
-                        tempMessage = "The x-axis variable selected contains missing values whereas the response variable contains data. The corresponding response variable values have been removed from all plots except the Histogram.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddErrorMessage("The x-axis variable selected (" + gaVariables.XAxis + ") contains missing values whereas the response variable (" + gaVariables.Response + ") contains data. To generate the Histogram (which does not require an x-axis variable) deselect the x-axis variable prior to analysis.");
+                        return ValidationInfo;
                     }
 
                     if (String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && !String.IsNullOrEmpty(row[gaVariables.XAxis].ToString()))
                     {
-                        tempMessage = "The response selected contains missing values whereas the x-axis variable contains data. The corresponding x-axis variable values have been excluded from the analysis.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddWarningMessage("The response selected (" + gaVariables.Response + ") contains missing values whereas the x-axis variable (" + gaVariables.XAxis + ") contains data. The corresponding x-axis variable values have been excluded from the analysis.");
                     }
                 }
 
@@ -134,14 +128,13 @@ namespace SilveR.Validators
                 {
                     if (!String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && String.IsNullOrEmpty(row[gaVariables.FirstCatFactor].ToString()))
                     {
-                        tempMessage = "The 1st categorisation factor selected contains missing values whereas the response variable contains data. The corresponding response variable values have been excluded from the analysis.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddErrorMessage("The 1st categorisation factor selected (" + gaVariables.FirstCatFactor + ") contains missing values whereas the response variable (" + gaVariables.Response + ") contains data.");
+                        return ValidationInfo;
                     }
 
                     if (String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && !String.IsNullOrEmpty(row[gaVariables.FirstCatFactor].ToString()))
                     {
-                        tempMessage = "The response selected contains missing values whereas the 1st categorisation factor contains data. The corresponding 1st categorisation factor values have been excluded from the analysis.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddWarningMessage("The response selected (" + gaVariables.Response + ") contains missing values whereas the 1st categorisation factor (" + gaVariables.FirstCatFactor + ") contains data. The corresponding 1st categorisation factor values have been excluded from the analysis.");
                     }
                 }
 
@@ -150,24 +143,24 @@ namespace SilveR.Validators
                 {
                     if (!String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && String.IsNullOrEmpty(row[gaVariables.SecondCatFactor].ToString()))
                     {
-                        tempMessage = "The 2nd categorisation factor selected contains missing values whereas the response variable contains data. The corresponding response variable values have been excluded from the analysis.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddErrorMessage("The 2nd categorisation factor selected (" + gaVariables.SecondCatFactor + ") contains missing values whereas the response variable (" + gaVariables.Response + ") contains data.");
+                        return ValidationInfo;
                     }
 
                     if (String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && !String.IsNullOrEmpty(row[gaVariables.SecondCatFactor].ToString()))
                     {
-                        tempMessage = "The response selected contains missing values whereas the 2nd categorisation factor contains data. The corresponding 2nd categorisation factor values have been excluded from the analysis.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddWarningMessage("The response selected (" + gaVariables.Response + ") contains missing values whereas the 2nd categorisation factor (" + gaVariables.SecondCatFactor + ") contains data. The corresponding 2nd categorisation factor values have been excluded from the analysis.");
                     }
                 }
+
 
                 //check that the 1st cat factor has values for each x-axis value
                 if (!String.IsNullOrEmpty(gaVariables.XAxis) && !String.IsNullOrEmpty(gaVariables.FirstCatFactor))
                 {
                     if (!String.IsNullOrEmpty(row[gaVariables.XAxis].ToString()) && String.IsNullOrEmpty(row[gaVariables.FirstCatFactor].ToString()))
                     {
-                        tempMessage = "The 1st categorisation factor selected contains missing values whereas the x-axis variable contains data. The corresponding x-axis variable values have been excluded from the analysis.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddErrorMessage("The 1st categorisation factor selected (" + gaVariables.FirstCatFactor + ") contains missing values whereas the x-axis variable (" + gaVariables.XAxis + ") contains data.");
+                        return ValidationInfo;
                     }
                 }
 
@@ -176,8 +169,7 @@ namespace SilveR.Validators
                 {
                     if (!String.IsNullOrEmpty(row[gaVariables.XAxis].ToString()) && String.IsNullOrEmpty(row[gaVariables.SecondCatFactor].ToString()))
                     {
-                        tempMessage = "The 2nd categorisation factor selected contains missing values whereas the x-axis variable contains data. The corresponding x-axis variable values have been excluded from the analysis.";
-                        ValidationInfo.AddWarningMessage(tempMessage);
+                        ValidationInfo.AddWarningMessage("The 2nd categorisation factor selected (" + gaVariables.SecondCatFactor + ") contains missing values whereas the x-axis variable (" + gaVariables.XAxis + ") contains data. The corresponding x-axis variable values have been excluded from the analysis.");
                     }
                 }
             }

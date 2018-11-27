@@ -56,7 +56,7 @@ namespace SilveR.Controllers
             if (theDatasets.Any())
             {
                 //get the scripts
-                viewModel.Scripts = await repository.GetScriptNames();
+                viewModel.Scripts = await repository.GetScriptDisplayNames();
 
                 //add the last uploaded dataset in first
                 List<DatasetViewModel> datasetInfoList = new List<DatasetViewModel>();
@@ -90,158 +90,121 @@ namespace SilveR.Controllers
 
             AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisType, dataset);
 
-            //the method name is the same as the display name after spaces and hyphens removed
+            //the view name is the same as the display name after spaces and hyphens removed (should be same as scriptfilename)
             string analysisViewName = viewModel.AnalysisType.Replace(" ", String.Empty).Replace("-", String.Empty);
             return View(analysisViewName, analysisModel);
         }
 
-        //[HttpGet]
-        //public ActionResult SummaryStatistics() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult SingleMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult RepeatedMeasuresParametricAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult PValueAdjustment() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult PairedTTestAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult UnpairedTTestAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult OneSampleTTestAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult CorrelationAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult LinearRegressionAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult DoseResponseAndNonLinearRegressionAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult NonParametricAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult ChiSquaredAndFishersExactTest() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult SurvivalAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult GraphicalAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult MeansComparison() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult MultivariateAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult NestedDesignAnalysis() { return RedirectToAction("Index"); }
-        //[HttpGet]
-        //public ActionResult IncompleteFactorialParametricAnalysis() { return RedirectToAction("Index"); }
-
 
         [HttpPost]
-        public async Task<IActionResult> SummaryStatistics(SummaryStatisticsModel model, string submitButton)
+        public async Task<IActionResult> SummaryStatistics(SummaryStatisticsModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SingleMeasuresParametricAnalysis(SingleMeasuresParametricAnalysisModel model, string submitButton)
+        public async Task<IActionResult> SingleMeasuresParametricAnalysis(SingleMeasuresParametricAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> RepeatedMeasuresParametricAnalysis(RepeatedMeasuresParametricAnalysisModel model, string submitButton)
+        public async Task<IActionResult> RepeatedMeasuresParametricAnalysis(RepeatedMeasuresParametricAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PValueAdjustment(PValueAdjustmentModel model, string submitButton)
+        public async Task<IActionResult> PValueAdjustment(PValueAdjustmentModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> PairedTTestAnalysis(PairedTTestAnalysisModel model, string submitButton)
+        public async Task<IActionResult> PairedTTestAnalysis(PairedTTestAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UnpairedTTestAnalysis(UnpairedTTestAnalysisModel model, string submitButton)
+        public async Task<IActionResult> UnpairedTTestAnalysis(UnpairedTTestAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> OneSampleTTestAnalysis(OneSampleTTestAnalysisModel model, string submitButton)
+        public async Task<IActionResult> OneSampleTTestAnalysis(OneSampleTTestAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CorrelationAnalysis(CorrelationAnalysisModel model, string submitButton)
+        public async Task<IActionResult> CorrelationAnalysis(CorrelationAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> LinearRegressionAnalysis(LinearRegressionAnalysisModel model, string submitButton)
+        public async Task<IActionResult> LinearRegressionAnalysis(LinearRegressionAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DoseResponseAndNonLinearRegressionAnalysis(DoseResponseAndNonLinearRegesssionAnalysisModel model, string submitButton)
+        public async Task<IActionResult> DoseResponseAndNonLinearRegressionAnalysis(DoseResponseAndNonLinearRegesssionAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> NonParametricAnalysis(NonParametricAnalysisModel model, string submitButton)
+        public async Task<IActionResult> NonParametricAnalysis(NonParametricAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChiSquaredAndFishersExactTest(ChiSquaredAndFishersExactTestModel model, string submitButton)
+        public async Task<IActionResult> ChiSquaredAndFishersExactTest(ChiSquaredAndFishersExactTestModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SurvivalAnalysis(SurvivalAnalysisModel model, string submitButton)
+        public async Task<IActionResult> SurvivalAnalysis(SurvivalAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> GraphicalAnalysis(GraphicalAnalysisModel model, string submitButton)
+        public async Task<IActionResult> GraphicalAnalysis(GraphicalAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> MeansComparison(MeansComparisonModel model, string submitButton)
+        public async Task<IActionResult> MeansComparison(MeansComparisonModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         //[HttpPost]
-        //public async Task<IActionResult> MultivariateAnalysis(MultivariateModel model, string submitButton)
+        //public async Task<IActionResult> MultivariateAnalysis(MultivariateModel model, bool ignoreWarnings)
         //{
-        //    return await RunAnalysis(model, submitButton);
+        //    return await RunAnalysis(model, ignoreWarnings);
         //}
 
         [HttpPost]
-        public async Task<IActionResult> NestedDesignAnalysis(NestedDesignAnalysisModel model, string submitButton)
+        public async Task<IActionResult> NestedDesignAnalysis(NestedDesignAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> IncompleteFactorialParametricAnalysis(IncompleteFactorialParametricAnalysisModel model, string submitButton)
+        public async Task<IActionResult> IncompleteFactorialParametricAnalysis(IncompleteFactorialParametricAnalysisModel model, bool ignoreWarnings)
         {
-            return await RunAnalysis(model, submitButton);
+            return await RunAnalysis(model, ignoreWarnings);
         }
 
-        private async Task<IActionResult> RunAnalysis(AnalysisModelBase model, string submitButton)
+        private async Task<IActionResult> RunAnalysis(AnalysisModelBase model, bool ignoreWarnings)
         {
             Dataset dataset = await repository.GetDatasetByID(model.DatasetID);
             model.ReInitialize(dataset);
@@ -249,7 +212,6 @@ namespace SilveR.Controllers
             if (ModelState.IsValid)
             {
                 ValidationInfo validationInfo = model.Validate();
-                ViewBag.HasError = !validationInfo.ValidatedOK;
 
                 if (!validationInfo.ValidatedOK)
                 {
@@ -260,10 +222,9 @@ namespace SilveR.Controllers
 
                     return View(model);
                 }
-                else if (submitButton != "SubmitAnyway" && validationInfo.WarningMessages.Any())
+                else if (validationInfo.WarningMessages.Any() && !ignoreWarnings) //display warnings
                 {
                     ViewBag.WarningMessages = validationInfo.WarningMessages;
-                    ViewBag.HasWarnings = true;
 
                     return View(model);
                 }
@@ -290,7 +251,7 @@ namespace SilveR.Controllers
                         newAnalysis.Arguments.Add(argument);
                     }
 
-                    await repository.SaveAnalysis(newAnalysis);
+                    await repository.AddAnalysis(newAnalysis);
 
                     backgroundQueue.QueueBackgroundWorkItem(async cancellationToken =>
                     {
@@ -303,16 +264,8 @@ namespace SilveR.Controllers
             }
             else
             {
-                ViewBag.HasError = true;
                 return View(model);
             }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> HasFinished(string analysisGuid)
-        {
-            bool hasFinished = await repository.HasAnalysisCompleted(analysisGuid);
-            return Json(hasFinished);
         }
 
         [HttpGet]
@@ -320,20 +273,18 @@ namespace SilveR.Controllers
         {
             Analysis analysis = await repository.GetAnalysisComplete(analysisGuid);
 
-            if (analysis.DatasetID == null && analysis.Script.ScriptDisplayName != "P-value Adjustment") //then dataset has been deleted
+            if(analysis.Dataset != null || analysis.Script.ScriptDisplayName == "P-value Adjustment")
+            {
+                AnalysisModelBase model = AnalysisFactory.CreateAnalysisModel(analysis.Script.ScriptDisplayName, analysis.Dataset);
+                model.LoadArguments(analysis.Arguments);
+
+                //string analysisLink = analysis.Script.ScriptDisplayName.Replace(" ", String.Empty).Replace("-", String.Empty);
+                return View(analysis.Script.ScriptFileName, model);
+            }
+            else //then dataset has been deleted?
             {
                 TempData["ErrorMessage"] = "It is not possible to re-analyse this dataset as it has been deleted";
                 return RedirectToAction("Index");
-            }
-            else
-            {
-                AnalysisModelBase model = AnalysisFactory.CreateAnalysisModel(analysis.Script.ScriptDisplayName, analysis.Dataset);
-
-                model.LoadArguments(analysis.Arguments);
-
-                string analysisLink = analysis.Script.ScriptDisplayName.Replace(" ", String.Empty).Replace("-", String.Empty);
-
-                return View(analysisLink, model);
             }
         }
 
@@ -364,7 +315,8 @@ namespace SilveR.Controllers
             {
                 return RedirectToAction("ViewLog", new { analysisGuid = analysisGuid });
             }
-            else throw new Exception();
+            else
+                throw new ArgumentException("SubmitButton not valid!");
         }
 
         [HttpGet]
@@ -394,11 +346,11 @@ namespace SilveR.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Destroy(Analysis analysis)
+        public async Task<JsonResult> Destroy(Analysis analysis)
         {
             await repository.DeleteAnalysis(analysis);
 
-            return RedirectToAction("Index");
+            return Json(true);
         }
     }
 }

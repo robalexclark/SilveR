@@ -54,6 +54,7 @@ HTMLCSS(CSSfile = cssFile)
 
 #Graphics parameter setup
 graphdata<-statdata
+ReferenceLine <- "NULL"
 
 #Removing illegal characters
 

@@ -61,6 +61,13 @@ HTMLCSS(CSSfile = cssFile)
 set.seed(5041975)
 
 #Graphical parameters
+
+#Reference line
+if (ReferenceLine != "NULL") {
+	Gr_intercept <- as.numeric(ReferenceLine)
+	Gr_line_typeint<-Line_type_dashed
+}
+
 #add in a catfactor 
 if(!"catfact" %in% colnames(graphdata)) {
 	graphdata$catfact <- c(NA)
@@ -353,20 +360,20 @@ if (ScatterPlot == "Y" && jitterfunction == "Y" && is.numeric(graphdata$xvarrr_I
 } 
 
 if (jitterfunction == "N" ||( is.numeric(graphdata$xvarrr_IVS)=="TRUE" && is.numeric(graphdata$yvarrr_IVS)=="TRUE"))  {
-	w_Gr_jit <- 0
-	h_Gr_jit <- 0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <- 0
 } else {
 	if (is.numeric(graphdata$xvarrr_IVS)=="FALSE" && is.numeric(graphdata$yvarrr_IVS)=="TRUE") {	
-		w_Gr_jit <- Gr_w_Gr_jit
-		h_Gr_jit <- 0
+		w_Gr_jitscat <- Gr_w_Gr_jit
+		h_Gr_jitscat <- 0
 	}
 	if (is.numeric(graphdata$xvarrr_IVS)=="TRUE" && is.numeric(graphdata$yvarrr_IVS)=="FALSE") {	
-		w_Gr_jit <- 0
-		h_Gr_jit <- Gr_h_Gr_jit
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <- Gr_h_Gr_jit
 	}
 	if (is.numeric(graphdata$xvarrr_IVS)=="FALSE" && is.numeric(graphdata$yvarrr_IVS)=="FALSE") {	
-			w_Gr_jit <- 0
-			h_Gr_jit <- 0
+			w_Gr_jitscat <- 0
+			h_Gr_jitscat <- 0
 	}
 }
 
@@ -564,6 +571,10 @@ if(SEMPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==FALSE ) {
 #Make x axis categorical
 graphdata$xvarrr_IVS_SEM <-as.factor(graphdata$xvarrr_IVS)
 
+#Jitter selection
+w_Gr_jitSEM <- Gr_w_Gr_jit
+h_Gr_jitSEM <- 0
+
 #===================================================================================================================
 # Non-Categorised means with SEM plot
 #===================================================================================================================
@@ -675,6 +686,9 @@ if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && Gr
 if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "Overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Adding blanks where needed
+#	graphdataSEMx<-subset(graphdata, graphdata$catfact != "")
+#	graphdataSEM<-subset(graphdataSEMx, graphdataSEMx$xvarrr_IVS != "")
+#	graphdataSEM<-filter(graphdata,  !is.na(graphdata$catfact))
 	graphdataSEM<-graphdata
 	graphdataSEM$Type <- "Dataset"
 
@@ -768,12 +782,6 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NU
 } else	{
 	graphdata$Animal_IVS<-paste(graphdata$l_l  , "=" , as.factor(eval(parse(text = paste("graphdata$", CaseIDFactor)))), sep = "")
 	graphdata<-graphdata[order(graphdata$Animal_IVS, graphdata$Time_IVS), ]
-}
-
-#Reference line
-if (ReferenceLine != "NULL") {
-	Gr_intercept <- as.numeric(ReferenceLine)
-	Gr_line_type<-Line_type_dashed
 }
 
 #Colour range for individual animals on case profiles plot
@@ -932,6 +940,11 @@ if(BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==FALSE) {
 if(BoxPlot == "Y") {
 	graphdata$xvarrr_IVS_BP <-as.factor(graphdata$xvarrr_IVS)
 }
+
+
+#Jitter selection
+w_Gr_jitBP <- Gr_w_Gr_jit
+h_Gr_jitBP <- 0
 
 #===================================================================================================================
 # Non-Categorised boxplot (graphics + non-parametric)
@@ -1333,7 +1346,7 @@ if(BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 		HTML("Individual observations that lie outside the outlier range are included on the plot using circles.",  align="left")
 	}
 	if (Outliers=="Y" && displaypointBOX=="Y") {
-		HTML("The plot includes individual observations, those that lie outside the outlier range are surrounded by an outer circle.",  align="left")
+		HTML("The plot includes individual observations, those that lie outside the outlier range are surrounded by an asterix black star.",  align="left")
 	}
 	if (Outliers=="N" && displaypointBOX=="Y"){
 		HTML("The plot includes individual observations, denoted by black dots.", align="left")
@@ -1716,7 +1729,7 @@ if (CaseIDFactor != "NULL" && CaseProfilesPlot != "N") {
 	HTML(paste("Case ID variable for Case profiles plot: ", CaseIDFactor, sep=""),  align="left")
 }
 
-if (ReferenceLine != "NULL" && CaseProfilesPlot != "N") {
+if (ReferenceLine != "NULL" ) {
 	HTML(paste("Reference line included on Case profiles plot: ", ReferenceLine, sep=""),  align="left")
 }
 

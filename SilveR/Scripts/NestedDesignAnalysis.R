@@ -92,6 +92,9 @@ HTML(refxx, align="left")
 #===================================================================================================================
 #Model and parameter setup - check and balances
 #===================================================================================================================
+#Graphical parameter setup
+ReferenceLine <- "NULL"
+
 #STB Edits so that covariate can be non-null but treatments are null -  17Oct2010
 if (treatments=="NULL" && covariate == "NULL")	{
 	nonetreat<-eval(parse(text = paste(Args[4], "1")))

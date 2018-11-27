@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SilveR.ViewModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using SilveR.ViewModels;
 
 namespace SilveR.Models
 {
@@ -15,14 +15,14 @@ namespace SilveR.Models
         Task<Analysis> GetAnalysisComplete(string analysisGuid);
         Task<Dataset> GetDatasetByID(int? datasetID);
         Task<IList<DatasetViewModel>> GetDatasetViewModels();
-        Task<IList<Dataset>> GetExistingDatasets(string fileName);
+        Task<int> GetLastVersionNumberForDataset(string fileName);
         Task<Script> GetScriptByName(string scriptFileName);
-        Task<IEnumerable<string>> GetScriptNames();
+        Task<IEnumerable<string>> GetScriptDisplayNames();
         Task<bool> HasAnalyses();
         Task<bool> HasAnalysisCompleted(string analysisGuid);
         Task<bool> HasDatasets();
-        Task SaveAnalysis(Analysis newAnalysis);
-        Task SaveChangesAsync();
+        Task AddAnalysis(Analysis analysis);
         Task UpdateDataset(Dataset dataset);
+        Task UpdateAnalysis(Analysis analysis);
     }
 }

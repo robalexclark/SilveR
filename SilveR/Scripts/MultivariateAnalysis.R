@@ -52,6 +52,7 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 
 #Graphical parameters
 Labelz_IVS_ <- "Y"
+ReferenceLine <- "NULL"
 
 #Setting up the Case ID variable
 if (caseid_IVS_ == "NULL") {
@@ -279,8 +280,8 @@ graphdata$l_l<-graphdata$Treatments_IVS_
 YAxisTitle<-"PC2"
 XAxisTitle<-"PC1"
 MainTitle2 <-""
-w_Gr_jit<-0
-h_Gr_jit<-0
+w_Gr_jitscat<-0
+h_Gr_jitscat<-0
 catvartest<- "N"
 Gr_palette<-palette_FUN("Treatments_IVS_")
 LinearFit <- "N"
@@ -556,8 +557,8 @@ graphdata$l_l <- paste(graphdata$firstcatvarrr_IVS, graphdata$secondcatvarrr_IVS
 
 Gr_alpha <- 1
 Line_type <-Line_type_solid
-w_Gr_jit <- 0
-h_Gr_jit <- 0
+w_Gr_jitscat <- 0
+h_Gr_jitscat <- 0
 ScatterPlot<-"Y"
 LinearFit <- "N"
 FirstCatFactor <- "firstcatvarrr_IVS"
@@ -631,8 +632,8 @@ for (d in 1:resplength) {
 			graphdata$l_l <- as.factor(graphdata$catfact)
 	
 			MainTitle2<-""
-			w_Gr_jit <- 0
-			h_Gr_jit <- 0
+			w_Gr_jitscat <- 0
+			h_Gr_jitscat <- 0
 			Gr_legend_pos<-"none"
 			infiniteslope <- "N"
 			LinearFit <- "N"
@@ -911,8 +912,8 @@ if (dim(ttwo)[2] != 1) {
 	YAxisTitle<-"Second linear discriminant function"
 	XAxisTitle<-"First linear discriminant function"
 	MainTitle2 <-""
-	w_Gr_jit<-0
-	h_Gr_jit<-0
+	w_Gr_jitscat<-0
+	h_Gr_jitscat<-0
 	catvartest<- "N"
 	Gr_palette<-palette_FUN("Treatments_IVS_")
 	LinearFit <- "N"
@@ -1240,8 +1241,8 @@ if (noOfComponents == 0) {
 
 		Gr_alpha <- 1
 		Line_type <-Line_type_solid
-		w_Gr_jit <- 0
-		h_Gr_jit <- 0
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <- 0
 		ScatterPlot<-"Y"
 		LinearFit <- "N"
 		FirstCatFactor <- "firstcatvarrr_IVS"

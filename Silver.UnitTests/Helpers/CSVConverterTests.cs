@@ -61,7 +61,7 @@ namespace Silver.UnitTests.Helpers
         {
             //Arrange
             string theData = GetTestCSVData();
-            theData = theData.Replace(',',';');
+            theData = theData.Replace(',', ';');
             byte[] byteArray = Encoding.UTF8.GetBytes(theData);
 
             using (MemoryStream stream = new MemoryStream(byteArray))

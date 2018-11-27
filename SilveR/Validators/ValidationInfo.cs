@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SilveR.Validators
 {
     public class ValidationInfo
     {
-        private bool validatedOK = true;
-        public bool ValidatedOK { get { return validatedOK; } }
+        public bool ValidatedOK
+        {
+            get
+            {
+                return errorMessages.Any() == false;
+            }
+        }
 
         private List<string> errorMessages = new List<string>();
         public IEnumerable<string> ErrorMessages
@@ -23,10 +29,10 @@ namespace SilveR.Validators
 
         public void AddErrorMessage(string message)
         {
-            if (!validatedOK) throw new InvalidOperationException("Validation already failed");
+            if (!ValidatedOK)
+                throw new InvalidOperationException("Validation already failed");
 
             errorMessages.Add(message);
-            validatedOK = false;
         }
 
         public void AddWarningMessage(string message)

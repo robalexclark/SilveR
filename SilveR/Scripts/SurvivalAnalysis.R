@@ -47,6 +47,7 @@ Gr_palette<-palette_FUN(Groupqq)
 YAxisTitle = "Proportion surviving"
 MainTitle2 = ""
 Line_type<-Line_type_solid
+ReferenceLine <- "NULL"
 
 #replace illegal characters in variable names
 XAxisTitle <-Responseqq

@@ -42,21 +42,10 @@ namespace SilveR.StatsModels
         public string SecondCatFactor { get; set; }
 
         public enum GraphStyleType { Overlaid = 0, Separate = 1 }
-        private GraphStyleType styleType = GraphStyleType.Overlaid;
-        public GraphStyleType StyleType
-        {
-            get { return styleType; }
-            set
-            {
-                //if (styleType != value)
-                //{
-                    styleType = value;
-               // }
-            }
-        }
+        public GraphStyleType StyleType { get; set; } = GraphStyleType.Overlaid;
 
         [DisplayName("Display legend")]
-        public bool DisplayLegend { get; set; }
+        public bool DisplayLegend { get; set; } = true;
 
         [DisplayName("Include data")]
         public bool BoxPlotIncludeData { get; set; }
@@ -92,18 +81,7 @@ namespace SilveR.StatsModels
         public bool SEMPlotSelected { get; set; }
 
         public enum SEMPlotType { Column = 0, Line = 1 }
-        private SEMPlotType semType = SEMPlotType.Column;
-        public SEMPlotType SEMType
-        {
-            get { return semType; }
-            set
-            {
-                //if (semType != value)
-                //{
-                    semType = value;
-               // }
-            }
-        }
+        public SEMPlotType SEMType { get; set; } = SEMPlotType.Column;
 
         [DisplayName("Histogram plot")]
         public bool HistogramSelected { get; set; }
@@ -119,7 +97,7 @@ namespace SilveR.StatsModels
         public string CaseIDFactor { get; set; }
 
         [DisplayName("Reference line")]
-        public string ReferenceLine { get; set; }
+        public Nullable<decimal> ReferenceLine { get; set; }
 
 
         public GraphicalAnalysisModel() : this(null) { }
@@ -231,7 +209,7 @@ namespace SilveR.StatsModels
             this.NormalDistSelected = argHelper.LoadBooleanArgument(nameof(NormalDistSelected));
             this.CaseProfilesPlotSelected = argHelper.LoadBooleanArgument(nameof(CaseProfilesPlotSelected));
             this.CaseIDFactor = argHelper.LoadStringArgument(nameof(CaseIDFactor));
-            this.ReferenceLine = argHelper.LoadStringArgument(nameof(ReferenceLine));
+            this.ReferenceLine = argHelper.LoadNullableDecimalArgument(nameof(ReferenceLine));
         }
 
         public override string GetCommandLineArguments()
@@ -300,10 +278,10 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(CaseProfilesPlotSelected)); //23
 
             //Case ID Factor
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, false)); //24
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, true)); //24
 
             //Reference Line
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine, false)); //25
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine.ToString(), false)); //25
 
             //Legend
             arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //26

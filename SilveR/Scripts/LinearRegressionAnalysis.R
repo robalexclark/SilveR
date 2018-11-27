@@ -68,6 +68,7 @@ if (FirstCatFactor == "NULL") {
 
 #Graphics parameter setup
 graphdata<-statdata
+ReferenceLine <- "NULL"
 
 if (covariatelist != "NULL") {
 	Gr_palette<-palette_FUN(FirstCatFactor)
@@ -253,8 +254,8 @@ HTML.title(title, HR=2, align="left")
 graphdata<-statdata
 graphdata$yvarrr_IVS <- eval(parse(text = paste("statdata$",resp)))
 MainTitle2 <- ""
-w_Gr_jit <- 0
-h_Gr_jit <-  0
+w_Gr_jitscat <- 0
+h_Gr_jitscat <-  0
 infiniteslope <- "N"
 LinearFit <- "Y"
 Line_type <-Line_type_solid
@@ -467,8 +468,8 @@ if(covariatelist != "NULL") {
 		graphdata$catfact <-eval(parse(text = paste("statdata$",FirstCatFactor))) 
 		XAxisTitle <- XAxisTitleCov[i]
 		MainTitle2 <-""
-		w_Gr_jit <- 0
-		h_Gr_jit <- 0
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <- 0
 		Legendpos <- "right"
 		Gr_alpha <- 1
 		Line_type <-Line_type_solid
@@ -808,8 +809,8 @@ if(showPRPlot=="Y") {
 	XAxisTitle <- "Predicted values"
 	YAxisTitle <- "Externally Studentised residuals"
 	MainTitle2 <- "Residuals vs. predicted plot \n"
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "Y"
 	Gr_line_type<-Line_type_dashed
 	Line_size2 <- Line_size
@@ -856,8 +857,8 @@ if(showNormPlot=="Y") {
 	YAxisTitle <-"Sample Quantiles"
 	XAxisTitle <-"Theoretical Quantiles"
 	MainTitle2 <- "Normal probability plot \n"
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "N"
 	LinearFit <- "Y"
 	Gr_line_type<-Line_type_dashed
@@ -903,6 +904,8 @@ if (cooksDistancePlot =="Y") {
 	LinearFit <- "N"
 	infiniteslope <- "N"
 	Gr_line_type<-Line_type_dashed
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 
 	#cutoff <- 4/((nrow(graphdata)-length(threewayfull$coefficients)-2)) 
 	cutoff <- 4/nrow(graphdata) 
@@ -954,6 +957,8 @@ if (leveragesPlot =="Y") {
 	YAxisTitle<-"Leverage"
 	LinearFit <- "N"
 	infiniteslope <- "N"
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 
 	#Plot device setup
 	ncscatterplot <- sub(".html", "ncscatterplot.jpg", htmlFile)

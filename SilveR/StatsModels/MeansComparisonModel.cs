@@ -29,18 +29,7 @@ namespace SilveR.StatsModels
         public string Variance { get; set; }
 
         public enum ValueTypeOption { Supplied = 0, Dataset = 1 }
-        private ValueTypeOption valueType = ValueTypeOption.Supplied;
-        public ValueTypeOption ValueType
-        {
-            get { return valueType; }
-            set
-            {
-                //if (valueType != value)
-                //{
-                    valueType = value;
-                //}
-            }
-        }
+        public ValueTypeOption ValueType { get; set; } = ValueTypeOption.Supplied;
 
         [ValidateResponseOrTreatment]
         [CheckUsedOnceOnly]
@@ -64,18 +53,7 @@ namespace SilveR.StatsModels
         public string ControlGroup { get; set; }
 
         public enum ChangeTypeOption { Percent = 0, Absolute = 1 }
-        private ChangeTypeOption changeType = ChangeTypeOption.Percent;
-        public ChangeTypeOption ChangeType
-        {
-            get { return changeType; }
-            set
-            {
-                //if (changeType != value)
-                //{
-                    changeType = value;
-                //}
-            }
-        }
+        public ChangeTypeOption ChangeType { get; set; } = ChangeTypeOption.Percent;
 
         [ValidatePercentChanges]
         [DisplayName("Percent change")]
@@ -86,19 +64,7 @@ namespace SilveR.StatsModels
         public string AbsoluteChange { get; set; }// = String.Empty;
 
         public enum PlottingRangeTypeOption { SampleSize = 0, Power = 1 }
-        private PlottingRangeTypeOption plottingRangeType = PlottingRangeTypeOption.SampleSize;
-        public PlottingRangeTypeOption PlottingRangeType
-        {
-            get { return plottingRangeType; }
-            set
-            {
-                //if (plottingRangeType != value)
-                //{
-                    plottingRangeType = value;
-                //}
-            }
-        }
-
+        public PlottingRangeTypeOption PlottingRangeType { get; set; } = PlottingRangeTypeOption.SampleSize;
 
         [ValidateSampleSizeFrom]
         [DisplayName("Sample size from")]

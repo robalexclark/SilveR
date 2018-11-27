@@ -12,13 +12,8 @@ namespace SilveR.StatsModels
     public class DoseResponseAndNonLinearRegesssionAnalysisModel : AnalysisModelBase
     {
         public enum AnalysisOption { FourParameter = 0, Equation = 1 }
-        private AnalysisOption analysisType = AnalysisOption.FourParameter;
         [DisplayName("Analysis Option")]
-        public AnalysisOption AnalysisType
-        {
-            get { return analysisType; }
-            set { analysisType = value; }
-        }
+        public AnalysisOption AnalysisType { get; set; } = AnalysisOption.FourParameter;
 
         [CheckUsedOnceOnly]
         [ValidateResponseOrDoseAttribute]
@@ -39,13 +34,8 @@ namespace SilveR.StatsModels
         public string Dose { get; set; }
 
         public enum DoseScaleOption { Log10 = 0, Loge = 1 }
-        private DoseScaleOption doseScale = DoseScaleOption.Log10;
         [DisplayName("Dose scale")]
-        public DoseScaleOption DoseScale
-        {
-            get { return doseScale; }
-            set { doseScale = value; }
-        }
+        public DoseScaleOption DoseScale {get; set; } = DoseScaleOption.Log10;
 
         [DisplayName("Offset")]
         public Nullable<decimal> Offset { get; set; }

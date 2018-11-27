@@ -11,6 +11,8 @@ Diplayargs <- "Y"
 #Disply lines on lsmeans
 DisplayLSMeanslines <- "N"
 
+#Disply lines on lsmeans
+DisplaySEMlines <- "N"
 
 #===================================================================================================================
 #Import Graphical parameters from file
@@ -308,7 +310,8 @@ mytheme <- theme(
 	plot.title = element_text(size = Title_size,
 		family = gr_fontfamily,
 		face = gr_fontface,
-		colour = gr_textcolour),
+		colour = gr_textcolour,
+		hjust = 0.5),
 
 	text = element_text(size = X_Label_size,
 		family = gr_fontfamily,
@@ -709,7 +712,7 @@ NONCAT_SCAT <- function(typez) {
 	} else {
 		g6 <- g5
 	}
-	g7 <- g6 + geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jit, h = h_Gr_jit))
+	g7 <- g6 + geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat))
 
 	if (scatterlabels == "Y") {
 		g8 <- g7 + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5,force = 10, point.padding=1)
@@ -721,7 +724,13 @@ NONCAT_SCAT <- function(typez) {
 	} else {
 		g9 <- g8
 	}
-	suppressWarnings(print(g9))
+
+	if (ReferenceLine != "NULL") {
+		g10 <- g9 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g10 <- g9
+	}
+	suppressWarnings(print(g10))
 }
 
 
@@ -732,7 +741,7 @@ ONECATSEP_SCAT <- function() {
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_point(size = Point_size, colour = "black", shape = Point_shape, fill = Gr_fill, position = position_jitter(w = w_Gr_jit, h = h_Gr_jit)) +
+		geom_point(size = Point_size, colour = "black", shape = Point_shape, fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
 		facet_wrap(~l_l)
 
 	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
@@ -746,7 +755,13 @@ ONECATSEP_SCAT <- function() {
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+
+	if (ReferenceLine != "NULL") {
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g3 <- g2
+	}
+	suppressWarnings(print(g3))
 }
 
 TWOCATSEP_SCAT <- function() {
@@ -756,7 +771,7 @@ TWOCATSEP_SCAT <- function() {
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_point(size = Point_size, colour = "black", shape = Point_shape, fill = Gr_fill, position = position_jitter(w = w_Gr_jit, h = h_Gr_jit)) +
+		geom_point(size = Point_size, colour = "black", shape = Point_shape, fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scale = scalexy)
 
 	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
@@ -770,7 +785,12 @@ TWOCATSEP_SCAT <- function() {
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+	if (ReferenceLine != "NULL") {
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g3 <- g2
+	}
+	suppressWarnings(print(g3))
 }
 
 OVERLAID_SCAT <- function() {
@@ -783,7 +803,7 @@ OVERLAID_SCAT <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_point(graphdata = subset(graphdata, catvartest != "N"), aes(fill = l_l), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jit, h = h_Gr_jit))
+		geom_point(graphdata = subset(graphdata, catvartest != "N"), aes(fill = l_l), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat))
 
 	if (dim(subset(graphdata, catvartest != "N"))[1] >= 1 && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
 		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), aes(colour = l_l), method = "lm", se = FALSE, lty = Line_type, size = Line_size, fullrange = TRUE)
@@ -802,7 +822,12 @@ OVERLAID_SCAT <- function() {
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (ReferenceLine != "NULL") {
+		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 #===================================================================================================================
@@ -823,21 +848,26 @@ NONCAT_SEM <- function() {
 	} else {
 		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape)
-
-		if (DisplayLSMeanslines == "Y") {
-			g2 <- g1 + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line) 
-		} else {
-			g2 <- g1
-		}
 	}
 
+	if (DisplaySEMlines == "Y") {
+		g2 <- g1 + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line) 
+	} else {
+		g2 <- g1
+	}
+	
 	if (displaypointSEM == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (ReferenceLine != "NULL") {
+		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 
@@ -858,21 +888,25 @@ ONECATSEP_SEM <- function() {
 		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
 			facet_wrap(~l_l)
-
-		if (DisplayLSMeanslines == "Y") {
-			g2 <- g1 +stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
-		} else {
-			g2 <- g1
-		}
 	}
-
+	if (DisplaySEMlines == "Y") {
+		g2 <- g1 +stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+	} else {
+		g2 <- g1
+	}
+	
 	if (displaypointSEM == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM), pos = 'dodge')
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (ReferenceLine != "NULL") {
+		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 
@@ -893,26 +927,31 @@ TWOCATSEP_SEM <- function() {
 		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
 			facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
-
-		if (DisplayLSMeanslines == "Y") {
-			g2 <- g1 +  stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
-		} else {
-			g2 <- g1
-		}
 	}
 
+	if (DisplaySEMlines == "Y") {
+		g2 <- g1 +  stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+	} else {
+		g2 <- g1
+	}
+	
 	if (displaypointSEM == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (ReferenceLine != "NULL") {
+		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 
 OVERLAID_SEM <- function() {
-	g <- ggplot(graphdataSEM_overall, aes(x = xvarrr_IVS_SEM, y = yvarrr_IVS), colour = l_l) +
+	g <- ggplot(graphdataSEM_overall, aes(x = xvarrr_IVS_SEM, y = yvarrr_IVS, fill=l_l), colour = l_l ) +
 		theme_map +
 		mytheme +
 		theme(legend.position = Gr_legend_pos) +
@@ -929,30 +968,35 @@ OVERLAID_SEM <- function() {
 	} else {
 		g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.1), colour = "black") +
 			geom_point(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, fill = l_l), colour = "black", size = Point_size, shape = Point_shape, pos = position_dodge(w = 0.1))
-
-		if (DisplayLSMeanslines == "Y") {
-			g2 <- g1 +  stat_summary(data = graphdataSEM, fun.y = mean, geom = 'line', aes(group = l_l, colour = l_l), pos = position_dodge(w = 0.1))
-		} else {
-			g2 <- g1
-		}
 	}
-
+	
+	if (DisplaySEMlines == "Y") {
+		g2 <- g1 +  stat_summary(data = graphdataSEM, fun.y = mean, geom = 'line', aes(group = l_l, colour = l_l), pos = position_dodge(w = 0.1))
+	} else {
+		g2 <- g1
+	}
+	
 	if (displaypointSEM == "Y" && SEMPlotType == "Column") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(data = graphdataSEM_overall, pos = position_dodge(w = 0.9), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+#		g3 <- g2 + geom_point(data = graphdataSEM_overall, pos = position_dodge(w = 0.9), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
+		g3 <- g2 + geom_point(data = graphdataSEM_overall, size = Point_size2, shape = Point_shape, position = position_jitterdodge(dodge.width = 1, jitter.width = w_Gr_jitSEM))
 	}
 
 	if (displaypointSEM == "Y" && SEMPlotType == "Line") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(data = graphdataSEM, pos = position_dodge(w = 0.1), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g3 <- g2 + geom_point(data = graphdataSEM, pos = position_dodge(w = 0.1), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM), pos = position_dodge(w = 0.1))
 	}
 
 	if (displaypointSEM == "N") {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (ReferenceLine != "NULL") {
+		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
-
 
 #===================================================================================================================
 #case profiles plot (Graphics module)
@@ -971,7 +1015,7 @@ NONCAT_CPP <- function() {
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_type, size = Line_size, colour = Gr_line)
+		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
 		g1 <- g
 	}
@@ -993,7 +1037,7 @@ ONECATSEP_CPP <- function() {
 		facet_wrap(~l_l)
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_type, size = Line_size, colour = Gr_line)
+		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
 		g1 <- g
 	}
@@ -1015,7 +1059,7 @@ TWOCATSEP_CPP <- function() {
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_type, size = Line_size, colour = Gr_line)
+		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
 		g1 <- g
 	}
@@ -1036,7 +1080,7 @@ OVERLAID_CPP <- function() {
 		geom_line(aes(group = Animal_IVS), size = Line_size)
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_type, size = Line_size, colour = Gr_line)
+		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
 		g1 <- g
 	}
@@ -1057,18 +1101,23 @@ NONCAT_BOX <- function() {
 
 	if (Outliers == "Y") {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill) +
-			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill)
+			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = 8, color = "black", fill = Gr_fill)
 	} else {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill)
 	}
 
 	if (displaypointBOX == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g2 <- g1 + geom_point(data = graphdata, aes(x = xvarrr_IVS, y = yvarrr_IVS), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g2 <- g1 + geom_point(data = graphdata, aes(x = xvarrr_IVS, y = yvarrr_IVS), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitBP, h = h_Gr_jitBP))
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+	if (ReferenceLine != "NULL") {
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g3 <- g2
+	}
+	suppressWarnings(print(g3))
 }
 
 
@@ -1084,7 +1133,7 @@ ONECATSEP_BOX <- function() {
 
 	if (Outliers == "Y") {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill) +
-			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill)
+			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = 8, color = "black", fill = Gr_fill)
 	} else {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill)
 	}
@@ -1097,11 +1146,16 @@ ONECATSEP_BOX <- function() {
 		graphdata2xxx$l_ll <- graphdata2xxx$l_l
 	
 		Point_size2 <- Point_size / 1.5
-		g2 <- g1 + geom_point(data = graphdata2xxx, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS_BP), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g2 <- g1 + geom_point(data = graphdata2xxx, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS_BP), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitBP, h = h_Gr_jitBP))
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+	if (ReferenceLine != "NULL") {
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g3 <- g2
+	}
+	suppressWarnings(print(g3))
 }
 
 
@@ -1117,7 +1171,7 @@ TWOCATSEP_BOX <- function() {
 
 	if (Outliers == "Y") {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill) +
-			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill)
+			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = 8, color = "black", fill = Gr_fill)
 	} else {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill)
 	}
@@ -1131,11 +1185,16 @@ TWOCATSEP_BOX <- function() {
 		graphdata2xxx$secondcatvarrr_IVS_BP <- graphdata2xxx$secondcatvarrr_IVS
 
 		Point_size2 <- Point_size / 1.5
-		g2 <- g1 + geom_point(data = graphdata2xxx, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS_BP), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g2 <- g1 + geom_point(data = graphdata2xxx, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS_BP), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitBP, h = h_Gr_jitBP))
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+	if (ReferenceLine != "NULL") {
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g3 <- g2
+	}
+	suppressWarnings(print(g3))
 }
 
 
@@ -1155,7 +1214,7 @@ OVERLAID_BOX <- function() {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq, fill = l_l), stat = "identity") +
 
 		if (outliertest == "Y") {
-			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS, fill = l_l), size = Point_size, shape = Point_shape, color = "black", position = position_dodge(width = 0.9))
+			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS, fill = l_l), size = Point_size, shape = 8, color = "black", position = position_dodge(width = 0.9))
 		}
 	} else {
 		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq, fill = l_l), stat = "identity", outlier.shape = NA)
@@ -1163,11 +1222,16 @@ OVERLAID_BOX <- function() {
 	
 	if (displaypointBOX == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g2 <- g1 + geom_point(pos = position_dodge(w = 0.9), data = graphdataBOX_overall, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS, group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black")
+		g2 <- g1 + geom_point(data = graphdataBOX_overall, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS, group = l_l, fill=l_l), size = Point_size2, shape = Point_shape, position = position_jitterdodge(dodge.width = 1, jitter.width = w_Gr_jitBP))
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+	if (ReferenceLine != "NULL") {
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g3 <- g2
+	}
+	suppressWarnings(print(g3))
 }
 
 #===================================================================================================================
@@ -1181,7 +1245,7 @@ NONCAT_HIS <- function() {
 		ylab("Density") +
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, binwidth = (binrange)) +
+		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, center=(binrange/2), binwidth = (binrange)) +
 		stat_function(fun = dnorm, args = list(mean = mean(graphdata$yvarrr_IVS), sd = sd(graphdata$yvarrr_IVS)), alpha = Gr_alpha, color = Gr_line, size = Line_size)
 	suppressWarnings(print(g))
 }
@@ -1194,7 +1258,7 @@ ONECATSEP_HIS <- function() {
 		ylab("Density") +
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, binwidth = (binrange)) +
+		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill,  center=(binrange/2),  binwidth = (binrange)) +
 		geom_line(aes(y = density), size = 1, data = normaldens, colour = Gr_line, lty = Line_type) +
 		facet_wrap(~l_l)
 	suppressWarnings(print(g))
@@ -1208,7 +1272,7 @@ TWOCATSEP_HIS <- function() {
 		ylab("Density") +
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, binwidth = (binrange)) +
+		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, center=(binrange/2),  binwidth = (binrange)) +
 		geom_line(aes(y = density), size = 1, data = normaldens, colour = Gr_line, lty = Line_type) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 	suppressWarnings(print(g))
@@ -1224,7 +1288,7 @@ OVERLAID_HIS <- function() {
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_histogram(aes(y = ..density.., fill = l_l), position = 'dodge', colour = "black", binwidth = (binrange))
+		geom_histogram(aes(y = ..density.., fill = l_l), position = 'dodge', colour = "black", center=(binrange/2),  binwidth = (binrange))
 
 	if (NormalDistFit == "Y") {
 		for (i in 1:nlevels) {
@@ -1244,7 +1308,7 @@ NONCAT_MAT <- function() {
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_point(size = Point_size, colour = "black", shape = Point_shape, fill = Gr_fill, position = position_jitter(w = w_Gr_jit, h = h_Gr_jit)) +
+		geom_point(size = Point_size, colour = "black", shape = Point_shape, fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scales = scalexy)
 
 	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
@@ -1266,7 +1330,7 @@ OVERLAID_MAT <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_point(graphdata = subset(graphdata, catvartest != "N"), aes(fill = l_li), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jit, h = h_Gr_jit)) +
+		geom_point(graphdata = subset(graphdata, catvartest != "N"), aes(fill = l_li), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scales = scalexy)
 
 	if (dim(subset(graphdata, catvartest != "N"))[1] >= 1 && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {

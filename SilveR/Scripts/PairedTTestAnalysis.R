@@ -51,9 +51,11 @@ HTMLCSS(CSSfile = cssFile)
 
 statdataprint <- statdata
 
+#Graphical parameters
 graphdata<-statdata
 Gr_palette<-palette_FUN(timeFactor)
 Labelz_IVS_ <- "N"
+ReferenceLine <- "NULL"
 
 #STB 14OCT2015
 #Set contrast options for Marginal overall tests
@@ -294,8 +296,8 @@ if (dimfact ==2) {
 	YAxisTitle<-namereplace(YAxisTitle)
 
 	MainTitle2 <-""
-	w_Gr_jit <- 0
-	h_Gr_jit <- 0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <- 0
 	Gr_alpha <- 1
 	Gr_line_type<-Line_type_dashed
 
@@ -372,8 +374,8 @@ if(covariatelist != "NULL") {
 		XAxisTitle <- XAxisTitleCov[i]
 		XAxisTitle<-namereplace(XAxisTitle)
 		MainTitle2 <-""
-		w_Gr_jit <- 0
-		h_Gr_jit <- 0
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <- 0
 		Legendpos <- "right"
 		Gr_alpha <- 1
 		Line_type <-Line_type_solid
@@ -675,8 +677,8 @@ if(showPRPlot=="Y") {
 	XAxisTitle <- "Predicted values"
 	YAxisTitle <- "Standardised residuals"
 	MainTitle2 <- " "
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "Y"
 
 	if (bandw != "N")  {
@@ -734,8 +736,8 @@ if(showNormPlot=="Y") {
 	YAxisTitle <-"Sample Quantiles"
 	XAxisTitle <-"Theoretical Quantiles"
 	MainTitle2 <- " "
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "N"
 	LinearFit <- "Y"
 

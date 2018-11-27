@@ -48,6 +48,7 @@ HTMLCSS(CSSfile = cssFile)
 #Graphical parameters
 graphdata<-statdata
 Labelz_IVS_ <- "N"
+ReferenceLine <- "NULL"
 
 if (method == "Pearson") {method2="pearson"} 
 if (method == "Kendall") {method2="kendall"} 
@@ -157,8 +158,8 @@ if (scatterplotSelected != "N") {
 				graphdata$yvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][j])))
 	
 				MainTitle2<-""
-				w_Gr_jit <- 0
-				h_Gr_jit <- 0
+				w_Gr_jitscat <- 0
+				h_Gr_jitscat <- 0
 				infiniteslope <- "N"
 				LinearFit <- "Y"
 				Gr_alpha <- 1
@@ -242,8 +243,8 @@ if (matrixPlotSelected != "N") {
 
 	Gr_alpha <- 1
 	Line_type <-Line_type_solid
-	w_Gr_jit <- 0
-	h_Gr_jit <- 0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <- 0
 	ScatterPlot<-"Y"
 	LinearFit <- "Y"
 	FirstCatFactor <- "firstcatvarrr_IVS"
@@ -504,8 +505,8 @@ if (scatterplotSelected != "N") {
 				graphdata$l_l <- as.factor(graphdata$catfact)
 
 				MainTitle2<-""
-				w_Gr_jit <- 0
-				h_Gr_jit <- 0
+				w_Gr_jitscat <- 0
+				h_Gr_jitscat <- 0
 				infiniteslope <- "N"
 				LinearFit <- "Y"
 				Gr_alpha <- 1
@@ -610,8 +611,8 @@ if (matrixPlotSelected != "N") {
 
 	Gr_alpha <- 1
 	Line_type <-Line_type_solid
-	w_Gr_jit <- 0
-	h_Gr_jit <- 0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <- 0
 	ScatterPlot<-"Y"
 	LinearFit <- "Y"
 	FirstCatFactor <- "firstcatvarrr_IVS"

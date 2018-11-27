@@ -68,6 +68,7 @@ if (FirstCatFactor != "NULL") {
 } 
 Line_size2 <- Line_size
 Labelz_IVS_ <- "N"
+ReferenceLine <- "NULL"
 
 #Control group
 cntrlGroup<-sub("-", "_ivs_dash_ivs_", cntrlGroup, fixed=TRUE)
@@ -243,8 +244,8 @@ graphdata$yvarrr_IVS <- eval(parse(text = paste("statdata$",resp)))
 graphdata$xvarrr_IVS <-statdata$scatterPlotColumn
 XAxisTitle <- ""
 MainTitle2 <- ""
-w_Gr_jit <- 0
-h_Gr_jit <-  0
+w_Gr_jitscat <- 0
+h_Gr_jitscat <-  0
 infiniteslope <- "Y"
 
 #GGPLOT2 code
@@ -299,8 +300,8 @@ if(FirstCatFactor != "NULL") {
 		graphdata$catfact <-eval(parse(text = paste("statdata$",FirstCatFactor))) 
 		XAxisTitle <- XAxisTitleCov[i]
 		MainTitle2 <-""
-		w_Gr_jit <- 0
-		h_Gr_jit <- 0
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <- 0
 		Legendpos <- "right"
 		Gr_alpha <- 1
 		Line_type <-Line_type_solid
@@ -586,8 +587,8 @@ if(showPRPlot=="Y") {
 	XAxisTitle <- "Predicted values"
 	YAxisTitle <- "Externally Studentised residuals"
 	MainTitle2 <- " "
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "Y"
 
 	Gr_line_type<-Line_type_dashed
@@ -636,8 +637,8 @@ if(showNormPlot=="Y") {
 	YAxisTitle <-"Sample Quantiles"
 	XAxisTitle <-"Theoretical Quantiles"
 	MainTitle2 <- " "
-	w_Gr_jit <- 0
-	h_Gr_jit <-  0
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
 	infiniteslope <- "N"
 	LinearFit <- "Y"
 

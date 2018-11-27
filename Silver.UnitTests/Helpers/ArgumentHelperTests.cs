@@ -3,6 +3,7 @@ using SilveR.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Xunit;
 
 namespace Silver.UnitTests.Helpers
@@ -10,6 +11,80 @@ namespace Silver.UnitTests.Helpers
     [ExcludeFromCodeCoverageAttribute]
     public class ArgumentHelperTests
     {
+        [Fact]
+        public void ArgumentFactory_NullString_ReturnsNull()
+        {
+            //Arrange,Act
+            Argument sut = ArgumentHelper.ArgumentFactory("TestName", null);
+
+            //Assert
+            Assert.Equal("TestName", sut.Name);
+            Assert.Null(sut.Value);
+        }
+
+        [Fact]
+        public void ArgumentFactory_String_ReturnsString()
+        {
+            //Arrange,Act
+            Argument sut = ArgumentHelper.ArgumentFactory("TestName", "TestValue");
+
+            //Assert
+            Assert.Equal("TestName", sut.Name);
+            Assert.Equal("TestValue", sut.Value);
+        }
+
+
+        [Fact]
+        public void ArgumentFactory_StringList_ReturnsString()
+        {
+            //Arrange,Act
+            Argument sut = ArgumentHelper.ArgumentFactory("TestName", new List<string> { "TestValue1", "TestValue2", "TestValue3" });
+
+            //Assert
+            Assert.Equal("TestName", sut.Name);
+            Assert.Equal("TestValue1,TestValue2,TestValue3", sut.Value);
+        }
+
+        [Fact]
+        public void ArgumentFactory_EmptyList_ReturnsNull()
+        {
+            //Arrange,Act
+            Argument sut = ArgumentHelper.ArgumentFactory("TestName", new List<string>());
+
+            //Assert
+            Assert.Equal("TestName", sut.Name);
+            Assert.Null(sut.Value);
+        }
+
+        [Fact]
+        public void ArgumentFactory_Bool_ReturnsString()
+        {
+            //Arrange,Act
+            Argument sut = ArgumentHelper.ArgumentFactory("TestName", true);
+
+            //Assert
+            Assert.Equal("TestName", sut.Name);
+            Assert.Equal("True", sut.Value);
+        }
+
+        [Fact]
+        public void ArgumentFactory_Decimal_ReturnsString()
+        {
+            //Arrange,Act
+            Argument sut = ArgumentHelper.ArgumentFactory("TestName", 1.23M);
+
+            //Assert
+            Assert.Equal("TestName", sut.Name);
+            Assert.Equal("1.23", sut.Value);
+        }
+
+        [Fact]
+        public void ArgumentFactory_Int_ReturnsString()
+        {
+            //Assert
+            Assert.Throws< ArgumentException>(()=>ArgumentHelper.ArgumentFactory("TestName", 23)); //int
+        }
+
         [Fact]
         public void LoadStringArgument_ReturnsCorrectString()
         {
@@ -47,6 +122,21 @@ namespace Silver.UnitTests.Helpers
 
             //Assert
             Assert.Equal(new List<string> { "Treat1", "Treat 2", "Treat 3" }, result);
+        }
+
+        [Fact]
+        public void LoadIEnumerableArgument_IsNull_ReturnsNull()
+        {
+            //Arrange
+            var arguments = GetArguments();
+            arguments.Single(x => x.Name == "Treatments").Value = null;
+            ArgumentHelper sut = new ArgumentHelper(arguments);
+
+            //Act
+            IEnumerable<string> result = sut.LoadIEnumerableArgument("Treatments");
+
+            //Assert
+            Assert.Null(result);
         }
 
         [Fact]

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SilveR.Services
+namespace SilveR.Helpers
 {
     public static class InlineHtmlCreator
     {
@@ -15,8 +15,9 @@ namespace SilveR.Services
             //get html
             string htmlFile = resultsFiles.Single(x => x.EndsWith(".html") || x.EndsWith(".htm"));
 
-            //read in the html and reconvert any dodhy characters back
+            //read in the html and reconvert any dodgy characters back
             string theHTML = File.ReadAllText(htmlFile);
+
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             theHTML = argFormatter.ConvertIllegalCharactersBack(theHTML);
 
@@ -29,17 +30,17 @@ namespace SilveR.Services
             return inlineHtml;
         }
 
-        private static HtmlDocument InlineCSS(HtmlDocument document, string cssString)
-        {
-            HtmlNode linkNode = document.DocumentNode.SelectSingleNode("link");
+        //private static HtmlDocument InlineCSS(HtmlDocument document, string cssString)
+        //{
+        //    HtmlNode linkNode = document.DocumentNode.SelectSingleNode("link");
 
-            HtmlNode cssNode = HtmlNode.CreateNode("<style scoped>");
-            cssNode.InnerHtml = cssString;
+        //    HtmlNode cssNode = HtmlNode.CreateNode("<style scoped>");
+        //    cssNode.InnerHtml = cssString;
 
-            document.DocumentNode.ReplaceChild(cssNode, linkNode);
+        //    document.DocumentNode.ReplaceChild(cssNode, linkNode);
 
-            return document;
-        }
+        //    return document;
+        //}
 
         private static HtmlDocument InlineImages(HtmlDocument document, List<string> resultsFiles)
         {
@@ -51,10 +52,10 @@ namespace SilveR.Services
 
                 using (var image = Image.Load(imageFile))
                 {
-                    using (MemoryStream m = new MemoryStream())
+                    using (MemoryStream ms = new MemoryStream())
                     {
-                        image.Save(m, ImageFormats.Png);
-                        byte[] imageBytes = m.ToArray();
+                        image.Save(ms, ImageFormats.Png);
+                        byte[] imageBytes = ms.ToArray();
 
                         // Convert byte[] to Base64 String
                         string base64String = Convert.ToBase64String(imageBytes);

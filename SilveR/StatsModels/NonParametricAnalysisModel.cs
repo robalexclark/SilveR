@@ -45,19 +45,8 @@ namespace SilveR.StatsModels
         }
 
         public enum AnalysisOption { MannWhitney = 0, AllComparisons = 1, CompareToControl = 2 }
-        private AnalysisOption analysisType = AnalysisOption.MannWhitney;
         [DisplayName("Analysis type")]
-        public AnalysisOption AnalysisType
-        {
-            get { return analysisType; }
-            set
-            {
-                //if (analysisType != value)
-                //{
-                    analysisType = value;
-                //}
-            }
-        }
+        public AnalysisOption AnalysisType { get; set; } = AnalysisOption.MannWhitney;
 
         public NonParametricAnalysisModel() : this(null) { }
 
