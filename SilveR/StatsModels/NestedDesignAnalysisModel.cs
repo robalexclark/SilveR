@@ -11,7 +11,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class NestedDesignAnalysisModel : AnalysisModelBase
+    public class NestedDesignAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -79,11 +79,10 @@ namespace SilveR.StatsModels
         }
 
 
-        public NestedDesignAnalysisModel() : this(null) { }
+        public NestedDesignAnalysisModel() : base("NestedDesignAnalysis") { }
 
         public NestedDesignAnalysisModel(IDataset dataset)
             : base(dataset, "NestedDesignAnalysis") { }
-
 
 
         public override ValidationInfo Validate()

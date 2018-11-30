@@ -13,11 +13,11 @@ namespace SilveR.Models
         Task<IList<Analysis>> GetAnalyses();
         Task<Analysis> GetAnalysis(string analysisGuid);
         Task<Analysis> GetAnalysisComplete(string analysisGuid);
-        Task<Dataset> GetDatasetByID(int? datasetID);
+        Task<Dataset> GetDatasetByID(int datasetID);
         Task<IList<DatasetViewModel>> GetDatasetViewModels();
         Task<int> GetLastVersionNumberForDataset(string fileName);
         Task<Script> GetScriptByName(string scriptFileName);
-        Task<IEnumerable<string>> GetScriptDisplayNames();
+        Task<IEnumerable<Script>> GetScripts();
         Task<bool> HasAnalyses();
         Task<bool> HasAnalysisCompleted(string analysisGuid);
         Task<bool> HasDatasets();

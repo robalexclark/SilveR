@@ -11,7 +11,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class PairedTTestAnalysisModel : AnalysisModelBase
+    public class PairedTTestAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -84,11 +84,10 @@ namespace SilveR.StatsModels
         }
 
 
-        public PairedTTestAnalysisModel() : this(null) { }
+        public PairedTTestAnalysisModel() : base("PairedTTestAnalysis") { }
 
         public PairedTTestAnalysisModel(IDataset dataset)
             : base(dataset, "PairedTTestAnalysis") { }
-
 
 
         public override ValidationInfo Validate()

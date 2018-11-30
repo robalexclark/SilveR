@@ -11,7 +11,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class LinearRegressionAnalysisModel : AnalysisModelBase
+    public class LinearRegressionAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -83,7 +83,7 @@ namespace SilveR.StatsModels
         public bool LeveragePlot { get; set; }
 
 
-        public LinearRegressionAnalysisModel() : this(null) { }
+        public LinearRegressionAnalysisModel() : base("LinearRegressionAnalysis") { }
 
         public LinearRegressionAnalysisModel(IDataset dataset)
             : base(dataset, "LinearRegressionAnalysis") { }

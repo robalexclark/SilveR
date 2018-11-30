@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class OneSampleTTestAnalysisModel : AnalysisModelBase
+    public class OneSampleTTestAnalysisModel : AnalysisDataModelBase
     {
         [HasAtLeastOneEntry]
         [CheckUsedOnceOnly]
@@ -44,7 +44,7 @@ namespace SilveR.StatsModels
         public bool NormalPlot { get; set; }
 
 
-        public OneSampleTTestAnalysisModel() : this(null) { }
+        public OneSampleTTestAnalysisModel() : base("OneSampleTTestAnalysis") { }
 
         public OneSampleTTestAnalysisModel(IDataset dataset)
             : base(dataset, "OneSampleTTestAnalysis") { }

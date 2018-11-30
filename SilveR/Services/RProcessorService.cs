@@ -59,11 +59,13 @@ namespace SilveR.Services
                 AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
                 analysisModel.LoadArguments(analysis.Arguments);
 
-                string csvFileName = null;
-                string[] csvData = analysisModel.ExportData();
-                if (csvData != null)
+                //csvfilename is built from the analysis guid and is also used in R to name the output at this time
+                string csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
+
+                AnalysisDataModelBase analysisDataModelBase = analysisModel as AnalysisDataModelBase;
+                if (analysisDataModelBase != null) //then has data component
                 {
-                    csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
+                    string[] csvData = analysisDataModelBase.ExportData();
                     File.WriteAllLines(csvFileName, csvData);
                 }
 
@@ -101,7 +103,7 @@ namespace SilveR.Services
                 psi.WorkingDirectory = workingDir;
 
                 theArguments = analysisModel.GetCommandLineArguments();
-                psi.Arguments = scriptFileName.WrapInDoubleQuotes() + " --vanilla --args " + csvFileName.WrapInDoubleQuotes() + " " + theArguments;
+                psi.Arguments = FormatPreArgument(scriptFileName) + " --vanilla --args " + FormatPreArgument(csvFileName) + " " + theArguments;
 
                 //Configure some options for the R process
                 psi.UseShellExecute = false;
@@ -204,11 +206,8 @@ namespace SilveR.Services
 #endif
             }
         }
-    }
 
-    public static class StringExtensions
-    {
-        public static string WrapInDoubleQuotes(this string str)
+        private string FormatPreArgument(string str)
         {
             return "\"" + str + "\"";
         }

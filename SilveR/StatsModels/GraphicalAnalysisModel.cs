@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class GraphicalAnalysisModel : AnalysisModelBase
+    public class GraphicalAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -100,7 +100,7 @@ namespace SilveR.StatsModels
         public Nullable<decimal> ReferenceLine { get; set; }
 
 
-        public GraphicalAnalysisModel() : this(null) { }
+        public GraphicalAnalysisModel() : base("GraphicalAnalysis") { }
 
         public GraphicalAnalysisModel(IDataset dataset)
             : base(dataset, "GraphicalAnalysis") { }

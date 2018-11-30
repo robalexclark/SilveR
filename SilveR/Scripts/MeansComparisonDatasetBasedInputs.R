@@ -5,9 +5,9 @@ suppressWarnings(library(R2HTML))
 
 #===================================================================================================================
 # retrieve args
-Args <- commandArgs(TRUE)
 
 #Copy Args into variables
+Args <- commandArgs(TRUE)
 valueType <- Args[4]
 meanOrResponse <- Args[5]
 varianceTypeOrTreatment <- Args[6]
@@ -111,7 +111,7 @@ if(plotSettingsType=="PowerAxis") {
 			sampleSizeFrom <- floor(as.numeric(power.t.test(delta=temp11[length(temp11)], power=((powerFrom/100)),sd=standev, sig.level=sig)[1]))
 			sampleSizeTo <- ceiling(as.numeric(power.t.test(n=NULL,delta=temp11[1], power=((powerTo/100)), sd=standev,sig.level=sig)[1]))
 		}
-	} else if(valueType=="SuppliedValues") {
+	} else if(valueType=="UserValues") {
 		if(changesType == "Absolute") {
 			powerFrom <- plotSettingsFrom ;
 			powerTo <- plotSettingsTo ;
@@ -143,7 +143,8 @@ ReferenceLine <- "NULL"
 
 #===================================================================================================================
 #Output HTML header
-Title <-paste(branding, " Power Analysis (Two Means Comparison)", sep="")
+Title <-paste(branding, " 'Comparison of Means' Power Analysis", sep="")
+
 HTML.title(Title, HR = 1, align = "left")
 HTML("Power calculations made by InVivoStat assume the statistical analysis will be performed using the two sample t-test. This may lead to slightly conservative estimates of sample sizes and statistical power.", align="left")
 
@@ -349,7 +350,7 @@ powercurvespercentageANOVA<-function(resp, treat, ctrl, pcchange) {
 #===================================================================================================================
 #Geberating the power curves
 #===================================================================================================================
-if (valueType == "SuppliedValues") {
+if (valueType == "UserValues") {
 	if(changesType == "Absolute") {
 		powercurvesactual(SD, expectedChanges)
 	} else if (changesType == "Percent") {
@@ -379,7 +380,7 @@ HTML.title("Selected results", HR=2, align="left")
 # Text if Power is selected
 if(plotSettingsType=="PowerAxis") {
 	#Selected results for user defined parameters
-	if (valueType == "SuppliedValues") {
+	if (valueType == "UserValues") {
 		if(changesType == "Absolute") {
 			sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 			for (j in 1:1) {
@@ -451,7 +452,7 @@ if(plotSettingsType=="PowerAxis") {
 	}
 } else	{
 	#Selected results for user defined parameters
-	if (valueType == "SuppliedValues") {
+	if (valueType == "UserValues") {
 		if(changesType == "Absolute") {
 			sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 
@@ -569,12 +570,12 @@ if (showdataset == "Y") {
 #===================================================================================================================
 HTML.title("Analysis options", HR=2, align="left")
 if (valueType == "DatasetValues") { 
-	HTML(paste("Analysis method: Use dataset values"),  align="left")
+	HTML(paste("Analysis method: Dataset based inputs"),  align="left")
 	HTML(paste("Response variable: ", meanOrResponse, sep=""),  align="left")
 	HTML(paste("Treatment variable: ", varianceTypeOrTreatment, sep=""),  align="left")
 	HTML(paste("Control group: ", varianceAmntOrControl, sep=""),  align="left")
 } else {
-	HTML(paste("Analysis method: User defined values"),  align="left")
+	HTML(paste("Analysis method: User based inputs"),  align="left")
 	HTML(paste("Mean value: ", meanOrResponse, sep=""),  align="left")
 	HTML(paste("Variability estimate entered: ", varianceTypeOrTreatment, sep=""),  align="left")
 	HTML(paste("Variability estimate: ", varianceAmntOrControl, sep=""),  align="left")

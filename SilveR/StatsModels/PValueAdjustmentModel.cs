@@ -32,19 +32,13 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
 
-        public PValueAdjustmentModel()
-            : base(null, "PValueAdjustment") { }
+        public PValueAdjustmentModel() : base("PValueAdjustment") { }
 
 
         public override ValidationInfo Validate()
         {
             PValueAdjustmentValidator pValueAdjustmentValidator = new PValueAdjustmentValidator(this);
             return pValueAdjustmentValidator.Validate();
-        }
-
-        public override string[] ExportData()
-        {
-            return null;
         }
 
         public override void LoadArguments(IEnumerable<Argument> arguments)

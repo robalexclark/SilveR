@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class NonParametricAnalysisModel : AnalysisModelBase
+    public class NonParametricAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -48,7 +48,7 @@ namespace SilveR.StatsModels
         [DisplayName("Analysis type")]
         public AnalysisOption AnalysisType { get; set; } = AnalysisOption.MannWhitney;
 
-        public NonParametricAnalysisModel() : this(null) { }
+        public NonParametricAnalysisModel() : base("NonParametricAnalysis") { }
 
         public NonParametricAnalysisModel(IDataset dataset)
             : base(dataset, "NonParametricAnalysis") { }

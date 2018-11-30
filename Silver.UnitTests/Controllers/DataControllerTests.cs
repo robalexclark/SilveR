@@ -15,7 +15,7 @@ using Xunit;
 
 namespace Silver.UnitTests.Controllers
 {
-    [ExcludeFromCodeCoverageAttribute]
+    
     public class DataControllerTests
     {
         [Fact]

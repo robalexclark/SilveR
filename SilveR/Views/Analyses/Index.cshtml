@@ -12,7 +12,14 @@
 }
 <h2>@ViewBag.Title</h2>
 
-@await Html.PartialAsync("AnalysisErrors")
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>
+        <br />
+        <p>@ViewBag.ErrorMessage</p>
+    </div>
+}
 
 <form method="get" action="~/Analyses/AnalysisDataSelector">
     <input type="submit" value="New Analysis" class="btn btn-primary" />

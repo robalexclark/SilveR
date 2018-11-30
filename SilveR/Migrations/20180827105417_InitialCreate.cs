@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace SilveR.Migrations
 {
@@ -30,7 +30,8 @@ namespace SilveR.Migrations
                     ScriptID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ScriptDisplayName = table.Column<string>(unicode: false, maxLength: 50, nullable: false),
-                    ScriptFileName = table.Column<string>(unicode: false, maxLength: 50, nullable: false)
+                    ScriptFileName = table.Column<string>(unicode: false, maxLength: 50, nullable: false),
+                    RequiresDataset = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,18 +108,18 @@ namespace SilveR.Migrations
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Arguments");
+{
+    migrationBuilder.DropTable(
+        name: "Arguments");
 
-            migrationBuilder.DropTable(
-                name: "Analyses");
+    migrationBuilder.DropTable(
+        name: "Analyses");
 
-            migrationBuilder.DropTable(
-                name: "Datasets");
+    migrationBuilder.DropTable(
+        name: "Datasets");
 
-            migrationBuilder.DropTable(
-                name: "Scripts");
-        }
+    migrationBuilder.DropTable(
+        name: "Scripts");
+}
     }
 }

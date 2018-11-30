@@ -13,7 +13,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class RepeatedMeasuresParametricAnalysisModel : AnalysisModelBase
+    public class RepeatedMeasuresParametricAnalysisModel : AnalysisDataModelBase
     {
         private const string MAIN_EFFECT_SEPERATOR = "_.._";        
 
@@ -96,7 +96,7 @@ namespace SilveR.StatsModels
         [DisplayName("All pairwise comparisons")]
         public bool AllPairwiseComparisons { get; set; }
 
-        public RepeatedMeasuresParametricAnalysisModel() : this(null) { }
+        public RepeatedMeasuresParametricAnalysisModel() : base("RepeatedMeasuresParametricAnalysis") { }
 
         public RepeatedMeasuresParametricAnalysisModel(IDataset dataset)
             : base(dataset, "RepeatedMeasuresParametricAnalysis") { }

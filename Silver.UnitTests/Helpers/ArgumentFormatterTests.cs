@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Silver.UnitTests.Helpers
 {
-    [ExcludeFromCodeCoverageAttribute]
+    
     public class ArgumentFormatterTests
     {
         [Fact]

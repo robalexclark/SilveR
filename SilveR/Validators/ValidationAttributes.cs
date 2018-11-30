@@ -186,96 +186,85 @@ namespace SilveR.Validators
 
 
     //MEANS COMPARISON
-    public class ValidateGroupMeanAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+    //public class ValidateGroupMeanAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        MeansComparisonUserBasedInputsModel model = (MeansComparisonUserBasedInputsModel)validationContext.ObjectInstance;
 
-            if (model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset) return ValidationResult.Success;
+    //        if (String.IsNullOrEmpty(model.GroupMean))
+    //        {
+    //            return new ValidationResult("Group Mean is a required variable");
+    //        }
+    //        else if (!double.TryParse(model.GroupMean, out double val))
+    //        {
+    //            return new ValidationResult("Group Mean is not numeric");
+    //        }
+    //        else
+    //        {
+    //            return ValidationResult.Success;
+    //        }
+    //    }
+    //}
 
-            if (String.IsNullOrEmpty(model.GroupMean))
-            {
-                return new ValidationResult("Group Mean is a required variable");
-            }
-            else if (!double.TryParse(model.GroupMean, out double val))
-            {
-                return new ValidationResult("Group Mean is not numeric");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
+    //public class ValidateStandardDeviationAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        MeansComparisonUserBasedInputsModel model = (MeansComparisonUserBasedInputsModel)validationContext.ObjectInstance;
 
-    public class ValidateStandardDeviationAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+    //        if (model.StandardDeviation.HasValue && !double.TryParse(model.StandardDeviation, out double val))
+    //        {
+    //            return new ValidationResult("Standard Deviation entered is not numeric");
+    //        }
+    //        else
+    //        {
+    //            return ValidationResult.Success;
+    //        }
+    //    }
+    //}
 
-            if (model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset)
-            {
-                return ValidationResult.Success;
-            }
-            else if (!String.IsNullOrEmpty(model.StandardDeviation) && !double.TryParse(model.StandardDeviation, out double val))
-            {
-                return new ValidationResult("Standard Deviation entered is not numeric");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
+    //public class ValidateVarianceAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        MeansComparisonUserBasedInputsModel model = (MeansComparisonUserBasedInputsModel)validationContext.ObjectInstance;
 
+    //        if (model.Variance.HasValue && !double.TryParse(model.Variance, out double val))
+    //        {
+    //            return new ValidationResult("Variance entered is not numeric");
+    //        }
+    //        else
+    //        {
+    //            return ValidationResult.Success;
+    //        }
+    //    }
+    //}
 
-    public class ValidateVarianceAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+    //public class ValidateResponseOrTreatmentAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        MeansComparisonDatasetBasedInputsModel model = (MeansComparisonDatasetBasedInputsModel)validationContext.ObjectInstance;
 
-            if (model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset)
-            {
-                return ValidationResult.Success;
-            }
-            else if (!String.IsNullOrEmpty(model.Variance) && !double.TryParse(model.Variance, out double val))
-            {
-                return new ValidationResult("Variance entered is not numeric");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
-
-    public class ValidateResponseOrTreatmentAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
-
-            if (value == null && model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset)
-            {
-                return new ValidationResult(validationContext.DisplayName + " is a required variable");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
+    //        if (value == null)
+    //        {
+    //            return new ValidationResult(validationContext.DisplayName + " is a required variable");
+    //        }
+    //        else
+    //        {
+    //            return ValidationResult.Success;
+    //        }
+    //    }
+    //}
 
     public class ValidateControlGroupAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+            MeansComparisonDatasetBasedInputsModel model = (MeansComparisonDatasetBasedInputsModel)validationContext.ObjectInstance;
 
-            if (String.IsNullOrEmpty(model.ControlGroup) && model.ValueType == MeansComparisonModel.ValueTypeOption.Dataset && model.ChangeType.ToString() == "Percent")
+            if (String.IsNullOrEmpty(model.ControlGroup) && model.ChangeType.ToString() == "Percent")
             {
                 return new ValidationResult("You have selected % change as expected changes from control, but as you have not defined the control group it is not possible to calculate the % change.");
             }
@@ -290,13 +279,13 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
 
-            if (model.ChangeType == MeansComparisonModel.ChangeTypeOption.Absolute)
+            if (model.ChangeType == ChangeTypeOption.Absolute)
             {
                 return ValidationResult.Success;
             }
-            if ((String.IsNullOrEmpty(model.PercentChange) && model.ChangeType == MeansComparisonModel.ChangeTypeOption.Percent))
+            if (String.IsNullOrEmpty(model.PercentChange) && model.ChangeType == ChangeTypeOption.Percent)
             {
                 return new ValidationResult(validationContext.DisplayName + " is a required variable");
             }
@@ -328,13 +317,13 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
 
-            if (model.ChangeType == MeansComparisonModel.ChangeTypeOption.Percent)
+            if (model.ChangeType == ChangeTypeOption.Percent)
             {
                 return ValidationResult.Success;
             }
-            else if (String.IsNullOrEmpty(model.AbsoluteChange) && model.ChangeType == MeansComparisonModel.ChangeTypeOption.Absolute)
+            else if (String.IsNullOrEmpty(model.AbsoluteChange) && model.ChangeType == ChangeTypeOption.Absolute)
             {
                 return new ValidationResult(validationContext.DisplayName + " is a required variable");
             }
@@ -366,9 +355,9 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
 
-            if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.SampleSize)
+            if (model.PlottingRangeType == PlottingRangeTypeOption.SampleSize)
                 return ValidationResult.Success;
 
             bool fromOK = double.TryParse(model.PowerFrom, out double from);
@@ -399,9 +388,9 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
 
-            if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.SampleSize)
+            if (model.PlottingRangeType == PlottingRangeTypeOption.SampleSize)
                 return ValidationResult.Success;
 
             bool toOK = double.TryParse(model.PowerTo, out double to);
@@ -432,9 +421,9 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
 
-            if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.Power)
+            if (model.PlottingRangeType == PlottingRangeTypeOption.Power)
                 return ValidationResult.Success;
 
             bool fromOK = double.TryParse(model.SampleSizeFrom, out double from);
@@ -465,9 +454,9 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            MeansComparisonModel model = (MeansComparisonModel)validationContext.ObjectInstance;
+            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
 
-            if (model.PlottingRangeType == MeansComparisonModel.PlottingRangeTypeOption.Power)
+            if (model.PlottingRangeType == PlottingRangeTypeOption.Power)
                 return ValidationResult.Success;
 
             bool toOK = double.TryParse(model.SampleSizeTo, out double to);

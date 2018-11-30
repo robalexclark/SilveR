@@ -7,7 +7,7 @@ namespace SilveR.StatsModels
     {
         public static AnalysisModelBase CreateAnalysisModel(Analysis analysis)
         {
-            return CreateAnalysisModel(analysis.Script.ScriptDisplayName, analysis.Dataset);
+            return CreateAnalysisModel(analysis.Script.ScriptFileName, analysis.Dataset);
         }
 
         public static AnalysisModelBase CreateAnalysisModel(string scriptName, Dataset dataset)
@@ -15,58 +15,61 @@ namespace SilveR.StatsModels
             AnalysisModelBase model;
             switch (scriptName)
             {
-                case "Summary Statistics":
+                case "SummaryStatistics":
                     model = new SummaryStatisticsModel(dataset);
                     break;
-                case "Single Measures Parametric Analysis":
+                case "SingleMeasuresParametricAnalysis":
                     model = new SingleMeasuresParametricAnalysisModel(dataset);
                     break;
-                case "Repeated Measures Parametric Analysis":
+                case "RepeatedMeasuresParametricAnalysis":
                     model = new RepeatedMeasuresParametricAnalysisModel(dataset);
                     break;
-                case "P-value Adjustment":
+                case "PValueAdjustment":
                     model = new PValueAdjustmentModel();
                     break;
-                case "Paired t-test Analysis":
+                case "PairedTTestAnalysis":
                     model = new PairedTTestAnalysisModel(dataset);
                     break;
-                case "Unpaired t-test Analysis":
+                case "UnpairedTestAnalysis":
                     model = new UnpairedTTestAnalysisModel(dataset);
                     break;
-                case "One-Sample t-test Analysis":
+                case "OneSampleTTestAnalysis":
                     model = new OneSampleTTestAnalysisModel(dataset);
                     break;
-                case "Correlation Analysis":
+                case "CorrelationAnalysis":
                     model = new CorrelationAnalysisModel(dataset);
                     break;
-                case "Linear Regression Analysis":
+                case "LinearRegressionAnalysis":
                     model = new LinearRegressionAnalysisModel(dataset);
                     break;
-                case "Dose-Response and Non-Linear Regression Analysis":
+                case "DoseResponseAndNonLinearRegressionAnalysis":
                     model = new DoseResponseAndNonLinearRegesssionAnalysisModel(dataset);
                     break;
-                case "Non-Parametric Analysis":
+                case "NonParametricAnalysis":
                     model = new NonParametricAnalysisModel(dataset);
                     break;
-                case "Chi-Squared and Fishers Exact Test":
+                case "ChiSquaredAndFishersExactTest":
                     model = new ChiSquaredAndFishersExactTestModel(dataset);
                     break;
-                case "Survival Analysis":
+                case "SurvivalAnalysis":
                     model = new SurvivalAnalysisModel(dataset);
                     break;
-                case "Graphical Analysis":
+                case "GraphicalAnalysis":
                     model = new GraphicalAnalysisModel(dataset);
                     break;
-                case "Means Comparison":
-                    model = new MeansComparisonModel(dataset);
+                case "MeansComparisonUserBasedInputs":
+                    model = new MeansComparisonUserBasedInputsModel();
                     break;
-                //case "Multivariate Analysis":
+                case "MeansComparisonDatasetBasedInputs":
+                    model = new MeansComparisonDatasetBasedInputsModel(dataset);
+                    break;
+                //case "MultivariateAnalysis":
                 //    model = new MultivariateAnalysisModel(dataset);
                 //    break;
-                case "Nested Design Analysis":
+                case "NestedDesignAnalysis":
                     model = new NestedDesignAnalysisModel(dataset);
                     break;
-                case "Incomplete Factorial Parametric Analysis":
+                case "IncompleteFactorialParametricAnalysis":
                     model = new IncompleteFactorialParametricAnalysisModel(dataset);
                     break;
                 default:

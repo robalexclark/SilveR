@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Silver.UnitTests.StatsModels
 {
-    [ExcludeFromCodeCoverageAttribute]
+    
     public class ChiSquaredAndFishersExactTestModelTests
     {
         [Fact]

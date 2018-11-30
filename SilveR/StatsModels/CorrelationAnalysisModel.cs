@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class CorrelationAnalysisModel : AnalysisModelBase
+    public class CorrelationAnalysisModel : AnalysisDataModelBase
     {
         [HasAtLeastTwoEntries]
         [CheckUsedOnceOnly]
@@ -83,7 +83,7 @@ namespace SilveR.StatsModels
         [DisplayName("By categories and overall")]
         public bool ByCategoriesAndOverall { get; set; }
 
-        public CorrelationAnalysisModel() : this(null) { }
+        public CorrelationAnalysisModel() : base("CorrelationAnalysis") { }
 
         public CorrelationAnalysisModel(IDataset dataset)
             : base(dataset, "CorrelationAnalysis") { }

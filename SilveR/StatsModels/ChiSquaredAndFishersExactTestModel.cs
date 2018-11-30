@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class ChiSquaredAndFishersExactTestModel : AnalysisModelBase
+    public class ChiSquaredAndFishersExactTestModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -53,7 +53,7 @@ namespace SilveR.StatsModels
         }
 
 
-        public ChiSquaredAndFishersExactTestModel() : this(null) { }
+        public ChiSquaredAndFishersExactTestModel() : base("ChiSquaredAndFishersExactTest") { }
 
         public ChiSquaredAndFishersExactTestModel(IDataset dataset)
             : base(dataset, "ChiSquaredAndFishersExactTest") { }

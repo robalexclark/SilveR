@@ -1,6 +1,7 @@
 using Moq;
 using SilveR.Models;
 using SilveR.StatsModels;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
@@ -9,7 +10,7 @@ using Xunit;
 
 namespace Silver.UnitTests.StatsModels
 {
-    [ExcludeFromCodeCoverageAttribute]
+    
     public class RepeatedMeasuresParametricAnalysisModelTests
     {
         [Fact]
@@ -128,7 +129,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetArguments_ReturnsCorrectArguments()
         {
             //Arrange
-            RepeatedMeasuresParametricAnalysisModel sut = GetModel(null);
+            RepeatedMeasuresParametricAnalysisModel sut = GetModel(GetDataset());
 
             //Act
             List<Argument> result = sut.GetArguments().ToList();
@@ -193,7 +194,7 @@ namespace Silver.UnitTests.StatsModels
         public void LoadArguments_ReturnsCorrectArguments()
         {
             //Arrange
-            RepeatedMeasuresParametricAnalysisModel sut = new RepeatedMeasuresParametricAnalysisModel(null);
+            RepeatedMeasuresParametricAnalysisModel sut = new RepeatedMeasuresParametricAnalysisModel(GetDataset());
 
             List<Argument> arguments = new List<Argument>();
             arguments.Add(new Argument { Name = "Response", Value = "Resp1" });
@@ -246,7 +247,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetCommandLineArguments_ReturnsCorrectString()
         {
             //Arrange
-            RepeatedMeasuresParametricAnalysisModel sut = GetModel(null);
+            RepeatedMeasuresParametricAnalysisModel sut = GetModel(GetDataset());
 
             //Act
             string result = sut.GetCommandLineArguments();
@@ -661,6 +662,20 @@ namespace Silver.UnitTests.StatsModels
             dt.Rows.Add(new object[] { "True", "0.516570084372093", "0.897396984833117", "", "0.547115046041246", "0.428194171078605", "0.506281162979938", "0.0624340625851307", "0.764063992289652", "0.0673842493488561", "0.516570084372093", "0.274728096357866", "C", "z", "q", "3", "3", "1", "", "C", "A", "B", "C", "x", "", "q", "z", "", "1", "1", "1", "1", "A9", "9", "D4", "4", "0.843010767236506", "0.420072029726822", "0.738730947120001", "0.287958665525266", "0.253381123634659", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", });
 
             return dt;
+        }
+
+        private Dataset GetDataset()
+        {
+            Dataset dataset = new Dataset
+            {
+                DatasetID = 6,
+                DatasetName = "_test dataset.xlsx [unpairedttest]",
+                DateUpdated = new DateTime(2018, 11, 16, 9, 14, 35),
+                TheData = "SilveRSelected,Resp 1,Resp2,Resp 3,Resp4,Resp 5,Resp 6,Resp 7,Resp8,Resp:9,Resp-10,Resp^11,Treat1,Treat2,Treat3,Treat4,Treat(5,Treat£6,Treat:7,Treat}8,PVTestresponse1,PVTestresponse2,PVTestgroup\r\nTrue,65,65,65,x,,-2,0,-2,65,65,0.1,A,A,1,A,1,A,A,A,1,1,1\r\nTrue,32,,32,32,32,32,32,0.1,32,32,0.1,A,A,1,A,1,A,A,A,2,2,1\r\nTrue,543,,543,543,543,543,543,0.2,543,543,0.2,A,A,1,A,1,A,A,A,3,3,1\r\nTrue,675,,675,675,675,675,675,0.1,675,675,0.1,A,A,1,B,1,A,A,A,4,4,1\r\nTrue,876,,876,876,876,876,876,0.2,876,876,0.2,A,A,1,B,1,A,A,A,11,10,2\r\nTrue,54,,54,54,54,54,54,0.3,54,54,0.3,A,A,1,B,1,A,A,A,12,11,2\r\nTrue,432,,,432,432,432,432,0.45,432,432,0.45,B,B,2,C,2,B,B,B,13,12,2\r\nTrue,564,,,564,564,564,564,0.2,564,564,0.2,B,B,2,C,2,B,B,,14,13,2\r\nTrue,76,,,76,76,76,76,0.14,76,76,0.14,B,B,2,C,2,B,B,,,,\r\nTrue,54,,,54,54,54,54,0.2,54,54,0.2,B,B,2,D,3,B,B,,,,\r\nTrue,32,,,32,32,32,32,0.1,32,32,0.1,B,B,2,D,3,B,B,,,,\r\nTrue,234,,,234,234,234,234,0.4,234,234,0.4,B,,2,D,3,B,B,,,,",
+                VersionNo = 1
+            };
+
+            return dataset;
         }
     }
 }

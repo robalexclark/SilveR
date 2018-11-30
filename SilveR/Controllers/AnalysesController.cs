@@ -47,16 +47,33 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AnalysisDataSelector(string analysisType)
+        public async Task<IActionResult> AnalysisDataSelector(string analysisName)
         {
-            IList<DatasetViewModel> theDatasets = await repository.GetDatasetViewModels();
-            ViewBag.HasDatasets = theDatasets.Any();
+            IEnumerable<Script> scripts = await repository.GetScripts();
 
             AnalysisDataSelectorViewModel viewModel = new AnalysisDataSelectorViewModel();
+
+            if (analysisName != null)
+            {
+                viewModel.AnalysisName = analysisName;
+
+                Script script = scripts.Single(x => x.ScriptFileName == analysisName);
+
+                if (script.RequiresDataset == false)
+                {
+                    return RedirectToAction("Analysis", viewModel);
+                }
+
+                viewModel.AnalysisDisplayName = script.ScriptDisplayName;
+            }
+
+            IEnumerable<DatasetViewModel> theDatasets = await repository.GetDatasetViewModels();
+            ViewBag.HasDatasets = theDatasets.Any();
+
             if (theDatasets.Any())
             {
                 //get the scripts
-                viewModel.Scripts = await repository.GetScriptDisplayNames();
+                viewModel.Scripts = scripts;
 
                 //add the last uploaded dataset in first
                 List<DatasetViewModel> datasetInfoList = new List<DatasetViewModel>();
@@ -70,8 +87,6 @@ namespace SilveR.Controllers
                 }
 
                 viewModel.Datasets = datasetInfoList.AsEnumerable<DatasetViewModel>();
-
-                viewModel.AnalysisType = analysisType;
             }
 
             return View(viewModel);
@@ -86,13 +101,17 @@ namespace SilveR.Controllers
         [HttpGet]
         public async Task<IActionResult> Analysis(AnalysisDataSelectorViewModel viewModel)
         {
-            Dataset dataset = await repository.GetDatasetByID(viewModel.SelectedDatasetID);
+            Dataset dataset = null;
+            if (viewModel.SelectedDatasetID.HasValue)
+            {
+                dataset = await repository.GetDatasetByID(viewModel.SelectedDatasetID.Value);
+            }
 
-            AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisType, dataset);
+            AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisName, dataset);
 
             //the view name is the same as the display name after spaces and hyphens removed (should be same as scriptfilename)
-            string analysisViewName = viewModel.AnalysisType.Replace(" ", String.Empty).Replace("-", String.Empty);
-            return View(analysisViewName, analysisModel);
+
+            return View(viewModel.AnalysisName, analysisModel);
         }
 
 
@@ -181,7 +200,13 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MeansComparison(MeansComparisonModel model, bool ignoreWarnings)
+        public async Task<IActionResult> MeansComparisonDatasetBasedInputs(MeansComparisonDatasetBasedInputsModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MeansComparisonUserBasedInputs(MeansComparisonUserBasedInputsModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }
@@ -206,8 +231,13 @@ namespace SilveR.Controllers
 
         private async Task<IActionResult> RunAnalysis(AnalysisModelBase model, bool ignoreWarnings)
         {
-            Dataset dataset = await repository.GetDatasetByID(model.DatasetID);
-            model.ReInitialize(dataset);
+            Dataset dataset = null;
+            AnalysisDataModelBase analysisDataModelBase = model as AnalysisDataModelBase;
+            if (analysisDataModelBase != null)
+            {
+                dataset = await repository.GetDatasetByID(analysisDataModelBase.DatasetID);
+                analysisDataModelBase.ReInitialize(dataset);
+            }
 
             if (ModelState.IsValid)
             {
@@ -230,17 +260,8 @@ namespace SilveR.Controllers
                 }
                 else //run analysis...
                 {
-                    string analysisGuid = Guid.NewGuid().ToString();
-
                     //save settings to database
-                    Analysis newAnalysis = new Analysis();
-                    newAnalysis.AnalysisGuid = analysisGuid;
-
-                    if (dataset != null)
-                    {
-                        newAnalysis.DatasetID = dataset.DatasetID;
-                        newAnalysis.DatasetName = dataset.DatasetName;
-                    }
+                    Analysis newAnalysis = new Analysis(dataset);
 
                     newAnalysis.Script = await repository.GetScriptByName(model.ScriptFileName);
                     newAnalysis.DateAnalysed = DateTime.Now;
@@ -255,11 +276,11 @@ namespace SilveR.Controllers
 
                     backgroundQueue.QueueBackgroundWorkItem(async cancellationToken =>
                     {
-                        await rProcessorService.Execute(analysisGuid);
+                        await rProcessorService.Execute(newAnalysis.AnalysisGuid);
                     });
 
                     //eventually work out how to return message that analysis complete, but for now...
-                    return RedirectToAction("Processing", new { analysisGuid = analysisGuid });
+                    return RedirectToAction("Processing", new { analysisGuid = newAnalysis.AnalysisGuid });
                 }
             }
             else
@@ -273,12 +294,11 @@ namespace SilveR.Controllers
         {
             Analysis analysis = await repository.GetAnalysisComplete(analysisGuid);
 
-            if(analysis.Dataset != null || analysis.Script.ScriptDisplayName == "P-value Adjustment")
+            if (analysis.Dataset != null || !analysis.Script.RequiresDataset)
             {
-                AnalysisModelBase model = AnalysisFactory.CreateAnalysisModel(analysis.Script.ScriptDisplayName, analysis.Dataset);
+                AnalysisModelBase model = AnalysisFactory.CreateAnalysisModel(analysis.Script.ScriptFileName, analysis.Dataset);
                 model.LoadArguments(analysis.Arguments);
 
-                //string analysisLink = analysis.Script.ScriptDisplayName.Replace(" ", String.Empty).Replace("-", String.Empty);
                 return View(analysis.Script.ScriptFileName, model);
             }
             else //then dataset has been deleted?

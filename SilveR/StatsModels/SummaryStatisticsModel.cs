@@ -11,7 +11,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class SummaryStatisticsModel : AnalysisModelBase
+    public class SummaryStatisticsModel : AnalysisDataModelBase
     {
         [HasAtLeastOneEntry]
         [CheckUsedOnceOnly]
@@ -79,7 +79,7 @@ namespace SilveR.StatsModels
         [DisplayName("By categories and overall")]
         public bool ByCategoriesAndOverall { get; set; }
 
-        public SummaryStatisticsModel() : this(null) { }
+        public SummaryStatisticsModel() : base("SummaryStatistics") { }
 
         public SummaryStatisticsModel(IDataset dataset)
             : base(dataset, "SummaryStatistics") { }

@@ -21,5 +21,7 @@ namespace SilveR.Models
         public string ScriptFileName { get; set; }
 
         public ICollection<Analysis> Analysis { get; set; }
+
+        public bool RequiresDataset { get; set; }
     }
 }

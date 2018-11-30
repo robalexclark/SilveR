@@ -10,7 +10,6 @@ using SilveR.Validators;
 using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ using Xunit;
 
 namespace Silver.UnitTests.Controllers
 {
-    [ExcludeFromCodeCoverageAttribute]
+
     public class AnalysesControllerTests
     {
         [Fact]
@@ -61,7 +60,7 @@ namespace Silver.UnitTests.Controllers
 
             IEnumerable<AnalysisViewModel> analysesViewModel = (IEnumerable<AnalysisViewModel>)jsonResult.Value;
             AnalysisViewModel analysis = analysesViewModel.First();
-            Assert.Equal("2fbe4cd1-1b0c-4b03-82ad-24d594ae5195", analysis.AnalysisGuid);
+            Assert.Equal(45, analysis.AnalysisID);
         }
 
         [Fact]
@@ -70,7 +69,7 @@ namespace Silver.UnitTests.Controllers
             //Arrange
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetDatasetViewModels()).ReturnsAsync(GetDatasets());
-            mockRepository.Setup(x => x.GetScriptDisplayNames()).ReturnsAsync(GetScripts());
+            mockRepository.Setup(x => x.GetScripts()).ReturnsAsync(GetScripts());
 
             Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
             Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
@@ -78,16 +77,17 @@ namespace Silver.UnitTests.Controllers
             AnalysesController sut = new AnalysesController(mockRepository.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
 
             //Act
-            IActionResult result = await sut.AnalysisDataSelector("Summary Statistics");
+            IActionResult result = await sut.AnalysisDataSelector("SummaryStatistics");
 
             //Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
 
             AnalysisDataSelectorViewModel analysisDataSelectorViewModel = (AnalysisDataSelectorViewModel)viewResult.Model;
 
-            Assert.Equal(18, analysisDataSelectorViewModel.Scripts.Count());
+            Assert.Equal(19, analysisDataSelectorViewModel.Scripts.Count());
             Assert.Equal("_test dataset.xlsx [regression] v1", analysisDataSelectorViewModel.Datasets.First().DatasetNameVersion);
-            Assert.Equal("Summary Statistics", analysisDataSelectorViewModel.AnalysisType);
+            Assert.Equal("Summary Statistics", analysisDataSelectorViewModel.AnalysisDisplayName);
+            Assert.Equal("SummaryStatistics", analysisDataSelectorViewModel.AnalysisName);
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace Silver.UnitTests.Controllers
         public async Task Analysis_ReturnsAnActionResult()
         {
             //Arrange
-            AnalysisDataSelectorViewModel analysisDataSelectorViewModel = new AnalysisDataSelectorViewModel { AnalysisType = "Summary Statistics" };
+            AnalysisDataSelectorViewModel analysisDataSelectorViewModel = new AnalysisDataSelectorViewModel { AnalysisName = "SummaryStatistics", SelectedDatasetID = 1 };
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetDatasetByID(It.IsAny<int>())).ReturnsAsync(GetDataset());
@@ -398,17 +398,36 @@ namespace Silver.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task MeansComparison_ReturnsARedirectToActionResult()
+        public async Task MeansComparisonDatasetBasedInputs_ReturnsARedirectToActionResult()
         {
             //Arrange
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
-            Mock<MeansComparisonModel> mockModel = new Mock<MeansComparisonModel>(dataset);
+            Mock<MeansComparisonDatasetBasedInputsModel> mockModel = new Mock<MeansComparisonDatasetBasedInputsModel>(dataset);
             mockModel.Setup(x => x.Validate()).Returns(new ValidationInfo());
 
             //Act
-            IActionResult result = await sut.MeansComparison(mockModel.Object, false);
+            IActionResult result = await sut.MeansComparisonDatasetBasedInputs(mockModel.Object, false);
+
+            //Assert
+            RedirectToActionResult redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Processing", redirectToActionResult.ActionName);
+            Assert.NotNull(redirectToActionResult.RouteValues.Single(x => x.Key == "analysisGuid").Value);
+        }
+
+        [Fact]
+        public async Task MeansComparisonUserBasedInputs_ReturnsARedirectToActionResult()
+        {
+            //Arrange
+            var dataset = GetDataset();
+            AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
+
+            Mock<MeansComparisonUserBasedInputsModel> mockModel = new Mock<MeansComparisonUserBasedInputsModel>();
+            mockModel.Setup(x => x.Validate()).Returns(new ValidationInfo());
+
+            //Act
+            IActionResult result = await sut.MeansComparisonUserBasedInputs(mockModel.Object, false);
 
             //Assert
             RedirectToActionResult redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
@@ -536,10 +555,10 @@ namespace Silver.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task Reanalyse_ReturnsAnActionResult()
+        public async Task Reanalyse_DatasetRequired_ReturnsAnActionResult()
         {
             //Arrange
-            Analysis analysis = GetAnalysis();
+            Analysis analysis = GetSummaryStatsAnalysis();
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetAnalysisComplete(It.IsAny<string>())).ReturnsAsync(analysis);
@@ -559,10 +578,33 @@ namespace Silver.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task Reanalyse_NoDataset_ReturnsAnActionResult()
+        public async Task Reanalyse_NoDatasetRequired_ReturnsAnActionResult()
         {
             //Arrange
-            Analysis analysis = GetAnalysis();
+            Analysis analysis = GetAnalyses().Single(x => x.AnalysisID == 34);
+
+            Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
+            mockRepository.Setup(x => x.GetAnalysisComplete(It.IsAny<string>())).ReturnsAsync(analysis);
+
+            Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
+            Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
+
+            AnalysesController sut = new AnalysesController(mockRepository.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
+
+            //Act
+            IActionResult result = await sut.ReAnalyse(analysis.AnalysisGuid);
+
+            //Assert
+            ViewResult viewResult = Assert.IsType<ViewResult>(result);
+            Assert.Equal("PValueAdjustment", viewResult.ViewName);
+            Assert.IsType<PValueAdjustmentModel>(viewResult.Model);
+        }
+
+        [Fact]
+        public async Task Reanalyse_DatasetMissing_ReturnsAnActionResult()
+        {
+            //Arrange
+            Analysis analysis = GetAnalyses().First();
             analysis.Dataset = null;
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
@@ -586,7 +628,7 @@ namespace Silver.UnitTests.Controllers
         public async Task ViewResults_ReturnsAnActionResult()
         {
             //Arrange
-            Analysis analysis = GetAnalysis();
+            Analysis analysis = GetAnalyses().First();
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetAnalysis(It.IsAny<string>())).ReturnsAsync(analysis);
@@ -603,14 +645,14 @@ namespace Silver.UnitTests.Controllers
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
             Analysis analysisReturned = Assert.IsType<Analysis>(viewResult.Model);
 
-            Assert.Contains("Summary Statistics</h1>", analysisReturned.HtmlOutput);
+            Assert.Contains("InVivoStat Single Measure Parametric Analysis</h1>", analysisReturned.HtmlOutput);
         }
 
         [Fact]
         public async Task ViewResults_NoOutput_ReturnsAnActionResult()
         {
             //Arrange
-            Analysis analysis = GetAnalysis();
+            Analysis analysis = GetAnalyses().First();
             analysis.HtmlOutput = null;
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
@@ -695,7 +737,7 @@ namespace Silver.UnitTests.Controllers
         {
             //Arrange
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            mockRepository.Setup(x => x.GetAnalysis(It.IsAny<string>())).ReturnsAsync(new Analysis { RProcessOutput = "Test Output" });
+            mockRepository.Setup(x => x.GetAnalysis(It.IsAny<string>())).ReturnsAsync(new Analysis(It.IsAny<Dataset>()) { RProcessOutput = "Test Output" });
 
             Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
             Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
@@ -751,14 +793,10 @@ namespace Silver.UnitTests.Controllers
         {
             var analyses = new List<Analysis>
             {
-                new SilveR.Models.Analysis
+                new Analysis(It.IsAny<Dataset>())
                 {
-                    AnalysisGuid = "2fbe4cd1-1b0c-4b03-82ad-24d594ae5195",
                     AnalysisID = 45,
-                    //Arguments = new System.Collections.Generic.HashSet<SilveR.Models.Argument>
-                    //{
-                    //},
-                    Dataset = null,
+                    Dataset = GetDataset(),
                     DatasetID = 3,
                     DatasetName = "_test dataset.xlsx [singlemeasures]",
                     DateAnalysed = new DateTime(2018, 11, 19, 18, 5, 27),
@@ -768,14 +806,14 @@ namespace Silver.UnitTests.Controllers
                     {
                         ScriptDisplayName = "Single Measures Parametric Analysis",
                         ScriptFileName = "SingleMeasuresParametricAnalysis",
-                        ScriptID = 16
+                        ScriptID = 16,
+                        RequiresDataset = true
                     },
                     ScriptID = 16,
                     Tag = null
                 },
-                new SilveR.Models.Analysis
+                new Analysis(It.IsAny<Dataset>())
                 {
-                    AnalysisGuid = "3d78da4f-bf93-4324-a7c9-73ffd19798ea",
                     AnalysisID = 43,
                     Arguments = new System.Collections.Generic.HashSet<SilveR.Models.Argument>
                     {
@@ -790,18 +828,15 @@ namespace Silver.UnitTests.Controllers
                     {
                         ScriptDisplayName = "Correlation Analysis",
                         ScriptFileName = "CorrelationAnalysis",
-                        ScriptID = 10
+                        ScriptID = 10,
+                        RequiresDataset = true
                     },
                     ScriptID = 10,
                     Tag = null
                 },
-                new SilveR.Models.Analysis
+                new Analysis(It.IsAny<Dataset>())
                 {
-                    AnalysisGuid = "0e5acaf6-ed64-4bc9-93b2-63a277393728",
                     AnalysisID = 39,
-                    Arguments = new System.Collections.Generic.HashSet<SilveR.Models.Argument>
-                    {
-                    },
                     Dataset = null,
                     DatasetID = 6,
                     DatasetName = "_test dataset.xlsx [unpairedttest]",
@@ -812,21 +847,15 @@ namespace Silver.UnitTests.Controllers
                     {
                         ScriptDisplayName = "One-Sample t-test Analysis",
                         ScriptFileName = "OneSampleTTestAnalysis",
-                        ScriptID = 19
+                        ScriptID = 19,
+                        RequiresDataset = true
                     },
                     ScriptID = 19,
                     Tag = null
                 },
-                new SilveR.Models.Analysis
+                new Analysis(It.IsAny<Dataset>())
                 {
-                },
-                new SilveR.Models.Analysis
-                {
-                    AnalysisGuid = "5ed8b44e-2674-4bfa-a4d7-72b892b5a97f",
                     AnalysisID = 33,
-                    Arguments = new System.Collections.Generic.HashSet<SilveR.Models.Argument>
-                    {
-                    },
                     Dataset = null,
                     DatasetID = 1,
                     DatasetName = "_test dataset.xlsx [doseresponse]",
@@ -837,10 +866,51 @@ namespace Silver.UnitTests.Controllers
                     {
                         ScriptDisplayName = "Dose-Response and Non-Linear Regression Analysis",
                         ScriptFileName = "DoseResponseAndNonLinearRegressionAnalysis",
-                        ScriptID = 8
+                        ScriptID = 8,
+                        RequiresDataset = true
                     },
                     ScriptID = 8,
                     Tag = null
+                },
+                new Analysis(null)
+                {
+                    AnalysisID = 34,
+                    DateAnalysed = new DateTime(2018, 11, 15, 11, 10, 36),
+                    HtmlOutput = "\r\n<link rel=\"stylesheet\" type=\"text/css\" href='r2html.css'>\r\n\r\n <h1> InVivoStat Dose-Response Analysis</h1>\r\n\r\n <h2> Response and dose variables</h2>\r\n\r\n<p class='character'>The  Resp 1 response is currently being analysed by the Dose-Response Analysis module.</p>\r\n\r\n<p class='character'>The dose variable (Dose1) has been Log10 transformed prior to analysis.</p>\r\n",
+                    RProcessOutput = "[1] \"--vanilla\"                                                                       \r\n [2] \"--args\"                                                                          \r\n [3] \"C:\\\\Users\\\\robal\\\\AppData\\\\Local\\\\Temp\\\\5ed8b44e-2674-4bfa-a4d7-72b892b5a97f.csv\"\r\n [4] \"FourParameter\"                                                                   \r\n [5] \"Respivs_sp_ivs1\"                                                                 \r\n [6] \"None\"                                                                            \r\n [7] \"Dose1\"                                                                           \r\n [8] \"NULL\"                                                                            \r\n [9] \"Log10\"                                                                           \r\n[10] \"NULL\"                                                                            \r\n[11] \"NULL\"                                                                            \r\n[12] \"NULL\"                                                                            \r\n[13] \"10\"                                                                              \r\n[14] \"1\"                                                                               \r\n[15] \"NULL\"                                                                            \r\n[16] \"NULL\"                                                                            \r\n[17] \"NULL\"                                                                            \r\n[18] \"NULL\"                                                                            \r\n[19] \"NULL\"                                                                            \r\n[20] \"NULL\"                                                                            \r\n[21] \"NULL\"                                                                            \r\n[22] \"NULL\"                                                                            \r\n[23] \"NULL\"                                                                            \r\n[24] \"NULL\"                                                                            \r\n[1] \"C:\\\\Users\\\\robal\\\\AppData\\\\Local\\\\Temp\\\\5ed8b44e-2674-4bfa-a4d7-72b892b5a97f.html\"\r\n\r\n\r\n\r\nAttaching package: 'reshape'\r\n\r\nThe following objects are masked from 'package:plyr':\r\n\r\n    rename, round_any\r\n\r\nError in nls(responsezzzz ~ MinCoeffp + (MaxCoeffp - MinCoeffp)/(1 + 10^((C -  : \r\n  step factor 0.000488281 reduced below 'minFactor' of 0.000976562\r\nExecution halted\r\n\r\nAnalysis by the R Processor took 7.95 seconds.",
+                    Script = new SilveR.Models.Script
+                    {
+                        ScriptDisplayName = "P-Value Adjustment",
+                        ScriptFileName = "PValueAdjustment",
+                        ScriptID = 9,
+                        RequiresDataset = false
+                    },
+                    ScriptID = 8,
+                    Tag = null,
+                    Arguments = new System.Collections.Generic.HashSet<SilveR.Models.Argument>
+                    {
+                        new SilveR.Models.Argument
+                        {
+                            AnalysisID = 34,
+                            ArgumentID = 1121,
+                            Name = "SelectedTest",
+                            Value = "Holm"
+                        },
+                        new SilveR.Models.Argument
+                        {
+                            AnalysisID = 34,
+                            ArgumentID = 1122,
+                            Name = "Significance",
+                            Value = "0.05"
+                        },
+                        new SilveR.Models.Argument
+                        {
+                            AnalysisID = 34,
+                            ArgumentID = 1123,
+                            Name = "PValues",
+                            Value = "0.01"
+                        }
+                    }
                 }
             };
 
@@ -884,38 +954,38 @@ namespace Silver.UnitTests.Controllers
             return datasets;
         }
 
-        private List<string> GetScripts()
+        private List<Script> GetScripts()
         {
-            var scripts = new List<string>
+            var scripts = new List<Script>
             {
-                "Summary Statistics",
-                "Multivariate Analysis",
-                "Means Comparison",
-                "Graphical Analysis",
-                "Survival Analysis",
-                "Chi-Squared and Fishers Exact Test",
-                "Non-Parametric Analysis",
-                "Dose-Response and Non-Linear Regression Analysis",
-                "Linear Regression Analysis",
-                "Correlation Analysis",
-                "Unpaired t-test Analysis",
-                "Paired t-test Analysis",
-                "P-value Adjustment",
-                "Repeated Measures Parametric Analysis",
-                "Single Measures Parametric Analysis",
-                "Nested Design Analysis",
-                "Incomplete Factorial Parametric Analysis",
-                "One-Sample t-test Analysis"
+                new Script{ ScriptFileName = "SummaryStatistics",ScriptDisplayName = "Summary Statistics", RequiresDataset = true },
+                new Script{ ScriptFileName = "MultivariateAnalysis",ScriptDisplayName = "MultivariateAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "MeansComparisonUserBasedInputs",ScriptDisplayName = "MeansComparisonUserBasedInputs", RequiresDataset = false },
+                new Script{ ScriptFileName =  "MeansComparisonDatasetBasedInputs",ScriptDisplayName = "MeansComparisonDatasetBasedInputs", RequiresDataset = true },
+                new Script{ ScriptFileName =  "GraphicalAnalysis",ScriptDisplayName = "GraphicalAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "SurvivalAnalysis" ,ScriptDisplayName = "SurvivalAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "ChiSquaredAndFishersExactTest",ScriptDisplayName = "ChiSquaredAndFishersExactTest", RequiresDataset = true },
+                new Script{ ScriptFileName =  "NonParametricAnalysis",ScriptDisplayName = "NonParametricAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "DoseResponseAndNonLinearRegressionAnalysis" ,ScriptDisplayName = "DoseResponseAndNonLinearRegressionAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "LinearRegressionAnalysis" ,ScriptDisplayName = "LinearRegressionAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "CorrelationAnalysis",ScriptDisplayName = "CorrelationAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "UnpairedTTestAnalysis" ,ScriptDisplayName = "UnpairedTTestAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "PairedTTestAnalysis",ScriptDisplayName = "PairedTTestAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "PValueAdjustment",ScriptDisplayName = "PValueAdjustment", RequiresDataset = false },
+                new Script{ ScriptFileName =  "RepeatedMeasuresParametricAnalysis" ,ScriptDisplayName = "RepeatedMeasuresParametricAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "SingleMeasuresParametricAnalysis",ScriptDisplayName = "SingleMeasuresParametricAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "NestedDesignAnalysis",ScriptDisplayName = "NestedDesignAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "IncompleteFactorialParametricAnalysis",ScriptDisplayName = "IncompleteFactorialParametricAnalysis", RequiresDataset = true },
+                new Script{ ScriptFileName =  "OneSampleTTestAnalysis",ScriptDisplayName = "OneSampleTTestAnalysis", RequiresDataset = true }
             };
 
             return scripts;
         }
 
-        private Analysis GetAnalysis()
+        private Analysis GetSummaryStatsAnalysis()
         {
-            var analysis = new SilveR.Models.Analysis
+            Analysis analysis = new Analysis(It.IsAny<Dataset>())
             {
-                AnalysisGuid = "36b332be-41f0-4f36-b581-0a6067ac9402",
                 AnalysisID = 67,
                 Arguments = new System.Collections.Generic.HashSet<SilveR.Models.Argument>
                 {
@@ -1056,7 +1126,8 @@ namespace Silver.UnitTests.Controllers
                 {
                     ScriptDisplayName = "Summary Statistics",
                     ScriptFileName = "SummaryStatistics",
-                    ScriptID = 1
+                    ScriptID = 1,
+                    RequiresDataset = true
                 },
                 ScriptID = 1,
                 Tag = null

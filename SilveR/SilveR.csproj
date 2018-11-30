@@ -79,7 +79,10 @@
     <None Update="Scripts\LinearRegressionAnalysis.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\MeansComparison.R">
+    <None Update="Scripts\MeansComparisonUserBasedInputs.R">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\MeansComparisonDatasetBasedInputs.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Multivariate.R">
@@ -155,11 +158,5 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\bootstrap\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\Analyses\DoseResponseAndNonLinearRegressionAnalysis.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>
 </Project>

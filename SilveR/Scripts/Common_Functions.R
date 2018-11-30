@@ -1512,6 +1512,22 @@ POWERPLOT_PERCENT <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr_
 	suppressWarnings(print(g))
 }
 
+
+POWERPLOT_ANOVA <- function(XAxisTitle, MainTitle2) {
+	g <- ggplot(power2data, aes(x = sample, y = value)) +
+		theme_map +
+		mytheme +
+		theme(legend.position = Gr_legend_pos2, legend.title = element_text(colour = "black")) +
+		ylab("Statistical power (%)") +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		coord_cartesian(ylim = c(powerFrom, powerTo)) +
+		scale_x_continuous(breaks = pretty_breaks()) +
+		scale_y_continuous(breaks = pretty_breaks()) +
+		geom_line(aes(group = variable), lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
+	suppressWarnings(print(g))
+}
+
 #===================================================================================================================
 #Survival plot 
 #===================================================================================================================
@@ -1667,10 +1683,13 @@ R_refs <- function() {
 	cluster_ref <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2013).  cluster: Cluster Analysis Basics and Extensions. R package version 1.14.4."
 	ggdendro_ref <- "Andrie de Vries and Brian D. Ripley (2013). ggdendro: Tools for extracting dendrogram and tree diagram plot data for use with ggplot.. R package version 0.1-14. http://CRAN.R-project.org/package=ggdendro"
 	mixOmics_ref <- "Sebastien Dejean, Ignacio Gonzalez, Kim-Anh Le Cao with contributions from Pierre Monget, Jeff Coquery, FangZou Yao, Benoit Liquet and Florian Rohart (2013). mixOmics: Omics Data Integration Project. R package version 5.0-1. http://CRAN.R-project.org/package=mixOmics"
+	dplyr_ref <- "Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. https://CRAN.R-project.org/package=dplyr"
 
 	BateClark_ref <- "Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
 	
 	Barnard_ref <- "Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact."
+
+	power_ref <- "Stephane Champely (2018). pwr: Basic Functions for Power Analysis. R package version 1.2-2. https://CRAN.R-project.org/package=pwr"
 
 
 	Refs <- list(
@@ -1700,7 +1719,9 @@ R_refs <- function() {
 		extrafont_ref = extrafont_ref,
 		COIN_ref=COIN_ref,
 		ggrepel_ref = ggrepel_ref,
-		mcview_ref = mcview_ref
+		mcview_ref = mcview_ref,
+		power_ref = power_ref,
+		dplyr_ref = dplyr_ref
 	)
 	return(Refs)
 }

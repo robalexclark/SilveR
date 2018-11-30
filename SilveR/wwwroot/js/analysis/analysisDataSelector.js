@@ -1,20 +1,22 @@
 $(function () {
 
-    if (!selectedAnalysisType) {
-        $("#AnalysisType").kendoDropDownList({
+    if (!selectedAnalysisName) {
+        $("#AnalysisName").kendoDropDownList({
             change: analysisSelectionChanged,
-            dataSource: scriptList
+            dataSource: scriptsList,
+            dataTextField: "scriptDisplayName",
+            dataValueField: "scriptFileName"
         });
     }
 
     $("#SelectedDatasetID").kendoDropDownList({
+        dataSource: datasets,
         dataTextField: "datasetNameVersion",
-        dataValueField: "datasetID",
-        dataSource: datasets
+        dataValueField: "datasetID"
     });
 
     function analysisSelectionChanged() {
-        const analysisSelector = $("#AnalysisType").data("kendoDropDownList");
+        const analysisSelector = $("#AnalysisName").data("kendoDropDownList");
         if (analysisSelector.value() != "P-value Adjustment") {
             $("#dataSelectionBlock").show();
         }

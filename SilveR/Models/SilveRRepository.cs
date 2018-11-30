@@ -16,16 +16,9 @@ namespace SilveR.Models
             this.context = context;
         }
 
-        public async Task<Dataset> GetDatasetByID(Nullable<int> datasetID)
+        public async Task<Dataset> GetDatasetByID(int datasetID)
         {
-            if (datasetID.HasValue)
-            {
-                return await context.Datasets.SingleAsync(x => x.DatasetID == datasetID.Value);
-            }
-            else
-            {
-                return null;
-            }
+            return await context.Datasets.SingleAsync(x => x.DatasetID == datasetID);
         }
 
         public async Task<bool> HasDatasets()
@@ -94,9 +87,9 @@ namespace SilveR.Models
             return await context.Datasets.Select(x => new DatasetViewModel { DatasetID = x.DatasetID, DatasetName = x.DatasetName, VersionNo = x.VersionNo, DateUpdated = x.DateUpdated }).ToListAsync();
         }
 
-        public async Task<IEnumerable<string>> GetScriptDisplayNames()
+        public async Task<IEnumerable<Script>> GetScripts()
         {
-            return await context.Scripts.Select(x => x.ScriptDisplayName).ToListAsync();
+            return await context.Scripts.ToListAsync();
         }
 
 

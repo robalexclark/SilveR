@@ -2,9 +2,9 @@
 
 @section Scripts {
     <script>
-        var scriptList = @Html.Raw(Json.Serialize(Model.Scripts));
+        var scriptsList = @Html.Raw(Json.Serialize(Model.Scripts));
         var datasets = @Html.Raw(Json.Serialize(Model.Datasets));
-        var selectedAnalysisType = @Html.Raw(Json.Serialize(Model.AnalysisType));
+        var selectedAnalysisName = @Html.Raw(Json.Serialize(Model.AnalysisName));
     </script>
 
     <environment names="Development">
@@ -23,17 +23,17 @@
 {
     <form method="post" action="~/Analyses/AnalysisDataSelector">
 
-        @if (Model.AnalysisType == null)
+        @if (Model.AnalysisName == null)
         {
             <div id="analysisSelectionBlock" class="mt30">
                 <h4>Select the type of analysis to run</h4>
-                <input asp-for="AnalysisType" style="width:340px" />
+                <input asp-for="AnalysisName" style="width:340px" />
             </div>
         }
         else
         {
-            <h3>@Model.AnalysisType</h3>
-            <input asp-for="AnalysisType" type="hidden" />
+            <h3>@Model.AnalysisDisplayName</h3>
+            <input asp-for="AnalysisName" type="hidden" />
         }
 
         <div id="dataSelectionBlock" class="mt30">

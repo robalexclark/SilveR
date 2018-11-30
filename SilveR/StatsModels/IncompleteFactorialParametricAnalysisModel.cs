@@ -12,7 +12,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class IncompleteFactorialParametricAnalysisModel : AnalysisModelBase
+    public class IncompleteFactorialParametricAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -89,7 +89,7 @@ namespace SilveR.StatsModels
         public string ControlGroup { get; set; }
 
 
-        public IncompleteFactorialParametricAnalysisModel() : this(null) { }
+        public IncompleteFactorialParametricAnalysisModel() : base("IncompleteFactorialParametricAnalysis") { }
 
         public IncompleteFactorialParametricAnalysisModel(IDataset dataset)
             : base(dataset, "IncompleteFactorialParametricAnalysis") { }

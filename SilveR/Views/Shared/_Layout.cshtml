@@ -43,51 +43,57 @@
                         <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Statistics<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
 
-                            <li>@Html.ActionLink("Summary Statistics", "AnalysisDataSelector", "Analyses", new { analysisType = "Summary Statistics" }, null)</li>
+                            <li>@Html.ActionLink("Summary Statistics", "AnalysisDataSelector", "Analyses", new { analysisName = "SummaryStatistics" }, null)</li>
 
                             <li class="menu-item dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Parametric Analysis</a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Single Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Single Measures Parametric Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Repeated Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Repeated Measures Parametric Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("P-value Adjustment*", "Analysis", "Analyses", new { analysisType = "P-value Adjustment" }, null)</li>
-                                    <li>@Html.ActionLink("Paired t-test Analysis & Within-Subject Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Paired t-test Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Unpaired t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Unpaired t-test Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Correlation Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Correlation Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Linear Regression Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Dose-response and Non-Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Dose-Response and Non-Linear Regression Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("One-Sample t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "One-Sample t-test Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Single Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "SingleMeasuresParametricAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Repeated Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "RepeatedMeasuresParametricAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("P-value Adjustment*", "Analysis", "Analyses", new { analysisName = "PValueAdjustment" }, null)</li>
+                                    <li>@Html.ActionLink("Paired t-test Analysis & Within-Subject Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "PairedTTestAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Unpaired t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "UnpairedTTestAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Correlation Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "CorrelationAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "LinearRegressionAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Dose-response and Non-Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "DoseResponseAndNonLinearRegressionAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("One-Sample t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "OneSampleTTestAnalysis" }, null)</li>
                                 </ul>
                             </li>
 
                             <li class="menu-item dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Additional Analysis</a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Non-parametric Analysis*", "AnalysisDataSelector", "Analyses", new { analysisType = "Non-Parametric Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Chi-squared and Fisher's Exact Test*", "AnalysisDataSelector", "Analyses", new { analysisType = "Chi-Squared and Fishers Exact Test" }, null)</li>
-                                    <li>@Html.ActionLink("Survival Analysis*", "AnalysisDataSelector", "Analyses", new { analysisType = "Survival Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Non-parametric Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "NonParametricAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Chi-squared and Fisher's Exact Test*", "AnalysisDataSelector", "Analyses", new { analysisName = "ChiSquaredAndFishersExactTest" }, null)</li>
+                                    <li>@Html.ActionLink("Survival Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "SurvivalAnalysis" }, null)</li>
                                 </ul>
                             </li>
 
-                            <li>@Html.ActionLink("Graphical Analysis", "AnalysisDataSelector", "Analyses", new { analysisType = "Graphical Analysis" }, null)</li>
+                            <li>@Html.ActionLink("Graphical Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "GraphicalAnalysis" }, null)</li>
 
                             <li class="menu-item dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Power Analysis</a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Comparison of Means*", "AnalysisDataSelector", "Analyses", new { analysisType = "Means Comparison" }, null)</li>
+                                    <li class="menu-item dropdown dropdown-submenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Comparison of Means</a>
+                                        <ul class="dropdown-menu">
+                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "MeansComparisonUserBasedInputs" }, null)</li>
+                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "MeansComparisonDatasetBasedInputs" }, null)</li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
 
                             <li class="menu-item dropdown dropdown-submenu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Unvalidated Analyses</a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Multivariate Analysis*", "AnalysisDataSelector", "Analyses", new { analysisType = "Multivariate Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Nested Design Analysis*", "AnalysisDataSelector", "Analyses", new { analysisType = "Nested Design Analysis" }, null)</li>
-                                    <li>@Html.ActionLink("Incomplete Factorial Parametric Analysis*", "AnalysisDataSelector", "Analyses", new { analysisType = "Incomplete Factorial Parametric Analysis" }, null)</li>
+                                    <li>@Html.ActionLink("Multivariate Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "MultivariateAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Nested Design Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "NestedDesignAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Incomplete Factorial Parametric Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "IncompleteFactorialParametricAnalysis" }, null)</li>
                                 </ul>
                             </li>
 
-                            <li>@Html.ActionLink("R-Runner", "AnalysisDataSelector", "Analyses", new { analysisType = "R-Runner" }, null)</li>
+                            <li>@Html.ActionLink("R-Runner", "AnalysisDataSelector", "Analyses", new { analysisName = "RRunner" }, null)</li>
                         </ul>
                     </li>
 

@@ -7,7 +7,6 @@ namespace SilveR.Validators
         private readonly PValueAdjustmentModel pvVariables;
 
         public PValueAdjustmentValidator(PValueAdjustmentModel pv)
-            : base(pv.DataTable)
         {
             pvVariables = pv;
         }

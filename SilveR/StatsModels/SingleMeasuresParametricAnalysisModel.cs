@@ -13,7 +13,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class SingleMeasuresParametricAnalysisModel : AnalysisModelBase
+    public class SingleMeasuresParametricAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -89,7 +89,7 @@ namespace SilveR.StatsModels
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
 
-        public SingleMeasuresParametricAnalysisModel() : this(null) { }
+        public SingleMeasuresParametricAnalysisModel() : base("SingleMeasuresParametricAnalysis") { }
 
         public SingleMeasuresParametricAnalysisModel(IDataset dataset)
             : base(dataset, "SingleMeasuresParametricAnalysis") { }

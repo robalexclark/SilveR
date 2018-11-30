@@ -11,7 +11,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class SurvivalAnalysisModel : AnalysisModelBase
+    public class SurvivalAnalysisModel : AnalysisDataModelBase
     {      
         [Required]
         [CheckUsedOnceOnly]
@@ -47,7 +47,7 @@ namespace SilveR.StatsModels
         }
 
 
-        public SurvivalAnalysisModel() : this(null) { }
+        public SurvivalAnalysisModel() : base("SurvivalAnalysis") { }
 
         public SurvivalAnalysisModel(IDataset dataset)
             : base(dataset, "SurvivalAnalysis") { }

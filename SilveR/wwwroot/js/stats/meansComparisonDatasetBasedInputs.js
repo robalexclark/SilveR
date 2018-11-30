@@ -1,4 +1,3 @@
-
 $(function () {
 
     $("#Response").kendoDropDownList({
@@ -34,51 +33,11 @@ $(function () {
         dataSource: theModel.significancesList
     });
 
-    enableDisableValueType();
     enableDisableControlLevels();
+
     enableDisableChangeType();
     enableDisablePlottingRangeType();
 });
-
-
-function enableDisableValueType() {
-
-    const valueType = $('input:radio[name="ValueType"]:checked').val()
-
-    const groupMean = $("#GroupMean");
-    const standardDeviation = $("#StandardDeviation");
-    const variance = $("#Variance");
-    const response = $("#Response").data("kendoDropDownList");
-    const treatment = $("#Treatment").data("kendoDropDownList");
-    const controlGroup = $("#ControlGroup").data("kendoDropDownList");
-
-    if (valueType === "Supplied") {
-        groupMean.prop("disabled", false);
-        standardDeviation.prop("disabled", false);
-        variance.prop("disabled", false);
-        response.select(-1);
-        treatment.select(-1);
-        controlGroup.select(-1);
-        response.value(null);
-        treatment.value(null);
-        controlGroup.value(null);
-        response.enable(false);
-        treatment.enable(false);
-        controlGroup.enable(false);
-    }
-    else {
-        groupMean.prop("disabled", true);
-        standardDeviation.prop("disabled", true);
-        variance.prop("disabled", true);
-        response.enable(true);
-        treatment.enable(true);
-        controlGroup.enable(true);
-        groupMean.val(null);
-        standardDeviation.val(null);
-        variance.val(null);
-    }
-}
-
 
 function treatmentInfo() {
     return {

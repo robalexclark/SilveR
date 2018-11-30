@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Silver.UnitTests.Helpers
 {
-    [ExcludeFromCodeCoverageAttribute]
+    
     public class CSVConverterTests
     {
         [Fact]

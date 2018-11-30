@@ -78,6 +78,8 @@ namespace SilveR
 
         private void ProvisionDatabase(IApplicationBuilder app)
         {
+            //string analysisViewName = viewModel.AnalysisName.Replace(" ", String.Empty).Replace("-", String.Empty);
+
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 SilveRContext context = serviceScope.ServiceProvider.GetRequiredService<SilveRContext>();
@@ -88,109 +90,115 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "SummaryStatistics"))
                 {
-                    Script summaryStatistics = new Script() { ScriptDisplayName = "Summary Statistics", ScriptFileName = "SummaryStatistics" };
+                    Script summaryStatistics = new Script() { ScriptDisplayName = "Summary Statistics", ScriptFileName = "SummaryStatistics", RequiresDataset = true };
                     context.Scripts.Add(summaryStatistics);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "SingleMeasuresParametricAnalysis"))
                 {
-                    Script singleMeasureGLM = new Script() { ScriptDisplayName = "Single Measures Parametric Analysis", ScriptFileName = "SingleMeasuresParametricAnalysis" };
+                    Script singleMeasureGLM = new Script() { ScriptDisplayName = "Single Measures Parametric Analysis", ScriptFileName = "SingleMeasuresParametricAnalysis", RequiresDataset = true };
                     context.Scripts.Add(singleMeasureGLM);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "RepeatedMeasuresParametricAnalysis"))
                 {
-                    Script repeatedMeasures = new Script() { ScriptDisplayName = "Repeated Measures Parametric Analysis", ScriptFileName = "RepeatedMeasuresParametricAnalysis" };
+                    Script repeatedMeasures = new Script() { ScriptDisplayName = "Repeated Measures Parametric Analysis", ScriptFileName = "RepeatedMeasuresParametricAnalysis", RequiresDataset = true };
                     context.Scripts.Add(repeatedMeasures);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "PValueAdjustment"))
                 {
-                    Script pValueAdjustment = new Script() { ScriptDisplayName = "P-value Adjustment", ScriptFileName = "PValueAdjustment" };
+                    Script pValueAdjustment = new Script() { ScriptDisplayName = "P-value Adjustment", ScriptFileName = "PValueAdjustment", RequiresDataset = false };
                     context.Scripts.Add(pValueAdjustment);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "PairedTTestAnalysis"))
                 {
-                    Script pairedTTest = new Script() { ScriptDisplayName = "Paired t-test Analysis", ScriptFileName = "PairedTTestAnalysis" };
+                    Script pairedTTest = new Script() { ScriptDisplayName = "Paired t-test Analysis", ScriptFileName = "PairedTTestAnalysis", RequiresDataset = true };
                     context.Scripts.Add(pairedTTest);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "UnpairedTTestAnalysis"))
                 {
-                    Script unpairedTTest = new Script() { ScriptDisplayName = "Unpaired t-test Analysis", ScriptFileName = "UnpairedTTestAnalysis" };
+                    Script unpairedTTest = new Script() { ScriptDisplayName = "Unpaired t-test Analysis", ScriptFileName = "UnpairedTTestAnalysis", RequiresDataset = true };
                     context.Scripts.Add(unpairedTTest);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "OneSampleTTestAnalysis"))
                 {
-                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-Sample t-test Analysis", ScriptFileName = "OneSampleTTestAnalysis" };
+                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-Sample t-test Analysis", ScriptFileName = "OneSampleTTestAnalysis", RequiresDataset = true };
                     context.Scripts.Add(oneSampleTTest);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "CorrelationAnalysis"))
                 {
-                    Script correlation = new Script() { ScriptDisplayName = "Correlation Analysis", ScriptFileName = "CorrelationAnalysis" };
+                    Script correlation = new Script() { ScriptDisplayName = "Correlation Analysis", ScriptFileName = "CorrelationAnalysis", RequiresDataset = true };
                     context.Scripts.Add(correlation);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "LinearRegressionAnalysis"))
                 {
-                    Script linearRegression = new Script() { ScriptDisplayName = "Linear Regression Analysis", ScriptFileName = "LinearRegressionAnalysis" };
+                    Script linearRegression = new Script() { ScriptDisplayName = "Linear Regression Analysis", ScriptFileName = "LinearRegressionAnalysis", RequiresDataset = true };
                     context.Scripts.Add(linearRegression);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "DoseResponseAndNonLinearRegressionAnalysis"))
                 {
-                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-Response and Non-Linear Regression Analysis", ScriptFileName = "DoseResponseAndNonLinearRegressionAnalysis" };
+                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-Response and Non-Linear Regression Analysis", ScriptFileName = "DoseResponseAndNonLinearRegressionAnalysis", RequiresDataset = true };
                     context.Scripts.Add(doseResponse);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "NonParametricAnalysis"))
                 {
-                    Script nonParametrics = new Script() { ScriptDisplayName = "Non-Parametric Analysis", ScriptFileName = "NonParametricAnalysis" };
+                    Script nonParametrics = new Script() { ScriptDisplayName = "Non-Parametric Analysis", ScriptFileName = "NonParametricAnalysis", RequiresDataset = true };
                     context.Scripts.Add(nonParametrics);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "ChiSquaredAndFishersExactTest"))
                 {
-                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-Squared and Fishers Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest" };
+                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-Squared and Fishers Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest", RequiresDataset = true };
                     context.Scripts.Add(chiSquared);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "SurvivalAnalysis"))
                 {
-                    Script survivalAnalysis = new Script() { ScriptDisplayName = "Survival Analysis", ScriptFileName = "SurvivalAnalysis" };
+                    Script survivalAnalysis = new Script() { ScriptDisplayName = "Survival Analysis", ScriptFileName = "SurvivalAnalysis", RequiresDataset = true };
                     context.Scripts.Add(survivalAnalysis);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "GraphicalAnalysis"))
                 {
-                    Script graphicalAnalysis = new Script() { ScriptDisplayName = "Graphical Analysis", ScriptFileName = "GraphicalAnalysis" };
+                    Script graphicalAnalysis = new Script() { ScriptDisplayName = "Graphical Analysis", ScriptFileName = "GraphicalAnalysis", RequiresDataset = true };
                     context.Scripts.Add(graphicalAnalysis);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "MeansComparison"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "MeansComparisonDatasetBasedInputs"))
                 {
-                    Script meansComparison = new Script() { ScriptDisplayName = "Means Comparison", ScriptFileName = "MeansComparison" };
+                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (Dataset Based Inputs)", ScriptFileName = "MeansComparisonDatasetBasedInputs", RequiresDataset = true };
+                    context.Scripts.Add(meansComparison);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "MeansComparisonUserBasedInputs"))
+                {
+                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (User Based Inputs)", ScriptFileName = "MeansComparisonUserBasedInputs", RequiresDataset = false };
                     context.Scripts.Add(meansComparison);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "MultivariateAnalysis"))
                 {
-                    Script multivariate = new Script() { ScriptDisplayName = "Multivariate Analysis", ScriptFileName = "MultivariateAnalysis" };
+                    Script multivariate = new Script() { ScriptDisplayName = "Multivariate Analysis", ScriptFileName = "MultivariateAnalysis", RequiresDataset = true };
                     context.Scripts.Add(multivariate);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "NestedDesignAnalysis"))
                 {
-                    Script nestedDesign = new Script() { ScriptDisplayName = "Nested Design Analysis", ScriptFileName = "NestedDesignAnalysis" };
+                    Script nestedDesign = new Script() { ScriptDisplayName = "Nested Design Analysis", ScriptFileName = "NestedDesignAnalysis", RequiresDataset = true };
                     context.Scripts.Add(nestedDesign);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "IncompleteFactorialParametricAnalysis"))
                 {
-                    Script incompleteFactorialAnalysis = new Script() { ScriptDisplayName = "Incomplete Factorial Parametric Analysis", ScriptFileName = "IncompleteFactorialParametricAnalysis" };
+                    Script incompleteFactorialAnalysis = new Script() { ScriptDisplayName = "Incomplete Factorial Parametric Analysis", ScriptFileName = "IncompleteFactorialParametricAnalysis", RequiresDataset = true };
                     context.Scripts.Add(incompleteFactorialAnalysis);
                 }
 

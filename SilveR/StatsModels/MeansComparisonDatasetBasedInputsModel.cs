@@ -6,33 +6,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Linq;
 using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class MeansComparisonModel : AnalysisModelBase
+    public class MeansComparisonDatasetBasedInputsModel : AnalysisDataModelBase, IMeansComparisonOutputOptions
     {
-        [ValidateGroupMean]
-        [Range(0, double.MaxValue)]
-        [DisplayName("Group mean")]
-        public string GroupMean { get; set; }
-
-        [ValidateStandardDeviation]
-        [Range(0, double.MaxValue)]
-        [DisplayName("Standard deviation")]
-        public string StandardDeviation { get; set; }
-
-        [ValidateVariance]
-        [Range(0, double.MaxValue)]
-        [DisplayName("Variance")]
-        public string Variance { get; set; }
-
-        public enum ValueTypeOption { Supplied = 0, Dataset = 1 }
-        public ValueTypeOption ValueType { get; set; } = ValueTypeOption.Supplied;
-
-        [ValidateResponseOrTreatment]
+        //[ValidateResponseOrTreatment]
         [CheckUsedOnceOnly]
+        [Required]
         [DisplayName("Response")]
         public string Response { get; set; }
 
@@ -52,18 +34,16 @@ namespace SilveR.StatsModels
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
 
-        public enum ChangeTypeOption { Percent = 0, Absolute = 1 }
         public ChangeTypeOption ChangeType { get; set; } = ChangeTypeOption.Percent;
 
         [ValidatePercentChanges]
-        [DisplayName("Percent change")]
+        [DisplayName("Percent changes")]
         public string PercentChange { get; set; }// = String.Empty;
 
         [ValidateAbsoluteChanges]
-        [DisplayName("Absolute change")]
+        [DisplayName("Absolute changes")]
         public string AbsoluteChange { get; set; }// = String.Empty;
 
-        public enum PlottingRangeTypeOption { SampleSize = 0, Power = 1 }
         public PlottingRangeTypeOption PlottingRangeType { get; set; } = PlottingRangeTypeOption.SampleSize;
 
         [ValidateSampleSizeFrom]
@@ -86,14 +66,14 @@ namespace SilveR.StatsModels
         public string GraphTitle { get; set; }
 
 
-        public MeansComparisonModel() : this(null) { }
+        public MeansComparisonDatasetBasedInputsModel() : base("MeansComparisonDatasetBasedInputs") { }
 
-        public MeansComparisonModel(IDataset dataset)
-            :base(dataset, "MeansComparison") { }
+        public MeansComparisonDatasetBasedInputsModel(IDataset dataset)
+            : base(dataset, "MeansComparisonDatasetBasedInputs") { }
 
         public override ValidationInfo Validate()
         {
-            MeansComparisonValidator meansComparisonValidator = new MeansComparisonValidator(this);
+            MeansComparisonDatasetBasedInputsValidator meansComparisonValidator = new MeansComparisonDatasetBasedInputsValidator(this);
             return meansComparisonValidator.Validate();
         }
 
@@ -130,10 +110,6 @@ namespace SilveR.StatsModels
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(GroupMean), GroupMean));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardDeviation), StandardDeviation));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Variance), Variance));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(ValueType), ValueType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
@@ -155,10 +131,6 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.GroupMean = argHelper.LoadStringArgument(nameof(GroupMean));
-            this.StandardDeviation = argHelper.LoadStringArgument(nameof(StandardDeviation));
-            this.Variance = argHelper.LoadStringArgument(nameof(Variance));
-            this.ValueType = (ValueTypeOption)Enum.Parse(typeof(ValueTypeOption), argHelper.LoadStringArgument(nameof(ValueType)), true);
             this.Response = argHelper.LoadStringArgument(nameof(Response));
             this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
@@ -179,34 +151,11 @@ namespace SilveR.StatsModels
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            if (ValueType == ValueTypeOption.Supplied)
-            {
-                arguments.Append(" " + "SuppliedValues"); //4
-                arguments.Append(" " + argFormatter.GetFormattedArgument(GroupMean, false)); //5
+            arguments.Append(" " + "DatasetValues"); //4
 
-                if (!String.IsNullOrWhiteSpace(StandardDeviation))
-                {
-                    arguments.Append(" " + "StandardDeviation"); //6
-                    arguments.Append(" " + argFormatter.GetFormattedArgument(StandardDeviation, false)); //7
-                }
-                else if (!String.IsNullOrEmpty(Variance))
-                {
-                    arguments.Append(" " + "Variance"); //6
-                    arguments.Append(" " + argFormatter.GetFormattedArgument(Variance, false)); //7
-                }
-                else
-                    throw new InvalidOperationException("no stdev or variance supplied!");
-            }
-            else if (ValueType == ValueTypeOption.Dataset)
-            {
-                arguments.Append(" " + "DatasetValues"); //4
-                arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //5
-
-                arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true));
-
-                arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //7
-            }
-
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true)); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //7
             arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //8
 
             if (ChangeType == ChangeTypeOption.Percent)

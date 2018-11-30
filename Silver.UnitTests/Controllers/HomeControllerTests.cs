@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Silver.UnitTests.Controllers
 {
-    [ExcludeFromCodeCoverageAttribute]
+    
     public class HomeControllerTests
     {
         [Fact]

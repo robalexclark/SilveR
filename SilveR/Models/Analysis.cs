@@ -7,8 +7,20 @@ namespace SilveR.Models
 {
     public partial class Analysis
     {
-        public Analysis()
+        private Analysis()
         {
+        }
+
+        public Analysis(Dataset dataset)
+        {
+            if (dataset != null)
+            {
+                this.DatasetID = dataset.DatasetID;
+                this.DatasetName = dataset.DatasetName;
+            }
+
+            AnalysisGuid = Guid.NewGuid().ToString();
+
             Arguments = new HashSet<Argument>();
         }
 
@@ -17,9 +29,9 @@ namespace SilveR.Models
 
         [Required]
         [StringLength(128)]
-        public string AnalysisGuid { get; set; }
+        public string AnalysisGuid { get; private set; }
 
-        public int? DatasetID { get; set; }
+        public Nullable<int> DatasetID { get; set; }
 
         [StringLength(50)]
         public string DatasetName { get; set; }

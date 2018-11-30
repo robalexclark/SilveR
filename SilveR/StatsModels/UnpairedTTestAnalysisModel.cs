@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class UnpairedTTestAnalysisModel : AnalysisModelBase
+    public class UnpairedTTestAnalysisModel : AnalysisDataModelBase
     {
         [Required]
         [CheckUsedOnceOnly]
@@ -54,7 +54,7 @@ namespace SilveR.StatsModels
         }
 
 
-        public UnpairedTTestAnalysisModel() : this(null) { }
+        public UnpairedTTestAnalysisModel() : base("UnpairedTTestAnalysis") { }
 
         public UnpairedTTestAnalysisModel(IDataset dataset)
             : base(dataset, "UnpairedTTestAnalysis") { }

@@ -78,9 +78,15 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/meansComparison.min.js",
+    "outputFileName": "wwwroot/js/stats/meansComparisonDatasetBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/meansComparison.js"
+      "wwwroot/js/stats/meansComparisonDatasetBasedInputs.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/meansComparisonUserBasedInputs.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/meansComparisonUserBasedInputs.js"
     ]
   },
   {

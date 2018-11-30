@@ -20,7 +20,7 @@ namespace SilveR.Validators
             get { return validationInfo; }
         }
 
-        protected ValidatorBase(DataTable dataTable)
+        protected ValidatorBase(DataTable dataTable=null) //naughty
         {
             if (dataTable != null)
             {
