@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @Program.AppName</title>
 
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"  />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/kendo-ui/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/kendo-ui/styles/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/site.css" rel="stylesheet" type="text/css" />
@@ -79,6 +79,13 @@
                                         <ul class="dropdown-menu">
                                             <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "MeansComparisonUserBasedInputs" }, null)</li>
                                             <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "MeansComparisonDatasetBasedInputs" }, null)</li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item dropdown dropdown-submenu">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">One-way ANOVA</a>
+                                        <ul class="dropdown-menu">
+                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVAUserBasedInputs" }, null)</li>
+                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVADatasetBasedInputs" }, null)</li>
                                         </ul>
                                     </li>
                                 </ul>

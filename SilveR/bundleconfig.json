@@ -90,6 +90,18 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/oneWayANOVADatasetBasedInputs.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/oneWayANOVADatasetBasedInputs.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/oneWayANOVAUserBasedInputs.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/oneWayANOVAUserBasedInputs.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/stats/pValueAdjustment.min.js",
     "inputFiles": [
       "wwwroot/js/stats/pValueAdjustment.js"

@@ -1,4 +1,4 @@
-﻿@model SilveR.StatsModels.MeansComparisonUserBasedInputsModel
+﻿@model SilveR.StatsModels.OneWayANOVAUserBasedInputsModel
 
 @section Scripts {
     <script>
@@ -6,20 +6,20 @@
     </script>
 
     <environment names="Development">
-        <script src="~/js/stats/meansComparisonUserBasedInputs.js"></script>
+        <script src="~/js/stats/oneWayANOVAUserBasedInputs.js"></script>
     </environment>
     <environment names="Production">
-        <script src="~/js/stats/meansComparisonUserBasedInputs.min.js"></script>
+        <script src="~/js/stats/oneWayANOVAUserBasedInputs.min.js"></script>
     </environment>
 }
 
 @{
-    ViewBag.Title = "'Comparison of Means' Power Analysis (User Based Inputs)";
+    ViewBag.Title = "'One-way ANOVA' Power Analysis (User Based Inputs)";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/MeansComparisonUserBasedInputs" class="form-horizontal" method="post">
+<form action="/Analyses/OneWayANOVAUserBasedInputs" class="form-horizontal" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
@@ -31,33 +31,66 @@
                 <div class="panel-body">
                     <div class="col-sm-12">
 
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Group mean</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="GroupMean" />
-                                <div><span asp-validation-for="GroupMean"></span></div>
-                            </div>
-                        </div>
-
+                        <h4>Effect size estimate</h4>
                         <div class="form-group">
                             <div class="radio">
                                 <label>
-                                    <input asp-for="DeviationType" type="radio" value="StandardDeviation" onclick="enableDisableDeviationType()" />
-                                    <label>Use Standard Deviation</label>
+                                    <input asp-for="EffectSizeEstimate" type="radio" value="TreatmentMeanSquare" onclick="enableDisableEffectSizeEstimate()" />
+                                    <label>Use Treatment mean square</label>
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">Standard deviation</label>
+                            <label class="col-sm-4 control-label">Treatment mean square</label>
                             <div class="col-sm-8">
-                                <input class="form-control" asp-for="StandardDeviation" />
-                                <div><span asp-validation-for="StandardDeviation"></span></div>
+                                <input class="form-control" asp-for="TreatmentMeanSquare" />
+                                <div><span asp-validation-for="TreatmentMeanSquare"></span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">No. of treatment groups</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" asp-for="NoOfTreatmentGroups" />
+                                <div><span asp-validation-for="NoOfTreatmentGroups"></span></div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="radio">
                                 <label>
-                                    <input asp-for="DeviationType" type="radio" value="Variance" onclick="enableDisableDeviationType()" />
+                                    <input asp-for="EffectSizeEstimate" type="radio" value="TreatmentGroupMeans" onclick="enableDisableEffectSizeEstimate()" />
+                                    <label>Use Treatment group means</label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Means</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" asp-for="Means" />
+                                <div><span asp-validation-for="Means"></span></div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <h4>Variability estimate</h4>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input asp-for="VariabilityEstimate" type="radio" value="ResidualMeanSquare" onclick="enableDisableVariabilityEstimate()" />
+                                    <label>Use Residual mean square</label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Residual mean square</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" asp-for="ResidualMeanSquare" />
+                                <div><span asp-validation-for="ResidualMeanSquare"></span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input asp-for="VariabilityEstimate" type="radio" value="Variance" onclick="enableDisableVariabilityEstimate()" />
                                     <label>Use Variance</label>
                                 </label>
                             </div>
@@ -69,7 +102,22 @@
                                 <div><span asp-validation-for="Variance"></span></div>
                             </div>
                         </div>
-                                               
+                        <div class="form-group">
+                            <div class="radio">
+                                <label>
+                                    <input asp-for="VariabilityEstimate" type="radio" value="StandardDeviation" onclick="enableDisableVariabilityEstimate()" />
+                                    <label>Use Standard deviation</label>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Standard deviation</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" asp-for="StandardDeviation" />
+                                <div><span asp-validation-for="StandardDeviation"></span></div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Significance level</label>
                             <div class="col-sm-8">
@@ -87,43 +135,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Output Options</div>
                 <div class="panel-body">
-                    <h4>Change Type</h4>
 
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="ChangeType" type="radio" value="Percent" onclick="enableDisableChangeType()" />
-                                    <label>Use Percent Change</label>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Percent changes</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="PercentChange" />
-                                <div><span asp-validation-for="PercentChange"></span></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="ChangeType" type="radio" value="Absolute" onclick="enableDisableChangeType()" />
-                                    <label>Use Absolute Change</label>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Absolute changes</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="AbsoluteChange" />
-                                <div><span asp-validation-for="AbsoluteChange"></span></div>
-                            </div>
-                        </div>
-
-                    <br />
                     <h4>Plotting range</h4>
-
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <div class="radio">
                                 <label>
@@ -168,7 +182,6 @@
                                 <input class="form-control" asp-for="PowerTo" />
                                 <div><span asp-validation-for="PowerTo"></span></div>
                             </div>
-
                         </div>
 
                         <div class="form-group">
@@ -183,7 +196,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="row mt20">
         <div class="col-md-12">

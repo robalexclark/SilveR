@@ -63,6 +63,12 @@ namespace SilveR.StatsModels
                 case "MeansComparisonDatasetBasedInputs":
                     model = new MeansComparisonDatasetBasedInputsModel(dataset);
                     break;
+                case "OneWayANOVAUserBasedInputs":
+                    model = new OneWayANOVAUserBasedInputsModel();
+                    break;
+                case "OneWayANOVADatasetBasedInputs":
+                    model = new OneWayANOVADatasetBasedInputsModel(dataset);
+                    break;
                 //case "MultivariateAnalysis":
                 //    model = new MultivariateAnalysisModel(dataset);
                 //    break;

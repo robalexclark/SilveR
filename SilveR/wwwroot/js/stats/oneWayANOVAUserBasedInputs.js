@@ -1,18 +1,31 @@
-$(function () {  
 
-    $("#GroupMean").kendoNumericTextBox({
+$(function () {
+
+    $("#TreatmentMeanSquare").kendoNumericTextBox({
         format: '#.######',
         decimals: 6,
         spinners: false
     });
 
-    $("#StandardDeviation").kendoNumericTextBox({
+    $("#NoOfTreatmentGroups").kendoNumericTextBox({
+        format: '#.######',
+        decimals: 6,
+        spinners: false
+    });
+
+    $("#ResidualMeanSquare").kendoNumericTextBox({
         format: '#.######',
         decimals: 6,
         spinners: false
     });
 
     $("#Variance").kendoNumericTextBox({
+        format: '#.######',
+        decimals: 6,
+        spinners: false
+    });
+
+    $("#StandardDeviation").kendoNumericTextBox({
         format: '#.######',
         decimals: 6,
         spinners: false
@@ -54,46 +67,73 @@ $(function () {
         spinners: false
     });
 
-    enableDisableDeviationType();
-    enableDisableChangeType();
+
+    enableDisableEffectSizeEstimate();
+    enableDisableVariabilityEstimate();
     enableDisablePlottingRangeType();
 });
 
-function enableDisableDeviationType() {
 
-    const deviationType = $('input:radio[name="DeviationType"]:checked').val();
-    const standardDeviation = $("#StandardDeviation");
-    const variance = $("#Variance");
+function enableDisableEffectSizeEstimate() {
 
-    if (deviationType === "StandardDeviation") {
-        standardDeviation.prop("disabled", false);
-        variance.prop("disabled", true);
-        $("#Variance").data("kendoNumericTextBox").value(null);
+    const effectSizeEstimate = $('input:radio[name="EffectSizeEstimate"]:checked').val();
+    const treatmentMeanSquare = $("#TreatmentMeanSquare");
+    const noOfTreatmentGroups = $("#NoOfTreatmentGroups");
+    const means = $("#Means");
+
+    if (effectSizeEstimate === "TreatmentMeanSquare") {
+        treatmentMeanSquare.prop("disabled", false);
+        noOfTreatmentGroups.prop("disabled", false);
+
+        means.prop("disabled", true);
+        means.val("");
     }
     else {
-        variance.prop("disabled", false);
+        means.prop("disabled", false);
+
+        treatmentMeanSquare.prop("disabled", true);
+        treatmentMeanSquare.data("kendoNumericTextBox").value(null);
+        noOfTreatmentGroups.prop("disabled", true);
+        noOfTreatmentGroups.data("kendoNumericTextBox").value(null);
+    }
+}
+
+function enableDisableVariabilityEstimate() {
+
+    const variabilityEstimate = $('input:radio[name="VariabilityEstimate"]:checked').val();
+    const residualMeanSquare = $("#ResidualMeanSquare");
+    const variance = $("#Variance");
+    const standardDeviation = $("#StandardDeviation");
+
+    if (variabilityEstimate === "ResidualMeanSquare") {
+        residualMeanSquare.prop("disabled", false);
+
+        variance.prop("disabled", true);
+        $("#Variance").data("kendoNumericTextBox").value(null);
+
         standardDeviation.prop("disabled", true);
         $("#StandardDeviation").data("kendoNumericTextBox").value(null);
     }
+    else if (variabilityEstimate === "Variance") {
+        variance.prop("disabled", false);
+
+        residualMeanSquare.prop("disabled", true);
+        $("#ResidualMeanSquare").data("kendoNumericTextBox").value(null);
+
+        standardDeviation.prop("disabled", true);
+        $("#StandardDeviation").data("kendoNumericTextBox").value(null);
+    }
+    else if (variabilityEstimate === "StandardDeviation") {
+        standardDeviation.prop("disabled", false);
+
+        residualMeanSquare.prop("disabled", true);
+        $("#ResidualMeanSquare").data("kendoNumericTextBox").value(null);
+
+        variance.prop("disabled", true);
+        $("#Variance").data("kendoNumericTextBox").value(null);
+    }
 }
 
-function enableDisableChangeType() {
-
-    const changeType = $('input:radio[name="ChangeType"]:checked').val();
-    const percentChange = $("#PercentChange");
-    const absoluteChange = $("#AbsoluteChange");
-
-    if (changeType === "Percent") {
-        percentChange.prop("disabled", false);
-        absoluteChange.prop("disabled", true);
-        absoluteChange.val(null);
-    }
-    else {
-        percentChange.prop("disabled", true);
-        absoluteChange.prop("disabled", false);
-        percentChange.val(null);
-    }
-}
 
 function enableDisablePlottingRangeType() {
 

@@ -38,6 +38,30 @@ namespace SilveR.Helpers
             charConversionList.Add("'", "ivs_quote_ivs");
         }
 
+        public string GetFormattedArgument(Nullable<int> value)
+        {
+            if (!value.HasValue)
+            {
+                return  "NULL";
+            }
+            else
+            {
+                return GetFormattedArgument(value.ToString(), false);
+            }
+        }
+
+        public string GetFormattedArgument(Nullable<decimal> value)
+        {
+            if (!value.HasValue)
+            {
+                return "NULL";
+            }
+            else
+            {
+                return GetFormattedArgument(value.ToString(), false);
+            }
+        }
+
         public string GetFormattedArgument(string stringValue, bool isVariable)
         {
             if (String.IsNullOrEmpty(stringValue))
@@ -64,7 +88,8 @@ namespace SilveR.Helpers
         {
             if (listArguments == null) //6
             {
-                return "NULL";
+                throw new NullReferenceException("listArguments cant be null!");
+                //return "NULL";
             }
             else
             {

@@ -211,6 +211,18 @@ namespace SilveR.Controllers
             return await RunAnalysis(model, ignoreWarnings);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> OneWayANOVADatasetBasedInputs(OneWayANOVADatasetBasedInputsModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OneWayANOVAUserBasedInputs(OneWayANOVAUserBasedInputsModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
         //[HttpPost]
         //public async Task<IActionResult> MultivariateAnalysis(MultivariateModel model, bool ignoreWarnings)
         //{

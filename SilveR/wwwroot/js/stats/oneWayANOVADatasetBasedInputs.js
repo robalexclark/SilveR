@@ -5,42 +5,11 @@ $(function () {
     });
 
     $("#Treatment").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull,
-        change: enableDisableControlLevels
-    });
-
-    $("#ControlGroup").kendoDropDownList({
-        cascadeFrom: "Treatment",
-        dataSource: {
-            transport: {
-                read: {
-                    url: "/Values/GetLevels",
-                    data: function () {
-                        return {
-                            treatment: $("#Treatment").val(),
-                            datasetID: $("#DatasetID").val(),
-                            includeNull: false
-                        }
-                    }
-                }
-            },
-            serverFiltering: true,
-            schema: { "errors": "Errors" }
-        }
+        dataSource: theModel.availableVariablesAllowNull
     });
 
     $("#Significance").kendoDropDownList({
         dataSource: theModel.significancesList
-    });
-
-    enableDisableControlLevels();
-
-    $("#PercentChange").kendoNumericTextBox({
-        spinners: false
-    });
-
-    $("#AbsoluteChange").kendoNumericTextBox({
-        spinners: false
     });
 
     $("#SampleSizeFrom").kendoNumericTextBox({
@@ -67,7 +36,6 @@ $(function () {
         spinners: false
     });
 
-    enableDisableChangeType();
     enableDisablePlottingRangeType();
 });
 
@@ -77,38 +45,6 @@ function treatmentInfo() {
         datasetID: $("#DatasetID").val(),
         includeNull: true
     };
-}
-
-function enableDisableControlLevels() {
-    const treatmentDropDown = $("#Treatment").data("kendoDropDownList");
-    const controlDropDown = $("#ControlGroup").data("kendoDropDownList");
-
-    if (treatmentDropDown.select() > 0) {
-        controlDropDown.enable(true);
-    }
-    else {
-        controlDropDown.select(-1);
-        controlDropDown.value(null);
-        controlDropDown.enable(false);
-    }
-}
-
-function enableDisableChangeType() {
-
-    const changeType = $('input:radio[name="ChangeType"]:checked').val();
-    const percentChange = $("#PercentChange");
-    const absoluteChange = $("#AbsoluteChange");
-
-    if (changeType === "Percent") {
-        percentChange.prop("disabled", false);
-        absoluteChange.prop("disabled", true);
-        absoluteChange.val(null);
-    }
-    else {
-        percentChange.prop("disabled", true);
-        absoluteChange.prop("disabled", false);
-        percentChange.val(null);
-    }
 }
 
 function enableDisablePlottingRangeType() {

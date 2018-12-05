@@ -75,20 +75,6 @@ namespace Silver.UnitTests.Helpers
 
 
         [Fact]
-        public void GetFormattedArgument_ListIsNull_ReturnsNULL()
-        {
-            //Arrange
-            ArgumentFormatter sut = new ArgumentFormatter();
-
-            //Act
-            string result = sut.GetFormattedArgument(null);
-
-            //Assert
-            Assert.Equal("NULL", result);
-        }
-
-
-        [Fact]
         public void GetFormattedArgument_ListStringWithIllegalChars_ReturnsCorrectString()
         {
             //Arrange

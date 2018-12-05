@@ -184,6 +184,18 @@ namespace SilveR
                     context.Scripts.Add(meansComparison);
                 }
 
+                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVADatasetBasedInputs"))
+                {
+                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (Dataset Based Inputs)", ScriptFileName = "OneWayANOVADatasetBasedInputs", RequiresDataset = true };
+                    context.Scripts.Add(meansComparison);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVAUserBasedInputs"))
+                {
+                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (User Based Inputs)", ScriptFileName = "OneWayANOVAUserBasedInputs", RequiresDataset = false };
+                    context.Scripts.Add(meansComparison);
+                }
+
                 if (!existingScripts.Any(x => x.ScriptFileName == "MultivariateAnalysis"))
                 {
                     Script multivariate = new Script() { ScriptDisplayName = "Multivariate Analysis", ScriptFileName = "MultivariateAnalysis", RequiresDataset = true };

@@ -185,79 +185,7 @@ namespace SilveR.Validators
     }
 
 
-    //MEANS COMPARISON
-    //public class ValidateGroupMeanAttribute : ValidationAttribute
-    //{
-    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-    //    {
-    //        MeansComparisonUserBasedInputsModel model = (MeansComparisonUserBasedInputsModel)validationContext.ObjectInstance;
-
-    //        if (String.IsNullOrEmpty(model.GroupMean))
-    //        {
-    //            return new ValidationResult("Group Mean is a required variable");
-    //        }
-    //        else if (!double.TryParse(model.GroupMean, out double val))
-    //        {
-    //            return new ValidationResult("Group Mean is not numeric");
-    //        }
-    //        else
-    //        {
-    //            return ValidationResult.Success;
-    //        }
-    //    }
-    //}
-
-    //public class ValidateStandardDeviationAttribute : ValidationAttribute
-    //{
-    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-    //    {
-    //        MeansComparisonUserBasedInputsModel model = (MeansComparisonUserBasedInputsModel)validationContext.ObjectInstance;
-
-    //        if (model.StandardDeviation.HasValue && !double.TryParse(model.StandardDeviation, out double val))
-    //        {
-    //            return new ValidationResult("Standard Deviation entered is not numeric");
-    //        }
-    //        else
-    //        {
-    //            return ValidationResult.Success;
-    //        }
-    //    }
-    //}
-
-    //public class ValidateVarianceAttribute : ValidationAttribute
-    //{
-    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-    //    {
-    //        MeansComparisonUserBasedInputsModel model = (MeansComparisonUserBasedInputsModel)validationContext.ObjectInstance;
-
-    //        if (model.Variance.HasValue && !double.TryParse(model.Variance, out double val))
-    //        {
-    //            return new ValidationResult("Variance entered is not numeric");
-    //        }
-    //        else
-    //        {
-    //            return ValidationResult.Success;
-    //        }
-    //    }
-    //}
-
-    //public class ValidateResponseOrTreatmentAttribute : ValidationAttribute
-    //{
-    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-    //    {
-    //        MeansComparisonDatasetBasedInputsModel model = (MeansComparisonDatasetBasedInputsModel)validationContext.ObjectInstance;
-
-    //        if (value == null)
-    //        {
-    //            return new ValidationResult(validationContext.DisplayName + " is a required variable");
-    //        }
-    //        else
-    //        {
-    //            return ValidationResult.Success;
-    //        }
-    //    }
-    //}
-
+    //MEANS COMPARISON 
     public class ValidateControlGroupAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -279,7 +207,7 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
+            IMeanChangeOptions model = (IMeanChangeOptions)validationContext.ObjectInstance;
 
             if (model.ChangeType == ChangeTypeOption.Absolute)
             {
@@ -317,7 +245,7 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
+            IMeanChangeOptions model = (IMeanChangeOptions)validationContext.ObjectInstance;
 
             if (model.ChangeType == ChangeTypeOption.Percent)
             {
@@ -355,32 +283,17 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
+            IGraphSizeOptions model = (IGraphSizeOptions)validationContext.ObjectInstance;
 
             if (model.PlottingRangeType == PlottingRangeTypeOption.SampleSize)
                 return ValidationResult.Success;
 
-            bool fromOK = double.TryParse(model.PowerFrom, out double from);
-
-            if (!fromOK)
+            if (model.PowerFrom > model.PowerTo)
             {
-                return new ValidationResult("Custom From must be a numeric value");
+                return new ValidationResult("Custom From value must be less than the To value");
             }
-            else if (from < 0)
-            {
-                return new ValidationResult("Custom From value must be greater than zero.");
-            }
-            else
-            {
-                bool toOK = Double.TryParse(model.PowerTo, out double to);
 
-                if (!toOK || from > to)
-                {
-                    return new ValidationResult("Custom From value must be less than the To value");
-                }
-
-                return ValidationResult.Success;
-            }
+            return ValidationResult.Success;
         }
     }
 
@@ -388,32 +301,17 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
+            IGraphSizeOptions model = (IGraphSizeOptions)validationContext.ObjectInstance;
 
             if (model.PlottingRangeType == PlottingRangeTypeOption.SampleSize)
                 return ValidationResult.Success;
 
-            bool toOK = double.TryParse(model.PowerTo, out double to);
-
-            if (!toOK)
+            if (model.PowerFrom > model.PowerTo)
             {
-                return new ValidationResult("Custom To must be a numeric value");
+                return new ValidationResult("Custom To value must be greater than the From value");
             }
-            else if (to < 0)
-            {
-                return new ValidationResult("Custom To value must be greater than zero.");
-            }
-            else
-            {
-                bool fromOK = Double.TryParse(model.PowerFrom, out double from);
 
-                if (!fromOK || from > to)
-                {
-                    return new ValidationResult("Custom To value must be greater than the From value");
-                }
-
-                return ValidationResult.Success;
-            }
+            return ValidationResult.Success;
         }
     }
 
@@ -421,32 +319,17 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
+            IGraphSizeOptions model = (IGraphSizeOptions)validationContext.ObjectInstance;
 
             if (model.PlottingRangeType == PlottingRangeTypeOption.Power)
                 return ValidationResult.Success;
 
-            bool fromOK = double.TryParse(model.SampleSizeFrom, out double from);
-
-            if (!fromOK)
+            if (model.SampleSizeFrom > model.SampleSizeTo)
             {
-                return new ValidationResult("Sample Size From must be a numeric value");
+                return new ValidationResult("Sample Size To value must be greater than the From value");
             }
-            else if (from < 0)
-            {
-                return new ValidationResult("Sample Size From value must be greater than zero.");
-            }
-            else
-            {
-                bool toOK = Double.TryParse(model.SampleSizeTo, out double to);
 
-                if (!toOK || from > to)
-                {
-                    return new ValidationResult("Sample Size To value must be greater than the From value");
-                }
-
-                return ValidationResult.Success;
-            }
+            return ValidationResult.Success;
         }
     }
 
@@ -454,32 +337,17 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            IMeansComparisonOutputOptions model = (IMeansComparisonOutputOptions)validationContext.ObjectInstance;
+            IGraphSizeOptions model = (IGraphSizeOptions)validationContext.ObjectInstance;
 
             if (model.PlottingRangeType == PlottingRangeTypeOption.Power)
                 return ValidationResult.Success;
 
-            bool toOK = double.TryParse(model.SampleSizeTo, out double to);
-
-            if (!toOK)
+            if (model.SampleSizeFrom > model.SampleSizeTo)
             {
-                return new ValidationResult("Sample Size To must be a numeric value");
+                return new ValidationResult("Sample Size From value must be less than the To value");
             }
-            else if (to < 0)
-            {
-                return new ValidationResult("Sample Size To value must be greater than zero.");
-            }
-            else
-            {
-                bool fromOK = Double.TryParse(model.SampleSizeFrom, out double from);
 
-                if (!fromOK || from > to)
-                {
-                    return new ValidationResult("Sample Size From value must be less than the To value");
-                }
-
-                return ValidationResult.Success;
-            }
+            return ValidationResult.Success;
         }
     }
 
@@ -504,7 +372,6 @@ namespace SilveR.Validators
 
 
     //DOSE RESPONSE
-
     public class ValidateResponseOrDoseAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -521,46 +388,4 @@ namespace SilveR.Validators
             }
         }
     }
-
-
-
-    //public class UniqueVariableChecker
-    //{
-    //    private List<string> varList = new List<string>();
-
-    //    public void AddVar(string item)
-    //    {
-    //        if (!String.IsNullOrEmpty(item))
-    //        {
-    //            varList.Add(item);
-    //        }
-    //    }
-
-    //    public void AddVars(IEnumerable<string> items)
-    //    {
-    //        if (items != null)
-    //        {
-    //            varList.AddRange(items);
-    //        }
-    //    }
-
-    //    public bool DoCheck(object varToCheck)
-    //    {
-    //        if (varToCheck is String)
-    //        {
-    //            string stringVarToCheck = (String)varToCheck;
-    //            return !varList.Contains(varToCheck);
-    //        }
-    //        else if (varToCheck is List<string>)
-    //        {
-    //            List<string> varsToCheck = (List<string>)varToCheck;
-
-    //            return !varsToCheck.Intersect(varList).Any();
-    //        }
-    //        else
-    //        {
-    //            throw new ArgumentException("Attempting to check unknown type!");
-    //        }
-    //    }
-    //}
 }

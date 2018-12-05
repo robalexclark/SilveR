@@ -69,10 +69,10 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("SampleSize", plottingRangeType.Value);
 
             var powerFrom = result.Single(x => x.Name == "PowerFrom");
-            Assert.Equal("70", powerFrom.Value);
+            Assert.Null(powerFrom.Value);
 
             var powerTo = result.Single(x => x.Name == "PowerTo");
-            Assert.Equal("90", powerTo.Value);
+            Assert.Null(powerTo.Value);
 
             var sampleSizeFrom = result.Single(x => x.Name == "SampleSizeFrom");
             Assert.Equal("6", sampleSizeFrom.Value);
@@ -101,8 +101,8 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "GroupMean", Value = "2" });
             arguments.Add(new Argument { Name = "PercentChange" });
             arguments.Add(new Argument { Name = "PlottingRangeType", Value = "SampleSize" });
-            arguments.Add(new Argument { Name = "PowerFrom", Value = "70" });
-            arguments.Add(new Argument { Name = "PowerTo", Value = "90" });
+            arguments.Add(new Argument { Name = "PowerFrom" });
+            arguments.Add(new Argument { Name = "PowerTo"});
             arguments.Add(new Argument { Name = "SampleSizeFrom", Value = "6" });
             arguments.Add(new Argument { Name = "SampleSizeTo", Value = "15" });
             arguments.Add(new Argument { Name = "Significance", Value = "Log10" });
@@ -122,10 +122,10 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal(2, sut.GroupMean);
             Assert.Null(sut.PercentChange);
             Assert.Equal(PlottingRangeTypeOption.SampleSize, sut.PlottingRangeType);
-            Assert.Equal("70", sut.PowerFrom);
-            Assert.Equal("90", sut.PowerTo);
-            Assert.Equal("6", sut.SampleSizeFrom);
-            Assert.Equal("15", sut.SampleSizeTo);
+            Assert.Null(sut.PowerFrom);
+            Assert.Null(sut.PowerTo);
+            Assert.Equal(6, sut.SampleSizeFrom);
+            Assert.Equal(15, sut.SampleSizeTo);
             Assert.Equal("Log10", sut.Significance);
             Assert.Null(sut.StandardDeviation);
         }
@@ -155,10 +155,10 @@ namespace Silver.UnitTests.StatsModels
                 GroupMean = 2m,
                 PercentChange = null,
                 PlottingRangeType = PlottingRangeTypeOption.SampleSize,
-                PowerFrom = "70",
-                PowerTo = "90",
-                SampleSizeFrom = "6",
-                SampleSizeTo = "15",
+                PowerFrom = null,
+                PowerTo = null,
+                SampleSizeFrom = 6,
+                SampleSizeTo = 15,
                 Significance = "0.05",
                 StandardDeviation = null,
                 Variance = 1m

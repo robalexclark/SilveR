@@ -38,11 +38,11 @@ namespace SilveR.Helpers
                 bool boo = (bool)value;
                 newArgument.Value = boo.ToString();
             }
-            //else if (value is int)
-            //{
-            //    int num = (int)value;
-            //    newArgument.Value = num.ToString();
-            //}
+            else if (value is int)
+            {
+                int num = (int)value;
+                newArgument.Value = num.ToString();
+            }
             else if (value is decimal)
             {
                 decimal num = (decimal)value;
@@ -108,6 +108,20 @@ namespace SilveR.Helpers
             if (arg.Value != null)
             {
                 return decimal.Parse(arg.Value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Nullable<int> LoadNullableIntArgument(string targetName)
+        {
+            Argument arg = arguments.Single(x => x.Name == targetName);
+
+            if (arg.Value != null)
+            {
+                return int.Parse(arg.Value);
             }
             else
             {

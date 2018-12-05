@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class MeansComparisonDatasetBasedInputsModel : AnalysisDataModelBase, IGraphSizeOptions, IMeanChangeOptions
+    public class OneWayANOVADatasetBasedInputsModel : AnalysisDataModelBase, IGraphSizeOptions
     {
         [CheckUsedOnceOnly]
         [Required]
@@ -27,20 +27,6 @@ namespace SilveR.StatsModels
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
-
-        [ValidateControlGroup]
-        [DisplayName("Control group")]
-        public string ControlGroup { get; set; }
-
-        public ChangeTypeOption ChangeType { get; set; } = ChangeTypeOption.Percent;
-
-        [ValidatePercentChanges]
-        [DisplayName("Percent changes")]
-        public string PercentChange { get; set; }
-
-        [ValidateAbsoluteChanges]
-        [DisplayName("Absolute changes")]
-        public string AbsoluteChange { get; set; }
 
         public PlottingRangeTypeOption PlottingRangeType { get; set; } = PlottingRangeTypeOption.SampleSize;
 
@@ -64,14 +50,14 @@ namespace SilveR.StatsModels
         public string GraphTitle { get; set; }
 
 
-        public MeansComparisonDatasetBasedInputsModel() : base("MeansComparisonDatasetBasedInputs") { }
+        public OneWayANOVADatasetBasedInputsModel() : base("OneWayANOVADatasetBasedInputs") { }
 
-        public MeansComparisonDatasetBasedInputsModel(IDataset dataset)
-            : base(dataset, "MeansComparisonDatasetBasedInputs") { }
+        public OneWayANOVADatasetBasedInputsModel(IDataset dataset)
+            : base(dataset, "OneWayANOVADatasetBasedInputs") { }
 
         public override ValidationInfo Validate()
         {
-            MeansComparisonDatasetBasedInputsValidator meansComparisonValidator = new MeansComparisonDatasetBasedInputsValidator(this);
+            OneWayANOVADatasetBasedInputsValidator meansComparisonValidator = new OneWayANOVADatasetBasedInputsValidator(this);
             return meansComparisonValidator.Validate();
         }
 
@@ -87,9 +73,6 @@ namespace SilveR.StatsModels
                     dtNew.Columns.Remove(col);
                 }
             }
-
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
@@ -111,10 +94,6 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(ChangeType), ChangeType.ToString()));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(PercentChange), PercentChange));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(AbsoluteChange), AbsoluteChange));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PlottingRangeType), PlottingRangeType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SampleSizeFrom), SampleSizeFrom));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SampleSizeTo), SampleSizeTo));
@@ -132,10 +111,6 @@ namespace SilveR.StatsModels
             this.Response = argHelper.LoadStringArgument(nameof(Response));
             this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
-            this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
-            this.ChangeType = (ChangeTypeOption)Enum.Parse(typeof(ChangeTypeOption), argHelper.LoadStringArgument(nameof(ChangeType)), true);
-            this.PercentChange = argHelper.LoadStringArgument(nameof(PercentChange));
-            this.AbsoluteChange = argHelper.LoadStringArgument(nameof(AbsoluteChange));
             this.PlottingRangeType = (PlottingRangeTypeOption)Enum.Parse(typeof(PlottingRangeTypeOption), argHelper.LoadStringArgument(nameof(PlottingRangeType)), true);
             this.SampleSizeFrom = argHelper.LoadNullableIntArgument(nameof(SampleSizeFrom));
             this.SampleSizeTo = argHelper.LoadNullableIntArgument(nameof(SampleSizeTo));
@@ -153,34 +128,22 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //5
             arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true)); //6
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //7
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //8
-
-            if (ChangeType == ChangeTypeOption.Percent)
-            {
-                arguments.Append(" " + "Percent"); //9
-                arguments.Append(" " + argFormatter.GetFormattedArgument(PercentChange, false)); //10
-            }
-            else
-            {
-                arguments.Append(" " + "Absolute"); //9
-                arguments.Append(" " + argFormatter.GetFormattedArgument(AbsoluteChange, false)); //10
-            }
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //7
 
             if (PlottingRangeType == PlottingRangeTypeOption.SampleSize)
             {
-                arguments.Append(" " + "SampleSize"); //11
-                arguments.Append(" " + argFormatter.GetFormattedArgument(SampleSizeFrom)); //12
-                arguments.Append(" " + argFormatter.GetFormattedArgument(SampleSizeTo)); //13
+                arguments.Append(" " + "SampleSize"); //8
+                arguments.Append(" " + argFormatter.GetFormattedArgument(SampleSizeFrom)); //9
+                arguments.Append(" " + argFormatter.GetFormattedArgument(SampleSizeTo)); //10
             }
             else
             {
-                arguments.Append(" " + "PowerAxis"); //11
-                arguments.Append(" " + argFormatter.GetFormattedArgument(PowerFrom)); //12
-                arguments.Append(" " + argFormatter.GetFormattedArgument(PowerTo)); //13
+                arguments.Append(" " + "PowerAxis"); //8
+                arguments.Append(" " + argFormatter.GetFormattedArgument(PowerFrom)); //9
+                arguments.Append(" " + argFormatter.GetFormattedArgument(PowerTo)); //10
             }
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(GraphTitle, false)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GraphTitle, false)); //11
 
             return arguments.ToString().Trim();
         }

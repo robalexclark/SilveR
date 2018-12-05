@@ -81,8 +81,12 @@ namespace Silver.UnitTests.Helpers
         [Fact]
         public void ArgumentFactory_Int_ReturnsString()
         {
+            //Arrange,Act
+            Argument sut = ArgumentHelper.ArgumentFactory("TestName", 123);
+
             //Assert
-            Assert.Throws< ArgumentException>(()=>ArgumentHelper.ArgumentFactory("TestName", 23)); //int
+            Assert.Equal("TestName", sut.Name);
+            Assert.Equal("123", sut.Value);
         }
 
         [Fact]

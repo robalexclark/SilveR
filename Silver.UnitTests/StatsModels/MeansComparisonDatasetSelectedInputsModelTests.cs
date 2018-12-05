@@ -77,10 +77,10 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("Resp1", response.Value);
 
             var sampleSizeFrom = result.Single(x => x.Name == "SampleSizeFrom");
-            Assert.Equal("6", sampleSizeFrom.Value);
+            Assert.Null(sampleSizeFrom.Value);
 
             var sampleSizeTo = result.Single(x => x.Name == "SampleSizeTo");
-            Assert.Equal("15", sampleSizeTo.Value);
+            Assert.Null(sampleSizeTo.Value);
 
             var significance = result.Single(x => x.Name == "Significance");
             Assert.Equal("0.05", significance.Value);
@@ -105,8 +105,8 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "PowerFrom", Value = "70" });
             arguments.Add(new Argument { Name = "PowerTo", Value = "90" });
             arguments.Add(new Argument { Name = "Response", Value = "Resp1" });
-            arguments.Add(new Argument { Name = "SampleSizeFrom", Value = "6" });
-            arguments.Add(new Argument { Name = "SampleSizeTo", Value = "15" });
+            arguments.Add(new Argument { Name = "SampleSizeFrom" });
+            arguments.Add(new Argument { Name = "SampleSizeTo" });
             arguments.Add(new Argument { Name = "Significance", Value = "0.05" });
             arguments.Add(new Argument { Name = "Treatment", Value = "Treat2" });
 
@@ -122,11 +122,11 @@ namespace Silver.UnitTests.StatsModels
             Assert.Null(sut.GraphTitle);
             Assert.Equal("5", sut.PercentChange);
             Assert.Equal(PlottingRangeTypeOption.Power, sut.PlottingRangeType);
-            Assert.Equal("70", sut.PowerFrom);
-            Assert.Equal("90", sut.PowerTo);
+            Assert.Equal(70, sut.PowerFrom);
+            Assert.Equal(90, sut.PowerTo);
             Assert.Equal("Resp1", sut.Response);
-            Assert.Equal("6", sut.SampleSizeFrom);
-            Assert.Equal("15", sut.SampleSizeTo);
+            Assert.Null( sut.SampleSizeFrom);
+            Assert.Null( sut.SampleSizeTo);
             Assert.Equal("0.05", sut.Significance);
             Assert.Equal("Treat2", sut.Treatment);
         }
@@ -155,11 +155,11 @@ namespace Silver.UnitTests.StatsModels
                 GraphTitle = null,
                 PercentChange = "5",
                 PlottingRangeType = PlottingRangeTypeOption.Power,
-                PowerFrom = "70",
-                PowerTo = "90",
+                PowerFrom = 70,
+                PowerTo = 90,
                 Response = "Resp1",
-                SampleSizeFrom = "6",
-                SampleSizeTo = "15",
+                SampleSizeFrom = null,
+                SampleSizeTo = null,
                 Significance = "0.05",
                 Treatment = "Treat2"
             };
