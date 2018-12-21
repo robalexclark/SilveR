@@ -35,13 +35,13 @@ $(function () {
         dataSource: theModel.significancesList
     });
 
-    $("#PercentChange").kendoNumericTextBox({
-        spinners: false
-    });
+    //$("#PercentChange").kendoNumericTextBox({
+    //    spinners: false
+    //});
 
-    $("#AbsoluteChange").kendoNumericTextBox({
-        spinners: false
-    });
+    //$("#AbsoluteChange").kendoNumericTextBox({
+    //    spinners: false
+    //});
 
     $("#SampleSizeFrom").kendoNumericTextBox({
         format: '#',
@@ -147,8 +147,8 @@ function enableDisablePlottingRangeType() {
     if (plottingRangeType === "SampleSize") {
         sampleSizeFrom.prop("disabled", false);
         sampleSizeTo.prop("disabled", false);
-        $("#SampleSizeFrom").data("kendoNumericTextBox").value(6);
-        $("#SampleSizeTo").data("kendoNumericTextBox").value(15);
+        $("#SampleSizeFrom").data("kendoNumericTextBox").value(theModel.sampleSizeFrom);
+        $("#SampleSizeTo").data("kendoNumericTextBox").value(theModel.sampleSizeTo);
 
         powerFrom.prop("disabled", true);
         powerTo.prop("disabled", true);
@@ -158,8 +158,8 @@ function enableDisablePlottingRangeType() {
     else {
         powerFrom.prop("disabled", false);
         powerTo.prop("disabled", false);
-        $("#PowerFrom").data("kendoNumericTextBox").value(70);
-        $("#PowerTo").data("kendoNumericTextBox").value(90);
+        $("#PowerFrom").data("kendoNumericTextBox").value(theModel.powerFrom);
+        $("#PowerTo").data("kendoNumericTextBox").value(theModel.powerTo);
 
         sampleSizeFrom.prop("disabled", true);
         sampleSizeTo.prop("disabled", true);

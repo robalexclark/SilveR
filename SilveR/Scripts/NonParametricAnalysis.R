@@ -64,7 +64,7 @@ for (i in 1:10) {
 #Titles and description
 #===================================================================================================================
 #Module Title
-Title <-paste(branding, " Non-Parametric Analysis", sep="")
+Title <-paste(branding, " Non-parametric Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
 #Response title
@@ -73,7 +73,7 @@ HTML.title(title, HR = 2, align = "left")
 
 #Description
 add <- paste(c("The  "), response, sep = "")
-add <- paste(add, " response is currently being analysed by the Non-Parametric Analysis module", sep = "")
+add <- paste(add, " response is currently being analysed by the Non-parametric Analysis module", sep = "")
 
 if (treatment != "NULL") {
     add <- paste(add, c(", with  "), sep = "")
@@ -945,18 +945,15 @@ if (block != "NULL" && statstest == "AllComparisons") {
                     interdata[k, 2] <- eval(parse(text = paste("tempdata2x$", response)))[1]
                 }
 
-                #Wilcoxon test
-
-                if (length(interdata$X1) < 20) {
-                    wilcox <- wilcoxsign_test(interdata$X1 ~ interdata$X2, distribution = "exact", zero.method = "Wilcoxon")
-                } else {
-                    wilcox <- wilcoxsign_test(interdata$X1 ~ interdata$X2, distribution = "asymptotic", zero.method = "Wilcoxon")
-                }
-
                 #Generating regarding exact tests
                 interdataX3 <- interdata$X1 - interdata$X2
                 TestTpe <- "Exact"
-                if ((length(unique(interdataX3)) < length((interdataX3))) || (length((interdataX3)) > 19)) {
+
+                #Wilcoxon test
+                if ((length(unique(interdataX3)) == length((interdataX3))) && (length(interdata$X1) < 21 ) && (length(interdata$X2) < 21) ) {
+                    wilcox <- wilcoxsign_test(interdata$X1 ~ interdata$X2, distribution = "exact", zero.method = "Wilcoxon")
+                } else {
+                    wilcox <- wilcoxsign_test(interdata$X1 ~ interdata$X2, distribution = "asymptotic", zero.method = "Wilcoxon")
                     INDEX <- INDEX + 1
                     TestTpe <- "Asymptotic"
                 }
@@ -1076,7 +1073,7 @@ if (RunFried == "Y") {
                 add <- paste(add, 1 - sig, sep = "")
                 add <- paste(add, " (Kruskal-Wallis test).", sep = "")
                 HTML(add, align = "left")
-            } else if (temptab[1, 4] > 0.05) {
+            } else if (temptab[1, 4] > (1 - sig)) {
                 add <- paste(c("The overall difference between the treatment groups is not statistically significant at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")
@@ -1105,7 +1102,7 @@ if (RunFried == "Y") {
                 add <- paste(add, 1 - sig, sep = "")
                 add <- paste(add, " (Mann-Whitney test).", sep = "")
                 HTML(add, align = "left")
-            } else if (wilcoxOut$p.value > 0.05) {
+            } else if (wilcoxOut$p.value > (1 - sig)) {
                 add <- paste(c("The difference between the two treatment groups is not statistically significant at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")
@@ -1140,7 +1137,7 @@ if (RunFried == "Y") {
             add <- paste(add, 1 - sig, sep = "")
             add <- paste(add, " (Friedman test).", sep = "")
             HTML(add, align = "left")
-        } else if (temptab[1, 4] > 0.05) {
+        } else if (temptab[1, 4] > (1 - sig)) {
             add <- paste(c("The overall difference between the treatment groups is not statistically significant at the "), sep = "")
             add <- paste(add, 100 * (1 - sig), sep = "")
             add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")

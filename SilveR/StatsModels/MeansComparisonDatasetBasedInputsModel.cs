@@ -27,38 +27,31 @@ namespace SilveR.StatsModels
         {
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
-
-        [ValidateControlGroup]
+        
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
 
         public ChangeTypeOption ChangeType { get; set; } = ChangeTypeOption.Percent;
 
-        [ValidatePercentChanges]
         [DisplayName("Percent changes")]
         public string PercentChange { get; set; }
 
-        [ValidateAbsoluteChanges]
         [DisplayName("Absolute changes")]
         public string AbsoluteChange { get; set; }
 
         public PlottingRangeTypeOption PlottingRangeType { get; set; } = PlottingRangeTypeOption.SampleSize;
 
-        [ValidateSampleSizeFrom]
         [DisplayName("Sample size from")]
-        public Nullable<int> SampleSizeFrom { get; set; }
+        public Nullable<int> SampleSizeFrom { get; set; } = 6;
 
-        [ValidateSampleSizeTo]
         [DisplayName("Sample size to")]
-        public Nullable<int> SampleSizeTo { get; set; }
+        public Nullable<int> SampleSizeTo { get; set; } = 15;
 
-        [ValidateCustomFrom]
         [DisplayName("Power from")]
-        public Nullable<int> PowerFrom { get; set; }
+        public Nullable<int> PowerFrom { get; set; } = 70;
 
-        [ValidateCustomTo]
         [DisplayName("Power to")]
-        public Nullable<int> PowerTo { get; set; }
+        public Nullable<int> PowerTo { get; set; } = 90;
 
         [DisplayName("Graph title")]
         public string GraphTitle { get; set; }

@@ -48,7 +48,6 @@ namespace SilveR.Validators
                 {
                     if (level.Value < 2)
                     {
-                        //ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor. Please select another factor.");
                         ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor (" + mcVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
                         return ValidationInfo;
                     }
@@ -66,6 +65,93 @@ namespace SilveR.Validators
                     return ValidationInfo;
                 }
             }
+
+            if (mcVariables.ChangeType == ChangeTypeOption.Percent)
+            {
+                if (String.IsNullOrEmpty(mcVariables.PercentChange))
+                {
+                    ValidationInfo.AddErrorMessage("Percent changes is required");
+                    return ValidationInfo;
+                }
+                else
+                {
+                    char[] splitters = { ',' };
+                    string[] changes = mcVariables.PercentChange.Replace(" ", "").Split(splitters, StringSplitOptions.RemoveEmptyEntries); //split list by comma
+
+                    foreach (string s in changes)//go through list and check that is a number and is greater than 0
+                    {
+                        double number;
+                        if (!double.TryParse(s, out number))
+                        {
+                            ValidationInfo.AddErrorMessage("Percent changes has non-numeric values or the values are not comma separated");
+                            return ValidationInfo;
+                        }
+                        else if (number < 0)
+                        {
+                            ValidationInfo.AddErrorMessage("Percent changes has values less than zero");
+
+                            return ValidationInfo;
+                        }
+                    }
+                }
+            }
+            else if (mcVariables.ChangeType == ChangeTypeOption.Absolute)
+            {
+                if (String.IsNullOrEmpty(mcVariables.AbsoluteChange))
+                {
+                    ValidationInfo.AddErrorMessage("Absolute changes is required");
+                    return ValidationInfo;
+                }
+                else
+                {
+                    char[] splitters = { ',' };
+                    string[] changes = mcVariables.AbsoluteChange.Replace(" ", "").Split(splitters, StringSplitOptions.RemoveEmptyEntries); //split list by comma
+
+                    foreach (string s in changes)//go through list and check that is a number and is greater than 0
+                    {
+                        double number;
+                        if (!double.TryParse(s, out number))
+                        {
+                            ValidationInfo.AddErrorMessage("Absolute changes has non-numeric values or the values are not comma separated");
+                            return ValidationInfo;
+                        }
+                        else if (number < 0)
+                        {
+                            ValidationInfo.AddErrorMessage("Absolute changes has values less than zero");
+                            return ValidationInfo;
+                        }
+                    }
+                }
+            }
+
+            if (mcVariables.PlottingRangeType == PlottingRangeTypeOption.SampleSize)
+            {
+                if (!mcVariables.SampleSizeFrom.HasValue || !mcVariables.SampleSizeTo.HasValue)
+                {
+                    ValidationInfo.AddErrorMessage("Sample Size From and To must be set");
+                    return ValidationInfo;
+                }
+                else if (mcVariables.SampleSizeFrom > mcVariables.SampleSizeTo)
+                {
+                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value");
+                    return ValidationInfo;
+                }
+            }
+            else if (mcVariables.PlottingRangeType == PlottingRangeTypeOption.Power)
+            {
+                if (!mcVariables.PowerFrom.HasValue || !mcVariables.PowerTo.HasValue)
+                {
+                    ValidationInfo.AddErrorMessage("Power From and To must be set");
+                    return ValidationInfo;
+                }
+                else if (mcVariables.PowerFrom > mcVariables.PowerTo)
+                {
+                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value");
+                    return ValidationInfo;
+                }
+            }
+
+
 
             //if get here then no errors so return true
             return ValidationInfo;

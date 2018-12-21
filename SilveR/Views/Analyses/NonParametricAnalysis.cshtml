@@ -14,7 +14,7 @@
 }
 
 @{
-    ViewBag.Title = "Non-Parametric Analysis";
+    ViewBag.Title = "Non-parametric Analysis";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -27,70 +27,82 @@
 
     <div class=" row">
         <div class="col-sm-6">
-            <h3>Input</h3>
-            <div class="form-group">
-                <label class="col-sm-6 control-label">Response</label>
-                <div class="col-sm-6">
-                    <input class="form-control" asp-for="Response" />
-                    <div><span asp-validation-for="Response"></span></div>
-                </div>             
-            </div>
-            <div class="form-group">
-                <label class="col-sm-6 control-label">Treatment</label>
-                <div class="col-sm-6">
-                    <input class="form-control" asp-for="Treatment" />
-                    <div><span asp-validation-for="Treatment"></span></div>
-                </div>               
-            </div>
-            <div class="form-group">
-                <label class="col-sm-6 control-label">Other design (block)</label>
-                <div class="col-sm-6">
-                    <input class="form-control" asp-for="OtherDesignFactor" />
-                    <div><span asp-validation-for="OtherDesignFactor"></span></div>
-                </div>      
+            <div class="panel panel-default">
+                <div class="panel-heading">Input Options</div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Response</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="Response" />
+                                <div><span asp-validation-for="Response"></span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Treatment factor</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="Treatment" />
+                                <div><span asp-validation-for="Treatment"></span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Other design (block) factor</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="OtherDesignFactor" />
+                                <div><span asp-validation-for="OtherDesignFactor"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="col-sm-6">
-            <h3>Analysis</h3>
-            <div class="form-group">
-                <label class="col-sm-6 control-label">Analysis Type</label>
-                <div class="col-sm-6">
-                    <div class="radio">
-                        <label>
-                            <input asp-for="AnalysisType" type="radio" onclick="enableDisableControlLevels();" value="MannWhitney" checked="checked" />
-                            <label>Overall test (Kruskal-Wallis, Mann-Whitney or Friedman)</label>
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input asp-for="AnalysisType" onclick="enableDisableControlLevels();" type="radio" value="AllComparisons" />
-                            <label>All treatment comparisons</label>
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input asp-for="AnalysisType" onclick="enableDisableControlLevels();" type="radio" value="CompareToControl" />
-                            <label>Comparisons back to control</label>
-                        </label>
-                    </div>
-                </div>
-            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Output Options</div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Analysis type</label>
+                            <div class="col-sm-6">
+                                <div class="radio">
+                                    <label>
+                                        <input asp-for="AnalysisType" type="radio" onclick="enableDisableControlLevels();" value="MannWhitney" checked="checked" />
+                                        <label>Overall test (Kruskal-Wallis, Mann-Whitney or Friedman)</label>
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input asp-for="AnalysisType" onclick="enableDisableControlLevels();" type="radio" value="AllComparisons" />
+                                        <label>All treatment comparisons</label>
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input asp-for="AnalysisType" onclick="enableDisableControlLevels();" type="radio" value="CompareToControl" />
+                                        <label>Comparisons back to control</label>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="form-group">
-                <label class="col-sm-6 control-label">Significance</label>
-                <div class="col-sm-6">
-                    <input class="form-control" asp-for="Significance" />
-                    <div><span asp-validation-for="Significance"></span></div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Significance level</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="Significance" />
+                                <div><span asp-validation-for="Significance"></span></div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Control</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="Control" />
+                                <div><span asp-validation-for="Control"></span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              
-            </div>
-            <div class="form-group">
-                <label class="col-sm-6 control-label">Control</label>
-                <div class="col-sm-6">
-                    <input class="form-control" asp-for="Control" />
-                    <div><span asp-validation-for="Control"></span></div>
-                </div>          
             </div>
         </div>
     </div>

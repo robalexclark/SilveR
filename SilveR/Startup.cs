@@ -150,7 +150,7 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "NonParametricAnalysis"))
                 {
-                    Script nonParametrics = new Script() { ScriptDisplayName = "Non-Parametric Analysis", ScriptFileName = "NonParametricAnalysis", RequiresDataset = true };
+                    Script nonParametrics = new Script() { ScriptDisplayName = "Non-parametric Analysis", ScriptFileName = "NonParametricAnalysis", RequiresDataset = true };
                     context.Scripts.Add(nonParametrics);
                 }
 

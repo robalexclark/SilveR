@@ -51,21 +51,17 @@ namespace SilveR.StatsModels
 
         public PlottingRangeTypeOption PlottingRangeType { get; set; } = PlottingRangeTypeOption.SampleSize;
 
-        [ValidateSampleSizeFrom]
         [DisplayName("Sample size from")]
-        public Nullable<int> SampleSizeFrom { get; set; }
+        public Nullable<int> SampleSizeFrom { get; set; } = 6;
 
-        [ValidateSampleSizeTo]
         [DisplayName("Sample size to")]
-        public Nullable<int> SampleSizeTo { get; set; }
+        public Nullable<int> SampleSizeTo { get; set; } = 15;
 
-        [ValidateCustomFrom]
         [DisplayName("Power from")]
-        public Nullable<int> PowerFrom { get; set; }
+        public Nullable<int> PowerFrom { get; set; } = 70;
 
-        [ValidateCustomTo]
         [DisplayName("Power to")]
-        public Nullable<int> PowerTo { get; set; }
+        public Nullable<int> PowerTo { get; set; } = 90;
 
         [DisplayName("Graph title")]
         public string GraphTitle { get; set; }

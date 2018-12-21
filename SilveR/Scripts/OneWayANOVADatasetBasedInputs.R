@@ -7,6 +7,7 @@ suppressWarnings(library(dplyr))
 # retrieve args
 
 #Select dataset type
+#valueType <- "UserValues"
 valueType <- "DatasetValues"
 
 #Copy Args into variables
@@ -16,23 +17,28 @@ if (valueType == "DatasetValues") {
 	valueType <- Args[4]
 	meanOrResponse <- Args[5]
 	varianceTypeOrTreatment <- Args[6]
-	varianceAmntOrControl <- Args[7]
-	sig <- as.numeric(Args[8])
-	changesType <- Args[9]
-	changesValue <- Args[10]
-	plotSettingsType <- Args[11]
-	plotSettingsFrom <- as.numeric(Args[12])
-	plotSettingsTo <- as.numeric(Args[13])
-	graphTitle <- Args[14]
+	sig <- as.numeric(Args[7])
+	plotSettingsType <- Args[8]
+	plotSettingsFrom <- as.numeric(Args[9])
+	plotSettingsTo <- as.numeric(Args[10])
+	graphTitle <- Args[11]
+}
 
-
-#	meanOrResponse <- Args[4]
-#	varianceTypeOrTreatment <- Args[5]
-#	sig <- as.numeric(Args[7])
-#	plotSettingsType <- Args[10]
-#	plotSettingsFrom <- as.numeric(Args[11])
-#	plotSettingsTo <- as.numeric(Args[12])
-#	graphTitle <- Args[13]
+if (valueType == "UserValues") {
+	valueType <- Args[4]
+	Effecttype <- Args[5]
+	Effectvalue <- Args[6]
+	Treatmentmeans <- Args[7]
+	Variancetype <- Args[8]
+	ResidMS <- Args[9]
+	Variance <- Args[10]
+	Standdev <- Args[11]
+	NoTrGp <- Args[12]	
+	sig <- as.numeric(Args[13])
+	plotSettingsType <- Args[14]
+	plotSettingsFrom <- as.numeric(Args[15])
+	plotSettingsTo <- as.numeric(Args[16])
+	graphTitle <- Args[17]
 }
 
 # Reading in dataset or values
@@ -43,20 +49,7 @@ if (valueType=="DatasetValues") {
 	statdata_print<-statdata
 	response <- meanOrResponse
 	treatment <- varianceTypeOrTreatment
-} else {
-#	if(meanOrResponse == "NULL") {
-#	groupMean <- 1
-#	} else  {
-#	groupMean <- as.numeric(meanOrResponse)
-#	}
-#	varianceType <- varianceTypeOrTreatment
-#	
-#	if(varianceType=="Variance") {
-#		SD <- sqrt(as.numeric(varianceAmntOrControl))
-#	} else {
-#		SD <- as.numeric(varianceAmntOrControl)
-#	}
-}
+} 
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -82,15 +75,47 @@ powerTo <- 105
 sampleSizeFrom <- 6
 sampleSizeTo <- 15
 
-#Identifying the min and max sample size
-if(valueType=="DatasetValues") {
-	test<- count(statdata, eval(parse(text = paste("statdata$", treatment))))
-	mingp<- min(test[,2], na.rm = TRUE)
-	maxgp<- max(test[,2], na.rm = TRUE)
-} else {
-	mingp <- 1
-	maxgp<- 100
+#Working out parameters from User defined parameters
+
+if (valueType == "UserValues") { 
+	#Manipulating treatment mean list
+	notrs=0
+	if (Effecttype == "TreatmentGroupMeans") {
+		temptrChanges <-strsplit(Treatmentmeans, ",")
+		trlistx <- c("")
+		for(i in 1:length(temptrChanges[[1]]))  {
+			trlistx [length(trlistx )+1]=(temptrChanges[[1]][i]) 
+		}
+		trlist <- trlistx[-1]
+		notrfactors<-length(trlist)
+	}
+
+	#Generating the muber of treatment groups 
+	if (Effecttype == "TreatmentMeanSquare") {
+		ngps <- as.numeric(NoTrGp)
+	} else {
+		ngps <- notrfactors
+	}
+
+	#Generating the Effectsize
+	if (Effecttype == "TreatmentGroupMeans") {
+		betweenvar <- var(trlist)		
+	} else {
+		betweenvar <- as.numeric(Effectvalue)
+	}
+
+	#Generating variance estimate
+	if (Variancetype == "ResidualMeanSquare") {
+		withinvar <- as.numeric(ResidMS)
+	}
+	if (Variancetype == "Variance") {
+		withinvar <- as.numeric(Variance)
+	}
+	if (Variancetype == "StandardDeviation") {
+		withinvar <- as.numeric(Standdev)^2
+	}
 }
+
 
 #Working out parameters from dataset
 if(valueType=="DatasetValues") {
@@ -108,15 +133,10 @@ if(valueType=="DatasetValues") {
 
 #Working out the graphical parameters
 if(plotSettingsType=="PowerAxis") {
-	if(valueType=="DatasetValues") {
-		powerFrom <- plotSettingsFrom 
-		powerTo <- plotSettingsTo 
-		sampleSizeFrom <- format(round(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerFrom/100, sig.level=sig)[2]), 0), nsmall = 0, scientific = FALSE)
-		sampleSizeTo <- format(round(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerTo/100, sig.level=sig)[2]), 0), nsmall = 0, scientific = FALSE)
-	}
-} else {
-	sampleSizeFrom <- format(round(plotSettingsFrom, 0), nsmall = 0, scientific = FALSE)
-	sampleSizeTo <- format(round(plotSettingsTo, 0), nsmall = 0, scientific = FALSE)
+	powerFrom <- plotSettingsFrom 
+	powerTo <- plotSettingsTo 
+	sampleSizeFrom <- format(round(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerFrom/100, sig.level=sig)[2]), 0), nsmall = 0, scientific = FALSE)
+	sampleSizeTo <- format(round(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerTo/100, sig.level=sig)[2]), 0), nsmall = 0, scientific = FALSE)
 }
 
 #Graphical parameter setup
@@ -143,68 +163,68 @@ HTML.title("Power curve plot", HR = 1, align="left")
 #===================================================================================================================
 #Power analysis functions
 
-if(valueType=="DatasetValues") {
-	sample <- seq(sampleSizeFrom,sampleSizeTo, 0.01)
-	temp2<-matrix(1,nrow=length(sample),ncol=1)
-	for(i in 1:length(sample)) {
-		test<-as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, n=sample[i], sig.level=sig)[6])
-		temp2[i,1]=test
-	}
-
-	temp3<-100*temp2
-	powergraph=cbind(sample,temp3)
-
-	powerPlot <- sub(".html", "powerPlot.jpg", htmlFile)
-	jpeg(powerPlot,width = jpegwidth, height = jpegheight, quality = 100)
-
-	#STB July2013
-	plotFilepdf1 <- sub(".html", "powerPlot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#===================================================================================================================
-	#Graphics parameters
-	XAxisTitle <- "Sample size (n)"
-	MainTitle2 <-graphTitle
-	Legendpos<-"none"
-	Gr_alpha <- 1
-	Line_type <-Line_type_solid
-
-	gr_temp<-data.frame(cbind(sample, temp3))
-	power2data<-melt(data=gr_temp, id=c("sample"))
-
-	#need to expand colour range for individual animals
-	colourcount_P = length(unique(power2data$variable))
-	getPalette_P = colorRampPalette(brewer.pal(9,"Set1"))
-	if (colourcount_P >=10) {
-		Col_palette_P<-getPalette(colourcount_P)
-	} else {
-		Col_palette_P<-brewer.pal(colourcount_P,"Set1")
-	}
-	if (bandw == "Y") {
-		BW_palette_P<-grey.colors(colourcount_P, 0.1, 0.7)
-		Gr_palette_P <-BW_palette_P
-	} else {
-		Gr_palette_P <-Col_palette_P
-	}
-
-	#GGPLOT2
-	POWERPLOT_ANOVA(XAxisTitle,MainTitle2)
-	#===================================================================================================================
-
-	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", powerPlot), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
-		linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the power curve plot</a>", sep = "")
-		HTML(linkToPdf1)
-	}
+sample <- seq(sampleSizeFrom,sampleSizeTo, 0.01)
+temp2<-matrix(1,nrow=length(sample),ncol=1)
+for(i in 1:length(sample)) {
+	test<-as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, n=sample[i], sig.level=sig)[6])
+	temp2[i,1]=test
 }
+
+temp3<-100*temp2
+powergraph=cbind(sample,temp3)
+
+powerPlot <- sub(".html", "powerPlot.jpg", htmlFile)
+jpeg(powerPlot,width = jpegwidth, height = jpegheight, quality = 100)
+
+#STB July2013
+plotFilepdf1 <- sub(".html", "powerPlot.pdf", htmlFile)
+dev.control("enable") 
+
+#===================================================================================================================
+#Graphics parameters
+XAxisTitle <- "Sample size (n)"
+MainTitle2 <-graphTitle
+Legendpos<-"none"
+Gr_alpha <- 1
+Line_type <-Line_type_solid
+
+gr_temp<-data.frame(cbind(sample, temp3))
+power2data<-melt(data=gr_temp, id=c("sample"))
+
+#need to expand colour range for individual animals
+colourcount_P = length(unique(power2data$variable))
+getPalette_P = colorRampPalette(brewer.pal(9,"Set1"))
+
+if (colourcount_P >=10) {
+	Col_palette_P<-getPalette(colourcount_P)
+} else {
+	Col_palette_P<-brewer.pal(colourcount_P,"Set1")
+}
+if (bandw == "Y") {
+	BW_palette_P<-grey.colors(colourcount_P, 0.1, 0.7)
+	Gr_palette_P <-BW_palette_P
+} else {
+	Gr_palette_P <-Col_palette_P
+}
+
+#GGPLOT2
+POWERPLOT_ANOVA(XAxisTitle,MainTitle2)
+#===================================================================================================================
+
+void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", powerPlot), Align="left")
+
+#STB July2013
+if (pdfout=="Y") {
+	pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
+	dev.set(2) 
+	dev.copy(which=3) 
+	dev.off(2)
+	dev.off(3)
+	pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
+	linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the power curve plot</a>", sep = "")
+	HTML(linkToPdf1)
+}
+
 
 #===================================================================================================================
 #References
@@ -277,16 +297,31 @@ if (valueType == "DatasetValues") {
 	HTML(paste("Analysis method: Dataset based inputs"),  align="left")
 	HTML(paste("Response variable: ", meanOrResponse, sep=""),  align="left")
 	HTML(paste("Treatment variable: ", varianceTypeOrTreatment, sep=""),  align="left")
-	HTML(paste("Control group: ", varianceAmntOrControl, sep=""),  align="left")
 } else {
 	HTML(paste("Analysis method: User based inputs"),  align="left")
-	HTML(paste("Mean value: ", meanOrResponse, sep=""),  align="left")
-	HTML(paste("Variability estimate entered: ", varianceTypeOrTreatment, sep=""),  align="left")
-	HTML(paste("Variability estimate: ", varianceAmntOrControl, sep=""),  align="left")
-}
 
-HTML(paste("Type of change investigated: ", changesType, sep=""), align="left")
-HTML(paste("Change values investigated: ", changesValue, sep=""), align="left")
+
+	if (Effecttype == "TreatmentMeanSquare") {
+		HTML(paste("Effect size estimate: Use Treatment mean square", sep=""),  align="left")
+		HTML(paste("Treatment mean square: ", Effectvalue, sep=""),  align="left")
+		HTML(paste("No of treatment groups: ", NoTrGp, sep=""),  align="left")
+	} else {
+		HTML(paste("Effect size estimate: Use Treatment means", sep=""),  align="left")
+		HTML(paste("Means: ", Treatmentmeans, sep=""),  align="left")
+	}
+	if (Variancetype == "ResidualMeanSquare") {
+		HTML(paste("Variability estimate: Use Residual mean square", sep=""),  align="left")
+		HTML(paste("Residual mean square: ", ResidMS, sep=""),  align="left")
+	}
+	if (Variancetype == "Variance") {
+		HTML(paste("Variability estimate: Use Variance", sep=""),  align="left")
+		HTML(paste("Variance: ", Variance, sep=""),  align="left")
+	}
+	if (Variancetype == "StandardDeviation") {
+		HTML(paste("Variability estimate: Use Standard deviation", sep=""),  align="left")
+		HTML(paste("Standard deviation: ", Standdev, sep=""),  align="left")
+	}
+}
 
 if (plotSettingsType == "PowerAxis")	{
 	HTML(paste("Power curve plots controlled by power range:"), align="left")

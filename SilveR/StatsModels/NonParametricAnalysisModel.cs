@@ -19,7 +19,7 @@ namespace SilveR.StatsModels
 
         [Required]
         [CheckUsedOnceOnly]
-        [DisplayName("Treatment")]
+        [DisplayName("Treatment factor")]
         public string Treatment { get; set; }
 
         [CheckUsedOnceOnly]

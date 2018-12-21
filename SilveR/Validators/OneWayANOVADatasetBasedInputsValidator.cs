@@ -48,7 +48,6 @@ namespace SilveR.Validators
                 {
                     if (level.Value < 2)
                     {
-                        //ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor. Please select another factor.");
                         ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor (" + owVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
                         return ValidationInfo;
                     }
@@ -63,6 +62,33 @@ namespace SilveR.Validators
                 if (CountResponses(owVariables.Response) == 1)
                 {
                     ValidationInfo.AddErrorMessage("The response selected (" + owVariables.Response + ") contains only 1 value. Please select another factor.");
+                    return ValidationInfo;
+                }
+            }
+
+            if (owVariables.PlottingRangeType == PlottingRangeTypeOption.SampleSize)
+            {
+                if (!owVariables.SampleSizeFrom.HasValue || !owVariables.SampleSizeTo.HasValue)
+                {
+                    ValidationInfo.AddErrorMessage("Sample Size From and To must be set");
+                    return ValidationInfo;
+                }
+                else if (owVariables.SampleSizeFrom > owVariables.SampleSizeTo)
+                {
+                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value");
+                    return ValidationInfo;
+                }
+            }
+            else if (owVariables.PlottingRangeType == PlottingRangeTypeOption.Power)
+            {
+                if (!owVariables.PowerFrom.HasValue || !owVariables.PowerTo.HasValue)
+                {
+                    ValidationInfo.AddErrorMessage("Power From and To must be set");
+                    return ValidationInfo;
+                }
+                else if (owVariables.PowerFrom > owVariables.PowerTo)
+                {
+                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value");
                     return ValidationInfo;
                 }
             }
