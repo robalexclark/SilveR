@@ -1,5 +1,6 @@
 ﻿using SilveR.StatsModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SilveR.Validators
 {
@@ -24,21 +25,23 @@ namespace SilveR.Validators
             if (!CheckColumnNames(allVars))
                 return ValidationInfo;
 
-            //if (!CheckIsNumeric(csfetVariables.Response))
-            //{
-            //    ValidationInfo.AddErrorMessage("The response selected contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
-            //    return ValidationInfo;
-            //}
+            if (!CheckIsNumeric(csfetVariables.Response))
+            {
+                ValidationInfo.AddErrorMessage("The response selected contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                return ValidationInfo;
+            }
 
-            //if (!CheckTreatmentsHaveLevels(csfetVariables.Treatment)) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(csfetVariables.GroupingFactor, csfetVariables.Response, ReflectionExtensions.GetPropertyDisplayName<ChiSquaredAndFishersExactTestModel>(i => i.GroupingFactor))) return ValidationInfo;
 
-            //if (!CheckResponsesPerLevel(csfetVariables.Treatment, csfetVariables.Response)) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(csfetVariables.ResponseCategories, csfetVariables.Response, ReflectionExtensions.GetPropertyDisplayName<ChiSquaredAndFishersExactTestModel>(i => i.ResponseCategories))) return ValidationInfo;
 
-            ////check response and treatments contain values
-            //if (!CheckResponseAndTreatmentsNotBlank(csfetVariables.Response, csfetVariables.Treatment, "treatment factor")) return ValidationInfo;
+            if (csfetVariables.BarnardsTest && (GetLevels(csfetVariables.GroupingFactor).Count() > 2 || GetLevels(csfetVariables.ResponseCategories).Count() > 2))
+            {
+                ValidationInfo.AddWarningMessage("Grouping factor or the Response categories have more than two levels. Barnard's test can only be performed when there are two levels of the Grouping factor and two Response categories");
+            }
 
             //if get here then no errors so return true
             return ValidationInfo;
-        }       
+        }
     }
 }

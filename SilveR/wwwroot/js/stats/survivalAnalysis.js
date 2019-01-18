@@ -4,7 +4,7 @@ $(function () {
         dataSource: theModel.availableVariablesAllowNull
     });
 
-    $("#Grouping").kendoDropDownList({
+    $("#Treatment").kendoDropDownList({
         dataSource: theModel.availableVariablesAllowNull
     });
 

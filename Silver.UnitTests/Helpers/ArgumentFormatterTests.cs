@@ -1,10 +1,10 @@
 using SilveR.Helpers;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Silver.UnitTests.Helpers
 {
-    
+
     public class ArgumentFormatterTests
     {
         [Fact]
@@ -48,6 +48,34 @@ namespace Silver.UnitTests.Helpers
         }
 
         [Fact]
+        public void GetFormattedArgument_ListIsNull_ReturnsNULL()
+        {
+            //Arrange
+            ArgumentFormatter sut = new ArgumentFormatter();
+
+            //Act
+            IEnumerable<string> nullList = null;
+            string result = sut.GetFormattedArgument(nullList);
+
+            //Assert
+            Assert.Equal("NULL", result);
+        }
+
+        [Fact]
+        public void GetFormattedArgument_ListValue_ReturnsCorrectString()
+        {
+            //Arrange
+            ArgumentFormatter sut = new ArgumentFormatter();
+
+            //Act
+            IEnumerable<string> list = new List<string> { "TestString1", "TestString2" };
+            string result = sut.GetFormattedArgument(list);
+
+            //Assert
+            Assert.Equal("TestString1,TestString2", result);
+        }
+
+        [Fact]
         public void GetFormattedArgument_StringWithSpacesIsVariableTrue_ReturnsCorrectString()
         {
             //Arrange
@@ -75,7 +103,7 @@ namespace Silver.UnitTests.Helpers
 
 
         [Fact]
-        public void GetFormattedArgument_ListStringWithIllegalChars_ReturnsCorrectString()
+        public void GetFormattedArgument_StringWithIllegalChars_ReturnsCorrectString()
         {
             //Arrange
             ArgumentFormatter sut = new ArgumentFormatter();

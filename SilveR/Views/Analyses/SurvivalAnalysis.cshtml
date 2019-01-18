@@ -25,62 +25,73 @@
 
     <input asp-for="DatasetID" hidden />
 
-    <div class="row">
+    <div class=" row">
         <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Input Options</div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Response</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" asp-for="Response" />
+                                <div><span asp-validation-for="Response"></span></div>
+                            </div>
+                        </div>
 
-            <h3>Input</h3>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Response</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Response" />
-                    <div><span asp-validation-for="Response"></span></div>
-                </div>                
-            </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Treatment factor</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" asp-for="Treatment" />
+                                <div><span asp-validation-for="Treatment"></span></div>
+                            </div>
+                        </div>
 
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Grouping</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Grouping" />
-                    <div><span asp-validation-for="Grouping"></span></div>
-                </div>               
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Censorship</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Censorship" />
-                    <div><span asp-validation-for="Censorship"></span></div>
-                </div>                
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Censorship variable</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" asp-for="Censorship" />
+                                <div><span asp-validation-for="Censorship"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="col-sm-6">
-            <h3>Analysis Results</h3>
-            <div class="row">
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Summary results</label>
-                    <div class="col-sm-6">
-                        <input class="checkbox" asp-for="SummaryResults" type="checkbox" />
+            <div class="panel panel-default">
+                <div class="panel-heading">Output Options</div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label">Summary results</label>
+                                <div class="col-sm-6">
+                                    <input class="checkbox" asp-for="SummaryResults" type="checkbox" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label">Survival plot</label>
+                                <div class="col-sm-6">
+                                    <input class="checkbox" asp-for="SurvivalPlot" type="checkbox" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label">Compare survival curves</label>
+                                <div class="col-sm-6">
+                                    <input class="checkbox" asp-for="CompareSurvivalCurves" type="checkbox" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-6 control-label">Significance level</label>
+                                <div class="col-sm-6">
+                                    <input asp-for="Significance" />
+                                    <div><span asp-validation-for="Significance"></span></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Survival plot</label>
-                    <div class="col-sm-6">
-                        <input class="checkbox" asp-for="SurvivalPlot" type="checkbox" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Compare survival curves</label>
-                    <div class="col-sm-6">
-                        <input class="checkbox" asp-for="CompareSurvivalCurves" type="checkbox" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Significance</label>
-                    <div class="col-sm-6">
-                        <input asp-for="Significance" />
-                        <div><span asp-validation-for="Significance"></span></div>
-                    </div>                   
                 </div>
             </div>
         </div>

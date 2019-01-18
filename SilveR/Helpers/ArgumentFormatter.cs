@@ -86,10 +86,10 @@ namespace SilveR.Helpers
 
         public string GetFormattedArgument(IEnumerable<string> listArguments)
         {
-            if (listArguments == null) //6
+            if (listArguments == null)
             {
-                throw new NullReferenceException("listArguments cant be null!");
-                //return "NULL";
+                //throw new NullReferenceException("listArguments can't be null!");
+                return "NULL";
             }
             else
             {

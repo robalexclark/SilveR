@@ -13,7 +13,7 @@ namespace SilveR.Models
         public int ScriptID { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string ScriptDisplayName { get; set; }
 
         [Required]

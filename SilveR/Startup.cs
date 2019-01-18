@@ -156,7 +156,7 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "ChiSquaredAndFishersExactTest"))
                 {
-                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-Squared and Fishers Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest", RequiresDataset = true };
+                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-Squared and Fisher's Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest", RequiresDataset = true };
                     context.Scripts.Add(chiSquared);
                 }
 

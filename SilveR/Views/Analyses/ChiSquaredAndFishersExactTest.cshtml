@@ -14,7 +14,7 @@
 }
 
 @{
-    ViewBag.Title = "Chi-Squared and Fishers Exact Test";
+    ViewBag.Title = "Chi-Squared and Fisher's Exact Test";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -25,70 +25,80 @@
 
     <input asp-for="DatasetID" hidden />
 
-    <div class="row">
+    <div class=" row">
         <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Input Options</div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
 
-            <h3>Input</h3>
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Response</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="Response" />
-                    <div><span asp-validation-for="Response"></span></div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Response</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="Response" />
+                                <div><span asp-validation-for="Response"></span></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Grouping factor</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="GroupingFactor" />
+                                <div><span asp-validation-for="GroupingFactor"></span></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Response categories</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" asp-for="ResponseCategories" />
+                                <div><span asp-validation-for="ResponseCategories"></span></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Grouping factor</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="GroupingFactor" />
-                    <div><span asp-validation-for="GroupingFactor"></span></div>
-                </div>   
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Response categories</label>
-                <div class="col-sm-8">
-                    <input class="form-control" asp-for="ResponseCategories" />
-                    <div><span asp-validation-for="ResponseCategories"></span></div>
-                </div>            
             </div>
         </div>
 
         <div class="col-sm-6">
-            <h3>Analysis Results</h3>
-            <div class="row">
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Chi-squared test</label>
-                    <div class="col-sm-6">
-                        <input class="checkbox" asp-for="ChiSquaredTest" type="checkbox" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Fisher's Exact test</label>
-                    <div class="col-sm-6">
-                        <input class="checkbox" asp-for="FishersExactTest" type="checkbox" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 control-label">Hypothesis</label>
-                    <div class="col-sm-8">
-                        <input asp-for="Hypothesis" />
-                        <div><span asp-validation-for="Hypothesis"></span></div>
-                    </div>
-                </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Output Options</div>
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Chi-squared test</label>
+                            <div class="col-sm-6">
+                                <input class="checkbox" asp-for="ChiSquaredTest" type="checkbox" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Fisher's exact test</label>
+                            <div class="col-sm-6">
+                                <input class="checkbox" asp-for="FishersExactTest" type="checkbox" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Hypothesis</label>
+                            <div class="col-sm-6">
+                                <input asp-for="Hypothesis" />
+                                <div><span asp-validation-for="Hypothesis"></span></div>
+                            </div>
+                        </div>
 
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Barnard's test</label>
-                    <div class="col-sm-6">
-                        <input class="checkbox" asp-for="BarnardsTest" type="checkbox" />
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Barnard's test</label>
+                            <div class="col-sm-6">
+                                <input class="checkbox" asp-for="BarnardsTest" type="checkbox" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-6 control-label">Significance level</label>
+                            <div class="col-sm-6">
+                                <input asp-for="Significance" />
+                                <div><span asp-validation-for="Significance"></span></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-6 control-label">Significance</label>
-                    <div class="col-sm-6">
-                        <input asp-for="Significance" />
-                        <div><span asp-validation-for="Significance"></span></div>
-                    </div>     
                 </div>
             </div>
         </div>

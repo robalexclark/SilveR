@@ -6,7 +6,6 @@ using Xunit;
 
 namespace Silver.UnitTests.StatsModels
 {
-
     public class PValueAdjustmentModelTests
     {
         [Fact]

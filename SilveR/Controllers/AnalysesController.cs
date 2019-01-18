@@ -110,7 +110,6 @@ namespace SilveR.Controllers
             AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(viewModel.AnalysisName, dataset);
 
             //the view name is the same as the display name after spaces and hyphens removed (should be same as scriptfilename)
-
             return View(viewModel.AnalysisName, analysisModel);
         }
 

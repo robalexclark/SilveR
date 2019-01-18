@@ -30,14 +30,6 @@ else if (ViewBag.InfoMessage != null)
         @ViewBag.InfoMessage
     </div>
 }
-@if (ViewBag.WarningMessage != null)
-{
-    <div class="alert alert-warning">
-        <strong>Warning!</strong>
-        <br />
-        @ViewBag.WarningMessage
-    </div>
-}
 
 <form method="get" action="~/Data/DataUploader">
     <input type="submit" value="Upload Data" class="btn btn-primary" />

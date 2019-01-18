@@ -20,14 +20,13 @@ namespace SilveR.StatsModels
 
         [Required]
         [CheckUsedOnceOnly]
-        [DisplayName("Grouping")]
-        public string Grouping { get; set; }
+        [DisplayName("Treatment factor")]
+        public string Treatment { get; set; }
 
         [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Censorship")]
         public string Censorship { get; set; }
-
 
         [DisplayName("Summary results")]
         public bool SummaryResults { get; set; } = true;
@@ -65,7 +64,7 @@ namespace SilveR.StatsModels
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string col in dtNew.GetVariableNames())
             {
-                if (Response != col && Grouping != col && Censorship != col)
+                if (Response != col && Treatment != col && Censorship != col)
                 {
                     dtNew.Columns.Remove(col);
                 }
@@ -76,7 +75,6 @@ namespace SilveR.StatsModels
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
-
 
             string[] csvArray = dtNew.GetCSVArray();
 
@@ -92,7 +90,7 @@ namespace SilveR.StatsModels
             List<Argument> args = new List<Argument>();
 
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Grouping), Grouping));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Censorship), Censorship));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SummaryResults), SummaryResults));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SurvivalPlot), SurvivalPlot));
@@ -107,7 +105,7 @@ namespace SilveR.StatsModels
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
             this.Response = argHelper.LoadStringArgument(nameof(Response));
-            this.Grouping = argHelper.LoadStringArgument(nameof(Grouping));
+            this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
             this.Censorship = argHelper.LoadStringArgument(nameof(Censorship));
             this.SummaryResults = argHelper.LoadBooleanArgument(nameof(SummaryResults));
             this.SurvivalPlot = argHelper.LoadBooleanArgument(nameof(SurvivalPlot));
@@ -121,7 +119,7 @@ namespace SilveR.StatsModels
             StringBuilder arguments = new StringBuilder();
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //4
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Grouping, true)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true)); //5
             arguments.Append(" " + argFormatter.GetFormattedArgument(Censorship, true)); //6          
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(SummaryResults)); //7

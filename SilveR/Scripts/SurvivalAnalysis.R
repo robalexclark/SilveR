@@ -62,7 +62,7 @@ for (i in 1:10) {
 
 statdata$Groupzzz <-eval(parse(text = paste("statdata$", Groupqq)))
 
-mfit <- survfit(Surv(time=eval(parse(text = paste("statdata$", Responseqq))), event = eval(parse(text = paste("statdata$", Censorshipqq)))) ~ statdata$Groupzzz, conf.type = "plain")
+mfit <- survfit(Surv(time=eval(parse(text = paste("statdata$", Responseqq))), event = eval(parse(text = paste("statdata$", Censorshipqq)))) ~ statdata$Groupzzz, conf.type = "plain",  conf.int=sig)
 
 nogps<-length(unique(eval(parse(text = paste("statdata$", Groupqq)))))
 
@@ -105,7 +105,9 @@ if (SummaryResults == "Y") {
 	}
 	table2<-subset(table2, select = -c(X.rmean, X.se.rmean.))
 	table2<- cbind(rnms, table2)
-	colnames(table2)<-c("Group" , "Records","n","Start size","Events","Median", "Lower 95% CI", "Upper 95% CI")
+	lowerz <- paste("Lower ", sig*100, "% CI", sep="")
+	upperz <- paste("Upper ", sig*100, "% CI", sep="")
+	colnames(table2)<-c("Group" , "Records","n","Start size","Events","Median", lowerz , upperz)
 	HTML(table2, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
