@@ -15,7 +15,7 @@ namespace SilveR.StatsModels
 {
     public class RepeatedMeasuresParametricAnalysisModel : AnalysisDataModelBase
     {
-        private const string MAIN_EFFECT_SEPERATOR = "_.._";        
+        private const string MAIN_EFFECT_SEPERATOR = "_.._";
 
         [Required]
         [CheckUsedOnceOnly]
@@ -90,11 +90,9 @@ namespace SilveR.StatsModels
         [DisplayName("Least square (predicted) means")]
         public bool LSMeansSelected { get; set; }
 
-        [DisplayName("All comparisons within repeated factor levels")]
-        public bool AllComparisonsWithinSelected { get; set; } = true;
-
-        [DisplayName("All pairwise comparisons")]
-        public bool AllPairwiseComparisons { get; set; }
+        public enum ComparisonOption { None = 0, AllComparisonsWithinSelected = 1, AllPairwiseComparisons = 2 }
+        [DisplayName("Comparison type")]
+        public ComparisonOption ComparisonType { get; set; } = ComparisonOption.None;
 
         public RepeatedMeasuresParametricAnalysisModel() : base("RepeatedMeasuresParametricAnalysis") { }
 
@@ -281,8 +279,7 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //20
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(AllComparisonsWithinSelected)); //21
-            arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwiseComparisons)); //22
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonType.ToString(), false)); //21
 
             return arguments.ToString().Trim();
         }
@@ -308,8 +305,7 @@ namespace SilveR.StatsModels
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
             this.SelectedEffect = argHelper.LoadStringArgument(nameof(SelectedEffect));
             this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
-            this.AllComparisonsWithinSelected = argHelper.LoadBooleanArgument(nameof(AllComparisonsWithinSelected));
-            this.AllPairwiseComparisons = argHelper.LoadBooleanArgument(nameof(AllPairwiseComparisons));
+            this.ComparisonType = (ComparisonOption)Enum.Parse(typeof(ComparisonOption), argHelper.LoadStringArgument(nameof(ComparisonType)), true);
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -332,8 +328,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedEffect), SelectedEffect));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(AllComparisonsWithinSelected), AllComparisonsWithinSelected));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(AllPairwiseComparisons), AllPairwiseComparisons));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ComparisonType), ComparisonType.ToString()));
 
             return args;
         }

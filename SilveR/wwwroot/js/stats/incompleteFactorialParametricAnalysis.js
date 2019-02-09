@@ -67,7 +67,7 @@ $(function () {
             }
         }
 
-        selectedEffect.enable(false);
+        //selectedEffect.enable(false);
     });
 
     $("#AllPairwise").kendoDropDownList({

@@ -4,13 +4,12 @@ using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
 namespace Silver.UnitTests.StatsModels
 {
-    
+
     public class RepeatedMeasuresParametricAnalysisModelTests
     {
         [Fact]
@@ -174,11 +173,8 @@ namespace Silver.UnitTests.StatsModels
             var covariance = result.Single(x => x.Name == "Covariance");
             Assert.Equal("Compound Symmetric", covariance.Value);
 
-            var allPairwiseComparisons = result.Single(x => x.Name == "AllPairwiseComparisons");
-            Assert.Equal("False", allPairwiseComparisons.Value);
-
-            var allComparisonsWithinSelected = result.Single(x => x.Name == "AllComparisonsWithinSelected");
-            Assert.Equal("True", allComparisonsWithinSelected.Value);
+            var comparisonType = result.Single(x => x.Name == "ComparisonType");
+            Assert.Equal("AllComparisonsWithinSelected", comparisonType.Value);
 
             var lsMeansSelected = result.Single(x => x.Name == "LSMeansSelected");
             Assert.Equal("False", lsMeansSelected.Value);
@@ -213,10 +209,9 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "SelectedEffect", Value = "Treat 1 * Day 1" });
             arguments.Add(new Argument { Name = "LSMeansSelected", Value = "True" });
             arguments.Add(new Argument { Name = "Covariance", Value = "Compound Symmetric" });
-            arguments.Add(new Argument { Name = "AllComparisonsWithinSelected", Value = "False" });
-            arguments.Add(new Argument { Name = "AllPairwiseComparisons", Value = "True" });
+            arguments.Add(new Argument { Name = "ComparisonType", Value = "AllComparisonsWithinSelected" });
 
-            Assert.Equal(18, arguments.Count);
+            Assert.Equal(17, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -238,8 +233,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("Treat 1 * Day 1", sut.SelectedEffect);
             Assert.True(sut.LSMeansSelected);
             Assert.Equal("Compound Symmetric", sut.Covariance);
-            Assert.False(sut.AllComparisonsWithinSelected);
-            Assert.True(sut.AllPairwiseComparisons);
+            Assert.Equal("AllComparisonsWithinSelected", sut.ComparisonType.ToString());
         }
 
 
@@ -253,7 +247,7 @@ namespace Silver.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Resp2~Cov1+Block1+Block2+Treativs_sp_ivs1+Treativs_sp_ivs2+Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2+Treativs_sp_ivs1*Timezzz+Treativs_sp_ivs2*Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2*Timezzz Dayivs_sp_ivs1 Animal1 Cov1 \"Compound Symmetric\" None None Treativs_sp_ivs1 Treativs_sp_ivs1,Treativs_sp_ivs2 Block1,Block2 Y Y N 0.05 Resp2~Cov1+Block1+Block2+Treativs_sp_ivs2+mainEffect Treativs_sp_ivs1ivs_sp_ivs*ivs_sp_ivsDayivs_sp_ivs1 N Y N", result);
+            Assert.Equal("Resp2~Cov1+Block1+Block2+Treativs_sp_ivs1+Treativs_sp_ivs2+Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2+Treativs_sp_ivs1*Timezzz+Treativs_sp_ivs2*Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2*Timezzz Dayivs_sp_ivs1 Animal1 Cov1 \"Compound Symmetric\" None None Treativs_sp_ivs1 Treativs_sp_ivs1,Treativs_sp_ivs2 Block1,Block2 Y Y N 0.05 Resp2~Cov1+Block1+Block2+Treativs_sp_ivs2+mainEffect Treativs_sp_ivs1ivs_sp_ivs*ivs_sp_ivsDayivs_sp_ivs1 N AllComparisonsWithinSelected", result);
         }
 
         private RepeatedMeasuresParametricAnalysisModel GetModel(IDataset dataset)
@@ -261,8 +255,7 @@ namespace Silver.UnitTests.StatsModels
             var model = new RepeatedMeasuresParametricAnalysisModel(dataset)
             {
                 ANOVASelected = true,
-                AllComparisonsWithinSelected = true,
-                AllPairwiseComparisons = false,
+                ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected,
                 Covariance = "Compound Symmetric",
                 CovariateTransformation = "None",
                 Covariates = new System.Collections.Generic.List<string>

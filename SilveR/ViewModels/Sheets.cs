@@ -159,13 +159,11 @@ namespace SilveR.ViewModels
 
     public class Cell
     {
-        //public int index { get; set; }
         public object Value { get; set; }
 
         public bool Bold { get; set; }
 
         public Validation Validation { get; set; }
-        //public string Format { get; set; }
 
         public bool Enable { get; set; } = true;
     }

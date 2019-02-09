@@ -169,15 +169,26 @@
 
                     <h4>Post Hoc Tests</h4>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">All comparisons within repeated factor levels</label>
-                        <div class="col-sm-8">
-                            <input class="checkbox" asp-for="AllComparisonsWithinSelected" type="checkbox" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">All pairwise comparisons</label>
-                        <div class="col-sm-8">
-                            <input class="checkbox" asp-for="AllPairwiseComparisons" type="checkbox" />
+                        <label class="col-sm-6 control-label">Comparison type</label>
+                        <div class="col-sm-6">
+                            <div class="radio">
+                                <label>
+                                    <input asp-for="ComparisonType" type="radio" value="None" checked="checked" />
+                                    <label>None</label>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input asp-for="ComparisonType" type="radio" value="AllComparisonsWithinSelected" />
+                                    <label>All comparisons within repeated factor levels</label>
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input asp-for="ComparisonType" type="radio" value="AllPairwiseComparisons" />
+                                    <label>All pairwise comparisons</label>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>

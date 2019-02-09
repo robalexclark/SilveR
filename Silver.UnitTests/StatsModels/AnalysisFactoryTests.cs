@@ -8,13 +8,6 @@ namespace Silver.UnitTests.StatsModels
     public class AnalysisFactoryTests
     {
         [Fact]
-        public void DeliberateFail()
-        {
-            bool f = false;
-            Assert.True(f);
-        }
-
-        [Fact]
         public void CreateAnalysisModel_Analysis_ReturnsSingleMeasuresParametricAnalysisModel()
         {
             //Arrange
