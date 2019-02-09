@@ -1,0 +1,23 @@
+Package: pls
+Version: 2.6-0
+Date: 2016-12-18
+Title: Partial Least Squares and Principal Component Regression
+Author: Bjørn-Helge Mevik, Ron Wehrens and Kristian Hovde Liland
+Maintainer: Bjørn-Helge Mevik <pls@mevik.net>
+Encoding: latin1
+LazyLoad: yes
+LazyData: yes
+ZipData: yes
+Description: Multivariate regression methods
+	Partial Least Squares Regression (PLSR), Principal Component
+	Regression (PCR) and Canonical Powered Partial Least Squares (CPPLS).
+License: GPL-2
+URL: http://mevik.net/work/software/pls.html
+Depends: R (>= 2.10)
+Imports: grDevices, graphics, methods, stats
+Suggests: MASS, parallel, Rmpi
+NeedsCompilation: no
+Packaged: 2016-12-18 16:28:35 UTC; bhm
+Repository: CRAN
+Date/Publication: 2016-12-18 17:46:39
+Built: R 3.5.1; ; 2018-08-09 09:55:53 UTC; windows

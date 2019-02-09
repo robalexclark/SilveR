@@ -23,7 +23,7 @@ namespace SilveR.Validators
             allVars.AddVariables(ndaVariables.Treatments);
             allVars.AddVariables(ndaVariables.OtherDesignFactors);
             allVars.AddVariables(ndaVariables.Response);
-            allVars.AddVariables(ndaVariables.Covariate);
+            allVars.AddVariables(ndaVariables.Covariates);
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
@@ -44,13 +44,6 @@ namespace SilveR.Validators
             //do data checks on the treatments/other factors and response
             if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Response))
                 return ValidationInfo;
-
-            //do data checks on the treatments/other factors and covariate (if selected)
-            if (!String.IsNullOrEmpty(ndaVariables.Covariate))
-            {
-                if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Covariate))
-                    return ValidationInfo;
-            }
 
             //if get here then no errors so return true
             return ValidationInfo;
@@ -122,11 +115,14 @@ namespace SilveR.Validators
                 }
 
                 //check transformations
-                foreach (DataRow row in DataTable.Rows)
-                {
-                    CheckTransformations(row, ndaVariables.ResponseTransformation, ndaVariables.Response);
+                CheckTransformations(DataTable, ndaVariables.ResponseTransformation, ndaVariables.Response);
 
-                    CheckTransformations(row, ndaVariables.CovariateTransformation, ndaVariables.Covariate, true);
+                if (ndaVariables.Covariates != null)
+                {
+                    foreach (string covariate in ndaVariables.Covariates)
+                    {
+                        CheckTransformations(DataTable, ndaVariables.CovariateTransformation, covariate, true);
+                    }
                 }
             }
 

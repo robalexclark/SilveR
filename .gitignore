@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 #R Project exe and libraries
-SilveR/R-3.5.1/
+# SilveR/R-3.5.1/
 
 # User-specific files
 *.suo

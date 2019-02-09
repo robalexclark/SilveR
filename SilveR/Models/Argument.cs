@@ -4,6 +4,7 @@ namespace SilveR.Models
 {
     public partial class Argument
     {
+        [Key]
         public int ArgumentID { get; set; }
 
         public int AnalysisID { get; set; }

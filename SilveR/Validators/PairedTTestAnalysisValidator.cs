@@ -220,16 +220,13 @@ namespace SilveR.Validators
                 }
 
                 //check transformations
-                foreach (DataRow row in DataTable.Rows)
-                {
-                    CheckTransformations(row, pttVariables.ResponseTransformation, pttVariables.Response);
+                CheckTransformations(DataTable, pttVariables.ResponseTransformation, pttVariables.Response);
 
-                    if (pttVariables.Covariates != null)
+                if (pttVariables.Covariates != null)
+                {
+                    foreach (string covariate in pttVariables.Covariates)
                     {
-                        foreach (string covariate in pttVariables.Covariates)
-                        {
-                            CheckTransformations(row, pttVariables.CovariateTransformation, covariate, true);
-                        }
+                        CheckTransformations(DataTable, pttVariables.CovariateTransformation, covariate, true);
                     }
                 }
             }

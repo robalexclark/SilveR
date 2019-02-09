@@ -30,7 +30,7 @@ namespace SilveR.StatsModels
                 case "PairedTTestAnalysis":
                     model = new PairedTTestAnalysisModel(dataset);
                     break;
-                case "UnpairedTestAnalysis":
+                case "UnpairedTTestAnalysis":
                     model = new UnpairedTTestAnalysisModel(dataset);
                     break;
                 case "OneSampleTTestAnalysis":
@@ -57,17 +57,17 @@ namespace SilveR.StatsModels
                 case "GraphicalAnalysis":
                     model = new GraphicalAnalysisModel(dataset);
                     break;
-                case "MeansComparisonUserBasedInputs":
-                    model = new MeansComparisonUserBasedInputsModel();
+                case "ComparisonOfMeansPowerAnalysisUserBasedInputs":
+                    model = new ComparisonOfMeansPowerAnalysisUserBasedInputsModel();
                     break;
-                case "MeansComparisonDatasetBasedInputs":
-                    model = new MeansComparisonDatasetBasedInputsModel(dataset);
+                case "ComparisonOfMeansPowerAnalysisDatasetBasedInputs":
+                    model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel(dataset);
                     break;
-                case "OneWayANOVAUserBasedInputs":
-                    model = new OneWayANOVAUserBasedInputsModel();
+                case "OneWayANOVAPowerAnalysisUserBasedInputs":
+                    model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
                     break;
-                case "OneWayANOVADatasetBasedInputs":
-                    model = new OneWayANOVADatasetBasedInputsModel(dataset);
+                case "OneWayANOVAPowerAnalysisDatasetBasedInputs":
+                    model = new OneWayANOVAPowerAnalysisDatasetBasedInputsModel(dataset);
                     break;
                 //case "MultivariateAnalysis":
                 //    model = new MultivariateAnalysisModel(dataset);

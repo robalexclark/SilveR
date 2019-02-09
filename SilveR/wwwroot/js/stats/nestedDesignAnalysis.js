@@ -19,8 +19,22 @@ $(function () {
         value: theModel.otherDesignFactors
     });
 
-    $("#Covariate").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull,
+    $("#RandomFactor1").kendoDropDownList({
+        dataSource: theModel.availableVariablesAllowNull
+    });
+    $("#RandomFactor2").kendoDropDownList({
+        dataSource: theModel.availableVariablesAllowNull
+    });
+    $("#RandomFactor3").kendoDropDownList({
+        dataSource: theModel.availableVariablesAllowNull
+    });
+    $("#RandomFactor4").kendoDropDownList({
+        dataSource: theModel.availableVariablesAllowNull
+    });
+
+    $("#Covariates").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.covariates,
         change: covariateBlockEnableDisable
     });
 
@@ -37,7 +51,7 @@ $(function () {
 
 
 function covariateBlockEnableDisable() {
-    const covariateDropDown = $("#Covariate");
+    const covariateDropDown = $("#Covariates");
     const covariateTransformationDropDown = $("#CovariateTransformation").data("kendoDropDownList");
 
     if (covariateDropDown.val().length > 0) {

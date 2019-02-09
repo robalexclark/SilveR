@@ -64,21 +64,7 @@ namespace Silver.UnitTests.StatsModels
 
             //Assert
             Assert.IsAssignableFrom<IEnumerable<string>>(result);
-            Assert.Equal(new List<string>() { String.Empty, "Unadjusted (LSD)", "Tukey", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }, result);
-        }
-
-        [Fact]
-        public void ComparisonsBackToControlTestList_ReturnsCorrectList()
-        {
-            //Arrange
-            IncompleteFactorialParametricAnalysisModel sut = new IncompleteFactorialParametricAnalysisModel();
-
-            //Act
-            IEnumerable<string> result = sut.ComparisonsBackToControlTestList;
-
-            //Assert
-            Assert.IsAssignableFrom<IEnumerable<string>>(result);
-            Assert.Equal(new List<string>() { String.Empty, "Unadjusted (LSD)", "Dunnett", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }, result);
+            Assert.Equal(new List<string>() { String.Empty, "Unadjusted (LSD)", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }, result);
         }
 
         [Fact]
@@ -183,13 +169,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("True", prPlotSelected.Value);
 
             var allPairwise = result.Single(x => x.Name == "AllPairwise");
-            Assert.Equal("Tukey", allPairwise.Value);
-
-            var comparisonsBackToControl = result.Single(x => x.Name == "ComparisonsBackToControl");
-            Assert.Equal("Holm", comparisonsBackToControl.Value);
-
-            var controlGroup = result.Single(x => x.Name == "ControlGroup");
-            Assert.Equal("D1", controlGroup.Value);
+            Assert.Equal("Holm", allPairwise.Value);
         }
 
         [Fact]
@@ -212,11 +192,9 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "Significance", Value = "0.9" });
             arguments.Add(new Argument { Name = "SelectedEffect", Value = "Treat1 * Treat2" });
             arguments.Add(new Argument { Name = "LSMeansSelected", Value = "True" });
-            arguments.Add(new Argument { Name = "AllPairwise", Value = "Tukey" });
-            arguments.Add(new Argument { Name = "ComparisonsBackToControl", Value = "Bonferroni" });
-            arguments.Add(new Argument { Name = "ControlGroup", Value = "A" });
+            arguments.Add(new Argument { Name = "AllPairwise", Value = "Holm" });
 
-            Assert.Equal(16, arguments.Count);
+            Assert.Equal(14, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -235,9 +213,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("0.9", sut.Significance);
             Assert.Equal("Treat1 * Treat2", sut.SelectedEffect);
             Assert.True(sut.LSMeansSelected);
-            Assert.Equal("Tukey", sut.AllPairwise);
-            Assert.Equal("Bonferroni", sut.ComparisonsBackToControl);
-            Assert.Equal("A", sut.ControlGroup);
+            Assert.Equal("Holm", sut.AllPairwise);
         }
 
 
@@ -251,8 +227,7 @@ namespace Silver.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-
-            Assert.Equal("Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+Treat1+Treat2+Treat1*Treat2 Respivs_sp_ivs1~scatterPlotColumn Covivs_sp_ivs1 None None Treat1 Treat1,Treat2 Block3 Y Y N 0.05 Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+mainEffect Treat1ivs_sp_ivs*ivs_sp_ivsTreat2 N Tukey Holm D1", result);
+            Assert.Equal("Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+Treat1+Treat2+Treat1*Treat2 Respivs_sp_ivs1~scatterPlotColumn Covivs_sp_ivs1 None None Treat1 Treat1,Treat2 Block3 Y Y N 0.05 Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+mainEffect Treat1ivs_sp_ivs*ivs_sp_ivsTreat2 N Holm", result);
         }
 
         private IncompleteFactorialParametricAnalysisModel GetModel(IDataset dataset)
@@ -260,9 +235,7 @@ namespace Silver.UnitTests.StatsModels
             var model = new IncompleteFactorialParametricAnalysisModel(dataset)
             {
                 ANOVASelected = true,
-                AllPairwise = "Tukey",
-                ComparisonsBackToControl = "Holm",
-                ControlGroup = "D1",
+                AllPairwise = "Holm",
                 CovariateTransformation = "None",
                 Covariates = new System.Collections.Generic.List<string>
                 {

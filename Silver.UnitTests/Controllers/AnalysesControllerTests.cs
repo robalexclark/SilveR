@@ -398,17 +398,17 @@ namespace Silver.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task MeansComparisonDatasetBasedInputs_ReturnsARedirectToActionResult()
+        public async Task ComparisonOfMeansPowerAnalysisDatasetBasedInputs_ReturnsARedirectToActionResult()
         {
             //Arrange
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
-            Mock<MeansComparisonDatasetBasedInputsModel> mockModel = new Mock<MeansComparisonDatasetBasedInputsModel>(dataset);
+            Mock<ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel> mockModel = new Mock<ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel>(dataset);
             mockModel.Setup(x => x.Validate()).Returns(new ValidationInfo());
 
             //Act
-            IActionResult result = await sut.MeansComparisonDatasetBasedInputs(mockModel.Object, false);
+            IActionResult result = await sut.ComparisonOfMeansPowerAnalysisDatasetBasedInputs(mockModel.Object, false);
 
             //Assert
             RedirectToActionResult redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
@@ -417,17 +417,17 @@ namespace Silver.UnitTests.Controllers
         }
 
         [Fact]
-        public async Task MeansComparisonUserBasedInputs_ReturnsARedirectToActionResult()
+        public async Task ComparisonOfMeansPowerAnalysisUserBasedInputs_ReturnsARedirectToActionResult()
         {
             //Arrange
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
-            Mock<MeansComparisonUserBasedInputsModel> mockModel = new Mock<MeansComparisonUserBasedInputsModel>();
+            Mock<ComparisonOfMeansPowerAnalysisUserBasedInputsModel> mockModel = new Mock<ComparisonOfMeansPowerAnalysisUserBasedInputsModel>();
             mockModel.Setup(x => x.Validate()).Returns(new ValidationInfo());
 
             //Act
-            IActionResult result = await sut.MeansComparisonUserBasedInputs(mockModel.Object, false);
+            IActionResult result = await sut.ComparisonOfMeansPowerAnalysisUserBasedInputs(mockModel.Object, false);
 
             //Assert
             RedirectToActionResult redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
@@ -960,8 +960,8 @@ namespace Silver.UnitTests.Controllers
             {
                 new Script{ ScriptFileName = "SummaryStatistics",ScriptDisplayName = "Summary Statistics", RequiresDataset = true },
                 new Script{ ScriptFileName = "MultivariateAnalysis",ScriptDisplayName = "MultivariateAnalysis", RequiresDataset = true },
-                new Script{ ScriptFileName =  "MeansComparisonUserBasedInputs",ScriptDisplayName = "MeansComparisonUserBasedInputs", RequiresDataset = false },
-                new Script{ ScriptFileName =  "MeansComparisonDatasetBasedInputs",ScriptDisplayName = "MeansComparisonDatasetBasedInputs", RequiresDataset = true },
+                new Script{ ScriptFileName =  "ComparisonOfMeansPowerAnalysisUserBasedInputs",ScriptDisplayName = "ComparisonOfMeansPowerAnalysisUserBasedInputs", RequiresDataset = false },
+                new Script{ ScriptFileName =  "ComparisonOfMeansPowerAnalysisDatasetBasedInputs",ScriptDisplayName = "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", RequiresDataset = true },
                 new Script{ ScriptFileName =  "GraphicalAnalysis",ScriptDisplayName = "GraphicalAnalysis", RequiresDataset = true },
                 new Script{ ScriptFileName =  "SurvivalAnalysis" ,ScriptDisplayName = "SurvivalAnalysis", RequiresDataset = true },
                 new Script{ ScriptFileName =  "ChiSquaredAndFishersExactTest",ScriptDisplayName = "ChiSquaredAndFishersExactTest", RequiresDataset = true },

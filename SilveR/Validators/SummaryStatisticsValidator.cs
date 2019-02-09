@@ -1,7 +1,6 @@
 ﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
-using System.Data;
 
 namespace SilveR.Validators
 {
@@ -53,10 +52,7 @@ namespace SilveR.Validators
                     return ValidationInfo;
                 }
 
-                foreach (DataRow row in DataTable.Rows)
-                {
-                    CheckTransformations(row, ssVariables.Transformation, response);
-                }
+                CheckTransformations(DataTable, ssVariables.Transformation, response);
 
                 if (!CheckResponsesPerLevel(categorical, response, ReflectionExtensions.GetPropertyDisplayName<SummaryStatisticsModel>(i => i.Responses)))
                     return ValidationInfo;

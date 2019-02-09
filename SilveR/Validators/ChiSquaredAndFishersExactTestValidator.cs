@@ -33,7 +33,7 @@ namespace SilveR.Validators
 
             if (!CheckFactorAndResponseNotBlank(csfetVariables.GroupingFactor, csfetVariables.Response, ReflectionExtensions.GetPropertyDisplayName<ChiSquaredAndFishersExactTestModel>(i => i.GroupingFactor))) return ValidationInfo;
 
-            if (!CheckFactorAndResponseNotBlank(csfetVariables.ResponseCategories, csfetVariables.Response, ReflectionExtensions.GetPropertyDisplayName<ChiSquaredAndFishersExactTestModel>(i => i.ResponseCategories))) return ValidationInfo;
+            if (!CheckFactorAndResponseNotBlank(csfetVariables.ResponseCategories, csfetVariables.Response, ReflectionExtensions.GetPropertyDisplayName<ChiSquaredAndFishersExactTestModel>(i => i.ResponseCategories, true))) return ValidationInfo;
 
             if (csfetVariables.BarnardsTest && (GetLevels(csfetVariables.GroupingFactor).Count() > 2 || GetLevels(csfetVariables.ResponseCategories).Count() > 2))
             {

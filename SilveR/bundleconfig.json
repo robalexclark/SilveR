@@ -78,27 +78,27 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/meansComparisonDatasetBasedInputs.min.js",
+    "outputFileName": "wwwroot/js/stats/comparisonOfMeansPowerAnalysisDatasetBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/meansComparisonDatasetBasedInputs.js"
+      "wwwroot/js/stats/comparisonOfMeansPowerAnalysisDatasetBasedInputs.js"
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/meansComparisonUserBasedInputs.min.js",
+    "outputFileName": "wwwroot/js/stats/comparisonOfMeansPowerAnalysisUserBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/meansComparisonUserBasedInputs.js"
+      "wwwroot/js/stats/comparisonOfMeansPowerAnalysisUserBasedInputs.js"
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/oneWayANOVADatasetBasedInputs.min.js",
+    "outputFileName": "wwwroot/js/stats/oneWayANOVAPowerAnalysisDatasetBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/oneWayANOVADatasetBasedInputs.js"
+      "wwwroot/js/stats/oneWayANOVAPowerAnalysisDatasetBasedInputs.js"
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/oneWayANOVAUserBasedInputs.min.js",
+    "outputFileName": "wwwroot/js/stats/oneWayANOVAPowerAnalysisUserBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/oneWayANOVAUserBasedInputs.js"
+      "wwwroot/js/stats/oneWayANOVAPowerAnalysisUserBasedInputs.js"
     ]
   },
   {

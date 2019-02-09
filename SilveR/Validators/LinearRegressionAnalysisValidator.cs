@@ -79,24 +79,21 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
             }
 
-            foreach (DataRow row in DataTable.Rows)
+            CheckTransformations(DataTable, lrVariables.ResponseTransformation, lrVariables.Response);
+
+            if (lrVariables.ContinuousFactors != null)
             {
-                CheckTransformations(row, lrVariables.ResponseTransformation, lrVariables.Response);
-
-                if (lrVariables.ContinuousFactors != null)
+                foreach (string contFactor in lrVariables.ContinuousFactors)
                 {
-                    foreach (string contFactor in lrVariables.ContinuousFactors)
-                    {
-                        CheckTransformations(row, lrVariables.ContinuousFactorsTransformation, contFactor);
-                    }
+                    CheckTransformations(DataTable, lrVariables.ContinuousFactorsTransformation, contFactor);
                 }
+            }
 
-                if (lrVariables.Covariates != null)
+            if (lrVariables.Covariates != null)
+            {
+                foreach (string covariate in lrVariables.Covariates)
                 {
-                    foreach (string covariate in lrVariables.Covariates)
-                    {
-                        CheckTransformations(row, lrVariables.CovariateTransformation, covariate, true);
-                    }
+                    CheckTransformations(DataTable, lrVariables.CovariateTransformation, covariate, true);
                 }
             }
 

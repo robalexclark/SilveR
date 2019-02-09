@@ -1,3 +1,8 @@
+#Parameter setup
+#Module type
+#Module <- "SMPA"
+Module <- "IFPA"
+
 #===================================================================================================================
 #R Libraries
 
@@ -52,10 +57,6 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
-#Parameter setup
-#Module type
-Module <- "IFPA"
-
 #V3.2 STB OCT2015
 set.seed(5041975)
 
@@ -173,7 +174,7 @@ noeffects<-length(emodelChanges)-2
 if (Module == "SMPA") {
 	Title <-paste(branding, " Single Measure Parametric Analysis", sep="")
 }
-if (Module == "IFPA) {
+if (Module == "IFPA") {
 	Title <-paste(branding, " Incomplete Factorial Parametric Analysis", sep="")
 }
 
@@ -210,11 +211,11 @@ if(FirstCatFactor != "NULL") {
 }
 HTML.title(title, HR=2, align="left")
 
-if (Module = "SMPA") {
+if (Module == "SMPA") {
 	add<-paste(c("The  "), resp, " response is currently being analysed by the Single Measures Parametric Analysis module", sep="")
 }
 
-if (Module = "IFPA") {
+if (Module == "IFPA") {
 	add<-paste(c("The  "), resp, " response is currently being analysed by the Incomplete Factorial Parametric Analysis module", sep="")
 }
 
@@ -412,7 +413,7 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 
 			if (tempx[dim(tempx)[1],1] != 0) {
 				temp2x<-(tempx)
-				col1x<-format(round(temp2x[1], 2), nsmall=2, scientific=FALSE)
+				col1x<-format(round(temp2x[1], 3), nsmall=3, scientific=FALSE)
 				col2x<-format(round(temp2x[1]/temp2x[2], 3), nsmall=3, scientific=FALSE)
 				col3x<-format(round(temp2x[3], 2), nsmall=2, scientific=FALSE)
 				col4x<-format(round(temp2x[4], 4), nsmall=4, scientific=FALSE)
@@ -446,6 +447,7 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 
 				HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
 				HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
+				HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 			} 
 		}
 
@@ -457,7 +459,7 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 				tempx<-anova(Covintfull)
 				temp2x<-(tempx)
 
-				col1x<-format(round(temp2x[2], 2), nsmall=2, scientific=FALSE)
+				col1x<-format(round(temp2x[2], 3), nsmall=3, scientific=FALSE)
 				col2x<-format(round(temp2x[3], 3), nsmall=3, scientific=FALSE)
 				col3x<-format(round(temp2x[4], 2), nsmall=2, scientific=FALSE)
 				col4x<-format(round(temp2x[5], 4), nsmall=4, scientific=FALSE)
@@ -491,6 +493,7 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 
 				HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
 				HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
+				HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
 			} 
 		}
 
@@ -527,7 +530,7 @@ if(showANOVA=="Y") {
 
 	if (Module == "SMPA") {
 		temp<-Anova(threewayfull, type=c("III"))[-1,]
-		col1<-format(round(temp[1], 2), nsmall=2, scientific=FALSE)
+		col1<-format(round(temp[1], 3), nsmall=3, scientific=FALSE)
 		col2<-format(round(temp[1]/temp[2], 3), nsmall=3, scientific=FALSE)
 		col3<-format(round(temp[3], 2), nsmall=2, scientific=FALSE)
 		col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
@@ -563,7 +566,6 @@ if(showANOVA=="Y") {
 
 		if(FirstCatFactor != "NULL") {
 			#STB Error spotted:
-			#HTML.title("<sTitle<-sub("ivs_colon_ivs"	,":"ML.title("<bf>Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", HR=0, align="left")
 			HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 		} else {
 			HTML("Comment: ANOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
@@ -575,7 +577,7 @@ if(showANOVA=="Y") {
 
 	if (Module == "IFPA") {
 		temp<-anova(threewayfull)
-		col1<-format(round(temp[2], 2), nsmall=2, scientific=FALSE)
+		col1<-format(round(temp[2], 3), nsmall=3, scientific=FALSE)
 		col2<-format(round(temp[3], 3), nsmall=3, scientific=FALSE)
 		col3<-format(round(temp[4], 2), nsmall=2, scientific=FALSE)
 		col4<-format(round(temp[5], 4), nsmall=4, scientific=FALSE)
@@ -589,7 +591,7 @@ if(showANOVA=="Y") {
 		for (q in 1:notreatfactors) {
 			source<-sub(":"," * ", source) 
 		}	
-		ivsanova<-cbind(source, col1,temp[2],col2,col3,col4)
+		ivsanova<-cbind(source, col1,temp[1],col2,col3,col4)
 
 		ivsanova[length(unique(source)),5]<-" "
 		ivsanova[length(unique(source)),6]<-" "
@@ -611,7 +613,6 @@ if(showANOVA=="Y") {
 
 		if(FirstCatFactor != "NULL") {
 			#STB Error spotted:
-			#HTML.title("<sTitle<-sub("ivs_colon_ivs"	,":"ML.title("<bf>Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", HR=0, align="left")
 			HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
 		} else {
 			HTML("Comment: ANOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
@@ -1325,14 +1326,18 @@ if(allPairwiseTest != "NULL") {
 	}
 	HTML.title(add, HR=2, align="left")
 
-	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
+	if (Module == "SMPA") {
+		mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
+	}
+	if (Module == "IFPA") {
+		mult<-glht(lm(effectModel, data=statdata, na.action = na.omit), linfct=mcp(mainEffect="Tukey"))
+	}
 	multci<-confint(mult, level=sig, calpha = univariate_calpha())
 	tablen<-length(unique(rownames(multci$confint)))
 
 	if (allPairwiseTest== "Tukey") {
 		if ( tablen >1 ) {
 			set.seed(3)	
-			mult<-glht(lm(model, data=statdata, na.action = na.omit),  linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
 			pwc = lsmeans(lm(model, data=statdata, na.action = na.omit) , eval(parse(text = paste("pairwise ~",selectedEffect))),   adjust = "tukey")
 			pvals<-cld(pwc$contrast, sort=FALSE)[,6]
 			sigma<-cld(pwc$contrast, sort=FALSE)[,3]
@@ -1542,6 +1547,7 @@ if(backToControlTest != "NULL") {
 
 	#Creating the table of unadjusted p-values
 	#Generate all pairwise comparisons, unadjusted for multiplicity
+
 	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
 	multci<-confint(mult, level=sig, calpha = univariate_calpha())
 	multp<-summary(mult, test=adjusted("none"))

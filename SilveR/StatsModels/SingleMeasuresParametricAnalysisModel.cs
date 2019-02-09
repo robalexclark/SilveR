@@ -1,4 +1,3 @@
-using Combinatorics;
 using Combinatorics.Collections;
 using SilveR.Helpers;
 using SilveR.Models;
@@ -112,9 +111,6 @@ namespace SilveR.StatsModels
                     dtNew.Columns.Remove(columnName);
                 }
             }
-
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
@@ -320,30 +316,39 @@ namespace SilveR.StatsModels
         }
 
 
-
         private string GetModel()
         {
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
             string model = Response + "~";
 
             if (Covariates != null)
+            {
                 foreach (string covariate in Covariates)
+                {
                     model = model + covariate + "+";
+                }
+            }
 
             if (OtherDesignFactors != null)
             {
                 foreach (string otherDesign in OtherDesignFactors)
+                {
                     model = model + otherDesign + "+";
+                }
             }
 
             foreach (string treat in Treatments)
+            {
                 model = model + treat + "+";
+            }
 
             //determine the interactions
             List<string> factors = new List<string>(Treatments);
             List<string> fullInteractions = DetermineInteractions(factors);
             foreach (string s in fullInteractions)
+            {
                 model = model + s.Replace(" * ", "*") + "+";
+            }
 
             model = model.TrimEnd('+');
 

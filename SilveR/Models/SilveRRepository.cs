@@ -77,12 +77,12 @@ namespace SilveR.Models
             return await context.Analyses.AnyAsync();
         }
 
-        public async Task<IList<Analysis>> GetAnalyses()
+        public async Task<IEnumerable<Analysis>> GetAnalyses()
         {
             return await context.Analyses.Include("Script").OrderByDescending(x => x.DateAnalysed).ToListAsync();
         }
 
-        public async Task<IList<DatasetViewModel>> GetDatasetViewModels()
+        public async Task<IEnumerable<DatasetViewModel>> GetDatasetViewModels()
         {
             return await context.Datasets.Select(x => new DatasetViewModel { DatasetID = x.DatasetID, DatasetName = x.DatasetName, VersionNo = x.VersionNo, DateUpdated = x.DateUpdated }).ToListAsync();
         }
@@ -128,6 +128,34 @@ namespace SilveR.Models
         public async Task UpdateAnalysis(Analysis analysis)
         {
             context.Entry(analysis).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+        }
+
+
+        public async Task<UserOption> GetUserOptions()
+        {
+            UserOption userOption = await context.UserOptions.SingleOrDefaultAsync();
+            if (userOption == null)
+            {
+                userOption = new UserOption();
+            }
+
+            return userOption;
+        }
+
+        public async Task UpdateUserOptions(UserOption userOption)
+        {
+            UserOption existingUserOption = context.UserOptions.Find(userOption.UserOptionID);
+            if (existingUserOption == null)
+            {
+                context.Add(userOption);
+            }
+            else
+            {
+                //context.Entry(existingUserOption).CurrentValues.SetValues(userOption);
+                context.Update(userOption);
+            }
+
             await context.SaveChangesAsync();
         }
 

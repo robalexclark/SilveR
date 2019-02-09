@@ -767,7 +767,7 @@ if (CovariateRegressionCoefficients == "Y" && covariatelist != "NULL") {
 #R squared
 #===================================================================================================================
 if (showAdjustedRSquared =="Y") {
-	HTML.title("R-squared and Adjusted R-squared statistics", HR=2, align="left")
+	HTML.title("R-squared and adjusted R-squared statistics", HR=2, align="left")
 
 	rsq    <- format(round(summary(threewayfull)$r.squared,4),nsmall=4)
 	adjrsq <- format(round(summary(threewayfull)$adj.r.squared,4),nsmall=4)

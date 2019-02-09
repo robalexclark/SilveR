@@ -25,6 +25,7 @@ namespace SilveR.StatsModels
                 return availableVars.AsEnumerable();
             }
         }
+
         public AnalysisDataModelBase(IDataset dataset, string scriptFileName)
             : base(scriptFileName)
         {

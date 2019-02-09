@@ -367,11 +367,8 @@ if (showdataset=="Y") {
 #===================================================================================================================
 HTML.title("Analysis options", HR=2, align="left")
 
-if (resplength == 1) {
-	HTML(paste("Response variable: ", resplistqq, sep=""),  align="left")
-} else {
-	HTML(paste("Response variables: ", resplistqq, sep=""),  align="left")
-}
+HTML(paste("Response variable: ", resplistqq, sep=""),  align="left")
+ 
 if (responseTransform != "None")
 { 
 	HTML(paste("Response transformation: ", responseTransform, sep=""), align="left")

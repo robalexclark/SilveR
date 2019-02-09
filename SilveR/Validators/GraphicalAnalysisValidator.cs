@@ -100,14 +100,13 @@ namespace SilveR.Validators
                 ValidationInfo.AddWarningMessage("The x-axis variable is ignored in the Histogram plot option. If you wish to include a categorisation factor in the plot, then select the categorisation factors.");
 
             //go through each row in the datatable and do further checks...
+            CheckTransformations(DataTable, gaVariables.XAxisTransformation, gaVariables.XAxis);
+
+            //if the response has been transformed check if the value is <= 0
+            CheckTransformations(DataTable, gaVariables.ResponseTransformation, gaVariables.Response);
+
             foreach (DataRow row in DataTable.Rows)
             {
-                //if the x-axis has been transformed check if the value is <= 0
-                CheckTransformations(row, gaVariables.XAxisTransformation, gaVariables.XAxis);
-
-                //if the response has been transformed check if the value is <= 0
-                CheckTransformations(row, gaVariables.ResponseTransformation, gaVariables.Response);
-
                 //check that the x-axis has values for each response value
                 if (!String.IsNullOrEmpty(gaVariables.XAxis))
                 {

@@ -1,18 +1,8 @@
 ﻿#Software branding
-
-#Display labels on scatterplot (needs argument)
 branding <- "InVivoStat"
-scatterlabels <- "N"
 
 #Display arguments
 Diplayargs <- "Y"
-
-
-#Disply lines on lsmeans
-DisplayLSMeanslines <- "N"
-
-#Disply lines on lsmeans
-DisplaySEMlines <- "N"
 
 #===================================================================================================================
 #Import Graphical parameters from file
@@ -29,228 +19,121 @@ suppressWarnings(library(grid))
 #suppressWarnings(library(extrafont))
 
 #===================================================================================================================
-#Numerical parameters
+#User option parameters
 #===================================================================================================================
-#if (file.exists(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsNumeric.txt", sep="")) == TRUE)
-#{
-	#grpara = data.frame(read.table(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsNumeric.txt", sep="")))
+grparanum = read.table(paste(getwd(),"/UserOptions.txt", sep=""), skip = 22, sep=" ", nrows = 22)
+grparatext = read.table(paste(getwd(),"/UserOptions.txt", sep=""))
+
+#Line types used - solid, blank and dashed
+	Line_type_solid<- paste(grparatext$V2[1],sep="")
+	Line_type_dashed<- paste(grparatext$V2[2],sep="")
+
+#Font for plots
+	gr_font<- paste(grparatext$V2[3],sep="")
+
+#Font style for plots
+	gr_fontface<- paste(grparatext$V2[4],sep="")
+
+#Font colour
+	gr_textcolour<- paste(grparatext$V2[5],sep="")
+
+#Colour fill colour
+	Col_fill<- paste(grparatext$V2[6],sep="")
+	BW_fill<- paste(grparatext$V2[7],sep="")
+
+#Colour for the header bar on the seperate categorised plots
+	Catbar_fill<- paste(grparatext$V2[8],sep="")
+
+#Individual lines colour
+	Col_line<- paste(grparatext$V2[9],sep="")
+	BW_line<- paste(grparatext$V2[10],sep="")
+
+#Legend parameters
+	Legend_text_col<- paste(grparatext$V2[11],sep="")
+	Legend_pos<- paste(grparatext$V2[12],sep="")
+
+#Categorised plot set default
+	Palette_set<- paste(grparatext$V2[13],sep="")
+
+#Output dataset
+#	showdataset <- paste(grparatext$V2[14],sep="")
+showdataset <- "Y"
+#pdf output
+	pdfout<- paste(grparatext$V2[15],sep="")
+
+#plot colour
+	bandw<- paste(grparatext$V2[16],sep="")
+
+#Display back-transformed geometric means
+	GeomDisplay<- paste(grparatext$V2[17],sep="")
+
+#Display covariate regression coefficients
+	CovariateRegressionCoefficients<- paste(grparatext$V2[18],sep="")
+
+#Display covariate interaction tests 
+	AssessCovariateInteractions<- paste(grparatext$V2[19],sep="")
+
+#Display labels on scatterplot (needs argument)
+	scatterlabels <- paste(grparatext$V2[20],sep="")
+
+#Disply lines on lsmeans
+	DisplayLSMeanslines <- paste(grparatext$V2[21],sep="")
+
+#Disply lines on lsmeans
+	DisplaySEMlines <- paste(grparatext$V2[22],sep="")
 
 #Font size for the main title
-	#Title_size  <- as.numeric(grpara$V2[1])
+	Title_size  <- as.numeric(grparanum$V2[1])
 
 #Y and X axis titles font size
-	#X_Title_size<- as.numeric(grpara$V2[2])
-	#Y_Title_size<- as.numeric(grpara$V2[3])
+	X_Title_size<- as.numeric(grparanum$V2[2])
+	Y_Title_size<- as.numeric(grparanum$V2[3])
 
 #Y and X axis titles font size
-	#Y_Label_size<- as.numeric(grpara$V2[4])
-	#X_Label_size<- as.numeric(grpara$V2[5])
+	X_Label_size<- as.numeric(grparanum$V2[4])
+	Y_Label_size<- as.numeric(grparanum$V2[5])
 
 #X-axis labels angle and horizontal adjustment
-	#Gr_x_angle<- as.numeric(grpara$V2[6])
-	#Gr_x_hjust<- as.numeric(grpara$V2[7])
+	Gr_x_angle<- as.numeric(grparanum$V2[6])
+	Gr_x_hjust<- as.numeric(grparanum$V2[7])
 
 #Y-axis labels angle and vertical adjustment
-	#Gr_y_angle<- as.numeric(grpara$V2[8])
-	#Gr_y_vjust<- as.numeric(grpara$V2[9])
+	Gr_y_angle<- as.numeric(grparanum$V2[8])
+	Gr_y_vjust<- as.numeric(grparanum$V2[9])
 
 #Size of points on plots
-	#Point_size<- as.numeric(grpara$V2[10])
+	Point_size<- as.numeric(grparanum$V2[10])
 
 #Shape of points on plot
-	#Point_shape<- as.numeric(grpara$V2[11])
+	Point_shape<- as.numeric(grparanum$V2[11])
 
 #Size of the lines on the plots
-	#Line_size<- as.numeric(grpara$V2[12])
+	Line_size<- as.numeric(grparanum$V2[12])
 
 #Legend text size
-	#legend_font_size  <- as.numeric(grpara$V2[13])
+	legend_font_size  <- as.numeric(grparanum$V2[13])
 
 #graphics sizes
-	#pdfwidth<- as.numeric(grpara$V2[14])
-	#pdfheight<- as.numeric(grpara$V2[15])
-	#jpegwidth<- as.numeric(grpara$V2[16])
-	#jpegheight<- as.numeric(grpara$V2[17])
+	pdfwidth<- as.numeric(grparanum$V2[14])
+	pdfheight<- as.numeric(grparanum$V2[15])
+	jpegwidth<- grparanum$V2[16]
+	jpegheight<- as.numeric(grparanum$V2[17])
 
 # When using black and white range - these are the limits (0 = white and 1 = black)
-	#gr_bw_low<- as.numeric(grpara$V2[18])
-	#gr_bw_high<- as.numeric(grpara$V2[19])
+	gr_bw_low<- as.numeric(grparanum$V2[18])
+	gr_bw_high<- as.numeric(grparanum$V2[19])
 
 #Horizontal jitter on scatterplot
-	#Gr_w_Gr_jit<- as.numeric(grpara$V2[20])
+	Gr_w_Gr_jit<- as.numeric(grparanum$V2[20])
 
 #Vertical jitter on scatterplot
-	#Gr_h_Gr_jit<- as.numeric(grpara$V2[21])
+	Gr_h_Gr_jit<- as.numeric(grparanum$V2[21])
 
 #Error bar width for LSMeans plots and line SEM plots
-	#ErrorBarWidth <- as.numeric(grpara$V2[22])
-
-#Width of bars for means with SEM column plots
-	#ErrorBarWidth2 <- ErrorBarWidth /2
-
-#} else {
-#print("Unfortunately, due to the Windows installation, InVivoStat is not able to load the Output Options file. The default options will be used instead.")
-
-#Font size for the main title
-	Title_size  <- 20
-
-#Y and X axis titles font size
-	X_Title_size<- 15
-	Y_Title_size<- 15
-
-#Y and X axis titles font size
-	Y_Label_size<- 15
-	X_Label_size<- 15
-
-#X-axis labels angle and horizontal adjustment
-	Gr_x_angle<- 0
-	Gr_x_hjust<- 0.5
-
-#Y-axis labels angle and vertical adjustment
-	Gr_y_angle<- 0
-	Gr_y_vjust<- 0.5
-
-#Size of points on plots
-	Point_size<- 4
-
-#Shape of points on plot
-	Point_shape<-21
-
-#Size of the lines on the plots
-	Line_size<- 1
-
-#Legend text size
-	legend_font_size  <- 15
-
-#graphics sizes
-	pdfwidth<- 11
-	pdfheight<- 8
-	jpegwidth<- 480
-	jpegheight<- 480
-
-# When using black and white range - these are the limits (0 = white and 1 = black)
-	gr_bw_low<- 0.1
-	gr_bw_high<- 0.8
-
-#Horizontal jitter on scatterplot
-	Gr_w_Gr_jit<- 0.1
-
-#Vertical jitter on scatterplot
-	Gr_h_Gr_jit<- 0.1
-
-#Error bar width for LSMeans plots and line SEM plots
-	ErrorBarWidth <- 0.7
+	ErrorBarWidth <- as.numeric(grparanum$V2[22])
 
 #Width of bars for means with SEM column plots
 	ErrorBarWidth2 <- ErrorBarWidth /2
-#}
-
-#===================================================================================================================
-#Text parameters
-#===================================================================================================================
-#if (file.exists(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsText.txt", sep="")) == TRUE) {
-
-	#grpara = data.frame(read.table(paste(Sys.getenv("APPDATA"),"/IVS/OutputOptionsText.txt", sep="")))
-
-#Line types used - solid, blank and dashed
-	#Line_type_solid<- paste(grpara$V2[1],sep="")
-	#Line_type_dashed<- paste(grpara$V2[2],sep="")
-
-#Font for plots
-	#gr_font<- paste(grpara$V2[3],sep="")
-
-#Font style for plots
-	#gr_fontface<- paste(grpara$V2[4],sep="")
-
-#Font colour
-	#gr_textcolour<- paste(grpara$V2[5],sep="")
-
-#Colour fill colour
-	#Col_fill<- paste(grpara$V2[6],sep="")
-	#BW_fill<- paste(grpara$V2[7],sep="")
-
-#Colour for the header bar on the seperate categorised plots
-	#Catbar_fill<- paste(grpara$V2[8],sep="")
-
-#Individual lines colour
-	#Col_line<- paste(grpara$V2[9],sep="")
-	#BW_line<- paste(grpara$V2[10],sep="")
-
-#Legend parameters
-	#Legend_text_col<- paste(grpara$V2[11],sep="")
-	#Legend_pos<- paste(grpara$V2[12],sep="")
-
-#Categorised plot set default
-	#Palette_set<- paste(grpara$V2[13],sep="")
-
-#Output dataset
-	#showdataset <- paste(grpara$V2[14],sep="")
-
-#pdf output
-	#pdfout<- paste(grpara$V2[15],sep="")
-
-#plot colour
-	#bandw<- paste(grpara$V2[16],sep="")
-
-#Display back-transformed geometric means
-	#GeomDisplay<- paste(grpara$V2[17],sep="")
-
-#Display covariate regression coefficients
-	#CovariateRegressionCoefficients<- paste(grpara$V2[18],sep="")
-
-#Display covariate interaction tests 
-	#AssessCovariateInteractions<- paste(grpara$V2[19],sep="")
-
-#} else {
-#Line types used - solid, blank and dashed
-	Line_type_solid<- "solid"
-	Line_type_dashed<- "dashed"
-
-#Font for plots
-	gr_font<- "Helvetica"
-
-#Font style for plots
-	gr_fontface<- "plain"
-
-#Font colour
-	gr_textcolour<- "Black"
-
-#Colour fill colour
-	Col_fill<- "royalblue1"
-	BW_fill<- "grey"
-
-#Colour for the header bar on the seperate categorised plots
-	Catbar_fill<- "ivory2"
-
-#Individual lines colour
-	Col_line<- "red"
-	BW_line<- "black"
-
-#Legend parameters
-	Legend_text_col<- "white"
-	Legend_pos<- "Default"
-
-#Categorised plot set default
-	Palette_set<- "Set1"
-
-#Output dataset
-	showdataset <- "Y"
-
-#pdf output
-	pdfout<- "Y"
-
-#plot colour
-	bandw<- "N"
-
-#Display back-transformed geometric means
-	GeomDisplay<- "Y"
-
-#Display covariate regression coefficients
-	CovariateRegressionCoefficients<- "Y"
-
-#Display covariate interaction tests 
-	AssessCovariateInteractions<- "Y"
-#}
 
 #===================================================================================================================
 #Defining the GGPLOT options

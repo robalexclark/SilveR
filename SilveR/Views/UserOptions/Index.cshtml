@@ -1,0 +1,136 @@
+﻿@model SilveR.Models.UserOption
+
+@{
+    ViewBag.Title = "User Options";
+}
+<h2>@ViewBag.Title</h2>
+
+<form asp-controller="UserOptions" asp-action="UpdateUserOptions" method="post" class="mt30 mb30">
+    <fieldset>
+        @*<div class="col-sm-12">*@
+        <input asp-for="UserOptionID" type="hidden">
+
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#1" data-toggle="tab">Graphics: Appearance</a>
+            </li>
+            <li>
+                <a href="#2" data-toggle="tab">Graphics: Font</a>
+            </li>
+            <li>
+                <a href="#3" data-toggle="tab">Graphics: Colour</a>
+            </li>
+            <li>
+                <a href="#3" data-toggle="tab">Advanced Output Options</a>
+            </li>
+        </ul>
+
+        <div class="tab-content ">
+            <div class="tab-pane active" id="1">
+
+                <div class="panel panel-default" style="margin:10px">
+                    <div class="panel-heading"><h3>Points</h3></div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="LineTypeSolid" class="control-label">Line Type Solid?</label>
+                            <select asp-for="LineTypeSolid" type="text" class="form-control question-margin input-lg">
+                                <option style="display:none"></option>
+                                <option value="None">None</option>
+                                <option value="1 year">1 year</option>
+                                <option value="2 years">2 years</option>
+                                <option value="3 years">3 years</option>
+                            </select>
+                            <span asp-validation-for="LineTypeSolid" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LineTypeDashed" class="control-label">Line Type Dashed?</label>
+                            <select asp-for="LineTypeDashed" type="text" class="form-control question-margin input-lg">
+                                <option style="display:none"></option>
+                                <option value="None">None</option>
+                                <option value="1 year">1 year</option>
+                                <option value="2 years">2 years</option>
+                                <option value="3 years">3 years</option>
+                            </select>
+                            <span asp-validation-for="LineTypeDashed" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="GraphicsFont" class="control-label">Graphics Font?</label>
+                            <select asp-for="GraphicsFont" type="text" class="form-control question-margin input-lg">
+                                <option style="display:none"></option>
+                                <option value="None">None</option>
+                                <option value="1 year">1 year</option>
+                                <option value="2 years">2 years</option>
+                                <option value="3 years">3 years</option>
+                            </select>
+                            <span asp-validation-for="GraphicsFont" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default" style="margin:10px">
+                    <div class="panel-heading"><h3>Lines</h3></div>
+
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label asp-for="LineTypeSolid" class="control-label">Line Type Solid?</label>
+                            <select asp-for="LineTypeSolid" type="text" class="form-control question-margin input-lg">
+                                <option style="display:none"></option>
+                                <option value="None">None</option>
+                                <option value="1 year">1 year</option>
+                                <option value="2 years">2 years</option>
+                                <option value="3 years">3 years</option>
+                            </select>
+                            <span asp-validation-for="LineTypeSolid" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LineTypeDashed" class="control-label">Line Type Dashed?</label>
+                            <select asp-for="LineTypeDashed" type="text" class="form-control question-margin input-lg">
+                                <option style="display:none"></option>
+                                <option value="None">None</option>
+                                <option value="1 year">1 year</option>
+                                <option value="2 years">2 years</option>
+                                <option value="3 years">3 years</option>
+                            </select>
+                            <span asp-validation-for="LineTypeDashed" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="GraphicsFont" class="control-label">Graphics Font?</label>
+                            <select asp-for="GraphicsFont" type="text" class="form-control question-margin input-lg">
+                                <option style="display:none"></option>
+                                <option value="None">None</option>
+                                <option value="1 year">1 year</option>
+                                <option value="2 years">2 years</option>
+                                <option value="3 years">3 years</option>
+                            </select>
+                            <span asp-validation-for="GraphicsFont" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="2">
+                <h3>Notice the gap between the content and tab after applying a background color</h3>
+            </div>
+
+            <div class="tab-pane" id="3">
+                <h3>add clearfix to tab-content (see the css)</h3>
+            </div>
+
+            <div class="tab-pane" id="4">
+                <h3>4</h3>
+            </div>
+        </div>
+
+
+
+        <div class="text-right" style="padding:20px">
+            <button type="submit" class="btn btn-primary">Save Options</button>
+        </div>
+        @*</div>*@
+    </fieldset>
+</form>

@@ -1,8 +1,6 @@
 ﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace SilveR.Validators
 {
@@ -109,15 +107,9 @@ namespace SilveR.Validators
                 }
 
                 //go through each row in the datatable and check transforms are ok
-                foreach (DataRow row in DataTable.Rows)
-                {
-                    //if the resp has been transformed check if the value is <= 0
-                    CheckTransformations(row, drnlrVariables.ResponseTransformation, drnlrVariables.Response);
-
-                    CheckTransformations(row, drnlrVariables.ResponseTransformation, drnlrVariables.QCResponse);
-
-                    CheckTransformations(row, drnlrVariables.ResponseTransformation, drnlrVariables.SamplesResponse);
-                }
+                CheckTransformations(DataTable, drnlrVariables.ResponseTransformation, drnlrVariables.Response);
+                CheckTransformations(DataTable, drnlrVariables.ResponseTransformation, drnlrVariables.QCResponse);
+                CheckTransformations(DataTable, drnlrVariables.ResponseTransformation, drnlrVariables.SamplesResponse);
 
                 //check that if fixed parameter is set then start value is not set, else add warning...
                 bool warningFoxFixedAndStart = false;

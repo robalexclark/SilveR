@@ -344,28 +344,41 @@ namespace SilveR.StatsModels
             string model = Response + "~";
 
             if (Covariates != null)
+            {
                 foreach (string covariate in Covariates)
+                {
                     model = model + covariate + "+";
+                }
+            }
 
             if (OtherDesignFactors != null)
             {
                 foreach (string otherDesign in OtherDesignFactors)
+                {
                     model = model + otherDesign + "+";
+                }
             }
 
             foreach (string s in Treatments)
+            {
                 model = model + s + "+";
+            }
 
             if (!String.IsNullOrEmpty(RepeatedFactor))
+            {
                 model = model + "Timezzz+"; //Time model needs zzz adding on the end for R to be able to recognise Time var
+            }
 
             //determine the interactions
             List<string> factors = new List<string>(Treatments);
-            if (!String.IsNullOrEmpty(RepeatedFactor)) factors.Add("Timezzz"); //add in time to the factors PLUS the zzz's
+            if (!String.IsNullOrEmpty(RepeatedFactor))
+                factors.Add("Timezzz"); //add in time to the factors PLUS the zzz's
             List<string> fullInteractions = DetermineInteractions(factors);
 
             foreach (string s in fullInteractions)
+            {
                 model = model + s.Replace(" * ", "*") + "+";
+            }
 
             model = model.TrimEnd('+');
 

@@ -9,12 +9,11 @@ namespace SilveR.Models
         Task CreateDataset(Dataset dataset);
         Task DeleteAnalysis(Analysis analysis);
         Task DeleteDataset(int datasetID);
-        void Dispose();
-        Task<IList<Analysis>> GetAnalyses();
+        Task<IEnumerable<Analysis>> GetAnalyses();
         Task<Analysis> GetAnalysis(string analysisGuid);
         Task<Analysis> GetAnalysisComplete(string analysisGuid);
         Task<Dataset> GetDatasetByID(int datasetID);
-        Task<IList<DatasetViewModel>> GetDatasetViewModels();
+        Task<IEnumerable<DatasetViewModel>> GetDatasetViewModels();
         Task<int> GetLastVersionNumberForDataset(string fileName);
         Task<Script> GetScriptByName(string scriptFileName);
         Task<IEnumerable<Script>> GetScripts();
@@ -24,5 +23,8 @@ namespace SilveR.Models
         Task AddAnalysis(Analysis analysis);
         Task UpdateDataset(Dataset dataset);
         Task UpdateAnalysis(Analysis analysis);
+        Task<UserOption> GetUserOptions();
+        Task UpdateUserOptions(UserOption userOption);
+        void Dispose();
     }
 }

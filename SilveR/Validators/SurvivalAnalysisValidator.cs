@@ -1,6 +1,7 @@
 ﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace SilveR.Validators
 {
@@ -23,10 +24,6 @@ namespace SilveR.Validators
             allVars.Add(samVariables.Censorship);
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            //Create a list of categorical variables selected (i.e. the cat factors)
-            List<string> categorical = new List<string>();
-            if (!String.IsNullOrEmpty(samVariables.Treatment)) categorical.Add(samVariables.Treatment);
-            if (!String.IsNullOrEmpty(samVariables.Censorship)) categorical.Add(samVariables.Censorship);
 
             if (!CheckIsNumeric(samVariables.Response))
             {
@@ -34,27 +31,32 @@ namespace SilveR.Validators
                 return ValidationInfo;
             }
 
-            foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
-            {
-                //Check that each level has replication
-                Dictionary<string, int> levelResponses = ResponsesPerLevel(catFactor, samVariables.Response);
-                foreach (KeyValuePair<string, int> level in levelResponses)
-                {
-                    if (level.Value == 0)
-                    {
-                        ValidationInfo.AddErrorMessage("Error: There are no observations recorded on the levels of one of the factors. Please amend the dataset prior to running the analysis.");
-                        return ValidationInfo;
-                    }
-                    else if (level.Value < 2)
-                    {
-                        ValidationInfo.AddErrorMessage("Error: There is no replication in one or more of the levels of the categorical factor (" + catFactor + ").  Please amend the dataset prior to running the analysis.");
-                        return ValidationInfo;
-                    }
-                }
+            if (!CheckFactorsHaveLevels(samVariables.Treatment))
+                return ValidationInfo;
 
-                //check response and cat factors contain values
-                if (!CheckFactorAndResponseNotBlank(catFactor, samVariables.Response, "categorisation factor"))
+            if (!CheckResponsesPerLevel(samVariables.Treatment, samVariables.Response, "treatment factor"))
+                return ValidationInfo;
+
+            //check response and treatments contain values
+            if (!CheckFactorAndResponseNotBlank(samVariables.Treatment, samVariables.Response, "treatment factor"))
+                return ValidationInfo;
+
+            foreach (DataRow row in DataTable.Rows)
+            {
+                if (String.IsNullOrEmpty(row[samVariables.Censorship].ToString()) && !String.IsNullOrEmpty(row[samVariables.Response].ToString()))
+                {
+                    ValidationInfo.AddErrorMessage("Error: There is a missing value in the censorship variable when there is a corresponding response. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
+                }
+                else if (!String.IsNullOrEmpty(row[samVariables.Censorship].ToString()) && row[samVariables.Censorship].ToString() != "0" && row[samVariables.Censorship].ToString() != "1")
+                {
+                    ValidationInfo.AddErrorMessage("Error: The censorship variable contains values other than 0 and 1. Please amend the dataset prior to running the analysis.");
+                    return ValidationInfo;
+                }
+                else if (String.IsNullOrEmpty(row[samVariables.Response].ToString()) && !String.IsNullOrEmpty(row[samVariables.Treatment].ToString()) && !String.IsNullOrEmpty(row[samVariables.Censorship].ToString()))
+                {
+                    ValidationInfo.AddWarningMessage("The response selected (" + samVariables.Response + ") contains missing data.");
+                }
             }
 
             //if get here then no errors so return true

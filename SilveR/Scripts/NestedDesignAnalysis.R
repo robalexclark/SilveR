@@ -27,8 +27,6 @@ repList2 <- Args[16]
 repList3 <- Args[17]
 repList4 <- Args[18]
 
-#source(paste(getwd(),"/Common_Functions.R", sep=""))
-
 #Print args
 if (Diplayargs == "Y"){
 	print(Args)
@@ -52,44 +50,6 @@ sipowerttest<-function(delta,sd,n,sig.level) {
 }
 
 #===================================================================================================================
-#Output HTML header
-#===================================================================================================================
-Title <-paste(branding, " Nested Design Analysis", sep="")
-HTML.title(Title, HR = 1, align = "left")
-
-#Response
-title<-c("Response")
-if(covariate != "NULL") {
-	title<-paste(title, " and covariate", sep="")
-}
-HTML.title(title, HR=2, align="left")
-
-add<-paste(c("The  "), resp, " response is currently being analysed by the Nested Design Analysis module", sep="")
-if(covariate != "NULL") {
-	add<-paste(add, c(", with  "), covariate, " fitted as a covariate.", sep="")
-} else {
-	add<-paste(add, ".", sep="")
-}
-HTML(add, align="left")
-
-if (responseTransform != "None") {
-	add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.",sep="")
-	HTML(add2, align="left")
-}
-
-if (covariateTransform != "None") {
-	add3<-paste(c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
-	HTML(add3, align="left")
-}
-
-#Method
-HTML.title("Methodology", HR=2, align="left")
-HTML("This module uses the estimated variance components from the original dataset to predict the hypothetical statistical power than can be achieved by varying the replication of the levels of the random factors in the experimental design, see Snedecor and Cochran (1989, p239)." , align="left")
-
-#Bate and Clark comment
-HTML(refxx, align="left")	
-
-#===================================================================================================================
 #Model and parameter setup - check and balances
 #===================================================================================================================
 #Graphical parameter setup
@@ -107,16 +67,16 @@ if (treatments=="NULL" && covariate == "NULL")	{
 
 # Making sure random factors are factor
 if (randomEffect1 != "NULL") {
-	statdata$rEffect1 <-as.factor(eval(parse(text = paste("statdata$", randomEffect1))))
+	statdata$rEffect1IVS <-as.factor(eval(parse(text = paste("statdata$", randomEffect1))))
 }
 if (randomEffect2 != "NULL") {
-	statdata$rEffect2  <-as.factor(eval(parse(text = paste("statdata$", randomEffect2))))
+	statdata$rEffect2IVS  <-as.factor(eval(parse(text = paste("statdata$", randomEffect2))))
 }
 if (randomEffect3 != "NULL") {
-	statdata$rEffect3  <-as.factor(eval(parse(text = paste("statdata$", randomEffect3))))
+	statdata$rEffect3IVS  <-as.factor(eval(parse(text = paste("statdata$", randomEffect3))))
 }
 if (randomEffect4 != "NULL") {
-	statdata$rEffect4  <-as.factor(eval(parse(text = paste("statdata$", randomEffect4))))
+	statdata$rEffect4IVS  <-as.factor(eval(parse(text = paste("statdata$", randomEffect4))))
 }
 
 siglevel<-as.numeric(sigLevel)
@@ -167,13 +127,13 @@ if (treatments!="NULL") {
 
 #Define random model
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL" && randomEffect4 == "NULL") {
-	randmodel<-as.formula(~1|rEffect1)
+	randmodel<-as.formula(~1|rEffect1IVS)
 }
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 == "NULL") {
-	randmodel<-as.formula(~1|rEffect1/rEffect2)
+	randmodel<-as.formula(~1|rEffect1IVS/rEffect2IVS)
 }
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 != "NULL") {
-	randmodel<-as.formula(~1|rEffect1/rEffect2/rEffect3)
+	randmodel<-as.formula(~1|rEffect1IVS/rEffect2IVS/rEffect3IVS)
 }
 
 #Parameters set up
@@ -209,6 +169,44 @@ if(len2<len) {
 	quit()
 }
 
+
+#===================================================================================================================
+#Output HTML header
+#===================================================================================================================
+Title <-paste(branding, " Nested Design Analysis", sep="")
+HTML.title(Title, HR = 1, align = "left")
+
+#Response
+title<-c("Response")
+if(covariate != "NULL") {
+	title<-paste(title, " and covariate", sep="")
+}
+HTML.title(title, HR=2, align="left")
+
+add<-paste(c("The  "), resp, " response is currently being analysed by the Nested Design Analysis module", sep="")
+if(covariate != "NULL") {
+	add<-paste(add, c(", with  "), covariate, " fitted as a covariate.", sep="")
+} else {
+	add<-paste(add, ".", sep="")
+}
+HTML(add, align="left")
+
+if (responseTransform != "None") {
+	add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.",sep="")
+	HTML(add2, align="left")
+}
+
+if (covariateTransform != "None") {
+	add3<-paste(c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
+	HTML(add3, align="left")
+}
+
+#Method
+HTML.title("Methodology", HR=2, align="left")
+HTML("This module uses the estimated variance components from the original dataset to predict the hypothetical statistical power than can be achieved by varying the replication of the levels of the random factors in the experimental design, see Snedecor and Cochran (1989, p239)." , align="left")
+
+#Bate and Clark comment
+HTML(refxx, align="left")	
 #Warning
 HTML.title("Warning", HR=2, align="left")
 HTML("Warning: This module is currently under construction, care should be taken when considering the results. The results have not been verified.", align="left")
@@ -248,13 +246,13 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 #===================================================================================================================
 HTML.title("Table of estimated variance components", HR=2, align="left")
 
-table<-matrix(nrow=1, ncol=length(reffects))
+table<-matrix(nrow=1, ncol=(length(reffects)+1))
+table[1,1] <- "Variance Components"
 for ( i in 1:length(reffects)) {
-	table[1,i]=format(round(covs[i], 4), nsmall=4, scientific=FALSE)
+	table[1,(i+1)]=format(round(covs[i], 4), nsmall=4, scientific=FALSE)
 }
 vars<-data.frame(table)
-colnames(vars)<-reffects
-rownames(vars)<-c("Variance Components")
+colnames(vars)<-c( "  ",  reffects)
 HTML(vars, classfirstline="second", align="left", row.names = "FALSE")
 
 #===================================================================================================================
@@ -272,10 +270,10 @@ repz1<-as.numeric(mean(vectorN1))
 
 #Random2 replication
 if (randomEffect1 != "NULL") {
-	length2<-length(unique(levels(as.factor(statdata$rEffect1))))
+	length2<-length(unique(levels(as.factor(statdata$rEffect1IVS))))
 	vectorN2 <-c(1:length2)
 	for (i in 1:length2) {
-		sub<-subset(statdata, statdata$rEffect1 == unique(levels(as.factor(statdata$rEffect1)))[i])
+		sub<-subset(statdata, statdata$rEffect1IVS == unique(levels(as.factor(statdata$rEffect1IVS)))[i])
 		sub2<-data.frame(sub)
 		vectorN2[i]=dim(sub2)[1]
 	}
@@ -284,10 +282,10 @@ if (randomEffect1 != "NULL") {
 
 #Random3 replication
 if (randomEffect2 != "NULL") {
-	length3<-length(unique(levels(as.factor(statdata$rEffect2))))
+	length3<-length(unique(levels(as.factor(statdata$rEffect2IVS))))
 	vectorN3 <-c(1:length3)
 	for (i in 1:length3) {
-		sub<-subset(statdata, statdata$rEffect2 == unique(levels(as.factor(statdata$rEffect2)))[i])
+		sub<-subset(statdata, statdata$rEffect2IVS == unique(levels(as.factor(statdata$rEffect2IVS)))[i])
 		sub3<-data.frame(sub)
 		vectorN3[i]=dim(sub3)[1]
 	}
@@ -296,10 +294,10 @@ if (randomEffect2 != "NULL") {
 
 #Random4 replication
 if (randomEffect3 != "NULL") {
-	length4<-length(unique(levels(as.factor(statdata$rEffect3))))
+	length4<-length(unique(levels(as.factor(statdata$rEffect3IVS))))
 	vectorN4 <-c(1:length4)
 	for (i in 1:length4) {
-		sub<-subset(statdata, statdata$rEffect3 == unique(levels(as.factor(statdata$rEffect3)))[i])
+		sub<-subset(statdata, statdata$rEffect3IVS == unique(levels(as.factor(statdata$rEffect3IVS)))[i])
 		sub4<-data.frame(sub)
 		vectorN4[i]=dim(sub4)[1]
 	}
@@ -349,14 +347,14 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	EMS<- cov34 + rep0*cov33 + rep0*rep3*cov32 + rep0*rep3*rep2*cov31
 }
 
-table<-matrix(nrow=1, ncol=length(reffects))
+table<-matrix(nrow=1, ncol=(length(reffects)+1))
+table[1,1]<-"Factor replication"
 for ( i in 1:length(reffects))
 {
-	table[1,i]=format(round(reps[i], 0), nsmall=0, scientific=FALSE)
+	table[1,(i+1)]=format(round(reps[i], 0), nsmall=0, scientific=FALSE)
 }
 vars<-data.frame(table)
-colnames(vars)<-reffects
-rownames(vars)<-c("Factor replication")
+colnames(vars)<-c(" ",  reffects)
 
 HTML.title("Table of average replication in the original design", HR=2, align="left")
 HTML("The following replication of the levels of the random factors are used in the power analyses, unless alternative replications are defined by the user. They are an estimate of the replication used within the original design.", align="left")
@@ -548,7 +546,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 }
 
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL" && randomEffect4 == "NULL" && repList2!="NULL") {
-	title<-paste("Power curves for a design varying the replication of ", randomEffect2, " within ", randomEffect1, sep="")
+	title<-paste("Power curves for a design varying the replication of ", randomEffect2, sep="")
 	HTML.title(title, HR=2, align="left")
 
 	EMSlist12<-numeric(0)
@@ -620,6 +618,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 		HTML(linkToPdf3)
 	}
 
+	title<-paste("These power curves are for a design varying the replication of ", randomEffect2, " within the levels of ", randomEffect1, ".", sep="")
+	HTML(title, align="left")
 	Comment2<-paste("These power curves assume the replication of the levels of the random factor ", randomEffect1, " is ", rep1, ".", sep="") 
 	HTML(Comment2, align="left")
 }
@@ -629,7 +629,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 	l2<- length(userlist2)
 
 	if (l1 ==l2) {
-		title<-paste("Power curves for a design varying the replication of ", randomEffect1, " and ", randomEffect2, " within ", randomEffect1, sep="")
+		title<-paste("Power curves for a design varying the replication of both random effects simultaneously", sep="")
 		HTML.title(title, HR=2, align="left")
 	
 		EMSlist12<-numeric(0)
@@ -790,7 +790,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 }
 
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 == "NULL" && repList2!="NULL") {
-	title<-paste("Power curves for a design varying the replication of ", randomEffect2, " within ", randomEffect1, sep="")
+	title<-paste("Power curves for a design varying the replication of ", randomEffect2, sep="")
 	HTML.title(title, HR=2, align="left")
 
 	EMSlist32<-numeric(0)
@@ -860,12 +860,14 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		linkToPdf6 <- paste ("<a href=\"",pdfFile_6,"\">Click here to view the PDF of the plot of the power curves</a>", sep = "")
 		HTML(linkToPdf6)
 	}
+	title<-paste("These power curves are for a design varying the replication of ", randomEffect2, " within the levels of ", randomEffect1, ".", sep="")
+	HTML(title, align="left")
 	Comment2<-paste("These power curves assume the replication of the levels of the random factor ", randomEffect1, " is ", rep1, " and the replication of ", randomEffect3, " is ", rep0, ".", sep="") 
 	HTML(Comment2, align="left")
 }
 
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 == "NULL" && repList3!="NULL") {
-	title<-paste("Power curves for a design varying the replication of ", randomEffect3, " within ", randomEffect2, " within ", randomEffect1, sep="")
+	title<-paste("Power curves for a design varying the replication of ", randomEffect3, sep="")
 	HTML.title(title, HR=2, align="left")
 
 	EMSlist33<-numeric(0)
@@ -934,6 +936,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		linkToPdf7 <- paste ("<a href=\"",pdfFile_7,"\">Click here to view the PDF of the plots of the power curves</a>", sep = "")
 		HTML(linkToPdf7)
 	}
+	title<-paste("These power curves are for a design varying the replication of ", randomEffect3, " within the levels of ", randomEffect2, " within the levels of ", randomEffect1, ".", sep="")
+	HTML(title, align="left")
 	Comment2<-paste("These power curves assume the replication of the levels of the random factor ", randomEffect1, " is ", rep1, " and the replication of ", randomEffect2, " is ", rep2, ".", sep="") 
 	HTML(Comment2, align="left")
 }
@@ -944,7 +948,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	l3<- length(userlist3)
 
 	if (l1 ==l2 && l1==l3)	 {
-		title<-paste("Power curves for a design varying the replication of ", randomEffect1, ", ", randomEffect2, " within ", randomEffect1, " and ", randomEffect3, " within ", randomEffect2, " within ", randomEffect1, sep="")
+		title<-paste("Power curves for a design varying the replication of all random effects  simultaneously" , sep="")
 		HTML.title(title, HR=2, align="left")
 	
 		EMSlist12<-numeric(0)
@@ -1035,7 +1039,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 #===================================================================================================================
 #===================================================================================================================
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 != "NULL" && repList1!="NULL") {
-	HTML.title("Power curves for a design varying the replication of ", HR=2, align="left")
+	title<-paste("Power curves for a design varying the replication of ", randomEffect1)
+	HTML.title(title, HR=2, align="left")
 
 	EMSlist41<-numeric(0)
 	samplesizelist41<-numeric(0)
@@ -1109,7 +1114,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 }
 
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 != "NULL" && repList2!="NULL") {
-	title<-paste("Power curves for a design varying the replication of ", randomEffect2, " within ", randomEffect1, sep="")
+	title<-paste("Power curves for a design varying the replication of ", randomEffect2, sep="")
 	HTML.title(title, HR=2, align="left")
 
 	EMSlist42<-numeric(0)
@@ -1177,12 +1182,14 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		linkToPdf1a <- paste ("<a href=\"",pdfFile_1a,"\">Click here to view the PDF of the plot of the power curves</a>", sep = "")
 		HTML(linkToPdf1a)
 	}
+	title<-paste("These power curves are for a design varying the replication of ", randomEffect2, " within the levels of ", randomEffect1, ".", sep="")
+	HTML(title, align="left")
 	Comment2<-paste("These power curves assume the replication of the levels of the random factor ", randomEffect1, " is ", rep1, ", the replication of the levels of the random factor ", randomEffect3, " is ", rep3, " and the replication of ", randomEffect4, " is ", rep0, ".", sep="") 
 	HTML(Comment2, align="left")
 }
  
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 != "NULL" && repList3!="NULL") {
-	title<-paste("Power curves for a design varying the replication of ", randomEffect3, " within ", randomEffect2, " within ", randomEffect1, sep="")
+	title<-paste("Power curves for a design varying the replication of ", randomEffect3, sep="")
 	HTML.title(title, HR=2, align="left")
 
 	EMSlist43<-numeric(0)
@@ -1252,12 +1259,14 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		linkToPdf1b <- paste ("<a href=\"",pdfFile_1b,"\">Click here to view the PDF of the plot of the power curves</a>", sep = "")
 		HTML(linkToPdf1b)
 	}
+	title<-paste("These power curves are for a design varying the replication of ", randomEffect3, " within the levels of ", randomEffect2, " within the levels of ", randomEffect1, ".", sep="")
+	HTML(title, align="left")
 	Comment2<-paste("These power curves assume the replication of the levels of the random factor ", randomEffect1, " is ", rep1, ", the replication of the levels of the random factor ", randomEffect2, " is ",  rep2, " and the replication of ", randomEffect4, " is ", rep0, ".", sep="") 
 	HTML(Comment2, align="left")
 }
 
 if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL" && randomEffect4 != "NULL" && repList4!="NULL") {
-	title<-paste("Power curves for a design varying the replication of ", randomEffect4, " within ", randomEffect3, " within ", randomEffect2, " within ", randomEffect1, sep="")
+	title<-paste("Power curves for a design varying the replication of ", randomEffect4, sep="")
 	HTML.title(title, HR=2, align="left")
 
 	EMSlist44<-numeric(0)
@@ -1326,6 +1335,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		linkToPdf1d <- paste ("<a href=\"",pdfFile_1d,"\">Click here to view the PDF of the plot of the power curves</a>", sep = "")
 		HTML(linkToPdf1d)
 	}
+	title<-paste("These power curves are for a design varying the replication of ", randomEffect4, " within the levels of ", randomEffect3, " within the levels of  ", randomEffect2, " within the levels of ", randomEffect1, ".", sep="")
+	HTML(title, align="left")
 	Comment2<-paste("These power curves assume the replication of the levels of the random factor ", randomEffect1, " is ", rep1, ", the replication of the levels of the random factor ", randomEffect2, " is ", rep2, " and the replication of ", randomEffect3, " is ", rep3, ".", sep="") 
 	HTML(Comment2, align="left")
 }
@@ -1337,7 +1348,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	l4<- length(userlist4)
 
 	if (l1 ==l2 && l1==l3 && l1==l4) {
-		title<-paste("Power curves for a design varying the replication of ", randomEffect1, ", ",  randomEffect2, " within ", randomEffect1, ", ", randomEffect3, " within ", randomEffect2, " within ", randomEffect1, " and ", randomEffect4, " within ", randomEffect3, " within ", randomEffect2, " within ", randomEffect1, sep="")
+		title<-paste("Power curves for a design varying the replication of all random effects  simultaneously" , sep="")
 		HTML.title(title, HR=2, align="left")
 
 		EMSlist12<-numeric(0)
@@ -1451,16 +1462,16 @@ HTML(Ref_list$PROTO_ref,  align="left")
 if (showdataset=="Y") {
 	statdata2<-subset(statdata, select = -c(alltreat))
 	if (randomEffect1 != "NULL") {
-		statdata2<-subset(statdata2, select = -c(rEffect1))
+		statdata2<-subset(statdata2, select = -c(rEffect1IVS))
 	}
 	if (randomEffect2 != "NULL") {
-		statdata2<-subset(statdata2, select = -c(rEffect2))
+		statdata2<-subset(statdata2, select = -c(rEffect2IVS))
 	}
 	if (randomEffect3 != "NULL") {
-		statdata2<-subset(statdata2, select = -c(rEffect3))
+		statdata2<-subset(statdata2, select = -c(rEffect3IVS))
 	}
 	if (randomEffect4 != "NULL") {
-		statdata2<-subset(statdata2, select = -c(rEffect4))
+		statdata2<-subset(statdata2, select = -c(rEffect4IVS))
 	}
 
 	observ <- data.frame(c(1:dim(statdata2)[1]))
@@ -1531,7 +1542,7 @@ if (repList4 != "NULL" && randomEffect4 != "NULL") {
 	HTML(paste("Replication options for random factor 4: ", repList4, sep=""), align="left")
 }
 
-HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
+HTML(paste("Significance level: ", siglevel, sep=""), align="left")
 
 
 

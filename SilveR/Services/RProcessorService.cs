@@ -44,6 +44,10 @@ namespace SilveR.Services
 #endif
                 Stopwatch sw = Stopwatch.StartNew();
 
+                //save the useroptions to the working dir
+                UserOption userOptions = await repository.GetUserOptions();
+                File.WriteAllLines(Path.Combine(workingDir, "UserOptions.txt"), userOptions.GetOptionLines());
+
                 //get analysis
                 Analysis analysis = await repository.GetAnalysisComplete(analysisGuid);
 

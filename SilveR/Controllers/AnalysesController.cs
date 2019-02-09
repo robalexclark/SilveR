@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Services;
 using SilveR.StatsModels;
@@ -40,7 +41,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAnalyses()
         {
-            IList<Analysis> analyses = await repository.GetAnalyses();
+            IEnumerable<Analysis> analyses = await repository.GetAnalyses();
             IEnumerable<AnalysisViewModel> analysesViewModel = analyses.Select(x => new AnalysisViewModel(x));
 
             return Json(analysesViewModel);
@@ -199,25 +200,25 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> MeansComparisonDatasetBasedInputs(MeansComparisonDatasetBasedInputsModel model, bool ignoreWarnings)
+        public async Task<IActionResult> ComparisonOfMeansPowerAnalysisDatasetBasedInputs(ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> MeansComparisonUserBasedInputs(MeansComparisonUserBasedInputsModel model, bool ignoreWarnings)
+        public async Task<IActionResult> ComparisonOfMeansPowerAnalysisUserBasedInputs(ComparisonOfMeansPowerAnalysisUserBasedInputsModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> OneWayANOVADatasetBasedInputs(OneWayANOVADatasetBasedInputsModel model, bool ignoreWarnings)
+        public async Task<IActionResult> OneWayANOVAPowerAnalysisDatasetBasedInputs(OneWayANOVAPowerAnalysisDatasetBasedInputsModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }
 
         [HttpPost]
-        public async Task<IActionResult> OneWayANOVAUserBasedInputs(OneWayANOVAUserBasedInputsModel model, bool ignoreWarnings)
+        public async Task<IActionResult> OneWayANOVAPowerAnalysisUserBasedInputs(OneWayANOVAPowerAnalysisUserBasedInputsModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }
@@ -273,15 +274,9 @@ namespace SilveR.Controllers
                 {
                     //save settings to database
                     Analysis newAnalysis = new Analysis(dataset);
-
                     newAnalysis.Script = await repository.GetScriptByName(model.ScriptFileName);
                     newAnalysis.DateAnalysed = DateTime.Now;
-
-                    //Arguments
-                    foreach (Argument argument in model.GetArguments())
-                    {
-                        newAnalysis.Arguments.Add(argument);
-                    }
+                    newAnalysis.Arguments.AddRange(model.GetArguments());
 
                     await repository.AddAnalysis(newAnalysis);
 

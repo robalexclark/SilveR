@@ -1,0 +1,15 @@
+language: csharp
+mono: none
+dotnet: 2.1
+
+install:
+- dotnet restore
+
+script:
+ - dotnet build
+ - dotnet test
+ 
+after_success:
+ - dotnet publish -c Release -r win-x64
+ - dotnet publish -c Release -r linux-x64
+ - dotnet publish -c Release -r osx-x64

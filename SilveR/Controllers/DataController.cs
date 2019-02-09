@@ -40,7 +40,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public async Task<ActionResult> GetDatasets()
         {
-            IList<DatasetViewModel> datasets = await repository.GetDatasetViewModels();
+            IEnumerable<DatasetViewModel> datasets = await repository.GetDatasetViewModels();
             return Json(datasets);
         }
 

@@ -1387,6 +1387,7 @@ if (analysisType == "PLS" ) {
 HTML(Ref_list$GGally_ref, align="left")
 HTML(Ref_list$RColorBrewers_ref,  align="left")
 HTML(Ref_list$GGPLot2_ref,  align="left")
+HTML(Ref_list$ggrepel_ref,  align="left")
 HTML(Ref_list$reshape_ref,  align="left")
 HTML(Ref_list$plyr_ref,  align="left")
 HTML(Ref_list$scales_ref,  align="left")

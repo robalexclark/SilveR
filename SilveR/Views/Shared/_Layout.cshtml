@@ -10,6 +10,8 @@
     <link href="~/lib/kendo-ui/styles/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/site.css" rel="stylesheet" type="text/css" />
 
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+
     <!-- Insert this line above script imports  -->
     <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
 
@@ -50,7 +52,7 @@
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("Single Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "SingleMeasuresParametricAnalysis" }, null)</li>
                                     <li>@Html.ActionLink("Repeated Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "RepeatedMeasuresParametricAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("P-value Adjustment*", "Analysis", "Analyses", new { analysisName = "PValueAdjustment" }, null)</li>
+                                    <li>@Html.ActionLink("P-value Adjustment", "Analysis", "Analyses", new { analysisName = "PValueAdjustment" }, null)</li>
                                     <li>@Html.ActionLink("Paired t-test Analysis & Within-Subject Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "PairedTTestAnalysis" }, null)</li>
                                     <li>@Html.ActionLink("Unpaired t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "UnpairedTTestAnalysis" }, null)</li>
                                     <li>@Html.ActionLink("Correlation Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "CorrelationAnalysis" }, null)</li>
@@ -64,8 +66,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Additional Analysis</a>
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("Non-parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "NonParametricAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Chi-squared and Fisher's Exact Test*", "AnalysisDataSelector", "Analyses", new { analysisName = "ChiSquaredAndFishersExactTest" }, null)</li>
-                                    <li>@Html.ActionLink("Survival Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "SurvivalAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Chi-squared and Fisher's Exact Test", "AnalysisDataSelector", "Analyses", new { analysisName = "ChiSquaredAndFishersExactTest" }, null)</li>
+                                    <li>@Html.ActionLink("Survival Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "SurvivalAnalysis" }, null)</li>
                                 </ul>
                             </li>
 
@@ -77,15 +79,15 @@
                                     <li class="menu-item dropdown dropdown-submenu">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Comparison of Means</a>
                                         <ul class="dropdown-menu">
-                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "MeansComparisonUserBasedInputs" }, null)</li>
-                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "MeansComparisonDatasetBasedInputs" }, null)</li>
+                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "ComparisonOfMeansPowerAnalysisUserBasedInputs" }, null)</li>
+                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "ComparisonOfMeansPowerAnalysisDatasetBasedInputs" }, null)</li>
                                         </ul>
                                     </li>
                                     <li class="menu-item dropdown dropdown-submenu">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">One-way ANOVA</a>
                                         <ul class="dropdown-menu">
-                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVAUserBasedInputs" }, null)</li>
-                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVADatasetBasedInputs" }, null)</li>
+                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVAPowerAnalysisUserBasedInputs" }, null)</li>
+                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVAPowerAnalysisDatasetBasedInputs" }, null)</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -96,7 +98,7 @@
                                 <ul class="dropdown-menu">
                                     <li>@Html.ActionLink("Multivariate Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "MultivariateAnalysis" }, null)</li>
                                     <li>@Html.ActionLink("Nested Design Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "NestedDesignAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Incomplete Factorial Parametric Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "IncompleteFactorialParametricAnalysis" }, null)</li>
+                                    <li>@Html.ActionLink("Incomplete Factorial Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "IncompleteFactorialParametricAnalysis" }, null)</li>
                                 </ul>
                             </li>
 
@@ -105,6 +107,10 @@
                     </li>
 
                     <li>@Html.ActionLink("My Analyses", "Index", "Analyses")</li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Index", "UserOptions")"><i class="fa fa-lg fa-gears"></i></a></li>
                 </ul>
             </div>
         </div>

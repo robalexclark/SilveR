@@ -15,6 +15,7 @@ namespace SilveR.Models
         {
             if (dataset != null)
             {
+                this.Dataset = dataset;
                 this.DatasetID = dataset.DatasetID;
                 this.DatasetName = dataset.DatasetName;
             }

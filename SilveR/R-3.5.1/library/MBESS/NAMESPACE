@@ -1,0 +1,13 @@
+exportPattern("^[^\\.]") # Exports all functions not beginning with a period.
+import(methods)
+importFrom("grDevices", "dev.off", "jpeg", "pdf", "postscript",
+             "trans3d")
+importFrom("graphics", "abline", "arrows", "legend", "lines", "par",
+             "persp", "plot", "points", "rect", "segments", "text",
+             "title")
+importFrom("stats", "anova", "coef", "cor", "cov", "cov2cor", "fitted",
+             "integrate", "lm", "median", "na.omit", "nlm", "optim",
+             "optimize", "pchisq", "pf", "pnorm", "pt", "qchisq", "qf",
+             "qnorm", "qt", "quantile", "resid", "rnorm", "sd", "var",
+             "weighted.mean", "model.frame")
+importFrom("utils", "capture.output", "read.table", "write.table")

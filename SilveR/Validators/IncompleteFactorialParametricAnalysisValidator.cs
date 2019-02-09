@@ -58,15 +58,9 @@ namespace SilveR.Validators
             //check that the effect selected is the highest order interaction possible from selected factors, else output warning
             CheckEffectSelectedIsHighestOrderInteraction();
 
-            //
             if (ifpVariables.Covariates != null && String.IsNullOrEmpty(ifpVariables.PrimaryFactor))
             {
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
-            }
-
-            if (!String.IsNullOrEmpty(ifpVariables.ComparisonsBackToControl) && String.IsNullOrEmpty(ifpVariables.ControlGroup))
-            {
-                ValidationInfo.AddErrorMessage("You have selected to compare back to a control but no control group is selected");
             }
 
             //if get here then no errors so return true
@@ -140,16 +134,13 @@ namespace SilveR.Validators
                 }
 
                 //check transformations
-                foreach (DataRow row in DataTable.Rows)
-                {
-                    CheckTransformations(row, ifpVariables.ResponseTransformation, ifpVariables.Response);
+                CheckTransformations(DataTable, ifpVariables.ResponseTransformation, ifpVariables.Response);
 
-                    if (ifpVariables.Covariates != null)
+                if (ifpVariables.Covariates != null)
+                {
+                    foreach (string covariate in ifpVariables.Covariates)
                     {
-                        foreach (string covariate in ifpVariables.Covariates)
-                        {
-                            CheckTransformations(row, ifpVariables.CovariateTransformation, covariate, true);
-                        }
+                        CheckTransformations(DataTable, ifpVariables.CovariateTransformation, covariate, true);
                     }
                 }
             }

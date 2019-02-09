@@ -1,0 +1,33 @@
+Package: MBESS
+Type: Package
+Title: The MBESS R Package
+Version: 4.4.3
+Date: 2018-1-10
+Authors@R: c(person("Ken", "Kelley", role=c("aut", "cre"), email="kkelley@nd.edu"))
+Maintainer: Ken Kelley <kkelley@nd.edu>
+Depends: R (>= 3.2.0), stats
+Imports: boot, gsl, lavaan, MASS, methods, mnormt, nlme, OpenMx,
+        parallel, sem, semTools
+Description: Implements methods that useful in designing research studies and analyzing data, with 
+	particular emphasis on methods that are developed for or used within the behavioral, 
+	educational, and social sciences (broadly defined). That being said, many of the methods 
+	implemented within MBESS are applicable to a wide variety of disciplines. MBESS has a 
+	suite of functions for a variety of related topics, such as effect sizes, confidence intervals 
+	for effect sizes (including standardized effect sizes and noncentral effect sizes), sample size
+	planning (from the accuracy in parameter estimation [AIPE], power analytic, equivalence, and 
+	minimum-risk point estimation perspectives), mediation analysis, various properties of 
+	distributions, and a variety of utility functions. MBESS (pronounced 'em-bes') was originally 
+	an acronym for 'Methods for the Behavioral, Educational, and Social Sciences,' but at this 
+	point MBESS contains methods applicable and used in a wide variety of fields and is an 
+	orphan acronym, in the sense that what was an acronym is now literally its name. MBESS has 
+	greatly benefited from others, see <http://nd.edu/~kkelley/site/MBESS.html> for a detailed 
+	list of those that have contributed and other details.
+License: GPL-2 | GPL-3
+URL: http://nd.edu/~kkelley/site/MBESS.html
+RoxygenNote: 6.0.0
+NeedsCompilation: no
+Packaged: 2018-01-10 21:05:40 UTC; kkelley
+Author: Ken Kelley [aut, cre]
+Repository: CRAN
+Date/Publication: 2018-01-10 23:37:02 UTC
+Built: R 3.5.1; ; 2018-08-09 13:57:36 UTC; windows

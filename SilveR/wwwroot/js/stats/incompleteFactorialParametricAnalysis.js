@@ -31,17 +31,13 @@ $(function () {
     });
 
     const primaryFactorDropdown = $("#PrimaryFactor").kendoDropDownList({
-        dataSource: {
-            transport: {
-                read: {
-                    url: "/Values/GetSelectedTreatments"
-                }
-            }
-        }
-
+        dataSource: theModel.treatments,
+        value: theModel.primaryFactor
     }).data("kendoDropDownList");
     primaryFactorDropdown.bind("dataBound", function (e) {
-        primaryFactorDropdown.value(theModel.primaryFactor);
+        if (!this.value()) {
+            this.select(0);
+        }
     });
 
     $("#CovariateTransformation").kendoDropDownList({
@@ -56,11 +52,10 @@ $(function () {
         dataSource: {
             transport: {
                 read: {
-                    url: "/Values/GetSelectedEffectsList"
+                    url: "/Values/GetIncompleteFactorialSelectedEffectsList"
                 }
             }
-        },
-        change: selectedEffectChanged
+        }
     }).data("kendoDropDownList");
     selectedEffect.bind("dataBound", function (e) {
         if (selectedEffect.select() === -1) {
@@ -72,31 +67,11 @@ $(function () {
             }
         }
 
-        selectedEffect.enable(true);
-
-        selectedEffectChanged();
+        selectedEffect.enable(false);
     });
 
     $("#AllPairwise").kendoDropDownList({
         dataSource: theModel.pairwiseTestList
-    });
-
-    $("#ComparisonsBackToControl").kendoDropDownList({
-        dataSource: theModel.comparisonsBackToControlTestList
-    });
-
-    const controlGroup = $("#ControlGroup").kendoDropDownList({
-        autoBind: false,
-        dataSource: {
-            transport: {
-                read: {
-                    url: "/Values/GetLevels"
-                }
-            }
-        }
-    }).data("kendoDropDownList");
-    controlGroup.bind("dataBound", function (e) {
-        controlGroup.value(theModel.controlGroup);
     });
 
     treatmentsChanged();
@@ -109,11 +84,11 @@ function treatmentsChanged() {
 
     $.ajax({
         type: 'GET',
-        url: "/Values/GetInteractions",
+        url: "/Values/GetIncompleteFactorialInteractions",
         data: { selectedTreatments: treatmentMultiSelect.dataItems() },
         success: function (data) {
-            let markup = '';
-            for (let x = 0; x < data.length; x++) {
+            var markup = '';
+            for (var x = 0; x < data.length; x++) {
                 markup += '<option value="' + data[x] + '">' + data[x] + '</option>';
             }
 
@@ -122,32 +97,15 @@ function treatmentsChanged() {
     });
 
 
-    const currentlySelectedTreatments = $("#Treatments").data("kendoMultiSelect").dataItems();
-
     //treatments have changed so fill in the primary factor...
     const primaryFactorDropDown = $("#PrimaryFactor").data("kendoDropDownList");
-    primaryFactorDropDown.dataSource.read({
-        selectedTreatments: currentlySelectedTreatments
-    });
+    primaryFactorDropDown.setDataSource($("#Treatments").data("kendoMultiSelect").dataItems());
 
     //...and the selected effect
     const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
     selectedEffectDropDown.dataSource.read({
-        selectedTreatments: currentlySelectedTreatments
+        selectedTreatments: $("#Treatments").data("kendoMultiSelect").dataItems()
     });
-
-    //selectedEffectsBlockEnableDisable();
-}
-
-//if the selected effect is changed then fill in the control group
-function selectedEffectChanged() {
-
-    const controlGroup = $("#ControlGroup").data("kendoDropDownList");
-
-    controlGroup.value(null);
-    controlGroup.dataSource.read({ treatment: $("#SelectedEffect").val(), datasetID: $("#DatasetID").val(), includeNull: true });
-
-    selectedEffectsBlockEnableDisable();
 }
 
 function covariateBlockEnableDisable() {
@@ -165,38 +123,4 @@ function covariateBlockEnableDisable() {
         covariateTransformationDropDown.value("None");
         primaryFactorDropDown.value(null);
     }
-}
-
-function selectedEffectsBlockEnableDisable() {
-    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
-    const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
-    const lsMeansSelectedCheckBox = $("#LSMeansSelected");
-    const allPairwise = $('#AllPairwise').data("kendoDropDownList");
-    const comparisonsBackToControl = $('#ComparisonsBackToControl').data("kendoDropDownList");
-    const controlGroup = $('#ControlGroup').data("kendoDropDownList");
-
-    if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 0 && selectedEffectDropDown.value().indexOf("*") == -1) {
-        //selectedEffectDropDown.enable(true);
-        lsMeansSelectedCheckBox.prop("disabled", false);
-        allPairwise.enable(true);
-        comparisonsBackToControl.enable(true);
-        controlGroup.enable(true);
-    }
-    else {
-        //selectedEffectDropDown.enable(false);
-        lsMeansSelectedCheckBox.prop("disabled", true);
-        allPairwise.enable(false);
-        comparisonsBackToControl.enable(false);
-        controlGroup.enable(false);
-        allPairwise.value(null);
-        comparisonsBackToControl.value(null);
-        controlGroup.value(null);
-    }
-
-    //if (selectedEffectDropDown.value().indexOf("*") >= 0) {
-    //    comparisonsBackToControl.enable(false);
-    //    controlGroup.enable(false);
-    //    comparisonsBackToControl.value(null);
-    //    controlGroup.value(null);
-    //}
 }

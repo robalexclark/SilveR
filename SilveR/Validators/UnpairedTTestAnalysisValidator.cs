@@ -39,10 +39,7 @@ namespace SilveR.Validators
                 return ValidationInfo;
 
             //check transformations
-            foreach (DataRow row in DataTable.Rows)
-            {
-                CheckTransformations(row, upttVariables.ResponseTransformation, upttVariables.Response);
-            }
+            CheckTransformations(DataTable, upttVariables.ResponseTransformation, upttVariables.Response);
 
             //if get here then no errors so return true
             return ValidationInfo;

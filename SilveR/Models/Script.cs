@@ -10,6 +10,7 @@ namespace SilveR.Models
             Analysis = new HashSet<Analysis>();
         }
 
+        [Key]
         public int ScriptID { get; set; }
 
         [Required]

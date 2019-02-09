@@ -1,0 +1,5 @@
+export(exact.test)
+export(power.exact.test)
+
+importFrom("graphics", "plot", "points")
+importFrom("stats", "dbinom", "dhyper", "optimise", "phyper", "qbeta", "rbinom")

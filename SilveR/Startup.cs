@@ -78,8 +78,6 @@ namespace SilveR
 
         private void ProvisionDatabase(IApplicationBuilder app)
         {
-            //string analysisViewName = viewModel.AnalysisName.Replace(" ", String.Empty).Replace("-", String.Empty);
-
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 SilveRContext context = serviceScope.ServiceProvider.GetRequiredService<SilveRContext>();
@@ -172,27 +170,27 @@ namespace SilveR
                     context.Scripts.Add(graphicalAnalysis);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "MeansComparisonDatasetBasedInputs"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "ComparisonOfMeansPowerAnalysisDatasetBasedInputs"))
                 {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (Dataset Based Inputs)", ScriptFileName = "MeansComparisonDatasetBasedInputs", RequiresDataset = true };
+                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (Dataset Based Inputs)", ScriptFileName = "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", RequiresDataset = true };
                     context.Scripts.Add(meansComparison);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "MeansComparisonUserBasedInputs"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "ComparisonOfMeansPowerAnalysisUserBasedInputs"))
                 {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (User Based Inputs)", ScriptFileName = "MeansComparisonUserBasedInputs", RequiresDataset = false };
+                    Script meansComparison = new Script() { ScriptDisplayName = "'Comparison of Means' Power Analysis (User Based Inputs)", ScriptFileName = "ComparisonOfMeansPowerAnalysisUserBasedInputs", RequiresDataset = false };
                     context.Scripts.Add(meansComparison);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVADatasetBasedInputs"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVAPowerAnalysisDatasetBasedInputs"))
                 {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (Dataset Based Inputs)", ScriptFileName = "OneWayANOVADatasetBasedInputs", RequiresDataset = true };
+                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (Dataset Based Inputs)", ScriptFileName = "OneWayANOVAPowerAnalysisDatasetBasedInputs", RequiresDataset = true };
                     context.Scripts.Add(meansComparison);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVAUserBasedInputs"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVAPowerAnalysisUserBasedInputs"))
                 {
-                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (User Based Inputs)", ScriptFileName = "OneWayANOVAUserBasedInputs", RequiresDataset = false };
+                    Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (User Based Inputs)", ScriptFileName = "OneWayANOVAPowerAnalysisUserBasedInputs", RequiresDataset = false };
                     context.Scripts.Add(meansComparison);
                 }
 

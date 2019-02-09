@@ -1,5 +1,4 @@
 ﻿using SilveR.StatsModels;
-using System.Data;
 
 namespace SilveR.Validators
 {
@@ -34,10 +33,7 @@ namespace SilveR.Validators
                     return ValidationInfo;
                 }
 
-                foreach (DataRow row in DataTable.Rows)
-                {
-                    CheckTransformations(row, osttVariables.ResponseTransformation, response);
-                }
+                CheckTransformations(DataTable, osttVariables.ResponseTransformation, response);
             }
 
             //if get here then no errors so return true

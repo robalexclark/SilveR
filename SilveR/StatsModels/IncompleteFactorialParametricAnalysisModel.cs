@@ -74,19 +74,8 @@ namespace SilveR.StatsModels
 
         public IEnumerable<string> PairwiseTestList
         {
-            get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Tukey", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }; }
+            get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }; }
         }
-
-        [DisplayName("Comparisons back to control")]
-        public string ComparisonsBackToControl { get; set; }
-
-        public IEnumerable<string> ComparisonsBackToControlTestList
-        {
-            get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Dunnett", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }; }
-        }
-
-        [DisplayName("Control group")]
-        public string ControlGroup { get; set; }
 
 
         public IncompleteFactorialParametricAnalysisModel() : base("IncompleteFactorialParametricAnalysis") { }
@@ -113,9 +102,6 @@ namespace SilveR.StatsModels
                     dtNew.Columns.Remove(columnName);
                 }
             }
-
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
@@ -209,7 +195,13 @@ namespace SilveR.StatsModels
                 }
             }
 
-            return dtNew.GetCSVArray();
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
 
@@ -225,12 +217,12 @@ namespace SilveR.StatsModels
             arguments.Append(" " + scatterplotModel); //5
 
             //assemble a model for the covariate plot (if a covariate has been chosen)...
-            arguments.Append(" " + Covariates); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //6
 
             //get transforms
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation,false)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //7
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation,false)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //8
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //9
 
@@ -242,7 +234,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //13
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //14
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance,false)); //15
+            arguments.Append(" " + Significance); //15
 
             //assemble the effect model
             if (String.IsNullOrEmpty(SelectedEffect)) //16, 17
@@ -259,10 +251,6 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //18
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwise, false)); //19
-
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonsBackToControl, false)); //20
-
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //21
 
             return arguments.ToString().Trim();
         }
@@ -286,8 +274,6 @@ namespace SilveR.StatsModels
             this.SelectedEffect = argHelper.LoadStringArgument(nameof(SelectedEffect));
             this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
             this.AllPairwise = argHelper.LoadStringArgument(nameof(AllPairwise));
-            this.ComparisonsBackToControl = argHelper.LoadStringArgument(nameof(ComparisonsBackToControl));
-            this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -308,12 +294,9 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedEffect), SelectedEffect));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AllPairwise), AllPairwise));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(ComparisonsBackToControl), ComparisonsBackToControl));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
 
             return args;
         }
-
 
 
         private string GetModel()
@@ -322,23 +305,33 @@ namespace SilveR.StatsModels
             string model = Response + "~";
 
             if (Covariates != null)
+            {
                 foreach (string covariate in Covariates)
+                {
                     model = model + covariate + "+";
+                }
+            }
 
             if (OtherDesignFactors != null)
             {
                 foreach (string otherDesign in OtherDesignFactors)
+                {
                     model = model + otherDesign + "+";
+                }
             }
 
             foreach (string treat in Treatments)
+            {
                 model = model + treat + "+";
+            }
 
             //determine the interactions
             List<string> factors = new List<string>(Treatments);
-            List<string> fullInteractions = DetermineInteractions(factors);
+            IEnumerable<string> fullInteractions = DetermineInteractions(factors);
             foreach (string s in fullInteractions)
+            {
                 model = model + s.Replace(" * ", "*") + "+";
+            }
 
             model = model.TrimEnd('+');
 
@@ -408,24 +401,14 @@ namespace SilveR.StatsModels
 
         public static List<string> DetermineSelectedEffectsList(List<string> selectedTreatments)
         {
-            //assemble a complete list of main and interaction effects
+            //get a list and add in the highest order interaction
             List<string> effects = new List<string>();
-            effects.AddRange(selectedTreatments);
 
             List<string> interactions = DetermineInteractions(selectedTreatments);
-            effects.AddRange(interactions);
 
-            //if the number of interaction effects is 4 or greater,
-            //then only the main effects and highest order effect are to be available
-            if (selectedTreatments.Count >= 4)
+            if (interactions.Any())
             {
-                //remove any effect that is an interaction effect
-                for (int i = effects.Count - 1; i >= 0; i = i - 1)
-                {
-                    if (effects[i].Contains("*")) effects.Remove(effects[i]);
-                }
-                //add in the highest order interaction again
-                effects.Add(interactions[interactions.Count - 1].ToString());
+                effects.Add(interactions.Last());
             }
 
             return effects;

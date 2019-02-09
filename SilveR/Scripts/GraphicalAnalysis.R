@@ -1629,20 +1629,20 @@ if (showdataset == "Y") {
 
 HTML.title("Analysis options", HR=2, align="left")
 
-if (XAxisVar != "NULL") {
-	HTML(paste("X-axis variable: ", XAxisVar, sep=""),  align="left")
-}
-
-if (XAxisTransform  != "None") {
-	HTML(paste("X-axis transformation: ", XAxisTransform , sep=""),  align="left")
-}
-
 if (YAxisVars != "NULL") {
 	HTML(paste("Response variable: ", YAxisVars, sep=""),  align="left")
 }
 
 if (YAxisTransform != "None") {
 	HTML(paste("Y-axis transformation: ", YAxisTransform, sep=""),  align="left")
+}
+
+if (XAxisVar != "NULL") {
+	HTML(paste("X-axis variable: ", XAxisVar, sep=""),  align="left")
+}
+
+if (XAxisTransform  != "None") {
+	HTML(paste("X-axis transformation: ", XAxisTransform , sep=""),  align="left")
 }
 
 if (FirstCatFactor != "NULL") {

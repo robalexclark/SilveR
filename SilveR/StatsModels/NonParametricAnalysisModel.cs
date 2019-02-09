@@ -38,12 +38,6 @@ namespace SilveR.StatsModels
         [DisplayName("Control")]
         public string Control { get; set; }
 
-        private readonly IEnumerable<string> controlList = new List<string>();
-        public IEnumerable<string> ControlList
-        {
-            get { return controlList; }
-        }
-
         public enum AnalysisOption { MannWhitney = 0, AllComparisons = 1, CompareToControl = 2 }
         [DisplayName("Analysis type")]
         public AnalysisOption AnalysisType { get; set; } = AnalysisOption.MannWhitney;
@@ -71,9 +65,6 @@ namespace SilveR.StatsModels
                     dtNew.Columns.Remove(columnName);
                 }
             }
-
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);

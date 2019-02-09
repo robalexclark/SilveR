@@ -1,0 +1,36 @@
+Package: mi
+Type: Package
+Title: Missing Data Imputation and Model Checking
+Version: 1.0
+Date: 2015-04-16
+Authors@R: c(person("Andrew", "Gelman", email = "gelman@stat.columbia.edu", role = "ctb"), 
+             person("Jennifer", "Hill", email = "jennifer.hill@nyu.edu", role = "ctb"),
+             person("Yu-Sung", "Su", email = "suyusung@tsinghua.edu.cn", role = c("aut")), 
+             person("Masanao", "Yajima", email = "my2167@columbia.edu", role = "ctb"), 
+             person("Maria", "Pittau", email = "grazia@stat.columbia.edu", role = "ctb"), 
+             person("Ben", "Goodrich", email = "benjamin.goodrich@columbia.edu", role = c("cre", "aut")), 
+             person("Yajuan", "Si", email = "sophie2012@gmail.com", role = "ctb"),
+             person("Jon", "Kropko", email = "jkropko@gmail.com", role = "aut"))
+Description: The mi package provides functions for data manipulation, imputing missing values in an approximate Bayesian framework, diagnostics of the models used to generate the imputations, confidence-building mechanisms to validate some of the assumptions of the imputation algorithm, and functions to analyze multiply imputed data sets with the appropriate degree of sampling uncertainty.
+VignetteBuilder: knitr
+Depends: R (>= 3.0.0), methods, Matrix, stats4
+Imports: arm (>= 1.4-11)
+Suggests: betareg, lattice, knitr, MASS, nnet, parallel, sn, survival,
+        truncnorm, foreign
+URL: http://www.stat.columbia.edu/~gelman/
+License: GPL (>= 2)
+LazyLoad: yes
+Packaged: 2015-04-16 14:03:10 UTC; goodrich
+Author: Andrew Gelman [ctb],
+  Jennifer Hill [ctb],
+  Yu-Sung Su [aut],
+  Masanao Yajima [ctb],
+  Maria Pittau [ctb],
+  Ben Goodrich [cre, aut],
+  Yajuan Si [ctb],
+  Jon Kropko [aut]
+Maintainer: Ben Goodrich <benjamin.goodrich@columbia.edu>
+NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 2015-04-16 19:53:48
+Built: R 3.5.1; ; 2018-08-03 22:09:20 UTC; windows

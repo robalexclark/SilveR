@@ -13,6 +13,7 @@ namespace SilveR.Models
         public virtual DbSet<Argument> Arguments { get; set; }
         public virtual DbSet<Dataset> Datasets { get; set; }
         public virtual DbSet<Script> Scripts { get; set; }
+        public virtual DbSet<UserOption> UserOptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,16 +45,14 @@ namespace SilveR.Models
 
             modelBuilder.Entity<Dataset>(entity =>
             {
-                entity.Property(e => e.DatasetName).IsUnicode(false);
-
-                entity.Property(e => e.TheData).IsUnicode(false);
+                entity.Property(e => e.DatasetName);
+                entity.Property(e => e.TheData);
             });
 
             modelBuilder.Entity<Script>(entity =>
             {
-                entity.Property(e => e.ScriptDisplayName).IsUnicode(false);
-
-                entity.Property(e => e.ScriptFileName).IsUnicode(false);
+                entity.Property(e => e.ScriptDisplayName);
+                entity.Property(e => e.ScriptFileName);
             });
 
             OnModelCreatingPartial(modelBuilder);

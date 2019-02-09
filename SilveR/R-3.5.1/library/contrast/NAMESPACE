@@ -1,0 +1,38 @@
+# Generic functions formula, coef, and vcov are defined in stats package
+import(stats,rms)
+
+importFrom("sandwich", "vcovHC")
+importFrom("nlme", "asOneFormula", "fixef", "getCovariateFormula", 
+           "getGroups", "getGroupsFormula", "glsStruct", "lmeStruct", 
+           "pdSymm", "reStruct", "splitFormula", "varFunc")
+
+#import(MASS)
+
+# Export functions
+export(
+       contrast.lm,
+       contrast.lme,
+       contrast.gls,
+       contrast.geese,
+       print.contrast
+       )
+
+# I have to define and export the contrast generic function because Design
+# doesn't have a namespace, so I can't import Design's definition of it.
+export(contrast)
+
+# S3 methods that we define
+S3method(contrast, lm)
+S3method(contrast, gls)
+S3method(contrast, lme)
+S3method(contrast, geese)
+
+S3method(print, contrast)
+
+S3method(model.frame, gls)
+S3method(model.frame, lme)
+S3method(model.frame, geese)
+
+S3method(getCoefficients, default)
+S3method(getCoefficients, lme)
+

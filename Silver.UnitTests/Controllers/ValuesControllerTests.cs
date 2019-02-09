@@ -4,13 +4,11 @@ using SilveR.Controllers;
 using SilveR.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Silver.UnitTests.Controllers
 {
-    
     public class ValuesControllerTests
     {
         [Theory]
@@ -100,6 +98,39 @@ namespace Silver.UnitTests.Controllers
             JsonResult jsonResult = Assert.IsType<JsonResult>(result);
 
             Assert.Equal(new List<string> { "Treat1 * Day1", "Treat2 * Day1", "Treat3 * Day1", "Treat1 * Treat2 * Day1", "Treat1 * Treat3 * Day1", "Treat2 * Treat3 * Day1", "Treat1 * Treat2 * Treat3 * Day1" }, jsonResult.Value);
+        }
+
+        [Fact]
+        public void GetIncompleteFactorialInteractions_ReturnsAnActionResult()
+        {
+            //Arrange
+            Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
+            ValuesController sut = new ValuesController(mock.Object);
+
+            //Act
+            IActionResult result = sut.GetIncompleteFactorialInteractions(new List<string> { "Treat1", "Treat2", "Treat3" });
+
+            //Assert
+            JsonResult jsonResult = Assert.IsType<JsonResult>(result);
+
+            Assert.Equal(new List<string> { "Treat1 * Treat2", "Treat1 * Treat3", "Treat2 * Treat3", "Treat1 * Treat2 * Treat3" }, jsonResult.Value);
+        }
+
+
+        [Fact]
+        public void GetIncompleteFactorialSelectedEffectsLists_ReturnsAnActionResult()
+        {
+            //Arrange
+            Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
+            ValuesController sut = new ValuesController(mock.Object);
+
+            //Act
+            IActionResult result = sut.GetIncompleteFactorialSelectedEffectsList(new List<string> { "Treat1", "Treat2", "Treat3" });
+
+            //Assert
+            JsonResult jsonResult = Assert.IsType<JsonResult>(result);
+
+            Assert.Equal(new List<string> { "Treat1 * Treat2 * Treat3" }, jsonResult.Value);
         }
 
 

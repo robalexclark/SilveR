@@ -20,7 +20,7 @@ namespace SilveR.Validators
             get { return validationInfo; }
         }
 
-        protected ValidatorBase(DataTable dataTable=null) //naughty
+        protected ValidatorBase(DataTable dataTable = null) //naughty
         {
             if (dataTable != null)
             {
@@ -63,15 +63,6 @@ namespace SilveR.Validators
 
             foreach (string level in levels)
             {
-                // IEnumerable<string> query = (from row in dataTable.AsEnumerable()
-                //                            where row.Field<string>(treatCol) == level & !String.IsNullOrEmpty(Convert.ToString( row.Field<string>(responseCol)))
-                //                          select row.Field<string>(treatCol));
-
-                //var query = dataTable.AsEnumerable().Where(dt => dt.Field<string>(treatCol) == level && !String.IsNullOrEmpty(dt.Field<string>(responseCol)));
-
-                //responseCounts.Add(level, query.Count());
-
-                //REALLY NOT SURE WHY THE ABOVE SUDDENLY STARTED FAILING
                 int count = 0;
                 foreach (DataRow row in dataTable.Rows)
                 {
@@ -240,8 +231,15 @@ namespace SilveR.Validators
             return true;
         }
 
+        protected void CheckTransformations(DataTable dataTable, string transformation, string column, bool isCovariate = false)
+        {
+            foreach (DataRow row in dataTable.Rows)
+            {
+                CheckTransformations(row, transformation, column, isCovariate);
+            }
+        }
 
-        protected void CheckTransformations(DataRow row, string transformation, string column, bool isCovariate = false)
+        private void CheckTransformations(DataRow row, string transformation, string column, bool isCovariate = false)
         {
             if (transformation != "None" && !String.IsNullOrEmpty(column))
             {

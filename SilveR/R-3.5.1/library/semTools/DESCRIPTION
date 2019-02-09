@@ -1,0 +1,68 @@
+Package: semTools
+Version: 0.5-0
+Title: Useful Tools for Structural Equation Modeling
+Description: Provides useful tools for structural equation modeling.
+Authors@R: c(person(given = c("Terrence","D."), family = "Jorgensen", role = c("aut","cre"), email="TJorgensen314@gmail.com", comment = c(ORCID = "0000-0001-5111-6773")),
+		person(given = "Sunthud", family = "Pornprasertmanit", role = "aut", email = "psunthud@gmail.com"),
+		person(given = "Alexander", family = "Schoemann", role = "aut", email="schoemanna@ecu.edu"),
+		person(given = "Yves", family = "Rosseel", role = "aut", email="Yves.Rosseel@UGent.be"),
+		person(given = "Patrick", family = "Miller", role = "ctb", email="pmille13@nd.edu"),
+		person(given = "Corbin", family = "Quick", role = "ctb", email="corbinq@umich.edu"),
+		person(given = "Mauricio", family = "Garnier-Villarreal", role = "ctb", email="mauricio.garniervillarreal@marquette.edu"),
+		person(given = "James", family = "Selig", role = "ctb", email="selig@unm.edu"),
+		person(given = "Aaron", family = "Boulton", role = "ctb", email="aboulton@email.unc.edu"),
+		person(given = "Kristopher", family = "Preacher", role = "ctb", email="kris.preacher@vanderbilt.edu"),
+		person(given = "Donna", family = "Coffman", role = "ctb", email="dlc30@psu.edu"),
+		person(given = "Mijke", family = "Rhemtulla", role = "ctb", email="mrhemtulla@ucdavis.edu"),
+		person(given = "Alexander", family = "Robitzsch", role = "ctb", email="a.robitzsch@bifie.at"),
+		person(given = "Craig", family = "Enders", role = "ctb", email="Craig.Enders@asu.edu"),
+		person(given = "Ruber", family = "Arslan", role = "ctb", email="rubenarslan@gmail.com"),
+		person(given = "Bell", family = "Clinton", role = "ctb", email="clintonbell@ku.edu"),
+		person(given = "Pavel", family = "Panko", role = "ctb", email="pavel.panko@ttu.edu"),
+		person(given = "Edgar", family = "Merkle", role = "ctb", email="merklee@missouri.edu"),
+		person(given = "Steven", family = "Chesnut", role = "ctb", email="Steven.Chesnut@usm.edu"),
+		person(given = "Jarrett", family = "Byrnes", role = "ctb", email="Jarrett.Byrnes@umb.edu"),
+		person(given = c("Jason","D."), family = "Rights", role = "ctb", email="jason.d.rights@vanderbilt.edu"),
+		person(given = "Ylenio", family = "Longo", role = "ctb", email="yleniolongo@gmail.com"),
+		person(given = "Maxwell", family = "Mansolf", role = "ctb", email="mamansolf@gmail.com")
+		)
+Depends: R(>= 3.3), utils, stats, graphics, lavaan(>= 0.6.1)
+Imports: methods
+Suggests: MASS, foreign, parallel, boot, Amelia, mice, GPArotation,
+        mnormt, OpenMx
+License: GPL (>= 2)
+LazyData: yes
+LazyLoad: yes
+URL: https://github.com/simsem/semTools/wiki
+BugReports: https://github.com/simsem/semTools/issues
+Date/Publication: 2018-06-27 13:13:01 UTC
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+Packaged: 2018-06-27 12:31:18 UTC; tjorgen2
+Author: Terrence D. Jorgensen [aut, cre]
+    (<https://orcid.org/0000-0001-5111-6773>),
+  Sunthud Pornprasertmanit [aut],
+  Alexander Schoemann [aut],
+  Yves Rosseel [aut],
+  Patrick Miller [ctb],
+  Corbin Quick [ctb],
+  Mauricio Garnier-Villarreal [ctb],
+  James Selig [ctb],
+  Aaron Boulton [ctb],
+  Kristopher Preacher [ctb],
+  Donna Coffman [ctb],
+  Mijke Rhemtulla [ctb],
+  Alexander Robitzsch [ctb],
+  Craig Enders [ctb],
+  Ruber Arslan [ctb],
+  Bell Clinton [ctb],
+  Pavel Panko [ctb],
+  Edgar Merkle [ctb],
+  Steven Chesnut [ctb],
+  Jarrett Byrnes [ctb],
+  Jason D. Rights [ctb],
+  Ylenio Longo [ctb],
+  Maxwell Mansolf [ctb]
+Maintainer: Terrence D. Jorgensen <TJorgensen314@gmail.com>
+Repository: CRAN
+Built: R 3.5.1; ; 2018-08-09 09:59:04 UTC; windows

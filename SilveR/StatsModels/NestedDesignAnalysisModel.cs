@@ -1,7 +1,6 @@
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -36,8 +35,8 @@ namespace SilveR.StatsModels
         }
 
         [CheckUsedOnceOnly]
-        [DisplayName("Covariate")]
-        public string Covariate { get; set; }
+        [DisplayName("Covariates")]
+        public IEnumerable<string> Covariates { get; set; }
 
         [DisplayName("Covariate transformation")]
         public string CovariateTransformation { get; set; } = "None";
@@ -98,14 +97,11 @@ namespace SilveR.StatsModels
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (Response != columnName && !Treatments.Contains(columnName) && (OtherDesignFactors == null || !OtherDesignFactors.Contains(columnName)) && Covariate != columnName && RandomFactor1 != columnName && RandomFactor2 != columnName && RandomFactor3 != columnName && RandomFactor4 != columnName)
+                if (Response != columnName && !Treatments.Contains(columnName) && (OtherDesignFactors == null || !OtherDesignFactors.Contains(columnName)) && (Covariates == null || !Covariates.Contains(columnName)) && RandomFactor1 != columnName && RandomFactor2 != columnName && RandomFactor3 != columnName && RandomFactor4 != columnName)
                 {
                     dtNew.Columns.Remove(columnName);
                 }
             }
-
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
@@ -113,9 +109,12 @@ namespace SilveR.StatsModels
             //Now do transformations...
             dtNew.TransformColumn(Response, ResponseTransformation);
 
-            if (!String.IsNullOrEmpty(Covariate)) //check that a covariate is selected
+            if (Covariates != null)
             {
-                dtNew.TransformColumn(Covariate, CovariateTransformation);
+                foreach (string covariate in Covariates)
+                {
+                    dtNew.TransformColumn(covariate, CovariateTransformation);
+                }
             }
 
             //Finally, as numeric categorical variables get misinterpreted by r, we need to go through
@@ -166,7 +165,7 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //8
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariate, true)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Covariates)); //9
             arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //10
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(RandomFactor1, true)); //11
@@ -190,7 +189,7 @@ namespace SilveR.StatsModels
             this.Treatments = argHelper.LoadIEnumerableArgument(nameof(Treatments));
             this.OtherDesignFactors = argHelper.LoadIEnumerableArgument(nameof(OtherDesignFactors));
             this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
-            this.Covariate = argHelper.LoadStringArgument(nameof(Covariate));
+            this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
             this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
             this.RandomFactor1 = argHelper.LoadStringArgument(nameof(RandomFactor1));
             this.RandomFactor2 = argHelper.LoadStringArgument(nameof(RandomFactor2));
@@ -211,7 +210,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatments), Treatments));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(OtherDesignFactors), OtherDesignFactors));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariate), Covariate));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(RandomFactor1), RandomFactor1));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(RandomFactor2), RandomFactor2));
@@ -231,19 +230,45 @@ namespace SilveR.StatsModels
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
             string model = Response + "~";
 
-            if (!String.IsNullOrEmpty(Covariate))
-                model = model + Covariate + "+";
+            if (Covariates != null)
+            {
+                foreach (string covariate in Covariates)
+                {
+                    model = model + covariate + "+";
+                }
+            }
 
             if (OtherDesignFactors != null)
             {
                 foreach (string otherDesign in OtherDesignFactors)
+                {
                     model = model + otherDesign + "+";
+                }
             }
 
             foreach (string treat in Treatments)
+            {
                 model = model + treat + "+";
+            }
 
-            return model;
+            if (RandomFactor1 != null)
+            {
+                model = model + RandomFactor1 + "+";
+            }
+            if (RandomFactor2 != null)
+            {
+                model = model + RandomFactor2 + "+";
+            }
+            if (RandomFactor3 != null)
+            {
+                model = model + RandomFactor3 + "+";
+            }
+            if (RandomFactor4 != null)
+            {
+                model = model + RandomFactor4 + "+";
+            }
+
+            return model.TrimEnd('+');
         }
     }
 }

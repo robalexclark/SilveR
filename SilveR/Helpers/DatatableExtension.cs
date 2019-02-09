@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SilveR.Helpers
 {
-    public static class DataTableExtensionMethods
+    public static class DataTableExtension
     {
         //public static void TrimAllDataInDataTable(this DataTable dataTable)
         //{

@@ -1,0 +1,15 @@
+Package: Exact
+Version: 1.7
+Date: 2016-10-21
+Title: Unconditional Exact Test
+Authors@R: person("Peter", "Calhoun", email="calhoun.peter@gmail.com", role=c("aut", "cre"))
+Author: Peter Calhoun [aut, cre]
+Maintainer: Peter Calhoun <calhoun.peter@gmail.com>
+Description: Performs unconditional exact tests and power calculations for 2x2 contingency tables. Unconditional exact tests are often more powerful than conditional exact tests and asymptotic tests.
+License: GPL-2
+Imports: graphics, stats
+NeedsCompilation: no
+Packaged: 2016-10-21 20:16:40 UTC; pcalh_000
+Repository: CRAN
+Date/Publication: 2016-10-22 12:17:16
+Built: R 3.5.0; ; 2018-04-21 03:42:31 UTC; windows

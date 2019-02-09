@@ -49,7 +49,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public JsonResult GetSMPAInteractions(List<string> selectedTreatments)
         {
-            if (selectedTreatments != null)// && selectedTreatments.Any())
+            if (selectedTreatments != null)
             {
                 List<string> interactions = SingleMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
@@ -63,7 +63,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public JsonResult GetSMPASelectedEffectsList(List<string> selectedTreatments)
         {
-            if (selectedTreatments != null)// && selectedTreatments.Any())
+            if (selectedTreatments != null)
             {
                 List<string> selectedEffectsList = SingleMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments);
                 return Json(selectedEffectsList);
@@ -78,7 +78,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public JsonResult GetRMPAInteractions(List<string> selectedTreatments)
         {
-            if (selectedTreatments != null)// && selectedTreatments.Any())
+            if (selectedTreatments != null)
             {
                 List<string> interactions = RepeatedMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
@@ -92,9 +92,38 @@ namespace SilveR.Controllers
         [HttpGet]
         public JsonResult GetRMPASelectedEffectsList(List<string> selectedTreatments, string repeatedFactor)
         {
-            if (selectedTreatments != null  && repeatedFactor != null)//&& selectedTreatments.Any()
+            if (selectedTreatments != null  && repeatedFactor != null)
             {
                 List<string> selectedEffectsList = RepeatedMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments, repeatedFactor);
+                return Json(selectedEffectsList);
+            }
+            else
+            {
+                return Json(new List<string>());
+            }
+        }
+
+
+        [HttpGet]
+        public JsonResult GetIncompleteFactorialInteractions(List<string> selectedTreatments)
+        {
+            if (selectedTreatments != null)
+            {
+                List<string> interactions = IncompleteFactorialParametricAnalysisModel.DetermineInteractions(selectedTreatments);
+                return Json(interactions);
+            }
+            else
+            {
+                return Json(new List<string>());
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetIncompleteFactorialSelectedEffectsList(List<string> selectedTreatments)
+        {
+            if (selectedTreatments != null)
+            {
+                List<string> selectedEffectsList = IncompleteFactorialParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments);
                 return Json(selectedEffectsList);
             }
             else

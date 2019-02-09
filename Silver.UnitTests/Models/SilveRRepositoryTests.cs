@@ -4,14 +4,12 @@ using SilveR.Models;
 using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Silver.UnitTests.Helpers
+namespace Silver.UnitTests.Models
 {
-    
     public class SilveRRepositoryTests
     {
         [Fact]
@@ -87,7 +85,7 @@ namespace Silver.UnitTests.Helpers
                 DatasetID = 7,
                 DatasetName = "_test dataset.xlsx [correlation]",
                 DateUpdated = new DateTime(2018, 11, 25, 9, 14, 35),
-                TheData = "SilveRSelected,Resp 1,Resp2,Resp 3,Resp4,Resp 5,Resp 6,Resp 7,Resp8,Resp:9,Resp-10,Resp^11,Treat1,Treat2,Treat3,Treat4,Treat(5,Treat£6,Treat:7,Treat}8,PVTestresponse1,PVTestresponse2,PVTestgroup\r\nTrue,65,65,65,x,,-2,0,-2,65,65,0.1,A,A,1,A,1,A,A,A,1,1,1\r\nTrue,32,,32,32,32,32,32,0.1,32,32,0.1,A,A,1,A,1,A,A,A,2,2,1\r\nTrue,543,,543,543,543,543,543,0.2,543,543,0.2,A,A,1,A,1,A,A,A,3,3,1\r\nTrue,675,,675,675,675,675,675,0.1,675,675,0.1,A,A,1,B,1,A,A,A,4,4,1\r\nTrue,876,,876,876,876,876,876,0.2,876,876,0.2,A,A,1,B,1,A,A,A,11,10,2\r\nTrue,54,,54,54,54,54,54,0.3,54,54,0.3,A,A,1,B,1,A,A,A,12,11,2\r\nTrue,432,,,432,432,432,432,0.45,432,432,0.45,B,B,2,C,2,B,B,B,13,12,2\r\nTrue,564,,,564,564,564,564,0.2,564,564,0.2,B,B,2,C,2,B,B,,14,13,2\r\nTrue,76,,,76,76,76,76,0.14,76,76,0.14,B,B,2,C,2,B,B,,,,\r\nTrue,54,,,54,54,54,54,0.2,54,54,0.2,B,B,2,D,3,B,B,,,,\r\nTrue,32,,,32,32,32,32,0.1,32,32,0.1,B,B,2,D,3,B,B,,,,\r\nTrue,234,,,234,234,234,234,0.4,234,234,0.4,B,,2,D,3,B,B,,,,",
+                TheData = "SilveRSelected,Resp 1,Resp2,Resp 3,Resp4,Resp 5,Resp 6,Resp 7,Resp8,Resp:9,Resp-10,Resp^11,Treat1,Treat2,Treat3,Treat4,Treat(5,Treatï¿½6,Treat:7,Treat}8,PVTestresponse1,PVTestresponse2,PVTestgroup\r\nTrue,65,65,65,x,,-2,0,-2,65,65,0.1,A,A,1,A,1,A,A,A,1,1,1\r\nTrue,32,,32,32,32,32,32,0.1,32,32,0.1,A,A,1,A,1,A,A,A,2,2,1\r\nTrue,543,,543,543,543,543,543,0.2,543,543,0.2,A,A,1,A,1,A,A,A,3,3,1\r\nTrue,675,,675,675,675,675,675,0.1,675,675,0.1,A,A,1,B,1,A,A,A,4,4,1\r\nTrue,876,,876,876,876,876,876,0.2,876,876,0.2,A,A,1,B,1,A,A,A,11,10,2\r\nTrue,54,,54,54,54,54,54,0.3,54,54,0.3,A,A,1,B,1,A,A,A,12,11,2\r\nTrue,432,,,432,432,432,432,0.45,432,432,0.45,B,B,2,C,2,B,B,B,13,12,2\r\nTrue,564,,,564,564,564,564,0.2,564,564,0.2,B,B,2,C,2,B,B,,14,13,2\r\nTrue,76,,,76,76,76,76,0.14,76,76,0.14,B,B,2,C,2,B,B,,,,\r\nTrue,54,,,54,54,54,54,0.2,54,54,0.2,B,B,2,D,3,B,B,,,,\r\nTrue,32,,,32,32,32,32,0.1,32,32,0.1,B,B,2,D,3,B,B,,,,\r\nTrue,234,,,234,234,234,234,0.4,234,234,0.4,B,,2,D,3,B,B,,,,",
                 VersionNo = 1
             };
             await sut.CreateDataset(newDataset);
@@ -325,6 +323,106 @@ namespace Silver.UnitTests.Helpers
             Assert.Equal("Test", a.RProcessOutput);
         }
 
+        [Fact]
+        public async Task GetUserOptions_ReturnDefaultUserOptions()
+        {
+            //Arrange
+            SilveRContext dbContextMock = GetContext();
+            SilveRRepository sut = new SilveRRepository(dbContextMock);
+
+            //Act
+            UserOption userOption = await sut.GetUserOptions();
+            sut.Dispose();
+
+            //Assert (test default user options)
+            //Assert.Equal(44, userOption.Properties.Count);
+            Assert.Equal("Solid", userOption.LineTypeSolid);
+            Assert.Equal("Dashed", userOption.LineTypeDashed);
+            Assert.Equal("Helvetica", userOption.GraphicsFont);
+            Assert.Equal("Plain", userOption.FontStyle);
+            Assert.Equal("Black", userOption.GraphicsTextColour);
+            Assert.Equal("RoyalBlue1", userOption.ColourFill);
+            Assert.Equal("Grey", userOption.BWFill);
+            Assert.Equal("Ivory2", userOption.CategoryBarFill);
+            Assert.Equal("Red", userOption.ColourLine);
+            Assert.Equal("Black", userOption.BWLine);
+            Assert.Equal("White", userOption.LegendTextColour);
+            Assert.Equal("Default", userOption.LegendPosition);
+            Assert.Equal("Set1", userOption.PaletteSet);
+            Assert.Equal("N", userOption.OutputData);
+            Assert.Equal("N", userOption.OutputPlotsAsPdf);
+            Assert.Equal("N", userOption.OutputPlotsInBW);
+            Assert.Equal("N", userOption.GeometryDisplay);
+            Assert.Equal("N", userOption.CovariateRegressionCoefficients);
+            Assert.Equal("N", userOption.AssessCovariateInteractions);
+            Assert.Equal("N", userOption.ScatterLabels);
+            Assert.Equal("N", userOption.DisplayLSMeanslines);
+            Assert.Equal("N", userOption.DisplaySEMlines);
+
+            Assert.Equal(20, userOption.TitleSize);
+            Assert.Equal(15, userOption.XAxisTitleFontSize);
+            Assert.Equal(15, userOption.YAxisTitleFontSize);
+            Assert.Equal(15, userOption.XLabelsFontSize);
+            Assert.Equal(15, userOption.YLabelsFontSize);
+            Assert.Equal(0, userOption.GraphicsXAngle);
+            Assert.Equal(0.5m, userOption.GraphicsXHorizontalJust);
+            Assert.Equal(0, userOption.GraphicsYAngle);
+            Assert.Equal(0.5m, userOption.GraphicsYVerticalJust);
+            Assert.Equal(4, userOption.PointSize);
+            Assert.Equal(21, userOption.PointShape);
+            Assert.Equal(1, userOption.LineSize);
+            Assert.Equal(15, userOption.LegendTextSize);
+            Assert.Equal(11, userOption.PdfWidth);
+            Assert.Equal(8, userOption.PdfHeight);
+            Assert.Equal(480, userOption.JpegWidth);
+            Assert.Equal(480, userOption.JpegHeight);
+            Assert.Equal(0.1m, userOption.GraphicsBWLow);
+            Assert.Equal(0.8m, userOption.GraphicsBWHigh);
+            Assert.Equal(0.1m, userOption.GraphicsWidthJitter);
+            Assert.Equal(0.1m, userOption.GraphicsHeightJitter);
+            Assert.Equal(0.7m, userOption.ErrorBarWidth);
+        }
+
+
+        [Fact]
+        public async Task GetUserOptions_ReturnUserOptions()
+        {
+            //Arrange
+            SilveRContext dbContextMock = GetContext();
+            UserOption existingUserOption = new UserOption();
+            existingUserOption.LineTypeSolid = "Test";
+            dbContextMock.Update(existingUserOption);
+            dbContextMock.SaveChanges();
+
+            SilveRRepository sut = new SilveRRepository(dbContextMock);
+
+            //Act
+            UserOption userOption = await sut.GetUserOptions();
+            sut.Dispose();
+
+            //Assert
+            Assert.Equal("Test", userOption.LineTypeSolid);
+        }
+
+        [Fact]
+        public async Task UpdateUserOptions_UserOptionsUpdated()
+        {
+            //Arrange
+            SilveRContext dbContextMock = GetContext();
+            dbContextMock.SaveChanges();
+
+            SilveRRepository sut = new SilveRRepository(dbContextMock);
+
+            //Act
+            UserOption userOption = new UserOption();
+            userOption.LineTypeSolid = "Test";
+            await sut.UpdateUserOptions(userOption);
+
+            //Assert
+            var u = await sut.GetUserOptions();
+            Assert.Equal("Test", u.LineTypeSolid);
+        }
+
 
 
         private SilveRContext GetContext()
@@ -337,7 +435,7 @@ namespace Silver.UnitTests.Helpers
                 DatasetID = 6,
                 DatasetName = "_test dataset.xlsx [unpairedttest]",
                 DateUpdated = new DateTime(2018, 11, 16, 9, 14, 35),
-                TheData = "SilveRSelected,Resp 1,Resp2,Resp 3,Resp4,Resp 5,Resp 6,Resp 7,Resp8,Resp:9,Resp-10,Resp^11,Treat1,Treat2,Treat3,Treat4,Treat(5,Treat£6,Treat:7,Treat}8,PVTestresponse1,PVTestresponse2,PVTestgroup\r\nTrue,65,65,65,x,,-2,0,-2,65,65,0.1,A,A,1,A,1,A,A,A,1,1,1\r\nTrue,32,,32,32,32,32,32,0.1,32,32,0.1,A,A,1,A,1,A,A,A,2,2,1\r\nTrue,543,,543,543,543,543,543,0.2,543,543,0.2,A,A,1,A,1,A,A,A,3,3,1\r\nTrue,675,,675,675,675,675,675,0.1,675,675,0.1,A,A,1,B,1,A,A,A,4,4,1\r\nTrue,876,,876,876,876,876,876,0.2,876,876,0.2,A,A,1,B,1,A,A,A,11,10,2\r\nTrue,54,,54,54,54,54,54,0.3,54,54,0.3,A,A,1,B,1,A,A,A,12,11,2\r\nTrue,432,,,432,432,432,432,0.45,432,432,0.45,B,B,2,C,2,B,B,B,13,12,2\r\nTrue,564,,,564,564,564,564,0.2,564,564,0.2,B,B,2,C,2,B,B,,14,13,2\r\nTrue,76,,,76,76,76,76,0.14,76,76,0.14,B,B,2,C,2,B,B,,,,\r\nTrue,54,,,54,54,54,54,0.2,54,54,0.2,B,B,2,D,3,B,B,,,,\r\nTrue,32,,,32,32,32,32,0.1,32,32,0.1,B,B,2,D,3,B,B,,,,\r\nTrue,234,,,234,234,234,234,0.4,234,234,0.4,B,,2,D,3,B,B,,,,",
+                TheData = "SilveRSelected,Resp 1,Resp2,Resp 3,Resp4,Resp 5,Resp 6,Resp 7,Resp8,Resp:9,Resp-10,Resp^11,Treat1,Treat2,Treat3,Treat4,Treat(5,Treatï¿½6,Treat:7,Treat}8,PVTestresponse1,PVTestresponse2,PVTestgroup\r\nTrue,65,65,65,x,,-2,0,-2,65,65,0.1,A,A,1,A,1,A,A,A,1,1,1\r\nTrue,32,,32,32,32,32,32,0.1,32,32,0.1,A,A,1,A,1,A,A,A,2,2,1\r\nTrue,543,,543,543,543,543,543,0.2,543,543,0.2,A,A,1,A,1,A,A,A,3,3,1\r\nTrue,675,,675,675,675,675,675,0.1,675,675,0.1,A,A,1,B,1,A,A,A,4,4,1\r\nTrue,876,,876,876,876,876,876,0.2,876,876,0.2,A,A,1,B,1,A,A,A,11,10,2\r\nTrue,54,,54,54,54,54,54,0.3,54,54,0.3,A,A,1,B,1,A,A,A,12,11,2\r\nTrue,432,,,432,432,432,432,0.45,432,432,0.45,B,B,2,C,2,B,B,B,13,12,2\r\nTrue,564,,,564,564,564,564,0.2,564,564,0.2,B,B,2,C,2,B,B,,14,13,2\r\nTrue,76,,,76,76,76,76,0.14,76,76,0.14,B,B,2,C,2,B,B,,,,\r\nTrue,54,,,54,54,54,54,0.2,54,54,0.2,B,B,2,D,3,B,B,,,,\r\nTrue,32,,,32,32,32,32,0.1,32,32,0.1,B,B,2,D,3,B,B,,,,\r\nTrue,234,,,234,234,234,234,0.4,234,234,0.4,B,,2,D,3,B,B,,,,",
                 VersionNo = 1
             };
             context.Datasets.Add(dataset);

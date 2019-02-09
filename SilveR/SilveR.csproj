@@ -79,16 +79,16 @@
     <None Update="Scripts\LinearRegressionAnalysis.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\OneWayANOVADatasetBasedInputs.R">
+    <None Update="Scripts\OneWayANOVAPowerAnalysisDatasetBasedInputs.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\OneWayANOVAUserBasedInputs.R">
+    <None Update="Scripts\OneWayANOVAPowerAnalysisUserBasedInputs.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\MeansComparisonUserBasedInputs.R">
+    <None Update="Scripts\ComparisonOfMeansPowerAnalysisUserBasedInputs.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\MeansComparisonDatasetBasedInputs.R">
+    <None Update="Scripts\ComparisonOfMeansPowerAnalysisDatasetBasedInputs.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Scripts\Multivariate.R">
@@ -167,10 +167,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\Analyses\OneWayANOVADatasetBasedInputs.cshtml">
+    <Content Update="Views\Analyses\OneWayANOVAPowerAnalysisDatasetBasedInputs.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Analyses\OneWayANOVAUserBasedInputs.cshtml">
+    <Content Update="Views\Analyses\OneWayANOVAPowerAnalysisUserBasedInputs.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
