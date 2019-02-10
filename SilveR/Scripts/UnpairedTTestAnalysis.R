@@ -143,7 +143,9 @@ HTML("Tip: Use this plot to identify possible outliers.", align="left")
 #Equal variance case
 #===================================================================================================================
 if (equalCase == "Y") {
-	HTML.title("Unpaired t-test assuming equal variances", HR=2, align="left")
+	HTML.title("Statistical analysis results assuming equal variances", HR=2, align="left")
+
+	HTML.title("Unpaired t-test result", HR=3, align="left")
 
 #STB - July 2012 rename response variable
 	eqtest<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~statdata$mainEffect, paired = FALSE, var.equal= TRUE, conf.level= sig)
@@ -227,14 +229,14 @@ if (equalCase == "Y") {
 	colnames(tables)<-c("Treatment level", "Mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
 
 	#STB May 2012 Updating "least square (predicted) means"
-	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals (assuming equal variances)",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
+	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+	HTML.title(CITitle2, HR=3, align="left")
 	HTML(tables, classfirstline="second", align="left", row.names = "FALSE")
 
 	#===================================================================================================================
 	#Calculating the size of the arithmetic difference with 95%CI
-	add <- paste("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval (assuming equal variances)",sep="")
-	HTML.title(add, HR=2, align="left")
+	add <- paste("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval",sep="")
+	HTML.title(add, HR=3, align="left")
 
 	mult2<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 	multci2<-confint(mult2, level=sig, calpha = univariate_calpha())
@@ -321,7 +323,7 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 #Calculating the size of the geometric ratio with 95%CI
 #V3.2 STB NOV2015
 #===================================================================================================================
-	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio (assuming equal variances)", HR=2, align="left")
+	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio", HR=2, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 	mult<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
@@ -367,8 +369,10 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 #Unequal variance case
 #===================================================================================================================
 if (unequalCase == "Y") {
-	HTML.title("Unpaired t-test assuming unequal variances", HR=2, align="left")
+	HTML.title("Statistical analysis results assuming unequal variances", HR=2, align="left")
 	HTML("The analysis presented is Welch's t-test assuming unequal variances.", align="left")
+
+	HTML.title("Unpaired t-test result", HR=3, align="left")
 
 	#STB - July 2012 rename response variable
 	# eqtest<-t.test(formula = eval(parse(text = paste("statdata$", response)))~eval(parse(text = paste("statdata$", treatFactor))), paired = FALSE, var.equal= FALSE, conf.level= sig)
@@ -447,15 +451,15 @@ if (unequalCase == "Y") {
 	colnames(table2)<-c("Treatment level", "Mean", CIlow, CIhigh)
 
 	#STB May 2012 Updating "least square (predicted) means"
-	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals (assuming unequal variances)",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
+	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+	HTML.title(CITitle2, HR=3, align="left")
 	HTML(table2, align="left" , classfirstline="second", row.names = "FALSE")
 
 #===================================================================================================================
 #Calculating the size of the arithmetic difference with 95%CI
 #===================================================================================================================
-	add <-paste ("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval (assuming unequal variances)" , sep="") 
-	HTML.title(add, HR=2, align="left")
+	add <-paste ("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval" , sep="") 
+	HTML.title(add, HR=3, align="left")
 
 	#Required to generate table label only
 	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
@@ -507,8 +511,8 @@ if (unequalCase == "Y") {
 if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
 
 	#Table of LS Means
-	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals (assuming unequal variances)",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
+	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+	HTML.title(CITitle2, HR=3, align="left")
 	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 
 	#STB Dec 2011 formatting 3dp
@@ -540,7 +544,7 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 #===================================================================================================================
 #Calculating the size of the geometric ratio with 95%CI
 #===================================================================================================================
-	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio (assuming unequal variances)", HR=2, align="left")
+	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio", HR=3, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 	#Required to generate table label only

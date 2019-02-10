@@ -38,8 +38,16 @@ effectModel2 <- Args[16]
 selectedEffect <- Args[17]
 showLSMeans <- Args[18]
 allPairwiseTest <- Args[19]
-backToControlTest <- Args[20]
-cntrlGroup <- Args[21]
+
+if (Module == "SMPA") {
+	backToControlTest <- Args[20]
+	cntrlGroup <- Args[21]
+}
+
+if (Module == "IFPA") {
+	backToControlTest <- "NULL"
+	cntrlGroup <- "NULL"
+}
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 

@@ -55,9 +55,6 @@ namespace SilveR.Validators
                 }
             }
 
-            //check that the effect selected is the highest order interaction possible from selected factors, else output warning
-            CheckEffectSelectedIsHighestOrderInteraction();
-
             if (ifpVariables.Covariates != null && String.IsNullOrEmpty(ifpVariables.PrimaryFactor))
             {
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
@@ -147,32 +144,6 @@ namespace SilveR.Validators
 
             //if got here then all checks ok, return true
             return true;
-        }
-
-        private void CheckEffectSelectedIsHighestOrderInteraction()
-        {
-            if (!String.IsNullOrEmpty(ifpVariables.SelectedEffect))
-            {
-                string[] splittedEffect = ifpVariables.SelectedEffect.Split('*');
-
-                if (splittedEffect.GetLength(0) < ifpVariables.Treatments.Count())
-                {
-                    string mainEffectOrInteraction;
-
-                    if (splittedEffect.GetLength(0) == 1) //then only one factor
-                    {
-                        mainEffectOrInteraction = "a main effect";
-                    }
-                    else // then an interaction
-                    {
-                        mainEffectOrInteraction = "an interaction";
-                    }
-
-                    ValidationInfo.AddWarningMessage("You have selected to plot/compare levels of " + mainEffectOrInteraction +
-                        " in the presence of a higher order interaction(s). This should only be carried out if the higher order interaction(s) are not statistically significant. In the following we have removed these interaction(s) from the model prior to making the comparisons. The actual model fitted is " +
-                        ifpVariables.GetEffectModel().Replace("mainEffect", " selected effect"));
-                }
-            }
         }
     }
 }

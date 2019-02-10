@@ -83,9 +83,6 @@ namespace SilveR.Validators
             if (!CheckTreatmentCombinations())
                 return ValidationInfo;
 
-            //check that the effect selected is the highest order interaction possible from selected factors, else output warning
-            CheckEffectSelectedIsHighestOrderInteraction();
-
             //if get here then no errors so return true
             return ValidationInfo;
         }
@@ -228,32 +225,6 @@ namespace SilveR.Validators
             else
             {
                 return true;
-            }
-        }
-
-        private void CheckEffectSelectedIsHighestOrderInteraction()
-        {
-            if (!String.IsNullOrEmpty(rmVariables.SelectedEffect))
-            {
-                string[] splittedEffect = rmVariables.SelectedEffect.Split('*');
-                if (splittedEffect.GetLength(0) < rmVariables.Treatments.Count() + 1) //add on one to account for subject factor
-                {
-                    string mainEffectOrInteraction;
-
-                    if (splittedEffect.GetLength(0) == 1) //then only one factor
-                    {
-                        mainEffectOrInteraction = "a main effect";
-                    }
-                    else // then an interaction
-                    {
-                        mainEffectOrInteraction = "an interaction";
-                    }
-
-                    ValidationInfo.AddWarningMessage("You have selected to plot/compare levels of " + mainEffectOrInteraction +
-                        " in the presence of a higher order interaction(s). This should only be carried out if the higher order interaction(s) are not statistically significant. In the following we have removed these interaction(s) from the model prior to making the comparisons. The actual model fitted is " +
-
-                        rmVariables.GetEffectModel().Replace("mainEffect", " selected effect"));
-                }
             }
         }
 
