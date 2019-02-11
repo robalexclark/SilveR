@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SilveR.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace SilveR.Controllers
@@ -21,10 +22,21 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateUserOptions(UserOption userOption)
+        public async Task<ActionResult> UpdateUserOptions(UserOption userOption, string submitButtonValue)
         {
-            await repository.UpdateUserOptions(userOption);
-            return RedirectToAction("Index", "Home");
+            if (submitButtonValue == "save")
+            {
+                await repository.UpdateUserOptions(userOption);
+                return RedirectToAction("Index", "Home");
+            }
+            else if (submitButtonValue == "reset")
+            {
+                await repository.ResetUserOptions();
+
+                return RedirectToAction ("Index");
+            }
+            else
+                throw new ArgumentException("submitButtonValue is not valid!");
         }
     }
 }

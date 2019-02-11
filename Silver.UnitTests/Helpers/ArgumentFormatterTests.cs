@@ -1,6 +1,5 @@
 using SilveR.Helpers;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using Xunit;
 
 namespace Silver.UnitTests.Helpers
@@ -11,18 +10,15 @@ namespace Silver.UnitTests.Helpers
         [Fact]
         public void ConvertIllegalCharacters_StringWithAllIllegalChars_ReturnsCorrectString()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                //Arrange
-                ArgumentFormatter sut = new ArgumentFormatter();
+            //Arrange
+            ArgumentFormatter sut = new ArgumentFormatter();
 
-                //Act
-                string nastyString = " ()/%#.-@:!\"£$^&{};|\\[]=<>'";
-                string result = sut.ConvertIllegalCharacters(nastyString);
+            //Act
+            string nastyString = " ()/%#.-@:!\"Â£$^&{};|\\[]=<>'";
+            string result = sut.ConvertIllegalCharacters(nastyString);
 
-                //Assert
-                Assert.Equal("ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs", result);
-            }
+            //Assert
+            Assert.Equal("ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs", result);
         }
 
         [Fact]
@@ -109,17 +105,14 @@ namespace Silver.UnitTests.Helpers
         [Fact]
         public void GetFormattedArgument_StringWithIllegalChars_ReturnsCorrectString()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                //Arrange
-                ArgumentFormatter sut = new ArgumentFormatter();
+            //Arrange
+            ArgumentFormatter sut = new ArgumentFormatter();
 
-                //Act
-                string result = sut.GetFormattedArgument(" ()/%#.-@:!\"£$^&{};|\\[]=<>'", true);
+            //Act
+            string result = sut.GetFormattedArgument(" ()/%#.-@:!\"Â£$^&{};|\\[]=<>'", true);
 
-                //Assert
-                Assert.Equal("ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs", result);
-            }
+            //Assert
+            Assert.Equal("ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs", result);
         }
 
         [Fact]
@@ -151,18 +144,15 @@ namespace Silver.UnitTests.Helpers
         [Fact]
         public void ConvertIllegalCharactersBack_StringWithAllIllegalChars_ReturnsCorrectString()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                //Arrange
-                ArgumentFormatter sut = new ArgumentFormatter();
+            //Arrange
+            ArgumentFormatter sut = new ArgumentFormatter();
 
-                //Act
-                string formattedString = "ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs";
-                string result = sut.ConvertIllegalCharactersBack(formattedString);
+            //Act
+            string formattedString = "ivs_sp_ivsivs_ob_ivsivs_cb_ivsivs_div_ivsivs_pc_ivsivs_hash_ivsivs_pt_ivsivs_hyphen_ivsivs_at_ivsivs_colon_ivsivs_exclam_ivsivs_dblquote_ivsivs_pound_ivsivs_dollar_ivsivs_hat_ivsivs_amper_ivsivs_obrace_ivsivs_cbrace_ivsivs_semi_ivsivs_pipe_ivsivs_slash_ivsivs_osb_ivsivs_csb_ivsivs_eq_ivsivs_lt_ivsivs_gt_ivsivs_quote_ivs";
+            string result = sut.ConvertIllegalCharactersBack(formattedString);
 
-                //Assert
-                Assert.Equal(" ()/%#.-@:!\"£$^&{};|\\[]=<>'", result);
-            }
+            //Assert
+            Assert.Equal(" ()/%#.-@:!\"Â£$^&{};|\\[]=<>'", result);
         }
     }
 }

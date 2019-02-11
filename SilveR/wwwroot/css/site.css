@@ -408,3 +408,11 @@ table.dataframe th {
     pointer-events: none;
     opacity: 0.4;
 }
+
+input[type=checkbox] {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(0.5); /* IE */
+    -moz-transform: scale(0.5); /* FF */
+    -webkit-transform: scale(0.5); /* Safari and Chrome */
+    -o-transform: scale(0.5); /* Opera */
+}

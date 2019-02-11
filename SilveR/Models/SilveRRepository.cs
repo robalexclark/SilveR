@@ -152,10 +152,17 @@ namespace SilveR.Models
             }
             else
             {
-                //context.Entry(existingUserOption).CurrentValues.SetValues(userOption);
-                context.Update(userOption);
+                context.Entry(existingUserOption).CurrentValues.SetValues(userOption);
+                context.Update(existingUserOption);
             }
 
+            await context.SaveChangesAsync();
+        }
+
+        public async Task ResetUserOptions()
+        {
+            //clear out the (one) record
+            context.Database.ExecuteSqlCommand("DELETE FROM UserOptions");
             await context.SaveChangesAsync();
         }
 

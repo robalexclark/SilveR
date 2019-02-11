@@ -14,7 +14,7 @@ namespace SilveR.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
 
             modelBuilder.Entity("SilveR.Models.Analysis", b =>
                 {
@@ -119,8 +119,7 @@ namespace SilveR.Migrations
                     b.Property<int>("UserOptionID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AssessCovariateInteractions")
-                        .IsRequired();
+                    b.Property<bool>("AssessCovariateInteractions");
 
                     b.Property<string>("BWFill")
                         .IsRequired();
@@ -137,22 +136,18 @@ namespace SilveR.Migrations
                     b.Property<string>("ColourLine")
                         .IsRequired();
 
-                    b.Property<string>("CovariateRegressionCoefficients")
-                        .IsRequired();
+                    b.Property<bool>("CovariateRegressionCoefficients");
 
-                    b.Property<string>("DisplayLSMeanslines")
-                        .IsRequired();
+                    b.Property<bool>("DisplayLSMeanslines");
 
-                    b.Property<string>("DisplaySEMlines")
-                        .IsRequired();
+                    b.Property<bool>("DisplaySEMlines");
 
                     b.Property<decimal>("ErrorBarWidth");
 
                     b.Property<string>("FontStyle")
                         .IsRequired();
 
-                    b.Property<string>("GeometryDisplay")
-                        .IsRequired();
+                    b.Property<bool>("GeometryDisplay");
 
                     b.Property<decimal>("GraphicsBWHigh");
 
@@ -196,14 +191,11 @@ namespace SilveR.Migrations
                     b.Property<string>("LineTypeSolid")
                         .IsRequired();
 
-                    b.Property<string>("OutputData")
-                        .IsRequired();
+                    b.Property<bool>("OutputData");
 
-                    b.Property<string>("OutputPlotsAsPdf")
-                        .IsRequired();
+                    b.Property<bool>("OutputPlotsAsPdf");
 
-                    b.Property<string>("OutputPlotsInBW")
-                        .IsRequired();
+                    b.Property<bool>("OutputPlotsInBW");
 
                     b.Property<string>("PaletteSet")
                         .IsRequired();
@@ -216,8 +208,7 @@ namespace SilveR.Migrations
 
                     b.Property<int>("PointSize");
 
-                    b.Property<string>("ScatterLabels")
-                        .IsRequired();
+                    b.Property<bool>("ScatterLabels");
 
                     b.Property<int>("TitleSize");
 

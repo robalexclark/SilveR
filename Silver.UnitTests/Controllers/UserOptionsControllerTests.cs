@@ -39,10 +39,30 @@ namespace Silver.UnitTests.Controllers
             UserOptionsController sut = new UserOptionsController(mock.Object);
 
             //Act
-            IActionResult result = await sut.UpdateUserOptions(new UserOption());
+            IActionResult result = await sut.UpdateUserOptions(new UserOption(), "save");
 
             //Assert
             RedirectToActionResult viewResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Home", viewResult.ControllerName);
+            Assert.Equal("Index", viewResult.ActionName);
+        }
+
+        [Fact]
+        public async Task UpdateUserOptionsPost_ResetUserOptions_ReturnsARedirectResult()
+        {
+            //Arrange
+            Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
+            mock.Setup(x => x.GetUserOptions()).ReturnsAsync(It.IsAny<UserOption>());
+
+            UserOptionsController sut = new UserOptionsController(mock.Object);
+
+            //Act
+            IActionResult result = await sut.UpdateUserOptions(new UserOption(), "reset");
+
+            //Assert
+            RedirectToActionResult viewResult = Assert.IsType<RedirectToActionResult>(result);
+            //Assert.Equal("UserOptions", viewResult.ControllerName);?
+            Assert.Equal("Index", viewResult.ActionName);
         }
     }
 }

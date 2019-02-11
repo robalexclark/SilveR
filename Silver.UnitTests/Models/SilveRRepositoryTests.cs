@@ -349,15 +349,15 @@ namespace Silver.UnitTests.Models
             Assert.Equal("White", userOption.LegendTextColour);
             Assert.Equal("Default", userOption.LegendPosition);
             Assert.Equal("Set1", userOption.PaletteSet);
-            Assert.Equal("N", userOption.OutputData);
-            Assert.Equal("N", userOption.OutputPlotsAsPdf);
-            Assert.Equal("N", userOption.OutputPlotsInBW);
-            Assert.Equal("N", userOption.GeometryDisplay);
-            Assert.Equal("N", userOption.CovariateRegressionCoefficients);
-            Assert.Equal("N", userOption.AssessCovariateInteractions);
-            Assert.Equal("N", userOption.ScatterLabels);
-            Assert.Equal("N", userOption.DisplayLSMeanslines);
-            Assert.Equal("N", userOption.DisplaySEMlines);
+            Assert.False(userOption.OutputData);
+            Assert.False(userOption.OutputPlotsAsPdf);
+            Assert.False(userOption.OutputPlotsInBW);
+            Assert.False(userOption.GeometryDisplay);
+            Assert.False(userOption.CovariateRegressionCoefficients);
+            Assert.False(userOption.AssessCovariateInteractions);
+            Assert.False(userOption.ScatterLabels);
+            Assert.False(userOption.DisplayLSMeanslines);
+            Assert.False(userOption.DisplaySEMlines);
 
             Assert.Equal(20, userOption.TitleSize);
             Assert.Equal(15, userOption.XAxisTitleFontSize);

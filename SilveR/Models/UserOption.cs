@@ -47,32 +47,23 @@ namespace SilveR.Models
         [Required]
         public string PaletteSet { get; set; } = "Set1";
 
-        [Required]
-        public string OutputData { get; set; } = "N";
+        public bool OutputData { get; set; } = false;
 
-        [Required]
-        public string OutputPlotsAsPdf { get; set; } = "N";
+        public bool OutputPlotsAsPdf { get; set; } = false;
 
-        [Required]
-        public string OutputPlotsInBW { get; set; } = "N";
+        public bool OutputPlotsInBW { get; set; } = false;
 
-        [Required]
-        public string GeometryDisplay { get; set; } = "N";
+        public bool GeometryDisplay { get; set; } = false;
 
-        [Required]
-        public string CovariateRegressionCoefficients { get; set; } = "N";
+        public bool CovariateRegressionCoefficients { get; set; } = false;
 
-        [Required]
-        public string AssessCovariateInteractions { get; set; } = "N";
+        public bool AssessCovariateInteractions { get; set; } = false;
 
-        [Required]
-        public string ScatterLabels { get; set; } = "N";
+        public bool ScatterLabels { get; set; } = false;
 
-        [Required]
-        public string DisplayLSMeanslines { get; set; } = "N";
+        public bool DisplayLSMeanslines { get; set; } = false;
 
-        [Required]
-        public string DisplaySEMlines { get; set; } = "N";
+        public bool DisplaySEMlines { get; set; } = false;
 
 
 
@@ -118,15 +109,15 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.LegendTextColour) + " " + this.LegendTextColour.ToLower());
             optionLines.Add(nameof(this.LegendPosition) + " " + this.LegendPosition);
             optionLines.Add(nameof(this.PaletteSet) + " " + this.PaletteSet);
-            optionLines.Add(nameof(this.OutputData) + " " + this.OutputData);
-            optionLines.Add(nameof(this.OutputPlotsAsPdf) + " " + this.OutputPlotsAsPdf);
-            optionLines.Add(nameof(this.OutputPlotsInBW) + " " + this.OutputPlotsInBW);
-            optionLines.Add(nameof(this.GeometryDisplay) + " " + this.GeometryDisplay);
-            optionLines.Add(nameof(this.CovariateRegressionCoefficients) + " " + this.CovariateRegressionCoefficients);
-            optionLines.Add(nameof(this.AssessCovariateInteractions) + " " + this.AssessCovariateInteractions);
-            optionLines.Add(nameof(this.ScatterLabels) + " " + this.ScatterLabels);
-            optionLines.Add(nameof(this.DisplayLSMeanslines) + " " + this.DisplayLSMeanslines);
-            optionLines.Add(nameof(this.DisplaySEMlines) + " " + this.DisplaySEMlines);
+            optionLines.Add(nameof(this.OutputData) + " " + (this.OutputData ? "Y" : "N"));
+            optionLines.Add(nameof(this.OutputPlotsAsPdf) + " " + (this.OutputPlotsAsPdf ? "Y" : "N"));
+            optionLines.Add(nameof(this.OutputPlotsInBW) + " " + (this.OutputPlotsInBW ? "Y" : "N"));
+            optionLines.Add(nameof(this.GeometryDisplay) + " " + (this.GeometryDisplay ? "Y" : "N"));
+            optionLines.Add(nameof(this.CovariateRegressionCoefficients) + " " + (this.CovariateRegressionCoefficients ? "Y" : "N"));
+            optionLines.Add(nameof(this.AssessCovariateInteractions) + " " + (this.AssessCovariateInteractions ? "Y" : "N"));
+            optionLines.Add(nameof(this.ScatterLabels) + " " + (this.ScatterLabels ? "Y" : "N"));
+            optionLines.Add(nameof(this.DisplayLSMeanslines) + " " + (this.DisplayLSMeanslines ? "Y" : "N"));
+            optionLines.Add(nameof(this.DisplaySEMlines) + " " + (this.DisplaySEMlines ? "Y" : "N"));
 
             optionLines.Add(nameof(this.TitleSize) + " " + this.TitleSize);
             optionLines.Add(nameof(this.XAxisTitleFontSize) + " " + this.XAxisTitleFontSize);

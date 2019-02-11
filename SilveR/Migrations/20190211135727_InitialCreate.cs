@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SilveR.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,12 +57,15 @@ namespace SilveR.Migrations
                     LegendTextColour = table.Column<string>(nullable: false),
                     LegendPosition = table.Column<string>(nullable: false),
                     PaletteSet = table.Column<string>(nullable: false),
-                    OutputData = table.Column<string>(nullable: false),
-                    OutputPlotsAsPdf = table.Column<string>(nullable: false),
-                    OutputPlotsInBW = table.Column<string>(nullable: false),
-                    GeometryDisplay = table.Column<string>(nullable: false),
-                    CovariateRegressionCoefficients = table.Column<string>(nullable: false),
-                    AssessCovariateInteractions = table.Column<string>(nullable: false),
+                    OutputData = table.Column<bool>(nullable: false),
+                    OutputPlotsAsPdf = table.Column<bool>(nullable: false),
+                    OutputPlotsInBW = table.Column<bool>(nullable: false),
+                    GeometryDisplay = table.Column<bool>(nullable: false),
+                    CovariateRegressionCoefficients = table.Column<bool>(nullable: false),
+                    AssessCovariateInteractions = table.Column<bool>(nullable: false),
+                    ScatterLabels = table.Column<bool>(nullable: false),
+                    DisplayLSMeanslines = table.Column<bool>(nullable: false),
+                    DisplaySEMlines = table.Column<bool>(nullable: false),
                     TitleSize = table.Column<int>(nullable: false),
                     XAxisTitleFontSize = table.Column<int>(nullable: false),
                     YAxisTitleFontSize = table.Column<int>(nullable: false),
