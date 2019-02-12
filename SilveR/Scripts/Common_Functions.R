@@ -1,4 +1,9 @@
-﻿#Software branding
+﻿ShowCoeff <- "Y"
+
+
+
+
+#Software branding
 branding <- "InVivoStat"
 
 #Display arguments

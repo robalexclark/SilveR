@@ -350,14 +350,14 @@ namespace Silver.UnitTests.Models
             Assert.Equal("Default", userOption.LegendPosition);
             Assert.Equal("Set1", userOption.PaletteSet);
             Assert.False(userOption.OutputData);
-            Assert.False(userOption.OutputPlotsAsPdf);
             Assert.False(userOption.OutputPlotsInBW);
             Assert.False(userOption.GeometryDisplay);
             Assert.False(userOption.CovariateRegressionCoefficients);
             Assert.False(userOption.AssessCovariateInteractions);
             Assert.False(userOption.ScatterLabels);
-            Assert.False(userOption.DisplayLSMeanslines);
-            Assert.False(userOption.DisplaySEMlines);
+            Assert.False(userOption.DisplayLSMeansLines);
+            Assert.False(userOption.DisplaySEMLines);
+            Assert.False(userOption.DisplayPointLabels);
 
             Assert.Equal(20, userOption.TitleSize);
             Assert.Equal(15, userOption.XAxisTitleFontSize);
@@ -372,8 +372,6 @@ namespace Silver.UnitTests.Models
             Assert.Equal(21, userOption.PointShape);
             Assert.Equal(1, userOption.LineSize);
             Assert.Equal(15, userOption.LegendTextSize);
-            Assert.Equal(11, userOption.PdfWidth);
-            Assert.Equal(8, userOption.PdfHeight);
             Assert.Equal(480, userOption.JpegWidth);
             Assert.Equal(480, userOption.JpegHeight);
             Assert.Equal(0.1m, userOption.GraphicsBWLow);

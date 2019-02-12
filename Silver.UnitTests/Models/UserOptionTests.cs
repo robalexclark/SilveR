@@ -31,14 +31,14 @@ namespace Silver.UnitTests.Models
             Assert.Equal("LegendPosition Default", optionLines[11]);
             Assert.Equal("PaletteSet Set1", optionLines[12]);
             Assert.Equal("OutputData N", optionLines[13]);
-            Assert.Equal("OutputPlotsAsPdf N", optionLines[14]);
-            Assert.Equal("OutputPlotsInBW N", optionLines[15]);
-            Assert.Equal("GeometryDisplay N", optionLines[16]);
-            Assert.Equal("CovariateRegressionCoefficients N", optionLines[17]);
-            Assert.Equal("AssessCovariateInteractions N", optionLines[18]);
-            Assert.Equal("ScatterLabels N", optionLines[19]);
-            Assert.Equal("DisplayLSMeanslines N", optionLines[20]);
-            Assert.Equal("DisplaySEMlines N", optionLines[21]);
+            Assert.Equal("OutputPlotsInBW N", optionLines[14]);
+            Assert.Equal("GeometryDisplay N", optionLines[15]);
+            Assert.Equal("CovariateRegressionCoefficients N", optionLines[16]);
+            Assert.Equal("AssessCovariateInteractions N", optionLines[17]);
+            Assert.Equal("ScatterLabels N", optionLines[18]);
+            Assert.Equal("DisplayLSMeansLines N", optionLines[19]);
+            Assert.Equal("DisplaySEMLines N", optionLines[20]);
+            Assert.Equal("DisplayPointLabels N", optionLines[21]);
 
             Assert.Equal("TitleSize 20", optionLines[22]);
             Assert.Equal("XAxisTitleFontSize 15", optionLines[23]);
@@ -53,15 +53,13 @@ namespace Silver.UnitTests.Models
             Assert.Equal("PointShape 21", optionLines[32]);
             Assert.Equal("LineSize 1", optionLines[33]);
             Assert.Equal("LegendTextSize 15", optionLines[34]);
-            Assert.Equal("PdfWidth 11", optionLines[35]);
-            Assert.Equal("PdfHeight 8", optionLines[36]);
-            Assert.Equal("JpegWidth 480", optionLines[37]);
-            Assert.Equal("JpegHeight 480", optionLines[38]);
-            Assert.Equal("GraphicsBWLow 0.1", optionLines[39]);
-            Assert.Equal("GraphicsBWHigh 0.8", optionLines[40]);
-            Assert.Equal("GraphicsWidthJitter 0.1", optionLines[41]);
-            Assert.Equal("GraphicsHeightJitter 0.1", optionLines[42]);
-            Assert.Equal("ErrorBarWidth 0.7", optionLines[43]);
+            Assert.Equal("JpegWidth 480", optionLines[35]);
+            Assert.Equal("JpegHeight 480", optionLines[36]);
+            Assert.Equal("GraphicsBWLow 0.1", optionLines[37]);
+            Assert.Equal("GraphicsBWHigh 0.8", optionLines[38]);
+            Assert.Equal("GraphicsWidthJitter 0.1", optionLines[39]);
+            Assert.Equal("GraphicsHeightJitter 0.1", optionLines[40]);
+            Assert.Equal("ErrorBarWidth 0.7", optionLines[41]);
         }
     }
 }

@@ -33,8 +33,8 @@ effectModel <- as.formula(Args[18])
 effectModel2 <- Args[18]
 selectedEffect <- Args[19]
 showLSMeans <- Args[20]
-reducedTest <- Args[21]
-allPairwiseTest <- Args[22]
+pairwiseTest <- Args[21]
+
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -1386,7 +1386,7 @@ tell1b<-tell1a[,dim(tell1a)[2]]
 tell2b<-tell2a[,dim(tell2a)[2]]
 tellfinal<-cbind(tell1b,tell2b)
 
-if(allPairwiseTest == "Y") {
+if(pairwiseTest == "AllPairwiseComparisons") {
 	#Creatng dataset for printing
 	tabs_final<-tabs
 
@@ -1500,7 +1500,7 @@ if(allPairwiseTest == "Y") {
 
 #===================================================================================================================
 
-if(reducedTest == "Y") {
+if(pairwiseTest == "AllComparisonsWithinSelected") {
 	HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
 
 	#Creating the subsetted version of tabs dataset
@@ -1692,7 +1692,7 @@ if (covariatelist == "NULL") {
 		}
 	}
 }
-if (allPairwiseTest== "Y" || reducedTest== "Y") {
+if (pairwiseTest== "AllComparisonsWithinSelected" || pairwiseTest== "AllPairwiseComparisons") {
 	#STB May 2012 Updating "Selected"
 	add<-paste(add, "This was followed by Planned Comparisons on the predicted means to compare the levels of the Selected effect. ", sep="")
 }
@@ -1750,7 +1750,7 @@ if(FirstCatFactor != "NULL") {
 
 HTML("Pinherio JC and Bates DM. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.", align="left")
 
-if (allPairwiseTest != "Y") {
+if (pairwiseTest != "None") {
 	HTML("Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.", align="left")
 }
 HTML("Venables WN and Ripley BD. (2003). Modern Applied Statistics with S. 4th Edition; Springer. New York, Inc.", align="left")
@@ -1826,9 +1826,10 @@ if (showLSMeans != "N" && Args[19] != "NULL" ) {
 	HTML(paste("Selected effect (for pairwise mean comparisons): ", selectedEffectXX, sep=""),  align="left")
 }
 
-if (showLSMeans != "N" && Args[19] != "NULL" && allPairwiseTest == "Reduced") {
+if (showLSMeans != "N" && Args[19] != "NULL" && pairwiseTest == "AllComparisonsWithinSelected") {
 	HTML(paste("Post-hoc tests:  All comparisons within repeated factor levels"),  align="left")
-} else {
+} 
+if (showLSMeans != "N" && Args[19] != "NULL" && pairwiseTest == "AllPairwiseComparisons") {
 	HTML(paste("Post-hoc tests:  All pairwise comparisons"),  align="left")
 }
 

@@ -38,8 +38,16 @@ effectModel2 <- Args[16]
 selectedEffect <- Args[17]
 showLSMeans <- Args[18]
 allPairwiseTest <- Args[19]
-backToControlTest <- Args[20]
-cntrlGroup <- Args[21]
+
+if (Module == "SMPA") {
+	backToControlTest <- Args[20]
+	cntrlGroup <- Args[21]
+}
+
+if (Module == "IFPA") {
+	backToControlTest <- "NULL"
+	cntrlGroup <- "NULL"
+}
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -656,6 +664,24 @@ if(showANOVA=="Y") {
 		HTML("Tip: While it is a good idea to consider the overall tests in the ANOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
 	}
 }
+
+#===================================================================================================================
+#Fixed effect coefficients
+#===================================================================================================================
+if (ShowCoeff == "Y") {
+	HTML.title("Model coefficients", HR=2, align="left")
+
+
+threewayfull<-lm(model, data=statdata, na.action = na.omit)
+print(head(statdata))
+
+	coeffs<- summary(threewayfull)$coefficient
+print(coeffs)
+	HTML(coeffs, classfirstline="second", align="left", row.names = "FALSE")
+
+}
+
+quit()
 
 #===================================================================================================================
 #Covariate correlation table

@@ -9,7 +9,7 @@ using SilveR.Models;
 namespace SilveR.Migrations
 {
     [DbContext(typeof(SilveRContext))]
-    [Migration("20190211135727_InitialCreate")]
+    [Migration("20190212095150_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,9 +140,11 @@ namespace SilveR.Migrations
 
                     b.Property<bool>("CovariateRegressionCoefficients");
 
-                    b.Property<bool>("DisplayLSMeanslines");
+                    b.Property<bool>("DisplayLSMeansLines");
 
-                    b.Property<bool>("DisplaySEMlines");
+                    b.Property<bool>("DisplayPointLabels");
+
+                    b.Property<bool>("DisplaySEMLines");
 
                     b.Property<decimal>("ErrorBarWidth");
 
@@ -195,16 +197,10 @@ namespace SilveR.Migrations
 
                     b.Property<bool>("OutputData");
 
-                    b.Property<bool>("OutputPlotsAsPdf");
-
                     b.Property<bool>("OutputPlotsInBW");
 
                     b.Property<string>("PaletteSet")
                         .IsRequired();
-
-                    b.Property<int>("PdfHeight");
-
-                    b.Property<int>("PdfWidth");
 
                     b.Property<int>("PointShape");
 

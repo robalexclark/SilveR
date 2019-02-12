@@ -184,7 +184,7 @@ if (equalCase == "Y") {
 #Testing the degrees of freedom
 #===================================================================================================================
 if (equalCase == "Y" && eqtest[2]<5) {
-	HTML.title("Warning", HR=2, align="left")
+	HTML.title("Warning", HR=3, align="left")
 	HTML("Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable.", align="left")
 }
 
@@ -284,7 +284,7 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 {
 	#Table of LS Means
 	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
+	HTML.title(CITitle2, HR=3, align="left")
 	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 
 	tab1<-c()
@@ -323,7 +323,7 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 #Calculating the size of the geometric ratio with 95%CI
 #V3.2 STB NOV2015
 #===================================================================================================================
-	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio", HR=2, align="left")
+	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio", HR=3, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 	mult<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))

@@ -5,27 +5,110 @@
 }
 <h2>@ViewBag.Title</h2>
 
-<form asp-controller="UserOptions" asp-action="UpdateUserOptions" method="post" class="mt30 mb30 form-horizontal">
+<form asp-controller="UserOptions" asp-action="UpdateUserOptions" method="post" class="form-horizontal">
     <fieldset>
         <input asp-for="UserOptionID" type="hidden">
 
         <ul class="nav nav-tabs">
             <li class="active">
-                <a href="#1" data-toggle="tab">Graphics: Appearance</a>
+                <a href="#1" data-toggle="tab">Output Options</a>
             </li>
             <li>
-                <a href="#2" data-toggle="tab">Graphics: Font</a>
+                <a href="#2" data-toggle="tab">Graphics: Appearance</a>
             </li>
             <li>
-                <a href="#3" data-toggle="tab">Graphics: Colour</a>
+                <a href="#3" data-toggle="tab">Graphics: Font</a>
             </li>
             <li>
-                <a href="#4" data-toggle="tab">Advanced Output Options</a>
+                <a href="#4" data-toggle="tab">Graphics: Colour</a>
             </li>
         </ul>
 
         <div class="tab-content ">
             <div class="tab-pane active" id="1">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default" style="margin:10px">
+                            <div class="panel-heading"><h3>Output Options</h3></div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label asp-for="OutputData" class="control-label col-xs-4">Output data with results</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="OutputData" class="checkbox" type="checkbox">
+                                    </div>
+                                    <span asp-validation-for="OutputData" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="GeometryDisplay" class="control-label col-xs-4">Display geometric means</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="GeometryDisplay" class="checkbox" type="checkbox">
+                                    </div>
+                                    <span asp-validation-for="GeometryDisplay" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default" style="margin:10px">
+                            <div class="panel-heading"><h3>Covariate Output Options</h3></div>
+
+                            <div class="panel-body">
+
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label asp-for="CovariateRegressionCoefficients" class="control-label col-xs-4">Covariate regression coefficients</label>
+                                        <div class="col-xs-8">
+                                            <input asp-for="CovariateRegressionCoefficients" class="checkbox" type="checkbox">
+                                        </div>
+                                        <span asp-validation-for="CovariateRegressionCoefficients" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="AssessCovariateInteractions" class="control-label col-xs-4">Assess covariate interactions</label>
+                                        <div class="col-xs-8">
+                                            <input asp-for="AssessCovariateInteractions" class="checkbox" type="checkbox">
+                                        </div>
+                                        <span asp-validation-for="AssessCovariateInteractions" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default" style="margin:10px">
+                            <div class="panel-heading"><h3>Graph Size Options</h3></div>
+
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label asp-for="JpegHeight" class="control-label col-xs-4">Height of jpeg version of graph</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="JpegHeight" type="number" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="JpegHeight" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="JpegWidth" class="control-label col-xs-4">Width of jpeg version of graph</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="JpegWidth" type="number" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="JpegWidth" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="2">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
@@ -33,19 +116,27 @@
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="PointSize" class="control-label col-sm-4">Size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="PointSize" class="control-label col-xs-4">Size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="PointSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="PointSize" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="PointShape" class="control-label col-sm-4">Shape</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="PointShape" class="control-label col-xs-4">Shape</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="PointShape" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="PointShape" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="DisplayPointLabels" class="control-label col-xs-4">Display point labels</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="DisplayPointLabels" class="checkbox" type="checkbox">
+                                    </div>
+                                    <span asp-validation-for="DisplayPointLabels" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -57,16 +148,16 @@
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="LineSize" class="control-label col-sm-4">Lines size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="LineSize" class="control-label col-xs-4">Lines size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="LineSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="LineSize" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="LineTypeSolid" class="control-label col-sm-4">Solid type</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="LineTypeSolid" class="control-label col-xs-4">Solid type</label>
+                                    <div class="col-xs-8">
                                         <select asp-for="LineTypeSolid" type="text" class="form-control">
                                             <option value="Blank">Blank</option>
                                             <option value="Solid">Solid</option>
@@ -81,8 +172,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="LineTypeDashed" class="control-label col-sm-4">Dashed type</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="LineTypeDashed" class="control-label col-xs-4">Dashed type</label>
+                                    <div class="col-xs-8">
                                         <select asp-for="LineTypeDashed" type="text" class="form-control">
                                             <option value="Blank">Blank</option>
                                             <option value="Solid">Solid</option>
@@ -95,6 +186,49 @@
                                     </div>
                                     <span asp-validation-for="LineTypeDashed" class="text-danger"></span>
                                 </div>
+
+                                <div class="form-group">
+                                    <label asp-for="DisplayLSMeansLines" class="control-label col-xs-4">Display lines on LS Means plot</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="DisplayLSMeansLines" class="checkbox" type="checkbox">
+                                    </div>
+                                    <span asp-validation-for="DisplayLSMeansLines" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="DisplaySEMLines" class="control-label col-xs-4">Display lines on Plot of Means with SEM</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="DisplaySEMLines" class="checkbox" type="checkbox">
+                                    </div>
+                                    <span asp-validation-for="DisplaySEMLines" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default" style="margin:10px">
+                            <div class="panel-heading"><h3>Points Jitter Amount</h3></div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label asp-for="GraphicsHeightJitter" class="control-label col-xs-4">Horizontal</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="GraphicsHeightJitter" type="number" step="0.1" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="GraphicsHeightJitter" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="GraphicsWidthJitter" class="control-label col-xs-4">Vertical</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="GraphicsWidthJitter" type="number" step="0.1" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="GraphicsWidthJitter" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -105,35 +239,11 @@
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="ErrorBarWidth" class="control-label col-sm-4">Size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="ErrorBarWidth" class="control-label col-xs-4">Size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="PointSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="ErrorBarWidth" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Scatterplot Jitter Amount</h3></div>
-
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label asp-for="GraphicsHeightJitter" class="control-label col-sm-4">Horizontal</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="GraphicsHeightJitter" type="number" step="0.1" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="GraphicsHeightJitter" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="GraphicsWidthJitter" class="control-label col-sm-4">Vertical</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="GraphicsWidthJitter" type="number" step="0.1" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="GraphicsWidthJitter" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +252,8 @@
             </div>
 
 
-            <div class="tab-pane" id="2">
+            <div class="tab-pane" id="3">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
@@ -150,24 +261,24 @@
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="TitleSize" class="control-label col-sm-4">Title font size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="TitleSize" class="control-label col-xs-4">Title font size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="TitleSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="TitleSize" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="XAxisTitleFontSize" class="control-label col-sm-4">X-Axis title font size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="XAxisTitleFontSize" class="control-label col-xs-4">X-axis title font size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="XAxisTitleFontSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="XAxisTitleFontSize" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="GraphicsFont" class="control-label col-sm-4">Font</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsFont" class="control-label col-xs-4">Font</label>
+                                    <div class="col-xs-8">
                                         <select asp-for="GraphicsFont" type="text" class="form-control">
                                             <option value="Helvetica">Helvetica</option>
                                             <option value="Times">Times</option>
@@ -178,8 +289,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="FontStyle" class="control-label col-sm-4">Font style</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="FontStyle" class="control-label col-xs-4">Font style</label>
+                                    <div class="col-xs-8">
                                         <select asp-for="FontStyle" type="text" class="form-control">
                                             <option value="Plain">Plain</option>
                                             <option value="Italic">Italic</option>
@@ -190,8 +301,8 @@
                                     <span asp-validation-for="FontStyle" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="GraphicsTextColour" class="control-label col-sm-4">Font colour</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsTextColour" class="control-label col-xs-4">Font colour</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="GraphicsTextColour" type="text" class="form-control">
                                     </div>
                                     <span asp-validation-for="GraphicsTextColour" class="text-danger"></span>
@@ -200,31 +311,30 @@
                         </div>
                     </div>
 
-
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
                             <div class="panel-heading"><h3>Legend Parameters</h3></div>
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="LegendTextColour" class="control-label col-sm-4">Title text colour</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="LegendTextColour" class="control-label col-xs-4">Title text colour</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="LegendTextColour" type="text" class="form-control">
                                     </div>
                                     <span asp-validation-for="LegendTextColour" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="LegendTextSize" class="control-label col-sm-4">Legend text size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="LegendTextSize" class="control-label col-xs-4">Legend text size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="LegendTextSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="LegendTextSize" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="LegendPosition" class="control-label col-sm-4">Position</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="LegendPosition" class="control-label col-xs-4">Position</label>
+                                    <div class="col-xs-8">
                                         <select asp-for="LegendPosition" type="text" class="form-control">
                                             <option value="Default">Default</option>
                                             <option value="Right">Right</option>
@@ -238,31 +348,34 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="row">
 
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>X-axis Parameters</h3></div>
+                            <div class="panel-heading"><h3>X-axis Label Parameters</h3></div>
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="XLabelsFontSize" class="control-label col-sm-4">Labels font size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="XLabelsFontSize" class="control-label col-xs-4">Labels font size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="XLabelsFontSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="XLabelsFontSize" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="GraphicsXAngle" class="control-label col-sm-4">Legend angle</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsXAngle" class="control-label col-xs-4">Legend angle</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="GraphicsXAngle" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="GraphicsXAngle" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="GraphicsXHorizontalJust" class="control-label col-sm-4">Horizontal adjustment</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsXHorizontalJust" class="control-label col-xs-4">Horizontal adjustment</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="GraphicsXHorizontalJust" type="number" step="0.1" class="form-control">
                                     </div>
                                     <span asp-validation-for="GraphicsXHorizontalJust" class="text-danger"></span>
@@ -273,28 +386,28 @@
 
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Y-axis Parameters</h3></div>
+                            <div class="panel-heading"><h3>Y-axis Label Parameters</h3></div>
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="YLabelsFontSize" class="control-label col-sm-4">Labels font size</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="YLabelsFontSize" class="control-label col-xs-4">Labels font size</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="YLabelsFontSize" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="YLabelsFontSize" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="GraphicsYAngle" class="control-label col-sm-4">Legend angle</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsYAngle" class="control-label col-xs-4">Legend angle</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="GraphicsYAngle" type="number" class="form-control">
                                     </div>
                                     <span asp-validation-for="GraphicsYAngle" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="GraphicsYVerticalJust" class="control-label col-sm-4">Vertical adjustment</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsYVerticalJust" class="control-label col-xs-4">Vertical adjustment</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="GraphicsYVerticalJust" type="number" step="0.1" class="form-control">
                                     </div>
                                     <span asp-validation-for="GraphicsYVerticalJust" class="text-danger"></span>
@@ -306,7 +419,8 @@
             </div>
 
 
-            <div class="tab-pane" id="3">
+            <div class="tab-pane" id="4">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
@@ -314,9 +428,9 @@
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="OutputPlotsInBW" class="control-label col-sm-4">Black and white format</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="OutputPlotsInBW" type="checkbox" class="form-control">
+                                    <label asp-for="OutputPlotsInBW" class="control-label col-xs-4">Black &amp; white format</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="OutputPlotsInBW" class="checkbox" type="checkbox">
                                     </div>
                                     <span asp-validation-for="OutputPlotsInBW" class="text-danger"></span>
                                 </div>
@@ -326,36 +440,36 @@
 
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Colour</h3></div>
+                            <div class="panel-heading"><h3>Overall Colour Options</h3></div>
 
                             <div class="panel-body">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <label asp-for="ColourFill" class="control-label col-sm-4">Fill (colour)</label>
-                                        <div class="  col-sm-8">
+                                        <label asp-for="ColourFill" class="control-label col-xs-4">Fill (colour)</label>
+                                        <div class="col-xs-8">
                                             <input asp-for="ColourFill" type="text" class="form-control">
                                         </div>
                                         <span asp-validation-for="ColourFill" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label asp-for="BWFill" class="control-label col-sm-4">Fill (black and white) angle</label>
-                                        <div class="  col-sm-8">
+                                        <label asp-for="BWFill" class="control-label col-xs-4">Fill (black &amp; white)</label>
+                                        <div class="col-xs-8">
                                             <input asp-for="BWFill" type="text" class="form-control">
                                         </div>
                                         <span asp-validation-for="BWFill" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
-                                        <label asp-for="ColourLine" class="control-label col-sm-4">Line (colour)</label>
-                                        <div class="  col-sm-8">
+                                        <label asp-for="ColourLine" class="control-label col-xs-4">Line (colour)</label>
+                                        <div class="col-xs-8">
                                             <input asp-for="ColourLine" type="text" class="form-control">
                                         </div>
                                         <span asp-validation-for="ColourLine" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
-                                        <label asp-for="BWLine" class="control-label col-sm-4">Line (black and white)</label>
-                                        <div class="  col-sm-8">
+                                        <label asp-for="BWLine" class="control-label col-xs-4">Line (black &amp; white)</label>
+                                        <div class="col-xs-8">
                                             <input asp-for="BWLine" type="text" class="form-control">
                                         </div>
                                         <span asp-validation-for="BWLine" class="text-danger"></span>
@@ -364,153 +478,43 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
                             <div class="panel-heading"><h3>Categorised Plot Colours</h3></div>
 
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label asp-for="GraphicsBWLow" class="control-label col-sm-4">Palette black and white min</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsBWLow" class="control-label col-xs-4">Black &amp; white palette range minimum</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="GraphicsBWLow" type="number" step="0.1" class="form-control">
                                     </div>
                                     <span asp-validation-for="GraphicsBWLow" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="GraphicsBWHigh" class="control-label col-sm-4">Palette black and white max</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="GraphicsBWHigh" class="control-label col-xs-4">Black &amp; white palette range maximum</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="GraphicsBWHigh" type="number" step="0.1" class="form-control">
                                     </div>
                                     <span asp-validation-for="GraphicsBWHigh" class="text-danger"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="PaletteSet" class="control-label col-sm-4">Palette (colour)</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="PaletteSet" class="control-label col-xs-4">Palette (colour)</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="PaletteSet" type="text" class="form-control">
                                     </div>
                                     <span asp-validation-for="PaletteSet" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="CategoryBarFill" class="control-label col-sm-4">Header bar</label>
-                                    <div class="  col-sm-8">
+                                    <label asp-for="CategoryBarFill" class="control-label col-xs-4">Header bar</label>
+                                    <div class="col-xs-8">
                                         <input asp-for="CategoryBarFill" type="text" class="form-control">
                                     </div>
                                     <span asp-validation-for="CategoryBarFill" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="tab-pane" id="4">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Covariate Output Options</h3></div>
-
-                            <div class="panel-body">
-
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label asp-for="CovariateRegressionCoefficients" class="control-label col-sm-4">Covariate regression coefficients</label>
-                                        <div class="  col-sm-8">
-                                            <input asp-for="CovariateRegressionCoefficients" type="checkbox" class="form-control">
-                                        </div>
-                                        <span asp-validation-for="CovariateRegressionCoefficients" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label asp-for="AssessCovariateInteractions" class="control-label col-sm-4">Assess covariate interactions</label>
-                                        <div class="  col-sm-8">
-                                            <input asp-for="AssessCovariateInteractions" type="checkbox" class="form-control">
-                                        </div>
-                                        <span asp-validation-for="AssessCovariateInteractions" class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Graphics Output Options</h3></div>
-
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label asp-for="OutputPlotsAsPdf" class="control-label col-sm-4">Generate pdf version of each graph</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="OutputPlotsAsPdf" type="checkbox" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="OutputPlotsAsPdf" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="OutputPlotsAsPdf" class="control-label col-sm-4">Generate pdf version of each graph</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="OutputPlotsAsPdf" type="checkbox" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="OutputPlotsAsPdf" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="PdfHeight" class="control-label col-sm-4">Height of pdf version of graph</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="PdfHeight" type="number" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="PdfHeight" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="PdfWidth" class="control-label col-sm-4">Width of pdf version of graph</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="PdfWidth" type="number" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="PdfWidth" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="JpegHeight" class="control-label col-sm-4">Height of jpeg version of graph</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="JpegHeight" type="number" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="JpegHeight" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="JpegWidth" class="control-label col-sm-4">Width of jpeg version of graph</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="JpegWidth" type="number" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="JpegWidth" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Other Output Options</h3></div>
-
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label asp-for="OutputData" class="control-label col-sm-4">Output data with results</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="OutputData" type="checkbox" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="OutputData" class="text-danger"></span>
-                                </div>
-
-                                <div class="form-group">
-                                    <label asp-for="GeometryDisplay" class="control-label col-sm-4">Display geometric means</label>
-                                    <div class="  col-sm-8">
-                                        <input asp-for="GeometryDisplay" type="checkbox" class="form-control">
-                                    </div>
-                                    <span asp-validation-for="GeometryDisplay" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>

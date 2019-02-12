@@ -138,9 +138,11 @@ namespace SilveR.Migrations
 
                     b.Property<bool>("CovariateRegressionCoefficients");
 
-                    b.Property<bool>("DisplayLSMeanslines");
+                    b.Property<bool>("DisplayLSMeansLines");
 
-                    b.Property<bool>("DisplaySEMlines");
+                    b.Property<bool>("DisplayPointLabels");
+
+                    b.Property<bool>("DisplaySEMLines");
 
                     b.Property<decimal>("ErrorBarWidth");
 
@@ -193,16 +195,10 @@ namespace SilveR.Migrations
 
                     b.Property<bool>("OutputData");
 
-                    b.Property<bool>("OutputPlotsAsPdf");
-
                     b.Property<bool>("OutputPlotsInBW");
 
                     b.Property<string>("PaletteSet")
                         .IsRequired();
-
-                    b.Property<int>("PdfHeight");
-
-                    b.Property<int>("PdfWidth");
 
                     b.Property<int>("PointShape");
 

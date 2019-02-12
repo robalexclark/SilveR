@@ -49,8 +49,6 @@ namespace SilveR.Models
 
         public bool OutputData { get; set; } = false;
 
-        public bool OutputPlotsAsPdf { get; set; } = false;
-
         public bool OutputPlotsInBW { get; set; } = false;
 
         public bool GeometryDisplay { get; set; } = false;
@@ -61,9 +59,11 @@ namespace SilveR.Models
 
         public bool ScatterLabels { get; set; } = false;
 
-        public bool DisplayLSMeanslines { get; set; } = false;
+        public bool DisplayLSMeansLines { get; set; } = false;
 
-        public bool DisplaySEMlines { get; set; } = false;
+        public bool DisplaySEMLines { get; set; } = false;
+
+        public bool DisplayPointLabels { get; set; } = false;
 
 
 
@@ -82,8 +82,6 @@ namespace SilveR.Models
         public int LineSize { get; set; } = 1;
         public int LegendTextSize { get; set; } = 15;
 
-        public int PdfWidth { get; set; } = 11;
-        public int PdfHeight { get; set; } = 8;
         public int JpegWidth { get; set; } = 480;
         public int JpegHeight { get; set; } = 480;
         public decimal GraphicsBWLow { get; set; } = 0.1m;
@@ -110,14 +108,14 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.LegendPosition) + " " + this.LegendPosition);
             optionLines.Add(nameof(this.PaletteSet) + " " + this.PaletteSet);
             optionLines.Add(nameof(this.OutputData) + " " + (this.OutputData ? "Y" : "N"));
-            optionLines.Add(nameof(this.OutputPlotsAsPdf) + " " + (this.OutputPlotsAsPdf ? "Y" : "N"));
             optionLines.Add(nameof(this.OutputPlotsInBW) + " " + (this.OutputPlotsInBW ? "Y" : "N"));
             optionLines.Add(nameof(this.GeometryDisplay) + " " + (this.GeometryDisplay ? "Y" : "N"));
             optionLines.Add(nameof(this.CovariateRegressionCoefficients) + " " + (this.CovariateRegressionCoefficients ? "Y" : "N"));
             optionLines.Add(nameof(this.AssessCovariateInteractions) + " " + (this.AssessCovariateInteractions ? "Y" : "N"));
             optionLines.Add(nameof(this.ScatterLabels) + " " + (this.ScatterLabels ? "Y" : "N"));
-            optionLines.Add(nameof(this.DisplayLSMeanslines) + " " + (this.DisplayLSMeanslines ? "Y" : "N"));
-            optionLines.Add(nameof(this.DisplaySEMlines) + " " + (this.DisplaySEMlines ? "Y" : "N"));
+            optionLines.Add(nameof(this.DisplayLSMeansLines) + " " + (this.DisplayLSMeansLines ? "Y" : "N"));
+            optionLines.Add(nameof(this.DisplaySEMLines) + " " + (this.DisplaySEMLines ? "Y" : "N"));
+            optionLines.Add(nameof(this.DisplayPointLabels) + " " + (this.DisplayPointLabels ? "Y" : "N"));
 
             optionLines.Add(nameof(this.TitleSize) + " " + this.TitleSize);
             optionLines.Add(nameof(this.XAxisTitleFontSize) + " " + this.XAxisTitleFontSize);
@@ -132,8 +130,6 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.PointShape) + " " + this.PointShape);
             optionLines.Add(nameof(this.LineSize) + " " + this.LineSize);
             optionLines.Add(nameof(this.LegendTextSize) + " " + this.LegendTextSize);
-            optionLines.Add(nameof(this.PdfWidth) + " " + this.PdfWidth);
-            optionLines.Add(nameof(this.PdfHeight) + " " + this.PdfHeight);
             optionLines.Add(nameof(this.JpegWidth) + " " + this.JpegWidth);
             optionLines.Add(nameof(this.JpegHeight) + " " + this.JpegHeight);
             optionLines.Add(nameof(this.GraphicsBWLow) + " " + this.GraphicsBWLow);
