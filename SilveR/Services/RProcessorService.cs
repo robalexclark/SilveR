@@ -5,8 +5,10 @@ using SilveR.Models;
 using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +33,7 @@ namespace SilveR.Services
         {
             using (IServiceScope scope = services.CreateScope())
             {
-                ISilveRRepository repository = scope.ServiceProvider.GetRequiredService<ISilveRRepository>();
+                ISilveRRepository silveRRepository = scope.ServiceProvider.GetRequiredService<ISilveRRepository>();
                 AppSettings appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
 
                 //declared here as used in exception handler
@@ -45,11 +47,11 @@ namespace SilveR.Services
                 Stopwatch sw = Stopwatch.StartNew();
 
                 //save the useroptions to the working dir
-                UserOption userOptions = await repository.GetUserOptions();
+                UserOption userOptions = await silveRRepository.GetUserOptions();
                 File.WriteAllLines(Path.Combine(workingDir, "UserOptions.txt"), userOptions.GetOptionLines());
 
                 //get analysis
-                Analysis analysis = await repository.GetAnalysisComplete(analysisGuid);
+                Analysis analysis = await silveRRepository.GetAnalysisComplete(analysisGuid);
 
                 //combine script files into analysisGuid.R
                 string scriptFileName = Path.Combine(workingDir, analysisGuid + ".R");
@@ -160,14 +162,22 @@ namespace SilveR.Services
 
                 if (File.Exists(htmlFile)) //wont exist if there is an error!
                 {
-                    //get the output files
+                    //get the output files that match the guid
                     List<string> resultsFiles = new List<string>();
                     string[] outputFiles = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
-                    foreach (string file in outputFiles)
+                    foreach (string file in outputFiles.Where(x => !x.EndsWith(".R"))) //go through all output (except the R input file)
                     {
-                        if (file.EndsWith(".R") || file.EndsWith(".csv")) continue;
-
-                        resultsFiles.Add(file);
+                        if (file.ToLower().EndsWith(".html") || file.ToLower().EndsWith(".jpg"))
+                        {
+                            resultsFiles.Add(file);
+                        }
+                        //else if (file..ToLower().EndsWith("AGREEANAMEHERE.csv"))
+                        //{
+                        //    DataTable dataTable = CSVConverter.CSVDataToDataTable(new FileInfo(file).OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
+                        //    await SaveDatasetToDatabase(silveRRepository, "WhatFileNameHere", dataTable);
+                        //}
+                        //else
+                        //    throw new InvalidOperationException("Unexpected file type in temp folder!");
                     }
 
                     string inlineHtml = InlineHtmlCreator.CreateInlineHtml(resultsFiles);
@@ -175,7 +185,7 @@ namespace SilveR.Services
                     analysis.HtmlOutput = inlineHtml;
                 }
 
-                await repository.UpdateAnalysis(analysis);
+                await silveRRepository.UpdateAnalysis(analysis);
 
 #if !DEBUG
                     string[] filesToClean = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
@@ -186,7 +196,7 @@ namespace SilveR.Services
                 {
                     try
                     {
-                        Analysis analysis = await repository.GetAnalysis(analysisGuid);
+                        Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
 
                         string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
                         message = message + "TempFolder=" + workingDir + Environment.NewLine + Environment.NewLine;
@@ -201,7 +211,7 @@ namespace SilveR.Services
                         }
 
                         analysis.RProcessOutput = message;
-                        await repository.UpdateAnalysis(analysis);
+                        await silveRRepository.UpdateAnalysis(analysis);
                     }
                     catch { }
 
@@ -209,6 +219,15 @@ namespace SilveR.Services
                 }
 #endif
             }
+        }
+
+        private async Task SaveDatasetToDatabase(ISilveRRepository silveRRepository, string fileName, DataTable dataTable)
+        {
+            //get last version no based on existing dataset names
+            int lastVersionNo = await silveRRepository.GetLastVersionNumberForDataset(fileName);
+            Dataset dataset = dataTable.GetDataset(fileName, lastVersionNo);
+
+            await silveRRepository.CreateDataset(dataset);
         }
 
         private string FormatPreArgument(string str)

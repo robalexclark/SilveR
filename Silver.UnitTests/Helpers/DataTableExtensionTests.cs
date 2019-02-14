@@ -6,8 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Silver.UnitTests.Helpers
-{
-    
+{    
     public class DataTableExtensionTests
     {
         //[Fact]

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SilveR.Controllers;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Silver.UnitTests.Controllers
-{    
+{
     public class HomeControllerTests
     {
         [Fact]

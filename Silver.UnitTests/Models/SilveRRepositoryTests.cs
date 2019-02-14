@@ -354,7 +354,6 @@ namespace Silver.UnitTests.Models
             Assert.False(userOption.GeometryDisplay);
             Assert.False(userOption.CovariateRegressionCoefficients);
             Assert.False(userOption.AssessCovariateInteractions);
-            Assert.False(userOption.ScatterLabels);
             Assert.False(userOption.DisplayLSMeansLines);
             Assert.False(userOption.DisplaySEMLines);
             Assert.False(userOption.DisplayPointLabels);

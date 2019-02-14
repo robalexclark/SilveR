@@ -9,7 +9,7 @@ using SilveR.Models;
 namespace SilveR.Migrations
 {
     [DbContext(typeof(SilveRContext))]
-    [Migration("20190212095150_InitialCreate")]
+    [Migration("20190213082711_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,8 +205,6 @@ namespace SilveR.Migrations
                     b.Property<int>("PointShape");
 
                     b.Property<int>("PointSize");
-
-                    b.Property<bool>("ScatterLabels");
 
                     b.Property<int>("TitleSize");
 

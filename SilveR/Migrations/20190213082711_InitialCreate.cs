@@ -62,7 +62,6 @@ namespace SilveR.Migrations
                     GeometryDisplay = table.Column<bool>(nullable: false),
                     CovariateRegressionCoefficients = table.Column<bool>(nullable: false),
                     AssessCovariateInteractions = table.Column<bool>(nullable: false),
-                    ScatterLabels = table.Column<bool>(nullable: false),
                     DisplayLSMeansLines = table.Column<bool>(nullable: false),
                     DisplaySEMLines = table.Column<bool>(nullable: false),
                     DisplayPointLabels = table.Column<bool>(nullable: false),

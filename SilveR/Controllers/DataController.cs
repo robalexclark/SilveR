@@ -172,27 +172,37 @@ namespace SilveR.Controllers
                     }
                 }
             }
-            else throw new Exception("File format not recognised.");
+            else
+                throw new Exception("File format not recognised.");
         }
+
+        //private async Task SaveDatasetToDatabase(string fileName, DataTable dataTable)
+        //{
+        //    //clean up the datatable, trimming spaces, and ensuring that decimal seperator is a .
+        //    dataTable.CleanUpDataTable();
+
+        //    //add the selected column to the dataset, setting all rows to "true"
+        //    dataTable.AddSelectedColumn();
+
+        //    //get last version no based on existing dataset names
+        //    int lastVersionNo = await repository.GetLastVersionNumberForDataset(fileName);
+
+        //    //create entity and save...
+        //    Dataset dataset = new Dataset();
+        //    string[] csvArray = dataTable.GetCSVArray();
+        //    dataset.TheData = String.Join(Environment.NewLine, csvArray);
+        //    dataset.DatasetName = fileName;
+        //    dataset.VersionNo = lastVersionNo + 1;
+        //    dataset.DateUpdated = DateTime.Now;
+
+        //    await repository.CreateDataset(dataset);
+        //}
 
         private async Task SaveDatasetToDatabase(string fileName, DataTable dataTable)
         {
-            //clean up the datatable, trimming spaces, and ensuring that decimal seperator is a .
-            dataTable.CleanUpDataTable();
-
-            //add the selected column to the dataset, setting all rows to "true"
-            dataTable.AddSelectedColumn();
-
             //get last version no based on existing dataset names
             int lastVersionNo = await repository.GetLastVersionNumberForDataset(fileName);
-
-            //create entity and save...
-            Dataset dataset = new Dataset();
-            string[] csvArray = dataTable.GetCSVArray();
-            dataset.TheData = String.Join(Environment.NewLine, csvArray);
-            dataset.DatasetName = fileName;
-            dataset.VersionNo = lastVersionNo + 1;
-            dataset.DateUpdated = DateTime.Now;
+            Dataset dataset = dataTable.GetDataset(fileName, lastVersionNo);
 
             await repository.CreateDataset(dataset);
         }

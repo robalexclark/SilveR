@@ -57,8 +57,6 @@ namespace SilveR.Models
 
         public bool AssessCovariateInteractions { get; set; } = false;
 
-        public bool ScatterLabels { get; set; } = false;
-
         public bool DisplayLSMeansLines { get; set; } = false;
 
         public bool DisplaySEMLines { get; set; } = false;
@@ -112,7 +110,6 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.GeometryDisplay) + " " + (this.GeometryDisplay ? "Y" : "N"));
             optionLines.Add(nameof(this.CovariateRegressionCoefficients) + " " + (this.CovariateRegressionCoefficients ? "Y" : "N"));
             optionLines.Add(nameof(this.AssessCovariateInteractions) + " " + (this.AssessCovariateInteractions ? "Y" : "N"));
-            optionLines.Add(nameof(this.ScatterLabels) + " " + (this.ScatterLabels ? "Y" : "N"));
             optionLines.Add(nameof(this.DisplayLSMeansLines) + " " + (this.DisplayLSMeansLines ? "Y" : "N"));
             optionLines.Add(nameof(this.DisplaySEMLines) + " " + (this.DisplaySEMLines ? "Y" : "N"));
             optionLines.Add(nameof(this.DisplayPointLabels) + " " + (this.DisplayPointLabels ? "Y" : "N"));

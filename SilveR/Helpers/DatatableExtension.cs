@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SilveR.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -9,17 +10,6 @@ namespace SilveR.Helpers
 {
     public static class DataTableExtension
     {
-        //public static void TrimAllDataInDataTable(this DataTable dataTable)
-        //{
-        //    foreach (DataColumn c in dataTable.Columns)
-        //    {
-        //        foreach (DataRow r in dataTable.Rows)
-        //        {
-        //            r[c.ColumnName] = r[c.ColumnName].ToString().Trim();
-        //        }
-        //    }
-        //}
-
         public static void CleanUpDataTable(this DataTable dataTable)
         {
             foreach (DataColumn dc in dataTable.Columns)
@@ -205,8 +195,6 @@ namespace SilveR.Helpers
 
         public static void RemoveBlankRow(this DataTable dtNew, string columnToCheck)
         {
-            //if (!String.IsNullOrEmpty(columnToCheck))
-            //{
                 for (int i = dtNew.Rows.Count - 1; i >= 0; i--)
                 {
                     DataRow theRow = dtNew.Rows[i];
@@ -216,7 +204,6 @@ namespace SilveR.Helpers
                         dtNew.Rows.Remove(dtNew.Rows[i]);
                     }
                 }
-            //}
         }
 
         public static bool CheckIsNumeric(this DataTable dataTable, string column)
@@ -336,6 +323,25 @@ namespace SilveR.Helpers
             dtNew.Columns.Remove("SilveRSelected");
 
             return dtNew;
+        }
+
+        public static Dataset GetDataset(this DataTable dataTable, string fileName, int lastVersionNo)
+        {
+            //clean up the datatable, trimming spaces, and ensuring that decimal seperator is a .
+            dataTable.CleanUpDataTable();
+
+            //add the selected column to the dataset, setting all rows to "true"
+            dataTable.AddSelectedColumn();
+
+            //create entity and save...
+            Dataset dataset = new Dataset();
+            string[] csvArray = dataTable.GetCSVArray();
+            dataset.TheData = String.Join(Environment.NewLine, csvArray);
+            dataset.DatasetName = fileName;
+            dataset.VersionNo = lastVersionNo + 1;
+            dataset.DateUpdated = DateTime.Now;
+
+            return dataset;
         }
     }
 }

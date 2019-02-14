@@ -1,6 +1,6 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.1.x), local data storage in DbSQLLite and the statistical analysis performed in R 3.5.1.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.2.x), local data storage in DbSQLLite and the statistical analysis performed in R 3.5.1.
 
 ## Getting Started
 

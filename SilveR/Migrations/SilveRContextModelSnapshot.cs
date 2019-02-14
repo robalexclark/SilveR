@@ -204,8 +204,6 @@ namespace SilveR.Migrations
 
                     b.Property<int>("PointSize");
 
-                    b.Property<bool>("ScatterLabels");
-
                     b.Property<int>("TitleSize");
 
                     b.Property<int>("XAxisTitleFontSize");
