@@ -195,15 +195,15 @@ namespace SilveR.Helpers
 
         public static void RemoveBlankRow(this DataTable dtNew, string columnToCheck)
         {
-                for (int i = dtNew.Rows.Count - 1; i >= 0; i--)
-                {
-                    DataRow theRow = dtNew.Rows[i];
+            for (int i = dtNew.Rows.Count - 1; i >= 0; i--)
+            {
+                DataRow theRow = dtNew.Rows[i];
 
-                    if (String.IsNullOrEmpty(theRow[columnToCheck].ToString()))
-                    {
-                        dtNew.Rows.Remove(dtNew.Rows[i]);
-                    }
+                if (String.IsNullOrEmpty(theRow[columnToCheck].ToString()))
+                {
+                    dtNew.Rows.Remove(dtNew.Rows[i]);
                 }
+            }
         }
 
         public static bool CheckIsNumeric(this DataTable dataTable, string column)
@@ -292,15 +292,14 @@ namespace SilveR.Helpers
         public static IEnumerable<string> GetValues(this DataTable dataTable, string column)
         {
             //Get a list of the levels in a selected column
-            //if (String.IsNullOrEmpty(column))
-            //    return new List<string>(); //i.e. empty list
-
             List<string> levels = new List<string>();
 
             foreach (DataRow row in dataTable.Rows)
             {
                 if (!String.IsNullOrEmpty(row[column].ToString()))
+                {
                     levels.Add(row[column].ToString());
+                }
             }
 
             return levels;

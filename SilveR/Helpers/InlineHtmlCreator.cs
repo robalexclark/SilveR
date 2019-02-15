@@ -38,7 +38,6 @@ namespace SilveR.Helpers
         //    cssNode.InnerHtml = cssString;
 
         //    document.DocumentNode.ReplaceChild(cssNode, linkNode);
-
         //    return document;
         //}
 

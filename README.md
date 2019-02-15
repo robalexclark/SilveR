@@ -4,7 +4,7 @@ SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system 
 
 ## Getting Started
 
-Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.5.1 so that it should produce analyses straight away. You can always point the system at your own R setup (YMMV!)
+Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.5.1 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
 
 ### Current Build
 
@@ -14,15 +14,8 @@ Clone the project, open in Visual Studio, optionally run the tests, and then deb
 
 SilveR is a self-hosted web app written in .net core, designed to run locally on Windows, Linux and macOS.
 
-Releases can be produced through the following dotnet commands:
 
-dotnet publish -c Release -r win-x64
-
-dotnet publish -c Release -r linux-x64
-
-dotnet publish -c Release -r osx-x64 
-
-For windows you will need to xcopy the R-3.5.1 folder to the root of the publish output folder. For linux and mac you will need to provide your own R install (We need help here to work out how to add a specific version of R into the build/installation process).
+If you are building and publishing the application from source you will need to xcopy the R-3.5.1 folder to the root of the publish output folder (windows only). For linux and mac you will need to provide your own R install (We need help here to work out how to add a specific version of R into the build/installation process).
 
 To run the published system run SilveR.exe. A console window will appear stating that the system is listening on http://localhost:5000. Open your browser and navigate to that location.
 
@@ -66,12 +59,12 @@ Viewing of the results file entails the inline html being extracted from the loc
 1) Finialise the migration of stats modules from InVivoStat (in progress)
 2) Provide "wrapper" for Windows and MacOS to host application and provide browser (e.g. electron or chromely).
 3) Develop installer for Windows and MacOS
-4) Port to .net core 3.x and Blazor/razor components when these are released
+4) Clean up interface and provide more "helper text" where necessary
+5) Port to .net core 3.x and Blazor/razor components when these are released
 
-## Contributing
+## Contributing or Issues
 
-TODO 
-
+If you would like to contribute or find an issue with the system then please raise an issue ticket. I'm happy to help developers write modules for the system as long as the statistical methodology is reasonbly mainstream. 
 
 ## License
 

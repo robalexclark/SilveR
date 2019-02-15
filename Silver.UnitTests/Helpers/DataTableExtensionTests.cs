@@ -1,30 +1,14 @@
 using SilveR.Helpers;
+using SilveR.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Silver.UnitTests.Helpers
-{    
+{
     public class DataTableExtensionTests
     {
-        //[Fact]
-        //public void TrimAllDataInDataTable_ReturnsCorrectDataTable()
-        //{
-        //    //Arrange
-        //    DataTable dataTable = GetTestDataTable();
-
-        //    //Act
-        //    Assert.Equal("0.454828601  ", dataTable.Rows[0][1]);
-        //    Assert.Equal(" 0.574150302", dataTable.Rows[0][2]);
-        //    dataTable.TrimAllDataInDataTable();
-
-        //    //Assert
-        //    Assert.Equal("0.454828601", dataTable.Rows[0][1]);
-        //    Assert.Equal("0.574150302", dataTable.Rows[0][2]);
-        //}
-
         [Fact]
         public void CleanUpDataTable_ReturnsCorrectDataTable()
         {
@@ -276,6 +260,23 @@ namespace Silver.UnitTests.Helpers
 
             //Assert
             Assert.Equal(30, newDataTable.Rows.Count);
+        }
+
+
+        [Fact]
+        public void GetDataset_ReturnsCorrectDataset()
+        {
+            //Arrange
+            DataTable dataTable = GetTestDataTable();
+
+            //Act
+            Dataset dataSet = dataTable.GetDataset("TestFileName", 1);
+
+            //Assert
+            Assert.Equal("TestFileName", dataSet.DatasetName);
+            Assert.Equal(2, dataSet.VersionNo);
+            Assert.StartsWith("SilveRSelected,Resp1,Resp 2,Resp3,Resp4,Resp5,Resp6,Resp7,Resp8,Resp9,Resp10,Resp11,Cat1,Cat2,Cat3,Cat4,Cat5,Cat6,Cat456", dataSet.TheData);
+            Assert.EndsWith("True,0.928850779,0.939350659,0.009809005,0.770861279,0.026496166,0.414520232,,0.90541248,0.267292424,0.267292424,0.267292424,A,A,A,A,2,2,A_ 2_ 2", dataSet.TheData);
         }
 
 
