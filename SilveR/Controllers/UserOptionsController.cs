@@ -31,7 +31,7 @@ namespace SilveR.Controllers
             }
             else if (submitButtonValue == "reset")
             {
-                await repository.ResetUserOptions();
+                await repository.ResetUserOptions(userOption); //remove the useroptions
 
                 return RedirectToAction ("Index");
             }

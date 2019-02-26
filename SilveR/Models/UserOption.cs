@@ -72,9 +72,9 @@ namespace SilveR.Models
 
         public int YLabelsFontSize { get; set; } = 15;
         public int GraphicsXAngle { get; set; } = 0;
-        public decimal GraphicsXHorizontalJust { get; set; } = 0.5m;
+        public double GraphicsXHorizontalJust { get; set; } = 0.5;
         public int GraphicsYAngle { get; set; } = 0;
-        public decimal GraphicsYVerticalJust { get; set; } = 0.5m;
+        public double GraphicsYVerticalJust { get; set; } = 0.5;
         public int PointSize { get; set; } = 4;
         public int PointShape { get; set; } = 21;
         public int LineSize { get; set; } = 1;
@@ -82,11 +82,11 @@ namespace SilveR.Models
 
         public int JpegWidth { get; set; } = 480;
         public int JpegHeight { get; set; } = 480;
-        public decimal GraphicsBWLow { get; set; } = 0.1m;
-        public decimal GraphicsBWHigh { get; set; } = 0.8m;
-        public decimal GraphicsWidthJitter { get; set; } = 0.1m;
-        public decimal GraphicsHeightJitter { get; set; } = 0.1m;
-        public decimal ErrorBarWidth { get; set; } = 0.7m;
+        public double GraphicsBWLow { get; set; } = 0.1;
+        public double GraphicsBWHigh { get; set; } = 0.8;
+        public double GraphicsWidthJitter { get; set; } = 0.1;
+        public double GraphicsHeightJitter { get; set; } = 0.1;
+        public double ErrorBarWidth { get; set; } = 0.7;
 
 
         public IEnumerable<string> GetOptionLines()

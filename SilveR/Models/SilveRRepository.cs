@@ -159,11 +159,16 @@ namespace SilveR.Models
             await context.SaveChangesAsync();
         }
 
-        public async Task ResetUserOptions()
+        public async Task ResetUserOptions(UserOption userOption)
         {
-            //clear out the (one) record
-            context.Database.ExecuteSqlCommand("DELETE FROM UserOptions");
-            await context.SaveChangesAsync();
+            //get the options
+            bool exists = await context.UserOptions.AnyAsync(x => x.UserOptionID == userOption.UserOptionID);
+
+            if (exists)
+            {
+                context.UserOptions.Remove(userOption);
+                await context.SaveChangesAsync();
+            }
         }
 
 

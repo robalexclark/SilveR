@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SilveR.Helpers;
 using SilveR.Models;
@@ -45,12 +45,12 @@ namespace SilveR.Services
                 {
                     Stopwatch sw = Stopwatch.StartNew();
 
+                    //get analysis
+                    Analysis analysis = await silveRRepository.GetAnalysisComplete(analysisGuid);
+
                     //save the useroptions to the working dir
                     UserOption userOptions = await silveRRepository.GetUserOptions();
                     File.WriteAllLines(Path.Combine(workingDir, "UserOptions.txt"), userOptions.GetOptionLines());
-
-                    //get analysis
-                    Analysis analysis = await silveRRepository.GetAnalysisComplete(analysisGuid);
 
                     //combine script files into analysisGuid.R
                     string scriptFileName = Path.Combine(workingDir, analysisGuid + ".R");
@@ -166,15 +166,18 @@ namespace SilveR.Services
                         string[] outputFiles = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
                         foreach (string file in outputFiles.Where(x => !x.EndsWith(".R"))) //go through all output (except the R input file)
                         {
-                            if (file.ToLower().EndsWith(".html") || file.ToLower().EndsWith(".jpg"))
+                            FileInfo fileInfo = new FileInfo(file);
+                            if (fileInfo.Extension == ".html" || fileInfo.Extension == ".jpg") //main output so add to results
                             {
                                 resultsFiles.Add(file);
                             }
-                            //else if (file..ToLower().EndsWith("AGREEANAMEHERE.csv"))
-                            //{
-                            //    DataTable dataTable = CSVConverter.CSVDataToDataTable(new FileInfo(file).OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
-                            //    await SaveDatasetToDatabase(silveRRepository, "WhatFileNameHere", dataTable);
-                            //}
+                            else if (fileInfo.Name != analysis.AnalysisGuid + ".csv" && fileInfo.Extension == ".csv") //is not the input csv and is a dataset to be imported into datasets
+                            {
+                                DataTable dataTable = CSVConverter.CSVDataToDataTable(fileInfo.OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
+
+                                string datasetName = fileInfo.Name.Replace(analysis.AnalysisGuid, String.Empty).TrimStart('-');
+                                await SaveDatasetToDatabase(silveRRepository, datasetName, dataTable);
+                            }
                             //else
                             //    throw new InvalidOperationException("Unexpected file type in temp folder!");
                         }

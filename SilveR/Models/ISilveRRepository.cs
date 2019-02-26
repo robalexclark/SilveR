@@ -23,7 +23,7 @@ namespace SilveR.Models
         Task AddAnalysis(Analysis analysis);
         Task UpdateDataset(Dataset dataset);
         Task UpdateAnalysis(Analysis analysis);
-        Task ResetUserOptions();
+        Task ResetUserOptions(UserOption userOption);
         Task<UserOption> GetUserOptions();
         Task UpdateUserOptions(UserOption userOption);
         void Dispose();

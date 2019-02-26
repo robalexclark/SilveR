@@ -364,20 +364,20 @@ namespace Silver.UnitTests.Models
             Assert.Equal(15, userOption.XLabelsFontSize);
             Assert.Equal(15, userOption.YLabelsFontSize);
             Assert.Equal(0, userOption.GraphicsXAngle);
-            Assert.Equal(0.5m, userOption.GraphicsXHorizontalJust);
+            Assert.Equal(0.5, userOption.GraphicsXHorizontalJust);
             Assert.Equal(0, userOption.GraphicsYAngle);
-            Assert.Equal(0.5m, userOption.GraphicsYVerticalJust);
+            Assert.Equal(0.5, userOption.GraphicsYVerticalJust);
             Assert.Equal(4, userOption.PointSize);
             Assert.Equal(21, userOption.PointShape);
             Assert.Equal(1, userOption.LineSize);
             Assert.Equal(15, userOption.LegendTextSize);
             Assert.Equal(480, userOption.JpegWidth);
             Assert.Equal(480, userOption.JpegHeight);
-            Assert.Equal(0.1m, userOption.GraphicsBWLow);
-            Assert.Equal(0.8m, userOption.GraphicsBWHigh);
-            Assert.Equal(0.1m, userOption.GraphicsWidthJitter);
-            Assert.Equal(0.1m, userOption.GraphicsHeightJitter);
-            Assert.Equal(0.7m, userOption.ErrorBarWidth);
+            Assert.Equal(0.1, userOption.GraphicsBWLow);
+            Assert.Equal(0.8, userOption.GraphicsBWHigh);
+            Assert.Equal(0.1, userOption.GraphicsWidthJitter);
+            Assert.Equal(0.1, userOption.GraphicsHeightJitter);
+            Assert.Equal(0.7, userOption.ErrorBarWidth);
         }
 
 
