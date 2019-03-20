@@ -26,7 +26,7 @@ namespace SilveR.StatsModels
         [DisplayName("Other design (block) factors")]
         public IEnumerable<string> OtherDesignFactors { get; set; }
 
-        [HasAtLeastOneEntry]
+        [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Continuous factors")]
         public IEnumerable<string> ContinuousFactors { get; set; }

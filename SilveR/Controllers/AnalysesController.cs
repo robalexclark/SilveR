@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SelectPdf;
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Services;
@@ -7,8 +8,10 @@ using SilveR.Validators;
 using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace SilveR.Controllers
 {
@@ -223,11 +226,11 @@ namespace SilveR.Controllers
             return await RunAnalysis(model, ignoreWarnings);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> MultivariateAnalysis(MultivariateModel model, bool ignoreWarnings)
-        //{
-        //    return await RunAnalysis(model, ignoreWarnings);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> MultivariateAnalysis(MultivariateAnalysisModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
 
         [HttpPost]
         public async Task<IActionResult> NestedDesignAnalysis(NestedDesignAnalysisModel model, bool ignoreWarnings)
@@ -330,19 +333,22 @@ namespace SilveR.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult ViewResults(string analysisGuid, string submitButton)
+        [HttpGet]
+        public FileContentResult ExportToPdf(string analysisGuid)
         {
-            if (submitButton == "ReAnalyse")
-            {
-                return RedirectToAction("ReAnalyse", new { analysisGuid = analysisGuid });
-            }
-            else if (submitButton == "ViewLog")
-            {
-                return RedirectToAction("ViewLog", new { analysisGuid = analysisGuid });
-            }
-            else
-                throw new ArgumentException("SubmitButton not valid!");
+            //generate pdf using static method (but should really be a service?)
+            byte[] bytes = PdfGenerator.GeneratePdf(new Uri($"{Request.Scheme}://{Request.Host.Value}/Analyses/ResultsForExport?analysisGuid=" + analysisGuid));
+
+            Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".pdf");
+            return File(bytes, "application/pdf");
+        }
+      
+        [HttpGet]
+        public async Task<IActionResult> ResultsForExport(string analysisGuid)
+        {
+            Analysis analysis = await repository.GetAnalysis(analysisGuid);
+
+            return View(analysis);
         }
 
         [HttpGet]

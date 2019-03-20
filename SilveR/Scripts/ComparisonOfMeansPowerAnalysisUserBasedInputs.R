@@ -185,8 +185,8 @@ powercurvesactual<-function(standev, diffs) {
 	temp3<-100*temp2
 	powergraph=cbind(sample,temp3)
 
-	powerPlot <- sub(".html", "powerPlot.jpg", htmlFile)
-	jpeg(powerPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	powerPlot <- sub(".html", "powerPlot.png", htmlFile)
+	png(powerPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", "powerPlot.pdf", htmlFile)
@@ -267,8 +267,8 @@ powercurvespercentage<-function(mean,standev,pcchange) {
 	temp3<-100*temp2
 	powergraph=cbind(sample,temp3)
 	
-	powerPlot <- sub(".html", "powerPlot.jpg", htmlFile)
-	jpeg(powerPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	powerPlot <- sub(".html", "powerPlot.png", htmlFile)
+	png(powerPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", "powerPlot.pdf", htmlFile)

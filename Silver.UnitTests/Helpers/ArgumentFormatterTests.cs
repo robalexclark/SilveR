@@ -4,7 +4,6 @@ using Xunit;
 
 namespace Silver.UnitTests.Helpers
 {
-
     public class ArgumentFormatterTests
     {
         [Fact]

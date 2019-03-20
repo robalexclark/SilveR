@@ -10,22 +10,22 @@
         <input asp-for="UserOptionID" type="hidden">
 
         <ul class="nav nav-tabs">
-            <li class="active">
-                <a href="#1" data-toggle="tab">Output Options</a>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#one">Output Options</a>
             </li>
-            <li>
-                <a href="#2" data-toggle="tab">Graphics: Appearance</a>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#two">Graphics: Appearance</a>
             </li>
-            <li>
-                <a href="#3" data-toggle="tab">Graphics: Font</a>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#three">Graphics: Font</a>
             </li>
-            <li>
-                <a href="#4" data-toggle="tab">Graphics: Colour</a>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#four">Graphics: Colour</a>
             </li>
         </ul>
 
         <div class="tab-content ">
-            <div class="tab-pane active" id="1">
+            <div class="tab-pane active" id="one">
 
                 <div class="row">
                     <div class="col-md-6">
@@ -47,6 +47,14 @@
                                         <input asp-for="GeometryDisplay" class="checkbox" type="checkbox">
                                     </div>
                                     <span asp-validation-for="GeometryDisplay" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="DisplayModelCoefficients" class="control-label col-xs-4">Display model coefficients</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="DisplayModelCoefficients" class="checkbox" type="checkbox">
+                                    </div>
+                                    <span asp-validation-for="DisplayModelCoefficients" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +95,7 @@
                             <div class="panel-body">
 
                                 <div class="form-group">
-                                    <label asp-for="JpegHeight" class="control-label col-xs-4">Height of jpeg version of graph</label>
+                                    <label asp-for="JpegHeight" class="control-label col-xs-4">Height of plot</label>
                                     <div class="col-xs-8">
                                         <input asp-for="JpegHeight" type="number" class="form-control">
                                     </div>
@@ -95,7 +103,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="JpegWidth" class="control-label col-xs-4">Width of jpeg version of graph</label>
+                                    <label asp-for="JpegWidth" class="control-label col-xs-4">Width of plot</label>
                                     <div class="col-xs-8">
                                         <input asp-for="JpegWidth" type="number" class="form-control">
                                     </div>
@@ -107,7 +115,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="2">
+            <div class="tab-pane" id="two">
 
                 <div class="row">
                     <div class="col-md-6">
@@ -251,8 +259,7 @@
                 </div>
             </div>
 
-
-            <div class="tab-pane" id="3">
+            <div class="tab-pane" id="three">
 
                 <div class="row">
                     <div class="col-md-6">
@@ -418,8 +425,7 @@
                 </div>
             </div>
 
-
-            <div class="tab-pane" id="4">
+            <div class="tab-pane" id="four">
 
                 <div class="row">
                     <div class="col-md-6">

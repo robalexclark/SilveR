@@ -89,11 +89,11 @@ namespace SilveR.Helpers
             }
         }
 
-        //public int LoadIntArgument(string targetName)
-        //{
-        //    Argument arg = arguments.Single(x => x.Name == targetName);
-        //    return int.Parse(arg.Value);
-        //}
+        public int LoadIntArgument(string targetName)
+        {
+            Argument arg = arguments.Single(x => x.Name == targetName);
+            return int.Parse(arg.Value);
+        }
 
         public decimal LoadDecimalArgument(string targetName)
         {

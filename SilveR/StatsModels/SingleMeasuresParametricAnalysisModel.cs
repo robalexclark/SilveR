@@ -19,7 +19,7 @@ namespace SilveR.StatsModels
         [DisplayName("Response")]
         public string Response { get; set; }
 
-        [HasAtLeastOneEntry]
+        [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Treatment factors")]
         public IEnumerable<string> Treatments { get; set; }
@@ -87,6 +87,9 @@ namespace SilveR.StatsModels
 
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
+
+        [DisplayName("Generate comparisons dataset")]
+        public bool GenerateComparisonsDataset { get; set; }
 
         public SingleMeasuresParametricAnalysisModel() : base("SingleMeasuresParametricAnalysis") { }
 
@@ -265,6 +268,8 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, false)); //21
 
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GenerateComparisonsDataset)); //22
+
             return arguments.ToString().Trim();
         }
 
@@ -289,6 +294,7 @@ namespace SilveR.StatsModels
             this.AllPairwise = argHelper.LoadStringArgument(nameof(AllPairwise));
             this.ComparisonsBackToControl = argHelper.LoadStringArgument(nameof(ComparisonsBackToControl));
             this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
+            this.GenerateComparisonsDataset = argHelper.LoadBooleanArgument(nameof(GenerateComparisonsDataset));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -311,6 +317,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AllPairwise), AllPairwise));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ComparisonsBackToControl), ComparisonsBackToControl));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(GenerateComparisonsDataset), GenerateComparisonsDataset));
 
             return args;
         }
@@ -355,7 +362,7 @@ namespace SilveR.StatsModels
             return model;
         }
 
-        public string GetEffectModel()
+        private string GetEffectModel()
         {
             //assemble the effect model
             string effectModel = Response + "~"; //add in the response

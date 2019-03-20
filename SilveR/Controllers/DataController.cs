@@ -101,11 +101,11 @@ namespace SilveR.Controllers
                     //save in database
                     await SaveDatasetToDatabase(selectedFile.Name, dataTable);
 
-                    try
+                    try //to delete but if fails doesn't matter
                     {
                         System.IO.File.Delete(selectedFile.FullName);
                     }
-                    catch { }
+                    catch (IOException) { }
 
                     TempData["InfoMessage"] = "File imported successfully!";
                 }
@@ -143,11 +143,11 @@ namespace SilveR.Controllers
                                 //save in database
                                 await SaveDatasetToDatabase(selectedFile.Name, dataTable);
 
-                                try
+                                try //to delete but if fails doesn't matter
                                 {
                                     System.IO.File.Delete(selectedFile.FullName);
                                 }
-                                catch { }
+                                catch (IOException) { }
 
                                 TempData["InfoMessage"] = "File imported successfully!";
                             }
@@ -216,11 +216,11 @@ namespace SilveR.Controllers
                         string datasetName = selectedFile.Name + " [" + sheetSelection + "]";
                         await SaveDatasetToDatabase(datasetName, dataTable);
 
-                        try
+                        try //to delete but if fails doesn't matter
                         {
                             System.IO.File.Delete(selectedFile.FullName);
                         }
-                        catch { }
+                        catch(IOException) { }
 
                         TempData["InfoMessage"] = "File imported successfully!";
                     }
@@ -288,7 +288,7 @@ namespace SilveR.Controllers
                     return Json(message);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) //so much could go wrong here!
             {
                 return Json(ex.Message);
             }

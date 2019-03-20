@@ -22,7 +22,7 @@ namespace SilveR.StatsModels
         [DisplayName("Response")]
         public string Response { get; set; }
 
-        [HasAtLeastOneEntry]
+        [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Treatment factors")]
         public IEnumerable<string> Treatments { get; set; }
@@ -93,6 +93,9 @@ namespace SilveR.StatsModels
         public enum ComparisonOption { None = 0, AllComparisonsWithinSelected = 1, AllPairwiseComparisons = 2 }
         [DisplayName("Comparison type")]
         public ComparisonOption ComparisonType { get; set; } = ComparisonOption.None;
+
+        [DisplayName("Generate comparisons dataset")]
+        public bool GenerateComparisonsDataset { get; set; }
 
         public RepeatedMeasuresParametricAnalysisModel() : base("RepeatedMeasuresParametricAnalysis") { }
 
@@ -281,6 +284,8 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonType.ToString(), false)); //21
 
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GenerateComparisonsDataset)); //22
+
             return arguments.ToString().Trim();
         }
 
@@ -306,6 +311,7 @@ namespace SilveR.StatsModels
             this.SelectedEffect = argHelper.LoadStringArgument(nameof(SelectedEffect));
             this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
             this.ComparisonType = (ComparisonOption)Enum.Parse(typeof(ComparisonOption), argHelper.LoadStringArgument(nameof(ComparisonType)), true);
+            this.GenerateComparisonsDataset = argHelper.LoadBooleanArgument(nameof(GenerateComparisonsDataset));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -329,6 +335,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedEffect), SelectedEffect));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ComparisonType), ComparisonType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(GenerateComparisonsDataset), GenerateComparisonsDataset));
 
             return args;
         }

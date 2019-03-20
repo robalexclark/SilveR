@@ -25,24 +25,26 @@
 
         @if (Model.AnalysisName == null)
         {
-            <div id="analysisSelectionBlock" class="mt30">
+            <div id="analysisSelectionBlock" class="mt-4">
                 <h4>Select the type of analysis to run</h4>
                 <input asp-for="AnalysisName" style="width:340px" />
             </div>
         }
         else
         {
-            <h3>@Model.AnalysisDisplayName</h3>
-            <input asp-for="AnalysisName" type="hidden" />
+            <div class="mt-4">
+                <h3>@Model.AnalysisDisplayName</h3>
+                <input asp-for="AnalysisName" type="hidden" />
+            </div>
         }
 
-        <div id="dataSelectionBlock" class="mt30">
+        <div id="dataSelectionBlock" class="mt-3">
             <h4>Select the file to analyse</h4>
             <input asp-for="SelectedDatasetID" style="width:340px" />
         </div>
 
-        <div class="mt20">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        <div class="mt-3">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </form>
 }

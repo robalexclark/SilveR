@@ -371,8 +371,8 @@ namespace Silver.UnitTests.Models
             Assert.Equal(21, userOption.PointShape);
             Assert.Equal(1, userOption.LineSize);
             Assert.Equal(15, userOption.LegendTextSize);
-            Assert.Equal(480, userOption.JpegWidth);
-            Assert.Equal(480, userOption.JpegHeight);
+            Assert.Equal(6, userOption.JpegWidth);
+            Assert.Equal(6, userOption.JpegHeight);
             Assert.Equal(0.1, userOption.GraphicsBWLow);
             Assert.Equal(0.8, userOption.GraphicsBWHigh);
             Assert.Equal(0.1, userOption.GraphicsWidthJitter);

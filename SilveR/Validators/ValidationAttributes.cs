@@ -8,23 +8,6 @@ using System.Reflection;
 namespace SilveR.Validators
 {
     //SHARED
-    public class HasAtLeastOneEntryAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            IEnumerable<object> iEnumerable = (IEnumerable<object>)value;
-
-            if (iEnumerable == null || !iEnumerable.Any())
-            {
-                return new ValidationResult(validationContext.DisplayName + " requires at least one entry");
-            }
-            else
-            {
-                return ValidationResult.Success;
-            }
-        }
-    }
-
     public class CheckUsedOnceOnlyAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -32,7 +15,7 @@ namespace SilveR.Validators
             if (value == null)
                 return ValidationResult.Success;
 
-            var properties = validationContext.ObjectInstance.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(CheckUsedOnceOnlyAttribute), false));
+            IEnumerable<PropertyInfo> properties = validationContext.ObjectInstance.GetType().GetProperties().Where(prop => prop.IsDefined(typeof(CheckUsedOnceOnlyAttribute), false));
 
             List<string> varList = new List<string>();
             foreach (PropertyInfo p in properties.Where(x => x.Name != validationContext.MemberName))

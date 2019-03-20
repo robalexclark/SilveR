@@ -403,8 +403,8 @@ for (j in 1:length(sample)) {
 temp3<-100*temp2
 powergraph=cbind(diffs,temp3)
 
-powerPlot <- sub(".html", "powerPlot.jpg", htmlFile)
-jpeg(powerPlot,width = jpegwidth, height = jpegheight, quality = 100)
+powerPlot <- sub(".html", "powerPlot.png", htmlFile)
+png(powerPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 #STB July2013
 plotFilepdf1 <- sub(".html", "powerPlot.pdf", htmlFile)
@@ -493,8 +493,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
 
-	plot1 <- sub(".html", "plot1.jpg", htmlFile)
-	jpeg(plot1,width = jpegwidth, height = jpegheight, quality = 100)
+	plot1 <- sub(".html", "plot1.png", htmlFile)
+	png(plot1,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf2 <- sub(".html", "plot1.pdf", htmlFile)
@@ -569,8 +569,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
 
-	plot2 <- sub(".html", "plot2.jpg", htmlFile)
-	jpeg(plot2,width = jpegwidth, height = jpegheight, quality = 100)
+	plot2 <- sub(".html", "plot2.png", htmlFile)
+	png(plot2,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf3 <- sub(".html", "plot2.pdf", htmlFile)
@@ -655,8 +655,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 		temp2<-100*temp
 		powergraph=cbind(diffs,temp2)
 
-		plot12 <- sub(".html", "plot12.jpg", htmlFile)
-		jpeg(plot12,width = jpegwidth, height = jpegheight, quality = 100)
+		plot12 <- sub(".html", "plot12.png", htmlFile)
+		png(plot12,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf4 <- sub(".html", "plot12.pdf", htmlFile)
@@ -739,8 +739,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
 
-	plot1 <- sub(".html", "plot1.jpg", htmlFile)
-	jpeg(plot1,width = jpegwidth, height = jpegheight, quality = 100)
+	plot1 <- sub(".html", "plot1.png", htmlFile)
+	png(plot1,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5 <- sub(".html", "plot1.pdf", htmlFile)
@@ -813,8 +813,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	}
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
-	plot2 <- sub(".html", "plot2.jpg", htmlFile)
-	jpeg(plot2,width = jpegwidth, height = jpegheight, quality = 100)
+	plot2 <- sub(".html", "plot2.png", htmlFile)
+	png(plot2,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf6 <- sub(".html", "plot2.pdf", htmlFile)
@@ -890,8 +890,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	}
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
-	plot3 <- sub(".html", "plot3.jpg", htmlFile)
-	jpeg(plot3,width = jpegwidth, height = jpegheight, quality = 100)
+	plot3 <- sub(".html", "plot3.png", htmlFile)
+	png(plot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf7 <- sub(".html", "plot3.pdf", htmlFile)
@@ -976,8 +976,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		temp2<-100*temp
 		powergraph=cbind(diffs,temp2)
 
-		plot12 <- sub(".html", "plot12.jpg", htmlFile)
-		jpeg(plot12,width = jpegwidth, height = jpegheight, quality = 100)
+		plot12 <- sub(".html", "plot12.png", htmlFile)
+		png(plot12,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf8 <- sub(".html", "plot12.pdf", htmlFile)
@@ -1062,8 +1062,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
 
-	plot1 <- sub(".html", "plot1.jpg", htmlFile)
-	jpeg(plot1,width = jpegwidth, height = jpegheight, quality = 100)
+	plot1 <- sub(".html", "plot1.png", htmlFile)
+	png(plot1,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf9 <- sub(".html", "plot1.pdf", htmlFile)
@@ -1136,8 +1136,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	}
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
-	plot2 <- sub(".html", "plot2.jpg", htmlFile)
-	jpeg(plot2,width = jpegwidth, height = jpegheight, quality = 100)
+	plot2 <- sub(".html", "plot2.png", htmlFile)
+	png(plot2,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1a <- sub(".html", "plot2.pdf", htmlFile)
@@ -1212,8 +1212,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
 
-	plot3 <- sub(".html", "plot3.jpg", htmlFile)
-	jpeg(plot3,width = jpegwidth, height = jpegheight, quality = 100)
+	plot3 <- sub(".html", "plot3.png", htmlFile)
+	png(plot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1b <- sub(".html", "plot3.pdf", htmlFile)
@@ -1288,8 +1288,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	}
 	temp2<-100*temp
 	powergraph=cbind(diffs,temp2)
-	plot4 <- sub(".html", "plot4.jpg", htmlFile)
-	jpeg(plot4,width = jpegwidth, height = jpegheight, quality = 100)
+	plot4 <- sub(".html", "plot4.png", htmlFile)
+	png(plot4,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1d <- sub(".html", "plot4.pdf", htmlFile)
@@ -1378,8 +1378,8 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		}
 		temp2<-100*temp
 		powergraph=cbind(diffs,temp2)
-		plot12 <- sub(".html", "plot12.jpg", htmlFile)
-		jpeg(plot12,width = jpegwidth, height = jpegheight, quality = 100)
+		plot12 <- sub(".html", "plot12.png", htmlFile)
+		png(plot12,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf1e <- sub(".html", "plot12.pdf", htmlFile)

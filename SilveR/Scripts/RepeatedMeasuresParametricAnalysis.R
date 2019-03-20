@@ -34,7 +34,7 @@ effectModel2 <- Args[18]
 selectedEffect <- Args[19]
 showLSMeans <- Args[20]
 pairwiseTest <- Args[21]
-
+genpvals <- Args[22]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -67,13 +67,6 @@ Labelz_IVS_ <- "N"
 Line_size2 <- Line_size
 DisplayLSMeanslines <- "Y"
 ReferenceLine <- "NULL"
-
-#working directory
-direct2<- unlist(strsplit(Args[3],"/"))
-direct<-direct2[1]
-for (i in 2:(length(direct2)-1)) {
-	direct<- paste(direct, "/", direct2[i], sep = "")
-}
 
 # Setting up the parameters
 resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
@@ -238,8 +231,8 @@ if(responseTransform != "None") {
 }
 HTML.title(title, HR=2, align="left")
 
-scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 #STB July2013
 plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -296,8 +289,8 @@ if(covariatelist != "NULL") {
 	index <- 1
 	for (i in 1:nocovlist) {
 		ncscatterplot3 <- sub(".html", "IVS", htmlFile)
-	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.jpg", sep = "")
-	    	jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.png", sep = "")
+	    	png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf2 <- sub(".html", "IVS", htmlFile)
@@ -604,8 +597,8 @@ if(showPRPlot=="Y" && showNormPlot=="Y") {
 if(showPRPlot=="Y") {
 	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
 
-	residualPlot <- sub(".html", "residualplot.jpg", htmlFile)
-	jpeg(residualPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	residualPlot <- sub(".html", "residualplot.png", htmlFile)
+	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
@@ -667,8 +660,8 @@ if(showPRPlot=="Y") {
 if(showNormPlot=="Y") {
 	HTML.title("Normal probability plot", HR=3, align="left")
 
-	normPlot <- sub(".html", "normplot.jpg", htmlFile)
-	jpeg(normPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	normPlot <- sub(".html", "normplot.png", htmlFile)
+	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
@@ -766,8 +759,8 @@ if(showLSMeans=="Y") {
 	CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
 	HTML.title(CITitle, HR=2, align="left")
 
-	meanPlot <- sub(".html", "meanplot.jpg", htmlFile)
-	jpeg(meanPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	meanPlot <- sub(".html", "meanplot.png", htmlFile)
+	png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
@@ -1024,8 +1017,8 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 	if(showLSMeans=="Y") {
 		Line_size <- Line_size2
 
-		meanPlotd <- sub(".html", "meanplotd.jpg", htmlFile)
-		jpeg(meanPlotd,width = jpegwidth, height = jpegheight, quality = 100)
+		meanPlotd <- sub(".html", "meanplotd.png", htmlFile)
+		png(meanPlotd,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf5d <- sub(".html", "meanplotd.pdf", htmlFile)
@@ -1609,17 +1602,21 @@ if(pairwiseTest == "AllComparisonsWithinSelected") {
 
 #===================================================================================================================
 #STB March 2014 - Creating a dataset of p-values
-#comparisons <-paste(direct, "/Comparisons.csv", sep = "")
-#tabsx<- data.frame(tabs_final[,6])
-#row <-rownames(tabs_final)
-#
-#for (i in 1:100) {
-#	row<-sub(","," and ", row, fixed=TRUE)
-#}
-#tabsx<-cbind(row, tabsx)
-#colnames(tabsx)<-c("Comparison", "p-value")
-#row.names(tabsx) <- seq(nrow(tabsx)) 
-#tabsx <-tabsx[-1,]
+if (genpvals == "Y" && (pairwiseTest == "AllComparisonsWithinSelected" || pairwiseTest == "AllPairwiseComparisons")) {
+	comparisons <- sub(".csv", "comparisons.csv",  Args[3])
+
+	for (i in 1:100) {
+		tabs_final2[,1]<-sub(","," ", tabs_final2[,1], fixed=TRUE)
+	}
+
+	tabsx<- data.frame(tabs_final2[,6])
+	row <-data.frame(tabs_final2[,1])
+
+	tabsx2<-cbind(row, tabsx)
+	colnames(tabsx2)<-c("Comparison", "p-value")
+	row.names(tabsx2) <- seq(nrow(tabsx2)) 
+	write.csv(tabsx2, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
+}
 
 #===================================================================================================================
 #Analysis description
@@ -1727,11 +1724,6 @@ if(covariance=="Unstructured") {
 
 add<-paste("A full description of mixed model theory, including information on the R nlme package used by ", branding , ", can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
 HTML(add, align="left")
-
-#===================================================================================================================
-#Create file of comparisons
-#===================================================================================================================
-#write.csv(tabsx, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
 
 #===================================================================================================================
 #References

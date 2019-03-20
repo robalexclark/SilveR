@@ -14,7 +14,7 @@ namespace SilveR.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
 
             modelBuilder.Entity("SilveR.Models.Analysis", b =>
                 {
@@ -140,38 +140,40 @@ namespace SilveR.Migrations
 
                     b.Property<bool>("DisplayLSMeansLines");
 
+                    b.Property<bool>("DisplayModelCoefficients");
+
                     b.Property<bool>("DisplayPointLabels");
 
                     b.Property<bool>("DisplaySEMLines");
 
-                    b.Property<decimal>("ErrorBarWidth");
+                    b.Property<double>("ErrorBarWidth");
 
                     b.Property<string>("FontStyle")
                         .IsRequired();
 
                     b.Property<bool>("GeometryDisplay");
 
-                    b.Property<decimal>("GraphicsBWHigh");
+                    b.Property<double>("GraphicsBWHigh");
 
-                    b.Property<decimal>("GraphicsBWLow");
+                    b.Property<double>("GraphicsBWLow");
 
                     b.Property<string>("GraphicsFont")
                         .IsRequired();
 
-                    b.Property<decimal>("GraphicsHeightJitter");
+                    b.Property<double>("GraphicsHeightJitter");
 
                     b.Property<string>("GraphicsTextColour")
                         .IsRequired();
 
-                    b.Property<decimal>("GraphicsWidthJitter");
+                    b.Property<double>("GraphicsWidthJitter");
 
                     b.Property<int>("GraphicsXAngle");
 
-                    b.Property<decimal>("GraphicsXHorizontalJust");
+                    b.Property<double>("GraphicsXHorizontalJust");
 
                     b.Property<int>("GraphicsYAngle");
 
-                    b.Property<decimal>("GraphicsYVerticalJust");
+                    b.Property<double>("GraphicsYVerticalJust");
 
                     b.Property<int>("JpegHeight");
 

@@ -19,131 +19,121 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/OneWayANOVAPowerAnalysisUserBasedInputs" class="form-horizontal" method="post">
+<form action="/Analyses/OneWayANOVAPowerAnalysisUserBasedInputs" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Input Options</div>
-                <div class="panel-body">
-                    <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
 
-                        <h4>Group means</h4>
-                        <div class="form-group">
-                              <div class="col-sm-8">
-                                <input class="form-control" asp-for="Means" />
-                                <div><span asp-validation-for="Means"></span></div>
-                            </div>
+                    <h4>Group means</h4>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Means" />
+                            <div><span asp-validation-for="Means"></span></div>
                         </div>
-                        <br />
+                    </div>
+                    <br />
 
-                        <h4>Variability estimate</h4>
-                        <div class="form-group">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="VariabilityEstimate" type="radio" value="Variance" onclick="enableDisableVariabilityEstimate()" />
-                                    <label>Use Variance</label>
-                                </label>
-                            </div>
+                    <h4>Variability estimate</h4>
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="VariabilityEstimate" type="radio" class="form-check-input" value="Variance" onclick="enableDisableVariabilityEstimate()">Use Variance
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Variance</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="Variance" />
-                                <div><span asp-validation-for="Variance"></span></div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Variance</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Variance" />
+                            <div><span asp-validation-for="Variance"></span></div>
                         </div>
-                        <div class="form-group">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="VariabilityEstimate" type="radio" value="StandardDeviation" onclick="enableDisableVariabilityEstimate()" />
-                                    <label>Use Standard deviation</label>
-                                </label>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="VariabilityEstimate" type="radio" class="form-check-input" value="StandardDeviation" onclick="enableDisableVariabilityEstimate()">Use Standard deviation
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Standard deviation</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="StandardDeviation" />
-                                <div><span asp-validation-for="StandardDeviation"></span></div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Standard deviation</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="StandardDeviation" />
+                            <div><span asp-validation-for="StandardDeviation"></span></div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Significance level</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="Significance" />
-                                <div><span asp-validation-for="Significance"></span></div>
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Significance level</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Significance" />
+                            <div><span asp-validation-for="Significance"></span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-6">
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Output Options</div>
-                <div class="panel-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
 
                     <h4>Plotting range</h4>
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="PlottingRangeType" type="radio" value="SampleSize" onclick="enableDisablePlottingRangeType()" />
-                                    <label>Use Sample Size</label>
-                                </label>
-                            </div>
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="PlottingRangeType" type="radio" class="form-check-input" value="SampleSize" onclick="enableDisablePlottingRangeType()">Use Sample size
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Sample size from</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="SampleSizeFrom" />
-                                <div><span asp-validation-for="SampleSizeFrom"></span></div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Sample size from</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="SampleSizeFrom" />
+                            <div><span asp-validation-for="SampleSizeFrom"></span></div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" for="SampleSizeTo">Sample size to</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="SampleSizeTo" />
-                                <div><span asp-validation-for="SampleSizeTo"></span></div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label" for="SampleSizeTo">Sample size to</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="SampleSizeTo" />
+                            <div><span asp-validation-for="SampleSizeTo"></span></div>
                         </div>
-                        <div class="form-group">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="PlottingRangeType" type="radio" value="Power" onclick="enableDisablePlottingRangeType()" />
-                                    <label>Use Power</label>
-                                </label>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="PlottingRangeType" type="radio" class="form-check-input" value="Power" onclick="enableDisablePlottingRangeType()">Use Power
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Power from</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="PowerFrom" />
-                                <div><span asp-validation-for="PowerFrom"></span></div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Power from</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="PowerFrom" />
+                            <div><span asp-validation-for="PowerFrom"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Power to</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="PowerTo" />
+                            <div><span asp-validation-for="PowerTo"></span></div>
+                        </div>
+                    </div>
 
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Power to</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="PowerTo" />
-                                <div><span asp-validation-for="PowerTo"></span></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Graph title</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" asp-for="GraphTitle" />
-                                <div><span asp-validation-for="GraphTitle"></span></div>
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Graph title</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="GraphTitle" />
+                            <div><span asp-validation-for="GraphTitle"></span></div>
                         </div>
                     </div>
                 </div>
@@ -151,9 +141,9 @@
         </div>
     </div>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </div>
 </form>

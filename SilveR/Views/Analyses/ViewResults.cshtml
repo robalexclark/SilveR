@@ -3,24 +3,23 @@
 @{
     ViewBag.Title = "View Results";
 }
-<br />
 
 @await Html.PartialAsync("AnalysisErrors")
 
-<form method="post" action="~/Analyses/ViewResults">
-
+<form>
     <input id="analysisGuid" name="analysisGuid" value="@Model.AnalysisGuid" hidden />
 
     <div class="row">
-        <div class="col-sm-10 mt10">
-            <button class="btn btn-info" name="submitButton" type="submit" value="ViewLog">View Analysis Log</button>
+        <div class="col">
+            <button class="btn btn-info" asp-controller="Analyses" asp-action="ViewLog">View Analysis Log</button>
+            <button class="btn btn-secondary" asp-controller="Analyses" asp-action="ExportToPdf" formtarget="_blank">Export to Pdf</button>
         </div>
-        <div class="col-sm-2 mt10">
-            <button class="btn btn-primary" name="submitButton" type="submit" value="ReAnalyse">Re-analyse</button>
+        <div class="col">
+            <button class="btn btn-primary float-right" asp-controller="Analyses" asp-action="ReAnalyse">Re-analyse</button>
         </div>
     </div>
 </form>
 
-<div class="container">
+<div class="container mt-3">
     @Html.Raw(Model.HtmlOutput)
 </div>

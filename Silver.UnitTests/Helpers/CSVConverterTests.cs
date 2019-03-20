@@ -1,14 +1,12 @@
 using SilveR.Helpers;
 using System;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using Xunit;
 
 namespace Silver.UnitTests.Helpers
 {
-    
     public class CSVConverterTests
     {
         [Fact]

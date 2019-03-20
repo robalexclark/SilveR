@@ -267,8 +267,8 @@ for (i in 1: length(ContinuousList)) {
 	XAxisTitle <- namereplace(ContinuousList[i])
 	graphdata$xvarrr_IVS <-eval(parse(text = paste("statdata$",ContinuousList[i])))
 
-	scatterPlot <- sub(".html", paste(i,"scatterPlot.jpg",sep=""), htmlFile)
-	jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	scatterPlot <- sub(".html", paste(i,"scatterPlot.png",sep=""), htmlFile)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", paste(i,"scatterPlot.pdf",sep=""), htmlFile)
@@ -452,8 +452,8 @@ if(covariatelist != "NULL") {
 	index <- 1
 	for (i in 1:nocovlist) {
 		ncscatterplot3 <- sub(".html", "IVS", htmlFile)
-	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.jpg", sep = "")
-		jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.png", sep = "")
+		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf2 <- sub(".html", "IVS", htmlFile)
@@ -795,8 +795,8 @@ if(showPRPlot=="Y" && showNormPlot=="Y") {
 if(showPRPlot=="Y") {
 	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
 
-	residualPlot <- sub(".html", "residualplot.jpg", htmlFile)
-	jpeg(residualPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	residualPlot <- sub(".html", "residualplot.png", htmlFile)
+	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
@@ -842,8 +842,8 @@ if(showPRPlot=="Y") {
 if(showNormPlot=="Y") {
 	HTML.title("Normal probability plot", HR=3, align="left")
 
-	normPlot <- sub(".html", "normplot.jpg", htmlFile)
-	jpeg(normPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	normPlot <- sub(".html", "normplot.png", htmlFile)
+	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
@@ -911,8 +911,8 @@ if (cooksDistancePlot =="Y") {
 	cutoff <- 4/nrow(graphdata) 
 
 	#Plot device setup
-	ncscatterplotx <- sub(".html", "ncscatterplotx.jpg", htmlFile)
-	jpeg(ncscatterplotx,width = jpegwidth, height = jpegheight, quality = 100)
+	ncscatterplotx <- sub(".html", "ncscatterplotx.png", htmlFile)
+	png(ncscatterplotx,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf16 <- sub(".html", "ncscatterplotx.pdf", htmlFile)
@@ -961,8 +961,8 @@ if (leveragesPlot =="Y") {
 	h_Gr_jitscat <-  0
 
 	#Plot device setup
-	ncscatterplot <- sub(".html", "ncscatterplot.jpg", htmlFile)
-	jpeg(ncscatterplot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncscatterplot <- sub(".html", "ncscatterplot.png", htmlFile)
+	png(ncscatterplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf15 <- sub(".html", "ncscatterplot.pdf", htmlFile)

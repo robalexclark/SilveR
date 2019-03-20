@@ -5,16 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @Program.AppName</title>
 
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/kendo-ui/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/kendo-ui/styles/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/site.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
 
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/lib/kendo-ui/js/kendo.custom.min.js"></script>
+
+    <environment names="Development">
+        <script defer src="~/js/index.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/index.min.js"></script>
+    </environment>
 
     @RenderSection("scripts", required: false)
 </head>
@@ -25,95 +35,97 @@
             To enable Javascript follow this link http://enable-javascript.com/.
         </div>
     </noscript>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink(Program.AppName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("My Data", "Index", "Data")</li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Statistics<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-
-                            <li>@Html.ActionLink("Summary Statistics", "AnalysisDataSelector", "Analyses", new { analysisName = "SummaryStatistics" }, null)</li>
-
-                            <li class="menu-item dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Parametric Analysis</a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Single Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "SingleMeasuresParametricAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Repeated Measures Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "RepeatedMeasuresParametricAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("P-value Adjustment", "Analysis", "Analyses", new { analysisName = "PValueAdjustment" }, null)</li>
-                                    <li>@Html.ActionLink("Paired t-test Analysis & Within-Subject Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "PairedTTestAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Unpaired t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "UnpairedTTestAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Correlation Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "CorrelationAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "LinearRegressionAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Dose-response and Non-Linear Regression Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "DoseResponseAndNonLinearRegressionAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("One-Sample t-test Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "OneSampleTTestAnalysis" }, null)</li>
-                                </ul>
-                            </li>
-
-                            <li class="menu-item dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Additional Analysis</a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Non-parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "NonParametricAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Chi-squared and Fisher's Exact Test", "AnalysisDataSelector", "Analyses", new { analysisName = "ChiSquaredAndFishersExactTest" }, null)</li>
-                                    <li>@Html.ActionLink("Survival Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "SurvivalAnalysis" }, null)</li>
-                                </ul>
-                            </li>
-
-                            <li>@Html.ActionLink("Graphical Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "GraphicalAnalysis" }, null)</li>
-
-                            <li class="menu-item dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Power Analysis</a>
-                                <ul class="dropdown-menu">
-                                    <li class="menu-item dropdown dropdown-submenu">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Comparison of Means</a>
-                                        <ul class="dropdown-menu">
-                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "ComparisonOfMeansPowerAnalysisUserBasedInputs" }, null)</li>
-                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "ComparisonOfMeansPowerAnalysisDatasetBasedInputs" }, null)</li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item dropdown dropdown-submenu">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">One-way ANOVA</a>
-                                        <ul class="dropdown-menu">
-                                            <li>@Html.ActionLink("User based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVAPowerAnalysisUserBasedInputs" }, null)</li>
-                                            <li>@Html.ActionLink("Dataset based inputs", "AnalysisDataSelector", "Analyses", new { analysisName = "OneWayANOVAPowerAnalysisDatasetBasedInputs" }, null)</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="menu-item dropdown dropdown-submenu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Unvalidated Analyses</a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Multivariate Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "MultivariateAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Nested Design Analysis*", "AnalysisDataSelector", "Analyses", new { analysisName = "NestedDesignAnalysis" }, null)</li>
-                                    <li>@Html.ActionLink("Incomplete Factorial Parametric Analysis", "AnalysisDataSelector", "Analyses", new { analysisName = "IncompleteFactorialParametricAnalysis" }, null)</li>
-                                </ul>
-                            </li>
-
-                            <li>@Html.ActionLink("R-Runner", "AnalysisDataSelector", "Analyses", new { analysisName = "RRunner" }, null)</li>
-                        </ul>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">@Program.AppName</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Data" asp-action="Index">My Data</a>
                     </li>
 
-                    <li>@Html.ActionLink("My Analyses", "Index", "Analyses")</li>
-                </ul>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-dark dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">Statistics</a>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="@Url.Action("Index", "UserOptions")"><i class="fa fa-lg fa-gears"></i></a></li>
+                        <ul class="nav-item dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="SummaryStatistics">Summary Statistics</a></li>
+
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Parametric Analysis</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="SingleMeasuresParametricAnalysis">Single Measures Parametric Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="RepeatedMeasuresParametricAnalysis">Repeated Measures Parametric Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="PValueAdjustment">P-value Adjustment</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="PairedTTestAnalysis">Paired t-test Analysis & Within-Subject Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="UnpairedTTestAnalysis">Unpaired t-test Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="CorrelationAnalysis">Correlation Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="LinearRegressionAnalysis">Linear Regression Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="DoseResponseAndNonLinearRegressionAnalysis">Dose-response and Non-Linear Regression Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="OneSampleTTestAnalysis">One-Sample t-test Analysis</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Additional Analysis</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="NonParametricAnalysis">Non-parametric Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="ChiSquaredAndFishersExactTest">Chi-squared and Fisher's Exact Test</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="SurvivalAnalysis">Survival Analysis</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="GraphicalAnalysis">Graphical Analysis</a></li>
+
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Power Analysis</a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Comparison of Means</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="ComparisonOfMeansPowerAnalysisUserBasedInputs">User based inputs</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="ComparisonOfMeansPowerAnalysisDatasetBasedInputs">Dataset based inputs</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">One-way ANOVA</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="OneWayANOVAPowerAnalysisUserBasedInputs">User based inputs</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="OneWayANOVAPowerAnalysisDatasetBasedInputs">Dataset based inputs</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Unvalidated Analysis</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="MultivariateAnalysis">Multivariate Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="NestedDesignAnalysis">Nested Design Analysis</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="IncompleteFactorialParametricAnalysis">Incomplete Factorial Parametric Analysis</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Analyses" asp-action="Index">My Analyses</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="UserOptions" asp-action="Index"><i class="fa fa-lg fa-gears"></i></a>
+                    <li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container body-content mt20">
+    <div class="container body-content" style="margin-top:70px">
         @RenderBody()
     </div>
 </body>

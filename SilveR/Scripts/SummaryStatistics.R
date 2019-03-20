@@ -650,8 +650,8 @@ if (NormalProbabilityPlot != "N" ) {
  
     for (i in 1: (length(expectedChanges)-1)) {
 	normPlot <- sub(".html", "IVS", htmlFile)
-    	normPlot <- paste(normPlot, index, "normplot.jpg", sep = "")
-    	jpeg(normPlot, width = jpegwidth, height = jpegheight, quality = 100)
+    	normPlot <- paste(normPlot, index, "normplot.png", sep = "")
+    	png(normPlot, width = jpegwidth, height = jpegheight, units="in", res=300)
 
     	#STB July2013
     	plotFilepdf4 <- sub(".html", "IVS", htmlFile)

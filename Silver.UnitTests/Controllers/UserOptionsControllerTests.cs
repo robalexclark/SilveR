@@ -7,7 +7,6 @@ using Xunit;
 
 namespace Silver.UnitTests.Controllers
 {
-
     public class UserOptionsControllerTests
     {
         [Fact]

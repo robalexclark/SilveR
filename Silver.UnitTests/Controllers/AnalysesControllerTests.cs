@@ -672,24 +672,45 @@ namespace Silver.UnitTests.Controllers
             Assert.Equal("ViewLog", redirectToActionResult.ActionName);
         }
 
-        [Theory]
-        [InlineData("ReAnalyse")]
-        [InlineData("ViewLog")]
-        public void ViewResultsPost_ReturnsAnActionResult(string submitButton)
+        //[Fact]
+        //public void ExportToPdf_ReturnsAnActionResult()
+        //{
+        //    //Arrange
+        //    Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
+        //    Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
+        //    Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
+
+        //    AnalysesController sut = new AnalysesController(mockRepository.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
+
+        //    //Act
+        //    FileContentResult result = sut.ExportToPdf(It.IsAny<string>());
+
+        //    //Assert
+        //    FileContentResult redirectToActionResult = Assert.IsType<FileContentResult>(result);
+        //}
+
+        [Fact]
+        public  async Task ResultsForExport_ReturnsAnActionResult()
         {
             //Arrange
+            Analysis analysis = GetAnalyses().First();
+
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
+            mockRepository.Setup(x => x.GetAnalysis(It.IsAny<string>())).ReturnsAsync(analysis);
+
             Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
             Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
 
             AnalysesController sut = new AnalysesController(mockRepository.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
 
             //Act
-            IActionResult result = sut.ViewResults(It.IsAny<string>(), submitButton);
+            IActionResult result = await sut.ResultsForExport(It.IsAny<string>());
 
             //Assert
-            RedirectToActionResult redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal(submitButton, redirectToActionResult.ActionName);
+            ViewResult viewResult = Assert.IsType<ViewResult>(result);
+            Analysis analysisReturned = Assert.IsType<Analysis>(viewResult.Model);
+
+            Assert.Contains("InVivoStat Single Measure Parametric Analysis</h1>", analysisReturned.HtmlOutput);
         }
 
 
@@ -772,7 +793,6 @@ namespace Silver.UnitTests.Controllers
             JsonResult jsonResult = Assert.IsType<JsonResult>(result);
             Assert.True((bool)jsonResult.Value);
         }
-
 
 
         private Dataset GetDataset()

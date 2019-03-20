@@ -19,7 +19,7 @@
                 dataType: "json",
                 success: function (response) {
                     if (response === true) {
-                        alert("Data saved successfully!!");
+                        alert("Data saved successfully!");
                     }
                     else {
                         alert(response);

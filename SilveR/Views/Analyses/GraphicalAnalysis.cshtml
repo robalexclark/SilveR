@@ -19,211 +19,208 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/GraphicalAnalysis" class="form-horizontal" method="post">
+<form action="/Analyses/GraphicalAnalysis" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <input asp-for="DatasetID" hidden />
 
     <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Input Options</div>
-                <div class="panel-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
                     <h4>Responses</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Response" />
                             <div><span asp-validation-for="Response"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Reponse transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Reponse transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="ResponseTransformation" />
                             <div><span asp-validation-for="ResponseTransformation"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">X-axis variable</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">X-axis variable</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="XAxis" />
                             <div><span asp-validation-for="XAxis"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">X-axis transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">X-axis transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="XAxisTransformation" />
                             <div><span asp-validation-for="XAxisTransformation"></span></div>
                         </div>
                     </div>
                     <br />
                     <h4>Categorisation Factors</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">1st categorisation factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">1st categorisation factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="FirstCatFactor" />
                             <div><span asp-validation-for="FirstCatFactor"></span></div>
                         </div>
                     </div>
                     <br />
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">2nd categorisation factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">2nd categorisation factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="SecondCatFactor" />
                             <div><span asp-validation-for="SecondCatFactor"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Categorised graph style</label>
-                        <div class="col-sm-8">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="StyleType" type="radio" value="Overlaid" checked="checked" />
-                                    <label>Overlaid</label>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Categorised graph style</label>
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="StyleType" type="radio" class="form-check-input" value="Overlaid" checked="checked">Overlaid
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="StyleType" type="radio" value="Separate" />
-                                    <label>Separate</label>
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="StyleType" type="radio" class="form-check-input" value="Separate">Separate
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Display legend</label>
-                        <div class="col-sm-8">
-                            <input class="checkbox" asp-for="DisplayLegend" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Display legend</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="DisplayLegend" type="checkbox" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Output Options</div>
-                <div class="panel-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
                     <h4>Plot Titles</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Main graph title</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Main graph title</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="MainTitle" />
                             <div><span asp-validation-for="MainTitle"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">X-axis title</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">X-axis title</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="XAxisTitle" />
                             <div><span asp-validation-for="XAxisTitle"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Y-axis title</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Y-axis title</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="YAxisTitle" />
                             <div><span asp-validation-for="YAxisTitle"></span></div>
                         </div>
                     </div>
                     <br />
                     <h4>Plot Types</h4>
-                    <div class="form-group">
-                        <label class="col-xs-4 control-label">Scatterplot</label>
-                        <div class="col-xs-8">
-                            <input class="checkbox" asp-for="ScatterplotSelected" type="checkbox" onclick="enableDisableScatterplot()" />
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Scatterplot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="ScatterplotSelected" type="checkbox" onclick="enableDisableScatterplot()" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4 control-label">Linear fit</label>
-                        <div class="col-xs-6">
-                            <input class="checkbox" asp-for="LinearFitSelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Linear fit</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="LinearFitSelected" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4 control-label">Jitter</label>
-                        <div class="col-xs-6">
-                            <input class="checkbox" asp-for="JitterSelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Jitter</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="JitterSelected" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-4 control-label">Boxplot</label>
-                        <div class="col-xs-8">
-                            <input class="checkbox" asp-for="BoxplotSelected" type="checkbox" onclick="enableDisableBoxplot()" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Boxplot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="BoxplotSelected" type="checkbox" onclick="enableDisableBoxplot()" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4 control-label">Outliers</label>
-                        <div class="col-xs-6">
-                            <input class="checkbox" asp-for="OutliersSelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Outliers</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="OutliersSelected" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4 control-label">Include data</label>
-                        <div class="col-xs-6">
-                            <input class="checkbox" asp-for="BoxPlotIncludeData" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Include data</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="BoxPlotIncludeData" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-4 control-label">Mean with SEM plot</label>
-                        <div class="col-xs-8">
-                            <input class="checkbox" asp-for="SEMPlotSelected" type="checkbox" onclick="enableDisableSEMplot()" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Mean with SEM plot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="SEMPlotSelected" type="checkbox" onclick="enableDisableSEMplot()" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4 control-label">Plot type</label>
-                        <div class="col-xs-6">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="SEMType" type="radio" value="Column" checked="checked" />
-                                    <label>Column plot</label>
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Plot type</label>
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="SEMType" type="radio" class="form-check-input" value="Column" checked="checked">Column plot
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="SEMType" type="radio" value="Line" />
-                                    <label for="Line_plot">Line plot</label>
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="SEMType" type="radio" class="form-check-input" value="Line">Line plot
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4 control-label">Include data</label>
-                        <div class="col-xs-6">
-                            <input class="checkbox" asp-for="SEMPlotIncludeData" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Include data</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="SEMPlotIncludeData" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-4 control-label">Histogram plot</label>
-                        <div class="col-xs-8">
-                            <input class="checkbox" asp-for="HistogramSelected" type="checkbox" onclick="enableDisableHistogram()" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Histogram plot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="HistogramSelected" type="checkbox" onclick="enableDisableHistogram()" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4 control-label">Normal dist. fit</label>
-                        <div class="col-xs-6">
-                            <input class="checkbox" asp-for="NormalDistSelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Normal dist. fit</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="NormalDistSelected" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-4 control-label">Case profiles plot</label>
-                        <div class="col-xs-8">
-                            <input class="checkbox" asp-for="CaseProfilesPlotSelected" type="checkbox" onclick="enableDisableCaseProfiles()" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Case profiles plot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="CaseProfilesPlotSelected" type="checkbox" onclick="enableDisableCaseProfiles()" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-offset-2 col-xs-4  control-label">Case ID factor</label>
-                        <div class="col-xs-6">
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4  col-form-label">Case ID factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="CaseIDFactor" />
                             <div><span asp-validation-for="CaseIDFactor"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-4 control-label">Reference line (y-axis)</label>
-                        <div class="col-xs-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Reference line (y-axis)</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="ReferenceLine" />
                             <div><span asp-validation-for="ReferenceLine"></span></div>
                         </div>
@@ -233,9 +230,9 @@
         </div>
     </div>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </div>
 </form>

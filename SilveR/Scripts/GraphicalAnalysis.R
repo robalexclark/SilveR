@@ -382,8 +382,8 @@ if (jitterfunction == "N" ||( is.numeric(graphdata$xvarrr_IVS)=="TRUE" && is.num
 #===================================================================================================================
 if(ScatterPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" ) {
 	#Plot device setup
-	ncscatterplot <- sub(".html", "ncscatterplot.jpg", htmlFile)
-	jpeg(ncscatterplot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncscatterplot <- sub(".html", "ncscatterplot.png", htmlFile)
+	png(ncscatterplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf14 <- sub(".html", "ncscatterplot.pdf", htmlFile)
@@ -414,8 +414,8 @@ if(ScatterPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" )
 if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL"))  && GraphStyle == "Separate") {
 
 	#Plot device setup
-	ncscatterplot2 <- sub(".html", "ncscatterplot2.jpg", htmlFile)
-	jpeg(ncscatterplot2,width = jpegwidth, height = jpegheight, quality = 100)
+	ncscatterplot2 <- sub(".html", "ncscatterplot2.png", htmlFile)
+	png(ncscatterplot2,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf17 <- sub(".html", "ncscatterplot2.pdf", htmlFile)
@@ -449,8 +449,8 @@ scalexy<-"fixed"
 if(ScatterPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && GraphStyle == "Separate") {
 
 	#Plot device setup
-	scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-	jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf20 <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -482,8 +482,8 @@ if(ScatterPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  
 if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL") || (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))    && GraphStyle == "Overlaid") {
 
 	#Plot device setup
-	ncscatterplot3 <- sub(".html", "ncscatterplot3.jpg", htmlFile)
-    	jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
+    	png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf16 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
@@ -584,8 +584,8 @@ if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && is
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
-	ncSEMPlot <- sub(".html", "ncSEMPlot.jpg", htmlFile)
-	jpeg(ncSEMPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
+	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5 <- sub(".html", "ncSEMPlot.pdf", htmlFile)
@@ -619,8 +619,8 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
-	ncSEMPlot <- sub(".html", "ncSEMPlot.jpg", htmlFile)
-	jpeg(ncSEMPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
+	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf6 <- sub(".html", "ncSEMPlot.pdf", htmlFile)
@@ -654,8 +654,8 @@ if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && Gr
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+firstcatvarrr_IVS+secondcatvarrr_IVS, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
-	ncSEMPlot <- sub(".html", "ncSEMPlot.jpg", htmlFile)
-	jpeg(ncSEMPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
+	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf9 <- sub(".html", "ncSEMPlot.pdf", htmlFile)
@@ -722,8 +722,8 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	graphdataSEM_means<-  ddply(graphdataSEM_overall, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
-	ncSEMPlotx <- sub(".html", "ncSEMPlotx.jpg", htmlFile)
-	jpeg(ncSEMPlotx,width = jpegwidth, height = jpegheight, quality = 100)
+	ncSEMPlotx <- sub(".html", "ncSEMPlotx.png", htmlFile)
+	png(ncSEMPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf7 <- sub(".html", "ncSEMPlotx.pdf", htmlFile)
@@ -796,8 +796,8 @@ Gr_fill <-temp$Gr_fill
 if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"   && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
-	nccaseplot <- sub(".html", "nccaseplot.jpg", htmlFile)
-	jpeg(nccaseplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf22 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -828,8 +828,8 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NU
 if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
-	nccaseplot <- sub(".html", "nccaseplot.jpg", htmlFile)
-	jpeg(nccaseplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf23 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -860,8 +860,8 @@ if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "
 if(CaseProfilesPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
-	nccaseplot <- sub(".html", "nccaseplot.jpg", htmlFile)
-	jpeg(nccaseplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf25 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -892,8 +892,8 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NU
 if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "Overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
-	nccaseplot <- sub(".html", "nccaseplot.jpg", htmlFile)
-	jpeg(nccaseplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf24 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -960,8 +960,8 @@ if(BoxPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"   && 
 	range <-temp$range
 
 	#Plot device setup
-	ncboxplot <- sub(".html", "ncboxplot.jpg", htmlFile)
-	jpeg(ncboxplot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdfx <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1054,8 +1054,8 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	}
 
 	#Plot device setup
-	ncboxplot <- sub(".html", "ncboxplot.jpg", htmlFile)
-	jpeg(ncboxplot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf11 <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1147,8 +1147,8 @@ if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && G
 	}
 
 	#Plot device setup
-	ncboxplot <- sub(".html", "ncboxplot.jpg", htmlFile)
-	jpeg(ncboxplot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf13 <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1310,8 +1310,8 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	outlierdata<-outlierdata[-1,]
 
 	#Plot device setup
-	ncboxplot <- sub(".html", "ncboxplot.jpg", htmlFile)
-	jpeg(ncboxplot,width = jpegwidth, height = jpegheight, quality = 100)
+	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf12 <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1393,8 +1393,8 @@ if (HistogramPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 if(HistogramPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"   && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
-	nchistplot <- sub(".html", "nchistplot.jpg", htmlFile)
-	jpeg(nchistplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", "nchistplot.pdf", htmlFile)
@@ -1430,8 +1430,8 @@ if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NUL
 	normaldens<-ddply(graphdata, "l_l", function (df) { data.frame(yvarrr_IVS = grid, density=dnorm(grid, mean(df$yvarrr_IVS), sd(df$yvarrr_IVS)) ) })
 
 	#Plot device setup
-	nchistplot <- sub(".html", "nchistplot.jpg", htmlFile)
-	jpeg(nchistplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf2 <- sub(".html", "nchistplot.pdf", htmlFile)
@@ -1474,8 +1474,8 @@ if(HistogramPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"
 	normaldens<-cbind(normaldens, temp)
 
 	#Plot device setup
-	nchistplot <- sub(".html", "nchistplot.jpg", htmlFile)
-	jpeg(nchistplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "nchistplot.pdf", htmlFile)
@@ -1523,8 +1523,8 @@ if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NUL
 	histdata<-cbind(graphdata, extra)
 
 	#Plot device setup
-	nchistplot <- sub(".html", "nchistplot.jpg", htmlFile)
-	jpeg(nchistplot,width = jpegwidth, height = jpegheight, quality = 100)
+	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf3z <- sub(".html", "nchistplot.pdf", htmlFile)

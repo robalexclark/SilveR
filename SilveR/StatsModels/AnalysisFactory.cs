@@ -69,9 +69,9 @@ namespace SilveR.StatsModels
                 case "OneWayANOVAPowerAnalysisDatasetBasedInputs":
                     model = new OneWayANOVAPowerAnalysisDatasetBasedInputsModel(dataset);
                     break;
-                //case "MultivariateAnalysis":
-                //    model = new MultivariateAnalysisModel(dataset);
-                //    break;
+                case "MultivariateAnalysis":
+                    model = new MultivariateAnalysisModel(dataset);
+                    break;
                 case "NestedDesignAnalysis":
                     model = new NestedDesignAnalysisModel(dataset);
                     break;

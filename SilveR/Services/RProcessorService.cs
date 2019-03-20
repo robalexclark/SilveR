@@ -164,22 +164,22 @@ namespace SilveR.Services
                         //get the output files that match the guid
                         List<string> resultsFiles = new List<string>();
                         string[] outputFiles = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
-                        foreach (string file in outputFiles.Where(x => !x.EndsWith(".R"))) //go through all output (except the R input file)
+                        foreach (string file in outputFiles.Where(x => !x.EndsWith(".R") && !x.EndsWith(analysis.AnalysisGuid + ".csv"))) //go through all output (except the R input file and the csv input file)
                         {
                             FileInfo fileInfo = new FileInfo(file);
-                            if (fileInfo.Extension == ".html" || fileInfo.Extension == ".jpg") //main output so add to results
+                            if (fileInfo.Extension == ".html" || fileInfo.Extension == ".jpg" || fileInfo.Extension == ".png") //main output so add to results
                             {
                                 resultsFiles.Add(file);
                             }
-                            else if (fileInfo.Name != analysis.AnalysisGuid + ".csv" && fileInfo.Extension == ".csv") //is not the input csv and is a dataset to be imported into datasets
+                            else if (fileInfo.Extension == ".csv") //is not the input csv and is a dataset to be imported into datasets
                             {
                                 DataTable dataTable = CSVConverter.CSVDataToDataTable(fileInfo.OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
 
-                                string datasetName = fileInfo.Name.Replace(analysis.AnalysisGuid, String.Empty).TrimStart('-');
+                                string datasetName = fileInfo.Name.Replace(analysis.AnalysisGuid, String.Empty);
                                 await SaveDatasetToDatabase(silveRRepository, datasetName, dataTable);
                             }
-                            //else
-                            //    throw new InvalidOperationException("Unexpected file type in temp folder!");
+                            else
+                                throw new InvalidOperationException("Unexpected file type in temp folder!");
                         }
 
                         string inlineHtml = InlineHtmlCreator.CreateInlineHtml(resultsFiles);
@@ -197,8 +197,8 @@ namespace SilveR.Services
                 }
                 catch (Exception ex)
                 {
-                    try
-                    {
+                    //try
+                    //{
                         Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
 
                         string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
@@ -215,12 +215,11 @@ namespace SilveR.Services
 
                         analysis.RProcessOutput = message;
                         await silveRRepository.UpdateAnalysis(analysis);
-                    }
-                    catch { }
+                    //}
+                    //catch { }
 
-                    throw ex;
+                    throw new Exception("RProcessor execution failed (see inner exception for details)", ex);
                 }
-
             }
         }
 

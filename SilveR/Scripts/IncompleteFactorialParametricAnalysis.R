@@ -49,6 +49,8 @@ if (Module == "IFPA") {
 	cntrlGroup <- "NULL"
 }
 
+genpvals <- Args[22]
+
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
 #Print args
@@ -85,13 +87,6 @@ ReferenceLine <- "NULL"
 cntrlGroup<-sub("-", "_ivs_dash_ivs_", cntrlGroup, fixed=TRUE)
 if (is.numeric(statdata$mainEffect) == TRUE) {
 	cntrlGroup <- paste ("'",cntrlGroup,"'",sep="")
-}
-
-#Set working directory for p-values dataset
-direct2<- unlist(strsplit(Args[3],"/"))
-direct<-direct2[1]
-for (i in 2:(length(direct2)-1)) {
-	direct<- paste(direct, "/", direct2[i], sep = "")
 }
 
 statdata$mainEffect<-as.factor(statdata$mainEffect)
@@ -267,8 +262,8 @@ if(responseTransform != "None") {
 }
 HTML.title(title, HR=2, align="left")
 
-scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 #STB July2013
 plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -320,8 +315,8 @@ if(FirstCatFactor != "NULL") {
 	index <- 1
 	for (i in 1:nocovars) {
 		ncscatterplot3 <- sub(".html", "IVS", htmlFile)
-	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.jpg", sep = "")
-		jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.png", sep = "")
+		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf2 <- sub(".html", "IVS", htmlFile)
@@ -666,6 +661,29 @@ if(showANOVA=="Y") {
 }
 
 #===================================================================================================================
+#Fixed effect coefficients
+#===================================================================================================================
+if (ShowCoeff == "Y") {
+	HTML.title("Model coefficients", HR=2, align="left")
+	threewayfull<-lm(model, data=statdata, na.action = na.omit)
+	coeffs<- summary(threewayfull)$coefficient
+
+	col1<-format(round(coeffs[,1], 4), nsmall=4, scientific=FALSE)
+	col2<-format(round(coeffs[,2], 4), nsmall=4, scientific=FALSE)
+	col3<-format(round(coeffs[,3], 2), nsmall=2, scientific=FALSE)
+	col4<-format(round(coeffs[,4], 4), nsmall=4, scientific=FALSE)
+	coeffsx <- cbind(col1, col2, col3, col4)
+	colnames(coeffsx)<-c("Estimate", "Std. Error", "t-value", "p-value")
+	for (i in 1:(dim(coeffsx)[1])) {
+		if (coeffs[i,4]<0.0001) {
+			coeffsx[i,4]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+			coeffsx[i,4]<- paste("<",coeffsx[i,4])
+		}
+	}
+	HTML(coeffsx, classfirstline="second", align="left", row.names = "FALSE")
+}
+
+#===================================================================================================================
 #Covariate correlation table
 #===================================================================================================================
 if (CovariateRegressionCoefficients == "Y" && FirstCatFactor != "NULL") {
@@ -709,8 +727,8 @@ if(showPRPlot=="Y" && showNormPlot=="Y") {
 if(showPRPlot=="Y") {
 	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
 
-	residualPlot <- sub(".html", "residualplot.jpg", htmlFile)
-	jpeg(residualPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	residualPlot <- sub(".html", "residualplot.png", htmlFile)
+	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
@@ -758,8 +776,8 @@ if(showPRPlot=="Y") {
 if(showNormPlot=="Y") {
 	HTML.title("Normal probability plot", HR=3, align="left")
 
-	normPlot <- sub(".html", "normplot.jpg", htmlFile)
-	jpeg(normPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	normPlot <- sub(".html", "normplot.png", htmlFile)
+	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
@@ -858,8 +876,8 @@ if(showLSMeans =="Y") {
 	Line_size <- Line_size2
 
 	#Code for LS MEans plot
-	meanPlot <- sub(".html", "meanplot.jpg", htmlFile)
-	jpeg(meanPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	meanPlot <- sub(".html", "meanplot.png", htmlFile)
+	png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
@@ -1106,8 +1124,8 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 	Line_size <- Line_size2
 
 	#Code for LS MEans plot
-	meanPlotq <- sub(".html", "meanplotq.jpg", htmlFile)
-	jpeg(meanPlotq,width = jpegwidth, height = jpegheight, quality = 100)
+	meanPlotq <- sub(".html", "meanplotq.png", htmlFile)
+	png(meanPlotq,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5q <- sub(".html", "meanplotq.pdf", htmlFile)
@@ -1405,18 +1423,23 @@ if(allPairwiseTest != "NULL") {
 #===================================================================================================================
 	#STB March 2014 - Creating a dataset of p-values
 
-	comparisons <-paste(direct, "/Comparisons.csv", sep = "")
-	for (i in 1:tablen) {
-		tabs[i,5]=pvals[i]
+	if (genpvals == "Y") {
+		comparisons <- sub(".csv", "comparisons.csv",  Args[3])
+		for (i in 1:tablen) {
+			tabs[i,5]=pvals[i]
+		}
+		tabsxx<- data.frame(tabs[,5])
+		for (i in 1:20) {
+			rows<-sub(","," and ", rows, fixed=TRUE)
+		}	
+		tabsxx<-cbind(rows, tabsxx)
+		colnames(tabsxx)<-c("Comparison", "p-value")
+		row.names(tabsxx) <- seq(nrow(tabsxx)) 
+	
+		if(allPairwiseTest != "NULL") {
+			write.csv(tabsxx, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
+		}
 	}
-	tabsxx<- data.frame(tabs[,5])
-	for (i in 1:20) {
-		rows<-sub(","," and ", rows, fixed=TRUE)
-	}	
-	tabsxx<-cbind(rows, tabsxx)
-	colnames(tabsxx)<-c("Comparison", "p-value")
-	row.names(tabsxx) <- seq(nrow(tabsxx)) 
-
 #===================================================================================================================
 	#Conclusion
 	add<-paste(c("Conclusion"))
@@ -1689,8 +1712,8 @@ if(backToControlTest != "NULL") {
 	HTML.title(CITitle, HR=2, align="left")
 
 	#Code for LS MEans plot
-	meanPlotqq <- sub(".html", "meanplotqq.jpg", htmlFile)
-	jpeg(meanPlotqq,width = jpegwidth, height = jpegheight, quality = 100)
+	meanPlotqq <- sub(".html", "meanplotqq.png", htmlFile)
+	png(meanPlotqq,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5qq <- sub(".html", "meanplotqq.pdf", htmlFile)
@@ -1810,8 +1833,8 @@ if(backToControlTest != "NULL" && GeomDisplay == "Y" && (responseTransform =="Lo
 	HTML.title(CITitle, HR=2, align="left")
 
 	#Code for LS MEans plot
-	meanPlotqs <- sub(".html", "meanplotqs.jpg", htmlFile)
-	jpeg(meanPlotqs,width = jpegwidth, height = jpegheight, quality = 100)
+	meanPlotqs <- sub(".html", "meanplotqs.png", htmlFile)
+	png(meanPlotqs,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5qs <- sub(".html", "meanplotqs.pdf", htmlFile)
@@ -1950,12 +1973,7 @@ if (responseTransform != "None") {
 
 HTML(add, align="left")
 
-#===================================================================================================================
-#Create file of comparisons
-#===================================================================================================================
-#if(allPairwiseTest != "NULL") {
-#	write.csv(tabsxx, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
-#}
+
 
 #===================================================================================================================
 #References

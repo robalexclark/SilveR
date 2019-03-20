@@ -170,6 +170,9 @@ namespace Silver.UnitTests.StatsModels
 
             var allPairwise = result.Single(x => x.Name == "AllPairwise");
             Assert.Equal("Holm", allPairwise.Value);
+
+            var generateComparisonsDataset = result.Single(x => x.Name == "GenerateComparisonsDataset");
+            Assert.Equal("True", generateComparisonsDataset.Value);
         }
 
         [Fact]
@@ -193,8 +196,9 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "SelectedEffect", Value = "Treat1 * Treat2" });
             arguments.Add(new Argument { Name = "LSMeansSelected", Value = "True" });
             arguments.Add(new Argument { Name = "AllPairwise", Value = "Holm" });
+            arguments.Add(new Argument { Name = "GenerateComparisonsDataset", Value = "True" });
 
-            Assert.Equal(14, arguments.Count);
+            Assert.Equal(15, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -214,6 +218,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("Treat1 * Treat2", sut.SelectedEffect);
             Assert.True(sut.LSMeansSelected);
             Assert.Equal("Holm", sut.AllPairwise);
+            Assert.True(sut.GenerateComparisonsDataset);
         }
 
 
@@ -227,7 +232,7 @@ namespace Silver.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+Treat1+Treat2+Treat1*Treat2 Respivs_sp_ivs1~scatterPlotColumn Covivs_sp_ivs1 None None Treat1 Treat1,Treat2 Block3 Y Y N 0.05 Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+mainEffect Treat1ivs_sp_ivs*ivs_sp_ivsTreat2 N Holm", result);
+            Assert.Equal("Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+Treat1+Treat2+Treat1*Treat2 Respivs_sp_ivs1~scatterPlotColumn Covivs_sp_ivs1 None None Treat1 Treat1,Treat2 Block3 Y Y N 0.05 Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+mainEffect Treat1ivs_sp_ivs*ivs_sp_ivsTreat2 N Holm Y", result);
         }
 
         private IncompleteFactorialParametricAnalysisModel GetModel(IDataset dataset)
@@ -257,7 +262,8 @@ namespace Silver.UnitTests.StatsModels
                 {
                     "Treat1",
                     "Treat2"
-                }
+                },
+                GenerateComparisonsDataset = true
             };
 
             return model;

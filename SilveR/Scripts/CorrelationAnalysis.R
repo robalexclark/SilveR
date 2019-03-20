@@ -148,8 +148,8 @@ if (scatterplotSelected != "N") {
 	for (i in 1:resplength) {
 		for (j in 1:resplength) {
 			if (i != j) {
-				scatterPlot <- sub(".html", paste(i,j,"scatterPlot.jpg",sep=""), htmlFile)
-				jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+				scatterPlot <- sub(".html", paste(i,j,"scatterPlot.png",sep=""), htmlFile)
+				png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 				#STB July2013
 				plotFilepdf1 <- sub(".html", paste(i,j,"scatterPlot.pdf",sep=""), htmlFile)
@@ -212,8 +212,8 @@ if (matrixPlotSelected != "N") {
 	#Scatterplot
 	HTML.title("Matrixplot, including linear regression lines", HR=3, align="left")
 
-	scatterPlotx <- sub(".html", "scatterPlotx.jpg", htmlFile)
-	jpeg(scatterPlotx,width = jpegwidth, height = jpegheight, quality = 100)
+	scatterPlotx <- sub(".html", "scatterPlotx.png", htmlFile)
+	png(scatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf2 <- sub(".html", "scatterPlotx.pdf", htmlFile)
@@ -492,8 +492,8 @@ if (scatterplotSelected != "N") {
 	for (d in 1:resplength) {
 		for (f in 1:resplength) {
 			if ( d != f) {
-				ncscatterplot3 <- sub(".html", paste(d,f,"ncscatterplot3.jpg",sep=""), htmlFile)
-				jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+				ncscatterplot3 <- sub(".html", paste(d,f,"ncscatterplot3.png",sep=""), htmlFile)
+				png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 				#STB July2013
 				plotFilepdf3 <- sub(".html", paste(d,f,"ncscatterplot3.pdf",sep=""), htmlFile)
@@ -573,8 +573,8 @@ if (matrixPlotSelected != "N") {
 	#Scatterplot
 	HTML.title("Categorised matrixplot, including linear regression lines", HR=3, align="left")
 
-	xscatterPlotx <- sub(".html", "xscatterPlotx.jpg", htmlFile)
-	jpeg(xscatterPlotx,width = jpegwidth, height = jpegheight, quality = 100)
+	xscatterPlotx <- sub(".html", "xscatterPlotx.png", htmlFile)
+	png(xscatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "xscatterPlotx.pdf", htmlFile)

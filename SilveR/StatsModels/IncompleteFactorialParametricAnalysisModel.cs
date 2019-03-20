@@ -19,7 +19,7 @@ namespace SilveR.StatsModels
         [DisplayName("Response")]
         public string Response { get; set; }
 
-        [HasAtLeastOneEntry]
+        [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Treatment factors")]
         public IEnumerable<string> Treatments { get; set; }
@@ -76,6 +76,9 @@ namespace SilveR.StatsModels
         {
             get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }; }
         }
+
+        [DisplayName("Generate comparisons dataset")]
+        public bool GenerateComparisonsDataset { get; set; }
 
 
         public IncompleteFactorialParametricAnalysisModel() : base("IncompleteFactorialParametricAnalysis") { }
@@ -252,6 +255,8 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwise, false)); //19
 
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GenerateComparisonsDataset)); //20
+
             return arguments.ToString().Trim();
         }
 
@@ -274,6 +279,7 @@ namespace SilveR.StatsModels
             this.SelectedEffect = argHelper.LoadStringArgument(nameof(SelectedEffect));
             this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
             this.AllPairwise = argHelper.LoadStringArgument(nameof(AllPairwise));
+            this.GenerateComparisonsDataset = argHelper.LoadBooleanArgument(nameof(GenerateComparisonsDataset));
         }
 
         public override IEnumerable<Argument> GetArguments()
@@ -294,6 +300,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedEffect), SelectedEffect));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AllPairwise), AllPairwise));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(GenerateComparisonsDataset), GenerateComparisonsDataset));
 
             return args;
         }
@@ -338,7 +345,7 @@ namespace SilveR.StatsModels
             return model;
         }
 
-        public string GetEffectModel()
+        private string GetEffectModel()
         {
             //assemble the effect model
             string effectModel = Response + "~"; //add in the response

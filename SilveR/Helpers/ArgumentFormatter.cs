@@ -38,6 +38,12 @@ namespace SilveR.Helpers
             charConversionList.Add("'", "ivs_quote_ivs");
         }
 
+        public string GetFormattedArgument(int value)
+        {
+                return GetFormattedArgument(value.ToString(), false);
+        }
+
+
         public string GetFormattedArgument(Nullable<int> value)
         {
             if (!value.HasValue)
@@ -62,7 +68,7 @@ namespace SilveR.Helpers
             }
         }
 
-        public string GetFormattedArgument(string stringValue, bool isVariable)
+        public string GetFormattedArgument(string stringValue, bool isVariable = false)
         {
             if (String.IsNullOrEmpty(stringValue))
             {

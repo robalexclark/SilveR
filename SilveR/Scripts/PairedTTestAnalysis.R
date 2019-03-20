@@ -208,8 +208,8 @@ if(responseTransform != "None") {
 }
 HTML.title(title, HR=2, align="left")
 
-scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 #STB July2013
 plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -279,8 +279,8 @@ if (dimfact ==2) {
 	}
 
 	#Plot code
-	ncscatterplot3 <- sub(".html", "ncscatterplot3.jpg", htmlFile)
-	jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
+	png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf2 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
@@ -354,8 +354,8 @@ if(covariatelist != "NULL") {
 	index <- 1
 	for (i in 1:nocovlist) {
 		ncscatterplot3 <- sub(".html", "IVS", htmlFile)
-	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.jpg", sep = "")
-		jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.png", sep = "")
+		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf2 <- sub(".html", "IVS", htmlFile)
@@ -658,8 +658,8 @@ if(showPRPlot=="Y" && showNormPlot=="Y") {
 if(showPRPlot=="Y") {
 	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
 
-	residualPlot <- sub(".html", "residualplot.jpg", htmlFile)
-	jpeg(residualPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	residualPlot <- sub(".html", "residualplot.png", htmlFile)
+	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
 	dev.control("enable") 
@@ -722,8 +722,8 @@ if(showPRPlot=="Y") {
 if(showNormPlot=="Y") {
 	HTML.title("Normal probability plot", HR=3, align="left")
 
-	normPlot <- sub(".html", "normplot.jpg", htmlFile)
-	jpeg(normPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	normPlot <- sub(".html", "normplot.png", htmlFile)
+	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
 	dev.control("enable") 
@@ -818,8 +818,8 @@ if(showLSMeans=="Y") {
 	CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
 	HTML.title(CITitle, HR=2, align="left")
 
-	meanPlot <- sub(".html", "meanplot.jpg", htmlFile)
-	jpeg(meanPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	meanPlot <- sub(".html", "meanplot.png", htmlFile)
+	png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
@@ -899,8 +899,8 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 		LSMx$Group_IVSq_ <- LSMx$Timezzz
 	}
 
-	meanPlotz <- sub(".html", "meanplotz.jpg", htmlFile)
-	jpeg(meanPlotz,width = jpegwidth, height = jpegheight, quality = 100)
+	meanPlotz <- sub(".html", "meanplotz.png", htmlFile)
+	png(meanPlotz,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf5z <- sub(".html", "meanplotz.pdf", htmlFile)

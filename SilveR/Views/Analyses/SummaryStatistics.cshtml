@@ -1,4 +1,4 @@
-﻿@model SilveR.StatsModels.SummaryStatisticsModel
+@model SilveR.StatsModels.SummaryStatisticsModel
 
 @section Scripts {
     <script>
@@ -19,29 +19,29 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/SummaryStatistics" class="form-horizontal" method="post">
+<form action="/Analyses/SummaryStatistics" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <input asp-for="DatasetID" hidden />
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Input Options</div>
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
                     <h4>Responses</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Responses</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Responses</label>
+                        <div class="col-md-6">
                             <select class="form-control" asp-for="Responses"></select>
                             <div><span asp-validation-for="Responses"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Transformation" />
                             <div><span asp-validation-for="Transformation"></span></div>
                         </div>
@@ -49,123 +49,122 @@
                     <br />
 
                     <h4>Categorisation Factors</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">1st factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">1st factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="FirstCatFactor" />
                             <div><span asp-validation-for="FirstCatFactor"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">2nd factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">2nd factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="SecondCatFactor" />
                             <div><span asp-validation-for="SecondCatFactor"></span></div>
-                        </div>                       
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">3rd factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">3rd factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="ThirdCatFactor" />
                             <div><span asp-validation-for="ThirdCatFactor"></span></div>
-                        </div>                        
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">4th factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">4th factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="FourthCatFactor" />
                             <div><span asp-validation-for="FourthCatFactor"></span></div>
-                        </div>                      
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
 
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Output Options</div>
-                <div class="panel-body">
-
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Mean</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="Mean" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Mean</label>
+                        <div class="col-md-6">
+                            <input asp-for="Mean" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">N</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="N" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">N</label>
+                        <div class="col-md-6">
+                            <input asp-for="N" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
                     <br />
 
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Variance</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="Variance" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Variance</label>
+                        <div class="col-md-6">
+                            <input asp-for="Variance" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Standard deviation</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="StandardDeviation" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Standard deviation</label>
+                        <div class="col-md-6">
+                            <input asp-for="StandardDeviation" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Standard error of mean</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="StandardErrorOfMean" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Standard error of mean</label>
+                        <div class="col-md-6">
+                            <input asp-for="StandardErrorOfMean" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">% coefficient of variation</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="CoefficientOfVariation" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">% coefficient of variation</label>
+                        <div class="col-md-6">
+                            <input asp-for="CoefficientOfVariation" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Confidence interval of the mean</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="ConfidenceInterval" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Confidence interval of the mean</label>
+                        <div class="col-md-6">
+                            <input asp-for="ConfidenceInterval" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Level (%)</label>
-                        <div class="col-xs-3">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Level (%)</label>
+                        <div class="col-md-6">
                             <div class="input-group">
-                                <input asp-for="Significance" class="form-control" type="number" step=".1" />
+                                <input asp-for="Significance" class="form-control" />
                                 <div><span asp-validation-for="Significance"></span></div>
                             </div>
                         </div>
                     </div>
                     <br />
 
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Normal probability plot</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="NormalProbabilityPlot" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Normal probability plot</label>
+                        <div class="col-md-6">
+                            <input asp-for="NormalProbabilityPlot" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
                     <br />
 
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Min and max</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="MinAndMax" type="checkbox">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Min and max</label>
+                        <div class="col-md-6">
+                            <input asp-for="MinAndMax" type="checkbox" class="checkbox-fix">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">Median and quartiles</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="MedianAndQuartiles" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Median and quartiles</label>
+                        <div class="col-md-6">
+                            <input asp-for="MedianAndQuartiles" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-6 control-label">By categories and overall</label>
-                        <div class="col-xs-6 checkbox">
-                            <input asp-for="ByCategoriesAndOverall" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">By categories and overall</label>
+                        <div class="col-md-6">
+                            <input asp-for="ByCategoriesAndOverall" type="checkbox" class="checkbox-fix" />
                         </div>
                     </div>
                 </div>
@@ -173,9 +172,9 @@
         </div>
     </div>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </div>
 </form>

@@ -599,8 +599,8 @@ ymax <- temp$ymax
 range <- temp$range
 
 #Plot device setup
-ncboxplot <- sub(".html", "ncboxplot.jpg", htmlFile)
-jpeg(ncboxplot, width = jpegwidth, height = jpegheight, quality = 100)
+ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
+png(ncboxplot, width = jpegwidth, height = jpegheight, units="in", res=300)
 plotFilepdfx <- sub(".html", "ncboxplot.pdf", htmlFile)
 dev.control("enable")
 

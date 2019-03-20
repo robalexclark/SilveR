@@ -1,16 +1,16 @@
 ﻿@model SilveR.StatsModels.ChiSquaredAndFishersExactTestModel
 
 @section Scripts {
-    <script>
+<script>
         var theModel = @Html.Raw(Json.Serialize(Model));
-    </script>
+</script>
 
-    <environment names="Development">
-        <script defer src="~/js/stats/chiSquaredAndFishersExactTest.js"></script>
-    </environment>
-    <environment names="Production">
-        <script defer src="~/js/stats/chiSquaredAndFishersExactTest.min.js"></script>
-    </environment>
+<environment names="Development">
+    <script defer src="~/js/stats/chiSquaredAndFishersExactTest.js"></script>
+</environment>
+<environment names="Production">
+    <script defer src="~/js/stats/chiSquaredAndFishersExactTest.min.js"></script>
+</environment>
 }
 
 @{
@@ -19,84 +19,79 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/ChiSquaredAndFishersExactTest" class="form-horizontal" method="post">
+<form action="/Analyses/ChiSquaredAndFishersExactTest" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <input asp-for="DatasetID" hidden />
 
     <div class=" row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Input Options</div>
-                <div class="panel-body">
-                    <div class="col-sm-12">
-
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Response</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" asp-for="Response" />
-                                <div><span asp-validation-for="Response"></span></div>
-                            </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Response</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Response" />
+                            <div><span asp-validation-for="Response"></span></div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Grouping factor</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" asp-for="GroupingFactor" />
-                                <div><span asp-validation-for="GroupingFactor"></span></div>
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Grouping factor</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="GroupingFactor" />
+                            <div><span asp-validation-for="GroupingFactor"></span></div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Response categories</label>
-                            <div class="col-sm-6">
-                                <input class="form-control" asp-for="ResponseCategories" />
-                                <div><span asp-validation-for="ResponseCategories"></span></div>
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Response categories</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="ResponseCategories" />
+                            <div><span asp-validation-for="ResponseCategories"></span></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Output Options</div>
-                <div class="panel-body">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Chi-squared test</label>
-                            <div class="col-sm-6">
-                                <input class="checkbox" asp-for="ChiSquaredTest" type="checkbox" />
-                            </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Chi-squared test</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="ChiSquaredTest" />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Fisher's exact test</label>
-                            <div class="col-sm-6">
-                                <input class="checkbox" asp-for="FishersExactTest" type="checkbox" />
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Fisher's exact test</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="FishersExactTest" />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Hypothesis</label>
-                            <div class="col-sm-6">
-                                <input asp-for="Hypothesis" />
-                                <div><span asp-validation-for="Hypothesis"></span></div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Hypothesis</label>
+                        <div class="col-md-6">
+                            <input asp-for="Hypothesis" />
+                            <div><span asp-validation-for="Hypothesis"></span></div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Barnard's test</label>
-                            <div class="col-sm-6">
-                                <input class="checkbox" asp-for="BarnardsTest" type="checkbox" />
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Barnard's test</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="BarnardsTest" />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-6 control-label">Significance level</label>
-                            <div class="col-sm-6">
-                                <input asp-for="Significance" />
-                                <div><span asp-validation-for="Significance"></span></div>
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Significance level</label>
+                        <div class="col-md-6">
+                            <input asp-for="Significance" />
+                            <div><span asp-validation-for="Significance"></span></div>
                         </div>
                     </div>
                 </div>
@@ -104,9 +99,9 @@
         </div>
     </div>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </div>
 </form>

@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using SilveR.Helpers;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
@@ -53,7 +52,7 @@ namespace SilveR.Helpers
                 {
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        image.Save(ms, ImageFormats.Png);
+                        image.SaveAsPng(ms);
                         byte[] imageBytes = ms.ToArray();
 
                         // Convert byte[] to Base64 String

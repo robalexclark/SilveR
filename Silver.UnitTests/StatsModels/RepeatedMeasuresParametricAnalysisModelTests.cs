@@ -184,6 +184,9 @@ namespace Silver.UnitTests.StatsModels
 
             var significance = result.Single(x => x.Name == "Significance");
             Assert.Equal("0.05", significance.Value);
+
+            var generateComparisonsDataset = result.Single(x => x.Name == "GenerateComparisonsDataset");
+            Assert.Equal("True", generateComparisonsDataset.Value);
         }
 
         [Fact]
@@ -210,8 +213,9 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "LSMeansSelected", Value = "True" });
             arguments.Add(new Argument { Name = "Covariance", Value = "Compound Symmetric" });
             arguments.Add(new Argument { Name = "ComparisonType", Value = "AllComparisonsWithinSelected" });
+            arguments.Add(new Argument { Name = "GenerateComparisonsDataset", Value = "True" });
 
-            Assert.Equal(17, arguments.Count);
+            Assert.Equal(18, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -234,6 +238,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.True(sut.LSMeansSelected);
             Assert.Equal("Compound Symmetric", sut.Covariance);
             Assert.Equal("AllComparisonsWithinSelected", sut.ComparisonType.ToString());
+            Assert.True(sut.GenerateComparisonsDataset);
         }
 
 
@@ -247,7 +252,7 @@ namespace Silver.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Resp2~Cov1+Block1+Block2+Treativs_sp_ivs1+Treativs_sp_ivs2+Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2+Treativs_sp_ivs1*Timezzz+Treativs_sp_ivs2*Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2*Timezzz Dayivs_sp_ivs1 Animal1 Cov1 \"Compound Symmetric\" None None Treativs_sp_ivs1 Treativs_sp_ivs1,Treativs_sp_ivs2 Block1,Block2 Y Y N 0.05 Resp2~Cov1+Block1+Block2+Treativs_sp_ivs2+mainEffect Treativs_sp_ivs1ivs_sp_ivs*ivs_sp_ivsDayivs_sp_ivs1 N AllComparisonsWithinSelected", result);
+            Assert.Equal("Resp2~Cov1+Block1+Block2+Treativs_sp_ivs1+Treativs_sp_ivs2+Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2+Treativs_sp_ivs1*Timezzz+Treativs_sp_ivs2*Timezzz+Treativs_sp_ivs1*Treativs_sp_ivs2*Timezzz Dayivs_sp_ivs1 Animal1 Cov1 \"Compound Symmetric\" None None Treativs_sp_ivs1 Treativs_sp_ivs1,Treativs_sp_ivs2 Block1,Block2 Y Y N 0.05 Resp2~Cov1+Block1+Block2+Treativs_sp_ivs2+mainEffect Treativs_sp_ivs1ivs_sp_ivs*ivs_sp_ivsDayivs_sp_ivs1 N AllComparisonsWithinSelected Y", result);
         }
 
         private RepeatedMeasuresParametricAnalysisModel GetModel(IDataset dataset)
@@ -281,7 +286,8 @@ namespace Silver.UnitTests.StatsModels
                 {
                     "Treat 1",
                     "Treat 2"
-                }
+                },
+                GenerateComparisonsDataset = true
             };
 
             return model;

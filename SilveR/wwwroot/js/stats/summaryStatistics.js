@@ -25,4 +25,10 @@ $(function () {
     $("#FourthCatFactor").kendoDropDownList({
         dataSource: theModel.availableVariablesAllowNull
     });
+
+    $("#Significance").kendoNumericTextBox({
+        format: '#.#',
+        decimals: 1,
+        spinners: true
+    });
 });

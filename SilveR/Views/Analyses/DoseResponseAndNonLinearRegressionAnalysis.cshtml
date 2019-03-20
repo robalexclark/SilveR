@@ -19,36 +19,35 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/DoseResponseAndNonLinearRegressionAnalysis" class="form-horizontal" method="post">
+<form action="/Analyses/DoseResponseAndNonLinearRegressionAnalysis" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <input asp-for="DatasetID" hidden />
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="radio">
-                        <label>
-                            <input asp-for="AnalysisType" type="radio" value="FourParameter" checked />
-                            <label>Four parameter logistic dose-response</label>
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input asp-for="AnalysisType" type="radio" class="form-check-input" value="FourParameter">Four parameter logistic dose-response
                         </label>
                     </div>
                 </div>
-                <div id="FourParameterPanel" class="panel-body">
+                <div id="FourParameterPanel" class="card-body">
                     <h4>Response</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Response" />
                             <div><span asp-validation-for="Response"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="ResponseTransformation" />
                             <div><span asp-validation-for="ResponseTransformation"></span></div>
                         </div>
@@ -56,34 +55,32 @@
                     <br />
 
                     <h4>Dose</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Dose</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Dose</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Dose" />
                             <div><span asp-validation-for="Dose"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Dose scale</label>
-                        <div class="col-sm-8">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="DoseScale" type="radio" value="Log10" />
-                                    <label>Log 10</label>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Dose scale</label>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input asp-for="DoseScale" type="radio" class="form-check-input" value="Log10">Log 10
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="DoseScale" type="radio" value="Loge" />
-                                    <label>Log e</label>
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="DoseScale" type="radio" class="form-check-input" value="Loge">Log e
                                 </label>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Offset</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Offset</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Offset" />
                             <div><span asp-validation-for="Offset"></span></div>
                         </div>
@@ -91,16 +88,16 @@
                     <br />
 
                     <h4>Quality controls</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="QCResponse" />
                             <div><span asp-validation-for="QCResponse"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Dose</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Dose</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="QCDose" />
                             <div><span asp-validation-for="QCDose"></span></div>
                         </div>
@@ -108,9 +105,9 @@
                     <br />
 
                     <h4>Samples</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Samples</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Samples</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="SamplesResponse" />
                             <div><span asp-validation-for="SamplesResponse"></span></div>
                         </div>
@@ -118,55 +115,55 @@
                     <br />
 
                     <h4>Settings</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Parameter</label>
-                        <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Parameter</label>
+                        <div class="col-md-4">
                             <label class="control-label">Fix coefficient at:</label>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <label class="control-label">Start value:</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Min coefficient</label>
-                        <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Min coefficient</label>
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="MinCoeff" />
                             <div><span asp-validation-for="MinCoeff"></span></div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="MinStartValue" />
                             <div><span asp-validation-for="MinStartValue"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Max coefficient</label>
-                        <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Max coefficient</label>
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="MaxCoeff" />
                             <div><span asp-validation-for="MaxCoeff"></span></div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="MaxStartValue" />
                             <div><span asp-validation-for="MaxStartValue"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Slope</label>
-                        <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">Slope</label>
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="SlopeCoeff" />
                             <div><span asp-validation-for="SlopeCoeff"></span></div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="SlopeStartValue" />
                             <div><span asp-validation-for="SlopeStartValue"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">ED/IC50</label>
-                        <div class="col-sm-4">
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">ED/IC50</label>
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="EDICCoeff" />
                             <div><span asp-validation-for="EDICCoeff"></span></div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <input class="form-control" asp-for="EDICStartValue" />
                             <div><span asp-validation-for="EDICStartValue"></span></div>
                         </div>
@@ -175,39 +172,38 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="radio">
-                        <label>
-                            <input asp-for="AnalysisType" type="radio" value="Equation" />
-                            <label>User defined equation</label>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input asp-for="AnalysisType" type="radio" class="form-check-input" value="Equation">User defined equation
                         </label>
                     </div>
                 </div>
-                <div id="EquationPanel" class="panel-body">
+                <div id="EquationPanel" class="card-body">
                     <h4>Equation</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Equation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Equation</label>
+                        <div class="col-md-6">
                             <input asp-for="Equation" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Start values for parameters</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Start values for parameters</label>
+                        <div class="col-md-6">
                             <input asp-for="StartValues" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Y-axis variable</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Y-axis variable</label>
+                        <div class="col-md-6">
                             <input asp-for="EquationYAxis" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">X-axis variable</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">X-axis variable</label>
+                        <div class="col-md-6">
                             <input asp-for="EquationXAxis" />
                         </div>
                     </div>
@@ -216,9 +212,9 @@
         </div>
     </div>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </div>
 </form>

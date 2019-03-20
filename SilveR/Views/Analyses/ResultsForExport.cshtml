@@ -1,0 +1,25 @@
+﻿@model SilveR.Models.Analysis
+
+@{
+  Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Program.AppName</title>
+
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/kendo-ui/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/kendo-ui/styles/kendo.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/site.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container body-content m-5">
+        @Html.Raw(Model.HtmlOutput)
+    </div>
+</body>
+</html>

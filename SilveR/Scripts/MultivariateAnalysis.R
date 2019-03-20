@@ -42,13 +42,20 @@ if (Diplayargs == "Y"){
 
 #===================================================================================================================
 #Setup the html file and associated css file
-htmlFile <- sub(".csv", ".html", Args[3]); #determine the file name of the html file
-HTMLSetFile(file=htmlFile) 
-cssFile <- "r2html.css"
-cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path has spaces in it
+htmlFile <- sub(".csv", ".html", Args[3]);
+#determine the file name of the html file
+HTMLSetFile(file = htmlFile)
+.HTML.file = htmlFile
+
+HTML(statdata, classfirstline = "second", align = "left", row.names = "TRUE")
 
 #===================================================================================================================
 #Variable set-up
+
+#Count rows in dataset and remove rows from original dataset with blank rows
+original <- dim(statdata)[1]
+statdata<- statdata[complete.cases(statdata), ]
+new <- dim(statdata)[1]
 
 #Graphical parameters
 Labelz_IVS_ <- "Y"
@@ -103,15 +110,15 @@ if (contPred_ != "NULL") {
 	TreatmentsPLS_IVS_ <- statdata[,Xlist]
 }
 Treatments_IVS_ <- statdata$catPred_
-CaseIDs_IVS_    <- statdata[,"caseid_IVS_"]
-rownames(Responses_IVS_)<-CaseIDs_IVS_
+CaseIDs_IVS_    <- c(statdata[,"caseid_IVS_"])
+rownames(Responses_IVS_) <- CaseIDs_IVS_
 
 #===================================================================================================================
 #===================================================================================================================
 # Principal components analysis
 #===================================================================================================================
 #===================================================================================================================
-if (analysisType == "PCA" ) {
+if (analysisType == "PrincipalComponentsAnalysis" ) {
 
 #PCA options
 if (PCA_center == "Centered_at_zero") { 
@@ -150,13 +157,14 @@ description <- paste("The following responses are included in the PCA analysis: 
 if (length(Xlist)>1 && catPred_ != "NULL") {
 	description <- paste(description, "For the PCA analysis only the first of the categorisation factors selected, namely ", Xlist[1], ", will be used within this module.", sep = "")
 } 
+
 if (length(Xlist) == 1 && catPred_ != "NULL") {
 	description <- paste(description, "The categorical predictor used to categorise the plots is ", Xlist[1], ".", sep = "")
 }
 HTML(description, align="left")
 
 if (contPred_ != "NULL") {
-	description <- paste("The continuous predictors ", contPred_, " are ignored when using the PCA analysis tool in ", branding", ".", sep = "")
+	description <- paste("The continuous predictors ", contPred_ , " are ignored when using the PCA analysis tool in ", branding , ".", sep = "")
 	HTML(description, align="left")
 }
 
@@ -178,8 +186,8 @@ HTML("This table summarises the proportion of the total variance explained by ea
 #Screeplot
 HTML.title("Plot of the standard deviation of each principal component", HR=2, align="left")
 
-scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-jpeg(scatterPlot)
+scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+png(scatterPlot)
 
 #STB July2013
 plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -224,8 +232,8 @@ HTML("This table summarises the loadings of principal components. Responses with
 #Biplot
 HTML.title("Biplot of the first two principal components", HR=2, align="left")
 
-scatterPlot2c <- sub(".html", "scatterPlot2c.jpg", htmlFile)
-jpeg(scatterPlot2c)
+scatterPlot2c <- sub(".html", "scatterPlot2c.png", htmlFile)
+png(scatterPlot2c)
 
 #STB July2013
 plotFilepdf2c <- sub(".html", "scatterPlot2c.pdf", htmlFile)
@@ -236,7 +244,7 @@ labells<-rownames(pca$rotation)
 labells<-namereplaceGSUB(labells)
 rownames(pca$rotation)<-labells
 
-PCbiplot(pca)
+PCbiplotx(pca)
 
 void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot2c), Align="centre")
 
@@ -256,7 +264,7 @@ HTML("These axes are scaled to allow both loading and scores to be included on t
 #===================================================================================================================
 #Categorised scatterplot of first two principal components
 
-dat<-biplot(pca)
+#dat<-biplot(pca)
 
 title<-c("Plot of the first two principal components, ")
 if (catPred_ != "NULL") {
@@ -265,8 +273,8 @@ if (catPred_ != "NULL") {
 title <-paste(title, "labelled by the ", caseid_IVS_name , " variable", sep = "")
 HTML(title, align="left")
 
-scatterPlotv <- sub(".html", "scatterPlotv.jpg", htmlFile)
-jpeg(scatterPlotv)
+scatterPlotv <- sub(".html", "scatterPlotv.png", htmlFile)
+png(scatterPlotv)
 
 #STB July2013
 plotFilepdfv <- sub(".html", "scatterPlotv.pdf", htmlFile)
@@ -323,7 +331,7 @@ if (pdfout=="Y") {
 # Cluster analysis
 #===================================================================================================================
 #===================================================================================================================
-if (analysisType == "Cluster" )
+if (analysisType == "ClusterAnalysis" )
 {
 
 #===================================================================================================================
@@ -410,8 +418,8 @@ if (contPred_ != "NULL") {
 #===================================================================================================================
 HTML.title("Dendogram of clusters", HR=2, align="left")
 
-ncscatterplot4 <- sub(".html", "ncscatterplot4.jpg", htmlFile)
-jpeg(ncscatterplot4,width = jpegwidth, height = jpegheight, quality = 100)
+ncscatterplot4 <- sub(".html", "ncscatterplot4.png", htmlFile)
+png(ncscatterplot4,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 #STB July2013
 plotFilepdf4 <- sub(".html", "ncscatterplot4.pdf", htmlFile)
@@ -444,8 +452,8 @@ if (pdfout=="Y")
 #===================================================================================================================
 HTML.title("Within group sum of squares for different numbers of clusters", HR=2, align="left")
 
-scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-jpeg(scatterPlot)
+scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+png(scatterPlot)
 
 #STB July2013
 plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -504,8 +512,8 @@ plut.km <- kmeans(Responses_IVS_ , no_clust, nstart=10)
 stdata <- data.frame(Responses_IVS_ , catfact=plut.km$cluster)
 
 #GGPLOT matrix plot
-scatterPlot2 <- sub(".html", "scatterPlot2.jpg", htmlFile)
-jpeg(scatterPlot2)
+scatterPlot2 <- sub(".html", "scatterPlot2.png", htmlFile)
+png(scatterPlot2)
 
 #STB July2013
 plotFilepdf2 <- sub(".html", "scatterPlot2.pdf", htmlFile)
@@ -616,8 +624,8 @@ HTML.title(title, HR=2, align="left")
 for (d in 1:resplength) {
 	for (f in 1:resplength) {
 		if ( d != f) {
-			ncscatterplot3 <- sub(".html", paste(d,f,"ncscatterplot3.jpg",sep=""), htmlFile)
-			jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+			ncscatterplot3 <- sub(".html", paste(d,f,"ncscatterplot3.png",sep=""), htmlFile)
+			png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 			#STB July2013
 			plotFilepdf3 <- sub(".html", paste(d,f,"ncscatterplot3.pdf",sep=""), htmlFile)
@@ -693,11 +701,17 @@ for (d in 1:resplength) {
 }
 
 #=================================================================================================================
+
+
+
+
+
+
 #=================================================================================================================
 #Linear Disriminant Analysis
 #=================================================================================================================
 #=================================================================================================================
-if (analysisType == "LDA" )
+if (analysisType == "LinearDiscriminantAnalysis" )
 {
 
 #===================================================================================================================
@@ -705,7 +719,7 @@ if (analysisType == "LDA" )
 #STB May 2012 correcting capitals
 Title <-paste(branding, " Linear Discriminant Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
-HTML.title(""Warning", this module is under development, care should be taken with the results.", HR=0, align="left")
+HTML.title("Warning, this module is under development, care should be taken with the results.", HR=0, align="left")
 
 #Description
 HTML.title("Description", HR=2, align="left")
@@ -736,7 +750,10 @@ HTML.title("Summary results", HR=2, align="left")
 
 #Group means
 tone<-data.frame(lda_anal[3])
-colnames(tone)<-c(resplist)
+tonenames<- rownames(tone)
+tone <- cbind(tonenames, tone)
+tempps <- paste(catPred_, " levels", sep="")
+colnames(tone)<-c(tempps , resplist)
 HTML.title("Group means", HR=2, align="left")
 HTML(tone, classfirstline="second", align="left", row.names = "FALSE")
 HTML("Table of means for each response, categorised by the categorical predictor.", align="left")
@@ -744,8 +761,10 @@ HTML("Table of means for each response, categorised by the categorical predictor
 #Coefficients of linear discriminants
 ttwo<-data.frame(lda_anal[4])
 tempnames<-colnames(ttwo)
+ttwonames<-rownames(ttwo)
+ttwo <- cbind(ttwonames, ttwo)
 tempnames<-gsub("scaling."," ", tempnames,fixed=TRUE)
-colnames(ttwo)<-tempnames
+colnames(ttwo)<-c("Response", tempnames)
 
 HTML.title("Coefficients of the linear discriminant functions (LD)", HR=2, align="left")
 HTML(ttwo, classfirstline="second", align="left" , row.names = "FALSE")
@@ -768,12 +787,17 @@ tthree<-cbind(CaseIDs_IVS_,predy)
 if (dim(ttwo)[2] == 1) { 
 	tthree<-tthree[,c("LD1")]
 	tthree2<-cbind(Responses_IVS_ , Treatments_IVS_ , CaseIDs_IVS_,tthree)
-	colnames(tthree2)<- c(resplist, "Treatment", "Case ID", "LD1")
+	tthree2cols<- c(resplist, "Treatment", "Case ID", "LD1")
 } else {
 	tthree<-tthree[,c("x.LD1","x.LD2")]
 	tthree2<-cbind(Responses_IVS_ , Treatments_IVS_ , CaseIDs_IVS_,tthree)
-	colnames(tthree2)<- c(resplist, "Treatment", "Case ID", "LD1", "LD2")
+	tthree2cols<- c(resplist, "Treatment", "Case ID", "LD1", "LD2")
 }
+
+tthree2names <- rownames(tthree2)
+tthree2 <- cbind (tthree2names, tthree2)
+colnames(tthree2) <- c("Obs ID", tthree2cols)
+
 HTML(tthree2, classfirstline="second", align="left", row.names = "FALSE")
 HTML("This table contains the linear discriminant functions along with the original responses." , align="left")
 
@@ -783,8 +807,8 @@ HTML("This table contains the linear discriminant functions along with the origi
 title <- paste("Histogram of the first linear discriminant function values, categorised by ", catPred_, sep = "")
 HTML.title(title, HR=2, align="left")
 
-ncscatterplot3 <- sub(".html", "ncscatterplot3.jpg", htmlFile)
-jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
+png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 #STB July2013
 plotFilepdf3 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
@@ -841,8 +865,8 @@ if (dim(ttwo)[2] != 1) {
 	title <- paste("Histogram of the second linear discriminant function values, categorised by ", catPred_, sep = "")
 	HTML.title(title, HR=2, align="left")
 
-	ncscatterplot3b <- sub(".html", "ncscatterplot3b.jpg", htmlFile)
-	jpeg(ncscatterplot3b,width = jpegwidth, height = jpegheight, quality = 100)
+	ncscatterplot3b <- sub(".html", "ncscatterplot3b.png", htmlFile)
+	png(ncscatterplot3b,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf3b <- sub(".html", "ncscatterplot3b.pdf", htmlFile)
@@ -897,8 +921,8 @@ if (dim(ttwo)[2] != 1) {
 	title <-paste("Plot of the first two linear discriminant functions, categorised by the ", catPred_ , " variable and labelled by the ", caseid_IVS_name , " variable", sep = "")
 	HTML.title(title, HR=2, align="left")
 
-	scatterPlotv <- sub(".html", "scatterPlotv.jpg", htmlFile)
-	jpeg(scatterPlotv)
+	scatterPlotv <- sub(".html", "scatterPlotv.png", htmlFile)
+	png(scatterPlotv)
 
 	#STB July2013
 	plotFilepdfv <- sub(".html", "scatterPlotv.pdf", htmlFile)	
@@ -940,8 +964,15 @@ if (dim(ttwo)[2] != 1) {
 #Confusion matrix of correct and incorrect classification
 #===================================================================================================================
 HTML.title("Confusion matrix of classifications", HR=2, align="left")
+
 confuzion<- table(predict(lda_anal, type="class")$class, statdata$catPred_)
-colnames(confuzion)<- rownames(confuzion)
+confuziontemp <- rownames(confuzion)
+confuzion <- cbind(confuziontemp, confuzion)
+tempps <- paste(catPred_, " levels", sep="")
+confuzion <- data.frame(confuzion)
+colnames(confuzion) <- c(tempps , confuziontemp)
+
+
 HTML(confuzion, classfirstline="second", align="left", row.names = "FALSE")
 HTML("This table summarises the classification of the individual cases, based on the linear discriminant function values." , align="left")
 
@@ -968,7 +999,7 @@ HTML("This table summarises the cases that are classified correctly, based on th
 #Partial Least Squares
 #===================================================================================================================
 #===================================================================================================================
-if (analysisType == "PLS" )
+if (analysisType == "PartialLeastSquares" )
 {
 usercomp <- as.numeric(noOfComponents)
 
@@ -1128,8 +1159,8 @@ grlegend<-"none"
 
 #===================================================================================================================
 #plotting the final table
-ncscatterplot3q <- sub(".html", "ncscatterplot3q.jpg", htmlFile)
-jpeg(ncscatterplot3q,width = jpegwidth, height = jpegheight, quality = 100)
+ncscatterplot3q <- sub(".html", "ncscatterplot3q.png", htmlFile)
+png(ncscatterplot3q,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 #STB July2013
 plotFilepdf3q <- sub(".html", "ncscatterplot3q.pdf", htmlFile)
@@ -1207,8 +1238,8 @@ if (noOfComponents == 0) {
 		tableScores<-data.frame(tableScores)
 
 		#plotting the final table
-		scatterPlotx <- sub(".html", "scatterPlotx.jpg", htmlFile)
-		jpeg(scatterPlotx,width = jpegwidth, height = jpegheight, quality = 100)
+		scatterPlotx <- sub(".html", "scatterPlotx.png", htmlFile)
+		png(scatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		plotFilepdf2 <- sub(".html", "scatterPlotx.pdf", htmlFile)
 		dev.control("enable") 
@@ -1284,10 +1315,8 @@ if (noOfComponents == 0) {
 	expvar$explvar.PLSmodel. = expvar$explvar.PLSmodel. / 100
 	expvar$explvar.PLSmodel.<- format(round(expvar$explvar.PLSmodel.,2),nsmall=2)
 
-	iden<-c(" ")
-	expvar<- rbind(iden,expvar)
-	colnames(expvar)<- c("Variance proportion")
-	rownames(expvar)<- c("Component", 1:as.numeric(usercomp))
+	expvar <- cbind((1:as.numeric(usercomp)), expvar)
+	colnames(expvar)<- c("Component", "Variance proportion")
 
 	HTML.title("Proportion of the variability explained by the components", HR=2, align="left")
 	HTML(expvar, classfirstline="second", align="left", row.names = "FALSE")
@@ -1325,8 +1354,8 @@ if (noOfComponents == 0) {
 		HTML.title("Plot of the loadings for each continuous predictor", HR=2, align="left")
 
 		#plotting the final table
-		ncscatterplot3qq <- sub(".html", "ncscatterplot3qq.jpg", htmlFile)
-		jpeg(ncscatterplot3qq,width = jpegwidth, height = jpegheight, quality = 100)
+		ncscatterplot3qq <- sub(".html", "ncscatterplot3qq.png", htmlFile)
+		png(ncscatterplot3qq,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf3qq <- sub(".html", "ncscatterplot3qq.pdf", htmlFile)
@@ -1375,12 +1404,12 @@ HTML.title("R references", HR=2, align="left")
 HTML(Ref_list$R_ref ,  align="left")
 HTML(Ref_list$R2HTML_ref,  align="left")
 
-if (analysisType == "Cluster" ) {
+if (analysisType == "ClusterAnalysis" ) {
 	HTML(Ref_list$cluster_ref,  align="left")
 	HTML(Ref_list$ggdendro_ref,  align="left")
 }
 
-if (analysisType == "PLS" ) {
+if (analysisType == "PartialLeastSquares" ) {
 	HTML(Ref_list$mixOmics_ref, align="left")
 }
 
@@ -1439,15 +1468,15 @@ if (caseid_IVS_ != "NULL") {
 
 HTML(paste("Analysis performed: ", analysisType, sep=""), align="left")
 
-if (noOfClusters != "NULL" && analysisType == "Cluster") {
+if (noOfClusters != "NULL" && analysisType == "ClusterAnalysis") {
 	HTML(paste("Number of clusters: ", noOfClusters, sep=""), align="left")
 }
 
-if (distanceMethod != "NULL" && analysisType == "Cluster") {
+if (distanceMethod != "NULL" && analysisType == "ClusterAnalysis") {
 	HTML(paste("Distance method: ", distanceMethod, sep=""), align="left")
 }
 
-if (agglomerationMethod != "NULL" && analysisType == "Cluster") {
+if (agglomerationMethod != "NULL" && analysisType == "ClusterAnalysis") {
 	HTML(paste("Agglomeration method: ", agglomerationMethod, sep=""), align="left")
 }
 
@@ -1455,15 +1484,15 @@ if (plotLabels != "NULL") {
 	HTML(paste("Plot labels variable: ", plotLabels, sep=""), align="left")
 }
 
-if (noOfComponents != "NULL" && analysisType == "PLS") {
+if (noOfComponents != "NULL" && analysisType == "PartialLeastSquares") {
 	HTML(paste("Number of components: ", noOfComponents, sep=""), align="left")
 }
 
-if (PCA_center != "NULL" && analysisType == "PCA") {
+if (PCA_center != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
 	HTML(paste("Response centering transformation: ", PCA_center, sep=""), align="left")
 }
 
-if (PCA_scale != "NULL" && analysisType == "PCA") {
+if (PCA_scale != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
 	HTML(paste("Response scale transformation: ", PCA_scale, sep=""), align="left")
 }
 

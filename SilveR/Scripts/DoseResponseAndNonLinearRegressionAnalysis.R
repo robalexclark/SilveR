@@ -229,8 +229,8 @@ if (DoseResponseType == "Equation") {
 	statdata$respzzzz = eval(parse(text = paste("statdata$", EquationResponse )))
 	HTML.title("Scatterplot of raw data including the predicted fit", HR=2, align="left")
 
-	scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-	jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -492,8 +492,8 @@ if (DoseResponseType == "FourParameter") {
 #===================================================================================================================
 	HTML.title("Scatterplot of raw data including the predicted fit", HR=2, align="left")
 
-	scatterPlot <- sub(".html", "scatterPlot.jpg", htmlFile)
-	jpeg(scatterPlot,width = jpegwidth, height = jpegheight, quality = 100)
+	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -834,8 +834,8 @@ if (DoseResponseType == "FourParameter") {
 		newnames<-c(colnames(alldata),index)
 		colnames(catplotdata)<-newnames
 
-		ncscatterplot3 <- sub(".html", "ncscatterplot3.jpg", htmlFile)
-		jpeg(ncscatterplot3,width = jpegwidth, height = jpegheight, quality = 100)
+		ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
+		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 		#STB July2013
 		plotFilepdf3 <- sub(".html", "ncscatterplot3.pdf", htmlFile)

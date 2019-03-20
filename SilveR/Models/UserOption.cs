@@ -53,6 +53,8 @@ namespace SilveR.Models
 
         public bool GeometryDisplay { get; set; } = false;
 
+        public bool DisplayModelCoefficients { get; set; } = false;
+
         public bool CovariateRegressionCoefficients { get; set; } = false;
 
         public bool AssessCovariateInteractions { get; set; } = false;
@@ -80,8 +82,8 @@ namespace SilveR.Models
         public int LineSize { get; set; } = 1;
         public int LegendTextSize { get; set; } = 15;
 
-        public int JpegWidth { get; set; } = 480;
-        public int JpegHeight { get; set; } = 480;
+        public int JpegWidth { get; set; } = 6;
+        public int JpegHeight { get; set; } = 6;
         public double GraphicsBWLow { get; set; } = 0.1;
         public double GraphicsBWHigh { get; set; } = 0.8;
         public double GraphicsWidthJitter { get; set; } = 0.1;
@@ -108,6 +110,7 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.OutputData) + " " + (this.OutputData ? "Y" : "N"));
             optionLines.Add(nameof(this.OutputPlotsInBW) + " " + (this.OutputPlotsInBW ? "Y" : "N"));
             optionLines.Add(nameof(this.GeometryDisplay) + " " + (this.GeometryDisplay ? "Y" : "N"));
+            optionLines.Add(nameof(this.DisplayModelCoefficients) + " " + (this.DisplayModelCoefficients ? "Y" : "N"));
             optionLines.Add(nameof(this.CovariateRegressionCoefficients) + " " + (this.CovariateRegressionCoefficients ? "Y" : "N"));
             optionLines.Add(nameof(this.AssessCovariateInteractions) + " " + (this.AssessCovariateInteractions ? "Y" : "N"));
             optionLines.Add(nameof(this.DisplayLSMeansLines) + " " + (this.DisplayLSMeansLines ? "Y" : "N"));

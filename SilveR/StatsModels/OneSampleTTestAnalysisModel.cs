@@ -12,7 +12,7 @@ namespace SilveR.StatsModels
 {
     public class OneSampleTTestAnalysisModel : AnalysisDataModelBase
     {
-        [HasAtLeastOneEntry]
+        [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Responses")]
         public IEnumerable<string> Responses { get; set; }

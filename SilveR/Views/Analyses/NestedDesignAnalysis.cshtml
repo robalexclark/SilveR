@@ -19,45 +19,45 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/NestedDesignAnalysis" class="form-horizontal" method="post">
+<form action="/Analyses/NestedDesignAnalysis" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <input asp-for="DatasetID" hidden />
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Input Options</div>
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
                     <h4>Response</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Response" />
                             <div><span asp-validation-for="Response"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="ResponseTransformation" />
                             <div><span asp-validation-for="ResponseTransformation"></span></div>
                         </div>
                     </div>
                     <br />
                     <h4>Treatments</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Treatment factors</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Treatment factors</label>
+                        <div class="col-md-6">
                             <select class="form-control" asp-for="Treatments"></select>
                             <div><span asp-validation-for="Treatments"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Other design (block) factors</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Other design (block) factors</label>
+                        <div class="col-md-6">
                             <select class="form-control" asp-for="OtherDesignFactors"></select>
                             <div><span asp-validation-for="OtherDesignFactors"></span></div>
                         </div>
@@ -65,46 +65,46 @@
                     <br />
 
                     <h4>Random factors</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random factor 1</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 1</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="RandomFactor1" />
                             <div><span asp-validation-for="RandomFactor1"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random factor 2</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 2</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="RandomFactor2" />
                             <div><span asp-validation-for="RandomFactor2"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random factor 3</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 3</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="RandomFactor3" />
                             <div><span asp-validation-for="RandomFactor3"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random factor 4</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 4</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="RandomFactor4" />
                             <div><span asp-validation-for="RandomFactor4"></span></div>
                         </div>
                     </div>
 
                     <h4>Covariates</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Covariates</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Covariates</label>
+                        <div class="col-md-6">
                             <select class="form-control" asp-for="Covariates"></select>
                             <div><span asp-validation-for="Covariates"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Covariate transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Covariate transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="CovariateTransformation" />
                             <div><span asp-validation-for="CovariateTransformation"></span></div>
                         </div>
@@ -113,15 +113,15 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Output Options</div>
-                <div class="panel-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
                     <h4>Overall Results</h4>
 
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Significance level</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Significance level</label>
+                        <div class="col-md-6">
                             <input asp-for="Significance" />
                             <div><span asp-validation-for="Significance"></span></div>
                         </div>
@@ -129,30 +129,30 @@
                     <br />
 
                     <h4>Design Options</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random Factor 1</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 1</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="DesignOption1" />
                             <div><span asp-validation-for="DesignOption1"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random Factor 2</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 2</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="DesignOption2" />
                             <div><span asp-validation-for="DesignOption2"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random Factor 3</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 3</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="DesignOption3" />
                             <div><span asp-validation-for="DesignOption3"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Random Factor 4</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Random factor 4</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="DesignOption4" />
                             <div><span asp-validation-for="DesignOption4"></span></div>
                         </div>
@@ -162,9 +162,9 @@
         </div>
     </div>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </div>
 </form>

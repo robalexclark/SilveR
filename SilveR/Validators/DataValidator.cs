@@ -41,11 +41,6 @@ namespace SilveR.Validators
             return dataTable.GetLevels(column).Count();
         }
 
-        //protected IEnumerable<string> GetValues(string column)
-        //{
-        //    return dataTable.GetValues(column);
-        //}
-
         protected int CountResponses(string column)
         {
             return dataTable.GetValues(column).Count();
@@ -201,21 +196,34 @@ namespace SilveR.Validators
         {
             if (String.IsNullOrEmpty(response) || String.IsNullOrEmpty(factor)) return true;
 
+            bool hasWarning = false;
+            bool hasError = false;
+
             foreach (DataRow row in DataTable.Rows)
             {
                 //Check that there are treatment levels for where there are response data
                 if (!String.IsNullOrEmpty(row[response].ToString()) && String.IsNullOrEmpty(row[factor].ToString()))
                 {
-                    validationInfo.AddErrorMessage("The " + displayName + " selected contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
-                    return false;
+                    hasError = true;
+                    break;
                 }
 
                 //check that the response contains data for each treatment (not fatal)
                 if (String.IsNullOrEmpty(row[response].ToString()) && !String.IsNullOrEmpty(row[factor].ToString()))
                 {
-                    string message = "The response selected (" + response + ") contains missing data.";
-                    validationInfo.AddWarningMessage(message);
+                    hasWarning = true;
                 }
+            }
+
+            if (hasError)
+            {
+                validationInfo.AddErrorMessage("The " + displayName + " selected contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
+                return false;
+            }
+            else if (hasWarning)
+            {
+                string message = "The response selected (" + response + ") contains missing data.";
+                validationInfo.AddWarningMessage(message);
             }
 
             return true;

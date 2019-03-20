@@ -17,7 +17,7 @@ namespace SilveR.StatsModels
         [DisplayName("Response")]
         public string Response { get; set; }
 
-        [HasAtLeastOneEntry]
+        [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Treatments")]
         public IEnumerable<string> Treatments { get; set; }

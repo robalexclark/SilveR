@@ -8,7 +8,6 @@ using Xunit;
 
 namespace Silver.UnitTests.Helpers
 {
-    
     public class ArgumentHelperTests
     {
         [Fact]
@@ -144,6 +143,19 @@ namespace Silver.UnitTests.Helpers
         }
 
         [Fact]
+        public void LoadIntArgument_ReturnsCorrectInt()
+        {
+            //Arrange
+            ArgumentHelper sut = new ArgumentHelper(GetArguments());
+
+            //Act
+            decimal result = sut.LoadIntArgument("Slope2");
+
+            //Assert
+            Assert.Equal(3, result);
+        }
+
+        [Fact]
         public void LoadDecimalArgument_ReturnsCorrectDecimal()
         {
             //Arrange
@@ -163,10 +175,10 @@ namespace Silver.UnitTests.Helpers
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act
-            Nullable<decimal> result = sut.LoadNullableDecimalArgument("Slope");
+            Nullable<decimal> result = sut.LoadNullableDecimalArgument("NullDecimal");
 
             //Assert
-            Assert.Equal(1.23m, result);
+            Assert.Null(result);
         }
 
         [Fact]
@@ -191,6 +203,8 @@ namespace Silver.UnitTests.Helpers
             arguments.Add(new Argument() { Name = "ANOVASelected", Value = "True" });
             arguments.Add(new Argument() { Name = "Significance", Value = "0.05" });
             arguments.Add(new Argument() { Name = "Slope", Value = "1.23" });
+            arguments.Add(new Argument() { Name = "Slope2", Value = "3" });
+            arguments.Add(new Argument() { Name = "NullDecimal" });
             arguments.Add(new Argument() { Name = "Origin" });
 
             return arguments;

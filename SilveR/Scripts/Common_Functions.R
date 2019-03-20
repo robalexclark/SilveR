@@ -1,11 +1,11 @@
-﻿ShowCoeff <- "Y"
-
-
-#Software branding
+﻿#Software branding
 branding <- "InVivoStat"
 
 #Display arguments
 Diplayargs <- "Y"
+
+#Display pdf disabled
+pdfout <- "N"
 
 #===================================================================================================================
 #Import Graphical parameters from file
@@ -24,7 +24,7 @@ suppressWarnings(library(grid))
 #===================================================================================================================
 #User option parameters
 #===================================================================================================================
-grparanum = read.table(paste(getwd(),"/UserOptions.txt", sep=""), skip = 21, sep=" ")
+grparanum = read.table(paste(getwd(),"/UserOptions.txt", sep=""), skip = 22, sep=" ")
 grparatext = read.table(paste(getwd(),"/UserOptions.txt", sep=""))
 
 #Line types used - solid, blank and dashed
@@ -61,30 +61,29 @@ grparatext = read.table(paste(getwd(),"/UserOptions.txt", sep=""))
 #Output dataset
 	showdataset <- paste(grparatext$V2[14],sep="")
 
-#pdf output
-#	pdfout<- paste(grparatext$V2[15],sep="")
-pdfout<- "N"
-
 #plot colour
 	bandw<- paste(grparatext$V2[15],sep="")
 
 #Display back-transformed geometric means
 	GeomDisplay<- paste(grparatext$V2[16],sep="")
 
+#Display model coefficients
+	ShowCoeff<- paste(grparatext$V2[17],sep="")
+
 #Display covariate regression coefficients
-	CovariateRegressionCoefficients<- paste(grparatext$V2[17],sep="")
+	CovariateRegressionCoefficients<- paste(grparatext$V2[18],sep="")
 
 #Display covariate interaction tests 
-	AssessCovariateInteractions<- paste(grparatext$V2[18],sep="")
+	AssessCovariateInteractions<- paste(grparatext$V2[19],sep="")
 
 #Disply lines on lsmeans
-	DisplayLSMeanslines <- paste(grparatext$V2[19],sep="")
+	DisplayLSMeanslines <- paste(grparatext$V2[20],sep="")
 
 #Disply lines on lsmeans
-	DisplaySEMlines <- paste(grparatext$V2[20],sep="")
+	DisplaySEMlines <- paste(grparatext$V2[21],sep="")
 
 #Disply point labels
-	scatterlabels <- paste(grparatext$V2[21],sep="")
+	scatterlabels <- paste(grparatext$V2[22],sep="")
 
 
 #Font size for the main title
@@ -1467,16 +1466,16 @@ NONCAT_SEMx <- function() {
 
 
 #Biplot
-PCbiplot <- function(PC, x = "PC1", y = "PC2") {
+PCbiplotx <- function(PC, x = "PC1", y = "PC2") {
 	#PC being a prcomp object
 	data <- data.frame(obsnames = row.names(PC$x), PC$x)
 	plot <- ggplot(data, aes_string(x = x, y = y)) +
 		theme_map +
 		mytheme +
 		theme(legend.position = Gr_legend_pos) +
-		geom_text(alpha = .7, size = 3, aes(label = obsnames)) +
-		geom_hline(aes(0), size = .2) +
-		geom_vline(aes(0), size = .2)
+		geom_hline(yintercept=0, size = 0.1, linetype="dashed") +
+		geom_vline(xintercept=0, size = 0.1, linetype="dashed") + 
+		geom_text(alpha = .7, size = 3, aes(label = obsnames)) 
 	
 	datapc <- data.frame(varnames = rownames(PC$rotation), PC$rotation)
 	mult <- min(
@@ -1489,10 +1488,10 @@ PCbiplot <- function(PC, x = "PC1", y = "PC2") {
 		v2 = .7 * mult * (get(y))
 	)
 
-	plot2 <- plot + coord_equal() +
+	plot2 <- plot + 
+		coord_equal() +
 		geom_text(data = datapc, aes(x = v1, y = v2, label = varnames), size = 5, vjust = 1, color = Gr_line) +
-		geom_segment(data = datapc, aes(x = 0, y = 0, xend = v1, yend = v2), arrow = arrow(length = unit(0.2, "cm")), color = Gr_line)
-
+		geom_segment(data = datapc, aes(x = 0, y = 0, xend = v1, yend = v2), arrow = arrow(length = unit(0.2, "cm")), color = Gr_line) 
 	suppressWarnings(print(plot2))
 }
 

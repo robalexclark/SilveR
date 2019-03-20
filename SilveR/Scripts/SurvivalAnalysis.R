@@ -155,8 +155,8 @@ if (ShowPlot == "Y") {
 	#Code to print table in the HTML output
 	HTML.title("Kaplan-Meier survival plot", HR=2, align="left")
 
-	plotx <- sub(".html", "plotx.jpg", htmlFile)
-	jpeg(plotx,width = jpegwidth, height = jpegheight, quality = 100)
+	plotx <- sub(".html", "plotx.png", htmlFile)
+	png(plotx,width = jpegwidth, height = jpegheight, units="in", res=300)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", "plotx.pdf", htmlFile)

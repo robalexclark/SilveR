@@ -19,88 +19,88 @@
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/RepeatedMeasuresParametricAnalysis" class="form-horizontal" method="post">
+<form action="/Analyses/RepeatedMeasuresParametricAnalysis" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <input asp-for="DatasetID" hidden />
 
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-md-6">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Input Options</div>
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
                     <h4>Responses</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Response" />
                             <div><span asp-validation-for="Response"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Response transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="ResponseTransformation" />
                             <div><span asp-validation-for="ResponseTransformation"></span></div>
                         </div>
                     </div>
                     <br />
                     <h4>Factors</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Treatment factors</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Treatment factors</label>
+                        <div class="col-md-6">
                             <select class="form-control" asp-for="Treatments" />
                             <div><span asp-validation-for="Treatments"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-4 control-label">Interactions</div>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <div class="col-md-6 control-label">Interactions</div>
+                        <div class="col-md-6">
                             <select id="Interactions" name="Interactions" size="4" class="form-control"></select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Repeated factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Repeated factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="RepeatedFactor" />
                             <div><span asp-validation-for="RepeatedFactor"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Subject factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Subject factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Subject" />
                             <div><span asp-validation-for="Subject"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Other design (block) factors</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Other design (block) factors</label>
+                        <div class="col-md-6">
                             <select class="form-control" asp-for="OtherDesignFactors"></select>
                             <div><span asp-validation-for="OtherDesignFactors"></span></div>
                         </div>
                     </div>
                     <br />
                     <h4>Covariate</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Covariates</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Covariates</label>
+                        <div class="col-md-6">
                             <select class="form-control" asp-for="Covariates"></select>
                             <div><span asp-validation-for="Covariates"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="PrimaryFactor">Primary factor</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label" for="PrimaryFactor">Primary factor</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="PrimaryFactor" />
                             <div><span asp-validation-for="PrimaryFactor"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="CovariateTransformation">Covariate transformation</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label" for="CovariateTransformation">Covariate transformation</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="CovariateTransformation" />
                             <div><span asp-validation-for="CovariateTransformation"></span></div>
                         </div>
@@ -108,9 +108,9 @@
                     <br />
                     <h4>Covariance Structure</h4>
 
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="Covariance">Covariance</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label" for="Covariance">Covariance</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="Covariance" />
                             <div><span asp-validation-for="Covariance"></span></div>
                         </div>
@@ -119,32 +119,32 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">Output Options</div>
-                <div class="panel-body">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
                     <h4>Overall Results</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">ANOVA table</label>
-                        <div class="col-sm-8">
-                            <input class="checkbox" asp-for="ANOVASelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">ANOVA table</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="ANOVASelected" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Predicted vs. residuals plot</label>
-                        <div class="col-sm-8">
-                            <input class="checkbox" asp-for="PRPlotSelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Predicted vs. residuals plot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="PRPlotSelected" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Normal probability plot</label>
-                        <div class="col-sm-8">
-                            <input class="checkbox" asp-for="NormalPlotSelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Normal probability plot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="NormalPlotSelected" type="checkbox" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="Significance">Significance level</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label" for="Significance">Significance level</label>
+                        <div class="col-md-6">
                             <input asp-for="Significance" />
                             <div><span asp-validation-for="Significance"></span></div>
                         </div>
@@ -152,43 +152,46 @@
                     <br />
 
                     <h4>Selected Effect Results</h4>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="SelectedEffect">Effect</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label" for="SelectedEffect">Effect</label>
+                        <div class="col-md-6">
                             <input class="form-control" asp-for="SelectedEffect" />
                             <div><span asp-validation-for="SelectedEffect"></span></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Least square (predicted) means</label>
-                        <div class="col-sm-8">
-                            <input class="checkbox" asp-for="LSMeansSelected" type="checkbox" />
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Least square (predicted) means</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="LSMeansSelected" type="checkbox" />
                         </div>
                     </div>
                     <br />
 
                     <h4>Post Hoc Tests</h4>
-                    <div class="form-group">
-                        <label class="col-sm-6 control-label">Comparison type</label>
-                        <div class="col-sm-6">
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="ComparisonType" type="radio" value="None" checked="checked" />
-                                    <label>None</label>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label">Comparison type</label>
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="ComparisonType" type="radio" class="form-check-input" value="None">None
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="ComparisonType" type="radio" value="AllComparisonsWithinSelected" />
-                                    <label>All comparisons within repeated factor levels</label>
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="ComparisonType" type="radio" class="form-check-input" value="AllComparisonsWithinSelected">All comparisons within repeated factor levels
                                 </label>
                             </div>
-                            <div class="radio">
-                                <label>
-                                    <input asp-for="ComparisonType" type="radio" value="AllPairwiseComparisons" />
-                                    <label>All pairwise comparisons</label>
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="ComparisonType" type="radio" class="form-check-input" value="AllPairwiseComparisons">All pairwise comparisons
                                 </label>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Generate comparisons dataset</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="GenerateComparisonsDataset" type="checkbox" />
                         </div>
                     </div>
                 </div>
@@ -196,9 +199,9 @@
         </div>
     </div>
 
-    <div class="row mt20">
-        <div class="col-md-12">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
         </div>
     </div>
 </form>

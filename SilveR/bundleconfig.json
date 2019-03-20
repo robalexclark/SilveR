@@ -6,6 +6,12 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/index.min.js",
+    "inputFiles": [
+      "wwwroot/js/index.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/analysis/index.min.js",
     "inputFiles": [
       "wwwroot/js/analysis/index.js"
@@ -159,6 +165,12 @@
     "outputFileName": "wwwroot/js/stats/doseResponseAndNonLinearRegesssionAnalysis.min.js",
     "inputFiles": [
       "wwwroot/js/stats/doseResponseAndNonLinearRegesssionAnalysis.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/multivariateAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/multivariateAnalysis.js"
     ]
   },
   {

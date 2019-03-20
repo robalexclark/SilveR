@@ -4,13 +4,11 @@ using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
 namespace Silver.UnitTests.StatsModels
 {
-    
     public class SingleMeasuresParametricAnalysisModelTests
     {
         [Fact]
@@ -191,6 +189,9 @@ namespace Silver.UnitTests.StatsModels
 
             var controlGroup = result.Single(x => x.Name == "ControlGroup");
             Assert.Equal("D1", controlGroup.Value);
+
+            var generateComparisonsDataset = result.Single(x => x.Name == "GenerateComparisonsDataset");
+            Assert.Equal("True", generateComparisonsDataset.Value);
         }
 
         [Fact]
@@ -216,8 +217,9 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "AllPairwise", Value = "Tukey" });
             arguments.Add(new Argument { Name = "ComparisonsBackToControl", Value = "Bonferroni" });
             arguments.Add(new Argument { Name = "ControlGroup", Value = "A" });
+            arguments.Add(new Argument { Name = "GenerateComparisonsDataset", Value = "True" });
 
-            Assert.Equal(16, arguments.Count);
+            Assert.Equal(17, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -239,6 +241,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("Tukey", sut.AllPairwise);
             Assert.Equal("Bonferroni", sut.ComparisonsBackToControl);
             Assert.Equal("A", sut.ControlGroup);
+            Assert.True(sut.GenerateComparisonsDataset);
         }
 
 
@@ -253,7 +256,7 @@ namespace Silver.UnitTests.StatsModels
 
             //Assert
 
-            Assert.Equal("Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+Treat1+Treat2+Treat1*Treat2 Respivs_sp_ivs1~scatterPlotColumn Covivs_sp_ivs1 None None Treat1 Treat1,Treat2 Block3 Y Y N 0.05 Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+mainEffect Treat1ivs_sp_ivs*ivs_sp_ivsTreat2 N Tukey Holm D1", result);
+            Assert.Equal("Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+Treat1+Treat2+Treat1*Treat2 Respivs_sp_ivs1~scatterPlotColumn Covivs_sp_ivs1 None None Treat1 Treat1,Treat2 Block3 Y Y N 0.05 Respivs_sp_ivs1~Covivs_sp_ivs1+Block3+mainEffect Treat1ivs_sp_ivs*ivs_sp_ivsTreat2 N Tukey Holm D1 Y", result);
         }
 
         private SingleMeasuresParametricAnalysisModel GetModel(IDataset dataset)
@@ -285,7 +288,8 @@ namespace Silver.UnitTests.StatsModels
                 {
                     "Treat1",
                     "Treat2"
-                }
+                },
+                GenerateComparisonsDataset = true
             };
 
             return model;
