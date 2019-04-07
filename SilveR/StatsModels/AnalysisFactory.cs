@@ -24,8 +24,11 @@ namespace SilveR.StatsModels
                 case "RepeatedMeasuresParametricAnalysis":
                     model = new RepeatedMeasuresParametricAnalysisModel(dataset);
                     break;
-                case "PValueAdjustment":
-                    model = new PValueAdjustmentModel();
+                case "PValueAdjustmentUserBasedInputs":
+                    model = new PValueAdjustmentUserBasedInputsModel();
+                    break;
+                case "PValueAdjustmentDatasetBasedInputs":
+                    model = new PValueAdjustmentDatasetBasedInputsModel(dataset);
                     break;
                 case "PairedTTestAnalysis":
                     model = new PairedTTestAnalysisModel(dataset);

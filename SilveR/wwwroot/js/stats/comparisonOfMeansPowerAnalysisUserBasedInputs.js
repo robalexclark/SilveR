@@ -22,14 +22,6 @@ $(function () {
         dataSource: theModel.significancesList
     });
 
-    //$("#PercentChange").kendoNumericTextBox({
-    //    spinners: false
-    //});
-
-    //$("#AbsoluteChange").kendoNumericTextBox({
-    //    spinners: false
-    //});
-
     $("#SampleSizeFrom").kendoNumericTextBox({
         format: '#',
         decimals: 0,

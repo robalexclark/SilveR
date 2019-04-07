@@ -222,7 +222,7 @@ namespace SilveR.Validators
             }
             else if (hasWarning)
             {
-                string message = "The response selected (" + response + ") contains missing data.";
+                string message = "The response selected (" + response + ") contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.";
                 validationInfo.AddWarningMessage(message);
             }
 

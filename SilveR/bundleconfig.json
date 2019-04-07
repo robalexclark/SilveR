@@ -108,9 +108,15 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/pValueAdjustment.min.js",
+    "outputFileName": "wwwroot/js/stats/pValueAdjustmentUserBasedInputs.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/pValueAdjustment.js"
+      "wwwroot/js/stats/pValueAdjustmentUserBasedInputs.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/pValueAdjustmentDatasetBasedInputs.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/pValueAdjustmentDatasetBasedInputs.js"
     ]
   },
   {

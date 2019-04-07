@@ -2,11 +2,11 @@
 
 namespace SilveR.Validators
 {
-    public class PValueAdjustmentValidator : ValidatorBase
+    public class PValueAdjustmentUserBasedInputsValidator : ValidatorBase
     {
-        private readonly PValueAdjustmentModel pvVariables;
+        private readonly PValueAdjustmentUserBasedInputsModel pvVariables;
 
-        public PValueAdjustmentValidator(PValueAdjustmentModel pv)
+        public PValueAdjustmentUserBasedInputsValidator(PValueAdjustmentUserBasedInputsModel pv)
         {
             pvVariables = pv;
         }

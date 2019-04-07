@@ -17,7 +17,7 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
 responses_IVS_ <- Args[4]
-transformation <- Args[5]
+responseTransform <- Args[5]
 catPred_ <- Args[6] 
 contPred_ <-Args[7]
 caseid_IVS_ <- Args[8]
@@ -46,8 +46,6 @@ htmlFile <- sub(".csv", ".html", Args[3]);
 #determine the file name of the html file
 HTMLSetFile(file = htmlFile)
 .HTML.file = htmlFile
-
-HTML(statdata, classfirstline = "second", align = "left", row.names = "TRUE")
 
 #===================================================================================================================
 #Variable set-up
@@ -106,9 +104,11 @@ if (catPred_ == "NULL") {
 
 #data management
 Responses_IVS_  <- statdata[,resplist]
+
 if (contPred_ != "NULL") {
 	TreatmentsPLS_IVS_ <- statdata[,Xlist]
 }
+
 Treatments_IVS_ <- statdata$catPred_
 CaseIDs_IVS_    <- c(statdata[,"caseid_IVS_"])
 rownames(Responses_IVS_) <- CaseIDs_IVS_
@@ -146,13 +146,15 @@ if (PCA_scale == "No_scaling") {
 Title <-paste(branding, " Multivariate Principal Components Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
-#Sub-title heading
-HTML.title("Warning", HR=2, align="left")
-HTML("This module is under development, care should be taken with the results.", align="left")
-
 #Description
 HTML.title("Description", HR=2, align="left")
-description <- paste("The following responses are included in the PCA analysis: ", responses_IVS_, ". The responses ", PCA_c_text, " and ", PCA_s_text , ". ", sep = "")
+description <- paste("The following responses are included in the PCA analysis: ", responses_IVS_ , ". ", sep = "") 
+
+if (responseTransform != "None") {
+	description<-paste(description, c("The responses have been "), responseTransform, " transformed prior to analysis. ", sep="")
+}
+
+description<-paste(description, "Additionally, the responses ", PCA_c_text, " and ", PCA_s_text , ". ", sep = "")
 
 if (length(Xlist)>1 && catPred_ != "NULL") {
 	description <- paste(description, "For the PCA analysis only the first of the categorisation factors selected, namely ", Xlist[1], ", will be used within this module.", sep = "")
@@ -184,7 +186,7 @@ HTML("This table summarises the proportion of the total variance explained by ea
 
 #===================================================================================================================
 #Screeplot
-HTML.title("Plot of the standard deviation of each principal component", HR=2, align="left")
+HTML.title("Plot of the proportion of the variance for each principal component", HR=2, align="left")
 
 scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
 png(scatterPlot)
@@ -193,10 +195,10 @@ png(scatterPlot)
 plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
 dev.control("enable") 
 
-YAxisTitle<-"Standard deviation"
+YAxisTitle<-"Proportion of variance"
 XAxisTitle<-"Principal component"
 MainTitle2 <-""
-yvarrr_IVS_SEM<- test$importance[1,]
+yvarrr_IVS_SEM<- test$importance[2,]
 xvarrr_IVS_SEM<- c(1:length(yvarrr_IVS_SEM))
 for (i in 1:length(yvarrr_IVS_SEM)) {
 	xvarrr_IVS_SEM[i] <- paste("PC", xvarrr_IVS_SEM[i], sep = "")
@@ -218,7 +220,7 @@ if (pdfout=="Y") {
 	linkToPdf <- paste ("<a href=\"",pdfFile,"\">Click here to view the PDF of the plot</a>", sep = "")
 	HTML(linkToPdf)
 }
-HTML("This plot illustrates the standard deviation of each principal component. ", align="left")
+HTML("This plot illustrates the proportion of the variability explained by each principal component. ", align="left")
 
 #===================================================================================================================
 #Loading table
@@ -1450,8 +1452,8 @@ if (showdataset=="Y")
 HTML.title("Analysis options", HR=2, align="left")
 
 HTML(paste("Response variables: ", responses_IVS_, sep=""), align="left")
-if (transformation != "None") {
-	HTML(paste("Responses transformation: ", transformation, sep=""), align="left")
+if (responseTransform != "None") {
+	HTML(paste("Responses transformation: ", responseTransform, sep=""), align="left")
 }
 
 if (catPred_ != "NULL") {

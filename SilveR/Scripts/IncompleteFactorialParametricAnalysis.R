@@ -42,14 +42,14 @@ allPairwiseTest <- Args[19]
 if (Module == "SMPA") {
 	backToControlTest <- Args[20]
 	cntrlGroup <- Args[21]
+	genpvals <- Args[22]
 }
 
 if (Module == "IFPA") {
 	backToControlTest <- "NULL"
 	cntrlGroup <- "NULL"
+	genpvals <- Args[20]
 }
-
-genpvals <- Args[22]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 

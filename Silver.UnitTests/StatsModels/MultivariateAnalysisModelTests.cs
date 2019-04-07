@@ -122,9 +122,9 @@ namespace Silver.UnitTests.StatsModels
             string[] result = sut.ExportData();
 
             //Assert
-            Assert.Equal("Petalivs_sp_ivslength,Caseivs_sp_ivsID", result[0]);
+            Assert.Equal("Petalivs_sp_ivslength,Categorical,Continuous,Caseivs_sp_ivsID", result[0]);
             Assert.Equal(151, result.Count()); //as blank reponses are removed
-            Assert.StartsWith("1.5,A32", result[32]);
+            Assert.StartsWith("1.5,D,0.860808933734089,A32", result[32]);
         }
 
         [Fact]
@@ -141,10 +141,10 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("Petal length", response.Value);
 
             var treatments = result.Single(x => x.Name == "CategoricalPredictor");
-            Assert.Equal("Categorial", treatments.Value);
+            Assert.Equal("Categorical", treatments.Value);
 
             var continuousPredictors = result.Single(x => x.Name == "ContinuousPredictors");
-            Assert.Null(continuousPredictors.Value);
+            Assert.Equal("Continuous", continuousPredictors.Value);
 
             var caseID = result.Single(x => x.Name == "CaseID");
             Assert.Equal("Case ID", caseID.Value);
@@ -179,7 +179,7 @@ namespace Silver.UnitTests.StatsModels
 
             List<Argument> arguments = new List<Argument>();
             arguments.Add(new Argument { Name = "Responses", Value = "Petal length" });
-            arguments.Add(new Argument { Name = "CategoricalPredictor", Value = "Categorial" });
+            arguments.Add(new Argument { Name = "CategoricalPredictor", Value = "Categorical" });
             arguments.Add(new Argument { Name = "ContinuousPredictors", Value = "Continuous" });
             arguments.Add(new Argument { Name = "ResponseTransformation", Value = "None" });
             arguments.Add(new Argument { Name = "CaseID", Value = "Case ID" });
@@ -199,7 +199,7 @@ namespace Silver.UnitTests.StatsModels
 
             //Assert
             Assert.Equal(new List<string> { "Petal length" }, sut.Responses);
-            Assert.Equal("Categorial", sut.CategoricalPredictor);
+            Assert.Equal("Categorical", sut.CategoricalPredictor);
             Assert.Equal(new List<string> { "Continuous" }, sut.ContinuousPredictors);
             Assert.Equal("None", sut.ResponseTransformation);
             Assert.Equal("Case ID", sut.CaseID);
@@ -224,7 +224,7 @@ namespace Silver.UnitTests.StatsModels
 
             //Assert
 
-            Assert.Equal("Petalivs_sp_ivslength None Categorial NULL Caseivs_sp_ivsID PrincipalComponentsAnalysis 2 Euclidean Ward.d2 \"Case ID\" 0 Centered_at_zero Unit_variance", result);
+            Assert.Equal("Petalivs_sp_ivslength None Categorical Continuous Caseivs_sp_ivsID PrincipalComponentsAnalysis 2 Euclidean Ward.d2 \"Case ID\" 0 Centered_at_zero Unit_variance", result);
         }
 
         private MultivariateAnalysisModel GetModel(IDataset dataset)
@@ -232,7 +232,8 @@ namespace Silver.UnitTests.StatsModels
             MultivariateAnalysisModel model = new MultivariateAnalysisModel(dataset)
             {
                 Responses = new List<string> { "Petal length" },
-                CategoricalPredictor = "Categorial",
+                CategoricalPredictor = "Categorical",
+                ContinuousPredictors = new List<string>() { "Continuous" },
                 CaseID = "Case ID",
                 ResponseTransformation = "None",
                 AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis,
@@ -259,7 +260,7 @@ namespace Silver.UnitTests.StatsModels
             dt.Columns.Add("Species");
             dt.Columns.Add("Petal width (reduced)");
             dt.Columns.Add("Species (reduced)");
-            dt.Columns.Add("Categorial");
+            dt.Columns.Add("Categorical");
             dt.Columns.Add("Continuous");
             dt.Columns.Add("Case ID");
             dt.Rows.Add(new object[] { "True", "5.1", "3.5", "1.4", "0.2", "I. setosa", "", "I. setosa", "A", "0.335512636813198", "A1", });

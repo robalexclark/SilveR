@@ -35,14 +35,6 @@ $(function () {
 
     enableDisableControlLevels();
 
-    //$("#PercentChange").kendoNumericTextBox({
-    //    spinners: false
-    //});
-
-    //$("#AbsoluteChange").kendoNumericTextBox({
-    //    spinners: false
-    //});
-
     $("#SampleSizeFrom").kendoNumericTextBox({
         format: '#',
         decimals: 0,
@@ -135,7 +127,7 @@ function enableDisablePlottingRangeType() {
         powerFrom.prop("disabled", false);
         powerTo.prop("disabled", false);
         $("#PowerFrom").data("kendoNumericTextBox").value(theModel.powerFrom);
-        $("#PowerTo").data("kendoNumericTextBox").value(themodel.powerTo);
+        $("#PowerTo").data("kendoNumericTextBox").value(theModel.powerTo);
 
         sampleSizeFrom.prop("disabled", true);
         sampleSizeTo.prop("disabled", true);

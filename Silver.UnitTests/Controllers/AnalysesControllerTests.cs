@@ -195,11 +195,11 @@ namespace Silver.UnitTests.Controllers
             //Arrange
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(null);
 
-            Mock<PValueAdjustmentModel> mockModel = new Mock<PValueAdjustmentModel>();
+            Mock<PValueAdjustmentUserBasedInputsModel> mockModel = new Mock<PValueAdjustmentUserBasedInputsModel>();
             mockModel.Setup(x => x.Validate()).Returns(new ValidationInfo());
 
             //Act
-            IActionResult result = await sut.PValueAdjustment(mockModel.Object, false);
+            IActionResult result = await sut.PValueAdjustmentUserBasedInputs(mockModel.Object, false);
 
             //Assert
             RedirectToActionResult redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
@@ -596,8 +596,8 @@ namespace Silver.UnitTests.Controllers
 
             //Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
-            Assert.Equal("PValueAdjustment", viewResult.ViewName);
-            Assert.IsType<PValueAdjustmentModel>(viewResult.Model);
+            Assert.Equal("PValueAdjustmentUserBasedInputs", viewResult.ViewName);
+            Assert.IsType<PValueAdjustmentUserBasedInputsModel>(viewResult.Model);
         }
 
         [Fact]
@@ -690,7 +690,7 @@ namespace Silver.UnitTests.Controllers
         //}
 
         [Fact]
-        public  async Task ResultsForExport_ReturnsAnActionResult()
+        public async Task ResultsForExport_ReturnsAnActionResult()
         {
             //Arrange
             Analysis analysis = GetAnalyses().First();
@@ -900,8 +900,8 @@ namespace Silver.UnitTests.Controllers
                     RProcessOutput = "[1] \"--vanilla\"                                                                       \r\n [2] \"--args\"                                                                          \r\n [3] \"C:\\\\Users\\\\robal\\\\AppData\\\\Local\\\\Temp\\\\5ed8b44e-2674-4bfa-a4d7-72b892b5a97f.csv\"\r\n [4] \"FourParameter\"                                                                   \r\n [5] \"Respivs_sp_ivs1\"                                                                 \r\n [6] \"None\"                                                                            \r\n [7] \"Dose1\"                                                                           \r\n [8] \"NULL\"                                                                            \r\n [9] \"Log10\"                                                                           \r\n[10] \"NULL\"                                                                            \r\n[11] \"NULL\"                                                                            \r\n[12] \"NULL\"                                                                            \r\n[13] \"10\"                                                                              \r\n[14] \"1\"                                                                               \r\n[15] \"NULL\"                                                                            \r\n[16] \"NULL\"                                                                            \r\n[17] \"NULL\"                                                                            \r\n[18] \"NULL\"                                                                            \r\n[19] \"NULL\"                                                                            \r\n[20] \"NULL\"                                                                            \r\n[21] \"NULL\"                                                                            \r\n[22] \"NULL\"                                                                            \r\n[23] \"NULL\"                                                                            \r\n[24] \"NULL\"                                                                            \r\n[1] \"C:\\\\Users\\\\robal\\\\AppData\\\\Local\\\\Temp\\\\5ed8b44e-2674-4bfa-a4d7-72b892b5a97f.html\"\r\n\r\n\r\n\r\nAttaching package: 'reshape'\r\n\r\nThe following objects are masked from 'package:plyr':\r\n\r\n    rename, round_any\r\n\r\nError in nls(responsezzzz ~ MinCoeffp + (MaxCoeffp - MinCoeffp)/(1 + 10^((C -  : \r\n  step factor 0.000488281 reduced below 'minFactor' of 0.000976562\r\nExecution halted\r\n\r\nAnalysis by the R Processor took 7.95 seconds.",
                     Script = new SilveR.Models.Script
                     {
-                        ScriptDisplayName = "P-Value Adjustment",
-                        ScriptFileName = "PValueAdjustment",
+                        ScriptDisplayName = "P-Value Adjustment (User Based Inputs)",
+                        ScriptFileName = "PValueAdjustmentUserBasedInputs",
                         ScriptID = 9,
                         RequiresDataset = false
                     },
@@ -991,7 +991,7 @@ namespace Silver.UnitTests.Controllers
                 new Script{ ScriptFileName =  "CorrelationAnalysis",ScriptDisplayName = "CorrelationAnalysis", RequiresDataset = true },
                 new Script{ ScriptFileName =  "UnpairedTTestAnalysis" ,ScriptDisplayName = "UnpairedTTestAnalysis", RequiresDataset = true },
                 new Script{ ScriptFileName =  "PairedTTestAnalysis",ScriptDisplayName = "PairedTTestAnalysis", RequiresDataset = true },
-                new Script{ ScriptFileName =  "PValueAdjustment",ScriptDisplayName = "PValueAdjustment", RequiresDataset = false },
+                new Script{ ScriptFileName =  "PValueAdjustmentUserBasedInputs",ScriptDisplayName = "PValueAdjustmentUserBasedInputs", RequiresDataset = false },
                 new Script{ ScriptFileName =  "RepeatedMeasuresParametricAnalysis" ,ScriptDisplayName = "RepeatedMeasuresParametricAnalysis", RequiresDataset = true },
                 new Script{ ScriptFileName =  "SingleMeasuresParametricAnalysis",ScriptDisplayName = "SingleMeasuresParametricAnalysis", RequiresDataset = true },
                 new Script{ ScriptFileName =  "NestedDesignAnalysis",ScriptDisplayName = "NestedDesignAnalysis", RequiresDataset = true },

@@ -58,13 +58,21 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="SingleMeasuresParametricAnalysis">Single Measures Parametric Analysis</a></li>
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="RepeatedMeasuresParametricAnalysis">Repeated Measures Parametric Analysis</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="PValueAdjustment">P-value Adjustment</a></li>
+
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="PairedTTestAnalysis">Paired t-test Analysis & Within-Subject Analysis</a></li>
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="UnpairedTTestAnalysis">Unpaired t-test Analysis</a></li>
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="CorrelationAnalysis">Correlation Analysis</a></li>
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="LinearRegressionAnalysis">Linear Regression Analysis</a></li>
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="DoseResponseAndNonLinearRegressionAnalysis">Dose-response and Non-Linear Regression Analysis</a></li>
                                     <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="OneSampleTTestAnalysis">One-Sample t-test Analysis</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">P-value Adjustment</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="PValueAdjustmentUserBasedInputs">User Based Inputs</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Analyses" asp-action="AnalysisDataSelector" asp-route-analysisName="PValueAdjustmentDatasetBasedInputs">Dataset Based Inputs</a></li>
                                 </ul>
                             </li>
 

@@ -104,10 +104,16 @@ namespace SilveR
                     context.Scripts.Add(repeatedMeasures);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "PValueAdjustment"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "PValueAdjustmentUserBasedInputs"))
                 {
-                    Script pValueAdjustment = new Script() { ScriptDisplayName = "P-value Adjustment", ScriptFileName = "PValueAdjustment", RequiresDataset = false };
-                    context.Scripts.Add(pValueAdjustment);
+                    Script pValueAdjustmentUserBasedInputs = new Script() { ScriptDisplayName = "P-value Adjustment (User Based Inputs)", ScriptFileName = "PValueAdjustmentUserBasedInputs", RequiresDataset = false };
+                    context.Scripts.Add(pValueAdjustmentUserBasedInputs);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "PValueAdjustmentDatasetBasedInputs"))
+                {
+                    Script pValueAdjustmentUserBasedInputs = new Script() { ScriptDisplayName = "P-value Adjustment (Dataset Based Inputs)", ScriptFileName = "PValueAdjustmentDatasetBasedInputs", RequiresDataset = true };
+                    context.Scripts.Add(pValueAdjustmentUserBasedInputs);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "PairedTTestAnalysis"))

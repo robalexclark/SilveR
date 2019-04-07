@@ -95,12 +95,19 @@ namespace SilveR.Services
                         else
                         {
                             rscriptPath = "Rscript";
-                            //rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript");
                         }
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        rscriptPath = "Rscript";
+                        if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
+                        {
+                            rscriptPath = appSettings.CustomRScriptLocation;
+                        }
+                        else
+                        {
+                            rscriptPath = "/usr/local/bin/Rscript";
+                            //rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript");
+                        }
                     }
 
                     ProcessStartInfo psi = new ProcessStartInfo();
@@ -167,7 +174,7 @@ namespace SilveR.Services
                         foreach (string file in outputFiles.Where(x => !x.EndsWith(".R") && !x.EndsWith(analysis.AnalysisGuid + ".csv"))) //go through all output (except the R input file and the csv input file)
                         {
                             FileInfo fileInfo = new FileInfo(file);
-                            if (fileInfo.Extension == ".html" || fileInfo.Extension == ".jpg" || fileInfo.Extension == ".png") //main output so add to results
+                            if (fileInfo.Extension == ".html" || fileInfo.Extension == ".png" || fileInfo.Extension == ".jpg") //main output so add to results
                             {
                                 resultsFiles.Add(file);
                             }

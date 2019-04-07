@@ -1,5 +1,8 @@
 ﻿using SilveR.StatsModels;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace SilveR.Validators
 {
@@ -54,7 +57,7 @@ namespace SilveR.Validators
                 CheckTransformations(DataTable, maVariables.ResponseTransformation, response);
 
                 //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-                if (maVariables.CategoricalPredictor != null && maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.PartialLeastSquares)
+                if (maVariables.CategoricalPredictor != null && maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis)
                 {
                     //check response and cat factors contain values
                     if (!CheckFactorAndResponseNotBlank(maVariables.CategoricalPredictor, response, ReflectionExtensions.GetPropertyDisplayName<MultivariateAnalysisModel>(i => i.CategoricalPredictor)))
@@ -65,7 +68,7 @@ namespace SilveR.Validators
                 }
 
                 //Go through each continuous predictor
-                if (maVariables.ContinuousPredictors != null && maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis)
+                if (maVariables.ContinuousPredictors != null && maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.PartialLeastSquares)
                 {
                     foreach (string continuousPredictor in maVariables.ContinuousPredictors)
                     {
@@ -87,7 +90,6 @@ namespace SilveR.Validators
                 }
             }
 
-
             if (maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis)
             {
                 if (maVariables.CategoricalPredictor != null)
@@ -105,7 +107,7 @@ namespace SilveR.Validators
                 {
                     ValidationInfo.AddWarningMessage("Warning: When performing a Cluster analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
-                else if (maVariables.ContinuousPredictors != null)
+                if (maVariables.ContinuousPredictors != null)
                 {
                     ValidationInfo.AddWarningMessage("Warning: When performing a Cluster analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
@@ -116,7 +118,7 @@ namespace SilveR.Validators
                 {
                     ValidationInfo.AddErrorMessage("Warning: When performing a LDA analysis a categorical predictor is required.");
                 }
-                else if (maVariables.ContinuousPredictors != null)
+                if (maVariables.ContinuousPredictors != null)
                 {
                     ValidationInfo.AddWarningMessage("Warning: When performing a LDA analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
@@ -127,7 +129,7 @@ namespace SilveR.Validators
                 {
                     ValidationInfo.AddWarningMessage("Warning: When performing a PLS analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
-                else if (maVariables.ContinuousPredictors == null)
+                if (maVariables.ContinuousPredictors == null)
                 {
                     ValidationInfo.AddErrorMessage("Warning: When performing a LDA analysis a continuous predictor(s) is required.");
                 }

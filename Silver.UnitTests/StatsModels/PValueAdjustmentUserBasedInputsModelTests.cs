@@ -6,19 +6,19 @@ using Xunit;
 
 namespace Silver.UnitTests.StatsModels
 {
-    public class PValueAdjustmentModelTests
+    public class PValueAdjustmentUserBasedInputsModelTests
     {
         [Fact]
         public void ScriptFileName_ReturnsCorrectString()
         {
             //Arrange
-            PValueAdjustmentModel sut = new PValueAdjustmentModel();
+            PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             //Act
             string result = sut.ScriptFileName;
 
             //Assert
-            Assert.Equal("PValueAdjustment", result);
+            Assert.Equal("PValueAdjustmentUserBasedInputs", result);
         }
 
 
@@ -26,7 +26,7 @@ namespace Silver.UnitTests.StatsModels
         public void SignificancesList_ReturnsCorrectList()
         {
             //Arrange
-            PValueAdjustmentModel sut = new PValueAdjustmentModel();
+            PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             //Act
             IEnumerable<string> result = sut.SignificancesList;
@@ -40,7 +40,7 @@ namespace Silver.UnitTests.StatsModels
         public void MultipleComparisonTestsList_ReturnsCorrectList()
         {
             //Arrange
-            PValueAdjustmentModel sut = new PValueAdjustmentModel();
+            PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             //Act
             IEnumerable<string> result = sut.MultipleComparisonTests;
@@ -55,7 +55,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetArguments_ReturnsCorrectArguments()
         {
             //Arrange
-            PValueAdjustmentModel sut = GetModel();
+            PValueAdjustmentUserBasedInputsModel sut = GetModel();
 
             //Act
             List<Argument> result = sut.GetArguments().ToList();
@@ -75,7 +75,7 @@ namespace Silver.UnitTests.StatsModels
         public void LoadArguments_ReturnsCorrectArguments()
         {
             //Arrange
-            PValueAdjustmentModel sut = new PValueAdjustmentModel();
+            PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             List<Argument> arguments = new List<Argument>();
             arguments.Add(new Argument { Name = "SelectedTest", Value = "Hochberg" });
@@ -97,7 +97,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetCommandLineArguments_ReturnsCorrectString()
         {
             //Arrange
-            PValueAdjustmentModel sut = GetModel();
+            PValueAdjustmentUserBasedInputsModel sut = GetModel();
 
             //Act
             string result = sut.GetCommandLineArguments();
@@ -107,9 +107,9 @@ namespace Silver.UnitTests.StatsModels
         }
 
 
-        private PValueAdjustmentModel GetModel()
+        private PValueAdjustmentUserBasedInputsModel GetModel()
         {
-            var model = new PValueAdjustmentModel
+            var model = new PValueAdjustmentUserBasedInputsModel
             {
                 SelectedTest = "Hochberg",
                 Significance = "0.01",

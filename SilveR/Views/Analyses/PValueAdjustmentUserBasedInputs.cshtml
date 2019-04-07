@@ -1,4 +1,4 @@
-﻿@model SilveR.StatsModels.PValueAdjustmentModel
+﻿@model SilveR.StatsModels.PValueAdjustmentUserBasedInputsModel
 
 @section Scripts {
     <script>
@@ -6,20 +6,20 @@
     </script>
 
     <environment names="Development">
-        <script defer src="~/js/stats/pValueAdjustment.js"></script>
+        <script defer src="~/js/stats/pValueAdjustmentUserBasedInputs.js"></script>
     </environment>
     <environment names="Production">
-        <script defer src="~/js/stats/pValueAdjustment.min.js"></script>
+        <script defer src="~/js/stats/pValueAdjustmentUserBasedInputs.min.js"></script>
     </environment>
 }
 
 @{
-    ViewBag.Title = "P-Value Adjustment";
+    ViewBag.Title = "P-Value Adjustment (User Based Inputs)";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<form action="/Analyses/PValueAdjustment" class="form-horizontal mt-2" method="post">
+<form action="/Analyses/PValueAdjustmentUserBasedInputs" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 

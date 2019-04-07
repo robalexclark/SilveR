@@ -137,7 +137,13 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PValueAdjustment(PValueAdjustmentModel model, bool ignoreWarnings)
+        public async Task<IActionResult> PValueAdjustmentUserBasedInputs(PValueAdjustmentUserBasedInputsModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PValueAdjustmentDatasetBasedInputs(PValueAdjustmentDatasetBasedInputsModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }

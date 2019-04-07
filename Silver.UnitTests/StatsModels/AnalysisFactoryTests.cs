@@ -67,13 +67,13 @@ namespace Silver.UnitTests.StatsModels
         }
 
         [Fact]
-        public void CreateAnalysisModel_PValueAdjustment_ReturnsPValueAdjustmentModel()
+        public void CreateAnalysisModel_PValueAdjustmentUserBasedInputs_ReturnsPValueAdjustmentModel()
         {
             //Arrange, Act
-            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PValueAdjustment", GetDataset());
+            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PValueAdjustmentUserBasedInputs", GetDataset());
 
             //Assert
-            Assert.IsType<PValueAdjustmentModel>(analysisModelBase);
+            Assert.IsType<PValueAdjustmentUserBasedInputsModel>(analysisModelBase);
         }
 
         [Fact]

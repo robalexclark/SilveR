@@ -118,7 +118,7 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            PValueAdjustmentModel model = (PValueAdjustmentModel)validationContext.ObjectInstance;
+            PValueAdjustmentUserBasedInputsModel model = (PValueAdjustmentUserBasedInputsModel)validationContext.ObjectInstance;
 
             if (String.IsNullOrEmpty(model.PValues))
             {

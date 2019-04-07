@@ -111,7 +111,8 @@ namespace SilveR.StatsModels
             //Get the response, treatment and covariate columns by removing all other columns from the new datatable
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (!Responses.Contains(columnName) && (CategoricalPredictor != columnName || (CategoricalPredictor == columnName && AnalysisType != AnalysisOption.LinearDiscriminantAnalysis)) && (ContinuousPredictors == null || !ContinuousPredictors.Contains(columnName) || (ContinuousPredictors.Contains(columnName) && AnalysisType == AnalysisOption.PartialLeastSquares)) && CaseID != columnName)
+                //if (!Responses.Contains(columnName) && (CategoricalPredictor != columnName || (CategoricalPredictor == columnName && AnalysisType != AnalysisOption.LinearDiscriminantAnalysis)) && (ContinuousPredictors == null || !ContinuousPredictors.Contains(columnName) || (ContinuousPredictors.Contains(columnName) && AnalysisType == AnalysisOption.PartialLeastSquares)) && CaseID != columnName)
+                if (!Responses.Contains(columnName) && CategoricalPredictor != columnName && (ContinuousPredictors == null || !ContinuousPredictors.Contains(columnName)) && CaseID != columnName)
                 {
                     dtNew.Columns.Remove(columnName);
                 }

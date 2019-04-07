@@ -1,0 +1,61 @@
+﻿@model SilveR.StatsModels.PValueAdjustmentDatasetBasedInputsModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script defer src="~/js/stats/pValueAdjustmentDatasetBasedInputs.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/stats/pValueAdjustmentDatasetBasedInputs.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "P-Value Adjustment (Dataset Based Inputs)";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form action="/Analyses/PValueAdjustmentDatasetBasedInputs" class="form-horizontal mt-2" method="post">
+
+    @await Html.PartialAsync("AnalysisErrors")
+
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-md-6 col-form-label">Unadjusted p-Values</label>
+                <div class="col-md-6">
+                    <input class="form-control" asp-for="PValues" />
+                    <div><span asp-validation-for="PValues"></span></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-6 col-form-label">Multiple comparison adjustment</label>
+                <div class="col-md-6">
+                    <input asp-for="SelectedTest" />
+                    <div><span asp-validation-for="SelectedTest"></span></div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-6 col-form-label">Significance</label>
+                <div class="col-md-6">
+                    <input asp-for="Significance" />
+                    <div><span asp-validation-for="Significance"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
+        </div>
+    </div>
+</form>

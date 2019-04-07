@@ -5,14 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class PValueAdjustmentModel : AnalysisModelBase
+    public class PValueAdjustmentDatasetBasedInputsModel : AnalysisDataModelBase
     {
         [Required]
-        [CheckPValue]
         [DisplayName("Unadjusted p-Values")]
         public string PValues { get; set; }
 
@@ -32,13 +32,42 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
         }
 
-        public PValueAdjustmentModel() : base("PValueAdjustment") { }
+        public PValueAdjustmentDatasetBasedInputsModel() : base("PValueAdjustmentDatasetBasedInputs") { }
+
+        public PValueAdjustmentDatasetBasedInputsModel(IDataset dataset)
+            : base(dataset, "PValueAdjustmentDatasetBasedInputs") { }
 
 
         public override ValidationInfo Validate()
         {
-            PValueAdjustmentValidator pValueAdjustmentValidator = new PValueAdjustmentValidator(this);
-            return pValueAdjustmentValidator.Validate();
+            PValueAdjustmentDatasetBasedInputsValidator pValueAdjustmentDatasetBasedInputsValidator = new PValueAdjustmentDatasetBasedInputsValidator(this);
+            return pValueAdjustmentDatasetBasedInputsValidator.Validate();
+        }
+
+        public override string[] ExportData()
+        {
+            DataTable dtNew = DataTable.CopyForExport();
+
+            //Get the response and treatment columns
+            foreach (string columnName in dtNew.GetVariableNames())
+            {
+                if (PValues != columnName)
+                {
+                    dtNew.Columns.Remove(columnName);
+                }
+            }
+
+            //if the response is blank then remove that row
+            dtNew.RemoveBlankRow(PValues);
+
+            //...and export them
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
         public override void LoadArguments(IEnumerable<Argument> arguments)
@@ -63,9 +92,10 @@ namespace SilveR.StatsModels
 
         public override string GetCommandLineArguments()
         {
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + PValues.Replace(" ", "").Replace("<", "^<")); //4
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PValues, true)); //4
             arguments.Append(" " + SelectedTest); //5
             arguments.Append(" " + Significance.Replace("<", "^<")); //6
 
