@@ -384,9 +384,9 @@ namespace SilveR.Controllers
         }
 
         [HttpDelete]
-        public async Task<JsonResult> Destroy(Analysis analysis)
+        public async Task<JsonResult> Destroy(int analysisID)
         {
-            await repository.DeleteAnalysis(analysis);
+            await repository.DeleteAnalysis(analysisID);
 
             return Json(true);
         }

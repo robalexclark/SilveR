@@ -1061,7 +1061,8 @@ if (showComps == "Y") {
 	for (i in 1:100) {
 		rows<-sub("_.._"," ", rows, fixed=TRUE)
 	}
-	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+#STB2019
+#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
 
 	tabls<-cbind(rows, tabs)
 
@@ -1354,7 +1355,7 @@ if (noblockfactors > 0) {
 
 HTML(paste("Covariance structure: ", covariance, sep=""), align="left")
 HTML(paste("Display overall tests of model effects (Y/N): ", showANOVA, sep=""), align="left")
-HTML(paste("Display residuals vs predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
+HTML(paste("Display residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
 HTML(paste("Display normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
 HTML(paste("Display least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
 HTML(paste("Display all pairwise comparisons (Y/N): ", showComps, sep=""), align="left")

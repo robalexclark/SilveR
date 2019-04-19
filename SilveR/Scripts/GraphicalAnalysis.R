@@ -273,7 +273,7 @@ if(ScatterPlot == "Y" && is.numeric(graphdata$xvarrr_IVS)=="TRUE" && is.numeric(
 		tmpdata2<-subset(tmpdata, tmpdata$catfact == unique(levels(as.factor(tmpdata$catfact)))[k])
 
 			#STB Aug 2011 - removing lines with infinite slope
-			if(length(unique(tmpdata2$xvarrr_IVS)) >2 && length(unique(tmpdata2$yvarrr_IVS)) >2) {
+			if(length(unique(tmpdata2$xvarrr_IVS)) >1 && length(unique(tmpdata2$yvarrr_IVS)) >1) {
 			correlation<-cor.test(tmpdata2$yvarrr_IVS,tmpdata2$xvarrr_IVS, method="pearson")
 			pcorr<-correlation$p.value
 			rho<-correlation$estimate

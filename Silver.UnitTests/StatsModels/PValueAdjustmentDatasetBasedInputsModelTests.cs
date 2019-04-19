@@ -93,6 +93,9 @@ namespace Silver.UnitTests.StatsModels
 
             var pValues = result.Single(x => x.Name == "PValues");
             Assert.Equal("Resp1", pValues.Value);
+
+            var datasetValues = result.Single(x => x.Name == "DatasetLabels");
+            Assert.Equal("Treat1", datasetValues.Value);
         }
 
         [Fact]
@@ -105,8 +108,9 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "SelectedTest", Value = "Hochberg" });
             arguments.Add(new Argument { Name = "Significance", Value = "0.01" });
             arguments.Add(new Argument { Name = "PValues", Value = "Resp1" });
+            arguments.Add(new Argument { Name = "DatasetLabels", Value = "Treat1" });
 
-            Assert.Equal(3, arguments.Count);
+            Assert.Equal(4, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -115,6 +119,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("Hochberg", sut.SelectedTest);
             Assert.Equal("0.01", sut.Significance);
             Assert.Equal("Resp1", sut.PValues);
+            Assert.Equal("Treat1", sut.DatasetLabels);
         }
 
         [Fact]
@@ -127,7 +132,7 @@ namespace Silver.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Resp1 Hochberg 0.01", result);
+            Assert.Equal("Resp1 Treat1 Hochberg 0.01", result);
         }
 
 
@@ -137,7 +142,8 @@ namespace Silver.UnitTests.StatsModels
             {
                 SelectedTest = "Hochberg",
                 Significance = "0.01",
-                PValues = "Resp1"
+                PValues = "Resp1",
+                DatasetLabels = "Treat1"
             };
 
             return model;

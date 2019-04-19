@@ -96,16 +96,16 @@ function analysisTypeChanged(analysisRadioButton) {
         $("#ResponseScale").data("kendoDropDownList").enable(false);
 
         $("#NoOfComponents").data("kendoNumericTextBox").enable(false);
-
-    } else if (analysisRadioButton == "PartialLeastSquares" || analysisRadioButton.value == "PartialLeastSquares") {
-        $("#NoOfClusters").data("kendoNumericTextBox").enable(false);
-        $("#DistanceMethod").data("kendoDropDownList").enable(false);
-        $("#AgglomerationMethod").data("kendoDropDownList").enable(false);
-        $("#PlotLabel").data("kendoDropDownList").enable(false);
-
-        $("#ResponseCentring").data("kendoDropDownList").enable(false);
-        $("#ResponseScale").data("kendoDropDownList").enable(false);
-
-        $("#NoOfComponents").data("kendoNumericTextBox").enable(true);
     }
+    //} else if (analysisRadioButton == "PartialLeastSquares" || analysisRadioButton.value == "PartialLeastSquares") {
+    //    $("#NoOfClusters").data("kendoNumericTextBox").enable(false);
+    //    $("#DistanceMethod").data("kendoDropDownList").enable(false);
+    //    $("#AgglomerationMethod").data("kendoDropDownList").enable(false);
+    //    $("#PlotLabel").data("kendoDropDownList").enable(false);
+
+    //    $("#ResponseCentring").data("kendoDropDownList").enable(false);
+    //    $("#ResponseScale").data("kendoDropDownList").enable(false);
+
+    //    $("#NoOfComponents").data("kendoNumericTextBox").enable(true);
+    //}
 }

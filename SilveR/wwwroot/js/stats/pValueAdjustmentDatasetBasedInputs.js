@@ -5,6 +5,10 @@ $(function () {
         dataSource: theModel.availableVariablesAllowNull
     });
 
+    $("#DatasetLabels").kendoDropDownList({
+        dataSource: theModel.availableVariablesAllowNull
+    });
+
     $("#SelectedTest").kendoDropDownList({
         dataSource: theModel.multipleComparisonTests
     });

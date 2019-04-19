@@ -296,11 +296,11 @@ namespace Silver.UnitTests.Models
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
             Analysis analysis = await sut.GetAnalysis(testGuid);
-            await sut.DeleteAnalysis(analysis);
-            sut.Dispose();
+            await sut.DeleteAnalysis(analysis.AnalysisID);
+            //sut.Dispose();
 
             //Assert
-            //var ds = await sut.GetAnalysis("572f830a-fcb6-4137-885c-a3e7278e642c");
+            //var ds = await sut.GetAnalysis(analysis.AnalysisGuid);
             //Assert.Null(ds);
         }
 

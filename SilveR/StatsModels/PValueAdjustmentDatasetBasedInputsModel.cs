@@ -1,7 +1,6 @@
 ﻿using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -15,6 +14,9 @@ namespace SilveR.StatsModels
         [Required]
         [DisplayName("Unadjusted p-Values")]
         public string PValues { get; set; }
+
+        [DisplayName("Dataset labels")]
+        public string DatasetLabels { get; set; }
 
         [DisplayName("Multiple comparison adjustment")]
         public string SelectedTest { get; set; }
@@ -51,7 +53,7 @@ namespace SilveR.StatsModels
             //Get the response and treatment columns
             foreach (string columnName in dtNew.GetVariableNames())
             {
-                if (PValues != columnName)
+                if (PValues != columnName && DatasetLabels != columnName)
                 {
                     dtNew.Columns.Remove(columnName);
                 }
@@ -75,6 +77,7 @@ namespace SilveR.StatsModels
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
             this.PValues = argHelper.LoadStringArgument(nameof(PValues));
+            this.DatasetLabels = argHelper.LoadStringArgument(nameof(DatasetLabels));
             this.SelectedTest = argHelper.LoadStringArgument(nameof(SelectedTest));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
         }
@@ -84,6 +87,7 @@ namespace SilveR.StatsModels
             List<Argument> args = new List<Argument>();
 
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PValues), PValues));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(DatasetLabels), DatasetLabels));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedTest), SelectedTest));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
 
@@ -96,8 +100,9 @@ namespace SilveR.StatsModels
             StringBuilder arguments = new StringBuilder();
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(PValues, true)); //4
-            arguments.Append(" " + SelectedTest); //5
-            arguments.Append(" " + Significance.Replace("<", "^<")); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DatasetLabels, true)); //5
+            arguments.Append(" " + SelectedTest); //6
+            arguments.Append(" " + Significance.Replace("<", "^<")); //7
 
             return arguments.ToString().Trim();
         }

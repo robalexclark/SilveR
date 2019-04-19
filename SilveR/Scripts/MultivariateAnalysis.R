@@ -6,7 +6,7 @@ suppressWarnings(library(R2HTML))
 suppressWarnings(library(cluster))
 suppressWarnings(library(ggdendro))
 suppressWarnings(library(mixOmics))
-suppressWarnings(library(pls))
+#suppressWarnings(library(pls))
 
 #===================================================================================================================
 # retrieve args
@@ -390,7 +390,7 @@ if (plotLabels == "Categorial Predictor") {
 #STB May 2012 correcting capitals
 Title <-paste(branding, " Multivariate Cluster Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
-HTML("Warning, this module is under development, care should be taken with the results.", align="left")
+HTML("Warning, as the results of this analysis have not been independently verified, care should be taken with the results.", align="left")
 
 #Description
 HTML.title("Description", HR=2, align="left")
@@ -721,7 +721,6 @@ if (analysisType == "LinearDiscriminantAnalysis" )
 #STB May 2012 correcting capitals
 Title <-paste(branding, " Linear Discriminant Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
-HTML.title("Warning, this module is under development, care should be taken with the results.", HR=0, align="left")
 
 #Description
 HTML.title("Description", HR=2, align="left")
@@ -748,17 +747,16 @@ lda_anal<-lda(x=Responses_IVS_ , grouping=Treatments_IVS_ )
 #===================================================================================================================
 #Summary results
 #===================================================================================================================
-HTML.title("Summary results", HR=2, align="left")
+HTML.title("Group means", HR=2, align="left")
 
-#Group means
 tone<-data.frame(lda_anal[3])
 tonenames<- rownames(tone)
 tone <- cbind(tonenames, tone)
 tempps <- paste(catPred_, " levels", sep="")
 colnames(tone)<-c(tempps , resplist)
-HTML.title("Group means", HR=2, align="left")
+
 HTML(tone, classfirstline="second", align="left", row.names = "FALSE")
-HTML("Table of means for each response, categorised by the categorical predictor.", align="left")
+HTML("This table contains the means for each response, categorised by the categorical predictor.", align="left")
 
 #Coefficients of linear discriminants
 ttwo<-data.frame(lda_anal[4])
@@ -775,7 +773,7 @@ HTML("This table contains the coefficients that are used to calculate the linear
 #===================================================================================================================
 #Values of the first discriminant function
 #===================================================================================================================
-if (dim(ttwo)[2] == 1) {
+if (dim(ttwo)[2] == 2) {
 	title<-c("Values of the linear discriminant function")
 } else {
 	title<-c("Values of the first two linear discriminant functions (LD1 and LD2)")
@@ -783,22 +781,16 @@ if (dim(ttwo)[2] == 1) {
 HTML.title(title, HR=2, align="left")
 
 predy<- data.frame(predict(lda_anal, newdata=Responses_IVS_))
-tthree<-cbind(Responses_IVS_ , Treatments_IVS_ , CaseIDs_IVS_,predy)
-tthree<-cbind(CaseIDs_IVS_,predy)
 
-if (dim(ttwo)[2] == 1) { 
-	tthree<-tthree[,c("LD1")]
-	tthree2<-cbind(Responses_IVS_ , Treatments_IVS_ , CaseIDs_IVS_,tthree)
-	tthree2cols<- c(resplist, "Treatment", "Case ID", "LD1")
+if (dim(ttwo)[2] == 2) { 
+	tthree<-predy[,c("LD1")]
+	tthree2<-cbind(data.frame(statdata$caseid_IVS_ , Responses_IVS_ , Treatments_IVS_ , tthree))
+	colnames(tthree2)<- c("Case ID", resplist, "Categorical factor",  "LD1")
 } else {
-	tthree<-tthree[,c("x.LD1","x.LD2")]
-	tthree2<-cbind(Responses_IVS_ , Treatments_IVS_ , CaseIDs_IVS_,tthree)
-	tthree2cols<- c(resplist, "Treatment", "Case ID", "LD1", "LD2")
+	tthree<-predy[,c("x.LD1","x.LD2")]
+	tthree2<-cbind(data.frame(statdata$caseid_IVS_ , Responses_IVS_ , Treatments_IVS_ , tthree))
+	colnames(tthree2)<- c("Case ID", resplist, "Categorical factor",  "LD1", "LD2")
 }
-
-tthree2names <- rownames(tthree2)
-tthree2 <- cbind (tthree2names, tthree2)
-colnames(tthree2) <- c("Obs ID", tthree2cols)
 
 HTML(tthree2, classfirstline="second", align="left", row.names = "FALSE")
 HTML("This table contains the linear discriminant functions along with the original responses." , align="left")
@@ -821,7 +813,7 @@ predy<- predict(lda_anal, newdata=Responses_IVS_)
 graphdata<-data.frame(predy$x)
 graphdata$yvarrr_IVS <- graphdata$LD1
 graphdata$firstcatvarrr_IVS <-Treatments_IVS_
-graphdata$secondcatvarrr_IVS <-c("First linear discriminant function’s values")
+graphdata$secondcatvarrr_IVS <-c("First linear discriminant function values")
 
 #Creating normal distribution grid
 graphdatazzz<-graphdata
@@ -863,7 +855,7 @@ if (pdfout=="Y") {
 #===================================================================================================================
 #Histogram of second discriminant functions
 #===================================================================================================================
-if (dim(ttwo)[2] != 1) {
+if (dim(ttwo)[2] > 2) {
 	title <- paste("Histogram of the second linear discriminant function values, categorised by ", catPred_, sep = "")
 	HTML.title(title, HR=2, align="left")
 
@@ -878,7 +870,7 @@ if (dim(ttwo)[2] != 1) {
 	graphdata<-data.frame(predy$x)
 	graphdata$yvarrr_IVS <- graphdata$LD2
 	graphdata$firstcatvarrr_IVS <-Treatments_IVS_
-	graphdata$secondcatvarrr_IVS <-c("Second linear discriminant function’s values")
+	graphdata$secondcatvarrr_IVS <-c("Second linear discriminant function values")
 
 	#Creating normal distribution grid
 	graphdatazzz<-graphdata
@@ -919,7 +911,7 @@ if (dim(ttwo)[2] != 1) {
 }
 
 #===================================================================================================================
-if (dim(ttwo)[2] != 1) {
+if (dim(ttwo)[2] >2 ) {
 	title <-paste("Plot of the first two linear discriminant functions, categorised by the ", catPred_ , " variable and labelled by the ", caseid_IVS_name , " variable", sep = "")
 	HTML.title(title, HR=2, align="left")
 
@@ -979,14 +971,14 @@ HTML(confuzion, classfirstline="second", align="left", row.names = "FALSE")
 HTML("This table summarises the classification of the individual cases, based on the linear discriminant function values." , align="left")
 
 HTML.title("Table of mis-classified cases ", HR=2, align="left")
-tempmm<- data.frame(cbind (statdata$caseid_IVS_, predict(lda_anal, type="class")$class, statdata$catPred_))
+tempmm<- cbind (data.frame(statdata$caseid_IVS_, predict(lda_anal, type="class")$class), data.frame(statdata$catPred_))
 newdata <- tempmm[ which(tempmm[,2] !=tempmm[,3]),]
 colnames(newdata)<- c("Case ID", "Predicted group", "Actual group")
 HTML(newdata, classfirstline="second", align="left", row.names = "FALSE")
 HTML("This table summarises the cases that are mis-classified, based on the linear discriminant function values." , align="left")
 
 HTML.title("Table of correctly classified cases ", HR=2, align="left")
-tempmm<- data.frame(cbind (statdata$caseid_IVS_, predict(lda_anal, type="class")$class, statdata$catPred_))
+tempmm<- cbind (data.frame(statdata$caseid_IVS_, predict(lda_anal, type="class")$class), data.frame(statdata$catPred_))
 newdata <- tempmm[ which(tempmm[,2] ==tempmm[,3]),]
 colnames(newdata)<- c("Case ID", "Predicted group", "Actual group")
 HTML(newdata, classfirstline="second", align="left", row.names = "FALSE")
@@ -1045,7 +1037,7 @@ HTML(test, align="left")
 #LOO version - not sure which one to go with yet, with LOO or without...
 #===================================================================================================================
 #PLS model code
-PLSmodel <- plsr(Responses ~ ivs_sp_ivs,  data = PLSData, validation = "LOO")
+PLSmodel <- plsr(Responses ~ ivs_sp_ivs,  data = PLSData, validation = "LOO", method="oscorespls", scale.unit=TRUE)
 test<-RMSEP(PLSmodel)
 test2<-test$val
 
@@ -1204,9 +1196,13 @@ if (noOfComponents == 0) {
 #===================================================================================================================
 #PLS final model code
 #===================================================================================================================
-	PLSmodel <- plsr(Responses ~ X_IVS_X,  data = PLSData, ncomp=usercomp)
-	#PLSmodel <- plsr(Responses ~ X_IVS_X,  data = PLSData, ncomp=usercomp, validation = "LOO")
+#	PLSmodel <- plsr(Responses ~ X_IVS_X,  data = PLSData, center=TRUE, scale=TRUE,  ncomp=usercomp)
+#	PLSmodel <- plsr(Responses ~ X_IVS_X,  data = PLSData, center=FALSE, scale=FALSE, method = "oscorespls" , ncomp=usercomp)
+#	PLSmodel <- plsr(Responses ~ X_IVS_X,  data = PLSData, ncomp=usercomp, validation = "LOO")
 
+	PLSmodel <- pls(Y=PLSDataResp , X=PLSDataX, ncomp=usercomp)
+print("test")
+print(PLSmodel$explained_variance)
 #===================================================================================================================
 #Score plots
 #===================================================================================================================
@@ -1315,7 +1311,7 @@ if (noOfComponents == 0) {
 #===================================================================================================================
 	expvar<-data.frame(explvar(PLSmodel))
 	expvar$explvar.PLSmodel. = expvar$explvar.PLSmodel. / 100
-	expvar$explvar.PLSmodel.<- format(round(expvar$explvar.PLSmodel.,2),nsmall=2)
+	expvar$explvar.PLSmodel.<- format(round(expvar$explvar.PLSmodel.,3),nsmall=3)
 
 	expvar <- cbind((1:as.numeric(usercomp)), expvar)
 	colnames(expvar)<- c("Component", "Variance proportion")

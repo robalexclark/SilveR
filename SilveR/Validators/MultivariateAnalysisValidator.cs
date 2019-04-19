@@ -45,6 +45,8 @@ namespace SilveR.Validators
                 }
             }
 
+
+            List<int> responseCounts = new List<int>();
             //Go through each response
             foreach (string response in maVariables.Responses)
             {
@@ -53,6 +55,17 @@ namespace SilveR.Validators
                     ValidationInfo.AddErrorMessage("Error: The response variable (" + response + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
+
+                //check no of responses are the same (actual check is later)
+                int responseCount = 0;
+                foreach (DataRow row in DataTable.Rows)
+                {
+                    if (!String.IsNullOrEmpty(row[response].ToString()))
+                    {
+                        responseCount = responseCount + 1;
+                    }
+                }
+                responseCounts.Add(responseCount);
 
                 CheckTransformations(DataTable, maVariables.ResponseTransformation, response);
 
@@ -90,6 +103,12 @@ namespace SilveR.Validators
                 }
             }
 
+            if (!responseCounts.All(x => x == responseCounts.First()))
+            {
+                ValidationInfo.AddErrorMessage("Error: Not all the responses contain the same number of values. Please amend the dataset prior to running the analysis.");
+                return ValidationInfo;
+            }
+
             if (maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis)
             {
                 if (maVariables.CategoricalPredictor != null)
@@ -123,17 +142,17 @@ namespace SilveR.Validators
                     ValidationInfo.AddWarningMessage("Warning: When performing a LDA analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
             }
-            else if (maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.PartialLeastSquares)
-            {
-                if (maVariables.CategoricalPredictor != null)
-                {
-                    ValidationInfo.AddWarningMessage("Warning: When performing a PLS analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
-                }
-                if (maVariables.ContinuousPredictors == null)
-                {
-                    ValidationInfo.AddErrorMessage("Warning: When performing a LDA analysis a continuous predictor(s) is required.");
-                }
-            }
+            //else if (maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.PartialLeastSquares)
+            //{
+            //    if (maVariables.CategoricalPredictor != null)
+            //    {
+            //        ValidationInfo.AddWarningMessage("Warning: When performing a PLS analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
+            //    }
+            //    if (maVariables.ContinuousPredictors == null)
+            //    {
+            //        ValidationInfo.AddErrorMessage("Warning: When performing a LDA analysis a continuous predictor(s) is required.");
+            //    }
+            //}
 
             //display the warning messages (if any) and return the result
             return ValidationInfo;

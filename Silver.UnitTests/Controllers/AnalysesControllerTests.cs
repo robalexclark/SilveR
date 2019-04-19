@@ -779,7 +779,7 @@ namespace Silver.UnitTests.Controllers
         {
             //Arrange
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            mockRepository.Setup(x => x.DeleteAnalysis(It.IsAny<Analysis>())).Returns(Task.CompletedTask);
+            mockRepository.Setup(x => x.DeleteAnalysis(It.IsAny<int>())).Returns(Task.CompletedTask);
 
             Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
             Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
@@ -787,7 +787,7 @@ namespace Silver.UnitTests.Controllers
             AnalysesController sut = new AnalysesController(mockRepository.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
 
             //Act
-            IActionResult result = await sut.Destroy(It.IsAny<Analysis>());
+            IActionResult result = await sut.Destroy(It.IsAny<int>());
 
             //Assert
             JsonResult jsonResult = Assert.IsType<JsonResult>(result);

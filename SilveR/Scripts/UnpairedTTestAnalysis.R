@@ -265,7 +265,9 @@ if (equalCase == "Y") {
 	
 
 	rows<-rownames(multci2$confint)
-	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+#STB2019
+#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+
 	#STB June 2015	
 	for (i in 1:100) {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
@@ -323,7 +325,7 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 #Calculating the size of the geometric ratio with 95%CI
 #V3.2 STB NOV2015
 #===================================================================================================================
-	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio", HR=3, align="left")
+	HTML.title("Comparison of the geometric means as a back-transformed ratio", HR=3, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 	mult<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
@@ -352,7 +354,9 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 	
 
 	rows<-rownames(multci$confint)
-	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+#STB2019
+	rows<-sub(" - "," / ", rows, fixed=TRUE)
+
 	#STB June 2015	
 	for (i in 1:100) {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
@@ -492,7 +496,10 @@ if (unequalCase == "Y") {
 	
 
 	rows<-rownames(multci3$confint)
-	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+
+#STB2019
+#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+
 	#STB June 2015	
 	for (i in 1:100) {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
@@ -544,7 +551,7 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 #===================================================================================================================
 #Calculating the size of the geometric ratio with 95%CI
 #===================================================================================================================
-	HTML.title("Comparison between the back-transformed geometric means as a back-transformed ratio", HR=3, align="left")
+	HTML.title("Comparison of the geometric means as a back-transformed ratio", HR=3, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 	#Required to generate table label only
@@ -576,7 +583,9 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 	}
 	
 	rows<-rownames(multci3$confint)
-	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+
+#STB2019
+	rows<-sub(" - "," / ", rows, fixed=TRUE)
 
 	#STB June 2015	
 	for (i in 1:100) {

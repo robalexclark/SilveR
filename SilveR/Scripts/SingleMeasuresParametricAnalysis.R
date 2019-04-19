@@ -1406,7 +1406,8 @@ if(allPairwiseTest != "NULL") {
 	}
 	
 	rows<-rownames(multci$confint)
-	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+#STB 2019
+#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
 
 	#STB June 2015	
 	for (i in 1:1000) {
@@ -1420,10 +1421,11 @@ if(allPairwiseTest != "NULL") {
 	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
 	HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
 	rownames(tabls) <- rows
+
 #===================================================================================================================
 	#STB March 2014 - Creating a dataset of p-values
 
-	if (genpvals == "Y") {
+	if (genpvals == "Y" && allPairwiseTest == "none") {
 		comparisons <- sub(".csv", "comparisons.csv",  Args[3])
 		for (i in 1:tablen) {
 			tabs[i,5]=pvals[i]
@@ -1435,10 +1437,8 @@ if(allPairwiseTest != "NULL") {
 		tabsxx<-cbind(rows, tabsxx)
 		colnames(tabsxx)<-c("Comparison", "p-value")
 		row.names(tabsxx) <- seq(nrow(tabsxx)) 
-	
-		if(allPairwiseTest != "NULL") {
-			write.csv(tabsxx, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
-		}
+
+		write.csv(tabsxx, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
 	}
 #===================================================================================================================
 	#Conclusion
@@ -1643,7 +1643,9 @@ if(backToControlTest != "NULL") {
 	}
 
 	for ( i in 1:tablen) {
-		tabs2[i,14] = paste(tabs2[i,12],  " vs. ", tabs2[i,13], sep = "")
+		tabs2[i,14] = paste(tabs2[i,12],  " - ", tabs2[i,13], sep = "")
+#STB
+#		tabs2[i,14] = paste(tabs2[i,12],  " vs. ", tabs2[i,13], sep = "")
 	}
 
 	#Subsetting to only the comparisons to control
@@ -1811,7 +1813,9 @@ if(backToControlTest != "NULL" && GeomDisplay == "Y" && (responseTransform =="Lo
 		}
 	}
 
-	tabs3$V14<-sub(" vs. "," / ", tabs3$V14, fixed=TRUE)
+	tabs3$V14<-sub(" - "," / ", tabs3$V14, fixed=TRUE)
+#STB2019
+#	tabs3$V14<-sub(" vs. "," / ", tabs3$V14, fixed=TRUE)
 
 	#STB June 2015	
 	for (i in 1:100) {

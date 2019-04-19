@@ -1528,7 +1528,7 @@ PLSloadingsplot <- function() {
 	g <- ggplot(graphdata, aes(X1, value)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = "right") +
+		theme(legend.position = "right" , axis.text.x = element_text(hjust = 1, angle = 45) ) +
 		ylab("loading value") +
 		xlab("variable") +
 		ggtitle(" ") +

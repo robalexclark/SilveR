@@ -307,3 +307,4 @@ ASALocalRun/
 
 #R Project exe and libraries
 !SilveR/R-3.5.1/**/*
+SilveR/SilveR\.db

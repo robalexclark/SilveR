@@ -106,7 +106,6 @@ namespace SilveR.Services
                         else
                         {
                             rscriptPath = "/usr/local/bin/Rscript";
-                            //rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript");
                         }
                     }
 
@@ -166,35 +165,40 @@ namespace SilveR.Services
                     //assemble the entire path and file to the html output
                     string htmlFile = Path.Combine(workingDir, analysisGuid + ".html");
 
-                    if (File.Exists(htmlFile)) //wont exist if there is an error!
+                    if (File.Exists(htmlFile)) //won't exist if there is an error!
                     {
-                        //get the output files that match the guid
-                        List<string> resultsFiles = new List<string>();
-                        string[] outputFiles = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
-                        foreach (string file in outputFiles.Where(x => !x.EndsWith(".R") && !x.EndsWith(analysis.AnalysisGuid + ".csv"))) //go through all output (except the R input file and the csv input file)
-                        {
-                            FileInfo fileInfo = new FileInfo(file);
-                            if (fileInfo.Extension == ".html" || fileInfo.Extension == ".png" || fileInfo.Extension == ".jpg") //main output so add to results
-                            {
-                                resultsFiles.Add(file);
-                            }
-                            else if (fileInfo.Extension == ".csv") //is not the input csv and is a dataset to be imported into datasets
-                            {
-                                DataTable dataTable = CSVConverter.CSVDataToDataTable(fileInfo.OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
+                        DirectoryInfo dir = new DirectoryInfo(workingDir);
+                        FileInfo[] outputFiles = dir.GetFiles(analysis.AnalysisGuid + "*");
 
-                                string datasetName = fileInfo.Name.Replace(analysis.AnalysisGuid, String.Empty);
-                                await SaveDatasetToDatabase(silveRRepository, datasetName, dataTable);
-                            }
-                            else
-                                throw new InvalidOperationException("Unexpected file type in temp folder!");
+                        //first go through all the results files...
+                        List<string> resultsFiles = new List<string>();
+
+                        foreach (FileInfo file in outputFiles.Where(x => x.Extension == ".html" || x.Extension == ".png")) //go through all results output
+                        {
+                            resultsFiles.Add(file.FullName);
                         }
 
+                        //generate the inline html
                         string inlineHtml = InlineHtmlCreator.CreateInlineHtml(resultsFiles);
-
                         analysis.HtmlOutput = inlineHtml;
-                    }
 
-                    await silveRRepository.UpdateAnalysis(analysis);
+                        //do a save at this point so that results can be shown (processing is checking for output at this point)
+                        await silveRRepository.UpdateAnalysis(analysis);
+
+
+                        //now go through any csv output to be imported into datasets
+                        foreach (FileInfo file in outputFiles.Where(x => x.Extension == ".csv" && !x.FullName.EndsWith(analysis.AnalysisGuid + ".csv"))) //go through any dataset output (make sure dont import original csv file!)
+                        {
+                            DataTable dataTable = CSVConverter.CSVDataToDataTable(file.OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
+
+                            string datasetName = file.Name.Replace(analysis.AnalysisGuid, String.Empty);
+                            await SaveDatasetToDatabase(silveRRepository, datasetName, dataTable);
+                        }
+                    }
+                    else //something not right then, throw exception
+                    {
+                        throw new InvalidOperationException("No html output found!");
+                    }
 
 #if !DEBUG
                     string[] filesToClean = Directory.GetFiles(workingDir, analysis.AnalysisGuid + "*");
@@ -206,22 +210,22 @@ namespace SilveR.Services
                 {
                     //try
                     //{
-                        Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
+                    Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
 
-                        string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
-                        message = message + "TempFolder=" + workingDir + Environment.NewLine + Environment.NewLine;
-                        message = message + "Arguments=" + theArguments + Environment.NewLine + Environment.NewLine;
-                        message = message + "Rscript=" + rscriptPath + Environment.NewLine + Environment.NewLine;
+                    string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
+                    message = message + "TempFolder=" + workingDir + Environment.NewLine + Environment.NewLine;
+                    message = message + "Arguments=" + theArguments + Environment.NewLine + Environment.NewLine;
+                    message = message + "Rscript=" + rscriptPath + Environment.NewLine + Environment.NewLine;
 
-                        message = message + ex.Message;
+                    message = message + ex.Message;
 
-                        if (ex.InnerException != null)
-                        {
-                            message = message + Environment.NewLine + "Inner Exception: " + ex.InnerException.Message;
-                        }
+                    if (ex.InnerException != null)
+                    {
+                        message = message + Environment.NewLine + "Inner Exception: " + ex.InnerException.Message;
+                    }
 
-                        analysis.RProcessOutput = message;
-                        await silveRRepository.UpdateAnalysis(analysis);
+                    analysis.RProcessOutput = message;
+                    await silveRRepository.UpdateAnalysis(analysis);
                     //}
                     //catch { }
 

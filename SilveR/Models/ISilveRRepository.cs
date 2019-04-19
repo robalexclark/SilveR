@@ -7,7 +7,7 @@ namespace SilveR.Models
     public interface ISilveRRepository
     {
         Task CreateDataset(Dataset dataset);
-        Task DeleteAnalysis(Analysis analysis);
+        Task DeleteAnalysis(int analysisID);
         Task DeleteDataset(int datasetID);
         Task<IEnumerable<Analysis>> GetAnalyses();
         Task<Analysis> GetAnalysis(string analysisGuid);

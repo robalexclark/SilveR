@@ -21,6 +21,7 @@ namespace SilveR.StatsModels
 
         [Required]
         [CheckUsedOnceOnly]
+        [HasAtLeastTwoEntries]
         [DisplayName("Treatment factors")]
         public IEnumerable<string> Treatments { get; set; }
 

@@ -7,9 +7,7 @@ namespace SilveR.Models
 {
     public partial class Analysis
     {
-        private Analysis()
-        {
-        }
+        public Analysis() { }
 
         public Analysis(Dataset dataset)
         {

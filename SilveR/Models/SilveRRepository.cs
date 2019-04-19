@@ -119,9 +119,12 @@ namespace SilveR.Models
             return await context.Analyses.Include("Dataset").Include("Script").Include("Arguments").SingleAsync(an => an.AnalysisGuid == analysisGuid);
         }
 
-        public async Task DeleteAnalysis(Analysis analysis)
+        public async Task DeleteAnalysis(int analysisID)
         {
-            context.Analyses.Remove(analysis);
+            Analysis analysis = new Analysis();
+            analysis.AnalysisID = analysisID;
+            context.Entry(analysis).State = EntityState.Deleted;
+
             await context.SaveChangesAsync();
         }
 

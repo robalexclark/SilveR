@@ -1394,7 +1394,8 @@ if(pairwiseTest == "AllPairwiseComparisons") {
 	for (i in 1:100) {
 		rows<-sub("_.._"," ", rows, fixed=TRUE)
 	}
-	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+#STB2019
+#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
 
 	#STB June 2015	
 	for (i in 1:100) {
@@ -1512,7 +1513,8 @@ if(pairwiseTest == "AllComparisonsWithinSelected") {
 	temp<-rownames(tabs_final)
 
 	#STB June 2015
-	temp<-sub(" - "," vs. ", temp, fixed=TRUE)
+#STB2019
+#	temp<-sub(" - "," vs. ", temp, fixed=TRUE)
 
 	#STB June 2015	
 	for (i in 1:100) {
