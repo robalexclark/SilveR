@@ -17,7 +17,14 @@
     ViewBag.Title = "Unpaired t-test Analysis";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class="col-md-6">
+        <a href="http://invivostat.co.uk/wp-content/user-guides/Unpaired_ttest_Analysis.pdf" class="btn btn-secondary pull-right" target="_blank">Help</a>
+    </div>
+</div>
 
 <form action="/Analyses/UnpairedTTestAnalysis" class="form-horizontal mt-2" method="post">
 
