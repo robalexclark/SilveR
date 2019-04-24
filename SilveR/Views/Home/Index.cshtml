@@ -1,55 +1,98 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Introduction to " + Program.AppName;
 }
-<h2>@ViewBag.Title</h2>
 
 @*@if (ViewBag.InfoMessage != null)
     {
-        <div class="alert alert-dismissible alert-info">
-            <button class="close" type="button" data-dismiss="alert">×</button>
-            <strong>OK!</strong>
-            <br />
-            @Html.Raw(@ViewBag.InfoMessage)
-        </div>
+<div class="alert alert-dismissible alert-info">
+    <button class="close" type="button" data-dismiss="alert">×</button>
+    <strong>OK!</strong>
+    <br />
+    @Html.Raw(@ViewBag.InfoMessage)
+</div>
     }*@
 
-<h2>
-    What Is @Program.AppName?
-</h2>
-
-<div class="row">
+@if (Program.AppName == "InVivoStat")
+{
+<div class="row m-4 justify-content-center">
     <div class="col-md-6">
-        <div class="text-block">
-            <p>
-                @Program.AppName is a powerful, free to use, statistical software package which uses <a href="http://www.r-project.org/">R</a>
-                as its statistics engine. The package combines complex and powerful statistical tools
-                (within R) with a user interface that is both easy to use and intuitive to the non-statistician.
-            </p>
-            <p>
-                While no package can comment on the suitability of a statistical analysis, @Program.AppName
-                has many dataset checks so errors within the data, that may invalidate the results
-                of the analysis, are identified prior to analysis.
-            </p>
-        </div>
-        <div class="text-block">
-            The authors of @Program.AppName have between them over 20 years of experience supporting scientists in the pharmaceutical industry and academia.
-            They have been involved in developing in-house software solutions and training scientists in using the software.
-        </div>
-
-        <div class="text-block">
-            For more information contact:<br>
-            <a href="mailto:robalexclark@hotmail.com">robalexclark@hotmail.com</a>
-        </div>
-
-    </div>
-    <div class="col-md-6">
-        @if (Program.AppName == "InVivoStat")
-        {
-            <img src="~/images/InVivoStat.png" class="img-fluid" />
-        }
-        else
-        {
-            <img src="~/images/SilveR.png" class="img-fluid" />
-        }
+        <img src="~/images/InVivoStatLogo.png" class="img-fluid" />
     </div>
 </div>
+
+<div class="row m-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">About InVivoStat</h5>
+                <p class="card-text text-block">
+                    InVivoStat is a powerful, free to use, statistical software package which uses <a href="http://www.r-project.org/">R</a>
+                    as its statistics engine. It is designed specifically for scientists conducting animal experiments. The package combines complex and powerful statistical tools
+                    (within R) with a user interface that is both easy to use and intuitive to the non-statistician.
+                </p>
+                <div class="m-4">
+                    <a href="http://invivostat.co.uk/user-guides" class="btn btn-lg btn-info" target="_blank">Getting Started User Guides</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img src="~/images/InVivoStatScreenshot.png" class="img-fluid" />
+    </div>
+</div>
+<div class="row m-4">
+    <div class="col-md-6">
+        <img src="~/images/BookCover.png" class="img-fluid float-right" />
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">The Design and Statistical Analysis of Animal Experiments</h5>
+                <h6 class="card-subtitle mt-1 mb-1 text-muted">Bate and Clark (2014)</h6>
+                <div class="card-text text-block">
+                    For more detailed descriptions, check out <a href="https://www.cambridge.org/gb/academic/subjects/life-sciences/quantitative-biology-biostatistics-and-mathematical-modellin/design-and-statistical-analysis-animal-experiments?format=HB&isbn=9781107030787">The Design and Statistical Analysis of Animal Experiments</a>.
+                    This book is a companion to InVivoStat and the first to feature InVivoStat. Taken together they will help you make the most of your experiments.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+else
+{
+<h2>@ViewBag.Title</h2>
+
+<div class="row m-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">About @Program.AppName</h5>
+                <div class="text-block">
+                    <p>
+                        @Program.AppName is a powerful, free to use, statistical software package which uses <a href="http://www.r-project.org/">R</a>
+                        as its statistics engine. The package combines complex and powerful statistical tools
+                        (within R) with a user interface that is both easy to use and intuitive to the non-statistician.
+                    </p>
+                    <p>
+                        While no package can comment on the suitability of a statistical analysis, @Program.AppName
+                        has many dataset checks so errors within the data, that may invalidate the results
+                        of the analysis, are identified prior to analysis.
+                    </p>
+                </div>
+                <div class="text-block">
+                    The authors of @Program.AppName have between them over 20 years of experience supporting scientists in the pharmaceutical industry and academia.
+                    They have been involved in developing in-house software solutions and training scientists in using the software.
+                </div>
+
+                <div class="text-block">
+                    For more information contact:<br>
+                    <a href="mailto:robalexclark@hotmail.com">robalexclark@hotmail.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <img src="~/images/SilveRScreenshot.png" class="img-fluid" />
+    </div>
+</div>
+}

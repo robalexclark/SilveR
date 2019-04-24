@@ -97,7 +97,7 @@ namespace Silver.UnitTests.StatsModels
 
             //Assert
             Assert.Equal("Respivs_sp_ivs1,Respivs_sp_ivs2,Factorivs_sp_ivs1,Factorivs_sp_ivs2,Factorivs_sp_ivs3,Factorivs_sp_ivs4,catfact", result[0]);
-            Assert.Equal(33, result.Count()); //as blank reponses are removed
+            Assert.Equal(33, result.Count()); //as blank responses are removed
             Assert.StartsWith("0.51,0.86,D,2,2,D,D 2 2 D", result[32]);
         }
 

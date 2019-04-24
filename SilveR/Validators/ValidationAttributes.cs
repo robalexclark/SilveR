@@ -93,6 +93,32 @@ namespace SilveR.Validators
         }
     }
 
+    //public class CheckFactorOrderingAttribute : ValidationAttribute
+    //{
+    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    //    {
+    //        GraphicalAnalysisModel model = (GraphicalAnalysisModel)validationContext.ObjectInstance;
+
+    //        if (!String.IsNullOrEmpty(model.XAxisLevelsOrder))
+    //        {
+    //            //get levels
+    //            IEnumerable<string> levels = null;
+
+    //            string[] xAxisLevelsOrder = model.XAxisLevelsOrder.Split(','); //split list by comma
+
+    //            foreach (string level in xAxisLevelsOrder)
+    //            {
+    //                if (!levels.Contains(level.Trim()))
+    //                {
+    //                    return new ValidationResult("All p-values must be greater than zero");
+    //                }
+    //            }
+    //        }
+
+    //        return ValidationResult.Success;
+    //    }
+    //}
+
 
     //NON-PARAMETRIC
     public class ValidateControlLevelSetAttribute : ValidationAttribute
@@ -165,7 +191,7 @@ namespace SilveR.Validators
             else
                 return ValidationResult.Success;
         }
-    }  
+    }
 
 
     //CORRELATION

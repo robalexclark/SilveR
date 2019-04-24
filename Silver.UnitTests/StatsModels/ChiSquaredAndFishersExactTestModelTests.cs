@@ -68,7 +68,7 @@ namespace Silver.UnitTests.StatsModels
 
             //Assert
             Assert.Equal("Count,Group,Respcat", result[0]);
-            Assert.Equal(9, result.Count()); //as blank reponses are removed
+            Assert.Equal(9, result.Count()); //as blank responses are removed
             Assert.StartsWith("6,a_Tr,N", result[3]);
         }
 

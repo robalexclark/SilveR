@@ -17,7 +17,7 @@ namespace SilveR.StatsModels
         [DisplayName("Responses")]
         public IEnumerable<string> Responses { get; set; }
 
-        [DisplayName("Reponse transformation")]
+        [DisplayName("Response transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
         public IEnumerable<string> TransformationsList

@@ -20,7 +20,7 @@ namespace SilveR.StatsModels
         [DisplayName("Response")]
         public string Response { get; set; }
 
-        [DisplayName("Reponse transformation")]
+        [DisplayName("Response transformation")]
         public string ResponseTransformation { get; set; } = "None";
 
         public IEnumerable<string> TransformationsList

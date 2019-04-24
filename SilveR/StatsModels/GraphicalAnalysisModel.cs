@@ -62,6 +62,17 @@ namespace SilveR.StatsModels
         [DisplayName("Y-axis title")]
         public string YAxisTitle { get; set; }
 
+
+        [DisplayName("Categorical x-axis levels")]
+        public string XAxisLevelsOrder { get; set; }
+
+        [DisplayName("First categorical factor levels")]
+        public string FirstCatFactorLevelsOrder { get; set; }
+
+        [DisplayName("Second categorical factor levels")]
+        public string SecondCatFactorLevelsOrder { get; set; }
+
+
         [DisplayName("Scatterplot")]
         public bool ScatterplotSelected { get; set; }
 
@@ -165,6 +176,11 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(MainTitle), MainTitle));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisTitle), XAxisTitle));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(YAxisTitle), YAxisTitle));
+
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisLevelsOrder), FixFactorOrdering(XAxisLevelsOrder)));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(FirstCatFactorLevelsOrder), FixFactorOrdering(FirstCatFactorLevelsOrder)));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SecondCatFactorLevelsOrder), FixFactorOrdering(SecondCatFactorLevelsOrder)));
+
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ScatterplotSelected), ScatterplotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LinearFitSelected), LinearFitSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(JitterSelected), JitterSelected));
@@ -198,6 +214,11 @@ namespace SilveR.StatsModels
             this.MainTitle = argHelper.LoadStringArgument(nameof(MainTitle));
             this.XAxisTitle = argHelper.LoadStringArgument(nameof(XAxisTitle));
             this.YAxisTitle = argHelper.LoadStringArgument(nameof(YAxisTitle));
+
+            this.XAxisLevelsOrder = argHelper.LoadStringArgument(nameof(XAxisLevelsOrder));
+            this.FirstCatFactorLevelsOrder = argHelper.LoadStringArgument(nameof(FirstCatFactorLevelsOrder));
+            this.SecondCatFactorLevelsOrder = argHelper.LoadStringArgument(nameof(SecondCatFactorLevelsOrder));
+
             this.ScatterplotSelected = argHelper.LoadBooleanArgument(nameof(ScatterplotSelected));
             this.LinearFitSelected = argHelper.LoadBooleanArgument(nameof(LinearFitSelected));
             this.JitterSelected = argHelper.LoadBooleanArgument(nameof(JitterSelected));
@@ -247,52 +268,77 @@ namespace SilveR.StatsModels
             //Y Axis title
             arguments.Append(" " + argFormatter.GetFormattedArgument(YAxisTitle, false)); //13
 
+
+            //XAxisLevelsOrder
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FixFactorOrdering(XAxisLevelsOrder), false)); //14
+
+            //FirstCatFactorLevelsOrder
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FixFactorOrdering(FirstCatFactorLevelsOrder), false)); //15
+
+            //SecondCatFactorLevelsOrder
+            arguments.Append(" " + argFormatter.GetFormattedArgument(FixFactorOrdering(SecondCatFactorLevelsOrder), false)); //16
+
+
             //Scatterplot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ScatterplotSelected)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ScatterplotSelected)); //17
 
             //Linear plot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(LinearFitSelected)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LinearFitSelected)); //18
 
             //Jitter
-            arguments.Append(" " + argFormatter.GetFormattedArgument(JitterSelected)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(JitterSelected)); //19
 
             //Boxplot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxplotSelected)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxplotSelected)); //20
 
             //Outliers
-            arguments.Append(" " + argFormatter.GetFormattedArgument(OutliersSelected)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OutliersSelected)); //21
 
             //SEM Plot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotSelected)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotSelected)); //22
 
             //Column plot type
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMType.ToString(), false)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMType.ToString(), false)); //23
 
             //Histogram plot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(HistogramSelected)); //21
+            arguments.Append(" " + argFormatter.GetFormattedArgument(HistogramSelected)); //24
 
             //Normal distribution fit
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalDistSelected)); //22
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalDistSelected)); //25
 
             //Case profiles plot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseProfilesPlotSelected)); //23
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseProfilesPlotSelected)); //26
 
             //Case ID Factor
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, true)); //24
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, true)); //27
 
             //Reference Line
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine.ToString(), false)); //25
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine.ToString(), false)); //28
 
             //Legend
-            arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //26
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //29
 
             //Box Plot include data
-            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxPlotIncludeData)); //27
+            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxPlotIncludeData)); //30
 
             //SEM Plot include data
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //28
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //31
 
             return arguments.ToString().Trim();
+        }
+
+
+        private string FixFactorOrdering(string factorOrder)
+        {
+            string[] levels = factorOrder.Split(',');
+
+            string fixedString = null;
+            foreach (string l in levels)
+            {
+                fixedString = fixedString + l.Trim() + ',';
+            }
+
+            return fixedString.TrimEnd(',');
         }
     }
 }

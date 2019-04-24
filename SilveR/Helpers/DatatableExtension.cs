@@ -155,7 +155,7 @@ namespace SilveR.Helpers
                     double val; //get the value
                     bool valOK = Double.TryParse(r[column].ToString(), out val);
 
-                    if (valOK && transformation != "None") //if reponse value is number (and actually doing a transformation)
+                    if (valOK && transformation != "None") //if response value is number (and actually doing a transformation)
                     {
                         switch (transformation) // do the selected transform
                         {
