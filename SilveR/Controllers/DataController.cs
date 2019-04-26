@@ -54,7 +54,7 @@ namespace SilveR.Controllers
         [HttpPost]
         public async Task<IActionResult> DataUploader(IEnumerable<IFormFile> files)
         {
-            if (files.Any() == false || files.Single().Length == 0)
+            if (!files.Any() || files.Single().Length == 0)
             {
                 ViewBag.ErrorMessage = "File failed to load, please try again";
                 return View();
@@ -105,7 +105,10 @@ namespace SilveR.Controllers
                     {
                         System.IO.File.Delete(selectedFile.FullName);
                     }
-                    catch (IOException) { }
+                    catch (IOException)
+                    {
+                        //ignore error
+                    }
 
                     TempData["InfoMessage"] = "File imported successfully!";
                 }
@@ -220,7 +223,7 @@ namespace SilveR.Controllers
                         {
                             System.IO.File.Delete(selectedFile.FullName);
                         }
-                        catch(IOException) { }
+                        catch (IOException) { }
 
                         TempData["InfoMessage"] = "File imported successfully!";
                     }

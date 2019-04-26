@@ -1,0 +1,64 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: dotnet restore
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet build
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet test
+  inputs:
+    command: 'test'
+    projects: '**/*[Tt]ests/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: dotnet publish
+  inputs:
+    command: 'publish'
+    arguments: '--output $(Build.ArtifactStagingDirectory) -r win-x64'
+    zipAfterPublish: true
+
+- task: CopyFiles@2
+  inputs:
+    contents: '*.zip'
+    targetFolder: '$(Build.ArtifactStagingDirectory)/'
+
+- task: CmdLine@2
+  inputs:
+    script: 'ren $(Build.ArtifactStagingDirectory)\SilveR.zip InVivoStat-Win.zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    ArtifactName: 'drop'
+
+
+- task: GitHubRelease@0
+  inputs:
+    gitHubConnection: 'Github'
+    repositoryName: 'robalexclark/SilveR' 
+    action: 'edit'
+    target: '$(build.sourceVersion)'
+    tagSource: 'Git tag'
+    tag: '1.0'
+    assetUploadMode: 'replace'
+    

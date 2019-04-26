@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace SilveR.Validators
 {
@@ -173,8 +174,64 @@ namespace SilveR.Validators
                 }
             }
 
+
+            //check x axis levels ordering
+            if (!CheckLevelsOrdering(gaVariables.XAxisLevelsOrder, gaVariables.XAxis, ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.XAxisLevelsOrder), ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.XAxis)))
+                return ValidationInfo;
+
+            if (!CheckLevelsOrdering(gaVariables.FirstCatFactorLevelsOrder, gaVariables.FirstCatFactor, ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.FirstCatFactorLevelsOrder), ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.FirstCatFactor)))
+                return ValidationInfo;
+
+            if (!CheckLevelsOrdering(gaVariables.SecondCatFactorLevelsOrder, gaVariables.SecondCatFactor, ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.SecondCatFactorLevelsOrder), ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.SecondCatFactor)))
+                return ValidationInfo;
+
             //if get here then no errors so return true
             return ValidationInfo;
+        }
+
+        private bool CheckLevelsOrdering(string levelsVariable, string actualVariable, string levelsVariableDisplayName, string actualVariableDisplayName)
+        {
+            if (!String.IsNullOrWhiteSpace(levelsVariable))
+            {
+                //check that an x axis has actually been selected
+                if (actualVariable == null)
+                {
+                    ValidationInfo.AddErrorMessage("The " + levelsVariableDisplayName + " order has been entered, but no " + actualVariableDisplayName + " has been selected.");
+                    return false;
+                }
+                else
+                {
+                    //get levels
+                    IEnumerable<string> levels = GetLevels(actualVariable);
+
+                    string[] levelsOrder = levelsVariable.Split(','); //split list by comma
+
+                    foreach (string level in levelsOrder)
+                    {
+                        if (!levels.Contains(level.Trim()))
+                        {
+                            ValidationInfo.AddErrorMessage("The " + levelsVariableDisplayName + " order contains levels that do not exist in the dataset, either the levels have not been entered correctly or the levels are not separated by commas. The list needs to be comma separated.");
+                            return false;
+                        }
+                    }
+
+                    //do this last as above step verifies that the levels entered are correct
+                    if (ContainsDuplicates(levelsOrder))
+                    {
+                        ValidationInfo.AddErrorMessage("The " + levelsVariableDisplayName + " order contains duplicate levels.");
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+
+        private bool ContainsDuplicates(IEnumerable<string> enumerable)
+        {
+            var knownKeys = new HashSet<string>();
+            return enumerable.Any(item => !knownKeys.Add(item));
         }
     }
 }

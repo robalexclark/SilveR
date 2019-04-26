@@ -66,10 +66,10 @@ namespace SilveR.StatsModels
         [DisplayName("Categorical x-axis levels")]
         public string XAxisLevelsOrder { get; set; }
 
-        [DisplayName("First categorical factor levels")]
+        [DisplayName("1st categorical factor levels")]
         public string FirstCatFactorLevelsOrder { get; set; }
 
-        [DisplayName("Second categorical factor levels")]
+        [DisplayName("2nd categorical factor levels")]
         public string SecondCatFactorLevelsOrder { get; set; }
 
 
@@ -134,9 +134,6 @@ namespace SilveR.StatsModels
                     dtNew.Columns.Remove(col);
                 }
             }
-
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
 
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
@@ -330,15 +327,18 @@ namespace SilveR.StatsModels
 
         private string FixFactorOrdering(string factorOrder)
         {
+            if (String.IsNullOrWhiteSpace(factorOrder))
+                return null;
+
             string[] levels = factorOrder.Split(',');
 
-            string fixedString = null;
+            StringBuilder fixedString = new StringBuilder();
             foreach (string l in levels)
             {
-                fixedString = fixedString + l.Trim() + ',';
+                fixedString.Append(l.Trim() + ',');
             }
 
-            return fixedString.TrimEnd(',');
+            return fixedString.ToString().TrimEnd(',');
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Silver.UnitTests.Controllers
             IActionResult result = await sut.Index();
 
             //Assert
-            ViewResult viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Silver.UnitTests.Controllers
             IActionResult result = sut.DataUploader();
 
             //Assert
-            ViewResult viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]

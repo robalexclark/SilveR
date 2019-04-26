@@ -9,8 +9,7 @@ using System.Linq;
 using Xunit;
 
 namespace Silver.UnitTests.StatsModels
-{
-    
+{    
     public class AnalysisDataModelBaseTests
     {
         [Fact]
@@ -51,15 +50,13 @@ namespace Silver.UnitTests.StatsModels
         public void AnalysisModelBaseTestClass_Constructor_InitializesObject()
         {
             //Arrange
-            Dataset dataset = GetDataset();
 
             //Act
             AnalysisModelBaseTestClass sut = new AnalysisModelBaseTestClass("TestScript");
 
             //Assert
             Assert.Equal("TestScript", sut.ScriptFileName);
-        }
-        
+        }        
 
 
         private Dataset GetDataset()

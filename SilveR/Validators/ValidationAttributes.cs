@@ -35,7 +35,7 @@ namespace SilveR.Validators
             if (value is String)
             {
                 string stringVarToCheck = (String)value;
-                if (varList.Contains(value))
+                if (varList.Contains(stringVarToCheck))
                 {
                     result = false;
                 }
@@ -92,32 +92,6 @@ namespace SilveR.Validators
                 return ValidationResult.Success;
         }
     }
-
-    //public class CheckFactorOrderingAttribute : ValidationAttribute
-    //{
-    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-    //    {
-    //        GraphicalAnalysisModel model = (GraphicalAnalysisModel)validationContext.ObjectInstance;
-
-    //        if (!String.IsNullOrEmpty(model.XAxisLevelsOrder))
-    //        {
-    //            //get levels
-    //            IEnumerable<string> levels = null;
-
-    //            string[] xAxisLevelsOrder = model.XAxisLevelsOrder.Split(','); //split list by comma
-
-    //            foreach (string level in xAxisLevelsOrder)
-    //            {
-    //                if (!levels.Contains(level.Trim()))
-    //                {
-    //                    return new ValidationResult("All p-values must be greater than zero");
-    //                }
-    //            }
-    //        }
-
-    //        return ValidationResult.Success;
-    //    }
-    //}
 
 
     //NON-PARAMETRIC

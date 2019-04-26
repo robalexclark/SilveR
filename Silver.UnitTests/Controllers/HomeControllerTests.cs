@@ -16,7 +16,7 @@ namespace Silver.UnitTests.Controllers
             IActionResult result = sut.Index();
 
             //Assert
-            ViewResult viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
         }
     }
 }

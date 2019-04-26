@@ -47,15 +47,15 @@ namespace SilveR.Validators
 
         private bool FactorAndResponseChecks(string treatmentVar, string responseVar)
         {
-            int treatmentLevels = CountDistinctLevels(treatmentVar);
+            int treatmentLevelCount = CountDistinctLevels(treatmentVar);
 
             //if only 1 level then error
-            if (CountDistinctLevels(treatmentVar) == 1)
+            if (treatmentLevelCount == 1)
             {
                 ValidationInfo.AddErrorMessage("Error: The treatment selected (" + treatmentVar + ") has only one level, please select another factor.");
                 return false;
             }
-            else if (CountDistinctLevels(treatmentVar) > 2) // if more than 2 levels then do anova instead...
+            else if (treatmentLevelCount > 2) // if more than 2 levels then do anova instead...
             {
                 ValidationInfo.AddErrorMessage("Error: The treatment selected (" + treatmentVar + ") has more than two levels, please analyse using Single Measure Parametric Analysis module.");
                 return false;

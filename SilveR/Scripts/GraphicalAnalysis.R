@@ -22,11 +22,9 @@ MainTitle <- Args[11]
 XAxisTitle <- Args[12]
 XAxisTitleHist <- Args[12]
 YAxisTitle <- Args[13]
-
-XAxisTitle <- Args[14]
-XAxisTitleHist <- Args[15]
-YAxisTitle <- Args[16]
-
+Xlabs <- Args[14]
+Cat1labs <- Args[15]
+Cat2labs <- Args[16]
 ScatterPlot <- Args[17]
 LinearFit <- Args[18]
 jitterfunction <- Args[19]
@@ -62,6 +60,27 @@ HTMLCSS(CSSfile = cssFile)
 #===================================================================================================================
 #Parameter setup
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #V3.2 STB OCT2015
 set.seed(5041975)
 
@@ -83,13 +102,6 @@ if (FirstCatFactor != "NULL" && SecondCatFactor == "NULL") {
 }
 if (FirstCatFactor == "NULL" && SecondCatFactor != "NULL") {
 	graphdata$catfact <- eval(parse(text = paste("graphdata$",SecondCatFactor )))
-}
-if (FirstCatFactor != "NULL" && SecondCatFactor != "NULL") {
-	graphdata$catfact <- paste(eval(parse(text = paste("graphdata$",FirstCatFactor ))), eval(parse(text = paste("graphdata$",SecondCatFactor ))))
-}
-
-if(FirstCatFactor != "NULL" || SecondCatFactor != "NULL") {
-	Gr_palette<-palette_FUN("catfact")
 }
 Labelz_IVS_ <- "N"
 
@@ -114,8 +126,7 @@ if (DisplayLegend == "N") {
 	Gr_legend_pos<-Legend_pos_abs
 }
 
-#Confirm the catfactor is categorical
-graphdata$catfact <-as.factor(graphdata$catfact)
+
 
 #Improve titles new variables
 graphdata$first_IVS_cat<- FirstCatFactor
@@ -131,21 +142,134 @@ if (HistogramPlot == "Y" && ScatterPlot == "N" && BoxPlot == "N" && CaseProfiles
 } else {
 	graphdata$xvarrr_IVS <-eval(parse(text = paste("graphdata$", XAxisVar)))
 	}
+
+#Rearranging the x-axis factor levels
+if (Xlabs != "NULL") {
+	#generating list of levels
+	noXlabs=0
+	tempXlabs <- strsplit(Xlabs, ",")
+	Xlabslistx <- c("")
+	for(i in 1:length(tempXlabs[[1]]))  {
+		Xlabslistx [length(Xlabslistx )+1]=(tempXlabs[[1]][i]) 
+	}
+	Xlabslist <- Xlabslistx[-1]
+	noXlabs<-length(Xlabslist)
+	Xlabslistcol <-c()
+	for (i in 1:noXlabs) {
+		Xlabslistcol[i]<- trimws(Xlabslist[i], which = c("both"))
+	}
+	graphdata$xvarrr_IVS <- factor(graphdata$xvarrr_IVS, levels = Xlabslistcol)
+}
+
 if(FirstCatFactor != "NULL" && SecondCatFactor == "NULL") {
 	graphdata$l_l <-as.factor(eval(parse(text = paste("graphdata$",FirstCatFactor ))))
-	graphdata$l_l <- paste(graphdata$first_IVS_cat, "=",graphdata$l_l, sep = "") 
+
+	#Rearranging the first cat factor levels
+	if (Cat1labs != "NULL") {
+		#generating list of levels
+		noCat1labs=0
+		tempCat1labs <- strsplit(Cat1labs, ",")
+		Cat1labslistx <- c("")
+		for(i in 1:length(tempCat1labs[[1]]))  {
+			Cat1labslistx [length(Cat1labslistx )+1]=(tempCat1labs[[1]][i]) 
+		}
+		Cat1labslist <- Cat1labslistx[-1]
+		noCat1labs<-length(Cat1labslist)
+		Cat1labslistcol <-c()
+		for (i in 1:noCat1labs) {
+			Cat1labslistcol[i]<- trimws(Cat1labslist[i], which = c("both"))
+		}
+		graphdata$l_l<-namereplace(graphdata$l_l)
+		graphdata$l_l <- factor(graphdata$l_l, levels = Cat1labslistcol)
+	}
+#	graphdata$l_l <- paste(graphdata$first_IVS_cat, "=",graphdata$l_l, sep = "") 
 }
+
 if(FirstCatFactor == "NULL" && SecondCatFactor != "NULL") {
 	graphdata$l_l <-as.factor(eval(parse(text = paste("graphdata$",SecondCatFactor ))))
-	graphdata$l_l <- paste(graphdata$second_IVS_cat, "=",graphdata$l_l, sep = "") 
+
+	#Rearranging the second cat factor levels
+	if (Cat2labs != "NULL") {
+		#generating list of levels
+		noCat2labs=0
+		tempCat2labs <- strsplit(Cat2labs, ",")
+		Cat2labslistx <- c("")
+		for(i in 1:length(tempCat2labs[[1]]))  {
+			Cat2labslistx [length(Cat2labslistx )+1]=(tempCat2labs[[1]][i]) 
+		}
+		Cat2labslist <- Cat2labslistx[-1]
+		noCat2labs<-length(Cat2labslist)
+		Cat2labslistcol <-c()
+		for (i in 1:noCat2labs) {
+			Cat2labslistcol[i]<- trimws(Cat2labslist[i], which = c("both"))
+		}
+		graphdata$l_l<-namereplace(graphdata$l_l)
+		graphdata$l_l <- factor(graphdata$l_l, levels = Cat2labslistcol)
+	}
+#	graphdata$l_l <- paste(graphdata$second_IVS_cat, "=",graphdata$l_l, sep = "") 
 }
 if(FirstCatFactor != "NULL" && SecondCatFactor != "NULL") {
 	graphdata$firstcatvarrr_IVS <-as.factor(eval(parse(text = paste("graphdata$",FirstCatFactor ))))
 	graphdata$secondcatvarrr_IVS <-as.factor(eval(parse(text = paste("graphdata$",SecondCatFactor ))))
-	graphdata$firstcatvarrr_IVS <- paste(graphdata$first_IVS_cat, "=",graphdata$firstcatvarrr_IVS, sep = "") 
-	graphdata$secondcatvarrr_IVS <- paste(graphdata$second_IVS_cat, "=",graphdata$secondcatvarrr_IVS, sep = "") 
+
+
+
+	#Rearranging the first cat factor levels
+	if (Cat1labs != "NULL") {
+		#generating list of levels
+		noCat1labs=0
+		tempCat1labs <- strsplit(Cat1labs, ",")
+		Cat1labslistx <- c("")
+		for(i in 1:length(tempCat1labs[[1]]))  {
+			Cat1labslistx [length(Cat1labslistx )+1]=(tempCat1labs[[1]][i]) 
+		}
+		Cat1labslist <- Cat1labslistx[-1]
+		noCat1labs<-length(Cat1labslist)
+		Cat1labslistcol <-c()
+		for (i in 1:noCat1labs) {
+			Cat1labslistcol[i]<- trimws(Cat1labslist[i], which = c("both"))
+		}
+		graphdata$firstcatvarrr_IVS<-namereplace(graphdata$firstcatvarrr_IVS)
+		graphdata$firstcatvarrr_IVS <- factor(graphdata$firstcatvarrr_IVS, levels = Cat1labslistcol)
+	}
+
+
+	#Rearranging the second cat factor levels
+	if (Cat2labs != "NULL") {
+		#generating list of levels
+		noCat2labs=0
+		tempCat2labs <- strsplit(Cat2labs, ",")
+		Cat2labslistx <- c("")
+		for(i in 1:length(tempCat2labs[[1]]))  {
+			Cat2labslistx [length(Cat2labslistx )+1]=(tempCat2labs[[1]][i]) 
+		}
+		Cat2labslist <- Cat2labslistx[-1]
+		noCat2labs<-length(Cat2labslist)
+		Cat2labslistcol <-c()
+		for (i in 1:noCat2labs) {
+			Cat2labslistcol[i]<- trimws(Cat2labslist[i], which = c("both"))
+		}
+		graphdata$secondcatvarrr_IVS<-namereplace(graphdata$secondcatvarrr_IVS)
+		graphdata$secondcatvarrr_IVS <- factor(graphdata$secondcatvarrr_IVS, levels = Cat2labslistcol)
+	}
+
+
+#	graphdata$firstcatvarrr_IVS <- paste(graphdata$first_IVS_cat, "=",graphdata$firstcatvarrr_IVS, sep = "") 
+#	graphdata$secondcatvarrr_IVS <- paste(graphdata$second_IVS_cat, "=",graphdata$secondcatvarrr_IVS, sep = "") 
+
+	graphdata$catfact <- paste(graphdata$firstcatvarrr_IVS, graphdata$secondcatvarrr_IVS)
 	graphdata$l_l <-as.factor(graphdata$catfact)
 }
+
+
+#Confirm the catfactor is categorical
+graphdata$catfact <-as.factor(graphdata$catfact)
+
+if(FirstCatFactor != "NULL" || SecondCatFactor != "NULL") {
+	Gr_palette<-palette_FUN("catfact")
+}
+
+
 
 #Adding a case ID variable if none is selected
 if (CaseProfilesPlot == "N") {
@@ -170,15 +294,23 @@ for (i in 1:10) {
 	CPXAxisTitle<-namereplace(CPXAxisTitle)
 
 	if (FirstCatFactor != "NULL" && SecondCatFactor != "NULL") 	{
-		graphdata$firstcatvarrr_IVS<-namereplace(graphdata$firstcatvarrr_IVS)
-		graphdata$secondcatvarrr_IVS<-namereplace(graphdata$secondcatvarrr_IVS)
+#		graphdata$firstcatvarrr_IVS<-namereplace(graphdata$firstcatvarrr_IVS)
+#		graphdata$secondcatvarrr_IVS<-namereplace(graphdata$secondcatvarrr_IVS)
 	}
 
 	if ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL")  || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) {
-		graphdata$l_l<-namereplace(graphdata$l_l)
+#		graphdata$l_l<-namereplace(graphdata$l_l)
 	}
 }
 XAxisTitleHist = YAxisTitle
+
+
+
+
+
+
+
+
 
 
 #===================================================================================================================

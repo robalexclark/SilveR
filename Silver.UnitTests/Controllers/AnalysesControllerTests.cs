@@ -37,7 +37,7 @@ namespace Silver.UnitTests.Controllers
             IActionResult result = await sut.Index();
 
             //Assert
-            ViewResult viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace Silver.UnitTests.Controllers
             IActionResult result = sut.AnalysisDataSelector(new AnalysisDataSelectorViewModel());
 
             //Assert
-            RedirectToActionResult viewResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.IsType<RedirectToActionResult>(result);
         }
 
         [Fact]
@@ -730,7 +730,7 @@ namespace Silver.UnitTests.Controllers
             IActionResult result = sut.Processing(It.IsAny<string>());
 
             //Assert
-            ViewResult viewResult = Assert.IsType<ViewResult>(result);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]

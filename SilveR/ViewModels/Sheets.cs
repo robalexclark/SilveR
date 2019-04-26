@@ -101,7 +101,7 @@ namespace SilveR.ViewModels
                     {
                         DataColumn dataColumn;
 
-                        if (cell.Value == null && cell.Enable == false) //then its the SilveRSelected header cell
+                        if (cell.Value == null && !cell.Enable) //then its the SilveRSelected header cell
                         {
                             dataColumn = new DataColumn("SilveRSelected", System.Type.GetType("System.Boolean"));
                         }

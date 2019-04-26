@@ -63,7 +63,7 @@ namespace SilveR.Controllers
 
                 Script script = scripts.Single(x => x.ScriptFileName == analysisName);
 
-                if (script.RequiresDataset == false)
+                if (!script.RequiresDataset)
                 {
                     return RedirectToAction("Analysis", viewModel);
                 }
