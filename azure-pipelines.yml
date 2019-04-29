@@ -54,11 +54,14 @@ steps:
 
 - task: GitHubRelease@0
   inputs:
-    gitHubConnection: 'Github'
-    repositoryName: 'robalexclark/SilveR' 
-    action: 'edit'
-    target: '$(build.sourceVersion)'
-    tagSource: 'Git tag'
+    gitHubConnection: Github
+    repositoryName: robalexclark/SilveR 
+    action: edit
+    target: 'master'
+    tagSource: manual
     tag: '1.0'
-    assetUploadMode: 'replace'
+    title: '1.0-beta'
+    assetUploadMode: 'delete'
+    isPreRelease: true
+    isDraft: false
     
