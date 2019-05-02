@@ -54,10 +54,6 @@ namespace SilveR.Models
                 entity.Property(e => e.ScriptDisplayName);
                 entity.Property(e => e.ScriptFileName);
             });
-
-            OnModelCreatingPartial(modelBuilder);
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

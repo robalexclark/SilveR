@@ -35,13 +35,12 @@ namespace SilveR.Validators
                 return ValidationInfo;
             }
 
-            if (!String.IsNullOrEmpty(owVariables.Treatment))
+            if (owVariables.Treatment != null && !CheckResponsesPerLevel(owVariables.Treatment, owVariables.Response, ReflectionExtensions.GetPropertyDisplayName<OneWayANOVAPowerAnalysisDatasetBasedInputsModel>(i => i.Treatment)))
             {
-                if (!CheckResponsesPerLevel(owVariables.Treatment, owVariables.Response, ReflectionExtensions.GetPropertyDisplayName<OneWayANOVAPowerAnalysisDatasetBasedInputsModel>(i => i.Treatment)))
-                    return ValidationInfo;
+                return ValidationInfo;
             }
 
-            if (!String.IsNullOrEmpty(owVariables.Treatment) && !String.IsNullOrEmpty(owVariables.Response)) //if a treat and response is selected...
+            if (owVariables.Treatment != null && owVariables.Response != null) //if a treat and response is selected...
             {
                 //Check that the number of responses for each level is at least 2
                 Dictionary<string, int> levelResponses = ResponsesPerLevel(owVariables.Treatment, owVariables.Response);
@@ -57,14 +56,10 @@ namespace SilveR.Validators
                 //check response and doses contain values
                 if (!CheckFactorAndResponseNotBlank(owVariables.Treatment, owVariables.Response, "treatment factor")) return ValidationInfo;
             }
-            else if (String.IsNullOrEmpty(owVariables.Treatment) && !String.IsNullOrEmpty(owVariables.Response))
-            //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
+            else if (owVariables.Response != null && CountResponses(owVariables.Response) == 1) //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
             {
-                if (CountResponses(owVariables.Response) == 1)
-                {
-                    ValidationInfo.AddErrorMessage("The response selected (" + owVariables.Response + ") contains only 1 value. Please select another factor.");
-                    return ValidationInfo;
-                }
+                ValidationInfo.AddErrorMessage("The response selected (" + owVariables.Response + ") contains only 1 value. Please select another factor.");
+                return ValidationInfo;
             }
 
             if (owVariables.PlottingRangeType == PlottingRangeTypeOption.SampleSize)

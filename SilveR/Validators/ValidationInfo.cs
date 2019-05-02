@@ -10,17 +10,17 @@ namespace SilveR.Validators
         {
             get
             {
-                return errorMessages.Any() == false;
+                return !errorMessages.Any();
             }
         }
 
-        private List<string> errorMessages = new List<string>();
+        private readonly List<string> errorMessages = new List<string>();
         public IEnumerable<string> ErrorMessages
         {
             get { return errorMessages; }
         }
 
-        private List<string> warningMessages = new List<string>();
+        private readonly List<string> warningMessages = new List<string>();
         public IEnumerable<string> WarningMessages
         {
             get { return warningMessages; }

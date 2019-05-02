@@ -193,57 +193,6 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("Respivs_sp_ivs2,Resp8 None Cat4 Cat5 Cat6 Cat456 Y Y Y N N N N N Y 95 N N", result);
         }
 
-        //[Fact]
-        //public void VariablesUsedOnceOnly_ReturnsTrue()
-        //{
-        //    //Arrange
-        //    SummaryStatisticsModel sut = new SummaryStatisticsModel(null);
-
-        //    sut.Responses = new List<string>() { "Resp1", "Resp 2" };
-        //    sut.FirstCatFactor = "Cat1";
-        //    sut.SecondCatFactor = "Cat2";
-        //    sut.ThirdCatFactor = "Cat3";
-        //    sut.FourthCatFactor = "Cat4";
-
-        //    //Act
-        //    bool resultResponses = sut.VariablesUsedOnceOnly("Responses");
-        //    bool resultCat1 = sut.VariablesUsedOnceOnly("FirstCatFactor");
-        //    bool resultCat2 = sut.VariablesUsedOnceOnly("SecondCatFactor");
-        //    bool resultCat3 = sut.VariablesUsedOnceOnly("ThirdCatFactor");
-        //    bool resultCat4 = sut.VariablesUsedOnceOnly("FourthCatFactor");
-
-        //    //Assert
-        //    Assert.True(resultResponses);
-        //    Assert.True(resultCat1);
-        //    Assert.True(resultCat2);
-        //    Assert.True(resultCat3);
-        //    Assert.True(resultCat4);
-        //}
-
-        //[Fact]
-        //public void VariablesUsedOnceOnly_ReturnsFalse()
-        //{
-        //    //Arrange
-        //    SummaryStatisticsModel sut = new SummaryStatisticsModel(null);
-
-        //    sut.Responses = new List<string>() { "Resp1", "Resp2" };
-        //    sut.FirstCatFactor = "Resp1";
-        //    sut.SecondCatFactor = "Cat2";
-        //    sut.ThirdCatFactor = "Cat2";
-
-        //    //Act
-        //    bool resultResponses = sut.VariablesUsedOnceOnly("Responses");
-        //    bool resultCat1 = sut.VariablesUsedOnceOnly("FirstCatFactor");
-        //    bool resultCat2 = sut.VariablesUsedOnceOnly("SecondCatFactor");
-        //    bool resultCat3 = sut.VariablesUsedOnceOnly("ThirdCatFactor");
-
-        //    //Assert
-        //    Assert.False(resultResponses);
-        //    Assert.False(resultCat1);
-        //    Assert.False(resultCat2);
-        //    Assert.False(resultCat3);
-        //}
-
         private SummaryStatisticsModel GetModel(IDataset dataset)
         {
             var model = new SummaryStatisticsModel(dataset)

@@ -21,38 +21,40 @@ namespace SilveR.Validators
             foreach (PropertyInfo p in properties.Where(x => x.Name != validationContext.MemberName))
             {
                 object propertyValue = p.GetValue(validationContext.ObjectInstance);
-                if (propertyValue is String)
+
+                switch (propertyValue)
                 {
-                    varList.Add(propertyValue.ToString());
-                }
-                else if (propertyValue is IEnumerable<string>)
-                {
-                    varList.AddRange((IEnumerable<string>)propertyValue);
+                    case string strPropertyValue:
+                        varList.Add(strPropertyValue);
+
+                        break;
+                    case IEnumerable<string> strIEnumerable:
+                        varList.AddRange(strIEnumerable);
+
+                        break;
                 }
             }
 
             bool result = true;
-            if (value is String)
+            switch (value)
             {
-                string stringVarToCheck = (String)value;
-                if (varList.Contains(stringVarToCheck))
-                {
-                    result = false;
-                }
-            }
-            else if (value is List<string>)
-            {
-                List<string> varsToCheck = (List<string>)value;
+                case string stringVarToCheck:
+                    if (varList.Contains(stringVarToCheck))
+                    {
+                        result = false;
+                    }
+                    break;
+                case List<string> varsToCheck:
+                    if (varsToCheck.Intersect(varList).Any())
+                    {
+                        result = false;
+                    }
+                    break;
 
-                if (varsToCheck.Intersect(varList).Any())
-                {
-                    result = false;
-                }
+                default:
+                    throw new InvalidOperationException("Attempting to check unknown type!");
             }
-            else
-            {
-                throw new ArgumentException("Attempting to check unknown type!");
-            }
+
 
             if (result)
             {
@@ -126,7 +128,7 @@ namespace SilveR.Validators
             }
             else //check to ensure that values in list are all numbers and are all comma separated and >0
             {
-                string[] pValues = model.PValues?.Replace(" ", "").Split(','); //split list by comma
+                string[] pValues = model.PValues.Replace(" ", "").Split(','); //split list by comma
 
                 foreach (string p in pValues)//go through list and check that is a number and is greater than 0
                 {

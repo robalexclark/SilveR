@@ -37,7 +37,7 @@ namespace SilveR.StatsModels
 
         public override ValidationInfo Validate()
         {
-            PValueAdjustmentUserBasedInputsValidator pValueAdjustmentUserBasedInputsValidator = new PValueAdjustmentUserBasedInputsValidator(this);
+            PValueAdjustmentUserBasedInputsValidator pValueAdjustmentUserBasedInputsValidator = new PValueAdjustmentUserBasedInputsValidator();
             return pValueAdjustmentUserBasedInputsValidator.Validate();
         }
 

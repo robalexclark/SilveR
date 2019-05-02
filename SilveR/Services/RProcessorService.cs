@@ -208,8 +208,6 @@ namespace SilveR.Services
                 }
                 catch (Exception ex)
                 {
-                    //try
-                    //{
                     Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
 
                     string message = "ContentRoot=" + Startup.ContentRootPath + Environment.NewLine + Environment.NewLine;
@@ -226,10 +224,6 @@ namespace SilveR.Services
 
                     analysis.RProcessOutput = message;
                     await silveRRepository.UpdateAnalysis(analysis);
-                    //}
-                    //catch { }
-
-                    throw new Exception("RProcessor execution failed (see inner exception for details)", ex);
                 }
             }
         }

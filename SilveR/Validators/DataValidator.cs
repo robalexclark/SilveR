@@ -14,7 +14,7 @@ namespace SilveR.Validators
             get { return dataTable; }
         }
 
-        private ValidationInfo validationInfo = new ValidationInfo();
+        private readonly ValidationInfo validationInfo = new ValidationInfo();
         public ValidationInfo ValidationInfo
         {
             get { return validationInfo; }

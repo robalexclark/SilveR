@@ -5,7 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SilveR.Models;
 using SilveR.Services;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace SilveR
@@ -37,7 +39,10 @@ namespace SilveR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=SilveR.db"));
+            string appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Program.AppName);
+            Directory.CreateDirectory(appDataFolder); //create the app folder if it does not exist
+
+            services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=" + Path.Combine(appDataFolder, Program.AppName + ".db")));
             services.AddScoped<ISilveRRepository, SilveRRepository>();
 
             //R processing services comprising of R processor and queue services

@@ -4,11 +4,8 @@ namespace SilveR.Validators
 {
     public class PValueAdjustmentDatasetBasedInputsValidator : ValidatorBase
     {
-        private readonly PValueAdjustmentDatasetBasedInputsModel pvVariables;
-
-        public PValueAdjustmentDatasetBasedInputsValidator(PValueAdjustmentDatasetBasedInputsModel pv)
+        public PValueAdjustmentDatasetBasedInputsValidator()
         {
-            pvVariables = pv;
         }
 
         public override ValidationInfo Validate()

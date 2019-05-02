@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 
 namespace SilveR.Validators
 {
@@ -163,14 +164,14 @@ namespace SilveR.Validators
         {
             //get a list of all treatment factors plus time
             List<string> treatmentsAndTime = new List<string>(rmVariables.Treatments);
-            if (!String.IsNullOrEmpty(rmVariables.RepeatedFactor)) treatmentsAndTime.Add(rmVariables.RepeatedFactor);
+            treatmentsAndTime.Add(rmVariables.RepeatedFactor);
 
             //Use hashsets to store the unique values
             HashSet<string> treatmentsAndTimeInteractions = new HashSet<string>();
             HashSet<string> timeLevels = new HashSet<string>();
             foreach (DataRow row in DataTable.Rows) //go through each row...
             {
-                string treatmentWithTime = null;
+                StringBuilder treatmentWithTime = new StringBuilder();
 
                 string respVal = row[rmVariables.Response].ToString().Trim();
 
@@ -181,14 +182,14 @@ namespace SilveR.Validators
                     if (!String.IsNullOrEmpty(treatValue) && !String.IsNullOrEmpty(respVal))
                     {
                         //combine the values from each column into one string (only if both are present)
-                        treatmentWithTime = treatmentWithTime + treatValue;
+                        treatmentWithTime.Append(treatValue);
                     }
                 }
 
                 //if the treatments by day value exists add it to the hashset
-                if (!String.IsNullOrEmpty(treatmentWithTime))
+                if (!String.IsNullOrEmpty(treatmentWithTime.ToString()))
                 {
-                    treatmentsAndTimeInteractions.Add(treatmentWithTime);
+                    treatmentsAndTimeInteractions.Add(treatmentWithTime.ToString());
                 }
 
                 //if the time exists, add it to the hashset

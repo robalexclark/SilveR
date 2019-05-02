@@ -343,6 +343,21 @@ namespace SilveR.Helpers
             return dataset;
         }
 
+        public static void CreateCombinedEffectColumn(this DataTable dataTable, IEnumerable<string> sourceColumnNames, string targetColumnName)
+        {
+            dataTable.Columns.Add(new DataColumn(targetColumnName));
+            foreach (DataRow r in dataTable.Rows) //go through each row...
+            {
+                StringBuilder combinedEffectValue = new StringBuilder();
+                foreach (string s in sourceColumnNames) //combine the values from each column into one string
+                {
+                    combinedEffectValue.Append(" " + r[s.Trim()]);
+                }
+
+                r[targetColumnName] = combinedEffectValue.ToString().Trim(); //copy the new value to the new column
+            }
+        }
+
 
         //WHEN CONVERTING VALIDATION TO LINQ UNCOMMENT THIS SO LINQ CAN BE USED
         //public static IEnumerable<DataRow> AsEnumerable(this DataTable table)

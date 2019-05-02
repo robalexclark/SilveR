@@ -67,13 +67,23 @@ namespace Silver.UnitTests.StatsModels
         }
 
         [Fact]
-        public void CreateAnalysisModel_PValueAdjustmentUserBasedInputs_ReturnsPValueAdjustmentModel()
+        public void CreateAnalysisModel_PValueAdjustmentUserBasedInputs_ReturnsPValueAdjustmentUserBasedInputsModel()
         {
             //Arrange, Act
-            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PValueAdjustmentUserBasedInputs", GetDataset());
+            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PValueAdjustmentUserBasedInputs", null);
 
             //Assert
             Assert.IsType<PValueAdjustmentUserBasedInputsModel>(analysisModelBase);
+        }
+
+        [Fact]
+        public void CreateAnalysisModel_PValueAdjustmentDatasetBasedInputs_ReturnsPValueAdjustmentDatasetBasedInputsModel()
+        {
+            //Arrange, Act
+            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PValueAdjustmentDatasetBasedInputs", GetDataset());
+
+            //Assert
+            Assert.IsType<PValueAdjustmentDatasetBasedInputsModel>(analysisModelBase);
         }
 
         [Fact]
@@ -200,7 +210,7 @@ namespace Silver.UnitTests.StatsModels
         public void CreateAnalysisModel_OneWayANOVAPowerAnalysisUserBasedInputs_ReturnsOneWayANOVAPowerAnalysisUserBasedInputsModel()
         {
             //Arrange, Act
-            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("OneWayANOVAPowerAnalysisUserBasedInputs", GetDataset());
+            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("OneWayANOVAPowerAnalysisUserBasedInputs", null);
 
             //Assert
             Assert.IsType<OneWayANOVAPowerAnalysisUserBasedInputsModel>(analysisModelBase);
@@ -216,15 +226,15 @@ namespace Silver.UnitTests.StatsModels
             Assert.IsType<OneWayANOVAPowerAnalysisDatasetBasedInputsModel>(analysisModelBase);
         }
 
-        //[Fact]
-        //public void CreateAnalysisModel_MultivariateAnalysis_ReturnsMultivariateAnalysisModel()
-        //{
-        //    //Arrange, Act
-        //    AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("MultivariateAnalysis", GetDataset());
+        [Fact]
+        public void CreateAnalysisModel_MultivariateAnalysis_ReturnsMultivariateAnalysisModel()
+        {
+            //Arrange, Act
+            AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("MultivariateAnalysis", GetDataset());
 
-        //    //Assert
-        //    Assert.IsType<MultivariateAnalysisModel>(analysisModelBase);
-        //}
+            //Assert
+            Assert.IsType<MultivariateAnalysisModel>(analysisModelBase);
+        }
 
 
         [Fact]
@@ -246,8 +256,8 @@ namespace Silver.UnitTests.StatsModels
             //Assert
             Assert.IsType<IncompleteFactorialParametricAnalysisModel>(analysisModelBase);
         }
-     
-  
+
+
         private Dataset GetDataset()
         {
             Dataset dataset = new Dataset

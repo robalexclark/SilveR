@@ -8,7 +8,7 @@ namespace SilveR.StatsModels
     {
         public string ScriptFileName { get; private set; }
 
-        public AnalysisModelBase(string scriptFileName)
+        protected AnalysisModelBase(string scriptFileName)
         {
             this.ScriptFileName = scriptFileName;
         }

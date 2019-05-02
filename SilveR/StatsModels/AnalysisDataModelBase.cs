@@ -25,7 +25,7 @@ namespace SilveR.StatsModels
             }
         }
 
-        public AnalysisDataModelBase(IDataset dataset, string scriptFileName)
+        protected AnalysisDataModelBase(IDataset dataset, string scriptFileName)
             : base(scriptFileName)
         {
             //setup model

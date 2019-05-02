@@ -108,9 +108,6 @@ namespace SilveR.StatsModels
                 }
             }
 
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
-
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
 
@@ -263,24 +260,17 @@ namespace SilveR.StatsModels
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
             string model = Response + "~";
 
-            //if (!String.IsNullOrEmpty(Covariate))
-            //    model = model + Covariate + "+";
-
             if (CategoricalFactors != null)
             {
-                foreach (string factor in CategoricalFactors)
-                    model = model + factor + "+";
+                model = model + String.Join('+', CategoricalFactors) + '+';
             }
 
             if (OtherDesignFactors != null)
             {
-                foreach (string otherDesign in OtherDesignFactors)
-                    model = model + otherDesign + "+";
+                model = model + String.Join('+', OtherDesignFactors);
             }
 
-            model = model.TrimEnd('+');
-
-            return model;
+            return model.TrimEnd('+'); //trim end because might have cat factors but no other design factors
         }
     }
 }

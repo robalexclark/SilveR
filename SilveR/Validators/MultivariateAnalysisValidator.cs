@@ -95,11 +95,10 @@ namespace SilveR.Validators
                     }
                 }
 
-                if (maVariables.CaseID != null)
+                //check response and cat factors contain values
+                if (maVariables.CaseID != null && !CheckFactorAndResponseNotBlank(maVariables.CaseID, response, ReflectionExtensions.GetPropertyDisplayName<MultivariateAnalysisModel>(i => i.CaseID)))
                 {
-                    //check response and cat factors contain values
-                    if (!CheckFactorAndResponseNotBlank(maVariables.CaseID, response, ReflectionExtensions.GetPropertyDisplayName<MultivariateAnalysisModel>(i => i.CaseID)))
-                        return ValidationInfo;
+                    return ValidationInfo;
                 }
             }
 

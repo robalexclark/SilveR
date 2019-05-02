@@ -93,7 +93,6 @@ namespace SilveR.StatsModels
             IncompleteFactorialParametricAnalysisValidator singleMeasuresParametricAnalysisValidator = new IncompleteFactorialParametricAnalysisValidator(this);
             return singleMeasuresParametricAnalysisValidator.Validate();
         }
-
         public override string[] ExportData()
         {
             DataTable dtNew = DataTable.CopyForExport();
@@ -114,46 +113,24 @@ namespace SilveR.StatsModels
             DataColumn catFactor = new DataColumn("catfact");
             dtNew.Columns.Add(catFactor);
 
-
             //Need to create a new column for the scatterplot data as we have to combine any interaction effects into one column
-            DataColumn scatterPlot = new DataColumn("scatterPlotColumn");
-            dtNew.Columns.Add(scatterPlot);
-            foreach (DataRow r in dtNew.Rows) //go through each row...
-            {
-                string combinedEffectValue = null;
-                foreach (string s in Treatments) //combine the values from each column into one string
-                {
-                    combinedEffectValue = combinedEffectValue + " " + r[s.Trim()];
-                }
-
-                r["scatterPlotColumn"] = combinedEffectValue.Trim(); //copy the new value to the new column
-            }
+            dtNew.CreateCombinedEffectColumn(Treatments, "scatterPlotColumn");
 
             //If an interaction effect is selected then we need to combine values into single column
             if (!String.IsNullOrEmpty(SelectedEffect))
             {
                 //create a new column and add it to the table
-                DataColumn mainEffect = new DataColumn("mainEffect");
-                dtNew.Columns.Add(mainEffect);
-
                 if (SelectedEffect.Contains(" * ")) //then it is an interaction effect so we need to combine values from different columns
                 {
                     char[] splitChar = { '*' };
                     string[] effects = SelectedEffect.Split(splitChar, StringSplitOptions.RemoveEmptyEntries); //get the effect names that make up the interaction effect
 
-                    foreach (DataRow r in dtNew.Rows) //go through each row...
-                    {
-                        string combinedEffectValue = null;
-                        foreach (string s in effects) //combine the values from each column into one string
-                        {
-                            combinedEffectValue = combinedEffectValue + " " + r[s.Trim()];
-                        }
-
-                        r["mainEffect"] = combinedEffectValue.Trim(); //copy the new value to the new column
-                    }
+                    dtNew.CreateCombinedEffectColumn(effects, "mainEffect");
                 }
                 else //just copy the column selected in the dropdown
                 {
+                    DataColumn mainEffect = new DataColumn("mainEffect");
+                    dtNew.Columns.Add(mainEffect);
                     foreach (DataRow r in dtNew.Rows)
                     {
                         r["mainEffect"] = r[SelectedEffect].ToString();
@@ -310,57 +287,44 @@ namespace SilveR.StatsModels
         private string GetModel()
         {
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
-            string model = Response + "~";
+            StringBuilder model = new StringBuilder(Response + "~");
 
             if (Covariates != null)
             {
-                foreach (string covariate in Covariates)
-                {
-                    model = model + covariate + "+";
-                }
+                model.Append(String.Join('+', Covariates) + '+');
             }
 
             if (OtherDesignFactors != null)
             {
-                foreach (string otherDesign in OtherDesignFactors)
-                {
-                    model = model + otherDesign + "+";
-                }
+                model.Append(String.Join('+', OtherDesignFactors) + '+');
             }
 
-            foreach (string treat in Treatments)
-            {
-                model = model + treat + "+";
-            }
+            model.Append(String.Join('+', Treatments) + '+');
 
             //determine the interactions
             List<string> factors = new List<string>(Treatments);
-            IEnumerable<string> fullInteractions = DetermineInteractions(factors);
+            List<string> fullInteractions = DetermineInteractions(factors);
             foreach (string s in fullInteractions)
             {
-                model = model + s.Replace(" * ", "*") + "+";
+                model.Append(s.Replace(" * ", "*") + '+');
             }
 
-            model = model.TrimEnd('+');
-
-            return model;
+            return model.ToString().TrimEnd('+');
         }
 
         private string GetEffectModel()
         {
             //assemble the effect model
-            string effectModel = Response + "~"; //add in the response
+            StringBuilder effectModel = new StringBuilder(Response + "~"); //add in the response
 
             if (Covariates != null)
             {
-                foreach (string covariate in Covariates) //add in a covariate if one is selected
-                    effectModel = effectModel + covariate + "+";
+                effectModel.Append(String.Join('+', Covariates) + '+');
             }
 
             if (OtherDesignFactors != null)
             {
-                foreach (string otherDesign in OtherDesignFactors) //add in blocking factors if they are selected
-                    effectModel = effectModel + otherDesign + "+";
+                effectModel.Append(String.Join('+', OtherDesignFactors) + '+');
             }
 
             //complicated business of assembling the other part of the model from the interactions etc...
@@ -371,7 +335,7 @@ namespace SilveR.StatsModels
             {
                 if (!interactionEffects.Contains(treat))
                 {
-                    effectModel = effectModel + treat.Trim() + "+";
+                    effectModel.Append(treat.Trim() + "+");
                 }
             }
 
@@ -388,16 +352,9 @@ namespace SilveR.StatsModels
                 Combinations<string> combinations = new Combinations<string>(listToCreateInteractionsFrom, i, GenerateOption.WithoutRepetition);
 
                 //for each set of combinations we need to assemble the string, with each factor separated by a *
-                foreach (IList<string> c in combinations)
+                foreach (IList<string> combination in combinations)
                 {
-                    string interaction = null;
-
-                    foreach (string s in c)
-                    {
-                        interaction = interaction + " * " + s;
-                    }
-
-                    interaction = interaction.Remove(0, 3); //remove the first *
+                    string interaction = String.Join(" * ", combination);
 
                     //add the interaction to the list
                     interactions.Add(interaction);

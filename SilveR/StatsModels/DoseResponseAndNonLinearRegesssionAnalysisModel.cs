@@ -116,9 +116,6 @@ namespace SilveR.StatsModels
                 }
             }
 
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
-
             if (AnalysisType == AnalysisOption.FourParameter)
             {
                 dtNew.RemoveBlankRow(Response);

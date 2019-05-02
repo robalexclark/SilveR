@@ -26,6 +26,5 @@ namespace SilveR.Models
         Task ResetUserOptions(UserOption userOption);
         Task<UserOption> GetUserOptions();
         Task UpdateUserOptions(UserOption userOption);
-        void Dispose();
     }
 }

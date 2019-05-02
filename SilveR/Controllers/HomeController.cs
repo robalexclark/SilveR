@@ -8,8 +8,6 @@ namespace SilveR.Controllers
     {
         public IActionResult Index()
         {
-            //ViewBag.InfoMessage = TempData["InfoMessage"];
-
             return View();
         }
 

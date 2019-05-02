@@ -34,10 +34,9 @@ namespace SilveR.Validators
                 return ValidationInfo;
             }
 
-            if (!String.IsNullOrEmpty(mcVariables.Treatment))
+            if (mcVariables.Treatment != null && !CheckResponsesPerLevel(mcVariables.Treatment, mcVariables.Response, ReflectionExtensions.GetPropertyDisplayName<ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel>(i => i.Treatment)))
             {
-                if (!CheckResponsesPerLevel(mcVariables.Treatment, mcVariables.Response, ReflectionExtensions.GetPropertyDisplayName<ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel>(i => i.Treatment)))
-                    return ValidationInfo;
+                return ValidationInfo;
             }
 
             if (!String.IsNullOrEmpty(mcVariables.Treatment) && !String.IsNullOrEmpty(mcVariables.Response)) //if a treat and response is selected...
@@ -56,14 +55,10 @@ namespace SilveR.Validators
                 //check response and doses contain values
                 if (!CheckFactorAndResponseNotBlank(mcVariables.Treatment, mcVariables.Response, "treatment factor")) return ValidationInfo;
             }
-            else if (String.IsNullOrEmpty(mcVariables.Treatment) && !String.IsNullOrEmpty(mcVariables.Response))
-            //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
+            else if (mcVariables.Treatment == null && mcVariables.Response != null && CountResponses(mcVariables.Response) == 1) //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
             {
-                if (CountResponses(mcVariables.Response) == 1)
-                {
-                    ValidationInfo.AddErrorMessage("The response selected (" + mcVariables.Response + ") contains only 1 value. Please select another factor.");
-                    return ValidationInfo;
-                }
+                ValidationInfo.AddErrorMessage("The response selected (" + mcVariables.Response + ") contains only 1 value. Please select another factor.");
+                return ValidationInfo;
             }
 
             if (mcVariables.ChangeType == ChangeTypeOption.Percent)

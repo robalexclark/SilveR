@@ -1,6 +1,7 @@
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -228,47 +229,41 @@ namespace SilveR.StatsModels
         private string GetModel()
         {
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
-            string model = Response + "~";
+            StringBuilder model = new StringBuilder(Response + "~");
 
             if (Covariates != null)
             {
-                foreach (string covariate in Covariates)
-                {
-                    model = model + covariate + "+";
-                }
+                model.Append(String.Join('+', Covariates) + '+');
             }
 
             if (OtherDesignFactors != null)
             {
-                foreach (string otherDesign in OtherDesignFactors)
-                {
-                    model = model + otherDesign + "+";
-                }
+                model.Append(String.Join('+', OtherDesignFactors) + '+');
             }
 
             foreach (string treat in Treatments)
             {
-                model = model + treat + "+";
+                model.Append(String.Join('+', Treatments) + '+');
             }
 
             if (RandomFactor1 != null)
             {
-                model = model + RandomFactor1 + "+";
+                model.Append(RandomFactor1 + '+');
             }
             if (RandomFactor2 != null)
             {
-                model = model + RandomFactor2 + "+";
+                model.Append(RandomFactor2 + '+');
             }
             if (RandomFactor3 != null)
             {
-                model = model + RandomFactor3 + "+";
+                model.Append(RandomFactor3 + '+');
             }
             if (RandomFactor4 != null)
             {
-                model = model + RandomFactor4 + "+";
+                model.Append(RandomFactor4 + '+');
             }
 
-            return model.TrimEnd('+');
+            return model.ToString().TrimEnd('+');
         }
     }
 }

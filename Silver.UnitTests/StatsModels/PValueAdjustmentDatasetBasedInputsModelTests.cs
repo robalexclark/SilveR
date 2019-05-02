@@ -51,29 +51,6 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal(new List<string>() { "Holm", "Hochberg", "Hommel", "Benjamini-Hochberg", "Bonferroni" }, result);
         }
 
-        [Fact]
-        public void ExportData_MultipleTreatments_ReturnsCorrectStringArray()
-        {
-            ////Arrange
-            //Mock<IDataset> mockDataset = new Mock<IDataset>();
-            //mockDataset.Setup(x => x.DatasetID).Returns(1);
-            //mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
-
-            //SingleMeasuresParametricAnalysisModel sut = GetModel(mockDataset.Object);
-
-            ////Act
-            //string[] result = sut.ExportData();
-
-            ////Assert
-            //Assert.Equal("Respivs_sp_ivs1", result[0]);
-
-            ////scatterplot check
-            //Assert.Contains(",D1 F,", result[24]);
-
-            ////mainEffect check
-            //Assert.EndsWith(",D1 F", result[24]);
-        }
-
 
         [Fact]
         public void GetArguments_ReturnsCorrectArguments()

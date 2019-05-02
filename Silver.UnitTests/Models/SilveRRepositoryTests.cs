@@ -124,8 +124,6 @@ namespace Silver.UnitTests.Models
             sut.Dispose();
 
             //Assert
-            //var ds = await sut.GetDatasetByID(6);
-            //Assert.Null(ds);
         }
 
         [Fact]
@@ -297,11 +295,6 @@ namespace Silver.UnitTests.Models
 
             Analysis analysis = await sut.GetAnalysis(testGuid);
             await sut.DeleteAnalysis(analysis.AnalysisID);
-            //sut.Dispose();
-
-            //Assert
-            //var ds = await sut.GetAnalysis(analysis.AnalysisGuid);
-            //Assert.Null(ds);
         }
 
         [Fact]
@@ -335,7 +328,6 @@ namespace Silver.UnitTests.Models
             sut.Dispose();
 
             //Assert (test default user options)
-            //Assert.Equal(44, userOption.Properties.Count);
             Assert.Equal("Solid", userOption.LineTypeSolid);
             Assert.Equal("Dashed", userOption.LineTypeDashed);
             Assert.Equal("Helvetica", userOption.GraphicsFont);

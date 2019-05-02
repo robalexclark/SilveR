@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SilveR.Helpers
 {
     public class ArgumentFormatter
     {
-        private Dictionary<string, string> charConversionList = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> charConversionList = new Dictionary<string, string>();
 
         public ArgumentFormatter()
         {
@@ -40,7 +41,7 @@ namespace SilveR.Helpers
 
         public string GetFormattedArgument(int value)
         {
-                return GetFormattedArgument(value.ToString(), false);
+            return GetFormattedArgument(value.ToString(), false);
         }
 
 
@@ -48,7 +49,7 @@ namespace SilveR.Helpers
         {
             if (!value.HasValue)
             {
-                return  "NULL";
+                return "NULL";
             }
             else
             {
@@ -94,19 +95,18 @@ namespace SilveR.Helpers
         {
             if (listArguments == null)
             {
-                //throw new NullReferenceException("listArguments can't be null!");
                 return "NULL";
             }
             else
             {
-                string formattedArgument = null;
+                StringBuilder formattedArgument = new StringBuilder();
 
                 foreach (string item in listArguments)
                 {
-                    formattedArgument = formattedArgument + "," + this.ConvertIllegalCharacters(item);
+                    formattedArgument.Append("," + this.ConvertIllegalCharacters(item));
                 }
 
-                return formattedArgument.TrimStart(',');
+                return formattedArgument.ToString().TrimStart(',');
             }
         }
 

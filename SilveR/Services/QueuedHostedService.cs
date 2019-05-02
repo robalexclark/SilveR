@@ -7,7 +7,7 @@ namespace SilveR.Services
 {
     public sealed class QueuedHostedService : IHostedService, IDisposable
     {
-        private CancellationTokenSource _shutdown = new CancellationTokenSource();
+        private readonly CancellationTokenSource _shutdown = new CancellationTokenSource();
         private Task _backgroundTask;
 
         public QueuedHostedService(IBackgroundTaskQueue taskQueue)

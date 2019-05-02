@@ -109,9 +109,6 @@ namespace SilveR.StatsModels
                 }
             }
 
-            //ensure that all data is trimmed
-            //dtNew.TrimAllDataInDataTable();
-
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
 
@@ -236,24 +233,24 @@ namespace SilveR.StatsModels
         private string GetModel()
         {
             //assemble the model from the information in the treatment, other factors, response and covariate boxes
-            string model = Response + "~";
+            StringBuilder model = new StringBuilder(Response + "~");
 
             if (Covariates != null)
-                foreach (string covariate in Covariates)
-                    model = model + covariate + "+";
+            {
+                model.Append(String.Join('+', Covariates) + '+');
+            }
 
             if (OtherDesignFactors != null)
             {
-                foreach (string otherDesign in OtherDesignFactors)
-                    model = model + otherDesign + "+";
+                model.Append(String.Join('+', OtherDesignFactors) + '+');
             }
 
-            if (!String.IsNullOrEmpty(Treatment))
-                model = model + "Timezzz+"; //Time model needs zzz adding on the end for R to be able to recognise Time var
+            if (Treatment !=null)
+            {
+                model.Append("Timezzz"); //Time model needs zzz adding on the end for R to be able to recognise Time var
+            }
 
-            model = model.TrimEnd('+');
-
-            return model;
+            return model.ToString().TrimEnd('+');
         }
     }
 }

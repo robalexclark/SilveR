@@ -127,7 +127,7 @@ namespace Silver.UnitTests.Controllers
             //Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
 
-            AnalysisModelBase analysisModelBase = Assert.IsAssignableFrom<AnalysisModelBase>(viewResult.Model);
+            Assert.IsAssignableFrom<AnalysisModelBase>(viewResult.Model);
 
             Assert.Equal("SummaryStatistics", viewResult.ViewName);
         }
@@ -490,7 +490,7 @@ namespace Silver.UnitTests.Controllers
 
             //Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
-            AnalysisModelBase analysisModelBase = (AnalysisModelBase)viewResult.Model;
+            Assert.IsAssignableFrom<AnalysisModelBase>(viewResult.Model);
 
             Assert.False(viewResult.ViewData.ModelState.IsValid);
         }
@@ -512,7 +512,7 @@ namespace Silver.UnitTests.Controllers
 
             //Assert
             ViewResult viewResult = Assert.IsType<ViewResult>(result);
-            AnalysisModelBase analysisModelBase = (AnalysisModelBase)viewResult.Model;
+            Assert.IsAssignableFrom<AnalysisModelBase>(viewResult.Model);
 
             Assert.NotNull(viewResult.ViewData["WarningMessages"]);
         }
@@ -671,23 +671,6 @@ namespace Silver.UnitTests.Controllers
             RedirectToActionResult redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("ViewLog", redirectToActionResult.ActionName);
         }
-
-        //[Fact]
-        //public void ExportToPdf_ReturnsAnActionResult()
-        //{
-        //    //Arrange
-        //    Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-        //    Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
-        //    Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
-
-        //    AnalysesController sut = new AnalysesController(mockRepository.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
-
-        //    //Act
-        //    FileContentResult result = sut.ExportToPdf(It.IsAny<string>());
-
-        //    //Assert
-        //    FileContentResult redirectToActionResult = Assert.IsType<FileContentResult>(result);
-        //}
 
         [Fact]
         public async Task ResultsForExport_ReturnsAnActionResult()

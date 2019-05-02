@@ -4,11 +4,8 @@ namespace SilveR.Validators
 {
     public class PValueAdjustmentUserBasedInputsValidator : ValidatorBase
     {
-        private readonly PValueAdjustmentUserBasedInputsModel pvVariables;
-
-        public PValueAdjustmentUserBasedInputsValidator(PValueAdjustmentUserBasedInputsModel pv)
+        public PValueAdjustmentUserBasedInputsValidator()
         {
-            pvVariables = pv;
         }
 
         public override ValidationInfo Validate()

@@ -146,11 +146,14 @@ namespace SilveR.Controllers
                                 //save in database
                                 await SaveDatasetToDatabase(selectedFile.Name, dataTable);
 
-                                try //to delete but if fails doesn't matter
+                                try //to delete...
                                 {
                                     System.IO.File.Delete(selectedFile.FullName);
                                 }
-                                catch (IOException) { }
+                                catch (IOException)
+                                {
+                                    //...if fails doesn't matter
+                                }
 
                                 TempData["InfoMessage"] = "File imported successfully!";
                             }
@@ -176,7 +179,9 @@ namespace SilveR.Controllers
                 }
             }
             else
-                throw new Exception("File format not recognised.");
+            {
+                throw new ArgumentException("File format not recognised.");
+            }
         }
 
         private async Task SaveDatasetToDatabase(string fileName, DataTable dataTable)
@@ -219,11 +224,14 @@ namespace SilveR.Controllers
                         string datasetName = selectedFile.Name + " [" + sheetSelection + "]";
                         await SaveDatasetToDatabase(datasetName, dataTable);
 
-                        try //to delete but if fails doesn't matter
+                        try //to delete...
                         {
                             System.IO.File.Delete(selectedFile.FullName);
                         }
-                        catch (IOException) { }
+                        catch (IOException)
+                        {
+                            //if fails doesn't matter
+                        }
 
                         TempData["InfoMessage"] = "File imported successfully!";
                     }
@@ -291,10 +299,12 @@ namespace SilveR.Controllers
                     return Json(message);
                 }
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex) //so much could go wrong here!
             {
                 return Json(ex.Message);
             }
+#pragma warning restore CA1031 // Do not catch general exception types
 
             return Json(true);
         }

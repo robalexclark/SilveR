@@ -5,7 +5,7 @@ namespace SilveR
 {
     public static class Program
     {
-        public static string AppName { get; private set; } = "ƩilveR";
+        public static string AppName { get; private set; } = "SilveR";
 
         public static void Main(string[] args)
         {

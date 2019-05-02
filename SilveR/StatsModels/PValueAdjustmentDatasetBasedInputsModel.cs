@@ -42,7 +42,7 @@ namespace SilveR.StatsModels
 
         public override ValidationInfo Validate()
         {
-            PValueAdjustmentDatasetBasedInputsValidator pValueAdjustmentDatasetBasedInputsValidator = new PValueAdjustmentDatasetBasedInputsValidator(this);
+            PValueAdjustmentDatasetBasedInputsValidator pValueAdjustmentDatasetBasedInputsValidator = new PValueAdjustmentDatasetBasedInputsValidator();
             return pValueAdjustmentDatasetBasedInputsValidator.Validate();
         }
 

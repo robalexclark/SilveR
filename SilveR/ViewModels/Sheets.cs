@@ -108,7 +108,7 @@ namespace SilveR.ViewModels
                         else
                         {
                             if (cell.Value == null || String.IsNullOrWhiteSpace(cell.Value.ToString()))
-                                throw new Exception("Header cannot be empty");
+                                throw new InvalidOperationException("Header cannot be empty");
 
                             dataColumn = new DataColumn(cell.Value.ToString());
                         }

@@ -123,31 +123,22 @@ namespace SilveR.Validators
                     ValidationInfo.AddWarningMessage("Warning: You have defined a start value for a parameter that has been fixed. The start value is ignored in the analysis.");
                 }
 
-                if (drnlrVariables.MinCoeff.HasValue && drnlrVariables.MaxCoeff.HasValue)
+                if (drnlrVariables.MinCoeff > drnlrVariables.MaxCoeff)
                 {
-                    if (drnlrVariables.MinCoeff > drnlrVariables.MaxCoeff)
-                    {
-                        ValidationInfo.AddErrorMessage("Error: The max coefficient is greater than the min coefficient");
-                        return ValidationInfo;
-                    }
-                }
-
-                if (drnlrVariables.MinStartValue.HasValue && drnlrVariables.MaxStartValue.HasValue)
-                {
-                    if (drnlrVariables.MinStartValue > drnlrVariables.MaxStartValue)
-                    {
-                        ValidationInfo.AddErrorMessage("Error: The max start value is greater than the min start value");
-                        return ValidationInfo;
-                    }
-                }
-            }
-            else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegesssionAnalysisModel.AnalysisOption.Equation)
-            {
-                if (!drnlrVariables.Equation.Contains("x"))
-                {
-                    ValidationInfo.AddErrorMessage("The formula should be of the form f=f(x) with x lower case");
+                    ValidationInfo.AddErrorMessage("Error: The max coefficient is greater than the min coefficient");
                     return ValidationInfo;
                 }
+
+                if (drnlrVariables.MinStartValue > drnlrVariables.MaxStartValue)
+                {
+                    ValidationInfo.AddErrorMessage("Error: The max start value is greater than the min start value");
+                    return ValidationInfo;
+                }
+            }
+            else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegesssionAnalysisModel.AnalysisOption.Equation && !drnlrVariables.Equation.Contains("x"))
+            {
+                ValidationInfo.AddErrorMessage("The formula should be of the form f=f(x) with x lower case");
+                return ValidationInfo;
             }
 
             //if get here then no errors so return true

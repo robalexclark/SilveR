@@ -15,46 +15,46 @@ namespace SilveR.Helpers
             {
                 newArgument.Value = null;
             }
-            else if (value is string)
-            {
-                string str = (string)value;
-                newArgument.Value = str;
-            }
-            else if (value is List<string>)
-            {
-                List<string> strList = (List<string>)value;
-
-                if (strList.Any())
-                {
-                    newArgument.Value = strList.Aggregate((a, b) => a + ',' + b);
-                }
-                else
-                {
-                    newArgument.Value = null;
-                }
-            }
-            else if (value is bool)
-            {
-                bool boo = (bool)value;
-                newArgument.Value = boo.ToString();
-            }
-            else if (value is int)
-            {
-                int num = (int)value;
-                newArgument.Value = num.ToString();
-            }
-            else if (value is decimal)
-            {
-                decimal num = (decimal)value;
-                newArgument.Value = num.ToString();
-            }
             else
-                throw new ArgumentException("Type not found!");
+            {
+                switch (value)
+                {
+                    case string str:
+                        newArgument.Value = str;
+
+                        break;
+                    case List<string> strList:
+                        if (strList.Any())
+                        {
+                            newArgument.Value = strList.Aggregate((a, b) => a + ',' + b);
+                        }
+                        else
+                        {
+                            newArgument.Value = null;
+                        }
+
+                        break;
+                    case bool boo:
+                        newArgument.Value = boo.ToString();
+
+                        break;
+                    case int num:
+                        newArgument.Value = num.ToString();
+
+                        break;
+                    case decimal dec:
+                        newArgument.Value = dec.ToString();
+
+                        break;
+                    default:
+                        throw new ArgumentException("Type not found!");
+                }
+            }
 
             return newArgument;
         }
 
-        private IEnumerable<Argument> arguments;
+        private readonly IEnumerable<Argument> arguments;
 
         public ArgumentHelper(IEnumerable<Argument> arguments)
         {
