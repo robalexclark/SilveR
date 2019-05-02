@@ -165,7 +165,9 @@ namespace SilveR.Validators
                 return new ValidationResult("You have selected a confidence limit that is less than 1. Note that this value should be entered as percentage and not a fraction.");
             }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 

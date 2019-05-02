@@ -23,7 +23,7 @@ namespace SilveR.Helpers
                         newArgument.Value = str;
 
                         break;
-                    case List<string> strList:
+                    case IEnumerable<string> strList:
                         if (strList.Any())
                         {
                             newArgument.Value = strList.Aggregate((a, b) => a + ',' + b);

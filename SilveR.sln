@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2042
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SilveR", "SilveR\SilveR.csproj", "{93790797-967C-43AC-9713-F0DDFCE58AB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silver.UnitTests", "Silver.UnitTests\Silver.UnitTests.csproj", "{F4FC299C-D76C-4729-88C3-1F1053E29B5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silver.UnitTests", "Silver.UnitTests\Silver.UnitTests.csproj", "{F4FC299C-D76C-4729-88C3-1F1053E29B5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SilveR.IntegrationTests", "SilveR.IntegrationTests\SilveR.IntegrationTests.csproj", "{708FFAE2-02E0-48DB-B252-AEEB97E845DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F4FC299C-D76C-4729-88C3-1F1053E29B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4FC299C-D76C-4729-88C3-1F1053E29B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4FC299C-D76C-4729-88C3-1F1053E29B5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{708FFAE2-02E0-48DB-B252-AEEB97E845DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708FFAE2-02E0-48DB-B252-AEEB97E845DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708FFAE2-02E0-48DB-B252-AEEB97E845DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708FFAE2-02E0-48DB-B252-AEEB97E845DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

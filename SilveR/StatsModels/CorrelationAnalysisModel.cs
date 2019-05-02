@@ -23,7 +23,7 @@ namespace SilveR.StatsModels
         }
 
         [DisplayName("Response transformation")]
-        public string Transformation { get; set; }
+        public string Transformation { get; set; } = "None";
 
         [CheckUsedOnceOnly]
         [DisplayName("1st factor")]

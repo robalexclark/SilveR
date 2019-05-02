@@ -324,7 +324,7 @@ namespace SilveR.Helpers
             return dtNew;
         }
 
-        public static Dataset GetDataset(this DataTable dataTable, string fileName, int lastVersionNo)
+        public static Dataset GetDataset(this DataTable dataTable, string fileName, int lastVersionNo=0)
         {
             //clean up the datatable, trimming spaces, and ensuring that decimal seperator is a .
             dataTable.CleanUpDataTable();

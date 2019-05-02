@@ -29,7 +29,7 @@ steps:
   displayName: dotnet test
   inputs:
     command: 'test'
-    projects: '**/*[Tt]ests/*.csproj'
+    projects: '**/SilveR.UnitsTests.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: dotnet publish

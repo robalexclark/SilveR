@@ -23,7 +23,7 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine" }; }
         }
 
-        public string Transformation { get; set; }
+        public string Transformation { get; set; } = "None";
 
         [CheckUsedOnceOnly]
         [DisplayName("1st factor")]

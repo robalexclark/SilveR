@@ -2,7 +2,7 @@
 branding <- "InVivoStat"
 
 #Display arguments
-Diplayargs <- "Y"
+Diplayargs <- "N"
 
 #Display pdf disabled
 pdfout <- "N"

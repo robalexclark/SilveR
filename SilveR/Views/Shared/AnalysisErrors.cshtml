@@ -4,7 +4,7 @@
         <button class="close" data-dismiss="alert" type="button"><span>&times;</span></button>
         <strong>Error!</strong>
         <br />
-        @Html.ValidationSummary(false)
+        <div id="errorsList">@Html.ValidationSummary(false)</div>
     </div>
 }
 else if (ViewBag.WarningMessages != null)
@@ -13,10 +13,12 @@ else if (ViewBag.WarningMessages != null)
         <button class="close" data-dismiss="alert" type="button"><span>&times;</span></button>
         <strong>Warning!</strong>
         <br />
-        @foreach (string warningMessage in ViewBag.WarningMessages)
-        {
-            <p>@warningMessage</p>
-        }
+        <div id="warningsList">
+            @foreach (string warningMessage in ViewBag.WarningMessages)
+            {
+                <p>@warningMessage</p>
+            }
+        </div>
         <br />
         <button class="btn btn-warning" name="ignoreWarnings" type="submit" value="true">Submit Anyway</button>
     </div>

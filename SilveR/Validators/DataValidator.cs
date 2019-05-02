@@ -217,7 +217,7 @@ namespace SilveR.Validators
 
             if (hasError)
             {
-                validationInfo.AddErrorMessage("The " + displayName + " selected contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
+                validationInfo.AddErrorMessage("The " + displayName + " selected (" + factor + ") contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
                 return false;
             }
             else if (hasWarning)
