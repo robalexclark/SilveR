@@ -14,7 +14,7 @@
             <button class="btn btn-info" asp-controller="Analyses" asp-action="ViewLog">View Analysis Log</button>
             @if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
             {
-                <button class="btn btn-secondary" asp-controller="Analyses" asp-action="ExportToPdf" formtarget="_blank">Export to Pdf</button>
+                <button class="btn btn-secondary" asp-controller="Analyses" asp-action="ExportToPdf">Export to Pdf</button>
             }
         </div>
         <div class="col">

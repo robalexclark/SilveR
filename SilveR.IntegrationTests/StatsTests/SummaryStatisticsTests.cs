@@ -25,7 +25,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS1";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -46,7 +46,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS2";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -68,7 +68,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS3";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -134,7 +134,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS6";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -156,7 +156,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS7";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -178,7 +178,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS8";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -200,7 +200,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS9";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -222,7 +222,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS10";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -243,7 +243,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS11";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -266,7 +266,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS12";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -289,7 +289,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS13";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -312,7 +312,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS14";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -334,7 +334,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS15";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -356,7 +356,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS16";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -378,7 +378,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS17";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -400,7 +400,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS18";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -422,7 +422,7 @@ namespace SilveR.IntegrationTests
         {
             string testName = "SS19";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -449,33 +449,36 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
-        //[Fact]
-        //public async Task SS20()
-        //{
-        //    // Arrange
-        //    HttpClient client = _factory.CreateClient();
 
-        //    SummaryStatisticsModel model = new SummaryStatisticsModel();
-        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
-        //    model.Responses = new string[] { "Resp6", "Resp7" };
-        //    model.FirstCatFactor = "Cat4";
-
-        //    //Act
-        //    HttpResponseMessage response = await client.PostAsync("Analyses/SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-        //    IEnumerable<string> errors = await Helpers.ExtractErrors(response);
-
-        //    //Assert
-        //    Assert.Contains("There are no observations recorded on the levels of the Response (Cat4). Please amend the dataset prior to running the analysis.", errors);
-        //}
-
-        //SS21 - Not required
 
         [Fact]
-        public async Task SS22()
+        public async Task SS20()
         {
-            string testName = "SS22";
+            string testName = "SS20";
 
-            // Arrange
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SummaryStatisticsModel model = new SummaryStatisticsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.Responses = new string[] { "Resp 2","Resp10" };
+            model.FirstCatFactor = "Cat4";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The response selected (Resp10) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Helpers.SaveOutput("SummaryStatistics", testName, warnings);
+        }
+
+        [Fact]
+        public async Task SS21()
+        {
+            string testName = "SS21";
+
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -504,11 +507,11 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task SS23()
+        public async Task SS22()
         {
-            string testName = "SS23";
+            string testName = "SS22";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -537,11 +540,11 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task SS24()
+        public async Task SS23()
         {
-            string testName = "SS24";
+            string testName = "SS23";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -572,11 +575,11 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task SS25()
+        public async Task SS24()
         {
-            string testName = "SS25";
+            string testName = "SS24";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -607,11 +610,11 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task SS26()
+        public async Task SS25()
         {
-            string testName = "SS26";
+            string testName = "SS25";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -644,11 +647,11 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task SS27()
+        public async Task SS26()
         {
-            string testName = "SS27";
+            string testName = "SS26";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -681,11 +684,11 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task SS28()
+        public async Task SS27()
         {
-            string testName = "SS28";
+            string testName = "SS27";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
@@ -716,11 +719,11 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task SS29()
+        public async Task SS28()
         {
-            string testName = "SS29";
+            string testName = "SS28";
 
-            // Arrange
+            //Arrange
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();

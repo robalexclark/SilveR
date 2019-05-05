@@ -86,13 +86,17 @@ namespace SilveR.IntegrationTests
             HttpResponseMessage response = await client.PostAsync("Analyses/" + analysisName, content);
             HtmlDocument doc = await GetHtml(response);
             string script = doc.DocumentNode.Descendants().Last(n => n.Name == "script").InnerText;
+
+            if (String.IsNullOrEmpty(script))
+                throw new InvalidOperationException("script is null - warnings/errors present?");
+
             string analysisGuid = script.Split("\"", StringSplitOptions.RemoveEmptyEntries)[1];
 
             string jsonResponse = null;
             DateTime timoutTime = DateTime.Now.AddSeconds(30);
             while (jsonResponse != "true" && DateTime.Now <= timoutTime)
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 HttpResponseMessage completedResponse = await client.PostAsync("/Analyses/AnalysisCompleted?analysisGuid=" + analysisGuid, null);
                 jsonResponse = await completedResponse.Content.ReadAsStringAsync();
             }
@@ -115,8 +119,6 @@ namespace SilveR.IntegrationTests
             doc.LoadHtml(html);
             return doc;
         }
-
-
     }
 
 

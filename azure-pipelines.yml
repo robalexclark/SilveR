@@ -25,11 +25,26 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
 
+
 - task: DotNetCoreCLI@2
   displayName: dotnet test
   inputs:
     command: 'test'
     projects: '**/*[Tt]ests/*.csproj'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/netcoreapp2.2/ActualResults/*'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
+    ArtifactName: 'test-results'
+
+
+- script: 'dotnet clean'
+  displayName: Clean Build
 
 - task: DotNetCoreCLI@2
   displayName: dotnet publish
