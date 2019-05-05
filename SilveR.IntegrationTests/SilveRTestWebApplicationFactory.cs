@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using ExcelDataReader;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Linq;
 using SilveR;
+using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Services;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Data;
 using System.IO;
-using System.Linq;
 
 namespace ControlledForms.IntegrationTests
 {
     public class SilveRTestWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {
+        public Dictionary<int, string> SheetNames { get; private set; }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            if (File.Exists("SilveR.db"))
-                File.Delete("SilveR.db");
-
             builder.ConfigureServices(services =>
             {
                 services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=SilveR.db"));
@@ -29,57 +28,55 @@ namespace ControlledForms.IntegrationTests
                 services.AddSingleton<IRProcessorService, RProcessorService>();
                 services.AddHostedService<QueuedHostedService>();
                 services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
-                //services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
                 services.AddMvc();
             });
-        }     
-    }
+        }
 
-    public static class ObjectExtensions
-    {
-        public static IDictionary<string, string> ToKeyValue(this object metaToken)
+        public SilveRTestWebApplicationFactory()
         {
-            if (metaToken == null)
-            {
-                return null;
-            }
+            if (File.Exists("SilveR.db"))
+                File.Delete("SilveR.db");
 
-            JToken token = metaToken as JToken;
-            if (token == null)
-            {
-                return ToKeyValue(JObject.FromObject(metaToken));
-            }
+            LoadDatasets();
+        }
 
-            if (token.HasValues)
+        private void LoadDatasets()
+        {
+            SheetNames = new Dictionary<int, string>();
+
+            DbContextOptionsBuilder<SilveRContext> optionsBuilder = new DbContextOptionsBuilder<SilveRContext>();
+            optionsBuilder.UseSqlite("Data Source=SilveR.db");
+            SilveRContext silverContext = new SilveRContext(optionsBuilder.Options);
+            silverContext.Database.Migrate();
+
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+            using (var stream = File.Open("_test dataset.xlsx", FileMode.Open, FileAccess.Read))
             {
-                var contentData = new Dictionary<string, string>();
-                foreach (var child in token.Children().ToList())
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    var childContent = child.ToKeyValue();
-                    if (childContent != null)
+                    var result = reader.AsDataSet(new ExcelDataSetConfiguration()
                     {
-                        contentData = contentData.Concat(childContent)
-                            .ToDictionary(k => k.Key, v => v.Value);
+                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true
+                        }
+                    });
+
+                    int counter = 1;
+                    foreach (DataTable dataTable in result.Tables)
+                    {
+                        this.SheetNames.Add(counter, dataTable.TableName);
+
+                        var dataset = dataTable.GetDataset(dataTable.TableName, 0);
+                        silverContext.Datasets.Add(dataset);
+                        silverContext.SaveChanges();
+
+                        counter++;
                     }
                 }
-
-                return contentData;
             }
-
-            var jValue = token as JValue;
-            if (jValue?.Value == null)
-            {
-                return null;
-            }
-
-            var value = jValue?.Type == JTokenType.Date ?
-                jValue?.ToString("o", CultureInfo.InvariantCulture) :
-                jValue?.ToString(CultureInfo.InvariantCulture);
-
-            return new Dictionary<string, string> { { token.Path, value } };
         }
     }
-
-
 }

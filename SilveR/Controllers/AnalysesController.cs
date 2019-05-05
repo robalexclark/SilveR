@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SelectPdf;
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Services;
@@ -8,10 +7,8 @@ using SilveR.Validators;
 using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace SilveR.Controllers
 {

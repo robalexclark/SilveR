@@ -54,7 +54,8 @@ namespace SilveR.Validators
 
             IEnumerable<string> levels = GetLevels(treatCol);
 
-            if (String.IsNullOrEmpty(treatCol) || dataTable == null) return responseCounts; //i.e. empty list
+            if (String.IsNullOrEmpty(treatCol) || dataTable == null)
+                return responseCounts; //i.e. empty list
 
             foreach (string level in levels)
             {
@@ -125,7 +126,8 @@ namespace SilveR.Validators
 
         protected bool CheckFactorsHaveLevels(string factors, bool multipleFactors)
         {
-            if (factors == null) return true;
+            if (factors == null)
+                return true;
 
             string message = null;
 
@@ -148,11 +150,11 @@ namespace SilveR.Validators
             {
                 if (multipleFactors)
                 {
-                    message = "One or more of the factors has only one level present in the dataset. Please select another factor.";
+                    message = "One or more of the factors (" + factors + ") has only one level present in the dataset. Please select another factor.";
                 }
                 else
                 {
-                    message = "The treatment factor has only one level present in the dataset. Please select another factor.";
+                    message = "The treatment factor ("+ factors + ") has only one level present in the dataset. Please select another factor.";
                 }
 
                 validationInfo.AddErrorMessage(message);
@@ -181,7 +183,12 @@ namespace SilveR.Validators
                 Dictionary<string, int> levelResponses = ResponsesPerLevel(factor, response);
                 foreach (KeyValuePair<string, int> level in levelResponses)
                 {
-                    if (level.Value < 2)
+                    if (level.Value == 0)
+                    {
+                        validationInfo.AddErrorMessage("There are no observations recorded on the levels of the " + displayName + " (" + factor + "). Please amend the dataset prior to running the analysis.");
+                        return false;
+                    }
+                    else if (level.Value < 2)
                     {
                         validationInfo.AddErrorMessage("There is no replication in one or more of the levels of the " + displayName + " (" + factor + "). Please select another factor.");
                         return false;
@@ -233,7 +240,8 @@ namespace SilveR.Validators
         {
             foreach (string factor in factors)
             {
-                if (!CheckFactorAndResponseNotBlank(factor, response, displayName)) return false;
+                if (!CheckFactorAndResponseNotBlank(factor, response, displayName))
+                    return false;
             }
 
             return true;

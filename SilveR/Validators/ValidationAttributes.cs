@@ -44,7 +44,7 @@ namespace SilveR.Validators
                         result = false;
                     }
                     break;
-                case List<string> varsToCheck:
+                case IEnumerable<string> varsToCheck:
                     if (varsToCheck.Intersect(varList).Any())
                     {
                         result = false;
@@ -55,14 +55,13 @@ namespace SilveR.Validators
                     throw new InvalidOperationException("Attempting to check unknown type!");
             }
 
-
             if (result)
             {
                 return ValidationResult.Success;
             }
             else
             {
-                return new ValidationResult(validationContext.MemberName + " have been selected in more than one input category, please change your input options.");
+                return new ValidationResult(validationContext.MemberName + " has been selected in more than one input category, please change your input options.");
             }
         }
     }
@@ -76,9 +75,13 @@ namespace SilveR.Validators
             GraphicalAnalysisModel ga = (GraphicalAnalysisModel)validationContext.ObjectInstance;
 
             if (String.IsNullOrEmpty(ga.XAxis) && (ga.ScatterplotSelected || ga.BoxplotSelected || ga.SEMPlotSelected || ga.CaseProfilesPlotSelected))
-                return new ValidationResult("X-axis variable required for all plots except histogram");
+            {
+                return new ValidationResult("X-axis variable required for all plots except histogram.");
+            }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 
@@ -89,9 +92,13 @@ namespace SilveR.Validators
             GraphicalAnalysisModel ga = (GraphicalAnalysisModel)validationContext.ObjectInstance;
 
             if (String.IsNullOrEmpty(ga.CaseIDFactor) && ga.CaseProfilesPlotSelected)
-                return new ValidationResult("Case ID variable required to produce Case Profiles Plot");
+            {
+                return new ValidationResult("Case ID variable required to produce Case Profiles Plot.");
+            }
             else
+            {
                 return ValidationResult.Success;
+            }
         }
     }
 
@@ -105,7 +112,7 @@ namespace SilveR.Validators
 
             if (model.AnalysisType == NonParametricAnalysisModel.AnalysisOption.CompareToControl && String.IsNullOrEmpty(model.Control))
             {
-                return new ValidationResult("Control level is a required variable when comparing to control");
+                return new ValidationResult("Control level is a required variable when comparing to control.");
             }
             else
             {
@@ -135,7 +142,7 @@ namespace SilveR.Validators
                     double number;
                     if (!double.TryParse(p, out number) && p != "<0.001" && p != "<0.0001") //n.b. remove < sign when checking
                     {
-                        return new ValidationResult("P values contains non-numeric values detected or values are not comma separated");
+                        return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
                     }
                     else if (number < 0)
                     {
@@ -160,9 +167,9 @@ namespace SilveR.Validators
         {
             SummaryStatisticsModel model = (SummaryStatisticsModel)validationContext.ObjectInstance;
 
-            if (model.Significance < 0 || model.Significance > 100)
+            if (model.Significance < 1 || model.Significance > 100)
             {
-                return new ValidationResult("You have selected a confidence limit that is less than 1. Note that this value should be entered as percentage and not a fraction.");
+                return new ValidationResult("You have selected a confidence limit that is less than 1. Note that this value should be entered as a percentage and not a fraction.");
             }
             else
             {
@@ -181,7 +188,7 @@ namespace SilveR.Validators
 
             if (iEnumerable == null || iEnumerable.Count() < 2)
             {
-                return new ValidationResult(validationContext.DisplayName + " requires at least two entries");
+                return new ValidationResult(validationContext.DisplayName + " requires at least two entries.");
             }
             else
             {
@@ -200,7 +207,7 @@ namespace SilveR.Validators
 
             if (value == null && model.AnalysisType == DoseResponseAndNonLinearRegesssionAnalysisModel.AnalysisOption.FourParameter)
             {
-                return new ValidationResult(validationContext.DisplayName + " is a required variable");
+                return new ValidationResult(validationContext.DisplayName + " is a required variable.");
             }
             else
             {

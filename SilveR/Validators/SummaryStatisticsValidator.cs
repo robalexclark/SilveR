@@ -55,13 +55,11 @@ namespace SilveR.Validators
                 CheckTransformations(DataTable, ssVariables.Transformation, response);
 
                 //check response and cat factors contain values
-                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
-                    return ValidationInfo;
-
                 if (!CheckResponsesPerLevel(categorical, response, ReflectionExtensions.GetPropertyDisplayName<SummaryStatisticsModel>(i => i.Responses)))
                     return ValidationInfo;
 
-
+                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
+                    return ValidationInfo;
             }
 
             //if get here then no errors so return true

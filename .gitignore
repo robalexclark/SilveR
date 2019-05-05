@@ -305,6 +305,4 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder
 .mfractor/
 
-#R Project exe and libraries
-!SilveR/R-3.5.1/**/*
-SilveR/SilveR\.db
+!/SilveR/R-3.5.1/**

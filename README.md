@@ -8,7 +8,7 @@ Clone the project, open in Visual Studio, optionally run the tests, and then deb
 
 ### Current Build
 
-[![Build Status](https://travis-ci.com/robalexclark/SilveR.svg?branch=master)](https://travis-ci.com/robalexclark/SilveR)
+[![Build Status](https://dev.azure.com/robalexclark/SilveR/_apis/build/status/SilveR?branchName=master)](https://dev.azure.com/robalexclark/SilveR/_build/latest?definitionId=1&branchName=master)
 
 ### Installing
 

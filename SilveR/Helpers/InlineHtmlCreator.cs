@@ -25,7 +25,9 @@ namespace SilveR.Helpers
 
             document = InlineImages(document, resultsFiles);
 
-            string inlineHtml = document.DocumentNode.OuterHtml;
+            var trimChars = new List<char>(Environment.NewLine.ToCharArray());
+            trimChars.Add(' ');
+            string inlineHtml = document.DocumentNode.OuterHtml.Trim(trimChars.ToArray());
             return inlineHtml;
         }
 
