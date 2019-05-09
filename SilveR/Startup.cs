@@ -1,3 +1,5 @@
+﻿using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SilveR
 {
@@ -78,6 +81,9 @@ namespace SilveR
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Open the Electron-Window here
+            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, Icon = "./resources/app/bin/IVS.ico" }));
         }
 
 

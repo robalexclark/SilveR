@@ -1,82 +1,226 @@
 # ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-2019'
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'windows-2019'
 
-variables:
-  buildConfiguration: 'Release'
+  steps:
 
-steps:
-- task: DotNetCoreCLI@2
-  displayName: dotnet restore
-  inputs:
-    command: 'restore'
-    projects: '**/*.csproj'
+# TEST
+  - task: DotNetCoreCLI@2
+    displayName: dotnet restore
+    inputs:
+      command: 'restore'
+      projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet build
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
-
-
-- task: DotNetCoreCLI@2
-  displayName: dotnet test
-  inputs:
-    command: 'test'
-    projects: '**/*[Tt]ests/*.csproj'
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/netcoreapp2.2/ActualResults/*'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
-    ArtifactName: 'test-results'
+  - task: DotNetCoreCLI@2
+    displayName: dotnet build
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
 
 
-- script: 'dotnet clean'
-  displayName: Clean Build
+  - task: DotNetCoreCLI@2
+    displayName: dotnet test
+    inputs:
+      command: 'test'
+      projects: '**/*[Tt]ests/*.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: dotnet publish
-  inputs:
-    command: 'publish'
-    arguments: '--output $(Build.ArtifactStagingDirectory) -r win-x64'
-    zipAfterPublish: true
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/netcoreapp2.2/ActualResults/*'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
 
-- task: CopyFiles@2
-  inputs:
-    contents: '*.zip'
-    targetFolder: '$(Build.ArtifactStagingDirectory)/'
-
-- task: CmdLine@2
-  inputs:
-    script: 'ren $(Build.ArtifactStagingDirectory)\SilveR.zip InVivoStat-Win.zip'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    ArtifactName: 'drop'
+  #- task: PublishBuildArtifacts@1
+  #  inputs:
+  #    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
+  #    ArtifactName: 'test-results'
 
 
-- task: GitHubRelease@0
-  inputs:
-    gitHubConnection: Github
-    repositoryName: robalexclark/SilveR 
-    action: edit
-    target: 'master'
-    tagSource: manual
-    tag: '1.0'
-    title: '1.0-beta'
-    assetUploadMode: 'delete'
-    isPreRelease: true
-    isDraft: false
-    
+# BUILD LITE
+  - script: 'dotnet clean'
+    displayName: Clean Build
+
+  - task: DotNetCoreCLI@2
+    displayName: dotnet publish
+    inputs:
+      command: 'publish'
+      arguments: '--output $(Build.ArtifactStagingDirectory) -r win-x64'
+      zipAfterPublish: true
+
+  - task: CopyFiles@2
+    inputs:
+      contents: '*.zip'
+      targetFolder: '$(Build.ArtifactStagingDirectory)/'
+
+  - task: CmdLine@2
+    inputs:
+      script: 'ren $(Build.ArtifactStagingDirectory)\SilveR.zip InVivoStat-win-x64-test-only.zip'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      ArtifactName: 'drop'
+
+
+# BUILD MAIN
+  - script: 'dotnet tool install -g electronnet.cli'
+    displayName: Install Electron.Net CLI
+
+  - script: 'dotnet clean'
+    displayName: Clean Build
+
+  - script: electronize build /target win /electron-params "--icon=\"$(Build.SourcesDirectory)\SilveR\IVS.ico\" --name=InVivoStat"
+    displayName: Build for Win-x64
+
+  - script: 'ren $(Build.SourcesDirectory)\bin\desktop\electron.net.host-win32-x64\electron.net.host.exe InVivoStat.exe'
+    displayName: Rename Electron.net.host to InVivoStat.exe
+
+  - script: 'ren $(Build.SourcesDirectory)\bin\desktop\electron.net.host-win32-x64 InVivoStat'
+    displayName: Rename Electron.net.host folder to InVivoStat
+
+  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\R-3.5.1 $(Build.SourcesDirectory)\bin\desktop\InVivoStat\resources\app\bin\R-3.5.1\* /sy'
+    displayName: Copy R-3.5.1
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/bin/desktop/InVivoStat/*'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/InVivoStat-win-x64.zip'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-win-x64.zip'
+      ArtifactName: 'drop'
+
+
+  - task: AdvancedInstallerTool@1
+    inputs:
+      advinstVersion: '15.9'
+      
+  - task: AdvancedInstaller@2
+    inputs:
+      aipPath: 'InVivoStat.aip'
+
+  - script: 'ren $(Build.SourcesDirectory)\InVivoStat-SetupFiles\InVivoStat.msi InVivoStat-win-x64.msi'
+    displayName: Rename InVivoStat.msi to InVivoStat-win-x64.msi
+
+  - script: 'xcopy $(Build.SourcesDirectory)\InVivoStat-SetupFiles\InVivoStat-win-x64.msi $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat-win-x64.msi
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)/InVivoStat-SetupFiles/InVivoStat-win-x64.msi'
+      ArtifactName: 'drop'
+
+
+  - task: GitHubRelease@0
+    inputs:
+      gitHubConnection: Github
+      repositoryName: robalexclark/SilveR
+      action: edit
+      target: 'master'
+      tagSource: manual
+      tag: '1.0'
+      title: '1.0-beta'
+      assetUploadMode: 'replace'
+      isPreRelease: true
+      isDraft: false
+
+
+
+- job: Linux
+  dependsOn: Windows
+  pool:
+    vmImage: 'windows-2019'
+
+  steps:
+
+  - script: 'dotnet tool install -g electronnet.cli'
+    displayName: Install Electron.Net CLI
+
+  - script: electronize build /target linux /electron-params "--icon=\"$(Build.SourcesDirectory)\SilveR\IVS.ico\" --name=InVivoStat"
+    displayName: Build for Linux
+
+  - script: 'ren $(Build.SourcesDirectory)\bin\desktop\electron.net.host-linux-x64\electron.net.host InVivoStat'
+    displayName: Rename Electron.net.host to InVivoStat
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/bin/desktop/electron.net.host-linux-x64/*'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/InVivoStat-linux-x64.zip'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-linux-x64.zip'
+      ArtifactName: 'drop'
+
+
+  - task: GitHubRelease@0
+    inputs:
+      gitHubConnection: Github
+      repositoryName: robalexclark/SilveR
+      action: edit
+      target: 'master'
+      tagSource: manual
+      tag: '1.0'
+      title: '1.0-beta'
+      assetUploadMode: 'replace'
+      isPreRelease: true
+      isDraft: false
+
+
+
+- job: MacOS
+  dependsOn: Windows
+  pool:
+    vmImage: 'macOS-10.14'
+
+  steps:
+
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '2.2.203'
+
+  - script: 'dotnet tool install -g electronnet.cli'
+    displayName: Install Electron.Net CLI
+
+  - task: NodeTool@0 
+    inputs:
+      versionSpec: '9.x'
+
+  - script: sudo npm install electron-packager --global
+    displayName: Install electron-packager
+
+  - script: electronize build /target osx /electron-params --name=InVivoStat
+    displayName: Build for MacOS
+
+  - script: 'mv $(Build.SourcesDirectory)/bin/desktop/electron.net.host-darwin-x64/electron.net.host.app $(Build.SourcesDirectory)/bin/desktop/electron.net.host-darwin-x64/InVivoStat.app'
+    displayName: Rename Electron.net.host to InVivoStat
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.SourcesDirectory)/bin/desktop/electron.net.host-darwin-x64/'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/InVivoStat-macos-x64.zip'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-macos-x64.zip'
+      ArtifactName: 'drop'
+
+
+  - task: GitHubRelease@0
+    inputs:
+      gitHubConnection: Github
+      repositoryName: robalexclark/SilveR
+      action: edit
+      target: 'master'
+      tagSource: manual
+      tag: '1.0'
+      title: '1.0-beta'
+      assetUploadMode: 'replace'
+      isPreRelease: true
+      isDraft: false

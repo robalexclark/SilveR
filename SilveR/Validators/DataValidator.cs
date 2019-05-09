@@ -282,7 +282,7 @@ namespace SilveR.Validators
 
                     if (tempMessage != null && isCovariate)
                     {
-                        tempMessage = tempMessage + Environment.NewLine + "Any response where the covariate has been removed will also be excluded from the analysis.";
+                        tempMessage = tempMessage + " Any response where the covariate has been removed will also be excluded from the analysis.";
                     }
 
                     validationInfo.AddWarningMessage(tempMessage);

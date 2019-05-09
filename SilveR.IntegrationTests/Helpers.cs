@@ -15,7 +15,7 @@ namespace SilveR.IntegrationTests
     {
         public static async Task<IEnumerable<string>> ExtractErrors(HttpResponseMessage response)
         {
-            var html = await response.Content.ReadAsStringAsync();
+            string html = await response.Content.ReadAsStringAsync();
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
 
@@ -37,7 +37,7 @@ namespace SilveR.IntegrationTests
 
         public static async Task<IEnumerable<string>> ExtractWarnings(HttpResponseMessage response)
         {
-            var html = await response.Content.ReadAsStringAsync();
+            string html = await response.Content.ReadAsStringAsync();
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
 
@@ -57,12 +57,12 @@ namespace SilveR.IntegrationTests
             return result;
         }
                
-        private static string Fix(string v)
+        private static string Fix(string s)
         {
-            v = v.Replace("&lt;", "<");
-            v = v.Replace("&gt;", ">");
+            s = s.Replace("&lt;", "<");
+            s = s.Replace("&gt;", ">");
 
-            return v;
+            return s;
         }
 
         public static void SaveOutput(string moduleName, string testName, IEnumerable<string> message)

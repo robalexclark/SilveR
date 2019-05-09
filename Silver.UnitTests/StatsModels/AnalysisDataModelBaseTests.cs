@@ -56,7 +56,7 @@ namespace Silver.UnitTests.StatsModels
 
             //Assert
             Assert.Equal("TestScript", sut.ScriptFileName);
-        }        
+        }
 
 
         private Dataset GetDataset()

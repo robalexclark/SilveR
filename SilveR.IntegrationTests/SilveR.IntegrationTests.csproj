@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SilveR.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="SilveR.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
@@ -185,28 +195,28 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP61.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP62.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP63.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP64.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP65.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP66.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP67.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP68.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP69.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -299,6 +309,270 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\NonParametricAnalysis\NP99.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA21.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-AllPairwise-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-AllPairwise-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-AllPairwise-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-AllPairwise-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-AllPairwise-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-AllPairwise-Tukey.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-AllPairwise-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-ComparisonsToControl-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-ComparisonsToControl-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-ComparisonsToControl-Dunnett.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-ComparisonsToControl-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-ComparisonsToControl-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-ComparisonsToControl-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA23-ComparisonsToControl-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-AllPairwise-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-AllPairwise-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-AllPairwise-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-AllPairwise-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-AllPairwise-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-AllPairwise-Tukey.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-AllPairwise-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-ComparisonsToControl-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-ComparisonsToControl-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-ComparisonsToControl-Dunnett.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-ComparisonsToControl-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-ComparisonsToControl-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-ComparisonsToControl-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA24-ComparisonsToControl-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA21.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-AllPairwise-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-AllPairwise-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-AllPairwise-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-AllPairwise-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-AllPairwise-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-AllPairwise-Tukey.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-AllPairwise-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-ComparisonsToControl-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-ComparisonsToControl-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-ComparisonsToControl-Dunnett.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-ComparisonsToControl-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-ComparisonsToControl-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-ComparisonsToControl-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA23-ComparisonsToControl-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-AllPairwise-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-AllPairwise-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-AllPairwise-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-AllPairwise-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-AllPairwise-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-AllPairwise-Tukey.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-AllPairwise-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-ComparisonsToControl-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-ComparisonsToControl-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-ComparisonsToControl-Dunnett.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-ComparisonsToControl-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-ComparisonsToControl-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-ComparisonsToControl-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA24-ComparisonsToControl-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-AllPairwise-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-AllPairwise-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-AllPairwise-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-AllPairwise-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-AllPairwise-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-AllPairwise-Tukey.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-AllPairwise-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-ComparisonsToControl-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-ComparisonsToControl-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-ComparisonsToControl-Dunnett.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-ComparisonsToControl-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-ComparisonsToControl-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-ComparisonsToControl-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA33-ComparisonsToControl-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-AllPairwise-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-AllPairwise-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-AllPairwise-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-AllPairwise-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-AllPairwise-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-AllPairwise-Tukey.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-AllPairwise-Unadjusted%28LSD%29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-ComparisonsToControl-Benjamini-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-ComparisonsToControl-Bonferroni.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-ComparisonsToControl-Dunnett.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-ComparisonsToControl-Hochberg.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-ComparisonsToControl-Holm.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-ComparisonsToControl-Hommel.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA34-ComparisonsToControl-Unadjusted%28LSD%29.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\SS22.html">

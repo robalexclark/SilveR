@@ -56,7 +56,7 @@ namespace SilveR.StatsModels
         public string Covariance { get; set; } = "Compound Symmetric";
 
 
-        [DisplayName("ANOVA Table")]
+        [DisplayName("Overall table of effects")]
         public bool ANOVASelected { get; set; } = true;
 
         [DisplayName("Predicted vs. Residuals Plot")]
