@@ -50,15 +50,16 @@ namespace SilveR.Services
 
                     //save the useroptions to the working dir
                     UserOption userOptions = await silveRRepository.GetUserOptions();
-                    File.WriteAllLines(Path.Combine(workingDir, "UserOptions.txt"), userOptions.GetOptionLines());
+
+                    File.WriteAllLines(Path.Combine(workingDir, analysisGuid + ".useroptions"), userOptions.GetOptionLines());
 
                     //combine script files into analysisGuid.R
                     string scriptFileName = Path.Combine(workingDir, analysisGuid + ".R");
-                    string[] commonFunctionsContents = File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", "Common_Functions.R"));
-                    string[] mainScriptContents = File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", analysis.Script.ScriptFileName + ".R"));
 
-                    File.WriteAllLines(scriptFileName, commonFunctionsContents);
-                    File.AppendAllLines(scriptFileName, mainScriptContents);
+                    List<string> scriptLines = new List<string>();
+                    scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", "Common_Functions.R")));
+                    scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", analysis.Script.ScriptFileName + ".R")));
+                    File.WriteAllLines(scriptFileName, scriptLines);
 
                     //load the analysis entity into the model so that arguments can be extracted
                     AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
@@ -128,32 +129,44 @@ namespace SilveR.Services
                     //create a stringbuilder to hold the output, and get the output line by line until R process finishes
                     StringBuilder output = new StringBuilder();
 
-                    bool completedOK = R.WaitForExit(60 * 1000);
+                    bool completedOK = R.WaitForExit(10 * 60 * 1000); //10 minutes!
 
-                    //if R didn't complete in time then add message and kill it
-                    if (!completedOK)
+                    if (completedOK)
+                    {
+                        //need to make sure that we have got all the output so do a readtoend here
+                        output.AppendLine(R.StandardOutput.ReadToEnd());
+                        output.AppendLine();
+
+                        //output the errors from R
+                        string errorsFromR = R.StandardError.ReadToEnd().Trim();
+
+                        R.Close();
+                        R.Dispose();
+
+                        if (!String.IsNullOrEmpty(errorsFromR))
+                        {
+                            output.AppendLine();
+                            output.Append(errorsFromR);
+                            output.AppendLine();
+                        }
+                    }
+                    else //timed out, try and kill it (but usually doesnt work)
                     {
                         output.AppendLine("WARNING! The R process timed out before the script could complete");
                         output.AppendLine();
 
+                        //get the id so can really check if it has died
+                        int processID = R.Id;
+
+                        //try and kill it 
                         R.Kill();
-                    }
+                        R.WaitForExit(5000); //wait 5 seconds to exit, but this usually doesnt work
+                        R.Dispose();
 
-                    //need to make sure that we have got all the output so do a readtoend here
-                    output.AppendLine(R.StandardOutput.ReadToEnd());
-                    output.AppendLine();
-
-                    //output the errors from R
-                    string errorsFromR = R.StandardError.ReadToEnd().Trim();
-
-                    R.Close();
-                    R.Dispose();
-
-                    if (!String.IsNullOrEmpty(errorsFromR))
-                    {
-                        output.AppendLine();
-                        output.Append(errorsFromR);
-                        output.AppendLine();
+                        if (Process.GetProcesses().Any(x => x.Id == processID)) //then R failed to exit
+                        {
+                            throw new TimeoutException("R timed out and failed to exit gracefully, aborting analysis without reading results or log. You may need to manually kill the Rscript process. Partial results and log may be in the temp folder.");
+                        }
                     }
 
                     TimeSpan timeElapsed = sw.Elapsed;

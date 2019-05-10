@@ -9,7 +9,6 @@ using Xunit;
 
 namespace SilveR.IntegrationTests
 {
-    [Collection("Sequential")]
     public class SummaryStatisticsTests : IClassFixture<SilveRTestWebApplicationFactory<Startup>>
     {
         private readonly SilveRTestWebApplicationFactory<Startup> _factory;
@@ -498,12 +497,12 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName+".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -531,12 +530,12 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -566,12 +565,12 @@ namespace SilveR.IntegrationTests
             model.Significance = 90;
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -601,12 +600,12 @@ namespace SilveR.IntegrationTests
             model.Significance = 99;
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -638,12 +637,12 @@ namespace SilveR.IntegrationTests
             model.Significance = 95;
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -675,12 +674,12 @@ namespace SilveR.IntegrationTests
             model.Significance = 95;
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -710,12 +709,12 @@ namespace SilveR.IntegrationTests
             model.Significance = 95;
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -755,12 +754,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("SummaryStatistics", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
     }
 }

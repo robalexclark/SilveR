@@ -9,7 +9,6 @@ using Xunit;
 
 namespace SilveR.IntegrationTests
 {
-    [Collection("Sequential")]
     public class SingleMeasureParametricAnalysisTests : IClassFixture<SilveRTestWebApplicationFactory<Startup>>
     {
         private readonly SilveRTestWebApplicationFactory<Startup> _factory;
@@ -30,8 +29,8 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
-            model.Response = "Resp1";
-            model.Treatments = new string[] { "Resp1" };
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Resp 1" };
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -499,14 +498,15 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
             model.Response = "Resp8";
             model.Treatments = new string[] { "Treat12", "Treat13" };
+            model.SelectedEffect = "Treat12";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -521,32 +521,19 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
             model.Response = "Resp11";
             model.Treatments = new string[] { "Treat14" };
+            model.SelectedEffect = "Treat14";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA23(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA23()
         {
             string testName = "SMA23";
 
@@ -563,41 +550,19 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.AllPairwise = "Unadjusted (LSD)";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA24(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA24()
         {
             string testName = "SMA24";
 
@@ -613,43 +578,21 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D3";
-            }
+            model.SelectedEffect = "Treat1";
+            model.AllPairwise = "Tukey";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA25(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA25()
         {
             string testName = "SMA25";
 
@@ -666,43 +609,21 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat2";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "F";
-            }
+            model.SelectedEffect = "Treat2";
+            model.AllPairwise = "Holm";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA26(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA26()
         {
             string testName = "SMA26";
 
@@ -719,43 +640,21 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat2";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "F";
-            }
+            model.SelectedEffect = "Treat2";
+            model.AllPairwise = "Hochberg";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA27(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA27()
         {
             string testName = "SMA27";
 
@@ -772,43 +671,21 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat2";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "F";
-            }
+            model.SelectedEffect = "Treat2";
+            model.AllPairwise = "Hommel";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA28(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA28()
         {
             string testName = "SMA28";
 
@@ -821,47 +698,26 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov 1" };
+            model.PrimaryFactor = "Treat1";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D1";
-            }
+            model.SelectedEffect = "Treat1";
+            model.AllPairwise = "Bonferroni";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA29(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA29()
         {
             string testName = "SMA29";
 
@@ -875,47 +731,26 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov 1" };
             model.CovariateTransformation = "Log10";
+            model.PrimaryFactor = "Treat1";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D10";
-            }
+            model.SelectedEffect = "Treat1";
+            model.AllPairwise = "Benjamini-Hochberg";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA30(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA30()
         {
             string testName = "SMA30";
 
@@ -929,47 +764,27 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov 1" };
             model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat1";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA31(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA31()
         {
             string testName = "SMA31";
 
@@ -983,47 +798,27 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov 1" };
             model.CovariateTransformation = "None";
+            model.PrimaryFactor = "Treat1";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.ComparisonsBackToControl = "Dunnett";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA32(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA32()
         {
             string testName = "SMA32";
 
@@ -1037,49 +832,27 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov 1" };
             model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat1";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.ComparisonsBackToControl = "Holm";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 1")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA33(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA33()
         {
             string testName = "SMA33";
 
@@ -1095,49 +868,22 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Hochberg";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 1")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA34(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA34()
         {
             string testName = "SMA34";
 
@@ -1153,49 +899,22 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Hommel";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 2")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA35(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA35()
         {
             string testName = "SMA35";
 
@@ -1212,49 +931,22 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Bonferroni";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 2")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA36(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA36()
         {
             string testName = "SMA36";
 
@@ -1271,49 +963,22 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Benjamini-Hochberg";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 2")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA37(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA37()
         {
             string testName = "SMA37";
 
@@ -1330,49 +995,22 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat2";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
+            model.ControlGroup = "F";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 1")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA38(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA38()
         {
             string testName = "SMA38";
 
@@ -1390,49 +1028,22 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Dunnett";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 1")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA39(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA39()
         {
             string testName = "SMA39";
 
@@ -1451,49 +1062,22 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Holm";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
-        [Theory]
-        [InlineData("SelectedEffect", "Treat 1")]
-        [InlineData("SelectedEffect", "Treat1 * Treat2")]
-        [InlineData("AllPairwise", "Unadjusted(LSD)")]
-        [InlineData("AllPairwise", "Tukey")]
-        [InlineData("AllPairwise", "Holm")]
-        [InlineData("AllPairwise", "Hochberg")]
-        [InlineData("AllPairwise", "Hommel")]
-        [InlineData("AllPairwise", "Bonferroni")]
-        [InlineData("AllPairwise", "Benjamini-Hochberg")]
-        [InlineData("ComparisonsToControl", "Unadjusted(LSD)")]
-        [InlineData("ComparisonsToControl", "Dunnett")]
-        [InlineData("ComparisonsToControl", "Holm")]
-        [InlineData("ComparisonsToControl", "Hochberg")]
-        [InlineData("ComparisonsToControl", "Hommel")]
-        [InlineData("ComparisonsToControl", "Bonferroni")]
-        [InlineData("ComparisonsToControl", "Benjamini-Hochberg")]
-        public async Task SMA40(string testType, string testTypeValue)
+        [Fact]
+        public async Task SMA40()
         {
             string testName = "SMA40";
 
@@ -1512,29 +1096,1687 @@ namespace SilveR.IntegrationTests
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-
-            if (testType == "SelectedEffect")
-            {
-                model.SelectedEffect = testTypeValue;
-                model.LSMeansSelected = true;
-            }
-            else if (testType == "AllPairwise")
-            {
-                model.AllPairwise = testTypeValue;
-            }
-            else if (testType == "ComparisonsToControl")
-            {
-                model.ComparisonsBackToControl = testTypeValue;
-                model.ControlGroup = "D0";
-            }
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Hochberg";
+            model.ControlGroup = "D0";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + "-" + testType + "-" + testTypeValue + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA41()
+        {
+            string testName = "SMA41";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat1", "Treat2" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "None";
+            model.PrimaryFactor = "Treat2";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Hommel";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA42()
+        {
+            string testName = "SMA42";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat1", "Treat2" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Bonferroni";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA43()
+        {
+            string testName = "SMA43";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Benjamini-Hochberg";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA44()
+        {
+            string testName = "SMA44";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA45()
+        {
+            string testName = "SMA45";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2 * Treat3";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Tukey";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA46()
+        {
+            string testName = "SMA46";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1", "Blo ck2" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Holm";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA47()
+        {
+            string testName = "SMA47";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1", "Blo ck2" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hochberg";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA48()
+        {
+            string testName = "SMA48";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2 * Treat3";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hommel";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA49()
+        {
+            string testName = "SMA49";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Log10";
+            model.PrimaryFactor = "Treat2";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Bonferroni";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA50()
+        {
+            string testName = "SMA50";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat3";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Benjamini-Hochberg";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA51()
+        {
+            string testName = "SMA51";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "None";
+            model.PrimaryFactor = "Treat3";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA52()
+        {
+            string testName = "SMA52";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat3";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Dunnett";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA53()
+        {
+            string testName = "SMA53";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Significance = "0.1";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Holm";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA54()
+        {
+            string testName = "SMA54";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.1";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Hochberg";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA55()
+        {
+            string testName = "SMA55";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat8" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat8";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Hommel";
+            model.ControlGroup = "A";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA56()
+        {
+            string testName = "SMA56";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "None";
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.1";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Bonferroni";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA57()
+        {
+            string testName = "SMA57";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat3";
+            model.Significance = "0.1";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Benjamini-Hochberg";
+            model.ControlGroup = "D0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA58()
+        {
+            string testName = "SMA58";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1", "Blo ck2" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "None";
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.1";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA59()
+        {
+            string testName = "SMA59";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1", "Blo ck2" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat3";
+            model.Significance = "0.1";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat2 * Treat3";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Tukey";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA60()
+        {
+            string testName = "SMA60";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Holm";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA61()
+        {
+            string testName = "SMA61";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9", "Treat10" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hochberg";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA62()
+        {
+            string testName = "SMA62";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9", "Treat10", "Treat11" };
+            model.OtherDesignFactors = new string[] { "Block3" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hommel";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+
+        [Fact]
+        public async Task SMA63()
+        {
+            string testName = "SMA63";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.Covariates = new string[] { "Cov6" };
+            model.PrimaryFactor = "Treat9";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Bonferroni";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA64()
+        {
+            string testName = "SMA64";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat10", "Treat9" };
+            model.Covariates = new string[] { "Cov6" };
+            model.PrimaryFactor = "Treat9";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat10";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Benjamini-Hochberg";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA65()
+        {
+            string testName = "SMA65";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat10", "Treat9", "Treat11" };
+            model.OtherDesignFactors = new string[] { "Block3", "Block4" };
+            model.Covariates = new string[] { "Cov6" };
+            model.PrimaryFactor = "Treat9";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat10";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
+            model.ControlGroup = "1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA66()
+        {
+            string testName = "SMA66";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat10", "Treat9", "Treat11" };
+            model.OtherDesignFactors = new string[] { "Block3", "Block4" };
+            model.Covariates = new string[] { "Cov6" };
+            model.PrimaryFactor = "Treat9";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat10";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Dunnett";
+            model.ControlGroup = "1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA67()
+        {
+            string testName = "SMA67";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat10", "Treat9", "Treat11" };
+            model.OtherDesignFactors = new string[] { "Block3", "Block4" };
+            model.Covariates = new string[] { "Cov3" };
+            model.CovariateTransformation = "ArcSine";
+            model.PrimaryFactor = "Treat9";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat10";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Holm";
+            model.ControlGroup = "1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA68()
+        {
+            string testName = "SMA68";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp1 2";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 15", "Treat16" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat 15 * Treat16";
+            model.LSMeansSelected = true;
+            model.ComparisonsBackToControl = "Tukey";
+            model.ControlGroup = "A";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA69()
+        {
+            string testName = "SMA69";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 13";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 17", "Treat 18", "Treat 19" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat 17 * Treat 18 * Treat 19";
+            model.LSMeansSelected = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA70()
+        {
+            string testName = "SMA70";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 13";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 17", "Treat 18", "Treat 19", "Treat 20" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat 17 * Treat 18 * Treat 19 * Treat 20";
+            model.LSMeansSelected = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+
+        [Fact]
+        public async Task SMA71()
+        {
+            string testName = "SMA71";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp 13";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 17", "Treat 18", "Treat 19", "Treat 20", "Treat 21" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat 17 * Treat 18 * Treat 19 * Treat 20 * Treat 21";
+            model.LSMeansSelected = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA72()
+        {
+            string testName = "SMA72";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp14";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat22", "Treat23" };
+            model.Covariates = new string[] { "Cov7" };
+            model.PrimaryFactor = "Treat22";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat22 * Treat23";
+            model.LSMeansSelected = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+
+        [Fact]
+        public async Task SMA73()
+        {
+            string testName = "SMA73";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp15";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat22", "Treat23" };
+            model.Covariates = new string[] { "Cov7" };
+            model.PrimaryFactor = "Treat22";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat22 * Treat23";
+            model.LSMeansSelected = true;
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp15) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+
+        [Fact]
+        public async Task SMA74()
+        {
+            string testName = "SMA74";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "PVTestResponse1a";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTestGroup1" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "PVTestGroup1";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+
+        [Fact]
+        public async Task SMA75()
+        {
+            string testName = "SMA75";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "PVTestResponse1b";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTestGroup1" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "PVTestGroup1";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Tukey";
+
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA76()
+        {
+            string testName = "SMA76";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "PVTestResponse2";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTEstGroup2" };
+            model.Covariates = new string[] { "PVTEstCovariate2a" };
+            model.PrimaryFactor = "PVTEstGroup2";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "PVTEstGroup2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Holm";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA77()
+        {
+            string testName = "SMA77";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "PVTestResponse2";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTEstGroup2" };
+            model.Covariates = new string[] { "PVTEstCovariate2b" };
+            model.PrimaryFactor = "PVTEstGroup2";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "PVTEstGroup2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hommel";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA78()
+        {
+            string testName = "SMA78";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "CVResp";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "CVTreat1", "CVTreat2" };
+            model.Covariates = new string[] { "PVTEstCovariate2b" };
+            model.PrimaryFactor = "CVTreat1";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "CVTreat1";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Covariate selected (PVTEstCovariate2b) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA79()
+        {
+            string testName = "SMA79";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "CVResp";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "CVTreat3", "CVTreat4" };
+            model.Covariates = new string[] { "PVTEstCovariate2b" };
+            model.PrimaryFactor = "CVTreat3";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "CVTreat3 * CVTreat4";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Covariate selected (PVTEstCovariate2b) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA80()
+        {
+            string testName = "SMA80";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "IFResp";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "IFTreat1", "IFTreat2" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "IFTreat1 * IFTreat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA81()
+        {
+            string testName = "SMA81";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "IFResp";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "IFTreat3", "IFTreat4" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "IFTreat3 * IFTreat4";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA82()
+        {
+            string testName = "SMA82";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1" };
+            model.Covariates = new string[] { "Cov 1" };
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA83()
+        {
+            string testName = "SMA83";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat1", "Treat2" };
+            model.Covariates = new string[] { "Resp 1", "Cov 1" };
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hochberg";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA84()
+        {
+            string testName = "SMA84";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.Covariates = new string[] { "Resp 1", "Cov 1" };
+            model.CovariateTransformation = "Loge";
+            model.PrimaryFactor = "Treat2";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2 * Treat3";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Benjamini-Hochberg";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA85()
+        {
+            string testName = "SMA85";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat1" };
+            model.OtherDesignFactors = new string[] { "Blo ck1" };
+            model.Covariates = new string[] { "Resp 1", "Cov 1" };
+            model.CovariateTransformation = "Log10";
+            model.PrimaryFactor = "Treat1";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Holm";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA86()
+        {
+            string testName = "SMA86";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat1", "Treat2" };
+            model.OtherDesignFactors = new string[] { "Blo ck1" };
+            model.Covariates = new string[] { "Cov 1", "Cov3" };
+            model.CovariateTransformation = "ArcSine";
+            model.PrimaryFactor = "Treat2";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Tukey";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA87()
+        {
+            string testName = "SMA87";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat1", "Treat2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Blo ck1" };
+            model.Covariates = new string[] { "Cov 1", "Resp 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat2";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat1 * Treat2";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hommel";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task SMA88()
+        {
+            string testName = "SMA88";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "singlemeasures").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9", "Treat10" };
+            model.Covariates = new string[] { "Cov 1", "Resp 1" };
+            model.CovariateTransformation = "Square Root";
+            model.PrimaryFactor = "Treat10";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hommel";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
     }
 }

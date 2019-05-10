@@ -24,8 +24,10 @@ suppressWarnings(library(grid))
 #===================================================================================================================
 #User option parameters
 #===================================================================================================================
-grparanum = read.table(paste(getwd(),"/UserOptions.txt", sep=""), skip = 22, sep=" ")
-grparatext = read.table(paste(getwd(),"/UserOptions.txt", sep=""))
+Args <- commandArgs(TRUE)
+userOptions <- sub(".csv", ".useroptions", Args[3])
+grparanum = read.table(userOptions, skip = 22, sep=" ")
+grparatext = read.table(userOptions)
 
 #Line types used - solid, blank and dashed
 	Line_type_solid<- paste(grparatext$V2[1],sep="")

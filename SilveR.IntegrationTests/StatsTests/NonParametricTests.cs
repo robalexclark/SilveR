@@ -9,7 +9,6 @@ using Xunit;
 
 namespace SilveR.IntegrationTests
 {
-    [Collection("Sequential")]
     public class NonParametricTests : IClassFixture<SilveRTestWebApplicationFactory<Startup>>
     {
         private readonly SilveRTestWebApplicationFactory<Startup> _factory;
@@ -543,12 +542,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -567,12 +566,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -591,12 +590,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.1";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -615,12 +614,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -639,12 +638,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -663,12 +662,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.1";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -687,12 +686,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -711,12 +710,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -735,12 +734,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.10";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -760,12 +759,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -785,12 +784,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -810,12 +809,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.1";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -844,12 +843,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -878,12 +877,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -912,12 +911,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -947,12 +946,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -981,12 +980,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1016,12 +1015,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1040,12 +1039,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1064,12 +1063,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1088,12 +1087,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.1";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1112,12 +1111,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1136,12 +1135,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1160,12 +1159,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1185,12 +1184,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1209,12 +1208,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1233,12 +1232,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1257,12 +1256,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1282,12 +1281,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1306,12 +1305,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1341,12 +1340,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
 
@@ -1377,12 +1376,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1412,12 +1411,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1448,12 +1447,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1473,12 +1472,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1498,12 +1497,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1524,12 +1523,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1549,12 +1548,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1574,12 +1573,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1600,12 +1599,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1625,12 +1624,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1650,12 +1649,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1676,12 +1675,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1701,12 +1700,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1726,12 +1725,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1752,12 +1751,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1777,12 +1776,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1802,12 +1801,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1828,12 +1827,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1853,12 +1852,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1878,12 +1877,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1904,12 +1903,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1929,12 +1928,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1954,12 +1953,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -1980,12 +1979,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2005,12 +2004,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2030,12 +2029,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2056,12 +2055,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2081,12 +2080,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2106,12 +2105,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2132,12 +2131,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2157,12 +2156,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2182,12 +2181,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2208,12 +2207,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2233,12 +2232,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2258,12 +2257,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2284,12 +2283,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2309,12 +2308,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2334,12 +2333,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.01";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2360,12 +2359,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2385,12 +2384,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2410,12 +2409,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2435,12 +2434,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2460,12 +2459,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2485,12 +2484,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2510,12 +2509,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2535,12 +2534,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2560,12 +2559,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2585,12 +2584,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2610,12 +2609,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2635,12 +2634,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2660,12 +2659,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2685,12 +2684,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2710,12 +2709,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2734,12 +2733,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2758,12 +2757,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2782,12 +2781,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2806,12 +2805,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2840,12 +2839,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2874,12 +2873,12 @@ namespace SilveR.IntegrationTests
             //Act2 - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2899,12 +2898,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
 
         [Fact]
@@ -2924,12 +2923,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
 
             //Act
-            string htmlResults = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveHtmlOutput("NonParametricAnalysis", testName, htmlResults);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, htmlResults);
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
     }
 }

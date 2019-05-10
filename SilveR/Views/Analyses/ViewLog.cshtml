@@ -9,7 +9,9 @@
 
 @if (ViewBag.AnalysisLog != null)
 {
-    @Html.Raw(ViewBag.AnalysisLog.Replace(System.Environment.NewLine, "<br/>"));
+    <div id="logOutput">
+        @Html.Raw(ViewBag.AnalysisLog.Replace(System.Environment.NewLine, "<br/>"));
+    </div>
 }
 else
 {

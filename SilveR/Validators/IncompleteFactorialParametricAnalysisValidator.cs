@@ -123,7 +123,7 @@ namespace SilveR.Validators
                         string mess = "The " + responseType + " selected contains missing data.";
                         if (responseType == "covariate")
                         {
-                            mess = mess + Environment.NewLine + " Any response that does not have a corresponding covariate will be excluded from the analysis.";
+                            mess = mess + " Any response that does not have a corresponding covariate will be excluded from the analysis.";
                         }
 
                         ValidationInfo.AddWarningMessage(mess);
