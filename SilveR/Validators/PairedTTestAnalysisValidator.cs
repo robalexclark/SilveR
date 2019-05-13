@@ -52,7 +52,7 @@ namespace SilveR.Validators
             categoricalVariables.AddVariables(pttVariables.Subject);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categoricalVariables, pttVariables.Response))
+            if (!CategoricalAgainstContinuousVariableChecks(categoricalVariables, pttVariables.Response))
                 return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
@@ -60,7 +60,7 @@ namespace SilveR.Validators
             {
                 foreach (string covariate in pttVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categoricalVariables, covariate))
+                    if (!CategoricalAgainstContinuousVariableChecks(categoricalVariables, covariate))
                         return ValidationInfo;
                 }
             }
@@ -180,7 +180,7 @@ namespace SilveR.Validators
             return true;
         }
 
-        private bool FactorAndResponseCovariateChecks(List<string> categorical, string continuous)
+        private bool CategoricalAgainstContinuousVariableChecks(List<string> categorical, string continuous)
         {
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {

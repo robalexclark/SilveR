@@ -28,13 +28,7 @@ namespace SilveR.Validators
             allVars.AddVariables(rmVariables.Response);
             allVars.AddVariables(rmVariables.Covariates);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
-
-            if (!CheckFactorsHaveLevels(rmVariables.Treatments, true))
-                return ValidationInfo;
-            if (!CheckFactorsHaveLevels(rmVariables.RepeatedFactor, true))
-                return ValidationInfo;
-            if (!CheckFactorsHaveLevels(rmVariables.Subject, true))
+            if (!CheckColumnNames(allVars))
                 return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
@@ -47,6 +41,15 @@ namespace SilveR.Validators
             if (!CheckResponsesPerLevel(rmVariables.Subject, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Subject)))
                 return ValidationInfo;
 
+            //?
+            if (!CheckFactorsHaveLevels(rmVariables.Treatments, true))
+                return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.RepeatedFactor, true))
+                return ValidationInfo;
+            if (!CheckFactorsHaveLevels(rmVariables.Subject, true))
+                return ValidationInfo;
+
+
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
             categorical.AddVariables(rmVariables.Treatments);
@@ -55,7 +58,7 @@ namespace SilveR.Validators
             categorical.Add(rmVariables.Subject);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, rmVariables.Response))
+            if (!CategoricalAgainstContinuousVariableChecks(categorical, rmVariables.Response))
                 return ValidationInfo;
 
             //do data checks on the treatments/other factors and covariate (if selected)
@@ -63,7 +66,7 @@ namespace SilveR.Validators
             {
                 foreach (string covariate in rmVariables.Covariates)
                 {
-                    if (!FactorAndResponseCovariateChecks(categorical, covariate))
+                    if (!CategoricalAgainstContinuousVariableChecks(categorical, covariate))
                         return ValidationInfo;
                 }
             }
@@ -116,7 +119,7 @@ namespace SilveR.Validators
 
                         if (count == 1)
                         {
-                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of one or more of the factors. Please review your factor selection.");
+                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of one or more of the factors (" + factor + "). Please review your factor selection.");
                             return false;
                         }
                     }
@@ -229,7 +232,7 @@ namespace SilveR.Validators
             }
         }
 
-        private bool FactorAndResponseCovariateChecks(List<string> categorical, string continuous)
+        private bool CategoricalAgainstContinuousVariableChecks(List<string> categorical, string continuous)
         {
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {
@@ -283,10 +286,10 @@ namespace SilveR.Validators
                     //check that the "response" contains data for each "treatment" (not fatal)
                     if (!String.IsNullOrEmpty(categoricalRow[i]) && String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        string mess = "The " + responseType + " selected contains missing data.";
-                        if (responseType == "covariate")
+                        string mess = "The " + responseType + " selected (" + continuous + ") contains missing data.";
+                        if (responseType == "Covariate")
                         {
-                            mess = mess + Environment.NewLine + " Any response that does not have a corresponding covariate will be excluded from the analysis.";
+                            mess = mess + " Any response that does not have a corresponding covariate will be excluded from the analysis.";
                         }
 
                         ValidationInfo.AddWarningMessage(mess);

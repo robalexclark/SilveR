@@ -42,14 +42,14 @@ namespace SilveR.Validators
             categorical.AddVariables(ndaVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
-            if (!FactorAndResponseCovariateChecks(categorical, ndaVariables.Response))
+            if (!CategoricalAgainstContinuousVariableChecks(categorical, ndaVariables.Response))
                 return ValidationInfo;
 
             //if get here then no errors so return true
             return ValidationInfo;
         }
 
-        private bool FactorAndResponseCovariateChecks(List<string> categorical, string continuous)
+        private bool CategoricalAgainstContinuousVariableChecks(List<string> categorical, string continuous)
         {
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {

@@ -2406,8 +2406,6 @@ namespace SilveR.IntegrationTests
             model.Response = "CVResp";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "CVTreat1", "CVTreat2" };
-            model.Covariates = new string[] { "PVTEstCovariate2b" };
-            model.PrimaryFactor = "CVTreat1";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
@@ -2416,18 +2414,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
 
-            //Act1
-            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
-
-            //Assert
-            Assert.Contains("The Covariate selected (PVTEstCovariate2b) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
-            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
-
-            //Act2 - ignore warnings
-            var modelIgnoreWarnings = model.ToKeyValue();
-            modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -2448,8 +2436,6 @@ namespace SilveR.IntegrationTests
             model.Response = "CVResp";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "CVTreat3", "CVTreat4" };
-            model.Covariates = new string[] { "PVTEstCovariate2b" };
-            model.PrimaryFactor = "CVTreat3";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
@@ -2458,18 +2444,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
 
-            //Act1
-            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
-
-            //Assert
-            Assert.Contains("The Covariate selected (PVTEstCovariate2b) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
-            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
-
-            //Act2 - ignore warnings
-            var modelIgnoreWarnings = model.ToKeyValue();
-            modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -2550,7 +2526,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp7";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat1" };
-            model.Covariates = new string[] { "Cov 1" };
+            model.Covariates = new string[] { "Resp 1", "Cov 1" };
             model.PrimaryFactor = "Treat1";
             model.Significance = "0.05";
             model.ANOVASelected = true;
@@ -2583,7 +2559,8 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat1", "Treat2" };
             model.Covariates = new string[] { "Resp 1", "Cov 1" };
-            model.PrimaryFactor = "Treat1";
+            model.PrimaryFactor = "Treat2";
+            model.CovariateTransformation = "Square Root";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
