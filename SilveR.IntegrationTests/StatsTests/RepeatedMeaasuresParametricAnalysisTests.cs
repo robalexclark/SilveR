@@ -31,8 +31,8 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
-            model.RepeatedFactor = "Day1";
-            model.Covariance = "CS";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -56,7 +56,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -66,7 +66,6 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Repeated factor field is required.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
-
 
         [Fact]
         public async Task RMA3()
@@ -82,7 +81,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -92,7 +91,6 @@ namespace SilveR.IntegrationTests
             Assert.Contains("There is no replication in one or more of the levels of the Treatment factor (Treat 1). Please select another factor.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
-
 
         [Fact]
         public async Task RMA4()
@@ -108,7 +106,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -133,7 +131,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat8" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -158,7 +156,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -184,7 +182,7 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariates = new string[] { "Cov2" };
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -194,7 +192,6 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Covariate selected (Cov2) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
-
 
         [Fact]
         public async Task RMA8()
@@ -210,7 +207,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -236,7 +233,7 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariates = new string[] { "Cov3" };
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -261,7 +258,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat9" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -286,7 +283,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat10" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -312,7 +309,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "CS";
+            model.Covariance = "Compound Symmetric";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -321,6 +318,1974 @@ namespace SilveR.IntegrationTests
             //Assert
             Assert.Contains("You have Log10 transformed the Resp5 variable. Unfortunately some of the Resp5 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task RMA13()
+        {
+            string testName = "RMA13";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp5";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have Loge transformed the Resp5 variable. Unfortunately some of the Resp5 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }        
+        
+        [Fact]
+        public async Task RMA14()
+        {
+            string testName = "RMA14";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp5";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have Square Root transformed the Resp5 variable. Unfortunately some of the Resp5 values are negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }           
+        
+        [Fact]
+        public async Task RMA15()
+        {
+            string testName = "RMA15";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov4" };
+            model.CovariateTransformation = "Loge";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have Loge transformed the Cov4 variable. Unfortunately some of the Cov4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task RMA16()
+        {
+            string testName = "RMA16";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov4" };
+            model.CovariateTransformation = "Log10";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have Log10 transformed the Cov4 variable. Unfortunately some of the Cov4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task RMA17()
+        {
+            string testName = "RMA17";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp5";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have ArcSine transformed the Resp5 variable. Unfortunately some of the Resp5 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task RMA18()
+        {
+            string testName = "RMA18";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 9";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have ArcSine transformed the Resp 9 variable. Unfortunately some of the Resp 9 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task RMA19()
+        {
+            string testName = "RMA19";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov4" };
+            model.CovariateTransformation = "ArcSine";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have ArcSine transformed the Cov4 variable. Unfortunately some of the Cov4 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+         
+        [Fact]
+        public async Task RMA20()
+        {
+            string testName = "RMA20";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov1" };
+            model.CovariateTransformation = "ArcSine";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have ArcSine transformed the Cov1 variable. Unfortunately some of the Cov1 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task RMA21()
+        {
+            string testName = "RMA21";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov4" };
+            model.CovariateTransformation = "Square Root";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("You have Square Root transformed the Cov4 variable. Unfortunately some of the Cov4 values are negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task RMA22()
+        {
+            string testName = "RMA22";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block3" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Error: According to the dataset at least one subject is associated with more than one level of one of the blocking factors. Please review this, as each subject must be associated with only one level of each blocking factor.", errors);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
+        }
+        
+        [Fact]
+        public async Task RMA23()
+        {
+            string testName = "RMA23";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat14" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Error: According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.", errors);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
+        }
+        
+        [Fact]
+        public async Task RMA24()
+        {
+            string testName = "RMA24";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp11";
+            model.Treatments = new string[] { "Treat 1", "Treat15" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Error: One of the levels of the treatment factor(s), or a combination of the levels of the treatment factors, is not present at at least one of the timepoints. Please review this selection as all treatment factors (and combinations thereof) must be present at each timepoint.", errors);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
+        }
+
+        [Fact]
+        public async Task RMA25()
+        {
+            string testName = "RMA25";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA26()
+        {
+            string testName = "RMA26";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA27()
+        {
+            string testName = "RMA27";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+
+        [Fact]
+        public async Task RMA28()
+        {
+            string testName = "RMA28";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA29()
+        {
+            string testName = "RMA29";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA30()
+        {
+            string testName = "RMA30";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA31()
+        {
+            string testName = "RMA31";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA32()
+        {
+            string testName = "RMA32";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA33()
+        {
+            string testName = "RMA33";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA34()
+        {
+            string testName = "RMA34";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA35()
+        {
+            string testName = "RMA35";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA36()
+        {
+            string testName = "RMA36";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA37()
+        {
+            string testName = "RMA37";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA38()
+        {
+            string testName = "RMA38";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA39()
+        {
+            string testName = "RMA39";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA40()
+        {
+            string testName = "RMA40";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA41()
+        {
+            string testName = "RMA41";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA42()
+        {
+            string testName = "RMA42";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA43()
+        {
+            string testName = "RMA43";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA44()
+        {
+            string testName = "RMA44";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA45()
+        {
+            string testName = "RMA45";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA46()
+        {
+            string testName = "RMA46";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA47()
+        {
+            string testName = "RMA47";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA48()
+        {
+            string testName = "RMA48";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA49()
+        {
+            string testName = "RMA49";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA50()
+        {
+            string testName = "RMA50";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA51()
+        {
+            string testName = "RMA51";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA52()
+        {
+            string testName = "RMA52";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4" };
+            model.Subject = "Animal2";
+            model.RepeatedFactor = "Day2";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat4 * Day2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA53()
+        {
+            string testName = "RMA53";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal2";
+            model.RepeatedFactor = "Day2";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat4 * Day2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA54()
+        {
+            string testName = "RMA54";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal2";
+            model.RepeatedFactor = "Day2";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat4 * Day2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA55()
+        {
+            string testName = "RMA55";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal2";
+            model.RepeatedFactor = "Day2";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat4 * Day2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA56()
+        {
+            string testName = "RMA56";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4", "Treat5" };
+            model.Subject = "Animal2";
+            model.RepeatedFactor = "Day2";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat4 * Treat5 * Day2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA57()
+        {
+            string testName = "RMA57";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4", "Treat5", "Treat6" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2"};
+            model.Subject = "Animal2";
+            model.RepeatedFactor = "Day2";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat4 * Treat5 * Treat6 * Day2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA58()
+        {
+            string testName = "RMA58";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA59()
+        {
+            string testName = "RMA59";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA60()
+        {
+            string testName = "RMA60";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA61()
+        {
+            string testName = "RMA61";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA62()
+        {
+            string testName = "RMA62";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA63()
+        {
+            string testName = "RMA63";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA64()
+        {
+            string testName = "RMA64";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA65()
+        {
+            string testName = "RMA65";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA66()
+        {
+            string testName = "RMA66";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
+            model.OtherDesignFactors = new string[] { "Block1","Block2" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response selected (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA67()
+        {
+            string testName = "RMA67";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp12";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat17", "Treat18", "Treat19", "Treat20" };
+            model.Subject = "Animal3";
+            model.RepeatedFactor = "Day3";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat17 * Treat18 * Treat19 * Treat20 * Day3";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        //[Fact]
+        //public async Task RMA68()
+        //{
+        //    string testName = "RMA68";
+
+        //    //Arrange
+        //    HttpClient client = _factory.CreateClient();
+
+        //    RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+        //    model.Response = "Resp13";
+        //    model.ResponseTransformation = "None";
+        //    model.Treatments = new string[] { "Treat21", "Treat22" };
+        //    model.Covariates = new string[] { "Cov6" };
+        //    model.Subject = "Animal4";
+        //    model.RepeatedFactor = "Day4";
+        //    model.Covariance = "Compound Symmetric";
+        //    model.SelectedEffect = "Treat21 * Treat22 * Day4";
+
+        //    //Act
+        //    StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+        //    Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+        //    //Assert
+        //    string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+        //    Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        //}
+
+        [Fact]
+        public async Task RMA69()
+        {
+            string testName = "RMA69";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "PVtestResp1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTestTreat1" };
+            model.Covariates = new string[] { "PVTestCOV1a" };
+            model.Subject = "PVTestAnimal1";
+            model.RepeatedFactor = "PVTestDay1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "PVTestTreat1 * PVTestDay1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA70()
+        {
+            string testName = "RMA70";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "PVtestResp1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTestTreat1" };
+            model.Covariates = new string[] { "PVTestCOV1b" };
+            model.Subject = "PVTestAnimal1";
+            model.RepeatedFactor = "PVTestDay1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "PVTestTreat1 * PVTestDay1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA71()
+        {
+            string testName = "RMA71";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "PVTestResp2";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTestTreat2" };
+            model.Covariates = new string[] { "PVTestCov2a" };
+            model.Subject = "PVTestAnimal2";
+            model.RepeatedFactor = "PVTestDay2";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "PVTestTreat2 * PVTestDay2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA72()
+        {
+            string testName = "RMA72";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "PVTestResp2";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "PVTestTreat2" };
+            model.Covariates = new string[] { "PVTestCov2b" };
+            model.Subject = "PVTestAnimal2";
+            model.RepeatedFactor = "PVTestDay2";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "PVTestTreat2 * PVTestDay2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA73()
+        {
+            string testName = "RMA73";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "CVResp";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "CVTreat1" };
+            model.Subject = "CVAnimal1";
+            model.RepeatedFactor = "CVTime1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "CVTreat1 * CVTime1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA74()
+        {
+            string testName = "RMA74";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "CVResp";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "CVTreat2" };
+            model.Subject = "CVAnimal2";
+            model.RepeatedFactor = "CVTime2";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "CVTreat2 * CVTime2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA75()
+        {
+            string testName = "RMA75";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA76()
+        {
+            string testName = "RMA76";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.CovariateTransformation = "Square Root";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA77()
+        {
+            string testName = "RMA77";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.CovariateTransformation = "None";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA78()
+        {
+            string testName = "RMA78";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.CovariateTransformation = "Log10";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "Treat 1 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA79()
+        {
+            string testName = "RMA79";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.CovariateTransformation = "None";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+        }
+
+        [Fact]
+        public async Task RMA80()
+        {
+            string testName = "RMA80";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.CovariateTransformation = "Log10";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
         }
     }
 }
