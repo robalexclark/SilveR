@@ -82,6 +82,12 @@ for (i in 2:resplength) {
 Title <-paste(branding, " Correlation Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 #Title
 title<-"Responses"
 if (transformation != "None") {

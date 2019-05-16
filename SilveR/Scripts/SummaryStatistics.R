@@ -77,8 +77,14 @@ for (i in 1:10) {
 #Module Title
 Title <-paste(branding, " Summary Statistics", sep="")
 HTML.title(Title, HR = 1, align = "left")
-HTML.title("Variable selection", HR=2, align="left")
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
+HTML.title("Variable selection", HR=2, align="left")
 add2<-c("Response")
 if (length(expectedChanges) >2) {
 	add2 <- paste(add2, "s", sep="")

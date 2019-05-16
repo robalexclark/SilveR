@@ -137,8 +137,14 @@ ReferenceLine <- "NULL"
 #===================================================================================================================
 #Output HTML header
 Title <-paste(branding, " 'One-way ANOVA' Power Analysis", sep="")
-
 HTML.title(Title, HR = 1, align = "left")
+
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 HTML("The power calculations made by InVivoStat assume that the future experimental design involves one treatment factor, with equal group sizes. The data will be analysed using a balanced One-way ANOVA.", align="left")
 HTML("The statistical power generated is for the overall ANOVA test (i.e. an overall difference between the group means) .", align="left")
 

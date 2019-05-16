@@ -41,7 +41,7 @@ namespace SilveR.Validators
                 //if the x-axis has been transformed then check that all is numeric
                 if (!xIsNumeric && gaVariables.XAxisTransformation != "None")
                 {
-                    ValidationInfo.AddWarningMessage("You have " + gaVariables.XAxisTransformation + " transformed the x-axis variable. Unfortunately the x-axis variable is non-numerical and hence cannot be transformed. The transformation has been ignored.");
+                    ValidationInfo.AddWarningMessage("You have " + gaVariables.XAxisTransformation + " transformed the x-axis variable ("+ gaVariables.XAxis + "). Unfortunately the x-axis variable is non-numerical and hence cannot be transformed. The transformation has been ignored.");
                 }
             }
 
@@ -62,7 +62,7 @@ namespace SilveR.Validators
 
             if (!yIsNumeric && gaVariables.ResponseTransformation != "None")
             {
-                ValidationInfo.AddWarningMessage("You have " + gaVariables.ResponseTransformation + " transformed the response variable. Unfortunately the response variable is non-numerical and hence cannot be transformed. The transformation has been ignored.");
+                ValidationInfo.AddWarningMessage("You have " + gaVariables.ResponseTransformation + " transformed the response variable (" + gaVariables.Response + "). Unfortunately the response variable is non-numerical and hence cannot be transformed. The transformation has been ignored.");
             }
 
             if (!yIsNumeric && !String.IsNullOrEmpty(gaVariables.Response) && (gaVariables.HistogramSelected || gaVariables.CaseProfilesPlotSelected || gaVariables.BoxplotSelected || gaVariables.SEMPlotSelected))

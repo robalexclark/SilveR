@@ -7,7 +7,7 @@ suppressWarnings(library(nlme))
 #===================================================================================================================
 # retrieve args
 Args <- commandArgs(TRUE)
-
+print(Args)
 #Read in data
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
@@ -175,6 +175,12 @@ if(len2<len) {
 #===================================================================================================================
 Title <-paste(branding, " Nested Design Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
+
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
 
 #Response
 title<-c("Response")
@@ -525,7 +531,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 	randomEffect1a<-namereplace(randomEffect1)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect1a)
+	POWERPLOT_NEW(randomEffect1a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot1), Align="left")
 
@@ -602,7 +608,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 	randomEffect2a<-namereplace(randomEffect2)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect2a)
+	POWERPLOT_NEW(randomEffect2a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot2), Align="left")
 
@@ -672,7 +678,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 		for(i in 1:length(userlist2)) {
 			userlistx[i]<- paste(userlist1[i], ",", userlist2[i], sep="")
 		}
-		namez <- paste("Replication of: \n", randomEffect1, ", ", randomEffect2 , " ", sep = "")
+		namez <- paste("Replication of: ", randomEffect1, ", ", randomEffect2 , " ", sep = "")
 
 		#Generating the variable list for the lines - they are labelled V1 up to Vn
 		lin_no<-dim(temp2)[2]
@@ -689,11 +695,11 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 == "NULL
 		Gr_fill <- temp$Gr_fill	
 		userlistgr<- userlistx
 
-		testy <- paste(randomEffect1, ", ", randomEffect2 , " ", sep = "")
+		testy <- paste(randomEffect1, ", \n", randomEffect2 , "\n ", sep = "")
 		testya<-namereplace(testy)
 	
 		#GGPLOT2 code
-		POWERPLOT_NEW(testya)
+		POWERPLOT_NEW(testya, "right")
 		void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot12), Align="left")
 
 		#STB July2013
@@ -770,7 +776,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	randomEffect1a<-namereplace(randomEffect1)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect1a)
+	POWERPLOT_NEW(randomEffect1a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot1), Align="left")
 
@@ -845,7 +851,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	randomEffect2a<-namereplace(randomEffect2)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect2a)
+	POWERPLOT_NEW(randomEffect2a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot2), Align="left")
 
@@ -922,7 +928,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	randomEffect3a<-namereplace(randomEffect3)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect3a)
+	POWERPLOT_NEW(randomEffect3a, "left")
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot3), Align="left")
 
 	#STB July2013
@@ -993,7 +999,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		for(i in 1:length(userlist2)) {
 			userlistx[i]<- paste(userlist1[i], ",", userlist2[i], ",", userlist3[i], sep="")
 		}
-		namez <- paste("Replication of: \n", randomEffect1, ", ", randomEffect2 , ", ", randomEffect3 , " ", sep = "")
+		namez <- paste("Replication of: ", randomEffect1, ", ", randomEffect2 , ", ", randomEffect3 , " ", sep = "")
 
 		#Generating the variable list for the lines - they are labelled V1 up to Vn
 		lin_no<-dim(temp2)[2]
@@ -1010,11 +1016,11 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		Gr_fill <- temp$Gr_fill	
 
 		userlistgr<- userlistx
-		testy<-paste(randomEffect1, ", ", randomEffect2 , ", ", randomEffect3 , " ", sep = "")
+		testy<-paste(randomEffect1, ", \n", randomEffect2 , ", \n", randomEffect3 , "\n ", sep = "")
 		testya<-namereplace(testy)
 
 		#GGPLOT2 code
-		POWERPLOT_NEW(testya)
+		POWERPLOT_NEW(testya, "right")
 
 		void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot12), Align="left")
 
@@ -1094,7 +1100,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	randomEffect1a<-namereplace(randomEffect1)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect1a)
+	POWERPLOT_NEW(randomEffect1a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot1), Align="left")
 
@@ -1167,7 +1173,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	randomEffect2a<-namereplace(randomEffect2)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect2a)
+	POWERPLOT_NEW(randomEffect2a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot2), Align="left")
 
@@ -1244,7 +1250,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	randomEffect3a<-namereplace(randomEffect3)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect3a)
+	POWERPLOT_NEW(randomEffect3a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot3), Align="left")
 
@@ -1320,7 +1326,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	randomEffect4a<-namereplace(randomEffect4)
 
 	#GGPLOT2 code
-	POWERPLOT_NEW(randomEffect4a)
+	POWERPLOT_NEW(randomEffect4a, "left")
 
 	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot4), Align="left")
 
@@ -1395,7 +1401,7 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		for(i in 1:length(userlist2)) {
 			userlistx[i]<- paste(userlist1[i], ",", userlist2[i], ",", userlist3[i], ",", userlist4[i], sep="")
 		}
-		namez <- paste("Replication of: \n", randomEffect1, ", ", randomEffect2 , ", ", randomEffect3 , ", ", randomEffect4 , "  ", sep = "")
+		namez <- paste("Replication of: ", randomEffect1, ", ", randomEffect2 , ", ", randomEffect3 , ", ", randomEffect4 , "  ", sep = "")
 
 		#Generating the variable list for the lines - they are labelled V1 up to Vn
 		lin_no<-dim(temp2)[2]
@@ -1412,11 +1418,11 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 		Gr_fill <- temp$Gr_fill	
 
 		userlistgr<- userlistx
-		testy<-paste(randomEffect1, ", ", randomEffect2 , ", ", randomEffect3 , ", ", randomEffect4 , "  ", sep = "")
+		testy<-paste(randomEffect1, ", \n", randomEffect2 , ", \n", randomEffect3 , ", \n", randomEffect4 , "\n  ", sep = "")
 		testya<-namereplace(testy)
 
 		#GGPLOT2 code
-		POWERPLOT_NEW(testya)
+		POWERPLOT_NEW(testya, "right")
 
 		void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plot12), Align="left")
 

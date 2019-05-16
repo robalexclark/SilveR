@@ -1,4 +1,3 @@
-
 $(function () {
 
     $("#Response").kendoDropDownList({
@@ -10,8 +9,7 @@ $(function () {
     });
 
     $("#XAxis").kendoDropDownList({
-        dataSource: theModel.availableVariablesAllowNull,
-        change: enableDisableXAxisTransformation()
+        dataSource: theModel.availableVariablesAllowNull
     });
 
     $("#XAxisTransformation").kendoDropDownList({
@@ -42,6 +40,10 @@ $(function () {
     enableDisableSEMplot();
     enableDisableHistogram();
     enableDisableCaseProfiles();
+
+
+    const xAxis = $("#XAxis").data("kendoDropDownList");
+    xAxis.bind("change", enableDisableXAxisTransformation);
 });
 
 

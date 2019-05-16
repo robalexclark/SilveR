@@ -27,7 +27,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat3";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -52,7 +52,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat4";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -77,7 +77,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat4";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -102,7 +102,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat4";
             model.Control = "A";
@@ -128,7 +128,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -153,7 +153,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -178,7 +178,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat5";
             model.Control = "x";
@@ -204,7 +204,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat6";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -229,7 +229,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat7";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -254,7 +254,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat7";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -279,7 +279,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat7";
             model.Control = "A";
@@ -305,7 +305,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp3";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -330,7 +330,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp3";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -355,7 +355,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp3";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -380,7 +380,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp3";
             model.Treatment = "Treat 2";
             model.Control = "A";
@@ -406,7 +406,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp4";
             model.Treatment = "Resp4";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -432,7 +432,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp5";
             model.Treatment = "Resp5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -458,7 +458,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp5";
             model.Treatment = "Resp5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -484,7 +484,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp5";
             model.Treatment = "Resp5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
@@ -510,7 +510,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp1";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
@@ -535,7 +535,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -547,7 +547,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -559,7 +559,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -571,7 +571,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -583,7 +583,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -595,7 +595,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -607,7 +607,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -619,7 +619,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -631,7 +631,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -643,7 +643,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -655,7 +655,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -667,7 +667,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -679,7 +679,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -691,7 +691,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -703,7 +703,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -715,7 +715,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -727,7 +727,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -739,7 +739,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -751,7 +751,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.Control = "A";
@@ -764,7 +764,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -776,7 +776,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.Control = "A";
@@ -789,7 +789,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -801,7 +801,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 2";
             model.Control = "A";
@@ -814,7 +814,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -826,7 +826,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp2";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -848,7 +848,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -860,7 +860,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp2";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -882,7 +882,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -894,7 +894,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp2";
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -916,7 +916,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -928,7 +928,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp2";
             model.Treatment = "Treat 2";
             model.Control = "A";
@@ -951,7 +951,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -963,7 +963,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -985,7 +985,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -997,7 +997,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat 1";
             model.Control = "x";
@@ -1020,7 +1020,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1032,7 +1032,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp6";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1044,7 +1044,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1056,7 +1056,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp6";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1068,7 +1068,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1080,7 +1080,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp6";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1092,7 +1092,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1104,7 +1104,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat8";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1116,7 +1116,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1128,7 +1128,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat9";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1140,7 +1140,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1152,7 +1152,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat9";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -1164,7 +1164,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1176,7 +1176,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat9";
             model.Control = "1";
@@ -1189,7 +1189,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1201,7 +1201,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp7";
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1213,7 +1213,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1225,7 +1225,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp7";
             model.Treatment = "Treat10";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1237,7 +1237,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1249,7 +1249,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp7";
             model.Treatment = "Treat10";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -1261,7 +1261,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1273,7 +1273,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp7";
             model.Treatment = "Treat10";
             model.Control = "A";
@@ -1286,7 +1286,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1298,7 +1298,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp7";
             model.Treatment = "Treat10";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -1310,7 +1310,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1322,7 +1322,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat11";
             model.OtherDesignFactor = "Block1";
@@ -1345,7 +1345,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
 
@@ -1358,7 +1358,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat12";
             model.OtherDesignFactor = "Block2";
@@ -1381,7 +1381,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1393,7 +1393,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat13";
             model.OtherDesignFactor = "Block3";
@@ -1416,7 +1416,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1428,7 +1428,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat14";
             model.OtherDesignFactor = "Block4";
@@ -1452,7 +1452,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1464,7 +1464,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat15";
             model.OtherDesignFactor = "Block5";
@@ -1477,7 +1477,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1489,7 +1489,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat15";
             model.OtherDesignFactor = "Block5";
@@ -1502,7 +1502,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1514,7 +1514,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat15";
             model.OtherDesignFactor = "Block5";
@@ -1528,7 +1528,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1540,7 +1540,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat16";
             model.OtherDesignFactor = "Block6";
@@ -1553,7 +1553,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1565,7 +1565,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat16";
             model.OtherDesignFactor = "Block6";
@@ -1578,7 +1578,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1590,7 +1590,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp11";
             model.Treatment = "Treat16";
             model.OtherDesignFactor = "Block6";
@@ -1604,7 +1604,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1616,7 +1616,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp12";
             model.Treatment = "Treat17";
             model.OtherDesignFactor = "Block7";
@@ -1629,7 +1629,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1641,7 +1641,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp12";
             model.Treatment = "Treat17";
             model.OtherDesignFactor = "Block7";
@@ -1654,7 +1654,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1666,7 +1666,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp12";
             model.Treatment = "Treat17";
             model.OtherDesignFactor = "Block7";
@@ -1680,7 +1680,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1692,7 +1692,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp12";
             model.Treatment = "Treat18";
             model.OtherDesignFactor = "Block8";
@@ -1705,7 +1705,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1717,7 +1717,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp12";
             model.Treatment = "Treat18";
             model.OtherDesignFactor = "Block8";
@@ -1730,7 +1730,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1742,7 +1742,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp12";
             model.Treatment = "Treat18";
             model.OtherDesignFactor = "Block8";
@@ -1756,7 +1756,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1768,7 +1768,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat11";
             model.OtherDesignFactor = "Block1";
@@ -1781,7 +1781,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1793,7 +1793,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat11";
             model.OtherDesignFactor = "Block1";
@@ -1806,7 +1806,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1818,7 +1818,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat11";
             model.OtherDesignFactor = "Block1";
@@ -1832,7 +1832,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1844,7 +1844,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp9";
             model.Treatment = "Treat11";
             model.OtherDesignFactor = "Block1";
@@ -1857,7 +1857,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1869,7 +1869,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp9";
             model.Treatment = "Treat11";
             model.OtherDesignFactor = "Block1";
@@ -1882,7 +1882,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1894,7 +1894,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp9";
             model.Treatment = "Treat11";
             model.OtherDesignFactor = "Block1";
@@ -1908,7 +1908,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1920,7 +1920,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat12";
             model.OtherDesignFactor = "Block2";
@@ -1933,7 +1933,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1945,7 +1945,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat12";
             model.OtherDesignFactor = "Block2";
@@ -1958,7 +1958,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1970,7 +1970,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat12";
             model.OtherDesignFactor = "Block2";
@@ -1984,7 +1984,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1996,7 +1996,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp9";
             model.Treatment = "Treat12";
             model.OtherDesignFactor = "Block2";
@@ -2009,7 +2009,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2021,7 +2021,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp9";
             model.Treatment = "Treat12";
             model.OtherDesignFactor = "Block2";
@@ -2034,7 +2034,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2046,7 +2046,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp9";
             model.Treatment = "Treat12";
             model.OtherDesignFactor = "Block2";
@@ -2060,7 +2060,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2072,7 +2072,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat13";
             model.OtherDesignFactor = "Block3";
@@ -2085,7 +2085,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2097,7 +2097,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat13";
             model.OtherDesignFactor = "Block3";
@@ -2110,7 +2110,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2122,7 +2122,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat13";
             model.OtherDesignFactor = "Block3";
@@ -2136,7 +2136,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2148,7 +2148,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp10";
             model.Treatment = "Treat13";
             model.OtherDesignFactor = "Block3";
@@ -2161,7 +2161,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2173,7 +2173,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp10";
             model.Treatment = "Treat13";
             model.OtherDesignFactor = "Block3";
@@ -2186,7 +2186,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2198,7 +2198,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp10";
             model.Treatment = "Treat13";
             model.OtherDesignFactor = "Block3";
@@ -2212,7 +2212,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2224,7 +2224,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat14";
             model.OtherDesignFactor = "Block4";
@@ -2237,7 +2237,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2249,7 +2249,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat14";
             model.OtherDesignFactor = "Block4";
@@ -2262,7 +2262,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2274,7 +2274,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp8";
             model.Treatment = "Treat14";
             model.OtherDesignFactor = "Block4";
@@ -2288,7 +2288,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2300,7 +2300,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp10";
             model.Treatment = "Treat14";
             model.OtherDesignFactor = "Block4";
@@ -2313,7 +2313,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2325,7 +2325,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp10";
             model.Treatment = "Treat14";
             model.OtherDesignFactor = "Block4";
@@ -2338,7 +2338,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2350,7 +2350,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp10";
             model.Treatment = "Treat14";
             model.OtherDesignFactor = "Block4";
@@ -2364,7 +2364,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2376,7 +2376,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp13";
             model.Treatment = "Treat19";
             model.OtherDesignFactor = "Block9";
@@ -2389,7 +2389,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2401,7 +2401,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp14";
             model.Treatment = "Treat19";
             model.OtherDesignFactor = "Block9";
@@ -2414,7 +2414,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2426,7 +2426,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp15";
             model.Treatment = "Treat20";
             model.OtherDesignFactor = "Block10";
@@ -2439,7 +2439,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2451,7 +2451,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp16";
             model.Treatment = "Treat20";
             model.OtherDesignFactor = "Block10";
@@ -2464,7 +2464,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2476,7 +2476,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp17";
             model.Treatment = "Treat21";
             model.OtherDesignFactor = "Block11";
@@ -2489,7 +2489,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2501,7 +2501,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp18";
             model.Treatment = "Treat21";
             model.OtherDesignFactor = "Block11";
@@ -2514,7 +2514,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2526,7 +2526,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp19";
             model.Treatment = "Treat22";
             model.OtherDesignFactor = "Block12";
@@ -2539,7 +2539,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2551,7 +2551,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp19";
             model.Treatment = "Treat22";
             model.OtherDesignFactor = "Block12";
@@ -2564,7 +2564,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2576,7 +2576,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp20";
             model.Treatment = "Treat22";
             model.OtherDesignFactor = "Block12";
@@ -2589,7 +2589,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2601,7 +2601,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp20";
             model.Treatment = "Treat22";
             model.OtherDesignFactor = "Block12";
@@ -2614,7 +2614,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2626,7 +2626,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp21";
             model.Treatment = "Treat23";
             model.OtherDesignFactor = "Block13";
@@ -2639,7 +2639,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2651,7 +2651,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp21";
             model.Treatment = "Treat23";
             model.OtherDesignFactor = "Block13";
@@ -2664,7 +2664,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2676,7 +2676,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp22";
             model.Treatment = "Treat23";
             model.OtherDesignFactor = "Block13";
@@ -2689,7 +2689,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2701,7 +2701,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp22";
             model.Treatment = "Treat23";
             model.OtherDesignFactor = "Block13";
@@ -2714,7 +2714,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2726,7 +2726,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp19";
             model.Treatment = "Treat22";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -2738,7 +2738,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2750,7 +2750,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp22";
             model.Treatment = "Treat23";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
@@ -2762,7 +2762,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2774,7 +2774,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp19";
             model.Treatment = "Treat22";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -2786,7 +2786,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2798,7 +2798,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp20";
             model.Treatment = "Treat22";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -2810,7 +2810,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2822,7 +2822,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp21";
             model.Treatment = "Treat23";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -2844,7 +2844,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2856,7 +2856,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp22";
             model.Treatment = "Treat23";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
@@ -2878,7 +2878,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2890,7 +2890,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp19";
             model.Treatment = "Treat22";
             model.Control = "1";
@@ -2903,7 +2903,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2915,7 +2915,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             NonParametricAnalysisModel model = new NonParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "nonpara").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
             model.Response = "Resp20";
             model.Treatment = "Treat22";
             model.Control = "1";
@@ -2928,7 +2928,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
     }
 }

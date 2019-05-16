@@ -75,17 +75,22 @@ for (i in 1:10) {
 }
 
 #===================================================================================================================
-#Output HTML header
-Title <-paste(branding, " Dose-Response Analysis", sep="")
-HTML.title(Title, HR = 1, align = "left")
-
-#===================================================================================================================
 #===================================================================================================================
 #Analysis based on a user equation
 #===================================================================================================================
 #===================================================================================================================
 #===================================================================================================================
 if (DoseResponseType == "Equation") {
+	#Output HTML header
+	Title <-paste(branding, " Non-Linear Regression Analysis", sep="")
+	HTML.title(Title, HR = 1, align = "left")
+
+	#Software developement version warning
+	if (Betawarn == "Y") {
+		HTML.title("Warning", HR=2, align="left")
+		HTML(BetaMessage, align="left")
+	}
+
 	#Titles and description
 	HTML.title("Variable selection", HR=2, align="left")
 	add<-paste(c("The  "), EquationResponse, " response is currently being analysed using the user defined equation in the Dose-Response Analysis module. ", sep="")
@@ -310,6 +315,15 @@ if (DoseResponseType == "Equation") {
 #===================================================================================================================
 if (DoseResponseType == "FourParameter") {
 
+	#Output HTML header
+	Title <-paste(branding, " Dose-Response Analysis", sep="")
+	HTML.title(Title, HR = 1, align = "left")
+
+	#Software developement version warning
+	if (Betawarn == "Y") {
+		HTML.title("Warning", HR=2, align="left")
+		HTML(BetaMessage, align="left")
+	}
 
 #===================================================================================================================
 #Setting up variables

@@ -146,6 +146,12 @@ if (PCA_scale == "No_scaling") {
 Title <-paste(branding, " Multivariate Principal Components Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 #Description
 HTML.title("Description", HR=2, align="left")
 description <- paste("The following responses are included in the PCA analysis: ", responses_IVS_ , ". ", sep = "") 
@@ -390,6 +396,13 @@ if (plotLabels == "Categorial Predictor") {
 #STB May 2012 correcting capitals
 Title <-paste(branding, " Multivariate Cluster Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
+
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 HTML("Warning, as the results of this analysis have not been independently verified, care should be taken with the results.", align="left")
 
 #Description
@@ -722,6 +735,12 @@ if (analysisType == "LinearDiscriminantAnalysis" )
 Title <-paste(branding, " Linear Discriminant Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 #Description
 HTML.title("Description", HR=2, align="left")
 HTML("The purpose of linear discriminant analysis (LDA) is to identify the linear combinations of the original variables that gives the best possible separation between the groups." , align="left")
@@ -1001,6 +1020,13 @@ usercomp <- as.numeric(noOfComponents)
 #Output HTML header
 Title <-paste(branding, " Multivariate Partial Least Squares Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
+
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 HTML("Warning, this module is under development, care should be taken with the results.", align="left")
 
 if (contPred_ == "NULL") {

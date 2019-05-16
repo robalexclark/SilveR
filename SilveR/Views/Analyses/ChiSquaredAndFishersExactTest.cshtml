@@ -1,16 +1,16 @@
 ﻿@model SilveR.StatsModels.ChiSquaredAndFishersExactTestModel
 
 @section Scripts {
-<script>
+    <script>
         var theModel = @Html.Raw(Json.Serialize(Model));
-</script>
+    </script>
 
-<environment names="Development">
-    <script defer src="~/js/stats/chiSquaredAndFishersExactTest.js"></script>
-</environment>
-<environment names="Production">
-    <script defer src="~/js/stats/chiSquaredAndFishersExactTest.min.js"></script>
-</environment>
+    <environment names="Development">
+        <script defer src="~/js/stats/chiSquaredAndFishersExactTest.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/stats/chiSquaredAndFishersExactTest.min.js"></script>
+    </environment>
 }
 
 @{
@@ -22,7 +22,7 @@
         <h2>@ViewBag.Title</h2>
     </div>
     <div class="col-md-6">
-        <a href="http://invivostat.co.uk/wp-content/user-guides/Chi_sq_Fishers_Exact.pdf" class="btn btn-secondary pull-right" target="_blank">Help</a>
+        <a asp-controller="Home" asp-action="OpenItem" asp-route-itemPath="http://invivostat.co.uk/wp-content/user-guides/Chi_sq_Fishers_Exact.pdf" class="btn btn-lg btn-info">Help</a>
     </div>
 </div>
 

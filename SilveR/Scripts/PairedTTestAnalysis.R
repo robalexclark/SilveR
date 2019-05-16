@@ -142,6 +142,12 @@ if (dimfact ==2 && covariatelist == "NULL") {
 	HTML.title(Title, HR = 1, align = "left")
 }
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 #Response and covariate title
 title<-c("Response")
 if(covariatelist !="NULL") {

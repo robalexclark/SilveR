@@ -4,7 +4,11 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </style>
     <link rel="stylesheet" type="text/css" href='r2html.css'>
 
- <h1> InVivoStat Single Measure Parametric Analysis</h1>
+ <h1> InVivoStat (beta version) Single Measure Parametric Analysis</h1>
+
+ <h2> Warning</h2>
+
+<p class='character'>This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output.</p>
 
  <h2> Response and covariate</h2>
 
@@ -27,6 +31,130 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>c) Is the covariate influenced by the treatment? (We assume the covariate is not influenced by the treatment and so there should be no separation of the treatment groups along the x-axis on the plot).</p>
 
 <p class='character'>These issues are discussed in more detail in Morris (1999).</p>
+
+ <h2> Analysis of Covariance (ANCOVA) table for assessing covariate interactions</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Effect  </th>
+		<th>Sums of squares  </th>
+		<th>Degrees of freedom  </th>
+		<th>Mean square  </th>
+		<th>F-value  </th>
+		<th>p-value</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">Cov 1
+</td>
+<td class="cellinside">0.000
+</td>
+<td class="cellinside"> 1
+</td>
+<td class="cellinside">0.000
+</td>
+<td class="cellinside">0.00
+</td>
+<td class="cellinside">0.9885
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Treat1
+</td>
+<td class="cellinside">0.487
+</td>
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">0.162
+</td>
+<td class="cellinside">2.85
+</td>
+<td class="cellinside">0.0442
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Treat2
+</td>
+<td class="cellinside">0.145
+</td>
+<td class="cellinside"> 1
+</td>
+<td class="cellinside">0.145
+</td>
+<td class="cellinside">2.55
+</td>
+<td class="cellinside">0.1151
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Treat1 * Treat2
+</td>
+<td class="cellinside">0.132
+</td>
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">0.044
+</td>
+<td class="cellinside">0.77
+</td>
+<td class="cellinside">0.5141
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Cov 1 * Treat1
+</td>
+<td class="cellinside">0.027
+</td>
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">0.009
+</td>
+<td class="cellinside">0.16
+</td>
+<td class="cellinside">0.9228
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Cov 1 * Treat2
+</td>
+<td class="cellinside">0.197
+</td>
+<td class="cellinside"> 1
+</td>
+<td class="cellinside">0.197
+</td>
+<td class="cellinside">3.45
+</td>
+<td class="cellinside">0.0677
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Residual
+</td>
+<td class="cellinside">3.708
+</td>
+<td class="cellinside">65
+</td>
+<td class="cellinside">0.057
+</td>
+<td class="cellinside"> 
+</td>
+<td class="cellinside"> 
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.</p>
+
+<p class='character'>Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).</p>
 
  <h2> Analysis of Covariance (ANCOVA) table</h2>
 
@@ -125,6 +253,94 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>Conclusion: There is a statistically significant overall difference between the levels of Treat1. </p>
 
 <p class='character'>Tip: While it is a good idea to consider the overall tests in the ANCOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.</p>
+
+ <h2> Model coefficients</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1"><caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> <tr class="second"> <th></th><th>Estimate</th><th>Std. Error</th><th>t-value</th><th>p-value</th> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">(Intercept)</td>
+<td class="cellinside"> 1.6180 </td>
+<td class="cellinside">0.0529  </td>
+<td class="cellinside">30.57   </td>
+<td class="cellinside">< 0.0001</td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Cov 1</td>
+<td class="cellinside">-0.0031 </td>
+<td class="cellinside">0.0943  </td>
+<td class="cellinside">-0.03   </td>
+<td class="cellinside">0.9736  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat11</td>
+<td class="cellinside">-0.2157 </td>
+<td class="cellinside">0.0484  </td>
+<td class="cellinside">-4.45   </td>
+<td class="cellinside">< 0.0001</td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat12</td>
+<td class="cellinside">-0.0527 </td>
+<td class="cellinside">0.0466  </td>
+<td class="cellinside">-1.13   </td>
+<td class="cellinside">0.2622  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat13</td>
+<td class="cellinside">-0.0557 </td>
+<td class="cellinside">0.0467  </td>
+<td class="cellinside">-1.19   </td>
+<td class="cellinside">0.2377  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat21</td>
+<td class="cellinside">-0.0010 </td>
+<td class="cellinside">0.0272  </td>
+<td class="cellinside">-0.04   </td>
+<td class="cellinside">0.9704  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat11:Treat21</td>
+<td class="cellinside"> 0.0200 </td>
+<td class="cellinside">0.0484  </td>
+<td class="cellinside"> 0.41   </td>
+<td class="cellinside">0.6806  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat12:Treat21</td>
+<td class="cellinside">-0.0668 </td>
+<td class="cellinside">0.0465  </td>
+<td class="cellinside">-1.44   </td>
+<td class="cellinside">0.1554  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat13:Treat21</td>
+<td class="cellinside"> 0.0455 </td>
+<td class="cellinside">0.0465  </td>
+<td class="cellinside"> 0.98   </td>
+<td class="cellinside">0.3312  </td> </tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+ <h2> Covariate regression coefficient</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1"><caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> <tr class="second"> <th>Covariate</th><th>Estimate</th><th>Std error</th><th>t-value</th><th>p-value</th> </tr>
+ <tr> 
+<td class="cellinside">Cov 1</td>
+<td class="cellinside">-0.003        </td>
+<td class="cellinside">0.094         </td>
+<td class="cellinside">-0.03         </td>
+<td class="cellinside">0.9736        </td> </tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
 
  <h2> Diagnostic plots</h2>
 

@@ -46,6 +46,12 @@ HTMLCSS(CSSfile = cssFile)
 Title <-paste(branding, " P-Value Adjustment", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 add<-paste(c("The input p-values for this module should be unadjusted p-values. These unadjusted p-values are adjusted using "), test, "'s multiple comparison procedure.", sep="")
 HTML(add, align="left")
 

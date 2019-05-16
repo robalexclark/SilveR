@@ -1,5 +1,9 @@
 ﻿#Software branding
-branding <- "InVivoStat"
+branding <- "InVivoStat (beta version)"
+
+#Beta warning
+Betawarn <- "Y"
+BetaMessage <- "This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output."
 
 #Display arguments
 Diplayargs <- "N"
@@ -1351,11 +1355,11 @@ POWERPLOT_ORIGINAL <- function() {
 	suppressWarnings(print(g))
 }
 
-POWERPLOT_NEW <- function(titlez) {
+
+POWERPLOT_NEW <- function(titlez, legpos) {
 	g <- ggplot(graphdata, aes(x = diffs, y = value)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = Gr_legend_pos2, legend.title = element_text(colour = "black")) +
 		guides(color = guide_legend(title = titlez)) +
 		ylab("Statistical power (%)") +
 		xlab(XAxisTitle) +
@@ -1365,7 +1369,14 @@ POWERPLOT_NEW <- function(titlez) {
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_colour_manual(name = namez, breaks = lin_list2, labels = userlistgr, values = Gr_palette_A) +
 		geom_line(aes(group = variable, color = variable), size = Line_size)
-	suppressWarnings(print(g))
+
+		if (legpos == "right") {
+			g1 <- g + theme(legend.position = "right", legend.title = element_text(colour = "black")) 
+		} else {
+			g1 <- g + theme(legend.position = Gr_legend_pos2, legend.title = element_text(colour = "black")) 
+		}
+
+	suppressWarnings(print(g1))
 }
 
 

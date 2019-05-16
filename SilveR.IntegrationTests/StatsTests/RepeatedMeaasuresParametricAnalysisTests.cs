@@ -28,7 +28,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.RepeatedFactor = "Day 1";
@@ -52,7 +52,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
@@ -76,7 +76,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 3";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
@@ -101,7 +101,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp7";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
@@ -126,7 +126,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat8" };
             model.Subject = "Animal1";
@@ -151,7 +151,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp4";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
@@ -166,7 +166,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response selected (Resp4) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
-        
+
         [Fact]
         public async Task RMA7()
         {
@@ -176,7 +176,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
@@ -202,7 +202,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp2";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
@@ -227,7 +227,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
@@ -253,7 +253,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat9" };
             model.Subject = "Animal1";
@@ -278,7 +278,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat10" };
             model.Subject = "Animal1";
@@ -303,7 +303,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp5";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1" };
@@ -319,7 +319,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have Log10 transformed the Resp5 variable. Unfortunately some of the Resp5 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-        
+
         [Fact]
         public async Task RMA13()
         {
@@ -329,7 +329,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp5";
             model.ResponseTransformation = "Loge";
             model.Treatments = new string[] { "Treat 1" };
@@ -344,8 +344,8 @@ namespace SilveR.IntegrationTests
             //Assert
             Assert.Contains("You have Loge transformed the Resp5 variable. Unfortunately some of the Resp5 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
-        }        
-        
+        }
+
         [Fact]
         public async Task RMA14()
         {
@@ -355,7 +355,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp5";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1" };
@@ -370,8 +370,8 @@ namespace SilveR.IntegrationTests
             //Assert
             Assert.Contains("You have Square Root transformed the Resp5 variable. Unfortunately some of the Resp5 values are negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
-        }           
-        
+        }
+
         [Fact]
         public async Task RMA15()
         {
@@ -381,7 +381,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Covariates = new string[] { "Cov4" };
@@ -398,7 +398,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have Loge transformed the Cov4 variable. Unfortunately some of the Cov4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-        
+
         [Fact]
         public async Task RMA16()
         {
@@ -408,7 +408,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Covariates = new string[] { "Cov4" };
@@ -425,7 +425,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have Log10 transformed the Cov4 variable. Unfortunately some of the Cov4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-        
+
         [Fact]
         public async Task RMA17()
         {
@@ -435,7 +435,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp5";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1" };
@@ -451,7 +451,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have ArcSine transformed the Resp5 variable. Unfortunately some of the Resp5 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-        
+
         [Fact]
         public async Task RMA18()
         {
@@ -461,7 +461,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 9";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1" };
@@ -477,7 +477,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have ArcSine transformed the Resp 9 variable. Unfortunately some of the Resp 9 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-        
+
         [Fact]
         public async Task RMA19()
         {
@@ -487,7 +487,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Covariates = new string[] { "Cov4" };
@@ -504,7 +504,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have ArcSine transformed the Cov4 variable. Unfortunately some of the Cov4 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-         
+
         [Fact]
         public async Task RMA20()
         {
@@ -514,7 +514,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Covariates = new string[] { "Cov1" };
@@ -531,7 +531,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have ArcSine transformed the Cov1 variable. Unfortunately some of the Cov1 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-        
+
         [Fact]
         public async Task RMA21()
         {
@@ -541,7 +541,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.Covariates = new string[] { "Cov4" };
@@ -558,7 +558,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have Square Root transformed the Cov4 variable. Unfortunately some of the Cov4 values are negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
         }
-        
+
         [Fact]
         public async Task RMA22()
         {
@@ -568,7 +568,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1" };
             model.OtherDesignFactors = new string[] { "Block3" };
@@ -584,7 +584,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Error: According to the dataset at least one subject is associated with more than one level of one of the blocking factors. Please review this, as each subject must be associated with only one level of each blocking factor.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
-        
+
         [Fact]
         public async Task RMA23()
         {
@@ -594,7 +594,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat14" };
             model.Subject = "Animal1";
@@ -609,7 +609,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Error: According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
-        
+
         [Fact]
         public async Task RMA24()
         {
@@ -619,7 +619,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp11";
             model.Treatments = new string[] { "Treat 1", "Treat15" };
             model.Subject = "Animal1";
@@ -644,7 +644,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1" };
@@ -659,7 +659,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -671,7 +671,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Loge";
             model.Treatments = new string[] { "Treat 1" };
@@ -687,7 +687,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -699,7 +699,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1" };
@@ -715,7 +715,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
 
@@ -728,7 +728,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1" };
@@ -744,7 +744,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -756,7 +756,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -771,7 +771,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -783,7 +783,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -799,7 +799,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -811,7 +811,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -827,7 +827,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -839,7 +839,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -855,7 +855,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -867,7 +867,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
@@ -883,7 +883,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -895,7 +895,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1" };
@@ -910,7 +910,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -922,7 +922,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Loge";
             model.Treatments = new string[] { "Treat 1" };
@@ -938,7 +938,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -950,7 +950,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1" };
@@ -966,7 +966,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -978,7 +978,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1" };
@@ -994,7 +994,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1006,7 +1006,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1021,7 +1021,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1033,7 +1033,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1049,7 +1049,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1061,7 +1061,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1077,7 +1077,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1089,7 +1089,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1105,7 +1105,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1117,7 +1117,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
@@ -1133,7 +1133,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1145,7 +1145,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1" };
@@ -1161,7 +1161,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1173,7 +1173,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Loge";
             model.Treatments = new string[] { "Treat 1" };
@@ -1189,7 +1189,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1201,7 +1201,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1" };
@@ -1217,7 +1217,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1229,7 +1229,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1" };
@@ -1245,7 +1245,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1257,7 +1257,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1272,7 +1272,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1284,7 +1284,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1300,7 +1300,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1312,7 +1312,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1328,7 +1328,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1340,7 +1340,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1356,7 +1356,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1368,7 +1368,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
@@ -1384,7 +1384,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1396,7 +1396,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat4" };
@@ -1411,7 +1411,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1423,7 +1423,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat4" };
@@ -1439,7 +1439,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1451,7 +1451,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat4" };
@@ -1467,7 +1467,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1479,7 +1479,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat4" };
@@ -1495,7 +1495,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1507,7 +1507,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat4", "Treat5" };
@@ -1522,7 +1522,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1534,11 +1534,11 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat4", "Treat5", "Treat6" };
-            model.OtherDesignFactors = new string[] { "Block1", "Block2"};
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
             model.Subject = "Animal2";
             model.RepeatedFactor = "Day2";
             model.Covariance = "Unstructured";
@@ -1550,7 +1550,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1562,7 +1562,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1" };
@@ -1587,7 +1587,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1599,7 +1599,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "Loge";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1625,7 +1625,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1637,7 +1637,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
@@ -1663,7 +1663,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1675,7 +1675,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1701,7 +1701,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1713,7 +1713,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1" };
@@ -1739,7 +1739,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1751,7 +1751,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1777,7 +1777,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1789,7 +1789,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1" };
@@ -1815,7 +1815,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1827,7 +1827,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "Loge";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -1853,7 +1853,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1865,11 +1865,11 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp8";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
-            model.OtherDesignFactors = new string[] { "Block1","Block2" };
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
@@ -1891,7 +1891,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1903,7 +1903,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp12";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat17", "Treat18", "Treat19", "Treat20" };
@@ -1918,36 +1918,36 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-        //[Fact]
-        //public async Task RMA68()
-        //{
-        //    string testName = "RMA68";
+        [Fact]
+        public async Task RMA68()
+        {
+            string testName = "RMA68";
 
-        //    //Arrange
-        //    HttpClient client = _factory.CreateClient();
+            //Arrange
+            HttpClient client = _factory.CreateClient();
 
-        //    RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
-        //    model.Response = "Resp13";
-        //    model.ResponseTransformation = "None";
-        //    model.Treatments = new string[] { "Treat21", "Treat22" };
-        //    model.Covariates = new string[] { "Cov6" };
-        //    model.Subject = "Animal4";
-        //    model.RepeatedFactor = "Day4";
-        //    model.Covariance = "Compound Symmetric";
-        //    model.SelectedEffect = "Treat21 * Treat22 * Day4";
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp13";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat21", "Treat22" };
+            model.Covariates = new string[] { "Cov6a" };
+            model.Subject = "Animal4";
+            model.RepeatedFactor = "Day4";
+            model.Covariance = "Compound Symmetric";
+            model.SelectedEffect = "Treat21 * Treat22 * Day4";
 
-        //    //Act
-        //    StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-        //    Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
 
-        //    //Assert
-        //    string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-        //    Assert.Equal(expectedHtml, statsOutput.HtmlResults);
-        //}
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
 
         [Fact]
         public async Task RMA69()
@@ -1958,7 +1958,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "PVtestResp1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "PVTestTreat1" };
@@ -1974,7 +1974,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1986,7 +1986,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "PVtestResp1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "PVTestTreat1" };
@@ -2002,7 +2002,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2014,7 +2014,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "PVTestResp2";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "PVTestTreat2" };
@@ -2030,7 +2030,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2042,7 +2042,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "PVTestResp2";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "PVTestTreat2" };
@@ -2058,7 +2058,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2070,7 +2070,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "CVResp";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "CVTreat1" };
@@ -2085,7 +2085,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2097,7 +2097,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "CVResp";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "CVTreat2" };
@@ -2112,7 +2112,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2124,7 +2124,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -2140,7 +2140,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2152,7 +2152,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -2169,7 +2169,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2181,7 +2181,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -2198,7 +2198,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2210,7 +2210,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -2227,7 +2227,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2239,7 +2239,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -2256,7 +2256,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2268,7 +2268,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "repeatedmeasures").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
@@ -2285,7 +2285,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
     }
 }

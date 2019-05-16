@@ -69,6 +69,12 @@ hypBtest <- "two-sided"
 Title <-paste(branding, " Chi-squared Test and Fisher's Exact Test", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 #Response
 HTML.title("Response", HR=2, align="left")
 add<-paste(c("The  "), response, " response is currently being analysed by the Chi-squared Test and Fisher's Exact Test module. The response is separated into categories, as defined by the factors ",  GroupingFactor, " and ", ResponseCategories, ".", sep="")

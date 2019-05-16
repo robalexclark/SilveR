@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Services;
@@ -337,7 +337,7 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public FileContentResult ExportToPdf(string analysisGuid)
+        public FileContentResult PdfExport(string analysisGuid)
         {
             //generate pdf using static method (but should really be a service?)
             byte[] bytes = PdfGenerator.GeneratePdf(new Uri($"{Request.Scheme}://{Request.Host.Value}/Analyses/ResultsForExport?analysisGuid=" + analysisGuid));
@@ -350,7 +350,6 @@ namespace SilveR.Controllers
         public async Task<IActionResult> ResultsForExport(string analysisGuid)
         {
             Analysis analysis = await repository.GetAnalysis(analysisGuid);
-
             return View(analysis);
         }
 
@@ -358,7 +357,6 @@ namespace SilveR.Controllers
         public ActionResult Processing(string analysisGuid)
         {
             ViewBag.AnalysisGuid = analysisGuid;
-
             return View();
         }
 

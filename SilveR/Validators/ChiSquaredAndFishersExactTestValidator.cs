@@ -37,7 +37,7 @@ namespace SilveR.Validators
 
             if (csfetVariables.BarnardsTest && (GetLevels(csfetVariables.GroupingFactor).Count() > 2 || GetLevels(csfetVariables.ResponseCategories).Count() > 2))
             {
-                ValidationInfo.AddWarningMessage("Grouping factor or the Response categories have more than two levels. Barnard's test can only be performed when there are two levels of the Grouping factor and two Response categories");
+                ValidationInfo.AddWarningMessage("Grouping factor or the Response categories have more than two levels. Barnard's test can only be performed when there are two levels of the Grouping factor and two Response categories.");
             }
 
             //if get here then no errors so return true

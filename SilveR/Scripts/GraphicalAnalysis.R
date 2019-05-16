@@ -59,28 +59,6 @@ HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
 #Parameter setup
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #V3.2 STB OCT2015
 set.seed(5041975)
 
@@ -304,21 +282,18 @@ for (i in 1:10) {
 }
 XAxisTitleHist = YAxisTitle
 
-
-
-
-
-
-
-
-
-
 #===================================================================================================================
 #Titles and description
 #===================================================================================================================
 #Output HTML header
 Title <-paste(branding, " Graphics", sep="")
 HTML.title(Title, HR = 1, align = "left")
+
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
 
 #Response
 title<-c("Selected variables")

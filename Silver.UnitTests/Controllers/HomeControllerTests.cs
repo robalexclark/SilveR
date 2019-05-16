@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SilveR.Controllers;
 using Xunit;
 
@@ -10,7 +12,8 @@ namespace Silver.UnitTests.Controllers
         public void Index_SimpleGet_ReturnsAnActionResult()
         {
             //Arrange
-            HomeController sut = new HomeController();
+            Mock<IHostingEnvironment> mock = new Mock<IHostingEnvironment>();
+            HomeController sut = new HomeController(mock.Object);
 
             //Act
             IActionResult result = sut.Index();

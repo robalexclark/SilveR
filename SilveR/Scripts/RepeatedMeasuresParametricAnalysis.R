@@ -156,11 +156,19 @@ noeffects<-length(emodelChanges)-2
 Title <-paste(branding, " Repeated Measures Parametric Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
+#Software developement version warning
+if (Betawarn == "Y") {
+	HTML.title("Warning", HR=2, align="left")
+	HTML(BetaMessage, align="left")
+}
+
 #Testing if full factorial design is being analysed
 if(intindex != ind) {
 	HTML.title("Unfortunately not all combinations of the levels of the treatment factors are present, or not all combinations are present at each level of the repeated factor, in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors or remove the incomplete levels of the repeated factors from the analysis.", align="left")
 	quit()
 }
+
+
 
 #Response and covariate title
 title<-c("Response")

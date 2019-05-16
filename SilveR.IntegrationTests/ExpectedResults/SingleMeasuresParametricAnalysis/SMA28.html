@@ -4,7 +4,11 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </style>
     <link rel="stylesheet" type="text/css" href='r2html.css'>
 
- <h1> InVivoStat Single Measure Parametric Analysis</h1>
+ <h1> InVivoStat (beta version) Single Measure Parametric Analysis</h1>
+
+ <h2> Warning</h2>
+
+<p class='character'>This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output.</p>
 
  <h2> Response and covariate</h2>
 
@@ -27,6 +31,88 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>c) Is the covariate influenced by the treatment? (We assume the covariate is not influenced by the treatment and so there should be no separation of the treatment groups along the x-axis on the plot).</p>
 
 <p class='character'>These issues are discussed in more detail in Morris (1999).</p>
+
+ <h2> Analysis of Covariance (ANCOVA) table for assessing covariate interactions</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Effect  </th>
+		<th>Sums of squares  </th>
+		<th>Degrees of freedom  </th>
+		<th>Mean square  </th>
+		<th>F-value  </th>
+		<th>p-value</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">Cov 1
+</td>
+<td class="cellinside">0.001
+</td>
+<td class="cellinside"> 1
+</td>
+<td class="cellinside">0.001
+</td>
+<td class="cellinside">0.02
+</td>
+<td class="cellinside">0.9019
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Treat1
+</td>
+<td class="cellinside">0.551
+</td>
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">0.184
+</td>
+<td class="cellinside">3.18
+</td>
+<td class="cellinside">0.0290
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Cov 1 * Treat1
+</td>
+<td class="cellinside">0.030
+</td>
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">0.010
+</td>
+<td class="cellinside">0.17
+</td>
+<td class="cellinside">0.9154
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Residual
+</td>
+<td class="cellinside">4.039
+</td>
+<td class="cellinside">70
+</td>
+<td class="cellinside">0.058
+</td>
+<td class="cellinside"> 
+</td>
+<td class="cellinside"> 
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.</p>
+
+<p class='character'>Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).</p>
 
  <h2> Analysis of Covariance (ANCOVA) table</h2>
 
@@ -97,6 +183,70 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>Conclusion: There is a statistically significant overall difference between the levels of Treat1. </p>
 
 <p class='character'>Tip: While it is a good idea to consider the overall tests in the ANCOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.</p>
+
+ <h2> Model coefficients</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1"><caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> <tr class="second"> <th></th><th>Estimate</th><th>Std. Error</th><th>t-value</th><th>p-value</th> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">(Intercept)</td>
+<td class="cellinside"> 1.6171 </td>
+<td class="cellinside">0.0520  </td>
+<td class="cellinside">31.09   </td>
+<td class="cellinside">< 0.0001</td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Cov 1</td>
+<td class="cellinside">-0.0023 </td>
+<td class="cellinside">0.0925  </td>
+<td class="cellinside">-0.02   </td>
+<td class="cellinside">0.9803  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat11</td>
+<td class="cellinside">-0.2173 </td>
+<td class="cellinside">0.0477  </td>
+<td class="cellinside">-4.56   </td>
+<td class="cellinside">< 0.0001</td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat12</td>
+<td class="cellinside">-0.0521 </td>
+<td class="cellinside">0.0461  </td>
+<td class="cellinside">-1.13   </td>
+<td class="cellinside">0.2616  </td> </tr>
+ <tr> 
+</tr><tr><td class="firstcolumn">Treat13</td>
+<td class="cellinside">-0.0551 </td>
+<td class="cellinside">0.0462  </td>
+<td class="cellinside">-1.19   </td>
+<td class="cellinside">0.2369  </td> </tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+ <h2> Covariate regression coefficient</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1"><caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> <tr class="second"> <th>Covariate</th><th>Estimate</th><th>Std error</th><th>t-value</th><th>p-value</th> </tr>
+ <tr> 
+<td class="cellinside">Cov 1</td>
+<td class="cellinside">-0.002        </td>
+<td class="cellinside">0.093         </td>
+<td class="cellinside">-0.02         </td>
+<td class="cellinside">0.9803        </td> </tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
 
  <h2> Diagnostic plots</h2>
 
@@ -242,7 +392,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>Conclusion: The following pairwise tests are statistically significantly different at the  5% level: D0 - D3, D1 - D3, D10 - D3. </p>
 
-<p class='character'>Warning: This procedure makes an adjustment assuming you want to make all pairwise comparisons. If this is not the case then these tests may be unduly conservative. You may wish to use planned comparisons (using unadjusted p-values) instead, see Snedecor and Cochran (1989), or make a manual adjustment to the unadjusted p-values using the InVivoStat P-value Adjustment module.</p>
+<p class='character'>Warning: This procedure makes an adjustment assuming you want to make all pairwise comparisons. If this is not the case then these tests may be unduly conservative. You may wish to use planned comparisons (using unadjusted p-values) instead, see Snedecor and Cochran (1989), or make a manual adjustment to the unadjusted p-values using the InVivoStat (beta version) P-value Adjustment module.</p>
 
 <p class='character'>Note: The confidence intervals quoted are not adjusted for multiplicity.</p>
 

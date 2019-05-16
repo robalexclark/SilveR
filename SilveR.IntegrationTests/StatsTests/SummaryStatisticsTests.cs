@@ -28,7 +28,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp1" };
 
             //Act
@@ -49,7 +49,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.FirstCatFactor = "Cat1";
 
@@ -71,7 +71,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.FirstCatFactor = "Cat2";
 
@@ -93,7 +93,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.FirstCatFactor = "Cat3";
 
@@ -115,7 +115,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp3" };
             model.Transformation = "Log10";
 
@@ -137,7 +137,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp3" };
             model.Transformation = "Square Root";
 
@@ -159,7 +159,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp3" };
             model.Transformation = "Loge";
 
@@ -181,7 +181,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp3" };
             model.Transformation = "ArcSine";
 
@@ -203,7 +203,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp11" };
             model.Transformation = "ArcSine";
 
@@ -225,7 +225,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp1", "Resp 2" };
 
             //Act
@@ -246,7 +246,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2", "Resp 5" };
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Cat4";
@@ -269,7 +269,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.FirstCatFactor = "Cat2";
             model.SecondCatFactor = "Cat4";
@@ -292,7 +292,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.FirstCatFactor = "Cat3";
             model.SecondCatFactor = "Cat4";
@@ -315,7 +315,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.Significance = 0.95m;
 
@@ -337,7 +337,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp3", "Resp 2" };
             model.Transformation = "Log10";
 
@@ -359,7 +359,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp3", "Resp 2" };
             model.Transformation = "Square Root";
 
@@ -381,7 +381,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp4", "Resp 2" };
             model.Transformation = "Loge";
 
@@ -403,7 +403,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp6", "Resp7" };
             model.FirstCatFactor = "Cat4";
 
@@ -425,7 +425,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp1" };
             model.Mean = false;
             model.N = false;
@@ -438,6 +438,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = false;
             model.CoefficientOfVariation = false;
             model.ByCategoriesAndOverall = false;
+            model.ConfidenceInterval = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -448,8 +449,6 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
-
-
         [Fact]
         public async Task SS20()
         {
@@ -459,8 +458,8 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
-            model.Responses = new string[] { "Resp 2","Resp10" };
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
+            model.Responses = new string[] { "Resp 2", "Resp10" };
             model.FirstCatFactor = "Cat4";
 
             //Act
@@ -481,7 +480,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.Transformation = "Loge";
             model.Mean = true;
@@ -495,14 +494,16 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
+            model.Significance = 90;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("SummaryStatistics", model, testName, statsOutput);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName+".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -514,7 +515,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2", "Resp8", "Resp9" };
             model.Transformation = "Log10";
             model.Mean = true;
@@ -528,6 +529,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -535,7 +537,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -547,7 +549,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.FirstCatFactor = "Cat4";
             model.Transformation = "Square Root";
@@ -562,6 +564,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
             model.Significance = 90;
 
             //Act
@@ -570,7 +573,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -582,7 +585,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2", "Resp8", "Resp9" };
             model.FirstCatFactor = "Cat4";
             model.Transformation = "Square Root";
@@ -597,6 +600,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
             model.Significance = 99;
 
             //Act
@@ -605,7 +609,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -617,7 +621,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
             model.FirstCatFactor = "Cat4";
             model.SecondCatFactor = "Cat5";
@@ -634,6 +638,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
             model.Significance = 95;
 
             //Act
@@ -642,7 +647,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -654,7 +659,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2", "Resp8", "Resp9" };
             model.FirstCatFactor = "Cat4";
             model.SecondCatFactor = "Cat5";
@@ -671,6 +676,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
             model.Significance = 95;
 
             //Act
@@ -679,7 +685,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -691,7 +697,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2", "Resp8", "Resp9" };
             model.FirstCatFactor = "Cat6";
             model.Transformation = "None";
@@ -706,6 +712,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
             model.Significance = 95;
 
             //Act
@@ -714,7 +721,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -726,7 +733,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "summary").Key;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2", "Resp3", "Resp6" };
             model.FirstCatFactor = "Cat6";
             model.Transformation = "ArcSine";
@@ -741,6 +748,7 @@ namespace SilveR.IntegrationTests
             model.NormalProbabilityPlot = true;
             model.CoefficientOfVariation = true;
             model.ByCategoriesAndOverall = true;
+            model.ConfidenceInterval = true;
             model.Significance = 95;
 
             //Act1
@@ -759,7 +767,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SummaryStatistics", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
     }
 }
