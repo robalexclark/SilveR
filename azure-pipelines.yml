@@ -35,11 +35,6 @@ jobs:
       rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/netcoreapp2.2/ActualResults/*'
       archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
 
-  #- task: PublishBuildArtifacts@1
-  #  inputs:
-  #    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
-  #    ArtifactName: 'test-results'
-
 
 # BUILD LITE
   - script: 'dotnet clean'
@@ -66,6 +61,7 @@ jobs:
       ArtifactName: 'drop'
 
 
+
 # BUILD MAIN
   - script: 'dotnet tool install -g electronnet.cli'
     displayName: Install Electron.Net CLI
@@ -73,46 +69,16 @@ jobs:
   - script: 'dotnet clean'
     displayName: Clean Build
 
-  - script: electronize build /target win /electron-params "--icon=\"$(Build.SourcesDirectory)\SilveR\IVS.ico\" --name=InVivoStat"
+  - script: electronize build /target win
+    workingDirectory: ./SilveR
     displayName: Build for Win-x64
 
-  - script: 'ren $(Build.SourcesDirectory)\bin\desktop\electron.net.host-win32-x64\electron.net.host.exe InVivoStat.exe'
-    displayName: Rename Electron.net.host to InVivoStat.exe
-
-  - script: 'ren $(Build.SourcesDirectory)\bin\desktop\electron.net.host-win32-x64 InVivoStat'
-    displayName: Rename Electron.net.host folder to InVivoStat
-
-  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\R-3.5.1 $(Build.SourcesDirectory)\bin\desktop\InVivoStat\resources\app\bin\R-3.5.1\* /sy'
-    displayName: Copy R-3.5.1
-
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)/bin/desktop/InVivoStat/*'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/InVivoStat-win-x64.zip'
+  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.0.0.exe" $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.0.0.exe
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-win-x64.zip'
-      ArtifactName: 'drop'
-
-
-  - task: AdvancedInstallerTool@1
-    inputs:
-      advinstVersion: '15.9'
-      
-  - task: AdvancedInstaller@2
-    inputs:
-      aipPath: 'InVivoStat.aip'
-
-  - script: 'ren $(Build.SourcesDirectory)\InVivoStat-SetupFiles\InVivoStat.msi InVivoStat-win-x64.msi'
-    displayName: Rename InVivoStat.msi to InVivoStat-win-x64.msi
-
-  - script: 'xcopy $(Build.SourcesDirectory)\InVivoStat-SetupFiles\InVivoStat-win-x64.msi $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat-win-x64.msi
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)/InVivoStat-SetupFiles/InVivoStat-win-x64.msi'
+      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.0.0.exe'
       ArtifactName: 'drop'
 
 
@@ -132,29 +98,36 @@ jobs:
 
 
 - job: Linux
-  dependsOn: Windows
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'ubuntu-16.04'
 
   steps:
 
-  - script: 'dotnet tool install -g electronnet.cli'
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: '2.2.203'
+
+  - script: 'dotnet tool install -g electronNET.CLI'
     displayName: Install Electron.Net CLI
 
-  - script: electronize build /target linux /electron-params "--icon=\"$(Build.SourcesDirectory)\SilveR\IVS.ico\" --name=InVivoStat"
+  - script: 'sudo npm install electron-builder --global'
+    displayName: Install electron builder
+
+  - script: 'sudo chown -R $(whoami) ~/.npm'
+    displayName: Reset permissions
+
+  - script: electronize build /target linux
+    workingDirectory: ./SilveR
     displayName: Build for Linux
 
-  - script: 'ren $(Build.SourcesDirectory)\bin\desktop\electron.net.host-linux-x64\electron.net.host InVivoStat'
-    displayName: Rename Electron.net.host to InVivoStat
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/"InVivoStat 4.0.0.AppImage" $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.0.0.exe
 
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)/bin/desktop/electron.net.host-linux-x64/*'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/InVivoStat-linux-x64.zip'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-linux-x64.zip'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat 4.0.0.AppImage'
       ArtifactName: 'drop'
 
 
@@ -192,25 +165,20 @@ jobs:
     inputs:
       versionSpec: '9.x'
 
-  - script: sudo npm install electron-packager --global
-    displayName: Install electron-packager
+  - script: sudo npm install electron-builder --global
+    displayName: Install electron-builder
 
-  - script: electronize build /target osx /electron-params --name=InVivoStat
+  - script: electronize build /target osx
+    workingDirectory: ./SilveR
     displayName: Build for MacOS
 
-  - script: 'mv $(Build.SourcesDirectory)/bin/desktop/electron.net.host-darwin-x64/electron.net.host.app $(Build.SourcesDirectory)/bin/desktop/electron.net.host-darwin-x64/InVivoStat.app'
-    displayName: Rename Electron.net.host to InVivoStat
-
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)/bin/desktop/electron.net.host-darwin-x64/'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/InVivoStat-macos-x64.zip'
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.0.0.dmg $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.0.0.exe
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-macos-x64.zip'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.0.0.dmg'
       ArtifactName: 'drop'
-
 
   - task: GitHubRelease@0
     inputs:

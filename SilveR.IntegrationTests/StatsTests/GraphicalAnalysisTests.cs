@@ -381,5 +381,161 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("GraphicalAnalysis", testName, errors);
         }
 
+        [Fact]
+        public async Task GRA15()
+        {
+            string testName = "GRA15";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.XAxis = "Treat 1";
+            model.Response = "Resp 1";
+            model.FirstCatFactor = "Cat1";
+            model.ScatterplotSelected = true;
+
+            var content = new FormUrlEncodedContent(model.ToKeyValue());
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", content);
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+        }
+        
+        [Fact]
+        public async Task GRA16()
+        {
+            string testName = "GRA16";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.XAxis = "Treat 1";
+            model.Response = "Resp 1";
+            model.SecondCatFactor = "Cat1";
+            model.ScatterplotSelected = true;
+
+            var content = new FormUrlEncodedContent(model.ToKeyValue());
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", content);
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 2nd categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+        }
+
+        [Fact]
+        public async Task GRA17()
+        {
+            string testName = "GRA17";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.XAxis = "Treat 1";
+            model.Response = "Resp 1";
+            model.FirstCatFactor = "Cat3";
+            model.ScatterplotSelected = true;
+
+            var content = new FormUrlEncodedContent(model.ToKeyValue());
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", content);
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor selected has only one distinct level. Please review your selection.", errors);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, errors);
+        }
+
+        [Fact]
+        public async Task GRA18()
+        {
+            string testName = "GRA18";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.XAxis = "Treat 1";
+            model.Response = "Resp 1";
+            model.SecondCatFactor = "Cat3";
+            model.ScatterplotSelected = true;
+
+            var content = new FormUrlEncodedContent(model.ToKeyValue());
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", content);
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("The 2nd categorisation factor selected has only one distinct level. Please review your selection.", errors);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, errors);
+        }
+
+        //[Fact]
+        //public async Task GRA19()
+        //{
+        //    string testName = "GRA19";
+
+        //    //Arrange
+        //    HttpClient client = _factory.CreateClient();
+
+        //    GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+        //    model.XAxis = "Resp2";
+        //    model.Response = "Resp 1";
+        //    model.FirstCatFactor = "Cat4";
+        //    model.ScatterplotSelected = true;
+
+        //    var content = new FormUrlEncodedContent(model.ToKeyValue());
+
+        //    //Act
+        //    HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", content);
+        //    IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+        //    //Assert
+        //    Assert.Contains("The 2nd categorisation factor selected has only one distinct level. Please review your selection.", warnings);
+        //    Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+        //}
+
+        //[Fact]
+        //public async Task GRA20()
+        //{
+        //    string testName = "GRA20";
+
+        //    //Arrange
+        //    HttpClient client = _factory.CreateClient();
+
+        //    GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+        //    model.XAxis = "Resp2";
+        //    model.Response = "Resp 1";
+        //    model.SecondCatFactor = "Cat4";
+        //    model.ScatterplotSelected = true;
+
+        //    var content = new FormUrlEncodedContent(model.ToKeyValue());
+
+        //    //Act
+        //    HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", content);
+        //    IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+        //    //Assert
+        //    Assert.Contains("The 2nd categorisation factor selected has only one distinct level. Please review your selection.", warnings);
+        //    Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+        //}
+
     }
 }

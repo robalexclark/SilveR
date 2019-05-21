@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ElectronNET.API;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,10 +15,12 @@ namespace SilveR.Controllers
 {
     public class ValuesController : Controller
     {
+        private readonly string wwwRoot;
         private readonly ISilveRRepository repository;
 
-        public ValuesController(ISilveRRepository repository)
+        public ValuesController(IHostingEnvironment hostingEnvironment, ISilveRRepository repository)
         {
+            this.wwwRoot = hostingEnvironment.WebRootPath;
             this.repository = repository;
         }
 
@@ -92,7 +97,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public JsonResult GetRMPASelectedEffectsList(List<string> selectedTreatments, string repeatedFactor)
         {
-            if (selectedTreatments != null  && repeatedFactor != null)
+            if (selectedTreatments != null && repeatedFactor != null)
             {
                 List<string> selectedEffectsList = RepeatedMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments, repeatedFactor);
                 return Json(selectedEffectsList);
@@ -129,6 +134,20 @@ namespace SilveR.Controllers
             else
             {
                 return Json(new List<string>());
+            }
+        }
+
+
+        [HttpPost]
+        public void OpenUrl(string url)
+        {
+            if (url.StartsWith("http"))
+            {
+                Electron.Shell.OpenExternalAsync(url);
+            }
+            else
+            {
+                Electron.Shell.OpenItemAsync(Path.Combine(wwwRoot, url));
             }
         }
     }

@@ -83,7 +83,7 @@ namespace SilveR
             });
 
             // Open the Electron-Window here
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, Icon = "./resources/app/bin/IVS.ico" }));
+            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, AutoHideMenuBar = true }));
         }
 
 

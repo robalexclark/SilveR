@@ -1,3 +1,90 @@
-{
-  "executable": "SilveR"
+﻿{
+  "executable": "SilveR",
+  "splashscreen": {
+    "imageFile": "/wwwroot/images/InVivoStatLogo.png"
+  },
+  "singleInstance": false,
+  "build": {
+    "appId": "InVivoStat.app",
+    "productName": "InVivoStat",
+    "copyright": "Copyright 2019",
+    "buildVersion": "4.0.0",
+    "compression": "maximum",
+    "directories": {
+      "output": "../../../bin/Desktop"
+    },
+    "win": {
+      "icon": "../../../build/icon.png",
+      "extraResources": [
+        {
+          "from": "./bin",
+          "to": "bin",
+          "filter": [
+            "**/*"
+          ]
+        },
+        {
+          "from": "../../../R-3.5.1",
+          "to": "./bin/R-3.5.1",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "from": "./ElectronHostHook/node_modules",
+          "to": "ElectronHostHook/node_modules",
+          "filter": [
+            "**/*"
+          ]
+        },
+        "**/*"
+      ]
+    },
+    "linux": {
+      "icon": "../../../build/256x256.png",
+      "extraResources": [
+        {
+          "from": "./bin",
+          "to": "bin",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "from": "./ElectronHostHook/node_modules",
+          "to": "ElectronHostHook/node_modules",
+          "filter": [
+            "**/*"
+          ]
+        },
+        "**/*"
+      ]
+    },
+    "mac": {
+      "icon": "../../../build/icon.png",
+      "extraResources": [
+        {
+          "from": "./bin",
+          "to": "bin",
+          "filter": [
+            "**/*"
+          ]
+        }
+      ],
+      "files": [
+        {
+          "from": "./ElectronHostHook/node_modules",
+          "to": "ElectronHostHook/node_modules",
+          "filter": [
+            "**/*"
+          ]
+        },
+        "**/*"
+      ]
+    }
+  }
 }

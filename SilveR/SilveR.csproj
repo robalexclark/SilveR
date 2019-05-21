@@ -1,8 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <RuntimeFrameworkVersion>2.1.10</RuntimeFrameworkVersion>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
+    <Version>1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="InVivoStat.bat" />
@@ -16,13 +17,13 @@
   <ItemGroup>
     <PackageReference Include="Combinatorics" Version="1.1.0.19" />
     <PackageReference Include="CsvHelper" Version="12.1.2" />
-    <PackageReference Include="ElectronNET.API" Version="0.0.11" />
+    <PackageReference Include="ElectronNET.API" Version="5.22.12" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
-    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="18.4.0" />
+    <PackageReference Include="Select.HtmlToPdf.NetCore" Version="19.1.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +38,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Update="build\256x256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="IVS.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

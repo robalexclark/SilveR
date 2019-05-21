@@ -8,6 +8,7 @@
 
     <environment names="Development">
         <script defer src="~/js/stats/oneSampleTTestAnalysis.js"></script>
+        <script defer src="~/js/openLinks.js"></script>
     </environment>
     <environment names="Production">
         <script defer src="~/js/stats/oneSampleTTestAnalysis.min.js"></script>
@@ -23,7 +24,7 @@
         <h2>@ViewBag.Title</h2>
     </div>
     <div class="col-md-6">
-        <a asp-controller="Home" asp-action="OpenItem" asp-route-externalUrl="http://www.google.co.uk" class="btn btn-info pull-right">Help</a>
+        <a href="#" onclick="openItem('http://www.google.co.uk')" class="btn btn-info pull-right">Help</a>
     </div>
 </div>
 

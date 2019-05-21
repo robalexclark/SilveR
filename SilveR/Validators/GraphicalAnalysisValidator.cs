@@ -70,10 +70,10 @@ namespace SilveR.Validators
 
             //check that the cat factors are numeric
             if (!String.IsNullOrEmpty(gaVariables.FirstCatFactor) && CheckIsNumeric(gaVariables.FirstCatFactor))
-                ValidationInfo.AddWarningMessage("The 1st categorisation factor selected is numerical. Each numerical value present will consitute a category");
+                ValidationInfo.AddWarningMessage("The 1st categorisation factor selected is numerical. Each numerical value present will consitute a category.");
 
             if (!String.IsNullOrEmpty(gaVariables.SecondCatFactor) && CheckIsNumeric(gaVariables.SecondCatFactor))
-                ValidationInfo.AddWarningMessage("The 2nd categorisation factor selected is numerical. Each numerical value present will consitute a category");
+                ValidationInfo.AddWarningMessage("The 2nd categorisation factor selected is numerical. Each numerical value present will consitute a category.");
 
             //check that the cat factors have more than 1 level
             if (!String.IsNullOrEmpty(gaVariables.FirstCatFactor) && CountDistinctLevels(gaVariables.FirstCatFactor) == 1)
