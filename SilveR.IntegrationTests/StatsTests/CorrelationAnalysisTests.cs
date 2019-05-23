@@ -30,10 +30,8 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
             model.Responses = new string[] { "Resp 1", "Resp 5" };
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -54,10 +52,8 @@ namespace SilveR.IntegrationTests
             model.Responses = new string[] { "Resp 1", "Resp 5" };
             model.FirstCatFactor = "Factor 4";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -76,12 +72,10 @@ namespace SilveR.IntegrationTests
             CorrelationAnalysisModel model = new CorrelationAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
             model.Responses = new string[] { "Resp 1", "Resp 2" };
-            model.FirstCatFactor = "Factor 5";
-
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
+            model.FirstCatFactor = "Factor 5";            
 
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -102,10 +96,8 @@ namespace SilveR.IntegrationTests
             model.Responses = new string[] { "Resp 1", "Resp 2", "Resp 4" };
             model.FirstCatFactor = "Factor 6";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -127,10 +119,8 @@ namespace SilveR.IntegrationTests
             model.Transformation = "Log10";
             model.FirstCatFactor = "Factor 1";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
@@ -153,10 +143,8 @@ namespace SilveR.IntegrationTests
             model.Transformation = "Square Root";
             model.FirstCatFactor = "Factor 1";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
@@ -179,10 +167,8 @@ namespace SilveR.IntegrationTests
             model.Transformation = "Loge";
             model.FirstCatFactor = "Factor 1";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
@@ -205,10 +191,8 @@ namespace SilveR.IntegrationTests
             model.Transformation = "ArcSine";
             model.FirstCatFactor = "Factor 1";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
@@ -231,10 +215,8 @@ namespace SilveR.IntegrationTests
             model.Transformation = "ArcSine";
             model.FirstCatFactor = "Factor 1";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
@@ -257,10 +239,8 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.FirstCatFactor = "Factor 4";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -282,10 +262,8 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.FirstCatFactor = "Factor 7";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -331,10 +309,8 @@ namespace SilveR.IntegrationTests
             model.Responses = new string[] { "Resp 1" };
             model.Transformation = "None";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -1162,10 +1138,10 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.01";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
+
 
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -1293,10 +1269,10 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.01";
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
+
 
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert

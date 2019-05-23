@@ -32,10 +32,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat3";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -57,10 +55,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat4";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -82,10 +78,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat4";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -108,10 +102,8 @@ namespace SilveR.IntegrationTests
             model.Control = "A";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -133,10 +125,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -158,10 +148,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -184,10 +172,8 @@ namespace SilveR.IntegrationTests
             model.Control = "x";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -209,10 +195,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat6";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -234,10 +218,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat7";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -259,10 +241,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat7";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -285,10 +265,8 @@ namespace SilveR.IntegrationTests
             model.Control = "A";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -310,10 +288,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat 1";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -335,10 +311,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -360,10 +334,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -386,10 +358,8 @@ namespace SilveR.IntegrationTests
             model.Control = "A";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -411,10 +381,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Resp4";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -437,10 +405,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Resp5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -463,10 +429,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Resp5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -489,10 +453,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Resp5";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
@@ -515,10 +477,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Treat 2";
             model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
 
-            var content = new FormUrlEncodedContent(model.ToKeyValue());
-
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", content);
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert

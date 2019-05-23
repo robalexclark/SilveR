@@ -12,7 +12,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Response</h2>
 
-<p class='character'>The  CountEF response is currently being analysed by the Chi-squared Test and Fisher's Exact Test module. The response is separated into categories, as defined by the factors BinE and BinF.</p>
+<p class='character'>The  CountAB response is currently being analysed by the Chi-squared Test and Fisher's Exact Test module. The response is separated into categories, as defined by the factors Treat A and Treat B.</p>
 
 <p class='character'>Note, this module should be used to analyse count data that can be expressed in the form of a contingency table. These tests assess the significance of the association (contingency) between the two treatment classifications.</p>
 
@@ -29,21 +29,43 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 	<tbody> 
 	<tr class="second"> 
 		<th>   </th>
-		<th>1  </th>
-		<th>2</th> 
+		<th>*2  </th>
+		<th>[1  </th>
+		<th>_3  </th>
+		<th>4</th> 
 	</tr> 
 <tr> 
-<td class="cellinside">1
+<td class="cellinside">A
 </td>
-<td class="cellinside">5
+<td class="cellinside">12
 </td>
-<td class="cellinside">4
+<td class="cellinside">8
+</td>
+<td class="cellinside">87
+</td>
+<td class="cellinside">3
 </td></tr>
  
 <tr> 
-<td class="cellinside">2
+<td class="cellinside">B^
 </td>
-<td class="cellinside">4
+<td class="cellinside"> 9
+</td>
+<td class="cellinside">0
+</td>
+<td class="cellinside">76
+</td>
+<td class="cellinside">5
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">C_
+</td>
+<td class="cellinside"> 8
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 5
 </td>
 <td class="cellinside">7
 </td></tr>
@@ -66,38 +88,66 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 	<tbody> 
 	<tr class="second"> 
 		<th>   </th>
-		<th>1  </th>
-		<th>2  </th>
+		<th>*2  </th>
+		<th>[1  </th>
+		<th>_3  </th>
+		<th>4  </th>
 		<th>Column totals</th> 
 	</tr> 
 <tr> 
-<td class="cellinside">1
+<td class="cellinside">A
 </td>
-<td class="cellinside">4.05
+<td class="cellinside">14.30
 </td>
-<td class="cellinside">4.95
+<td class="cellinside">5.43
 </td>
-<td class="cellinside">9
+<td class="cellinside">82.87
+</td>
+<td class="cellinside">7.40
+</td>
+<td class="cellinside">110
 </td></tr>
  
 <tr> 
-<td class="cellinside">2
+<td class="cellinside">B^
 </td>
-<td class="cellinside">4.95
+<td class="cellinside">11.70
+</td>
+<td class="cellinside">4.44
+</td>
+<td class="cellinside">67.80
 </td>
 <td class="cellinside">6.05
 </td>
-<td class="cellinside">11
+<td class="cellinside">90
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">C_
+</td>
+<td class="cellinside">2.99
+</td>
+<td class="cellinside">1.13
+</td>
+<td class="cellinside">17.33
+</td>
+<td class="cellinside">1.55
+</td>
+<td class="cellinside">23
 </td></tr>
  
 <tr> 
 <td class="cellinside">Row totals
 </td>
-<td class="cellinside">9
+<td class="cellinside">29
 </td>
 <td class="cellinside">11
 </td>
-<td class="cellinside">20
+<td class="cellinside">168
+</td>
+<td class="cellinside">15
+</td>
+<td class="cellinside">223
 </td></tr>
  
 	</tbody>
@@ -125,11 +175,11 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <tr> 
 <td class="cellinside">Result
 </td>
-<td class="cellinside">0.17
+<td class="cellinside">50.10
 </td>
-<td class="cellinside">1
+<td class="cellinside">6
 </td>
-<td class="cellinside">0.6843
+<td class="cellinside">< 0.0001
 </td></tr>
  
 	</tbody>
@@ -137,9 +187,9 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
- <h0> Note: For the 2 x 2 case, the chi-squared test is calculated with Yates' continuity correction.</h0>
+<p class='character'>The chi-squared test is significant at the 5% level of significance as the p-value is less than 0.05.</p>
 
-<p class='character'>The chi-squared test is not significant at the 5% level of significance as the p-value is greater than 0.05.</p>
+<p class='character'>Note: As a rule of thumb the chi-squared test results may not be valid for small datasets, for example when one or more of the expected values are less than 5.</p>
 
  <h2> Fisher's exact test</h2>
 
@@ -157,7 +207,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <tr> 
 <td class="cellinside">Result
 </td>
-<td class="cellinside">0.3425
+<td class="cellinside">< 0.0001
 </td></tr>
  
 	</tbody>
@@ -165,45 +215,11 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
-<p class='character'>The p-value presented is one-sided (greater than).</p>
-
-<p class='character'>The Fisher's exact test is not significant at the 5% level of significance as the p-value is greater than 0.05.</p>
-
- <h2> Barnard's exact test</h2>
-
-
-<p align="left">
-<table cellspacing="0" border="1">
-<caption align="bottom" class="captiondataframe"></caption>
-<tr><td>
-	<table border="0" class="dataframe">
-	<tbody> 
-	<tr class="second"> 
-		<th>   </th>
-		<th>p-value</th> 
-	</tr> 
-<tr> 
-<td class="cellinside">Result
-</td>
-<td class="cellinside">0.5258
-</td></tr>
- 
-	</tbody>
-</table>
- </td></tr></table>
- <br>
-
-<p class='character'>The p-value presented is two-sided.</p>
-
-<p class='character'>The two-sided Barnard's exact test is not significant at the 5% level of significance as the p-value is greater than 0.05.</p>
-
-<p class='character'>Barnard's test is a more powerful test than Fisher's exact test in certain situations as it is an unconditional test, see Lydersen et al. (2009). This test only assumes the row totals are fixed and not the column totals, unlike Fisher's exact test.</p>
+<p class='character'>The Fisher's exact test is significant at the 5% level of significance as the p-value is less than 0.05.</p>
 
  <h2> Statistical references</h2>
 
 <p class='character'>Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
-
-<p class='character'>Lydersen S, Fagerland MW and Laake P. (2009). Recommended tests for association in 2 x 2 tables. Statistics in Medicine, 28, 1159-1175.</p>
 
  <h2> R references</h2>
 
@@ -211,22 +227,20 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria.</p>
 
-<p class='character'>Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact.</p>
-
  <h2> Analysis options</h2>
 
-<p class='character'>Response variable: CountEF</p>
+<p class='character'>Response variable: CountAB</p>
 
-<p class='character'>Grouping variable: BinE</p>
+<p class='character'>Grouping variable: Treat A</p>
 
-<p class='character'>Response categories variable: BinF</p>
+<p class='character'>Response categories variable: Treat B</p>
 
 <p class='character'>Chi-squared test (Y/N): Y</p>
 
 <p class='character'>Fisher's Exact test (Y/N): Y</p>
 
-<p class='character'>Barnard's Exact test (Y/N): Y</p>
+<p class='character'>Barnard's Exact test (Y/N): N</p>
 
-<p class='character'>One- or two-sided test: Greater-than</p>
+<p class='character'>One- or two-sided test: Two-sided</p>
 
 <p class='character'>Significance level: 0.05</p>

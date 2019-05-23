@@ -38,9 +38,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Update="build\256x256.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="IVS.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

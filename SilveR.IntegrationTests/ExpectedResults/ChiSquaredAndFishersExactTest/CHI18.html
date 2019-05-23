@@ -144,3 +144,91 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>Note: As a rule of thumb the chi-squared test results may not be valid for small datasets, for example when one or more of the expected values are less than 5.</p>
 
  <h2> Fisher's exact test</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>   </th>
+		<th>p-value</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">Result
+</td>
+<td class="cellinside">1.0000
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>The p-value presented is one-sided (greater than).</p>
+
+<p class='character'>The Fisher's exact test is not significant at the 5% level of significance as the p-value is greater than 0.05.</p>
+
+ <h2> Barnard's exact test</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>   </th>
+		<th>p-value</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">Result
+</td>
+<td class="cellinside">< 0.0001
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>The p-value presented is two-sided.</p>
+
+<p class='character'>The two-sided Barnard's exact test is significant at the 5% level of significance as the p-value is less than 0.05.</p>
+
+<p class='character'>Barnard's test is a more powerful test than Fisher's exact test in certain situations as it is an unconditional test, see Lydersen et al. (2009). This test only assumes the row totals are fixed and not the column totals, unlike Fisher's exact test.</p>
+
+ <h2> Statistical references</h2>
+
+<p class='character'>Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+
+<p class='character'>Lydersen S, Fagerland MW and Laake P. (2009). Recommended tests for association in 2 x 2 tables. Statistics in Medicine, 28, 1159-1175.</p>
+
+ <h2> R references</h2>
+
+<p class='character'>R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org.</p>
+
+<p class='character'>Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria.</p>
+
+<p class='character'>Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact.</p>
+
+ <h2> Analysis options</h2>
+
+<p class='character'>Response variable: CountCD</p>
+
+<p class='character'>Grouping variable: BinC</p>
+
+<p class='character'>Response categories variable: BinD</p>
+
+<p class='character'>Chi-squared test (Y/N): Y</p>
+
+<p class='character'>Fisher's Exact test (Y/N): Y</p>
+
+<p class='character'>Barnard's Exact test (Y/N): Y</p>
+
+<p class='character'>One- or two-sided test: Greater-than</p>
+
+<p class='character'>Significance level: 0.05</p>
