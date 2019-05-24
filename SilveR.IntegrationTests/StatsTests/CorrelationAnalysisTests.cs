@@ -1149,7 +1149,6 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
-
         [Fact]
         public async Task COR37()
         {
@@ -1437,7 +1436,6 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-
         [Fact]
         public async Task COR45()
         {
@@ -1468,7 +1466,6 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "CorrelationAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
-
 
         [Fact]
         public async Task COR46()

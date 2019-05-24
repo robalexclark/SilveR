@@ -1,6 +1,6 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.2.x), local data storage in DbSQLLite and the statistical analysis performed in R 3.5.1.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.2.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.5.1.
 
 ## Getting Started
 
@@ -51,20 +51,19 @@ Viewing of the results file entails the inline html being extracted from the loc
 ## Built With
 
 * [.net Core](https://dotnet.microsoft.com/download) - The web framework used
+* [electron.net](https://github.com/ElectronNET/Electron.NET) - Hosts in local web app as a desktop applicaton
 * [sqllite](https://www.nuget.org/packages/Microsoft.Data.Sqlite.Core/) - Local data storage of data files and analyses
 * [R](https://www.r-project.org/) - The R system for statistical analysis, powered by R script files
 
 ## Ongoing and Future Development 
 
 1) Finialise the migration of stats modules from InVivoStat (in progress)
-2) Provide "wrapper" for Windows and MacOS to host application and provide browser (e.g. electron or chromely).
-3) Develop installer for Windows and MacOS
-4) Clean up interface and provide more "helper text" where necessary
-5) Port to .net core 3.x and Blazor/razor components when these are released
+2) Port to .net core 3.x and Blazor/razor components when these are released
+3) Investigate further modules for development
 
 ## Contributing or Issues
 
-If you would like to contribute or find an issue with the system then please raise an issue ticket. I'm happy to help developers write modules for the system as long as the statistical methodology is reasonbly mainstream. 
+If you would like to contribute or find an issue with the system then please raise an issue ticket. I'm happy to help developers write modules for the main branch of the system as long as the statistical methodology is reasonably mainstream. 
 
 ## License
 

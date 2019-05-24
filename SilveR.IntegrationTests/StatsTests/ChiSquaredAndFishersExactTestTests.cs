@@ -598,7 +598,6 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-
         [Fact]
         public async Task CHI18()
         {
@@ -735,7 +734,6 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-
         [Fact]
         public async Task CHI23()
         {
@@ -789,7 +787,6 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ChiSquaredAndFishersExactTest", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
-
 
         [Fact]
         public async Task CHI25()
