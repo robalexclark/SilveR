@@ -60,9 +60,6 @@ for (i in 1:10) {
     YAxisTitle <- namereplace(YAxisTitle)
     XAxisTitle <- namereplace(XAxisTitle)
 }
-
-#Print Conclusions title
-DisplayConc <- "Y"
 #===================================================================================================================
 #Titles and description
 #===================================================================================================================
@@ -719,12 +716,10 @@ if (block != "NULL" && statstest == "MannWhitney") {
 
     if (RunFried == "Na") {
         HTML("As not all combinations of the treatment factor and the other design (blocking) factor are present in the design, Friedman's test cannot be performed using this module. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
-	DisplayConc <- "N"
-   }
+    }
 
     if (RunFried == "Nb") {
         HTML("As one of the treatment factor levels occurs multiple times with one of the other design (blocking) factor levels, Friedman's test cannot be performed using this module. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
-	DisplayConc <- "N"
     }
 
     if (RunFried == "Y") {
@@ -925,12 +920,10 @@ if (block != "NULL" && statstest == "AllComparisons") {
 
     if (RunFried == "Na") {
         HTML("As not all combinations of the treatment factor and the other design (blocking) factor are present in the design, all pairwise comparisons have not been performed. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
-	DisplayConc <- "N"
     }
 
     if (RunFried == "Nb") {
         HTML("As one of the treatment factor levels occurs multiple times with one of the other design (blocking) factor levels, all pairwise comparisons have not been performed. An alternative approach is to analyse the data using the Single or Repeated Measures Parametric Analysis modules, applying the rank transformation to the responses. ", align = "left")
-	DisplayConc <- "N"
     }
 
     if (RunFried == "Y") {
@@ -1016,7 +1009,6 @@ if (block != "NULL" && statstest == "AllComparisons") {
 if (block != "NULL" && statstest == "CompareToControl") {
     HTML.title("All comparisons back to one", HR = 2, align = "left")
     HTML("The 'all comparisons back to one' is not available as an 'Other design (block)' factor has been selected. Please use the  'all pairwise comparisons' option to generate the required results.", align = "left")
-    DisplayConc <- "N"
 }
 
 if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
@@ -1074,9 +1066,7 @@ if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
 Ref_list <- R_refs()
 
 if (RunFried == "Y") {
-	if (DisplayConc == "Y") {
-        	HTML.title("Analysis conclusions", HR = 2, align = "left")
-	}
+        HTML.title("Analysis conclusions", HR = 2, align = "left")
 
     if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparisons" && leng == 2) || (statstest == "CompareToControl" && leng == 2))) {
         dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
@@ -1196,7 +1186,7 @@ if (RunFried == "Y") {
         textindex2 <- 1
         add2 <- c(" ")
         for (q in 1:(int - 1)) {
-            if (pvzzz_list <= (1 - sig)) {
+            if (pvzzz_list[q] <= (1 - sig)) {
                 add2 <- paste(add2, "The difference between groups ", sep = "")
                 add2 <- paste(add2, tabletemp[q, 2], sep = "")
                 add2 <- paste(add2, " and ", sep = "")
@@ -1247,7 +1237,7 @@ if (RunFried == "Y") {
         textindex2 <- 1
         add2 <- c(" ")
         for (q in 1:(int - 1)) {
-            if (pvzzz_list <= (1 - sig)) {
+            if (pvzzz_list[q] <= (1 - sig)) {
                 add2 <- paste(add2, "The difference between groups ", sep = "")
                 add2 <- paste(add2, tabletemp[q, 2], sep = "")
                 add2 <- paste(add2, " and ", sep = "")

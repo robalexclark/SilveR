@@ -581,7 +581,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Error: According to the dataset at least one subject is associated with more than one level of one of the blocking factors. Please review this, as each subject must be associated with only one level of each blocking factor.", errors);
+            Assert.Contains("According to the dataset at least one subject is associated with more than one level of one of the blocking factors. Please review this, as each subject must be associated with only one level of each blocking factor.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -606,7 +606,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Error: According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.", errors);
+            Assert.Contains("According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -631,7 +631,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Error: One of the levels of the treatment factor(s), or a combination of the levels of the treatment factors, is not present at at least one of the timepoints. Please review this selection as all treatment factors (and combinations thereof) must be present at each timepoint.", errors);
+            Assert.Contains("One of the levels of the treatment factor(s), or a combination of the levels of the treatment factors, is not present at at least one of the timepoints. Please review this selection as all treatment factors (and combinations thereof) must be present at each timepoint.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
         }
 

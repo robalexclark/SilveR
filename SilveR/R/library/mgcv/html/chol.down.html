@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Down date a Cholesky factor on dropping a row/col</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for choldrop {mgcv}"><tr><td>choldrop {mgcv}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Down date a Cholesky factor on dropping a row/col</h2>
+
+<h3>Description</h3>
+
+<p>Given a Cholesky factor, <code>R</code>, of a matrix, <code>A</code>, finds the Cholesky factor of <code>A[-k,-k]</code>,
+where <code>k</code> is an integer.  
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+choldrop(R,k)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>R</code></td>
+<td>
+<p>Cholesky factor of a matrix, <code>A</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+<p>row and column of <code>A</code> to drop.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If <code>R</code> is upper triangular then <code>t(R[,-k])%*%R[,-k] == A[-k,-k]</code>, but <code>R[,-k]</code> has elements on the first sub-diagonal, from its kth column onwards. To get from this to a triangular Cholesky factor of <code>A[-k,-k]</code> we can apply a sequence of Given rotations from the left to eliminate the sub-diagonal elements. The routine does this. If <code>R</code> is a lower triangular factor then Givens rotations from the right are needed to remove the extra elements. If <code>n</code> is the dimension of <code>R</code> then the update has O(n^2) computational cost.
+</p>
+<p>Note that the update is vector oriented, and is hence not susceptible to speed up by use of an optimized BLAS. The update is set up to be relatively Cache friendly, in that in the upper triangular case successive Givens rotations are stored for sequential application columnwise, rather than being applied rowwise as soon as they are computed. Even so, the upper triangular update is slightly slower than the lower triangular update. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Simon N. Wood <a href="mailto:simon.wood@r-project.org">simon.wood@r-project.org</a></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  require(mgcv)
+  set.seed(0)
+  n &lt;- 6
+  A &lt;- crossprod(matrix(runif(n*n),n,n))
+  R0 &lt;- chol(A)
+  k &lt;- 3
+  Rd &lt;- choldrop(R0,k)
+  range(Rd-chol(A[-k,-k]))
+  Rd;chol(A[-k,-k])
+  
+  ## same but using lower triangular factor A = LL'
+  L &lt;- t(R0)
+  Ld &lt;- choldrop(L,k)
+  range(Ld-t(chol(A[-k,-k])))
+  Ld;t(chol(A[-k,-k]))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mgcv</em> version 1.8-26 <a href="00Index.html">Index</a>]</div>
+</body></html>

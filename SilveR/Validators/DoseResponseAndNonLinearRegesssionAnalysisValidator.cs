@@ -32,27 +32,27 @@ namespace SilveR.Validators
             //Check that all the columns are numeric
             if (!CheckIsNumeric(drnlrVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("Error: The response variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The response variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.Dose))
             {
-                ValidationInfo.AddErrorMessage("Error: The dose variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The dose variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCResponse))
             {
-                ValidationInfo.AddErrorMessage("Error: The QC response variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC response variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCDose))
             {
-                ValidationInfo.AddErrorMessage("Error: The QC dose variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC dose variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.SamplesResponse))
             {
-                ValidationInfo.AddErrorMessage("Error: The sample variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The sample variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
@@ -61,13 +61,13 @@ namespace SilveR.Validators
             {
                 if (CountResponses(drnlrVariables.Response) == 1)
                 {
-                    ValidationInfo.AddErrorMessage("Error: The response variable contains only one value, please choose another response.");
+                    ValidationInfo.AddErrorMessage("The response variable contains only one value, please choose another response.");
                     return ValidationInfo;
                 }
 
                 if (!String.IsNullOrEmpty(drnlrVariables.QCResponse) && CountResponses(drnlrVariables.QCResponse) == 1)
                 {
-                    ValidationInfo.AddErrorMessage("Error: The QC response variable contains only one value, please choose another QC response.");
+                    ValidationInfo.AddErrorMessage("The QC response variable contains only one value, please choose another QC response.");
                     return ValidationInfo;
                 }
 
@@ -87,22 +87,22 @@ namespace SilveR.Validators
 
                 if (noOfLevels == 4 && noFixedParameters < 1)
                 {
-                    ValidationInfo.AddErrorMessage("Error: As you only have measured responses at four doses you cannot fit the selected dose response curve. You will need to fix at least one of the parameters.");
+                    ValidationInfo.AddErrorMessage("As you only have measured responses at four doses you cannot fit the selected dose response curve. You will need to fix at least one of the parameters.");
                     return ValidationInfo;
                 }
                 else if (noOfLevels == 3 && noFixedParameters < 2)
                 {
-                    ValidationInfo.AddErrorMessage("Error: As you only have measured responses at three doses you cannot fit the selected dose response curve. You will need to fix at least two of the parameters.");
+                    ValidationInfo.AddErrorMessage("As you only have measured responses at three doses you cannot fit the selected dose response curve. You will need to fix at least two of the parameters.");
                     return ValidationInfo;
                 }
                 else if (noOfLevels == 2 && noFixedParameters < 3)
                 {
-                    ValidationInfo.AddErrorMessage("Error: As you only have measured responses at two doses you cannot fit the selected dose response curve. You will need to fix at least three of the parameters.");
+                    ValidationInfo.AddErrorMessage("As you only have measured responses at two doses you cannot fit the selected dose response curve. You will need to fix at least three of the parameters.");
                     return ValidationInfo;
                 }
                 else if (noOfLevels == 1 && noFixedParameters < 4)
                 {
-                    ValidationInfo.AddErrorMessage("Error: As you only have measured responses at one dose you cannot fit the selected dose response curve.");
+                    ValidationInfo.AddErrorMessage("As you only have measured responses at one dose you cannot fit the selected dose response curve.");
                     return ValidationInfo;
                 }
 
@@ -125,13 +125,13 @@ namespace SilveR.Validators
 
                 if (drnlrVariables.MinCoeff > drnlrVariables.MaxCoeff)
                 {
-                    ValidationInfo.AddErrorMessage("Error: The max coefficient is greater than the min coefficient");
+                    ValidationInfo.AddErrorMessage("The max coefficient is greater than the min coefficient");
                     return ValidationInfo;
                 }
 
                 if (drnlrVariables.MinStartValue > drnlrVariables.MaxStartValue)
                 {
-                    ValidationInfo.AddErrorMessage("Error: The max start value is greater than the min start value");
+                    ValidationInfo.AddErrorMessage("The max start value is greater than the min start value");
                     return ValidationInfo;
                 }
             }

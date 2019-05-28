@@ -1,0 +1,3 @@
+Exact                   Unconditional Exact Tests for 2x2 Tables
+exact.test              Unconditional exact tests for 2x2 tables
+power.exact.test        Power calculation for unconditional exact test

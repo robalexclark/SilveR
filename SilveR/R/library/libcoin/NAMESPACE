@@ -1,0 +1,8 @@
+
+useDynLib(libcoin, .registration = TRUE)
+
+importFrom("stats", complete.cases, vcov)
+importFrom("mvtnorm", GenzBretz)
+
+export(LinStatExpCov, doTest, ctabs, "lmult")
+S3method("vcov", "LinStatExpCov")

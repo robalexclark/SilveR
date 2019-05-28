@@ -29,7 +29,7 @@ namespace SilveR.Validators
 
                 if (CountResponses(response) <= 1)
                 {
-                    ValidationInfo.AddErrorMessage("Error: There is no replication in the response variable (" + response + "). Please select another factor.");
+                    ValidationInfo.AddErrorMessage("There is no replication in the response variable (" + response + "). Please select another factor.");
                     return ValidationInfo;
                 }
 

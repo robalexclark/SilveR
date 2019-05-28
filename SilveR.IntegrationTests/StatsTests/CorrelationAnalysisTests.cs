@@ -267,7 +267,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Error: At least one of your categorisation factors only has one level. Please remove it from the analysis.", errors);
+            Assert.Contains("At least one of your categorisation factors only has one level. Please remove it from the analysis.", errors);
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
@@ -286,6 +286,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 8";
             model.SecondCatFactor = "Factor 9";
             model.ByCategoriesAndOverall = true;
+            model.Hypothesis = "2-sided";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -308,6 +309,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
             model.Responses = new string[] { "Resp 1" };
             model.Transformation = "None";
+            model.Hypothesis = "2-sided";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -332,6 +334,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.FirstCatFactor = "Factor 1";
             model.SecondCatFactor = "Factor 2";
+            model.Hypothesis = "2-sided";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -475,7 +478,7 @@ namespace SilveR.IntegrationTests
             CorrelationAnalysisModel model = new CorrelationAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
             model.Responses = new string[] { "Resp 1", "Resp 2", "Resp 3", "Resp 4" };
-            model.Transformation = "Log10";
+            model.Transformation = "Square Root";
             model.FirstCatFactor = "Factor 1";
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
@@ -962,7 +965,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 2";
             model.SecondCatFactor = "Factor 3";
             model.Transformation = "None";
-            model.Method = "Spearman";
+            model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
             model.Statistic = true;
@@ -1138,8 +1141,6 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.01";
 
-
-
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
@@ -1152,7 +1153,7 @@ namespace SilveR.IntegrationTests
         [Fact]
         public async Task COR37()
         {
-            string testName = "COR36";
+            string testName = "COR37";
 
             //Arrange
             HttpClient client = _factory.CreateClient();

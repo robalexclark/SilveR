@@ -40,7 +40,7 @@ namespace SilveR.Validators
 
                 if (CountDistinctLevels(maVariables.CategoricalPredictor) < 2)
                 {
-                    ValidationInfo.AddErrorMessage("Error: At least one of your categorical predictors only has one level. Please remove it from the analysis.");
+                    ValidationInfo.AddErrorMessage("At least one of your categorical predictors only has one level. Please remove it from the analysis.");
                     return ValidationInfo;
                 }
             }
@@ -52,7 +52,7 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("Error: The response variable (" + response + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The response variable (" + response + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
 
@@ -87,7 +87,7 @@ namespace SilveR.Validators
                     {
                         if (!CheckIsNumeric(continuousPredictor))
                         {
-                            ValidationInfo.AddErrorMessage("Error: The continuous predictor variable (" + continuousPredictor + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                            ValidationInfo.AddErrorMessage("The continuous predictor variable (" + continuousPredictor + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
                             return ValidationInfo;
                         }
                         else if (!CheckFactorAndResponseNotBlank(continuousPredictor, response, ReflectionExtensions.GetPropertyDisplayName<MultivariateAnalysisModel>(i => i.ContinuousPredictors)))
@@ -104,7 +104,7 @@ namespace SilveR.Validators
 
             if (!responseCounts.All(x => x == responseCounts.First()))
             {
-                ValidationInfo.AddErrorMessage("Error: Not all the responses contain the same number of values. Please amend the dataset prior to running the analysis.");
+                ValidationInfo.AddErrorMessage("Not all the responses contain the same number of values. Please amend the dataset prior to running the analysis.");
                 return ValidationInfo;
             }
 

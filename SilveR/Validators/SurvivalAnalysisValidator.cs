@@ -45,18 +45,18 @@ namespace SilveR.Validators
             {
                 if (String.IsNullOrEmpty(row[samVariables.Censorship].ToString()) && !String.IsNullOrEmpty(row[samVariables.Response].ToString()))
                 {
-                    ValidationInfo.AddErrorMessage("Error: There is a missing value in the censorship variable when there is a corresponding response. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("There is a missing value in the censorship variable when there is a corresponding response. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
                 else if (!String.IsNullOrEmpty(row[samVariables.Censorship].ToString()) && row[samVariables.Censorship].ToString() != "0" && row[samVariables.Censorship].ToString() != "1")
                 {
-                    ValidationInfo.AddErrorMessage("Error: The censorship variable contains values other than 0 and 1. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The censorship variable contains values other than 0 and 1. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
-                else if (String.IsNullOrEmpty(row[samVariables.Response].ToString()) && !String.IsNullOrEmpty(row[samVariables.Treatment].ToString()) && !String.IsNullOrEmpty(row[samVariables.Censorship].ToString()))
-                {
-                    ValidationInfo.AddWarningMessage("The response selected (" + samVariables.Response + ") contains missing data.");
-                }
+                //else if (String.IsNullOrEmpty(row[samVariables.Response].ToString()) && !String.IsNullOrEmpty(row[samVariables.Treatment].ToString()) && !String.IsNullOrEmpty(row[samVariables.Censorship].ToString()))
+                //{
+                //    ValidationInfo.AddWarningMessage("The response selected (" + samVariables.Response + ") contains missing data.");
+                //}
             }
 
             //if get here then no errors so return true

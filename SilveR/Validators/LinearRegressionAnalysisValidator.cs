@@ -30,7 +30,7 @@ namespace SilveR.Validators
 
             if (CountResponses(lrVariables.Response) <= 1)
             {
-                ValidationInfo.AddErrorMessage("Error: Unfortunately as there are less than two valid responses in the dataset no analysis has been performed.");
+                ValidationInfo.AddErrorMessage("Unfortunately as there are less than two valid responses in the dataset no analysis has been performed.");
                 return ValidationInfo;
             }
 
@@ -52,7 +52,7 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(contFactor))
                 {
-                    ValidationInfo.AddErrorMessage("Error: The continuous variable selected (" + contFactor + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The continuous variable selected (" + contFactor + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                     return ValidationInfo;
                 }
             }

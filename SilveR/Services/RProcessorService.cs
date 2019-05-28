@@ -18,7 +18,9 @@ namespace SilveR.Services
     public interface IRProcessorService
     {
         Task Execute(string analysisGuid);
+        void ExecuteInstaller();
     }
+
 
     public class RProcessorService : IRProcessorService
     {
@@ -84,7 +86,7 @@ namespace SilveR.Services
                         }
                         else
                         {
-                            rscriptPath = Path.Combine(Startup.ContentRootPath, "R-3.5.1", "bin", "Rscript.exe");
+                            rscriptPath = Path.Combine(Startup.ContentRootPath, "R", "bin", "Rscript.exe");
                         }
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
@@ -219,6 +221,28 @@ namespace SilveR.Services
                         File.Delete(file);
 #endif
                 }
+                catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 2)
+                {
+                    Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
+
+                    string message = "Rscript cannot be found, so no analysis was run" + Environment.NewLine;
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        message = message + "Platform - Windows: Your R installation (specifically Rscript.exe) is missing - please reinstall this application.";
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                    {
+                        message = message + "Platform - Linux: No R install could be found on this system. It is recommended that you copy and run the following shell script to install the correct version of R. Then, click the 'Install R packages' button under settings to install the correct R packages." + Environment.NewLine;
+                        message = message + "apt-get install r-base-core=3.5.2-1build1 -y";
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    {
+                        message = message + "Platform - OSX: No R install could be found on this system. It is recommended that you download and install the following R package (https://cran.r-project.org/bin/macosx/R-3.5.2.pkg) into your OSX system. Then, click the 'Install R packages' button under settings to install the correct R packages.";
+                    }
+
+                    analysis.RProcessOutput = message;
+                    await silveRRepository.UpdateAnalysis(analysis);
+                }
                 catch (Exception ex)
                 {
                     Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
@@ -241,6 +265,8 @@ namespace SilveR.Services
             }
         }
 
+
+
         private async Task SaveDatasetToDatabase(ISilveRRepository silveRRepository, string fileName, DataTable dataTable)
         {
             //get last version no based on existing dataset names
@@ -253,6 +279,114 @@ namespace SilveR.Services
         private string FormatPreArgument(string str)
         {
             return "\"" + str + "\"";
+        }
+
+        public void ExecuteInstaller()
+        {
+            using (IServiceScope scope = services.CreateScope())
+            {
+                AppSettings appSettings = scope.ServiceProvider.GetRequiredService<IOptions<AppSettings>>().Value;
+
+                //declared here as used in exception handler
+                string rscriptPath = null;
+
+                //combine script files into analysisGuid.R
+                string scriptFileName = Path.Combine(Startup.ContentRootPath, "Scripts", "RPackagesInstall.R");
+
+                //setup the r process (way of calling rscript.exe is slightly different for each OS)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
+                    {
+                        rscriptPath = appSettings.CustomRScriptLocation;
+                    }
+                    else
+                    {
+                        rscriptPath = Path.Combine(Startup.ContentRootPath, "R", "bin", "Rscript.exe");
+                    }
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
+                    {
+                        rscriptPath = appSettings.CustomRScriptLocation;
+                    }
+                    else
+                    {
+                        rscriptPath = "Rscript";
+                    }
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
+                    {
+                        rscriptPath = appSettings.CustomRScriptLocation;
+                    }
+                    else
+                    {
+                        rscriptPath = "/usr/local/bin/Rscript";
+                    }
+                }
+
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = rscriptPath;
+                psi.WindowStyle = ProcessWindowStyle.Normal;
+                psi.WorkingDirectory = Path.GetTempPath();
+
+                psi.Arguments = FormatPreArgument(scriptFileName);// + " --vanilla --args ";
+
+                //Configure some options for the R process
+                //psi.UseShellExecute = true;
+                //psi.CreateNoWindow = false;
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardError = true;
+
+                //start rscript.exe
+                Process R = Process.Start(psi);
+
+                //create a stringbuilder to hold the output, and get the output line by line until R process finishes
+                StringBuilder output = new StringBuilder();
+
+                bool completedOK = R.WaitForExit(360 * 60 * 1000); //360 minutes!
+
+                if (completedOK)
+                {
+                    //need to make sure that we have got all the output so do a readtoend here
+                    output.AppendLine(R.StandardOutput.ReadToEnd());
+                    output.AppendLine();
+
+                    //output the errors from R
+                    string errorsFromR = R.StandardError.ReadToEnd().Trim();
+
+                    R.Close();
+                    R.Dispose();
+
+                    if (!String.IsNullOrEmpty(errorsFromR))
+                    {
+                        output.AppendLine();
+                        output.Append(errorsFromR);
+                        output.AppendLine();
+                    }
+                }
+                else //timed out, try and kill it (but usually doesnt work)
+                {
+                    output.AppendLine("WARNING! The R process timed out before the script could complete");
+                    output.AppendLine();
+
+                    //get the id so can really check if it has died
+                    int processID = R.Id;
+
+                    //try and kill it 
+                    R.Kill();
+                    R.WaitForExit(5000); //wait 5 seconds to exit, but this usually doesnt work
+                    R.Dispose();
+
+                    if (Process.GetProcesses().Any(x => x.Id == processID)) //then R failed to exit
+                    {
+                        throw new TimeoutException("R timed out and failed to exit gracefully, aborting analysis without reading results or log. You may need to manually kill the Rscript process. Partial results and log may be in the temp folder.");
+                    }
+                }
+            }
         }
     }
 }

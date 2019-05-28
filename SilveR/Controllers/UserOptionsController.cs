@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SilveR.Models;
+using SilveR.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -7,11 +8,15 @@ namespace SilveR.Controllers
 {
     public class UserOptionsController : Controller
     {
+        private readonly IBackgroundTaskQueue backgroundQueue;
         private readonly ISilveRRepository repository;
+        private readonly IRProcessorService rProcessorService;
 
-        public UserOptionsController(ISilveRRepository repository)
+        public UserOptionsController(ISilveRRepository repository, IBackgroundTaskQueue backgroundQueue, IRProcessorService rProcessorService)
         {
+            this.backgroundQueue = backgroundQueue;
             this.repository = repository;
+            this.rProcessorService = rProcessorService;
         }
 
         [HttpGet]
@@ -37,6 +42,18 @@ namespace SilveR.Controllers
             }
             else
                 throw new ArgumentException("submitButtonValue is not valid!");
+        }
+
+
+        [HttpGet]
+        public IActionResult InstallRPackages()
+        {
+            backgroundQueue.QueueBackgroundWorkItem(async cancellationToken =>
+            {
+                rProcessorService.ExecuteInstaller();
+            });
+
+            return View("Index");
         }
     }
 }

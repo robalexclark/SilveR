@@ -148,11 +148,11 @@ namespace SilveR.Validators
                     {
                         if (isBlockingFactor)
                         {
-                            ValidationInfo.AddErrorMessage("Error: According to the dataset at least one subject is associated with more than one level of one of the blocking factors. Please review this, as each subject must be associated with only one level of each blocking factor.");
+                            ValidationInfo.AddErrorMessage("According to the dataset at least one subject is associated with more than one level of one of the blocking factors. Please review this, as each subject must be associated with only one level of each blocking factor.");
                         }
                         else
                         {
-                            ValidationInfo.AddErrorMessage("Error: According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.");
+                            ValidationInfo.AddErrorMessage("According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.");
                         }
                         return false;
                     }
@@ -223,7 +223,7 @@ namespace SilveR.Validators
             //if the following calc is false then there is a problem...
             if (treatmentsAndTimeInteractions.Count != (productOfFactorLevelCount * timeLevels.Count))
             {
-                ValidationInfo.AddErrorMessage("Error: One of the levels of the treatment factor(s), or a combination of the levels of the treatment factors, is not present at at least one of the timepoints. Please review this selection as all treatment factors (and combinations thereof) must be present at each timepoint.");
+                ValidationInfo.AddErrorMessage("One of the levels of the treatment factor(s), or a combination of the levels of the treatment factors, is not present at at least one of the timepoints. Please review this selection as all treatment factors (and combinations thereof) must be present at each timepoint.");
                 return false;
             }
             else

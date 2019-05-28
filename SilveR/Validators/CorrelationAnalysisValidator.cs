@@ -38,7 +38,7 @@ namespace SilveR.Validators
                || (caVariables.ThirdCatFactor != null && CountDistinctLevels(caVariables.ThirdCatFactor) < 2)
                || (caVariables.FourthCatFactor != null && CountDistinctLevels(caVariables.FourthCatFactor) < 2))
             {
-                ValidationInfo.AddErrorMessage("Error: At least one of your categorisation factors only has one level. Please remove it from the analysis.");
+                ValidationInfo.AddErrorMessage("At least one of your categorisation factors only has one level. Please remove it from the analysis.");
                 return ValidationInfo;
             }
 

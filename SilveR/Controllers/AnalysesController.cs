@@ -345,7 +345,7 @@ namespace SilveR.Controllers
             Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".pdf");
             return File(bytes, "application/pdf");
         }
-      
+
         [HttpGet]
         public async Task<IActionResult> ResultsForExport(string analysisGuid)
         {

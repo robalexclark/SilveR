@@ -5,7 +5,7 @@
   },
   "singleInstance": false,
   "build": {
-    "appId": "InVivoStat.app",
+    "appId": "com.electron.InVivoStat",
     "productName": "InVivoStat",
     "copyright": "Copyright 2019",
     "buildVersion": "4.0.0",
@@ -24,8 +24,8 @@
           ]
         },
         {
-          "from": "../../../R-3.5.1",
-          "to": "./bin/R-3.5.1",
+          "from": "../../../R",
+          "to": "./bin/R",
           "filter": [
             "**/*"
           ]

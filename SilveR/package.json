@@ -1,0 +1,27 @@
+{  
+    "name":"InVivoStat",
+    "version":"4.0.0",
+    "description":"Cross-platform statisical analysis system",
+    "repository":{  
+       "url":"https://github.com/robalexclark/SilveR"
+    },
+    "main":"main.js",
+    "author":"Robin Clark and Simon Bate",
+    "license":"MIT",
+    "scripts":{  
+       "start":"tsc -p ."
+    },
+    "dependencies":{  
+       "electron-updater":"^4.0.6",
+       "image-size":"^0.7.4",
+       "portscanner":"^2.2.0",
+       "socket.io":"^2.2.0"
+    },
+    "devDependencies":{  
+       "@types/node":"^10.14.4",
+       "@types/socket.io":"^2.1.2",
+       "tslint":"^5.12.0",
+       "typescript":"^3.2.2",
+       "electron":"^5.0.1"
+    }
+ }
