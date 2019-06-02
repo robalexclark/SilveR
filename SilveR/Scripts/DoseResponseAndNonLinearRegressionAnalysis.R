@@ -232,7 +232,7 @@ if (DoseResponseType == "Equation") {
 	#Plotting the results
 	statdata$conczzzz = eval(parse(text = paste("statdata$", EquationDose)))
 	statdata$respzzzz = eval(parse(text = paste("statdata$", EquationResponse )))
-	HTML.title("Scatterplot of raw data including the predicted fit", HR=2, align="left")
+	HTML.title("Scatterplot of observed data including the predicted fit", HR=2, align="left")
 
 	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
 	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
@@ -504,7 +504,7 @@ if (DoseResponseType == "FourParameter") {
 #===================================================================================================================
 # Scatterplot of responses with fit
 #===================================================================================================================
-	HTML.title("Scatterplot of raw data including the predicted fit", HR=2, align="left")
+	HTML.title("Scatterplot of observed data including the predicted fit", HR=2, align="left")
 
 	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
 	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)

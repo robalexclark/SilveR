@@ -4,13 +4,12 @@ using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
 namespace Silver.UnitTests.StatsModels
 {
-    
+
     public class OneSampleTTestAnalysisModelTests
     {
         [Fact]
@@ -98,8 +97,8 @@ namespace Silver.UnitTests.StatsModels
             var significance = result.Single(x => x.Name == "Significance");
             Assert.Equal("0.05", significance.Value);
 
-            var testValue = result.Single(x => x.Name == "TestValue");
-            Assert.Equal("3.142", testValue.Value);
+            var TargetValue = result.Single(x => x.Name == "TargetValue");
+            Assert.Equal("3.142", TargetValue.Value);
         }
 
         [Fact]
@@ -114,7 +113,7 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "Responses", Value = "Resp 1,Resp2" });
             arguments.Add(new Argument { Name = "ResponseTransformation", Value = "None" });
             arguments.Add(new Argument { Name = "Significance", Value = "0.05" });
-            arguments.Add(new Argument { Name = "TestValue", Value = "3.142" });
+            arguments.Add(new Argument { Name = "TargetValue", Value = "3.142" });
 
             Assert.Equal(6, arguments.Count);
 
@@ -127,7 +126,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal(new List<string> { "Resp 1","Resp2" }, sut.Responses);
             Assert.Equal("None", sut.ResponseTransformation);
             Assert.Equal("0.05", sut.Significance);
-            Assert.Equal(3.142m, sut.TestValue);
+            Assert.Equal(3.142m, sut.TargetValue);
         }
 
 
@@ -154,7 +153,7 @@ namespace Silver.UnitTests.StatsModels
                 Responses = new List<string> { "Resp 1", "Resp2" },
                 ResponseTransformation = "None",
                 Significance = "0.05",
-                TestValue = 3.142m
+                TargetValue = 3.142m
             };
 
             return model;

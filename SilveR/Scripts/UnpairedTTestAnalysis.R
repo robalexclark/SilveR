@@ -101,7 +101,7 @@ HTML(refxx, align="left")
 #===================================================================================================================
 #Scatterplot
 #===================================================================================================================
-title<-c("Scatterplot of the raw data")
+title<-c("Scatterplot of the observed data")
 if(responseTransform != "None") {
 	title<-paste(title, " (on the ", responseTransform, " scale)", sep="")
 }
@@ -375,6 +375,139 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 	HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
 }
 
+
+#===================================================================================================================
+#Diagnostic plots (equal variance case)
+#===================================================================================================================
+if (equalCase == "Y") {
+	if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
+			HTML.title("Diagnostic plot", HR=2, align="left")
+	}
+	if(showPRPlot=="Y" && showNormPlot=="Y") {
+			HTML.title("Diagnostic plots (assuming equal variances)", HR=2, align="left")
+	}
+
+	#Residual plots
+	if(showPRPlot=="Y") {
+		HTML.title("Residuals vs. predicted plot", HR=3, align="left")
+
+		#STB - July 2012 rename response variable
+		threewayfull<-lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit)
+		residualPlot <- sub(".html", "residualplot.png", htmlFile)
+		png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+
+		#STB July2013
+		plotFilepdf1 <- sub(".html", "residualplot.pdf", htmlFile)
+		dev.control("enable") 
+
+		#Graphical parameters
+		graphdata<-data.frame(cbind(predict(threewayfull),rstudent(threewayfull)))
+
+		graphdata$yvarrr_IVS <- graphdata$X2
+		graphdata$xvarrr_IVS <- graphdata$X1
+		XAxisTitle <- "Predicted values"
+		YAxisTitle <- "Externally Studentised residuals"
+		MainTitle2 <- " "
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <-  0
+		infiniteslope <- "Y"
+
+		if (bandw != "N")  {
+			Gr_line <-BW_line
+			Gr_fill <- BW_fill
+		} else {
+			Gr_line <-Col_line
+			Gr_fill <- Col_fill
+		}
+		Gr_line_type<-Line_type_dashed
+		Line_size <- 0.5
+
+		NONCAT_SCAT("RESIDPLOT")
+	
+		MainTitle2 <- ""
+	
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", residualPlot), Align="centre")
+
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
+			linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the residuals vs. predicted plot</a>", sep = "")
+			HTML(linkToPdf1)
+		}
+	
+		HTML("Tip: On this plot look to see if the spread of the points increases as the predicted values increase. If so the response may need transforming or the unequal variance assumption selected.", align="left")
+		HTML("Tip: Any observation with a residual less than -3 or greater than 3 (SD) should be investigated as a possible outlier.", align="left")
+	}
+
+#===================================================================================================================
+	#Normality plots
+	if(showNormPlot=="Y") {
+		HTML.title("Normal probability plot", HR=3, align="left")
+	
+		#STB - July 2012 rename response variable
+		threewayfull<-lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit)
+	
+		normPlot <- sub(".html", "normplot.png", htmlFile)
+		png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	
+		#STB July2013
+		plotFilepdf2 <- sub(".html", "normplot.pdf", htmlFile)
+		dev.control("enable") 
+	
+		#Graphical parameters
+		te<-qqnorm(resid(threewayfull))
+		graphdata<-data.frame(te$x,te$y)
+		graphdata$xvarrr_IVS <-graphdata$te.x
+		graphdata$yvarrr_IVS <-graphdata$te.y
+		YAxisTitle <-"Sample Quantiles"
+		XAxisTitle <-"Theoretical Quantiles"
+		MainTitle2 <- " "
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <-  0
+		infiniteslope <- "N"
+		LinearFit <- "Y"
+	
+		if (bandw != "N")  {
+			Gr_line <-BW_line
+			Gr_fill <- BW_fill
+		} else {
+			Gr_line <-Col_line
+			Gr_fill <- Col_fill
+		}
+		Gr_line_type<-Line_type_dashed
+	
+		Line_size <- 0.5
+		Gr_alpha <- 1
+		Line_type <-Line_type_dashed
+	
+		NONCAT_SCAT("QQPLOT")
+		MainTitle2 <- ""
+	
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
+	
+	#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf2), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_2<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf2)
+			linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
+			HTML(linkToPdf2)
+		}
+	
+		HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
+	}
+}	
+
+
+
 #===================================================================================================================
 #Unequal variance case
 #===================================================================================================================
@@ -604,134 +737,6 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 	tabls<-cbind(rows, tabs)
 	colnames(tabls)<-c("Comparison", "Ratio", lowerCI, upperCI)
 	HTML(tabls, classfirstline="second", align="left")
-}
-
-#===================================================================================================================
-#Diagnostic plots
-#===================================================================================================================
-if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
-		HTML.title("Diagnostic plot", HR=2, align="left")
-}
-if(showPRPlot=="Y" && showNormPlot=="Y") {
-		HTML.title("Diagnostic plots", HR=2, align="left")
-}
-
-#Residual plots
-if(showPRPlot=="Y") {
-	HTML.title("Residuals vs. predicted plot (assuming equal variances)", HR=3, align="left")
-
-	#STB - July 2012 rename response variable
-	threewayfull<-lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit)
-	residualPlot <- sub(".html", "residualplot.png", htmlFile)
-	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
-
-	#STB July2013
-	plotFilepdf1 <- sub(".html", "residualplot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Graphical parameters
-	graphdata<-data.frame(cbind(predict(threewayfull),rstudent(threewayfull)))
-
-	graphdata$yvarrr_IVS <- graphdata$X2
-	graphdata$xvarrr_IVS <- graphdata$X1
-	XAxisTitle <- "Predicted values"
-	YAxisTitle <- "Externally Studentised residuals"
-	MainTitle2 <- " "
-	w_Gr_jitscat <- 0
-	h_Gr_jitscat <-  0
-	infiniteslope <- "Y"
-
-	if (bandw != "N")  {
-		Gr_line <-BW_line
-		Gr_fill <- BW_fill
-	} else {
-		Gr_line <-Col_line
-		Gr_fill <- Col_fill
-	}
-	Gr_line_type<-Line_type_dashed
-	Line_size <- 0.5
-
-	NONCAT_SCAT("RESIDPLOT")
-
-	MainTitle2 <- ""
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", residualPlot), Align="centre")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
-		linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the residuals vs. predicted plot</a>", sep = "")
-		HTML(linkToPdf1)
-	}
-
-	HTML("Tip: On this plot look to see if the spread of the points increases as the predicted values increase. If so the response may need transforming or the unequal variance assumption selected.", align="left")
-	HTML("Tip: Any observation with a residual less than -3 or greater than 3 (SD) should be investigated as a possible outlier.", align="left")
-}
-
-#===================================================================================================================
-#Normality plots
-if(showNormPlot=="Y") {
-	HTML.title("Normal probability plot (assuming equal variances)", HR=3, align="left")
-
-	#STB - July 2012 rename response variable
-	threewayfull<-lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit)
-
-	normPlot <- sub(".html", "normplot.png", htmlFile)
-	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
-
-	#STB July2013
-	plotFilepdf2 <- sub(".html", "normplot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Graphical parameters
-	te<-qqnorm(resid(threewayfull))
-	graphdata<-data.frame(te$x,te$y)
-	graphdata$xvarrr_IVS <-graphdata$te.x
-	graphdata$yvarrr_IVS <-graphdata$te.y
-	YAxisTitle <-"Sample Quantiles"
-	XAxisTitle <-"Theoretical Quantiles"
-	MainTitle2 <- " "
-	w_Gr_jitscat <- 0
-	h_Gr_jitscat <-  0
-	infiniteslope <- "N"
-	LinearFit <- "Y"
-
-	if (bandw != "N")  {
-		Gr_line <-BW_line
-		Gr_fill <- BW_fill
-	} else {
-		Gr_line <-Col_line
-		Gr_fill <- Col_fill
-	}
-	Gr_line_type<-Line_type_dashed
-
-	Line_size <- 0.5
-	Gr_alpha <- 1
-	Line_type <-Line_type_dashed
-
-	NONCAT_SCAT("QQPLOT")
-	MainTitle2 <- ""
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
-
-#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf2), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_2<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf2)
-		linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
-		HTML(linkToPdf2)
-	}
-
-	HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
 }
 
 #===================================================================================================================

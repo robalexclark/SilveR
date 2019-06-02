@@ -20,14 +20,14 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             UserOption options = await repository.GetUserOptions();
             return View(options);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateUserOptions(UserOption userOption, string submitButtonValue)
+        public async Task<IActionResult> UpdateUserOptions(UserOption userOption, string submitButtonValue)
         {
             if (submitButtonValue == "save")
             {
@@ -48,10 +48,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public IActionResult InstallRPackages()
         {
-            backgroundQueue.QueueBackgroundWorkItem(async cancellationToken =>
-            {
-                rProcessorService.ExecuteInstaller();
-            });
+            backgroundQueue.QueueBackgroundWorkItem(cancellationToken => rProcessorService.ExecuteInstaller());
 
             return View("Index");
         }

@@ -60,7 +60,7 @@
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Treatment factors</label>
                         <div class="col-md-6">
-                            <select class="form-control" asp-for="Treatments" />
+                            <select class="form-control" asp-for="Treatments"></select>
                             <div><span asp-validation-for="Treatments"></span></div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                 <div class="card-body">
                     <h4>Overall Results</h4>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Overall table of effects</label>
+                        <label class="col-md-6 col-form-label">Table of overall effect tests</label>
                         <div class="col-md-6">
                             <input class="checkbox-fix" asp-for="ANOVASelected" type="checkbox" />
                         </div>

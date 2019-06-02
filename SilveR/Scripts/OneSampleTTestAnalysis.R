@@ -297,12 +297,6 @@ if (showNormPlot != "N" ) {
     	csResponsesqq <- resplistqq[index]
     	adda <- paste(c("Normal probability plot for "), csResponsesqq ,  sep = "")
 
-	if (resplength == 1) {
-		HTML.title(adda, HR = 2, align = "left")
-	} else {
-		HTML.title(adda, HR = 3, align = "left")
-	}
-
     	MainTitle2 <- ""
     	te <- qqnorm(eval(parse(text = paste("statdata$", csResponses))))
     	graphdata <- data.frame(te$x, te$y)

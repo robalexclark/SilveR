@@ -37,6 +37,7 @@ namespace SilveR.Helpers
             charConversionList.Add("<", "ivs_lt_ivs");
             charConversionList.Add(">", "ivs_gt_ivs");
             charConversionList.Add("'", "ivs_quote_ivs");
+            charConversionList.Add("?", "ivs_questionmark_ivs");
         }
 
         public string GetFormattedArgument(int value)

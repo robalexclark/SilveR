@@ -1828,6 +1828,9 @@
     <None Update="ExpectedResults\SurvivalAnalysis\SURV16.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\SurvivalAnalysis\SURV7.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ResultFormatting.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

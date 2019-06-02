@@ -1395,6 +1395,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	boxdata$allcat_IVS <-boxdata$lev
 	boxdata <- data.frame(boxdata, colsplit(boxdata$allcat_IVS,"xxxIVSxxx", names=c("xvarrr_IVS_BP","l_l")))
 	boxdata$xvarrr_IVS_BP <-as.factor(boxdata$xvarrr_IVS_BP)
+	boxdata$l_l <-as.factor(boxdata$l_l)
 
 	#Generating a dataset of outliers
 	outliertest<-"N"

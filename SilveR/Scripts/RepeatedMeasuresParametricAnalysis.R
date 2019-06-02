@@ -232,7 +232,7 @@ if(covariance=="Unstructured") {
 #===================================================================================================================
 #Case profiles plot
 #===================================================================================================================
-title<-c("Categorised case profiles plot of the raw data")
+title<-c("Categorised case profiles plot of the observed data")
 
 if(responseTransform != "None") {
 	title<-paste(title, " (on the ", responseTransform, " scale)", sep="")

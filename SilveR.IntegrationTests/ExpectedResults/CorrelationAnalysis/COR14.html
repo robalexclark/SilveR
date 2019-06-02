@@ -15,3 +15,151 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>This module assesses the correlation between the response variables Resp 1 and Resp 4. </p>
 
  <h2> Categorised results</h2>
+
+ <h3> Table of results for the  two-sided Pearson's product moment correlation coefficient </h3>
+
+
+<p align="left">
+<table cellspacing="0" border="1"><caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> <tr class="second"> <th>Comparison</th><th>Categorisation factor</th><th>First variable</th><th> </th><th>Second variable</th><th>n</th><th>Correlation Coefficient</th><th>Test statistic</th><th>p-value</th> </tr>
+ <tr> 
+<td class="cellinside">1              </td>
+<td class="cellinside">A 2            </td>
+<td class="cellinside">Resp 1</td>
+<td class="cellinside"> vs.           </td>
+<td class="cellinside">Resp 4</td>
+<td class="cellinside">4              </td>
+<td class="cellinside">0.157          </td>
+<td class="cellinside">0.224          </td>
+<td class="cellinside">0.8434         </td> </tr>
+ <tr> 
+<td class="cellinside">2              </td>
+<td class="cellinside">B 1            </td>
+<td class="cellinside">Resp 1</td>
+<td class="cellinside"> vs.           </td>
+<td class="cellinside">Resp 4</td>
+<td class="cellinside">4              </td>
+<td class="cellinside">0.326          </td>
+<td class="cellinside">0.488          </td>
+<td class="cellinside">0.6740         </td> </tr>
+ <tr> 
+<td class="cellinside">3              </td>
+<td class="cellinside">B 2            </td>
+<td class="cellinside">Resp 1</td>
+<td class="cellinside"> vs.           </td>
+<td class="cellinside">Resp 4</td>
+<td class="cellinside">4              </td>
+<td class="cellinside">-0.199         </td>
+<td class="cellinside">-0.288         </td>
+<td class="cellinside">0.8006         </td> </tr>
+ <tr> 
+<td class="cellinside">4              </td>
+<td class="cellinside">C 1            </td>
+<td class="cellinside">Resp 1</td>
+<td class="cellinside"> vs.           </td>
+<td class="cellinside">Resp 4</td>
+<td class="cellinside">4              </td>
+<td class="cellinside">-0.376         </td>
+<td class="cellinside">-0.574         </td>
+<td class="cellinside">0.6242         </td> </tr>
+ <tr> 
+<td class="cellinside">5              </td>
+<td class="cellinside">C 2            </td>
+<td class="cellinside">Resp 1</td>
+<td class="cellinside"> vs.           </td>
+<td class="cellinside">Resp 4</td>
+<td class="cellinside">4              </td>
+<td class="cellinside">-0.858         </td>
+<td class="cellinside">-2.367         </td>
+<td class="cellinside">0.1415         </td> </tr>
+ <tr> 
+<td class="cellinside">6              </td>
+<td class="cellinside">D 1            </td>
+<td class="cellinside">Resp 1</td>
+<td class="cellinside"> vs.           </td>
+<td class="cellinside">Resp 4</td>
+<td class="cellinside">4              </td>
+<td class="cellinside">0.728          </td>
+<td class="cellinside">1.504          </td>
+<td class="cellinside">0.2715         </td> </tr>
+ <tr> 
+<td class="cellinside">7              </td>
+<td class="cellinside">D 2            </td>
+<td class="cellinside">Resp 1</td>
+<td class="cellinside"> vs.           </td>
+<td class="cellinside">Resp 4</td>
+<td class="cellinside">4              </td>
+<td class="cellinside">-0.606         </td>
+<td class="cellinside">-1.076         </td>
+<td class="cellinside">0.3944         </td> </tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>Conclusion: There are no statistically significant correlations.</p>
+
+<p class='character'>Note that there is only one or two pairs of responses available for one or more of the level(s) of the categorisation factor(s) and hence no correlation analysis can be performed for the level(s) of the categorisation factor(s). </p>
+
+ <h2> Analysis description</h2>
+
+<p class='character'>The test statistic is based on Pearson's product moment correlation coefficient cor(x, y) and follows a t distribution with length(x)-2 degrees of freedom if the samples follow independent normal distributions, see Snedecor and Cochran (1989). </p>
+
+<p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
+
+ <h2> Statistical references</h2>
+
+<p class='character'>Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+
+<p class='character'>Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition; Iowa State University Press, Iowa, USA.</p>
+
+ <h2> R references</h2>
+
+<p class='character'>R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org.</p>
+
+<p class='character'>Barret Schloerke, Jason Crowley, Di Cook, Heike Hofmann, Hadley Wickham, Francois Briatte, Moritz Marbach and Edwin Thoen (2014). GGally: Extension to ggplot2. R package version 0.4.5. http://CRAN.R-project.org/package=GGally</p>
+
+<p class='character'>Erich Neuwirth (2011). RColorBrewer: ColorBrewer palettes. R package  version 1.0-5. http://CRAN.R-project.org/package=RColorBrewer</p>
+
+<p class='character'>H. Wickham. ggplot2: elegant graphics for data analysis. Springer New York, 2009.</p>
+
+<p class='character'>Kamil Slowikowski (2018). ggrepel: Automatically Position Non-Overlapping Text Labels with 'ggplot2'. R package version 0.8.0. https://CRAN.R-project.org/package=ggrepel</p>
+
+<p class='character'>H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007.</p>
+
+<p class='character'>Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL http://www.jstatsoft.org/v40/i01/.</p>
+
+<p class='character'>Hadley Wickham (2012). scales: Scale functions for graphics. R package version 0.2.3. http://CRAN.R-project.org/package=scales</p>
+
+<p class='character'>Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria.</p>
+
+<p class='character'>Louis Kates and Thomas Petzoldt (2012). proto: Prototype object-based programming. R package version 0.3-10. http://CRAN.R-project.org/package=proto</p>
+
+ <h2> Analysis options</h2>
+
+<p class='character'>Response variables: Resp 1,Resp 4</p>
+
+<p class='character'>First categorisation factor: Factor 1</p>
+
+<p class='character'>Second categorisation factor: Factor 2</p>
+
+<p class='character'>Significance level: 0.05</p>
+
+<p class='character'>Method used: Pearson</p>
+
+<p class='character'>Hypotheses type: 2-sided</p>
+
+<p class='character'>Display correlation coefficient (Y/N): Y</p>
+
+<p class='character'>Display test statistic (Y/N): Y</p>
+
+<p class='character'>Display p-values (Y/N): Y</p>
+
+<p class='character'>Generate scatterplots (Y/N): N</p>
+
+<p class='character'>Generate matrixplot (Y/N): N</p>
+
+<p class='character'>Generate categorised output (Y/N): N</p>

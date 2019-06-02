@@ -150,8 +150,8 @@ namespace Silver.UnitTests.StatsModels
             var significance = result.Single(x => x.Name == "Significance");
             Assert.Equal("0.05", significance.Value);
 
-            var statistic = result.Single(x => x.Name == "Statistic");
-            Assert.Equal("True", statistic.Value);
+            var testStatistic = result.Single(x => x.Name == "TestStatistic");
+            Assert.Equal("True", testStatistic.Value);
 
             var scatterplot = result.Single(x => x.Name == "Scatterplot");
             Assert.Equal("False", scatterplot.Value);
@@ -176,7 +176,7 @@ namespace Silver.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "Matrixplot", Value = "False" });
             arguments.Add(new Argument { Name = "Method", Value = "Pearson" });
             arguments.Add(new Argument { Name = "PValue", Value = "True" });
-            arguments.Add(new Argument { Name = "Statistic", Value = "True" });
+            arguments.Add(new Argument { Name = "TestStatistic", Value = "True" });
             arguments.Add(new Argument { Name = "Significance", Value = "0.05" });
             arguments.Add(new Argument { Name = "Scatterplot", Value = "False" });
 
@@ -198,7 +198,7 @@ namespace Silver.UnitTests.StatsModels
             Assert.Equal("2-sided", sut.Hypothesis);
             Assert.Equal("Pearson", sut.Method);
             Assert.True(sut.PValue);
-            Assert.True(sut.Statistic);
+            Assert.True(sut.TestStatistic);
             Assert.Equal("0.05", sut.Significance);
             Assert.False(sut.Scatterplot);
         }
@@ -237,7 +237,7 @@ namespace Silver.UnitTests.StatsModels
                 Scatterplot = false,
                 SecondCatFactor = "Factor 2",
                 Significance = "0.05",
-                Statistic = true,
+                TestStatistic = true,
                 ThirdCatFactor = "Factor 3",
                 Transformation = "None"
             };

@@ -135,10 +135,10 @@ if (controlGroup != "NULL") {
 #STB Aug 2014 updating paired t-test to exclude covariate
 if (dimfact ==2 && covariatelist == "NULL") {
 	#STB May 2012 Updating "paired"
-	Title <-paste(branding, " Paired t-test/within-subject Analysis (paired t-test analysis)", sep="")
+	Title <-paste(branding, " Paired t-test Analysis and Within-Subject Analysis (paired t-test analysis)", sep="")
 	HTML.title(Title, HR = 1, align = "left")
 } else {
-	Title <-paste(branding, " Paired t-test/within-subject Analysis", sep="")
+	Title <-paste(branding, " Paired t-test Analysis and Within-Subject Analysis", sep="")
 	HTML.title(Title, HR = 1, align = "left")
 }
 
@@ -162,7 +162,7 @@ if (dimfact >2) {
 }
 HTML.title(title, HR=2, align="left")
 
-add<-paste(c("The  "), resp, " response is currently being analysed by the Paired t-test/within-subject Analysis module", sep="")
+add<-paste(c("The  "), resp, " response is currently being analysed by the Paired t-test Analysis and Within-Subject Analysis module", sep="")
 
 if(covariatelist !="NULL") {
 	if (nocovlist == 1) {
@@ -208,7 +208,7 @@ if(covariance=="Unstructured" && dimfact >2) {
 #===================================================================================================================
 # One-categorised case profiles plot
 #===================================================================================================================
-title<-c("Case profiles plot of the raw data")
+title<-c("Case profiles plot of the observed data")
 if(responseTransform != "None") {
 	title<-paste(title, " (on the ", responseTransform, " scale)", sep="")
 }

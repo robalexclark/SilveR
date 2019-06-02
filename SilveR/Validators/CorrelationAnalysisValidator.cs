@@ -16,7 +16,7 @@ namespace SilveR.Validators
         public override ValidationInfo Validate()
         {
             //first just check to ensure that the user has actually selected something to output!
-            if (!caVariables.Estimate && !caVariables.Statistic && !caVariables.PValue && !caVariables.Scatterplot && !caVariables.Matrixplot && !caVariables.ByCategoriesAndOverall)
+            if (!caVariables.Estimate && !caVariables.TestStatistic && !caVariables.PValue && !caVariables.Scatterplot && !caVariables.Matrixplot && !caVariables.ByCategoriesAndOverall)
             {
                 ValidationInfo.AddErrorMessage("You have not selected anything to output!");
                 return ValidationInfo;

@@ -287,6 +287,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 9";
             model.ByCategoriesAndOverall = true;
             model.Hypothesis = "2-sided";
+            model.Method = "Pearson";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -335,6 +336,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 1";
             model.SecondCatFactor = "Factor 2";
             model.Hypothesis = "2-sided";
+            model.Method = "Pearson";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -370,7 +372,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -402,7 +404,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -442,7 +444,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -484,7 +486,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -524,7 +526,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -566,7 +568,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -606,7 +608,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Less than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -638,7 +640,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -678,7 +680,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Kendall";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -710,7 +712,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Kendall";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -750,7 +752,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Kendall";
             model.Hypothesis = "Less than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -782,7 +784,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Kendall";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -822,7 +824,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Spearman";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -854,7 +856,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Spearman";
             model.Hypothesis = "2-sided";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -894,7 +896,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Spearman";
             model.Hypothesis = "Less than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -926,7 +928,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Spearman";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -968,7 +970,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1009,7 +1011,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1040,7 +1042,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1071,7 +1073,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1102,7 +1104,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1134,7 +1136,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1166,7 +1168,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1198,7 +1200,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1230,7 +1232,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1262,7 +1264,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1296,7 +1298,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1338,7 +1340,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1380,7 +1382,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1421,7 +1423,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1452,7 +1454,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1483,7 +1485,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1514,7 +1516,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
@@ -1547,7 +1549,7 @@ namespace SilveR.IntegrationTests
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
             model.Estimate = true;
-            model.Statistic = true;
+            model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;

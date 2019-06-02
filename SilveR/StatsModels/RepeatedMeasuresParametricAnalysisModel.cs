@@ -67,7 +67,7 @@ namespace SilveR.StatsModels
         [DisplayName("Covariate transformation")]
         public string CovariateTransformation { get; set; } = "None";
 
-        [DisplayName("Overall table of effects")]
+        [DisplayName("Table of overall effect tests")]
         public bool ANOVASelected { get; set; } = true;
 
         [DisplayName("Predicted vs. residuals plot")]

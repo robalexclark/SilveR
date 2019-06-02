@@ -18,7 +18,7 @@
     <PackageReference Include="CsvHelper" Version="12.1.2" />
     <PackageReference Include="ElectronNET.API" Version="5.22.12" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.4" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />

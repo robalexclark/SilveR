@@ -652,6 +652,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -680,6 +682,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -708,6 +713,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -737,6 +744,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -763,7 +772,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -792,6 +803,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -820,6 +834,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -848,6 +864,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -875,7 +893,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -901,8 +921,10 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat 1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
-            model.Covariance = "Compound Symmetric";
+            model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -931,6 +953,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -959,6 +984,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -987,6 +1014,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1008,12 +1037,14 @@ namespace SilveR.IntegrationTests
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
-            model.ResponseTransformation = "None";
+            model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1035,13 +1066,16 @@ namespace SilveR.IntegrationTests
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
-            model.ResponseTransformation = "None";
+            model.ResponseTransformation = "Loge";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
             model.Covariates = new string[] { "Cov1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1063,13 +1097,15 @@ namespace SilveR.IntegrationTests
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
-            model.ResponseTransformation = "None";
+            model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
             model.OtherDesignFactors = new string[] { "Block1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1091,13 +1127,15 @@ namespace SilveR.IntegrationTests
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
             model.Response = "Resp 1";
-            model.ResponseTransformation = "None";
+            model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
             model.OtherDesignFactors = new string[] { "Block1", "Block2" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1125,7 +1163,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1149,11 +1189,12 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatments = new string[] { "Treat 1" };
-            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1182,6 +1223,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1210,6 +1254,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1238,6 +1284,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1264,7 +1312,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1292,7 +1342,10 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
-            model.SelectedEffect = "Treat 1 * Day 1";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1321,6 +1374,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1348,7 +1403,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
-            model.SelectedEffect = "Treat 1 * Day 1";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1377,6 +1434,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1404,6 +1463,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day2";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat4 * Day2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1430,8 +1491,11 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Cov1" };
             model.Subject = "Animal2";
             model.RepeatedFactor = "Day2";
-            model.Covariance = "Compound Symmetric";
+            model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat4 * Day2";
+            model.PrimaryFactor = "Treat 4";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1458,8 +1522,10 @@ namespace SilveR.IntegrationTests
             model.OtherDesignFactors = new string[] { "Block1" };
             model.Subject = "Animal2";
             model.RepeatedFactor = "Day2";
-            model.Covariance = "Compound Symmetric";
+            model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat4 * Day2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1488,6 +1554,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day2";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat4 * Day2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1515,6 +1583,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day2";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat4 * Treat5 * Day2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1542,7 +1612,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal2";
             model.RepeatedFactor = "Day2";
             model.Covariance = "Unstructured";
-            model.SelectedEffect = "Treat4 * Treat5 * Treat6 * Day2";
+            model.SelectedEffect = "Treat4 * Treat5 * Day2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1570,6 +1642,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1608,6 +1682,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1646,6 +1723,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1679,11 +1758,12 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp8";
             model.ResponseTransformation = "ArcSine";
             model.Treatments = new string[] { "Treat 1", "Treat 2" };
-            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1722,6 +1802,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1759,7 +1842,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1793,11 +1878,12 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp8";
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat 1" };
-            model.OtherDesignFactors = new string[] { "Block1" };
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1836,6 +1922,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1873,7 +1962,9 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1911,6 +2002,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day3";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat17 * Treat18 * Treat19 * Treat20 * Day3";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1939,6 +2032,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day4";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat21 * Treat22 * Day4";
+            model.PrimaryFactor = "Treat21";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1967,6 +2063,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "PVTestDay1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "PVTestTreat1 * PVTestDay1";
+            model.PrimaryFactor = "PVTestTreat1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1995,6 +2094,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "PVTestDay1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "PVTestTreat1 * PVTestDay1";
+            model.PrimaryFactor = "PVTestTreat1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2023,6 +2125,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "PVTestDay2";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "PVTestTreat2 * PVTestDay2";
+            model.PrimaryFactor = "PVTestTreat2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2051,6 +2156,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "PVTestDay2";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "PVTestTreat2 * PVTestDay2";
+            model.PrimaryFactor = "PVTestTreat2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2078,6 +2186,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "CVTime1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "CVTreat1 * CVTime1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2105,6 +2215,8 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "CVTime2";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "CVTreat2 * CVTime2";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2133,6 +2245,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2162,6 +2277,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Compound Symmetric";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2191,6 +2309,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2220,6 +2341,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2249,6 +2373,9 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
             model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2277,7 +2404,10 @@ namespace SilveR.IntegrationTests
             model.Subject = "Animal1";
             model.RepeatedFactor = "Day 1";
             model.Covariance = "Autoregressive(1)";
-            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

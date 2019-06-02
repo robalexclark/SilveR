@@ -26,8 +26,8 @@ namespace SilveR.StatsModels
         }
 
         [Required]
-        [DisplayName("Test value")]
-        public decimal TestValue { get; set; }
+        [DisplayName("Target value")]
+        public decimal TargetValue { get; set; }
 
         [DisplayName("Significance")]
         public string Significance { get; set; } = "0.05";
@@ -89,7 +89,7 @@ namespace SilveR.StatsModels
 
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Responses), Responses));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(TestValue), TestValue));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(TargetValue), TargetValue));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ConfidenceInterval), ConfidenceInterval));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlot), NormalPlot));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
@@ -103,7 +103,7 @@ namespace SilveR.StatsModels
 
             this.Responses = argHelper.LoadIEnumerableArgument(nameof(Responses));
             this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
-            this.TestValue = argHelper.LoadDecimalArgument(nameof(TestValue));
+            this.TargetValue = argHelper.LoadDecimalArgument(nameof(TargetValue));
             this.ConfidenceInterval = argHelper.LoadBooleanArgument(nameof(ConfidenceInterval));
             this.NormalPlot = argHelper.LoadBooleanArgument(nameof(NormalPlot));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
@@ -117,7 +117,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Responses));
             arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false));
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(TestValue.ToString(), false));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(TargetValue.ToString(), false));
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(ConfidenceInterval));
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlot));

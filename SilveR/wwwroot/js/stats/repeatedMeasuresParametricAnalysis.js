@@ -115,6 +115,7 @@ function treatmentsChanged() {
     updateSelectedEffects();
 }
 
+
 function updateSelectedEffects() {
     const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
     selectedEffectDropDown.dataSource.read({

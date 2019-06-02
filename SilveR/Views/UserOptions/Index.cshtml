@@ -123,7 +123,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Points</h3></div>
+                            <div class="panel-heading"><h3>Markers</h3></div>
 
                             <div class="panel-body">
                                 <div class="form-group">
@@ -143,7 +143,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="DisplayPointLabels" class="control-label col-xs-4">Display point labels</label>
+                                    <label asp-for="DisplayPointLabels" class="control-label col-xs-4">Display marker labels</label>
                                     <div class="col-xs-8">
                                         <input asp-for="DisplayPointLabels" class="checkbox" type="checkbox">
                                     </div>
@@ -199,7 +199,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="DisplayLSMeansLines" class="control-label col-xs-4">Display lines on LS Means plot</label>
+                                    <label asp-for="DisplayLSMeansLines" class="control-label col-xs-4">Display lines connecting means on the LS Means plot</label>
                                     <div class="col-xs-8">
                                         <input asp-for="DisplayLSMeansLines" class="checkbox" type="checkbox">
                                     </div>
@@ -207,7 +207,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label asp-for="DisplaySEMLines" class="control-label col-xs-4">Display lines on Plot of Means with SEM</label>
+                                    <label asp-for="DisplaySEMLines" class="control-label col-xs-4">Display lines connecting means on the Means with SEM plot</label>
                                     <div class="col-xs-8">
                                         <input asp-for="DisplaySEMLines" class="checkbox" type="checkbox">
                                     </div>
@@ -222,7 +222,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>Points Jitter Amount</h3></div>
+                            <div class="panel-heading"><h3>Markers Jitter Amount</h3></div>
 
                             <div class="panel-body">
                                 <div class="form-group">
@@ -552,8 +552,9 @@
                                 <br />
                                 <a asp-controller="UserOptions" asp-action="InstallRPackages" class="btn btn-primary">Install R packages <i class="fa fa-caret-right"></i></a>
                                 <br />
+                                <br />
                                 <div>
-                                    At this time the only way to see if the installer process has completed is to check your processes using taskmanager, activity monitor or top to see if rprocess.exe has completed.
+                                    At this time the only way to see if the installer process has completed is to check your processes using taskmanager, activity monitor or top to see if R or Rscript has completed.
                                 </div>
                             </div>
                         </div>

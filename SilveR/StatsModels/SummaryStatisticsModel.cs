@@ -23,6 +23,7 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine" }; }
         }
 
+        [DisplayName("Response Transformation")]
         public string Transformation { get; set; } = "None";
 
         [CheckUsedOnceOnly]

@@ -146,9 +146,9 @@ if(qt==2) {
 if (scatterplotSelected != "N") {
 	#Scatterplot
 	if (resplength == 2) {
-		HTML.title("Scatterplot of the raw data", HR=3, align="left")
+		HTML.title("Scatterplot of the observed data", HR=3, align="left")
 	} else {
-		HTML.title("Scatterplots of the raw data", HR=3, align="left")
+		HTML.title("Scatterplots of the observed data", HR=3, align="left")
 	}
 
 	for (i in 1:resplength) {
@@ -490,9 +490,9 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
 if (scatterplotSelected != "N") {
 	#Scatterplot
 	if (resplength == 2) {
-		HTML.title("Categorised scatterplot of the raw data", HR=3, align="left")
+		HTML.title("Categorised scatterplot of the observed data", HR=3, align="left")
 	} else {
-		HTML.title("Categorised scatterplots of the raw data", HR=3, align="left")
+		HTML.title("Categorised scatterplots of the observed data", HR=3, align="left")
 	}
 
 	for (d in 1:resplength) {

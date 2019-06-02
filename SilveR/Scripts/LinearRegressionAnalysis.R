@@ -249,7 +249,7 @@ HTML(add, align="left")
 #===================================================================================================================
 #Scatterplot
 #===================================================================================================================
-title<-c("Scatterplots of the raw data, including best-fit regression lines")
+title<-c("Scatterplots of the observed data, including best-fit regression lines")
 
 if(responseTransform != "None" || contFactorTransform != "None") {
 	title<-paste(title, ", on the transformed scale", sep="")

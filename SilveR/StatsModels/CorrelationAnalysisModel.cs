@@ -60,8 +60,8 @@ namespace SilveR.StatsModels
         [DisplayName("Estimate")]
         public bool Estimate { get; set; } = true;
 
-        [DisplayName("Statistic")]
-        public bool Statistic { get; set; } = true;
+        [DisplayName("Test Statistic")]
+        public bool TestStatistic { get; set; } = true;
 
         [DisplayName("p-value")]
         public bool PValue { get; set; } = true;
@@ -163,7 +163,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Method), Method));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Hypothesis), Hypothesis));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Estimate), Estimate));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Statistic), Statistic));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(TestStatistic), TestStatistic));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PValue), PValue));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Scatterplot), Scatterplot));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Matrixplot), Matrixplot));
@@ -186,7 +186,7 @@ namespace SilveR.StatsModels
             this.Method = argHelper.LoadStringArgument(nameof(Method));
             this.Hypothesis = argHelper.LoadStringArgument(nameof(Hypothesis));
             this.Estimate = argHelper.LoadBooleanArgument(nameof(Estimate));
-            this.Statistic = argHelper.LoadBooleanArgument(nameof(Statistic));
+            this.TestStatistic = argHelper.LoadBooleanArgument(nameof(TestStatistic));
             this.PValue = argHelper.LoadBooleanArgument(nameof(PValue));
             this.Scatterplot = argHelper.LoadBooleanArgument(nameof(Scatterplot));
             this.Matrixplot = argHelper.LoadBooleanArgument(nameof(Matrixplot));
@@ -227,7 +227,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Estimate)); //12
 
             //N
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Statistic)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(TestStatistic)); //13
 
             //St Dev
             arguments.Append(" " + argFormatter.GetFormattedArgument(PValue)); //14

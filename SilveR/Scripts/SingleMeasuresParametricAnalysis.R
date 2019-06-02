@@ -262,7 +262,7 @@ HTML(add, align="left")
 #===================================================================================================================
 #Scatterplot
 #===================================================================================================================
-title<-c("Scatterplot of the raw data")
+title<-c("Scatterplot of the observed data")
 if(responseTransform != "None") {
 	title<-paste(title, " (on the ", responseTransform, " scale)", sep="")
 }

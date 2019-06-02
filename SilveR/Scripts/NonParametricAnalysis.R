@@ -965,8 +965,8 @@ if (block != "NULL" && statstest == "AllComparisons") {
                 }
 
                 #Reformat p-values
-                pv <- format(round(pvalue(wilcox), 4), nsmall = 4, scientific = FALSE)
-                pvzzz <- pvalue(wilcox)
+                pv <- format(round(as.numeric(pvalue(wilcox)), 4), nsmall = 4, scientific = FALSE)
+                pvzzz <- as.numeric(pvalue(wilcox))
                 for (i in 1:(length(pv))) {
                     if (pvzzz[i] < 0.0001) {
                         #STB March 2011 - formatting p-values p<0.0001

@@ -927,6 +927,7 @@ namespace SilveR.IntegrationTests
             model.ScatterplotSelected = true;
             model.XAxisTitle = "Resp 1";
             model.YAxisTitle = "Resp2";
+            model.LinearFitSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1059,7 +1060,6 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "Square Root";
             model.FirstCatFactor = "Cat1";
             model.ScatterplotSelected = true;
-            model.LinearFitSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
@@ -1407,6 +1407,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Resp 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.LinearFitSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2898,7 +2899,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SEMPlotSelected = true;
-            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
@@ -3696,7 +3697,6 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Treat 1";
             model.HistogramSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
-            model.NormalDistSelected = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3819,7 +3819,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.XAxis = "Time 1";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act
@@ -3845,7 +3845,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Time2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act
@@ -3946,7 +3946,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act1
@@ -3983,7 +3983,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act1
@@ -4094,7 +4094,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
             //Act1
@@ -4131,9 +4131,8 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
-            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4223,7 +4222,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act
@@ -4250,7 +4249,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act
@@ -4331,7 +4330,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
             //Act
@@ -4358,7 +4357,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
             //Act
@@ -4384,7 +4383,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat2";
-            model.FirstCatFactor = "Treat 1";
+            model.SecondCatFactor = "Treat 1";
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
@@ -4412,7 +4411,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Cat2";
-            model.FirstCatFactor = "Treat 1";
+            model.SecondCatFactor = "Treat 1";
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
@@ -4440,9 +4439,9 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Treat 1";
-            model.FirstCatFactor = "Cat2";
+            model.SecondCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
             //Act
@@ -4468,9 +4467,9 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat2";
-            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
             //Act1
@@ -4478,7 +4477,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -4506,7 +4505,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Time2";
             model.FirstCatFactor = "Treat 1";
-            model.FirstCatFactor = "Cat2";
+            model.SecondCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
@@ -4534,7 +4533,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Treat 1";
-            model.FirstCatFactor = "Cat2";
+            model.SecondCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
@@ -4562,13 +4561,23 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.XAxis = "Time 1";
             model.FirstCatFactor = "Cat1";
-            model.FirstCatFactor = "Cat2";
+            model.SecondCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -4590,9 +4599,9 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat2";
-            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
             //Act1
@@ -4600,7 +4609,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -4628,18 +4637,28 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "ArcSine";
             model.XAxis = "Time2";
             model.FirstCatFactor = "Cat1";
-            model.FirstCatFactor = "Cat2";
+            model.SecondCatFactor = "Cat2";
             model.CaseProfilesPlotSelected = true;
-            model.CaseIDFactor = "Animal1";
+            model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor selected is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));            
         }
     }
 }

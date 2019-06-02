@@ -264,6 +264,7 @@ namereplace2 <- function(axistitle) {
 
 namereplace <- function(axistitle) {
 	for (i in 1:20) {
+		axistitle <- sub("ivs_questionmark_ivs", "?", axistitle)
 		axistitle <- sub("ivs_tilde_ivs", "~", axistitle)
 		axistitle <- sub("ivs_star_ivs", "*", axistitle)
 		axistitle <- sub("ivs_plus_ivs", "+", axistitle)
@@ -302,6 +303,7 @@ namereplace <- function(axistitle) {
 namereplaceGSUB <- function(axistitle) {
 
 	for (i in 1:20) {
+		axistitle <- sub("ivs_questionmark_ivs", "?", axistitle)
 		axistitle <- gsub("ivs_tilde_ivs", "~", axistitle)
 		axistitle <- gsub("ivs_star_ivs", "*", axistitle)
 		axistitle <- gsub("ivs_plus_ivs", "+", axistitle)

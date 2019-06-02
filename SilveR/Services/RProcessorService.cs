@@ -18,7 +18,7 @@ namespace SilveR.Services
     public interface IRProcessorService
     {
         Task Execute(string analysisGuid);
-        void ExecuteInstaller();
+        Task ExecuteInstaller();
     }
 
 
@@ -200,7 +200,6 @@ namespace SilveR.Services
                         //do a save at this point so that results can be shown (processing is checking for output at this point)
                         await silveRRepository.UpdateAnalysis(analysis);
 
-
                         //now go through any csv output to be imported into datasets
                         foreach (FileInfo file in outputFiles.Where(x => x.Extension == ".csv" && !x.FullName.EndsWith(analysis.AnalysisGuid + ".csv"))) //go through any dataset output (make sure dont import original csv file!)
                         {
@@ -225,19 +224,19 @@ namespace SilveR.Services
                 {
                     Analysis analysis = await silveRRepository.GetAnalysis(analysisGuid);
 
-                    string message = "Rscript cannot be found, so no analysis was run" + Environment.NewLine;
+                    string message = "Rscript cannot be found, so no analysis was run." + Environment.NewLine;
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                        message = message + "Platform - Windows: Your R installation (specifically Rscript.exe) is missing - please reinstall this application.";
+                        message = message + "Your R installation (specifically Rscript.exe) is missing - please reinstall this application.";
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        message = message + "Platform - Linux: No R install could be found on this system. It is recommended that you copy and run the following shell script to install the correct version of R. Then, click the 'Install R packages' button under settings to install the correct R packages." + Environment.NewLine;
+                        message = message + "No R install could be found on this system. It is recommended that you copy and run the following shell script to install the correct version of R. Then, click the 'Install R packages' button under settings to install the correct R packages." + Environment.NewLine;
                         message = message + "apt-get install r-base-core=3.5.2-1build1 -y";
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        message = message + "Platform - OSX: No R install could be found on this system. It is recommended that you download and install the following R package (https://cran.r-project.org/bin/macosx/R-3.5.2.pkg) into your OSX system. Then, click the 'Install R packages' button under settings to install the correct R packages.";
+                        message = message + "No R install could be found on this system. It is recommended that you download and install the following R package (https://cran.r-project.org/bin/macosx/R-3.5.2.pkg) into your OSX system. Then, click the 'Install R packages' button under settings to install the correct R packages.";
                     }
 
                     analysis.RProcessOutput = message;
@@ -281,7 +280,7 @@ namespace SilveR.Services
             return "\"" + str + "\"";
         }
 
-        public void ExecuteInstaller()
+        public Task ExecuteInstaller()
         {
             using (IServiceScope scope = services.CreateScope())
             {
@@ -333,7 +332,7 @@ namespace SilveR.Services
                 psi.WindowStyle = ProcessWindowStyle.Normal;
                 psi.WorkingDirectory = Path.GetTempPath();
 
-                psi.Arguments = FormatPreArgument(scriptFileName);// + " --vanilla --args ";
+                psi.Arguments = FormatPreArgument(scriptFileName);
 
                 //Configure some options for the R process
                 //psi.UseShellExecute = true;
@@ -386,6 +385,8 @@ namespace SilveR.Services
                         throw new TimeoutException("R timed out and failed to exit gracefully, aborting analysis without reading results or log. You may need to manually kill the Rscript process. Partial results and log may be in the temp folder.");
                     }
                 }
+
+                return Task.CompletedTask;
             }
         }
     }

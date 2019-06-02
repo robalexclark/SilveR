@@ -169,14 +169,25 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp3";
             model.Treatment = "Group 1";
             model.Censorship = "Censor1";
+            model.CompareSurvivalCurves = true;
 
-            //Act
+            //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
             Assert.Contains("The response selected (Resp3) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("SurvivalAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("SurvivalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -190,8 +201,8 @@ namespace SilveR.IntegrationTests
             SurvivalAnalysisModel model = new SurvivalAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Survival").Key;
             model.Response = "Resp2";
-            //model.Treatment = "Group 4";
             model.Censorship = "Censor1";
+            model.CompareSurvivalCurves = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -214,7 +225,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Survival").Key;
             model.Response = "Resp2";
             model.Treatment = "Group 1";
-            //model.Censorship = "Censor1";
+            model.CompareSurvivalCurves = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -236,9 +247,9 @@ namespace SilveR.IntegrationTests
 
             SurvivalAnalysisModel model = new SurvivalAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Survival").Key;
-            //model.Response = "Resp2";
             model.Treatment = "Group 1";
             model.Censorship = "Censor1";
+            model.CompareSurvivalCurves = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -262,6 +273,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp4";
             model.Treatment = "Group 5";
             model.Censorship = "Censor6";
+            model.CompareSurvivalCurves = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -285,6 +297,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp4";
             model.Treatment = "Group 5";
             model.Censorship = "Censor7";
+            model.CompareSurvivalCurves = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -308,6 +321,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp4";
             model.Treatment = "Group 5";
             model.Censorship = "Censor8";
+            model.CompareSurvivalCurves = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -331,6 +345,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp4";
             model.Treatment = "Group 6";
             model.Censorship = "Censor8";
+            model.CompareSurvivalCurves = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -354,6 +369,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp4";
             model.Treatment = "Group 7";
             model.Censorship = "Censor8";
+            model.CompareSurvivalCurves = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -377,6 +393,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp4";
             model.Treatment = "Group 8";
             model.Censorship = "Censor9";
+            model.CompareSurvivalCurves = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
