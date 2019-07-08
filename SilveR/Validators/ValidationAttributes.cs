@@ -203,9 +203,9 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            DoseResponseAndNonLinearRegesssionAnalysisModel model = (DoseResponseAndNonLinearRegesssionAnalysisModel)validationContext.ObjectInstance;
+            DoseResponseAndNonLinearRegressionAnalysisModel model = (DoseResponseAndNonLinearRegressionAnalysisModel)validationContext.ObjectInstance;
 
-            if (value == null && model.AnalysisType == DoseResponseAndNonLinearRegesssionAnalysisModel.AnalysisOption.FourParameter)
+            if (value == null && model.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.FourParameter)
             {
                 return new ValidationResult(validationContext.DisplayName + " is a required variable.");
             }

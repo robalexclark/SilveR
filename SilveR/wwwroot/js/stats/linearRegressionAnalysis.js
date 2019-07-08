@@ -72,7 +72,7 @@ function categoricalFactorsChanged() {
 
 function getCategoricalFactors() {
     const catFactors = $("#CategoricalFactors").data("kendoMultiSelect").dataItems();
-    catFactors.unshift("");
+    //catFactors.unshift("");
 
     return catFactors;
 }
@@ -84,6 +84,7 @@ function covariateBlockEnableDisable() {
 
     if (covariateDropDown.val().length > 0) {
         primaryFactorDropDown.enable(true);
+        primaryFactorDropDown.select(0);
         covariateTransformationDropDown.enable(true);
     }
     else {

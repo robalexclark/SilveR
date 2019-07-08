@@ -112,33 +112,33 @@ namespace SilveR.Validators
             {
                 if (maVariables.CategoricalPredictor != null)
                 {
-                    ValidationInfo.AddWarningMessage("Warning: When performing a PCA analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
+                    ValidationInfo.AddWarningMessage("When performing a PCA analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
                 else if (maVariables.ContinuousPredictors != null)
                 {
-                    ValidationInfo.AddWarningMessage("Warning: When performing a PCA analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
+                    ValidationInfo.AddWarningMessage("When performing a PCA analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
             }
             else if (maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.ClusterAnalysis)
             {
                 if (maVariables.CategoricalPredictor != null)
                 {
-                    ValidationInfo.AddWarningMessage("Warning: When performing a Cluster analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
+                    ValidationInfo.AddWarningMessage("When performing a Cluster analysis the categorical predictor you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
                 if (maVariables.ContinuousPredictors != null)
                 {
-                    ValidationInfo.AddWarningMessage("Warning: When performing a Cluster analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
+                    ValidationInfo.AddWarningMessage("When performing a Cluster analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
             }
             else if (maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis)
             {
                 if (maVariables.CategoricalPredictor == null)
                 {
-                    ValidationInfo.AddErrorMessage("Warning: When performing a LDA analysis a categorical predictor is required.");
+                    ValidationInfo.AddErrorMessage("When performing a LDA analysis a categorical predictor is required.");
                 }
                 if (maVariables.ContinuousPredictors != null)
                 {
-                    ValidationInfo.AddWarningMessage("Warning: When performing a LDA analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
+                    ValidationInfo.AddWarningMessage("When performing a LDA analysis the continuous predictors you have selected will not be used. If you do need to use them in the analysis, then another analysis option may be more appropriate.");
                 }
             }
 

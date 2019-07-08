@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Xunit;
-using static SilveR.StatsModels.DoseResponseAndNonLinearRegesssionAnalysisModel;
+using static SilveR.StatsModels.DoseResponseAndNonLinearRegressionAnalysisModel;
 
 namespace Silver.UnitTests.StatsModels
 {
-    public class DoseResponseAndNonLinearRegesssionAnalysisModelTests
+    public class DoseResponseAndNonLinearRegressionAnalysisModelTests
     {
         [Fact]
         public void ScriptFileName_ReturnsCorrectString()
         {
             //Arrange
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = new DoseResponseAndNonLinearRegesssionAnalysisModel();
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = new DoseResponseAndNonLinearRegressionAnalysisModel();
 
             //Act
             string result = sut.ScriptFileName;
@@ -29,7 +29,7 @@ namespace Silver.UnitTests.StatsModels
         public void TransformationsList_ReturnsCorrectList()
         {
             //Arrange
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = new DoseResponseAndNonLinearRegesssionAnalysisModel();
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = new DoseResponseAndNonLinearRegressionAnalysisModel();
 
             //Act
             IEnumerable<string> result = sut.TransformationsList;
@@ -47,7 +47,7 @@ namespace Silver.UnitTests.StatsModels
             mockDataset.Setup(x => x.DatasetID).Returns(It.IsAny<int>);
             mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
 
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelFourParameter(mockDataset.Object);
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelFourParameter(mockDataset.Object);
 
             //Act
             string[] result = sut.ExportData();
@@ -66,7 +66,7 @@ namespace Silver.UnitTests.StatsModels
             mockDataset.Setup(x => x.DatasetID).Returns(It.IsAny<int>);
             mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
 
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelEquation(mockDataset.Object);
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelEquation(mockDataset.Object);
 
             //Act
             string[] result = sut.ExportData();
@@ -81,7 +81,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetArguments_FourParameter_ReturnsCorrectArguments()
         {
             //Arrange
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelFourParameter(GetDataset());
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelFourParameter(GetDataset());
 
             //Act
             List<Argument> result = sut.GetArguments().ToList();
@@ -155,7 +155,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetArguments_Equation_ReturnsCorrectArguments()
         {
             //Arrange
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelEquation(GetDataset());
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelEquation(GetDataset());
 
             //Act
             List<Argument> result = sut.GetArguments().ToList();
@@ -229,7 +229,7 @@ namespace Silver.UnitTests.StatsModels
         public void LoadArguments_ReturnsCorrectArguments()
         {
             //Arrange
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = new DoseResponseAndNonLinearRegesssionAnalysisModel(GetDataset());
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = new DoseResponseAndNonLinearRegressionAnalysisModel(GetDataset());
 
             List<Argument> arguments = new List<Argument>();
             arguments.Add(new Argument { Name = "AnalysisType", Value = "FourParameter" });
@@ -285,7 +285,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetCommandLineArguments_FourParameter_ReturnsCorrectString()
         {
             //Arrange
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelFourParameter(GetDataset());
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelFourParameter(GetDataset());
 
             //Act
             string result = sut.GetCommandLineArguments();
@@ -298,7 +298,7 @@ namespace Silver.UnitTests.StatsModels
         public void GetCommandLineArguments_Equation_ReturnsCorrectString()
         {
             //Arrange
-            DoseResponseAndNonLinearRegesssionAnalysisModel sut = GetModelEquation(GetDataset());
+            DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelEquation(GetDataset());
 
             //Act
             string result = sut.GetCommandLineArguments();
@@ -308,9 +308,9 @@ namespace Silver.UnitTests.StatsModels
         }
 
 
-        private DoseResponseAndNonLinearRegesssionAnalysisModel GetModelFourParameter(IDataset dataset)
+        private DoseResponseAndNonLinearRegressionAnalysisModel GetModelFourParameter(IDataset dataset)
         {
-            var model = new DoseResponseAndNonLinearRegesssionAnalysisModel(dataset)
+            var model = new DoseResponseAndNonLinearRegressionAnalysisModel(dataset)
             {
                 AnalysisType = AnalysisOption.FourParameter,
                 Dose = "Dose1",
@@ -338,9 +338,9 @@ namespace Silver.UnitTests.StatsModels
             return model;
         }
 
-        private DoseResponseAndNonLinearRegesssionAnalysisModel GetModelEquation(IDataset dataset)
+        private DoseResponseAndNonLinearRegressionAnalysisModel GetModelEquation(IDataset dataset)
         {
-            var model = new DoseResponseAndNonLinearRegesssionAnalysisModel(dataset)
+            var model = new DoseResponseAndNonLinearRegressionAnalysisModel(dataset)
             {
                 AnalysisType = AnalysisOption.Equation,
                 Dose = null,

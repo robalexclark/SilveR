@@ -202,6 +202,135 @@
     <None Update="ExpectedResults\CorrelationAnalysis\COR48.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR40.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR41.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR42.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR43.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR44.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR45.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR46.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR47.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR48.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR49.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR50.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR51.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR52.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR53.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR54.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR55.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR56.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR57.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR58.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR59.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR60.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR61.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR62.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR63.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR64.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR65.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR66.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR67.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR68.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR69.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR70.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR71.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR72.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR73.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR74.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR75.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR76.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR77.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR78.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR79.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR80.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR81.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR82.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\GraphicalAnalysis\GRA100.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1840,10 +1969,6 @@
     <None Update="_test dataset.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ExpectedResults\" />
   </ItemGroup>
 
 </Project>

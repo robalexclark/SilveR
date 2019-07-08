@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class DoseResponseAndNonLinearRegesssionAnalysisModel : AnalysisDataModelBase
+    public class DoseResponseAndNonLinearRegressionAnalysisModel : AnalysisDataModelBase
     {
         public enum AnalysisOption { FourParameter = 0, Equation = 1 }
         [DisplayName("Analysis Option")]
@@ -91,16 +91,16 @@ namespace SilveR.StatsModels
         public string EquationXAxis { get; set; }
 
 
-        public DoseResponseAndNonLinearRegesssionAnalysisModel() : base("DoseResponseAndNonLinearRegressionAnalysis") { }
+        public DoseResponseAndNonLinearRegressionAnalysisModel() : base("DoseResponseAndNonLinearRegressionAnalysis") { }
 
-        public DoseResponseAndNonLinearRegesssionAnalysisModel(IDataset dataset)
+        public DoseResponseAndNonLinearRegressionAnalysisModel(IDataset dataset)
             : base(dataset, "DoseResponseAndNonLinearRegressionAnalysis") { }
 
 
         public override ValidationInfo Validate()
         {
-            DoseResponseAndNonLinearRegesssionAnalysisValidator doseResponseAndNonLinearRegesssionAnalysisValidator = new DoseResponseAndNonLinearRegesssionAnalysisValidator(this);
-            return doseResponseAndNonLinearRegesssionAnalysisValidator.Validate();
+            DoseResponseAndNonLinearRegressionAnalysisValidator doseResponseAndNonLinearRegressionAnalysisValidator = new DoseResponseAndNonLinearRegressionAnalysisValidator(this);
+            return doseResponseAndNonLinearRegressionAnalysisValidator.Validate();
         }
 
         public override string[] ExportData()

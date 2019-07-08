@@ -309,7 +309,7 @@ namespace Silver.UnitTests.Controllers
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
-            Mock<DoseResponseAndNonLinearRegesssionAnalysisModel> mockModel = new Mock<DoseResponseAndNonLinearRegesssionAnalysisModel>(dataset);
+            Mock<DoseResponseAndNonLinearRegressionAnalysisModel> mockModel = new Mock<DoseResponseAndNonLinearRegressionAnalysisModel>(dataset);
             mockModel.Setup(x => x.Validate()).Returns(new ValidationInfo());
 
             //Act

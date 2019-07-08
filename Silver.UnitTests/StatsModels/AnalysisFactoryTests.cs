@@ -137,13 +137,13 @@ namespace Silver.UnitTests.StatsModels
         }
 
         [Fact]
-        public void CreateAnalysisModel_DoseResponseAndNonLinearRegressionAnalysis_ReturnsDoseResponseAndNonLinearRegesssionAnalysisModel()
+        public void CreateAnalysisModel_DoseResponseAndNonLinearRegressionAnalysis_ReturnsDoseResponseAndNonLinearRegressionAnalysisModel()
         {
             //Arrange, Act
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("DoseResponseAndNonLinearRegressionAnalysis", GetDataset());
 
             //Assert
-            Assert.IsType<DoseResponseAndNonLinearRegesssionAnalysisModel>(analysisModelBase);
+            Assert.IsType<DoseResponseAndNonLinearRegressionAnalysisModel>(analysisModelBase);
         }
 
         [Fact]

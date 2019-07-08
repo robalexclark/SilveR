@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace SilveR.Validators
 {
-    public class DoseResponseAndNonLinearRegesssionAnalysisValidator : ValidatorBase
+    public class DoseResponseAndNonLinearRegressionAnalysisValidator : ValidatorBase
     {
-        private readonly DoseResponseAndNonLinearRegesssionAnalysisModel drnlrVariables;
+        private readonly DoseResponseAndNonLinearRegressionAnalysisModel drnlrVariables;
 
-        public DoseResponseAndNonLinearRegesssionAnalysisValidator(DoseResponseAndNonLinearRegesssionAnalysisModel drnlr)
+        public DoseResponseAndNonLinearRegressionAnalysisValidator(DoseResponseAndNonLinearRegressionAnalysisModel drnlr)
             : base(drnlr.DataTable)
         {
             drnlrVariables = drnlr;
@@ -32,42 +32,42 @@ namespace SilveR.Validators
             //Check that all the columns are numeric
             if (!CheckIsNumeric(drnlrVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The response variable selected (" + drnlrVariables.Response + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.Dose))
             {
-                ValidationInfo.AddErrorMessage("The dose variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The dose variable selected (" + drnlrVariables.Dose + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCResponse))
             {
-                ValidationInfo.AddErrorMessage("The QC response variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC response variable selected (" + drnlrVariables.QCResponse + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCDose))
             {
-                ValidationInfo.AddErrorMessage("The QC dose variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC dose variable selected (" + drnlrVariables.QCDose + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.SamplesResponse))
             {
-                ValidationInfo.AddErrorMessage("The sample variable selected contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The sample variable selected (" + drnlrVariables.SamplesResponse + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
             //check that there is more than one value in the response variables
-            if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegesssionAnalysisModel.AnalysisOption.FourParameter)
+            if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.FourParameter)
             {
                 if (CountResponses(drnlrVariables.Response) == 1)
                 {
-                    ValidationInfo.AddErrorMessage("The response variable contains only one value, please choose another response.");
+                    ValidationInfo.AddErrorMessage("The response variable selected (" + drnlrVariables.Response + ") contains only one value, please choose another response.");
                     return ValidationInfo;
                 }
 
                 if (!String.IsNullOrEmpty(drnlrVariables.QCResponse) && CountResponses(drnlrVariables.QCResponse) == 1)
                 {
-                    ValidationInfo.AddErrorMessage("The QC response variable contains only one value, please choose another QC response.");
+                    ValidationInfo.AddErrorMessage("The QC response variable selected (" + drnlrVariables.Response + ") contains only one value, please choose another QC response.");
                     return ValidationInfo;
                 }
 
@@ -112,15 +112,15 @@ namespace SilveR.Validators
                 CheckTransformations(DataTable, drnlrVariables.ResponseTransformation, drnlrVariables.SamplesResponse);
 
                 //check that if fixed parameter is set then start value is not set, else add warning...
-                bool warningFoxFixedAndStart = false;
-                if (drnlrVariables.MinCoeff.HasValue && drnlrVariables.MinStartValue.HasValue) warningFoxFixedAndStart = true;
-                else if (drnlrVariables.MaxCoeff.HasValue && drnlrVariables.MaxStartValue.HasValue) warningFoxFixedAndStart = true;
-                else if (drnlrVariables.SlopeCoeff.HasValue && drnlrVariables.SlopeStartValue.HasValue) warningFoxFixedAndStart = true;
-                else if (drnlrVariables.EDICCoeff.HasValue && drnlrVariables.EDICStartValue.HasValue) warningFoxFixedAndStart = true;
+                bool warningForFixedAndStart = false;
+                if (drnlrVariables.MinCoeff.HasValue && drnlrVariables.MinStartValue.HasValue) warningForFixedAndStart = true;
+                else if (drnlrVariables.MaxCoeff.HasValue && drnlrVariables.MaxStartValue.HasValue) warningForFixedAndStart = true;
+                else if (drnlrVariables.SlopeCoeff.HasValue && drnlrVariables.SlopeStartValue.HasValue) warningForFixedAndStart = true;
+                else if (drnlrVariables.EDICCoeff.HasValue && drnlrVariables.EDICStartValue.HasValue) warningForFixedAndStart = true;
 
-                if (warningFoxFixedAndStart)
+                if (warningForFixedAndStart)
                 {
-                    ValidationInfo.AddWarningMessage("Warning: You have defined a start value for a parameter that has been fixed. The start value is ignored in the analysis.");
+                    ValidationInfo.AddWarningMessage("You have defined a start value for a parameter that has been fixed. The start value is ignored in the analysis.");
                 }
 
                 if (drnlrVariables.MinCoeff > drnlrVariables.MaxCoeff)
@@ -135,7 +135,7 @@ namespace SilveR.Validators
                     return ValidationInfo;
                 }
             }
-            else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegesssionAnalysisModel.AnalysisOption.Equation && !drnlrVariables.Equation.Contains("x"))
+            else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation && !drnlrVariables.Equation.Contains("x"))
             {
                 ValidationInfo.AddErrorMessage("The formula should be of the form f=f(x) with x lower case");
                 return ValidationInfo;

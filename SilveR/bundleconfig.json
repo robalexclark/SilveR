@@ -190,9 +190,9 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/doseResponseAndNonLinearRegesssionAnalysis.min.js",
+    "outputFileName": "wwwroot/js/stats/doseResponseAndNonLinearRegressionAnalysis.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/doseResponseAndNonLinearRegesssionAnalysis.js",
+      "wwwroot/js/stats/doseResponseAndNonLinearRegressionAnalysis.js",
       "wwwroot/js/openLinks.js"
     ]
   },
