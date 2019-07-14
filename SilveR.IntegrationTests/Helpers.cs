@@ -141,7 +141,7 @@ namespace SilveR.IntegrationTests
 
         private static async Task<HtmlDocument> GetHtml(HttpResponseMessage response)
         {
-            var html = await response.Content.ReadAsStringAsync();
+            string html = await response.Content.ReadAsStringAsync();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
             return doc;
@@ -160,7 +160,6 @@ namespace SilveR.IntegrationTests
                 {
                     foreach (var node in nodes)
                     {
-                        //node.Remove();
                         node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
                     }
                 }

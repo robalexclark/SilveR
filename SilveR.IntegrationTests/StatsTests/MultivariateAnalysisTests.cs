@@ -84,7 +84,96 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
+        [Fact]
+        public async Task MVA4()
+        {
+            string testName = "MVA4";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal Length", "Sepal Width", "Petal Width" };
+            model.CategoricalPredictor = "Categorical factor";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Responses requires at least two entries.", errors);
+            Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
+        }
 
 
+        [Fact]
+        public async Task MVA5()
+        {
+            string testName = "MVA5";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal Length", "Sepal Width", "Petal Width" };
+            model.CategoricalPredictor = "Categorical factor";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.ClusterAnalysis;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Responses requires at least two entries.", errors);
+            Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
+        }
+
+        [Fact]
+        public async Task MVA6()
+        {
+            string testName = "MVA5";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal Length", "Sepal Width", "Petal Width (reduced)" };
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Responses requires at least two entries.", errors);
+            Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
+        }
+
+        [Fact]
+        public async Task MVA7()
+        {
+            string testName = "MVA7";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal Length", "Sepal Width", "Petal Width (reduced)" };
+            model.CaseID = "Case ID";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Responses requires at least two entries.", errors);
+            Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
+        }
     }
 }

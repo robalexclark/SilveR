@@ -125,19 +125,19 @@ namespace SilveR.Validators
 
                 if (drnlrVariables.MinCoeff > drnlrVariables.MaxCoeff)
                 {
-                    ValidationInfo.AddErrorMessage("The max coefficient is greater than the min coefficient");
+                    ValidationInfo.AddErrorMessage("The max coefficient is greater than the min coefficient.");
                     return ValidationInfo;
                 }
 
                 if (drnlrVariables.MinStartValue > drnlrVariables.MaxStartValue)
                 {
-                    ValidationInfo.AddErrorMessage("The max start value is greater than the min start value");
+                    ValidationInfo.AddErrorMessage("The max start value is greater than the min start value.");
                     return ValidationInfo;
                 }
             }
             else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation && !drnlrVariables.Equation.Contains("x"))
             {
-                ValidationInfo.AddErrorMessage("The formula should be of the form f=f(x) with x lower case");
+                ValidationInfo.AddErrorMessage("The formula should be of the form f=f(x) with x lower case.");
                 return ValidationInfo;
             }
 

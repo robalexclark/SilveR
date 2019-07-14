@@ -106,7 +106,7 @@ if (DoseResponseType == "Equation") {
 	#Dose fit equation
 	statdata$x = eval(parse(text = paste("statdata$", EquationDose)))
 	statdata$y = eval(parse(text = paste("statdata$", EquationResponse )))
-	Equation2 <- sub("=", "~", Equation)
+	Equation2 <- eval(parse(text = paste("y~", Equation)))
 
 	#Separate out the start values
 	#STB Jan 2016 remove trailing spaces
@@ -141,7 +141,6 @@ if (DoseResponseType == "Equation") {
 	}
 	names(paras)<-nameparas
 	dosefit<-nls(Equation2, start=paras, data=statdata)
-
 	#STB Sept 2011 CC26
 	if (min(statdata$x, na.rm=TRUE) > 0) {
 		xmin<-min(statdata$x, na.rm=TRUE)

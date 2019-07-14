@@ -4,7 +4,7 @@ trigger:
 - master
 
 jobs:
-- job: Windows
+- job: Test
   pool:
     vmImage: 'windows-2019'
 
@@ -36,7 +36,7 @@ jobs:
       archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
 
 
-# BUILD LITE
+# BUILD LITE VERSION
   - script: 'dotnet clean'
     displayName: Clean Build
 
@@ -62,7 +62,13 @@ jobs:
 
 
 
-# BUILD MAIN
+- job: Windows
+  dependsOn: Test
+  pool:
+    vmImage: 'windows-2019'
+
+  steps:
+
   - script: 'dotnet tool install -g electronnet.cli'
     displayName: Install Electron.Net CLI
 
@@ -81,10 +87,9 @@ jobs:
       PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.0.0.exe'
       ArtifactName: 'drop'
 
-
   - task: GitHubRelease@0
     inputs:
-      gitHubConnection: Github
+      gitHubConnection: github
       repositoryName: robalexclark/SilveR
       action: edit
       target: 'master'
@@ -98,6 +103,7 @@ jobs:
 
 
 - job: Linux
+  dependsOn: Test
   pool:
     vmImage: 'ubuntu-16.04'
 
@@ -124,16 +130,14 @@ jobs:
   - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/"InVivoStat 4.0.0.AppImage" $(Build.ArtifactStagingDirectory)'
     displayName: Copy InVivoStat Setup 4.0.0.exe
 
-
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat 4.0.0.AppImage'
       ArtifactName: 'drop'
 
-
   - task: GitHubRelease@0
     inputs:
-      gitHubConnection: Github
+      gitHubConnection: github
       repositoryName: robalexclark/SilveR
       action: edit
       target: 'master'
@@ -147,7 +151,7 @@ jobs:
 
 
 - job: MacOS
-  dependsOn: Windows
+  dependsOn: Test
   pool:
     vmImage: 'macOS-10.14'
 
@@ -173,7 +177,7 @@ jobs:
     displayName: Build for MacOS
 
   - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.0.0.dmg $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.0.0.exe
+    displayName: Copy InVivoStat Setup 4.0.0.dmg
 
   - task: PublishBuildArtifacts@1
     inputs:
@@ -182,7 +186,7 @@ jobs:
 
   - task: GitHubRelease@0
     inputs:
-      gitHubConnection: Github
+      gitHubConnection: github
       repositoryName: robalexclark/SilveR
       action: edit
       target: 'master'

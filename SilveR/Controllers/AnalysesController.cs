@@ -1,3 +1,4 @@
+using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
 using SilveR.Helpers;
 using SilveR.Models;
@@ -7,6 +8,8 @@ using SilveR.Validators;
 using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -337,7 +340,7 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public FileContentResult PdfExport(string analysisGuid)
+        public FileContentResult ExportToPdf(string analysisGuid)
         {
             //generate pdf using static method (but should really be a service?)
             byte[] bytes = PdfGenerator.GeneratePdf(new Uri($"{Request.Scheme}://{Request.Host.Value}/Analyses/ResultsForExport?analysisGuid=" + analysisGuid));
@@ -351,6 +354,54 @@ namespace SilveR.Controllers
         {
             Analysis analysis = await repository.GetAnalysis(analysisGuid);
             return View(analysis);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> ExportPlots(string analysisGuid)
+        {
+            Analysis analysis = await repository.GetAnalysis(analysisGuid);
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(analysis.HtmlOutput);
+
+            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
+
+            byte[] zippedBytes = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }; //
+            if (nodes != null)
+            {
+                Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
+
+                foreach (var node in nodes)
+                {
+                    string base64StringEncodedImage = node.Attributes["src"].Value.Remove(0, "data:image/png;base64,".Length);
+                    files.Add(Guid.NewGuid().ToString() + ".png", Convert.FromBase64String(base64StringEncodedImage));
+                }
+
+                zippedBytes = GetZipArchive(files);
+            }
+
+            Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".zip");
+            return File(zippedBytes, "application/zip");
+        }
+
+        private byte[] GetZipArchive(Dictionary<string, byte[]> files)
+        {
+            byte[] archiveFile;
+            using (var archiveStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(archiveStream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var file in files)
+                    {
+                        var zipArchiveEntry = archive.CreateEntry(file.Key, CompressionLevel.Fastest);
+                        using (var zipStream = zipArchiveEntry.Open())
+                            zipStream.Write(file.Value, 0, file.Value.Length);
+                    }
+                }
+
+                archiveFile = archiveStream.ToArray();
+            }
+
+            return archiveFile;
         }
 
         [HttpGet]

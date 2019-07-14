@@ -25,22 +25,11 @@ namespace SilveR.Helpers
 
             document = InlineImages(document, resultsFiles);
 
-            var trimChars = new List<char>(Environment.NewLine.ToCharArray());
+            List<char> trimChars = new List<char>(Environment.NewLine.ToCharArray());
             trimChars.Add(' ');
             string inlineHtml = document.DocumentNode.OuterHtml.Trim(trimChars.ToArray());
             return inlineHtml;
         }
-
-        //private static HtmlDocument InlineCSS(HtmlDocument document, string cssString)
-        //{
-        //    HtmlNode linkNode = document.DocumentNode.SelectSingleNode("link");
-
-        //    HtmlNode cssNode = HtmlNode.CreateNode("<style scoped>");
-        //    cssNode.InnerHtml = cssString;
-
-        //    document.DocumentNode.ReplaceChild(cssNode, linkNode);
-        //    return document;
-        //}
 
         private static HtmlDocument InlineImages(HtmlDocument document, List<string> resultsFiles)
         {

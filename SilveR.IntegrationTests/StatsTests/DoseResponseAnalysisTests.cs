@@ -879,7 +879,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The max start value is greater than the min start value", errors);
+            Assert.Contains("The max start value is greater than the min start value.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -2088,18 +2088,18 @@ namespace SilveR.IntegrationTests
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.AnalysisType = DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation;
-            model.Equation = "A+B*x+C*X*X";
+            model.Equation = "A+B*X+C*X*X";
             model.StartValues = "A=1,B=1,C=1";
             model.EquationYAxis = "Resp10";
             model.EquationXAxis = "Dose8";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveTestOutput("DoseResponseAndNonLinearRegressionAnalysis", model, testName, statsOutput);
+            HttpResponseMessage response = await client.PostAsync("Analyses/DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "DoseResponseAndNonLinearRegressionAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Contains("The formula should be of the form f=f(x) with x lower case.", errors);
+            Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
     }
 }
