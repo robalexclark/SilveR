@@ -27,7 +27,7 @@ namespace SilveR.Validators
 
             if (!CheckIsNumeric(csfetVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response selected contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The response selected contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 

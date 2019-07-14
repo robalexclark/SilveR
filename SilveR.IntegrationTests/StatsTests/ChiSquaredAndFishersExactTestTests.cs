@@ -41,7 +41,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The response selected contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, errors);
         }
 

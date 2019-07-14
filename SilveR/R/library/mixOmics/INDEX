@@ -1,0 +1,69 @@
+breast.tumors           Human Breast Tumors Data
+cim                     Clustered Image Maps (CIMs) ("heat maps")
+data.simu               Simulation study for multilevel analysis
+estim.regul             Estimate the parameters of regularization for
+                        Regularized CCA
+image.estim.regul       Plot the cross-validation score.
+image.tune.rcc          Plot the cross-validation score.
+imgCor                  Image Maps of Correlation Matrices between two
+                        Data Sets
+ipca                    Independent Principal Component Analysis
+jet.colors              Jet Colors Palette
+linnerud                Linnerud Dataset
+liver.toxicity          Liver Toxicity Data
+loo                     Internal Functions
+mat.rank                Matrix Rank
+multidrug               Multidrug Resistence Data
+multilevel              Multilevel analysis for repeated measurements
+                        (cross-over design)
+nearZeroVar             Identification of zero- or near-zero variance
+                        predictors
+network                 Relevance Network for (r)CCA and (s)PLS
+                        regression
+nipals                  Non-linear Iterative Partial Least Squares
+                        (NIPALS) algorithm
+nutrimouse              Nutrimouse Dataset
+pca                     Principal Components Analysis
+pcatune                 Tune the number of principal components in PCA
+perf                    Compute evaluation criteria for PLS, sPLS,
+                        PLS-DA and sPLS-DA
+pheatmap.multilevel     Clustered heatmap
+plot.perf               Plot for model performance
+plot.rcc                Canonical Correlations Plot
+plot3dIndiv             Plot of Individuals (Experimental Units) in
+                        three dimensions
+plot3dVar               Plot of Variables in three dimensions
+plotIndiv               Plot of Individuals (Experimental Units)
+plotVar                 Plot of Variables
+pls                     Partial Least Squares (PLS) Regression
+plsda                   Partial Least Squares Discriminate Analysis
+                        (PLS-DA).
+predict.splsda          Predict Method for PLS, sPLS, PLS-DA or sPLS-DA
+print                   Print Methods for CCA, (s)PLS, PCA and Summary
+                        objects
+prostate                Human Prostate Tumors Data
+rcc                     Regularized Canonical Correlation Analysis
+s.match                 Plot of Paired Coordinates
+scatterutil.base        Graphical utility functions from ade4
+select.var              Output of selected variables
+sipca                   Independent Principal Component Analysis
+spca                    Sparse Principal Components Analysis
+spls                    Sparse Partial Least Squares (sPLS)
+splsda                  Sparse Partial Least Squares Discriminate
+                        Analysis (sPLS-DA)
+srbct                   Small version of the small round blue cell
+                        tumors of childhood data
+summary                 Summary Methods for CCA and PLS objects
+tune.multilevel         Tuning functions for multilevel analyses
+tune.pca                Tune the number of principal components in PCA
+tune.rcc                Estimate the parameters of regularization for
+                        Regularized CCA
+vac18                   Vaccine study Data
+valid                   Compute validation criterion for PLS, sPLS,
+                        PLS-DA and sPLS-DA
+vip                     Variable Importance in the Projection (VIP)
+wrapper.rgcca           mixOmics wrapper for Regularised Generalised
+                        Canonical Correlation Analysis (rgcca)
+wrapper.sgcca           mixOmics wrapper for Sparse Generalised
+                        Canonical Correlation Analysis (sgcca)
+yeast                   Yeast metabolomic study
