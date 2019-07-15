@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: 16S microbiome atherosclerosis study</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Koren.16S {mixOmics}"><tr><td>Koren.16S {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>16S microbiome atherosclerosis study</h2>
+
+<h3>Description</h3>
+
+<p>The 16S data come from Koren et al. (2011) and compared the bodysites oral, gut and plaque microbial communities in patients with atherosclerosis. The data can be analysed with our mixMC module. The data include 43 samples measured on 980 OTUs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data(Koren.16S)</pre>
+
+
+<h3>Format</h3>
+
+<p>A list containing two data sets, <code>data.TSS</code> and <code>data.raw</code> and some meta data information:
+</p>
+
+<dl>
+<dt><code>data.TSS</code></dt><dd><p>data frame with 43 rows (samples) and 980 columns (OTUs). The prefiltered normalised data using Total Sum Scaling normalisation.</p>
+</dd>
+<dt><code>data.raw</code></dt><dd><p>data frame with 43 rows (samples) and 980 columns (OTUs). The prefiltered raw count OTU data which include a 1 offset (i.e. no 0 values).</p>
+</dd>
+<dt><code>taxonomy</code></dt><dd><p>data frame with 980 rows (OTUs) and 7 columns indicating the taxonomy of each OTU.</p>
+</dd>
+<dt><code>indiv</code></dt><dd><p>data frame with 43 rows indicating sample meta data.</p>
+</dd>
+<dt><code>bodysite</code></dt><dd><p>factor of length 43 indicating the bodysite with levels arterial plaque, saliva and stool.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>The data are from Koren et al. (2011) who examined the link between oral, gut and plaque microbial communities in patients with atherosclerosis and controls. Only healthy individuals were retained in the analysis. This study contained partially repeated measures from multiple sites including 15 unique patients samples from saliva and stool, and 13 unique patients only sampled from arterial plaque samples and we therefore considered a non multilevel analysis for that experimental design. After prefiltering, the data included 973 OTU for 43 samples. We strongly recommend to use log ratio transformations on the <code>data.TSS</code> normalisd data, as implemented in the PLS and PCA methods, see details on  <a href="www.mixOmics.org/mixMC">www.mixOmics.org/mixMC</a>.
+</p>
+<p>The <code>data.raw</code> include a 1 offset in order to be log ratios transformed after TSS normalisation. Consequently, the <code>data.TSS</code> are TSS normalisation of <code>data.raw</code>.
+The CSS normalisation was performed on the orignal data (including zero values)
+</p>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>Source</h3>
+
+<p>The raw data were downloaded from the QIITA database.
+Filtering and normalisation described in our website <a href="www.mixOmics.org/mixMC">www.mixOmics.org/mixMC</a></p>
+
+
+<h3>References</h3>
+
+<p>Lê Cao K.-A., Costello ME,  Lakis VA, Bartolo, F,Chua XY, Brazeilles R, Rondeau P. MixMC: Multivariate insights into Microbial Communities. PLoS ONE, 11(8): e0160169 (2016).
+</p>
+<p>Koren, O., Spor, A., Felin, J., Fak, F., Stombaugh, J., Tremaroli, V., et al.: Human oral, gut, and plaque microbiota in patients with atherosclerosis. Proceedings of the National Academy of Sciences 108(Supplement 1), 4592-4598 (2011)
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

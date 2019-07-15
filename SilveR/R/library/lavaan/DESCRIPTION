@@ -1,10 +1,14 @@
 Package: lavaan
 Title: Latent Variable Analysis
-Version: 0.6-3
+Version: 0.6-4
 Authors@R: c(person(given   = "Yves", family = "Rosseel",
                     role    = c("aut", "cre"),
                     email   = "Yves.Rosseel@UGent.be",
                     comment = c(ORCID = "0000-0002-4129-4477")),
+             person(given = c("Terrence","D."), family = "Jorgensen",
+                    role = "aut",
+                    email = "TJorgensen314@gmail.com",
+                    comment = c(ORCID = "0000-0001-5111-6773")),
              person(given = "Daniel", family = "Oberski",
                     role = "ctb",
                     email = "daniel.oberski@gmail.com"),
@@ -32,26 +36,23 @@ Authors@R: c(person(given   = "Yves", family = "Rosseel",
              person(given = "Mariska", family = "Barendse",
                     role = "ctb",
                     email = "m.t.barendse@rug.nl"),
-             person(given = "Michael", family = "Chow",
+             person(given = "Florian", family = "Scharf",
                     role = "ctb",
-                    email = "machow@princeton.edu"),
-             person(given = c("Terrence","D."), family = "Jorgensen",
-                    role = "ctb",
-                    comment = c(ORCID = "0000-0001-5111-6773"))
+                    email = "florian.scharf@uni-leipzig.de")
             )
 Description: Fit a variety of latent variable models, including confirmatory
    factor analysis, structural equation modeling and latent growth curve models.
 Depends: R(>= 3.4)
 Imports: methods, stats4, stats, utils, graphics, MASS, mnormt,
         pbivnorm, numDeriv
-Suggests: testthat
 License: GPL (>= 2)
 LazyData: yes
 ByteCompile: true
 URL: http://lavaan.org
 NeedsCompilation: no
-Packaged: 2018-09-22 14:15:39 UTC; yves
+Packaged: 2019-07-03 14:49:10 UTC; yves
 Author: Yves Rosseel [aut, cre] (<https://orcid.org/0000-0002-4129-4477>),
+  Terrence D. Jorgensen [aut] (<https://orcid.org/0000-0001-5111-6773>),
   Daniel Oberski [ctb],
   Jarrett Byrnes [ctb],
   Leonard Vanbrabant [ctb],
@@ -61,9 +62,8 @@ Author: Yves Rosseel [aut, cre] (<https://orcid.org/0000-0002-4129-4477>),
   Mijke Rhemtulla [ctb],
   Myrsini Katsikatsou [ctb],
   Mariska Barendse [ctb],
-  Michael Chow [ctb],
-  Terrence D. Jorgensen [ctb] (<https://orcid.org/0000-0001-5111-6773>)
+  Florian Scharf [ctb]
 Maintainer: Yves Rosseel <Yves.Rosseel@UGent.be>
 Repository: CRAN
-Date/Publication: 2018-09-22 23:20:07 UTC
-Built: R 3.5.3; ; 2019-05-22 18:40:45 UTC; windows
+Date/Publication: 2019-07-03 16:00:06 UTC
+Built: R 3.5.3; ; 2019-07-08 11:11:01 UTC; windows

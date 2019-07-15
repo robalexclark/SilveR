@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Liver Toxicity Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for liver.toxicity {mixOmics}"><tr><td>liver.toxicity {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Liver Toxicity Data</h2>
+
+<h3>Description</h3>
+
+<p>This data set contains the expression measure of 3116
+genes and 10 clinical measurements for 64 subjects (rats) that were
+exposed to non-toxic, moderately toxic or severely toxic doses of acetaminophen
+in a controlled experiment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data(liver.toxicity)</pre>
+
+
+<h3>Format</h3>
+
+<p>A list containing the following components:
+</p>
+
+<dl>
+<dt><code>gene</code></dt><dd><p>data frame with 64 rows and 3116 columns.
+The expression measure of 3116 genes for the 64 subjects (rats).</p>
+</dd>
+<dt><code>clinic</code></dt><dd><p>data frame with 64 rows and 10 columns,
+containing 10 clinical variables for the same 64 subjects.</p>
+</dd>
+<dt><code>treatment</code></dt><dd><p>data frame with 64 rows and 4 columns,
+containing the treatment information on the 64 subjects,
+such as doses of acetaminophen and times of necropsies.</p>
+</dd>
+<dt><code>gene.ID</code></dt><dd><p>data frame with 3116 rows and 2 columns,
+containing geneBank IDs and gene titles of the annotated genes</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>The data come from a liver toxicity study (Bushel <em>et al</em>., 2007) in which
+64 male rats of the inbred strain Fisher 344 were exposed to non-toxic (50 or
+150 mg/kg), moderately toxic (1500 mg/kg) or severely toxic (2000 mg/kg)
+doses of acetaminophen (paracetamol) in a controlled experiment. Necropsies
+were performed at 6, 18, 24 and 48 hours after exposure and the mRNA
+from the liver was extracted. Ten clinical chemistry measurements of variables
+containing markers for liver injury are available for each subject and the
+serum enzymes levels are measured numerically. The data were further normalized
+and pre-processed by Bushel <em>et al</em>. (2007).
+</p>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>Source</h3>
+
+<p>The two liver toxicity data sets are a companion resource for the paper of
+Bushel <em>et al.</em> (2007), and was downloaded from:
+</p>
+<p><a href="http://www.biomedcentral.com/1752-0509/1/15/additional/">http://www.biomedcentral.com/1752-0509/1/15/additional/</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Bushel, P., Wolfinger, R. D. and Gibson, G. (2007). Simultaneous clustering of gene
+expression data with clinical chemistry and pathological evaluations reveals
+phenotypic prototypes. <em>BMC Systems Biology</em> <b>1</b>, Number 15.
+</p>
+<p>Lê Cao, K.-A., Rossouw, D., Robert-Granie, C. and Besse, P. (2008). A sparse PLS for variable
+selection when integrating Omics data. <em>Statistical Applications in Genetics and Molecular
+Biology</em> <b>7</b>, article 35.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

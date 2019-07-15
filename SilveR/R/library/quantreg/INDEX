@@ -29,6 +29,7 @@ lprq                    locally polynomial quantile regression
 nlrq                    Function to compute nonlinear quantile
                         regression estimates
 nlrq.control            Set control parameters for nlrq
+plot.KhmaladzeTest      Plot a KhmaladzeTest object
 plot.rq.process         plot the coordinates of the quantile regression
                         process
 plot.rqs                Visualizing sequences of quantile regressions
@@ -38,6 +39,7 @@ plot.summary.rqs        Visualizing sequences of quantile regression
 predict.rq              Quantile Regression Prediction
 predict.rqss            Predict from fitted nonparametric quantile
                         regression smoothing spline models
+print.KhmaladzeTest     Print a KhmaladzeTest object
 print.rq                Print an rq object
 print.summary.rq        Print Quantile Regression Summary Object
 qrisk                   Function to compute Choquet portfolio weights

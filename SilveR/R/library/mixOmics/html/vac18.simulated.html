@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Simulated data based on the vac18 study for multilevel...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for vac18.simulated {mixOmics}"><tr><td>vac18.simulated {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Simulated data based on the vac18 study for multilevel analysis</h2>
+
+<h3>Description</h3>
+
+<p>Simulated data based on the vac18 study to illustrate the use of the multilevel analysis for one and two-factor
+analysis with sPLS-DA. This data set contains the expression simulated of 500 genes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data(vac18.simulated)</pre>
+
+
+<h3>Format</h3>
+
+<p>A list containing the following components:
+</p>
+
+<dl>
+<dt><code>genes</code></dt><dd><p>data frame with 48 rows and 500 columns. The simulated expression of 500 genes for
+48 subjects.</p>
+</dd>
+<dt><code>sample</code></dt><dd><p>a vector indicating the repeated measurements on each unique subject. See Details.</p>
+</dd>
+<dt><code>stimulation</code></dt><dd><p>a factor indicating the stimulation condition on each sample.</p>
+</dd>
+<dt><code>time</code></dt><dd><p>a factor indicating the time condition on each sample.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>In this cross-over design, repeated measurements are performed 12 experiments units (or unique subjects) for each of the 4 stimulations.
+</p>
+<p>The simulation study was based on a mixed effects model (see reference for details). Ten clusters of 100 genes were generated. Amongt those, 4 clusters of genes discriminate the 4 stimulations (denoted LIPO5, GAG+, GAG- and NS) as follows: \
+-2 gene clusters discriminate (LIPO5, GAG+) versus (GAG-, NS) \
+-2 gene clusters discriminate LIPO5 versus GAG+, while GAG+ and  NS have the same effect \
+-2 gene clusters discriminate GAG- versus NS, while LIPO5 and GAG+ have the same effect \
+-the 4 remaining clusters represent noisy signal (no stimulation effect) \
+</p>
+<p>Only a subset of those genes are presented here (to save memory space).
+</p>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>References</h3>
+
+<p>Liquet, B., Lê Cao, K.-A., Hocini, H. and Thiebaut, R. (2012). A novel approach for biomarker selection and the
+integration of repeated measures experiments from two platforms. <em>BMC Bioinformatics</em> <b>13</b>:325.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,6 +1,6 @@
 Package: cluster
-Version: 2.0.9
-Date: 2019-05-01
+Version: 2.1.0
+Date: 2019-06-07
 Priority: recommended
 Title: "Finding Groups in Data": Cluster Analysis Extended Rousseeuw et
         al.
@@ -24,6 +24,7 @@ Authors@R: c(person("Martin","Maechler", role = c("aut","cre"),
  ,person("Kamil",  "Kozlowski", role="ctb")
  ,person("Erich",  "Schubert", role="ctb", comment = c("fastpam options for pam()",
                                                        ORCID = "0000-0001-9143-4880"))
+ ,person("Keefe",  "Murphy", role="ctb", comment = "volume.ellipsoid({d >= 3})")
  )
 Depends: R (>= 3.3.0)
 Imports: graphics, grDevices, stats, utils
@@ -37,7 +38,7 @@ BuildResaveData: no
 License: GPL (>= 2)
 URL: https://svn.r-project.org/R-packages/trunk/cluster
 NeedsCompilation: yes
-Packaged: 2019-05-01 11:06:54 UTC; maechler
+Packaged: 2019-06-19 08:21:30 UTC; maechler
 Author: Martin Maechler [aut, cre] (<https://orcid.org/0000-0002-8685-9910>),
   Peter Rousseeuw [aut] (Fortran original,
     <https://orcid.org/0000-0002-3807-5353>),
@@ -50,8 +51,9 @@ Author: Martin Maechler [aut, cre] (<https://orcid.org/0000-0002-8685-9910>),
   Juan Gonzalez [ctb],
   Kamil Kozlowski [ctb],
   Erich Schubert [ctb] (fastpam options for pam(),
-    <https://orcid.org/0000-0001-9143-4880>)
+    <https://orcid.org/0000-0001-9143-4880>),
+  Keefe Murphy [ctb] (volume.ellipsoid({d >= 3}))
 Repository: CRAN
-Date/Publication: 2019-05-01 20:30:15 UTC
-Built: R 3.5.3; x86_64-w64-mingw32; 2019-05-22 18:37:33 UTC; windows
+Date/Publication: 2019-06-19 11:10:03 UTC
+Built: R 3.5.3; x86_64-w64-mingw32; 2019-07-08 12:30:36 UTC; windows
 Archs: i386, x64

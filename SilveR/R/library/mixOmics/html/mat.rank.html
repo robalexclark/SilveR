@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Matrix Rank</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for mat.rank {mixOmics}"><tr><td>mat.rank {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Matrix Rank</h2>
+
+<h3>Description</h3>
+
+<p>This function estimate the rank of a matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+mat.rank(mat, tol)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mat</code></td>
+<td>
+<p>a numeric matrix or data frame that can contain missing values.</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>positive real, the tolerance for singular values, only those
+with values larger than <code>tol</code> are considered non-zero.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>mat.rank</code> estimate the rank of a matrix by
+computing its singular values <i>d[i]</i> (using <code>nipals</code>).
+The rank of the matrix can be defined as
+the number of singular values <i>d[i] &gt; 0</i>.
+</p>
+<p>If <code>tol</code> is missing, it is given by
+<code>tol=max(dim(mat))*max(d)*.Machine$double.eps</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The returned value is a list with components:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>rank</code></td>
+<td>
+<p>a integer value, the matrix rank.</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>the tolerance used for singular values.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Sébastien Déjean and Ignacio González.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="nipals.html">nipals</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Hilbert matrix
+hilbert &lt;- function(n) { i &lt;- 1:n; 1 / outer(i - 1, i, "+") }
+mat &lt;- hilbert(16)
+mat.rank(mat)
+
+## Not run: 
+## Hilbert matrix with missing data
+idx.na &lt;- matrix(sample(c(0, 1, 1, 1, 1), 36, replace = TRUE), ncol = 6)
+m.na &lt;- m &lt;- hilbert(9)[, 1:6]
+m.na[idx.na == 0] &lt;- NA
+mat.rank(m)
+mat.rank(m.na)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

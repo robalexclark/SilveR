@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Canonical Correlations Plot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for plot.rcc {mixOmics}"><tr><td>plot.rcc {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Canonical Correlations Plot</h2>
+
+<h3>Description</h3>
+
+<p>This function provides scree plot of the canonical correlations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'rcc'
+plot(x, scree.type = c("pointplot", "barplot"), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>object of class inheriting from <code>"rcc"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>scree.type</code></td>
+<td>
+<p>character string, (partially) matching one of <code>"pointplot"</code> or <code>"barplot"</code>,
+determining the kind of	scree plots to be produced.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments to be passed to other methods. For the <code>"pointplot"</code> type
+see <code><a href="../../graphics/html/points.html">points</a></code>, for <code>"barplot"</code> type see <code><a href="../../graphics/html/barplot.html">barplot</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sébastien Déjean and Ignacio González.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../graphics/html/points.html">points</a></code>, <code><a href="../../graphics/html/barplot.html">barplot</a></code>, <code><a href="../../graphics/html/par.html">par</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(nutrimouse)
+X &lt;- nutrimouse$lipid
+Y &lt;- nutrimouse$gene
+nutri.res &lt;- rcc(X, Y, lambda1 = 0.064, lambda2 = 0.008)
+
+## 'pointplot' type scree
+plot(nutri.res) #(default)
+
+## Not run: 
+plot(nutri.res, pch = 19, cex = 1.2,
+col = c(rep("red", 3), rep("darkblue", 18)))
+
+## 'barplot' type scree
+plot(nutri.res, scree.type = "barplot")
+
+plot(nutri.res, scree.type = "barplot", density = 20, col = "black")
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

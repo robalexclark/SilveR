@@ -1,5 +1,5 @@
 Package: numDeriv
-Version: 2016.8-1
+Version: 2016.8-1.1
 Title: Accurate Numerical Derivatives
 Description: Methods for calculating (usually) accurate
 	numerical first and second order derivatives. Accurate calculations 
@@ -18,7 +18,7 @@ Author: Paul Gilbert and Ravi Varadhan
 Maintainer: Paul Gilbert <pgilbert.ttv9z@ncf.ca>
 URL: http://optimizer.r-forge.r-project.org/
 NeedsCompilation: no
-Packaged: 2016-08-21 23:03:32 UTC; paul
+Packaged: 2019-06-04 11:04:44 UTC; hornik
 Repository: CRAN
-Date/Publication: 2016-08-27 00:25:32
-Built: R 3.5.2; ; 2018-12-26 00:47:05 UTC; windows
+Date/Publication: 2019-06-06 09:51:09 UTC
+Built: R 3.5.3; ; 2019-06-09 17:12:42 UTC; windows

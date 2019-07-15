@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Tuning functions for sPLS method</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for tune.spls {mixOmics}"><tr><td>tune.spls {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Tuning functions for sPLS method</h2>
+
+<h3>Description</h3>
+
+<p>Computes M-fold or Leave-One-Out Cross-Validation scores on a user-input
+grid to determine optimal values for the sparsity parameters in <code>spls</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tune.spls(X, Y, ncomp = 1,
+test.keepX = c(5, 10, 15), already.tested.X,
+validation = "Mfold", folds = 10, measure = "MSE", scale = TRUE,
+progressBar = TRUE, tol = 1e-06, max.iter = 100, near.zero.var = FALSE,
+nrepeat = 1, multilevel = NULL, light.output = TRUE, cpus)
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>numeric matrix of predictors. <code>NA</code>s are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>Y</code></td>
+<td>
+<p><code>if(method = 'spls')</code> numeric vector or matrix of continuous responses (for multi-response models) <code>NA</code>s are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>ncomp</code></td>
+<td>
+<p>the number of components to include in the model.</p>
+</td></tr>
+<tr valign="top"><td><code>test.keepX</code></td>
+<td>
+<p>numeric vector for the different number of variables to test from the <i>X</i> data set</p>
+</td></tr>
+<tr valign="top"><td><code>already.tested.X</code></td>
+<td>
+<p>Optional, if <code>ncomp &gt; 1</code> A numeric vector indicating the number of variables to select from the <i>X</i> data set on the firsts components.</p>
+</td></tr>
+<tr valign="top"><td><code>validation</code></td>
+<td>
+<p>character.  What kind of (internal) validation to use, matching one of <code>"Mfold"</code> or
+<code>"loo"</code> (see below). Default is <code>"Mfold"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>folds</code></td>
+<td>
+<p>the folds in the Mfold cross-validation. See Details.</p>
+</td></tr>
+<tr valign="top"><td><code>measure</code></td>
+<td>
+<p>One of <code>MSE, MAE, Bias</code> or <code>R2</code>. Default to <code>MSE</code>. See details</p>
+</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+<p>boleean. If scale = TRUE, each block is standardized
+to zero means and unit variances (default: TRUE)</p>
+</td></tr>
+<tr valign="top"><td><code>progressBar</code></td>
+<td>
+<p>by default set to <code>TRUE</code> to output the progress bar of the computation.</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>Convergence stopping value.</p>
+</td></tr>
+<tr valign="top"><td><code>max.iter</code></td>
+<td>
+<p>integer, the maximum number of iterations.</p>
+</td></tr>
+<tr valign="top"><td><code>near.zero.var</code></td>
+<td>
+<p>boolean, see the internal <code><a href="nearZeroVar.html">nearZeroVar</a></code> function (should be set to TRUE in particular for data with many zero values). Default value is FALSE</p>
+</td></tr>
+<tr valign="top"><td><code>nrepeat</code></td>
+<td>
+<p>Number of times the Cross-Validation process is repeated.</p>
+</td></tr>
+<tr valign="top"><td><code>multilevel</code></td>
+<td>
+<p>Design matrix for multilevel analysis (for repeated measurements) that indicates the repeated measures on each individual, i.e. the individuals ID. See Details.</p>
+</td></tr>
+<tr valign="top"><td><code>light.output</code></td>
+<td>
+<p>if set to FALSE, the prediction/classification of each sample for each of <code>test.keepX</code> and each comp is returned.</p>
+</td></tr>
+<tr valign="top"><td><code>cpus</code></td>
+<td>
+<p>Number of cpus to use when running the code in parallel.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This tuning function should be used to tune the parameters in the <code>spls</code> function (number of components and the number of variables in <code>keepX</code> to select).
+</p>
+<p>If <code>validation = "loo"</code>, leave-one-out cross-validation is performed. By default <code>folds</code> is set to the number of unique individuals.
+If <code>validation = "Mfold"</code>, M-fold cross-validation is performed.
+How many folds to generate is selected by specifying the number of folds in <code>folds</code>.
+</p>
+<p>Four measures of accuracy are available: Mean Absolute Error (<code>MAE</code>), Mean Square Error(<code>MSE</code>), <code>Bias</code> and <code>R2</code>. Both MAE and MSE average the model prediction error. MAE measures the average magnitude of the errors without considering their direction. It is the average over the fold test samples of the absolute differences between the Y predictions and the actual Y observations. The MSE also measures the average magnitude of the error. Since the errors are squared before they are averaged, the MSE tends to give a relatively high weight to large errors. The Bias is the average of the differences between the Y predictions and the actual Y observations and the R2 is the correlation between the predictions and the observations. All those measures are averaged across all Y variables in the PLS2 case. We are still improving the function to tune an sPLS2 model, contact us for more details and examples.
+</p>
+<p>The function outputs the optimal number of components that achieve the best performance based on the chosen measure of accuracy. The assessment is data-driven and similar to the process detailed in (Rohart et al., 2016), where one-sided t-tests assess whether there is a gain in performance when adding a component to the model.
+</p>
+<p>See also <code>?perf</code> for more details.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list that contains:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>error.rate</code></td>
+<td>
+<p>returns the prediction error for each <code>test.keepX</code> on each component, averaged across all repeats and subsampling folds. Standard deviation is also output. All error rates are also available as a list.</p>
+</td></tr>
+<tr valign="top"><td><code>choice.keepX</code></td>
+<td>
+<p>returns the number of variables selected (optimal keepX) on each component.</p>
+</td></tr>
+<tr valign="top"><td><code>choice.ncomp</code></td>
+<td>
+<p>returns the optimal number of components for the model fitted with <code>$choice.keepX</code> and <code>$choice.keepY</code> </p>
+</td></tr>
+<tr valign="top"><td><code>measure</code></td>
+<td>
+<p>reminds which criterion was used</p>
+</td></tr>
+<tr valign="top"><td><code>predict</code></td>
+<td>
+<p>Prediction values for each sample, each <code>test.keepX,test.keepY</code>, each comp and each repeat. Only if light.output=FALSE</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Kim-Anh Lê Cao, Benoit Gautier, Francois Bartolo, Florian Rohart.</p>
+
+
+<h3>References</h3>
+
+<p>mixOmics article:
+</p>
+<p>Rohart F, Gautier B, Singh A, Lê Cao K-A. mixOmics: an R package for 'omics feature selection and multiple data integration. PLoS Comput Biol 13(11): e1005752
+</p>
+<p>PLS and PLS citeria for PLS regression: Tenenhaus, M. (1998). La regression PLS: theorie et pratique. Paris: Editions Technic.
+</p>
+<p>Chavent, Marie and Patouille, Brigitte (2003). Calcul des coefficients de regression et du PRESS en regression PLS1. Modulad n, 30 1-11. (this is the formula we use to calculate the Q2 in perf.pls and perf.spls)
+</p>
+<p>Mevik, B.-H., Cederkvist, H. R. (2004). Mean Squared Error of Prediction (MSEP) Estimates for Principal Component Regression (PCR) and Partial Least Squares Regression (PLSR). Journal of Chemometrics 18(9), 422-429.
+</p>
+<p>sparse PLS regression mode:
+</p>
+<p>Lê Cao, K. A., Rossouw D., Robert-Granie, C. and Besse, P. (2008). A sparse PLS for variable selection when integrating Omics data. Statistical Applications in Genetics and Molecular Biology 7, article 35.
+</p>
+<p>One-sided t-tests (suppl material):
+</p>
+<p>Rohart F, Mason EA, Matigian N, Mosbergen R, Korn O, Chen T, Butcher S, Patel J, Atkinson K, Khosrotehrani K, Fisk NM, Lê Cao K-A&amp;, Wells CA&amp; (2016). A Molecular Classification of Human Mesenchymal Stromal Cells. PeerJ 4:e1845.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="splsda.html">splsda</a></code>, <code><a href="predict.html">predict.splsda</a></code> and http://www.mixOmics.org for more details.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(liver.toxicity)
+X &lt;- liver.toxicity$gene
+Y &lt;- liver.toxicity$clinic
+
+## Not run: 
+tune = tune.spls(X, Y, ncomp=4, test.keepX = c(5,10,15), measure = "MSE",
+nrepeat=3, progressBar = TRUE)
+
+tune$choice.ncomp
+tune$choice.keepX
+
+# plot the results
+plot(tune)
+
+## End(Not run)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

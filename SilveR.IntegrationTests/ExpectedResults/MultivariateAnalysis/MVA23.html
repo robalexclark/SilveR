@@ -1,0 +1,3535 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<style>
+html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-break:break-all}.dropdown-submenu{position:relative}.dropdown-submenu a::after{transform:rotate(-90deg);position:absolute;right:6px;top:.8em}.dropdown-submenu .dropdown-menu{top:0;left:100%;margin-left:.1rem;margin-right:.1rem}.checkbox-fix{margin-top:15px}#grid{height:calc(75vh)}#spreadsheet{width:100%;height:calc(75vh)}.text-block{padding-top:10px;padding-bottom:10px;text-align:justify;line-height:150%;font-size:16px}table.dataframe{border:1px solid #808080;background-color:#fff;width:100%;text-align:center;border-collapse:collapse}table.dataframe td,table.dataframe th{border:1px solid #808080;padding:3px 13px}table.dataframe tbody td{font-size:13px;text-align:center;padding:3px 13px}td:nth-child(1){background:#ccc}table.dataframe th{font-size:15px;background-color:#ccc;text-align:center}.k-button{color:#fff;background-color:#5cb85c;border-color:#4cae4c}.k-button:focus,.k-button.focus{color:#fff;background-color:#449d44;border-color:#255625}.k-button:hover{color:#fff;background-color:#449d44;border-color:#398439}.k-button:active,.k-button.active,.open>.dropdown-toggle.k-button{color:#fff;background-color:#449d44;border-color:#398439}.k-button:active:hover,.k-button.active:hover,.open>.dropdown-toggle.k-button:hover,.k-button:active:focus,.k-button.active:focus,.open>.dropdown-toggle.k-button:focus,.k-button:active.focus,.k-button.active.focus,.open>.dropdown-toggle.k-button.focus{color:#fff;background-color:#398439;border-color:#255625}.k-button:active,.k-button.active,.open>.dropdown-toggle.k-button{background-image:none}.k-button.disabled:hover,.k-button[disabled]:hover,fieldset[disabled] .k-button:hover,.k-button.disabled:focus,.k-button[disabled]:focus,fieldset[disabled] .k-button:focus,.k-button.disabled.focus,.k-button[disabled].focus,fieldset[disabled] .k-button.focus{background-color:#5cb85c;border-color:#4cae4c}.k-button .badge{color:#5cb85c;background-color:#fff}.k-numeric-wrap{width:100px}.disabledpanel{pointer-events:none;opacity:.4}
+</style>
+    <h1> InVivoStat (beta version) Linear Discriminant Analysis</h1>
+
+ <h2> Warning</h2>
+
+<p class='character'>This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output.</p>
+
+ <h2> Description</h2>
+
+<p class='character'>The purpose of linear discriminant analysis (LDA) is to identify the linear combinations of the original variables that gives the best possible separation between the groups.</p>
+
+<p class='character'>The following responses are included in the analysis: Sepal length,Sepal width,Petal width. </p>
+
+ <h2> Group means</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Categorical Binary 1 levels  </th>
+		<th>Sepal length  </th>
+		<th>Sepal width  </th>
+		<th>Petal width</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">1
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-0.073
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">2
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-0.074
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>This table contains the means for each response, categorised by the categorical predictor.</p>
+
+ <h2> Coefficients of the linear discriminant functions (LD)</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Response  </th>
+		<th>LD1</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">Sepal length
+</td>
+<td class="cellinside"> 18.5
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Sepal width
+</td>
+<td class="cellinside">-19.9
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">Petal width
+</td>
+<td class="cellinside"> -3.6
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>This table contains the coefficients that are used to calculate the linear combinations of the original variables (the linear discriminant functions).</p>
+
+ <h2> Values of the linear discriminant function</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Case ID  </th>
+		<th>Sepal length  </th>
+		<th>Sepal width  </th>
+		<th>Petal width  </th>
+		<th>Categorical factor  </th>
+		<th>LD1</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">1
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.54
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.01214
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">2
+</td>
+<td class="cellinside">0.69
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.00117
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">3
+</td>
+<td class="cellinside">0.67
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.10850
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">4
+</td>
+<td class="cellinside">0.66
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.21083
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">5
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.56
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.05032
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">6
+</td>
+<td class="cellinside">0.73
+</td>
+<td class="cellinside">0.59
+</td>
+<td class="cellinside">-0.398
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.57693
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">7
+</td>
+<td class="cellinside">0.66
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.22420
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">8
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.07995
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">9
+</td>
+<td class="cellinside">0.64
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.43158
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">10
+</td>
+<td class="cellinside">0.69
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside">-1.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.80396
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">11
+</td>
+<td class="cellinside">0.73
+</td>
+<td class="cellinside">0.57
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.03476
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">12
+</td>
+<td class="cellinside">0.68
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.24736
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">13
+</td>
+<td class="cellinside">0.68
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-1.000
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.92241
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">14
+</td>
+<td class="cellinside">0.63
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-1.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.04042
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">15
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.60
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.13651
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">16
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.64
+</td>
+<td class="cellinside">-0.398
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-2.18737
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">17
+</td>
+<td class="cellinside">0.73
+</td>
+<td class="cellinside">0.59
+</td>
+<td class="cellinside">-0.398
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.57693
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">18
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.54
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.64774
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">19
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.58
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.46765
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">20
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.58
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.35946
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">21
+</td>
+<td class="cellinside">0.73
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.69702
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">22
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.57
+</td>
+<td class="cellinside">-0.398
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.57963
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">23
+</td>
+<td class="cellinside">0.66
+</td>
+<td class="cellinside">0.56
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.08327
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">24
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.52
+</td>
+<td class="cellinside">-0.301
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.93928
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">25
+</td>
+<td class="cellinside">0.68
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.24736
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">26
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.16316
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">27
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.398
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.00661
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">28
+</td>
+<td class="cellinside">0.72
+</td>
+<td class="cellinside">0.54
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.14355
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">29
+</td>
+<td class="cellinside">0.72
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.39442
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">30
+</td>
+<td class="cellinside">0.67
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.10850
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">31
+</td>
+<td class="cellinside">0.68
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.55207
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">32
+</td>
+<td class="cellinside">0.73
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.398
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.38954
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">33
+</td>
+<td class="cellinside">0.72
+</td>
+<td class="cellinside">0.61
+</td>
+<td class="cellinside">-1.000
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.13921
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">34
+</td>
+<td class="cellinside">0.74
+</td>
+<td class="cellinside">0.62
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.98460
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">35
+</td>
+<td class="cellinside">0.69
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.71740
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">36
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.60462
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">37
+</td>
+<td class="cellinside">0.74
+</td>
+<td class="cellinside">0.54
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.59328
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">38
+</td>
+<td class="cellinside">0.69
+</td>
+<td class="cellinside">0.56
+</td>
+<td class="cellinside">-1.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.50986
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">39
+</td>
+<td class="cellinside">0.64
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.13819
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">40
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.23873
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">41
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.54
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.80652
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">42
+</td>
+<td class="cellinside">0.65
+</td>
+<td class="cellinside">0.36
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.98226
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">43
+</td>
+<td class="cellinside">0.64
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.42035
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">44
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.54
+</td>
+<td class="cellinside">-0.222
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.89308
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">45
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.58
+</td>
+<td class="cellinside">-0.398
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.81042
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">46
+</td>
+<td class="cellinside">0.68
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside">-0.523
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.20025
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">47
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.58
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.72386
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">48
+</td>
+<td class="cellinside">0.66
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.06394
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">49
+</td>
+<td class="cellinside">0.72
+</td>
+<td class="cellinside">0.57
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.18464
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">50
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.52
+</td>
+<td class="cellinside">-0.699
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.33831
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">51
+</td>
+<td class="cellinside">0.85
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.25208
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">52
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.57458
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">53
+</td>
+<td class="cellinside">0.84
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.30332
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">54
+</td>
+<td class="cellinside">0.74
+</td>
+<td class="cellinside">0.36
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.29264
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">55
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.70536
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">56
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.12337
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">57
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.52
+</td>
+<td class="cellinside"> 0.204
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.06833
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">58
+</td>
+<td class="cellinside">0.69
+</td>
+<td class="cellinside">0.38
+</td>
+<td class="cellinside"> 0.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.40941
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">59
+</td>
+<td class="cellinside">0.82
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.74840
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">60
+</td>
+<td class="cellinside">0.72
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.66092
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">61
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.30
+</td>
+<td class="cellinside"> 0.000
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 2.14927
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">62
+</td>
+<td class="cellinside">0.77
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.66827
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">63
+</td>
+<td class="cellinside">0.78
+</td>
+<td class="cellinside">0.34
+</td>
+<td class="cellinside"> 0.000
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 2.78628
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">64
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.00057
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">65
+</td>
+<td class="cellinside">0.75
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.56898
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">66
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.17563
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">67
+</td>
+<td class="cellinside">0.75
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.08670
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">68
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.74209
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">69
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.34
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 2.41359
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">70
+</td>
+<td class="cellinside">0.75
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.041
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.97737
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">71
+</td>
+<td class="cellinside">0.77
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.51262
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">72
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.42043
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">73
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.43556
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">74
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.079
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.54590
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">75
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.50167
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">76
+</td>
+<td class="cellinside">0.82
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.33884
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">77
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.17529
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">78
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.230
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.15505
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">79
+</td>
+<td class="cellinside">0.78
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.24012
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">80
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.41
+</td>
+<td class="cellinside"> 0.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.92926
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">81
+</td>
+<td class="cellinside">0.74
+</td>
+<td class="cellinside">0.38
+</td>
+<td class="cellinside"> 0.041
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.18618
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">82
+</td>
+<td class="cellinside">0.74
+</td>
+<td class="cellinside">0.38
+</td>
+<td class="cellinside"> 0.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.33559
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">83
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.079
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.45629
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">84
+</td>
+<td class="cellinside">0.78
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.204
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.27714
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">85
+</td>
+<td class="cellinside">0.73
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.37830
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">86
+</td>
+<td class="cellinside">0.78
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside"> 0.204
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.71789
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">87
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.06748
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">88
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.36
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 2.38150
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">89
+</td>
+<td class="cellinside">0.75
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.86238
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">90
+</td>
+<td class="cellinside">0.74
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.57103
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">91
+</td>
+<td class="cellinside">0.74
+</td>
+<td class="cellinside">0.41
+</td>
+<td class="cellinside"> 0.079
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.35707
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">92
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.29283
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">93
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.41
+</td>
+<td class="cellinside"> 0.079
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.78290
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">94
+</td>
+<td class="cellinside">0.70
+</td>
+<td class="cellinside">0.36
+</td>
+<td class="cellinside"> 0.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.93972
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">95
+</td>
+<td class="cellinside">0.75
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.04945
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">96
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.079
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.59499
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">97
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.42707
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">98
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.24711
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">99
+</td>
+<td class="cellinside">0.71
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.041
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.22748
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">100
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.12337
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">101
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.52
+</td>
+<td class="cellinside"> 0.398
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.76792
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">102
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.279
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.26407
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">103
+</td>
+<td class="cellinside">0.85
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.322
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.28875
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">104
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.13472
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">105
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.342
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.49210
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">106
+</td>
+<td class="cellinside">0.88
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.322
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.83441
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">107
+</td>
+<td class="cellinside">0.69
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.230
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.77568
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">108
+</td>
+<td class="cellinside">0.86
+</td>
+<td class="cellinside">0.46
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1.04653
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">109
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.64333
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">110
+</td>
+<td class="cellinside">0.86
+</td>
+<td class="cellinside">0.56
+</td>
+<td class="cellinside"> 0.398
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.45029
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">111
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.301
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.90124
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">112
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.279
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.52522
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">113
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.322
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.05740
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">114
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.301
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.18213
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">115
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.380
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.94502
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">116
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.24464
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">117
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.17753
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">118
+</td>
+<td class="cellinside">0.89
+</td>
+<td class="cellinside">0.58
+</td>
+<td class="cellinside"> 0.342
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-1.17950
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">119
+</td>
+<td class="cellinside">0.89
+</td>
+<td class="cellinside">0.41
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 2.03506
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">120
+</td>
+<td class="cellinside">0.78
+</td>
+<td class="cellinside">0.34
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 2.15068
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">121
+</td>
+<td class="cellinside">0.84
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.64149
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">122
+</td>
+<td class="cellinside">0.75
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.301
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.94058
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">123
+</td>
+<td class="cellinside">0.89
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.301
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.61279
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">124
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.48371
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">125
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.52
+</td>
+<td class="cellinside"> 0.322
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.00104
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">126
+</td>
+<td class="cellinside">0.86
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.08400
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">127
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.04068
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">128
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.68679
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">129
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.322
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.05360
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">130
+</td>
+<td class="cellinside">0.86
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.204
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.82717
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">131
+</td>
+<td class="cellinside">0.87
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.279
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.37456
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">132
+</td>
+<td class="cellinside">0.90
+</td>
+<td class="cellinside">0.58
+</td>
+<td class="cellinside"> 0.301
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.82449
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">133
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.342
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.01933
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">134
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.45
+</td>
+<td class="cellinside"> 0.176
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.45477
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">135
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.41
+</td>
+<td class="cellinside"> 0.146
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 0.94562
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">136
+</td>
+<td class="cellinside">0.89
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 0.79661
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">137
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside"> 0.380
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.96229
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">138
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.58562
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">139
+</td>
+<td class="cellinside">0.78
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.81932
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">140
+</td>
+<td class="cellinside">0.84
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside"> 0.322
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.22412
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">141
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside"> 0.380
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.66929
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">142
+</td>
+<td class="cellinside">0.84
+</td>
+<td class="cellinside">0.49
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.36673
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">143
+</td>
+<td class="cellinside">0.76
+</td>
+<td class="cellinside">0.43
+</td>
+<td class="cellinside"> 0.279
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-0.26407
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">144
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.51
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.75855
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">145
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.52
+</td>
+<td class="cellinside"> 0.398
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-1.27435
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">146
+</td>
+<td class="cellinside">0.83
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.31880
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">147
+</td>
+<td class="cellinside">0.80
+</td>
+<td class="cellinside">0.40
+</td>
+<td class="cellinside"> 0.279
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1.06500
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">148
+</td>
+<td class="cellinside">0.81
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.301
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.34270
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">149
+</td>
+<td class="cellinside">0.79
+</td>
+<td class="cellinside">0.53
+</td>
+<td class="cellinside"> 0.362
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">-2.02386
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">150
+</td>
+<td class="cellinside">0.77
+</td>
+<td class="cellinside">0.48
+</td>
+<td class="cellinside"> 0.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">-0.95408
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>This table contains the linear discriminant functions along with the original responses.</p>
+
+ <h2> Histogram of the first linear discriminant function values, categorised by Categorical Binary 1</h2>
+
+<p align="centre"><img src='data:image/png;base64,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' border="1" width="500">
+ <h2> Confusion matrix of classifications</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Categorical Binary 1 levels  </th>
+		<th>1  </th>
+		<th>2</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">1
+</td>
+<td class="cellinside">40
+</td>
+<td class="cellinside">34
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">2
+</td>
+<td class="cellinside">35
+</td>
+<td class="cellinside">41
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>This table summarises the classification of the individual cases, based on the linear discriminant function values.</p>
+
+ <h2> Table of mis-classified cases </h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Case ID  </th>
+		<th>Predicted group  </th>
+		<th>Actual group</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">3
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">6
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">9
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">12
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">13
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">16
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">18
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">20
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">21
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">22
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">24
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">29
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">31
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">32
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">34
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">35
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">37
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">39
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">44
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">48
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">51
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">52
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">53
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">55
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">56
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">59
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">60
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">61
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">62
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">63
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">69
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">73
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">75
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">77
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">81
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">83
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">86
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">87
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">91
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">92
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">93
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">95
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">96
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">99
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">100
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">102
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">103
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">104
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">109
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">110
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">116
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">118
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">119
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">122
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">123
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">127
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">128
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">129
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">131
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">132
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">135
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">138
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">140
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">142
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">144
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">146
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">147
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">148
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">150
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>This table summarises the cases that are mis-classified, based on the linear discriminant function values.</p>
+
+ <h2> Table of correctly classified cases </h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Case ID  </th>
+		<th>Predicted group  </th>
+		<th>Actual group</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">4
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">5
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">7
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">8
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">10
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">11
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">14
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">15
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">17
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">19
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">23
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">25
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">26
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">27
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">28
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">30
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">33
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">36
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">38
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">40
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">41
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">42
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">43
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">45
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">46
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">47
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">49
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">50
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">54
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">57
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">58
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">64
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">65
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">66
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">67
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">68
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">70
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">71
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">72
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">74
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">76
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">78
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">79
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">80
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">82
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">84
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">85
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">88
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">89
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">90
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">94
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">97
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">98
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">101
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">105
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">106
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">107
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">108
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">111
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">112
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">113
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">114
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">115
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">117
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">120
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">121
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">124
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">125
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">126
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">130
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">133
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">134
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">136
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">137
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">139
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">141
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">143
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">145
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">149
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>This table summarises the cases that are classified correctly, based on the linear discriminant function values.</p>
+
+ <h2> R references</h2>
+
+<p class='character'>R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org.</p>
+
+<p class='character'>Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria.</p>
+
+<p class='character'>Barret Schloerke, Jason Crowley, Di Cook, Heike Hofmann, Hadley Wickham, Francois Briatte, Moritz Marbach and Edwin Thoen (2014). GGally: Extension to ggplot2. R package version 0.4.5. http://CRAN.R-project.org/package=GGally</p>
+
+<p class='character'>Erich Neuwirth (2011). RColorBrewer: ColorBrewer palettes. R package  version 1.0-5. http://CRAN.R-project.org/package=RColorBrewer</p>
+
+<p class='character'>H. Wickham. ggplot2: elegant graphics for data analysis. Springer New York, 2009.</p>
+
+<p class='character'>Kamil Slowikowski (2018). ggrepel: Automatically Position Non-Overlapping Text Labels with 'ggplot2'. R package version 0.8.0. https://CRAN.R-project.org/package=ggrepel</p>
+
+<p class='character'>H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007.</p>
+
+<p class='character'>Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL http://www.jstatsoft.org/v40/i01/.</p>
+
+<p class='character'>Hadley Wickham (2012). scales: Scale functions for graphics. R package version 0.2.3. http://CRAN.R-project.org/package=scales</p>
+
+<p class='character'>Louis Kates and Thomas Petzoldt (2012). proto: Prototype object-based programming. R package version 0.3-10. http://CRAN.R-project.org/package=proto</p>
+
+ <h2> Analysis options</h2>
+
+<p class='character'>Response variables: Sepal length,Sepal width,Petal width</p>
+
+<p class='character'>Responses transformation: Log10</p>
+
+<p class='character'>Categorical predictors: Categorical Binary 1</p>
+
+<p class='character'>Analysis performed: LinearDiscriminantAnalysis</p>
+
+<p class='character'>Plot labels variable: Case ID</p>

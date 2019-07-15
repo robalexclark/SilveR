@@ -24,6 +24,8 @@ brief                   Print Abbreviated Ouput
 car-defunct             Defunct Functions in the car Package
 car-deprecated          Deprecated Functions in the car Package
 car-internal.Rd         Internal Objects for the 'car' package
+carHexsticker           View the Official Hex Sticker for the car
+                        Package
 carPalette              Set or Retrieve 'car' Package Color Palette
 carWeb                  Access to the R Companion to Applied Regression
                         Website

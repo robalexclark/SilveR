@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Yeast metabolomic study</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for yeast {mixOmics}"><tr><td>yeast {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Yeast metabolomic study</h2>
+
+<h3>Description</h3>
+
+<p>Two Saccharomyces Cerevisiae strains were compared under two different environmental conditions, 37 metabolites expression are measured.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data(yeast)</pre>
+
+
+<h3>Format</h3>
+
+<p>A list containing the following components:
+</p>
+
+<dl>
+<dt><code>data</code></dt><dd><p>data matrix with 55 rows and 37 columns. Each row represents
+an experimental sample, and each column a single metabolite.</p>
+</dd>
+<dt><code>strain</code></dt><dd><p>a factor containing the type of strain (MT or WT).</p>
+</dd>
+<dt><code>condition</code></dt><dd><p>a factor containing the type of environmental condition (AER or ANA).</p>
+</dd>
+<dt><code>strain.condition</code></dt><dd><p>a crossed factor between <code>strain</code> and <code>condition</code>.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>In this study, two Saccharomyces cerevisiae strains were used - wild-type (WT)
+and mutant (MT), and were carried out in batch cultures under two different environmental conditions,
+aerobic (AER) and anaerobic (ANA) in standard mineral media with glucose as the sole carbon source.
+After normalization and pre processing, the metabolomic data results in 37 metabolites and 55 samples
+which include 13 MT-AER, 14 MT-ANA, 15 WT-AER and 13 WT-ANA samples
+</p>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>References</h3>
+
+<p>Villas-Boas S, Moxley J, Akesson M, Stephanopoulos G, Nielsen J: High-throughput metabolic state analysis (2005). The missing link in integrated functional genomics. <em>Biochemical Journal</em>, <b>388</b>:669–677.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

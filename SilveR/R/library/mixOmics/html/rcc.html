@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Regularized Canonical Correlation Analysis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for rcc {mixOmics}"><tr><td>rcc {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Regularized Canonical Correlation Analysis</h2>
+
+<h3>Description</h3>
+
+<p>The function performs the regularized extension of the Canonical Correlation Analysis
+to seek correlations between two data matrices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rcc(X,
+Y,
+ncomp = 2,
+method = "ridge", #choose between c("ridge", "shrinkage")
+lambda1 = 0,
+lambda2 = 0)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>numeric matrix or data frame <i>(n \times p)</i>, the observations on the <i>X</i> variables.
+<code>NA</code>s are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>Y</code></td>
+<td>
+<p>numeric matrix or data frame <i>(n \times q)</i>, the observations on the <i>Y</i> variables.
+<code>NA</code>s are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>One of &quot;ridge&quot; or &quot;shrinkage&quot;. If &quot;ridge&quot;, <code>lambda1</code> and <code>lambda2</code> need to be supplied (see also our function tune.rcc); if &quot;shrinkage&quot;, parameters are directly estimated with Strimmer's formula, see below and reference.</p>
+</td></tr>
+<tr valign="top"><td><code>ncomp</code></td>
+<td>
+<p>the number of components to include in the model. Default to 2.</p>
+</td></tr>
+<tr valign="top"><td><code>lambda1, lambda2</code></td>
+<td>
+<p>a non-negative real. The regularization parameter for the <em>X</em> and
+<em>Y</em> data. Defaults to <code>lambda1=lambda2=0</code>. Only used if <code>method="ridge"</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The main purpose of Canonical Correlations Analysis (CCA) is the exploration of sample
+correlations between two sets of variables <i>X</i> and <i>Y</i>
+observed on the same individuals (experimental units)
+whose roles in the analysis are strictly symmetric.
+</p>
+<p>The <code>cancor</code> function performs the core of computations
+but additional tools are required to deal with data sets highly
+correlated (nearly collinear), data sets with more variables
+than units by example.
+</p>
+<p>The <code>rcc</code> function, the regularized version of CCA,
+is one way to deal with this problem by
+including a regularization step in the computations of CCA.
+Such a regularization in this context
+was first proposed by Vinod (1976), then developped by Leurgans <em>et al.</em> (1993).
+It consists in the regularization of the empirical covariances matrices of
+<i>X</i> and <i>Y</i> by adding a multiple of the matrix identity, that is,
+Cov<i>(X)+ &lambda;_1 I</i> and Cov<i>(Y)+ &lambda;_2 I</i>.
+</p>
+<p>When <code>lambda1=0</code> and <code>lambda2=0</code>, <code>rcc</code> performs a classical
+CCA, if possible (i.e. when <i>n &gt; p+q</i>.
+</p>
+<p>The shrinkage estimates <code>method = "shrinkage"</code> can be used to bypass <code><a href="tune.rcc.html">tune.rcc</a></code> to choose the shrinkage parameters - which can be long and costly to compute with very large data sets. Note that both functions <code><a href="tune.rcc.html">tune.rcc</a></code>  (which uses cross-validation) and the whrinkage parameters (which uses the formula from Schafer and Strimmer) may output different results.
+</p>
+<p>Note: when <code>method = "shrinkage"</code> the input data are centered and scaled for the estimation of the shrinkage parameters and the calculation of the regularised variance-covariance matrices in <code><a href="rcc.html">rcc</a></code>.
+</p>
+<p>The estimation of the missing values can be performed
+by the reconstitution of the data matrix using the <code>nipals</code> function. Otherwise, missing
+values are handled by casewise deletion in the <code>rcc</code> function.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>rcc</code> returns a object of class <code>"rcc"</code>, a list that
+contains the following components:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>the original <i>X</i> data.</p>
+</td></tr>
+<tr valign="top"><td><code>Y</code></td>
+<td>
+<p>the original <i>Y</i> data.</p>
+</td></tr>
+<tr valign="top"><td><code>cor</code></td>
+<td>
+<p>a vector containing the canonical correlations.</p>
+</td></tr>
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+<p>a vector containing the regularization parameters whether those were input if ridge method or directly estimated with the shrinkage method.</p>
+</td></tr>
+<tr valign="top"><td><code>loadings</code></td>
+<td>
+<p>list containing the estimated coefficients used to calculate the canonical variates in  <i>X</i> and <i>Y</i>.</p>
+</td></tr>
+<tr valign="top"><td><code>variates</code></td>
+<td>
+<p>list containing the canonical variates.</p>
+</td></tr>
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>list containing the names to be used for individuals and variables.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Sébastien Déjean, Ignacio González, Francois Bartolo.</p>
+
+
+<h3>References</h3>
+
+<p>González, I., Déjean, S., Martin, P. G., and Baccini, A. (2008). CCA: An R package to extend canonical correlation analysis. Journal of Statistical Software, 23(12), 1-14.
+</p>
+<p>González, I., Déjean, S., Martin, P., Goncalves, O., Besse, P., and Baccini, A. (2009). Highlighting relationships between heterogeneous biological data through graphical displays based on regularized canonical correlation analysis. Journal of Biological Systems, 17(02), 173-199.
+</p>
+<p>Leurgans, S. E., Moyeed, R. A. and Silverman, B. W. (1993).
+Canonical correlation analysis when the data are curves.
+<em>Journal of the Royal Statistical Society. Series B</em> <b>55</b>, 725-740.
+</p>
+<p>Vinod, H. D. (1976). Canonical ridge and econometrics of joint production.
+<em>Journal of Econometrics</em> <b>6</b>, 129-137.
+</p>
+<p>Opgen-Rhein, R., and K. Strimmer. 2007. Accurate ranking of differentially expressed genes by a distribution-free shrinkage approach. Statist. emphAppl. Genet. Mol. Biol. <b>6</b>:9. (http://www.bepress.com/sagmb/vol6/iss1/art9/)
+</p>
+<p>Sch&quot;afer, J., and K. Strimmer. 2005. A shrinkage approach to large-scale covariance estimation and implications for functional genomics. Statist. emphAppl. Genet. Mol. Biol.  <b>4</b>:32. (http://www.bepress.com/sagmb/vol4/iss1/art32/)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="summary.html">summary</a></code>, <code><a href="tune.rcc.html">tune.rcc</a></code>,
+<code><a href="plot.rcc.html">plot.rcc</a></code>, <code><a href="plotIndiv.html">plotIndiv</a></code>,
+<code><a href="plotVar.html">plotVar</a></code>, <code><a href="cim.html">cim</a></code>, <code><a href="network.html">network</a></code> and http://www.mixOmics.org for more details.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Classic CCA
+data(linnerud)
+X &lt;- linnerud$exercise
+Y &lt;- linnerud$physiological
+linn.res &lt;- rcc(X, Y)
+
+## Not run: 
+## Regularized CCA
+data(nutrimouse)
+X &lt;- nutrimouse$lipid
+Y &lt;- nutrimouse$gene
+nutri.res1 &lt;- rcc(X, Y, ncomp = 3, lambda1 = 0.064, lambda2 = 0.008)
+
+## using shrinkage parameters
+nutri.res2 &lt;- rcc(X, Y, ncomp = 3, method = 'shrinkage')
+nutri.res2$lambda # the shrinkage parameters
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.6.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

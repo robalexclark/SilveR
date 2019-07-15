@@ -1,10 +1,12 @@
 #ifndef STAN_MATH_SUNDIALS_PRINTF_OVERRIDE_HPP
 #define STAN_MATH_SUNDIALS_PRINTF_OVERRIDE_HPP
 
-#include <R_ext/Print.h>
-
-#define STAN_SUNDIALS_PRINTF(...)   Rprintf(__VA_ARGS__)
+#ifdef WITH_SUNDIAL_PRINTF
+#define STAN_SUNDIALS_PRINTF(...) printf(__VA_ARGS__)
+#define STAN_SUNDIALS_FPRINTF(...) fprintf(__VA_ARGS__)
+#else
+#define STAN_SUNDIALS_PRINTF(...)
 #define STAN_SUNDIALS_FPRINTF(...)
-
 #endif
 
+#endif

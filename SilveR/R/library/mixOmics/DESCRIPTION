@@ -1,34 +1,30 @@
 Package: mixOmics
 Type: Package
 Title: Omics Data Integration Project
-Version: 5.0-3
-Date: 2012-12-11
-Depends: R (>= 2.10), MASS, lattice
-Imports: RGCCA, igraph, rgl, pheatmap
-Author: Sebastien Dejean, Ignacio Gonzalez, Kim-Anh Le Cao with
-        contributions from Pierre Monget, Jeff Coquery, FangZou Yao,
-        Benoit Liquet, Florian Rohart
-Maintainer: Kim-Anh Le Cao <k.lecao@uq.edu.au>
-Description: The package provide statistical integrative techniques and
-        variants to analyse highly dimensional data sets: regularized
-        CCA and sparse PLS to unravel relationships between two
-        heterogeneous data sets of size (nxp) and (nxq) where the p and
-        q variables are measured on the same samples or individuals n.
-        These data may come from high throughput technologies, such as
-        omics data (e.g. transcriptomics, metabolomics or proteomics
-        data) that require an integrative or joint analysis. However,
-        mixOmics can also be applied to any other large data sets where
-        p + q >> n. rCCA is a regularized version of CCA to deal with
-        the large number of variables. sPLS allows variable selection
-        in a one step procedure and two frameworks are proposed:
-        regression and canonical analysis. Numerous graphical outputs
-        are provided to help interpreting the results. Recent
-        methodological developments include: sparse PLS-Discriminant
-        Analysis, Independent Principal Component Analysis and
-        multilevel analysis using variance decomposition of the data.
+Version: 6.6.2
+Depends: R (>= 3.5.0), MASS, lattice, ggplot2
+Imports: igraph, ellipse, corpcor, RColorBrewer, parallel, dplyr,
+        tidyr, reshape2, methods, matrixStats, rARPACK, gridExtra,
+        grDevices, graphics, stats, utils
+Suggests: BiocStyle, knitr, rmarkdown, testthat, rgl
+Author: Kim-Anh Le Cao, Florian Rohart, Ignacio Gonzalez, Sebastien Dejean with key contributors Benoit Gautier, Francois Bartolo
+        and contributions from Pierre Monget, Jeff Coquery, FangZou Yao, Benoit Liquet. 
+Maintainer: Kim-Anh Le Cao <kimanh.lecao@unimelb.edu.au>
+Description: Multivariate methods are well suited to large omics data sets where the number of variables (e.g. genes, proteins, metabolites) is much larger than the number of samples (patients, cells, mice). They have the appealing properties of reducing the dimension of the data by using instrumental variables (components), which are defined as combinations of all variables. Those components are then used to produce useful graphical outputs that enable better understanding of the relationships and correlation structures between the different data sets that are integrated. mixOmics offers a wide range of multivariate methods for the exploration and integration of biological datasets with a particular focus on variable selection. The package proposes several sparse multivariate models we have developed to identify the key variables that are highly correlated, and/or explain the biological outcome of interest. The data that can be analysed with mixOmics may come from high throughput sequencing technologies, such as omics data (transcriptomics, metabolomics, proteomics, metagenomics etc) but also beyond the realm of omics (e.g. spectral imaging). The methods implemented in mixOmics can also handle missing values without having to delete entire rows with missing data. A non exhaustive list of methods include variants of generalised Canonical Correlation Analysis, sparse Partial Least Squares and sparse Discriminant Analysis. Recently we implemented integrative methods to combine multiple data sets: N-integration with variants of Generalised Canonical Correlation Analysis and P-integration with variants of multi-group Partial Least Squares.
 License: GPL (>= 2)
-Repository: CRAN
-Date/Publication: 2014-09-01 15:47:59
-Packaged: 2014-09-01 11:59:23 UTC; klecao
+URL: http://www.mixOmics.org
+BugReports: https://bitbucket.org/klecao/package-mixomics/issues
+Repository: Bioconductor
+VignetteBuilder: knitr
+Packaged: 2019-03-02 05:17:56 UTC; biocbuild
 NeedsCompilation: no
-Built: R 3.1.2; ; 2015-01-24 00:08:44 UTC; windows
+biocViews: ImmunoOncology, Microarray, Sequencing, Metabolomics,
+        Metagenomics, Proteomics, GenePrediction, MultipleComparison,
+        Classification, Regression
+RoxygenNote: 6.0.1.9000
+git_url: https://git.bioconductor.org/packages/mixOmics
+git_branch: RELEASE_3_8
+git_last_commit: 240e862
+git_last_commit_date: 2019-02-28
+Date/Publication: 2019-03-01
+Built: R 3.5.2; ; 2019-03-02 12:23:44 UTC; windows

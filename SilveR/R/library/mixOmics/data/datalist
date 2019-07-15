@@ -1,10 +1,13 @@
+Koren.16S
+breast.TCGA
 breast.tumors
-data.simu
+diverse.16S
 linnerud
 liver.toxicity
 multidrug
 nutrimouse
-prostate
 srbct
-yeast
+stemcells
 vac18
+vac18.simulated
+yeast

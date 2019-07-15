@@ -330,6 +330,53 @@ namespace SilveR.IntegrationTests
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
             model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task MVA15()
+        {
+            string testName = "MVA15";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Log10";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task MVA16()
+        {
+            string testName = "MVA16";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Square Root";
 
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis;
 
@@ -343,5 +390,205 @@ namespace SilveR.IntegrationTests
         }
 
 
+        [Fact]
+        public async Task MVA17()
+        {
+            string testName = "MVA17";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.CategoricalPredictor = "Categorial factor";
+
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task MVA18()
+        {
+            string testName = "MVA18";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Log10";
+            model.CategoricalPredictor = "Categorial factor";
+            model.CaseID = "Case ID";
+
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task MVA19()
+        {
+            string testName = "MVA19";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Log10";
+            model.CategoricalPredictor = "Categorial factor";
+            model.ContinuousPredictors = new string[] { "Continuous factor 1" };
+
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task MVA20()
+        {
+            string testName = "MVA20";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Square Root";
+            model.CategoricalPredictor = "Categorial factor";
+            model.CaseID = "Case ID";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task MVA21()
+        {
+            string testName = "MVA21";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Square Root";
+            model.CategoricalPredictor = "Categorical Binary 1";
+
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task MVA22()
+        {
+            string testName = "MVA22";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Loge";
+            model.CategoricalPredictor = "Categorical Binary 1";
+            model.CaseID = "Case ID";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task MVA23()
+        {
+            string testName = "MVA23";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Log10";
+            model.CategoricalPredictor = "Categorical Binary 1";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task MVA24()
+        {
+            string testName = "MVA24";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            MultivariateAnalysisModel model = new MultivariateAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.ResponseTransformation = "Square Root";
+            model.CategoricalPredictor = "Categorical Binary 1";
+            model.CaseID = "Case ID";
+            model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "MultivariateAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("MultivariateAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "MultivariateAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }
