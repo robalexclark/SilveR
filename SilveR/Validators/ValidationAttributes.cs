@@ -36,17 +36,20 @@ namespace SilveR.Validators
             }
 
             bool result = true;
+            string duplicateVarName = null;
             switch (value)
             {
                 case string stringVarToCheck:
                     if (varList.Contains(stringVarToCheck))
                     {
+                        duplicateVarName = stringVarToCheck;
                         result = false;
                     }
                     break;
                 case IEnumerable<string> varsToCheck:
                     if (varsToCheck.Intersect(varList).Any())
                     {
+                        duplicateVarName = varsToCheck.Intersect(varList).First();
                         result = false;
                     }
                     break;
@@ -61,7 +64,8 @@ namespace SilveR.Validators
             }
             else
             {
-                return new ValidationResult(validationContext.MemberName + " has been selected in more than one input category, please change your input options.");
+
+                return new ValidationResult(validationContext.MemberName + " (" + duplicateVarName + ") has been selected in more than one input category, please change your input options.");
             }
         }
     }

@@ -152,7 +152,7 @@ namespace SilveR.Validators
                         }
                         else
                         {
-                            ValidationInfo.AddErrorMessage("According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.");
+                            ValidationInfo.AddErrorMessage("According to the dataset at least one subject is associated with more than one level of the Treatment factor(s) or Treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each Treatment factor.");
                         }
                         return false;
                     }
@@ -223,7 +223,7 @@ namespace SilveR.Validators
             //if the following calc is false then there is a problem...
             if (treatmentsAndTimeInteractions.Count != (productOfFactorLevelCount * timeLevels.Count))
             {
-                ValidationInfo.AddErrorMessage("One of the levels of the treatment factor(s), or a combination of the levels of the treatment factors, is not present at at least one of the timepoints. Please review this selection as all treatment factors (and combinations thereof) must be present at each timepoint.");
+                ValidationInfo.AddErrorMessage("One of the levels of the Treatment factor(s), or a combination of the levels of the Treatment factors, is not present at at least one of the timepoints. Please review this selection as all Treatment factors (and combinations thereof) must be present at each timepoint.");
                 return false;
             }
             else
@@ -268,25 +268,25 @@ namespace SilveR.Validators
 
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
-                    //Check that the "response" does not contain non-numeric data
+                    //Check that the "response" does not contains non-numeric data
                     bool parsedOK = Double.TryParse(continuousRow[i], out var parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " selected (" + continuous + ") contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + factorType + " selected (" + catFactor + ") contains missing data where there are observations present in the " + responseType + " variable. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //check that the "response" contains data for each "treatment" (not fatal)
                     if (!String.IsNullOrEmpty(categoricalRow[i]) && String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        string mess = "The " + responseType + " selected (" + continuous + ") contains missing data.";
+                        string mess = "The " + responseType + " (" + continuous + ") contains missing data.";
                         if (responseType == "Covariate")
                         {
                             mess = mess + " Any response that does not have a corresponding covariate will be excluded from the analysis.";

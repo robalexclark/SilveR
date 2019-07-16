@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -108,7 +108,8 @@ namespace SilveR.Validators
 
         protected bool CheckFactorsHaveLevels(IEnumerable<String> factors, bool multipleFactors)
         {
-            if (factors == null) return true;
+            if (factors == null)
+                return true;
 
             //Check to see if the number of treatment levels selected is at least 2
             foreach (string factor in factors)
@@ -154,7 +155,7 @@ namespace SilveR.Validators
                 }
                 else
                 {
-                    message = "The treatment factor ("+ factors + ") has only one level present in the dataset. Please select another factor.";
+                    message = "The Treatment factor ("+ factors + ") has only one level present in the dataset. Please select another factor.";
                 }
 
                 validationInfo.AddErrorMessage(message);
@@ -224,12 +225,12 @@ namespace SilveR.Validators
 
             if (hasError)
             {
-                validationInfo.AddErrorMessage("The " + displayName + " selected (" + factor + ") contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.");
+                validationInfo.AddErrorMessage("The " + displayName + " (" + factor + ") contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.");
                 return false;
             }
             else if (hasWarning)
             {
-                string message = "The response selected (" + response + ") contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.";
+                string message = "The Response (" + response + ") contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.";
                 validationInfo.AddWarningMessage(message);
             }
 

@@ -8,7 +8,10 @@ namespace SilveR.Models
     {
         Task CreateDataset(Dataset dataset);
         Task DeleteAnalysis(int analysisID);
+        Task DeleteAnalyses(IEnumerable<int> analysisIDs);
         Task DeleteDataset(int datasetID);
+        Task DeleteDatasets(IEnumerable<int> datasetIDs);
+
         Task<IEnumerable<Analysis>> GetAnalyses();
         Task<Analysis> GetAnalysis(string analysisGuid);
         Task<Analysis> GetAnalysisComplete(string analysisGuid);

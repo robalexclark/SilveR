@@ -101,26 +101,26 @@ namespace SilveR.Validators
 
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
-                    //Check that the "response" does not contain non-numeric data
+                    //Check that the "response" does not contains non-numeric data
                     double parsedValue;
                     bool parsedOK = Double.TryParse(continuousRow[i], out parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") selected contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") selected contains missing data where there are observations present in the " + responseType + " variable. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //check that the "response" contains data for each "treatment" (not fatal)
                     if (!String.IsNullOrEmpty(categoricalRow[i]) && String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        string mess = "The " + responseType + " selected contains missing data.";
+                        string mess = "The " + responseType + " contains missing data.";
                         if (responseType == "covariate")
                         {
                             mess = mess + " Any response that does not have a corresponding covariate will be excluded from the analysis.";

@@ -406,17 +406,18 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 	#Title + warning
 	HTML.title("Analysis of Covariance (ANCOVA) table for assessing covariate interactions", HR=2, align="left")
 
-	# Stop process if residual sums of squares are too close to zero
-	if (deviance(Covintfull)<sqrt(.Machine$double.eps)) {
-		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
-		quit()
-	}
-
 	#Printing ANCOVA Table - note this code is reused from below - Type III SS included (SMPA only, IFPA uses Type I)
 	if (df.residual(Covintfull)<1) {
 		HTML("The covariate interactions have not been calculated as there are zero residual degrees of freedom when all terms are included in the statistical model." , align="left")
-	} else {
+	} 
 
+	# Stop process if residual sums of squares are too close to zero
+	if (deviance(Covintfull)<sqrt(.Machine$double.eps)) {
+		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). Either the model should be simplified, to reduce the number of terms in the model, or the output option to test covariate interactions should be deselected." , align="left")
+		quit()
+	}
+
+	if (df.residual(Covintfull)>0) {
 		if (Module == "SMPA") {
 			tempx<-Anova(Covintfull, type=c("III"))[-1,]
 

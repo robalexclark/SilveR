@@ -28,28 +28,22 @@ namespace SilveR.Validators
 
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-            if (!CheckFactorsHaveLevels(pttVariables.Treatment, true)) return ValidationInfo;
-            if (!CheckFactorsHaveLevels(pttVariables.Subject, true)) return ValidationInfo;
-
-            //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment)))
-                return ValidationInfo;
-
-            if (!CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.OtherDesignFactors)))
-                return ValidationInfo;
-
-            if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Subject)))
-                return ValidationInfo;
-
-            //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment)))
-                return ValidationInfo;
-
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categoricalVariables = new List<string>();
             categoricalVariables.AddVariables(pttVariables.Treatment);
             categoricalVariables.AddVariables(pttVariables.OtherDesignFactors);
             categoricalVariables.AddVariables(pttVariables.Subject);
+
+            if (!CheckFactorsHaveLevels(categoricalVariables, true))
+                return ValidationInfo;
+
+            //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
+            if (!CheckResponsesPerLevel(pttVariables.Treatment, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment)))
+                return ValidationInfo;
+            if (!CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.OtherDesignFactors)))
+                return ValidationInfo;
+            if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Subject)))
+                return ValidationInfo;
 
             //do data checks on the treatments/other factors and response
             if (!CategoricalAgainstContinuousVariableChecks(categoricalVariables, pttVariables.Response))
@@ -73,48 +67,9 @@ namespace SilveR.Validators
             if (!CheckSubjectOnlyHasOneResponseForEachTreatment())
                 return ValidationInfo;
 
-            //check that the replication of treatment factors in each timepoint is greater than 1
-            if (!CheckReplicationOfTreatmentFactors())
-                return ValidationInfo;
-
             //if get here then no errors so return true
             return ValidationInfo;
-        }
-
-        private bool CheckReplicationOfTreatmentFactors()
-        {
-            List<string> treatAndOtherFactors = new List<string>();
-            treatAndOtherFactors.AddVariables(pttVariables.Treatment);
-            treatAndOtherFactors.AddVariables(pttVariables.OtherDesignFactors);
-
-            IEnumerable<string> timePoints = GetLevels(pttVariables.Treatment);
-
-            foreach (string factor in treatAndOtherFactors)
-            {
-                IEnumerable<string> factorLevels = GetLevels(factor);
-
-                foreach (string point in timePoints)
-                {
-                    foreach (string factorLevel in factorLevels)
-                    {
-                        //do a linq query on the data, getting the distinct levels in the data
-                        IEnumerable<string> query = from row in DataTable.Select()
-                                                    where row[pttVariables.Treatment].ToString() == point
-                                                    && row[factor].ToString() == factorLevel
-                                                    && !String.IsNullOrEmpty(row[factor].ToString())
-                                                    && !String.IsNullOrEmpty(row[pttVariables.Response].ToString())
-                                                    select row[pttVariables.Response].ToString();
-
-                        if (query.Count() == 1)
-                        {
-                            ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of one or more of the factors. Please review your factor selection.");
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
+        }     
 
         private bool CheckSubjectOnlyHasOneResponseForEachTreatment()
         {
@@ -135,7 +90,7 @@ namespace SilveR.Validators
 
                     if (query.Count() > 1)
                     {
-                        ValidationInfo.AddErrorMessage("At least one of the subjects has more than one observation recorded on one of the treatments. Please make sure the data was entered correctly as each subject can only be measued once at each level of the treatment factor.");
+                        ValidationInfo.AddErrorMessage("At least one of the subjects has more than one observation recorded on one of the treatments. Please make sure the data was entered correctly as each subject can only be measued once at each level of the Treatment.");
                         return false;
                     }
                 }
@@ -169,7 +124,7 @@ namespace SilveR.Validators
                         }
                         else
                         {
-                            ValidationInfo.AddErrorMessage("According to the dataset at least one subject is associated with more than one level of the treatment factor(s) or treatment factor interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each treatment factor.");
+                            ValidationInfo.AddErrorMessage("According to the dataset at least one subject is associated with more than one level of the Treatment(s) or Treatment interactions. Please review this, in the repeated measures module each subject should be associated with only one level of each Treatment.");
                         }
                         return false;
                     }
@@ -184,6 +139,20 @@ namespace SilveR.Validators
         {
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {
+                string factorType;
+                if (pttVariables.Treatment == catFactor)
+                {
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Treatment);
+                }
+                else if (pttVariables.Subject == catFactor)
+                {
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Subject);
+                }
+                else
+                {
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.OtherDesignFactors);
+                }
+
                 string responseType;
                 if (pttVariables.Response.Contains(continuous))
                 {
@@ -206,13 +175,28 @@ namespace SilveR.Validators
 
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
-                    //check that the "response" contains data for each "covariate" (not fatal)
+                    //Check that the "response" does not contains non-numeric data
+                    bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
+                    if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
+                    {
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        return false;
+                    }
+
+                    //Check that there are no responses where the treatments are blank
+                    if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
+                    {
+                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the raw data and make sure the data was entered correctly.");
+                        return false;
+                    }
+
+                    //check that the "response" contains data for each "treatment" (not fatal)
                     if (!String.IsNullOrEmpty(categoricalRow[i]) && String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        string mess = "The " + responseType + " selected (" + continuous + ") contains missing data.";
-                        if (responseType == "covariate")
+                        string mess = "The " + responseType + " (" + continuous + ") contains missing data.";
+                        if (responseType == "Covariate")
                         {
-                            mess = mess + Environment.NewLine + " Any response that does not have a corresponding covariate will be excluded from the analysis.";
+                            mess = mess + " Any response that does not have a corresponding covariate will be excluded from the analysis.";
                         }
 
                         ValidationInfo.AddWarningMessage(mess);
@@ -231,7 +215,7 @@ namespace SilveR.Validators
                 }
             }
 
-            //if get this far then no errors so return true...
+            //if got here then all checks ok, return true
             return true;
         }
     }

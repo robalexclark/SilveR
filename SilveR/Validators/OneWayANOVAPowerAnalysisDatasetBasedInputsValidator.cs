@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -31,7 +31,7 @@ namespace SilveR.Validators
             //Check that the response does not contain non-numeric 
             if (!CheckIsNumeric(owVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response variable selected (" + owVariables.Response + ") contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Response (" + owVariables.Response + ") contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
@@ -48,17 +48,17 @@ namespace SilveR.Validators
                 {
                     if (level.Value < 2)
                     {
-                        ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor (" + owVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
+                        ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the Treatment factor (" + owVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
                         return ValidationInfo;
                     }
                 }
 
                 //check response and doses contain values
-                if (!CheckFactorAndResponseNotBlank(owVariables.Treatment, owVariables.Response, "treatment factor")) return ValidationInfo;
+                if (!CheckFactorAndResponseNotBlank(owVariables.Treatment, owVariables.Response, "Treatment factor")) return ValidationInfo;
             }
             else if (owVariables.Response != null && CountResponses(owVariables.Response) == 1) //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
             {
-                ValidationInfo.AddErrorMessage("The response selected (" + owVariables.Response + ") contains only 1 value. Please select another factor.");
+                ValidationInfo.AddErrorMessage("The Response (" + owVariables.Response + ") contains only 1 value. Please select another factor.");
                 return ValidationInfo;
             }
 

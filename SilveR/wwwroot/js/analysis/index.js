@@ -1,9 +1,9 @@
-﻿
-$(function () {
+﻿$(function () {
 
     $("#grid").kendoGrid({
         sortable: true,
         columns: [
+            { selectable: true, width: "40px" },
             { title: "Analysis Type", field: "scriptDisplayName" },
             { title: "Dataset Name", field: "datasetName" },
             { title: "Date Analysed", field: "dateAnalysed", format: "{0:dd MMM yy HH:mm}" },
@@ -50,13 +50,32 @@ $(function () {
 
     function viewResults(e) {
         const dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-
         window.location.href = '/analyses/viewresults?analysisGuid=' + dataItem.analysisGuid;
-    };
+    }
 
     function reAnalyse(e) {
         const dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-
         window.location.href = '/analyses/reanalyse?analysisGuid=' + dataItem.analysisGuid;
-    };
+    }
+
+    $("#deleteSelected").click(function () {
+        const grid = $("#grid").data("kendoGrid");
+        // Get selected rows
+        var sel = $("input:checked", grid.tbody).closest("tr");
+        // Get data item for each
+        var analysisIDs = [];
+        $.each(sel, function (idx, row) {
+            var item = grid.dataItem(row);
+            analysisIDs.push(item.analysisID);
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/Analyses/DeleteSelected",
+            data: { analysisIDs: analysisIDs },
+            success: function () {
+                grid.dataSource.read();
+            }
+        });
+    });
 });

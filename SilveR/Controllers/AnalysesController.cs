@@ -357,7 +357,7 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> ExportPlots(string analysisGuid)
+        public async Task<ActionResult> ExportImages(string analysisGuid)
         {
             Analysis analysis = await repository.GetAnalysis(analysisGuid);
             HtmlDocument document = new HtmlDocument();
@@ -433,7 +433,13 @@ namespace SilveR.Controllers
         public async Task<JsonResult> Destroy(int analysisID)
         {
             await repository.DeleteAnalysis(analysisID);
+            return Json(true);
+        }
 
+        [HttpPost]
+        public async Task<JsonResult> DeleteSelected(IEnumerable<int> analysisIds)
+        {
+            await repository.DeleteAnalyses(analysisIds);
             return Json(true);
         }
     }

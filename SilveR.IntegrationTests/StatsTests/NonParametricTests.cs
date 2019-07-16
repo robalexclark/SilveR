@@ -37,7 +37,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor selected (Treat3) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Treat3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -60,7 +60,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor selected (Treat4) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Treat4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -83,7 +83,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor selected (Treat4) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Treat4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -107,7 +107,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor selected (Treat4) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Treat4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -130,7 +130,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The treatment factor (Treat5) has only one level present in the dataset. Please select another factor.", errors);
+            Assert.Contains("The Treatment factor (Treat5) has only one level present in the dataset. Please select another factor.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -153,7 +153,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The treatment factor (Treat5) has only one level present in the dataset. Please select another factor.", errors);
+            Assert.Contains("The Treatment factor (Treat5) has only one level present in the dataset. Please select another factor.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -177,7 +177,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The treatment factor (Treat5) has only one level present in the dataset. Please select another factor.", errors);
+            Assert.Contains("The Treatment factor (Treat5) has only one level present in the dataset. Please select another factor.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -293,7 +293,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp3) contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp3) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -316,7 +316,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp3) contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp3) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -339,7 +339,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp3) contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp3) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -363,7 +363,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp3) contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp3) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -386,8 +386,8 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Response has been selected in more than one input category, please change your input options.", errors);
-            Assert.Contains("Treatment has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Response (Resp4) has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Treatment (Resp4) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -410,8 +410,8 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Response has been selected in more than one input category, please change your input options.", errors);
-            Assert.Contains("Treatment has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Response (Resp5) has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Treatment (Resp5) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -434,8 +434,8 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Response has been selected in more than one input category, please change your input options.", errors);
-            Assert.Contains("Treatment has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Response (Resp5) has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Treatment (Resp5) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -458,8 +458,8 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Response has been selected in more than one input category, please change your input options.", errors);
-            Assert.Contains("Treatment has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Response (Resp5) has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Treatment (Resp5) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("NonParametricAnalysis", testName, errors);
         }
 
@@ -797,7 +797,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -831,7 +831,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -865,7 +865,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -900,7 +900,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -934,7 +934,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The treatment factor selected (Treat 1) has only two levels so a Mann-Whitney test will be presented.", warnings);
+            Assert.Contains("The Treatment factor (Treat 1) has only two levels so a Mann-Whitney test will be presented.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -969,7 +969,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The treatment factor selected (Treat 1) has only two levels so a Mann-Whitney test will be presented.", warnings);
+            Assert.Contains("The Treatment factor (Treat 1) has only two levels so a Mann-Whitney test will be presented.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1294,7 +1294,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1330,7 +1330,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1365,7 +1365,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1401,7 +1401,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp11) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -2793,7 +2793,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The treatment factor selected (Treat23) has only two levels so a Mann-Whitney test will be presented.", warnings);
+            Assert.Contains("The Treatment factor (Treat23) has only two levels so a Mann-Whitney test will be presented.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -2827,7 +2827,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The treatment factor selected (Treat23) has only two levels so a Mann-Whitney test will be presented.", warnings);
+            Assert.Contains("The Treatment factor (Treat23) has only two levels so a Mann-Whitney test will be presented.", warnings);
             Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings

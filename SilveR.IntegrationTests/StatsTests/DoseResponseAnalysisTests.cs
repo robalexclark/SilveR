@@ -37,7 +37,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Response has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Response (Resp1) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -123,7 +123,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Response has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Response (Resp1) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -145,7 +145,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response variable selected (Resp2) contains only one value, please choose another response.", errors);
+            Assert.Contains("The Response (Resp2) contains only one value, please choose another response.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -167,7 +167,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The dose variable  selected (Dose2) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Dose (Dose2) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -191,7 +191,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The QC dose variable selected (QCDose3) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The QC Dose (QCDose3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -213,7 +213,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response variable selected (Resp3) contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp3) contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -235,7 +235,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The dose variable selected (Dose3) contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Dose (Dose3) contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -259,7 +259,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The QC dose variable selected (QCDose4) contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The QC Dose (QCDose4) contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -283,7 +283,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The QC response variable selected (QCResp2) contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The QC Response (QCResp2) contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -308,7 +308,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The sample variable selected (Sample2) contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Sample (Sample2) contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -330,7 +330,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, warnings);
         }
 
@@ -854,7 +854,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp8) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp8) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, warnings);
         }
 

@@ -24,39 +24,34 @@ namespace SilveR.Validators
             allVars.Add(samVariables.Censorship);
             if (!CheckColumnNames(allVars)) return ValidationInfo;
 
-
             if (!CheckIsNumeric(samVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response selected (" + samVariables.Response + ") contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Response (" + samVariables.Response + ") contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
             if (!CheckFactorsHaveLevels(samVariables.Treatment))
                 return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(samVariables.Treatment, samVariables.Response, "treatment factor"))
+            if (!CheckResponsesPerLevel(samVariables.Treatment, samVariables.Response, "Treatment factor"))
                 return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(samVariables.Treatment, samVariables.Response, "treatment factor"))
+            if (!CheckFactorAndResponseNotBlank(samVariables.Treatment, samVariables.Response, "Treatment factor"))
                 return ValidationInfo;
 
             foreach (DataRow row in DataTable.Rows)
             {
                 if (String.IsNullOrEmpty(row[samVariables.Censorship].ToString()) && !String.IsNullOrEmpty(row[samVariables.Response].ToString()))
                 {
-                    ValidationInfo.AddErrorMessage("There is a missing value in the censorship variable when there is a corresponding response. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("There is a missing value in the Censorship variable when there is a corresponding Response. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
                 else if (!String.IsNullOrEmpty(row[samVariables.Censorship].ToString()) && row[samVariables.Censorship].ToString() != "0" && row[samVariables.Censorship].ToString() != "1")
                 {
-                    ValidationInfo.AddErrorMessage("The censorship variable contains values other than 0 and 1. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The Censorship variable contains values other than 0 and 1. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
-                //else if (String.IsNullOrEmpty(row[samVariables.Response].ToString()) && !String.IsNullOrEmpty(row[samVariables.Treatment].ToString()) && !String.IsNullOrEmpty(row[samVariables.Censorship].ToString()))
-                //{
-                //    ValidationInfo.AddWarningMessage("The response selected (" + samVariables.Response + ") contains missing data.");
-                //}
             }
 
             //if get here then no errors so return true

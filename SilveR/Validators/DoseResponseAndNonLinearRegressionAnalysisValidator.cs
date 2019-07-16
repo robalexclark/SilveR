@@ -32,27 +32,27 @@ namespace SilveR.Validators
             //Check that all the columns are numeric
             if (!CheckIsNumeric(drnlrVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response variable selected (" + drnlrVariables.Response + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Response (" + drnlrVariables.Response + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.Dose))
             {
-                ValidationInfo.AddErrorMessage("The dose variable selected (" + drnlrVariables.Dose + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Dose (" + drnlrVariables.Dose + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCResponse))
             {
-                ValidationInfo.AddErrorMessage("The QC response variable selected (" + drnlrVariables.QCResponse + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC Response (" + drnlrVariables.QCResponse + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCDose))
             {
-                ValidationInfo.AddErrorMessage("The QC dose variable selected (" + drnlrVariables.QCDose + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC Dose (" + drnlrVariables.QCDose + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.SamplesResponse))
             {
-                ValidationInfo.AddErrorMessage("The sample variable selected (" + drnlrVariables.SamplesResponse + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Sample (" + drnlrVariables.SamplesResponse + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
@@ -61,20 +61,20 @@ namespace SilveR.Validators
             {
                 if (CountResponses(drnlrVariables.Response) == 1)
                 {
-                    ValidationInfo.AddErrorMessage("The response variable selected (" + drnlrVariables.Response + ") contains only one value, please choose another response.");
+                    ValidationInfo.AddErrorMessage("The Response (" + drnlrVariables.Response + ") contains only one value, please choose another response.");
                     return ValidationInfo;
                 }
 
                 if (!String.IsNullOrEmpty(drnlrVariables.QCResponse) && CountResponses(drnlrVariables.QCResponse) == 1)
                 {
-                    ValidationInfo.AddErrorMessage("The QC response variable selected (" + drnlrVariables.Response + ") contains only one value, please choose another QC response.");
+                    ValidationInfo.AddErrorMessage("The QC Response (" + drnlrVariables.Response + ") contains only one value, please choose another QC response.");
                     return ValidationInfo;
                 }
 
                 //check response and doses contain values
-                if (!CheckFactorAndResponseNotBlank(drnlrVariables.Dose, drnlrVariables.Response, "dose variable "))
+                if (!CheckFactorAndResponseNotBlank(drnlrVariables.Dose, drnlrVariables.Response, "Dose"))
                     return ValidationInfo;
-                if (!CheckFactorAndResponseNotBlank(drnlrVariables.QCDose, drnlrVariables.QCResponse, "QC dose variable"))
+                if (!CheckFactorAndResponseNotBlank(drnlrVariables.QCDose, drnlrVariables.QCResponse, "QC Dose"))
                     return ValidationInfo;
 
                 int noFixedParameters = 0;

@@ -9,11 +9,11 @@ using Xunit;
 
 namespace SilveR.IntegrationTests
 {
-    public class SurvivialAnalysisTests : IClassFixture<SilveRTestWebApplicationFactory<Startup>>
+    public class SurvivalAnalysisTests : IClassFixture<SilveRTestWebApplicationFactory<Startup>>
     {
         private readonly SilveRTestWebApplicationFactory<Startup> _factory;
 
-        public SurvivialAnalysisTests(SilveRTestWebApplicationFactory<Startup> factory)
+        public SurvivalAnalysisTests(SilveRTestWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
@@ -37,7 +37,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 1) contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp 1) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -60,7 +60,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The censorship variable contains values other than 0 and 1. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Censorship variable contains values other than 0 and 1. Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -83,7 +83,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The treatment factor (Group 2) has only one level present in the dataset. Please select another factor.", errors);
+            Assert.Contains("The Treatment factor (Group 2) has only one level present in the dataset. Please select another factor.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -106,7 +106,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There is no replication in one or more of the levels of the treatment factor (Group 3). Please select another factor.", errors);
+            Assert.Contains("There is no replication in one or more of the levels of the Treatment factor (Group 3). Please select another factor.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -129,7 +129,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There is a missing value in the censorship variable when there is a corresponding response. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("There is a missing value in the Censorship variable when there is a corresponding Response. Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -152,7 +152,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The treatment factor selected (Group 4) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Group 4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -176,7 +176,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp3) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp3) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("SurvivalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings

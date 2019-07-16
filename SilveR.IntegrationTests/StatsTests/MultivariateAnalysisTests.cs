@@ -219,7 +219,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Case ID selected (Case ID reduced) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -243,7 +243,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Case ID selected (Case ID reduced) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -267,7 +267,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Case ID selected (Case ID reduced) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -291,7 +291,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Categorical predictor selected (Categorial (reduced)) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Categorical predictor (Categorial (reduced)) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -452,8 +452,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
             model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
             model.ResponseTransformation = "Log10";
-            model.CategoricalPredictor = "Categorial factor";
-            model.ContinuousPredictors = new string[] { "Continuous factor 1" };
+            model.CategoricalPredictor = "Categorical continuous";
 
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
 
@@ -503,8 +502,7 @@ namespace SilveR.IntegrationTests
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
             model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
-            model.ResponseTransformation = "Square Root";
-            model.CategoricalPredictor = "Categorical Binary 1";
+            model.CategoricalPredictor = "Categorical Binary 2";
 
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
 
@@ -529,7 +527,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
             model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
             model.ResponseTransformation = "Loge";
-            model.CategoricalPredictor = "Categorical Binary 1";
+            model.CategoricalPredictor = "Categorical Binary 2";
             model.CaseID = "Case ID";
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
 
@@ -578,7 +576,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
             model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
             model.ResponseTransformation = "Square Root";
-            model.CategoricalPredictor = "Categorical Binary 1";
+            model.CategoricalPredictor = "Categorical Binary 2";
             model.CaseID = "Case ID";
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
 

@@ -35,7 +35,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 5) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp 5) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
@@ -57,7 +57,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor selected (Factor 4) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Factor 4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
@@ -125,7 +125,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("You have Log10 transformed the Resp 4 variable. Unfortunately some of the Resp 4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
         }
 
@@ -149,7 +149,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("You have Square Root transformed the Resp 6 variable. Unfortunately some of the Resp 6 values are negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
         }
 
@@ -173,7 +173,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("You have Loge transformed the Resp 4 variable. Unfortunately some of the Resp 4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
         }
 
@@ -197,7 +197,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("You have ArcSine transformed the Resp 6 variable. Unfortunately some of the Resp 6 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
         }
 
@@ -221,7 +221,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("You have ArcSine transformed the Resp 8 variable. Unfortunately some of the Resp 8 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
         }
 
@@ -244,7 +244,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor selected (Factor 4) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Factor 4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
@@ -343,7 +343,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -415,7 +415,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -497,7 +497,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -579,7 +579,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -651,7 +651,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -723,7 +723,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -795,7 +795,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -867,7 +867,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -939,7 +939,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -982,7 +982,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1310,7 +1310,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp31) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp31) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1352,7 +1352,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp33) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp33) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1394,7 +1394,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp35) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp35) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1561,7 +1561,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp44) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp44) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings

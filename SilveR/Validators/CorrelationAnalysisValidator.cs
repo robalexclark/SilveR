@@ -53,7 +53,7 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("The response selected (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
 

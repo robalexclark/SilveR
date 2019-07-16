@@ -250,7 +250,13 @@ namespace SilveR.Controllers
         public async Task<JsonResult> Destroy(int datasetID)
         {
             await repository.DeleteDataset(datasetID);
+            return Json(true);
+        }
 
+        [HttpPost]
+        public async Task<JsonResult> DeleteSelected(IEnumerable<int> datasetIDs)
+        {
+            await repository.DeleteDatasets(datasetIDs);
             return Json(true);
         }
 

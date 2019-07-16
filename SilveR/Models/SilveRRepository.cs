@@ -72,6 +72,25 @@ namespace SilveR.Models
             await context.SaveChangesAsync();
         }
 
+        public async Task DeleteDatasets(IEnumerable<int> datasetIDs)
+        {
+            foreach (int datasetID in datasetIDs)
+            {
+                Dataset dataset = new Dataset();
+                dataset.DatasetID = datasetID;
+                context.Entry(dataset).State = EntityState.Deleted;
+
+                //because not cascading, doing manual update on any analyses referencing this dataset
+                var analyses = context.Analyses.Where(a => a.DatasetID == datasetID);
+                foreach (Analysis analysis in analyses)
+                {
+                    analysis.DatasetID = null;
+                }
+            }
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task<bool> HasAnalyses()
         {
             return await context.Analyses.AnyAsync();
@@ -124,6 +143,18 @@ namespace SilveR.Models
             Analysis analysis = new Analysis();
             analysis.AnalysisID = analysisID;
             context.Entry(analysis).State = EntityState.Deleted;
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAnalyses(IEnumerable<int> analysisIDs)
+        {
+            foreach (int analysisID in analysisIDs)
+            {
+                Analysis analysis = new Analysis();
+                analysis.AnalysisID = analysisID;
+                context.Entry(analysis).State = EntityState.Deleted;
+            }
 
             await context.SaveChangesAsync();
         }

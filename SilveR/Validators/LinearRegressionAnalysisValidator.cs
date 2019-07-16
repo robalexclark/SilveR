@@ -52,7 +52,7 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(contFactor))
                 {
-                    ValidationInfo.AddErrorMessage("The continuous variable selected (" + contFactor + ") contain non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The continuous variable (" + contFactor + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                     return ValidationInfo;
                 }
             }
@@ -137,26 +137,25 @@ namespace SilveR.Validators
 
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
-                    //Check that the "response" does not contain non-numeric data
-                    double parsedValue;
-                    bool parsedOK = Double.TryParse(continuousRow[i], out parsedValue);
+                    //Check that the "response" does not contains non-numeric data
+                    bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " selected (" + lrVariables.Response + ") contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + lrVariables.Response + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + factorType + " selected (" + catFactor + ") contains missing data where there are observations present in the " + responseType + " variable. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the raw data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //check that the "response" contains data for each "treatment" (not fatal)
                     if (!String.IsNullOrEmpty(categoricalRow[i]) && String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        string mess = "The " + responseType + " selected contains missing data.";
+                        string mess = "The " + responseType + " (" + lrVariables.Response + ") contains missing data.";
                         if (responseType == "covariate")
                         {
                             mess = mess + Environment.NewLine + "Any response that does not have a corresponding covariate will be excluded from the analysis.";

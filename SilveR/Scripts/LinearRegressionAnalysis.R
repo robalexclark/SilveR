@@ -358,41 +358,41 @@ if (nocontfactors == 1) {
 
 		#STB Aug 2011 - removing lines with infinite slope
 		if(length(unique(tmpdata2$xvarrr_IVS)) >1 && length(unique(tmpdata2$yvarrr_IVS)) >1) {
-			correlation<-cor.test(tmpdata2$yvarrr_IVS,tmpdata2$xvarrr_IVS, method="pearson")
-			pcorr<-correlation$p.value
-			rho<-correlation$estimate
+#			correlation<-cor.test(tmpdata2$yvarrr_IVS,tmpdata2$xvarrr_IVS, method="pearson")
+#			pcorr<-correlation$p.value
+#			rho<-correlation$estimate
 
 			#Calculating regression coefficients
 			threewayfullx<-lm(yvarrr_IVS~xvarrr_IVS, data=tmpdata2, na.action = na.omit)			
 			inttabx<-   coefficients(threewayfullx)[1]
 			slopetabx<- coefficients(threewayfullx)[2]
 		} else {
-			pcorr<-1000
-			rho<-1000
+#			pcorr<-1000
+#			rho<-1000
 			inttabx<-1000
 			slopetabx<-1000
 		}
 
 		#STB - March 2011 Formatting p-values p<0.0001
-		pcorr2<-format(round(pcorr, 4), nsmall=4, scientific=FALSE)
-		rho<-format(round(rho, 3), nsmall=3, scientific=FALSE)
-		inttabx<-format(round(inttabx, 4), nsmall=4, scientific=FALSE)
+#		pcorr2<-format(round(pcorr, 4), nsmall=4, scientific=FALSE)
+#		rho<-format(round(rho, 3), nsmall=3, scientific=FALSE)
+		inttabx2<-format(round(inttabx, 4), nsmall=4, scientific=FALSE)
 		slopetabx<-format(round(slopetabx, 4), nsmall=4, scientific=FALSE)
 
-		if (pcorr<0.0001)  {
-			pcorr2=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			pcorr2<- paste("<",pcorr2)
-		}
+#		if (pcorr<0.0001)  {
+#			pcorr2=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+#			pcorr2<- paste("<",pcorr2)
+#		}
 			
 		#STB Aug 2011 - removing lines with infinite slope
-		if (pcorr==1000)  {
-			pcorr2<- "-"
-			rho<- "-"
+		if (inttabx==1000)  {
+#			pcorr2<- "-"
+#			rho<- "-"
 			inttabx<- "-"
 			slopetabx<- "-"
 		}
-		ptab[k]<-pcorr2
-		rhotab[k]<-rho
+#		ptab[k]<-pcorr2
+#		rhotab[k]<-rho
 		inttab[k]<-inttabx
 		slopetab[k]<-slopetabx
 	}

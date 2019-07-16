@@ -31,9 +31,16 @@ else if (ViewBag.InfoMessage != null)
     </div>
 }
 
-<form method="get" action="~/Data/DataUploader">
-    <input type="submit" value="Upload Data" class="btn btn-primary" />
-</form>
+<div class="row">
+    <div class="col">
+        <form method="get" action="~/Data/DataUploader">
+            <input type="submit" value="Upload Data" class="btn btn-primary" />
+        </form>
+    </div>
+    <div class="col">
+        <button id="deleteSelected" class="btn btn-secondary float-right">Delete selected</button>
+    </div>
+</div>
 <br />
 
 <div class="row">

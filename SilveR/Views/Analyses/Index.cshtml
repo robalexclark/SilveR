@@ -21,9 +21,16 @@
     </div>
 }
 
-<form method="get" action="~/Analyses/AnalysisDataSelector">
-    <input type="submit" value="New Analysis" class="btn btn-primary" />
-</form>
+<div class="row">
+    <div class="col">
+        <form method="get" action="~/Analyses/AnalysisDataSelector">
+            <input type="submit" value="New Analysis" class="btn btn-primary" />
+        </form>
+    </div>
+    <div class="col">
+        <button id="deleteSelected" class="btn btn-secondary float-right">Delete selected</button>
+    </div>
+</div>
 <br />
 
 <div class="row">

@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +27,7 @@ namespace SilveR.Validators
 
             if (!CheckIsNumeric(npVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response selected (" + npVariables.Response + ") contain non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Response (" + npVariables.Response + ") contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
@@ -44,7 +44,7 @@ namespace SilveR.Validators
             //if only two levels and all treats or to control selected, then need to only do KW
             if (CountDistinctLevels(npVariables.Treatment) == 2 && String.IsNullOrEmpty(npVariables.OtherDesignFactor) && npVariables.AnalysisType != NonParametricAnalysisModel.AnalysisOption.MannWhitney)
             {
-                string message = "The treatment factor selected (" + npVariables.Treatment + ") has only two levels so a Mann-Whitney test will be presented.";
+                string message = "The Treatment factor (" + npVariables.Treatment + ") has only two levels so a Mann-Whitney test will be presented.";
                 ValidationInfo.AddWarningMessage(message);
             }
 

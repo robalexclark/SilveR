@@ -52,7 +52,7 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("The response variable (" + response + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
 
@@ -87,7 +87,7 @@ namespace SilveR.Validators
                     {
                         if (!CheckIsNumeric(continuousPredictor))
                         {
-                            ValidationInfo.AddErrorMessage("The continuous predictor variable (" + continuousPredictor + ") selected contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                            ValidationInfo.AddErrorMessage("The continuous predictor (" + continuousPredictor + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
                             return ValidationInfo;
                         }
                         else if (!CheckFactorAndResponseNotBlank(continuousPredictor, response, ReflectionExtensions.GetPropertyDisplayName<MultivariateAnalysisModel>(i => i.ContinuousPredictors)))

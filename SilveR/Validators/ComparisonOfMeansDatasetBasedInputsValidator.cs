@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 
@@ -30,7 +30,7 @@ namespace SilveR.Validators
             //Check that the response does not contain non-numeric 
             if (!CheckIsNumeric(mcVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The response variable selected (" + mcVariables.Response + ") contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Response (" + mcVariables.Response + ") contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 
@@ -47,17 +47,17 @@ namespace SilveR.Validators
                 {
                     if (level.Value < 2)
                     {
-                        ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the treatment factor (" + mcVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
+                        ValidationInfo.AddErrorMessage("There is no replication in one or more of the levels of the Treatment factor (" + mcVariables.Treatment + ").  Please amend the dataset prior to running the analysis.");
                         return ValidationInfo;
                     }
                 }
 
                 //check response and doses contain values
-                if (!CheckFactorAndResponseNotBlank(mcVariables.Treatment, mcVariables.Response, "treatment factor")) return ValidationInfo;
+                if (!CheckFactorAndResponseNotBlank(mcVariables.Treatment, mcVariables.Response, "Treatment factor")) return ValidationInfo;
             }
             else if (mcVariables.Treatment == null && mcVariables.Response != null && CountResponses(mcVariables.Response) == 1) //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
             {
-                ValidationInfo.AddErrorMessage("The response selected (" + mcVariables.Response + ") contains only 1 value. Please select another factor.");
+                ValidationInfo.AddErrorMessage("The Response (" + mcVariables.Response + ") contains only 1 value. Please select another factor.");
                 return ValidationInfo;
             }
 

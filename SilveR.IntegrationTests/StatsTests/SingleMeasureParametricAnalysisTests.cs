@@ -37,8 +37,8 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Response has been selected in more than one input category, please change your input options.", errors);
-            Assert.Contains("Treatments has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Response (Resp 1) has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Treatments (Resp 1) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -104,7 +104,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor selected (Tre at4) contains missing data where there are observations present in the Response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Tre at4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -126,7 +126,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp4) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp4) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -149,7 +149,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Covariate selected (Cov4) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Covariate (Cov4) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -171,7 +171,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp5) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp5) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
         }
 
@@ -195,7 +195,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Covariate selected (Cov5) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
+            Assert.Contains("The Covariate (Cov5) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
         }
 
@@ -552,6 +552,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -582,6 +584,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat1";
             model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D3";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -613,6 +617,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat2";
             model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "F";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -644,6 +650,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat2";
             model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "F";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -675,6 +683,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat2";
             model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "F";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -707,6 +717,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat1";
             model.AllPairwise = "Bonferroni";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -740,6 +752,8 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat1";
             model.AllPairwise = "Benjamini-Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D10";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -772,7 +786,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Unadjusted (LSD)";
+            model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -806,7 +821,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Dunnett";
+            model.AllPairwise = "Dunnett";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -840,7 +856,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Holm";
+            model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -871,7 +888,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Hochberg";
+            model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -902,7 +920,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Hommel";
+            model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -934,7 +953,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Bonferroni";
+            model.AllPairwise = "Bonferroni";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -966,7 +986,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Benjamini-Hochberg";
+            model.AllPairwise = "Benjamini-Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -998,8 +1019,9 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat2";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Unadjusted (LSD)";
-            model.ControlGroup = "F";
+            model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1031,7 +1053,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Dunnett";
+            model.AllPairwise = "Dunnett";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1065,7 +1088,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Holm";
+            model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1099,7 +1123,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Hochberg";
+            model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1133,7 +1158,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Hommel";
+            model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1167,7 +1193,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Bonferroni";
+            model.AllPairwise = "Bonferroni";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1198,7 +1225,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Benjamini-Hochberg";
+            model.AllPairwise = "Benjamini-Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1230,6 +1258,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1261,6 +1291,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1292,6 +1324,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1323,6 +1357,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1355,6 +1391,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1388,6 +1426,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Bonferroni";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1421,6 +1461,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1453,7 +1495,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Unadjusted (LSD)";
+            model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1487,7 +1530,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Dunnett";
+            model.AllPairwise = "Dunnett";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1518,7 +1562,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Holm";
+            model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1552,7 +1597,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Hochberg";
+            model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D0";
 
             //Act
@@ -1583,7 +1629,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat8";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Hommel";
+            model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "A";
 
             //Act
@@ -1619,6 +1666,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1653,6 +1702,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1683,13 +1734,15 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1723,13 +1776,15 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1764,13 +1819,15 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1806,13 +1863,15 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Bonferroni";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1848,13 +1907,15 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1890,7 +1951,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Unadjusted (LSD)";
+            model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
             //Act1
@@ -1898,7 +1960,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1934,7 +1996,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Dunnett";
+            model.AllPairwise = "Dunnett";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
             //Act1
@@ -1942,7 +2005,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1979,7 +2042,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Holm";
+            model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
             //Act1
@@ -1987,7 +2051,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -2020,8 +2084,7 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat 15 * Treat16";
             model.LSMeansSelected = true;
-            model.ComparisonsBackToControl = "Tukey";
-            model.ControlGroup = "A";
+            model.AllPairwise = "Tukey";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2089,7 +2152,6 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
-
 
         [Fact]
         public async Task SMA69()
@@ -2178,7 +2240,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp15) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp15) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -2212,6 +2274,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTestGroup1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2242,6 +2306,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTestGroup1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "0";
 
 
             //Act
@@ -2275,6 +2341,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTEstGroup2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2307,6 +2375,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTEstGroup2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2337,6 +2407,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "CVTreat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "B";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2367,6 +2439,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "CVTreat3 * CVTreat4";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "2";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2459,6 +2533,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2492,6 +2568,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D10";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2525,6 +2603,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D3";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2559,6 +2639,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2589,10 +2671,12 @@ namespace SilveR.IntegrationTests
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
-            model.NormalPlotSelected = true;
+            //model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = "Dunnett";
+            model.ControlGroup = "D3";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2627,6 +2711,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2660,13 +2746,15 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "2";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response selected (Resp7) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
             //Act2 - ignore warnings

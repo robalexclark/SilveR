@@ -41,7 +41,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response selected contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Count_1) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, errors);
         }
 
@@ -68,7 +68,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Grouping factor selected (Treatment x) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Grouping factor (Treatment x) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, errors);
         }
 
@@ -95,7 +95,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response categories selected (Treatment x) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response categories (Treatment x) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, errors);
         }
 
@@ -122,7 +122,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Count_2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Count_2) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
         }
 

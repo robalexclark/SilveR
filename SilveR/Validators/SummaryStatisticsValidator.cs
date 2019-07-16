@@ -48,14 +48,14 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("The response variable selected (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
                     return ValidationInfo;
                 }
 
                 CheckTransformations(DataTable, ssVariables.Transformation, response);
 
                 //check response and cat factors contain values
-                if (!CheckResponsesPerLevel(categorical, response, ReflectionExtensions.GetPropertyDisplayName<SummaryStatisticsModel>(i => i.Responses)))
+                if (!CheckResponsesPerLevel(categorical, response, "categorisation factor"))
                     return ValidationInfo;
 
                 if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))

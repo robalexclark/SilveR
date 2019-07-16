@@ -151,6 +151,16 @@ table.dataframe th {
     width: 100px;
 }
 
+.k-grid .k-state-selected {
+    background-color: #ffffff !important;
+    color: #000000;
+}
+
+.k-grid .k-alt.k-state-selected {
+    background-color: #f1f1f1 !important;
+    color: #000000;
+}
+
 .disabledpanel {
     pointer-events: none;
     opacity: 0.4;

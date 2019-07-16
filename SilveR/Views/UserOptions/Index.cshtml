@@ -1,4 +1,5 @@
-﻿@model SilveR.Models.UserOption
+﻿@using System.Runtime.InteropServices
+@model SilveR.Models.UserOption
 
 @{
     ViewBag.Title = "User Options";
@@ -22,9 +23,12 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#four">Graphics: Colour</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#five">R Package Installation</a>
-            </li>
+            @if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#five">R Package Installation</a>
+                </li>
+            }
         </ul>
 
         <div class="tab-content ">
@@ -539,28 +543,31 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="five">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-default" style="margin:10px">
-                            <div class="panel-heading"><h3>R Package Installation</h3></div>
+            @if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                <div class="tab-pane" id="five">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-default" style="margin:10px">
+                                <div class="panel-heading"><h3>R Package Installation</h3></div>
 
-                            <div class="panel-body">
-                                <div>
-                                    Click the button below to install/reinstall the recommended R packages for @Program.AppName. Bear in mind that the size of R packages required is approx 500mb, so installation may take 30 minutes - several hours.
-                                </div>
-                                <br />
-                                <a asp-controller="UserOptions" asp-action="InstallRPackages" class="btn btn-primary">Install R packages <i class="fa fa-caret-right"></i></a>
-                                <br />
-                                <br />
-                                <div>
-                                    At this time the only way to see if the installer process has completed is to check your processes using taskmanager, activity monitor or top to see if R or Rscript has completed.
+                                <div class="panel-body">
+                                    <div>
+                                        Click the button below to install/reinstall the recommended R packages for @Program.AppName. Bear in mind that the size of R packages required is approx 500mb, so installation may take 30 minutes - several hours.
+                                    </div>
+                                    <br />
+                                    <a asp-controller="UserOptions" asp-action="InstallRPackages" class="btn btn-primary">Install R packages <i class="fa fa-caret-right"></i></a>
+                                    <br />
+                                    <br />
+                                    <div>
+                                        At this time the only way to see if the installer process has completed is to check your processes using taskmanager, activity monitor or top to see if R or Rscript has completed.
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
 
 

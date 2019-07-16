@@ -36,7 +36,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response variable selected (Resp1) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp1) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -58,7 +58,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor selected (Cat1) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Cat1) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -80,7 +80,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There is no replication in one or more of the levels of the Response (Cat2). Please select another factor.", errors);
+            Assert.Contains("There is no replication in one or more of the levels of the categorisation factor (Cat2). Please select another factor.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -102,7 +102,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There are no observations recorded on the levels of the Response (Cat3). Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("There are no observations recorded on the levels of the categorisation factor (Cat3). Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -233,7 +233,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The response variable selected (Resp1) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp1) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -256,7 +256,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor selected (Cat1) contains missing data where there are observations present in the response variable. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Cat1) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -279,7 +279,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There is no replication in one or more of the levels of the Response (Cat2). Please select another factor.", errors);
+            Assert.Contains("There is no replication in one or more of the levels of the categorisation factor (Cat2). Please select another factor.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -302,7 +302,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There are no observations recorded on the levels of the Response (Cat3). Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("There are no observations recorded on the levels of the categorisation factor (Cat3). Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -412,7 +412,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There are no observations recorded on the levels of the Response (Cat4). Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("There are no observations recorded on the levels of the categorisation factor (Cat4). Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -467,7 +467,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The response selected (Resp10) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Assert.Contains("The Response (Resp10) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("SummaryStatistics", testName, warnings);
         }
 
