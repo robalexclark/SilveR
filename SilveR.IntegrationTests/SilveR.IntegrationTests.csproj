@@ -1126,6 +1126,120 @@
     <None Update="ExpectedResults\PairedTTestAnalysis\PTT32.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT33.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT34.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT35.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT36.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT37.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT38.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT39.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT40.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT41.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT42.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT43.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT44.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT45.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT46.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT47.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT48.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT49.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT50.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT51.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT52.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT53.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT54.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT55.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT56.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT57.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT58.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT59.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT60.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT62.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT63.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT64.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT65.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT66.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT67.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT68.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT69.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT70.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT71.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\RepeatedMeasuresParametricAnalysis\RMA25.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -16,7 +16,7 @@
         ],
         scrollable: true,
         editable: {
-            confirmation: "Are you sure you want to delete this record?", confirmDelete: "Delete", cancelDelete: "Cancel", mode: "inline", destroy: true
+            confirmation: "Are you sure you want to delete this analysis?", confirmDelete: "Delete", cancelDelete: "Cancel", mode: "inline", destroy: true
         },
         dataSource: {
             type: "GET",
@@ -59,23 +59,28 @@
     }
 
     $("#deleteSelected").click(function () {
-        const grid = $("#grid").data("kendoGrid");
-        // Get selected rows
-        var sel = $("input:checked", grid.tbody).closest("tr");
-        // Get data item for each
-        var analysisIDs = [];
-        $.each(sel, function (idx, row) {
-            var item = grid.dataItem(row);
-            analysisIDs.push(item.analysisID);
-        });
 
-        $.ajax({
-            type: "POST",
-            url: "/Analyses/DeleteSelected",
-            data: { analysisIDs: analysisIDs },
-            success: function () {
-                grid.dataSource.read();
-            }
-        });
+        const result = confirm("Are you sure you want to delete these analyses?");
+
+        if (result) {
+            const grid = $("#grid").data("kendoGrid");
+            // Get selected rows
+            var sel = $("input:checked", grid.tbody).closest("tr");
+            // Get data item for each
+            var analysisIDs = [];
+            $.each(sel, function (idx, row) {
+                var item = grid.dataItem(row);
+                analysisIDs.push(item.analysisID);
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/Analyses/DeleteSelected",
+                data: { analysisIDs: analysisIDs },
+                success: function () {
+                    grid.dataSource.read();
+                }
+            });
+        }
     });
 });
