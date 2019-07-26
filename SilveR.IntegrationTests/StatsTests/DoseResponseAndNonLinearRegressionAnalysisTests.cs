@@ -9,11 +9,11 @@ using Xunit;
 
 namespace SilveR.IntegrationTests
 {
-    public class DoseResponseAnalysisTests : IClassFixture<SilveRTestWebApplicationFactory<Startup>>
+    public class DoseResponseAndNonLinearRegressionAnalysisTests : IClassFixture<SilveRTestWebApplicationFactory<Startup>>
     {
         private readonly SilveRTestWebApplicationFactory<Startup> _factory;
 
-        public DoseResponseAnalysisTests(SilveRTestWebApplicationFactory<Startup> factory)
+        public DoseResponseAndNonLinearRegressionAnalysisTests(SilveRTestWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
@@ -84,24 +84,24 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
-        [Fact]
-        public async Task DR4()
-        {
-            string testName = "DR4";
+        //[Fact]
+        //public async Task DR4()
+        //{
+        //    string testName = "DR4";
 
-            //Arrange
-            HttpClient client = _factory.CreateClient();
+        //    //Arrange
+        //    HttpClient client = _factory.CreateClient();
 
-            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
-            model.Response = "Resp1";
-            model.Dose = "Dose1";
-            //model.Offset = "n";
+        //    DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+        //    model.Response = "Resp1";
+        //    model.Dose = "Dose1";
+        //    //model.Offset = "n";
 
-            //Act
-            //Assert
-            Assert.True(true);// test will always pass because numeric value is forced at UI
-        }
+        //    //Act
+        //    //Assert
+        //    Assert.True(true);// test will always pass because numeric value is forced at UI
+        //}
 
         [Fact]
         public async Task DR5()
@@ -883,24 +883,24 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
-        [Fact]
-        public async Task DR38()
-        {
-            string testName = "DR38";
+        //[Fact]
+        //public async Task DR38()
+        //{
+        //    string testName = "DR38";
 
-            //Arrange
-            HttpClient client = _factory.CreateClient();
+        //    //Arrange
+        //    HttpClient client = _factory.CreateClient();
 
-            DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
-            model.Response = "Resp 1";
-            model.ResponseTransformation = "None";
-            model.Dose = "Dose1";
+        //    DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
+        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
+        //    model.Response = "Resp 1";
+        //    model.ResponseTransformation = "None";
+        //    model.Dose = "Dose1";
 
-            //Act
-            //Assert
-            Assert.True(true);// test will always pass because numeric value is forced at UI
-        }
+        //    //Act
+        //    //Assert
+        //    Assert.True(true);// test will always pass because numeric value is forced at UI
+        //}
 
         [Fact]
         public async Task DR39()
@@ -938,7 +938,7 @@ namespace SilveR.IntegrationTests
             DoseResponseAndNonLinearRegressionAnalysisModel model = new DoseResponseAndNonLinearRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Dose Response").Key;
             model.Response = "Resp 1";
-            model.ResponseTransformation = "Log10";
+            model.ResponseTransformation = "None";
             model.Dose = "Dose1";
             model.QCResponse = "QC Resp1";
             model.QCDose = "QCDose1";
@@ -1382,7 +1382,7 @@ namespace SilveR.IntegrationTests
             model.QCResponse = "QC Resp1";
             model.QCDose = "QCDose1";
             model.SamplesResponse = "Sample 1";
-            model.MinCoeff = 10;
+            model.MinStartValue = 10;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1410,7 +1410,7 @@ namespace SilveR.IntegrationTests
             model.QCResponse = "QC Resp1";
             model.QCDose = "QCDose1";
             model.SamplesResponse = "Sample 1";
-            model.MaxCoeff = 1;
+            model.MaxStartValue = 1;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1848,7 +1848,8 @@ namespace SilveR.IntegrationTests
             model.QCResponse = "QC Resp1";
             model.QCDose = "QCDose2";
             model.SamplesResponse = "Sample 1";
-            model.MaxCoeff = 1;
+            model.MaxStartValue = 1;
+            model.SlopeStartValue = -1;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "DoseResponseAndNonLinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

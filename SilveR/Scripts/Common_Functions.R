@@ -1209,7 +1209,7 @@ NONCAT_MAT <- function() {
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scales = scalexy)
 
 	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = TRUE)
+		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = FALSE)
 	} else {
 		g1 <- g
 	}
@@ -1231,7 +1231,7 @@ OVERLAID_MAT <- function() {
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scales = scalexy)
 
 	if (dim(subset(graphdata, catvartest != "N"))[1] >= 1 && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), aes(colour = l_li), method = "lm", se = FALSE, lty = Line_type, size = Line_size, fullrange = TRUE)
+		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), aes(colour = l_li), method = "lm", se = FALSE, lty = Line_type, size = Line_size, fullrange = FALSE)
 	} else {
 		g1 <- g
 	}

@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+<style>
+html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-break:break-all}.dropdown-submenu{position:relative}.dropdown-submenu a::after{transform:rotate(-90deg);position:absolute;right:6px;top:.8em}.dropdown-submenu .dropdown-menu{top:0;left:100%;margin-left:.1rem;margin-right:.1rem}.checkbox-fix{margin-top:15px}#grid{height:calc(75vh)}#spreadsheet{width:100%;height:calc(75vh)}.text-block{padding-top:10px;padding-bottom:10px;text-align:justify;line-height:150%;font-size:16px}table.dataframe{border:1px solid #808080;background-color:#fff;width:100%;text-align:center;border-collapse:collapse}table.dataframe td,table.dataframe th{border:1px solid #808080;padding:3px 13px}table.dataframe tbody td{font-size:13px;text-align:center;padding:3px 13px}td:nth-child(1){background:#ccc}table.dataframe th{font-size:15px;background-color:#ccc;text-align:center}.k-button{color:#fff;background-color:#5cb85c;border-color:#4cae4c}.k-button:focus,.k-button.focus{color:#fff;background-color:#449d44;border-color:#255625}.k-button:hover{color:#fff;background-color:#449d44;border-color:#398439}.k-button:active,.k-button.active,.open>.dropdown-toggle.k-button{color:#fff;background-color:#449d44;border-color:#398439}.k-button:active:hover,.k-button.active:hover,.open>.dropdown-toggle.k-button:hover,.k-button:active:focus,.k-button.active:focus,.open>.dropdown-toggle.k-button:focus,.k-button:active.focus,.k-button.active.focus,.open>.dropdown-toggle.k-button.focus{color:#fff;background-color:#398439;border-color:#255625}.k-button:active,.k-button.active,.open>.dropdown-toggle.k-button{background-image:none}.k-button.disabled:hover,.k-button[disabled]:hover,fieldset[disabled] .k-button:hover,.k-button.disabled:focus,.k-button[disabled]:focus,fieldset[disabled] .k-button:focus,.k-button.disabled.focus,.k-button[disabled].focus,fieldset[disabled] .k-button.focus{background-color:#5cb85c;border-color:#4cae4c}.k-button .badge{color:#5cb85c;background-color:#fff}.k-numeric-wrap{width:100px}.disabledpanel{pointer-events:none;opacity:.4}
+</style>
+    <link rel="stylesheet" type="text/css" href='r2html.css'>
+
+ <h1> InVivoStat (beta version) P-Value Adjustment</h1>
+
+ <h2> Warning</h2>
+
+<p class='character'>This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output.</p>
+
+<p class='character'>The input p-values for this module should be unadjusted p-values. These unadjusted p-values are adjusted using Hochberg's multiple comparison procedure.</p>
+
+<p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
+
+ <h2> Results</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Unadjusted p-value  </th>
+		<th>Adjusted p-value</th> 
+	</tr> 
+<tr> 
+<td class="cellinside"><0.001
+</td>
+<td class="cellinside">0.0049
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">0.002
+</td>
+<td class="cellinside">0.0080
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">0.003
+</td>
+<td class="cellinside">0.0080
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">0.004
+</td>
+<td class="cellinside">0.0080
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">0.4
+</td>
+<td class="cellinside">0.4000
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>WARNING: You have entered unadjusted p-value(s) of the form <0.001. For the purposes of the numerical calculation this value has been replaced with 0.00099 and hence the adjusted p-value(s) may be unduly conservative.</p>
+
+ <h2> Conclusions</h2>
+
+<p class='character'>The unadjusted p-values <0.001, 0.002, 0.003 and 0.004 are statistically significant at the  10% level, using Hochberg's multiple comparison procedure.</p>
+
+ <h2> Statistical references</h2>
+
+<p class='character'>Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+
+<p class='character'>Hochberg Y. (1988). A sharper Bonferroni procedure for multiple tests of significance. Biometrika, 75, 800-803.</p>
+
+ <h2> R references</h2>
+
+<p class='character'>R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org.</p>
+
+<p class='character'>Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria.</p>
+
+<p class='character'>Torsten Hothorn, Frank Bretz and Peter Westfall (2008). Simultaneous  Inference in General Parametric Models. Biometrical Journal 50(3),  346--363.</p>
+
+ <h2> Analysis options</h2>
+
+<p class='character'>Analysis approach used: User supplied p-values</p>
+
+<p class='character'>Multiple comparison adjustment used: Hochberg</p>
+
+<p class='character'>User entered p-values: <0.001,0.002,0.003,0.004,0.4</p>
+
+<p class='character'>Significance level: 0.1</p>

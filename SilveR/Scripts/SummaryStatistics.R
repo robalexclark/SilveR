@@ -199,7 +199,7 @@ for (i in 1:resplength) {
                     vectorUQ[i] = quantile(eval(parse(text = paste("sub2$", csResponses))), 0.75, type = 2, na.rm = TRUE)
                 }
                 if (CoeffVariation == "Y") {
-                    vectorCoeffVariation[i] = 100 * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
+                    vectorCoeffVariation[i] = 100 * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / abs(mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
                 }
                 if (confidenceLimits == "Y") {
                     tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
@@ -478,7 +478,7 @@ for (i in 1:resplength) {
                 vectorUQ[i] = quantile(eval(parse(text = paste("sub2$", csResponses))), 0.75, type = 2, na.rm = TRUE)
             }
             if (CoeffVariation == "Y") {
-                vectorCoeffVariation[i] = 100 * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
+                vectorCoeffVariation[i] = 100 * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / abs(mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
             }
             if (confidenceLimits == "Y") {
                 tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))

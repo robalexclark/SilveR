@@ -5,6 +5,7 @@ trigger:
 
 jobs:
 - job: Test
+  timeoutInMinutes: 0
   pool:
     vmImage: 'windows-2019'
 
@@ -60,7 +61,20 @@ jobs:
     inputs:
       ArtifactName: 'drop'
 
-
+  - task: GitHubRelease@0
+    inputs:
+      gitHubConnection: github
+      repositoryName: robalexclark/SilveR
+      action: edit
+      target: 'master'
+      tagSource: manual
+      tag: '1.0'
+      title: '1.0-beta'
+      assetUploadMode: 'replace'
+      isPreRelease: true
+      isDraft: false
+      
+      
 
 - job: Windows
   dependsOn: Test
@@ -69,13 +83,13 @@ jobs:
 
   steps:
 
-  - script: 'dotnet tool install -g electronnet.cli'
+  - script: dotnet tool install ElectronNET.CLI-hotfix -g #USING HOTFIX
     displayName: Install Electron.Net CLI
 
   - script: 'dotnet clean'
     displayName: Clean Build
 
-  - script: electronize build /target win
+  - script: electronize-hotfix build /target win #USING HOTFIX
     workingDirectory: ./SilveR
     displayName: Build for Win-x64
 
@@ -114,16 +128,16 @@ jobs:
       packageType: 'sdk'
       version: '2.2.203'
 
-  - script: 'dotnet tool install -g electronNET.CLI'
+  - script: dotnet tool install ElectronNET.CLI-hotfix -g #USING HOTFIX
     displayName: Install Electron.Net CLI
 
-  - script: 'sudo npm install electron-builder --global'
+  - script: sudo npm install electron-builder --global
     displayName: Install electron builder
 
-  - script: 'sudo chown -R $(whoami) ~/.npm'
+  - script: sudo chown -R $(whoami) ~/.npm
     displayName: Reset permissions
 
-  - script: electronize build /target linux
+  - script: electronize-hotfix build /target linux #USING HOTFIX
     workingDirectory: ./SilveR
     displayName: Build for Linux
 
@@ -162,7 +176,7 @@ jobs:
       packageType: 'sdk'
       version: '2.2.203'
 
-  - script: 'dotnet tool install -g electronnet.cli'
+  - script: dotnet tool install ElectronNET.CLI-hotfix -g #USING HOTFIX
     displayName: Install Electron.Net CLI
 
   - task: NodeTool@0 
@@ -172,7 +186,7 @@ jobs:
   - script: sudo npm install electron-builder --global
     displayName: Install electron-builder
 
-  - script: electronize build /target osx
+  - script: electronize-hotfix build /target osx  #USING HOTFIX
     workingDirectory: ./SilveR
     displayName: Build for MacOS
 

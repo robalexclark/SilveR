@@ -583,7 +583,7 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat1";
-            model.AllPairwise = "Tukey";
+            model.AllPairwise = "Dunnetts";
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "D3";
 
@@ -2665,13 +2665,12 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.Treatments = new string[] { "Treat1", "Treat2" };
             model.OtherDesignFactors = new string[] { "Blo ck1" };
-            model.Covariates = new string[] { "Cov 1", "Cov3" };
+            model.Covariates = new string[] { "Cov 1", "Cov1a" };
             model.CovariateTransformation = "ArcSine";
             model.PrimaryFactor = "Treat2";
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
-            //model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
