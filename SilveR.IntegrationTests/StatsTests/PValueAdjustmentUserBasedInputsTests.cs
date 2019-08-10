@@ -445,22 +445,12 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             PValueAdjustmentUserBasedInputsModel model = new PValueAdjustmentUserBasedInputsModel();
-            model.PValues = "<0.0001,0.4";
+            model.PValues = "0.00001,0.4";
             model.SelectedTest = "Hochberg";
             model.Significance = "0.05";
 
-            //Act1
-            HttpResponseMessage response = await client.PostAsync("Analyses/PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
-
-            //Assert
-            Assert.Contains("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.00099 and hence the adjusted p-values may be unduly conservative.", warnings);
-            Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, warnings);
-
-            //Act2 - ignore warnings
-            var modelIgnoreWarnings = model.ToKeyValue();
-            modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(modelIgnoreWarnings));
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("PValueAdjustmentUserBasedInputs", model, testName, statsOutput);
 
             //Assert

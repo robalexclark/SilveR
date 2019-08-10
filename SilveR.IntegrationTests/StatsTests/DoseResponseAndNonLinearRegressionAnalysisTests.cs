@@ -1848,7 +1848,7 @@ namespace SilveR.IntegrationTests
             model.QCResponse = "QC Resp1";
             model.QCDose = "QCDose2";
             model.SamplesResponse = "Sample 1";
-            model.MaxStartValue = 1;
+            model.MaxCoeff = 1;
             model.SlopeStartValue = -1;
 
             //Act

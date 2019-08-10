@@ -121,13 +121,8 @@ for (i in 1:10) {
 }
 LS_YAxisTitle<-YAxisTitle
 
-#Re-ordering factor levels based on control group
-if (controlGroup != "NULL") {
-	temp <- c(levels(statdata$Timezzz))
-	temp = temp[!(temp %in% controlGroup)]
-	levs_plot <- c(controlGroup, temp)
-	statdata$Timezzz <- factor(statdata$Timezzz, levels=levs_plot)
-}
+#Takign default factor levels
+levs_plot <- c(levels(statdata$Timezzz))
 
 #===================================================================================================================
 # Titles and description
@@ -967,6 +962,14 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 #===================================================================================================================
 #All pairwise tests
 #===================================================================================================================
+#Re-ordering factor levels based on control group
+if (controlGroup != "NULL") {
+	temp <- c(levels(statdata$Timezzz))
+	temp = temp[!(temp %in% controlGroup)]
+	levs_plot <- c(controlGroup, temp)
+	statdata$Timezzz <- factor(statdata$Timezzz, levels=levs_plot)
+}
+
 #STB NOV2015 Add extra condition to GUI
 if (showComps == "Y") {
 	statdata$mainEffect<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))

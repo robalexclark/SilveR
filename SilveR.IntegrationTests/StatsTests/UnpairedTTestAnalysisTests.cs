@@ -347,6 +347,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.Treatment = "Treat1";
+            model.Significance = "0.1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -370,6 +371,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp:9";
             model.ResponseTransformation = "Square Root";
             model.Treatment = "Treat3";
+            model.Significance = "0.01";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

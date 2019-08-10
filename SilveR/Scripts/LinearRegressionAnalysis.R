@@ -376,7 +376,7 @@ if (nocontfactors == 1) {
 		#STB - March 2011 Formatting p-values p<0.0001
 #		pcorr2<-format(round(pcorr, 4), nsmall=4, scientific=FALSE)
 #		rho<-format(round(rho, 3), nsmall=3, scientific=FALSE)
-		inttabx2<-format(round(inttabx, 4), nsmall=4, scientific=FALSE)
+		inttabx<-format(round(inttabx, 4), nsmall=4, scientific=FALSE)
 		slopetabx<-format(round(slopetabx, 4), nsmall=4, scientific=FALSE)
 
 #		if (pcorr<0.0001)  {
