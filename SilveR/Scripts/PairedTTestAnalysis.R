@@ -75,7 +75,16 @@ dimfact<-length(unique(eval(parse(text = paste("statdata$", timeFactor)))))
 resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
 statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
 statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
+
+#Re-ordering factor levels based on control group
+if (dimfact ==2 && controlGroup != "NULL") {
+	temp <- c(levels(statdata$Timezzz))
+	temp = temp[!(temp %in% controlGroup)]
+	levs_plot <- c(controlGroup, temp)
+	statdata$Timezzz <- factor(statdata$Timezzz, levels=levs_plot)
+}
 statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
+
 
 #calculating number of block and treatment factors
 noblockfactors = 0
@@ -962,13 +971,6 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 #===================================================================================================================
 #All pairwise tests
 #===================================================================================================================
-#Re-ordering factor levels based on control group
-if (controlGroup != "NULL") {
-	temp <- c(levels(statdata$Timezzz))
-	temp = temp[!(temp %in% controlGroup)]
-	levs_plot <- c(controlGroup, temp)
-	statdata$Timezzz <- factor(statdata$Timezzz, levels=levs_plot)
-}
 
 #STB NOV2015 Add extra condition to GUI
 if (showComps == "Y") {

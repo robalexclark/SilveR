@@ -627,6 +627,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day1";
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -654,7 +659,12 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Cov1" };
             model.ControlGroup = "2";
             model.Covariance = "Compound Symmetric";
-
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
@@ -681,7 +691,12 @@ namespace SilveR.IntegrationTests
             model.OtherDesignFactors = new string[] { "Block1" };
             model.ControlGroup = "2";
             model.Covariance = "Compound Symmetric";
-
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
@@ -706,6 +721,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day1";
             model.ControlGroup = "6";
             model.Covariance = "Autoregressive(1)";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -733,6 +753,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Autoregressive(1)";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -760,6 +785,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Autoregressive(1)";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -786,6 +816,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day1";
             model.ControlGroup = "6";
             model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -813,6 +848,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Unstructured";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -840,6 +880,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Unstructured";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -865,6 +910,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day1";
             model.ControlGroup = "2";
             model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -901,7 +951,12 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day1";
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
-            model.Covariates = new string[] { "Cov4" };
+            model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -939,6 +994,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Compound Symmetric";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -975,6 +1035,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day1";
             model.ControlGroup = "6";
             model.Covariance = "Autoregressive(1)";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1012,6 +1077,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "2";
             model.Covariance = "Autoregressive(1)";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1049,6 +1119,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Autoregressive(1)";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1085,6 +1160,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day1";
             model.ControlGroup = "1";
             model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1122,6 +1202,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "6";
             model.Covariance = "Unstructured";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1159,6 +1244,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Unstructured";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1189,25 +1279,20 @@ namespace SilveR.IntegrationTests
 
             PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
-            model.Response = "Resp4";
-            model.ResponseTransformation = "Square Root";
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
             model.Subject = "Animal4";
             model.Treatment = "Day4";
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
-            //Act1
-            HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
-
-            //Assert
-            Assert.Contains("The Response (Resp4) contains missing data.", warnings);
-            Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
-
-            //Act2 - ignore warnings
-            var modelIgnoreWarnings = model.ToKeyValue();
-            modelIgnoreWarnings.Add("ignoreWarnings", "true");
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -1232,6 +1317,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "6";
             model.Covariance = "Compound Symmetric";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1256,9 +1346,14 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.Subject = "Animal4";
             model.Treatment = "Day4";
-            model.ControlGroup = "6";
+            model.ControlGroup = "1";
             model.Covariance = "Compound Symmetric";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1285,6 +1380,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day4";
             model.ControlGroup = "2";
             model.Covariance = "Autoregressive(1)";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1312,6 +1412,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Autoregressive(1)";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1339,6 +1444,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "6";
             model.Covariance = "Autoregressive(1)";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1365,6 +1475,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day4";
             model.ControlGroup = "6";
             model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1392,6 +1507,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Unstructured";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1419,6 +1539,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "2";
             model.Covariance = "Unstructured";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1445,7 +1570,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day6";
             model.ControlGroup = "6";
             model.Covariance = "Compound Symmetric";
-            model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1473,6 +1602,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1500,6 +1634,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1526,6 +1665,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day6";
             model.ControlGroup = "4";
             model.Covariance = "Autoregressive(1)";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1553,6 +1697,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Autoregressive(1)";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1580,6 +1729,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "2";
             model.Covariance = "Autoregressive(1)";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1606,6 +1760,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Day6";
             model.ControlGroup = "6";
             model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1633,6 +1792,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "2";
             model.Covariance = "Unstructured";
             model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1660,6 +1824,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Unstructured";
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1687,6 +1856,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Unstructured";
             model.Covariates = new string[] { "Cov7" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1714,6 +1888,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
             model.Covariates = new string[] { "PVTestCOV1a" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1741,6 +1920,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
             model.Covariates = new string[] { "PVTestCOV1b" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1767,6 +1951,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "CVTime1";
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1793,6 +1982,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "CVTime2";
             model.ControlGroup = "4";
             model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1820,6 +2014,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Compound Symmetric";
             model.Covariates = new string[] { "Cov1", "Cov7", "Cov8" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1847,6 +2046,12 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Compound Symmetric";
             model.Covariates = new string[] { "Cov1", "Cov7" };
+            model.CovariateTransformation = "Log10";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1875,6 +2080,11 @@ namespace SilveR.IntegrationTests
             model.Covariance = "Unstructured";
             model.OtherDesignFactors = new string[] { "Block1" };
             model.Covariates = new string[] { "Cov1", "Cov7", "Cov8" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1903,6 +2113,11 @@ namespace SilveR.IntegrationTests
             model.Covariance = "Unstructured";
             model.Covariates = new string[] { "Cov1", "Cov7" };
             model.CovariateTransformation = "Square Root";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1930,6 +2145,11 @@ namespace SilveR.IntegrationTests
             model.ControlGroup = "1";
             model.Covariance = "Autoregressive(1)";
             model.Covariates = new string[] { "Cov1", "Cov7", "Cov8" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1959,6 +2179,11 @@ namespace SilveR.IntegrationTests
             model.Covariance = "Autoregressive(1)";
             model.Covariates = new string[] { "Cov1", "Cov7" };
             model.CovariateTransformation = "Square Root";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

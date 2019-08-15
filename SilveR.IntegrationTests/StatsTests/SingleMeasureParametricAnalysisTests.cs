@@ -583,8 +583,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat1";
-            model.AllPairwise = "Dunnetts";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = "Dunnett";
             model.ControlGroup = "D3";
 
             //Act
@@ -821,8 +821,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.AllPairwise = "Dunnett";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = "Dunnett";
             model.ControlGroup = "D0";
 
             //Act
@@ -1021,7 +1021,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
             model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
+            model.ControlGroup = "F";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1053,8 +1053,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.AllPairwise = "Dunnett";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = "Dunnett";
             model.ControlGroup = "D0";
 
             //Act
@@ -2675,7 +2675,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
             model.ComparisonsBackToControl = "Dunnett";
-            model.ControlGroup = "D3";
+            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
