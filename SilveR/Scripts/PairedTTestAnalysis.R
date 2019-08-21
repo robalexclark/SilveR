@@ -646,10 +646,12 @@ if (CovariateRegressionCoefficients == "Y"  && covariatelist != "NULL") {
 	
 	covtable2 <-cbind(names, Estimate, StdError, tvalue, Prt)
 
-	if (as.numeric(covtable[1,4])<0.0001)  {
-		#STB March 2011 formatting p-values p<0.0001
-		#ivsanova[i,9]<-0.0001
-		covtable2[1,5]= "<0.0001"
+	for (k in 1:(dim(covtable2)[1])) {
+		if (as.numeric(covtable[k,5])<0.0001)  {
+			#STB March 2011 formatting p-values p<0.0001
+			#ivsanova[i,9]<-0.0001
+			covtable2[k,5]= "<0.0001"
+		}
 	}
 	colnames(covtable2)<-c("Covariate", "Estimate", "Std error", "t-value", "p-value")
 	HTML(covtable2, classfirstline="second", align="left", row.names = "FALSE")

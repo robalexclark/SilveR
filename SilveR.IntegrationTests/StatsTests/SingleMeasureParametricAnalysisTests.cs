@@ -1258,8 +1258,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1291,8 +1289,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1325,7 +1321,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
             model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
+            model.ControlGroup = "M";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1357,8 +1353,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1391,8 +1385,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1461,8 +1453,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1530,8 +1520,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
-            model.AllPairwise = "Dunnett";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = "Dunnett";
             model.ControlGroup = "D0";
 
             //Act
@@ -1666,8 +1656,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1702,8 +1690,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1996,8 +1982,8 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
-            model.AllPairwise = "Dunnett";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = "Dunnett";
             model.ControlGroup = "1";
 
             //Act1
@@ -2275,7 +2261,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
             model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "0";
+            model.ControlGroup = "1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2306,8 +2292,8 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTestGroup1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "0";
+            model.ComparisonsBackToControl = "Dunnett";
+            model.ControlGroup = "1";
 
 
             //Act
@@ -2342,7 +2328,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
             model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "0";
+            model.ControlGroup = "1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2376,7 +2362,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
             model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "0";
+            model.ControlGroup = "1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2439,8 +2425,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "CVTreat3 * CVTreat4";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "2";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2568,8 +2552,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D10";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2603,8 +2585,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2 * Treat3";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D3";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2710,8 +2690,6 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1 * Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
-            model.ControlGroup = "D0";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

@@ -1568,7 +1568,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.Subject = "Animal 5";
             model.Treatment = "Day6";
-            model.ControlGroup = "6";
+            model.ControlGroup = "1";
             model.Covariance = "Compound Symmetric";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
@@ -1599,7 +1599,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.Subject = "Animal 5";
             model.Treatment = "Day6";
-            model.ControlGroup = "4";
+            model.ControlGroup = "2";
             model.Covariance = "Compound Symmetric";
             model.Covariates = new string[] { "Cov1" };
             model.ANOVASelected = true;
@@ -1631,7 +1631,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.Subject = "Animal 5";
             model.Treatment = "Day6";
-            model.ControlGroup = "4";
+            model.ControlGroup = "2";
             model.Covariance = "Compound Symmetric";
             model.OtherDesignFactors = new string[] { "Block1" };
             model.ANOVASelected = true;
@@ -1663,7 +1663,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.Subject = "Animal 5";
             model.Treatment = "Day6";
-            model.ControlGroup = "4";
+            model.ControlGroup = "1";
             model.Covariance = "Autoregressive(1)";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
@@ -1758,7 +1758,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.Subject = "Animal 5";
             model.Treatment = "Day6";
-            model.ControlGroup = "6";
+            model.ControlGroup = "2";
             model.Covariance = "Unstructured";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
@@ -1821,7 +1821,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.Subject = "Animal 5";
             model.Treatment = "Day6";
-            model.ControlGroup = "4";
+            model.ControlGroup = "1";
             model.Covariance = "Unstructured";
             model.OtherDesignFactors = new string[] { "Block1" };
             model.ANOVASelected = true;

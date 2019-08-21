@@ -931,4 +931,70 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
- <h2> All to one comparisons without adjustment for multiplicity (LSD test)</h2>
+ <h2> Analysis description</h2>
+
+<p class='character'>The data were analysed using a 3-way ANOVA approach, with Treat1, Treat2 and Treat3 as the treatment factors. This was followed by Planned Comparisons of the predicted means to compare the levels of the Treat1 * Treat2 interaction.  The response was Log10 transformed prior to analysis to stabilise the variance. </p>
+
+<p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
+
+ <h2> Statistical references</h2>
+
+<p class='character'>Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+
+<p class='character'><bf> Armitage P, Matthews JNS and Berry G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.</bf></p>
+
+<p class='character'><bf>Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.</bf></p>
+
+ <h2> R references</h2>
+
+<p class='character'>R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org.</p>
+
+<p class='character'>Barret Schloerke, Jason Crowley, Di Cook, Heike Hofmann, Hadley Wickham, Francois Briatte, Moritz Marbach and Edwin Thoen (2014). GGally: Extension to ggplot2. R package version 0.4.5. http://CRAN.R-project.org/package=GGally</p>
+
+<p class='character'>Erich Neuwirth (2011). RColorBrewer: ColorBrewer palettes. R package  version 1.0-5. http://CRAN.R-project.org/package=RColorBrewer</p>
+
+<p class='character'>H. Wickham. ggplot2: elegant graphics for data analysis. Springer New York, 2009.</p>
+
+<p class='character'>Kamil Slowikowski (2018). ggrepel: Automatically Position Non-Overlapping Text Labels with 'ggplot2'. R package version 0.8.0. https://CRAN.R-project.org/package=ggrepel</p>
+
+<p class='character'>H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007.</p>
+
+<p class='character'>Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL http://www.jstatsoft.org/v40/i01/.</p>
+
+<p class='character'>Hadley Wickham (2012). scales: Scale functions for graphics. R package version 0.2.3. http://CRAN.R-project.org/package=scales</p>
+
+<p class='character'>John Fox and Sanford Weisberg (2011). An {R} Companion to Applied Regression, Second Edition. Thousand Oaks CA: Sage. URL: http://socserv.socsci.mcmaster.ca/jfox/Books/Companion</p>
+
+<p class='character'>Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria.</p>
+
+<p class='character'>Louis Kates and Thomas Petzoldt (2012). proto: Prototype object-based programming. R package version 0.3-10. http://CRAN.R-project.org/package=proto</p>
+
+<p class='character'>Russell V. Lenth (2014). lsmeans: Least-Squares Means. R package version 2.00-1. http://CRAN.R-project.org/package=lsmeans</p>
+
+<p class='character'>Torsten Hothorn, Frank Bretz and Peter Westfall (2008). Simultaneous  Inference in General Parametric Models. Biometrical Journal 50(3),  346--363.</p>
+
+<p class='character'>Spencer Graves, Hans-Peter Piepho and Luciano Selzer with help from Sundar Dorai-Raj (2015). multcompView: Visualizations of Paired Comparisons. R package version 0.1-7. https://CRAN.R-project.org/package=multcompView</p>
+
+ <h2> Analysis options</h2>
+
+<p class='character'>Response variable: Resp 1</p>
+
+<p class='character'>Response transformation: Log10</p>
+
+<p class='character'>Treatment factors: Treat1,Treat2,Treat3</p>
+
+<p class='character'>Model fitted: Treat1+Treat2+Treat3+Treat1*Treat2+Treat1*Treat3+Treat2*Treat3+Treat1*Treat2*Treat3</p>
+
+<p class='character'>Output ANOVA table (Y/N): Y</p>
+
+<p class='character'>Output predicted vs. residual plot (Y/N): Y</p>
+
+<p class='character'>Output normal probability plot (Y/N): Y</p>
+
+<p class='character'>Show Least Square predicted means (Y/N): Y</p>
+
+<p class='character'>Selected effect (for pairwise mean comparisons): Treat1 * Treat2</p>
+
+<p class='character'>All pairwise tests procedure: none</p>
+
+<p class='character'>Significance level: 0.05</p>

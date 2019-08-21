@@ -521,6 +521,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp3";
             model.ContinuousFactors = new string[] { "Cont1" };
             model.CategoricalFactors = new string[] { "Cat6", "Cat8" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -544,6 +551,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp10";
             model.ContinuousFactors = new string[] { "Cont5" };
             model.CategoricalFactors = new string[] { "Cat11", "Cat12" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -566,6 +580,13 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
             model.Response = "Resp3";
             model.ContinuousFactors = new string[] { "Resp4", "Resp6", "Resp7" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -588,6 +609,13 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -610,6 +638,13 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -632,6 +667,13 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -655,6 +697,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1" };
             model.CategoricalFactors = new string[] { "Cat1" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -678,6 +727,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.CategoricalFactors = new string[] { "Cat1" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -702,6 +758,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
             model.CategoricalFactors = new string[] { "Cat1" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -723,9 +786,16 @@ namespace SilveR.IntegrationTests
             LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
             model.Response = "Response1";
-            model.ResponseTransformation = "Square Root";
+            model.ResponseTransformation = "None";
             model.ContinuousFactors = new string[] { "Cont1" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -749,6 +819,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -772,6 +849,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -796,6 +880,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.ContinuousFactors = new string[] { "Cont1" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2", "Cat$3" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -819,6 +910,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2", "Cat$3" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -842,6 +940,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2", "Cat$3" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -866,6 +971,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.ContinuousFactors = new string[] { "Cont1" };
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -890,6 +1002,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.OtherDesignFactors = new string[] { "Block1", "Block£2" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -914,6 +1033,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
             model.OtherDesignFactors = new string[] { "Block1", "Block£2", "Block3" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -938,6 +1064,13 @@ namespace SilveR.IntegrationTests
             model.ContinuousFactors = new string[] { "Cont1" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
             model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -962,6 +1095,13 @@ namespace SilveR.IntegrationTests
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
             model.OtherDesignFactors = new string[] { "Block1", "Block£2" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -986,6 +1126,13 @@ namespace SilveR.IntegrationTests
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
             model.OtherDesignFactors = new string[] { "Block1", "Block£2", "Block3" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1011,6 +1158,13 @@ namespace SilveR.IntegrationTests
             model.ContinuousFactors = new string[] { "Cont1" };
             model.Covariates = new string[] { "Covariate" };
             model.CovariateTransformation = "Log10";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1035,6 +1189,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.Covariates = new string[] { "Covariate" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1060,6 +1221,13 @@ namespace SilveR.IntegrationTests
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
             model.Covariates = new string[] { "Covariate" };
             model.CovariateTransformation = "Square Root";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1088,6 +1256,13 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Covariate" };
             model.PrimaryFactor = "Cat1";
             model.CovariateTransformation = "Log10";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1109,12 +1284,19 @@ namespace SilveR.IntegrationTests
             LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
             model.Response = "Response1";
-            model.ResponseTransformation = "LN";
+            model.ResponseTransformation = "Loge";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2", "Cat$3" };
             model.OtherDesignFactors = new string[] { "Block1" };
             model.Covariates = new string[] { "Covariate" };
             model.PrimaryFactor = "Cat1";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1143,6 +1325,13 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Covariate" };
             model.PrimaryFactor = "Cat&2";
             model.CovariateTransformation = "Square Root";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1170,6 +1359,13 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Covariate2" };
             model.PrimaryFactor = "Cat10";
             model.CovariateTransformation = "None";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1197,6 +1393,13 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Covariate2" };
             model.PrimaryFactor = "Cat9";
             model.CovariateTransformation = "None";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1231,6 +1434,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.ContinuousFactors = new string[] { "Resp5" };
             model.CategoricalFactors = new string[] { "Cat6" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1255,6 +1465,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.ContinuousFactors = new string[] { "Resp3" };
             model.CategoricalFactors = new string[] { "Cat6" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1288,6 +1505,13 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp12";
             model.ResponseTransformation = "None";
             model.ContinuousFactors = new string[] { "Cont6" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
