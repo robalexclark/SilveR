@@ -1060,6 +1060,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "Square Root";
             model.FirstCatFactor = "Cat1";
             model.ScatterplotSelected = true;
+            model.LinearFitSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
@@ -1854,6 +1855,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.OutliersSelected = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1893,6 +1895,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.OutliersSelected = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2000,6 +2003,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1 Cat 2";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.OutliersSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2030,6 +2034,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.OutliersSelected = true;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
