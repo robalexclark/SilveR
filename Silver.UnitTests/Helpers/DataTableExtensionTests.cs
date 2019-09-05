@@ -65,7 +65,7 @@ namespace Silver.UnitTests.Helpers
             string message = dataTable.CheckDataTable();
 
             //Assert
-            Assert.StartsWith("The dataset contains characters in the column headers that we cannot handle (such as + * ` ~ \\)", message);
+            Assert.StartsWith("The dataset contains characters in the column headers that InVivoStat cannot handle (such as + * ` ~ \\)", message);
         }
 
         [Fact]

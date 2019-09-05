@@ -30,7 +30,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
             model.Response = "Resp 1";
             model.Treatment = "Resp 1";
-            model.ControlGroup = "0.98";
+            model.ControlGroup = "0.998758912";
             model.PercentChange = "10";
             model.ChangeType = ChangeTypeOption.Percent;
             model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
@@ -57,7 +57,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp2";
             model.Treatment = null;
             model.ControlGroup = null;
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
@@ -83,7 +83,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Treat3";
             model.ControlGroup = "A";
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
@@ -109,7 +109,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Treat4";
             model.ControlGroup = "A";
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
@@ -135,7 +135,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp3";
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
@@ -148,36 +148,61 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 
-        //[Fact]
-        //public async Task PSS6()
-        //{
-        //    string testName = "PSS5";
+        [Fact]
+        public async Task PSS8()
+        {
+            string testName = "PSS8";
 
-        //    //Arrange
-        //    HttpClient client = _factory.CreateClient();
+            //Arrange
+            HttpClient client = _factory.CreateClient();
 
-        //    ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
-        //    model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
-        //    model.Response = "Resp3";
-        //    model.Treatment = "Treat1";
-        //    model.ControlGroup = "x";
-        //    model.AbsoluteChange = "0.25 0.5 0.75 1";
-        //    model.ChangeType = ChangeTypeOption.Absolute;
-        //    model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = -50;
+            model.PowerTo = 80;
 
-        //    //Act
-        //    HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
-        //    IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
-        //    //Assert
-        //    Assert.Contains("The Response (Resp2) contains only 1 value. Please select another factor.", errors);
-        //    Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
-        //}
+            //Assert
+            Assert.Contains("Power from must be > 0.", errors);
+            Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+        }
 
+        [Fact]
+        public async Task PSS11()
+        {
+            string testName = "PSS11";
 
+            //Arrange
+            HttpClient client = _factory.CreateClient();
 
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = -10;
+            model.SampleSizeTo = 20;
 
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
+            //Assert
+            Assert.Contains("Sample size from must be > 0.", errors);
+            Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+        }
 
         [Fact]
         public async Task PSS12()
@@ -192,16 +217,18 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 80;
+            model.PowerTo = 50;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Absolute changes has non-numeric values or the values are not comma separated.", errors);
+            Assert.Contains("Power To value must be greater than the From value.", errors);
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 
@@ -218,18 +245,18 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.AbsoluteChange = "0.25,0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
-            model.PlottingRangeType = PlottingRangeTypeOption.Power;
-            model.PowerFrom = 80;
-            model.PowerTo = 50;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 80;
+            model.SampleSizeTo = 50;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Absolute changes has non-numeric values or the values are not comma separated.", errors);
+            Assert.Contains("Sample Size To value must be greater than the From value.", errors);
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 
@@ -259,6 +286,452 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 
+
+        [Fact]
+        public async Task PSS15()
+        {
+            string testName = "PSS15";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.PercentChange = "40 60 80 100";
+            model.ChangeType = ChangeTypeOption.Percent;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS16()
+        {
+            string testName = "PSS16";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.1";
+            model.PercentChange = "40 60 80 100";
+            model.ChangeType = ChangeTypeOption.Percent;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 4;
+            model.SampleSizeTo = 8;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS17()
+        {
+            string testName = "PSS17";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.01";
+            model.PercentChange = "40 60 80 100";
+            model.ChangeType = ChangeTypeOption.Percent;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS18()
+        {
+            string testName = "PSS18";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.05";
+            model.PercentChange = "40 60 80 100";
+            model.ChangeType = ChangeTypeOption.Percent;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task PSS19()
+        {
+            string testName = "PSS19";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.05";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS20()
+        {
+            string testName = "PSS20";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.10";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 4;
+            model.SampleSizeTo = 8;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS21()
+        {
+            string testName = "PSS21";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.10";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS22()
+        {
+            string testName = "PSS22";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.5";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 80;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS23()
+        {
+            string testName = "PSS23";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = null;
+            model.Significance = "0.5";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS24()
+        {
+            string testName = "PSS24";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = null;
+            model.Significance = "0.5";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 4;
+            model.SampleSizeTo = 8;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS25()
+        {
+            string testName = "PSS25";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = null;
+            model.Significance = "0.01";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS26()
+        {
+            string testName = "PSS26";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = null;
+            model.Significance = "0.05";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 80;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS27()
+        {
+            string testName = "PSS27";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = null;
+            model.ControlGroup = null;
+            model.Significance = "0.05";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS28()
+        {
+            string testName = "PSS28";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = null;
+            model.ControlGroup = null;
+            model.Significance = "0.05";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.PowerFrom = 4;
+            model.PowerTo = 8;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS29()
+        {
+            string testName = "PSS29";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = null;
+            model.ControlGroup = null;
+            model.Significance = "0.01";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS30()
+        {
+            string testName = "PSS30";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = null;
+            model.ControlGroup = null;
+            model.Significance = "0.01";
+            model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 80;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
 
     }
 }

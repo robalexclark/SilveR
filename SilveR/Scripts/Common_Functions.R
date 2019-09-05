@@ -747,7 +747,7 @@ NONCAT_SEM <- function() {
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape)
 	}
 
-	if (DisplaySEMlines == "Y") {
+	if (DisplaySEMlines == "Y" && SEMPlotType != "Column" ) {
 		g2 <- g1 + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line) 
 	} else {
 		g2 <- g1
@@ -786,7 +786,7 @@ ONECATSEP_SEM <- function() {
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
 			facet_wrap(~l_l)
 	}
-	if (DisplaySEMlines == "Y") {
+	if (DisplaySEMlines == "Y" && SEMPlotType != "Column") {
 		g2 <- g1 +stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
 	} else {
 		g2 <- g1
@@ -826,7 +826,7 @@ TWOCATSEP_SEM <- function() {
 			facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 	}
 
-	if (DisplaySEMlines == "Y") {
+	if (DisplaySEMlines == "Y" && SEMPlotType != "Column") {
 		g2 <- g1 +  stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
 	} else {
 		g2 <- g1
@@ -867,7 +867,7 @@ OVERLAID_SEM <- function() {
 			geom_point(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, fill = l_l), colour = "black", size = Point_size, shape = Point_shape, pos = position_dodge(w = 0.1))
 	}
 	
-	if (DisplaySEMlines == "Y") {
+	if (DisplaySEMlines == "Y" && SEMPlotType != "Column") {
 		g2 <- g1 +  stat_summary(data = graphdataSEM, fun.y = mean, geom = 'line', aes(group = l_l, colour = l_l), pos = position_dodge(w = 0.1))
 	} else {
 		g2 <- g1

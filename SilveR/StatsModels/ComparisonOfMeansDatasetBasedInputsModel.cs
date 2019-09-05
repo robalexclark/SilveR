@@ -41,19 +41,19 @@ namespace SilveR.StatsModels
 
         public PlottingRangeTypeOption PlottingRangeType { get; set; } = PlottingRangeTypeOption.SampleSize;
 
-        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Sample size from must be > 0")]
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Sample size from must be > 0.")]
         [DisplayName("Sample size from")]
         public Nullable<int> SampleSizeFrom { get; set; } = 6;
 
-        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Sample size to must be > 0")]
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Sample size to must be > 0.")]
         [DisplayName("Sample size to")]
         public Nullable<int> SampleSizeTo { get; set; } = 15;
 
-        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Power from must be > 0")]
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Power from must be > 0.")]
         [DisplayName("Power from")]
         public Nullable<int> PowerFrom { get; set; } = 70;
 
-        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Power to must be > 0")]
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Power to must be > 0.")]
         [DisplayName("Power to")]
         public Nullable<int> PowerTo { get; set; } = 90;
 

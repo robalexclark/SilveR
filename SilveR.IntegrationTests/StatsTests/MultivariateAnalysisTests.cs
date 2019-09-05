@@ -330,6 +330,7 @@ namespace SilveR.IntegrationTests
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
             model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width", "Petal length" };
+            model.ResponseTransformation = "Loge";
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis;
 
             //Act
@@ -424,8 +425,8 @@ namespace SilveR.IntegrationTests
 
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
-            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
-            model.ResponseTransformation = "Log10";
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width", "Petal length" };
+            model.ResponseTransformation = "Loge";
             model.CategoricalPredictor = "Categorial factor";
             model.CaseID = "Case ID";
 
@@ -450,7 +451,7 @@ namespace SilveR.IntegrationTests
 
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
-            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width", "Petal length" };
             model.ResponseTransformation = "Log10";
             model.CategoricalPredictor = "Categorical continuous";
 
@@ -475,7 +476,7 @@ namespace SilveR.IntegrationTests
 
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
-            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width", "Petal length" };
             model.ResponseTransformation = "Square Root";
             model.CategoricalPredictor = "Categorial factor";
             model.CaseID = "Case ID";
@@ -501,7 +502,7 @@ namespace SilveR.IntegrationTests
 
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
-            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width", "Petal length" };
             model.CategoricalPredictor = "Categorical Binary 2";
 
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;
@@ -525,7 +526,7 @@ namespace SilveR.IntegrationTests
 
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
-            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width", "Petal length" };
             model.ResponseTransformation = "Loge";
             model.CategoricalPredictor = "Categorical Binary 2";
             model.CaseID = "Case ID";
@@ -550,7 +551,7 @@ namespace SilveR.IntegrationTests
 
             MultivariateAnalysisModel model = new MultivariateAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Multivariate").Key;
-            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width" };
+            model.Responses = new string[] { "Sepal length", "Sepal width", "Petal width", "Petal length" };
             model.ResponseTransformation = "Log10";
             model.CategoricalPredictor = "Categorical Binary 1";
             model.AnalysisType = MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis;

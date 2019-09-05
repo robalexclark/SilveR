@@ -64,7 +64,7 @@ namespace SilveR.Helpers
                     if (col.ColumnName.Contains(s))
                     {
                         illegalCharFound = true;
-                        illegalCharMessage = "The dataset contains characters in the column headers that we cannot handle (such as + * ` ~ \\)";
+                        illegalCharMessage = "The dataset contains characters in the column headers that InVivoStat cannot handle (such as + * ` ~ \\)";
                         break;
                     }
                 }
