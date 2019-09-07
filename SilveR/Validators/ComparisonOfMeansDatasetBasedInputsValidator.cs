@@ -76,7 +76,7 @@ namespace SilveR.Validators
                 else
                 {
                     char[] splitters = { ',' };
-                    string[] changes = mcVariables.PercentChange.Replace(" ", "").Split(splitters, StringSplitOptions.None); //split list by comma
+                    string[] changes = mcVariables.PercentChange.Split(splitters, StringSplitOptions.None); //split list by comma
 
                     foreach (string s in changes)
                     {
@@ -96,6 +96,11 @@ namespace SilveR.Validators
                             else if (number < 0)
                             {
                                 ValidationInfo.AddErrorMessage("Percent changes has values less than zero.");
+                                return ValidationInfo;
+                            }
+                            else if (number > 100)
+                            {
+                                ValidationInfo.AddErrorMessage("Percent changes has values greater than 100.");
                                 return ValidationInfo;
                             }
                         }
@@ -132,6 +137,11 @@ namespace SilveR.Validators
                             else if (number < 0)
                             {
                                 ValidationInfo.AddErrorMessage("Absolute changes has values less than zero.");
+                                return ValidationInfo;
+                            }
+                            else if (number > 100)
+                            {
+                                ValidationInfo.AddErrorMessage("Absolute changes has values greater than 100.");
                                 return ValidationInfo;
                             }
                         }

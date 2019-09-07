@@ -15,7 +15,7 @@ namespace SilveR.Validators
         public override ValidationInfo Validate()
         {
             char[] splitters = { ',' };
-            string[] means = owVariables.Means.Replace(" ", "").Split(splitters, StringSplitOptions.None); //split list by comma
+            string[] means = owVariables.Means.Split(splitters, StringSplitOptions.None); //split list by comma
 
             foreach (string s in means)//go through list and check that is a number and is greater than 0
             {

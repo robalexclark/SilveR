@@ -145,6 +145,54 @@
     <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisDatasetBasedInputs\PSS30.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS13.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS14.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS15.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS16.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS17.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS18.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS19.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS20.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS21.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS23.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS24.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS25.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS26.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS27.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\ComparisonOfMeansPowerAnalysisUserBasedInputs\PSS28.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\CorrelationAnalysis\COR12.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

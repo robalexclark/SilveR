@@ -300,7 +300,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
-            model.PercentChange = "40 60 80 100";
+            model.PercentChange = "40, 60, 80,100";
             model.ChangeType = ChangeTypeOption.Percent;
             model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
 
@@ -327,7 +327,7 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
             model.Significance = "0.1";
-            model.PercentChange = "40 60 80 100";
+            model.PercentChange = "40, 60, 80, 100";
             model.ChangeType = ChangeTypeOption.Percent;
             model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
             model.SampleSizeFrom = 4;
@@ -356,7 +356,7 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
             model.Significance = "0.01";
-            model.PercentChange = "40 60 80 100";
+            model.PercentChange = "40, 60, 80, 100";
             model.ChangeType = ChangeTypeOption.Percent;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
@@ -383,9 +383,11 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
             model.Significance = "0.05";
-            model.PercentChange = "40 60 80 100";
+            model.PercentChange = "40, 60 ,80, 100";
             model.ChangeType = ChangeTypeOption.Percent;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 80;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -493,7 +495,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
-            model.Significance = "0.5";
+            model.Significance = "0.05";
             model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
@@ -522,7 +524,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Trea t1";
             model.ControlGroup = null;
-            model.Significance = "0.5";
+            model.Significance = "0.05";
             model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
@@ -549,7 +551,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp1";
             model.Treatment = "Trea t1";
             model.ControlGroup = null;
-            model.Significance = "0.5";
+            model.Significance = "0.05";
             model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
@@ -665,8 +667,8 @@ namespace SilveR.IntegrationTests
             model.AbsoluteChange = "0.25, 0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
-            model.PowerFrom = 4;
-            model.PowerTo = 8;
+            model.SampleSizeFrom = 4;
+            model.SampleSizeTo = 8;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -733,5 +735,62 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
+        [Fact]
+        public async Task PSS31()
+        {
+            string testName = "PSS31";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = null;
+            model.ControlGroup = null;
+            model.Significance = "0.01";
+            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 80;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Absolute changes has non-numeric values or the values are not comma separated.", errors);
+            Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+        }
+
+        [Fact]
+        public async Task PSS32()
+        {
+            string testName = "PSS32";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Trea t1";
+            model.ControlGroup = "x";
+            model.Significance = "0.01";
+            model.AbsoluteChange = "0.25 0.5 0.75 1";
+            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 80;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Absolute changes has non-numeric values or the values are not comma separated.", errors);
+            Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+        }
     }
 }

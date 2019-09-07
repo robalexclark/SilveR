@@ -35,13 +35,13 @@ namespace SilveR.Validators
                 else
                 {
                     char[] splitters = { ',' };
-                    string[] changes = mcVariables.PercentChange.Replace(" ", "").Split(splitters, StringSplitOptions.None); //split list by comma
+                    string[] changes = mcVariables.PercentChange.Split(splitters, StringSplitOptions.None); //split list by comma
 
                     foreach (string s in changes)//go through list and check that is a number and is greater than 0
                     {
                         if (String.IsNullOrWhiteSpace(s))
                         {
-                            ValidationInfo.AddErrorMessage("The list of percent changes contains missing values, please remove any blank entries between the comma separated values");
+                            ValidationInfo.AddErrorMessage("The list of percent changes contains missing values, please remove any blank entries between the comma separated values.");
                             return ValidationInfo;
                         }
                         else
@@ -49,12 +49,12 @@ namespace SilveR.Validators
                             double number;
                             if (!double.TryParse(s, out number))
                             {
-                                ValidationInfo.AddErrorMessage("Percent changes has non-numeric values or the values are not comma separated");
+                                ValidationInfo.AddErrorMessage("Percent changes has non-numeric values or the values are not comma separated.");
                                 return ValidationInfo;
                             }
                             else if (number < 0)
                             {
-                                ValidationInfo.AddErrorMessage("Percent changes has values less than zero");
+                                ValidationInfo.AddErrorMessage("Percent changes has values less than zero.");
                                 return ValidationInfo;
                             }
                         }
@@ -71,13 +71,13 @@ namespace SilveR.Validators
                 else
                 {
                     char[] splitters = { ',' };
-                    string[] changes = mcVariables.AbsoluteChange.Replace(" ", "").Split(splitters, StringSplitOptions.None); //split list by comma
+                    string[] changes = mcVariables.AbsoluteChange.Split(splitters, StringSplitOptions.None); //split list by comma
 
                     foreach (string s in changes)//go through list and check that is a number and is greater than 0
                     {
                         if (String.IsNullOrWhiteSpace(s))
                         {
-                            ValidationInfo.AddErrorMessage("The list of absolute changes contains missing values, please remove any blank entries between the comma separated values");
+                            ValidationInfo.AddErrorMessage("The list of absolute changes contains missing values, please remove any blank entries between the comma separated values.");
                             return ValidationInfo;
                         }
                         else
@@ -85,12 +85,12 @@ namespace SilveR.Validators
                             double number;
                             if (!double.TryParse(s, out number))
                             {
-                                ValidationInfo.AddErrorMessage("Absolute changes has non-numeric values or the values are not comma separated");
+                                ValidationInfo.AddErrorMessage("Absolute changes has non-numeric values or the values are not comma separated.");
                                 return ValidationInfo;
                             }
                             else if (number < 0)
                             {
-                                ValidationInfo.AddErrorMessage("Absolute changes has values less than zero");
+                                ValidationInfo.AddErrorMessage("Absolute changes has values less than zero.");
                                 return ValidationInfo;
                             }
                         }
@@ -102,12 +102,12 @@ namespace SilveR.Validators
             {
                 if (!mcVariables.SampleSizeFrom.HasValue || !mcVariables.SampleSizeTo.HasValue)
                 {
-                    ValidationInfo.AddErrorMessage("Sample Size From and To must be set");
+                    ValidationInfo.AddErrorMessage("Sample Size From and To must be set.");
                     return ValidationInfo;
                 }
                 else if (mcVariables.SampleSizeFrom > mcVariables.SampleSizeTo)
                 {
-                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value");
+                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value.");
                     return ValidationInfo;
                 }
             }
@@ -115,12 +115,12 @@ namespace SilveR.Validators
             {
                 if (!mcVariables.PowerFrom.HasValue || !mcVariables.PowerTo.HasValue)
                 {
-                    ValidationInfo.AddErrorMessage("Power From and To must be set");
+                    ValidationInfo.AddErrorMessage("Power From and To must be set.");
                     return ValidationInfo;
                 }
                 else if (mcVariables.PowerFrom > mcVariables.PowerTo)
                 {
-                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value");
+                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value.");
                     return ValidationInfo;
                 }
             }

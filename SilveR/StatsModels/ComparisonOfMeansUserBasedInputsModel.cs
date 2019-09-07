@@ -15,17 +15,17 @@ namespace SilveR.StatsModels
 
     public class ComparisonOfMeansPowerAnalysisUserBasedInputsModel : AnalysisModelBase, IGraphSizeOptions, IMeanChangeOptions
     {
-        [Range(0, Int32.MaxValue, ErrorMessage = "Group mean must be >= 0")]
+        [Range(0, Int32.MaxValue, ErrorMessage = "Group mean must be >= 0.")]
         [DisplayName("Group mean")]
         public Nullable<decimal> GroupMean { get; set; }
 
         public DeviationType DeviationType { get; set; } = DeviationType.StandardDeviation;
 
-        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Standard deviation must be > 0")]
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Standard deviation must be > 0.")]
         [DisplayName("Standard deviation")]
         public Nullable<decimal> StandardDeviation { get; set; }
 
-        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Variance must be > 0")]
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Variance must be > 0.")]
         [DisplayName("Variance")]
         public Nullable<decimal> Variance { get; set; }
 
