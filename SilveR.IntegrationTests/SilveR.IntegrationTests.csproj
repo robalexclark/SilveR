@@ -1198,6 +1198,18 @@
     <None Update="ExpectedResults\OneSampleTTestAnalysis\OSTT9.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisDatasetBasedInputs\SMA23.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisDatasetBasedInputs\SMA24.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisDatasetBasedInputs\SMA25.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisDatasetBasedInputs\SMA26.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\PairedTTestAnalysis\PTT25.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -71,7 +71,7 @@ namespace SilveR.Validators
                 }
                 else if (owVariables.SampleSizeFrom > owVariables.SampleSizeTo)
                 {
-                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value");
+                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value.");
                     return ValidationInfo;
                 }
             }
@@ -84,7 +84,7 @@ namespace SilveR.Validators
                 }
                 else if (owVariables.PowerFrom > owVariables.PowerTo)
                 {
-                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value");
+                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value.");
                     return ValidationInfo;
                 }
             }
