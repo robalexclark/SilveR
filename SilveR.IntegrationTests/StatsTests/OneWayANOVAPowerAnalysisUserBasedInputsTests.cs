@@ -18,31 +18,6 @@ namespace SilveR.IntegrationTests
             _factory = factory;
         }
 
-        [Fact]
-        public async Task XXX1()
-        {
-            string testName = "PSS1";
-
-            //Arrange
-            HttpClient client = _factory.CreateClient();
-
-            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
-            //model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
-            //model.Response = "Resp 1";
-            //model.Treatment = "Resp 1";
-            //model.ControlGroup = "0.98";
-            //model.PercentChange = "10";
-            //model.ChangeType = ChangeTypeOption.Percent;
-            //model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
-
-            ////Act
-            //HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
-            //IEnumerable<string> errors = await Helpers.ExtractErrors(response);
-
-            ////Assert
-            //Assert.Contains("Response (Resp 1) has been selected in more than one input category, please change your input options.", errors);
-            //Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
-        }
 
         [Fact]
         public async Task PSS2()
@@ -52,57 +27,167 @@ namespace SilveR.IntegrationTests
             //Arrange
             HttpClient client = _factory.CreateClient();
 
-            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
-            model.Response = "Resp2";
-            model.Treatment = null;
-            model.ControlGroup = null;
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
-            model.ChangeType = ChangeTypeOption.Absolute;
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,x";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = 2;
+
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp2) contains only 1 value. Please select another factor.", errors);
-            Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+            Assert.Contains("Means has non-numeric values or the values are not comma separated.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
         }
 
-
-
-
-
-
         [Fact]
-        public async Task PSS12()
+        public async Task PSS3()
         {
-            string testName = "PSS12";
+            string testName = "PSS3";
 
             //Arrange
             HttpClient client = _factory.CreateClient();
 
-            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
-            model.Response = "Resp1";
-            model.Treatment = "Trea t1";
-            model.ControlGroup = "x";
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
-            model.ChangeType = ChangeTypeOption.Absolute;
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,,-3";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = -2;
+
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Absolute changes has non-numeric values or the values are not comma separated.", errors);
-            Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+            Assert.Contains("Variance must be > 0.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
         }
 
+        [Fact]
+        public async Task PSS4()
+        {
+            string testName = "PSS4";
 
+            //Arrange
+            HttpClient client = _factory.CreateClient();
 
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,3";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = 0;
+
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Variance must be > 0.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
+        }
+
+        [Fact]
+        public async Task PSS6()
+        {
+            string testName = "PSS6";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,3";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = -2;
+
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Standard deviation must be > 0.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
+        }
+
+        [Fact]
+        public async Task PSS7()
+        {
+            string testName = "PSS7";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,3";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 0;
+
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Standard deviation must be > 0.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
+        }
+
+        [Fact]
+        public async Task PSS10()
+        {
+            string testName = "PSS10";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,3";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 10;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = -50;
+            model.PowerTo = 80;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Power from must be > 0.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
+        }
+
+        [Fact]
+        public async Task PSS13()
+        {
+            string testName = "PSS13";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,3";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 10;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = -10;
+            model.SampleSizeTo = 20;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Sample size from must be > 0.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
+        }
 
         [Fact]
         public async Task PSS14()
@@ -112,24 +197,254 @@ namespace SilveR.IntegrationTests
             //Arrange
             HttpClient client = _factory.CreateClient();
 
-            ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel();
-            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
-            model.Response = "Resp1";
-            model.Treatment = null;
-            model.ControlGroup = null;
-            model.PercentChange = "40 60 80 100";
-            model.ChangeType = ChangeTypeOption.Percent;
-            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,3";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 10;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 80;
+            model.PowerTo = 50;
 
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("You have selected % change as expected changes from control, but as you have not defined the control group it is not possible to calculate the % change.", errors);
-            Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+            Assert.Contains("Power To value must be greater than the From value.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
         }
 
+        [Fact]
+        public async Task PSS15()
+        {
+            string testName = "PSS15";
 
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,3";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 10;
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 80;
+            model.SampleSizeTo = 50;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Sample Size To value must be greater than the From value.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
+        }
+
+        [Fact]
+        public async Task PSS16()
+        {
+            string testName = "PSS16";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = 3;
+            model.Significance = "0.05";
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 6;
+            model.SampleSizeTo = 15;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS17()
+        {
+            string testName = "PSS17";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 3;
+            model.Significance = "0.01";
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 6;
+            model.SampleSizeTo = 15;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS18()
+        {
+            string testName = "PSS18";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = 8;
+            model.Significance = "0.001";
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 2;
+            model.SampleSizeTo = 20;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS19()
+        {
+            string testName = "PSS19";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 3;
+            model.Significance = "0.01";
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 2;
+            model.SampleSizeTo = 20;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS20()
+        {
+            string testName = "PSS20";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = 8;
+            model.Significance = "0.05";
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 80;
+            model.PowerTo = 90;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS21()
+        {
+            string testName = "PSS21";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 3;
+            model.Significance = "0.05";
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 70;
+            model.SampleSizeTo = 90;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS22()
+        {
+            string testName = "PSS22";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = 8;
+            model.Significance = "0.05";
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 70;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PSS23()
+        {
+            string testName = "PSS23";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "3.5,3.75,5.5,8";
+            model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
+            model.StandardDeviation = 3;
+            model.Significance = "0.05";
+            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.SampleSizeFrom = 50;
+            model.SampleSizeTo = 70;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisUserBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisUserBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }

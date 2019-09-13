@@ -21,7 +21,7 @@ namespace SilveR.Validators
             {
                 if (String.IsNullOrWhiteSpace(s))
                 {
-                    ValidationInfo.AddErrorMessage("The list of means contains missing values, please remove any blank entries between the comma separated means");
+                    ValidationInfo.AddErrorMessage("The list of means contains missing values, please remove any blank entries between the comma separated means.");
                     return ValidationInfo;
                 }
                 else
@@ -29,7 +29,7 @@ namespace SilveR.Validators
                     double number;
                     if (!double.TryParse(s, out number))
                     {
-                        ValidationInfo.AddErrorMessage("Means has non-numeric values or the values are not comma separated");
+                        ValidationInfo.AddErrorMessage("Means has non-numeric values or the values are not comma separated.");
                         return ValidationInfo;
                     }
                 }
@@ -37,12 +37,12 @@ namespace SilveR.Validators
 
             if (owVariables.VariabilityEstimate == VariabilityEstimate.Variance && !owVariables.Variance.HasValue)
             {
-                ValidationInfo.AddErrorMessage("Variance is required");
+                ValidationInfo.AddErrorMessage("Variance is required.");
                 return ValidationInfo;
             }
             else if (owVariables.VariabilityEstimate == VariabilityEstimate.StandardDeviation && !owVariables.StandardDeviation.HasValue)
             {
-                ValidationInfo.AddErrorMessage("Standard deviation is required");
+                ValidationInfo.AddErrorMessage("Standard deviation is required.");
                 return ValidationInfo;
             }
 
@@ -51,12 +51,12 @@ namespace SilveR.Validators
             {
                 if (!owVariables.SampleSizeFrom.HasValue || !owVariables.SampleSizeTo.HasValue)
                 {
-                    ValidationInfo.AddErrorMessage("Sample Size From and To must be set");
+                    ValidationInfo.AddErrorMessage("Sample Size From and To must be set.");
                     return ValidationInfo;
                 }
                 else if (owVariables.SampleSizeFrom > owVariables.SampleSizeTo)
                 {
-                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value");
+                    ValidationInfo.AddErrorMessage("Sample Size To value must be greater than the From value.");
                     return ValidationInfo;
                 }
             }
@@ -64,12 +64,12 @@ namespace SilveR.Validators
             {
                 if (!owVariables.PowerFrom.HasValue || !owVariables.PowerTo.HasValue)
                 {
-                    ValidationInfo.AddErrorMessage("Power From and To must be set");
+                    ValidationInfo.AddErrorMessage("Power From and To must be set.");
                     return ValidationInfo;
                 }
                 else if (owVariables.PowerFrom > owVariables.PowerTo)
                 {
-                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value");
+                    ValidationInfo.AddErrorMessage("Power To value must be greater than the From value.");
                     return ValidationInfo;
                 }
             }

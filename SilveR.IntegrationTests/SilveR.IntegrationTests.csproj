@@ -1210,6 +1210,30 @@
     <None Update="ExpectedResults\OneWayANOVAPowerAnalysisDatasetBasedInputs\SMA26.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS16.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS17.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS18.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS19.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS20.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS21.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisUserBasedInputs\PSS23.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\PairedTTestAnalysis\PTT25.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
