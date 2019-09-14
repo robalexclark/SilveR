@@ -357,8 +357,6 @@ namespace SilveR.IntegrationTests
             model.Variance = 8;
             model.Significance = "0.05";
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
-            model.PowerFrom = 80;
-            model.PowerTo = 90;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -382,9 +380,9 @@ namespace SilveR.IntegrationTests
             model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
             model.StandardDeviation = 3;
             model.Significance = "0.05";
-            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
-            model.SampleSizeFrom = 70;
-            model.SampleSizeTo = 90;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 70;
+            model.PowerTo = 90;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -434,9 +432,9 @@ namespace SilveR.IntegrationTests
             model.VariabilityEstimate = VariabilityEstimate.StandardDeviation;
             model.StandardDeviation = 3;
             model.Significance = "0.05";
-            model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
-            model.SampleSizeFrom = 50;
-            model.SampleSizeTo = 70;
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 70;
+            model.PowerTo = 90;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));

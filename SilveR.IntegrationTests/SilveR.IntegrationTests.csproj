@@ -1372,6 +1372,15 @@
     <None Update="ExpectedResults\PairedTTestAnalysis\PTT71.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\PValueAdjustmentDatasetBasedInputs\PVA1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PValueAdjustmentDatasetBasedInputs\PVA2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PValueAdjustmentDatasetBasedInputs\PVA3.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\PValueAdjustmentUserBasedInputs\PVA10.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

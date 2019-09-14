@@ -19,31 +19,51 @@ namespace SilveR.IntegrationTests
         }
 
         [Fact]
-        public async Task XXX1()
+        public async Task PVA1()
         {
-            string testName = "PSS1";
+            string testName = "PVA1";
 
             //Arrange
             HttpClient client = _factory.CreateClient();
 
             PValueAdjustmentDatasetBasedInputsModel model = new PValueAdjustmentDatasetBasedInputsModel();
-            //model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - Means Comp").Key;
-            //model.Response = "Resp 1";
-            //model.Treatment = "Resp 1";
-            //model.ControlGroup = "0.98";
-            //model.PercentChange = "10";
-            //model.ChangeType = ChangeTypeOption.Percent;
-            //model.PlottingRangeType = PlottingRangeTypeOption.SampleSize;
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "P-value Adjustment Dataset").Key;
+            model.PValues = "p-value - PVA1";
+            model.DatasetLabels = "Comparison - PVA1";
+            model.SelectedTest = "Hochberg";
+            model.Significance = "0.05";
 
-            ////Act
-            //HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
-            //IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PValueAdjustmentDatasetBasedInputs", model, testName, statsOutput);
 
-            ////Assert
-            //Assert.Contains("Response (Resp 1) has been selected in more than one input category, please change your input options.", errors);
-            //Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PValueAdjustmentDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
+        [Fact]
+        public async Task PVA2()
+        {
+            string testName = "PVA2";
 
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PValueAdjustmentDatasetBasedInputsModel model = new PValueAdjustmentDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "P-value Adjustment Dataset").Key;
+            model.PValues = "p-value - PVA2";
+            model.DatasetLabels = "Comparison - PVA2";
+            model.SelectedTest = "Hochberg";
+            model.Significance = "0.05";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PValueAdjustmentDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PValueAdjustmentDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }
