@@ -102,7 +102,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(PValues, true)); //4
             arguments.Append(" " + argFormatter.GetFormattedArgument(DatasetLabels, true)); //5
             arguments.Append(" " + SelectedTest); //6
-            arguments.Append(" " + Significance.Replace("<", "^<")); //7
+            arguments.Append(" " + Significance); //7
 
             return arguments.ToString().Trim();
         }

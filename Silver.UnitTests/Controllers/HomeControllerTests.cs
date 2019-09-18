@@ -2,7 +2,7 @@
 using SilveR.Controllers;
 using Xunit;
 
-namespace Silver.UnitTests.Controllers
+namespace SilveR.UnitTests.Controllers
 {
     public class HomeControllerTests
     {

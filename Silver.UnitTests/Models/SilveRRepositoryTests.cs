@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Silver.UnitTests.Models
+namespace SilveR.UnitTests.Models
 {
     public class SilveRRepositoryTests
     {

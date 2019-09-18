@@ -3,7 +3,7 @@ using SilveR.StatsModels;
 using System;
 using Xunit;
 
-namespace Silver.UnitTests.StatsModels
+namespace SilveR.UnitTests.StatsModels
 {
     public class AnalysisFactoryTests
     {

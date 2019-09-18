@@ -433,8 +433,8 @@ namespace SilveR.IntegrationTests
             model.StandardDeviation = 3;
             model.Significance = "0.05";
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
-            model.PowerFrom = 70;
-            model.PowerTo = 90;
+            model.PowerFrom = 50;
+            model.PowerTo = 70;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));

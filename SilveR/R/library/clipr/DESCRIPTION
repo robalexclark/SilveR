@@ -1,7 +1,7 @@
 Type: Package
 Package: clipr
 Title: Read and Write from the System Clipboard
-Version: 0.6.0
+Version: 0.7.0
 Authors@R: 
     c(person(given = "Matthew",
              family = "Lincoln",
@@ -34,12 +34,12 @@ SystemRequirements: xclip (https://github.com/astrand/xclip) or xsel
         (http://www.vergenet.net/~conrad/software/xsel/) for accessing
         the X11 clipboard
 NeedsCompilation: no
-Packaged: 2019-04-14 19:41:05 UTC; mlincoln
+Packaged: 2019-07-23 02:33:48 UTC; admin
 Author: Matthew Lincoln [aut, cre] (<https://orcid.org/0000-0002-4387-3384>),
   Louis Maddox [ctb],
   Steve Simpson [ctb],
   Jennifer Bryan [ctb]
 Maintainer: Matthew Lincoln <matthew.d.lincoln@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-04-15 15:22:49 UTC
-Built: R 3.5.3; ; 2019-05-22 18:37:27 UTC; windows
+Date/Publication: 2019-07-23 05:00:03 UTC
+Built: R 3.5.3; ; 2019-09-12 06:23:24 UTC; windows

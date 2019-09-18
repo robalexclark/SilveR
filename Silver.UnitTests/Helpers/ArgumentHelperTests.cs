@@ -2,11 +2,10 @@ using SilveR.Helpers;
 using SilveR.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Xunit;
 
-namespace Silver.UnitTests.Helpers
+namespace SilveR.UnitTests.Helpers
 {
     public class ArgumentHelperTests
     {

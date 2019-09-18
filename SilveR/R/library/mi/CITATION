@@ -1,8 +1,0 @@
-bibentry(
-   bibtype = "Article",
-   title = "Opening Windows to the Black Box",
-   author = c(person("Andrew", "Gelman"), person("Jennifer", "Hill")),
-   journal = "Journal of Statistical Software",
-   year = "2011",
-   volume = "40"
-)

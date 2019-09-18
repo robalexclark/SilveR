@@ -1,5 +1,5 @@
 Package: rgl
-Version: 0.100.24
+Version: 0.100.30
 Title: 3D Visualization Using OpenGL
 Author: Daniel Adler <dadler@uni-goettingen.de>, Duncan Murdoch <murdoch@stats.uwo.ca>, and others (see README)
 Maintainer: Duncan Murdoch <murdoch@stats.uwo.ca>
@@ -23,8 +23,8 @@ SystemRequirements: OpenGL, GLU Library, XQuartz (on OSX), zlib
 BugReports: https://r-forge.r-project.org/projects/rgl/
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2019-06-26 10:46:15 UTC; murdoch
+Packaged: 2019-08-18 19:53:12 UTC; murdoch
 Repository: CRAN
-Date/Publication: 2019-06-26 14:00:03 UTC
-Built: R 3.5.3; i386-w64-mingw32; 2019-07-08 19:59:33 UTC; windows
+Date/Publication: 2019-08-19 18:50:12 UTC
+Built: R 3.5.3; i386-w64-mingw32; 2019-09-12 12:30:38 UTC; windows
 Archs: i386, x64

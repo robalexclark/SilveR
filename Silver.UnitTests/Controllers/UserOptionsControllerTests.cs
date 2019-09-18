@@ -6,7 +6,7 @@ using SilveR.Services;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Silver.UnitTests.Controllers
+namespace SilveR.UnitTests.Controllers
 {
     public class UserOptionsControllerTests
     {

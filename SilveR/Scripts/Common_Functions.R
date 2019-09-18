@@ -1392,11 +1392,17 @@ POWERPLOT_ABSOLUTE <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
-		scale_x_continuous(breaks = pretty_breaks()) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_colour_manual(name = "Absolute change: ", breaks = lin_list2, labels = expectedChanges, values = Gr_palette_P) +
 		geom_line(aes(group = variable, color = variable), size = Line_size)
-	suppressWarnings(print(g))
+
+		ranngeSS<-sampleSizeTo-sampleSizeFrom
+		if (ranngeSS<15){
+			g1<- g +scale_x_continuous(breaks = c(sampleSizeFrom:sampleSizeTo) )
+		} else {
+			g1<- g +scale_x_continuous(breaks = pretty_breaks())	
+		}
+	suppressWarnings(print(g1))
 }
 
 POWERPLOT_PERCENT <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr_palette_P, expectedChanges2) {
@@ -1408,12 +1414,18 @@ POWERPLOT_PERCENT <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr_
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
-		scale_x_continuous(breaks = pretty_breaks()) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_colour_manual(name = "Percent change: ", breaks = lin_list2, labels = expectedChanges2, values = Gr_palette_P) +
 		geom_line(aes(group = variable, color = variable), size = Line_size)
 #		 g1 <- g + geom_line(aes(group = variable, color = variable), size = Line_size)
-	suppressWarnings(print(g))
+
+		ranngeSS<-sampleSizeTo-sampleSizeFrom
+		if (ranngeSS<15){
+			g1<- g + scale_x_continuous(breaks = c(sampleSizeFrom:sampleSizeTo) )
+		} else {
+			g1<- g + scale_x_continuous(breaks = pretty_breaks()) 
+		}
+	suppressWarnings(print(g1))
 }
 
 
@@ -1426,10 +1438,16 @@ POWERPLOT_ANOVA <- function(XAxisTitle, MainTitle2) {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
-		scale_x_continuous(breaks = pretty_breaks()) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		geom_line(aes(group = variable), lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
-	suppressWarnings(print(g))
+
+		ranngeSS<-as.numeric(sampleSizeTo)-as.numeric(sampleSizeFrom)
+		if (ranngeSS<15){
+			g1<- g + scale_x_continuous(breaks = c(sampleSizeFrom:sampleSizeTo) )
+		} else {
+			g1<- g + scale_x_continuous(breaks = pretty_breaks()) 
+		}
+	suppressWarnings(print(g1))
 }
 
 #===================================================================================================================

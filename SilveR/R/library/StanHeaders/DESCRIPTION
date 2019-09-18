@@ -1,5 +1,5 @@
 Package: StanHeaders
-Date: 2019-06-13
+Date: 2019-09-05
 Title: C++ Header Files for Stan
 Authors@R: c(person("Ben",family="Goodrich", email="benjamin.goodrich@columbia.edu", role=c('cre','aut')),
              person("Joshua", "Pritikin", role = "ctb"),
@@ -35,10 +35,10 @@ Suggests: Rcpp, RcppEigen, BH, knitr (>= 1.15.1), rmarkdown, Matrix,
 VignetteBuilder: knitr
 SystemRequirements: pandoc
 Depends: R (>= 3.4.0)
-Version: 2.18.1-10
+Version: 2.19.0
 License: BSD_3_clause + file LICENSE
 NeedsCompilation: yes
-Packaged: 2019-06-13 14:02:32 UTC; ben
+Packaged: 2019-09-05 18:28:20 UTC; ben
 Author: Ben Goodrich [cre, aut],
   Joshua Pritikin [ctb],
   Andrew Gelman [aut],
@@ -68,6 +68,6 @@ Author: Ben Goodrich [cre, aut],
   Southern Methodist University [cph] (CVODES)
 Maintainer: Ben Goodrich <benjamin.goodrich@columbia.edu>
 Repository: CRAN
-Date/Publication: 2019-06-14 07:10:17 UTC
-Built: R 3.5.3; x86_64-w64-mingw32; 2019-07-08 12:33:06 UTC; windows
+Date/Publication: 2019-09-07 07:00:17 UTC
+Built: R 3.5.3; x86_64-w64-mingw32; 2019-09-12 06:26:41 UTC; windows
 Archs: i386, x64

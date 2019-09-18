@@ -37,7 +37,7 @@ qdrg                    Quick and dirty reference grid
 rbind.emmGrid           Combine or subset 'emmGrid' objects
 ref_grid                Create a reference grid from a fitted model
 regrid                  Reconstruct a reference grid with a new
-                        transformation
+                        transformation or posterior sample
 str.emmGrid             Miscellaneous methods for 'emmGrid' objects
 summary.emmGrid         Summaries, predictions, intervals, and tests
                         for 'emmGrid' objects

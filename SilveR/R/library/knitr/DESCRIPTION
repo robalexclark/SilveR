@@ -1,7 +1,7 @@
 Package: knitr
 Type: Package
 Title: A General-Purpose Package for Dynamic Report Generation in R
-Version: 1.23
+Version: 1.24
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("Adam", "Vogt", role = "ctb"),
@@ -129,7 +129,7 @@ Collate: 'block.R' 'cache.R' 'utils.R' 'citation.R' 'hooks-html.R'
         'utils-vignettes.R' 'zzz.R'
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2019-05-18 03:49:56 UTC; yihui
+Packaged: 2019-08-07 22:26:54 UTC; yihui
 Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Adam Vogt [ctb],
   Alastair Andrew [ctb],
@@ -227,5 +227,5 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Wush Wu [ctb],
   Zachary Foster [ctb]
 Repository: CRAN
-Date/Publication: 2019-05-18 05:10:02 UTC
-Built: R 3.5.3; ; 2019-05-22 21:35:24 UTC; windows
+Date/Publication: 2019-08-08 04:40:10 UTC
+Built: R 3.5.3; ; 2019-09-12 09:28:44 UTC; windows

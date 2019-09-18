@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Silver.UnitTests.StatsModels
+namespace SilveR.UnitTests.StatsModels
 {
     public class OneWayANOVAPowerAnalysisDatasetBasedInputsModelTests
     {

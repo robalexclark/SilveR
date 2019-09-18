@@ -1,6 +1,6 @@
 Package: zip
 Title: Cross-Platform 'zip' Compression
-Version: 2.0.3
+Version: 2.0.4
 Author: Gábor Csárdi, Kuba Podgórski, Rich Geldreich
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Description: Cross-Platform 'zip' Compression Library. A replacement
@@ -14,8 +14,8 @@ RoxygenNote: 6.1.1
 Suggests: covr, processx, R6, testthat, withr
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2019-07-03 10:27:59 UTC; gaborcsardi
+Packaged: 2019-09-01 08:28:20 UTC; gaborcsardi
 Repository: CRAN
-Date/Publication: 2019-07-03 10:50:40 UTC
-Built: R 3.5.3; x86_64-w64-mingw32; 2019-07-08 11:14:07 UTC; windows
+Date/Publication: 2019-09-01 08:50:02 UTC
+Built: R 3.5.3; x86_64-w64-mingw32; 2019-09-12 06:24:35 UTC; windows
 Archs: i386, x64

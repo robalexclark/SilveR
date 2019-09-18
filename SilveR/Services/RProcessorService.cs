@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SilveR.Helpers;
 using SilveR.Models;
@@ -211,7 +211,7 @@ namespace SilveR.Services
                     }
                     else //something not right then, throw exception
                     {
-                        throw new InvalidOperationException("No html output found!");
+                        throw new InvalidOperationException("No html output found!" + Environment.NewLine + "RProcessOutput:" + Environment.NewLine + analysis.RProcessOutput);
                     }
 
 #if !DEBUG
@@ -251,12 +251,7 @@ namespace SilveR.Services
                     message = message + "Arguments=" + theArguments + Environment.NewLine + Environment.NewLine;
                     message = message + "Rscript=" + rscriptPath + Environment.NewLine + Environment.NewLine;
 
-                    message = message + ex.Message;
-
-                    if (ex.InnerException != null)
-                    {
-                        message = message + Environment.NewLine + "Inner Exception: " + ex.InnerException.Message;
-                    }
+                    message = message + ex.ToString();
 
                     analysis.RProcessOutput = message;
                     await silveRRepository.UpdateAnalysis(analysis);

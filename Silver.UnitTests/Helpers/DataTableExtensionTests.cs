@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using Xunit;
 
-namespace Silver.UnitTests.Helpers
+namespace SilveR.UnitTests.Helpers
 {
     public class DataTableExtensionTests
     {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SilveR.StatsModels
@@ -65,9 +66,15 @@ namespace SilveR.StatsModels
         {
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + PValues.Replace(" ", "").Replace("<", "^<")); //4
+            string formattedPValues = PValues.Replace(" ", "");
+
+            //need to escape the < symbol on windows (linux ok)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                formattedPValues = formattedPValues.Replace("<", "^<");
+
+            arguments.Append(" " + formattedPValues); //4
             arguments.Append(" " + SelectedTest); //5
-            arguments.Append(" " + Significance.Replace("<", "^<")); //6
+            arguments.Append(" " + Significance); //6
 
             return arguments.ToString().Trim();
         }

@@ -1,4 +1,4 @@
-namespace SilveR.ViewModels
+﻿namespace SilveR.ViewModels
 {
     public class ErrorViewModel
     {

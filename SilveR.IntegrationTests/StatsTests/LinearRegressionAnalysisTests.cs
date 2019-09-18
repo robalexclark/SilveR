@@ -1001,7 +1001,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ResponseTransformation = "Loge";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
-            model.OtherDesignFactors = new string[] { "Block1", "Block£2" };
+            model.OtherDesignFactors = new string[] { "Block1", "BlockÂ£2" };
             model.ANOVASelected = true;
             model.Coefficients = true;
             model.AdjustedRSquared = true;
@@ -1032,7 +1032,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ResponseTransformation = "Square Root";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
-            model.OtherDesignFactors = new string[] { "Block1", "Block£2", "Block3" };
+            model.OtherDesignFactors = new string[] { "Block1", "BlockÂ£2", "Block3" };
             model.ANOVASelected = true;
             model.Coefficients = true;
             model.AdjustedRSquared = true;
@@ -1094,7 +1094,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
-            model.OtherDesignFactors = new string[] { "Block1", "Block£2" };
+            model.OtherDesignFactors = new string[] { "Block1", "BlockÂ£2" };
             model.ANOVASelected = true;
             model.Coefficients = true;
             model.AdjustedRSquared = true;
@@ -1125,7 +1125,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont 3" };
             model.CategoricalFactors = new string[] { "Cat1", "Cat&2" };
-            model.OtherDesignFactors = new string[] { "Block1", "Block£2", "Block3" };
+            model.OtherDesignFactors = new string[] { "Block1", "BlockÂ£2", "Block3" };
             model.ANOVASelected = true;
             model.Coefficients = true;
             model.AdjustedRSquared = true;

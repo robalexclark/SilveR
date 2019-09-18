@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using Xunit;
 
-namespace Silver.UnitTests.Helpers
+namespace SilveR.UnitTests.Helpers
 {
     public class CSVConverterTests
     {

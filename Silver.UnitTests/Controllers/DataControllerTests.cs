@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Silver.UnitTests.Controllers
+namespace SilveR.UnitTests.Controllers
 {
     
     public class DataControllerTests

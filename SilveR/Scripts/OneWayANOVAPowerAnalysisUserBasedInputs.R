@@ -119,8 +119,8 @@ if(valueType=="DatasetValues") {
 if(plotSettingsType=="PowerAxis") {
 	powerFrom <- plotSettingsFrom 
 	powerTo <- plotSettingsTo 
-	sampleSizeFrom <- format(round(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerFrom/100, sig.level=sig)[2]), 0), nsmall = 0, scientific = FALSE)
-	sampleSizeTo <- format(round(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerTo/100, sig.level=sig)[2]), 0), nsmall = 0, scientific = FALSE)
+	sampleSizeFrom <- format(floor(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerFrom/100, sig.level=sig)[2])), nsmall = 0, scientific = FALSE)
+	sampleSizeTo <- format(ceiling(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerTo/100, sig.level=sig)[2])), nsmall = 0, scientific = FALSE)
 } else {
 	sampleSizeFrom  <- plotSettingsFrom
 	sampleSizeTo   <-  plotSettingsTo
@@ -137,7 +137,6 @@ ReferenceLine <- "NULL"
 #===================================================================================================================
 #Output HTML header
 Title <-paste(branding, " 'One-way ANOVA' Power Analysis", sep="")
-HTML.title(Title, HR = 1, align = "left")
 
 #Software developement version warning
 if (Betawarn == "Y") {
@@ -145,6 +144,7 @@ if (Betawarn == "Y") {
 	HTML(BetaMessage, align="left")
 }
 
+HTML.title(Title, HR = 1, align = "left")
 HTML("The power calculations made by InVivoStat assume that the future experimental design involves one treatment factor, with equal group sizes. The data will be analysed using a balanced One-way ANOVA.", align="left")
 HTML("The statistical power generated is for the overall ANOVA test (i.e. an overall difference between the group means) .", align="left")
 
@@ -321,6 +321,10 @@ HTML.title("Analysis options", HR=2, align="left")
 if (valueType == "DatasetValues") { 
 	HTML(paste("Analysis method: Dataset based inputs"),  align="left")
 	HTML(paste("Response variable: ", response, sep=""),  align="left")
+
+	if (transformation != "None") {
+		HTML(paste("Response transformation: ", transformation, sep = ""),  align="left")
+	}
 	HTML(paste("Treatment variable: ", treatment, sep=""),  align="left")
 } else {
 	HTML(paste("Analysis method: User based inputs"),  align="left")

@@ -8,7 +8,7 @@ using System.Linq;
 using Xunit;
 using static SilveR.StatsModels.DoseResponseAndNonLinearRegressionAnalysisModel;
 
-namespace Silver.UnitTests.StatsModels
+namespace SilveR.UnitTests.StatsModels
 {
     public class DoseResponseAndNonLinearRegressionAnalysisModelTests
     {

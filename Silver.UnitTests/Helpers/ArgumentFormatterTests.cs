@@ -2,7 +2,7 @@ using SilveR.Helpers;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Silver.UnitTests.Helpers
+namespace SilveR.UnitTests.Helpers
 {
     public class ArgumentFormatterTests
     {

@@ -1,14 +1,14 @@
 Package: semTools
-Version: 0.5-1
+Version: 0.5-2
 Title: Useful Tools for Structural Equation Modeling
 Description: Provides useful tools for structural equation modeling.
 Authors@R: c(person(given = c("Terrence","D."), family = "Jorgensen", role = c("aut","cre"), email="TJorgensen314@gmail.com", comment = c(ORCID = "0000-0001-5111-6773")),
 		person(given = "Sunthud", family = "Pornprasertmanit", role = "aut", email = "psunthud@gmail.com"),
-		person(given = "Alexander", family = "Schoemann", role = "aut", email="schoemanna@ecu.edu"),
+		person(given = c("Alexander","M."), family = "Schoemann", role = "aut", email="schoemanna@ecu.edu"),
 		person(given = "Yves", family = "Rosseel", role = "aut", email="Yves.Rosseel@UGent.be"),
 		person(given = "Patrick", family = "Miller", role = "ctb", email="pmille13@nd.edu"),
 		person(given = "Corbin", family = "Quick", role = "ctb", email="corbinq@umich.edu"),
-		person(given = "Mauricio", family = "Garnier-Villarreal", role = "ctb", email="mauricio.garniervillarreal@marquette.edu"),
+		person(given = "Mauricio", family = "Garnier-Villarreal", role = "ctb", email="mauricio.garniervillarreal@marquette.edu", comment = c(ORCID = "0000-0002-2951-6647")),
 		person(given = "James", family = "Selig", role = "ctb", email="selig@unm.edu"),
 		person(given = "Aaron", family = "Boulton", role = "ctb", email="aboulton@email.unc.edu"),
 		person(given = "Kristopher", family = "Preacher", role = "ctb", email="kris.preacher@vanderbilt.edu"),
@@ -19,34 +19,35 @@ Authors@R: c(person(given = c("Terrence","D."), family = "Jorgensen", role = c("
 		person(given = "Ruber", family = "Arslan", role = "ctb", email="rubenarslan@gmail.com"),
 		person(given = "Bell", family = "Clinton", role = "ctb", email="clintonbell@ku.edu"),
 		person(given = "Pavel", family = "Panko", role = "ctb", email="pavel.panko@ttu.edu"),
-		person(given = "Edgar", family = "Merkle", role = "ctb", email="merklee@missouri.edu"),
+		person(given = "Edgar", family = "Merkle", role = "ctb", email="merklee@missouri.edu", comment = c(ORCID = "0000-0001-7158-0653")),
 		person(given = "Steven", family = "Chesnut", role = "ctb", email="Steven.Chesnut@usm.edu"),
 		person(given = "Jarrett", family = "Byrnes", role = "ctb", email="Jarrett.Byrnes@umb.edu"),
 		person(given = c("Jason","D."), family = "Rights", role = "ctb", email="jason.d.rights@vanderbilt.edu"),
 		person(given = "Ylenio", family = "Longo", role = "ctb", email="yleniolongo@gmail.com"),
 		person(given = "Maxwell", family = "Mansolf", role = "ctb", email="mamansolf@gmail.com")
 		)
-Depends: R(>= 3.4), utils, stats, graphics, lavaan(>= 0.6.3)
+Depends: R(>= 3.4), utils, stats, graphics, lavaan(>= 0.6-5)
 Imports: methods
 Suggests: MASS, foreign, parallel, boot, Amelia, mice, GPArotation,
-        mnormt, OpenMx
+        mnormt, blavaan
 License: GPL (>= 2)
 LazyData: yes
 LazyLoad: yes
 URL: https://github.com/simsem/semTools/wiki
 BugReports: https://github.com/simsem/semTools/issues
-Date/Publication: 2018-09-24 12:00:11 UTC
-RoxygenNote: 6.1.0
+Date/Publication: 2019-08-30 09:50:02 UTC
+RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2018-09-24 09:03:27 UTC; tjorgen2
+Packaged: 2019-08-30 09:12:31 UTC; terrence
 Author: Terrence D. Jorgensen [aut, cre]
     (<https://orcid.org/0000-0001-5111-6773>),
   Sunthud Pornprasertmanit [aut],
-  Alexander Schoemann [aut],
+  Alexander M. Schoemann [aut],
   Yves Rosseel [aut],
   Patrick Miller [ctb],
   Corbin Quick [ctb],
-  Mauricio Garnier-Villarreal [ctb],
+  Mauricio Garnier-Villarreal [ctb]
+    (<https://orcid.org/0000-0002-2951-6647>),
   James Selig [ctb],
   Aaron Boulton [ctb],
   Kristopher Preacher [ctb],
@@ -57,7 +58,7 @@ Author: Terrence D. Jorgensen [aut, cre]
   Ruber Arslan [ctb],
   Bell Clinton [ctb],
   Pavel Panko [ctb],
-  Edgar Merkle [ctb],
+  Edgar Merkle [ctb] (<https://orcid.org/0000-0001-7158-0653>),
   Steven Chesnut [ctb],
   Jarrett Byrnes [ctb],
   Jason D. Rights [ctb],
@@ -65,4 +66,4 @@ Author: Terrence D. Jorgensen [aut, cre]
   Maxwell Mansolf [ctb]
 Maintainer: Terrence D. Jorgensen <TJorgensen314@gmail.com>
 Repository: CRAN
-Built: R 3.5.3; ; 2019-05-22 18:53:38 UTC; windows
+Built: R 3.5.3; ; 2019-09-12 06:32:14 UTC; windows

@@ -1,7 +1,7 @@
 Package: markdown
 Type: Package
 Title: Render Markdown with the C Library 'Sundown'
-Version: 1.0
+Version: 1.1
 Authors@R: c(
    person("JJ", "Allaire", role = "aut"),
    person("Jeffrey", "Horner", role = "aut"),
@@ -25,7 +25,7 @@ Description: Provides R bindings to the 'Sundown' Markdown rendering library
     syntax that can be converted to 'XHTML' or other formats. See
     <http://en.wikipedia.org/wiki/Markdown> for more information about Markdown.
 Depends: R (>= 2.11.1)
-Imports: utils, mime (>= 0.3)
+Imports: utils, xfun, mime (>= 0.3)
 Suggests: knitr, RCurl
 License: GPL-2
 URL: https://github.com/rstudio/markdown
@@ -34,7 +34,7 @@ VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2019-06-07 14:17:03 UTC; yihui
+Packaged: 2019-08-07 15:59:28 UTC; yihui
 Author: JJ Allaire [aut],
   Jeffrey Horner [aut],
   Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
@@ -53,6 +53,6 @@ Author: JJ Allaire [aut],
   RStudio [cph]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2019-06-07 19:00:15 UTC
-Built: R 3.5.3; x86_64-w64-mingw32; 2019-07-08 12:30:43 UTC; windows
+Date/Publication: 2019-08-07 16:30:02 UTC
+Built: R 3.5.3; x86_64-w64-mingw32; 2019-09-12 07:58:56 UTC; windows
 Archs: i386, x64

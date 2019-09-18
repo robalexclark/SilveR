@@ -35,11 +35,12 @@ rowQuantiles            Estimates quantiles for each row (column) in a
                         matrix
 rowRanges               Gets the range of values in each row (column)
                         of a matrix
-rowRanks                Gets the rank of each row (column) of a matrix
+rowRanks                Gets the rank of the elements in each row
+                        (column) of a matrix
 rowSums2                Calculates the sum for each row (column) in a
                         matrix
 rowTabulates            Tabulates the values in a matrix by row
-                        (column)
+                        (column).
 rowVars                 Variance estimates for each row (column) in a
                         matrix
 rowWeightedMeans        Calculates the weighted means for each row

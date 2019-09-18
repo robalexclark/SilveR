@@ -7,7 +7,7 @@ using System.Data;
 using System.Linq;
 using Xunit;
 
-namespace Silver.UnitTests.StatsModels
+namespace SilveR.UnitTests.StatsModels
 {
     public class NonParametricAnalysisModelTests
     {

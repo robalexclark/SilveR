@@ -394,7 +394,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Unpaired t-test").Key;
             model.Response = "Resp-10";
             model.ResponseTransformation = "Loge";
-            model.Treatment = "Treat£6";
+            model.Treatment = "TreatÂ£6";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

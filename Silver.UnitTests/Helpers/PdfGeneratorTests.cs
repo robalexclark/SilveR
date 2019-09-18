@@ -3,7 +3,7 @@ using System;
 using System.Runtime.InteropServices;
 using Xunit;
 
-namespace Silver.UnitTests.Helpers
+namespace SilveR.UnitTests.Helpers
 {
     public class PdfGeneratorTests
     {
