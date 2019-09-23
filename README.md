@@ -57,9 +57,10 @@ Viewing of the results file entails the inline html being extracted from the loc
 
 ## Ongoing and Future Development 
 
-1) Finialise the migration of stats modules from InVivoStat (in progress)
-2) Port to .net core 3.x and Blazor/razor components when these are released
-3) Investigate further modules for development
+1) Finialise setup process on linux and osx
+2) Refactor validation classes and methods to standardise and remove any duplication
+3) Port to .net core 3.x and Blazor/razor components when these are released
+4) Investigate further modules for development
 
 ## Contributing or Issues
 

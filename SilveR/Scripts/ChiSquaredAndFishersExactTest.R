@@ -4,8 +4,6 @@
 suppressWarnings(library(R2HTML))
 suppressWarnings(library(Exact))
 
-Sys.setlocale("LC_COLLATE","C")
-
 #===================================================================================================================
 # retrieve args
 Args <- commandArgs(TRUE)

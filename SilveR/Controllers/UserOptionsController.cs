@@ -43,14 +43,5 @@ namespace SilveR.Controllers
             else
                 throw new ArgumentException("submitButtonValue is not valid!");
         }
-
-
-        [HttpGet]
-        public IActionResult InstallRPackages()
-        {
-            backgroundQueue.QueueBackgroundWorkItem(cancellationToken => rProcessorService.ExecuteInstaller());
-
-            return View("Index");
-        }
     }
 }
