@@ -80,7 +80,7 @@ if (resplength == 1) {
 }
 
 if (resplength == 1) {
-	add<-paste("The  ", resplistqq, " response is currently being analysed by the One-Sample t-test Analysis module. The sample mean is compared back to the fixed value ", truemean, ".", sep="")
+	add<-paste("The  ", resplistqq, " response is currently being analysed by the One-sample t-test Analysis module. The sample mean is compared back to the fixed value ", truemean, ".", sep="")
 } else {
 	add<-paste("The responses ")
 	if (resplength == 2) {
@@ -91,7 +91,7 @@ if (resplength == 1) {
 		}
 		add <- paste (add, resplistqq[(resplength-1)] , " and ", resplistqq[resplength] , sep="") 
 	}
-	add<-paste (add, " are currently being analysed by the One-Sample t-test Analysis module. The sample means are compared back to the fixed value ", truemean, ".", sep="")
+	add<-paste (add, " are currently being analysed by the One-sample t-test Analysis module. The sample means are compared back to the fixed value ", truemean, ".", sep="")
 }
 HTML(add, align="left")
 

@@ -8,15 +8,11 @@ namespace SilveR.Controllers
 {
     public class UserOptionsController : Controller
     {
-        private readonly IBackgroundTaskQueue backgroundQueue;
         private readonly ISilveRRepository repository;
-        private readonly IRProcessorService rProcessorService;
 
-        public UserOptionsController(ISilveRRepository repository, IBackgroundTaskQueue backgroundQueue, IRProcessorService rProcessorService)
+        public UserOptionsController(ISilveRRepository repository)
         {
-            this.backgroundQueue = backgroundQueue;
             this.repository = repository;
-            this.rProcessorService = rProcessorService;
         }
 
         [HttpGet]

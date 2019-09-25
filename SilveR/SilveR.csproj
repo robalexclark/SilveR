@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <RuntimeFrameworkVersion>2.1.10</RuntimeFrameworkVersion>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <TargetLatestRuntimePatch>false</TargetLatestRuntimePatch>
     <Version>1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>

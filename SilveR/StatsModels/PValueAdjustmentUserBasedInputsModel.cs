@@ -14,7 +14,7 @@ namespace SilveR.StatsModels
     {
         [Required]
         [CheckPValue]
-        [DisplayName("Unadjusted p-Values")]
+        [DisplayName("Unadjusted p-values")]
         public string PValues { get; set; }
 
         [DisplayName("Multiple comparison adjustment")]

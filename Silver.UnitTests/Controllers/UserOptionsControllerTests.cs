@@ -14,13 +14,10 @@ namespace SilveR.UnitTests.Controllers
         public async Task Index_ReturnsAnActionResult()
         {
             //Arrange
-            Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
-            Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
-
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetUserOptions()).ReturnsAsync(new UserOption());
 
-            UserOptionsController sut = new UserOptionsController(mock.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
+            UserOptionsController sut = new UserOptionsController(mock.Object);
 
             //Act
             IActionResult result = await sut.Index();
@@ -36,13 +33,10 @@ namespace SilveR.UnitTests.Controllers
         public async Task UpdateUserOptionsPost_ReturnsARedirectResult()
         {
             //Arrange
-            Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
-            Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
-
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetUserOptions()).ReturnsAsync(It.IsAny<UserOption>());
 
-            UserOptionsController sut = new UserOptionsController(mock.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
+            UserOptionsController sut = new UserOptionsController(mock.Object);
 
             //Act
             IActionResult result = await sut.UpdateUserOptions(new UserOption(), "save");
@@ -57,13 +51,10 @@ namespace SilveR.UnitTests.Controllers
         public async Task UpdateUserOptionsPost_ResetUserOptions_ReturnsARedirectResult()
         {
             //Arrange
-            Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
-            Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
-
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetUserOptions()).ReturnsAsync(It.IsAny<UserOption>());
 
-            UserOptionsController sut = new UserOptionsController(mock.Object, mockBackgroundTaskQueue.Object, mockProcessorService.Object);
+            UserOptionsController sut = new UserOptionsController(mock.Object);
 
             //Act
             IActionResult result = await sut.UpdateUserOptions(new UserOption(), "reset");

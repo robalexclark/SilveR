@@ -43,7 +43,7 @@ HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
 #Output HTML header
-Title <-paste(branding, " P-Value Adjustment", sep="")
+Title <-paste(branding, " P-value Adjustment", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
 #Software developement version warning

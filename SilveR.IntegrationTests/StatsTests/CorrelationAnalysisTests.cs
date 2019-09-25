@@ -1554,7 +1554,7 @@ namespace SilveR.IntegrationTests
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
-            model.Significance = "0.01";
+            model.Significance = "0.05";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1562,6 +1562,92 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("The Response (Resp44) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("CorrelationAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "CorrelationAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task COR49()
+        {
+            string testName = "COR49";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            CorrelationAnalysisModel model = new CorrelationAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
+            model.Responses = new string[] { "Resp45", "Resp46", "Resp47", "y" };
+            model.Transformation = "None";
+            model.FirstCatFactor = "Factor 1";
+            model.SecondCatFactor = "Factor 2";
+            model.Method = "Pearson";
+            model.Hypothesis = "2-sided";
+            model.Estimate = true;
+            model.TestStatistic = true;
+            model.PValue = true;
+            model.Scatterplot = true;
+            model.Matrixplot = true;
+            model.ByCategoriesAndOverall = true;
+            model.Significance = "0.05";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp45) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
+            Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
+
+            //Act2 - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("CorrelationAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "CorrelationAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task COR50()
+        {
+            string testName = "COR50";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            CorrelationAnalysisModel model = new CorrelationAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
+            model.Responses = new string[] { "Resp45", "Resp46", "Resp47", "_?_" };
+            model.Transformation = "None";
+            model.FirstCatFactor = "Factor 1";
+            model.SecondCatFactor = "Factor 2";
+            model.Method = "Pearson";
+            model.Hypothesis = "2-sided";
+            model.Estimate = true;
+            model.TestStatistic = true;
+            model.PValue = true;
+            model.Scatterplot = true;
+            model.Matrixplot = true;
+            model.ByCategoriesAndOverall = true;
+            model.Significance = "0.05";
+
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp45) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
             //Act2 - ignore warnings

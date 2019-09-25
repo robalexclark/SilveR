@@ -12,7 +12,7 @@ namespace SilveR.StatsModels
     public class PValueAdjustmentDatasetBasedInputsModel : AnalysisDataModelBase
     {
         [Required]
-        [DisplayName("Unadjusted p-Values")]
+        [DisplayName("Unadjusted p-values")]
         public string PValues { get; set; }
 
         [DisplayName("Dataset labels")]

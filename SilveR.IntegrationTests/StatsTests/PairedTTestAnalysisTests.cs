@@ -2193,5 +2193,36 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task PTT72()
+        {
+            string testName = "PTT72";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Subject = "Animal 5";
+            model.Treatment = "Day6";
+            model.ControlGroup = "1";
+            model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }

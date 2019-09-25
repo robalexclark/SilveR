@@ -928,6 +928,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Resp 1";
             model.YAxisTitle = "Resp2";
             model.LinearFitSelected = true;
+            model.ReferenceLine = 0.75m;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1034,6 +1035,7 @@ namespace SilveR.IntegrationTests
             model.JitterSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 1";
+            model.XAxisLevelsOrder = "T3,T2,T1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1064,6 +1066,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ReferenceLine = 1m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1104,6 +1107,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Resp 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ReferenceLine = 1m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1681,6 +1685,8 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.OutliersSelected = true;
+            model.ReferenceLine = 0m;
+            model.XAxisLevelsOrder = "T3,T2,T1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1738,6 +1744,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.OutliersSelected = true;
+            model.ReferenceLine = 1m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1777,6 +1784,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1 Cat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ReferenceLine = 1m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1974,6 +1982,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisLevelsOrder = "T3,T2,T1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2192,6 +2201,7 @@ namespace SilveR.IntegrationTests
             model.SEMPlotSelected = true;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
+            model.ReferenceLine = 0.6m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2230,6 +2240,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+            model.XAxisLevelsOrder = "T3,T2,T1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2260,6 +2271,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+            model.ReferenceLine = 0.6m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2380,6 +2392,8 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "LogeResp2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.ReferenceLine = -0.7m;
+            model.XAxisLevelsOrder = "T3,T2,T1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2755,6 +2769,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "";
             model.YAxisTitle = "";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.XAxisLevelsOrder = "D,E,A,B,C";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3774,6 +3789,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ReferenceLine = 1m;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3879,6 +3895,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ReferenceLine = 1m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4027,6 +4044,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ReferenceLine = 1m;
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4663,7 +4681,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));            
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
     }
 }

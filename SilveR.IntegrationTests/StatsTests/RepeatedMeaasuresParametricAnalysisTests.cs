@@ -2417,5 +2417,38 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task RMA81()
+        {
+            string testName = "RMA81";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.CovariateTransformation = "Log10";
+            model.Subject = "Animal1";
+            model.RepeatedFactor = "Day 1";
+            model.Covariance = "Autoregressive(1)";
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }

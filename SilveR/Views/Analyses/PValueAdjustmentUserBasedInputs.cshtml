@@ -15,7 +15,7 @@
 }
 
 @{
-    ViewBag.Title = "P-Value Adjustment (User Based Inputs)";
+    ViewBag.Title = "P-value Adjustment (User Based Inputs)";
 }
 
 <div class="row">
@@ -34,7 +34,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label class="col-md-6 col-form-label">Unadjusted p-Values</label>
+                <label class="col-md-6 col-form-label">Unadjusted p-values</label>
                 <div class="col-md-6">
                     <input class="form-control" asp-for="PValues" />
                     <div>Unadjusted p-values should be entered as comma separated values</div>
@@ -51,7 +51,7 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-md-6 col-form-label">Significance</label>
+                <label class="col-md-6 col-form-label">Significance level</label>
                 <div class="col-md-6">
                     <input asp-for="Significance" />
                     <div><span asp-validation-for="Significance"></span></div>

@@ -141,7 +141,7 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "OneSampleTTestAnalysis"))
                 {
-                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-Sample t-test Analysis", ScriptFileName = "OneSampleTTestAnalysis", RequiresDataset = true };
+                    Script oneSampleTTest = new Script() { ScriptDisplayName = "One-sample t-test Analysis", ScriptFileName = "OneSampleTTestAnalysis", RequiresDataset = true };
                     context.Scripts.Add(oneSampleTTest);
                 }
 
@@ -159,7 +159,7 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "DoseResponseAndNonLinearRegressionAnalysis"))
                 {
-                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-Response and Non-Linear Regression Analysis", ScriptFileName = "DoseResponseAndNonLinearRegressionAnalysis", RequiresDataset = true };
+                    Script doseResponse = new Script() { ScriptDisplayName = "Dose-response and Non-linear Regression Analysis", ScriptFileName = "DoseResponseAndNonLinearRegressionAnalysis", RequiresDataset = true };
                     context.Scripts.Add(doseResponse);
                 }
 
@@ -171,7 +171,7 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "ChiSquaredAndFishersExactTest"))
                 {
-                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-Squared and Fisher's Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest", RequiresDataset = true };
+                    Script chiSquared = new Script() { ScriptDisplayName = "Chi-squared and Fisher's Exact Test", ScriptFileName = "ChiSquaredAndFishersExactTest", RequiresDataset = true };
                     context.Scripts.Add(chiSquared);
                 }
 
