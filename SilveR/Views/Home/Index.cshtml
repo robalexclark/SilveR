@@ -11,6 +11,16 @@
     ViewBag.Title = "Introduction to " + Program.AppName;
 }
 
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>
+        <br />
+        <p>@ViewBag.ErrorMessage</p>
+    </div>
+}
+
+
 @if (Program.AppName == "InVivoStat")
 {
     <div class="row m-4">

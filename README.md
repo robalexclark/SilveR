@@ -1,10 +1,10 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.2.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.5.1.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.2.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.5.2.
 
 ## Getting Started
 
-Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.5.1 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
+Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.5.2 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
 
 ### Current Build
 
@@ -12,12 +12,24 @@ Clone the project, open in Visual Studio, optionally run the tests, and then deb
 
 ### Installing
 
-SilveR is a self-hosted web app written in .net core, designed to run locally on Windows, Linux and macOS.
+SilveR is a self-hosted web app written in .net core, running in an Electron shell, designed to run locally on Windows, Linux and macOS.
+
+#### Windows
+
+A stripped down install of R 3.5.2 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
+
+#### Linux
+
+For linux (only tested on Ubuntu so far) you will need to provide an install of R 3.5.2. We have provided a script so that the correct versions of R and R libraries are installed - run ./Setup/setup-linux.sh as sudo/root
+
+#### MacOS
+
+For Mac you will need to install R 3.5.2 from https://cran.r-project.org/bin/macosx/R-3.5.2.pkg, and then run ./Setup/RPackagesInstall.R (e.g. sudo Rscript RPackagesInstall.R)
 
 
-If you are building and publishing the application from source you will need to xcopy the R-3.5.1 folder to the root of the publish output folder (windows only). For linux and mac you will need to provide your own R install (We need help here to work out how to add a specific version of R into the build/installation process).
+#### Running Locally
 
-To run the published system run SilveR.exe. A console window will appear stating that the system is listening on http://localhost:5000. Open your browser and navigate to that location.
+To run the published system locally in a browser run SilveR.exe. A console window will appear stating that the system is listening on http://localhost:5000. Open your browser and navigate to that location.
 
 To run through an analysis:
 1) Click on the Data tab and import your csv or xlsx file (selecting a worksheet if necessary)
@@ -28,6 +40,10 @@ To run through an analysis:
 
 You can open the Analysis tab to see your previous results, reanalyse to see the settings selected and re-submit your analysis.
 
+#### Running in Electron shell
+For details on how to build with the electron.net wrapper see https://github.com/ElectronNET/Electron.NET
+
+
 ### Architecture
 
 Each analysis type consists of a UI defined in a View (e.g. SummaryStatistics.cshtml), a Model (e.g. SummaryStatistics.cs) and a class containing validation (e.g. SummaryStatisticsValidator.cs).
@@ -36,7 +52,7 @@ When an analysis is submitted by the user to the AnalysisController the followin
 
 1) It is validated using any data annotations detailed in the statsmodel class and then passed through the Validate() method in the validator class.
 
-2) If validation passes then the analsysis is submitted (via a background queue) to the RProcessorService.
+2) If validation passes then the analysis is submitted (via a background queue) to the RProcessorService.
 
 3) The RProcessorService exports a csv file from the selected data, and assembles a set of command line arguments from the selections made by the user with the name of the R script (e.g. SummaryStatistics.R) being passsed as the first argument.
 

@@ -1360,6 +1360,8 @@ if (covariateTransform != "None" && covariatelist != "NULL") {
 }
 
 HTML(paste("Treatment factor: ", timeFactor, sep=""), align="left")
+HTML(paste("Control group: ", controlGroup, sep=""), align="left")
+
 HTML(paste("Subject factor: ", subjectFactor, sep=""), align="left")
 
 if (noblockfactors > 0) {

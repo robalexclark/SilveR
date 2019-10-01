@@ -187,10 +187,41 @@ if(FirstCatFactor == "NULL" && SecondCatFactor != "NULL") {
 #	graphdata$l_l <- paste(graphdata$second_IVS_cat, "=",graphdata$l_l, sep = "") 
 }
 if(FirstCatFactor != "NULL" && SecondCatFactor != "NULL") {
+
+#	#Splitting the lists up 
+#	list1 <- c(1)
+#	list2 <- c(2)
+#	if (Cat1labs != "NULL") {
+#		list1Changes <-strsplit(Cat1labs, ",")
+#		list1x <- c("")
+#		for(i in 1:length(list1Changes[[1]]))  { 
+#			list1x [length(list1x )+1]=(list1Changes[[1]][i]) 
+#		}
+#		list1 <- list1x[-1]
+#		list1length<-length(list1)
+#	}
+#
+#	if (Cat2labs != "NULL") {
+#		list2Changes <-strsplit(Cat2labs, ",")
+#		list2x <- c("")
+#		for(i in 1:length(list2Changes[[1]]))  { 
+#			list2x [length(list2x )+1]=(list2Changes[[1]][i]) 
+#		}
+#		list2 <- list2x[-1]
+#		list2length<-length(list2)
+#	}
+#	totlist<-list1length*list2length
+#	catlabels <- rep(NA, totlist)
+#	k<-1
+#	for (i in 1:list1length) {
+#		for (j in 1:list2length) {
+#			catlabels[k] = paste(trimws(list1[i]), " ", trimws(list2[j]))
+#			k=k+1
+#		}
+#	}
+
 	graphdata$firstcatvarrr_IVS <-as.factor(eval(parse(text = paste("graphdata$",FirstCatFactor ))))
 	graphdata$secondcatvarrr_IVS <-as.factor(eval(parse(text = paste("graphdata$",SecondCatFactor ))))
-
-
 
 	#Rearranging the first cat factor levels
 	if (Cat1labs != "NULL") {
@@ -230,13 +261,9 @@ if(FirstCatFactor != "NULL" && SecondCatFactor != "NULL") {
 		graphdata$secondcatvarrr_IVS<-namereplace(graphdata$secondcatvarrr_IVS)
 		graphdata$secondcatvarrr_IVS <- factor(graphdata$secondcatvarrr_IVS, levels = Cat2labslistcol)
 	}
-
-
-#	graphdata$firstcatvarrr_IVS <- paste(graphdata$first_IVS_cat, "=",graphdata$firstcatvarrr_IVS, sep = "") 
-#	graphdata$secondcatvarrr_IVS <- paste(graphdata$second_IVS_cat, "=",graphdata$secondcatvarrr_IVS, sep = "") 
-
 	graphdata$catfact <- paste(graphdata$firstcatvarrr_IVS, graphdata$secondcatvarrr_IVS)
 	graphdata$l_l <-as.factor(graphdata$catfact)
+#	graphdata$l_l <- factor(graphdata$l_l, levels = catlabels)
 }
 
 
@@ -1051,8 +1078,10 @@ if(BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==FALSE) {
 #Generating the categorical x-axis
 if(BoxPlot == "Y") {
 	graphdata$xvarrr_IVS_BP <-as.factor(graphdata$xvarrr_IVS)
+	if (Xlabs != "NULL") {
+		graphdata$xvarrr_IVS_BP <- factor(graphdata$xvarrr_IVS_BP, levels = Xlabslistcol)
+	}
 }
-
 
 #Jitter selection
 w_Gr_jitBP <- Gr_w_Gr_jit
@@ -1067,6 +1096,10 @@ if(BoxPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"   && 
 	temp<-IVS_F_boxplot_outlier()
 	outlierdata <-temp$outlierdata
 	boxdata <- temp$boxdata
+
+	if (Xlabs != "NULL") {
+		boxdata$xvarrr_IVS_BP <- factor(boxdata$xvarrr_IVS_BP, levels = Xlabslistcol)
+	}
 	ymin <- temp$ymin
 	ymax <- temp$ymax
 	range <-temp$range
@@ -1129,6 +1162,16 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	boxdata<-data.frame(boxdata, colsplit(boxdata$lev,"xxxIVSxxx", names=c("xvarrr_IVS_BP","l_l")))
 	boxdata$allcat_IVS <-boxdata$lev
 	boxdata$xvarrr_IVS_BP <-as.factor(boxdata$xvarrr_IVS_BP)
+
+	if (Xlabs != "NULL") {
+		boxdata$xvarrr_IVS_BP <- factor(boxdata$xvarrr_IVS_BP, levels = Xlabslistcol)
+	}
+	if(FirstCatFactor != "NULL" && Cat1labs != "NULL") { 
+		boxdata$l_l <- factor(boxdata$l_l, levels = Cat1labslistcol)
+	}
+	if(SecondCatFactor != "NULL" && Cat2labs != "NULL") { 
+		boxdata$l_l <- factor(boxdata$l_l, levels = Cat2labslistcol)
+	}
 
 	#Generating a dataset of outliers
 	levs<-length(lev)
@@ -1223,6 +1266,10 @@ if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && G
 	boxdata <- data.frame(boxdata, colsplit(boxdata$lev,"xxxIVSxxx", names=c("xvarrr_IVS_BP","firstcatvarrr_IVS","secondcatvarrr_IVS")))
 	boxdata$allcat_IVS <-boxdata$lev
 	boxdata$xvarrr_IVS_BP <-as.factor(boxdata$xvarrr_IVS_BP)
+
+	if (Xlabs != "NULL") {
+		boxdata$xvarrr_IVS_BP <- factor(boxdata$xvarrr_IVS_BP, levels = Xlabslistcol)
+	}
 
 	#Generating a dataset of outliers
 	levs<-length(lev)
@@ -1395,7 +1442,17 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	boxdata$allcat_IVS <-boxdata$lev
 	boxdata <- data.frame(boxdata, colsplit(boxdata$allcat_IVS,"xxxIVSxxx", names=c("xvarrr_IVS_BP","l_l")))
 	boxdata$xvarrr_IVS_BP <-as.factor(boxdata$xvarrr_IVS_BP)
+	if (Xlabs != "NULL") {
+		boxdata$xvarrr_IVS_BP <- factor(boxdata$xvarrr_IVS_BP, levels = Xlabslistcol)
+	}
 	boxdata$l_l <-as.factor(boxdata$l_l)
+
+	if(FirstCatFactor != "NULL" && SecondCatFactor == "NULL" && Cat1labs != "NULL") { 
+		boxdata$l_l <- factor(boxdata$l_l, levels = Cat1labslistcol)
+	}
+	if(FirstCatFactor == "NULL" && SecondCatFactor != "NULL" && Cat2labs != "NULL") { 
+		boxdata$l_l <- factor(boxdata$l_l, levels = Cat2labslistcol)
+	}
 
 	#Generating a dataset of outliers
 	outliertest<-"N"
@@ -1421,6 +1478,14 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 		}
 	}
 	outlierdata<-outlierdata[-1,]
+
+	if(FirstCatFactor != "NULL" && SecondCatFactor == "NULL" && Cat1labs != "NULL") { 
+		outlierdata$l_l <- factor(outlierdata$l_l, levels = Cat1labslistcol)
+	}
+	if(FirstCatFactor == "NULL" && SecondCatFactor != "NULL" && Cat2labs != "NULL") { 
+		outlierdata$l_l <- factor(outlierdata$l_l, levels = Cat2labslistcol)
+	}
+
 
 	#Plot device setup
 	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
@@ -1782,6 +1847,17 @@ if (YAxisTitle != "NULL") {
 	HTML(paste("Response variable title: ", YAxisTitle, sep=""),  align="left")
 }
 
+if (Xlabs != "NULL") {
+	HTML(paste("Re-ordered categorical x-axis levels: ", Xlabs, sep=""),  align="left")
+}
+
+if (Cat1labs != "NULL") {
+	HTML(paste("Re-ordered 1st categorical factor levels: ", Cat1labs, sep=""),  align="left")
+}
+
+if (Cat2labs != "NULL") {
+	HTML(paste("Re-ordered 2nd categorical factor levels: ", Cat2labs, sep=""),  align="left")
+}
 
 if (DisplayLegend != "N" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL")) {
 	HTML(paste("Display legend (Y/N): ", DisplayLegend, sep=""),  align="left")

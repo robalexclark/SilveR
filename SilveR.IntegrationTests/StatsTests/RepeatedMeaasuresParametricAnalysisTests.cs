@@ -2428,16 +2428,14 @@ namespace SilveR.IntegrationTests
 
             RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
-            model.Response = "Resp 1";
+            model.Response = "CVResp";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat 1", "Treat 2" };
-            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
-            model.CovariateTransformation = "Log10";
-            model.Subject = "Animal1";
-            model.RepeatedFactor = "Day 1";
-            model.Covariance = "Autoregressive(1)";
-            model.SelectedEffect = "Treat 1 * Day 1";
-            model.PrimaryFactor = "Treat 1";
+            model.Treatments = new string[] { "CVTreat1" };
+            model.Subject = "CVAnimal1";
+            model.RepeatedFactor = "CVTime1";
+            model.Covariance = "Unstructured";
+            model.SelectedEffect = "CVTreat1 * CVTime1";
+            model.PrimaryFactor = "CVTreat1";
             model.LSMeansSelected = true;
             model.NormalPlotSelected = true;
             model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;

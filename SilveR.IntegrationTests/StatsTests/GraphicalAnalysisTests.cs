@@ -1063,10 +1063,11 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Cat1";
             model.ScatterplotSelected = true;
             model.LinearFitSelected = true;
-            model.XAxisTitle = "Treat 1";
+            model.XAxisTitle = "Resp 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.ReferenceLine = 1m;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1108,6 +1109,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.ReferenceLine = 1m;
+            model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1142,19 +1144,21 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.XAxis = "Resp 1";
             model.XAxisTransformation = "None";
-            model.FirstCatFactor = "Cat1";
+            model.FirstCatFactor =null;
+            model.SecondCatFactor = "Cat1";
             model.ScatterplotSelected = true;
             model.LinearFitSelected = true;
             model.XAxisTitle = "Resp 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1223,19 +1227,20 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
-            model.SecondCatFactor = "Cat1";
+            model.FirstCatFactor = "Cat1";
             model.ScatterplotSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.JitterSelected = true;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1745,6 +1750,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.OutliersSelected = true;
             model.ReferenceLine = 1m;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1785,6 +1791,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.ReferenceLine = 1m;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1819,18 +1826,19 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
-            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat1";
             model.BoxplotSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -1858,19 +1866,20 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
-            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat1";
             model.BoxplotSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.OutliersSelected = true;
+            model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -2013,6 +2022,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.OutliersSelected = true;
+            model.XAxisLevelsOrder = "T3,T2,T1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2272,6 +2282,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
             model.ReferenceLine = 0.6m;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2312,6 +2323,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2386,7 +2398,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
-            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat1";
             model.SEMPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Treat 1";
@@ -2394,13 +2406,14 @@ namespace SilveR.IntegrationTests
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.ReferenceLine = -0.7m;
             model.XAxisLevelsOrder = "T3,T2,T1";
+            model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -2428,12 +2441,13 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Time 1";
             model.XAxisTransformation = "None";
-            model.FirstCatFactor = "Cat2";
+            model.SecondCatFactor = "Cat2";
             model.SEMPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.SecondCatFactorLevelsOrder = "B,A";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3896,6 +3910,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.ReferenceLine = 1m;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3929,17 +3944,18 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.ResponseTransformation = "Log10";
             model.XAxis = "Time 1";
-            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings
@@ -4045,6 +4061,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.ReferenceLine = 1m;
+            model.FirstCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4078,17 +4095,18 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.ResponseTransformation = "Square Root";
             model.XAxis = "Time 1";
-            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat1";
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act2 - ignore warnings

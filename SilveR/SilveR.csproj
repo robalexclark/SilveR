@@ -5,9 +5,17 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="InVivoStat.bat" />
+    <None Remove="setup\RPackagesInstall.R" />
+    <None Remove="setup\setup-linux.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="InVivoStat.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="setup\RPackagesInstall.R">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="setup\setup-linux.sh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

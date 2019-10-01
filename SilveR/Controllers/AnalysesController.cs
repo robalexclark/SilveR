@@ -31,6 +31,7 @@ namespace SilveR.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            //check if any analyses already in db
             ViewBag.HasAnalyses = await repository.HasAnalyses();
 
             if (TempData.ContainsKey("ErrorMessage"))

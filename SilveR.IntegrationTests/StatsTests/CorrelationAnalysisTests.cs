@@ -1628,7 +1628,7 @@ namespace SilveR.IntegrationTests
 
             CorrelationAnalysisModel model = new CorrelationAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
-            model.Responses = new string[] { "Resp45", "Resp46", "Resp47", "_?_" };
+            model.Responses = new string[] { "Resp45", "Resp46", "Resp47", "qm?m" };
             model.Transformation = "None";
             model.FirstCatFactor = "Factor 1";
             model.SecondCatFactor = "Factor 2";
