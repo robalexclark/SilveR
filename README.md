@@ -14,17 +14,25 @@ Clone the project, open in Visual Studio, optionally run the tests, and then deb
 
 SilveR is a self-hosted web app written in .net core, running in an Electron shell, designed to run locally on Windows, Linux and macOS.
 
-#### Windows
+#### [Windows](#windows)
 
 A stripped down install of R 3.5.2 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
 
-#### Linux
+#### [Linux](#linux)
 
-For linux (only tested on Ubuntu so far) you will need to provide an install of R 3.5.2. We have provided a script so that the correct versions of R and R libraries are installed - run ./Setup/setup-linux.sh as sudo/root
+For linux (only tested on Ubuntu so far) you will need to provide an install of R 3.5.2. To do this:
 
-#### MacOS
+1) Download the setup script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/setup-linux.sh and R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R into the same folder.
 
-For Mac you will need to install R 3.5.2 from https://cran.r-project.org/bin/macosx/R-3.5.2.pkg, and then run ./Setup/RPackagesInstall.R (e.g. sudo Rscript RPackagesInstall.R)
+2) Run the setup script using 'sudo ./setup-linux.sh'
+
+#### [MacOS](#macos)
+
+For Mac you will need to install R 3.5.2 and run a script to install the required R packages. To do this:
+
+1) Download and install R from https://cran.r-project.org/bin/macosx/R-3.5.2.pkg
+
+2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R and run it using 'sudo Rscript RPackagesInstall.R'
 
 
 #### Running Locally

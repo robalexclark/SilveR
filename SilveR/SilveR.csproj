@@ -5,17 +5,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="InVivoStat.bat" />
-    <None Remove="setup\RPackagesInstall.R" />
-    <None Remove="setup\setup-linux.sh" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="InVivoStat.bat">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="setup\RPackagesInstall.R">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="setup\setup-linux.sh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -26,7 +18,6 @@
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.16" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
     <PackageReference Include="Select.HtmlToPdf.NetCore" Version="19.1.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />

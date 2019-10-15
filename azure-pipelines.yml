@@ -83,13 +83,17 @@ jobs:
 
   steps:
 
-  - script: dotnet tool install ElectronNET.CLI-hotfix -g #USING HOTFIX
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '9.x'
+
+  - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
 
   - script: 'dotnet clean'
     displayName: Clean Build
 
-  - script: electronize-hotfix build /target win #USING HOTFIX
+  - script: electronize build /target win
     workingDirectory: ./SilveR
     displayName: Build for Win-x64
 
@@ -123,12 +127,16 @@ jobs:
 
   steps:
 
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '9.x'
+
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '2.2.203'
+      version: '2.2.402'
 
-  - script: dotnet tool install ElectronNET.CLI-hotfix -g #USING HOTFIX
+  - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
 
   - script: sudo npm install electron-builder --global
@@ -137,16 +145,16 @@ jobs:
   - script: sudo chown -R $(whoami) ~/.npm
     displayName: Reset permissions
 
-  - script: electronize-hotfix build /target linux #USING HOTFIX
+  - script: electronize build /target linux
     workingDirectory: ./SilveR
     displayName: Build for Linux
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/"InVivoStat 4.0.0.AppImage" $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.0.0.exe
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.0.0.AppImage $(Build.ArtifactStagingDirectory)'  
+    displayName: Copy InVivoStat Setup 4.0.0.AppImage
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat 4.0.0.AppImage'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.0.0.AppImage'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -171,22 +179,22 @@ jobs:
 
   steps:
 
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '9.x'
+
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
       version: '2.2.203'
 
-  - script: dotnet tool install ElectronNET.CLI-hotfix -g #USING HOTFIX
+  - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
-
-  - task: NodeTool@0 
-    inputs:
-      versionSpec: '9.x'
 
   - script: sudo npm install electron-builder --global
     displayName: Install electron-builder
 
-  - script: electronize-hotfix build /target osx  #USING HOTFIX
+  - script: electronize build /target osx 
     workingDirectory: ./SilveR
     displayName: Build for MacOS
 

@@ -43,11 +43,13 @@ namespace SilveR.Controllers
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        stringBuilder.AppendLine("To install " + R_VERSION + " on linux run 'sudo ./setup/setup-linux.sh'");
+                        //stringBuilder.AppendLine("To install " + R_VERSION + " on linux run 'sudo ./setup/setup-linux.sh'");
+                        stringBuilder.AppendLine("To install " + R_VERSION + " on linux see the setup instructions at https://github.com/robalexclark/SilveR#linux");
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        stringBuilder.AppendLine("To install " + R_VERSION + " on mac first download R from  https://cran.r-project.org/bin/macosx/R-" + R_VERSION + ".pkg, and then run 'sudo Rscript RPackagesInstall.R' (found in the ./setup folder)");
+                        //stringBuilder.AppendLine("To install " + R_VERSION + " on mac first download R from https://cran.r-project.org/bin/macosx/R-" + R_VERSION + ".pkg, and then run 'sudo Rscript RPackagesInstall.R' (found in the ./setup folder)");
+                        stringBuilder.AppendLine("To install " + R_VERSION + " on mac see the setup instructions at https://github.com/robalexclark/SilveR#macos");
                     }
                 }
 

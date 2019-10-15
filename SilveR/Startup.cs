@@ -83,7 +83,7 @@ namespace SilveR
             });
 
             // Open the Electron-Window here
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, AutoHideMenuBar = true }));
+            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, AutoHideMenuBar = true, WebPreferences = new WebPreferences { NodeIntegration = false } }));
         }
 
 
