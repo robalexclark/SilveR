@@ -426,6 +426,7 @@ namespace SilveR.Controllers
 
             ViewBag.ErrorMessage = TempData["ErrorMessage"];
             ViewBag.AnalysisLog = analysis.RProcessOutput;
+            ViewBag.AnalysisGuid = analysisGuid;
 
             return View();
         }

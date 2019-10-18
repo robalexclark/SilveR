@@ -2,20 +2,34 @@
     ViewBag.Title = "Analysis Log";
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
-
 @await Html.PartialAsync("AnalysisErrors")
 
 @if (ViewBag.AnalysisLog != null)
 {
-    <div id="logOutput">
+    <form>
+        <input id="analysisGuid" name="analysisGuid" value="@ViewBag.AnalysisGuid" hidden />
+
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-info" asp-controller="Analyses" asp-action="ViewResults">View Results</button>
+            </div>
+            <div class="col">
+                <button class="btn btn-primary float-right" asp-controller="Analyses" asp-action="ReAnalyse">Re-analyse</button>
+            </div>
+        </div>
+    </form>
+    <br />
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <div id="logOutput" class="container mt-2">
         @Html.Raw(ViewBag.AnalysisLog.Replace(System.Environment.NewLine, "<br/>"))
     </div>
 }
 else
 {
-    <div>
+    <h2>@ViewBag.Title</h2>
+    <br />
+    <div class="container mt-2">
         No analysis log was found!
     </div>
 }

@@ -9,6 +9,9 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+.navbar-nav li:hover > .dropdown-menu {
+    display: block;
+}
 
 .dropdown-submenu {
     position: relative;
