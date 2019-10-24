@@ -2,6 +2,10 @@
 
 SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.2.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.5.2.
 
+## Branded as InVivoStat
+
+The SilveR project is currently branded as InVivoStat as it is the cross platform replacement for the winforms version of the InVivoStat system (hosted at http://invivostat.co.uk/). However, the statistical analyses in this system are applicable to non-pharmaceutical studies. The system is designed so that the branding can be easily changed.
+
 ## Getting Started
 
 Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.5.2 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
