@@ -66,6 +66,10 @@
     },
     "mac": {
       "icon": "../../../build/icon.png",
+      "hardenedRuntime": true,
+      "entitlements": "../../../build/entitlements.mac.inherit.plist",
+      "target": ["dmg", "zip"],
+
       "extraResources": [
         {
           "from": "./bin",
