@@ -533,7 +533,7 @@ if(plotSettingsType=="PowerAxis") {
 } 
 
 HTML.title("Definitions", HR=2, align="left")
-HTML("Power: The chance of achieving a statistically significant test result from running an experiment, assuming there is a real biological effect to find.", align="left")
+HTML("Power: The chance of detecting a statistically significant test result from running an experiment, assuming there is a real biological effect to find.", align="left")
 HTML("Significance level: The chance that the experiment will give a false-positive result.", align="left")
 HTML("Biologically relevant effect: The size of effect that is of scientific interest.", align="left")
 

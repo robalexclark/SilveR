@@ -83,7 +83,7 @@ namespace SilveR.IntegrationTests
             model.DeviationType = DeviationType.Variance;
             model.Variance = 4;
             model.Significance = "0.05";
-            model.AbsoluteChange = "0.5,1,2,,4,x";
+            model.AbsoluteChange = "0.5, 1, 2, 4, x";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
 
@@ -92,7 +92,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The list of absolute changes contains missing values, please remove any blank entries between the comma separated values.", errors);
+            Assert.Contains("Absolute changes has non-numeric values or the values are not comma separated.", errors);
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisUserBasedInputs", testName, errors);
         }
 

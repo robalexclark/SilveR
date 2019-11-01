@@ -18,7 +18,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task GetLevels_ReturnsAnActionResult(bool includeNull)
         {
             //Arrange
-            Mock<IHostingEnvironment> mockHostingEnvironment = new Mock<IHostingEnvironment>();
+            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetDatasetByID(It.IsAny<int>())).ReturnsAsync(GetDataset());
 
@@ -40,7 +40,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetSMPAInteractions_ReturnsAnActionResult()
         {
             //Arrange
-            Mock<IHostingEnvironment> mockHostingEnvironment = new Mock<IHostingEnvironment>();
+            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
 
@@ -58,7 +58,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetSMPASelectedEffectsLists_ReturnsAnActionResult()
         {
             //Arrange
-            Mock<IHostingEnvironment> mockHostingEnvironment = new Mock<IHostingEnvironment>();
+            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
 
@@ -75,7 +75,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetRMPAInteractions_ReturnsAnActionResult()
         {
             //Arrange
-            Mock<IHostingEnvironment> mockHostingEnvironment = new Mock<IHostingEnvironment>();
+            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
 
@@ -93,7 +93,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetRMPASelectedEffectsLists_ReturnsAnActionResult()
         {
             //Arrange
-            Mock<IHostingEnvironment> mockHostingEnvironment = new Mock<IHostingEnvironment>();
+            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
 
@@ -110,7 +110,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetIncompleteFactorialInteractions_ReturnsAnActionResult()
         {
             //Arrange
-            Mock<IHostingEnvironment> mockHostingEnvironment = new Mock<IHostingEnvironment>();
+            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
 
@@ -128,7 +128,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetIncompleteFactorialSelectedEffectsLists_ReturnsAnActionResult()
         {
             //Arrange
-            Mock<IHostingEnvironment> mockHostingEnvironment = new Mock<IHostingEnvironment>();
+            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
 

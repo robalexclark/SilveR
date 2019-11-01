@@ -191,7 +191,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -229,7 +229,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -267,7 +267,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -305,7 +305,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -343,7 +343,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -381,7 +381,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -419,7 +419,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -457,7 +457,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -495,7 +495,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -533,7 +533,7 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
             //Act2 - ignore warnings
-            model.BarnardsTest = false; //Deselecting Barnards test!
+            model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -803,11 +803,22 @@ namespace SilveR.IntegrationTests
             model.ResponseCategories = "TreatmentH";
             model.ChiSquaredTest = true;
             model.FishersExactTest = true;
-            model.BarnardsTest = false;
+            model.BarnardsTest = true;
             model.Hypothesis = "Two-sided";
 
-            //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
+            Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
+
+            //Act2 - ignore warnings
+            model.BarnardsTest = true; //Deselecting Barnards test!
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("ChiSquaredAndFishersExactTest", model, testName, statsOutput);
 
             //Assert
@@ -830,11 +841,22 @@ namespace SilveR.IntegrationTests
             model.ResponseCategories = "TreatmentH";
             model.ChiSquaredTest = true;
             model.FishersExactTest = true;
-            model.BarnardsTest = false;
+            model.BarnardsTest = true;
             model.Hypothesis = "Less-than";
 
-            //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
+            Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
+
+            //Act2 - ignore warnings
+            model.BarnardsTest = true; //Deselecting Barnards test!
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("ChiSquaredAndFishersExactTest", model, testName, statsOutput);
 
             //Assert
@@ -857,11 +879,22 @@ namespace SilveR.IntegrationTests
             model.ResponseCategories = "TreatmentH";
             model.ChiSquaredTest = true;
             model.FishersExactTest = true;
-            model.BarnardsTest = false;
+            model.BarnardsTest = true;
             model.Hypothesis = "Greater-than";
 
-            //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            //Act1
+            HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
+            Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
+
+            //Act2 - ignore warnings
+            model.BarnardsTest = true; //Deselecting Barnards test!
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("ChiSquaredAndFishersExactTest", model, testName, statsOutput);
 
             //Assert

@@ -1441,6 +1441,10 @@ if (randomEffect1 != "NULL" && randomEffect2 != "NULL" && randomEffect3 != "NULL
 	}
 }
 
+HTML.title("Definitions", HR=2, align="left")
+HTML("Power: The chance of detecting a statistically significant test result from running an experiment, assuming there is a real biological effect to find.", align="left")
+HTML("Significance level: The chance that the experiment will give a false-positive result.", align="left")
+
 #===================================================================================================================
 #References
 #===================================================================================================================

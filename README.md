@@ -1,6 +1,6 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 2.2.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.5.2.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 3.0.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.5.2.
 
 ### Branded as InVivoStat
 

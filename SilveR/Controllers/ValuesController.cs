@@ -18,7 +18,7 @@ namespace SilveR.Controllers
         private readonly string wwwRoot;
         private readonly ISilveRRepository repository;
 
-        public ValuesController(IHostingEnvironment hostingEnvironment, ISilveRRepository repository)
+        public ValuesController(IWebHostEnvironment hostingEnvironment, ISilveRRepository repository)
         {
             this.wwwRoot = hostingEnvironment.WebRootPath;
             this.repository = repository;

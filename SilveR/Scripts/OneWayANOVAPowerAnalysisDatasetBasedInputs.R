@@ -275,7 +275,7 @@ text3<-paste("Assuming the significance level is set at ", 100*sig , "%, the num
 HTML(text3, align="left")
 
 HTML.title("Definitions", HR=2, align="left")
-HTML("Power: The chance of achieving a statistically significant test result from running an experiment, assuming there is a real biological effect to find.", align="left")
+HTML("Power: The chance of detecting a statistically significant test result from running an experiment, assuming there is a real biological effect to find.", align="left")
 HTML("Significance level: The chance that the experiment will give a false-positive result.", align="left")
 
 #===================================================================================================================

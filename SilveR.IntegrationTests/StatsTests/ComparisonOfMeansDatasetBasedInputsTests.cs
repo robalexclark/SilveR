@@ -778,8 +778,8 @@ namespace SilveR.IntegrationTests
             model.Treatment = "Trea t1";
             model.ControlGroup = "x";
             model.Significance = "0.01";
-            model.AbsoluteChange = "0.25 0.5 0.75 1";
-            model.ChangeType = ChangeTypeOption.Absolute;
+            model.PercentChange = "0.25 0.5 0.75 1";
+            model.ChangeType = ChangeTypeOption.Percent;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
             model.PowerFrom = 50;
             model.PowerTo = 80;
@@ -789,7 +789,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Absolute changes has non-numeric values or the values are not comma separated.", errors);
+            Assert.Contains("Percent changes has non-numeric values or the values are not comma separated.", errors);
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
         }
     }

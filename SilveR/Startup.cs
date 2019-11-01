@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace SilveR
 {
@@ -19,7 +20,7 @@ namespace SilveR
     {
         public static string ContentRootPath { get; private set; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
 #if DEBUG
             env.EnvironmentName = "Development";
@@ -55,11 +56,13 @@ namespace SilveR
 
             services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
 
-            services.AddMvc();
+            services.AddControllersWithViews().AddNewtonsoftJson();
+
+            services.AddRouting();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -73,13 +76,15 @@ namespace SilveR
 
             ProvisionDatabase(app);
 
+            app.UseRouting();
+
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                //endpoints.MapControllers(); // Map attribute-routed API controllers
+                endpoints.MapDefaultControllerRoute(); // Map conventional MVC controllers using the default route
+                //endpoints.MapRazorPages();
             });
 
             // Open the Electron-Window here
