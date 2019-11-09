@@ -1689,7 +1689,7 @@ namespace SilveR.IntegrationTests
             model.BoxplotSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
-            model.OutliersSelected = true;
+            model.BoxplotOptions = "Outliers";
             model.ReferenceLine = 0m;
             model.XAxisLevelsOrder = "T3,T2,T1";
 
@@ -1717,6 +1717,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
             model.BoxplotSelected = true;
+            model.BoxplotOptions = "Include Data";
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 1";
 
@@ -1748,7 +1749,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
-            model.OutliersSelected = true;
+            model.BoxplotOptions = "Outliers";
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
@@ -1790,6 +1791,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1 Cat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.BoxplotOptions = "None";
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
@@ -1828,6 +1830,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.SecondCatFactor = "Cat1";
             model.BoxplotSelected = true;
+            model.BoxplotOptions = "Include Data";
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
@@ -1871,7 +1874,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
-            model.OutliersSelected = true;
+            model.BoxplotOptions = "Outliers";
             model.SecondCatFactorLevelsOrder = "2,1";
 
             //Act1
@@ -1909,10 +1912,11 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat2";
             model.BoxplotSelected = true;
+            model.BoxplotOptions = "Include Data";
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
-            model.OutliersSelected = true;
+            model.BoxplotOptions = "Outliers";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1952,6 +1956,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1 Cat 2";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.BoxplotOptions = "None";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1988,6 +1993,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat2";
             model.BoxplotSelected = true;
+            model.BoxplotOptions = "Include Data";
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
@@ -2021,7 +2027,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1 Cat 2";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
-            model.OutliersSelected = true;
+            model.BoxplotOptions = "Outliers";
             model.XAxisLevelsOrder = "T3,T2,T1";
 
             //Act
@@ -2053,7 +2059,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
-            model.OutliersSelected = true;
+            model.BoxplotOptions = "Outliers";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2094,6 +2100,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1 Cat 1 Cat 2";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.BoxplotOptions = "None";
 
             //Act1
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2131,6 +2138,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Time 1";
             model.BoxplotSelected = true;
+            model.BoxplotOptions = "Include Data";
             model.XAxisTitle = "Anima 1";
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;

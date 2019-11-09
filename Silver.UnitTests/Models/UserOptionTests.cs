@@ -55,11 +55,13 @@ namespace SilveR.UnitTests.Models
             Assert.Equal("LegendTextSize 15", optionLines[34]);
             Assert.Equal("JpegWidth 6", optionLines[35]);
             Assert.Equal("JpegHeight 6", optionLines[36]);
-            Assert.Equal("GraphicsBWLow 0.1", optionLines[37]);
-            Assert.Equal("GraphicsBWHigh 0.8", optionLines[38]);
-            Assert.Equal("GraphicsWidthJitter 0.1", optionLines[39]);
-            Assert.Equal("GraphicsHeightJitter 0.1", optionLines[40]);
-            Assert.Equal("ErrorBarWidth 0.7", optionLines[41]);
+            Assert.Equal("PlotResolution 300", optionLines[37]);
+            Assert.Equal("GraphicsBWLow 0.1", optionLines[38]);
+            Assert.Equal("GraphicsBWHigh 0.8", optionLines[39]);
+            Assert.Equal("GraphicsWidthJitter 0.1", optionLines[40]);
+            Assert.Equal("GraphicsHeightJitter 0.1", optionLines[41]);
+            Assert.Equal("ErrorBarWidth 0.7", optionLines[42]);
+            Assert.Equal("FillTransparency 1", optionLines[43]);
         }
     }
 }

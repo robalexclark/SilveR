@@ -29,7 +29,7 @@ ScatterPlot <- Args[17]
 LinearFit <- Args[18]
 jitterfunction <- Args[19]
 BoxPlot <- Args[20]
-Outliers <- Args[21]
+BoxplotOptions <- Args[21]
 SEMPlot <- Args[22]
 SEMPlotType <- Args[23]
 HistogramPlot <- Args[24]
@@ -38,8 +38,7 @@ CaseProfilesPlot <- Args[26]
 CaseIDFactor <- Args[27]
 ReferenceLine <- Args[28]
 DisplayLegend <-Args[29]
-displaypointBOX<-Args[30]
-displaypointSEM<-Args[31]
+displaypointSEM<-Args[30]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -522,7 +521,7 @@ if (jitterfunction == "N" ||( is.numeric(graphdata$xvarrr_IVS)=="TRUE" && is.num
 if(ScatterPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" ) {
 	#Plot device setup
 	ncscatterplot <- sub(".html", "ncscatterplot.png", htmlFile)
-	png(ncscatterplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncscatterplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf14 <- sub(".html", "ncscatterplot.pdf", htmlFile)
@@ -554,7 +553,7 @@ if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL"
 
 	#Plot device setup
 	ncscatterplot2 <- sub(".html", "ncscatterplot2.png", htmlFile)
-	png(ncscatterplot2,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncscatterplot2,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf17 <- sub(".html", "ncscatterplot2.pdf", htmlFile)
@@ -589,7 +588,7 @@ if(ScatterPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  
 
 	#Plot device setup
 	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
-	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf20 <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -622,7 +621,7 @@ if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL"
 
 	#Plot device setup
 	ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
-    	png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
+    	png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf16 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
@@ -724,7 +723,7 @@ if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && is
 
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
-	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf5 <- sub(".html", "ncSEMPlot.pdf", htmlFile)
@@ -759,7 +758,7 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
-	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf6 <- sub(".html", "ncSEMPlot.pdf", htmlFile)
@@ -794,7 +793,7 @@ if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && Gr
 
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
-	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf9 <- sub(".html", "ncSEMPlot.pdf", htmlFile)
@@ -862,7 +861,7 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 
 	#Plot device setup
 	ncSEMPlotx <- sub(".html", "ncSEMPlotx.png", htmlFile)
-	png(ncSEMPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncSEMPlotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf7 <- sub(".html", "ncSEMPlotx.pdf", htmlFile)
@@ -936,7 +935,7 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NU
 
 	#Plot device setup
 	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
-	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf22 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -968,7 +967,7 @@ if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "
 
 	#Plot device setup
 	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
-	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf23 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -1000,7 +999,7 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NU
 
 	#Plot device setup
 	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
-	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf25 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -1032,7 +1031,7 @@ if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "
 
 	#Plot device setup
 	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
-	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nccaseplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf24 <- sub(".html", "nccaseplot.pdf", htmlFile)
@@ -1106,7 +1105,7 @@ if(BoxPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"   && 
 
 	#Plot device setup
 	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
-	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdfx <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1197,7 +1196,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	outlierdata<-outlierdata[-1,]
 
 	#GGPLOT2 variable options
-	if (Outliers == "N") {
+	if (BoxplotOptions == "None") {
 		stats <- boxplot(yvarrr_IVS~allcat_IVS, data=graphdata, plot=FALSE)$stat
 		ymin  <- min(stats[1,], na.rm=TRUE)
 		ymax  <- max(stats[5,], na.rm=TRUE)
@@ -1210,7 +1209,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 
 	#Plot device setup
 	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
-	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf11 <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1294,7 +1293,7 @@ if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && G
 	outlierdata<-outlierdata[-1,]
 
 	#GGPLOT2 variable options
-	if (Outliers == "N") {
+	if (BoxplotOptions == "None") {
 		stats <- boxplot(yvarrr_IVS~allcat_IVS, data=graphdata, plot=FALSE)$stat
 		ymin  <- min(stats[1,], na.rm=TRUE)
 		ymax  <- max(stats[5,], na.rm=TRUE)
@@ -1307,7 +1306,7 @@ if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && G
 
 	#Plot device setup
 	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
-	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf13 <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1369,7 +1368,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	}
 
 	#GGPLOT2 variable options
-	if (Outliers == "N")	{
+	if (BoxplotOptions == "None")	{
 		stats <- boxplot(yvarrr_IVS~l_l, data=graphdata, plot=FALSE)$stat
 		ymin  <- min(stats[1,], na.rm=TRUE)
 		ymax  <- max(stats[5,], na.rm=TRUE)
@@ -1489,7 +1488,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 
 	#Plot device setup
 	ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
-	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncboxplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf12 <- sub(".html", "ncboxplot.pdf", htmlFile)
@@ -1520,13 +1519,10 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 if(BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 	HTML("On the box-plot the median is denoted by the horizontal line within the box. The box indicates the interquartile range, where the lower and upper quartiles are calculated using the type 2 method, see Hyndman and Fan (1996). The whiskers extend to the most extreme data point which is no more than 1.5 times the length of the box away from the box.", align="left")
 
-	if (Outliers=="Y" && displaypointBOX=="N") {
+	if (BoxplotOptions == "Outliers") {
 		HTML("Individual observations that lie outside the outlier range are included on the plot using circles.",  align="left")
 	}
-	if (Outliers=="Y" && displaypointBOX=="Y") {
-		HTML("The plot includes individual observations, those that lie outside the outlier range are surrounded by an asterix black star.",  align="left")
-	}
-	if (Outliers=="N" && displaypointBOX=="Y"){
+	if (BoxplotOptions == "Include Data"){
 		HTML("The plot includes individual observations, denoted by black dots.", align="left")
 	}
 }
@@ -1572,7 +1568,7 @@ if(HistogramPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"
 
 	#Plot device setup
 	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
-	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", "nchistplot.pdf", htmlFile)
@@ -1609,7 +1605,7 @@ if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NUL
 
 	#Plot device setup
 	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
-	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf2 <- sub(".html", "nchistplot.pdf", htmlFile)
@@ -1653,7 +1649,7 @@ if(HistogramPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"
 
 	#Plot device setup
 	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
-	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "nchistplot.pdf", htmlFile)
@@ -1702,7 +1698,7 @@ if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NUL
 
 	#Plot device setup
 	nchistplot <- sub(".html", "nchistplot.png", htmlFile)
-	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(nchistplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf3z <- sub(".html", "nchistplot.pdf", htmlFile)
@@ -1881,12 +1877,12 @@ if (BoxPlot != "N") {
 	HTML(paste("Generate Box-plot (Y/N): ", BoxPlot, sep=""),  align="left")
 }
 
-if (Outliers != "N" && BoxPlot != "N") {
-	HTML(paste("Display outliers on Box-plot (Y/N): ", Outliers, sep=""),  align="left")
+if (BoxplotOptions == "Outliers" && BoxPlot != "N") {
+	HTML(paste("Display outliers on Box-plot (Y/N): Y", sep=""),  align="left")
 }
 
-if (displaypointBOX != "NULL" &&BoxPlot != "N") {
-	HTML(paste("Display points on Box-plot (Y/N): ", displaypointBOX, sep=""),  align="left")
+if (BoxplotOptions == "Include Data" &&BoxPlot != "N") {
+	HTML(paste("Display points on Box-plot (Y/N): Y", sep=""),  align="left")
 }
 
 

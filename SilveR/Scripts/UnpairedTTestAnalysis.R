@@ -109,7 +109,7 @@ if(responseTransform != "None") {
 HTML.title(title, HR=2, align="left")
 
 scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
-png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 #STB July2013
 plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -394,7 +394,7 @@ if (equalCase == "Y") {
 		#STB - July 2012 rename response variable
 		threewayfull<-lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit)
 		residualPlot <- sub(".html", "residualplot.png", htmlFile)
-		png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+		png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 		#STB July2013
 		plotFilepdf1 <- sub(".html", "residualplot.pdf", htmlFile)
@@ -453,7 +453,7 @@ if (equalCase == "Y") {
 		threewayfull<-lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit)
 	
 		normPlot <- sub(".html", "normplot.png", htmlFile)
-		png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+		png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 	
 		#STB July2013
 		plotFilepdf2 <- sub(".html", "normplot.pdf", htmlFile)

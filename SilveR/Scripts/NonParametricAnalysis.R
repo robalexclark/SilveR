@@ -39,8 +39,7 @@ HTMLSetFile(file = htmlFile)
 
 #Graphical parameter setup
 graphdata <- statdata
-displaypointBOX <- "N"
-ReferenceLine <- "NULL"
+
 
 #STB CC28 Oct 2011
 statdata <- statdata[order(eval(parse(text = paste("statdata$", treatment)))),]
@@ -594,7 +593,8 @@ MainTitle2 <- ""
 BoxPlot <- "Y"
 FirstCatFactor <- "NULL"
 SecondCatFactor <- "NULL"
-Outliers <- "Y"
+ReferenceLine <- "NULL"
+BoxplotOptions <- "Outliers"
 
 #Creating outliers dataset for the boxplot
 temp <- IVS_F_boxplot_outlier()
@@ -606,7 +606,7 @@ range <- temp$range
 
 #Plot device setup
 ncboxplot <- sub(".html", "ncboxplot.png", htmlFile)
-png(ncboxplot, width = jpegwidth, height = jpegheight, units="in", res=300)
+png(ncboxplot, width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 plotFilepdfx <- sub(".html", "ncboxplot.pdf", htmlFile)
 dev.control("enable")
 

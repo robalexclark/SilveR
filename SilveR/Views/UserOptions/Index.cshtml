@@ -116,6 +116,14 @@
                                     </div>
                                     <span asp-validation-for="JpegWidth" class="text-danger"></span>
                                 </div>
+
+                                <div class="form-group">
+                                    <label asp-for="JpegWidth" class="control-label col-xs-4">Plot resolution</label>
+                                    <div class="col-xs-8">
+                                        <input asp-for="PlotResolution" type="number" class="form-control">
+                                    </div>
+                                    <span asp-validation-for="PlotResolution" class="text-danger"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -468,7 +476,7 @@
                                     <div class="form-group">
                                         <label asp-for="ColourFill" class="control-label col-xs-4">Fill (colour)</label>
                                         <div class="col-xs-8">
-                                            <input asp-for="ColourFill" type="text" class="form-control">
+                                            <input asp-for="ColourFill" type="text" class="form-control" list="Colours">
                                         </div>
                                         <span asp-validation-for="ColourFill" class="text-danger"></span>
                                     </div>
@@ -476,22 +484,30 @@
                                     <div class="form-group">
                                         <label asp-for="BWFill" class="control-label col-xs-4">Fill (black &amp; white)</label>
                                         <div class="col-xs-8">
-                                            <input asp-for="BWFill" type="text" class="form-control">
+                                            <input asp-for="BWFill" type="text" class="form-control" list="BWColours">
                                         </div>
                                         <span asp-validation-for="BWFill" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group">
+                                        <label asp-for="FillTransparency" class="control-label col-xs-4">Fill transparency</label>
+                                        <div class="col-xs-8">
+                                            <input asp-for="FillTransparency" type="number" step="0.01" class="form-control">
+                                        </div>
+                                        <span asp-validation-for="FillTransparency" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label asp-for="ColourLine" class="control-label col-xs-4">Line (colour)</label>
                                         <div class="col-xs-8">
-                                            <input asp-for="ColourLine" type="text" class="form-control">
+                                            <input asp-for="ColourLine" type="text" class="form-control" list="Colours">
                                         </div>
                                         <span asp-validation-for="ColourLine" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="BWLine" class="control-label col-xs-4">Line (black &amp; white)</label>
                                         <div class="col-xs-8">
-                                            <input asp-for="BWLine" type="text" class="form-control">
+                                            <input asp-for="BWLine" type="text" class="form-control" list="BWColours">
                                         </div>
                                         <span asp-validation-for="BWLine" class="text-danger"></span>
                                     </div>
@@ -526,14 +542,23 @@
                                 <div class="form-group">
                                     <label asp-for="PaletteSet" class="control-label col-xs-4">Palette (colour)</label>
                                     <div class="col-xs-8">
-                                        <input asp-for="PaletteSet" type="text" class="form-control">
+                                        <select asp-for="PaletteSet" type="text" class="form-control">
+                                            <option value="Set1">Set1</option>
+                                            <option value="Set2">Set2</option>
+                                            <option value="Set3">Set3</option>
+                                            <option value="Accent">Accent</option>
+                                            <option value="Dark2">Dark2</option>
+                                            <option value="Paired">Paired</option>
+                                            <option value="Pastel1">Pastel1</option>
+                                            <option value="Pastel2">Pastel2</option>
+                                        </select>
                                     </div>
                                     <span asp-validation-for="PaletteSet" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CategoryBarFill" class="control-label col-xs-4">Header bar</label>
                                     <div class="col-xs-8">
-                                        <input asp-for="CategoryBarFill" type="text" class="form-control">
+                                        <input asp-for="CategoryBarFill" type="text" class="form-control" list="Colours">
                                     </div>
                                     <span asp-validation-for="CategoryBarFill" class="text-danger"></span>
                                 </div>
@@ -543,6 +568,57 @@
                 </div>
             </div>
         </div>
+
+        <datalist id="Colours">
+            <option value="aquamarine" />
+            <option value="beige" />
+            <option value="black" />
+            <option value="blue" />
+            <option value="brown" />
+            <option value="chocolate" />
+            <option value="cyan" />
+            <option value="darkgrey" />
+            <option value="deeppink" />
+            <option value="gold" />
+            <option value="green" />
+            <option value="grey" />
+            <option value="ivory" />
+            <option value="khaki" />
+            <option value="lightgrey" />
+            <option value="magenta" />
+            <option value="maroon" />
+            <option value="orange" />
+            <option value="pink" />
+            <option value="plum" />
+            <option value="purple" />
+            <option value="red" />
+            <option value="tan" />
+            <option value="turquoise" />
+            <option value="violet" />
+            <option value="white" />
+            <option value="yellow" />
+        </datalist>
+        <datalist id="BWColours">
+            <option value="antiquewhite" />
+            <option value="darkslategrey" />
+            <option value="dimgrey" />
+            <option value="gray" />
+            <option value="gray10" />
+            <option value="gray20" />
+            <option value="gray30" />
+            <option value="gray40" />
+            <option value="gray50" />
+            <option value="gray60" />
+            <option value="gray70" />
+            <option value="gray80" />
+            <option value="gray90" />
+            <option value="gray99" />
+            <option value="lightgrey" />
+            <option value="lightslategrey" />
+            <option value="slategrey" />
+            <option value="white" />
+        </datalist>
+
 
         <div class="text-right" style="padding:20px">
             <button type="submit" class="btn btn-secondary" name="submitButtonValue" value="reset">Reset to Default</button>

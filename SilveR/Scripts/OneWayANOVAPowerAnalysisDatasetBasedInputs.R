@@ -184,7 +184,7 @@ temp3<-100*temp2
 powergraph=cbind(sample,temp3)
 
 powerPlot <- sub(".html", "powerPlot.png", htmlFile)
-png(powerPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+png(powerPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 #STB July2013
 plotFilepdf1 <- sub(".html", "powerPlot.pdf", htmlFile)

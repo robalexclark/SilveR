@@ -48,9 +48,6 @@ namespace SilveR.StatsModels
         public bool DisplayLegend { get; set; } = true;
 
         [DisplayName("Include data")]
-        public bool BoxPlotIncludeData { get; set; }
-
-        [DisplayName("Include data")]
         public bool SEMPlotIncludeData { get; set; }
 
         [DisplayName("Main graph title")]
@@ -85,8 +82,15 @@ namespace SilveR.StatsModels
         [DisplayName("Boxplot")]
         public bool BoxplotSelected { get; set; }
 
-        [DisplayName("Outliers")]
-        public bool OutliersSelected { get; set; }
+
+        public IEnumerable<string> BoxplotOptionsList
+        {
+            get { return new List<string>() { "None", "Outliers", "Include Data" }; }
+        }
+
+        [DisplayName("Boxplot options")]
+        public string BoxplotOptions { get; set; } = "Outliers";
+
 
         [DisplayName("SEM plot")]
         public bool SEMPlotSelected { get; set; }
@@ -168,7 +172,6 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SecondCatFactor), SecondCatFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(StyleType), StyleType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(DisplayLegend), DisplayLegend));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(BoxPlotIncludeData), BoxPlotIncludeData));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMPlotIncludeData), SEMPlotIncludeData));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(MainTitle), MainTitle));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisTitle), XAxisTitle));
@@ -182,7 +185,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LinearFitSelected), LinearFitSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(JitterSelected), JitterSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(BoxplotSelected), BoxplotSelected));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(OutliersSelected), OutliersSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(BoxplotOptions), BoxplotOptions));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMPlotSelected), SEMPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMType), SEMType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(HistogramSelected), HistogramSelected));
@@ -206,7 +209,6 @@ namespace SilveR.StatsModels
             this.SecondCatFactor = argHelper.LoadStringArgument(nameof(SecondCatFactor));
             this.StyleType = (GraphStyleType)Enum.Parse(typeof(GraphStyleType), argHelper.LoadStringArgument(nameof(StyleType)), true);
             this.DisplayLegend = argHelper.LoadBooleanArgument(nameof(DisplayLegend));
-            this.BoxPlotIncludeData = argHelper.LoadBooleanArgument(nameof(BoxPlotIncludeData));
             this.SEMPlotIncludeData = argHelper.LoadBooleanArgument(nameof(SEMPlotIncludeData));
             this.MainTitle = argHelper.LoadStringArgument(nameof(MainTitle));
             this.XAxisTitle = argHelper.LoadStringArgument(nameof(XAxisTitle));
@@ -220,7 +222,7 @@ namespace SilveR.StatsModels
             this.LinearFitSelected = argHelper.LoadBooleanArgument(nameof(LinearFitSelected));
             this.JitterSelected = argHelper.LoadBooleanArgument(nameof(JitterSelected));
             this.BoxplotSelected = argHelper.LoadBooleanArgument(nameof(BoxplotSelected));
-            this.OutliersSelected = argHelper.LoadBooleanArgument(nameof(OutliersSelected));
+            this.BoxplotOptions = argHelper.LoadStringArgument(nameof(BoxplotOptions));
             this.SEMPlotSelected = argHelper.LoadBooleanArgument(nameof(SEMPlotSelected));
             this.SEMType = (SEMPlotType)Enum.Parse(typeof(SEMPlotType), argHelper.LoadStringArgument(nameof(SEMType)), true);
             this.HistogramSelected = argHelper.LoadBooleanArgument(nameof(HistogramSelected));
@@ -289,7 +291,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(BoxplotSelected)); //20
 
             //Outliers
-            arguments.Append(" " + argFormatter.GetFormattedArgument(OutliersSelected)); //21
+            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxplotOptions)); //21
 
             //SEM Plot
             arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotSelected)); //22
@@ -315,11 +317,8 @@ namespace SilveR.StatsModels
             //Legend
             arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //29
 
-            //Box Plot include data
-            arguments.Append(" " + argFormatter.GetFormattedArgument(BoxPlotIncludeData)); //30
-
             //SEM Plot include data
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //31
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //30
 
             return arguments.ToString().Trim();
         }

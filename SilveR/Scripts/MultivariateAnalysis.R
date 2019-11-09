@@ -434,7 +434,7 @@ if (contPred_ != "NULL") {
 HTML.title("Dendogram of clusters", HR=2, align="left")
 
 ncscatterplot4 <- sub(".html", "ncscatterplot4.png", htmlFile)
-png(ncscatterplot4,width = jpegwidth, height = jpegheight, units="in", res=300)
+png(ncscatterplot4,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 #STB July2013
 plotFilepdf4 <- sub(".html", "ncscatterplot4.pdf", htmlFile)
@@ -640,7 +640,7 @@ for (d in 1:resplength) {
 	for (f in 1:resplength) {
 		if ( d != f) {
 			ncscatterplot3 <- sub(".html", paste(d,f,"ncscatterplot3.png",sep=""), htmlFile)
-			png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
+			png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 			#STB July2013
 			plotFilepdf3 <- sub(".html", paste(d,f,"ncscatterplot3.pdf",sep=""), htmlFile)
@@ -821,7 +821,7 @@ title <- paste("Histogram of the first linear discriminant function values, cate
 HTML.title(title, HR=2, align="left")
 
 ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
-png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
+png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 #STB July2013
 plotFilepdf3 <- sub(".html", "ncscatterplot3.pdf", htmlFile)
@@ -879,7 +879,7 @@ if (dim(ttwo)[2] > 2) {
 	HTML.title(title, HR=2, align="left")
 
 	ncscatterplot3b <- sub(".html", "ncscatterplot3b.png", htmlFile)
-	png(ncscatterplot3b,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncscatterplot3b,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf3b <- sub(".html", "ncscatterplot3b.pdf", htmlFile)
@@ -1180,7 +1180,7 @@ grlegend<-"none"
 #===================================================================================================================
 #plotting the final table
 ncscatterplot3q <- sub(".html", "ncscatterplot3q.png", htmlFile)
-png(ncscatterplot3q,width = jpegwidth, height = jpegheight, units="in", res=300)
+png(ncscatterplot3q,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 #STB July2013
 plotFilepdf3q <- sub(".html", "ncscatterplot3q.pdf", htmlFile)
@@ -1263,7 +1263,7 @@ print(PLSmodel$explained_variance)
 
 		#plotting the final table
 		scatterPlotx <- sub(".html", "scatterPlotx.png", htmlFile)
-		png(scatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
+		png(scatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 		plotFilepdf2 <- sub(".html", "scatterPlotx.pdf", htmlFile)
 		dev.control("enable") 
@@ -1379,7 +1379,7 @@ print(PLSmodel$explained_variance)
 
 		#plotting the final table
 		ncscatterplot3qq <- sub(".html", "ncscatterplot3qq.png", htmlFile)
-		png(ncscatterplot3qq,width = jpegwidth, height = jpegheight, units="in", res=300)
+		png(ncscatterplot3qq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 		#STB July2013
 		plotFilepdf3qq <- sub(".html", "ncscatterplot3qq.pdf", htmlFile)

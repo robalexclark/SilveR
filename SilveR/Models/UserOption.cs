@@ -30,6 +30,9 @@ namespace SilveR.Models
         public string BWFill { get; set; } = "Grey";
 
         [Required]
+        public double FillTransparency { get; set; } = 1;
+
+        [Required]
         public string CategoryBarFill { get; set; } = "Ivory2";
 
         [Required]
@@ -84,6 +87,7 @@ namespace SilveR.Models
 
         public int JpegWidth { get; set; } = 6;
         public int JpegHeight { get; set; } = 6;
+        public int PlotResolution { get; set; } = 300;
         public double GraphicsBWLow { get; set; } = 0.1;
         public double GraphicsBWHigh { get; set; } = 0.8;
         public double GraphicsWidthJitter { get; set; } = 0.1;
@@ -132,11 +136,13 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.LegendTextSize) + " " + this.LegendTextSize);
             optionLines.Add(nameof(this.JpegWidth) + " " + this.JpegWidth);
             optionLines.Add(nameof(this.JpegHeight) + " " + this.JpegHeight);
+            optionLines.Add(nameof(this.PlotResolution) + " " + this.PlotResolution);
             optionLines.Add(nameof(this.GraphicsBWLow) + " " + this.GraphicsBWLow);
             optionLines.Add(nameof(this.GraphicsBWHigh) + " " + this.GraphicsBWHigh);
             optionLines.Add(nameof(this.GraphicsWidthJitter) + " " + this.GraphicsWidthJitter);
             optionLines.Add(nameof(this.GraphicsHeightJitter) + " " + this.GraphicsHeightJitter);
             optionLines.Add(nameof(this.ErrorBarWidth) + " " + this.ErrorBarWidth);
+            optionLines.Add(nameof(this.FillTransparency) + " " + this.FillTransparency);
 
             return optionLines;
         }

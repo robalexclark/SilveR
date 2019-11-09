@@ -162,7 +162,7 @@ if (ShowPlot == "Y") {
 	HTML.title("Kaplan-Meier survival plot", HR=2, align="left")
 
 	plotx <- sub(".html", "plotx.png", htmlFile)
-	png(plotx,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(plotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", "plotx.pdf", htmlFile)

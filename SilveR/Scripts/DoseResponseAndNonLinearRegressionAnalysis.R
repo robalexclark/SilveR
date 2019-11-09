@@ -234,7 +234,7 @@ if (DoseResponseType == "Equation") {
 	HTML.title("Scatterplot of observed data including the predicted fit", HR=2, align="left")
 
 	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
-	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -506,7 +506,7 @@ if (DoseResponseType == "FourParameter") {
 	HTML.title("Scatterplot of observed data including the predicted fit", HR=2, align="left")
 
 	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
-	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
@@ -848,7 +848,7 @@ if (DoseResponseType == "FourParameter") {
 		colnames(catplotdata)<-newnames
 
 		ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
-		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
+		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 		#STB July2013
 		plotFilepdf3 <- sub(".html", "ncscatterplot3.pdf", htmlFile)

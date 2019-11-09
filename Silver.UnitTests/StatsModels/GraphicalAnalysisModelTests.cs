@@ -68,9 +68,6 @@ namespace SilveR.UnitTests.StatsModels
             List<Argument> result = sut.GetArguments().ToList();
 
             //Assert
-            var boxPlotIncludeData = result.Single(x => x.Name == "BoxPlotIncludeData");
-            Assert.Equal("False", boxPlotIncludeData.Value);
-
             var boxplotSelected = result.Single(x => x.Name == "BoxplotSelected");
             Assert.Equal("False", boxplotSelected.Value);
 
@@ -101,8 +98,8 @@ namespace SilveR.UnitTests.StatsModels
             var normalDistSelected = result.Single(x => x.Name == "NormalDistSelected");
             Assert.Equal("False", normalDistSelected.Value);
 
-            var outliersSelected = result.Single(x => x.Name == "OutliersSelected");
-            Assert.Equal("False", outliersSelected.Value);
+            var boxplotOptions = result.Single(x => x.Name == "BoxplotOptions");
+            Assert.Equal("Outliers", boxplotOptions.Value);
 
             var referenceLine = result.Single(x => x.Name == "ReferenceLine");
             Assert.Equal("5", referenceLine.Value);
@@ -157,7 +154,6 @@ namespace SilveR.UnitTests.StatsModels
             GraphicalAnalysisModel sut = new GraphicalAnalysisModel(GetDataset());
 
             List<Argument> arguments = new List<Argument>();
-            arguments.Add(new Argument { Name = "BoxPlotIncludeData", Value = "False" });
             arguments.Add(new Argument { Name = "BoxplotSelected", Value = "False" });
             arguments.Add(new Argument { Name = "CaseIDFactor", Value = "Treat 1" });
             arguments.Add(new Argument { Name = "CaseProfilesPlotSelected", Value = "True" });
@@ -168,7 +164,7 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "LinearFitSelected", Value = "False" });
             arguments.Add(new Argument { Name = "MainTitle", Value = "The Title" });
             arguments.Add(new Argument { Name = "NormalDistSelected", Value = "False" });
-            arguments.Add(new Argument { Name = "OutliersSelected", Value = "False" });
+            arguments.Add(new Argument { Name = "BoxplotOptions", Value = "Outliers" });
             arguments.Add(new Argument { Name = "ReferenceLine", Value = "5" });
             arguments.Add(new Argument { Name = "Response", Value = "Resp 1" });
             arguments.Add(new Argument { Name = "ResponseTransformation", Value = "None" });
@@ -186,13 +182,12 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "FirstCatFactorLevelsOrder", Value = "T1" });
             arguments.Add(new Argument { Name = "SecondCatFactorLevelsOrder" });
 
-            Assert.Equal(28, arguments.Count);
+            Assert.Equal(27, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
 
             //Assert
-            Assert.False(sut.BoxPlotIncludeData);
             Assert.False(sut.BoxplotSelected);
             Assert.Equal("Treat 1", sut.CaseIDFactor);
             Assert.True(sut.CaseProfilesPlotSelected);
@@ -203,7 +198,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.False(sut.LinearFitSelected);
             Assert.Equal("The Title", sut.MainTitle);
             Assert.False(sut.NormalDistSelected);
-            Assert.False(sut.OutliersSelected);
+            Assert.Equal("Outliers",sut.BoxplotOptions);
             Assert.Equal(5, sut.ReferenceLine);
             Assert.Equal("Resp 1", sut.Response);
             Assert.Equal("None", sut.ResponseTransformation);
@@ -232,7 +227,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Treatment None Respivs_sp_ivs1 None Cat1 Cat2 Overlaid \"The Title\" \"The x axis\" \"The y axis\" T3,T1 T1 NULL Y N N N N Y Column Y N Y Treativs_sp_ivs1 5 N N N", result);
+            Assert.Equal("Treatment None Respivs_sp_ivs1 None Cat1 Cat2 Overlaid \"The Title\" \"The x axis\" \"The y axis\" T3,T1 T1 NULL Y N N N Outliers Y Column Y N Y Treativs_sp_ivs1 5 N N", result);
         }
 
 
@@ -240,7 +235,6 @@ namespace SilveR.UnitTests.StatsModels
         {
             var model = new SilveR.StatsModels.GraphicalAnalysisModel(dataset)
             {
-                BoxPlotIncludeData = false,
                 BoxplotSelected = false,
                 CaseIDFactor = "Treat 1",
                 CaseProfilesPlotSelected = true,
@@ -252,7 +246,7 @@ namespace SilveR.UnitTests.StatsModels
                 LinearFitSelected = false,
                 MainTitle = "The Title",
                 NormalDistSelected = false,
-                OutliersSelected = false,
+                BoxplotOptions = "Outliers",
                 ReferenceLine = 5,
                 Response = "Resp 1",
                 ResponseTransformation = "None",

@@ -126,27 +126,34 @@ grparatext = read.table(userOptions)
 
 #graphics sizes
 #	pdfwidth<- as.numeric(grparanum$V2[14])
-pdfwidth<-12
+	pdfwidth<-12
 #	pdfheight<- as.numeric(grparanum$V2[15])
-pdfheight<-12
+	pdfheight<-12
+
 	jpegwidth<- grparanum$V2[14]
 	jpegheight<- as.numeric(grparanum$V2[15])
 
+#Plot resolution
+	PlotResolution <- as.numeric(grparanum$V2[16])
+
 # When using black and white range - these are the limits (0 = white and 1 = black)
-	gr_bw_low<- as.numeric(grparanum$V2[16])
-	gr_bw_high<- as.numeric(grparanum$V2[17])
+	gr_bw_low<- as.numeric(grparanum$V2[17])
+	gr_bw_high<- as.numeric(grparanum$V2[18])
 
 #Horizontal jitter on scatterplot
-	Gr_w_Gr_jit<- as.numeric(grparanum$V2[18])
+	Gr_w_Gr_jit<- as.numeric(grparanum$V2[19])
 
 #Vertical jitter on scatterplot
-	Gr_h_Gr_jit<- as.numeric(grparanum$V2[19])
+	Gr_h_Gr_jit<- as.numeric(grparanum$V2[20])
 
 #Error bar width for LSMeans plots and line SEM plots
-	ErrorBarWidth <- as.numeric(grparanum$V2[20])
+	ErrorBarWidth <- as.numeric(grparanum$V2[21])
 
 #Width of bars for means with SEM column plots
 	ErrorBarWidth2 <- ErrorBarWidth /2
+
+#Fill Transparency
+	FillTransparency <- as.numeric(grparanum$V2[22])
 
 #===================================================================================================================
 #Defining the GGPLOT options
@@ -165,7 +172,7 @@ if (bandw != "N") {
 	Gr_line <- Col_line
 }
 
-if (Legend_pos == "Default") {
+if (Legend_pos == "default") {
 	Gr_legend_pos <- "right"
 	Gr_legend_pos2 <- "bottom"
 } else {
@@ -250,7 +257,6 @@ mytheme <- theme(
 
 	legend.key = element_blank()
 )
-
 
 #===================================================================================================================
 #FUNCTIONS TO REPLACE ILLEGAL CHARACTERS
@@ -490,7 +496,7 @@ IVS_F_boxplot_outlier <- function() {
 	outlierdata <- outlierdata[-1,]
 
 	#GGPLOT2 variable options
-	if (Outliers == "N") {
+	if (BoxplotOptions == "None") {
 		stats <- boxplot(yvarrr_IVS ~ xvarrr_IVS_BP, data = graphdata, plot = FALSE)$stat
 		ymin <- min(stats[1,], na.rm = TRUE)
 		ymax <- max(stats[5,], na.rm = TRUE)
@@ -740,9 +746,17 @@ NONCAT_SEM <- function() {
 		ggtitle(MainTitle2)
 
 	if (SEMPlotType == "Column") {
-		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-			geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black") +
-			geom_hline(yintercept = 0)
+		if (FillTransparency == 1) {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
+				geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", alpha = FillTransparency) +
+				geom_hline(yintercept = 0)
+		}
+		if (FillTransparency < 1) {
+			g1 <- g + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", alpha = FillTransparency) +
+				geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
+				geom_hline(yintercept = 0)
+		}
+
 	} else {
 		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape)
@@ -778,10 +792,19 @@ ONECATSEP_SEM <- function() {
 		ggtitle(MainTitle2)
 
 	if (SEMPlotType == "Column") {
-		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-			geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge') +
-			facet_wrap(~l_l) +
-			geom_hline(yintercept = 0)
+		if (FillTransparency == 1) {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
+				geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
+				facet_wrap(~l_l) +
+				geom_hline(yintercept = 0)
+		}
+		if (FillTransparency < 1) {
+			g1 <- g + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
+				geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
+				facet_wrap(~l_l) +
+				geom_hline(yintercept = 0)
+		}
+
 	} else {
 		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
@@ -817,10 +840,18 @@ TWOCATSEP_SEM <- function() {
 		ggtitle(MainTitle2)
 
 	if (SEMPlotType == "Column") {
-		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-			geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge') +
-			facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
-			geom_hline(yintercept = 0)
+		if (FillTransparency == 1) {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
+				geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
+				facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
+				geom_hline(yintercept = 0)
+		}
+		if (FillTransparency < 1) {
+			g1 <- g + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
+				geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
+				facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
+				geom_hline(yintercept = 0)
+		}
 	} else {
 		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
@@ -860,9 +891,16 @@ OVERLAID_SEM <- function() {
 		scale_fill_manual(values = Gr_palette)
 
 	if (SEMPlotType == "Column") {
-		g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") +
-			geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge') +
-			geom_hline(yintercept = 0)
+		if (FillTransparency == 1) {
+			g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") +
+				geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge', alpha = FillTransparency) +
+				geom_hline(yintercept = 0)
+		}
+		if (FillTransparency < 1) {
+			g1 <- g + geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge', alpha = FillTransparency) +
+				geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") +
+				geom_hline(yintercept = 0)
+		}
 	} else {
 		g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.1), colour = "black") +
 			geom_point(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, fill = l_l), colour = "black", size = Point_size, shape = Point_shape, pos = position_dodge(w = 0.1))
@@ -997,14 +1035,14 @@ NONCAT_BOX <- function() {
 		ggtitle(MainTitle2) +
 		coord_cartesian(ylim = c(ymin - range, ymax + range))
 
-	if (Outliers == "Y") {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill) +
+	if (BoxplotOptions == "Outliers") {
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill, alpha = FillTransparency) +
 			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = 8, color = "black", fill = Gr_fill)
 	} else {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill)
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill, alpha = FillTransparency)
 	}
 
-	if (displaypointBOX == "Y") {
+	if (BoxplotOptions == "Include Data") {
 		Point_size2 <- Point_size / 1.5
 		g2 <- g1 + geom_point(data = graphdata, aes(x = xvarrr_IVS, y = yvarrr_IVS), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitBP, h = h_Gr_jitBP))
 	} else {
@@ -1029,14 +1067,14 @@ ONECATSEP_BOX <- function() {
 		facet_wrap(~l_l) +
 		coord_cartesian(ylim = c(ymin - range, ymax + range))
 
-	if (Outliers == "Y") {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill) +
+	if (BoxplotOptions == "Outliers") {
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill, alpha = FillTransparency) +
 			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = 8, color = "black", fill = Gr_fill)
 	} else {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill)
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill, alpha = FillTransparency)
 	}
 
-	if (displaypointBOX == "Y") {
+	if (BoxplotOptions == "Include Data") {
 		#Create dataset with the same facet for original dataset
 		graphdata2xxx <- graphdata
 		graphdata2xxx$xvarrr_IVS_BP <- graphdata2xxx$xvarrr_IVS
@@ -1067,14 +1105,14 @@ TWOCATSEP_BOX <- function() {
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
 		coord_cartesian(ylim = c(ymin - range, ymax + range))
 
-	if (Outliers == "Y") {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill) +
+	if (BoxplotOptions == "Outliers") {
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", fill = Gr_fill, alpha = FillTransparency) +
 			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS), size = Point_size, shape = 8, color = "black", fill = Gr_fill)
 	} else {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill)
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq), stat = "identity", outlier.shape = NA, fill = Gr_fill, alpha = FillTransparency)
 	}
 
-	if (displaypointBOX == "Y") {
+	if (BoxplotOptions == "Include Data") {
 		#Create dataset with the same facet for original dataset
 		graphdata2xxx <- graphdata
 		graphdata2xxx$xvarrr_IVS_BP <- graphdata2xxx$xvarrr_IVS
@@ -1108,17 +1146,17 @@ OVERLAID_BOX <- function() {
 		scale_fill_manual(values = Gr_palette) +
 		coord_cartesian(ylim = c(ymin - range, ymax + range))
 
-	if (Outliers == "Y") {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq, fill = l_l), stat = "identity") +
+	if (BoxplotOptions == "Outliers") {
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq, fill = l_l), stat = "identity", alpha = FillTransparency) +
 
 		if (outliertest == "Y") {
-			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS, fill = l_l), size = Point_size, shape = 8, color = "black", position = position_dodge(width = 0.9))
+			geom_point(data = outlierdata, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS, fill = l_l), size = Point_size, shape = 8, color = "black", position = position_dodge(width = 0.9), alpha = FillTransparency)
 		}
 	} else {
-		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq, fill = l_l), stat = "identity", outlier.shape = NA)
+		g1 <- g + geom_boxplot(data = boxdata, aes(x = xvarrr_IVS_BP, ymin = minq, lower = lowerq, middle = medq, upper = upperq, ymax = maxq, fill = l_l), stat = "identity", outlier.shape = NA, alpha = FillTransparency)
 	}
 	
-	if (displaypointBOX == "Y") {
+	if (BoxplotOptions == "Include Data") {
 		Point_size2 <- Point_size / 1.5
 		g2 <- g1 + geom_point(data = graphdataBOX_overall, aes(x = xvarrr_IVS_BP, y = yvarrr_IVS, group = l_l, fill=l_l), size = Point_size2, shape = Point_shape, position = position_jitterdodge(dodge.width = 1, jitter.width = w_Gr_jitBP))
 	} else {
@@ -1143,7 +1181,7 @@ NONCAT_HIS <- function() {
 		ylab("Density") +
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, center=(binrange/2), binwidth = (binrange)) +
+		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, center=(binrange/2), binwidth = (binrange), alpha = FillTransparency) +
 		stat_function(fun = dnorm, args = list(mean = mean(graphdata$yvarrr_IVS), sd = sd(graphdata$yvarrr_IVS)), alpha = Gr_alpha, color = Gr_line, size = Line_size)
 	suppressWarnings(print(g))
 }
@@ -1156,7 +1194,7 @@ ONECATSEP_HIS <- function() {
 		ylab("Density") +
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill,  center=(binrange/2),  binwidth = (binrange)) +
+		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill,  center=(binrange/2),  binwidth = (binrange), alpha = FillTransparency) +
 		geom_line(aes(y = density), size = 1, data = normaldens, colour = Gr_line, lty = Line_type) +
 		facet_wrap(~l_l)
 	suppressWarnings(print(g))
@@ -1170,7 +1208,7 @@ TWOCATSEP_HIS <- function() {
 		ylab("Density") +
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
-		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, center=(binrange/2),  binwidth = (binrange)) +
+		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, center=(binrange/2),  binwidth = (binrange), alpha = FillTransparency) +
 		geom_line(aes(y = density), size = 1, data = normaldens, colour = Gr_line, lty = Line_type) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 	suppressWarnings(print(g))
@@ -1186,7 +1224,7 @@ OVERLAID_HIS <- function() {
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_histogram(aes(y = ..density.., fill = l_l), position = 'dodge', colour = "black", center=(binrange/2),  binwidth = (binrange))
+		geom_histogram(aes(y = ..density.., fill = l_l), position = 'dodge', colour = "black", center=(binrange/2),  binwidth = (binrange), alpha = FillTransparency)
 
 	if (NormalDistFit == "Y") {
 		for (i in 1:nlevels) {

@@ -188,17 +188,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="offset-md-2 col-md-4 col-form-label">Outliers</label>
+                        <label class="offset-md-2 col-md-4 col-form-label">Boxplot options</label>
                         <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="OutliersSelected" type="checkbox" />
+                            <input class="form-control" asp-for="BoxplotOptions" />
+                            <div><span asp-validation-for="BoxplotOptions"></span></div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="offset-md-2 col-md-4 col-form-label">Include data</label>
-                        <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="BoxPlotIncludeData" type="checkbox" />
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Mean with SEM plot</label>
                         <div class="col-md-6">

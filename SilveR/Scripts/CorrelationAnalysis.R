@@ -156,7 +156,7 @@ if (scatterplotSelected != "N") {
 		for (j in 1:resplength) {
 			if (i != j) {
 				scatterPlot <- sub(".html", paste(i,j,"scatterPlot.png",sep=""), htmlFile)
-				png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+				png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 				#STB July2013
 				plotFilepdf1 <- sub(".html", paste(i,j,"scatterPlot.pdf",sep=""), htmlFile)
@@ -220,7 +220,7 @@ if (matrixPlotSelected != "N") {
 	HTML.title("Matrixplot, including linear regression lines", HR=3, align="left")
 
 	scatterPlotx <- sub(".html", "scatterPlotx.png", htmlFile)
-	png(scatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(scatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf2 <- sub(".html", "scatterPlotx.pdf", htmlFile)
@@ -500,7 +500,7 @@ if (scatterplotSelected != "N") {
 		for (f in 1:resplength) {
 			if ( d != f) {
 				ncscatterplot3 <- sub(".html", paste(d,f,"ncscatterplot3.png",sep=""), htmlFile)
-				png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
+				png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 				#STB July2013
 				plotFilepdf3 <- sub(".html", paste(d,f,"ncscatterplot3.pdf",sep=""), htmlFile)
@@ -581,7 +581,7 @@ if (matrixPlotSelected != "N") {
 	HTML.title("Categorised matrixplot, including linear regression lines", HR=3, align="left")
 
 	xscatterPlotx <- sub(".html", "xscatterPlotx.png", htmlFile)
-	png(xscatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(xscatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "xscatterPlotx.pdf", htmlFile)

@@ -274,7 +274,7 @@ for (i in 1: length(ContinuousList)) {
 	graphdata$xvarrr_IVS <-eval(parse(text = paste("statdata$",ContinuousList[i])))
 
 	scatterPlot <- sub(".html", paste(i,"scatterPlot.png",sep=""), htmlFile)
-	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf1 <- sub(".html", paste(i,"scatterPlot.pdf",sep=""), htmlFile)
@@ -459,7 +459,7 @@ if(covariatelist != "NULL") {
 	for (i in 1:nocovlist) {
 		ncscatterplot3 <- sub(".html", "IVS", htmlFile)
 	    	ncscatterplot3 <- paste(ncscatterplot3, index, "ncscatterplot3.png", sep = "")
-		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=300)
+		png(ncscatterplot3,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 		#STB July2013
 		plotFilepdf2 <- sub(".html", "IVS", htmlFile)
@@ -803,7 +803,7 @@ if(showPRPlot=="Y") {
 	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
 
 	residualPlot <- sub(".html", "residualplot.png", htmlFile)
-	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
@@ -850,7 +850,7 @@ if(showNormPlot=="Y") {
 	HTML.title("Normal probability plot", HR=3, align="left")
 
 	normPlot <- sub(".html", "normplot.png", htmlFile)
-	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
@@ -919,7 +919,7 @@ if (cooksDistancePlot =="Y") {
 
 	#Plot device setup
 	ncscatterplotx <- sub(".html", "ncscatterplotx.png", htmlFile)
-	png(ncscatterplotx,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncscatterplotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf16 <- sub(".html", "ncscatterplotx.pdf", htmlFile)
@@ -969,7 +969,7 @@ if (leveragesPlot =="Y") {
 
 	#Plot device setup
 	ncscatterplot <- sub(".html", "ncscatterplot.png", htmlFile)
-	png(ncscatterplot,width = jpegwidth, height = jpegheight, units="in", res=300)
+	png(ncscatterplot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
 	plotFilepdf15 <- sub(".html", "ncscatterplot.pdf", htmlFile)

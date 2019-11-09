@@ -34,6 +34,10 @@ $(function () {
         spinners: false
     });
 
+    $("#BoxplotOptions").kendoDropDownList({
+        dataSource: theModel.boxplotOptionsList
+    });
+
     enableDisableXAxisTransformation();
     enableDisableScatterplot();
     enableDisableBoxplot();
@@ -82,17 +86,13 @@ function enableDisableScatterplot() {
 function enableDisableBoxplot() {
     const boxplot = $("#BoxplotSelected");
     const outliers = $("#OutliersSelected");
-    const includeData = $("#BoxPlotIncludeData");
 
     if (boxplot.prop('checked')) {
         outliers.prop('disabled', false);
-        includeData.prop('disabled', false);
     }
     else {
         outliers.prop('checked', false);
         outliers.prop('disabled', true);
-        includeData.prop('checked', false);
-        includeData.prop('disabled', true);
     }
 }
 
