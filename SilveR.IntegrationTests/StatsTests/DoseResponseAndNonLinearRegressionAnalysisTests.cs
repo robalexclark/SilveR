@@ -191,7 +191,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The QC Dose (QCDose3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The QC dose (QCDose3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 

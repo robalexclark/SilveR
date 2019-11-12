@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 
@@ -53,7 +53,8 @@ namespace SilveR.Validators
                 }
 
                 //check response and doses contain values
-                if (!CheckFactorAndResponseNotBlank(mcVariables.Treatment, mcVariables.Response, "Treatment factor")) return ValidationInfo;
+                if (!CheckFactorAndResponseNotBlank(mcVariables.Treatment, mcVariables.Response, "Treatment factor"))
+                    return ValidationInfo;
             }
             else if (mcVariables.Treatment == null && mcVariables.Response != null && CountResponses(mcVariables.Response) == 1) //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
             {
@@ -87,8 +88,7 @@ namespace SilveR.Validators
                         }
                         else
                         {
-                            double number;
-                            if (!double.TryParse(s, out number))
+                            if (!Double.TryParse(s, out double number))
                             {
                                 ValidationInfo.AddErrorMessage("Percent changes has non-numeric values or the values are not comma separated.");
                                 return ValidationInfo;
@@ -128,8 +128,7 @@ namespace SilveR.Validators
                         }
                         else
                         {
-                            double number;
-                            if (!double.TryParse(s, out number))
+                            if (!Double.TryParse(s, out double number))
                             {
                                 ValidationInfo.AddErrorMessage("Absolute changes has non-numeric values or the values are not comma separated.");
                                 return ValidationInfo;

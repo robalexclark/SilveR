@@ -17,7 +17,6 @@ using Xunit;
 
 namespace SilveR.UnitTests.Controllers
 {
-
     public class AnalysesControllerTests
     {
         [Fact]

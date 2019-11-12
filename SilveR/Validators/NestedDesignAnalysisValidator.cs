@@ -45,6 +45,14 @@ namespace SilveR.Validators
             if (!CategoricalAgainstContinuousVariableChecks(categorical, ndaVariables.Response))
                 return ValidationInfo;
 
+            //check transformations
+            CheckTransformations(ndaVariables.ResponseTransformation, ndaVariables.Response);
+
+            if (ndaVariables.Covariates != null)
+            {
+                CheckTransformations(ndaVariables.CovariateTransformation, ndaVariables.Covariates, true);
+            }
+
             //if get here then no errors so return true
             return ValidationInfo;
         }
@@ -111,17 +119,6 @@ namespace SilveR.Validators
                         }
 
                         ValidationInfo.AddWarningMessage(mess);
-                    }
-                }
-
-                //check transformations
-                CheckTransformations(DataTable, ndaVariables.ResponseTransformation, ndaVariables.Response);
-
-                if (ndaVariables.Covariates != null)
-                {
-                    foreach (string covariate in ndaVariables.Covariates)
-                    {
-                        CheckTransformations(DataTable, ndaVariables.CovariateTransformation, covariate, true);
                     }
                 }
             }

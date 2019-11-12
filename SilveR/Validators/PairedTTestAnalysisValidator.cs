@@ -49,6 +49,14 @@ namespace SilveR.Validators
             if (!CategoricalAgainstContinuousVariableChecks(categoricalVariables, pttVariables.Response))
                 return ValidationInfo;
 
+            //check transformations
+            CheckTransformations(pttVariables.ResponseTransformation, pttVariables.Response);
+
+            if (pttVariables.Covariates != null)
+            {
+                CheckTransformations(pttVariables.CovariateTransformation, pttVariables.Covariates, true);
+            }
+
             //do data checks on the treatments/other factors and covariate (if selected)
             if (pttVariables.Covariates != null)
             {
@@ -69,7 +77,7 @@ namespace SilveR.Validators
 
             //if get here then no errors so return true
             return ValidationInfo;
-        }     
+        }
 
         private bool CheckSubjectOnlyHasOneResponseForEachTreatment()
         {
@@ -200,17 +208,6 @@ namespace SilveR.Validators
                         }
 
                         ValidationInfo.AddWarningMessage(mess);
-                    }
-                }
-
-                //check transformations
-                CheckTransformations(DataTable, pttVariables.ResponseTransformation, pttVariables.Response);
-
-                if (pttVariables.Covariates != null)
-                {
-                    foreach (string covariate in pttVariables.Covariates)
-                    {
-                        CheckTransformations(DataTable, pttVariables.CovariateTransformation, covariate, true);
                     }
                 }
             }

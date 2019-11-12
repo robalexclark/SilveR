@@ -23,9 +23,11 @@ namespace SilveR.Validators
             allVars.Add(upttVariables.Treatment);
             allVars.Add(upttVariables.Response);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
-            if (!CheckFactorsHaveLevels(upttVariables.Treatment)) return ValidationInfo;
+            if (!CheckFactorsHaveLevels(upttVariables.Treatment))
+                return ValidationInfo;
 
             if (!CheckResponsesPerLevel(upttVariables.Treatment, upttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<UnpairedTTestAnalysisModel>(i => i.Treatment)))
                 return ValidationInfo;
@@ -39,7 +41,7 @@ namespace SilveR.Validators
                 return ValidationInfo;
 
             //check transformations
-            CheckTransformations(DataTable, upttVariables.ResponseTransformation, upttVariables.Response);
+            CheckTransformations(upttVariables.ResponseTransformation, upttVariables.Response);
 
             //if get here then no errors so return true
             return ValidationInfo;

@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -79,22 +79,16 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
             }
 
-            CheckTransformations(DataTable, lrVariables.ResponseTransformation, lrVariables.Response);
+            CheckTransformations(lrVariables.ResponseTransformation, lrVariables.Response);
 
             if (lrVariables.ContinuousFactors != null)
             {
-                foreach (string contFactor in lrVariables.ContinuousFactors)
-                {
-                    CheckTransformations(DataTable, lrVariables.ContinuousFactorsTransformation, contFactor);
-                }
+                CheckTransformations(lrVariables.ContinuousFactorsTransformation, lrVariables.ContinuousFactors);
             }
 
             if (lrVariables.Covariates != null)
             {
-                foreach (string covariate in lrVariables.Covariates)
-                {
-                    CheckTransformations(DataTable, lrVariables.CovariateTransformation, covariate, true);
-                }
+                CheckTransformations(lrVariables.CovariateTransformation, lrVariables.Covariates, true);
             }
 
             //if get here then no errors so return true

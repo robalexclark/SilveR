@@ -22,7 +22,9 @@ namespace SilveR.Validators
             allVars.Add(samVariables.Response);
             allVars.Add(samVariables.Treatment);
             allVars.Add(samVariables.Censorship);
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             if (!CheckIsNumeric(samVariables.Response))
             {
@@ -33,11 +35,11 @@ namespace SilveR.Validators
             if (!CheckFactorsHaveLevels(samVariables.Treatment))
                 return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(samVariables.Treatment, samVariables.Response, "Treatment factor"))
+            if (!CheckResponsesPerLevel(samVariables.Treatment, samVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SurvivalAnalysisModel>(i => i.Treatment)))
                 return ValidationInfo;
 
             //check response and treatments contain values
-            if (!CheckFactorAndResponseNotBlank(samVariables.Treatment, samVariables.Response, "Treatment factor"))
+            if (!CheckFactorAndResponseNotBlank(samVariables.Treatment, samVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SurvivalAnalysisModel>(i => i.Treatment)))
                 return ValidationInfo;
 
             foreach (DataRow row in DataTable.Rows)
