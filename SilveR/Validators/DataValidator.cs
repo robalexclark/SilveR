@@ -1,4 +1,4 @@
-﻿using SilveR.Helpers;
+using SilveR.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -74,6 +74,7 @@ namespace SilveR.Validators
         }
 
 
+
         protected bool CheckIsNumeric(string column)
         {
             if (!String.IsNullOrEmpty(column))
@@ -82,9 +83,12 @@ namespace SilveR.Validators
                 {
                     bool isNumeric = Double.TryParse(row[column].ToString(), out var vvoid);
 
-                    if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString())) return false;
+                    if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString()))
+                        return false;
                 }
             }
+
+            //if get here then no error so return true
             return true;
         }
 
@@ -92,9 +96,10 @@ namespace SilveR.Validators
         {
             foreach (string s in vars)
             {
-                if (String.IsNullOrEmpty(s)) continue; //if the string is null then ignore it and carry on with next one
+                if (String.IsNullOrEmpty(s)) //if the string is null then ignore it and carry on with next one
+                    continue; 
 
-                if (double.TryParse(s[0].ToString(), out var vvoid))
+                if (Double.TryParse(s[0].ToString(), out var vvoid))
                 {
                     validationInfo.AddErrorMessage("One or more of your selected columns has a numeric name or starts with a number. The analysis will not proceed.");
                     return false; //error so return
@@ -130,7 +135,7 @@ namespace SilveR.Validators
             if (factors == null)
                 return true;
 
-            string message = null;
+            string message;
 
             //Check to see if the number of treatment levels selected is at least 2
             if (CountDistinctLevels(factors) == 0)
@@ -155,11 +160,22 @@ namespace SilveR.Validators
                 }
                 else
                 {
-                    message = "The Treatment factor ("+ factors + ") has only one level present in the dataset. Please select another factor.";
+                    message = "The Treatment factor (" + factors + ") has only one level present in the dataset. Please select another factor.";
                 }
 
                 validationInfo.AddErrorMessage(message);
                 return false;
+            }
+
+            return true;
+        }
+
+        protected bool CheckResponsesPerLevel(IEnumerable<string> factors, IEnumerable<string> responses, string displayName)
+        {
+            foreach (string response in responses)
+            {
+                if (!CheckResponsesPerLevel(factors, response, displayName)) //then error
+                    return false;
             }
 
             return true;
@@ -176,7 +192,8 @@ namespace SilveR.Validators
 
         protected virtual bool CheckResponsesPerLevel(IEnumerable<string> factors, string response, string displayName)
         {
-            if (factors == null) return true;
+            if (factors == null)
+                return true;
 
             //Check that the number of responses for each level is at least 2 for factors
             foreach (string factor in factors)
@@ -202,7 +219,8 @@ namespace SilveR.Validators
 
         protected bool CheckFactorAndResponseNotBlank(string factor, string response, string displayName)
         {
-            if (String.IsNullOrEmpty(response) || String.IsNullOrEmpty(factor)) return true;
+            if (String.IsNullOrEmpty(response) || String.IsNullOrEmpty(factor))
+                return true;
 
             bool hasWarning = false;
             bool hasError = false;
@@ -237,6 +255,17 @@ namespace SilveR.Validators
             return true;
         }
 
+        protected bool CheckFactorsAndResponsesNotBlank(IEnumerable<string> factors, IEnumerable<string> responses, string displayName)
+        {
+            foreach (string response in responses)
+            {
+                if (!CheckFactorsAndResponseNotBlank(factors, response, displayName))
+                    return false;
+            }
+
+            return true;
+        }
+
         protected bool CheckFactorsAndResponseNotBlank(IEnumerable<string> factors, string response, string displayName)
         {
             foreach (string factor in factors)
@@ -248,45 +277,52 @@ namespace SilveR.Validators
             return true;
         }
 
-        protected void CheckTransformations(DataTable dataTable, string transformation, string column, bool isCovariate = false)
+
+        protected void CheckTransformations(string transformation, IEnumerable<string> columns, bool isCovariate = false)
         {
-            foreach (DataRow row in dataTable.Rows)
+            foreach (string column in columns)
             {
-                CheckTransformations(row, transformation, column, isCovariate);
+                CheckTransformations(transformation, column, isCovariate);
             }
         }
 
-        private void CheckTransformations(DataRow row, string transformation, string column, bool isCovariate = false)
+        protected void CheckTransformations(string transformation, string column, bool isCovariate = false)
         {
-            if (transformation != "None" && !String.IsNullOrEmpty(column))
+            if (String.IsNullOrEmpty(column))
+                return;
+
+            foreach (DataRow row in dataTable.Rows)
             {
-                bool respParsedOK = Double.TryParse(row[column].ToString(), out double respValue);
-
-                if (respParsedOK)
+                if (transformation != "None")
                 {
-                    string tempMessage = null;
+                    bool respParsedOK = Double.TryParse(row[column].ToString(), out double respValue);
 
-                    if (transformation.StartsWith("Log") && respValue <= 0) //must not be <= 0
+                    if (respParsedOK)
                     {
-                        tempMessage = "You have " + transformation +
-                               " transformed the " + column + " variable. Unfortunately some of the " + column + " values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.";
-                    }
-                    else if (transformation.StartsWith("Square") && respValue < 0) //must not be < 0
-                    {
-                        tempMessage = "You have " + transformation +
-                               " transformed the " + column + " variable. Unfortunately some of the " + column + " values are negative. These values have been ignored in the analysis as it is not possible to transform them.";
-                    }
-                    else if (transformation == "ArcSine" && (respValue < 0 || respValue > 1)) //must be between 0 and 1
-                    {
-                        tempMessage = "You have " + transformation + " transformed the " + column + " variable. Unfortunately some of the " + column + " values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.";
-                    }
+                        string tempMessage = null;
 
-                    if (tempMessage != null && isCovariate)
-                    {
-                        tempMessage = tempMessage + " Any response where the covariate has been removed will also be excluded from the analysis.";
-                    }
+                        if (transformation.StartsWith("Log") && respValue <= 0) //must not be <= 0
+                        {
+                            tempMessage = "You have " + transformation +
+                                   " transformed the " + column + " variable. Unfortunately some of the " + column + " values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.";
+                        }
+                        else if (transformation.StartsWith("Square") && respValue < 0) //must not be < 0
+                        {
+                            tempMessage = "You have " + transformation +
+                                   " transformed the " + column + " variable. Unfortunately some of the " + column + " values are negative. These values have been ignored in the analysis as it is not possible to transform them.";
+                        }
+                        else if (transformation == "ArcSine" && (respValue < 0 || respValue > 1)) //must be between 0 and 1
+                        {
+                            tempMessage = "You have " + transformation + " transformed the " + column + " variable. Unfortunately some of the " + column + " values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.";
+                        }
 
-                    validationInfo.AddWarningMessage(tempMessage);
+                        if (tempMessage != null && isCovariate)
+                        {
+                            tempMessage = tempMessage + " Any response where the covariate has been removed will also be excluded from the analysis.";
+                        }
+
+                        validationInfo.AddWarningMessage(tempMessage);
+                    }
                 }
             }
         }

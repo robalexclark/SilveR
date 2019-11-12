@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System.Collections.Generic;
 
 namespace SilveR.Validators
@@ -53,19 +53,19 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.");
                     return ValidationInfo;
                 }
-
-                CheckTransformations(DataTable, caVariables.Transformation, response);
-
-                if (!CheckResponsesPerLevel(categorical, response, "categorical"))
-                    return ValidationInfo;
-
-                //check response and cat factors contain values
-                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
-                    return ValidationInfo;
             }
+
+            CheckTransformations(caVariables.Transformation, caVariables.Responses);
+
+            if (!CheckResponsesPerLevel(categorical, caVariables.Responses, "categorical"))
+                return ValidationInfo;
+
+            //check response and cat factors contain values
+            if (!CheckFactorsAndResponsesNotBlank(categorical, caVariables.Responses, "categorisation factor"))
+                return ValidationInfo;
 
             //if get here then no errors so return true
             return ValidationInfo;

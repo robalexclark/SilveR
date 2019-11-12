@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 
@@ -72,9 +72,9 @@ namespace SilveR.Validators
                 }
 
                 //check response and doses contain values
-                if (!CheckFactorAndResponseNotBlank(drnlrVariables.Dose, drnlrVariables.Response, "Dose"))
+                if (!CheckFactorAndResponseNotBlank(drnlrVariables.Dose, drnlrVariables.Response, ReflectionExtensions.GetPropertyDisplayName<DoseResponseAndNonLinearRegressionAnalysisModel>(i => i.Dose)))
                     return ValidationInfo;
-                if (!CheckFactorAndResponseNotBlank(drnlrVariables.QCDose, drnlrVariables.QCResponse, "QC Dose"))
+                if (!CheckFactorAndResponseNotBlank(drnlrVariables.QCDose, drnlrVariables.QCResponse, ReflectionExtensions.GetPropertyDisplayName<DoseResponseAndNonLinearRegressionAnalysisModel>(i => i.QCDose)))
                     return ValidationInfo;
 
                 int noFixedParameters = 0;
@@ -107,9 +107,9 @@ namespace SilveR.Validators
                 }
 
                 //go through each row in the datatable and check transforms are ok
-                CheckTransformations(DataTable, drnlrVariables.ResponseTransformation, drnlrVariables.Response);
-                CheckTransformations(DataTable, drnlrVariables.ResponseTransformation, drnlrVariables.QCResponse);
-                CheckTransformations(DataTable, drnlrVariables.ResponseTransformation, drnlrVariables.SamplesResponse);
+                CheckTransformations(drnlrVariables.ResponseTransformation, drnlrVariables.Response);
+                CheckTransformations(drnlrVariables.ResponseTransformation, drnlrVariables.QCResponse);
+                CheckTransformations(drnlrVariables.ResponseTransformation, drnlrVariables.SamplesResponse);
 
                 //check that if fixed parameter is set then start value is not set, else add warning...
                 bool warningForFixedAndStart = false;
@@ -137,7 +137,7 @@ namespace SilveR.Validators
             }
             else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation && !drnlrVariables.Equation.Contains("x"))
             {
-                ValidationInfo.AddErrorMessage("The formula should be of the form f=f(x) with x lower case.");
+                ValidationInfo.AddErrorMessage("The formula should be of the form f=y(x) with x lower case.");
                 return ValidationInfo;
             }
 

@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 
 namespace SilveR.Validators
 {
@@ -23,7 +23,7 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.");
                     return ValidationInfo;
                 }
 
@@ -32,9 +32,9 @@ namespace SilveR.Validators
                     ValidationInfo.AddErrorMessage("There is no replication in the response variable (" + response + "). Please select another factor.");
                     return ValidationInfo;
                 }
-
-                CheckTransformations(DataTable, osttVariables.ResponseTransformation, response);
             }
+
+            CheckTransformations(osttVariables.ResponseTransformation, osttVariables.Responses);
 
             //if get here then no errors so return true
             return ValidationInfo;

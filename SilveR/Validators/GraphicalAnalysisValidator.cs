@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -101,10 +101,10 @@ namespace SilveR.Validators
                 ValidationInfo.AddWarningMessage("The x-axis variable is ignored in the Histogram plot option. If you wish to include a categorisation factor in the plot, then select the categorisation factors.");
 
             //go through each row in the datatable and do further checks...
-            CheckTransformations(DataTable, gaVariables.XAxisTransformation, gaVariables.XAxis);
+            CheckTransformations(gaVariables.XAxisTransformation, gaVariables.XAxis);
 
             //if the response has been transformed check if the value is <= 0
-            CheckTransformations(DataTable, gaVariables.ResponseTransformation, gaVariables.Response);
+            CheckTransformations(gaVariables.ResponseTransformation, gaVariables.Response);
 
             foreach (DataRow row in DataTable.Rows)
             {
@@ -225,7 +225,7 @@ namespace SilveR.Validators
 
         private bool ContainsDuplicates(IEnumerable<string> enumerable)
         {
-            var knownKeys = new HashSet<string>();
+            HashSet<string> knownKeys = new HashSet<string>();
             return enumerable.Any(item => !knownKeys.Add(item));
         }
     }

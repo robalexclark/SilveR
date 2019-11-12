@@ -310,7 +310,7 @@ k<-1
 
 #Table column names
 rownams<-matrix(ncol=colsno,nrow=1)
-rownams[1,1]="Comparison"
+rownams[1,1]="Correlation"
 rownams[1,2]="First variable"
 rownams[1,3]=" "
 rownams[1,4]="Second variable"
@@ -679,7 +679,7 @@ k<-1
 
 #Table column names
 rownams<-matrix(ncol=colsno,nrow=1)
-rownams[1,1]="Comparison"
+rownams[1,1]="Correlation"
 rownams[1,2]="Categorisation factor"
 rownams[1,3]="First variable"
 rownams[1,4]=" "
@@ -862,18 +862,6 @@ if (k>2) {
 	if (testcomb == 2) {
 		HTML("Note that there is only one or two pairs of responses available for one or more of the level(s) of the categorisation factor(s) and hence no correlation analysis can be performed for the level(s) of the categorisation factor(s). ", align="left")
 	}
-
-	HTML.title("Analysis description", HR=2, align="left")
-
-	if (method == "Pearson") {
-		HTML("The test statistic is based on Pearson's product moment correlation coefficient cor(x, y) and follows a t distribution with length(x)-2 degrees of freedom if the samples follow independent normal distributions, see Snedecor and Cochran (1989). ", align="left")
-	}
-	if (method == "Kendall") {
-		HTML.title("This test is a rank-based measure of association and can be used when the data are not necessarily from a bivariate normal distribution, see Hollander and Wolfe (1973). The test statistic is the estimate scaled to zero mean and unit variance, and is approximately normally distributed. ", align="left")
-	}
-	if (method == "Spearman")  {
-		HTML("This test is a rank-based measure of association and can be used when the data are not necessarily from a bivariate normal distribution, see Hollander and Wolfe (1973). The p-values are computed using algorithm AS 89, see Best and Roberts (1975). ", align="left")
-	}
 } else {
 	HTML.title("Warning", HR=2, align="left")
 	HTML("As the replication of every combination of the levels of the categorical factor(s) for all pairs of responses is two or less, no correlation analysis has been performed.", align="left")
@@ -881,6 +869,21 @@ if (k>2) {
 
 #===================================================================================================================
 #End of If statement for cat analyisis
+}
+
+#===================================================================================================================
+#Analysis description
+
+HTML.title("Analysis description", HR=2, align="left")
+
+if (method == "Pearson") {
+	HTML("The test statistic is based on Pearson's product moment correlation coefficient cor(x, y) and follows a t distribution with length(x)-2 degrees of freedom if the samples follow independent normal distributions, see Snedecor and Cochran (1989). ", align="left")
+}
+if (method == "Kendall") {
+	HTML("This test is a rank-based measure of association and can be used when the data are not necessarily from a bivariate normal distribution, see Hollander and Wolfe (1973). The test statistic is the estimate scaled to zero mean and unit variance, and is approximately normally distributed. ", align="left")
+}
+if (method == "Spearman")  {
+	HTML("This test is a rank-based measure of association and can be used when the data are not necessarily from a bivariate normal distribution, see Hollander and Wolfe (1973). The p-values are computed using algorithm AS 89, see Best and Roberts (1975). ", align="left")
 }
 
 #===================================================================================================================

@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 
@@ -35,6 +35,18 @@ namespace SilveR.Validators
             if (!CheckColumnNames(allVars))
                 return ValidationInfo;
 
+            //Go through each response
+            foreach (string response in ssVariables.Responses)
+            {
+                if (!CheckIsNumeric(response))
+                {
+                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.");
+                    return ValidationInfo;
+                }
+            }
+
+            CheckTransformations(ssVariables.Transformation, ssVariables.Responses);
+
             //Create a list of categorical variables selected (i.e. the cat factors)
             List<string> categorical = new List<string>();
             if (!String.IsNullOrEmpty(ssVariables.FirstCatFactor)) categorical.Add(ssVariables.FirstCatFactor);
@@ -42,25 +54,12 @@ namespace SilveR.Validators
             if (!String.IsNullOrEmpty(ssVariables.ThirdCatFactor)) categorical.Add(ssVariables.ThirdCatFactor);
             if (!String.IsNullOrEmpty(ssVariables.FourthCatFactor)) categorical.Add(ssVariables.FourthCatFactor);
 
+            //check response and cat factors contain values
+            if (!CheckResponsesPerLevel(categorical, ssVariables.Responses, "categorisation factor"))
+                return ValidationInfo;
 
-            //Go through each response
-            foreach (string response in ssVariables.Responses)
-            {
-                if (!CheckIsNumeric(response))
-                {
-                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
-                    return ValidationInfo;
-                }
-
-                CheckTransformations(DataTable, ssVariables.Transformation, response);
-
-                //check response and cat factors contain values
-                if (!CheckResponsesPerLevel(categorical, response, "categorisation factor"))
-                    return ValidationInfo;
-
-                if (!CheckFactorsAndResponseNotBlank(categorical, response, "categorisation factor"))
-                    return ValidationInfo;
-            }
+            if (!CheckFactorsAndResponsesNotBlank(categorical, ssVariables.Responses, "categorisation factor"))
+                return ValidationInfo;
 
             //if get here then no errors so return true
             return ValidationInfo;

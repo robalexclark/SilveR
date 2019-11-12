@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -36,9 +36,7 @@ namespace SilveR.Validators
             }
 
             if (owVariables.Treatment != null && !CheckResponsesPerLevel(owVariables.Treatment, owVariables.Response, ReflectionExtensions.GetPropertyDisplayName<OneWayANOVAPowerAnalysisDatasetBasedInputsModel>(i => i.Treatment)))
-            {
                 return ValidationInfo;
-            }
 
             if (owVariables.Treatment != null && owVariables.Response != null) //if a treat and response is selected...
             {
@@ -54,7 +52,8 @@ namespace SilveR.Validators
                 }
 
                 //check response and doses contain values
-                if (!CheckFactorAndResponseNotBlank(owVariables.Treatment, owVariables.Response, "Treatment factor")) return ValidationInfo;
+                if (!CheckFactorAndResponseNotBlank(owVariables.Treatment, owVariables.Response, ReflectionExtensions.GetPropertyDisplayName<OneWayANOVAPowerAnalysisDatasetBasedInputsModel>(i => i.Treatment)))
+                    return ValidationInfo;
             }
             else if (owVariables.Response != null && CountResponses(owVariables.Response) == 1) //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
             {
@@ -90,7 +89,7 @@ namespace SilveR.Validators
             }
 
             //check transformations
-            CheckTransformations(DataTable, owVariables.ResponseTransformation, owVariables.Response);
+            CheckTransformations(owVariables.ResponseTransformation, owVariables.Response);
 
             //if get here then no errors so return true
             return ValidationInfo;

@@ -106,7 +106,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor (Treat3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment (Treat3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("OneWayANOVAPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 

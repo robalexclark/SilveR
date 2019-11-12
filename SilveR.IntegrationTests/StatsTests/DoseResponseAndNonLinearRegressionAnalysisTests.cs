@@ -191,7 +191,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The QC Dose (QCDose3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The QC dose (QCDose3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
 
@@ -2099,7 +2099,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The formula should be of the form f=f(x) with x lower case.", errors);
+            Assert.Contains("The formula should be of the form f=y(x) with x lower case.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
     }

@@ -35,7 +35,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp 5) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp 5) contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.", errors);
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
@@ -49,7 +49,7 @@ namespace SilveR.IntegrationTests
 
             CorrelationAnalysisModel model = new CorrelationAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Correlation").Key;
-            model.Responses = new string[] { "Resp 1", "Resp 5" };
+            model.Responses = new string[] { "Resp 1", "Resp 2" };
             model.FirstCatFactor = "Factor 4";
 
             //Act
@@ -1547,7 +1547,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 1";
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
-            model.Hypothesis = "Greater than";
+            model.Hypothesis = "2-sided";
             model.Estimate = true;
             model.TestStatistic = true;
             model.PValue = true;

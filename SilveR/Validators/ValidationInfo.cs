@@ -37,6 +37,9 @@ namespace SilveR.Validators
 
         public void AddWarningMessage(string message)
         {
+            if (!ValidatedOK)
+                throw new InvalidOperationException("Validation already failed");
+
             if (!warningMessages.Contains(message) && !String.IsNullOrEmpty(message))
                 warningMessages.Add(message);
         }

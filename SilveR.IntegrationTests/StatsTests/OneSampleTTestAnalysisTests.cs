@@ -58,7 +58,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp 6) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp 6) contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.", errors);
             Helpers.SaveOutput("OneSampleTTestAnalysis", testName, errors);
         }
 
@@ -80,7 +80,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp 6) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp 6) contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.", errors);
             Helpers.SaveOutput("OneSampleTTestAnalysis", testName, errors);
         }
 

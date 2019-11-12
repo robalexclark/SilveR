@@ -36,7 +36,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp1) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp1) contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -233,7 +233,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp1) contains non-numerical data. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("The Response (Resp1) contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -247,7 +247,7 @@ namespace SilveR.IntegrationTests
 
             SummaryStatisticsModel model = new SummaryStatisticsModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
-            model.Responses = new string[] { "Resp 2", "Resp 5" };
+            model.Responses = new string[] { "Resp 2", "Resp5" };
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Cat4";
 

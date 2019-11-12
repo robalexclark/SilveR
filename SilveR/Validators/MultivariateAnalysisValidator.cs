@@ -1,4 +1,4 @@
-﻿using SilveR.StatsModels;
+using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -52,7 +52,7 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(response))
                 {
-                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                    ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.");
                     return ValidationInfo;
                 }
 
@@ -67,7 +67,7 @@ namespace SilveR.Validators
                 }
                 responseCounts.Add(responseCount);
 
-                CheckTransformations(DataTable, maVariables.ResponseTransformation, response);
+                CheckTransformations(maVariables.ResponseTransformation, response);
 
                 //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
                 if (maVariables.CategoricalPredictor != null && maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.LinearDiscriminantAnalysis)
@@ -87,7 +87,7 @@ namespace SilveR.Validators
                     {
                         if (!CheckIsNumeric(continuousPredictor))
                         {
-                            ValidationInfo.AddErrorMessage("The continuous predictor (" + continuousPredictor + ") contains non-numerical data. Please amend the dataset prior to running the analysis.");
+                            ValidationInfo.AddErrorMessage("The continuous predictor (" + continuousPredictor + ") contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.");
                             return ValidationInfo;
                         }
                         else if (!CheckFactorAndResponseNotBlank(continuousPredictor, response, ReflectionExtensions.GetPropertyDisplayName<MultivariateAnalysisModel>(i => i.ContinuousPredictors)))
