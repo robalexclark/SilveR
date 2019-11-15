@@ -2099,7 +2099,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The formula should be of the form f=f(x) with x lower case.", errors);
+            Assert.Contains("The formula should be of the form f=y(x) with x lower case.", errors);
             Helpers.SaveOutput("DoseResponseAndNonLinearRegressionAnalysis", testName, errors);
         }
     }

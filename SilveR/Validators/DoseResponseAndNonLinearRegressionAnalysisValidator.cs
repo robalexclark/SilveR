@@ -137,7 +137,7 @@ namespace SilveR.Validators
             }
             else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation && !drnlrVariables.Equation.Contains("x"))
             {
-                ValidationInfo.AddErrorMessage("The formula should be of the form f=f(x) with x lower case.");
+                ValidationInfo.AddErrorMessage("The formula should be of the form f=y(x) with x lower case.");
                 return ValidationInfo;
             }
 
