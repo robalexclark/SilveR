@@ -89,7 +89,7 @@ HTML.title("Analysis information", HR=2, align="left")
 
 title<-paste("The response ", Responseqq ,  " has been analysed in the Survival Analysis module, with " ,sep="")
 if (Groupqq != "NULL") {
-	title<-paste(title, "grouping variable " , Groupqq , " and " , sep="")
+	title<-paste(title, "treatment factor " , Groupqq , " and " , sep="")
 }
 title<-paste(title, "censorship variable " , Censorshipqq , "." , sep="")
 HTML(title, align="left")
@@ -147,9 +147,9 @@ if (ComparingCurves == "Y") {
 	HTML(testresults, classfirstline="second", align="left", row.names = "FALSE")
 
 	if(as.numeric(zzz) < (1-sig)) {
-		HTML("Conclusion: There was a significant difference between the survival curves.", align="left")
+		HTML(paste("Conclusion: There was a significant difference between the survival curves at the ", 100*(1-sig) , "% level.", sep=""), align="left")
 	} else {
-		HTML("Conclusion: The survival curves were not statistically significantly different.", align="left")
+		HTML(paste("Conclusion: The survival curves were not statistically significantly different at the ", 100*(1-sig) , "% level.", sep=""), align="left")
 	}
 	HTML("This analysis implements the G-rho family of Harrington and Fleming (1982), with weights on each death of 1, where S is the Kaplan-Meier estimate of survival. This is the log-rank or Mantel-Haenszel test.", align="left")
 
@@ -180,7 +180,8 @@ if (ShowPlot == "Y") {
 	grdata <- rbind.fill(zeros, grdata)
 	grdata2<-cbind(grdata, read.table(text = as.character(grdata$strata), sep = "="))
 	grdata2$first_IVS_cat<- Grouprr
-	grdata2$V3 <- paste(grdata2$first_IVS_cat, "=",grdata2$V2, "  ", sep = "") 
+#	grdata2$V3 <- paste(grdata2$first_IVS_cat, "=",grdata2$V2, "  ", sep = "") 
+	grdata2$V3 <- grdata2$V2
 
 	#Testing for groups with no censored data and re-ordering dataset if necessary
 	infiniteslope<-"N"
@@ -244,7 +245,9 @@ Ref_list<-R_refs()
 
 HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref,  align="left")
-HTML("Harrington DP and Fleming TR. (1982). A class of rank test procedures for censored survival data. Biometrika 69, 553-566.", align="left")
+if (ComparingCurves == "Y") {
+	HTML("Harrington, D.P. and Fleming, T.R. (1982). A class of rank test procedures for censored survival data. Biometrika 69, 553-566.", align="left")
+}
 
 HTML.title("R references", HR=2, align="left")
 HTML(Ref_list$R_ref , align="left")
@@ -274,13 +277,14 @@ if (showdataset=="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", Responseqq, sep=""), align="left")
-HTML(paste("Grouping variable: ", Groupqq, sep=""),  align="left")
-HTML(paste("Censorship variable: ", Censorshipqq, sep=""),  align="left")
-HTML(paste("Disply summary results (Y/N): ", SummaryResults, sep=""), align="left")
-HTML(paste("Display survival curve comparison (Y/N): ", ComparingCurves, sep=""),  align="left")
-HTML(paste("Display Kaplan Meir survival plot: ", ShowPlot, sep=""),  align="left")
-HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
-
+	HTML(paste("Response variable: ", Responseqq, sep=""), align="left")
+	HTML(paste("Treatment factor: ", Groupqq, sep=""),  align="left")
+	HTML(paste("Censorship variable: ", Censorshipqq, sep=""),  align="left")
+	HTML(paste("Output summary results (Y/N): ", SummaryResults, sep=""), align="left")
+	HTML(paste("Output Kaplan Meir survival plot: ", ShowPlot, sep=""),  align="left")
+	HTML(paste("Output survival curve comparison (Y/N): ", ComparingCurves, sep=""),  align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
+}

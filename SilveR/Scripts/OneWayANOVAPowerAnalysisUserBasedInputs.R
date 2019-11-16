@@ -267,11 +267,11 @@ if (as.numeric(Res3) > 99.99) {
 	Res3x <- Res3
 }
 
-text1<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeFrom2, " per group, then if the effect size is ", Effect , ", then the statistical power is ", Res1x, "%. " , sep="")
+text1<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeFrom2, " per group, if the effect size is ", Effect , ", then the statistical power is ", Res1x, "%. " , sep="")
 HTML(text1, align="left")
-text2<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  midsize, " per group, then if the effect size is ", Effect , ", then the statistical power is ", Res2x, "%. " , sep="")
+text2<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  midsize, " per group, if the effect size is ", Effect , ", then the statistical power is ", Res2x, "%. " , sep="")
 HTML(text2, align="left")
-text3<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeTo2, " per group, then if the effect size is ", Effect , ", then the statistical power is ", Res3x, "%. " , sep="")
+text3<-paste("Assuming the significance level is set at ", 100*sig , "%, the number of groups is ", ngps, ", with a sample size of ",  sampleSizeTo2, " per group, if the effect size is ", Effect , ", then the statistical power is ", Res3x, "%. " , sep="")
 HTML(text3, align="left")
 
 HTML.title("Definitions", HR=2, align="left")
@@ -285,7 +285,7 @@ Ref_list <- R_refs()
 
 HTML.title("Statistical references", HR = 2, align = "left")
 HTML(Ref_list$BateClark_ref, align = "left")
-HTML("Harrison, DA and Brady, AR (2004). Sample size and power calculations using the noncentral t-distribution. The Stata Journal, 4(2), 142-153.", align = "left")
+#HTML("Harrison, D.A. and Brady, A.R. (2004). Sample size and power calculations using the noncentral t-distribution. The Stata Journal, 4(2), 142-153.", align = "left")
 
 HTML.title("R references", HR = 2, align = "left")
 HTML(Ref_list$R_ref,  align = "left")
@@ -317,35 +317,38 @@ if (showdataset == "Y") {
 #===================================================================================================================
 #Show arguments 
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
-if (valueType == "DatasetValues") { 
-	HTML(paste("Analysis method: Dataset based inputs"),  align="left")
-	HTML(paste("Response variable: ", response, sep=""),  align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
+	if (valueType == "DatasetValues") { 
+		HTML(paste("One-way ANOVA Power Analysis module used: Dataset based inputs"),  align="left")
+		HTML(paste("Response variable: ", response, sep=""),  align="left")
 
-	if (transformation != "None") {
-		HTML(paste("Response transformation: ", transformation, sep = ""),  align="left")
-	}
-	HTML(paste("Treatment variable: ", treatment, sep=""),  align="left")
-} else {
-	HTML(paste("Analysis method: User based inputs"),  align="left")
-
-	HTML(paste("Treatment means: ", Treatmentmeans, sep=""),  align="left")
-
-	if (Variancetype == "Variance") {
-		HTML(paste("Variability estimate type: Variance", sep=""),  align="left")
-		HTML(paste("Variance: ", Variance, sep=""),  align="left")
-	}
-	if (Variancetype == "StandardDeviation") {
-		HTML(paste("Variability estimate type: Standard deviation", sep=""),  align="left")
-		HTML(paste("Standard deviation: ", Standdev, sep=""),  align="left")
-	}
-}
-
-if (plotSettingsType == "PowerAxis")	{
-	HTML(paste("Power curve plots controlled by power range:"), align="left")
+		if (transformation != "None") {
+			HTML(paste("Response variable transformation: ", transformation, sep = ""),  align="left")
+		}
+		HTML(paste("Treatment factor: ", treatment, sep=""),  align="left")
 	} else {
-	HTML(paste("Power curve plots controlled by sample size range:"), align="left")
+		HTML(paste("One-way ANOVA Power Analysis module used: User based inputs"),  align="left")
+
+		HTML(paste("Group means: ", Treatmentmeans, sep=""),  align="left")
+
+		if (Variancetype == "Variance") {
+			HTML("Variability estimate type: Variance",  align="left")
+			HTML(paste("Variance estimate: ", Variance, sep=""),  align="left")
+		}
+		if (Variancetype == "StandardDeviation") {
+			HTML("Variability estimate type: Standard deviation",  align="left")
+			HTML(paste("Standard deviation estimate: ", Standdev, sep=""),  align="left")
+		}
 	}
-HTML(paste("Plot setting from: ", plotSettingsFrom, sep=""), align="left")
-HTML(paste("Plot setting to: ", plotSettingsTo, sep=""), align="left")
-HTML(paste("Significance level: ", sig, sep=""), align="left")
+
+	HTML(paste("Significance level: ", sig, sep=""), align="left")
+
+	if (plotSettingsType == "PowerAxis")	{
+		HTML(paste("Power curve plots defined by power range:"), align="left")
+		} else {
+		HTML(paste("Power curve plots defined by sample size range:"), align="left")
+		}
+	HTML(paste("Plot setting from: ", plotSettingsFrom, sep=""), align="left")
+	HTML(paste("Plot setting to: ", plotSettingsTo, sep=""), align="left")
+}		

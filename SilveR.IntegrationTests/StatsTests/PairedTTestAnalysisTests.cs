@@ -130,7 +130,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment (Day2) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment (Day2) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
         }
 
@@ -154,7 +154,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Subject (Animal2) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Subject (Animal2) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
         }
 
@@ -179,7 +179,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Other design (block) factor (Block3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Other design (block) factor (Block3) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
         }
 
@@ -203,7 +203,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp3) contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp3) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
         }
 
@@ -228,7 +228,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Covariate (Cov2) contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Covariate (Cov2) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
         }
 
@@ -298,11 +298,11 @@ namespace SilveR.IntegrationTests
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("There is no replication in one or more of the levels of the Subject (Animal3). Please select another factor.", errors);
-            Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
+            Assert.Contains("There is no replication in one or more of the levels of the Subject factor (Animal3). This can lead to unreliable results so you may want to remove any subjects from the dataset with only one replicate.", warnings);
+            Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
         }
 
         [Fact]
@@ -394,7 +394,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Loge";
             model.Subject = "Animal1";
             model.Treatment = "Day1";
-            model.Covariates = new string[] { "Cov3" };
+            model.Covariates = new string[] { "Cov4" };
             model.CovariateTransformation = "Loge";
             model.Covariance = "Compound Symmetric";
 
@@ -403,7 +403,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Covariate (Cov3) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
+            Assert.Contains("You have Loge transformed the Cov4 variable. Unfortunately some of the Cov4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
         }
 
@@ -608,7 +608,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("At least one of the subjects has more than one observation recorded on one of the treatments. Please make sure the data was entered correctly as each subject can only be measued once at each level of the Treatment.", errors);
+            Assert.Contains("At least one of the subjects has more than one observation recorded on one of the treatments. Please make sure the data was entered correctly as each subject can only be measured once at each level of the Treatment.", errors);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
         }
 
@@ -916,7 +916,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -924,7 +924,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -958,7 +958,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -966,7 +966,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1000,7 +1000,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1008,7 +1008,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1041,7 +1041,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1049,7 +1049,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1083,7 +1083,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1091,7 +1091,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1125,7 +1125,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1133,7 +1133,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1166,7 +1166,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1174,7 +1174,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1208,7 +1208,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1216,7 +1216,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1250,7 +1250,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1258,7 +1258,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp4) contains missing data.", warnings);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1853,9 +1853,9 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.Subject = "Animal6";
             model.Treatment = "Day7";
-            model.ControlGroup = "4";
-            model.Covariance = "Unstructured";
-            model.Covariates = new string[] { "Cov7" };
+            model.ControlGroup = "2";
+            model.Covariance = "Compound Symmetric";
+            model.Covariates = new string[] { "Cov9" };
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
@@ -1863,12 +1863,12 @@ namespace SilveR.IntegrationTests
             model.AllPairwiseComparisons = true;
 
             //Act
-            HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
 
             //Assert
-            Assert.Contains("The Treatment (Day7) contains missing data where there are observations present in the Covariate. Please check the raw data and make sure the data was entered correctly.", errors);
-            Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2208,7 +2208,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.Subject = "Animal 5";
             model.Treatment = "Day6";
-            model.ControlGroup = "1";
+            model.ControlGroup = "2";
             model.Covariance = "Unstructured";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;

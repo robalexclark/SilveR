@@ -584,7 +584,7 @@ HTML(table, classfirstline = "second", align = "left", row.names = "FALSE")
 #===================================================================================================================
 #Boxplot of data
 #===================================================================================================================
-HTML.title("Box-plot", HR = 2, align = "left")
+HTML.title("Boxplot", HR = 2, align = "left")
 
 #Graphics parameter setup
 graphdata$xvarrr_IVS_BP <- as.factor(eval(parse(text = paste("graphdata$", treatment))))
@@ -622,15 +622,15 @@ if (pdfout == "Y") {
     dev.off(2)
     dev.off(3)
     pdfFile_x <- sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]", "", plotFilepdfx)
-    linkToPdfx <- paste("<a href=\"", pdfFile_x, "\">Click here to view the PDF of the box-plot</a>", sep = "")
+    linkToPdfx <- paste("<a href=\"", pdfFile_x, "\">Click here to view the PDF of the boxplot</a>", sep = "")
     HTML(linkToPdfx)
 }
 
-#Footnote to box-plot
-HTML("On the box-plot the median is denoted by the horizontal line within the box. 
+#Footnote to boxplot
+HTML("On the boxplot the median is denoted by the horizontal line within the box. 
 The box indicates the interquartile range, where the lower and upper quartiles are calculated using the type 2 method, see Hyndman and Fan (1996). 
 The whiskers extend to the most extreme data point which is no more than 1.5 times the length of the box away from the box. 
-Individual observations that lie outside the outlier range are included on the plot using circles.", align = "left")
+Individual observations that lie outside the outlier range are included on the plot using stars.", align = "left")
 
 #===================================================================================================================
 #Kruskall-Wallis and Mann Whitney
@@ -1004,13 +1004,8 @@ if (block != "NULL" && statstest == "AllComparisons") {
 }
 
 #===================================================================================================================
-#Comparisons back to control
+#Comparisons back to control - no blocks
 #===================================================================================================================
-if (block != "NULL" && statstest == "CompareToControl") {
-    HTML.title("All comparisons back to one", HR = 2, align = "left")
-    HTML("The 'all comparisons back to one' is not available as an 'Other design (block)' factor has been selected. Please use the  'all pairwise comparisons' option to generate the required results.", align = "left")
-}
-
 if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
     #Steels all to one comparison
     HTML.title("Steel's all comparisons back to one", HR = 2, align = "left")
@@ -1060,27 +1055,34 @@ if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
     HTML(steeltable2, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
+
+#===================================================================================================================
+#Comparisons back to control - blocks
+#===================================================================================================================
+if (block != "NULL" && (statstest == "CompareToControl" )) {
+    HTML.title("All comparisons back to one", HR = 2, align = "left")
+    HTML("The 'all comparisons back to one' is not available as an 'Other design (block)' factor has been selected. Please use the  'all pairwise comparisons' option to generate the required results.", align = "left")
+}
 #===================================================================================================================
 #Text for conclusions and comments 
 #===================================================================================================================
 Ref_list <- R_refs()
 
 if (RunFried == "Y") {
-        HTML.title("Analysis conclusions", HR = 2, align = "left")
-
     if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparisons" && leng == 2) || (statstest == "CompareToControl" && leng == 2))) {
+        HTML.title("Analysis conclusions", HR = 2, align = "left")
         dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
         if (dim > 2) {
             if (temptab[1, 4] <= (1 - sig)) {
-                add <- paste(c("There is a statistically significant overall difference between the treatment groups at the "), sep = "")
+                add <- paste(c("There is a statistically significant overall difference between the treatment factor levels at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is less than ", sep = "")
                 add <- paste(add, 1 - sig, sep = "")
                 add <- paste(add, " (Kruskal-Wallis test).", sep = "")
                 HTML(add, align = "left")
             } else if (temptab[1, 4] > (1 - sig)) {
-                add <- paste(c("The overall difference between the treatment groups is not statistically significant at the "), sep = "")
+                add <- paste(c("The overall difference between the treatment factor levels is not statistically significant at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")
                 add <- paste(add, 1 - sig, sep = "")
@@ -1090,26 +1092,26 @@ if (RunFried == "Y") {
 
             HTML.title("Analysis description", HR = 2, align = "left")
             HTML("The overall treatment effect was assessed using the non-parametric Kruskal-Wallis test, see Kruskal and Wallis (1952, 1953).", align = "left")
-            HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
+            HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability of the responses varies across treatments or the responses are not continuous and numerical. ", align = "left")
 
             #Bate and Clark comment
             HTML(refxx, align = "left")
 
             HTML.title("Statistical references", HR = 2, align = "left")
             HTML(Ref_list$BateClark_ref, align = "left")
-            HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
-            HTML("Kruskal, WH and Wallis, WA (1952). Use of ranks in one criterion variance analysis. JASA, 47, 583-621.", align = "left")
-            HTML("Kruskal, WH and Wallis, WA (1953). Errata for Kruskal-Wallis (1952). JASA, 48, 907-911.", align = "left")
+            HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+            HTML("Kruskal, W.H. and Wallis, W.A. (1952). Use of ranks in one criterion variance analysis. JASA, 47, 583-621.", align = "left")
+            HTML("Kruskal, W.H. and Wallis, W.A. (1953). Errata for Kruskal-Wallis (1952). JASA, 48, 907-911.", align = "left")
         } else if (dim == 2) {
             if (wilcoxOut$p.value <= (1 - sig)) {
-                add <- paste(c("The difference between the two treatment groups is statistically significant at the "), sep = "")
+                add <- paste(c("The difference between the two treatment factor levels is statistically significant at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is less than ", sep = "")
                 add <- paste(add, 1 - sig, sep = "")
                 add <- paste(add, " (Mann-Whitney test).", sep = "")
                 HTML(add, align = "left")
             } else if (wilcoxOut$p.value > (1 - sig)) {
-                add <- paste(c("The difference between the two treatment groups is not statistically significant at the "), sep = "")
+                add <- paste(c("The difference between the two treatment factor levels is not statistically significant at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")
                 add <- paste(add, 1 - sig, sep = "")
@@ -1120,31 +1122,32 @@ if (RunFried == "Y") {
             HTML.title("Analysis description", HR = 2, align = "left")
             HTML("The difference between the two treatments was assessed using the non-parametric Mann-Whitney test with continuity correction, see Wilcoxon (1945), Mann and Whitney (1947). ", align = "left")
             HTML("Note that the literature is not unanimous about the definition of the Mann-Whitney test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
-            HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
+            HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability of the responses varies across treatments or the responses are not continuous and numerical. ", align = "left")
 
             #Bate and Clark comment
-            HTML.title(refxx, HR = 0, align = "left")
+            HTML(refxx,  align = "left")
 
             HTML.title("Statistical references", HR = 2, align = "left")
             HTML(Ref_list$BateClark_ref, align = "left")
-            HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
-            HTML("Mann, HB and Whitney, DR (1947). On a test of whether one of two random variables is stochastically larger than the other. Annals of Mathematical Statistics, 18, 50-60.", align = "left")
-            HTML("Wilcoxon, F (1945). Individual comparisons by ranking methods. Biometrics Bulletin, 1, 80-83.", align = "left")
+            HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+            HTML("Mann, H.B. and Whitney, D.R. (1947). On a test of whether one of two random variables is stochastically larger than the other. Annals of Mathematical Statistics, 18, 50-60.", align = "left")
+            HTML("Wilcoxon, F. (1945). Individual comparisons by ranking methods. Biometrics Bulletin, 1, 80-83.", align = "left")
         }
     }
 
     if (block != "NULL" && statstest == "MannWhitney") {
-        dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
+       HTML.title("Analysis conclusions", HR = 2, align = "left")
+       dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
         if (temptab[1, 4] <= (1 - sig)) {
-            add <- paste(c("There is a statistically significant overall difference between the treatment groups at the "), sep = "")
+            add <- paste(c("There is a statistically significant overall difference between the treatment factor levels at the "), sep = "")
             add <- paste(add, 100 * (1 - sig), sep = "")
             add <- paste(add, "% level of significance as the p-value is less than ", sep = "")
             add <- paste(add, 1 - sig, sep = "")
             add <- paste(add, " (Friedman test).", sep = "")
             HTML(add, align = "left")
         } else if (temptab[1, 4] > (1 - sig)) {
-            add <- paste(c("The overall difference between the treatment groups is not statistically significant at the "), sep = "")
+            add <- paste(c("The overall difference between the treatment factor levels is not statistically significant at the "), sep = "")
             add <- paste(add, 100 * (1 - sig), sep = "")
             add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")
             add <- paste(add, 1 - sig, sep = "")
@@ -1154,20 +1157,21 @@ if (RunFried == "Y") {
 
         HTML.title("Analysis description", HR = 2, align = "left")
         HTML("The overall treatment effect was assessed using the non-parametric Friedman test, see Hollander and Wolfe (1973).", align = "left")
-        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
+        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability of the responses varies across treatments or the responses are not continuous and numerical. ", align = "left")
 
         #Bate and Clark comment
         HTML(refxx, align = "left")
 
         HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
-        HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
-        HTML("Hollander, M and Wolfe DA (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
+        HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+        HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
     }
 
 
     if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
-        add <- c(" ")
+      HTML.title("Analysis conclusions", HR = 2, align = "left")
+      add <- c(" ")
         textindex = 1
         for (y in 1:(int - 1)) {
             if (allpairtable[y, 5] <= (1 - sig)) {
@@ -1200,18 +1204,20 @@ if (RunFried == "Y") {
             }
         }
         if (textindex == 1) {
-            add3 <- c("None of the pairwise Behrens Fisher tests were statistically significant at the ")
-            add3 <- paste(add3, 1 - sig, sep = "")
-            add3 <- paste(add3, " level.", sep = "")
+            add3 <- c("None of the pairwise Behrens Fisher tests are statistically significant at the ")
+            add3 <- paste(add3, 100 * (1 - sig), sep = "")
+            add3 <- paste(add3, "% level of significance as the p-values are all greater than ", sep = "")
+            add3 <- paste(add3, 1 - sig, ".", sep = "")
             HTML(add3, align = "left")
         } else if (textindex > 1) {
             HTML(add, align = "left")
         }
 
         if (textindex2 == 1) {
-            add3 <- c("None of the pairwise Mann-Whitney tests were statistically significant at the ")
-            add3 <- paste(add3, 1 - sig, sep = "")
-            add3 <- paste(add3, " level.", sep = "")
+            add3 <- c("None of the pairwise Mann-Whitney tests are statistically significant at the ")
+            add3 <- paste(add3, 100 * (1 - sig), sep = "")
+            add3 <- paste(add3, "% level of significance as the p-values are all greater than ", sep = "")
+            add3 <- paste(add3, 1 - sig, ".", sep = "")
             HTML(add3, align = "left")
         } else if (textindex2 > 1) {
             HTML(add2, align = "left")
@@ -1219,22 +1225,23 @@ if (RunFried == "Y") {
 
         HTML.title("Analysis description", HR = 2, align = "left")
         HTML("All pairwise differences between the treatments were assessed using Behrens Fisher tests, see Munzel and Hothorn (2001) and Mann-Whitney tests with continuity correction, see Mann and Whitney (1947).", align = "left")
-        HTML("Note that the literature is not unanimous about the definition of the Mann-Whitney test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
-        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
+        HTML("Note that the literature is not unanimous about the definition of the Mann-Whitney test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper, Wilcoxon (1945), used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
+        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability of the responses varies across treatments or the responses are not continuous and numerical. ", align = "left")
 
         #Bate and Clark comment
-        HTML.title(refxx, HR = 0, align = "left")
+        HTML(refxx,  align = "left")
 
         HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
-        HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
-        HTML("Mann, HB and Whitney, DR (1947). On a test of whether one of two random variables is stochastically larger than the other. Annals of Mathematical Statistics, 18, 50-60.", align = "left")
-        HTML("Munzel, U and Hothorn, LA (2001). A unified approach to simultaneous rank test procedures in the unbalanced one-way layout. Biometrical Journal, 43(5) 553-569.", align = "left")
-        HTML("Wilcoxon, F (1945). Individual comparisons by ranking methods. Biometrics Bulletin, 1, 80-83.", align = "left")
+        HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+        HTML("Mann, H.B. and Whitney, D.R. (1947). On a test of whether one of two random variables is stochastically larger than the other. Annals of Mathematical Statistics, 18, 50-60.", align = "left")
+        HTML("Munzel, U. and Hothorn, L.A. (2001). A unified approach to simultaneous rank test procedures in the unbalanced one-way layout. Biometrical Journal, 43(5) 553-569.", align = "left")
+        HTML("Wilcoxon, F. (1945). Individual comparisons by ranking methods. Biometrics Bulletin, 1, 80-83.", align = "left")
     }
 
     if (block != "NULL" && statstest == "AllComparisons") {
-        textindex2 <- 1
+       HTML.title("Analysis conclusions", HR = 2, align = "left")
+       textindex2 <- 1
         add2 <- c(" ")
         for (q in 1:(int - 1)) {
             if (pvzzz_list[q] <= (1 - sig)) {
@@ -1252,14 +1259,16 @@ if (RunFried == "Y") {
         }
 
         if (textindex2 == 1 && int == 2) {
-            add3 <- c("The pairwise Wilcoxon Signed Rank test was not statistically significant at the ")
-            add3 <- paste(add3, 1 - sig, sep = "")
-            add3 <- paste(add3, " level.", sep = "")
+            add3 <- c("The pairwise Wilcoxon Signed Rank test is not statistically significant at the ")
+            add3 <- paste(add3, 100 * (1 - sig), sep = "")
+            add3 <- paste(add3, "% level of significance as the p-value is greater than ", sep = "")
+            add3 <- paste(add3, 1 - sig, ".", sep = "")
             HTML(add3, align = "left")
         } else if (textindex2 == 1 && int > 2) {
-            add3 <- c("None of the pairwise Wilcoxon Signed Rank tests were statistically significant at the ")
-            add3 <- paste(add3, 1 - sig, sep = "")
-            add3 <- paste(add3, " level.", sep = "")
+            add3 <- c("None of the pairwise Wilcoxon Signed Rank tests are statistically significant at the ")
+            add3 <- paste(add3, 100 * (1 - sig), sep = "")
+            add3 <- paste(add3, "% level of significance as the p-values are greater than ", sep = "")
+            add3 <- paste(add3, 1 - sig, ".", sep = "")
             HTML(add3, align = "left")
         } else if (textindex2 > 1) {
             HTML(add2, align = "left")
@@ -1272,19 +1281,20 @@ if (RunFried == "Y") {
             HTML("All pairwise differences between the treatments were assessed using a Wilcoxon Signed Rank test with continuity correction, see Hollander and Wolfe (1973).", align = "left")
         }
         HTML("Note that the literature is not unanimous about the definition of the Wilcoxon Signed Rank test. The two most common definitions correspond to the sum of the ranks of the first sample with the minimum value subtracted or not: R subtracts. It seems Wilcoxon's original paper used the unadjusted sum of the ranks but subsequent tables subtracted the minimum. ", align = "left")
-        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
+        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability of the responses varies across treatments or the responses are not continuous and numerical. ", align = "left")
 
         #Bate and Clark comment
-        HTML.title(refxx, HR = 0, align = "left")
+        HTML(refxx,  align = "left")
 
         HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
-        HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
-        HTML("Hollander, M and Wolfe DA (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
+        HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+        HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
     }
 
     if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
-        add <- c(" ")
+       HTML.title("Analysis conclusions", HR = 2, align = "left")
+       add <- c(" ")
         textindex = 1
         for (y in 1:(length(unique(eval(parse(text = paste("statdata$", treatment))))) - 1)) {
             if (steeltable2[y, 5] <= (1 - sig)) {
@@ -1301,27 +1311,31 @@ if (RunFried == "Y") {
             }
         }
         if (textindex == 1) {
-            HTML("None of the Steel's all to one comparisons were significant.", align = "left")
+            add <- c("None of the Steel's all to one comparisons are significant at the ")
+            add <- paste(add, 100 * (1 - sig), sep = "")
+            add <- paste(add, "% level of significance as the p-values are all greater than ", sep = "")
+            add <- paste(add, 1 - sig, ".", sep = "")
+            HTML(add, align = "left")
         } else if (textindex > 1) {
             HTML(add, align = "left")
         }
 
         HTML.title("Analysis description", HR = 2, align = "left")
-        HTML("The comparison of treatment groups back to a single control group was made using the non-parametric Steel's test, see Steel (1959).", align = "left")
-        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability is different between treatment groups or the responses are not continuous and numerical. ", align = "left")
+        HTML("The comparison of treatment factor levels back to a single control group was made using the non-parametric Steel's test, see Steel (1959).", align = "left")
+        HTML("Non-parametric tests should be used if the data is non-normally distributed, the variability of the responses varies across treatments or the responses are not continuous and numerical. ", align = "left")
 
         #Bate and Clark comment
-        HTML.title(refxx, HR = 0, align = "left")
+        HTML(refxx,  align = "left")
 
         HTML.title("Statistical references", HR = 2, align = "left")
         HTML(Ref_list$BateClark_ref, align = "left")
-        HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
-        HTML("Steel, RGD (1959). A multiple comparison rank sum test: treatments versus control. Biometrics, 15, 560-572. ", align = "left")
+        HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+        HTML("Steel, R.G.D. (1959). A multiple comparison rank sum test: treatments versus control. Biometrics, 15, 560-572. ", align = "left")
     }
 
     if (block != "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
         HTML.title("Statistical references", HR = 2, align = "left")
-        HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+        HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
     }
 
 
@@ -1329,7 +1343,7 @@ if (RunFried == "Y") {
 
 if (RunFried != "Y") {
     HTML.title("Statistical reference", HR = 2, align = "left")
-    HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
+    HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
 }
 
 #===================================================================================================================
@@ -1374,37 +1388,33 @@ if (showdataset == "Y") {
     HTML(statdata6, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
-
-
-
-
-
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR = 2, align = "left")
+	HTML(paste("Response variable: ", response, sep = ""), align = "left")
+	HTML(paste("Treatment factor: ", treatment, sep = ""), align = "left")
+	
+	if (block != "NULL") {
+	    HTML(paste("Other design (block) factor: ", block, sep = ""), align = "left")
+	}
 
-HTML.title("Analysis options", HR = 2, align = "left")
-HTML(paste("Response variable: ", response, sep = ""), align = "left")
-HTML(paste("Grouping variable: ", treatment, sep = ""), align = "left")
+	if (statstest == "MannWhitney" && dim == 2) {
+	    HTML(paste("Analysis type: Mann-Whitney"), align = "left")
+	}
 
-if (block != "NULL") {
-    HTML(paste("Other design (blocking) variable: ", block, sep = ""), align = "left")
+	if (statstest == "MannWhitney" && dim >= 3) {
+	    HTML(paste("Analysis type: Kruskal-Wallis"), align = "left")
+	}
+
+	if (statstest != "MannWhitney") {
+	    HTML(paste("Analysis type: ", statstest, sep = ""), align = "left")
+	}
+
+	HTML(paste("Significance level: ", 1 - sig, sep = ""), align = "left")
+
+	if (contlevel != "NULL" && statstest == "CompareToControl") {
+	    HTML(paste("Control group: ", contlevel, sep = ""), align = "left")
+	}
 }
-
-if (statstest == "MannWhitney" && dim == 2) {
-    HTML(paste("Statistical test: Mann-Whitney"), align = "left")
-}
-
-if (statstest == "MannWhitney" && dim >= 3) {
-    HTML(paste("Statistical test: Kruskal-Wallis"), align = "left")
-}
-
-if (statstest != "MannWhitney") {
-    HTML(paste("Statistical test: ", statstest, sep = ""), align = "left")
-}
-
-if (contlevel != "NULL" && statstest == "CompareToControl") {
-    HTML(paste("Control group: ", contlevel, sep = ""), align = "left")
-}
-
-HTML(paste("Significance level: ", 1 - sig, sep = ""), align = "left")

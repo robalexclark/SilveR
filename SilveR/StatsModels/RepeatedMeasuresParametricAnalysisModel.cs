@@ -70,7 +70,7 @@ namespace SilveR.StatsModels
         [DisplayName("Table of overall effect tests")]
         public bool ANOVASelected { get; set; } = true;
 
-        [DisplayName("Predicted vs. residuals plot")]
+        [DisplayName("Residuals vs. predicted plot")]
         public bool PRPlotSelected { get; set; } = true;
 
         [DisplayName("Normal probability plot")]

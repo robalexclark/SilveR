@@ -72,16 +72,17 @@ namespace SilveR.IntegrationTests
 
             OneSampleTTestAnalysisModel model = new OneSampleTTestAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "One Sample t-test").Key;
-            model.Responses = new string[] { "Resp 6" };
+            model.Responses = new string[] { "Resp8" };
+            model.ResponseTransformation = "Log10";
             model.TargetValue = 0.1m;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/OneSampleTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response (Resp 6) contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.", errors);
-            Helpers.SaveOutput("OneSampleTTestAnalysis", testName, errors);
+            Assert.Contains("You have Log10 transformed the Resp8 variable. Unfortunately some of the Resp8 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
+            Helpers.SaveOutput("OneSampleTTestAnalysis", testName, warnings);
         }
 
         [Fact]

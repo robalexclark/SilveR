@@ -14,7 +14,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
 
- <h2> One-sample t-test summary results</h2>
+ <h2> One-sample t-test summary result</h2>
 
 
 <p align="left">
@@ -35,7 +35,9 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
-<p class='character'>Conclusion: There is a statistically significant difference between the mean of  Resp 1 and the test value 0.1. </p>
+<p class='character'>Conclusion: There is a statistically significant difference between the mean of  Resp 1 and the test value 0.1 at the 1% level of significance as the p-value is less than 0.01. </p>
+
+<p class='character'>Warning: Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the result of the statistical test, unreliable.</p>
 
  <h2> Table of the sample mean with 99% confidence interval</h2>
 
@@ -58,7 +60,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Statistical references</h2>
 
-<p class='character'>Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+<p class='character'>Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
 
  <h2> R references</h2>
 
@@ -82,16 +84,76 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>Louis Kates and Thomas Petzoldt (2012). proto: Prototype object-based programming. R package version 0.3-10. http://CRAN.R-project.org/package=proto</p>
 
+ <h2> Analysis dataset</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Observation  </th>
+		<th>Resp 1</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">1
+</td>
+<td class="cellinside">0.45
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">2
+</td>
+<td class="cellinside">0.55
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">3
+</td>
+<td class="cellinside">0.71
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">4
+</td>
+<td class="cellinside">0.84
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">5
+</td>
+<td class="cellinside">0.77
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">6
+</td>
+<td class="cellinside">0.32
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">7
+</td>
+<td class="cellinside">0.32
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
  <h2> Analysis options</h2>
 
 <p class='character'>Response variable: Resp 1</p>
 
-<p class='character'>Response transformation: Square Root</p>
+<p class='character'>Response variable transformation: Square Root</p>
 
-<p class='character'>Test value: 0.1</p>
+<p class='character'>Target value: 0.1</p>
 
-<p class='character'>Display confidence interval table (Y/N): Y</p>
+<p class='character'>Output confidence interval (Y/N): Y</p>
 
-<p class='character'>Display normal probability plot (Y/N): N</p>
+<p class='character'>Output normal probability plot (Y/N): N</p>
 
 <p class='character'>Significance level: 0.01</p>

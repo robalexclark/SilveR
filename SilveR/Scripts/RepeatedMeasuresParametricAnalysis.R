@@ -130,6 +130,7 @@ for (i in 1:10) {
 LS_YAxisTitle<-YAxisTitle
 
 #Tidying up the selectedEffect
+selectedEffectname <-selectedEffect
 selectedEffect<-gsub(eval(timeFactor), "Timezzz",selectedEffect) 
 selectedEffect<-gsub("ivs_sp_ivs*ivs_sp_ivs", "*",selectedEffect,fixed=TRUE) 
 
@@ -217,7 +218,7 @@ if (covariatelist !="NULL" && covariateTransform != "None") {
 
 if(covariance=="Compound Symmetric") {
 	add4<-paste("The repeated measures mixed model analysis is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of " , timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
-	HTML.title(add4, HR=0, align="left")
+	HTML(add4, align="left")
 }
 
 if(covariance=="Autoregressive(1)") {
@@ -1451,7 +1452,7 @@ if(pairwiseTest == "AllPairwiseComparisons") {
 		add<-paste(add, ". ", sep="")
 	}
 	HTML(add, align="left")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
+	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1570,7 +1571,7 @@ if(pairwiseTest == "AllComparisonsWithinSelected") {
 		add<-paste(add, ". ", sep="")
 	}
 	HTML(add, align="left")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
+	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1703,7 +1704,7 @@ if (covariatelist == "NULL") {
 }
 if (pairwiseTest== "AllComparisonsWithinSelected" || pairwiseTest== "AllPairwiseComparisons") {
 	#STB May 2012 Updating "Selected"
-	add<-paste(add, "This was followed by Planned Comparisons on the predicted means to compare the levels of the Selected effect. ", sep="")
+	add<-paste(add, "This was followed by Planned Comparisons on the predicted means to compare the levels of the effect ", selectedEffectname , ". ", sep="")
 }
 
 if (responseTransform != "None") {
@@ -1743,21 +1744,21 @@ HTML(add, align="left")
 Ref_list<-R_refs()
 
 #Bate and Clark comment
-HTML.title(refxx, HR=0, align="left")	
+HTML(refxx, align="left")	
 
 HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
 if(FirstCatFactor != "NULL") {
-	HTML("Morris TR. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
+	HTML("Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
 }
 
-HTML("Pinherio JC and Bates DM. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.", align="left")
+HTML("Pinherio, J.C. and Bates, D.M. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.", align="left")
 
 if (pairwiseTest != "None") {
-	HTML("Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.", align="left")
+	HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.", align="left")
 }
-HTML("Venables WN and Ripley BD. (2003). Modern Applied Statistics with S. 4th Edition; Springer. New York, Inc.", align="left")
+HTML("Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 4th Edition; Springer. New York, Inc.", align="left")
 
 HTML.title("R references", HR=2, align="left")
 HTML(Ref_list$R_ref ,  align="left")
@@ -1791,50 +1792,53 @@ if (showdataset=="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", resp, sep=""),  align="left")
+	HTML(paste("Response variable: ", resp, sep=""),  align="left")
 
-if (responseTransform != "None") {
-	HTML(paste("Response transformation: ", responseTransform, sep=""),  align="left")
+	if (responseTransform != "None") {
+		HTML(paste("Response variable transformation: ", responseTransform, sep=""),  align="left")
+	}
+
+	HTML(paste("Treatment factor(s): ", treatlist, sep=""),  align="left")
+	HTML(paste("Repeated factor: ", timeFactor, sep=""),  align="left")
+	HTML(paste("Subject factor: ", subjectFactor, sep=""),  align="left")
+
+	if (blocklist != "NULL") {
+		HTML(paste("Other design (block) factor(s): ", blocklist, sep=""),  align="left")
+	}
+
+	if(covariatelist != "NULL") {
+		HTML(paste("Covariate(s): ", covariatelist, sep=""),  align="left")
+	}
+
+	if (covariatelist != "NULL" ) {
+		HTML(paste("Primary factor: ", FirstCatFactor, sep=""),  align="left")
+	}
+
+	if (covariatelist != "NULL" && covariateTransform != "None") {
+		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""),  align="left")
+	}
+
+	HTML(paste("Covariance structure: ", covariance, sep=""),  align="left")
+	
+	HTML(paste("Output table of overall effects (Y/N): ", showANOVA, sep=""),  align="left")
+	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""),  align="left")
+	HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
+
+	if (showLSMeans != "N" && Args[19] != "NULL" ) {
+		selectedEffectXX<-gsub("Timezzz",eval(timeFactor),selectedEffect) 
+		HTML(paste("Selected effect (for pairwise mean comparisons): ", selectedEffectXX, sep=""),  align="left")
+	}
+
+	HTML(paste("Output least square (predicted) means (Y/N): ", showLSMeans, sep=""),  align="left")
+
+	if (showLSMeans != "N" && Args[19] != "NULL" && pairwiseTest == "AllComparisonsWithinSelected") {
+		HTML(paste("Post-hoc tests:  All comparisons within repeated factor levels"),  align="left")
+	} 
+	if (showLSMeans != "N" && Args[19] != "NULL" && pairwiseTest == "AllPairwiseComparisons") {
+		HTML(paste("Post-hoc tests:  All pairwise comparisons"),  align="left")
+	}
 }
-
-if(covariatelist != "NULL") {
-	HTML(paste("Covariate(s): ", covariatelist, sep=""),  align="left")
-}
-
-if (covariatelist != "NULL" && covariateTransform != "None") {
-	HTML(paste("Covariate transformation: ", covariateTransform, sep=""),  align="left")
-}
-
-if (covariatelist != "NULL" ) {
-	HTML(paste("Categorisation factor used on covariate scatterplots: ", FirstCatFactor, sep=""),  align="left")
-}
-
-HTML(paste("Treatment factors: ", treatlist, sep=""),  align="left")
-HTML(paste("Repeated factor: ", timeFactor, sep=""),  align="left")
-HTML(paste("Subject factor: ", subjectFactor, sep=""),  align="left")
-
-if (blocklist != "NULL") {
-	HTML(paste("Blocking factor(s) selected: ", blocklist, sep=""),  align="left")
-}
-
-HTML(paste("Covariance structure fitted: ", covariance, sep=""),  align="left")
-HTML(paste("Output tests of overall effects table (Y/N): ", showANOVA, sep=""),  align="left")
-HTML(paste("Output predicted vs. residual plot (Y/N): ", showPRPlot, sep=""),  align="left")
-HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
-HTML(paste("Show Least Square predicted means (Y/N): ", showLSMeans, sep=""),  align="left")
-
-if (showLSMeans != "N" && Args[19] != "NULL" ) {
-	selectedEffectXX<-gsub("Timezzz",eval(timeFactor),selectedEffect) 
-	HTML(paste("Selected effect (for pairwise mean comparisons): ", selectedEffectXX, sep=""),  align="left")
-}
-
-if (showLSMeans != "N" && Args[19] != "NULL" && pairwiseTest == "AllComparisonsWithinSelected") {
-	HTML(paste("Post-hoc tests:  All comparisons within repeated factor levels"),  align="left")
-} 
-if (showLSMeans != "N" && Args[19] != "NULL" && pairwiseTest == "AllPairwiseComparisons") {
-	HTML(paste("Post-hoc tests:  All pairwise comparisons"),  align="left")
-}
-
-HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")

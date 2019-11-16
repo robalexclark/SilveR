@@ -8,7 +8,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Response</h2>
 
-<p class='character'>The  CountCD response is currently being analysed by the Chi-squared Test and Fisher's Exact Test module. The response is separated into categories, as defined by the factors BinC and BinD.</p>
+<p class='character'>The  CountCD response is currently being analysed by the Chi-squared Test and Fisher's Exact Test module. The response is separated into categories, as defined by BinD, seperately for each level of the grouping factor BinC.</p>
 
 <p class='character'>Note, this module should be used to analyse count data that can be expressed in the form of a contingency table. These tests assess the significance of the association (contingency) between the two treatment classifications.</p>
 
@@ -101,7 +101,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
-<p class='character'>The values in this table are the expected results, given the row and column totals, under the assumption of no association between the two factors.</p>
+<p class='character'>The values in this table are the expected results, given the row and column totals, under the assumption of no association between the grouping factor and the response categories.</p>
 
  <h2> Chi-squared test</h2>
 
@@ -133,7 +133,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
- <h0> Note: For the 2 x 2 case, the chi-squared test is calculated with Yates' continuity correction.</h0>
+<p class='character'>Note: For the 2 x 2 case, the chi-squared test is calculated with Yates' continuity correction.</p>
 
 <p class='character'>The chi-squared test is significant at the 5% level of significance as the p-value is less than 0.05.</p>
 
@@ -199,9 +199,9 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Statistical references</h2>
 
-<p class='character'>Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+<p class='character'>Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
 
-<p class='character'>Lydersen S, Fagerland MW and Laake P. (2009). Recommended tests for association in 2 x 2 tables. Statistics in Medicine, 28, 1159-1175.</p>
+<p class='character'>Lydersen, S., Fagerland, M.W. and Laake, P. (2009). Recommended tests for association in 2 x 2 tables. Statistics in Medicine, 28, 1159-1175.</p>
 
  <h2> R references</h2>
 
@@ -211,20 +211,110 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact.</p>
 
+ <h2> Analysis dataset</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Observation  </th>
+		<th>CountCD  </th>
+		<th>BinC  </th>
+		<th>BinD</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 4
+</td>
+<td class="cellinside">x
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 2
+</td>
+<td class="cellinside">x
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">x
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">4
+</td>
+<td class="cellinside"> 4
+</td>
+<td class="cellinside">x
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">5
+</td>
+<td class="cellinside">65
+</td>
+<td class="cellinside">y
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">6
+</td>
+<td class="cellinside"> 4
+</td>
+<td class="cellinside">y
+</td>
+<td class="cellinside">1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">7
+</td>
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">y
+</td>
+<td class="cellinside">2
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
  <h2> Analysis options</h2>
 
 <p class='character'>Response variable: CountCD</p>
 
-<p class='character'>Grouping variable: BinC</p>
+<p class='character'>Grouping factor: BinC</p>
 
-<p class='character'>Response categories variable: BinD</p>
+<p class='character'>Response categories: BinD</p>
 
-<p class='character'>Chi-squared test (Y/N): Y</p>
+<p class='character'>Output Chi-squared test (Y/N): Y</p>
 
-<p class='character'>Fisher's Exact test (Y/N): Y</p>
+<p class='character'>Output Fisher's Exact test (Y/N): Y</p>
 
-<p class='character'>Barnard's Exact test (Y/N): Y</p>
+<p class='character'>Output Barnard's Exact test (Y/N): Y</p>
 
-<p class='character'>One- or two-sided test: Less-than</p>
+<p class='character'>Hypothesis: Less-than</p>
 
 <p class='character'>Significance level: 0.05</p>

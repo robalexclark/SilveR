@@ -110,8 +110,11 @@ HTML(refxx, align="left")
 #===================================================================================================================
 #Analysis
 #===================================================================================================================
-HTML.title("One-sample t-test summary results", HR=2, align="left")
-
+if (resplength == 1) {
+	HTML.title("One-sample t-test summary result", HR=2, align="left")
+} else {
+	HTML.title("One-sample t-test summary results", HR=2, align="left")
+}
 finaltable <- matrix(nrow=resplength, ncol=6)
 pval<-c(1:resplength)
 for (i in 1:resplength) {
@@ -154,14 +157,14 @@ for(i in 1:(dim(finaltable)[1])) {
 }
 
 if (inte >1) {
-	add <- paste (add, " and the test value ", truemean , sep = "") 
+	add <- paste (add, " and the test value ", truemean , " at the ", 100*(1-sig), "% level of significance as the p-value is less than ", 1 - sig , sep = "")
 }
 
 if (inte==1) {
-	if (dim(finaltable)[1]>2) {
+	if (dim(finaltable)[1]>1) {
 		add<-paste(add, ": There are no statistically significant overall differences between the sample means and the test value ", truemean, sep="")
 	} 
-	if (dim(finaltable)[1]<=2) {
+	if (dim(finaltable)[1]<=1) {
 		add<-paste(add, ": The difference between the sample mean and ", truemean, " is not statistically significant", sep="")
 	}
 } 
@@ -173,8 +176,10 @@ HTML(add, align="left")
 #Testing the degrees of freedom
 #===================================================================================================================
 minval <- suppressWarnings(min(finaltable[ ,5], na.rm = TRUE))
-if (minval<5) {
-	HTML("Warning: Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable.", align="left")
+if (minval<5 && resplength > 1) {
+	HTML("Warning: Unfortunately one or more of the residual degrees of freedom is low (less than 5). When this is the case the estimation of the underlying variability, and hence the result of the statistical test, may be unreliable.", align="left")
+} else {
+	HTML("Warning: Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the result of the statistical test, unreliable.", align="left")
 }
 
 #===================================================================================================================
@@ -365,16 +370,17 @@ if (showdataset=="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", resplistqq, sep=""),  align="left")
+	HTML(paste("Response variable: ", resplistqq, sep=""),  align="left")
  
-if (responseTransform != "None")
-{ 
-	HTML(paste("Response transformation: ", responseTransform, sep=""), align="left")
+	if (responseTransform != "None")
+	{ 
+		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
+	}
+	HTML(paste("Target value: ", truemean, sep=""),  align="left")
+	HTML(paste("Output confidence interval (Y/N): ", showCITable, sep=""),  align="left")
+	HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
 }
-HTML(paste("Test value: ", truemean, sep=""),  align="left")
-HTML(paste("Display confidence interval table (Y/N): ", showCITable, sep=""),  align="left")
-HTML(paste("Display normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
-HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
-

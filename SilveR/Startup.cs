@@ -82,9 +82,7 @@ namespace SilveR
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllers(); // Map attribute-routed API controllers
                 endpoints.MapDefaultControllerRoute(); // Map conventional MVC controllers using the default route
-                //endpoints.MapRazorPages();
             });
 
             // Open the Electron-Window here
@@ -134,7 +132,7 @@ namespace SilveR
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "PairedTTestAnalysis"))
                 {
-                    Script pairedTTest = new Script() { ScriptDisplayName = "Paired t-test Analysis", ScriptFileName = "PairedTTestAnalysis", RequiresDataset = true };
+                    Script pairedTTest = new Script() { ScriptDisplayName = "Extended Paired t-test Analysis", ScriptFileName = "PairedTTestAnalysis", RequiresDataset = true };
                     context.Scripts.Add(pairedTTest);
                 }
 

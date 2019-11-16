@@ -860,6 +860,9 @@
     <None Update="ExpectedResults\LinearRegressionAnalysis\LRA52.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\LinearRegressionAnalysis\LRA53.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\MultivariateAnalysis\MVA13.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1202,6 +1205,9 @@
     <None Update="ExpectedResults\OneSampleTTestAnalysis\OSTT9.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\OneWayANOVAPowerAnalysisDatasetBasedInputs\SMA14.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\OneWayANOVAPowerAnalysisDatasetBasedInputs\SMA23.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -1344,6 +1350,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\PairedTTestAnalysis\PTT60.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\PairedTTestAnalysis\PTT61.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\PairedTTestAnalysis\PTT62.html">
@@ -1599,6 +1608,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\RepeatedMeasuresParametricAnalysis\RMA81.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\RepeatedMeasuresParametricAnalysis\RMA82.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\SingleMeasureParametricAnalysis\SMA21.html">

@@ -30,13 +30,15 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Unpaired t-test").Key;
             model.Response = "Resp 1";
             model.Treatment = null;
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment field is required.", errors);
+            Assert.Contains("The Treatment factor field is required.", errors);
             Helpers.SaveOutput("UnpairedTTestAnalysis", testName, errors);
         }
 
@@ -52,16 +54,17 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Unpaired t-test").Key;
             model.Response = "Resp2";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There is no replication in one or more of the levels of the Treatment (Treat1). Please select another factor.", errors);
+            Assert.Contains("There is no replication in one or more of the levels of the Treatment factor (Treat1). Please select another factor.", errors);
             Helpers.SaveOutput("UnpairedTTestAnalysis", testName, errors);
         }
-
 
         [Fact]
         public async Task UPTT3()
@@ -75,13 +78,15 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Unpaired t-test").Key;
             model.Response = "Resp 3";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("There are no observations recorded on the levels of the Treatment (Treat1). Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("There are no observations recorded on the levels of the Treatment factor (Treat1). Please amend the dataset prior to running the analysis.", errors);
             Helpers.SaveOutput("UnpairedTTestAnalysis", testName, errors);
         }
 
@@ -97,13 +102,15 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Unpaired t-test").Key;
             model.Response = "Resp 1";
             model.Treatment = "Treat2";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment (Treat2) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Treat2) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("UnpairedTTestAnalysis", testName, errors);
         }
 
@@ -119,13 +126,15 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Unpaired t-test").Key;
             model.Response = "Resp4";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp4) contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp4) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("UnpairedTTestAnalysis", testName, errors);
         }
 
@@ -141,6 +150,8 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Unpaired t-test").Key;
             model.Response = "Resp 5";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -164,6 +175,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 6";
             model.ResponseTransformation = "Log10";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -187,6 +200,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 7";
             model.ResponseTransformation = "Log10";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -209,6 +224,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 6";
             model.ResponseTransformation = "Square Root";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -232,6 +249,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp8";
             model.ResponseTransformation = "ArcSine";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -255,6 +274,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 7";
             model.ResponseTransformation = "ArcSine";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -278,6 +299,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatment = "Treat4";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -301,6 +324,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatment = "Treat(5";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -324,6 +349,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.ResponseTransformation = "None";
             model.Treatment = "Treat1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -348,6 +375,8 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Log10";
             model.Treatment = "Treat1";
             model.Significance = "0.1";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -372,6 +401,8 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "Square Root";
             model.Treatment = "Treat3";
             model.Significance = "0.01";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -395,6 +426,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp-10";
             model.ResponseTransformation = "Loge";
             model.Treatment = "Treat£6";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -418,6 +451,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp-10";
             model.ResponseTransformation = "Loge";
             model.Treatment = "Treat:7";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -441,6 +476,8 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp^11";
             model.ResponseTransformation = "ArcSine";
             model.Treatment = "Treat:7";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -464,6 +501,8 @@ namespace SilveR.IntegrationTests
             model.Response = "PVTestresponse1";
             model.ResponseTransformation = "None";
             model.Treatment = "PVTestgroup";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -487,6 +526,8 @@ namespace SilveR.IntegrationTests
             model.Response = "PVTestresponse2";
             model.ResponseTransformation = "None";
             model.Treatment = "PVTestgroup";
+            model.NormalProbabilityPlotSelected = true;
+            model.ResidualsVsPredictedPlotSelected = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "UnpairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

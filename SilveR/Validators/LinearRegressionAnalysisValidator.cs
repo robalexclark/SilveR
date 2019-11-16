@@ -26,7 +26,8 @@ namespace SilveR.Validators
             allVars.AddVariables(lrVariables.OtherDesignFactors);
             allVars.AddVariables(lrVariables.Covariates);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             if (CountResponses(lrVariables.Response) <= 1)
             {
@@ -52,10 +53,15 @@ namespace SilveR.Validators
             {
                 if (!CheckIsNumeric(contFactor))
                 {
-                    ValidationInfo.AddErrorMessage("The continuous variable (" + contFactor + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The continuous variable (" + contFactor + ") contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                     return ValidationInfo;
                 }
             }
+
+            //need to do a check on continuous variables vs response
+            if (!ContinuousAgainstResponseVariableChecks(lrVariables.ContinuousFactors, lrVariables.Response))
+                return ValidationInfo;
+
 
             //do data checks on the treatments/other factors and covariate (if selected)
             if (lrVariables.Covariates != null)
@@ -135,14 +141,14 @@ namespace SilveR.Validators
                     bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + lrVariables.Response + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + lrVariables.Response + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the input data and make sure the data was entered correctly.");
                         return false;
                     }
 
@@ -156,6 +162,36 @@ namespace SilveR.Validators
                         }
 
                         ValidationInfo.AddWarningMessage(mess);
+                    }
+                }
+            }
+
+            //if got here then all checks ok, return true
+            return true;
+        }
+
+        private bool ContinuousAgainstResponseVariableChecks(IEnumerable<string> continuousFactors, string response)
+        {
+            foreach (string contFactor in continuousFactors) //go through each categorical factor and do the check on each
+            {
+                //Now that the whole column checks have been done, ensure that the treatment and response for each row is ok
+                List<string> continuousRow = new List<string>();
+                List<string> responseRow = new List<string>();
+
+                foreach (DataRow row in DataTable.Rows) //assemble a list of the categorical data and the continuous data...
+                {
+                    continuousRow.Add(row[contFactor].ToString());
+                    responseRow.Add(row[response].ToString());
+                }
+
+                for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
+                {
+
+                    //Check that there are no responses where the treatments are blank
+                    if (String.IsNullOrEmpty(continuousRow[i]) && !String.IsNullOrEmpty(responseRow[i]))
+                    {
+                        ValidationInfo.AddErrorMessage("The " + ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.ContinuousFactors) + " (" + contFactor + ") contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.");
+                        return false;
                     }
                 }
             }

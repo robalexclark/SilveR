@@ -31,7 +31,8 @@ suppressWarnings(library(grid))
 #===================================================================================================================
 Args <- commandArgs(TRUE)
 userOptions <- sub(".csv", ".useroptions", Args[3])
-grparanum = read.table(userOptions, skip = 22, sep=" ")
+print(userOptions)
+grparanum = read.table(userOptions, skip = 23, sep=" ")
 grparatext = read.table(userOptions)
 
 #Line types used - solid, blank and dashed
@@ -68,29 +69,32 @@ grparatext = read.table(userOptions)
 #Output dataset
 	showdataset <- paste(grparatext$V2[14],sep="")
 
+#Output options
+	OutputAnalysisOps <- paste(grparatext$V2[15],sep="")
+
 #plot colour
-	bandw<- paste(grparatext$V2[15],sep="")
+	bandw<- paste(grparatext$V2[16],sep="")
 
 #Display back-transformed geometric means
-	GeomDisplay<- paste(grparatext$V2[16],sep="")
+	GeomDisplay<- paste(grparatext$V2[17],sep="")
 
 #Display model coefficients
-	ShowCoeff<- paste(grparatext$V2[17],sep="")
+	ShowCoeff<- paste(grparatext$V2[18],sep="")
 
 #Display covariate regression coefficients
-	CovariateRegressionCoefficients<- paste(grparatext$V2[18],sep="")
+	CovariateRegressionCoefficients<- paste(grparatext$V2[19],sep="")
 
 #Display covariate interaction tests 
-	AssessCovariateInteractions<- paste(grparatext$V2[19],sep="")
+	AssessCovariateInteractions<- paste(grparatext$V2[20],sep="")
 
 #Disply lines on lsmeans
-	DisplayLSMeanslines <- paste(grparatext$V2[20],sep="")
+	DisplayLSMeanslines <- paste(grparatext$V2[21],sep="")
 
 #Disply lines on lsmeans
-	DisplaySEMlines <- paste(grparatext$V2[21],sep="")
+	DisplaySEMlines <- paste(grparatext$V2[22],sep="")
 
 #Disply point labels
-	scatterlabels <- paste(grparatext$V2[22],sep="")
+	scatterlabels <- paste(grparatext$V2[23],sep="")
 
 
 #Font size for the main title
@@ -154,7 +158,9 @@ grparatext = read.table(userOptions)
 
 #Fill Transparency
 	FillTransparency <- as.numeric(grparanum$V2[22])
-
+	if (FillTransparency > 1) {
+		FillTransparency <- 1
+	}
 #===================================================================================================================
 #Defining the GGPLOT options
 
@@ -1646,7 +1652,7 @@ R_refs <- function() {
 	mixOmics_ref <- "Sebastien Dejean, Ignacio Gonzalez, Kim-Anh Le Cao with contributions from Pierre Monget, Jeff Coquery, FangZou Yao, Benoit Liquet and Florian Rohart (2013). mixOmics: Omics Data Integration Project. R package version 5.0-1. http://CRAN.R-project.org/package=mixOmics"
 	dplyr_ref <- "Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. https://CRAN.R-project.org/package=dplyr"
 
-	BateClark_ref <- "Bate ST and Clark RA. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
+	BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
 	
 	Barnard_ref <- "Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact."
 

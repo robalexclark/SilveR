@@ -59,6 +59,7 @@ namespace SilveR.Migrations
                     LegendPosition = table.Column<string>(nullable: false),
                     PaletteSet = table.Column<string>(nullable: false),
                     OutputData = table.Column<bool>(nullable: false),
+                    OutputAnalysisOptions = table.Column<bool>(nullable: false),
                     OutputPlotsInBW = table.Column<bool>(nullable: false),
                     GeometryDisplay = table.Column<bool>(nullable: false),
                     DisplayModelCoefficients = table.Column<bool>(nullable: false),

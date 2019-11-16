@@ -41,7 +41,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Count_1) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Count_1) contains non-numeric data that cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, errors);
         }
 
@@ -68,7 +68,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Grouping factor (Treatment x) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Grouping factor (Treatment x) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, errors);
         }
 
@@ -95,7 +95,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response categories (Treatment x) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response categories (Treatment x) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, errors);
         }
 
@@ -144,7 +144,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Two-sided";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -152,7 +152,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = false; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -182,7 +182,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Less-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -190,7 +190,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -220,7 +220,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Greater-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -228,7 +228,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -258,7 +258,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Two-sided";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -266,7 +266,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -296,7 +296,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Less-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -304,7 +304,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -334,7 +334,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Greater-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -342,7 +342,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -372,7 +372,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Two-sided";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -380,7 +380,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -410,7 +410,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Less-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -418,7 +418,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -448,7 +448,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Greater-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -456,7 +456,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -486,7 +486,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Two-sided";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -494,7 +494,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -524,7 +524,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Less-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -532,7 +532,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -806,7 +806,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Two-sided";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -814,7 +814,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -844,7 +844,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Less-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -852,7 +852,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
@@ -882,7 +882,7 @@ namespace SilveR.IntegrationTests
             model.BarnardsTest = true;
             model.Hypothesis = "Greater-than";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ChiSquaredAndFishersExactTest", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -890,7 +890,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("Grouping factor or the Response categories have more than two levels. Barnard&#x27;s test can only be performed when there are two levels of the Grouping factor and two Response categories.", warnings);
             Helpers.SaveOutput("ChiSquaredAndFishersExactTest", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             model.BarnardsTest = true; //Deselecting Barnards test!
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");

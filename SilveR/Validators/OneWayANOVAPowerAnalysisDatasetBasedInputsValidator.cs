@@ -31,7 +31,7 @@ namespace SilveR.Validators
             //Check that the response does not contain non-numeric 
             if (!CheckIsNumeric(owVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The Response (" + owVariables.Response + ") contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Response (" + owVariables.Response + ") contains non-numerical data that cannot be processed. Please check input data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 

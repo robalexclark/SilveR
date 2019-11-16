@@ -118,9 +118,11 @@ if (transformation == "None")
 {
 	add2 <- paste(add2, ".", sep="")
 } else {
-	add2<-paste(add2, ". Response", sep="")
+	add2<-paste(add2, ". The response", sep="")
 	if (length(expectedChanges) >2) {
-		add2 <- paste(add2, "s", sep="")
+		add2 <- paste(add2, "s have been ", sep="")
+	} else {
+		add2 <- paste(add2, " has been ", sep="")
 	}
 	add2<-paste(add2, " ", transformation, " transformed prior to analysis.", sep="")
 }
@@ -752,42 +754,44 @@ if (showdataset == "Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variables: ", csResponses, sep=""),  align="left")
+	HTML(paste("Response variable(s): ", csResponses, sep=""),  align="left")
 
-if (transformation != "None") {
-	HTML(paste("Response variables transformation: ", transformation, sep=""),  align="left")
+	if (transformation != "None") {
+		HTML(paste("Response variable(s) transformation: ", transformation, sep=""),  align="left")
+	}
+
+	if (firstCat != "NULL") {
+		HTML(paste("First categorisation factor: ", firstCat, sep=""),  align="left")
+	}
+
+	if (secondCat != "NULL") {
+		HTML(paste("Second categorisation factor: ", secondCat, sep=""),  align="left")
+	}
+
+	if (thirdCat != "NULL") {
+		HTML(paste("Third categorisation factor: ", thirdCat, sep=""),  align="left")
+	}
+
+	if (fourthCat != "NULL") {
+		HTML(paste("Fourth categorisation factor: ", fourthCat, sep=""),  align="left")
+	}
+	HTML(paste("Output mean (Y/N): ", mean, sep=""),  align="left")
+	HTML(paste("Output sample size  (Y/N): ", N, sep=""),  align="left")
+	HTML(paste("Output variance (Y/N): ", Variances, sep=""),  align="left")
+	HTML(paste("Output standard deviation (Y/N): ", StDev, sep=""),  align="left")
+	HTML(paste("Output standard error of mean (Y/N): ", StErr, sep=""),  align="left")
+	HTML(paste("Output coefficient of variation (Y/N): ", CoeffVariation, sep=""),  align="left")
+	HTML(paste("Output confidence interval of the mean (Y/N): ", confidenceLimits, sep=""),  align="left")
+	
+	if (confidenceLimits == "Y") {	
+		HTML(paste("Confidence level (%): ", CIval2, sep=""),  align="left")
+	}
+	
+	HTML(paste("Output normal probability plot (Y/N): ", NormalProbabilityPlot, sep=""),  align="left")
+	HTML(paste("Output minimum/maximum  (Y/N): ", MinMax, sep=""),  align="left")
+	HTML(paste("Output median and quartiles (Y/N): ", MedianQuartile, sep=""),  align="left")
+	HTML(paste("Output results by categories & overall (Y/N): ", ByCategoriesAndOverall, sep=""),  align="left")
 }
-
-if (firstCat != "NULL") {
-	HTML(paste("First categorisation factor: ", firstCat, sep=""),  align="left")
-}
-
-if (secondCat != "NULL") {
-	HTML(paste("Second categorisation factor: ", secondCat, sep=""),  align="left")
-}
-
-if (thirdCat != "NULL") {
-	HTML(paste("Third categorisation factor: ", thirdCat, sep=""),  align="left")
-}
-
-if (fourthCat != "NULL") {
-	HTML(paste("Fourth categorisation factor: ", fourthCat, sep=""),  align="left")
-}
-HTML(paste("Display mean (Y/N): ", mean, sep=""),  align="left")
-HTML(paste("Display sample size  (Y/N): ", N, sep=""),  align="left")
-HTML(paste("Display standard deviation (Y/N): ", StDev, sep=""),  align="left")
-HTML(paste("Display variance (Y/N): ", Variances, sep=""),  align="left")
-HTML(paste("Display standard error (Y/N): ", StErr, sep=""),  align="left")
-HTML(paste("Display minimum/maximum  (Y/N): ", MinMax, sep=""),  align="left")
-HTML(paste("Display median and quartiles (Y/N): ", MedianQuartile, sep=""),  align="left")
-HTML(paste("Display coefficient of variation (Y/N): ", CoeffVariation, sep=""),  align="left")
-HTML(paste("Display confidence interval (Y/N): ", confidenceLimits, sep=""),  align="left")
-
-if (confidenceLimits == "Y") {	
-	HTML(paste("Confidence level: ", CIval2, sep=""),  align="left")
-}
-
-HTML(paste("Display normal probability plot (Y/N): ", NormalProbabilityPlot, sep=""),  align="left")
-HTML(paste("Display results by categories & overall (Y/N): ", ByCategoriesAndOverall, sep=""),  align="left")

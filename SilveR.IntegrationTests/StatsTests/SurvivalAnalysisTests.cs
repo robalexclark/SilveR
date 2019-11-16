@@ -37,7 +37,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp 1) contains non-numeric data that cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp 1) contains non-numeric data that cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -152,7 +152,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor (Group 4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Group 4) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SurvivalAnalysis", testName, errors);
         }
 
@@ -171,7 +171,7 @@ namespace SilveR.IntegrationTests
             model.Censorship = "Censor1";
             model.CompareSurvivalCurves = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SurvivalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -179,7 +179,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp3) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("SurvivalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SurvivalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));

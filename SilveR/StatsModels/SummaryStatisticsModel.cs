@@ -72,7 +72,7 @@ namespace SilveR.StatsModels
         [Required(ErrorMessage = "Level (%) is Required")]
         [ValidateConfidenceLimits]
         [DisplayName("Level (%)")]
-        public decimal Significance { get; set; } = 95;
+        public int Significance { get; set; } = 95;
 
         [DisplayName("Normal probability plot")]
         public bool NormalProbabilityPlot { get; set; }
@@ -192,7 +192,7 @@ namespace SilveR.StatsModels
             this.MinAndMax = argHelper.LoadBooleanArgument(nameof(MinAndMax));
             this.N = argHelper.LoadBooleanArgument(nameof(N));
             this.NormalProbabilityPlot = argHelper.LoadBooleanArgument(nameof(NormalProbabilityPlot));
-            this.Significance = argHelper.LoadDecimalArgument(nameof(Significance));
+            this.Significance = argHelper.LoadIntArgument(nameof(Significance));
             this.StandardDeviation = argHelper.LoadBooleanArgument(nameof(StandardDeviation));
             this.StandardErrorOfMean = argHelper.LoadBooleanArgument(nameof(StandardErrorOfMean));
             this.Variance = argHelper.LoadBooleanArgument(nameof(Variance));

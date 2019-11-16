@@ -38,7 +38,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("Response (Resp 1) has been selected in more than one input category, please change your input options.", errors);
-            Assert.Contains("Treatments (Resp 1) has been selected in more than one input category, please change your input options.", errors);
+            Assert.Contains("Treatment factor (Resp 1) has been selected in more than one input category, please change your input options.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -104,7 +104,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor (Tre at4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Tre at4) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -126,7 +126,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp4) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp4) contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -149,7 +149,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Covariate (Cov4) contain non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Covariate (Cov4) contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -1723,7 +1723,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1731,7 +1731,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1765,7 +1765,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1773,7 +1773,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1808,7 +1808,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1816,7 +1816,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1852,7 +1852,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1860,7 +1860,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1896,7 +1896,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1904,7 +1904,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1941,7 +1941,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1949,7 +1949,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1986,7 +1986,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = "Dunnett";
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1994,7 +1994,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2032,7 +2032,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2040,7 +2040,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2221,7 +2221,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat22 * Treat23";
             model.LSMeansSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2229,7 +2229,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp15) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2726,7 +2726,7 @@ namespace SilveR.IntegrationTests
             model.ComparisonsBackToControl = model.AllPairwise;
             model.ControlGroup = "2";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2734,7 +2734,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp7) contains missing data.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));

@@ -32,27 +32,27 @@ namespace SilveR.Validators
             //Check that all the columns are numeric
             if (!CheckIsNumeric(drnlrVariables.Response))
             {
-                ValidationInfo.AddErrorMessage("The Response (" + drnlrVariables.Response + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Response (" + drnlrVariables.Response + ") contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.Dose))
             {
-                ValidationInfo.AddErrorMessage("The Dose (" + drnlrVariables.Dose + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Dose (" + drnlrVariables.Dose + ") contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCResponse))
             {
-                ValidationInfo.AddErrorMessage("The QC Response (" + drnlrVariables.QCResponse + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC Response (" + drnlrVariables.QCResponse + ") contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.QCDose))
             {
-                ValidationInfo.AddErrorMessage("The QC Dose (" + drnlrVariables.QCDose + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The QC Dose (" + drnlrVariables.QCDose + ") contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
             if (!CheckIsNumeric(drnlrVariables.SamplesResponse))
             {
-                ValidationInfo.AddErrorMessage("The Sample (" + drnlrVariables.SamplesResponse + ") contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                ValidationInfo.AddErrorMessage("The Sample (" + drnlrVariables.SamplesResponse + ") contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                 return ValidationInfo;
             }
 

@@ -544,7 +544,7 @@ Ref_list <- R_refs()
 
 HTML.title("Statistical references", HR = 2, align = "left")
 HTML(Ref_list$BateClark_ref, align = "left")
-HTML("Harrison, DA and Brady, AR (2004). Sample size and power calculations using the noncentral t-distribution. The Stata Journal, 4(2), 142-153.", align = "left")
+#HTML("Harrison, D.A. and Brady, A.R. (2004). Sample size and power calculations using the noncentral t-distribution. The Stata Journal, 4(2), 142-153.", align = "left")
 
 HTML.title("R references", HR = 2, align = "left")
 HTML(Ref_list$R_ref,  align = "left")
@@ -574,27 +574,35 @@ if (showdataset == "Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
-if (valueType == "DatasetValues") { 
-	HTML(paste("Analysis method: Dataset based inputs"),  align="left")
-	HTML(paste("Response variable: ", meanOrResponse, sep=""),  align="left")
-	HTML(paste("Treatment variable: ", varianceTypeOrTreatment, sep=""),  align="left")
-	HTML(paste("Control group: ", varianceAmntOrControl, sep=""),  align="left")
-} else {
-	HTML(paste("Analysis method: User based inputs"),  align="left")
-	HTML(paste("Mean value: ", meanOrResponse, sep=""),  align="left")
-	HTML(paste("Variability estimate entered: ", varianceTypeOrTreatment, sep=""),  align="left")
-	HTML(paste("Variability estimate: ", varianceAmntOrControl, sep=""),  align="left")
-}
-
-HTML(paste("Type of change investigated: ", changesType, sep=""), align="left")
-HTML(paste("Change values investigated: ", changesValue, sep=""), align="left")
-
-if (plotSettingsType == "PowerAxis")	{
-	HTML(paste("Power curve plots controlled by power range:"), align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
+	if (valueType == "DatasetValues") { 
+		HTML(paste("Comparison of Means Power Analysis module used: Dataset based inputs"),  align="left")
+		HTML(paste("Response variable: ", meanOrResponse, sep=""),  align="left")
+		HTML(paste("Treatment factor: ", varianceTypeOrTreatment, sep=""),  align="left")
+		HTML(paste("Control group: ", varianceAmntOrControl, sep=""),  align="left")
 	} else {
-	HTML(paste("Power curve plots controlled by sample size range:"), align="left")
+		HTML(paste("Comparison of Means Power Analysis module used: User based inputs"),  align="left")
+		HTML(paste("Group mean: ", meanOrResponse, sep=""),  align="left")
+
+		if (varianceTypeOrTreatment == "StandardDeviation") {
+			HTML("Variability estimate entered as: Standard deviation",  align="left")
+			HTML(paste("Standard deviation estimate: ", varianceAmntOrControl, sep=""),  align="left")
+		} else {
+			HTML("Variability estimate entered as: Variance",  align="left")
+			HTML(paste("Variance estimate: ", varianceAmntOrControl, sep=""),  align="left")
+		}
 	}
-HTML(paste("Plot setting from: ", plotSettingsFrom, sep=""), align="left")
-HTML(paste("Plot setting to: ", plotSettingsTo, sep=""), align="left")
-HTML(paste("Significance level: ", sig, sep=""), align="left")
+	HTML(paste("Significance level: ", sig, sep=""), align="left")
+
+	HTML(paste("Type of change investigated: ", changesType, sep=""), align="left")
+	HTML(paste("Change values investigated: ", changesValue, sep=""), align="left")
+
+	if (plotSettingsType == "PowerAxis")	{
+		HTML(paste("Power curve plots controlled by power range:"), align="left")
+		} else {
+		HTML(paste("Power curve plots controlled by sample size range:"), align="left")
+		}
+	HTML(paste("Plot setting from: ", plotSettingsFrom, sep=""), align="left")
+	HTML(paste("Plot setting to: ", plotSettingsTo, sep=""), align="left")
+}

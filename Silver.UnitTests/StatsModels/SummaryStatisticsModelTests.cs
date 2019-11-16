@@ -213,7 +213,7 @@ namespace SilveR.UnitTests.StatsModels
                     "Resp8"
                 },
                 SecondCatFactor = "Cat5",
-                Significance = 95m,
+                Significance = 95,
                 StandardDeviation = true,
                 StandardErrorOfMean = false,
                 ThirdCatFactor = "Cat6",

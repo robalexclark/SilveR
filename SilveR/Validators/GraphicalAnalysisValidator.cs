@@ -56,7 +56,7 @@ namespace SilveR.Validators
             }
             else if (!xIsNumeric && !yIsNumeric)
             {
-                ValidationInfo.AddErrorMessage("Both the x-axis and the response variables are not numeric.");
+                ValidationInfo.AddErrorMessage("The response variable is not numeric.");
                 return ValidationInfo;
             }
 
@@ -90,7 +90,7 @@ namespace SilveR.Validators
 
             //check if linear fit selected that both axes are numeric
             if ((!xIsNumeric || !yIsNumeric) && gaVariables.LinearFitSelected)
-                ValidationInfo.AddWarningMessage("As one of the axes is non-numeric, the best fit line is not included on the scatterplot.");
+                ValidationInfo.AddWarningMessage("As one of the axes is non-numeric, the best fit linear line is not included on the scatterplot.");
 
             //check if SEM or boxplot selected that x is numeric
             if (xIsNumeric && (gaVariables.SEMPlotSelected || gaVariables.BoxplotSelected))
@@ -113,7 +113,7 @@ namespace SilveR.Validators
                 {
                     if (!String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && String.IsNullOrEmpty(row[gaVariables.XAxis].ToString()))
                     {
-                        ValidationInfo.AddWarningMessage("The x-axis variable (" + gaVariables.XAxis + ") contains missing values whereas the Response (" + gaVariables.Response + ") contains data. To generate the Histogram (which does not require an x-axis variable) deselect the x-axis variable prior to analysis.");
+                        ValidationInfo.AddWarningMessage("The x-axis variable (" + gaVariables.XAxis + ") contains missing values whereas the Response (" + gaVariables.Response + ") contains data, these responses will therefore be excluded from all analyses. To generate the Histogram containing these excluded responses (which does not require an x-axis variable) deselect the x-axis variable prior to analysis.");
                     }
                     else if (String.IsNullOrEmpty(row[gaVariables.Response].ToString()) && !String.IsNullOrEmpty(row[gaVariables.XAxis].ToString()))
                     {

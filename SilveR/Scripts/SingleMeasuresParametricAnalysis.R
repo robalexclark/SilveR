@@ -195,7 +195,7 @@ if (Module == "IFPA") {
 	HTML.title(title, HR=2, align="left")
 
 	HTML.title("</bf> ", HR=2, align="left")
-	HTML.title("Warning: This module is currently under construction, care should be taken when considering the results. The results have not been verified.", HR=0, align="left")
+	HTML("Warning: This module is currently under construction, care should be taken when considering the results. The results have not been verified.", align="left")
 }
 
 
@@ -381,7 +381,7 @@ if(FirstCatFactor != "NULL") {
 	HTML("Tip: In order to decide whether it is helpful to fit the covariate, the following should be considered:", align="left")
 	HTML("a) Is there a relationship between the response and the covariate? (N.B., It is only worth fitting the covariate if there is a strong positive (or negative) relationship between them: i.e., the lines on the plot should not be horizontal).", align="left")
 	HTML("b) Is the relationship similar for all treatments? (The lines on the plot should be approximately parallel).", align="left")
-	HTML("c) Is the covariate influenced by the treatment? (We assume the covariate is not influenced by the treatment and so there should be no separation of the treatment groups along the x-axis on the plot).", HR=0, align="left")
+	HTML("c) Is the covariate influenced by the treatment? (We assume the covariate is not influenced by the treatment and so there should be no separation of the treatment groups along the x-axis on the plot).", align="left")
 	HTML("These issues are discussed in more detail in Morris (1999).", align="left")
 }
 
@@ -1070,7 +1070,7 @@ if(showLSMeans =="Y") {
 if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
 	CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 	HTML.title(CITitle, HR=2, align="left")
-	HTML.title("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", HR=0, align="left")
+	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 
 #===================================================================================================================
 #LSMeans plot
@@ -1481,14 +1481,15 @@ if(allPairwiseTest != "NULL") {
 	}
 #	if(length(grep("\\*", effectModel)) == 0 && length(grep("\\+", effectModel)) == 0 && length(grep("\\+", model)) == 1)  {
 #		add2<-paste(c(" "), " ", sep="")
-#		HTML.title(add2, HR=0, align="left")
+#		HTML(add2, align="left")
 #	} else	if (length(grep("\\*", model)) == 0 && length(grep("\\+", effectModel)) == 0 && length(grep("\\+", model)) == 0) {
 #		add2<-paste(c(" "), " ", sep="")
 #		HTML.title("<bf> ", HR=2, align="left")
-#		HTML.title(add2, HR=0, align="left")
+#		HTML(add2, align="left")
 #	} 
 	if (noeffects>testeffects)  {
-		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table we have assumed that certain higher-order interactions are not significant and have removed them from the statistical model, see log for more details.", align="left")
+		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. ", align="left")
+#In the above table we have assumed that certain higher-order interactions are not significant and have removed them from the statistical model, see log for more details.", align="left")
 	}
 
 
@@ -1959,15 +1960,36 @@ if (allPairwiseTest== "none" | backToControlTest== "none") {
 	#STB May 2012 Updating "Selected"
 	add<-paste(add, "This was followed by Planned Comparisons of the predicted means to compare the levels of the ", selectedEffect , sep="")
 	if (factno == 1) {
-		add<-paste(add, " factor. ", sep="")
+		add<-paste(add, " factor, Snedecor and Cochran (1989). ", sep="")
 	} else {
-		add<-paste(add, " interaction. ", sep="")
+		add<-paste(add, " interaction, Snedecor and Cochran (1989). ", sep="")
 	}
 }
 
 if (backToControlTest!= "NULL" & backToControlTest!= "none") {
-	add<-paste(add, "This was followed by comparisons of the predicted means of the ", selectedEffect , " factor back to the control group mean using ", backToControlTestText , "'s procedure. ", sep="")
+	add<-paste(add, "This was followed by comparisons of the predicted means of the ", selectedEffect , " factor back to the control group mean using ", backToControlTestText , "'s procedure, ", sep="")
 }
+
+if (backToControlTest=="BH") {
+add<-paste(add, "Benjamini and Hochberg (1995). ", sep="")
+}
+if (backToControlTest=="bonferroni") {
+add<-paste(add, "Bonferroni (1936). ", sep="")
+} 
+if (backToControlTest== "Dunnett") {
+add<-paste(add, "Dunnett (1955). ", sep="")
+}
+if (backToControlTest=="hochberg") {
+add<-paste(add, "Hochberg (1988). ", sep="")
+} 
+if (backToControlTest=="holm") {
+add<-paste(add, "Holm (1979). ", sep="")
+} 
+if (backToControlTest=="hommel") {
+add<-paste(add, "Hommel (1988). ", sep="")
+}
+
+
 
 if (allPairwiseTest!= "NULL" & allPairwiseTest!= "none") {
 	#STB May 2012 Updating "Selected"
@@ -1977,7 +1999,26 @@ if (allPairwiseTest!= "NULL" & allPairwiseTest!= "none") {
 	} else {
 		add<-paste(add, " interaction ", sep="")
 	}
-	add<-paste(add, " using ", allPairwiseTestText , "'s procedure. ", sep="")
+	add<-paste(add, " using ", allPairwiseTestText , "'s procedure, ", sep="")
+}
+
+if (allPairwiseTest== "BH" ) {
+add<-paste(add, "Benjamini and Hochberg (1995). ", sep="")
+}
+if (allPairwiseTest== "bonferroni" ) {
+add<-paste(add, "Bonferroni (1936). ", sep="")
+} 
+if (allPairwiseTest== "Tukey") {	
+add<-paste(add, "Braun (1994). ", sep="")
+} 
+if (allPairwiseTest== "hochberg" ) {
+add<-paste(add, "Hochberg (1988). ", sep="")
+} 
+if (allPairwiseTest== "holm" ) {
+add<-paste(add, "Holm (1979). ", sep="")
+} 
+if (allPairwiseTest== "hommel" ) {
+add<-paste(add, "Hommel (1988). ", sep="")
 }
 
 if (responseTransform != "None") {
@@ -2000,44 +2041,44 @@ HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref,  align="left")
 
 if(showANOVA=="Y") {
-	HTML("<bf> Armitage P, Matthews JNS and Berry G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.",  align="left")
+	HTML("<bf> Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.",  align="left")
 }
 
 if (allPairwiseTest== "BH" | backToControlTest=="BH") {
-	HTML("<bf>Benjamini Y and Hochberg Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society Series B, 57, 289-300. ",  align="left")
+	HTML("<bf>Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society Series B, 57, 289-300. ",  align="left")
 }
 
 if (allPairwiseTest== "bonferroni" | backToControlTest=="bonferroni") {
-	HTML("<bf>Bonferroni CE. (1936). Teoria statistica delle classi e calcolo delle probabilita. Pubblicazioni del R Istituto Superiore di Scienze Economiche e Commerciali di Firenze, 8, 3-62.",  align="left")
+	HTML("<bf>Bonferroni, C.E. (1936). Teoria statistica delle classi e calcolo delle probabilita. Pubblicazioni del R Istituto Superiore di Scienze Economiche e Commerciali di Firenze, 8, 3-62.",  align="left")
 } 
 
 if (allPairwiseTest== "Tukey") {	
-	HTML("<bf>Braun HI, ed. (1994). The collected works of John W. Tukey. Vol. VIII: Multiple comparisons:1948-1983. New York: Chapman and Hall.",  align="left")
+	HTML("<bf>Braun, H.I., ed. (1994). The collected works of John W. Tukey. Vol. VIII: Multiple comparisons:1948-1983. New York: Chapman and Hall.",  align="left")
 } 
 
 if (backToControlTest== "Dunnett") {
-	HTML("<bf>Dunnett CW. (1955). A multiple comparison procedure for comparing several treatments with a control. Journal of the American Statistical Association, 50, 1096-1121.",  align="left")
+	HTML("<bf>Dunnett, C.W. (1955). A multiple comparison procedure for comparing several treatments with a control. Journal of the American Statistical Association, 50, 1096-1121.",  align="left")
 }
 
 if (allPairwiseTest== "hochberg" | backToControlTest=="hochberg") {
-	HTML("<bf>Hochberg Y. (1988). A sharper Bonferroni procedure for multiple tests of significance. Biometrika, 75, 800-803.",  align="left")
+	HTML("<bf>Hochberg, Y. (1988). A sharper Bonferroni procedure for multiple tests of significance. Biometrika, 75, 800-803.",  align="left")
 } 
 
 if (allPairwiseTest== "holm" | backToControlTest=="holm") {
-	HTML("<bf>Holm S. (1979). A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6, 65-70.",  	align="left")
+	HTML("<bf>Holm, S. (1979). A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6, 65-70.",  	align="left")
 } 
 
 if (allPairwiseTest== "hommel" | backToControlTest=="hommel") {
-	HTML("<bf>Hommel G. (1988). A stagewise rejective multiple test procedure based on a modified Bonferroni test. Biometrika, 75, 383-386.",  	align="left")
+	HTML("<bf>Hommel, G. (1988). A stagewise rejective multiple test procedure based on a modified Bonferroni test. Biometrika, 75, 383-386.",  	align="left")
 }
 
 if(FirstCatFactor != "NULL") {
-	HTML("<bf> Morris TR. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).",  align="left")
+	HTML("<bf> Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).",  align="left")
 }
 
 if (allPairwiseTest != "NULL" | backToControlTest !="NULL") {
 	if (tablen >1 & (allPairwiseTest== "none" | backToControlTest=="none"|allPairwiseTest!= "NULL" | backToControlTest=="NULL") ) 	{
-		HTML("<bf>Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.",  align="left")
+		HTML("<bf>Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.",  align="left")
 	}
 }
 
@@ -2079,59 +2120,58 @@ if (showdataset=="Y")
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", resp, sep=""), align="left")
+	HTML(paste("Response variable: ", resp, sep=""), align="left")
+	
+	if (responseTransform != "None") {
+		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
+	}
+	
+	HTML(paste("Treatment factor(s): ", treatFactors, sep=""), align="left")
+	
+	if (blockFactors != "NULL") {
+		HTML(paste("Other design (block) factor(s): ", blockFactors, sep=""), align="left")
+	}
 
-if (responseTransform != "None") {
-	HTML(paste("Response transformation: ", responseTransform, sep=""), align="left")
+	if(FirstCatFactor != "NULL") {
+		HTML(paste("Covariate(s): ", covariates, sep=""), align="left")
+	}
+
+	if (FirstCatFactor != "NULL" ) {
+		HTML(paste("Primary factor: ", FirstCatFactor, sep=""), align="left")
+	}
+
+	if (FirstCatFactor != "NULL" && covariateTransform != "None") {
+		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
+	}
+
+	HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""), align="left")
+	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
+	HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
+
+	if (showLSMeans != "N" && (Args[19] != "NULL" | backToControlTest != "NULL" ) ) {
+		HTML(paste("Selected effect (for pairwise mean comparisons): ", selectedEffect, sep=""), align="left")
+	}
+
+	HTML(paste("Output least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
+	
+
+	if (Args[19] != "NULL") {
+		HTML(paste("All pairwise comparisons procedure: ", allPairwiseTest, sep=""), align="left")
+	}
+
+	if (backToControlTest != "NULL" && backToControlTest != "none") {
+		HTML(paste("Comparisons back to control procedure: ", backToControlTest, sep=""), align="left")
+	}
+
+	if (backToControlTest == "none") {
+		HTML(paste("Comparisons back to control procedure: Unadjusted (LSD)"), align="left")
+	}
+
+	if ( backToControlTest != "NULL" ) {
+		HTML(paste("Control group: ", cntrlGroup, sep=""), align="left")
+	}
 }
-
-HTML(paste("Treatment factors: ", treatFactors, sep=""), align="left")
-
-if (blockFactors != "NULL") {
-	HTML(paste("Blocking factor(s) selected: ", blockFactors, sep=""), align="left")
-}
-
-if(FirstCatFactor != "NULL") {
-	HTML(paste("Covariate(s): ", covariates, sep=""), align="left")
-}
-
-if (FirstCatFactor != "NULL" && covariateTransform != "None") {
-	HTML(paste("Covariate transformation: ", covariateTransform, sep=""), align="left")
-}
-
-if (FirstCatFactor != "NULL" ) {
-	HTML(paste("Categorisation factor used on covariate scatterplots: ", FirstCatFactor, sep=""), align="left")
-}
-
-HTML(paste("Model fitted: ", unlist(strsplit(model,"~"))[-1], sep=""), align="left")
-HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""), align="left")
-HTML(paste("Output predicted vs. residual plot (Y/N): ", showPRPlot, sep=""), align="left")
-HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
-HTML(paste("Show Least Square predicted means (Y/N): ", showLSMeans, sep=""), align="left")
-
-if (showLSMeans != "N" && (Args[19] != "NULL" | backToControlTest != "NULL" ) ) {
-	HTML(paste("Selected effect (for pairwise mean comparisons): ", selectedEffect, sep=""), align="left")
-}
-
-if (Args[19] != "NULL") {
-	HTML(paste("All pairwise tests procedure: ", allPairwiseTest, sep=""), align="left")
-}
-
-if (backToControlTest != "NULL" && backToControlTest != "none") {
-	HTML(paste("Comparisons back to control procedure: ", backToControlTest, sep=""), align="left")
-}
-
-if (backToControlTest == "none") {
-	HTML(paste("Comparisons back to control procedure: Unadjusted (LSD)"), align="left")
-}
-
-if ( backToControlTest != "NULL" ) {
-	HTML(paste("Control group to compare back to: ", cntrlGroup, sep=""), align="left")
-}
-HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
-
-
-
-

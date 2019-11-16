@@ -60,6 +60,8 @@ namespace SilveR.IntegrationTests
             model.AbsoluteChange = "0.25,0.5, 0.75, 1";
             model.ChangeType = ChangeTypeOption.Absolute;
             model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = 50;
+            model.PowerTo = 80;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/ComparisonOfMeansPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -118,7 +120,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment factor (Treat4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment factor (Treat4) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 
@@ -144,7 +146,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp3) contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp3) contains non-numerical data that cannot be processed. Please check input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 

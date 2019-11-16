@@ -107,7 +107,6 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("MultivariateAnalysis", testName, warnings);
         }
 
-
         [Fact]
         public async Task MVA5()
         {
@@ -149,7 +148,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Not all the responses contain the same number of values. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("One or more of the response variables contains missing data. Please delete any rows of the dataset that contain missing data prior to running the analysis.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -172,7 +171,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Not all the responses contain the same number of values. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("One or more of the response variables contains missing data. Please delete any rows of the dataset that contain missing data prior to running the analysis.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -196,7 +195,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Not all the responses contain the same number of values. Please amend the dataset prior to running the analysis.", errors);
+            Assert.Contains("One or more of the response variables contains missing data. Please delete any rows of the dataset that contain missing data prior to running the analysis.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -219,10 +218,9 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
-
 
         [Fact]
         public async Task MVA10()
@@ -243,7 +241,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -267,7 +265,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Case ID (Case ID reduced) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 
@@ -291,7 +289,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Categorical predictor (Categorial (reduced)) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Categorical predictor (Categorial (reduced)) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("MultivariateAnalysis", testName, errors);
         }
 

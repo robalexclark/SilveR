@@ -132,7 +132,7 @@ namespace SilveR.UnitTests.StatsModels
             var byCategoriesAndOverall = result.Single(x => x.Name == "ByCategoriesAndOverall");
             Assert.Equal("False", byCategoriesAndOverall.Value);
 
-            var estimate = result.Single(x => x.Name == "Estimate");
+            var estimate = result.Single(x => x.Name == "CorrelationCoefficient");
             Assert.Equal("True", estimate.Value);
 
             var hypothesis = result.Single(x => x.Name == "Hypothesis");
@@ -171,7 +171,7 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "FourthCatFactor", Value = "Factor 4" });
             arguments.Add(new Argument { Name = "Transformation", Value = "Log10" });
             arguments.Add(new Argument { Name = "ByCategoriesAndOverall", Value = "False" });
-            arguments.Add(new Argument { Name = "Estimate", Value = "True" });
+            arguments.Add(new Argument { Name = "CorrelationCoefficient", Value = "True" });
             arguments.Add(new Argument { Name = "Hypothesis", Value = "2-sided" });
             arguments.Add(new Argument { Name = "Matrixplot", Value = "False" });
             arguments.Add(new Argument { Name = "Method", Value = "Pearson" });
@@ -193,7 +193,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("Factor 4", sut.FourthCatFactor);
             Assert.Equal("Log10", sut.Transformation);
             Assert.False(sut.ByCategoriesAndOverall);
-            Assert.True(sut.Estimate);
+            Assert.True(sut.CorrelationCoefficient);
             Assert.False(sut.Matrixplot);
             Assert.Equal("2-sided", sut.Hypothesis);
             Assert.Equal("Pearson", sut.Method);
@@ -222,7 +222,7 @@ namespace SilveR.UnitTests.StatsModels
             var model = new CorrelationAnalysisModel(dataset)
             {
                 ByCategoriesAndOverall = false,
-                Estimate = true,
+                CorrelationCoefficient = true,
                 FirstCatFactor = "Factor 1",
                 FourthCatFactor = "Factor 4",
                 Hypothesis = "2-sided",

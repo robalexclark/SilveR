@@ -46,7 +46,6 @@ namespace SilveR.Validators
             }
 
 
-            List<int> responseCounts = new List<int>();
             //Go through each response
             foreach (string response in maVariables.Responses)
             {
@@ -55,17 +54,6 @@ namespace SilveR.Validators
                     ValidationInfo.AddErrorMessage("The Response (" + response + ") contains non-numeric data that cannot be processed. Please check the data and make sure it was entered correctly.");
                     return ValidationInfo;
                 }
-
-                //check no of responses are the same (actual check is later)
-                int responseCount = 0;
-                foreach (DataRow row in DataTable.Rows)
-                {
-                    if (!String.IsNullOrEmpty(row[response].ToString()))
-                    {
-                        responseCount = responseCount + 1;
-                    }
-                }
-                responseCounts.Add(responseCount);
 
                 CheckTransformations(maVariables.ResponseTransformation, response);
 
@@ -102,11 +90,25 @@ namespace SilveR.Validators
                 }
             }
 
-            if (!responseCounts.All(x => x == responseCounts.First()))
+            //check that all the responses contain the same number of responses, row by row
+            int expectedResponses = maVariables.Responses.Count();
+            foreach (DataRow row in DataTable.Rows)
             {
-                ValidationInfo.AddErrorMessage("Not all the responses contain the same number of values. Please amend the dataset prior to running the analysis.");
-                return ValidationInfo;
+                int actualResponses = 0;
+
+                foreach (string response in maVariables.Responses)
+                {
+                    if (!String.IsNullOrEmpty(row[response].ToString()))
+                        actualResponses++;
+                }
+
+                if (expectedResponses != actualResponses)
+                {
+                    ValidationInfo.AddErrorMessage("One or more of the response variables contains missing data. Please delete any rows of the dataset that contain missing data prior to running the analysis.");
+                    return ValidationInfo;
+                }
             }
+
 
             if (maVariables.AnalysisType == MultivariateAnalysisModel.AnalysisOption.PrincipalComponentsAnalysis)
             {

@@ -8,7 +8,7 @@
 
     var activeSheet = $("#spreadsheet").data("kendoSpreadsheet").activeSheet();
     activeSheet.frozenRows(1);
-    activeSheet.frozenColumns(1);
+    //activeSheet.frozenColumns(1);
 
     $("#save").click(function () {
         if (!$(this).hasClass("k-state-disabled")) {

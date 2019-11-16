@@ -93,7 +93,7 @@ if (DoseResponseType == "Equation") {
 
 	#Titles and description
 	HTML.title("Variable selection", HR=2, align="left")
-	add<-paste(c("The  "), EquationResponse, " response is currently being analysed using the user defined equation in the Dose-Response Analysis module. ", sep="")
+	add<-paste(c("The  "), EquationResponse, " response is currently being analysed using the user defined equation in the Dose-response and Non-Linear Regression Analysis module. ", sep="")
 	HTML(add, align="left")
 
 	#STB October 2013 - adding a warnign message if no x variable defined in the user equation
@@ -315,7 +315,7 @@ if (DoseResponseType == "Equation") {
 if (DoseResponseType == "FourParameter") {
 
 	#Output HTML header
-	Title <-paste(branding, " Dose-Response Analysis", sep="")
+	Title <-paste(branding, " Dose-response Analysis", sep="")
 	HTML.title(Title, HR = 1, align = "left")
 
 	#Software developement version warning
@@ -434,7 +434,7 @@ if (DoseResponseType == "FourParameter") {
 #===================================================================================================================
 	HTML.title("Response and dose variables", HR=2, align="left")
 
-	add<-paste("The  ", ResponseVar, " response is currently being analysed by the Dose-Response Analysis module", sep="")
+	add<-paste("The  ", ResponseVar, " response is currently being analysed by the Dose-response and Non-Linear Regression Analysis module", sep="")
 	if(ResponseTransform != "None") {
 		add<-paste(add, " and has been ", ResponseTransform, " transformed prior to analysis" , sep="")
 		add<-paste(add, ResponseTransform, sep="")
@@ -1070,70 +1070,71 @@ if (showdataset == "Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-if (DoseResponseType == "FourParameter")
-{ 
-	HTML(paste("Response variable: ", ResponseVar, sep=""), align="left")
+	if (DoseResponseType == "FourParameter")
+	{ 
+		HTML(paste("Response variable: ", ResponseVar, sep=""), align="left")
 
-	if (ResponseTransform != "None") {
-		HTML(paste("Response transformation: ", ResponseTransform, sep=""), align="left")
-	}
-	HTML(paste("Dose Variable: ", DoseVar, sep=""), align="left")
-
-	if (Offsetz != "NULL") {
-		HTML(paste("Manually entered offset: ", Offsetz, sep=""), align="left")
-	}
-	HTML(paste("Log scale used for dose variable: ", DoseTransform, sep=""), align="left")
-
-	if (QCResponse != "NULL") {
-		HTML(paste("Quality control responses: ", QCResponse, sep=""), align="left")
-	}
-
-	if (QCDose != "NULL") {	
-		HTML(paste("Quality control dose variable: ", QCDose, sep=""), align="left")
-	}
-
-	if (Samples != "NULL") {
-		HTML(paste("Samples variable: ", Samples, sep=""), align="left")
-	}
-
-	if (MinCoeff != "NULL")	{
-		HTML(paste("Minimum parameter fixed at: ", MinCoeff, sep=""), align="left")
-	}
+		if (ResponseTransform != "None") {
+			HTML(paste("Response variable transformation: ", ResponseTransform, sep=""), align="left")
+		}
+		HTML(paste("Dose variable: ", DoseVar, sep=""), align="left")
 	
-	if (MaxCoeff != "NULL") {
-		HTML(paste("Maximum parameter fixed at: ", MaxCoeff, sep=""), align="left")
-	}
+		HTML(paste("Dose variable transformation: ", DoseTransform, sep=""), align="left")
 
-	if (SlopeCoeff != "NULL") {
-		HTML(paste("Slope parameter fixed at: ", SlopeCoeff, sep=""),  align="left")
-	}
+		if (Offsetz != "NULL") {
+			HTML(paste("Dose variable transformation offset: ", Offsetz, sep=""), align="left")
+		}
 
-	if (ECIDCoeff != "NULL") {
-		HTML(paste("xD50 parameter fixed at: ", ECIDCoeff, sep=""),  align="left")
-	}
+		if (QCResponse != "NULL") {
+			HTML(paste("Quality control response variable: ", QCResponse, sep=""), align="left")
+		}
 
-	if (MinStartValue != "NULL") {
-		HTML(paste("Minimum parameter start value: ", MinStartValue, sep=""),  align="left")
-	}
+		if (QCDose != "NULL") {	
+			HTML(paste("Quality control dose variable: ", QCDose, sep=""), align="left")
+		}
 
-	if (MaxStartValue != "NULL") {
-		HTML(paste("Maximum parameter start value: ", MaxStartValue, sep=""),  align="left")
-	}
+		if (Samples != "NULL") {
+			HTML(paste("Samples variable: ", Samples, sep=""), align="left")
+		}
+
+		if (MinCoeff != "NULL")	{
+			HTML(paste("Minimum parameter fixed at: ", MinCoeff, sep=""), align="left")
+		}
 	
-	if (SlopeStartValue != "NULL") {
-		HTML(paste("Slope parameter start value: ", SlopeStartValue, sep=""),  align="left")
-	}
+		if (MaxCoeff != "NULL") {
+			HTML(paste("Maximum parameter fixed at: ", MaxCoeff, sep=""), align="left")
+		}
 
-	if (ECIDStartValue != "NULL") {
-		HTML(paste("xD50 parameter start value: ", ECIDStartValue, sep=""),  align="left")
+		if (SlopeCoeff != "NULL") {
+			HTML(paste("Slope parameter fixed at: ", SlopeCoeff, sep=""),  align="left")
+		}
+
+		if (ECIDCoeff != "NULL") {
+			HTML(paste("xD50 parameter fixed at: ", ECIDCoeff, sep=""),  align="left")
+		}
+
+		if (MinStartValue != "NULL") {
+			HTML(paste("Minimum parameter start value: ", MinStartValue, sep=""),  align="left")
+		}
+
+		if (MaxStartValue != "NULL") {
+			HTML(paste("Maximum parameter start value: ", MaxStartValue, sep=""),  align="left")
+		}
+	
+		if (SlopeStartValue != "NULL") {
+			HTML(paste("Slope parameter start value: ", SlopeStartValue, sep=""),  align="left")
+		}
+
+		if (ECIDStartValue != "NULL") {
+			HTML(paste("xD50 parameter start value: ", ECIDStartValue, sep=""),  align="left")
+		}
+	} else {
+		HTML(paste("User defined equation: ", Equation, sep=""),  align="left")
+		HTML(paste("User defined parameter start values: ", StartValues, sep=""),  align="left")
+		HTML(paste("Y-axis variable: ", EquationResponse , sep=""),  align="left")
+		HTML(paste("X-axis variable: ", EquationDose, sep=""),  align="left")
 	}
-} else {
-	HTML(paste("User defined equation: ", Equation, sep=""),  align="left")
-	HTML(paste("User defined parameter start values: ", StartValues, sep=""),  align="left")
-	HTML(paste("Y-axis variable: ", EquationResponse , sep=""),  align="left")
-	HTML(paste("X-axis variable: ", EquationDose, sep=""),  align="left")
 }
-
-

@@ -106,7 +106,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Categorical factor (Cat5) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Categorical factor (Cat5) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
         }
 
@@ -129,7 +129,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp4) contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp4) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
         }
 
@@ -154,7 +154,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Covariate (Resp3) contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Covariate (Resp3) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
         }
 
@@ -593,7 +593,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The continuous variable (Resp4) contains non-numeric data which cannot be processed. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The continuous variable (Resp4) contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
         }
 
@@ -1401,7 +1401,7 @@ namespace SilveR.IntegrationTests
             model.CooksDistancePlot = true;
             model.LeveragePlot = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1409,7 +1409,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp11) contains missing data.", warnings);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1432,8 +1432,8 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
             model.Response = "Resp3";
             model.ResponseTransformation = "None";
-            model.ContinuousFactors = new string[] { "Resp5" };
-            model.CategoricalFactors = new string[] { "Cat6" };
+            model.ContinuousFactors = new string[] { "Resp10" };
+            model.CategoricalFactors = new string[] { "Cat8" };
             model.ANOVASelected = true;
             model.Coefficients = true;
             model.AdjustedRSquared = true;
@@ -1443,12 +1443,12 @@ namespace SilveR.IntegrationTests
             model.LeveragePlot = true;
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveTestOutput("LinearRegressionAnalysis", model, testName, statsOutput);
+            HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LinearRegressionAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Contains("The Continuous factor (Resp10) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
+            Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
         }
 
         [Fact]
@@ -1473,7 +1473,7 @@ namespace SilveR.IntegrationTests
             model.CooksDistancePlot = true;
             model.LeveragePlot = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1481,7 +1481,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp5) contains missing data.", warnings);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1520,6 +1520,82 @@ namespace SilveR.IntegrationTests
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LinearRegressionAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task LRA53()
+        {
+            string testName = "LRA53";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
+            model.Response = "Resp3";
+            model.ResponseTransformation = "None";
+            model.ContinuousFactors = new string[] { "Resp8" };
+            model.CategoricalFactors = new string[] { "Cat8" };
+            model.Covariates = new string[] { "Resp10" };
+            model.PrimaryFactor = "Cat8";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Covariate (Resp3) contains missing data.", warnings);
+            Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("LinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task LRA54()
+        {
+            string testName = "LRA54";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
+            model.Response = "Resp3";
+            model.ResponseTransformation = "None";
+            model.ContinuousFactors = new string[] { "Resp8" };
+            model.CategoricalFactors = new string[] { "Cat9" };
+            model.Covariates = new string[] { "Cat8" };
+            model.PrimaryFactor = "Cat9";
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("The Categorical factor (Cat9) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
+            Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);            
         }
     }
 }

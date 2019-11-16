@@ -22,7 +22,7 @@ namespace SilveR.StatsModels
             get { return new List<string>() { "None", "Log10", "Loge", "Square Root", "ArcSine" }; }
         }
 
-        [DisplayName("Response transformation")]
+        [DisplayName("Responses transformation")]
         public string Transformation { get; set; } = "None";
 
         [CheckUsedOnceOnly]
@@ -57,8 +57,8 @@ namespace SilveR.StatsModels
         [DisplayName("Hypothesis")]
         public string Hypothesis { get; set; }
 
-        [DisplayName("Estimate")]
-        public bool Estimate { get; set; } = true;
+        [DisplayName("CorrelationCoefficient")]
+        public bool CorrelationCoefficient { get; set; } = true;
 
         [DisplayName("Test Statistic")]
         public bool TestStatistic { get; set; } = true;
@@ -162,7 +162,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(FourthCatFactor), FourthCatFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Method), Method));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Hypothesis), Hypothesis));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Estimate), Estimate));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CorrelationCoefficient), CorrelationCoefficient));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(TestStatistic), TestStatistic));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PValue), PValue));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Scatterplot), Scatterplot));
@@ -185,7 +185,7 @@ namespace SilveR.StatsModels
             this.Transformation = argHelper.LoadStringArgument(nameof(Transformation));
             this.Method = argHelper.LoadStringArgument(nameof(Method));
             this.Hypothesis = argHelper.LoadStringArgument(nameof(Hypothesis));
-            this.Estimate = argHelper.LoadBooleanArgument(nameof(Estimate));
+            this.CorrelationCoefficient = argHelper.LoadBooleanArgument(nameof(CorrelationCoefficient));
             this.TestStatistic = argHelper.LoadBooleanArgument(nameof(TestStatistic));
             this.PValue = argHelper.LoadBooleanArgument(nameof(PValue));
             this.Scatterplot = argHelper.LoadBooleanArgument(nameof(Scatterplot));
@@ -224,7 +224,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(Hypothesis, false)); //11
 
             //Mean
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Estimate)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CorrelationCoefficient)); //12
 
             //N
             arguments.Append(" " + argFormatter.GetFormattedArgument(TestStatistic)); //13

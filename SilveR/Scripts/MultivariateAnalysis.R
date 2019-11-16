@@ -279,7 +279,7 @@ if (catPred_ != "NULL") {
 	title <-paste(title, "categorised by the ", catPred_ , " variable and ", sep = "")
 }
 title <-paste(title, "labelled by the ", caseid_IVS_name , " variable", sep = "")
-HTML(title, align="left")
+HTML.title(title, HR=2, align="left")
 
 scatterPlotv <- sub(".html", "scatterPlotv.png", htmlFile)
 png(scatterPlotv)
@@ -408,7 +408,7 @@ HTML("Warning, as the results of this analysis have not been independently verif
 #Description
 HTML.title("Description", HR=2, align="left")
 title <-paste("The cluster analysis has been performed using the ", agglomerationMethod , " clustering agglomeration method. Distances between the individual points are calculated using the ", distanceMethod , " distance measure. The analysis has been set-up to generate ", no_clust, " clusters.", sep = "")
-HTML.title(title, HR=0, align="left")
+HTML(title, align="left")
 
 description <- paste("The following responses are included in the analysis: ", responses_IVS_, ". ", sep = "")
 if (plotLabels == "Case ID") {
@@ -1471,53 +1471,53 @@ if (showdataset=="Y")
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variables: ", responses_IVS_, sep=""), align="left")
-if (responseTransform != "None") {
-	HTML(paste("Responses transformation: ", responseTransform, sep=""), align="left")
+	HTML(paste("Response variables: ", responses_IVS_, sep=""), align="left")
+	if (responseTransform != "None") {
+		HTML(paste("Response variables transformation: ", responseTransform, sep=""), align="left")
+	}
+
+	if (catPred_ != "NULL") {
+		HTML(paste("Categorical predictor: ", catPred_, sep=""), align="left")
+	}
+
+	#if (contPred_ != "NULL") {
+	#	HTML(paste("Continuous predictor: ", contPred_, sep=""), align="left")
+	#}
+
+	if (caseid_IVS_ != "NULL") {
+		HTML(paste("Case ID: ", caseid_IVS_, sep=""), align="left")
+	}
+
+	HTML(paste("Analysis performed: ", analysisType, sep=""), align="left")
+
+	if (PCA_center != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
+		HTML(paste("Response centering: ", PCA_center, sep=""), align="left")
+	}
+
+	if (PCA_scale != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
+		HTML(paste("Response scale: ", PCA_scale, sep=""), align="left")
+	}
+
+	if (noOfClusters != "NULL" && analysisType == "ClusterAnalysis") {
+		HTML(paste("Number of clusters: ", noOfClusters, sep=""), align="left")
+	}
+
+	if (distanceMethod != "NULL" && analysisType == "ClusterAnalysis") {
+		HTML(paste("Distance method: ", distanceMethod, sep=""), align="left")
+	}
+
+	if (agglomerationMethod != "NULL" && analysisType == "ClusterAnalysis") {
+		HTML(paste("Agglomeration method: ", agglomerationMethod, sep=""), align="left")
+	}
+
+	if (plotLabels != "NULL") {
+		HTML(paste("Plot labels: ", plotLabels, sep=""), align="left")
+	}
+
+	#if (noOfComponents != "NULL" && analysisType == "PartialLeastSquares") {
+	#	HTML(paste("Number of components: ", noOfComponents, sep=""), align="left")
+	#}
 }
-
-if (catPred_ != "NULL") {
-	HTML(paste("Categorical predictors: ", catPred_, sep=""), align="left")
-}
-
-if (contPred_ != "NULL") {
-	HTML(paste("Continuous predictors: ", contPred_, sep=""), align="left")
-}
-
-if (caseid_IVS_ != "NULL") {
-	HTML(paste("Case ID variable: ", caseid_IVS_, sep=""), align="left")
-}
-
-HTML(paste("Analysis performed: ", analysisType, sep=""), align="left")
-
-if (noOfClusters != "NULL" && analysisType == "ClusterAnalysis") {
-	HTML(paste("Number of clusters: ", noOfClusters, sep=""), align="left")
-}
-
-if (distanceMethod != "NULL" && analysisType == "ClusterAnalysis") {
-	HTML(paste("Distance method: ", distanceMethod, sep=""), align="left")
-}
-
-if (agglomerationMethod != "NULL" && analysisType == "ClusterAnalysis") {
-	HTML(paste("Agglomeration method: ", agglomerationMethod, sep=""), align="left")
-}
-
-if (plotLabels != "NULL") {
-	HTML(paste("Plot labels variable: ", plotLabels, sep=""), align="left")
-}
-
-if (noOfComponents != "NULL" && analysisType == "PartialLeastSquares") {
-	HTML(paste("Number of components: ", noOfComponents, sep=""), align="left")
-}
-
-if (PCA_center != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
-	HTML(paste("Response centering transformation: ", PCA_center, sep=""), align="left")
-}
-
-if (PCA_scale != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
-	HTML(paste("Response scale transformation: ", PCA_scale, sep=""), align="left")
-}
-
-

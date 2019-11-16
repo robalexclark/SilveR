@@ -42,8 +42,18 @@ namespace SilveR.Validators
                 return ValidationInfo;
             if (!CheckResponsesPerLevel(pttVariables.OtherDesignFactors, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.OtherDesignFactors)))
                 return ValidationInfo;
-            if (!CheckResponsesPerLevel(pttVariables.Subject, pttVariables.Response, ReflectionExtensions.GetPropertyDisplayName<PairedTTestAnalysisModel>(i => i.Subject)))
-                return ValidationInfo;
+
+            //Check that the number of responses for the subject is at least 1
+            Dictionary<string, int> levelResponses = ResponsesPerLevel(pttVariables.Subject, pttVariables.Response);
+            foreach (KeyValuePair<string, int> level in levelResponses)
+            {
+                if (level.Value < 2)
+                {
+                    ValidationInfo.AddWarningMessage("There is no replication in one or more of the levels of the Subject factor (" + pttVariables.Subject + "). This can lead to unreliable results so you may want to remove any subjects from the dataset with only one replicate.");
+                    break;
+                }
+            }
+
 
             //do data checks on the treatments/other factors and response
             if (!CategoricalAgainstContinuousVariableChecks(categoricalVariables, pttVariables.Response))
@@ -98,7 +108,7 @@ namespace SilveR.Validators
 
                     if (query.Count() > 1)
                     {
-                        ValidationInfo.AddErrorMessage("At least one of the subjects has more than one observation recorded on one of the treatments. Please make sure the data was entered correctly as each subject can only be measued once at each level of the Treatment.");
+                        ValidationInfo.AddErrorMessage("At least one of the subjects has more than one observation recorded on one of the treatments. Please make sure the data was entered correctly as each subject can only be measured once at each level of the Treatment.");
                         return false;
                     }
                 }
@@ -187,14 +197,14 @@ namespace SilveR.Validators
                     bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the input data and make sure the data was entered correctly.");
                         return false;
                     }
 

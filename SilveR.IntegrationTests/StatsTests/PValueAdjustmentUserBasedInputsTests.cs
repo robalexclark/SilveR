@@ -2,7 +2,6 @@ using ControlledForms.IntegrationTests;
 using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -48,7 +47,7 @@ namespace SilveR.IntegrationTests
             HttpClient client = _factory.CreateClient();
 
             PValueAdjustmentUserBasedInputsModel model = new PValueAdjustmentUserBasedInputsModel();
-            model.PValues = "0.01 0.05";
+            model.PValues = "0.01 0.02 1.2";
             model.SelectedTest = "Holm";
 
             //Act
@@ -98,7 +97,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.00099 and hence the adjusted p-values may be unduly conservative.", warnings);
+            Assert.Contains("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.000099 and hence the adjusted p-values may be unduly conservative.", warnings);
             Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, warnings);
         }
 
@@ -119,7 +118,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.00099 and hence the adjusted p-values may be unduly conservative.", warnings);
+            Assert.Contains("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.000099 and hence the adjusted p-values may be unduly conservative.", warnings);
             Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, warnings);
         }
 
@@ -135,15 +134,15 @@ namespace SilveR.IntegrationTests
             model.PValues = "0.03631, 0.96873,<0.0001,0.03318,<0.0001,0.0001";
             model.SelectedTest = "Benjamini-Hochberg";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.00099 and hence the adjusted p-values may be unduly conservative.", warnings);
+            Assert.Contains("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.000099 and hence the adjusted p-values may be unduly conservative.", warnings);
             Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -385,7 +384,7 @@ namespace SilveR.IntegrationTests
             model.SelectedTest = "Hochberg";
             model.Significance = "0.10";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -393,7 +392,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have entered unadjusted p-value(s) of the form <0.001. For the purposes of the numerical calculations this value has been replaced with 0.00099 and hence the adjusted p-values may be unduly conservative.", warnings);
             Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -417,7 +416,7 @@ namespace SilveR.IntegrationTests
             model.SelectedTest = "Hochberg";
             model.Significance = "0.10";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -425,7 +424,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have entered unadjusted p-value(s) of the form <0.001. For the purposes of the numerical calculations this value has been replaced with 0.00099 and hence the adjusted p-values may be unduly conservative.", warnings);
             Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentUserBasedInputs", new FormUrlEncodedContent(modelIgnoreWarnings));

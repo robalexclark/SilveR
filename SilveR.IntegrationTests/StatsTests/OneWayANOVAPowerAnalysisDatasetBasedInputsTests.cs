@@ -106,7 +106,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Treatment (Treat3) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Treatment (Treat3) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("OneWayANOVAPowerAnalysisDatasetBasedInputs", testName, errors);
         }
 
@@ -129,7 +129,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp4) contains non-numerical data that cannot be processed. Please check raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp4) contains non-numerical data that cannot be processed. Please check input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("OneWayANOVAPowerAnalysisDatasetBasedInputs", testName, errors);
         }
         
@@ -322,6 +322,54 @@ namespace SilveR.IntegrationTests
             Helpers.SaveOutput("OneWayANOVAPowerAnalysisDatasetBasedInputs", testName, warnings);
         }
 
+        [Fact]
+        public async Task SMA14()
+        {
+            string testName = "SMA14";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisDatasetBasedInputsModel model = new OneWayANOVAPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - One-way ANOVA").Key;
+            model.Response = "Resp8";
+            model.Treatment = "Treat6";
+            model.Significance = "0.05";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("OneWayANOVAPowerAnalysisDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "OneWayANOVAPowerAnalysisDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task SMA17()
+        {
+            string testName = "SMA17";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisDatasetBasedInputsModel model = new OneWayANOVAPowerAnalysisDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Power - One-way ANOVA").Key;
+            model.Response = "Resp1";
+            model.Treatment = "Treat1";
+            model.Significance = "0.05";
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+            model.PowerFrom = -50;
+            model.PowerTo = 80;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Power from must be > 0", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisDatasetBasedInputs", testName, errors);
+        }
 
 
         [Fact]
@@ -498,7 +546,7 @@ namespace SilveR.IntegrationTests
             model.PowerFrom = 50;
             model.PowerTo = 70;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -506,7 +554,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp5) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("OneWayANOVAPowerAnalysisDatasetBasedInputs", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "OneWayANOVAPowerAnalysisDatasetBasedInputs", new FormUrlEncodedContent(modelIgnoreWarnings));

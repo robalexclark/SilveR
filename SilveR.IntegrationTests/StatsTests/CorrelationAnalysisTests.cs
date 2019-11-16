@@ -57,7 +57,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor (Factor 4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Factor 4) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
@@ -244,7 +244,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor (Factor 4) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Factor 4) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("CorrelationAnalysis", testName, errors);
         }
 
@@ -338,7 +338,7 @@ namespace SilveR.IntegrationTests
             model.Hypothesis = "2-sided";
             model.Method = "Pearson";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -346,7 +346,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -371,7 +371,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -403,14 +403,14 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -418,7 +418,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -443,14 +443,14 @@ namespace SilveR.IntegrationTests
             model.Transformation = "Log10";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -458,7 +458,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have Log10 transformed the Resp 4 variable. Unfortunately some of the Resp 4 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -485,14 +485,14 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -500,7 +500,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -525,14 +525,14 @@ namespace SilveR.IntegrationTests
             model.Transformation = "ArcSine";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -540,7 +540,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have ArcSine transformed the Resp 3 variable. Unfortunately some of the Resp 3 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -567,14 +567,14 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -582,7 +582,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -607,7 +607,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Less than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -639,14 +639,14 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -654,7 +654,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -679,7 +679,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Kendall";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -711,14 +711,14 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Kendall";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -726,7 +726,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -751,7 +751,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Kendall";
             model.Hypothesis = "Less than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -783,14 +783,14 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Kendall";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -798,7 +798,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -823,7 +823,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Spearman";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -855,14 +855,14 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Spearman";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -870,7 +870,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -895,7 +895,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Spearman";
             model.Hypothesis = "Less than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -927,14 +927,14 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Spearman";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
             model.Matrixplot = true;
             model.ByCategoriesAndOverall = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -942,7 +942,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -969,7 +969,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -977,7 +977,7 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.01";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -985,7 +985,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp 4) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1010,7 +1010,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1041,7 +1041,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1072,7 +1072,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1103,7 +1103,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1135,7 +1135,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 10";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1167,7 +1167,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 11";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1199,7 +1199,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 12";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1231,7 +1231,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 13";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1263,7 +1263,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 15";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1297,7 +1297,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 16";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1305,7 +1305,7 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.01";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1313,7 +1313,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp31) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1339,7 +1339,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 17";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1347,7 +1347,7 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.01";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1355,7 +1355,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp33) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1381,7 +1381,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Factor 18";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1389,7 +1389,7 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.01";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1397,7 +1397,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp35) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1422,7 +1422,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1453,7 +1453,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1484,7 +1484,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1515,7 +1515,7 @@ namespace SilveR.IntegrationTests
             model.Transformation = "None";
             model.Method = "Pearson";
             model.Hypothesis = "Greater than";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1548,7 +1548,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1556,7 +1556,7 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.05";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1564,7 +1564,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp44) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1591,7 +1591,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1599,7 +1599,7 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.05";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1607,7 +1607,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp45) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1634,7 +1634,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Factor 2";
             model.Method = "Pearson";
             model.Hypothesis = "2-sided";
-            model.Estimate = true;
+            model.CorrelationCoefficient = true;
             model.TestStatistic = true;
             model.PValue = true;
             model.Scatterplot = true;
@@ -1642,7 +1642,7 @@ namespace SilveR.IntegrationTests
             model.ByCategoriesAndOverall = true;
             model.Significance = "0.05";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/CorrelationAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1650,7 +1650,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp45) contains missing data. Any rows of the dataset that contain missing responses will be excluded prior to the analysis.", warnings);
             Helpers.SaveOutput("CorrelationAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "CorrelationAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));

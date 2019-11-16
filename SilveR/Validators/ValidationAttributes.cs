@@ -64,8 +64,8 @@ namespace SilveR.Validators
             }
             else
             {
-
-                return new ValidationResult(validationContext.MemberName + " (" + duplicateVarName + ") has been selected in more than one input category, please change your input options.");
+                string displayName = validationContext.DisplayName.TrimEnd('s');
+                return new ValidationResult(displayName + " (" + duplicateVarName + ") has been selected in more than one input category, please change your input options.");
             }
         }
     }

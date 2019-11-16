@@ -52,6 +52,8 @@ namespace SilveR.Models
 
         public bool OutputData { get; set; } = false;
 
+        public bool OutputAnalysisOptions { get; set; } = false;
+
         public bool OutputPlotsInBW { get; set; } = false;
 
         public bool GeometryDisplay { get; set; } = false;
@@ -112,6 +114,7 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.LegendPosition) + " " + this.LegendPosition);
             optionLines.Add(nameof(this.PaletteSet) + " " + this.PaletteSet);
             optionLines.Add(nameof(this.OutputData) + " " + (this.OutputData ? "Y" : "N"));
+            optionLines.Add(nameof(this.OutputAnalysisOptions) + " " + (this.OutputAnalysisOptions ? "Y" : "N"));
             optionLines.Add(nameof(this.OutputPlotsInBW) + " " + (this.OutputPlotsInBW ? "Y" : "N"));
             optionLines.Add(nameof(this.GeometryDisplay) + " " + (this.GeometryDisplay ? "Y" : "N"));
             optionLines.Add(nameof(this.DisplayModelCoefficients) + " " + (this.DisplayModelCoefficients ? "Y" : "N"));

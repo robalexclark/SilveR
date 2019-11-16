@@ -142,7 +142,7 @@ if (treatFactors !="NULL") {
 	}
 
 	if(intindex != ind) {
-		HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
+		HTML("Unfortunately not all combinations of the levels of the categorical factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the categorical factors.", align="left")
 		quit()
 	}
 }
@@ -249,8 +249,12 @@ HTML(add, align="left")
 #===================================================================================================================
 #Scatterplot
 #===================================================================================================================
-title<-c("Scatterplots of the observed data, including best-fit regression lines")
-
+if (nocontfactors == 1 && notreatfactors == 0) {
+	title<-c("Scatterplot of the observed data, including best-fit regression line")
+} else {
+	title<-c("Scatterplots of the observed data, including best-fit regression lines")
+}
+	
 if(responseTransform != "None" || contFactorTransform != "None") {
 	title<-paste(title, ", on the transformed scale", sep="")
 } 
@@ -369,23 +373,25 @@ if (nocontfactors == 1) {
 		} else {
 #			pcorr<-1000
 #			rho<-1000
-			inttabx<-1000
-			slopetabx<-1000
+			inttabx<-10000000000
+			slopetabx<-10000000000
 		}
 
 		#STB - March 2011 Formatting p-values p<0.0001
 #		pcorr2<-format(round(pcorr, 4), nsmall=4, scientific=FALSE)
 #		rho<-format(round(rho, 3), nsmall=3, scientific=FALSE)
-		inttabx<-format(round(inttabx, 4), nsmall=4, scientific=FALSE)
-		slopetabx<-format(round(slopetabx, 4), nsmall=4, scientific=FALSE)
 
+		if (slopetabx != 10000000000) {
+			inttabx<-format(round(inttabx, 4), nsmall=4, scientific=FALSE)
+			slopetabx<-format(round(slopetabx, 4), nsmall=4, scientific=FALSE)
+		}
 #		if (pcorr<0.0001)  {
 #			pcorr2=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
 #			pcorr2<- paste("<",pcorr2)
 #		}
 			
 		#STB Aug 2011 - removing lines with infinite slope
-		if (inttabx==1000)  {
+		if (inttabx==10000000000)  {
 #			pcorr2<- "-"
 #			rho<- "-"
 			inttabx<- "-"
@@ -416,23 +422,28 @@ if (nocontfactors == 1) {
 	temp6<-c(good3, "Intercept estimate", "Slope estimate")
 	colnames(esttab2)<-temp6
 
-	HTML.title("Estimates of the coefficients of the best-fit regression lines", HR=2, align="left")
-	HTML(esttab2 , align="left" , classfirstline="second", row.names="FALSE")
+	if (notreatfactors == 0) {
+		HTML.title("Estimates of the coefficients of the best-fit regression line", HR=2, align="left")
+		HTML(esttab2 , align="left" , classfirstline="second", row.names="FALSE")
+	} else  {
+		HTML.title("Estimates of the coefficients of the best-fit regression lines", HR=2, align="left")
+		HTML(esttab2 , align="left" , classfirstline="second", row.names="FALSE")
+	}
 }
 
 if (nocontfactors > 1) {
 	HTML("Note: As the number of continuous factors included in the analysis is more than one, the coefficients of the best-fit regression lines have not been calculated.", align="left")
 }
 
-if(covariatelist != "NULL" && noblockfactors == 0) {
+if(nocontfactors ==1 && covariatelist != "NULL" && noblockfactors == 0) {
 	HTML("Note: The estimates of the regression coefficients are not adjusted for the covariate.", align="left")
 }
 
-if(covariatelist != "NULL" && noblockfactors == 1) {
+if(nocontfactors ==1 && covariatelist != "NULL" && noblockfactors == 1) {
 	HTML("Note: The estimates of the regression coefficients are not adjusted for the covariate or the blocking factor.", align="left")
 }
 
-if(covariatelist != "NULL" && noblockfactors > 1) {
+if(nocontfactors ==1 && covariatelist != "NULL" && noblockfactors > 1) {
 	HTML("Note: The estimates of the regression coefficients are not adjusted for the covariate or the blocking factors.", align="left")
 }
 
@@ -515,11 +526,15 @@ if(covariatelist != "NULL") {
 		title<-paste("Warning: The covariate has the same value for all subjects in one or more levels of the ", FirstCatFactor, " factor. Care should be taken if you want to include this covariate in the analysis.", sep="")
 		HTML(title, align="left")
 	}
-	HTML("Tip: In order to decide whether it is helpful to fit the covariate, the following should be considered:", align="left")
-	HTML("a) Is there a relationship between the response and the covariate? (N.B., It is only worth fitting the covariate if there is a strong positive (or negative) relationship between them: i.e., the lines on the plot should not be horizontal).", align="left")
-	HTML("b) Is the relationship similar for all treatments? (The lines on the plot should be approximately parallel).", align="left")
-	HTML("c) Is the covariate influenced by the treatment? (We assume the covariate is not influenced by the treatment and so there should be no separation of the treatment groups along the x-axis on the plot).", HR=0, align="left")
-	HTML("These issues are discussed in more detail in Morris (1999).", align="left")
+	if(notreatfactors>0) {
+		HTML("Tip: In order to decide whether it is helpful to fit the covariate, the following should be considered:", align="left")
+		HTML("a) Is there a relationship between the response and the covariate? (N.B., It is only worth fitting the covariate if there is a strong positive (or negative) relationship between them: i.e., the lines on the plot should not be horizontal).", align="left")
+		HTML("b) Is the relationship similar for all levels of the categorical factor? (The lines on the plot should be approximately parallel).", align="left")
+		HTML("c) Is the covariate influenced by the categorisation factor? (We assume the covariate is not influenced by the categorisation factor and so there should be no separation of the categorisation factor levels along the x-axis on the plot).", align="left")
+		HTML("These issues are discussed in more detail in Morris (1999).", align="left")
+	} else {
+		HTML("Tip: In order to decide whether it is helpful to fit the covariate, consider if there a relationship between the response and the covariate (N.B., It is only worth fitting the covariate if there is a strong positive (or negative) relationship between them: i.e., the line on the plot should not be horizontal). This issue is discussed in more detail in Morris (1999).", align="left")
+	}
 }
 
 #===================================================================================================================
@@ -553,14 +568,14 @@ if(AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 	HTML.title("Analysis of Covariance (ANCOVA) table for assessing covariate interactions", HR=2, align="left")
 
 	# Stop process if residual sums of squares are too close to zero
-	if (deviance(Covintfull)<sqrt(.Machine$double.eps)) {
-		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
-		quit()
-	}
+#	if (deviance(Covintfull)<sqrt(.Machine$double.eps)) {
+#		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
+#		quit()
+#	}
 
 	#Printing ANCOVA Table - note this code is reused from below - Type III SS included
-	if (df.residual(Covintfull)<1) {
-		HTML("The covariate interactions have not been calculated as there are zero residual degrees of freedom when all terms are included in the statistical model." , align="left")
+	if (df.residual(Covintfull)<1 || deviance(Covintfull)<sqrt(.Machine$double.eps)) {
+		HTML("The covariate interactions have not been calculated as there are zero residual degrees of freedom, or the residual sums of squares is close to zero, when all terms are included in the statistical model." , align="left")
 	} else {
 		tempx<-Anova(Covintfull, type=c("III"))[-1,]
 
@@ -607,14 +622,6 @@ if(AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 #===================================================================================================================
 #ANOVA table
 #===================================================================================================================
-#Testing the degrees of freedom
-
-if (df.residual(threewayfull)<5) {
-	HTML.title("Warning", HR=2, align="left")
-	HTML("Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.", align="left")
-}
-
-#ANOVA Table
 if(showANOVA=="Y") {
 	if(covariatelist != "NULL") {
 		HTML.title("Analysis of Covariance (ANCOVA) table", HR=2, align="left")
@@ -622,12 +629,29 @@ if(showANOVA=="Y") {
 		HTML.title("Analysis of variance (ANOVA) table", HR=2, align="left")
 	}
 
+	#Generating the error message if there are co-linearities
+	#Code repeated below, incasee the user deselected the ANOVA table we need to kill the code
+	test <- try(Anova(threewayfull, type=c("III")))
+	if(class(test) == "try-error"){
+		HTML.title("Error", HR=4, align="left")
+		HTML("Unfortunately there are aliased parameters in the statistical model. This can be caused if a best-fit regression line cannot be fitted for one or more combinations of the categorical factor levels in the above scatterplots. In order to perform an analysis, the model may need to be simplified.", align="left")
+		quit()
+	}
+
+
 	# Stop process if residual sums of squares are too close to zero
-	if (deviance(threewayfull)<sqrt(.Machine$double.eps)) {
+	if (df.residual(threewayfull)<1 || deviance(threewayfull)<sqrt(.Machine$double.eps)) {
 		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
 		quit()
 	}
 
+	#Testing the degrees of freedom
+	if (df.residual(threewayfull)<5) {
+		HTML.title("Warning", HR=2, align="left")
+		HTML("Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the categorical factors as 'Other design (block)' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.", align="left")
+	}
+
+#ANOVA Table
 	#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
 	temp<-Anova(threewayfull, type=c("III"))[-1,]
 	col1<-format(round(temp[1], 2), nsmall=2, scientific=FALSE)
@@ -663,11 +687,13 @@ if(showANOVA=="Y") {
 		}
 	}
 
+
+
 	HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
 
 	if(covariatelist != "NULL") {
 		#STB Error spotted:
-		#HTML.title("<sTitle<-sub("ivs_colon_ivs"	,":"ML.title("<bf>Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", HR=0, align="left")
+		#HTML("<sTitle<-sub("ivs_colon_ivs"	,":"ML.title("<bf>Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 		HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 	} else {
 		HTML("Comment: ANOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
@@ -704,13 +730,22 @@ if(showANOVA=="Y") {
 	add<-paste(add, ". ", sep="")
 
 	HTML(add, align="left")
-	if(covariatelist != "NULL") {
-		HTML("Tip: While it is a good idea to consider the overall tests in the ANCOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
-	} else { 
-		HTML("Tip: While it is a good idea to consider the overall tests in the ANOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
-	}
+#	if(covariatelist != "NULL") {
+#		HTML("Tip: While it is a good idea to consider the overall tests in the ANCOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
+#	} else { 
+#		HTML("Tip: While it is a good idea to consider the overall tests in the ANOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
+#	}
 }
 
+
+#Repeat of code above, incase the user deselected the ANOVA table we need to kill the code
+#Generating the error message if there are co-linearities
+test <- try(Anova(threewayfull, type=c("III")))
+if(class(test) == "try-error"){
+	HTML.title("Error", HR=2, align="left")
+	HTML("Unfortunately there are aliased parameters in the statistical model. This can be caused if a best-fit regression line cannot be fitted for one or more combinations of the categorical factor levels in the above scatterplots. In order to perform an analysis, the model may need to be simplified.", align="left")
+	quit()
+}
 #===================================================================================================================
 #Table of regression coefficients
 #===================================================================================================================
@@ -774,7 +809,7 @@ if (CovariateRegressionCoefficients == "Y" && covariatelist != "NULL") {
 #R squared
 #===================================================================================================================
 if (showAdjustedRSquared =="Y") {
-	HTML.title("R-squared and adjusted R-squared statistics", HR=2, align="left")
+	HTML.title("R-squared and Adjusted R-squared statistics", HR=2, align="left")
 
 	rsq    <- format(round(summary(threewayfull)$r.squared,4),nsmall=4)
 	adjrsq <- format(round(summary(threewayfull)$adj.r.squared,4),nsmall=4)
@@ -1038,9 +1073,9 @@ if (nocontfactors==1 && notreatfactors==0)  {
 				add<-paste(add, ", ", TreatmentsList[i], " and", sep="")
 			} else if (i==notreatfactors) {
 				if (notreatfactors==1) {
-					add<-paste(add, ", ", TreatmentsList[i], " as the treatment factor", sep="")
+					add<-paste(add, ", ", TreatmentsList[i], " as the categorical factor", sep="")
 				} else {
-					add<-paste(add, " ", TreatmentsList[i], " as the treatment factors", sep="")
+					add<-paste(add, " ", TreatmentsList[i], " as the categorical factors", sep="")
 				}
 			}
 		}
@@ -1109,19 +1144,19 @@ HTML(add, align="left")
 Ref_list<-R_refs()
 
 #Bate and Clark comment
-HTML.title(refxx, HR=0, align="left")	
+HTML(refxx, align="left")	
 
 HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
 if(showANOVA=="Y") {
-	HTML("Armitage P, Matthews JNS and Berry G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.", align="left")
+	HTML("Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.", align="left")
 }
 if(showCoefficients == "Y") {
-	HTML("Chambers JM and Hastie TJ. (1992). Statistical Models in S. Wadsworth and Brooks-Cole advanced books and software.", align="left")
+	HTML("Chambers, J.M. and Hastie, T.J. (1992). Statistical Models in S. Wadsworth and Brooks-Cole advanced books and software.", align="left")
 }
 if(covariatelist != "NULL") {
-	HTML("Morris TR. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
+	HTML("Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
 }
 
 HTML.title("R references", HR=2, align="left")
@@ -1155,65 +1190,48 @@ if (showdataset=="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", resp, sep=""),  align="left")
-if (responseTransform != "None") {
-	HTML(paste("Response transformation: ", responseTransform, sep=""),  align="left")
-}
-
-if(covariatelist != "NULL") {
-	HTML(paste("Covariate(s): ", covariatelist, sep=""), align="left")
-}
-
-if (covariatelist != "NULL" && covariateTransform != "None") {
-	if (nocontfactors == 1) {
-		HTML(paste("Covariate transformation: ", covariateTransform, sep=""),  align="left")
-	} else {
-		HTML(paste("Covariates transformation: ", covariateTransform, sep=""),  align="left")
+	HTML(paste("Response variable: ", resp, sep=""),  align="left")
+	if (responseTransform != "None") {
+		HTML(paste("Response variable transformation: ", responseTransform, sep=""),  align="left")
 	}
-}
 
-if (covariatelist != "NULL" ) {
-	HTML(paste("Categorisation factor used on covariate scatterplots: ", FirstCatFactor, sep=""),  align="left")
-}
-
-if(contFactors != "NULL") {
-	HTML(paste("Continuous treatment factors included in model: ", contFactors, sep=""),  align="left")
-}
-if (contFactorTransform != "None"){
-	if (nocontfactors == 1) {
-		HTML(paste("Continuous factor transformation: ", contFactorTransform, sep=""),  align="left")
-	} else {
-		HTML(paste("Continuous factors transformation: ", contFactorTransform, sep=""),  align="left")
+	if(contFactors != "NULL") {
+		HTML(paste("Continuous factor(s): ", contFactors, sep=""),  align="left")
 	}
+
+	if (contFactorTransform != "None"){
+		HTML(paste("Continuous factor(s) transformation: ", contFactorTransform, sep=""),  align="left")
+	}
+
+	if(treatFactors != "NULL") {
+		HTML(paste("Categorical factor(s): ", treatFactors, sep=""),  align="left")
+	}
+
+	if (blocklist != "NULL") {
+		HTML(paste("Other design (block) factor(s): ", blocklistsep, sep=""),  align="left")
+	}
+
+	if(covariatelist != "NULL") {
+		HTML(paste("Covariate(s): ", covariatelist, sep=""), align="left")
+	}
+
+	if (covariatelist != "NULL" ) {
+		HTML(paste("Primary factor: ", FirstCatFactor, sep=""),  align="left")
+	}
+
+	if (covariatelist != "NULL" && covariateTransform != "None") {
+		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""),  align="left")
+	}
+
+	HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""),  align="left")
+	HTML(paste("Output coefficients (Y/N): ", showCoefficients, sep=""),  align="left")
+	HTML(paste("Output Adjusted R-squared (Y/N): ", showAdjustedRSquared, sep=""),  align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
+	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""),  align="left")
+	HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
+	HTML(paste("Output Cook's distance plot (Y/N): ", cooksDistancePlot, sep=""),  align="left")
+	HTML(paste("Output leverage plot (Y/N): ", leveragesPlot, sep=""),  align="left")
 }
-
-if(treatFactors != "NULL") {
-	HTML(paste("Categorical treatment factors included in model: ", treatFactors, sep=""),  align="left")
-}
-
-if (blocklist != "NULL") {
-	HTML(paste("Blocking factor(s) selected: ", blocklistsep, sep=""),  align="left")
-}
-HTML(paste("Model fitted: ", model, sep=""),  align="left")
-HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""),  align="left")
-HTML(paste("Output model coefficients (Y/N): ", showCoefficients, sep=""),  align="left")
-HTML(paste("Output Adjusted R-squared (Y/N): ", showAdjustedRSquared, sep=""),  align="left")
-HTML(paste("Output predicted vs. residual plot (Y/N): ", showPRPlot, sep=""),  align="left")
-HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
-HTML(paste("Output Cook's distance plot (Y/N): ", cooksDistancePlot, sep=""),  align="left")
-HTML(paste("Output leverage plot (Y/N): ", leveragesPlot, sep=""),  align="left")
-HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
-
-
-
-
-
-
-
-
-
-
-
-

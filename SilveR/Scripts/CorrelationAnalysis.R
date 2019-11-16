@@ -897,13 +897,13 @@ HTML(refxx, align="left")
 HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 if (method == "Pearson") {
-	HTML("Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition; Iowa State University Press, Iowa, USA.", align="left") 
+	HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition; Iowa State University Press, Iowa, USA.", align="left") 
 }
 if (method == "Spearman") {
-	HTML("Best DJ and Roberts DE. (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho. Applied Statistics, 24, 377-379. ", align="left")
+	HTML("Best, D.J. and Roberts, D.E. (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho. Applied Statistics, 24, 377-379. ", align="left")
 }
 if (method == "Spearman" || method == "Kendall") {
-	HTML("Hollander M and Wolfe DA. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons. P185-194. ", align="left")
+	HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons. P185-194. ", align="left")
 }
 HTML.title("R references", HR=2, align="left")
 HTML(Ref_list$R_ref , align="left")
@@ -934,31 +934,32 @@ if (showdataset=="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
-HTML(paste("Response variables: ", csResponses, sep=""), align="left")
-if (transformation != "None") {
-	HTML(paste("Transformation: ", transformation, sep=""), align="left")
-}
-if (firstCat != "NULL") {
-	HTML(paste("First categorisation factor: ", firstCat, sep=""), align="left")
-}
-if (secondCat != "NULL") {
-	HTML(paste("Second categorisation factor: ", secondCat, sep=""), align="left")
-}
-if (thirdCat != "NULL") {	
-	HTML(paste("Third categorisation factor: ", thirdCat, sep=""), align="left")
-}
-if (fourthCat != "NULL") {	
-	HTML(paste("Fourth categorisation factor: ", fourthCat, sep=""), align="left")
-}
-HTML(paste("Significance level: ", 1-CIval, sep=""),  align="left")
-HTML(paste("Method used: ", method, sep=""),  align="left")
-HTML(paste("Hypotheses type: ", hypothesis, sep=""),  align="left")
-HTML(paste("Display correlation coefficient (Y/N): ", estimate, sep=""),  align="left")
-HTML(paste("Display test statistic (Y/N): ", statistic, sep=""),  align="left")
-HTML(paste("Display p-values (Y/N): ", pValueSelected, sep=""),  align="left")
-HTML(paste("Generate scatterplots (Y/N): ", scatterplotSelected, sep=""),  align="left")
-HTML(paste("Generate matrixplot (Y/N): ", matrixPlotSelected, sep=""),  align="left")
-HTML(paste("Generate categorised output (Y/N): ", ByCategoriesAndOverall, sep=""),  align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
+	HTML(paste("Response variables: ", csResponses, sep=""), align="left")
+	if (transformation != "None") {
+		HTML(paste("Response variables transformation: ", transformation, sep=""), align="left")
+	}
+	if (firstCat != "NULL") {
+		HTML(paste("First categorisation factor: ", firstCat, sep=""), align="left")
+	}
+	if (secondCat != "NULL") {
+		HTML(paste("Second categorisation factor: ", secondCat, sep=""), align="left")
+	}
+	if (thirdCat != "NULL") {	
+		HTML(paste("Third categorisation factor: ", thirdCat, sep=""), align="left")
+	}
+	if (fourthCat != "NULL") {	
+		HTML(paste("Fourth categorisation factor: ", fourthCat, sep=""), align="left")
+	}
+	HTML(paste("Method: ", method, sep=""),  align="left")
+	HTML(paste("Hypothesis: ", hypothesis, sep=""),  align="left")
 
-
+	HTML(paste("Display correlation coefficient (Y/N): ", estimate, sep=""),  align="left")
+	HTML(paste("Display test statistic (Y/N): ", statistic, sep=""),  align="left")
+	HTML(paste("Display p-values (Y/N): ", pValueSelected, sep=""),  align="left")
+	HTML(paste("Generate scatterplots (Y/N): ", scatterplotSelected, sep=""),  align="left")
+	HTML(paste("Generate matrixplot (Y/N): ", matrixPlotSelected, sep=""),  align="left")
+	HTML(paste("Significance level: ", 1-CIval, sep=""),  align="left")
+	HTML(paste("Display categorised output (Y/N): ", ByCategoriesAndOverall, sep=""),  align="left")
+}

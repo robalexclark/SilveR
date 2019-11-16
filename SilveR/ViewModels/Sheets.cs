@@ -61,12 +61,12 @@ namespace SilveR.ViewModels
                     {
                         cell.Validation = new Validation();
                         cell.Validation.DataType = "list";
-                        cell.Validation.From = "{True, False}";
+                        cell.Validation.From = "{true,false}";
                         cell.Validation.ShowButton = true;
                         cell.Validation.Type = "reject";
                         cell.Validation.ComparerType = "list";
 
-                        cell.Value = c.ToString();
+                        cell.Value = c.ToString().ToLower();
 
                         silverSelectedColumn = false;
                     }

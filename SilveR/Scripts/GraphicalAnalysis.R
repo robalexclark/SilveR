@@ -668,20 +668,28 @@ if (ScatterPlot == "Y" && infiniteslope == "Y" && is.numeric(graphdata$xvarrr_IV
 
 #Corrleation and p
 if(ScatterPlot == "Y" && is.numeric(graphdata$xvarrr_IVS)=="TRUE" && is.numeric(graphdata$yvarrr_IVS)=="TRUE") {
+	if (dim(corrtab)[1] == 1) {
+	HTML.title("Pearson's correlation coefficient and p-value", HR=2, align="left")
+	} else {
 	HTML.title("Pearson's correlation coefficients and p-values", HR=2, align="left")
+	}
     	HTML(corrtab, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
 #Slope estimation
 if(ScatterPlot == "Y" && is.numeric(graphdata$xvarrr_IVS)=="TRUE" && is.numeric(graphdata$yvarrr_IVS)=="TRUE" && LinearFit == "Y") {
-	HTML.title("Estimates of the coefficients of the linear line", HR=2, align="left")
+	if (dim(esttab)[1] == 1) {
+		HTML.title("Estimate of the coefficients of the fitted linear line", HR=2, align="left")
+	} else {	
+		HTML.title("Estimate of the coefficients of the fitted linear lines", HR=2, align="left")
+	}
     	HTML(esttab, classfirstline = "second", align = "left", row.names = "FALSE")
 }
 
 #Linear fit warning
-if(LinearFit == "Y" && ScatterPlot == "Y" && (is.numeric(graphdata$xvarrr_IVS)=="FALSE" || is.numeric(graphdata$yvarrr_IVS)=="FALSE")) {
-	HTML("Warning: As one of the variables is non-numeric, the best fit line is not included on the scatterplot.", align="left")
-}
+#if(LinearFit == "Y" && ScatterPlot == "Y" && (is.numeric(graphdata$xvarrr_IVS)=="FALSE" || is.numeric(graphdata$yvarrr_IVS)=="FALSE")) {
+#	HTML("Warning: As one of the variables is non-numeric, the best fit line is not included on the scatterplot.", align="left")
+#}
 
 #correlation and p warning
 if(ScatterPlot == "Y" && (is.numeric(graphdata$xvarrr_IVS)=="FALSE" || is.numeric(graphdata$yvarrr_IVS)=="FALSE")) {
@@ -907,7 +915,7 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NU
 #non-numeric Y axis warning
 #STB NOV2015 - Updating warning message
 if(CaseProfilesPlot == "Y"  && is.numeric(graphdata$yvarrr_IVS)==FALSE) {
-	HTML.title("As the Y-axis is non-numeric, no graph has been produced. Please review your selection.", HR=0, align="left")
+	HTML("As the Y-axis is non-numeric, no graph has been produced. Please review your selection.", align="left")
 }
 
 #Global variables format
@@ -1063,11 +1071,9 @@ if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "
 #===================================================================================================================
 #Titles
 if(BoxPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"&& YAxisVars != "NULL") {
-	#STB May 2012 - change name to box-plot
-	HTML.title("Box-plot", HR=2, align="left")
+	HTML.title("Boxplot", HR=2, align="left")
 } else if (BoxPlot == "Y" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL")&& YAxisVars != "NULL") {
-	#STB May 2012 - change name to box-plot
-	HTML.title("Categorised box-plot", HR=2, align="left")
+	HTML.title("Categorised boxplot", HR=2, align="left")
 }	
 
 if(BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==FALSE) {
@@ -1125,7 +1131,7 @@ if(BoxPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"   && 
 		dev.off(2)
 		dev.off(3)
 		pdfFile_x<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdfx)
-		linkToPdfx <- paste ("<a href=\"",pdfFile_x,"\">Click here to view the PDF of the box-plot</a>", sep = "")
+		linkToPdfx <- paste ("<a href=\"",pdfFile_x,"\">Click here to view the PDF of the boxplot</a>", sep = "")
 		HTML(linkToPdfx)
 	}
 }
@@ -1229,7 +1235,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 		dev.off(2)
 		dev.off(3)
 		pdfFile_11<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf11)
-		linkToPdf11 <- paste ("<a href=\"",pdfFile_11,"\">Click here to view the PDF of the box-plot</a>", sep = "")
+		linkToPdf11 <- paste ("<a href=\"",pdfFile_11,"\">Click here to view the PDF of the boxplot</a>", sep = "")
 		HTML(linkToPdf11)
 	}
 }
@@ -1326,7 +1332,7 @@ if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && G
 		dev.off(2)
 		dev.off(3)
 		pdfFile_13<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf13)
-		linkToPdf13 <- paste ("<a href=\"",pdfFile_13,"\">Click here to view the PDF of the box-plot</a>", sep = "")
+		linkToPdf13 <- paste ("<a href=\"",pdfFile_13,"\">Click here to view the PDF of the boxplot</a>", sep = "")
 		HTML(linkToPdf13)
 	}
 }
@@ -1508,19 +1514,19 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 		dev.off(2)
 		dev.off(3)
 		pdfFile_12<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf12)
-		linkToPdf12 <- paste ("<a href=\"",pdfFile_12,"\">Click here to view the PDF of the box-plot</a>", sep = "")
+		linkToPdf12 <- paste ("<a href=\"",pdfFile_12,"\">Click here to view the PDF of the boxplot</a>", sep = "")
 		HTML(linkToPdf12)
 	}
 }
 
 #===================================================================================================================
-#Final box-plot options
+#Final boxplot options
 #===================================================================================================================
 if(BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
-	HTML("On the box-plot the median is denoted by the horizontal line within the box. The box indicates the interquartile range, where the lower and upper quartiles are calculated using the type 2 method, see Hyndman and Fan (1996). The whiskers extend to the most extreme data point which is no more than 1.5 times the length of the box away from the box.", align="left")
+	HTML("On the boxplot the median is denoted by the horizontal line within the box. The box indicates the interquartile range, where the lower and upper quartiles are calculated using the type 2 method, see Hyndman and Fan (1996). The whiskers extend to the most extreme data point which is no more than 1.5 times the length of the box away from the box.", align="left")
 
 	if (BoxplotOptions == "Outliers") {
-		HTML("Individual observations that lie outside the outlier range are included on the plot using circles.",  align="left")
+		HTML("Individual observations that lie outside the outlier range are included on the plot using stars.",  align="left")
 	}
 	if (BoxplotOptions == "Include Data"){
 		HTML("The plot includes individual observations, denoted by black dots.", align="left")
@@ -1542,7 +1548,7 @@ if(HistogramPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"
 #Warning message if response is not numeric
 #STB NOV2015 - Updating warning message
 if(HistogramPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==FALSE) {
-	HTML.title("As the response variable is non-numeric, no graph has been produced. Please review your selection.", HR=0, align="left")
+	HTML("As the response variable is non-numeric, no graph has been produced. Please review your selection.", align="left")
 }
 
 #GGPLOT2 variable options
@@ -1735,7 +1741,7 @@ HTML.title("Statistical references", HR = 2, align = "left")
 HTML(Ref_list$BateClark_ref, align = "left")
 
 if (BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS) == TRUE) {
-    HTML("Hyndman RJ and Fan Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365. ", align = "left")
+    HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365. ", align = "left")
 }
 
 HTML.title("R references", HR = 2, align = "left")
@@ -1800,121 +1806,118 @@ if (showdataset == "Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML.title("Analysis options", HR=2, align="left")
+	if (YAxisVars != "NULL") {
+		HTML(paste("Response variable: ", YAxisVars, sep=""),  align="left")
+	}
 
-if (YAxisVars != "NULL") {
-	HTML(paste("Response variable: ", YAxisVars, sep=""),  align="left")
+	if (YAxisTransform != "None") {
+		HTML(paste("Response variable transformation: ", YAxisTransform, sep=""),  align="left")
+	}
+
+	if (XAxisVar != "NULL") {
+		HTML(paste("X-axis variable: ", XAxisVar, sep=""),  align="left")
+	}
+
+	if (XAxisTransform  != "None") {
+		HTML(paste("X-axis variable transformation: ", XAxisTransform , sep=""),  align="left")
+	}
+
+	if (FirstCatFactor != "NULL") {
+		HTML(paste("First categorisation factor: ", FirstCatFactor, sep=""),  align="left")
+	}
+
+	if (SecondCatFactor != "NULL") {
+		HTML(paste("Second categorisation factor: ", SecondCatFactor, sep=""),  align="left")
+	}
+
+	if (GraphStyle != "NULL" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL")) {
+		HTML(paste("Categorised gragh style: ", GraphStyle, sep=""),  align="left")
+	}
+
+	if (DisplayLegend != "N" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL")) {
+		HTML(paste("Display legend (Y/N): ", DisplayLegend, sep=""),  align="left")
+	}
+
+	if (MainTitle != "NULL") {
+		HTML(paste("Main graph title: ", MainTitle, sep=""),  align="left")
+	}
+
+	if (XAxisTitle != "NULL") {
+		HTML(paste("X-axis title (except for Histogram): ", XAxisTitle, sep=""),  align="left")
+	}
+
+	if (YAxisTitle != "NULL") {
+		HTML(paste("Y-axis title: ", YAxisTitle, sep=""),  align="left")
+	}
+
+	if (Xlabs != "NULL") {
+		HTML(paste("Re-ordered categorical x-axis levels: ", Xlabs, sep=""),  align="left")
+	}
+
+	if (Cat1labs != "NULL") {
+		HTML(paste("Re-ordered 1st categorisation factor levels: ", Cat1labs, sep=""),  align="left")
+	}
+
+	if (Cat2labs != "NULL") {
+		HTML(paste("Re-ordered 2nd categorisation factor levels: ", Cat2labs, sep=""),  align="left")
+	}
+
+	if (ScatterPlot != "NULL") {
+		HTML(paste("Output Scatterplot (Y/N): ", ScatterPlot, sep=""),  align="left")
+	}
+
+	if (LinearFit != "N" && ScatterPlot != "NULL") {
+		HTML(paste("Include linear fit (Y/N): ", LinearFit, sep=""),  align="left")
+	}
+
+	if (jitterfunction != "N" && ScatterPlot != "NULL") {
+		HTML(paste("Apply jitter function (Y/N): ", jitterfunction, sep=""),  align="left")
+	}
+
+	if (BoxPlot != "N") {
+		HTML(paste("Output Boxplot (Y/N): ", BoxPlot, sep=""),  align="left")
+	}
+
+	if (BoxplotOptions == "Outliers" && BoxPlot != "N") {
+		HTML(paste("Include outliers on Boxplot (Y/N): Y", sep=""),  align="left")
+	}
+
+	if (BoxplotOptions == "Include Data" &&BoxPlot != "N") {
+		HTML(paste("Include observations on Boxplot (Y/N): Y", sep=""),  align="left")
+	}
+
+	if (SEMPlot != "N") {
+		HTML(paste("Output Means with SEMs plot (Y/N): ", SEMPlot, sep=""),  align="left")
+	}
+
+	if (SEMPlotType != "NULL" && SEMPlot != "N") {
+		HTML(paste("Means with SEMs plot type: ", SEMPlotType, sep=""),  align="left")
+	}
+
+	if (displaypointSEM != "NULL" && SEMPlot != "N") {
+		HTML(paste("Include observations on Means with SEMs plot (Y/N): ", displaypointSEM, sep=""),  align="left")
+	}
+
+	if (HistogramPlot != "N") {
+		HTML(paste("Output Histogram (Y/N): ", HistogramPlot, sep=""),  align="left")
+	}
+
+	if (NormalDistFit != "NULL" && HistogramPlot != "N") {
+		HTML(paste("Include normal distribution on Histogram (Y/N): ", NormalDistFit, sep=""),  align="left")
+	}
+
+	if (CaseProfilesPlot != "N") {
+		HTML(paste("Output Case profiles plot (Y/N): ", CaseProfilesPlot, sep=""),  align="left")
+	}
+
+	if (CaseIDFactor != "NULL" && CaseProfilesPlot != "N") {
+		HTML(paste("Case ID factor: ", CaseIDFactor, sep=""),  align="left")
+	}
+
+	if (ReferenceLine != "NULL" ) {
+		HTML(paste("Reference line included on Case profiles plot: ", ReferenceLine, sep=""),  align="left")
+	}
 }
-
-if (YAxisTransform != "None") {
-	HTML(paste("Y-axis transformation: ", YAxisTransform, sep=""),  align="left")
-}
-
-if (XAxisVar != "NULL") {
-	HTML(paste("X-axis variable: ", XAxisVar, sep=""),  align="left")
-}
-
-if (XAxisTransform  != "None") {
-	HTML(paste("X-axis transformation: ", XAxisTransform , sep=""),  align="left")
-}
-
-if (FirstCatFactor != "NULL") {
-	HTML(paste("First categorisation factor: ", FirstCatFactor, sep=""),  align="left")
-}
-
-if (SecondCatFactor != "NULL") {
-	HTML(paste("Second categorisation factor: ", SecondCatFactor, sep=""),  align="left")
-}
-
-if (GraphStyle != "NULL" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL")) {
-	HTML(paste("Categorised gragh style: ", GraphStyle, sep=""),  align="left")
-}
-
-if (MainTitle != "NULL") {
-	HTML(paste("User defined main title: ", MainTitle, sep=""),  align="left")
-}
-
-if (XAxisTitle != "NULL") {
-	HTML(paste("X-axis variable title (except for Histogram): ", XAxisTitle, sep=""),  align="left")
-}
-
-if (YAxisTitle != "NULL") {
-	HTML(paste("Response variable title: ", YAxisTitle, sep=""),  align="left")
-}
-
-if (Xlabs != "NULL") {
-	HTML(paste("Re-ordered categorical x-axis levels: ", Xlabs, sep=""),  align="left")
-}
-
-if (Cat1labs != "NULL") {
-	HTML(paste("Re-ordered 1st categorical factor levels: ", Cat1labs, sep=""),  align="left")
-}
-
-if (Cat2labs != "NULL") {
-	HTML(paste("Re-ordered 2nd categorical factor levels: ", Cat2labs, sep=""),  align="left")
-}
-
-if (DisplayLegend != "N" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL")) {
-	HTML(paste("Display legend (Y/N): ", DisplayLegend, sep=""),  align="left")
-}
-
-
-if (ScatterPlot != "NULL") {
-	HTML(paste("Generate Scatterplot (Y/N): ", ScatterPlot, sep=""),  align="left")
-}
-
-if (LinearFit != "N" && ScatterPlot != "NULL") {
-	HTML(paste("Apply linear fit (Y/N): ", LinearFit, sep=""),  align="left")
-}
-
-if (jitterfunction != "N" && ScatterPlot != "NULL") {
-	HTML(paste("Apply jitter function (Y/N): ", jitterfunction, sep=""),  align="left")
-}
-
-
-if (BoxPlot != "N") {
-	HTML(paste("Generate Box-plot (Y/N): ", BoxPlot, sep=""),  align="left")
-}
-
-if (BoxplotOptions == "Outliers" && BoxPlot != "N") {
-	HTML(paste("Display outliers on Box-plot (Y/N): Y", sep=""),  align="left")
-}
-
-if (BoxplotOptions == "Include Data" &&BoxPlot != "N") {
-	HTML(paste("Display points on Box-plot (Y/N): Y", sep=""),  align="left")
-}
-
-
-if (SEMPlot != "N") {
-	HTML(paste("Generate Means with SEM plot (Y/N): ", SEMPlot, sep=""),  align="left")
-}
-
-if (SEMPlotType != "NULL" && SEMPlot != "N") {
-	HTML(paste("Means with SEM plot type: ", SEMPlotType, sep=""),  align="left")
-}
-
-if (displaypointSEM != "NULL" && SEMPlot != "N") {
-	HTML(paste("Display points on Means with SEM plot (Y/N): ", displaypointSEM, sep=""),  align="left")
-}
-
-if (HistogramPlot != "N") {
-	HTML(paste("Generate Histogram (Y/N): ", HistogramPlot, sep=""),  align="left")
-}
-
-if (NormalDistFit != "NULL" && HistogramPlot != "N") {
-	HTML(paste("Display normal distribution on histogram (Y/N): ", NormalDistFit, sep=""),  align="left")
-}
-
-if (CaseProfilesPlot != "N") {
-	HTML(paste("Generate Case Profiles plot (Y/N): ", CaseProfilesPlot, sep=""),  align="left")
-}
-
-if (CaseIDFactor != "NULL" && CaseProfilesPlot != "N") {
-	HTML(paste("Case ID variable for Case profiles plot: ", CaseIDFactor, sep=""),  align="left")
-}
-
-if (ReferenceLine != "NULL" ) {
-	HTML(paste("Reference line included on Case profiles plot: ", ReferenceLine, sep=""),  align="left")
-}
-

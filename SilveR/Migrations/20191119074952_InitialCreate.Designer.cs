@@ -9,7 +9,7 @@ using SilveR.Models;
 namespace SilveR.Migrations
 {
     [DbContext(typeof(SilveRContext))]
-    [Migration("20191108093659_InitialCreate")]
+    [Migration("20191119074952_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -253,6 +253,9 @@ namespace SilveR.Migrations
                     b.Property<string>("LineTypeSolid")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("OutputAnalysisOptions")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("OutputData")
                         .HasColumnType("INTEGER");

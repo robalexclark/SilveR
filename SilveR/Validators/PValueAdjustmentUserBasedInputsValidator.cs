@@ -21,7 +21,7 @@ namespace SilveR.Validators
             }
             if (pValues.Any(x => x == "<0.0001"))
             {
-                ValidationInfo.AddWarningMessage("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.00099 and hence the adjusted p-values may be unduly conservative.");
+                ValidationInfo.AddWarningMessage("You have entered unadjusted p-value(s) of the form <0.0001. For the purposes of the numerical calculations this value has been replaced with 0.000099 and hence the adjusted p-values may be unduly conservative.");
             }
 
             //if get here then no errors so return true

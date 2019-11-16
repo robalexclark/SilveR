@@ -565,7 +565,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The x-axis variable (Resp5) contains missing values whereas the Response (Resp2) contains data. To generate the Histogram (which does not require an x-axis variable) deselect the x-axis variable prior to analysis.", warnings);
+            Assert.Contains("The x-axis variable (Resp5) contains missing values whereas the Response (Resp2) contains data, these responses will therefore be excluded from all analyses. To generate the Histogram containing these excluded responses (which does not require an x-axis variable) deselect the x-axis variable prior to analysis.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
         }
 
@@ -612,7 +612,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("As one of the axes is non-numeric, the best fit line is not included on the scatterplot.", warnings);
+            Assert.Contains("As one of the axes is non-numeric, the best fit linear line is not included on the scatterplot.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
         }
 
@@ -636,7 +636,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("As one of the axes is non-numeric, the best fit line is not included on the scatterplot.", warnings);
+            Assert.Contains("As one of the axes is non-numeric, the best fit linear line is not included on the scatterplot.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
         }
 
@@ -681,7 +681,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Both the x-axis and the response variables are not numeric.", errors);
+            Assert.Contains("The response variable is not numeric.", errors);
             Helpers.SaveOutput("GraphicalAnalysis", testName, errors);
         }
 
@@ -749,7 +749,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("Both the x-axis and the response variables are not numeric.", errors);
+            Assert.Contains("The response variable is not numeric.", errors);
             Helpers.SaveOutput("GraphicalAnalysis", testName, errors);
         }
 
@@ -1006,8 +1006,8 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Resp 1";
             model.XAxisTransformation = "Loge";
             model.ScatterplotSelected = true;
-            model.XAxisTitle = "Treat 1";
-            model.YAxisTitle = "Resp2";
+            model.XAxisTitle = "Resp 1";
+            model.YAxisTitle = "Treat 1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1069,7 +1069,7 @@ namespace SilveR.IntegrationTests
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1077,7 +1077,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1111,7 +1111,7 @@ namespace SilveR.IntegrationTests
             model.ReferenceLine = 1m;
             model.SecondCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1119,7 +1119,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1153,7 +1153,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SecondCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1161,7 +1161,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1194,7 +1194,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.JitterSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1202,7 +1202,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1235,7 +1235,7 @@ namespace SilveR.IntegrationTests
             model.JitterSelected = true;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1243,7 +1243,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1337,7 +1337,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1345,7 +1345,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1378,7 +1378,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1386,7 +1386,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1574,7 +1574,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.JitterSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1582,7 +1582,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1615,7 +1615,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.JitterSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1623,7 +1623,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1653,7 +1653,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1661,7 +1661,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1753,7 +1753,7 @@ namespace SilveR.IntegrationTests
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1761,7 +1761,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1795,7 +1795,7 @@ namespace SilveR.IntegrationTests
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1803,7 +1803,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1836,7 +1836,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.SecondCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1844,7 +1844,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1877,7 +1877,7 @@ namespace SilveR.IntegrationTests
             model.BoxplotOptions = "Outliers";
             model.SecondCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1885,7 +1885,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1918,7 +1918,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.BoxplotOptions = "Outliers";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1926,7 +1926,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -1958,7 +1958,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.BoxplotOptions = "None";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -1966,7 +1966,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2061,7 +2061,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.BoxplotOptions = "Outliers";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2069,7 +2069,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2102,7 +2102,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.BoxplotOptions = "None";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2110,7 +2110,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2143,7 +2143,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2151,7 +2151,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2183,7 +2183,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2191,7 +2191,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2221,7 +2221,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 2";
             model.ReferenceLine = 0.6m;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2229,7 +2229,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2292,7 +2292,7 @@ namespace SilveR.IntegrationTests
             model.ReferenceLine = 0.6m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2300,7 +2300,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2333,7 +2333,7 @@ namespace SilveR.IntegrationTests
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2341,7 +2341,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2373,7 +2373,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Sqrt Resp 2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2381,7 +2381,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2416,7 +2416,7 @@ namespace SilveR.IntegrationTests
             model.XAxisLevelsOrder = "T3,T2,T1";
             model.SecondCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2424,7 +2424,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2457,7 +2457,7 @@ namespace SilveR.IntegrationTests
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.SecondCatFactorLevelsOrder = "B,A";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2465,7 +2465,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2497,7 +2497,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Log10Resp2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2505,7 +2505,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2598,7 +2598,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2606,7 +2606,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2639,7 +2639,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2647,7 +2647,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2680,7 +2680,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2688,7 +2688,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -2721,7 +2721,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -2729,7 +2729,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3152,7 +3152,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.MainTitle = "Title";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3160,7 +3160,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3193,7 +3193,7 @@ namespace SilveR.IntegrationTests
             model.YAxisTitle = "Resp 8";
             model.MainTitle = "Title";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3201,7 +3201,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3234,7 +3234,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 8";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3242,7 +3242,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3274,7 +3274,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 8";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3282,7 +3282,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3315,7 +3315,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 8";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3323,7 +3323,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3523,7 +3523,7 @@ namespace SilveR.IntegrationTests
             model.HistogramSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3531,7 +3531,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3559,7 +3559,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.NormalDistSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3567,7 +3567,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3595,7 +3595,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.NormalDistSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3603,7 +3603,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3630,7 +3630,7 @@ namespace SilveR.IntegrationTests
             model.HistogramSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3638,7 +3638,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3667,7 +3667,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.NormalDistSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3675,7 +3675,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3704,7 +3704,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.NormalDistSelected = true;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3712,7 +3712,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3740,7 +3740,7 @@ namespace SilveR.IntegrationTests
             model.HistogramSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3748,7 +3748,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3776,7 +3776,7 @@ namespace SilveR.IntegrationTests
             model.HistogramSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3784,7 +3784,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3920,7 +3920,7 @@ namespace SilveR.IntegrationTests
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3928,7 +3928,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3958,7 +3958,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SecondCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -3966,7 +3966,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -3995,7 +3995,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4003,7 +4003,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4032,7 +4032,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4040,7 +4040,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4071,7 +4071,7 @@ namespace SilveR.IntegrationTests
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4079,7 +4079,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4109,7 +4109,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.SecondCatFactorLevelsOrder = "2,1";
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4117,7 +4117,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4146,7 +4146,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4154,7 +4154,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4183,7 +4183,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4191,7 +4191,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4521,7 +4521,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4529,7 +4529,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4615,7 +4615,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4623,7 +4623,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4653,7 +4653,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4661,7 +4661,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
@@ -4691,7 +4691,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -4699,7 +4699,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));

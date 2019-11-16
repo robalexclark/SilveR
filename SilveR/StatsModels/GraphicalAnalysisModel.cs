@@ -63,10 +63,10 @@ namespace SilveR.StatsModels
         [DisplayName("Categorical x-axis levels")]
         public string XAxisLevelsOrder { get; set; }
 
-        [DisplayName("1st categorical factor levels")]
+        [DisplayName("1st categorisation factor levels")]
         public string FirstCatFactorLevelsOrder { get; set; }
 
-        [DisplayName("2nd categorical factor levels")]
+        [DisplayName("2nd categorisation factor levels")]
         public string SecondCatFactorLevelsOrder { get; set; }
 
 
@@ -92,7 +92,7 @@ namespace SilveR.StatsModels
         public string BoxplotOptions { get; set; } = "Outliers";
 
 
-        [DisplayName("SEM plot")]
+        [DisplayName("Mean with SEMS plot")]
         public bool SEMPlotSelected { get; set; }
 
         public enum SEMPlotType { Column = 0, Line = 1 }

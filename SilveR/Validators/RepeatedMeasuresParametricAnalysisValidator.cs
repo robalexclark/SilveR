@@ -38,8 +38,17 @@ namespace SilveR.Validators
                 return ValidationInfo;
             if (!CheckResponsesPerLevel(rmVariables.RepeatedFactor, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.RepeatedFactor)))
                 return ValidationInfo;
-            if (!CheckResponsesPerLevel(rmVariables.Subject, rmVariables.Response, ReflectionExtensions.GetPropertyDisplayName<RepeatedMeasuresParametricAnalysisModel>(i => i.Subject)))
-                return ValidationInfo;
+
+            //Check that the number of responses for the subject is at least 1
+            Dictionary<string, int> levelResponses = ResponsesPerLevel(rmVariables.Subject, rmVariables.Response);
+            foreach (KeyValuePair<string, int> level in levelResponses)
+            {
+                if (level.Value < 2)
+                {
+                    ValidationInfo.AddWarningMessage("There is no replication in one or more of the levels of the Subject factor (" + rmVariables.Subject + "). This can lead to unreliable results so you may want to remove any subjects from the dataset with only one replicate.");
+                    break;
+                }
+            }
 
             //?
             if (!CheckFactorsHaveLevels(rmVariables.Treatments, true))
@@ -280,14 +289,14 @@ namespace SilveR.Validators
                     bool parsedOK = Double.TryParse(continuousRow[i], out var parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                         return false;
                     }
 
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(categoricalRow[i]) && !String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the raw data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + factorType + " (" + catFactor + ") contains missing data where there are observations present in the " + responseType + ". Please check the input data and make sure the data was entered correctly.");
                         return false;
                     }
 

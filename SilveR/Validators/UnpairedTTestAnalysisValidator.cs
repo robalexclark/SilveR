@@ -79,14 +79,14 @@ namespace SilveR.Validators
                 bool parsedOK = Double.TryParse(responseRow[i], (NumberStyles.Number | NumberStyles.AllowExponent), CultureInfo.CreateSpecificCulture("en-GB"), out double parsedValue);
                 if (!String.IsNullOrEmpty(responseRow[i]) && !parsedOK)
                 {
-                    ValidationInfo.AddErrorMessage("The Response (" + responseVar + ") contains non-numerical data which cannot be processed. Please check the raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The Response (" + responseVar + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                     return false;
                 }
 
                 //Check that there are no responses where the treatments are blank
                 if (String.IsNullOrEmpty(treatRow[i]) && !String.IsNullOrEmpty(responseRow[i]))
                 {
-                    ValidationInfo.AddErrorMessage("The treatment (" + treatmentVar + ") contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.");
+                    ValidationInfo.AddErrorMessage("The treatment (" + treatmentVar + ") contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.");
                     return false;
                 }
             }

@@ -5,7 +5,11 @@ $(function () {
     });
 
     $("#ResponseTransformation").kendoDropDownList({
-        dataSource: theModel.transformationsList
+        dataSource: theModel.transformationsList,
+        change: function () {
+            const covariateTransformation = $("#CovariateTransformation").data("kendoDropDownList");
+            covariateTransformation.value($("#ResponseTransformation").val());
+        }
     });
 
     $("#Treatment").kendoDropDownList({

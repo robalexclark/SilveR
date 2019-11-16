@@ -513,7 +513,7 @@ if (equalCase == "Y") {
 #===================================================================================================================
 if (unequalCase == "Y") {
 	HTML.title("Statistical analysis results assuming unequal variances", HR=2, align="left")
-	HTML("The analysis presented is Welch's t-test assuming unequal variances.", align="left")
+	HTML("The analysis presented is Welch's t-test assuming unequal variances, Welch (1947).", align="left")
 
 	HTML.title("Unpaired t-test result", HR=3, align="left")
 
@@ -748,7 +748,7 @@ HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
 if(unequalCase == "Y") {
-	HTML("Welch BL. (1947). The generalization of Student's problem when several different population variances are involved. Biometrika, 34(1-2), 28-35.", align="left")
+	HTML("Welch, B.L. (1947). The generalization of Student's problem when several different population variances are involved. Biometrika, 34(1-2), 28-35.", align="left")
 }
 
 HTML.title("R references", HR=2, align="left")
@@ -782,20 +782,21 @@ if (showdataset=="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", xxxresponsexxx, sep=""),  align="left")
+	HTML(paste("Response variable: ", xxxresponsexxx, sep=""),  align="left")
 
-if (responseTransform != "None")
-{ 
-	HTML(paste("Response transformation: ", responseTransform, sep=""), align="left")
+	if (responseTransform != "None")
+	{ 
+		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
+	}
+
+	HTML(paste("Treatment factor: ", treatFactor, sep=""),  align="left")
+	HTML(paste("Display equal variance case (Y/N): ", equalCase, sep=""),  align="left")
+	HTML(paste("Display unequal variance case (Y/N): ", unequalCase, sep=""),  align="left")
+	HTML(paste("Show residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
+	HTML(paste("Display normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
+	HTML(paste("Control group: ", controlGroup, sep=""),  align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
 }
-
-HTML(paste("Treatment variable: ", treatFactor, sep=""),  align="left")
-HTML(paste("Control group: ", controlGroup, sep=""),  align="left")
-HTML(paste("Display equal variance case (Y/N): ", equalCase, sep=""),  align="left")
-HTML(paste("Display unequal variance case (Y/N): ", unequalCase, sep=""),  align="left")
-HTML(paste("Show residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
-HTML(paste("Display normal probability plot (Y/N): ", showNormPlot, sep=""),  align="left")
-HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
-

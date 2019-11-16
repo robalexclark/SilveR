@@ -35,7 +35,7 @@ namespace SilveR.StatsModels
         }
 
         [ValidateControlLevelSet]
-        [DisplayName("Control")]
+        [DisplayName("Control group")]
         public string Control { get; set; }
 
         public enum AnalysisOption { MannWhitney = 0, AllComparisons = 1, CompareToControl = 2 }

@@ -252,6 +252,9 @@ namespace SilveR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("OutputAnalysisOptions")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("OutputData")
                         .HasColumnType("INTEGER");
 

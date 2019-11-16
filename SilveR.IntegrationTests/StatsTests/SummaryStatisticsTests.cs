@@ -58,7 +58,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor (Cat1) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Cat1) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -256,7 +256,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The categorisation factor (Cat1) contains missing data where there are observations present in the Response. Please check the raw data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The categorisation factor (Cat1) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SummaryStatistics", testName, errors);
         }
 
@@ -317,7 +317,7 @@ namespace SilveR.IntegrationTests
             SummaryStatisticsModel model = new SummaryStatisticsModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Summary Statistics").Key;
             model.Responses = new string[] { "Resp 2" };
-            model.Significance = 0.95m;
+            model.Significance = 0;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -751,7 +751,7 @@ namespace SilveR.IntegrationTests
             model.ConfidenceInterval = true;
             model.Significance = 95;
 
-            //Act1
+            //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/SummaryStatistics", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
@@ -759,7 +759,7 @@ namespace SilveR.IntegrationTests
             Assert.Contains("You have ArcSine transformed the Resp3 variable. Unfortunately some of the Resp3 values are <0 or >1. These values have been ignored in the analysis as it is not possible to transform them.", warnings);
             Helpers.SaveOutput("SummaryStatistics", testName, warnings);
 
-            //Act2 - ignore warnings
+            //Act - ignore warnings
             var modelIgnoreWarnings = model.ToKeyValue();
             modelIgnoreWarnings.Add("ignoreWarnings", "true");
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SummaryStatistics", new FormUrlEncodedContent(modelIgnoreWarnings));

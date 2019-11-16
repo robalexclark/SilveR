@@ -130,19 +130,19 @@ for (i in 1:10) {
 }
 LS_YAxisTitle<-YAxisTitle
 
-#Takign default factor levels
+#Taking default factor levels
 levs_plot <- c(levels(statdata$Timezzz))
 
 #===================================================================================================================
 # Titles and description
 #===================================================================================================================
 #STB Aug 2014 updating paired t-test to exclude covariate
-if (dimfact ==2 && covariatelist == "NULL") {
+if (dimfact ==2 ) { #&& covariatelist == "NULL") {
 	#STB May 2012 Updating "paired"
-	Title <-paste(branding, " Paired t-test Analysis and Within-Subject Analysis (paired t-test analysis)", sep="")
+	Title <-paste(branding, " Extended Paired t-test Analysis", sep="")
 	HTML.title(Title, HR = 1, align = "left")
 } else {
-	Title <-paste(branding, " Paired t-test Analysis and Within-Subject Analysis", sep="")
+	Title <-paste(branding, " Within-Subject Analysis", sep="")
 	HTML.title(Title, HR = 1, align = "left")
 }
 
@@ -166,7 +166,7 @@ if (dimfact >2) {
 }
 HTML.title(title, HR=2, align="left")
 
-add<-paste(c("The  "), resp, " response is currently being analysed by the Paired t-test Analysis and Within-Subject Analysis module", sep="")
+add<-paste(c("The  "), resp, " response is currently being analysed by the Extended Paired t-test Analysis and Within-Subject Analysis module", sep="")
 
 if(covariatelist !="NULL") {
 	if (nocovlist == 1) {
@@ -198,12 +198,12 @@ if (covariatelist !="NULL" &&  covariateTransform != "None") {
 
 if(covariance=="Compound Symmetric" && dimfact >2) {
 	add4<-paste("The repeated measures mixed model analysis is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
-	HTML.title(add4, HR=0, align="left")
+	HTML(add4, align="left")
 }
 if(covariance=="Autoregressive(1)" && dimfact >2) {
 	add4<-paste("The repeated measures mixed model analysis is using the first order autoregressive covariance structure to model the within-subject correlations. When using this structure you are assuming the levels of ", timeFactor, " are equally spaced and also that the variability of responses are the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
-	HTML.title(add4, HR=0, align="left")
-	HTML("Warning: Make sure that the levels of the repeated factor occur in the correct order in the least square (predicted) means table. If they do not then this analysis may not be valid. The autoregressive covariance structure assumes that the order of the repeated factor levels is as defined in the least square (predicted) means table.", align="left")
+	HTML(add4, align="left")
+	HTML("Warning: Make sure that the levels of the treatment factor occur in the correct order in the least square (predicted) means table. If they do not then this analysis may not be valid. The autoregressive covariance structure assumes that the order of the treatment factor levels is as defined in the least square (predicted) means table.", align="left")
 }
 if(covariance=="Unstructured" && dimfact >2) {
 	HTML("The repeated measures mixed model analysis is using the unstructured covariance structure to model the within-subject correlations. When using this structure you are estimating many parameters. If the numbers of subjects used is small then these estimates may be unreliable, see Pinherio and Bates (2002).", align="left")
@@ -565,7 +565,7 @@ if(showANOVA=="Y") {
 
 	#STB Aug 2014 updating paired t-test to exclude covariate
 	if (dimfact ==2&& dim(ivsanova)[1]==1) {
-		HTML.title("Paired t-test result", HR=2, align="left")
+		HTML.title("Extended paired t-test result", HR=2, align="left")
 	} else {
 		HTML.title("Table of overall tests of model effects", HR=2, align="left")
 	}	
@@ -573,7 +573,7 @@ if(showANOVA=="Y") {
 
 	#STB May 2012 - correcting comment for paired t-test
 	#STB Aug 2014 updating paired t-test to exclude covariate
-	if (dimfact ==2&& dim(ivsanova)[1]==1)	{
+	if (dim(ivsanova)[1]==1)	{
 		#STB August 2014 change in message
 		HTML("Comment: The test in this table is a likelihood ratio test. ", align="left")
 	} else {
@@ -1089,7 +1089,7 @@ if (showComps == "Y") {
 	HTML(tabls2, classfirstline="second", align="left", row.names="FALSE")
 
 	if (dimfact > 2) {		
-		HTML("Tip: The p-values in this table are unadjusted for multiple comparisons. No options are available in this module to make multiple comparison adjustments because it is highly unlikely you would want to make all these pairwise comparisons. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
+		HTML("Tip: The p-values in this table are unadjusted for multiple comparisons. No options are available in this module to make multiple comparison adjustments because it is highly unlikely you would want to make all these pairwise comparisons. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 	}	
 
 #===================================================================================================================
@@ -1119,10 +1119,16 @@ if (showComps == "Y") {
 		if (tabs$X6[i] <= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
+				if (dimfact ==2) {
+					add<-paste(add, ": The pairwise test is statistically significant at the  ", sep="")
+				} else {
+					add<-paste(add, ": The following pairwise tests are statistically significant at the  ", sep="")
+				}
 				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: ", sep="")
-				add<-paste(add, rows[i], sep="")
+				add<-paste(add, "% level ", sep="")
+				if (dimfact > 2) {
+					add<-paste(add, ": ", rows[i], sep="")
+				}
 			} else {
 				inte<-inte+1
 				add<-paste(add, ", ", sep="")
@@ -1141,8 +1147,9 @@ if (showComps == "Y") {
 		add<-paste(add, ". ", sep="")
 	}
 	HTML(add, align="left")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the p-value adjustment module.", align="left")
-
+	if (dimfact > 2) {
+		HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned 	to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
+	}
 	
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1192,10 +1199,10 @@ if (showComps == "Y") {
 #Analysis description
 HTML.title("Analysis description", HR=2, align="left")
 
-add<-c("The data were analysed using a ")
+add<-c("The data were analysed using an ")
 
-if (dimfact ==2 && covariatelist == "NULL") {
-	add<-paste(add, "paired t-test, with treatment factor ", timeFactor, sep="")
+if (dimfact ==2 ) { #&& covariatelist == "NULL") {
+	add<-paste(add, "extended paired t-test, with treatment factor ", timeFactor, sep="")
 } else {
 	add<-paste(add, "repeated measures mixed model approach, with treatment factor ", timeFactor, sep="")
 }
@@ -1262,6 +1269,10 @@ if (responseTransform == "None" && covariateTransform != "None") {
 
 HTML(add, align="left")
 
+if (dimfact ==2) {
+	HTML("The paired t-test performed by InVivoStat is defined as an extended paired t-test because the data is analysed using a repeated measures mixed model approach. This allows for any additional blocking factors and/or covariates to be taken into account as well as the pairing within the design.", align="left")
+}
+
 if(dimfact > 2) {
 	if(covariance=="Compound Symmetric")
 	{
@@ -1298,16 +1309,16 @@ HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
 if(covariatelist != "NULL") {
-	HTML("Morris TR. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
+	HTML("Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
 }
 
-HTML("Pinherio JC and Bates DM. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.", align="left")
+HTML("Pinherio, J.C. and Bates, D.M. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.", align="left")
 
 if (dimfact > 2) {
-	HTML.title("Snedecor GW and Cochran WG. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.", HR=0, align="left")
+	HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.", align="left")
 }
 
-HTML("Venables WN and Ripley BD. (2003). Modern Applied Statistics with S. 4th Edition; Springer. New York, Inc.", align="left")
+HTML("Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 4th Edition; Springer. New York, Inc.", align="left")
 
 HTML.title("R references", HR=2, align="left")
 HTML(Ref_list$R_ref , align="left")
@@ -1343,36 +1354,38 @@ if (showdataset=="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", resp, sep=""), align="left")
+	HTML(paste("Response variable: ", resp, sep=""), align="left")
 
-if (responseTransform != "None") {
-	HTML(paste("Response transformation: ", responseTransform, sep=""), align="left")
+	if (responseTransform != "None") {
+		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
+	}
+
+	HTML(paste("Treatment factor: ", timeFactor, sep=""), align="left")
+	
+	HTML(paste("Subject factor: ", subjectFactor, sep=""), align="left")
+
+	if (noblockfactors > 0) {
+		HTML(paste("Other design (block) factor(s): ", blocklist, sep=""), align="left")
+	}
+
+	if (nocovlist > 0) {
+		HTML(paste("Covariate(s): ", covariatelist, sep=""), align="left")
+	}
+
+	if (covariateTransform != "None" && covariatelist != "NULL") {
+		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
+	}
+
+	HTML(paste("Covariance structure: ", covariance, sep=""), align="left")
+
+	HTML(paste("Output table of overall effect tests (Y/N): ", showANOVA, sep=""), align="left")
+	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
+	HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
+	HTML(paste("Output least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
+	HTML(paste("Output all pairwise comparisons (Y/N): ", showComps, sep=""), align="left")
+	HTML(paste("Control group: ", controlGroup, sep=""), align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
 }
-
-if (nocovlist > 0) {
-	HTML(paste("Covariate variable: ", covariatelist, sep=""), align="left")
-}
-
-if (covariateTransform != "None" && covariatelist != "NULL") {
-	HTML(paste("Covariate transformation: ", covariateTransform, sep=""), align="left")
-}
-
-HTML(paste("Treatment factor: ", timeFactor, sep=""), align="left")
-HTML(paste("Control group: ", controlGroup, sep=""), align="left")
-
-HTML(paste("Subject factor: ", subjectFactor, sep=""), align="left")
-
-if (noblockfactors > 0) {
-	HTML(paste("Block factors: ", blocklist, sep=""), align="left")
-}
-
-HTML(paste("Covariance structure: ", covariance, sep=""), align="left")
-HTML(paste("Display overall tests of model effects (Y/N): ", showANOVA, sep=""), align="left")
-HTML(paste("Display residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
-HTML(paste("Display normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
-HTML(paste("Display least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
-HTML(paste("Display all pairwise comparisons (Y/N): ", showComps, sep=""), align="left")
-HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
-

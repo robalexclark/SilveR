@@ -77,7 +77,7 @@ if (Betawarn == "Y") {
 
 #Response
 HTML.title("Response", HR=2, align="left")
-add<-paste(c("The  "), response, " response is currently being analysed by the Chi-squared Test and Fisher's Exact Test module. The response is separated into categories, as defined by the factors ",  GroupingFactor, " and ", ResponseCategories, ".", sep="")
+add<-paste(c("The  "), response, " response is currently being analysed by the Chi-squared Test and Fisher's Exact Test module. The response is separated into categories, as defined by ", ResponseCategories, ", seperately for each level of the grouping factor ",  GroupingFactor , ".", sep="")
 HTML(add, align="left")
 
 #Warning
@@ -300,7 +300,7 @@ colnames(expdata)<-c(" ", colz)
 #Print of Expected table
 HTML.title("Table of expected results (under the null hypothesis of no association)", HR=2, align="left")
 HTML(expdata, classfirstline="second", align="left", row.names = "FALSE")
-HTML("The values in this table are the expected results, given the row and column totals, under the assumption of no association between the two factors.", align="left")
+HTML("The values in this table are the expected results, given the row and column totals, under the assumption of no association between the grouping factor and the response categories.", align="left")
 
 #===================================================================================================================
 #ChiSquaredTest
@@ -331,7 +331,7 @@ if (ChiSquaredTest == "Y") {
 	HTML(temptable, classfirstline="second", align="left", row.names = "FALSE")		
 
 	if (lenA==2 && lenB==2) {
-		HTML.title("Note: For the 2 x 2 case, the chi-squared test is calculated with Yates' continuity correction.", HR=0, align="left")
+		HTML("Note: For the 2 x 2 case, the chi-squared test is calculated with Yates' continuity correction.", align="left")
 	}
 
 	if (chi$p.value <= (1-sig))
@@ -440,9 +440,9 @@ Ref_list<-R_refs()
 HTML.title("Statistical references", HR=2, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
-if(FishersExactTest == "Y"&& row ==2 && col == 2)
+if(BarnardsExactTest == "Y" && row == 2 && col == 2)
 {
-	HTML("Lydersen S, Fagerland MW and Laake P. (2009). Recommended tests for association in 2 x 2 tables. Statistics in Medicine, 28, 1159-1175.", align="left")
+	HTML("Lydersen, S., Fagerland, M.W. and Laake, P. (2009). Recommended tests for association in 2 x 2 tables. Statistics in Medicine, 28, 1159-1175.", align="left")
 }
 
 HTML.title("R references", HR=2, align="left")
@@ -474,13 +474,15 @@ if (showdataset =="Y") {
 #===================================================================================================================
 #Show arguments
 #===================================================================================================================
-HTML.title("Analysis options", HR=2, align="left")
+if (OutputAnalysisOps == "Y") {
+	HTML.title("Analysis options", HR=2, align="left")
 
-HTML(paste("Response variable: ", response, sep=""), align="left")
-HTML(paste("Grouping variable: ", GroupingFactor, sep=""),  align="left")
-HTML(paste("Response categories variable: ", ResponseCategories, sep=""),  align="left")
-HTML(paste("Chi-squared test (Y/N): ", ChiSquaredTest, sep=""),  align="left")
-HTML(paste("Fisher's Exact test (Y/N): ", FishersExactTest, sep=""),  align="left")
-HTML(paste("Barnard's Exact test (Y/N): ", BarnardsExactTest, sep=""),  align="left")
-HTML(paste("One- or two-sided test: ", FishersHypothesis, sep=""),  align="left")
-HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
+	HTML(paste("Response variable: ", response, sep=""), align="left")
+	HTML(paste("Grouping factor: ", GroupingFactor, sep=""),  align="left")
+	HTML(paste("Response categories: ", ResponseCategories, sep=""),  align="left")
+	HTML(paste("Output Chi-squared test (Y/N): ", ChiSquaredTest, sep=""),  align="left")
+	HTML(paste("Output Fisher's Exact test (Y/N): ", FishersExactTest, sep=""),  align="left")
+	HTML(paste("Output Barnard's Exact test (Y/N): ", BarnardsExactTest, sep=""),  align="left")
+	HTML(paste("Hypothesis: ", FishersHypothesis, sep=""),  align="left")
+	HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
+}

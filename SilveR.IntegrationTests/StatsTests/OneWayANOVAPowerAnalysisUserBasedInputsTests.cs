@@ -2,7 +2,6 @@ using ControlledForms.IntegrationTests;
 using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -18,11 +17,10 @@ namespace SilveR.IntegrationTests
             _factory = factory;
         }
 
-
         [Fact]
-        public async Task PSS2()
+        public async Task PSS1()
         {
-            string testName = "PSS2";
+            string testName = "PSS1";
 
             //Arrange
             HttpClient client = _factory.CreateClient();
@@ -40,6 +38,30 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("Means has non-numeric values or the values are not comma separated.", errors);
+            Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
+        }
+
+        [Fact]
+        public async Task PSS2()
+        {
+            string testName = "PSS2";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            OneWayANOVAPowerAnalysisUserBasedInputsModel model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
+            model.Means = "2,2,,3";
+            model.VariabilityEstimate = VariabilityEstimate.Variance;
+            model.Variance = 2;
+
+            model.PlottingRangeType = PlottingRangeTypeOption.Power;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/OneWayANOVAPowerAnalysisUserBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("The list of means contains missing values, please remove any blank entries between the comma separated means.", errors);
             Helpers.SaveOutput("OneWayANOVAPowerAnalysisUserBasedInputs", testName, errors);
         }
 
