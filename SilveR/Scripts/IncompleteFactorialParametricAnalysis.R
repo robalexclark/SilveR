@@ -193,6 +193,8 @@ if (Module == "IFPA") {
 	#Warning
 	title<-c("Warning")
 	HTML.title(title, HR=2, align="left")
+
+	HTML.title("</bf> ", HR=2, align="left")
 	HTML("Warning: This module is currently under construction, care should be taken when considering the results. The results have not been verified.", align="left")
 }
 
@@ -640,22 +642,23 @@ if(showANOVA=="Y") {
 			}
 		} 
 	}
-	add<-paste(add, ". ", sep="")
 
 	if (inte==1) {
 		if (dim(ivsanova)[1]>2) {
 			if(FirstCatFactor != "NULL") {
 
 			#STB July 2013 change wording to remove effects
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANCOVA table.", sep="")
+			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANCOVA table", sep="")
 			} else {
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANOVA table.", sep="")
+			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANOVA table", sep="")
 			}
 		} 
 	if (dim(ivsanova)[1]<=2) {
-			add<-paste(add, ": There is no statistically significant overall difference between the levels of the treatment factor.", sep="")
+			add<-paste(add, ": There is no statistically significant overall difference between the levels of the treatment factor", sep="")
 		}
 	} 
+
+	add<-paste(add, ". ", sep="")
 
 	HTML(add, align="left")
 	if(FirstCatFactor != "NULL") {
@@ -1830,8 +1833,8 @@ if(backToControlTest != "NULL" && GeomDisplay == "Y" && (responseTransform =="Lo
 		tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
 	}
 
-	lowerCI<-paste("Lower",(sig*100),"% CI",sep="")
-	upperCI<-paste("Upper",(sig*100),"% CI",sep="")
+	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 
 	tablsx <- cbind(tabs3$V14, tabs4x)
 	#STB May 2012 correcting "SEM"
