@@ -74,7 +74,7 @@ jobs:
       target: 'master'
       tagSource: manual
       tag: '1.0'
-      title: '1.0-beta'
+      title: '1.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -123,7 +123,7 @@ jobs:
       target: 'master'
       tagSource: manual
       tag: '1.0'
-      title: '1.0-beta'
+      title: '1.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -175,7 +175,7 @@ jobs:
       target: 'master'
       tagSource: manual
       tag: '1.0'
-      title: '1.0-beta'
+      title: '1.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -224,7 +224,7 @@ jobs:
       target: 'master'
       tagSource: manual
       tag: '1.0'
-      title: '1.0-beta'
+      title: '1.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false

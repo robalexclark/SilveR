@@ -28,7 +28,7 @@ For linux (only tested on Ubuntu so far) you will need to provide an install of 
 
 1) Download the setup script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/setup-linux.sh and R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R into the same folder.
 
-2) Run the setup script using 'sudo ./setup-linux.sh'
+2) Run the setup script from the terminal prompt using 'sudo ./setup-linux.sh'
 
 #### [MacOS](#macos)
 
@@ -36,7 +36,7 @@ For Mac you will need to install R 3.5.2 and run a script to install the require
 
 1) Download and install R from https://cran.r-project.org/bin/macosx/R-3.5.2.pkg
 
-2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R and run it using 'sudo Rscript RPackagesInstall.R'
+2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R and run the script from the terminal prompt using 'sudo Rscript RPackagesInstall.R'
 
 
 #### Running Locally
