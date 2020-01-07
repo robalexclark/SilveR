@@ -96,6 +96,7 @@ namespace SilveR
             {
                 SilveRContext context = serviceScope.ServiceProvider.GetRequiredService<SilveRContext>();
 
+                //context.Database.EnsureCreated();
                 context.Database.Migrate();
 
                 IEnumerable<Script> existingScripts = context.Scripts.ToList();
