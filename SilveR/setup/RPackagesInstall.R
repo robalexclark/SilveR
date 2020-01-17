@@ -1,3 +1,5 @@
+options(install.packages.check.source="no")
+
 install.packages("ggrepel",repos = "https://www.stats.bris.ac.uk/R/", version="0.8.1")
 install.packages("bitops",repos = "https://www.stats.bris.ac.uk/R/", version="1.0-6")
 install.packages("car",repos = "https://www.stats.bris.ac.uk/R/", version="3.0-3")
@@ -32,4 +34,4 @@ install.packages("modeltools",repos = "https://www.stats.bris.ac.uk/R/", version
 install.packages("dplyr",repos = "https://www.stats.bris.ac.uk/R/", version="0.8.3")
 
 install.packages("BiocManager",repos = "https://www.stats.bris.ac.uk/R/", version="1.30.4")
-BiocManager::install("mixOmics")
+BiocManager::install("mixOmics", version="3.8")
