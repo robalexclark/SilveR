@@ -22,9 +22,9 @@ namespace SilveR.UnitTests.Models
             Assert.Equal("GraphicsFont Helvetica", optionLines[2]);
             Assert.Equal("FontStyle plain", optionLines[3]);
             Assert.Equal("GraphicsTextColour Black", optionLines[4]);
-            Assert.Equal("ColourFill royalblue1", optionLines[5]);
-            Assert.Equal("BWFill grey", optionLines[6]);
-            Assert.Equal("CategoryBarFill ivory2", optionLines[7]);
+            Assert.Equal("ColourFill blue", optionLines[5]);
+            Assert.Equal("BWFill gray", optionLines[6]);
+            Assert.Equal("CategoryBarFill ivory", optionLines[7]);
             Assert.Equal("ColourLine red", optionLines[8]);
             Assert.Equal("BWLine black", optionLines[9]);
             Assert.Equal("LegendTextColour white", optionLines[10]);

@@ -333,10 +333,10 @@ namespace SilveR.UnitTests.Models
             Assert.Equal("Helvetica", userOption.GraphicsFont);
             Assert.Equal("Plain", userOption.FontStyle);
             Assert.Equal("Black", userOption.GraphicsTextColour);
-            Assert.Equal("RoyalBlue1", userOption.ColourFill);
-            Assert.Equal("Grey", userOption.BWFill);
+            Assert.Equal("Blue", userOption.ColourFill);
+            Assert.Equal("Gray", userOption.BWFill);
             Assert.Equal(1, userOption.FillTransparency);
-            Assert.Equal("Ivory2", userOption.CategoryBarFill);
+            Assert.Equal("Ivory", userOption.CategoryBarFill);
             Assert.Equal("Red", userOption.ColourLine);
             Assert.Equal("Black", userOption.BWLine);
             Assert.Equal("White", userOption.LegendTextColour);

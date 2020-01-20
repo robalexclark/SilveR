@@ -24,16 +24,16 @@ namespace SilveR.Models
         public string GraphicsTextColour { get; set; } = "Black";
 
         [Required]
-        public string ColourFill { get; set; } = "RoyalBlue1";
+        public string ColourFill { get; set; } = "Blue";
 
         [Required]
-        public string BWFill { get; set; } = "Grey";
+        public string BWFill { get; set; } = "Gray";
 
         [Required]
         public double FillTransparency { get; set; } = 1;
 
         [Required]
-        public string CategoryBarFill { get; set; } = "Ivory2";
+        public string CategoryBarFill { get; set; } = "Ivory";
 
         [Required]
         public string ColourLine { get; set; } = "Red";
