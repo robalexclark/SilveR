@@ -1,6 +1,9 @@
 ﻿using ElectronNET.API;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Serilog;
+using System;
+using System.IO;
 
 namespace SilveR
 {
@@ -10,12 +13,33 @@ namespace SilveR
 
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File(Path.Combine(Path.GetTempPath(), AppName + "-" + DateTime.Now.ToString("yyyyMMddHHmmss")) + ".log")
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("Starting web host");
+                CreateWebHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.Information("Stopping web host");
+                Log.CloseAndFlush();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
               .UseElectron(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                    .UseSerilog();
     }
 }
