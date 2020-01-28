@@ -1,5 +1,6 @@
 ﻿using SilveR.StatsModels;
 using System;
+using System.Globalization;
 
 namespace SilveR.Validators
 {
@@ -46,7 +47,7 @@ namespace SilveR.Validators
                         }
                         else
                         {
-                            if (!Double.TryParse(s, out double number))
+                            if (!Double.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
                             {
                                 ValidationInfo.AddErrorMessage("Percent changes has non-numeric values or the values are not comma separated.");
                                 return ValidationInfo;
@@ -81,7 +82,7 @@ namespace SilveR.Validators
                         }
                         else
                         {
-                            if (!Double.TryParse(s, out double number))
+                            if (!Double.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
                             {
                                 ValidationInfo.AddErrorMessage("Absolute changes has non-numeric values or the values are not comma separated.");
                                 return ValidationInfo;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 
 namespace SilveR.ViewModels
 {
@@ -73,7 +74,7 @@ namespace SilveR.ViewModels
                     else
                     {
                         double doubleVal;
-                        bool isNumeric = Double.TryParse(c.ToString(), out doubleVal);
+                        bool isNumeric = Double.TryParse(c.ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out doubleVal);
 
                         if (isNumeric)
                             cell.Value = doubleVal;

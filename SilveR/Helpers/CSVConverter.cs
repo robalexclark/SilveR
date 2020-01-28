@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using System.Data;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -8,16 +7,16 @@ namespace SilveR.Helpers
 {
     public static class CSVConverter
     {
-        public static DataTable CSVDataToDataTable(Stream stream, CultureInfo culture = null)
+        public static DataTable CSVDataToDataTable(Stream stream, bool useCultureSeparator)
         {
             DataTable dataTable = new DataTable();
 
             //use the csvreader to read in the csv data
             TextReader textReader = new StreamReader(stream);
             CsvParser parser = new CsvParser(textReader);
-            if (culture != null && culture.NumberFormat.NumberDecimalSeparator == ",")
+            if (!useCultureSeparator)
             {
-                parser.Configuration.Delimiter = ";";// if comma then use semicolon
+                parser.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format FIX THIS! Otherwise the parser will use the default culture
             }
 
             string[] headerRow = parser.Read();
@@ -42,9 +41,9 @@ namespace SilveR.Helpers
             textReader = new StreamReader(stream);
 
             CsvReader csv = new CsvReader(textReader);
-            if (culture != null && culture.NumberFormat.NumberDecimalSeparator == ",")
+            if (!useCultureSeparator)
             {
-                csv.Configuration.Delimiter = ";";// if comma then use semicolon
+                parser.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format
             }
 
             csv.Read();
@@ -54,8 +53,16 @@ namespace SilveR.Helpers
                 DataRow row = dataTable.NewRow();
                 foreach (DataColumn column in dataTable.Columns)
                 {
-                    row[column.ColumnName] = csv.GetField(column.DataType, column.ColumnName);
+                    string fieldValue = csv.GetField(column.DataType, column.ColumnName).ToString().Trim();
+
+                    if (useCultureSeparator) // then need to convert any , to .
+                    {
+                        fieldValue = fieldValue.Replace(',', '.');
+                    }
+
+                    row[column.ColumnName] = fieldValue;
                 }
+
                 dataTable.Rows.Add(row);
             }
 

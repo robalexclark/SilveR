@@ -85,7 +85,7 @@ namespace SilveR.Controllers
             {
                 //use the CSVReader to read in the data
                 string message;
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(selectedFile.OpenRead(), System.Threading.Thread.CurrentThread.CurrentCulture);
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(selectedFile.OpenRead(), true); //loading from disk so allow the CSV parser to just use the current culture
 
                 if (dataTable == null) //then failed to be read
                 {
@@ -270,7 +270,7 @@ namespace SilveR.Controllers
 
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream);
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, false); //convert the internally loaded data (which is in CSV format) to a datatable
                 dataTable.TableName = dataset.DatasetID.ToString();
 
                 Sheet sheet = new Sheet(dataTable);

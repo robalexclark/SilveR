@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace SilveR.Validators
@@ -111,7 +112,7 @@ namespace SilveR.Validators
                 {
                     //Check that the "response" does not contains non-numeric data
                     double parsedValue;
-                    bool parsedOK = Double.TryParse(continuousRow[i], out parsedValue);
+                    bool parsedOK = Double.TryParse(continuousRow[i], NumberStyles.Float, CultureInfo.InvariantCulture, out parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
                         ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");

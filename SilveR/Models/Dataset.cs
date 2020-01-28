@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -55,6 +56,8 @@ namespace SilveR.Models
                 {
                     using (CsvParser parser = new CsvParser(textReader))
                     {
+                        parser.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format
+
                         string[] headerRow = parser.Read();
                         foreach (string h in headerRow)
                         {
@@ -70,6 +73,8 @@ namespace SilveR.Models
                 {
                     using (CsvReader csv = new CsvReader(textReader))
                     {
+                        csv.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format
+
                         csv.Read();
                         csv.ReadHeader();
                         while (csv.Read())

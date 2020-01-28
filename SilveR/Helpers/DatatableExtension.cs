@@ -17,16 +17,13 @@ namespace SilveR.Helpers
                 dc.ColumnName = dc.ColumnName.Trim();
             }
 
-            CultureInfo culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            string decSeparator = culture.NumberFormat.NumberDecimalSeparator;
-
             foreach (DataRow row in dataTable.Rows)
             {
                 foreach (DataColumn dc in dataTable.Columns)
                 {
                     if (!String.IsNullOrEmpty(row[dc].ToString()))
                     {
-                        row[dc] = row[dc].ToString().Replace(decSeparator, ".").Trim();
+                        row[dc] = row[dc].ToString().Trim();
                     }
                 }
             }
@@ -105,7 +102,7 @@ namespace SilveR.Helpers
                 foreach (DataRow r in data.Rows)
                 {
                     double val; //get the value
-                    bool valOK = Double.TryParse(r[column].ToString(), out val);
+                    bool valOK = Double.TryParse(r[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out val);
 
                     if (valOK) //then it is numeric 
                     {
@@ -138,7 +135,7 @@ namespace SilveR.Helpers
                 foreach (DataRow r in data.Rows)
                 {
                     double val;
-                    bool valOK = Double.TryParse(r[column].ToString(), out val);
+                    bool valOK = Double.TryParse(r[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out val);
 
                     if (valOK)
                     {
@@ -153,7 +150,7 @@ namespace SilveR.Helpers
                 foreach (DataRow r in data.Rows)
                 {
                     double val; //get the value
-                    bool valOK = Double.TryParse(r[column].ToString(), out val);
+                    bool valOK = Double.TryParse(r[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out val);
 
                     if (valOK && transformation != "None") //if response value is number (and actually doing a transformation)
                     {
@@ -161,28 +158,28 @@ namespace SilveR.Helpers
                         {
                             case "Log10":
                                 if (val > 0)
-                                    r[column] = Math.Log10(val);
+                                    r[column] = Math.Log10(val).ToString(CultureInfo.InvariantCulture);
                                 else
                                     r[column] = null;
 
                                 break;
                             case "Loge":
                                 if (val > 0)
-                                    r[column] = Math.Log(val);
+                                    r[column] = Math.Log(val).ToString(CultureInfo.InvariantCulture);
                                 else
                                     r[column] = null;
 
                                 break;
                             case "Square Root":
                                 if (val >= 0)
-                                    r[column] = Math.Sqrt(val);
+                                    r[column] = Math.Sqrt(val).ToString(CultureInfo.InvariantCulture);
                                 else
                                     r[column] = null;
 
                                 break;
                             case "ArcSine":
                                 if (val >= 0 && val <= 1)
-                                    r[column] = Math.Asin(Math.Sqrt(val));
+                                    r[column] = Math.Asin(Math.Sqrt(val)).ToString(CultureInfo.InvariantCulture);
                                 else
                                     r[column] = null;
 
@@ -212,9 +209,10 @@ namespace SilveR.Helpers
             {
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    bool isNumeric = Double.TryParse(row[column].ToString(), out double number);
+                    bool isNumeric = Double.TryParse(row[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out double vvoid);
 
-                    if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString())) return false;
+                    if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString()))
+                        return false;
                 }
             }
 
@@ -324,9 +322,9 @@ namespace SilveR.Helpers
             return dtNew;
         }
 
-        public static Dataset GetDataset(this DataTable dataTable, string fileName, int lastVersionNo=0)
+        public static Dataset GetDataset(this DataTable dataTable, string fileName, int lastVersionNo = 0)
         {
-            //clean up the datatable, trimming spaces, and ensuring that decimal seperator is a .
+            //clean up the datatable, trimming spaces
             dataTable.CleanUpDataTable();
 
             //add the selected column to the dataset, setting all rows to "true"

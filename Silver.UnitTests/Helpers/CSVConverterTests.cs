@@ -19,7 +19,7 @@ namespace SilveR.UnitTests.Helpers
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
                 //Act
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream);
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, true);
 
                 //Assert
                 Assert.Equal("SilveRSelected", dataTable.Columns[0].ColumnName);
@@ -34,27 +34,6 @@ namespace SilveR.UnitTests.Helpers
         }
 
         [Fact]
-        public void ConvertToDataTable_UKCulture_ReturnsCorrectDataTable()
-        {
-            //Arrange
-            string theData = GetTestCSVData();
-            byte[] byteArray = Encoding.UTF8.GetBytes(theData);
-
-            using (MemoryStream stream = new MemoryStream(byteArray))
-            {
-                //Act
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, new System.Globalization.CultureInfo("en-GB"));
-
-                //Assert
-                Assert.Equal("SilveRSelected", dataTable.Columns[0].ColumnName);
-                Assert.Equal("Trea t1", dataTable.Columns[2].ColumnName);
-
-                Assert.True((bool)dataTable.Rows[0][0]);
-                Assert.Equal("0.998758912", dataTable.Rows[0][1]);
-            }
-        }
-
-        [Fact]
         public void ConvertToDataTable_EuropeanCulture_ReturnsCorrectDataTable()
         {
             //Arrange
@@ -65,7 +44,9 @@ namespace SilveR.UnitTests.Helpers
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
                 //Act
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, new System.Globalization.CultureInfo("de-DE"));
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("de-DE");
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, true);
+                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
 
                 //Assert
                 Assert.Equal("SilveRSelected", dataTable.Columns[0].ColumnName);

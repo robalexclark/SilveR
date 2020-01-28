@@ -1,6 +1,7 @@
 ﻿using SilveR.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace SilveR.Helpers
@@ -92,13 +93,13 @@ namespace SilveR.Helpers
         public int LoadIntArgument(string targetName)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
-            return int.Parse(arg.Value);
+            return int.Parse(arg.Value, NumberStyles.Integer, CultureInfo.InvariantCulture);
         }
 
         public decimal LoadDecimalArgument(string targetName)
         {
             Argument arg = arguments.Single(x => x.Name == targetName);
-            return decimal.Parse(arg.Value);
+            return Decimal.Parse(arg.Value, NumberStyles.Float, CultureInfo.InvariantCulture);
         }
 
         public Nullable<decimal> LoadNullableDecimalArgument(string targetName)
@@ -107,7 +108,7 @@ namespace SilveR.Helpers
 
             if (arg.Value != null)
             {
-                return decimal.Parse(arg.Value);
+                return Decimal.Parse(arg.Value, NumberStyles.Float, CultureInfo.InvariantCulture);
             }
             else
             {
@@ -121,7 +122,7 @@ namespace SilveR.Helpers
 
             if (arg.Value != null)
             {
-                return int.Parse(arg.Value);
+                return int.Parse(arg.Value, NumberStyles.Integer, CultureInfo.InvariantCulture);
             }
             else
             {

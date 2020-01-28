@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace SilveR.Validators
@@ -194,7 +195,7 @@ namespace SilveR.Validators
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
                     //Check that the "response" does not contains non-numeric data
-                    bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
+                    bool parsedOK = Double.TryParse(continuousRow[i], NumberStyles.Float, CultureInfo.InvariantCulture, out double parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
                         ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");

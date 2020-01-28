@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace SilveR.Models
 {
@@ -124,28 +125,28 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.DisplaySEMLines) + " " + (this.DisplaySEMLines ? "Y" : "N"));
             optionLines.Add(nameof(this.DisplayPointLabels) + " " + (this.DisplayPointLabels ? "Y" : "N"));
 
-            optionLines.Add(nameof(this.TitleSize) + " " + this.TitleSize);
-            optionLines.Add(nameof(this.XAxisTitleFontSize) + " " + this.XAxisTitleFontSize);
-            optionLines.Add(nameof(this.YAxisTitleFontSize) + " " + this.YAxisTitleFontSize);
-            optionLines.Add(nameof(this.XLabelsFontSize) + " " + this.XLabelsFontSize);
-            optionLines.Add(nameof(this.YLabelsFontSize) + " " + this.YLabelsFontSize);
-            optionLines.Add(nameof(this.GraphicsXAngle) + " " + this.GraphicsXAngle);
-            optionLines.Add(nameof(this.GraphicsXHorizontalJust) + " " + this.GraphicsXHorizontalJust);
-            optionLines.Add(nameof(this.GraphicsYAngle) + " " + this.GraphicsYAngle);
-            optionLines.Add(nameof(this.GraphicsYVerticalJust) + " " + this.GraphicsYVerticalJust);
-            optionLines.Add(nameof(this.PointSize) + " " + this.PointSize);
-            optionLines.Add(nameof(this.PointShape) + " " + this.PointShape);
-            optionLines.Add(nameof(this.LineSize) + " " + this.LineSize);
-            optionLines.Add(nameof(this.LegendTextSize) + " " + this.LegendTextSize);
-            optionLines.Add(nameof(this.JpegWidth) + " " + this.JpegWidth);
-            optionLines.Add(nameof(this.JpegHeight) + " " + this.JpegHeight);
-            optionLines.Add(nameof(this.PlotResolution) + " " + this.PlotResolution);
-            optionLines.Add(nameof(this.GraphicsBWLow) + " " + this.GraphicsBWLow);
-            optionLines.Add(nameof(this.GraphicsBWHigh) + " " + this.GraphicsBWHigh);
-            optionLines.Add(nameof(this.GraphicsWidthJitter) + " " + this.GraphicsWidthJitter);
-            optionLines.Add(nameof(this.GraphicsHeightJitter) + " " + this.GraphicsHeightJitter);
-            optionLines.Add(nameof(this.ErrorBarWidth) + " " + this.ErrorBarWidth);
-            optionLines.Add(nameof(this.FillTransparency) + " " + this.FillTransparency);
+            optionLines.Add(nameof(this.TitleSize) + " " + this.TitleSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.XAxisTitleFontSize) + " " + this.XAxisTitleFontSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.YAxisTitleFontSize) + " " + this.YAxisTitleFontSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.XLabelsFontSize) + " " + this.XLabelsFontSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.YLabelsFontSize) + " " + this.YLabelsFontSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsXAngle) + " " + this.GraphicsXAngle.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsXHorizontalJust) + " " + this.GraphicsXHorizontalJust.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsYAngle) + " " + this.GraphicsYAngle.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsYVerticalJust) + " " + this.GraphicsYVerticalJust.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.PointSize) + " " + this.PointSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.PointShape) + " " + this.PointShape.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.LineSize) + " " + this.LineSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.LegendTextSize) + " " + this.LegendTextSize.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.JpegWidth) + " " + this.JpegWidth.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.JpegHeight) + " " + this.JpegHeight.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.PlotResolution) + " " + this.PlotResolution.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsBWLow) + " " + this.GraphicsBWLow.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsBWHigh) + " " + this.GraphicsBWHigh.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsWidthJitter) + " " + this.GraphicsWidthJitter.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.GraphicsHeightJitter) + " " + this.GraphicsHeightJitter.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.ErrorBarWidth) + " " + this.ErrorBarWidth.ToString(CultureInfo.InvariantCulture));
+            optionLines.Add(nameof(this.FillTransparency) + " " + this.FillTransparency.ToString(CultureInfo.InvariantCulture));
 
             return optionLines;
         }
