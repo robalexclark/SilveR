@@ -10,7 +10,7 @@ namespace SilveR.UnitTests.Helpers
     public class CSVConverterTests
     {
         [Fact]
-        public void ConvertToDataTable_ReturnsCorrectDataTable()
+        public void ConvertToDataTable_GBCulture_ReturnsCorrectDataTable()
         {
             //Arrange
             string theData = GetTestCSVData();
@@ -19,7 +19,7 @@ namespace SilveR.UnitTests.Helpers
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
                 //Act
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, true);
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, new System.Globalization.CultureInfo("en-GB"));
 
                 //Assert
                 Assert.Equal("SilveRSelected", dataTable.Columns[0].ColumnName);
@@ -34,7 +34,7 @@ namespace SilveR.UnitTests.Helpers
         }
 
         [Fact]
-        public void ConvertToDataTable_EuropeanCulture_ReturnsCorrectDataTable()
+        public void ConvertToDataTable_DECulture__ReturnsCorrectDataTable()
         {
             //Arrange
             string theData = GetTestCSVData();
@@ -44,9 +44,7 @@ namespace SilveR.UnitTests.Helpers
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
                 //Act
-                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("de-DE");
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, true);
-                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-GB");
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, new System.Globalization.CultureInfo("de-DE"));
 
                 //Assert
                 Assert.Equal("SilveRSelected", dataTable.Columns[0].ColumnName);

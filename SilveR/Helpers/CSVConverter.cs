@@ -1,5 +1,7 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -7,17 +9,13 @@ namespace SilveR.Helpers
 {
     public static class CSVConverter
     {
-        public static DataTable CSVDataToDataTable(Stream stream, bool useCultureSeparator)
+        public static DataTable CSVDataToDataTable(Stream stream, CultureInfo cultureInfo)
         {
             DataTable dataTable = new DataTable();
 
             //use the csvreader to read in the csv data
             TextReader textReader = new StreamReader(stream);
-            CsvParser parser = new CsvParser(textReader);
-            if (!useCultureSeparator)
-            {
-                parser.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format FIX THIS! Otherwise the parser will use the default culture
-            }
+            CsvParser parser = new CsvParser(textReader, new Configuration(cultureInfo));
 
             string[] headerRow = parser.Read();
             for (int i = 0; i < headerRow.Count(); i++)
@@ -40,24 +38,20 @@ namespace SilveR.Helpers
             stream.Seek(0, SeekOrigin.Begin);
             textReader = new StreamReader(stream);
 
-            CsvReader csv = new CsvReader(textReader);
-            if (!useCultureSeparator)
-            {
-                parser.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format
-            }
+            CsvReader csvReader = new CsvReader(textReader, new Configuration(cultureInfo));
 
-            csv.Read();
-            csv.ReadHeader();
-            while (csv.Read())
+            csvReader.Read();
+            csvReader.ReadHeader();
+            while (csvReader.Read())
             {
                 DataRow row = dataTable.NewRow();
                 foreach (DataColumn column in dataTable.Columns)
                 {
-                    string fieldValue = csv.GetField(column.DataType, column.ColumnName).ToString().Trim();
+                    string fieldValue = csvReader.GetField(column.DataType, column.ColumnName).ToString().Trim();
 
-                    if (useCultureSeparator) // then need to convert any , to .
+                    if (cultureInfo != null)
                     {
-                        fieldValue = fieldValue.Replace(',', '.');
+                        fieldValue = fieldValue.Replace(',', cultureInfo.NumberFormat.NumberDecimalSeparator.Single());
                     }
 
                     row[column.ColumnName] = fieldValue;
@@ -67,7 +61,7 @@ namespace SilveR.Helpers
             }
 
             parser.Dispose();
-            csv.Dispose();
+            csvReader.Dispose();
             textReader.Dispose();
             stream.Dispose();
 

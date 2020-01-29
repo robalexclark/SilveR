@@ -37,10 +37,6 @@ namespace SilveR
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
 
             configuration = builder.Build();
-
-            //var cultureInfo = new CultureInfo("sv-SE");
-            //CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            //CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
         }
 
         private readonly IConfigurationRoot configuration;
@@ -60,13 +56,6 @@ namespace SilveR
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 
             services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
-
-            //services.Configure<RequestLocalizationOptions>(options =>
-            //{
-            //    options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-GB");
-            //    options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-GB") };
-            //    options.RequestCultureProviders.Clear();
-            //});
 
             services.AddControllersWithViews().AddNewtonsoftJson();
 

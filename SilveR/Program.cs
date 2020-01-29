@@ -3,6 +3,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace SilveR
@@ -10,6 +11,7 @@ namespace SilveR
     public static class Program
     {
         public static string AppName { get; private set; } = "InVivoStat";
+        public static CultureInfo UserCulture { get; private set; } = CultureInfo.CurrentCulture;
 
         public static void Main(string[] args)
         {

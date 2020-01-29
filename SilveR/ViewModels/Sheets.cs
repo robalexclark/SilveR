@@ -74,7 +74,7 @@ namespace SilveR.ViewModels
                     else
                     {
                         double doubleVal;
-                        bool isNumeric = Double.TryParse(c.ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out doubleVal);
+                        bool isNumeric = Double.TryParse(c.ToString(), out doubleVal);
 
                         if (isNumeric)
                             cell.Value = doubleVal;

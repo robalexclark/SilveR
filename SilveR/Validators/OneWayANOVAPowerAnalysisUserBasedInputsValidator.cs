@@ -27,7 +27,7 @@ namespace SilveR.Validators
                 }
                 else
                 {
-                    if (!Double.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out double vvoid))
+                    if (!Double.TryParse(s, out double vvoid))
                     {
                         ValidationInfo.AddErrorMessage("Means has non-numeric values or the values are not comma separated.");
                         return ValidationInfo;

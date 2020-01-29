@@ -102,7 +102,7 @@ namespace SilveR.Helpers
                 foreach (DataRow r in data.Rows)
                 {
                     double val; //get the value
-                    bool valOK = Double.TryParse(r[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out val);
+                    bool valOK = Double.TryParse(r[column].ToString(), out val);
 
                     if (valOK) //then it is numeric 
                     {
@@ -135,7 +135,7 @@ namespace SilveR.Helpers
                 foreach (DataRow r in data.Rows)
                 {
                     double val;
-                    bool valOK = Double.TryParse(r[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out val);
+                    bool valOK = Double.TryParse(r[column].ToString(), out val);
 
                     if (valOK)
                     {
@@ -150,7 +150,7 @@ namespace SilveR.Helpers
                 foreach (DataRow r in data.Rows)
                 {
                     double val; //get the value
-                    bool valOK = Double.TryParse(r[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out val);
+                    bool valOK = Double.TryParse(r[column].ToString(), out val);
 
                     if (valOK && transformation != "None") //if response value is number (and actually doing a transformation)
                     {
@@ -158,28 +158,28 @@ namespace SilveR.Helpers
                         {
                             case "Log10":
                                 if (val > 0)
-                                    r[column] = Math.Log10(val).ToString(CultureInfo.InvariantCulture);
+                                    r[column] = Math.Log10(val).ToString();
                                 else
                                     r[column] = null;
 
                                 break;
                             case "Loge":
                                 if (val > 0)
-                                    r[column] = Math.Log(val).ToString(CultureInfo.InvariantCulture);
+                                    r[column] = Math.Log(val).ToString();
                                 else
                                     r[column] = null;
 
                                 break;
                             case "Square Root":
                                 if (val >= 0)
-                                    r[column] = Math.Sqrt(val).ToString(CultureInfo.InvariantCulture);
+                                    r[column] = Math.Sqrt(val).ToString();
                                 else
                                     r[column] = null;
 
                                 break;
                             case "ArcSine":
                                 if (val >= 0 && val <= 1)
-                                    r[column] = Math.Asin(Math.Sqrt(val)).ToString(CultureInfo.InvariantCulture);
+                                    r[column] = Math.Asin(Math.Sqrt(val)).ToString();
                                 else
                                     r[column] = null;
 
@@ -209,7 +209,7 @@ namespace SilveR.Helpers
             {
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    bool isNumeric = Double.TryParse(row[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out double vvoid);
+                    bool isNumeric = Double.TryParse(row[column].ToString(), out double vvoid);
 
                     if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString()))
                         return false;

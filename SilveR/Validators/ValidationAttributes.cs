@@ -144,7 +144,7 @@ namespace SilveR.Validators
 
                 foreach (string p in pValues)//go through list and check that is a number and is greater than 0
                 {
-                    if (!Double.TryParse(p, NumberStyles.Float, CultureInfo.InvariantCulture, out double number) && p != "<0.001" && p != "<0.0001") //n.b. remove < sign when checking
+                    if (!Double.TryParse(p, out double number) && p != "<0.001" && p != "<0.0001") //n.b. remove < sign when checking
                     {
                         return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
                     }

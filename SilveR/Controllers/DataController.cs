@@ -9,6 +9,7 @@ using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -85,7 +86,7 @@ namespace SilveR.Controllers
             {
                 //use the CSVReader to read in the data
                 string message;
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(selectedFile.OpenRead(), true); //loading from disk so allow the CSV parser to just use the current culture
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(selectedFile.OpenRead(), Program.UserCulture); //loading from disk so allow the CSV parser to just use the current culture
 
                 if (dataTable == null) //then failed to be read
                 {
@@ -270,7 +271,7 @@ namespace SilveR.Controllers
 
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, false); //convert the internally loaded data (which is in CSV format) to a datatable
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, CultureInfo.InvariantCulture); //convert the internally loaded data (which is in CSV format) to a datatable
                 dataTable.TableName = dataset.DatasetID.ToString();
 
                 Sheet sheet = new Sheet(dataTable);

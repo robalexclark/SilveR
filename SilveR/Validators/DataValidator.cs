@@ -82,7 +82,7 @@ namespace SilveR.Validators
             {
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    bool isNumeric = Double.TryParse(row[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out var vvoid);
+                    bool isNumeric = Double.TryParse(row[column].ToString(), out var vvoid);
 
                     if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString()))
                         return false;
@@ -100,7 +100,7 @@ namespace SilveR.Validators
                 if (String.IsNullOrEmpty(s)) //if the string is null then ignore it and carry on with next one
                     continue; 
 
-                if (Double.TryParse(s[0].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out var vvoid))
+                if (Double.TryParse(s[0].ToString(), out var vvoid))
                 {
                     validationInfo.AddErrorMessage("One or more of your selected columns has a numeric name or starts with a number. The analysis will not proceed.");
                     return false; //error so return
@@ -296,7 +296,7 @@ namespace SilveR.Validators
             {
                 if (transformation != "None")
                 {
-                    bool respParsedOK = Double.TryParse(row[column].ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out double respValue);
+                    bool respParsedOK = Double.TryParse(row[column].ToString(), out double respValue);
 
                     if (respParsedOK)
                     {

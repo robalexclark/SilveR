@@ -76,7 +76,7 @@ namespace SilveR.Validators
             for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the treatment and response rows
             {
                 //Check that the "response" does not contains non-numeric data
-                bool parsedOK = Double.TryParse(responseRow[i], NumberStyles.Float, CultureInfo.InvariantCulture, out double parsedValue);
+                bool parsedOK = Double.TryParse(responseRow[i], out double parsedValue);
                 if (!String.IsNullOrEmpty(responseRow[i]) && !parsedOK)
                 {
                     ValidationInfo.AddErrorMessage("The Response (" + responseVar + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
