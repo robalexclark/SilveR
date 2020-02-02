@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -16,6 +17,7 @@ namespace SilveR.UnitTests.StatsModels
         public void AnalysisDataModelBaseTestClass_Constructor_InitializesObject()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Dataset dataset = GetDataset();
 
             //Act
@@ -32,6 +34,7 @@ namespace SilveR.UnitTests.StatsModels
         public void AnalysisDataModelBaseTestClass_AvailableVariablesAllowNull_ReturnsListStringWithFirstEmptyValue()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Dataset dataset = GetDataset();
 
             AnalysisDataModelBaseTestClass sut = new AnalysisDataModelBaseTestClass(dataset, "TestScript");
@@ -45,11 +48,11 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("TestScript", sut.ScriptFileName);
         }
 
-
         [Fact]
         public void AnalysisModelBaseTestClass_Constructor_InitializesObject()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             //Act
             AnalysisModelBaseTestClass sut = new AnalysisModelBaseTestClass("TestScript");

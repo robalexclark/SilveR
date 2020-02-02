@@ -271,7 +271,7 @@ namespace SilveR.Controllers
 
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
-                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream, CultureInfo.InvariantCulture); //convert the internally loaded data (which is in CSV format) to a datatable
+                DataTable dataTable = CSVConverter.CSVDataToDataTable(stream); //convert the internally loaded data (which is in CSV format) to a datatable
                 dataTable.TableName = dataset.DatasetID.ToString();
 
                 Sheet sheet = new Sheet(dataTable);

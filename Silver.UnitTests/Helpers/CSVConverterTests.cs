@@ -1,6 +1,7 @@
 using SilveR.Helpers;
 using System;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using Xunit;
@@ -13,6 +14,7 @@ namespace SilveR.UnitTests.Helpers
         public void ConvertToDataTable_GBCulture_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             string theData = GetTestCSVData();
             byte[] byteArray = Encoding.UTF8.GetBytes(theData);
 
@@ -37,6 +39,7 @@ namespace SilveR.UnitTests.Helpers
         public void ConvertToDataTable_DECulture__ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             string theData = GetTestCSVData();
             theData = theData.Replace(',', ';');
             byte[] byteArray = Encoding.UTF8.GetBytes(theData);

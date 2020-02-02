@@ -1,5 +1,6 @@
 using SilveR.Helpers;
 using System.Collections.Generic;
+using System.Globalization;
 using Xunit;
 
 namespace SilveR.UnitTests.Helpers
@@ -10,6 +11,7 @@ namespace SilveR.UnitTests.Helpers
         public void ConvertIllegalCharacters_StringWithAllIllegalChars_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -24,6 +26,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_StringIsNull_ReturnsNULL()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -37,6 +40,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_SimpleStringValue_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -50,6 +54,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_ListIsNull_ReturnsNULL()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -64,6 +69,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_ListValue_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -78,6 +84,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_StringWithSpacesIsVariableTrue_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -91,6 +98,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_StringWithSpacesIsVariableFalse_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -105,6 +113,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_StringWithIllegalChars_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -118,6 +127,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_True_ReturnsY()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -131,6 +141,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetFormattedArgument_False_ReturnsY()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act
@@ -144,6 +155,7 @@ namespace SilveR.UnitTests.Helpers
         public void ConvertIllegalCharactersBack_StringWithAllIllegalChars_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentFormatter sut = new ArgumentFormatter();
 
             //Act

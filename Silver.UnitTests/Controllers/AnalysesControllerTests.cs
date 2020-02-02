@@ -10,6 +10,7 @@ using SilveR.Validators;
 using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Index_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.HasAnalyses()).ReturnsAsync(It.IsAny<bool>());
 
@@ -43,6 +45,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task GetAnalyses_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetAnalyses()).ReturnsAsync(GetAnalyses());
 
@@ -66,6 +69,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task AnalysisDataSelector_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetDatasetViewModels()).ReturnsAsync(GetDatasets());
             mockRepository.Setup(x => x.GetScripts()).ReturnsAsync(GetScripts());
@@ -93,6 +97,7 @@ namespace SilveR.UnitTests.Controllers
         public void AnalysisDataSelectorPost_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             Mock<IBackgroundTaskQueue> mockBackgroundTaskQueue = new Mock<IBackgroundTaskQueue>();
             Mock<IRProcessorService> mockProcessorService = new Mock<IRProcessorService>();
@@ -110,6 +115,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Analysis_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisDataSelectorViewModel analysisDataSelectorViewModel = new AnalysisDataSelectorViewModel { AnalysisName = "SummaryStatistics", SelectedDatasetID = 1 };
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
@@ -135,6 +141,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task SummaryStatistics_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -154,6 +161,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task SingleMeasuresParametricAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -173,6 +181,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task RepeatedMeasuresParametricAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -192,6 +201,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task PValueAdjustment_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(null);
 
             Mock<PValueAdjustmentUserBasedInputsModel> mockModel = new Mock<PValueAdjustmentUserBasedInputsModel>();
@@ -210,6 +220,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task PairedTTestAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -229,6 +240,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task UnpairedTTestAnalysis_ReturnsARedirectToActionResultt()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -248,6 +260,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task OneSampleTTestAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -267,6 +280,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task CorrelationAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -286,6 +300,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task LinearRegressionAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -305,6 +320,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task DoseResponseAndNonLinearRegressionAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -324,6 +340,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task NonParametricAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -343,6 +360,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task ChiSquaredAndFishersExactTest_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -362,6 +380,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task SurvivalAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -381,6 +400,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task GraphicalAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -400,6 +420,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task ComparisonOfMeansPowerAnalysisDatasetBasedInputs_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -419,6 +440,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task ComparisonOfMeansPowerAnalysisUserBasedInputs_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -438,6 +460,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task NestedDesignAnalysis_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -457,6 +480,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task IncompleteFactorialParametricAnalysis_ReturnsARedirectToActionResultt()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -476,6 +500,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task SummaryStatistics_ValidationFailed_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -498,6 +523,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task SummaryStatistics_HasWarnings_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -520,6 +546,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task SummaryStatistics_HasWarningsIgnored_ReturnsARedirectToActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var dataset = GetDataset();
             AnalysesController sut = SetupAnalysisControllerForAnalysisRun(dataset);
 
@@ -557,6 +584,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Reanalyse_DatasetRequired_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Analysis analysis = GetSummaryStatsAnalysis();
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
@@ -580,6 +608,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Reanalyse_NoDatasetRequired_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Analysis analysis = GetAnalyses().Single(x => x.AnalysisID == 34);
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
@@ -603,6 +632,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Reanalyse_DatasetMissing_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Analysis analysis = GetAnalyses().First();
             analysis.Dataset = null;
 
@@ -627,6 +657,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task ViewResults_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Analysis analysis = GetAnalyses().First();
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
@@ -651,6 +682,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task ViewResults_NoOutput_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Analysis analysis = GetAnalyses().First();
             analysis.HtmlOutput = null;
 
@@ -675,6 +707,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task ResultsForExport_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Analysis analysis = GetAnalyses().First();
 
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
@@ -700,6 +733,7 @@ namespace SilveR.UnitTests.Controllers
         public void Processing_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.HasAnalysisCompleted(It.IsAny<string>())).ReturnsAsync(It.IsAny<bool>);
 
@@ -719,6 +753,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task AnalysisCompleted_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.HasAnalysisCompleted(It.IsAny<string>())).ReturnsAsync(It.IsAny<bool>);
 
@@ -739,6 +774,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task ViewLog_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetAnalysis(It.IsAny<string>())).ReturnsAsync(new Analysis(It.IsAny<Dataset>()) { RProcessOutput = "Test Output" });
 
@@ -760,6 +796,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Destroy_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.DeleteAnalysis(It.IsAny<int>())).Returns(Task.CompletedTask);
 

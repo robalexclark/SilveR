@@ -3,6 +3,7 @@ using Moq;
 using SilveR.Controllers;
 using SilveR.Models;
 using SilveR.Services;
+using System.Globalization;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,6 +15,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Index_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetUserOptions()).ReturnsAsync(new UserOption());
 
@@ -33,6 +35,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task UpdateUserOptionsPost_ReturnsARedirectResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetUserOptions()).ReturnsAsync(It.IsAny<UserOption>());
 
@@ -51,6 +54,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task UpdateUserOptionsPost_ResetUserOptions_ReturnsARedirectResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetUserOptions()).ReturnsAsync(It.IsAny<UserOption>());
 

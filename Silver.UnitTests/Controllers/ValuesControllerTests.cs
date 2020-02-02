@@ -5,6 +5,7 @@ using SilveR.Controllers;
 using SilveR.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,6 +19,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task GetLevels_ReturnsAnActionResult(bool includeNull)
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetDatasetByID(It.IsAny<int>())).ReturnsAsync(GetDataset());
@@ -40,6 +42,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetSMPAInteractions_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
@@ -53,11 +56,11 @@ namespace SilveR.UnitTests.Controllers
             Assert.Equal(new List<string> { "Treat1 * Treat2", "Treat1 * Treat3", "Treat2 * Treat3", "Treat1 * Treat2 * Treat3" }, jsonResult.Value);
         }
 
-
         [Fact]
         public void GetSMPASelectedEffectsLists_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
@@ -75,6 +78,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetRMPAInteractions_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
@@ -93,6 +97,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetRMPASelectedEffectsLists_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
@@ -110,6 +115,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetIncompleteFactorialInteractions_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
@@ -128,6 +134,7 @@ namespace SilveR.UnitTests.Controllers
         public void GetIncompleteFactorialSelectedEffectsLists_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);

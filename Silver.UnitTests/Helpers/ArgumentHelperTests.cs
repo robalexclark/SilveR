@@ -2,6 +2,7 @@ using SilveR.Helpers;
 using SilveR.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -13,6 +14,7 @@ namespace SilveR.UnitTests.Helpers
         public void ArgumentFactory_NullString_ReturnsNull()
         {
             //Arrange,Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Argument sut = ArgumentHelper.ArgumentFactory("TestName", null);
 
             //Assert
@@ -24,6 +26,7 @@ namespace SilveR.UnitTests.Helpers
         public void ArgumentFactory_String_ReturnsString()
         {
             //Arrange,Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Argument sut = ArgumentHelper.ArgumentFactory("TestName", "TestValue");
 
             //Assert
@@ -36,6 +39,7 @@ namespace SilveR.UnitTests.Helpers
         public void ArgumentFactory_StringList_ReturnsString()
         {
             //Arrange,Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Argument sut = ArgumentHelper.ArgumentFactory("TestName", new List<string> { "TestValue1", "TestValue2", "TestValue3" });
 
             //Assert
@@ -47,6 +51,7 @@ namespace SilveR.UnitTests.Helpers
         public void ArgumentFactory_EmptyList_ReturnsNull()
         {
             //Arrange,Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Argument sut = ArgumentHelper.ArgumentFactory("TestName", new List<string>());
 
             //Assert
@@ -58,6 +63,7 @@ namespace SilveR.UnitTests.Helpers
         public void ArgumentFactory_Bool_ReturnsString()
         {
             //Arrange,Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Argument sut = ArgumentHelper.ArgumentFactory("TestName", true);
 
             //Assert
@@ -69,6 +75,7 @@ namespace SilveR.UnitTests.Helpers
         public void ArgumentFactory_Decimal_ReturnsString()
         {
             //Arrange,Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Argument sut = ArgumentHelper.ArgumentFactory("TestName", 1.23M);
 
             //Assert
@@ -80,6 +87,7 @@ namespace SilveR.UnitTests.Helpers
         public void ArgumentFactory_Int_ReturnsString()
         {
             //Arrange,Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Argument sut = ArgumentHelper.ArgumentFactory("TestName", 123);
 
             //Assert
@@ -91,6 +99,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadStringArgument_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act
@@ -104,6 +113,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadBooleanArgument_ReturnsCorrectBool()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act
@@ -117,6 +127,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadIEnumerableArgument_ReturnsCorrectIEnumerable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act
@@ -130,6 +141,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadIEnumerableArgument_IsNull_ReturnsNull()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             var arguments = GetArguments();
             arguments.Single(x => x.Name == "Treatments").Value = null;
             ArgumentHelper sut = new ArgumentHelper(arguments);
@@ -145,6 +157,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadIntArgument_ReturnsCorrectInt()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act
@@ -158,6 +171,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadDecimalArgument_ReturnsCorrectDecimal()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act
@@ -171,6 +185,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadNullableDecimalArgument_ReturnsCorrectDecimal()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act
@@ -184,6 +199,7 @@ namespace SilveR.UnitTests.Helpers
         public void LoadDecimalArgument_ReturnsNull()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             ArgumentHelper sut = new ArgumentHelper(GetArguments());
 
             //Act

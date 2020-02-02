@@ -8,6 +8,7 @@ using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Index_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.HasDatasets()).ReturnsAsync(It.IsAny<bool>());
 
@@ -41,6 +43,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task GetDatasets_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetDatasetViewModels()).ReturnsAsync(GetDatasets());
             DataController sut = new DataController(mock.Object);
@@ -60,6 +63,7 @@ namespace SilveR.UnitTests.Controllers
         public void DataUploader_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             DataController sut = new DataController(mock.Object);
 
@@ -74,6 +78,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task DataUploaderPost_NoFiles_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             DataController sut = new DataController(mock.Object);
 
@@ -89,6 +94,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task DataUploaderPost_EmptyFile_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             DataController sut = new DataController(mock.Object);
 
@@ -121,6 +127,7 @@ namespace SilveR.UnitTests.Controllers
         public void SheetSelector_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
 
             var tempDataMock = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
@@ -148,6 +155,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task Destroy_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.DeleteDataset(It.IsAny<int>())).Returns(Task.CompletedTask);
 
@@ -165,8 +173,10 @@ namespace SilveR.UnitTests.Controllers
         public async Task ViewDataTable_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.GetDatasetByID(It.IsAny<int>())).ReturnsAsync(GetDataset());
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
             DataController sut = new DataController(mock.Object);
 
@@ -184,6 +194,7 @@ namespace SilveR.UnitTests.Controllers
         public async Task UpdateDataset_ReturnsAnActionResult()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<ISilveRRepository> mock = new Mock<ISilveRRepository>();
             mock.Setup(x => x.UpdateDataset(It.IsAny<Dataset>())).Returns(Task.CompletedTask);
 

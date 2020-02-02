@@ -3,6 +3,7 @@ using SilveR.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using Xunit;
 
 namespace SilveR.UnitTests.Helpers
@@ -13,6 +14,7 @@ namespace SilveR.UnitTests.Helpers
         public void CleanUpDataTable_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -30,6 +32,7 @@ namespace SilveR.UnitTests.Helpers
         public void AddSelectedColumn_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTableNoSelectedCol();
 
             //Act
@@ -45,6 +48,7 @@ namespace SilveR.UnitTests.Helpers
         public void CheckDataTable_ReturnsNullMessage()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -58,6 +62,7 @@ namespace SilveR.UnitTests.Helpers
         public void CheckDataTable_IllegalColumn_ReturnsMessage()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
             dataTable.Columns[0].ColumnName = "Column~Name";
 
@@ -72,6 +77,7 @@ namespace SilveR.UnitTests.Helpers
         public void CheckDataTable_IllegalBody_ReturnsMessage()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
             dataTable.Rows[0][0] = "`Value`";
 
@@ -86,6 +92,7 @@ namespace SilveR.UnitTests.Helpers
         public void TransformColumn_Log10_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -102,6 +109,7 @@ namespace SilveR.UnitTests.Helpers
         public void TransformColumn_Loge_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -118,6 +126,7 @@ namespace SilveR.UnitTests.Helpers
         public void TransformColumn_SquareRoot_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -134,6 +143,7 @@ namespace SilveR.UnitTests.Helpers
         public void TransformColumn_ArcSine_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -150,6 +160,7 @@ namespace SilveR.UnitTests.Helpers
         public void TransformColumn_Rank_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -166,6 +177,7 @@ namespace SilveR.UnitTests.Helpers
         public void RemoveBlankRow_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -181,6 +193,7 @@ namespace SilveR.UnitTests.Helpers
         public void CheckIsNumeric_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -198,6 +211,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetCSVArray_ReturnsCorrectStringArray()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -213,6 +227,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetVariableNames_ReturnsCorrectStringArray()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -226,6 +241,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetLevels_ReturnsCorrectStringArray()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -239,6 +255,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetValues_ReturnsCorrectStringArray()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -252,6 +269,7 @@ namespace SilveR.UnitTests.Helpers
         public void CopyForExport_ReturnsCorrectDataTable()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act
@@ -267,6 +285,7 @@ namespace SilveR.UnitTests.Helpers
         public void GetDataset_ReturnsCorrectDataset()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DataTable dataTable = GetTestDataTable();
 
             //Act

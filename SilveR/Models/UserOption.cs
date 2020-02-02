@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
@@ -100,6 +101,11 @@ namespace SilveR.Models
 
         public IEnumerable<string> GetOptionLines()
         {
+            if(System.Threading.Thread.CurrentThread.CurrentCulture != CultureInfo.InvariantCulture)
+            {
+                throw new InvalidOperationException("This method can only be run when the current thread is InvariantCulture");
+            }
+
             List<string> optionLines = new List<string>();
             optionLines.Add(nameof(this.LineTypeSolid) + " " + this.LineTypeSolid.ToLower());
             optionLines.Add(nameof(this.LineTypeDashed) + " " + this.LineTypeDashed.ToLower());

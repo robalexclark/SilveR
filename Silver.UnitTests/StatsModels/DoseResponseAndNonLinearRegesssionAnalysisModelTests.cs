@@ -4,6 +4,7 @@ using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 using static SilveR.StatsModels.DoseResponseAndNonLinearRegressionAnalysisModel;
@@ -16,6 +17,7 @@ namespace SilveR.UnitTests.StatsModels
         public void ScriptFileName_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DoseResponseAndNonLinearRegressionAnalysisModel sut = new DoseResponseAndNonLinearRegressionAnalysisModel();
 
             //Act
@@ -29,6 +31,7 @@ namespace SilveR.UnitTests.StatsModels
         public void TransformationsList_ReturnsCorrectList()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DoseResponseAndNonLinearRegressionAnalysisModel sut = new DoseResponseAndNonLinearRegressionAnalysisModel();
 
             //Act
@@ -43,6 +46,7 @@ namespace SilveR.UnitTests.StatsModels
         public void ExportData_FourParameter_ReturnsCorrectStringArray()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IDataset> mockDataset = new Mock<IDataset>();
             mockDataset.Setup(x => x.DatasetID).Returns(It.IsAny<int>);
             mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
@@ -62,6 +66,7 @@ namespace SilveR.UnitTests.StatsModels
         public void ExportData_Equation_ReturnsCorrectStringArray()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IDataset> mockDataset = new Mock<IDataset>();
             mockDataset.Setup(x => x.DatasetID).Returns(It.IsAny<int>);
             mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
@@ -81,6 +86,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetArguments_FourParameter_ReturnsCorrectArguments()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelFourParameter(GetDataset());
 
             //Act
@@ -155,6 +161,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetArguments_Equation_ReturnsCorrectArguments()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelEquation(GetDataset());
 
             //Act
@@ -229,6 +236,7 @@ namespace SilveR.UnitTests.StatsModels
         public void LoadArguments_ReturnsCorrectArguments()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DoseResponseAndNonLinearRegressionAnalysisModel sut = new DoseResponseAndNonLinearRegressionAnalysisModel(GetDataset());
 
             List<Argument> arguments = new List<Argument>();
@@ -285,6 +293,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetCommandLineArguments_FourParameter_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelFourParameter(GetDataset());
 
             //Act
@@ -298,6 +307,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetCommandLineArguments_Equation_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             DoseResponseAndNonLinearRegressionAnalysisModel sut = GetModelEquation(GetDataset());
 
             //Act

@@ -37,6 +37,10 @@ namespace SilveR
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
 
             configuration = builder.Build();
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
         }
 
         private readonly IConfigurationRoot configuration;

@@ -4,6 +4,7 @@ using SilveR.Models;
 using SilveR.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,6 +17,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetDatasetByID_ReturnsDataset()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -31,6 +33,7 @@ namespace SilveR.UnitTests.Models
         public async Task HasDatasets_ReturnsTrue()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -46,6 +49,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetLastVersionNumberForDataset_NotExists_Returns0()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -61,6 +65,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetLastVersionNumberForDataset_Returns1()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -76,6 +81,7 @@ namespace SilveR.UnitTests.Models
         public async Task CreateDataset_DatasetCreated()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -99,6 +105,7 @@ namespace SilveR.UnitTests.Models
         public async Task UpdateDataset_DatasetUpdated()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -117,6 +124,7 @@ namespace SilveR.UnitTests.Models
         public async Task DeleteDataset_DatasetDeleted()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -130,6 +138,7 @@ namespace SilveR.UnitTests.Models
         public async Task HasAnalyses_ReturnsTrue()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -145,6 +154,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetAnalyses_ReturnsAnalyses()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -160,6 +170,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetDatasetViewModels_ReturnsDatasetViewModels()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -176,6 +187,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetScripts_ReturnsScripts()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -192,6 +204,7 @@ namespace SilveR.UnitTests.Models
         public async Task SaveAnalysis()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -224,6 +237,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetScriptByName_ReturnsScript()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -240,6 +254,7 @@ namespace SilveR.UnitTests.Models
         public async Task HasAnalysisCompleted_ReturnsTrue()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             string testGuid = dbContextMock.Analyses.Single(x => x.AnalysisID == 73).AnalysisGuid;
             SilveRRepository sut = new SilveRRepository(dbContextMock);
@@ -256,6 +271,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetAnalysis_ReturnsAnalysis()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             string testGuid = dbContextMock.Analyses.Single(x => x.AnalysisID == 73).AnalysisGuid;
             SilveRRepository sut = new SilveRRepository(dbContextMock);
@@ -272,6 +288,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetAnalysisComplete_ReturnsAnalysis()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             string testGuid = dbContextMock.Analyses.Single(x => x.AnalysisID == 73).AnalysisGuid;
             SilveRRepository sut = new SilveRRepository(dbContextMock);
@@ -289,6 +306,7 @@ namespace SilveR.UnitTests.Models
         public async Task DeleteAnalysis_AnalysisDeleted()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             string testGuid = dbContextMock.Analyses.Single(x => x.AnalysisID == 73).AnalysisGuid;
             SilveRRepository sut = new SilveRRepository(dbContextMock);
@@ -301,6 +319,7 @@ namespace SilveR.UnitTests.Models
         public async Task UpdateAnalysis_AnalysisUpdated()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             string testGuid = dbContextMock.Analyses.Single(x => x.AnalysisID == 73).AnalysisGuid;
             SilveRRepository sut = new SilveRRepository(dbContextMock);
@@ -320,6 +339,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetUserOptions_ReturnDefaultUserOptions()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             SilveRRepository sut = new SilveRRepository(dbContextMock);
 
@@ -378,6 +398,7 @@ namespace SilveR.UnitTests.Models
         public async Task GetUserOptions_ReturnUserOptions()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             UserOption existingUserOption = new UserOption();
             existingUserOption.LineTypeSolid = "Test";
@@ -398,6 +419,7 @@ namespace SilveR.UnitTests.Models
         public async Task UpdateUserOptions_UserOptionsUpdated()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SilveRContext dbContextMock = GetContext();
             dbContextMock.SaveChanges();
 

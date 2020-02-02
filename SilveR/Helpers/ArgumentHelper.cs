@@ -59,6 +59,11 @@ namespace SilveR.Helpers
 
         public ArgumentHelper(IEnumerable<Argument> arguments)
         {
+            if (System.Threading.Thread.CurrentThread.CurrentCulture != CultureInfo.InvariantCulture)
+            {
+                throw new InvalidOperationException("This method can only be executed when the underlying thread is an InvariantCulture");
+            }
+
             this.arguments = arguments;
         }
 

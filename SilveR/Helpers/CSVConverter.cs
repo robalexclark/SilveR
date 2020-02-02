@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using System;
 using System.Data;
 using System.Globalization;
 using System.IO;
@@ -9,8 +10,25 @@ namespace SilveR.Helpers
 {
     public static class CSVConverter
     {
-        public static DataTable CSVDataToDataTable(Stream stream, CultureInfo cultureInfo)
+        public static DataTable CSVDataToDataTable(Stream stream, CultureInfo cultureInfo = null)
         {
+            if (cultureInfo == null)
+            {
+                cultureInfo = CultureInfo.InvariantCulture;
+            }
+            else //check that its not invariant!
+            {
+                if (cultureInfo == CultureInfo.InvariantCulture)
+                {
+                    throw new ArgumentException("If cultureInfo is provided it must not be InvariantCulture");
+                }
+            }
+
+            if (System.Threading.Thread.CurrentThread.CurrentCulture != CultureInfo.InvariantCulture)
+            {
+                throw new ArgumentException("This method can only be executed when the underlying thread is an InvariantCulture");
+            }
+
             DataTable dataTable = new DataTable();
 
             //use the csvreader to read in the csv data

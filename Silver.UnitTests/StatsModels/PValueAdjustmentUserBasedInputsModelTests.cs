@@ -1,6 +1,7 @@
 using SilveR.Models;
 using SilveR.StatsModels;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -12,6 +13,7 @@ namespace SilveR.UnitTests.StatsModels
         public void ScriptFileName_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             //Act
@@ -26,6 +28,7 @@ namespace SilveR.UnitTests.StatsModels
         public void SignificancesList_ReturnsCorrectList()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             //Act
@@ -40,6 +43,7 @@ namespace SilveR.UnitTests.StatsModels
         public void MultipleComparisonTestsList_ReturnsCorrectList()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             //Act
@@ -55,6 +59,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetArguments_ReturnsCorrectArguments()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             PValueAdjustmentUserBasedInputsModel sut = GetModel();
 
             //Act
@@ -75,6 +80,7 @@ namespace SilveR.UnitTests.StatsModels
         public void LoadArguments_ReturnsCorrectArguments()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             PValueAdjustmentUserBasedInputsModel sut = new PValueAdjustmentUserBasedInputsModel();
 
             List<Argument> arguments = new List<Argument>();
@@ -97,6 +103,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetCommandLineArguments_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             PValueAdjustmentUserBasedInputsModel sut = GetModel();
 
             //Act

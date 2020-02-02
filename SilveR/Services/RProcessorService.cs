@@ -203,7 +203,7 @@ namespace SilveR.Services
                         //now go through any csv output to be imported into datasets
                         foreach (FileInfo file in outputFiles.Where(x => x.Extension == ".csv" && !x.FullName.EndsWith(analysis.AnalysisGuid + ".csv"))) //go through any dataset output (make sure dont import original csv file!)
                         {
-                            DataTable dataTable = CSVConverter.CSVDataToDataTable(file.OpenRead(), CultureInfo.InvariantCulture); //because R will write out using , separator
+                            DataTable dataTable = CSVConverter.CSVDataToDataTable(file.OpenRead()); //because R will write out using , separator
 
                             string datasetName = file.Name.Replace(analysis.AnalysisGuid, String.Empty);
                             await SaveDatasetToDatabase(silveRRepository, datasetName, dataTable);

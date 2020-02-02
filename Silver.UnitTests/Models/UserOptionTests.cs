@@ -1,5 +1,6 @@
 using SilveR.Models;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
@@ -11,6 +12,7 @@ namespace SilveR.UnitTests.Models
         public void GetOptionLines()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             UserOption userOption = new UserOption();
 
             //Act

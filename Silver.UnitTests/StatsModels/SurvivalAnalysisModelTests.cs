@@ -4,18 +4,19 @@ using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using Xunit;
 
 namespace SilveR.UnitTests.StatsModels
 {
-
     public class SurvivalAnalysisModelTests
     {
         [Fact]
         public void ScriptFileName_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SurvivalAnalysisModel sut = new SurvivalAnalysisModel();
 
             //Act
@@ -30,6 +31,7 @@ namespace SilveR.UnitTests.StatsModels
         public void SignificancesList_ReturnsCorrectList()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SurvivalAnalysisModel sut = new SurvivalAnalysisModel();
 
             //Act
@@ -44,6 +46,7 @@ namespace SilveR.UnitTests.StatsModels
         public void ExportData_ReturnsCorrectStringArray()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Mock<IDataset> mockDataset = new Mock<IDataset>();
             mockDataset.Setup(x => x.DatasetID).Returns(It.IsAny<int>);
             mockDataset.Setup(x => x.DatasetToDataTable()).Returns(GetTestDataTable());
@@ -63,6 +66,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetArguments_ReturnsCorrectArguments()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SurvivalAnalysisModel sut = GetModel(GetDataset());
 
             //Act
@@ -95,6 +99,7 @@ namespace SilveR.UnitTests.StatsModels
         public void LoadArguments_ReturnsCorrectArguments()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SurvivalAnalysisModel sut = new SurvivalAnalysisModel(GetDataset());
 
             List<Argument> arguments = new List<Argument>();
@@ -126,6 +131,7 @@ namespace SilveR.UnitTests.StatsModels
         public void GetCommandLineArguments_ReturnsCorrectString()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             SurvivalAnalysisModel sut = GetModel(GetDataset());
 
             //Act

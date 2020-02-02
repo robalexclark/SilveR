@@ -1,6 +1,7 @@
 using SilveR.Models;
 using SilveR.StatsModels;
 using System;
+using System.Globalization;
 using Xunit;
 
 namespace SilveR.UnitTests.StatsModels
@@ -11,6 +12,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_Analysis_ReturnsSingleMeasuresParametricAnalysisModel()
         {
             //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Analysis analysis = new Analysis(GetDataset())
             {
                 AnalysisID = 45,
@@ -40,6 +42,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_SummaryStatistics_ReturnsSummaryStatisticsModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("SummaryStatistics", GetDataset());
 
             //Assert
@@ -50,6 +53,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_SingleMeasuresParametricAnalysis_ReturnsSingleMeasuresParametricAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("SingleMeasuresParametricAnalysis", GetDataset());
 
             //Assert
@@ -60,6 +64,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_RepeatedMeasuresParametricAnalysis_ReturnsRepeatedMeasuresParametricAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("RepeatedMeasuresParametricAnalysis", GetDataset());
 
             //Assert
@@ -70,6 +75,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_PValueAdjustmentUserBasedInputs_ReturnsPValueAdjustmentUserBasedInputsModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PValueAdjustmentUserBasedInputs", null);
 
             //Assert
@@ -80,6 +86,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_PValueAdjustmentDatasetBasedInputs_ReturnsPValueAdjustmentDatasetBasedInputsModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PValueAdjustmentDatasetBasedInputs", GetDataset());
 
             //Assert
@@ -90,6 +97,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_PairedTTestAnalysis_ReturnsPairedTTestAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("PairedTTestAnalysis", GetDataset());
 
             //Assert
@@ -100,6 +108,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_UnpairedTTestAnalysis_ReturnsUnpairedTTestAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("UnpairedTTestAnalysis", GetDataset());
 
             //Assert
@@ -110,6 +119,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_OneSampleTTestAnalysis_ReturnsOneSampleTTestAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("OneSampleTTestAnalysis", GetDataset());
 
             //Assert
@@ -120,6 +130,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_CorrelationAnalysis_ReturnsCorrelationAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("CorrelationAnalysis", GetDataset());
 
             //Assert
@@ -130,6 +141,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_LinearRegressionAnalysis_ReturnsLinearRegressionAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("LinearRegressionAnalysis", GetDataset());
 
             //Assert
@@ -140,6 +152,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_DoseResponseAndNonLinearRegressionAnalysis_ReturnsDoseResponseAndNonLinearRegressionAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("DoseResponseAndNonLinearRegressionAnalysis", GetDataset());
 
             //Assert
@@ -150,6 +163,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_NonParametricAnalysis_ReturnsNonParametricAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("NonParametricAnalysis", GetDataset());
 
             //Assert
@@ -160,6 +174,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_ChiSquaredAndFishersExactTest_ReturnsChiSquaredAndFishersExactTestModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("ChiSquaredAndFishersExactTest", GetDataset());
 
             //Assert
@@ -170,6 +185,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_SurvivalAnalysis_ReturnsSurvivalAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("SurvivalAnalysis", GetDataset());
 
             //Assert
@@ -180,6 +196,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_GraphicalAnalysis_ReturnsGraphicalAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("GraphicalAnalysis", GetDataset());
 
             //Assert
@@ -190,6 +207,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_ComparisonOfMeansPowerAnalysisUserBasedInputs_ReturnsComparisonOfMeansPowerAnalysisUserBasedInputsModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("ComparisonOfMeansPowerAnalysisUserBasedInputs", GetDataset());
 
             //Assert
@@ -200,6 +218,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_ComparisonOfMeansPowerAnalysisDatasetBasedInputs_ReturnsComparisonOfMeansPowerAnalysisDatasetBasedInputsModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("ComparisonOfMeansPowerAnalysisDatasetBasedInputs", GetDataset());
 
             //Assert
@@ -210,6 +229,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_OneWayANOVAPowerAnalysisUserBasedInputs_ReturnsOneWayANOVAPowerAnalysisUserBasedInputsModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("OneWayANOVAPowerAnalysisUserBasedInputs", null);
 
             //Assert
@@ -220,6 +240,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_OneWayANOVAPowerAnalysisDatasetBasedInputs_ReturnsOneWayANOVAPowerAnalysisDatasetBasedInputsModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("OneWayANOVAPowerAnalysisDatasetBasedInputs", GetDataset());
 
             //Assert
@@ -230,6 +251,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_MultivariateAnalysis_ReturnsMultivariateAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("MultivariateAnalysis", GetDataset());
 
             //Assert
@@ -241,6 +263,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_NestedDesignAnalysis_ReturnsNestedDesignAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("NestedDesignAnalysis", GetDataset());
 
             //Assert
@@ -251,6 +274,7 @@ namespace SilveR.UnitTests.StatsModels
         public void CreateAnalysisModel_IncompleteFactorialParametricAnalysis_ReturnsIncompleteFactorialParametricAnalysisModel()
         {
             //Arrange, Act
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             AnalysisModelBase analysisModelBase = AnalysisFactory.CreateAnalysisModel("IncompleteFactorialParametricAnalysis", GetDataset());
 
             //Assert
