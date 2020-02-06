@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -54,10 +55,8 @@ namespace SilveR.Models
             {
                 using (TextReader textReader = new StreamReader(stream))
                 {
-                    using (CsvParser parser = new CsvParser(textReader))
+                    using (CsvParser parser = new CsvParser(textReader, CultureInfo.InvariantCulture))
                     {
-                        parser.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format
-
                         string[] headerRow = parser.Read();
                         foreach (string h in headerRow)
                         {
@@ -71,10 +70,8 @@ namespace SilveR.Models
             {
                 using (TextReader textReader = new StreamReader(stream))
                 {
-                    using (CsvReader csv = new CsvReader(textReader))
+                    using (CsvReader csv = new CsvReader(textReader, CultureInfo.InvariantCulture))
                     {
-                        csv.Configuration.Delimiter = ","; // override any culture as already will be loaded into the db and converted into that format
-
                         csv.Read();
                         csv.ReadHeader();
                         while (csv.Read())

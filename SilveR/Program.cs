@@ -5,12 +5,14 @@ using Serilog;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 
 namespace SilveR
 {
     public static class Program
     {
         public static string AppName { get; private set; } = "InVivoStat";
+        public static string AppVersion { get; private set; } = "v" + Assembly.GetEntryAssembly().GetName().Version.Major + "." + Assembly.GetEntryAssembly().GetName().Version.Minor + "." + Assembly.GetEntryAssembly().GetName().Version.Build;
         public static CultureInfo UserCulture { get; private set; } = CultureInfo.CurrentCulture;
 
         public static void Main(string[] args)

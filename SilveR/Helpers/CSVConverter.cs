@@ -1,5 +1,4 @@
 ﻿using CsvHelper;
-using CsvHelper.Configuration;
 using System;
 using System.Data;
 using System.Globalization;
@@ -33,7 +32,7 @@ namespace SilveR.Helpers
 
             //use the csvreader to read in the csv data
             TextReader textReader = new StreamReader(stream);
-            CsvParser parser = new CsvParser(textReader, new Configuration(cultureInfo));
+            CsvParser parser = new CsvParser(textReader, cultureInfo);
 
             string[] headerRow = parser.Read();
             for (int i = 0; i < headerRow.Count(); i++)
@@ -56,7 +55,7 @@ namespace SilveR.Helpers
             stream.Seek(0, SeekOrigin.Begin);
             textReader = new StreamReader(stream);
 
-            CsvReader csvReader = new CsvReader(textReader, new Configuration(cultureInfo));
+            CsvReader csvReader = new CsvReader(textReader, cultureInfo);
 
             csvReader.Read();
             csvReader.ReadHeader();
