@@ -141,7 +141,7 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(ResidualsVsPredictedPlotSelected)); //9
             arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlotSelected)); //10
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, false)); //11
             arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //12
 
             return arguments.ToString().Trim();

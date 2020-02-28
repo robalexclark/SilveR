@@ -107,12 +107,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for Win-x64
 
-  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.0.1.exe" $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.0.1.exe
+  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.0.2.exe" $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.0.2.exe
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.0.1.exe'
+      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.0.2.exe'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -159,12 +159,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for Linux
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.0.1.AppImage $(Build.ArtifactStagingDirectory)'  
-    displayName: Copy InVivoStat Setup 4.0.1.AppImage
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.0.2.AppImage $(Build.ArtifactStagingDirectory)'  
+    displayName: Copy InVivoStat Setup 4.0.2.AppImage
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.0.1.AppImage'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.0.2.AppImage'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -208,12 +208,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for MacOS
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.0.1.dmg $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.0.1.dmg
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.0.2.dmg $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.0.2.dmg
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.0.1.dmg'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.0.2.dmg'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0

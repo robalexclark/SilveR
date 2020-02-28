@@ -93,7 +93,34 @@ namespace SilveR
             });
 
             // Open the Electron-Window here
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, AutoHideMenuBar = true, WebPreferences = new WebPreferences { NodeIntegration = false } }));
+            //Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, AutoHideMenuBar = true, WebPreferences = new WebPreferences { NodeIntegration = false } }));
+
+            if (HybridSupport.IsElectronActive)
+            {
+                ElectronBootstrap();
+            }
+        }
+
+        public async void ElectronBootstrap()
+        {
+            BrowserWindow browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
+            {
+                Title = Program.AppName,
+                Width = 1280,
+                Height = 1024,
+                AutoHideMenuBar = true,
+                WebPreferences = new WebPreferences { NodeIntegration = false }
+            });
+
+            await browserWindow.WebContents.Session.ClearCacheAsync();
+
+            MenuItem[] contextMenu = new MenuItem[] {
+                new MenuItem { Label = "Copy", Accelerator = "CmdOrCtrl+C", Role = MenuRole.copy }
+            };
+
+            Electron.Menu.SetContextMenu(browserWindow, contextMenu);
+
+            browserWindow.OnReadyToShow += () => browserWindow.Show();
         }
 
 

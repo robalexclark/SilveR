@@ -116,7 +116,7 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false));
             arguments.Append(" " + argFormatter.GetFormattedArgument(AnalysisType.ToString(), false));
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Control, true));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Control, false));
 
             return arguments.ToString().Trim();
         }
