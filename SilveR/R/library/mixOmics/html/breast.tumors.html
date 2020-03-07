@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Human Breast Tumors Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for breast.tumors {mixOmics}"><tr><td>breast.tumors {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Human Breast Tumors Data</h2>
+
+<h3>Description</h3>
+
+<p>This data set contains the expression of 1,000 genes in 47 surgical specimens of
+human breast tumours from 17 different individuals before and after chemotherapy treatment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data(breast.tumors)</pre>
+
+
+<h3>Format</h3>
+
+<p>A list containing the following components:
+</p>
+
+<dl>
+<dt><code>gene.exp</code></dt><dd><p>data matrix with 47 rows and 1000 columns. Each row represents
+an experimental sample, and each column a single gene.</p>
+</dd>
+<dt><code>sample</code></dt><dd><p>a list containing two character vector components:
+<code>name</code> the name of the samples, and <code>treatment</code> the treatment status.</p>
+</dd>
+<dt><code>genes</code></dt><dd><p>a list containing two character vector components:
+<code>name</code> the name of the genes, and <code>description</code> the description
+of each gene.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>This data consists of 47 breast cancer samples and 1753 cDNA clones
+pre-selected by Perez-Enciso <em>et al.</em> (2003) to draw their Fig. 1.
+The authors selected 47 samples for which there was information
+at least before or before and after chemotherapy treatment.
+There were 20 tumours that were microarrayed both before
+and after treatment. For illustrative purposes we then randomly selected 1000 cDNA clones for this data set.
+</p>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>Source</h3>
+
+<p>The Human Breast Tumors dataset is a companion resource for the paper of
+Perou <em>et al.</em> (2000), and was downloaded from the Stanford Genomics Breast
+Cancer Consortium Portal
+<a href="http://genome-www.stanford.edu/breast_cancer/molecularportraits/download.shtml">http://genome-www.stanford.edu/breast_cancer/molecularportraits/download.shtml</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Perez-Enciso, M. and Tenenhaus, M. (2003). Prediction of clinical outcome with microarray data:
+a partial least squares discriminant analysis (PLS-DA) approach. <em>Human Genetics</em>
+<b>112</b>, 581-592.
+</p>
+<p>Perou, C. M., Sorlie, T., Eisen, M. B., van de Rijn, M., Jeffrey, S. S., Rees, C. A.,
+Pollack, J. R., Ross, D. T., Johnsen, H., Akslen, L. A., Fluge, O.,
+Pergamenschikov, A., Williams, C., Zhu, S. X., Lonning, P. E., Borresen-Dale, A. L.,
+Brown, P. O. and Botstein, D. (2000). Molecular portraits
+of human breast tumours. <em>Nature</em> <b>406</b>, 747-752.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.10.8 <a href="00Index.html">Index</a>]</div>
+</body></html>

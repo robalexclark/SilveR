@@ -76,7 +76,7 @@ plotVar                 Plot of Variables
 pls                     Partial Least Squares (PLS) Regression
 plsda                   Partial Least Squares Discriminant Analysis
                         (PLS-DA).
-predict.pls             Predict Method for (mint).(block).(s)pls(da)
+predict                 Predict Method for (mint).(block).(s)pls(da)
                         methods
 print                   Print Methods for CCA, (s)PLS, PCA and Summary
                         objects

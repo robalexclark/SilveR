@@ -52,7 +52,7 @@ using namespace std;
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
 
-#define R_VERSION_STRING "3.5.2"
+#define R_VERSION_STRING "3.6.3"
 
 // Legacy defines -- C99 functions which R >= 3.5.0 reauires
 #ifndef HAVE_EXPM1
@@ -361,6 +361,7 @@ double R_pow_di(double, int);
 
 double	norm_rand(void);
 double	unif_rand(void);
+double  R_unif_index(double);
 double	exp_rand(void);
 #ifdef MATHLIB_STANDALONE
 void	set_seed(unsigned int, unsigned int);

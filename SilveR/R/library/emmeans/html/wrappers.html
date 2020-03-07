@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Wrappers for alternative naming of EMMs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for lsmeans {emmeans}"><tr><td>lsmeans {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Wrappers for alternative naming of EMMs</h2>
+
+<h3>Description</h3>
+
+<p>These are wrappers for <code><a href="emmeans.html">emmeans</a></code> and related functions to provide
+backward compatibility, or for users who may prefer to
+use other terminology than &ldquo;estimated marginal means&rdquo; &ndash; namely 
+&ldquo;least-squares means&rdquo; or &ldquo;predicted marginal means&rdquo;.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+lsmeans(...)
+
+pmmeans(...)
+
+lstrends(...)
+
+pmtrends(...)
+
+lsmip(...)
+
+pmmip(...)
+
+lsm(...)
+
+pmm(...)
+
+lsmobj(...)
+
+pmmobj(...)
+
+lsm.options(...)
+
+get.lsm.option(x, default = emm_defaults[[x]])
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to the corresponding <code>em</code><em>xxxx</em> function</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>Character name of desired option</p>
+</td></tr>
+<tr valign="top"><td><code>default</code></td>
+<td>
+<p>default value to return if <code>x</code> not found</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>For each function with <code>ls</code><em>xxxx</em> or <code>pm</code><em>xxxx</em> in its name,
+the same function named <code>em</code><em>xxxx</em> is called. Any estimator names or 
+list items beginning with &ldquo;em&rdquo; are replaced with &ldquo;ls&rdquo; or 
+&ldquo;pm&rdquo; before the results are returned
+</p>
+
+
+<h3>Value</h3>
+
+<p>The result of the call to <code>em</code><em>xxxx</em>, suitably modified.
+</p>
+<p><code>get.lsm.option</code> and <code>lsm.options</code> remap options from
+and to corresponding options in the <span class="pkg">lsmeans</span> options system.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="emmeans.html">emmeans</a></code>, <code><a href="emtrends.html">emtrends</a></code>, <code><a href="emmip.html">emmip</a></code>,
+<code><a href="glht-support.html">emm</a></code>, <code><a href="emmobj.html">emmobj</a></code>, <code><a href="emm_options.html">emm_options</a></code>,
+<code><a href="emm_options.html">get_emm_option</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+pigs.lm &lt;- lm(log(conc) ~ source + factor(percent), data = pigs)
+lsmeans(pigs.lm, "source")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

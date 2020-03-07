@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compute joint tests of the terms in a model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for joint_tests {emmeans}"><tr><td>joint_tests {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compute joint tests of the terms in a model</h2>
+
+<h3>Description</h3>
+
+<p>This function produces an analysis-of-variance-like table based on linear
+functions of predictors in a model or <code>emmGrid</code> object. Specifically,
+the function constructs, for each combination of factors (or covariates
+reduced to two or more levels), a set of (interaction) contrasts via
+<code><a href="contrast.html">contrast</a></code>, and then tests them using <code><a href="summary.emmGrid.html">test</a></code> with
+<code>joint = TRUE</code>. Optionally, one or more of the predictors may be used as
+<code>by</code> variable(s), so that separate tables of tests are produced for
+each combination of them.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+joint_tests(object, by = NULL, show0df = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>a fitted model or an <code>emmGrid</code>. If a fitted model, it is
+replaced by <code>ref_grid(object, cov.reduce = range, ...)</code></p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>character names of <code>by</code> variables. Separate sets of tests are
+run for each combination of these.</p>
+</td></tr>
+<tr valign="top"><td><code>show0df</code></td>
+<td>
+<p>logical value; if <code>TRUE</code>, results with zero numerator
+degrees of freedom are displayed, if <code>FALSE</code> they are skipped</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>additional arguments passed to <code>ref_grid</code> and <code>emmeans</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>In models with only factors, no covariates, we believe these tests correspond
+to &ldquo;type III&rdquo; tests a la <span class="pkg">SAS</span>, as long as equal-weighted
+averaging is used and there are no estimability issues. When covariates are
+present and interact with factors, the results depend on how the covariate is
+handled in constructing the reference grid. See the example at the end of
+this documentation. The point that one must always remember is that
+<code>joint_tests</code> always tests contrasts among EMMs, in the context of the
+reference grid, whereas type III tests are tests of model coefficients &ndash;
+which may or may not have anything to do with EMMs or contrasts.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a <code>summary_emm</code> object (same as is produced by 
+<code><a href="summary.emmGrid.html">summary.emmGrid</a></code>). All effects for which there are no
+estimable contrasts are omitted from the results.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="summary.emmGrid.html">test</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+pigs.lm &lt;- lm(log(conc) ~ source * factor(percent), data = pigs)
+
+joint_tests(pigs.lm)                     ## will be same as type III ANOVA
+
+joint_tests(pigs.lm, weights = "outer")  ## differently weighted
+
+joint_tests(pigs.lm, by = "source")      ## separate joint tests of 'percent'
+
+### Comparisons with type III tests
+toy = data.frame(
+    treat = rep(c("A", "B"), c(4, 6)),
+    female = c(1, 0, 0, 1,   0, 0, 0, 1, 1, 0 ),
+    resp = c(17, 12, 14, 19, 28, 26, 26, 34, 33, 27))
+toy.fac = lm(resp ~ treat * factor(female), data = toy)
+toy.cov = lm(resp ~ treat * female, data = toy)
+# (These two models have identical fitted values and residuals)
+
+joint_tests(toy.fac)
+
+joint_tests(toy.cov)                      # ref grid uses mean(female) = 0.4
+joint_tests(toy.cov, cov.reduce = FALSE)  # ref grid uses female = c(0, 1) 
+joint_tests(toy.cov, at = list(female = c(-1, 1)))  # center on intercept
+
+# -- Compare with SAS output -- female as factor --
+## Source          DF    Type III SS    Mean Square   F Value   Pr &gt; F
+## treat            1    488.8928571    488.8928571    404.60   &lt;.0001
+## female           1     78.8928571     78.8928571     65.29   0.0002
+## treat*female     1      1.7500000      1.7500000      1.45   0.2741
+# 
+# -- Compare with SAS output -- female as covariate --
+## Source          DF    Type III SS    Mean Square   F Value   Pr &gt; F
+## treat            1    252.0833333    252.0833333    208.62   &lt;.0001
+## female           1     78.8928571     78.8928571     65.29   0.0002
+## female*treat     1      1.7500000      1.7500000      1.45   0.2741
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -48,6 +48,7 @@ panel.voronoi           Panel functions for level-coded irregular
                         points
 panel.xblocks           Plot contiguous blocks along x axis.
 panel.xyarea            Plot series as filled polygons.
+panel.xyimage           Scatter plots using emoji-like images
 postdoc                 Reasons for Taking First Postdoctoral
                         Appointment
 resizePanels            Resize panels to match data scales

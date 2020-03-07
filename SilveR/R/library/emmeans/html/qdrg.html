@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Quick and dirty reference grid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for qdrg {emmeans}"><tr><td>qdrg {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Quick and dirty reference grid</h2>
+
+<h3>Description</h3>
+
+<p>This function may make it possible to compute a reference grid for a model 
+object that is otherwise not supported.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+qdrg(formula, data, coef, mcmc, vcov, object, df, subset, weights, contrasts,
+  link, qr, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>Formula for the fixed effects</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>Dataset containing the variables in the model</p>
+</td></tr>
+<tr valign="top"><td><code>coef</code></td>
+<td>
+<p>Fixed-effect regression coefficients (must conform to formula)</p>
+</td></tr>
+<tr valign="top"><td><code>mcmc</code></td>
+<td>
+<p>Posterior sample of fixed-effect coefficients</p>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p>Variance-covariance matrix of the fixed effects</p>
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>Optional model object. If provided, it is used to set 
+certain other arguments, if not specified. See Details.</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p>Error degrees of freedom</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>Subset of <code>data</code> used in fitting the model</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>Weights used in fitting the model</p>
+</td></tr>
+<tr valign="top"><td><code>contrasts</code></td>
+<td>
+<p>List of contrasts specified in fitting the model</p>
+</td></tr>
+<tr valign="top"><td><code>link</code></td>
+<td>
+<p>Link function (character or list) used, if a generalized linear model.
+(Note: response transformations are auto-detected from <code>formula</code>)</p>
+</td></tr>
+<tr valign="top"><td><code>qr</code></td>
+<td>
+<p>QR decomposition of the model matrix; needed only if there are <code>NA</code>s
+in <code>coef</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Optional arguments passed to <code><a href="ref_grid.html">ref_grid</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If <code>object</code> is specified, it is used to try to obtain certain 
+other arguments, as detailed below. The user should ensure that these defaults
+will work. The default values for the arguments are as follows:
+</p>
+
+<ul>
+<li><p><code>formula</code>: Required unless obtainable via <code>formula(object)</code>
+</p>
+</li>
+<li><p><code>data</code>: Required if variables are not in <code>parent.frame()</code> or 
+obtainable via <code>object$data</code>
+</p>
+</li>
+<li><p><code>coef</code>: <code>coef(object)</code>
+</p>
+</li>
+<li><p><code>mcmc</code>: <code>object$sample</code>
+</p>
+</li>
+<li><p><code>vcov</code>: <code>vcov(object)</code>
+</p>
+</li>
+<li><p><code>df</code>: Set to <code>Inf</code> if not available in <code>object$df.residual</code>
+</p>
+</li>
+<li><p><code>subset</code>: <code>NULL</code> (so that all observations in <code>data</code> are used)
+</p>
+</li>
+<li><p><code>contrasts</code>: <code>NULL</code> (so that <code>getOption("contrasts")</code> is used)
+</p>
+</li></ul>
+
+<p>The functions <code><a href="qdrg.html">qdrg</a></code> and <code>emmobj</code> are close cousins, in that
+they both produce <code>emmGrid</code> objects. When starting with summary
+statistics for an existing grid, <code>emmobj</code> is more useful, while
+<code>qdrg</code> is more useful when starting from a fitted model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>emmGrid</code> object constructed from the arguments
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="emmobj.html">emmobj</a></code> for an alternative way to construct an <code>emmGrid</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (require(biglm)) {
+  # Post hoc analysis of a "biglm" object -- not supported by emmeans
+  bigmod &lt;- biglm(log(conc) ~ source + factor(percent), data = pigs)
+   
+  rg2 &lt;- qdrg(object = bigmod, data = pigs)
+  summary(emmeans(rg2, "source"), type = "response")
+}
+if(require(coda) &amp;&amp; require(lme4)) {
+  # Use a stored example having a posterior sample
+  # Model is based on the data in lme4::cbpp
+  
+  post &lt;- readRDS(system.file("extdata", "cbpplist", package = "emmeans"))$post.beta
+  rg1 &lt;- qdrg(~ size + period, data = lme4::cbpp, mcmc = post, link = "logit")
+  summary(rg1, type = "response")
+}
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Construct an 'emmGrid' object from scratch</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for emmobj {emmeans}"><tr><td>emmobj {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Construct an <code>emmGrid</code> object from scratch</h2>
+
+<h3>Description</h3>
+
+<p>This allows the user to incorporate results obtained by some analysis
+into an <code>emmGrid</code> object, enabling the use of <code>emmGrid</code> methods
+to perform related follow-up analyses.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+emmobj(bhat, V, levels, linfct, df = NA, dffun, dfargs = list(),
+  post.beta = matrix(NA), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>bhat</code></td>
+<td>
+<p>Numeric. Vector of regression coefficients</p>
+</td></tr>
+<tr valign="top"><td><code>V</code></td>
+<td>
+<p>Square matrix. Covariance matrix of <code>bhat</code></p>
+</td></tr>
+<tr valign="top"><td><code>levels</code></td>
+<td>
+<p>Named list or vector. Levels of factor(s) that define the
+estimates defined by <code>linfct</code>. If not a list, we assume one factor
+named <code>"level"</code></p>
+</td></tr>
+<tr valign="top"><td><code>linfct</code></td>
+<td>
+<p>Matrix. Linear functions of <code>bhat</code> for each combination 
+of <code>levels</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p>Numeric value or function with arguments <code>(x, dfargs)</code>. If a
+number, that is used for the degrees of freedom. If a function, it should
+return the degrees of freedom for <code>sum(x*bhat)</code>, with any additional
+parameters in <code>dfargs</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>dffun</code></td>
+<td>
+<p>Overrides <code>df</code> if specified. This is a convenience
+to match the slot names of the returned object.</p>
+</td></tr>
+<tr valign="top"><td><code>dfargs</code></td>
+<td>
+<p>List containing arguments for <code>df</code>.
+This is ignored if df is numeric.</p>
+</td></tr>
+<tr valign="top"><td><code>post.beta</code></td>
+<td>
+<p>Matrix whose columns comprise a sample from the posterior
+distribution of the regression coefficients (so that typically, the column
+averages will be <code>bhat</code>). A 1 x 1 matrix of <code>NA</code> indicates that
+such a sample is unavailable.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to <code><a href="update.emmGrid.html">update.emmGrid</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The arguments must be conformable. This includes that the length of
+<code>bhat</code>, the number of columns of <code>linfct</code>, and the number of
+columns of <code>post.beta</code> must all be equal. And that the product of
+lengths in <code>levels</code> must be equal to the number of rows of
+<code>linfct</code>. The <code>grid</code> slot of the returned object is generated 
+by <code><a href="../../base/html/expand.grid.html">expand.grid</a></code> using <code>levels</code> as its arguments. So the
+rows of <code>linfct</code> should be in corresponding order.
+</p>
+<p>The functions <code>qdrg</code> and <code><a href="emmobj.html">emmobj</a></code> are close cousins, in that
+they both produce <code>emmGrid</code> objects. When starting with summary
+statistics for an existing grid, <code>emmobj</code> is more useful, while
+<code>qdrg</code> is more useful when starting from an unsupported fitted model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>emmGrid</code> object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="qdrg.html">qdrg</a></code>, an alternative that is useful when starting 
+with a fitted model not supported in <span class="pkg">emmeans</span>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Given summary statistics for 4 cells in a 2 x 2 layout, obtain 
+# marginal means and comparisons thereof. Assume heteroscedasticity
+# and use the Satterthwaite method
+levels &lt;- list(trt = c("A", "B"), dose = c("high", "low"))
+ybar &lt;- c(57.6, 43.2, 88.9, 69.8)
+s &lt;-    c(12.1, 19.5, 22.8, 43.2)
+n &lt;-    c(44,   11,   37,   24)
+se2 = s^2 / n
+Satt.df &lt;- function(x, dfargs)
+    sum(x * dfargs$v)^2 / sum((x * dfargs$v)^2 / (dfargs$n - 1))
+    
+expt.rg &lt;- emmobj(bhat = ybar, V = diag(se2),
+    levels = levels, linfct = diag(c(1, 1, 1, 1)),
+    df = Satt.df, dfargs = list(v = se2, n = n), estName = "mean")
+plot(expt.rg)
+
+( trt.emm &lt;- emmeans(expt.rg, "trt") )
+( dose.emm &lt;- emmeans(expt.rg, "dose") )
+
+rbind(pairs(trt.emm), pairs(dose.emm), adjust = "mvt")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

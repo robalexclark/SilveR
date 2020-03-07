@@ -9,7 +9,6 @@ checkAccess             Check file system access rights
 checkArray              Check if an argument is an array
 checkAtomic             Check that an argument is an atomic vector
 checkAtomicVector       Check that an argument is an atomic vector
-checkBit                Check if an argument is a bit vector
 checkCharacter          Check if an argument is a vector of type
                         character
 checkChoice             Check if an object is an element of a given set
@@ -71,5 +70,6 @@ matchArg                Partial Argument Matching
 qassert                 Quick argument checks on (builtin) R types
 qassertr                Quick recursive arguments checks on lists and
                         data frames
+register_test_backend   Select Backend for Unit Tests
 vname                   Lookup a variable name
 wf                      Get the index of the first/last TRUE

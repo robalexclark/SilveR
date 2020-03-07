@@ -1,11 +1,11 @@
 Package: Hmisc
-Version: 4.2-0
-Date: 2019-01-25
+Version: 4.3-1
+Date: 2020-02-07
 Title: Harrell Miscellaneous
 Author: Frank E Harrell Jr <f.harrell@vanderbilt.edu>, with
   contributions from Charles Dupont and many others.
 Maintainer: Frank E Harrell Jr <f.harrell@vanderbilt.edu>
-Depends: lattice, survival (>= 2.40-1), Formula, ggplot2 (>= 2.2)
+Depends: lattice, survival (>= 3.1-6), Formula, ggplot2 (>= 2.2)
 Imports: methods, latticeExtra, cluster, rpart, nnet, acepack, foreign,
         gtable, grid, gridExtra, data.table, htmlTable (>= 1.11.0),
         viridis, htmltools, base64enc
@@ -24,8 +24,8 @@ URL: http://biostat.mc.vanderbilt.edu/Hmisc,
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 NeedsCompilation: yes
-Packaged: 2019-01-25 22:28:42 UTC; harrelfe
+Packaged: 2020-02-07 13:22:17 UTC; harrelfe
 Repository: CRAN
-Date/Publication: 2019-01-26 23:20:03 UTC
-Built: R 3.5.3; x86_64-w64-mingw32; 2019-05-23 01:25:46 UTC; windows
+Date/Publication: 2020-02-07 15:50:02 UTC
+Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-03 06:15:38 UTC; windows
 Archs: i386, x64

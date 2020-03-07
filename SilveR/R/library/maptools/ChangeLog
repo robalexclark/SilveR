@@ -1,3 +1,68 @@
+2019-10-03 12:20  rsbivand
+
+	* DESCRIPTION, src/shpopen.c, src/shptree.c: try warn_unused_result
+	  fix
+
+2019-10-03 07:58  rsbivand
+
+	* DESCRIPTION: tidy
+
+2019-08-09 15:59  rsbivand
+
+	* R/spatstat1.R: tidy
+
+2019-08-09 15:42  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2019-08-09 15:41  rsbivand
+
+	* man/as.SpatialPolygons.tess.Rd, man/as.im.Rd, man/as.owin.Rd,
+	  man/as.ppp.Rd, man/as.psp.Rd: add split out spatstat coercion man
+	  pages
+
+2019-08-07 13:06  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2019-08-07 13:05  rsbivand
+
+	* R/SP2owin.R, R/as.linnet.SL.R, R/spatstat1.R,
+	  man/as.linnet.SpatialLines.Rd, man/as.ppp.Rd,
+	  man/map2SpatialPolygons.Rd, man/nowrapRecenter.Rd,
+	  man/sp2Mondrian.Rd, man/sp2WB.Rd, man/sp2tmap.Rd: add checks for
+	  projected objects
+
+2019-08-07 09:36  rsbivand
+
+	* ChangeLog, inst/ChangeLog: tidy
+
+2019-08-07 09:25  rsbivand
+
+	* DESCRIPTION, R/as.linnet.SL.R: revised linnet code
+
+2019-02-18 09:05  rsbivand
+
+	* DESCRIPTION: tidy
+
+2019-02-18 09:04  rsbivand
+
+	* ChangeLog, inst/ChangeLog: revert default snapPointsToLines
+	  maxDist default to NA
+
+2019-02-18 08:58  rsbivand
+
+	* R/point_line_distance.R, man/snapPointsToLines.Rd: revert default
+	  snapPointsToLines maxDist default to NA
+
+2019-02-18 08:55  rsbivand
+
+	* DESCRIPTION: add pkgdown link to DESCRIPTION
+
+2019-02-18 08:35  rsbivand
+
+	* ChangeLog, DESCRIPTION, inst/ChangeLog: tidy
+
 2019-02-18 08:32  rsbivand
 
 	* R/point_line_distance.R: uncomment lines in snapPointsToLines

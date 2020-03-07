@@ -2,6 +2,7 @@ addFilter               Add column filters
 addStyle                Add a style to a set of cells
 addWorksheet            Add a worksheet to a workbook
 all.equal               Check equality of workbooks
+cloneWorksheet          Clone a worksheet to a workbook
 conditionalFormat       Add conditional formatting to cells
 conditionalFormatting   Add conditional formatting to cells
 convertFromExcelRef     Convert excel column name to integer index
@@ -37,6 +38,8 @@ openXL                  Open a Microsoft Excel file (xls/xlsx) or an
 openxlsx                xlsx reading, writing and editing.
 pageBreak               add a page break to a worksheet
 pageSetup               Set page margins, orientation and print scaling
+protectWorkbook         Protect a workbook from modifications
+protectWorksheet        Protect a worksheet from modifications
 read.xlsx               Read from an Excel file or Workbook object
 readWorkbook            Read from an Excel file or Workbook object
 removeCellMerge         Create a new Workbook object

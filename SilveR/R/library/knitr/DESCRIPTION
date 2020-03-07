@@ -1,7 +1,7 @@
 Package: knitr
 Type: Package
 Title: A General-Purpose Package for Dynamic Report Generation in R
-Version: 1.24
+Version: 1.28
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("Adam", "Vogt", role = "ctb"),
@@ -73,6 +73,7 @@ Authors@R: c(
     person("Miller", "Patrick", role = "ctb"),
     person("Nacho", "Caballero", role = "ctb"),
     person("Nick", "Salkowski", role = "ctb"),
+    person("Niels Richard", "Hansen", role = "ctb"),
     person("Noam", "Ross", role = "ctb"),
     person("Obada", "Mahdi", role = "ctb"),
     person("Qiang", "Li", role = "ctb"),
@@ -98,7 +99,6 @@ Authors@R: c(
     person("Wush", "Wu", role = "ctb"),
     person("Zachary", "Foster", role = "ctb")
     )
-Maintainer: Yihui Xie <xie@yihui.name>
 Description: Provides a general-purpose tool for dynamic report generation in R
     using Literate Programming techniques.
 Depends: R (>= 3.2.3)
@@ -108,9 +108,9 @@ Suggests: formatR, testit, digest, rgl (>= 0.95.1201), codetools,
         rmarkdown, htmlwidgets (>= 0.7), webshot, tikzDevice (>= 0.10),
         tinytex, reticulate (>= 1.4), JuliaCall (>= 0.11.1), magick,
         png, jpeg, gifski, xml2 (>= 1.2.0), httr, DBI (>= 0.4-1),
-        showtext, tibble, styler
+        showtext, tibble, sass, styler (>= 1.2.0)
 License: GPL
-URL: https://yihui.name/knitr/
+URL: https://yihui.org/knitr/
 BugReports: https://github.com/yihui/knitr/issues
 Encoding: UTF-8
 VignetteBuilder: knitr
@@ -127,9 +127,9 @@ Collate: 'block.R' 'cache.R' 'utils.R' 'citation.R' 'hooks-html.R'
         'template.R' 'utils-base64.R' 'utils-conversion.R'
         'utils-rd2html.R' 'utils-sweave.R' 'utils-upload.R'
         'utils-vignettes.R' 'zzz.R'
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 NeedsCompilation: no
-Packaged: 2019-08-07 22:26:54 UTC; yihui
+Packaged: 2020-02-06 15:31:44 UTC; yihui
 Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Adam Vogt [ctb],
   Alastair Andrew [ctb],
@@ -202,6 +202,7 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Miller Patrick [ctb],
   Nacho Caballero [ctb],
   Nick Salkowski [ctb],
+  Niels Richard Hansen [ctb],
   Noam Ross [ctb],
   Obada Mahdi [ctb],
   Qiang Li [ctb],
@@ -226,6 +227,7 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Weicheng Zhu [ctb],
   Wush Wu [ctb],
   Zachary Foster [ctb]
+Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2019-08-08 04:40:10 UTC
-Built: R 3.5.3; ; 2019-09-12 09:28:44 UTC; windows
+Date/Publication: 2020-02-06 17:10:03 UTC
+Built: R 3.6.3; ; 2020-03-03 02:20:13 UTC; windows

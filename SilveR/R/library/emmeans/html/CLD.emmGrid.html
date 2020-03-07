@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Extract and display information on all pairwise comparisons...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for CLD {emmeans}"><tr><td>CLD {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Extract and display information on all pairwise comparisons of estimated marginal means.</h2>
+
+<h3>Description</h3>
+
+<p>Extract and display information on all pairwise comparisons of estimated marginal means.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+CLD(object, ...)
+
+## S3 method for class 'emmGrid'
+CLD(object, details = FALSE, sort = TRUE, by,
+  alpha = 0.05, Letters = c("1234567890", LETTERS, letters),
+  reversed = FALSE, ...)
+
+cld.emmGrid(object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code></p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to <code><a href="contrast.html">contrast</a></code> (for example, 
+an <code>adjust</code> method)
+</p>
+<p>This function uses the Piepho (2004) algorithm (as implemented in the 
+<span class="pkg">multcompView</span> package) to generate a compact letter display of all
+pairwise comparisons of estimated marginal means. The function obtains (possibly
+adjusted) P values for all pairwise comparisons of means, using the
+<code><a href="contrast.html">contrast</a></code> function with <code>method = "pairwise"</code>. When a P
+value exceeds <code>alpha</code>, then the two means have at least one letter in
+common.</p>
+</td></tr>
+<tr valign="top"><td><code>details</code></td>
+<td>
+<p>Logical value determining whether detailed information on tests of 
+pairwise comparisons is displayed</p>
+</td></tr>
+<tr valign="top"><td><code>sort</code></td>
+<td>
+<p>Logical value determining whether the EMMs are sorted before the comparisons 
+are produced. When <code>TRUE</code>, the results are displayed according to 
+<code>reversed</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>Character value giving the name or names of variables by which separate 
+families of comparisons are tested. If NULL, all means are compared. 
+If missing, the object's <code>by.vars</code> setting, if any, is used.</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>Numeric value giving the significance level for the comparisons</p>
+</td></tr>
+<tr valign="top"><td><code>Letters</code></td>
+<td>
+<p>Character vector of letters to use in the display. Any strings of 
+length greater than 1 are expanded into individual characters</p>
+</td></tr>
+<tr valign="top"><td><code>reversed</code></td>
+<td>
+<p>Logical value (passed to <code>multcompView::multcompLetters</code>.) 
+If <code>TRUE</code>, the order of use of the letters is reversed. 
+In addition, if both <code>sort</code> and <code>reversed</code> are TRUE, the sort 
+order of results is reversed.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>When details == FALSE, an object of class <code>summary.ref_grid</code>
+(which inherits from <code>data.frame</code>) showing the summary of EMMs with 
+an added column named <code>.groups</code> containing the <code>CLD</code> information. 
+When <code>details == TRUE</code>, a <code>list</code> with the object just described, 
+as well as the summary of the contrast results showing each comparison, 
+its estimate, standard error, t ratio, and adjusted P value.
+</p>
+
+
+<h3>Deprecated</h3>
+
+<p>The <code>CLD</code> function and methods are deprecated.
+Compact-letter displays (CLDs) encourage a misleading
+interpretation of significance testing by visually grouping means whose comparisons
+have <em>P</em> &gt; <code>alpha</code> as though they are equal. However, failing to
+prove two means are different does not prove that they are the same. 
+In addition, CLDs make
+a hard distinction between <em>P</em> values nearly equal to <code>alpha</code>
+but on opposite sides.
+</p>
+<p>Some users may find <code><a href="pwpp.html">pwpp</a></code> to be a useful alternative. It produces a
+plot showing all P values for all pairwise comparisons (or other set of comparisons),
+and can also show one-sided P values and tests of equivalence or noninferiority.
+Also, if you insist, <code><a href="../../multcomp/html/cld.html">cld</a></code> is still available in the 
+<span class="pkg">multcomp</span> package, and <code>multcomp::cld(emm)</code> still works.
+</p>
+
+
+<h3>References</h3>
+
+<p>Piepho, Hans-Peter (2004) An algorithm for a letter-based representation 
+of all pairwise comparisons, Journal of Computational and Graphical Statistics, 13(2), 
+456-466.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cld</code> in the <span class="pkg">multcomp</span> package, for which a courtesy
+method is provided for <code>emmGrid</code> objects.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

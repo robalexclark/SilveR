@@ -1,6 +1,6 @@
 
-R version 3.5.2 RC (2018-12-13 r75856) -- "Eggshell Igloo"
-Copyright (C) 2018 The R Foundation for Statistical Computing
+R version 3.6.2 Patched (2020-02-12 r77795) -- "Dark and Stormy Night"
+Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -622,6 +622,7 @@ Nonlinear regression model
 > ## found wrong n in 2.3.x
 > ## finally worked in 2.4.0
 > ##__no.start: failed in 3.0.2
+> ## 2018-09 fails on macOS with Accelerate framework.
 > stopifnot(all.equal(.n(t1[[1]]), .n(t1[[2]])))
 > rm(a,b)
 > t2 <- test(FALSE)
@@ -737,4 +738,4 @@ Consider specifying 'start' or using a selfStart model
 > 
 > proc.time()
    user  system elapsed 
-  1.583   0.075   1.641 
+  1.437   0.067   1.488 

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Signal experimental or superseded features</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for signal_experimental {lifecycle}"><tr><td>signal_experimental {lifecycle}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Signal experimental or superseded features</h2>
+
+<h3>Description</h3>
+
+<a href='https://www.tidyverse.org/lifecycle/#experimental'><img src='figures/lifecycle-experimental.svg' alt='Experimental lifecycle'></a>
+<p>These functions signal simple conditions with <code><a href="../../rlang/html/signal.html">rlang::signal()</a></code>
+(see also <code><a href="../../base/html/signalCondition.html">base::signalCondition()</a></code>). They don't have any effect
+unless a condition handler is installed for conditions of class
+<code>lifecycle_experimental</code> or <code>lifecycle_superseded</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+signal_experimental(when, what)
+
+signal_superseded(when, what, with = NULL)
+
+lifecycle_cnd_data(cnd)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>when</code></td>
+<td>
+<p>The version at which the feature was assigned a
+lifecycle stage.</p>
+</td></tr>
+<tr valign="top"><td><code>what, with</code></td>
+<td>
+<p>Feature specifications for the feature and
+optionally its replacement. See <code><a href="deprecate_soft.html">deprecate_soft()</a></code> for details.</p>
+</td></tr>
+<tr valign="top"><td><code>cnd</code></td>
+<td>
+<p>A condition object thrown by <code>signal_experimental()</code> or
+<code>signal_superseded()</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>In order to be fast, <code>signal_experimental()</code> and
+<code>signal_superseded()</code> do not validate their arguments. Instead, you
+need to catch the condition object and pass it to
+<code>lifecycle_cnd_data()</code> to get structured data.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>lifecycle</em> version 0.2.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

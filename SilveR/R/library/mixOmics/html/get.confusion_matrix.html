@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create confusion table and calculate the Balanced Error Rate</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for get.confusion_matrix {mixOmics}"><tr><td>get.confusion_matrix {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create confusion table and calculate the Balanced Error Rate</h2>
+
+<h3>Description</h3>
+
+<p>Create confusion table between a vector of true classes and a vector of predicted classes, calculate the Balanced Error rate</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+get.confusion_matrix(truth, all.levels, predicted)
+
+get.BER(confusion)
+
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>truth</code></td>
+<td>
+<p>A factor vector indicating the true classes of the samples (typically <code>Y</code> from the training set).</p>
+</td></tr>
+<tr valign="top"><td><code>all.levels</code></td>
+<td>
+<p>Levels of the 'truth' factor. Optional parameter if there are some missing levels in <code>truth</code> compared to the fitted predicted model</p>
+</td></tr>
+<tr valign="top"><td><code>predicted</code></td>
+<td>
+<p>Vector of predicted classes (typically the prediction from the test set). Can contain NA.</p>
+</td></tr>
+<tr valign="top"><td><code>confusion</code></td>
+<td>
+<p>result from a <code>get.confusion_matrix</code> to calculate the Balanced Error Rate</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>BER is appropriate in case of an unbalanced number of samples per class as it calculates the average proportion of wrongly classified samples in each class, weighted by the number of samples in each class. BER is less biased towards majority classes during the performance assessment.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>get.confusion_matrix</code> returns a confusion matrix.
+</p>
+<p><code>get.BER</code> returns the BER from a confusion matrix
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Florian Rohart</p>
+
+
+<h3>References</h3>
+
+<p>mixOmics article:
+</p>
+<p>Rohart F, Gautier B, Singh A, Lê Cao K-A. mixOmics: an R package for 'omics feature selection and multiple data integration. PLoS Comput Biol 13(11): e1005752
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="predict.html">predict</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+# Example
+# -----------------------------------
+
+data(liver.toxicity)
+X &lt;- liver.toxicity$gene
+Y &lt;- as.factor(liver.toxicity$treatment[, 4])
+
+## if training is perfomed on 4/5th of the original data
+samp &lt;- sample(1:5, nrow(X), replace = TRUE)
+test &lt;- which(samp == 1)   # testing on the first fold
+train &lt;- setdiff(1:nrow(X), test)
+
+plsda.train &lt;- plsda(X[train, ], Y[train], ncomp = 2)
+test.predict &lt;- predict(plsda.train, X[test, ], dist = "max.dist")
+Prediction &lt;- test.predict$class$max.dist[, 2]
+
+# the confusion table compares the real subtypes with the predicted subtypes for a 2 component model
+confusion.mat = get.confusion_matrix(truth = Y[test],
+predicted = Prediction)
+
+get.BER(confusion.mat)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.10.8 <a href="00Index.html">Index</a>]</div>
+</body></html>

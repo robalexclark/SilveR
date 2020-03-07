@@ -7,10 +7,20 @@ SpatialLines2PolySet    Convert sp line and polygon objects to
                         PBSmapping PolySet objects
 SpatialLinesMidPoints   Line midpoints
 SplashDams              Data for Splash Dams in western Oregon
+as.SpatialPolygons.tess
+                        Coercion of spatstat tess object to sp
+                        SpatialPolygons object
+as.im.SpatialGridDataFrame
+                        Coercion between sp objects and spatstat im
+                        objects
 as.linnet.SpatialLines
                         Convert SpatialLines to Linear Network
 as.owin.SpatialGridDataFrame
-                        coercion between sp objects and spatstat
+                        Coercion between sp objects and spatstat owin
+                        objects
+as.ppp.SpatialPoints    Coercion between sp objects and spatstat ppp
+                        objects
+as.psp.Line             Coercion between sp objects and spatstat psp
                         objects
 checkPolygonsHoles      Check holes in Polygons objects
 crepuscule              Methods for sun ephemerides calculations

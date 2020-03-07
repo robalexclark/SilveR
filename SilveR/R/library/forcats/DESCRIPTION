@@ -1,6 +1,6 @@
 Package: forcats
 Title: Tools for Working with Categorical Variables (Factors)
-Version: 0.4.0
+Version: 0.5.0
 Authors@R: 
     c(person(given = "Hadley",
              family = "Wickham",
@@ -16,18 +16,18 @@ Description: Helpers for reordering factor levels (including
 License: GPL-3
 URL: http://forcats.tidyverse.org, https://github.com/tidyverse/forcats
 BugReports: https://github.com/tidyverse/forcats/issues
-Depends: R (>= 3.1)
+Depends: R (>= 3.2)
 Imports: ellipsis, magrittr, rlang, tibble
 Suggests: covr, ggplot2, testthat, readr, knitr, rmarkdown, dplyr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-02-17 14:15:34 UTC; hadley
+Packaged: 2020-03-01 17:20:37 UTC; hadley
 Author: Hadley Wickham [aut, cre],
   RStudio [cph, fnd]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
-Date/Publication: 2019-02-17 14:40:02 UTC
-Built: R 3.5.3; ; 2019-05-22 23:36:27 UTC; windows
+Date/Publication: 2020-03-01 18:10:02 UTC
+Built: R 3.6.3; ; 2020-03-03 04:06:44 UTC; windows

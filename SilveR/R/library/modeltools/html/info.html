@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get Information on Fitted Objects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for info {modeltools}"><tr><td>info {modeltools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get Information on Fitted Objects</h2>
+
+<h3>Description</h3>
+
+<p>Returns descriptive information about fitted objects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+info(object, which, ...)
+## S4 method for signature 'ANY,missing'
+info(object, which, ...)
+infoCheck(object, which, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>fitted object.</p>
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+<p>which information to get. Use <code>which="help"</code> to list
+available information.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>passed to methods.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Function <code>info</code> can be used to access slots of fitted 
+objects in a portable way.
+</p>
+<p>Function <code>infoCheck</code> returns a logical value that is <code>TRUE</code>
+if the requested information can be computed from the <code>object</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Friedrich Leisch</p>
+
+<hr /><div style="text-align: center;">[Package <em>modeltools</em> version 0.2-23 <a href="00Index.html">Index</a>]</div>
+</body></html>

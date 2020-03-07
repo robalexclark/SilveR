@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Model Predictions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for Predict {modeltools}"><tr><td>Predict {modeltools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Model Predictions </h2>
+
+<h3>Description</h3>
+
+<p>A function for predictions from the results of various model 
+fitting functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Predict(object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p> a model object for which prediction is desired. </p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p> additional arguments affecting the predictions produced. </p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>A somewhat improved version of <code><a href="../../stats/html/predict.html">predict</a></code> for models
+fitted with objects of class <code><a href="StatModel-class.html">StatModel-class</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Should return a vector of the same type as the response variable specified
+for fitting <code>object</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+df &lt;- data.frame(x = runif(10), y = rnorm(10))
+mf &lt;- dpp(linearModel, y ~ x, data = df)
+Predict(fit(linearModel, mf))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>modeltools</em> version 0.2-23 <a href="00Index.html">Index</a>]</div>
+</body></html>

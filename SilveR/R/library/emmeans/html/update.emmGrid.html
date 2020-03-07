@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Update an 'emmGrid' object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for update.emmGrid {emmeans}"><tr><td>update.emmGrid {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Update an <code>emmGrid</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Objects of class <code>emmGrid</code> contain several settings that affect such things as
+what arguments to pass to <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>. 
+The <code>update</code> method allows safer management of these settings than
+by direct modification of its slots.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'emmGrid'
+update(object, ..., silent = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An <code>emmGrid</code> object</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Options to be set. These must match a list of known options (see
+Details)</p>
+</td></tr>
+<tr valign="top"><td><code>silent</code></td>
+<td>
+<p>Logical value. If <code>FALSE</code> (the default), a message is
+displayed if any options are not matched. If <code>TRUE</code>, no messages are
+shown.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>an updated <code>emmGrid</code> object.
+</p>
+
+
+<h3>Details</h3>
+
+<p>The names in <code>...</code> are partially matched against those that are valid, and if a match is found, it adds or replaces the current setting. The valid names are
+</p>
+
+<dl>
+<dt><code>tran</code>, <code>tran2</code></dt><dd><p>(<code>list</code> or <code>character</code>) specifies
+the transformation which, when inverted, determines the results displayed by
+<code><a href="summary.emmGrid.html">summary.emmGrid</a></code>, <code><a href="summary.emmGrid.html">predict.emmGrid</a></code>, or <code><a href="emmip.html">emmip</a></code> when
+<code>type="response"</code>. The value may be the name of a standard
+transformation from <code><a href="../../stats/html/make.link.html">make.link</a></code> or additional ones supported by
+name, such as <code>"log2"</code>; or, for a custom transformation, a <code>list</code>
+containing at least the functions <code>linkinv</code> (the inverse of the
+transformation) and <code>mu.eta</code> (the derivative thereof). The
+<code><a href="make.tran.html">make.tran</a></code> function returns such lists for a number of popular
+transformations. See the help page of <code><a href="make.tran.html">make.tran</a></code> for details as
+well as information on the additional named transformations that are
+supported. <code>tran2</code> is just like <code>tran</code> except it is a second
+transformation (i.e., a response transformation in a generalized linear
+model).</p>
+</dd>
+<dt><code>tran.mult</code></dt><dd><p>Multiple for <code>tran</code>. For example, for the
+response transformation <span class="samp">2*sqrt(y)</span> (or <span class="samp">sqrt(y) + sqrt(y + 1)</span>,
+for that matter), we should have <code>tran = "sqrt"</code> and <code>tran.mult =
+2</code>. If absent, a multiple of 1 is assumed.</p>
+</dd>
+<dt><code>tran.offset</code></dt><dd><p>Additive constant before a transformation is applied.
+For example, a response transformation of <code>log(y + pi)</code> has
+<code>tran.offset  = pi</code>. If no value is present, an offset of 0 is assumed.</p>
+</dd>
+<dt><code>estName</code></dt><dd><p>(<code>character</code>) is the column label used for
+displaying predictions or EMMs.</p>
+</dd>
+<dt><code>inv.lbl</code></dt><dd><p>(<code>character)</code>) is the column label to use for
+predictions or EMMs when <code>type="response"</code>.</p>
+</dd>
+<dt><code>by.vars</code></dt><dd><p>(<code>character)</code> vector or <code>NULL</code>) the variables
+used for grouping in the summary, and also for defining subfamilies in a call
+to <code><a href="contrast.html">contrast</a></code>.</p>
+</dd>
+<dt><code>pri.vars</code></dt><dd><p>(<code>character</code> vector) are the names of the grid
+variables that are not in <code>by.vars</code>. Thus, the combinations of their
+levels are used as columns in each table produced by <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>.</p>
+</dd>
+<dt><code>alpha</code></dt><dd><p>(numeric) is the default significance level for tests, in
+<code><a href="summary.emmGrid.html">summary.emmGrid</a></code> as well as <code><a href="plot.html">plot.emmGrid</a></code>
+when <span class="samp">CIs = TRUE</span>. Be cautious that methods that depend on
+specifying <code>alpha</code> are prone to abuse. See the
+discussion in <a href="../doc/basics.html#pvalues"><code>vignette("basics", "emmeans")</code></a>.</p>
+</dd>
+<dt><code>adjust</code></dt><dd><p>(<code>character)</code>) is the default for the <code>adjust</code>
+argument in <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>.</p>
+</dd>
+<dt><code>famSize</code></dt><dd><p>(integer) is the number of means involved in a family of
+inferences; used in Tukey adjustment</p>
+</dd>
+<dt><code>infer</code></dt><dd><p>(<code>logical</code> vector of length 2) is the default value
+of <code>infer</code> in <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>.</p>
+</dd>
+<dt><code>level</code></dt><dd><p>(numeric) is the default confidence level, <code>level</code>,
+in <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>. <em>Note:</em> You must specify all five letters 
+of &lsquo;level&rsquo; to distinguish it from the slot name &lsquo;levels&rsquo;.</p>
+</dd>
+<dt><code>df</code></dt><dd><p>(numeric) overrides the default degrees of freedom with a
+specified single value.</p>
+</dd>
+<dt><code>null</code></dt><dd><p>(numeric) null hypothesis for <code>summary</code> or
+<code>test</code> (taken to be zero if missing).</p>
+</dd>
+<dt><code>side</code></dt><dd><p>(numeric or character) <code>side</code> specification for for
+<code>summary</code> or <code>test</code> (taken to be zero if missing).</p>
+</dd>
+<dt><code>sigma</code></dt><dd><p>(numeric) Error SD to use in predictions and for bias-adjusted
+back-transformations</p>
+</dd>
+<dt><code>delta</code></dt><dd><p>(numeric) <code>delta</code> specification for <code>summary</code>
+or <code>test</code> (taken to be zero if missing).</p>
+</dd>
+<dt><code>predict.type</code> or <code>type</code></dt><dd><p>(character) sets the default method
+of displaying predictions in <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>,
+<code><a href="summary.emmGrid.html">predict.emmGrid</a></code>, and <code><a href="emmip.html">emmip</a></code>. Valid values are
+<code>"link"</code> (with synonyms <code>"lp"</code> and <code>"linear"</code>), or
+<code>"response"</code>.</p>
+</dd>
+<dt><code>bias.adjust</code>, <code>frequentist</code></dt><dd><p>(character) These
+are used by <code>summary</code> if the value of these arguments are not specified.</p>
+</dd>
+<dt><code>estType</code></dt><dd><p>(<code>character</code>) is used internally to determine 
+what <code>adjust</code> methods are appropriate. It should match one of 
+<span class="samp">c("prediction", "contrast", "pairs")</span>. As an example of why this is needed,
+the Tukey adjustment should only be used for pairwise comparisons 
+(<code>estType = "pairs"</code>); if <code>estType</code> is some other string, Tukey
+adjustments are not allowed.</p>
+</dd>
+<dt><code>avgd.over</code></dt><dd><p>(<code>character)</code> vector) are the names of the 
+variables whose levels are averaged over in obtaining marginal averages of 
+predictions, i.e., estimated marginal means. Changing this might produce a 
+misleading printout, but setting it to <code>character(0)</code> will suppress the 
+&ldquo;averaged over&rdquo; message in the summary.</p>
+</dd>
+<dt><code>initMesg</code></dt><dd><p>(<code>character</code>) is a string that is added to the
+beginning of any annotations that appear below the <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>
+display.</p>
+</dd>
+<dt><code>methDesc</code></dt><dd><p>(<code>character</code>) is a string that may be used for
+creating names for a list of <code>emmGrid</code> objects. </p>
+</dd>
+<dt><code>nesting</code></dt><dd><p>(Character or named <code>list</code>) specifies the nesting
+structure. See &ldquo;Recovering or overriding model information&rdquo; in the
+documentation for <code><a href="ref_grid.html">ref_grid</a></code>. The current nesting structure is
+displayed by <code><a href="emmGrid-methods.html">str.emmGrid</a></code>.</p>
+</dd>
+<dt><code>levels</code></dt><dd><p>named <code>list</code> of new levels for the elements of the
+current <code>emmGrid</code>. The list name(s) are used as new variable names, and
+if needed, the list is expanded using <code>expand.grid</code>. These results replace
+current variable names and levels. This specification changes the <code>levels</code>, 
+<code>grid</code>, <code>roles</code>, and <code>misc</code> slots in the updated <code>emmGrid</code>,
+and resets <code>pri.vars</code>, <code>by.vars</code>, <code>adjust</code>, <code>famSize</code>,
+<code>avgd.over</code>, and <code>nesting</code>. 
+<em>Note:</em> All six letters of <code>levels</code> is needed in order to distinguish
+it from <code>level</code>.</p>
+</dd>
+<dt>(any other slot name)</dt><dd><p>If the name matches an element of
+<code>slotNames(object)</code> other than <code>levels</code>, that slot is replaced by 
+the supplied value, if it is of the required class (otherwise an error occurs). 
+</p>
+<p>The user must be very careful in
+replacing slots because they are interrelated; for example, the lengths
+and dimensions of <code>grid</code>, <code>linfct</code>, <code>bhat</code>, and <code>V</code> must
+conform.</p>
+</dd>
+</dl>
+ 
+
+
+<h3>See Also</h3>
+
+<p><code><a href="emm_options.html">emm_options</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Using an already-transformed response:
+mypigs &lt;- transform(pigs, logconc = log(pigs$conc))
+mypigs.lm &lt;- lm(logconc ~ source + factor(percent), data = mypigs)
+
+# Reference grid that knows about the transformation:
+mypigs.rg &lt;- update(ref_grid(mypigs.lm), tran = "log", 
+                    predict.type = "response")
+emmeans(mypigs.rg, "source")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

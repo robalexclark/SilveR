@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Output of selected variables</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for selectVar {mixOmics}"><tr><td>selectVar {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Output of selected variables</h2>
+
+<h3>Description</h3>
+
+<p>This function outputs the selected variables on each component for the sparse versions of the approaches (was also generalised to the non sparse versions for our internal functions).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'mixo_pls'
+selectVar(object, comp =1, block=NULL,...)
+## S3 method for class 'pca'
+selectVar(object, comp =1, block=NULL,...)
+## S3 method for class 'mixo_spls'
+selectVar(object, comp =1, block=NULL,...)
+## S3 method for class 'sgcca'
+selectVar(object, comp =1, block=NULL, ...)
+## S3 method for class 'rgcca'
+selectVar(object, comp =1, block=NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>object of class inherited from <code>"pls"</code>, <code>"spls"</code>, <code>"plsda"</code>,<code>"splsda"</code>, <code>"pca"</code>, <code>"spca"</code>, <code>"sipca"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>comp</code></td>
+<td>
+<p>integer value indicating the component of interest.</p>
+</td></tr>
+<tr valign="top"><td><code>block</code></td>
+<td>
+<p>for an object of class <code>"sgcca"</code>, the block data sets can be specified as an input vector, for example <code>c(1,2)</code> for the first two blocks. Default to NULL (all block data sets)</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>other arguments.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>selectVar</code> provides the variables selected on a given component. \
+</p>
+
+<dl>
+<dt><code>name</code></dt><dd><p>outputs the name of the selected variables (provided that the input data have colnames) ranked in decreasing order of importance.</p>
+</dd>
+<dt><code>value</code></dt><dd><p>outputs the loading value for each selected variable, the loadings are ranked according to their absolute value.</p>
+</dd>
+</dl>
+
+<p>These functions are only implemented for the sparse versions.
+</p>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Kim-Anh Lê Cao, Florian Rohart.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+data(liver.toxicity)
+X = liver.toxicity$gene
+Y = liver.toxicity$clinic
+
+# example with sPCA
+# ------------------
+liver.spca &lt;- spca(X, ncomp = 1, keepX = 10)
+selectVar(liver.spca, comp = 1)$name
+selectVar(liver.spca, comp = 1)$value
+
+## Not run: 
+#example with sIPCA
+# -----------------
+
+liver.sipca &lt;- sipca(X, ncomp = 3, keepX = rep(10, 3))
+selectVar(liver.sipca, comp = 1)
+
+# example with sPLS
+# -----------------
+
+liver.spls = spls(X, Y, ncomp = 2, keepX = c(20, 40),keepY = c(5, 5))
+selectVar(liver.spls, comp = 2)
+
+# example with sPLS-DA
+data(srbct)   # an example with no gene name in the data
+X = srbct$gene
+Y = srbct$class
+
+srbct.splsda = splsda(X, Y, ncomp = 2, keepX = c(5, 10))
+select = selectVar(srbct.splsda, comp = 2)
+select
+# this is a very specific case where a data set has no rownames.
+srbct$gene.name[substr(select$select, 2,5),]
+
+
+# example with sGCCA
+# -----------------
+
+data(nutrimouse)
+
+# ! need to unmap the Y factor
+Y = unmap(nutrimouse$diet)
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid,Y)
+# in this design, gene expression and lipids are connected to the diet factor
+# and gene expression and lipids are also connected
+design = matrix(c(0,1,1,
+1,0,1,
+1,1,0), ncol = 3, nrow = 3, byrow = TRUE)
+#note: the penalty parameters need to be tuned
+wrap.result.sgcca = wrapper.sgcca(X = data, design = design, penalty = c(.3,.3, 1),
+ncomp = 2,
+scheme = "horst")
+
+#variables selected and loadings values on component 1 for the two blocs
+selectVar(wrap.result.sgcca, comp = 1, block = c(1,2))
+
+#variables selected on component 1 for each block
+selectVar(wrap.result.sgcca, comp = 1, block = c(1,2))$'gene'$name
+selectVar(wrap.result.sgcca, comp = 1, block = c(1,2))$'lipid'$name
+
+#variables selected on component 2 for each block
+selectVar(wrap.result.sgcca, comp = 2, block = c(1,2))$'gene'$name
+selectVar(wrap.result.sgcca, comp = 2, block = c(1,2))$'lipid'$name
+
+# loading value of the variables selected on the first block
+selectVar(wrap.result.sgcca, comp = 1, block = 1)$'gene'$value
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.10.8 <a href="00Index.html">Index</a>]</div>
+</body></html>

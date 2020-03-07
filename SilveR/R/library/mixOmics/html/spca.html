@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Sparse Principal Components Analysis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for spca {mixOmics}"><tr><td>spca {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Sparse Principal Components Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Performs a sparse principal components analysis to perform variable selection by using singular value decomposition.</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+spca(X, ncomp = 2, center = TRUE, scale = TRUE,
+keepX = rep(ncol(X),ncomp), max.iter = 500,
+tol = 1e-06, logratio = 'none',  # one of ('none','CLR')
+multilevel = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>a numeric matrix (or data frame) which provides the
+data for the sparse principal components analysis.</p>
+</td></tr>
+<tr valign="top"><td><code>ncomp</code></td>
+<td>
+<p>integer, the number of components to keep.</p>
+</td></tr>
+<tr valign="top"><td><code>center</code></td>
+<td>
+<p>a logical value indicating whether the variables should be shifted to be zero centered.
+Alternatively, a vector of length equal the number of columns of <code>X</code> can be supplied.
+The value is passed to <code><a href="../../base/html/scale.html">scale</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+<p>a logical value indicating whether the variables should be scaled to have
+unit variance before the analysis takes place. The default is <code>TRUE</code>. See details.</p>
+</td></tr>
+<tr valign="top"><td><code>max.iter</code></td>
+<td>
+<p>integer, the maximum number of iterations to check convergence in each component.</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>a positive real, the tolerance used in the iterative algorithm.</p>
+</td></tr>
+<tr valign="top"><td><code>keepX</code></td>
+<td>
+<p>numeric vector of length ncomp, the number of variables to keep in loading vectors. By default all
+variables are kept in the model. See details.</p>
+</td></tr>
+<tr valign="top"><td><code>logratio</code></td>
+<td>
+<p>one of ('none','CLR'). Specifies the log ratio transformation to deal with compositional values that may arise from specific normalisation in sequencing data. Default to 'none'</p>
+</td></tr>
+<tr valign="top"><td><code>multilevel</code></td>
+<td>
+<p>sample information for multilevel decomposition for repeated measurements.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The calculation employs singular value decomposition of the (centered and scaled) data matrix and LASSO to generate
+sparsity on the loading vectors.
+</p>
+<p><code>scale= TRUE</code> is highly recommended as it will help obtaining orthogonal sparse loading vectors.
+</p>
+<p><code>keepX</code> is the number of variables to keep in loading vectors. The difference between number of columns
+of <code>X</code> and <code>keepX</code> is the degree of sparsity, which refers to the number of zeros in each loading vector.
+</p>
+<p>Note that <code>spca</code> does not apply to the data matrix with missing values. The biplot function for <code>spca</code> is not available.
+</p>
+<p>According to Filzmoser et al., a ILR log ratio transformation is more appropriate for PCA with compositional data. Both CLR and ILR are valid.
+</p>
+<p>Logratio transform and multilevel analysis are performed sequentially as internal pre-processing step, through <code><a href="logratio.transfo.html">logratio.transfo</a></code> and <code><a href="withinVariation.html">withinVariation</a></code> respectively.
+</p>
+<p>Logratio can only be applied if the data do not contain any 0 value (for count data, we thus advise the normalise raw data with a 1 offset). For ILR transformation and additional offset might be needed.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>spca</code> returns a list with class <code>"spca"</code> containing the following components:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>ncomp</code></td>
+<td>
+<p>the number of components to keep in the calculation.</p>
+</td></tr>
+<tr valign="top"><td><code>varX</code></td>
+<td>
+<p>the adjusted cumulative percentage of variances explained.</p>
+</td></tr>
+<tr valign="top"><td><code>keepX</code></td>
+<td>
+<p>the number of variables kept in each loading vector.</p>
+</td></tr>
+<tr valign="top"><td><code>iter</code></td>
+<td>
+<p>the number of iterations needed to reach convergence for each component.</p>
+</td></tr>
+<tr valign="top"><td><code>rotation</code></td>
+<td>
+<p>the matrix containing the sparse loading vectors.</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>the matrix containing the principal components.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Kim-Anh Lê Cao, Fangzhou Yao, Leigh Coonan</p>
+
+
+<h3>References</h3>
+
+<p>Shen, H. and Huang, J. Z. (2008). Sparse principal component analysis via regularized
+low rank matrix approximation. <em>Journal of Multivariate Analysis</em> <b>99</b>, 1015-1034.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="pca.html">pca</a></code> and http://www.mixOmics.org for more details.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(liver.toxicity)
+spca.rat &lt;- spca(liver.toxicity$gene, ncomp = 3, keepX = rep(50, 3))
+spca.rat
+
+## variable representation
+plotVar(spca.rat, cex = 0.5)
+## Not run: 
+plotVar(spca.rat,style="3d")
+
+## End(Not run)
+
+## Not run: 
+## samples representation
+plotIndiv(spca.rat, ind.names = liver.toxicity$treatment[, 3],
+group = as.numeric(liver.toxicity$treatment[, 3]))
+plotIndiv(spca.rat, cex = 0.01,
+col = as.numeric(liver.toxicity$treatment[, 3]),style="3d")
+
+
+# example with multilevel decomposition and CLR log ratio transformation
+# ----------------
+
+data("diverse.16S")
+pca.res = pca(X = diverse.16S$data.TSS, ncomp = 5,
+logratio = 'CLR', multilevel = diverse.16S$sample)
+plot(pca.res)
+plotIndiv(pca.res, ind.names = FALSE, group = diverse.16S$bodysite, title = '16S diverse data',
+legend=TRUE)
+
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.10.8 <a href="00Index.html">Index</a>]</div>
+</body></html>

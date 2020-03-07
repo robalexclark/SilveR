@@ -1,5 +1,5 @@
 Package: SparseM
-Version: 1.77
+Version: 1.78
 Author: Roger Koenker <rkoenker@uiuc.edu> and Pin Ng <Pin.Ng@NAU.EDU>
 Maintainer: Roger Koenker <rkoenker@uiuc.edu>
 Depends: R (>= 2.15), methods
@@ -12,7 +12,7 @@ Title: Sparse Linear Algebra
 URL: http://www.econ.uiuc.edu/~roger/research/sparse/sparse.html
 NeedsCompilation: yes
 Repository: CRAN
-Packaged: 2017-04-23 17:52:11 UTC; roger
-Date/Publication: 2017-04-23 18:26:30 UTC
-Built: R 3.5.2; x86_64-w64-mingw32; 2018-12-26 00:47:42 UTC; windows
+Packaged: 2019-12-12 17:25:30 UTC; roger
+Date/Publication: 2019-12-13 09:10:07 UTC
+Built: R 3.6.2; x86_64-w64-mingw32; 2019-12-20 18:41:05 UTC; windows
 Archs: i386, x64

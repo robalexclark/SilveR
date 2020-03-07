@@ -1,0 +1,17 @@
+lsmeans-package	lsmeans-package
+auto.noise	auto.noise
+contrast	ref.grid
+emmeans-transition	transition
+feedlot	auto.noise
+fiber	auto.noise
+lsm.basis	ref.grid
+lsmeans	ref.grid
+lsmobj-class	ref.grid-class
+MOats	auto.noise
+nutrition	auto.noise
+oranges	auto.noise
+recover.data	ref.grid
+ref.grid	ref.grid
+ref.grid-class	ref.grid-class
+summary.ref.grid	ref.grid
+transition	transition

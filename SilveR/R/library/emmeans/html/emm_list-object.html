@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: The 'emm_list' class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for emm_list {emmeans}"><tr><td>emm_list {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>The <code>emm_list</code> class</h2>
+
+<h3>Description</h3>
+
+<p>An <code>emm_list</code> object is simply a list of
+<code><a href="emmGrid-class.html">emmGrid</a></code> objects. Such a list is returned,
+for example, by <code><a href="emmeans.html">emmeans</a></code> with a two-sided formula or a list as its
+<code>specs</code> argument.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Methods for <code>emm_list</code> objects include <code>summary</code>, <code>CLD</code>,
+<code>coef</code>, <code>confint</code>, <code>contrast</code>, <code>pairs</code>, <code>plot</code>,
+<code>print</code>, and
+<code>test</code>. These are all the same as those methods for <code>emmGrid</code>
+objects, with an additional <code>which</code> argument (integer) to specify which 
+members of the list to use. The default is <code>which = seq_along(object)</code>;
+i.e., the method is applied to every member of the <code>emm_list</code> object.
+The exception is <code>plot</code>, where only the <code>which[1]</code>th element is 
+plotted.
+</p>
+<p>As an example,
+to summarize a single member &ndash; say the second one &ndash; of an <code>emm_list</code>, 
+one may use <code>summary(object, which = 2)</code>, but it is probably preferable 
+to directly summarize it using <code>summary(object[[2]])</code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

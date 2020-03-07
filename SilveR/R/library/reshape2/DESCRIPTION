@@ -19,5 +19,5 @@ NeedsCompilation: yes
 Packaged: 2017-12-10 22:04:42 UTC; hadley
 Repository: CRAN
 Date/Publication: 2017-12-11 16:47:57 UTC
-Built: R 3.5.3; x86_64-w64-mingw32; 2019-05-22 21:35:26 UTC; windows
+Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-03 02:20:10 UTC; windows
 Archs: i386, x64

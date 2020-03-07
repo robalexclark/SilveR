@@ -27,6 +27,8 @@ coxph.control           Ancillary arguments for controlling coxph fits
 coxph.detail            Details of a Cox Model Fit
 coxph.object            Proportional Hazards Regression Object
 coxph.wtest             Compute a quadratic form
+coxsurv.fit             A direct interface to the 'computational
+                        engine' of survfit.coxph
 diabetic                Ddiabetic retinopathy
 dsurvreg                Distributions available in survreg.
 finegray                Create data for a Fine-Gray model
@@ -46,6 +48,7 @@ mgus2                   Monoclonal gammopathy data
 model.frame.coxph       Model.frame method for coxph objects
 model.matrix.coxph      Model.matrix method for coxph models
 myeloid                 Acute myeloid leukemia
+nafld1                  Non-alcohol fatty liver disease
 neardate                Find the index of the closest value in data set
                         2, for each entry in data set one.
 nwtco                   Data from the National Wilm's Tumor Study
@@ -87,6 +90,7 @@ summary.survexp         Summary function for a survexp object
 summary.survfit         Summary of a Survival Curve
 survConcordance         Compute a concordance measure.
 survSplit               Split a survival data set at specified times
+survcheck               Checks of a survival data set
 survdiff                Test Survival Curve Differences
 survexp                 Compute Expected Survival
 survexp.fit             Compute Expected Survival
@@ -99,6 +103,7 @@ survfit.formula         Compute a Survival Curve for Censored Data
 survfit.matrix          Create Aalen-Johansen estimates of multi-state
                         survival from a matrix of hazards.
 survfit.object          Survival Curve Object
+survfit0                Convert the format of a survfit object.
 survfitcoxph.fit        A direct interface to the 'computational
                         engine' of survfit.coxph
 survobrien              O'Brien's Test for Association of a Single

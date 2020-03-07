@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: circosPlot for DIABLO</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for circosPlot {mixOmics}"><tr><td>circosPlot {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>circosPlot for DIABLO</h2>
+
+<h3>Description</h3>
+
+<p>Displays variable correlation among different blocks
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+circosPlot(object,
+comp = 1 : min(object$ncomp),
+cutoff,
+color.Y,
+color.blocks,
+color.cor,
+var.names = NULL,
+showIntraLinks = FALSE,
+line = TRUE,
+size.legend = 0.8,
+ncol.legend = 1,
+size.variables = 0.25,
+size.labels = 1,
+legend = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class inheriting from <code>"block.splsda"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>comp</code></td>
+<td>
+<p>Numeric vector indicating which component to plot. Default to all</p>
+</td></tr>
+<tr valign="top"><td><code>cutoff</code></td>
+<td>
+<p>Only shows links with a correlation higher than <code>cutoff</code></p>
+</td></tr>
+<tr valign="top"><td><code>color.Y</code></td>
+<td>
+<p>a character vector of colors to be used for the levels of the outcome</p>
+</td></tr>
+<tr valign="top"><td><code>color.blocks</code></td>
+<td>
+<p>a character vector of colors to be used for the blocks</p>
+</td></tr>
+<tr valign="top"><td><code>color.cor</code></td>
+<td>
+<p>a character vector of two colors. First one is for the negative correlation, second one is for the positive correlation</p>
+</td></tr>
+<tr valign="top"><td><code>var.names</code></td>
+<td>
+<p>Optional parameter. A list of length the number of blocks in <code>object$X</code>, containing the names of the variables of each block.
+If <code>NULL</code>, the colnames of the data matrix are used.</p>
+</td></tr>
+<tr valign="top"><td><code>showIntraLinks</code></td>
+<td>
+<p>if TRUE, shows the correlation higher than the threshold inside each block.</p>
+</td></tr>
+<tr valign="top"><td><code>line</code></td>
+<td>
+<p>if TRUE, shows the overall expression of the selected variables. see examples.</p>
+</td></tr>
+<tr valign="top"><td><code>size.legend</code></td>
+<td>
+<p>size of the legend</p>
+</td></tr>
+<tr valign="top"><td><code>ncol.legend</code></td>
+<td>
+<p>number of columns for the legend</p>
+</td></tr>
+<tr valign="top"><td><code>size.variables</code></td>
+<td>
+<p>size of the variable labels</p>
+</td></tr>
+<tr valign="top"><td><code>size.labels</code></td>
+<td>
+<p>size of the block labels</p>
+</td></tr>
+<tr valign="top"><td><code>legend</code></td>
+<td>
+<p>boolean. Whether the legend should be added. Default is TRUE.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>circosPlot</code> function depicts correlations of variables selected with <code>block.splsda</code> among different blocks, using a generalisation of the method presented in González et al 2012.
+If <code>ncomp</code> is specified, then only the variables selected on that component are displayed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If saved in an object, the circos plot will output the similarity matrix and the names of the variables displayed on the plot (see <code>attributes(object)</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Michael Vacher, Amrit Singh, Florian Rohart, Kim-Anh Lê Cao</p>
+
+
+<h3>References</h3>
+
+<p>Singh A., Gautier B., Shannon C., Vacher M., Rohart F., Tebbutt S. and Lê Cao K.A. (2016).
+DIABLO:  multi omics integration for biomarker discovery. BioRxiv available here: <a href="http://biorxiv.org/content/early/2016/08/03/067611">http://biorxiv.org/content/early/2016/08/03/067611</a>
+</p>
+<p>mixOmics article:
+</p>
+<p>Rohart F, Gautier B, Singh A, Lê Cao K-A. mixOmics: an R package for 'omics feature selection and multiple data integration. PLoS Comput Biol 13(11): e1005752
+</p>
+<p>González I., Lê Cao K.A., Davis M.J., Déjean S. (2012). Visualising associations between
+paired 'omics' data sets. <em>BioData Mining</em>; <b>5</b>(1).
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="block.splsda.html">block.splsda</a></code>, references and http://www.mixOmics.org/mixDIABLO for more details.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(nutrimouse)
+Y = nutrimouse$diet
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid)
+design = matrix(c(0,1,1,1,0,1,1,1,0), ncol = 3, nrow = 3, byrow = TRUE)
+
+
+nutrimouse.sgccda &lt;- wrapper.sgccda(X=data,
+Y = Y,
+design = design,
+keepX = list(gene=c(10,10), lipid=c(15,15)),
+ncomp = 2,
+scheme = "horst")
+
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, ncol.legend = 2, size.legend = 1.1)
+
+## Not run: 
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, ncol.legend = 2, size.legend = 1.1,
+color.Y = 1:5, color.blocks = c("green","brown"), color.cor = c("magenta", "purple"))
+
+par(mfrow=c(2,2))
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, ncol.legend = 2,
+size.legend = 1.1)
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, ncol.legend = 2,
+size.legend = 1.1, showIntraLinks = TRUE)
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, ncol.legend = 1,
+size.legend = 1.1, showIntraLinks = TRUE)
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, ncol.legend = 2,
+size.legend = 1.1, showIntraLinks = TRUE, line = FALSE, size.variables = 0.5)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.10.8 <a href="00Index.html">Index</a>]</div>
+</body></html>

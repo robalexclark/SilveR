@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reconstruct a reference grid with a new transformation or...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for regrid {emmeans}"><tr><td>regrid {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reconstruct a reference grid with a new transformation or posterior sample</h2>
+
+<h3>Description</h3>
+
+<p>The typical use of this function is to cause EMMs to be computed on
+a different scale, e.g., the back-transformed scale rather than the 
+linear-predictor scale. In other words, if you want back-transformed 
+results, do you want to average and then back-transform, or 
+back-transform and then average?
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+regrid(object, transform = c("response", "mu", "unlink", "none", "pass",
+  links), inv.link.lbl = "response", predict.type,
+  bias.adjust = get_emm_option("back.bias.adj"), sigma, N.sim,
+  sim = mvtnorm::rmvnorm, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code></p>
+</td></tr>
+<tr valign="top"><td><code>transform</code></td>
+<td>
+<p>Character, list, or logical value. If <code>"response"</code>,
+<code>"mu"</code>, or <code>TRUE</code>, the inverse transformation is applied to the
+estimates in the grid (but if there is both a link function and a response
+transformation, <code>"mu"</code> back-transforms only the link part); if
+<code>"none"</code> or <code>FALSE</code>, <code>object</code> is re-gridded so that its
+<code>bhat</code> slot contains <code>predict(object)</code> and its <code>linfct</code> slot
+is the identity. Any internal transformation information is preserved. If
+<code>transform = "pass"</code>, the object is not re-gridded in any way (this
+may be useful in conjunction with <code>N.sim</code>).
+</p>
+<p>If <code>transform</code> is a character value in <code>links</code> (which is the set
+of valid arguments for the <code><a href="../../stats/html/make.link.html">make.link</a></code> function, excepting
+<code>"identity"</code>), or if <code>transform</code> is a list of the same form as
+returned by <code>make.links</code> or <code><a href="make.tran.html">make.tran</a></code>, the results are
+formulated as if the response had been transformed with that link function.</p>
+</td></tr>
+<tr valign="top"><td><code>inv.link.lbl</code></td>
+<td>
+<p>Character value. This applies only when <code>transform</code> 
+is in <code>links</code>, and is used to label the predictions if subsequently summarized
+with <code>type = "response"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>predict.type</code></td>
+<td>
+<p>Character value. If provided, the returned object is
+updated with the given type to use by default by <code>summary.emmGrid</code>
+(see <code><a href="update.emmGrid.html">update.emmGrid</a></code>).  This may be useful if, for example,
+when one specifies <code>transform = "log"</code> but desires summaries to be
+produced by default on the response scale.</p>
+</td></tr>
+<tr valign="top"><td><code>bias.adjust</code></td>
+<td>
+<p>Logical value for whether to adjust for bias in
+back-transforming (<code>transform = "response"</code>). This requires a value of 
+<code>sigma</code> to exist in the object or be specified.</p>
+</td></tr>
+<tr valign="top"><td><code>sigma</code></td>
+<td>
+<p>Error SD assumed for bias correction (when 
+<code>transform = "response"</code> and a transformation
+is in effect). If not specified,
+<code>object@misc$sigma</code> is used, and an error is thrown if it is not found.</p>
+</td></tr>
+<tr valign="top"><td><code>N.sim</code></td>
+<td>
+<p>Integer value. If specified and <code>object</code> is based on a 
+frequentist model (i.e., does not have a posterior sample), then a fake 
+posterior sample is generated using the function <code>sim</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>sim</code></td>
+<td>
+<p>A function of three arguments (no names are assumed).
+If <code>N.sim</code> is supplied with a frequentist model, this function is called
+with respective arguments <code>N.sim</code>, <code>object@bhat</code>, and <code>object@V</code>.
+The default is the multivariate normal distribution.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Ignored.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>regrid</code> function reparameterizes an existing <code>ref.grid</code> so
+that its <code>linfct</code> slot is the identity matrix and its <code>bhat</code> slot
+consists of the estimates at the grid points. If <code>transform</code> is
+<code>TRUE</code>, the inverse transform is applied to the estimates. Outwardly,
+when <code>transform = "response"</code>, the result of <code><a href="summary.emmGrid.html">summary.emmGrid</a></code>
+after applying <code>regrid</code> is identical to the summary of the original
+object using <span class="samp">type="response"</span>. But subsequent EMMs or
+contrasts will be conducted on the new scale &ndash; which is
+the reason this function exists. 
+</p>
+<p>This function may also be used to convert a reference grid for a 
+frequentist model to one for a Bayesian model. To do so, specify a value
+for <code>N.sim</code> and a posterior sample is simulated using the function <code>sim</code>.
+. The grid may be further processed in accordance with
+the other arguments; or if <code>transform = "pass"</code>, it is simply returned with the 
+only change being the addition of the posterior sample.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>emmGrid</code> object with the requested changes
+</p>
+
+
+<h3>Degrees of freedom</h3>
+
+<p>In cases where the
+degrees of freedom depended on the linear function being estimated (e.g.,
+Satterthwaite method), the d.f.
+from the reference grid are saved, and a kind of &ldquo;containment&rdquo; method
+is substituted in the returned object, whereby the calculated d.f. for a new
+linear function will be the minimum d.f. among those having nonzero
+coefficients. This is kind of an <em>ad hoc</em> method, and it can
+over-estimate the degrees of freedom in some cases. An annotation is
+displayed below any subsequent summary results stating that the 
+degrees-of-freedom method is inherited from the previous method at
+the time of re-gridding.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Another way to use <code>regrid</code> is to supply a <code>transform</code> 
+argument to <code><a href="ref_grid.html">ref_grid</a></code> (either directly of indirectly via
+<code><a href="emmeans.html">emmeans</a></code>). This is often a simpler approach if the reference
+grid has not already been constructed.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+pigs.lm &lt;- lm(log(conc) ~ source + factor(percent), data = pigs)
+rg &lt;- ref_grid(pigs.lm)
+
+# This will yield EMMs as GEOMETRIC means of concentrations:
+(emm1 &lt;- emmeans(rg, "source", type = "response"))
+pairs(emm1) ## We obtain RATIOS
+
+# This will yield EMMs as ARITHMETIC means of concentrations:
+(emm2 &lt;- emmeans(regrid(rg, transform = "response"), "source"))
+pairs(emm2)  ## We obtain DIFFERENCES
+# Same result, useful if we hadn't already created 'rg'
+# emm2 &lt;- emmeans(pigs.lm, "source", transform = "response")
+
+# Simulate a posterior sample
+set.seed(2.71828)
+rgb &lt;- regrid(rg, N.sim = 200, transform = "pass")
+emmeans(rgb, "source", type = "response")  ## similar to emm1
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

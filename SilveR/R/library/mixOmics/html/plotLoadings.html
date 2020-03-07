@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot of Loading vectors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for plotLoadings {mixOmics}"><tr><td>plotLoadings {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot of Loading vectors</h2>
+
+<h3>Description</h3>
+
+<p>This function provides a horizontal bar plot to visualise loading vectors. For discriminant analysis, it provides visualisation of highest or lowest mean/median value of the variables with color code corresponding to the outcome of interest.</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'mixo_pls'
+plotLoadings(object, block, comp = 1, col = NULL, ndisplay = NULL,
+size.name = 0.7, name.var = NULL, name.var.complete = FALSE, title = NULL, subtitle,
+size.title = rel(2), size.subtitle = rel(1.5), layout = NULL, border = NA,
+xlim = NULL, ... )
+
+## S3 method for class 'mint.pls'
+plotLoadings(object, study = "global", comp = 1, col = NULL, ndisplay = NULL,
+size.name = 0.7, name.var = NULL, name.var.complete = FALSE, title = NULL, subtitle,
+size.title = rel(1.8), size.subtitle = rel(1.4), layout = NULL, border = NA,
+xlim = NULL, ... )
+
+## S3 method for class 'mixo_plsda'
+plotLoadings(object, contrib, method = "mean", block, comp = 1,
+plot = TRUE, show.ties = TRUE, col.ties="white", ndisplay = NULL, size.name = 0.7,
+size.legend = 0.8, name.var=NULL, name.var.complete=FALSE, title = NULL,
+subtitle, size.title = rel(1.8), size.subtitle = rel(1.4),
+legend = TRUE, legend.color = NULL, legend.title = 'Outcome',
+layout = NULL, border = NA, xlim = NULL, ... )
+
+## S3 method for class 'mint.plsda'
+plotLoadings(object, contrib = NULL, method = "mean",
+study = "global", comp = 1, plot = TRUE, show.ties = TRUE, col.ties = "white",
+ndisplay = NULL, size.name = 0.7, size.legend = 0.8, name.var = NULL,
+name.var.complete = FALSE, title = NULL, subtitle, size.title = rel(1.8),
+size.subtitle = rel(1.4), legend = TRUE, legend.color = NULL,
+legend.title = 'Outcome', layout = NULL, border = NA, xlim = NULL, ... )
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>object</p>
+</td></tr>
+<tr valign="top"><td><code>contrib</code></td>
+<td>
+<p>a character set to 'max' or 'min' indicating if the color of the bar should correspond to the group with the maximal or minimal expression levels / abundance.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>a character set to 'mean' or 'median' indicating the criterion to assess the contribution. We recommend using median in the case of count or skewed data.</p>
+</td></tr>
+<tr valign="top"><td><code>study</code></td>
+<td>
+<p>Indicates which study are to be plotted.  A character vector containing some levels of <code>object$study</code>, &quot;all.partial&quot; to plot all studies or &quot;global&quot; is expected.</p>
+</td></tr>
+<tr valign="top"><td><code>block</code></td>
+<td>
+<p>A single value indicating which block to consider in a <code>sgccda</code> object.</p>
+</td></tr>
+<tr valign="top"><td><code>comp</code></td>
+<td>
+<p>integer value indicating the component of interest from the object.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>color used in the barplot, only for object from non Discriminant analysis</p>
+</td></tr>
+<tr valign="top"><td><code>plot</code></td>
+<td>
+<p>Boolean indicating of the plot should be output. If set to FALSE the user can extract the contribution matrix, see example. Default value is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>show.ties</code></td>
+<td>
+<p>Boolean. If TRUE then tie groups appear in the color set by <code>col.ties</code>, which will appear in the legend. Ties can happen when dealing with count data type. By default set to TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>col.ties</code></td>
+<td>
+<p>Color corresponding to ties, only used if <code>show.ties=TRUE</code> and ties are present.</p>
+</td></tr>
+<tr valign="top"><td><code>ndisplay</code></td>
+<td>
+<p>integer indicating how many of the most important variables are to be plotted (ranked by decreasing weights in each PLS-component). Useful to lighten a graph.</p>
+</td></tr>
+<tr valign="top"><td><code>size.name</code></td>
+<td>
+<p>A numerical value giving the amount by which plotting the variable name text should be magnified or reduced relative to the default.</p>
+</td></tr>
+<tr valign="top"><td><code>size.legend</code></td>
+<td>
+<p>A numerical value giving the amount by which plotting the legend text should be magnified or reduced relative to the default.</p>
+</td></tr>
+<tr valign="top"><td><code>name.var</code></td>
+<td>
+<p>A character vector indicating the names of the variables. The names of the vector should match the names of the input data, see example.</p>
+</td></tr>
+<tr valign="top"><td><code>name.var.complete</code></td>
+<td>
+<p>Boolean. If <code>name.var</code> is supplied with some empty names, <code>name.var.complete</code> allows you to use the initial variable names to complete the graph (from colnames(X)). Defaut to FALSE. </p>
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+<p>A set of characters to indicate the title of the plot. Default value is NULL.</p>
+</td></tr>
+<tr valign="top"><td><code>subtitle</code></td>
+<td>
+<p>subtitle for each plot, only used when several <code>block</code> or <code>study</code> are plotted.</p>
+</td></tr>
+<tr valign="top"><td><code>size.title</code></td>
+<td>
+<p>size of the title</p>
+</td></tr>
+<tr valign="top"><td><code>size.subtitle</code></td>
+<td>
+<p>size of the subtitle</p>
+</td></tr>
+<tr valign="top"><td><code>legend</code></td>
+<td>
+<p>Boolean indicating if the legend indicating the group outcomes should be added to the plot. Default value is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>legend.color</code></td>
+<td>
+<p>A color vector of length the number of group outcomes. See examples.</p>
+</td></tr>
+<tr valign="top"><td><code>legend.title</code></td>
+<td>
+<p>A set of characters to indicate the title of the legend. Default value is NULL.</p>
+</td></tr>
+<tr valign="top"><td><code>layout</code></td>
+<td>
+<p>Vector of two values (rows,cols) that indicates the layout of the plot. If <code>layout</code> is provided, the remaining empty subplots are still active</p>
+</td></tr>
+<tr valign="top"><td><code>border</code></td>
+<td>
+<p>Argument from <code><a href="../../graphics/html/barplot.html">barplot</a></code>: indicates whether to draw a border on the barplot.</p>
+</td></tr>
+<tr valign="top"><td><code>xlim</code></td>
+<td>
+<p>Argument from <code><a href="../../graphics/html/barplot.html">barplot</a></code>: limit of the x-axis. When plotting several <code>block</code>, a matrix is expected where each row is the <code>xlim</code> used for each of the blocks.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>not used.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The contribution of each variable for each component (depending on the object) is represented in a barplot where each bar length corresponds to the loading weight (importance) of the feature. The loading weight can be positive or negative.
+</p>
+<p>For discriminant analysis, the color corresponds to the group in which the feature is most 'abundant'.  Note that this type of graphical output is particularly insightful for count microbial data - in that latter case using the <code>method = 'median'</code> is advised.
+Note also that if the parameter <code>contrib</code> is not provided, plots are white.
+</p>
+<p>For MINT analysis, <code>study="global"</code> plots the global loadings while partial loadings are plotted when <code>study</code> is a level of <code>object$study</code>. Since variable selection in MINT is performed at the global level, only the selected variables are plotted for the partial loadings even if the partial loadings are not sparse. See references.
+Importantly for multi plots, the legend accounts for one subplot in the layout design.
+</p>
+
+
+<h3>Value</h3>
+
+<p>none</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Florian Rohart, Kim-Anh Lê Cao, Benoit Gautier</p>
+
+
+<h3>References</h3>
+
+<p>Rohart F. et al (2016, submitted). MINT: A multivariate integrative approach to identify a reproducible biomarker signature across multiple experiments and platforms.
+</p>
+<p>Eslami, A., Qannari, E. M., Kohler, A., and Bougeard, S. (2013). Multi-group PLS Regression: Application to Epidemiology.
+In New Perspectives in Partial Least Squares and Related Methods, pages 243-255. Springer.
+</p>
+<p>Singh A., Gautier B., Shannon C., Vacher M., Rohart F., Tebbutt S. and Lê Cao K.A. (2016).
+DIABLO - multi omics integration for biomarker discovery.
+</p>
+<p>Lê Cao, K.-A., Martin, P.G.P., Robert-Granie, C. and Besse, P. (2009). Sparse canonical methods
+for biological data integration: application to a cross-platform study. <em>BMC Bioinformatics</em> <b>10</b>:34.
+</p>
+<p>Tenenhaus, M. (1998). <em>La regression PLS: theorie et pratique</em>. Paris: Editions Technic.
+</p>
+<p>Wold H. (1966). Estimation of principal components and related models by iterative least squares.
+In: Krishnaiah, P. R. (editors), <em>Multivariate Analysis</em>. Academic Press, N.Y., 391-420.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="pls.html">pls</a></code>, <code><a href="spls.html">spls</a></code>, <code><a href="plsda.html">plsda</a></code>, <code><a href="splsda.html">splsda</a></code>,
+<code><a href="mint.pls.html">mint.pls</a></code>, <code><a href="mint.spls.html">mint.spls</a></code>, <code><a href="mint.plsda.html">mint.plsda</a></code>, <code><a href="mint.splsda.html">mint.splsda</a></code>,
+<code><a href="block.pls.html">block.pls</a></code>, <code><a href="block.spls.html">block.spls</a></code>, <code><a href="block.plsda.html">block.plsda</a></code>, <code><a href="block.splsda.html">block.splsda</a></code>,
+<code><a href="mint.block.pls.html">mint.block.pls</a></code>, <code><a href="mint.block.spls.html">mint.block.spls</a></code>, <code><a href="mint.block.plsda.html">mint.block.plsda</a></code>, <code><a href="mint.block.splsda.html">mint.block.splsda</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## object of class 'spls'
+# --------------------------
+data(liver.toxicity)
+X = liver.toxicity$gene
+Y = liver.toxicity$clinic
+
+toxicity.spls = spls(X, Y, ncomp = 2, keepX = c(50, 50),
+keepY = c(10, 10))
+
+plotLoadings(toxicity.spls)
+
+# with xlim
+xlim = matrix(c(-0.1,0.3, -0.4,0.6), nrow = 2, byrow = TRUE)
+plotLoadings(toxicity.spls, xlim = xlim)
+
+
+## Not run: 
+## object of class 'splsda'
+# --------------------------
+data(liver.toxicity)
+X = as.matrix(liver.toxicity$gene)
+Y = as.factor(liver.toxicity$treatment[, 4])
+
+splsda.liver = splsda(X, Y, ncomp = 2, keepX = c(20, 20))
+
+# contribution on comp 1, based on the median.
+# Colors indicate the group in which the median expression is maximal
+plotLoadings(splsda.liver, comp = 1, method = 'median')
+plotLoadings(splsda.liver, comp = 1, method = 'median', contrib = "max")
+
+# contribution on comp 2, based on median.
+#Colors indicate the group in which the median expression is maximal
+plotLoadings(splsda.liver, comp = 2, method = 'median', contrib = "max")
+
+# contribution on comp 2, based on median.
+# Colors indicate the group in which the median expression is minimal
+plotLoadings(splsda.liver, comp = 2, method = 'median', contrib = 'min')
+
+# changing the name to gene names
+# if the user input a name.var but names(name.var) is NULL,
+# then a warning will be output and assign names of name.var to colnames(X)
+# this is to make sure we can match the name of the selected variables to the contribution plot.
+name.var = liver.toxicity$gene.ID[, 'geneBank']
+length(name.var)
+plotLoadings(splsda.liver, comp = 2, method = 'median', name.var = name.var,
+title = "Liver data", contrib = "max")
+
+# if names are provided: ok, even when NAs
+name.var = liver.toxicity$gene.ID[, 'geneBank']
+names(name.var) = rownames(liver.toxicity$gene.ID)
+plotLoadings(splsda.liver, comp = 2, method = 'median',
+name.var = name.var, size.name = 0.5, contrib = "max")
+
+#missing names of some genes? complete with the original names
+plotLoadings(splsda.liver, comp = 2, method = 'median',
+name.var = name.var, size.name = 0.5,complete.name.var=TRUE, contrib = "max")
+
+# look at the contribution (median) for each variable
+plot.contrib = plotLoadings(splsda.liver, comp = 2, method = 'median', plot = FALSE,
+contrib = "max")
+head(plot.contrib$contrib)
+# change the title of the legend and title name
+plotLoadings(splsda.liver, comp = 2, method = 'median', legend.title = 'Time',
+title = 'Contribution plot', contrib = "max")
+
+# no legend
+plotLoadings(splsda.liver, comp = 2, method = 'median', legend = FALSE, contrib = "max")
+
+# change the color of the legend
+plotLoadings(splsda.liver, comp = 2, method = 'median', legend.color = c(1:4), contrib = "max")
+
+
+
+# object 'splsda multilevel'
+# -----------------
+
+data(vac18)
+X = vac18$genes
+Y = vac18$stimulation
+# sample indicates the repeated measurements
+sample = vac18$sample
+stimul = vac18$stimulation
+
+# multilevel sPLS-DA model
+res.1level = splsda(X, Y = stimul, ncomp = 3, multilevel = sample,
+keepX = c(30, 137, 123))
+
+
+name.var = vac18$tab.prob.gene[, 'Gene']
+names(name.var) = colnames(X)
+
+plotLoadings(res.1level, comp = 2, method = 'median', legend.title = 'Stimu',
+name.var = name.var, size.name = 0.2, contrib = "max")
+
+# too many transcripts? only output the top ones
+plotLoadings(res.1level, comp = 2, method = 'median', legend.title = 'Stimu',
+name.var = name.var, size.name = 0.5, ndisplay = 60, contrib = "max")
+
+
+
+# object 'plsda'
+# ----------------
+
+# breast tumors
+# ---
+data(breast.tumors)
+X = breast.tumors$gene.exp
+Y = breast.tumors$sample$treatment
+
+plsda.breast = plsda(X, Y, ncomp = 2)
+
+name.var = as.character(breast.tumors$genes$name)
+names(name.var) = colnames(X)
+
+# with gene IDs, showing the top 60
+plotLoadings(plsda.breast, contrib = 'max', comp = 1, method = 'median',
+ndisplay = 60,
+name.var = name.var,
+size.name = 0.6,
+legend.color = color.mixo(1:2))
+
+
+# liver toxicity
+# ---
+
+data(liver.toxicity)
+X = liver.toxicity$gene
+Y = liver.toxicity$treatment[, 4]
+
+plsda.liver = plsda(X, Y, ncomp = 2)
+plotIndiv(plsda.liver, ind.names = Y, ellipse = TRUE)
+
+
+name.var = liver.toxicity$gene.ID[, 'geneBank']
+names(name.var) = rownames(liver.toxicity$gene.ID)
+
+plotLoadings(plsda.liver, contrib = 'max', comp = 1, method = 'median', ndisplay = 100,
+name.var = name.var, size.name = 0.4,
+legend.color = color.mixo(1:4))
+
+
+# object 'sgccda'
+# ----------------
+
+data(nutrimouse)
+Y = nutrimouse$diet
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid)
+design = matrix(c(0,1,1,1,0,1,1,1,0), ncol = 3, nrow = 3, byrow = TRUE)
+
+nutrimouse.sgccda = wrapper.sgccda(X = data,
+Y = Y,
+design = design,
+keepX = list(gene = c(10,10), lipid = c(15,15)),
+ncomp = 2,
+scheme = "centroid")
+
+plotLoadings(nutrimouse.sgccda,block=2)
+plotLoadings(nutrimouse.sgccda,block="gene")
+
+
+
+# object 'mint.splsda'
+# ----------------
+data(stemcells)
+data = stemcells$gene
+type.id = stemcells$celltype
+exp = stemcells$study
+
+res = mint.splsda(X = data, Y = type.id, ncomp = 3, keepX = c(10,5,15), study = exp)
+
+plotLoadings(res)
+plotLoadings(res, contrib = "max")
+plotLoadings(res, contrib = "min", study = 1:4,comp=2)
+
+# combining different plots by setting a layout of 2 rows and 4columns.
+# Note that the legend accounts for a subplot so 4columns instead of 2.
+plotLoadings(res,contrib="min",study=c(1,2,3),comp=2, layout = c(2,4))
+plotLoadings(res,contrib="min",study="global",comp=2)
+
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.10.8 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,7 +1,7 @@
 # ASP.NET Core
 
 trigger:
-- master
+- R3-6-3
 
 jobs:
 - job: Test

@@ -530,3 +530,8 @@ The version 1.77
 1.  Changed setMethod for diag (matrix.csr) in accordance with MM's suggestion
 
 2.  removed setGeneric for image also suggested by MM.
+
+The version 1.78
+
+1.  Changed check for symmetry to use all.equal() in response to an error
+reported by Brian Ripley.

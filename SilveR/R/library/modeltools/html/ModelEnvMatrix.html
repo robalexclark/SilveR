@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Generate a model environment from design and response matrix</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for ModelEnvMatrix {modeltools}"><tr><td>ModelEnvMatrix {modeltools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Generate a model environment from design and response matrix</h2>
+
+<h3>Description</h3>
+
+<p>A simple model environment creator function working off matrices for
+input and response. This is much simpler and more limited than
+formula-based environments, but faster and easier to use, if only
+matrices are allowed as input.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ModelEnvMatrix(designMatrix=NULL, responseMatrix=NULL,
+               subset = NULL, na.action = NULL, other=list(), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>designMatrix</code></td>
+<td>
+<p>design matrix of input</p>
+</td></tr>
+<tr valign="top"><td><code>responseMatrix</code></td>
+<td>
+<p>matrix of responses</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p> an optional vector specifying a subset of observations to
+be used in the fitting process. </p>
+</td></tr>
+<tr valign="top"><td><code>na.action</code></td>
+<td>
+<p> a function which indicates what should happen when the data
+contain <code>NA</code>'s. </p>
+</td></tr>
+<tr valign="top"><td><code>other</code></td>
+<td>
+<p> an optional named list of additional formulae. </p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>currently not used</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>ModelEnvMatrix</code> returns an object of class
+<code><a href="ModelEnv-class.html">ModelEnv-class</a></code> - a high level object for storing
+data improving upon the capabilities of simple data matrices.
+</p>
+<p>Funny things may happen if the inpiut and response matrices do not have 
+distinct column names and the data new data are supplied via the
+<code>get</code> and <code>set</code> slots.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code><a href="ModelEnv-class.html">ModelEnv-class</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+### use Sepal measurements as input and Petal as response
+data(iris)
+me &lt;- ModelEnvMatrix(iris[,1:2], iris[,3:4])
+me
+
+### extract data from the ModelEnv object
+dim(me@get("designMatrix"))
+summary(me@get("responseMatrix"))
+
+### subsets and missing values
+iris[1,1] &lt;- NA
+me  &lt;- ModelEnvMatrix(iris[,1:2], iris[,3:4], subset=1:5, na.action=na.omit)
+
+## First case is not complete, so me contains only cases 2:5
+me
+me@get("designMatrix")
+me@get("responseMatrix")
+
+## use different cases
+me@set(data=iris[10:20,])
+me@get("designMatrix")
+
+## these two should be the same
+stopifnot(all.equal(me@get("responseMatrix"), as.matrix(iris[10:20,3:4])))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>modeltools</em> version 0.2-23 <a href="00Index.html">Index</a>]</div>
+</body></html>

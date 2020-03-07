@@ -1,5 +1,5 @@
 Package: igraph
-Version: 1.2.4.1
+Version: 1.2.4.2
 Title: Network Analysis and Visualization
 Author: See AUTHORS file.
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
@@ -34,8 +34,8 @@ Collate: 'adjacency.R' 'auto.R' 'assortativity.R' 'attributes.R'
         'tkplot.R' 'topology.R' 'triangles.R' 'utils.R' 'uuid.R'
         'versions.R' 'weakref.R' 'zzz-deprecate.R'
 NeedsCompilation: yes
-Packaged: 2019-04-21 07:44:54 UTC; ripley
+Packaged: 2019-11-13 08:31:37 UTC; maechler
 Repository: CRAN
-Date/Publication: 2019-04-22 06:57:32 UTC
-Built: R 3.5.3; i386-w64-mingw32; 2019-07-08 15:33:06 UTC; windows
+Date/Publication: 2019-11-27 20:02:16 UTC
+Built: R 3.6.3; i386-w64-mingw32; 2020-03-03 02:21:26 UTC; windows
 Archs: i386, x64

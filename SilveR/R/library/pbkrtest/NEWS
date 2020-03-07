@@ -1,0 +1,25 @@
+pbkrtest v0.4-8.6 (Release date: 2020-02-20)
+============================================
+
+Bug fixes:
+
+* documentation fixed ddf_Lb is now exported
+
+* mclapply issue for windows fixed
+
+* vcovAdj.lmerMod is exported to make emmeans work. Contact Russ Lenth
+  to make emmeans used generic function vcovAdj.
+
+
+pbkrtest v0.4-8 (Release date: 2020-02-20)
+==========================================
+
+Bug fixes:
+
+  * Issue related to class() versus inherits() fixed.
+
+Changes:
+
+  * NEWS file added
+  * NAMESPACE file is now generated automatically
+

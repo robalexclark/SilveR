@@ -17,5 +17,5 @@ NeedsCompilation: yes
 Packaged: 2019-09-01 08:28:20 UTC; gaborcsardi
 Repository: CRAN
 Date/Publication: 2019-09-01 08:50:02 UTC
-Built: R 3.5.3; x86_64-w64-mingw32; 2019-09-12 06:24:35 UTC; windows
+Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-02 23:47:26 UTC; windows
 Archs: i386, x64

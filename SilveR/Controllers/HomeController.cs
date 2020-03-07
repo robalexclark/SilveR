@@ -13,7 +13,7 @@ namespace SilveR.Controllers
 {
     public class HomeController : Controller
     {
-        private const string R_VERSION = "3.5.2";
+        private const string R_VERSION = "3.6.3";
 
         private readonly AppSettings appSettings;
 

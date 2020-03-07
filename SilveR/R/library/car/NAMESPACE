@@ -1,6 +1,6 @@
-# last modified 2019-01-02 by J. Fox
+# last modified 2019-12-20 by J. Fox
 
-# additions for car 3.0-0, started 2016-12-27
+# additions for car >= 3.0-0, started 2016-12-27
 
 export(Import, Export, Predict, bcnPowerAxis)
 import("rio")
@@ -65,7 +65,7 @@ importFrom("abind", "abind")
 importFrom("stats", "naprint", "symnum", ".checkMFClasses",
            "delete.response", "napredict", "influence", "dfbetas",
             "AIC", "BIC")
-importFrom("utils", "download.file", "capture.output", "askYesNo", "browseURL")
+importFrom("utils", "download.file", "capture.output", "askYesNo", "browseURL", "globalVariables")
 
 
 #  from earlier versions car package
@@ -380,3 +380,5 @@ S3method(summary, boot)
 S3method(print, summary.boot)
 S3method(print, confint.boot)
 S3method(vcov, boot)
+
+S3method(print, deltaMethod)

@@ -8,7 +8,7 @@ ps_children             List of child processes (process objects) of
                         is a costly operation.
 ps_cmdline              Command line of the process
 ps_connections          List network connections of a process
-ps_cpu_count            Number of logical or phyisical CPUs
+ps_cpu_count            Number of logical or physical CPUs
 ps_cpu_times            CPU times of the process
 ps_create_time          Start time of a process
 ps_cwd                  Process current working directory as an

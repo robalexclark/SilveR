@@ -1,4 +1,0 @@
-	spatial: visual, cubes, paper, flags
-	verbal: general, paragrap, sentence, wordc, wordm
-	memory: wordr, numberr, figurer, object, numberf, figurew
-	math: deduct, numeric, problemr, series, arithmet

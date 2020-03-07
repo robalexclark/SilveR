@@ -1,8 +1,0 @@
-# Blau and Duncan basic stratification model
-y3 <- x1, gam31
-y3 <- x2, gam32
-y4 <- x2, gam42
-y4 <- y3, beta43
-y5 <- x2, gam52
-y5 <- y3, beta53
-y5 <- y4, beta54

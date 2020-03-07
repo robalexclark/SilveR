@@ -1,5 +1,8 @@
 auglag                  Augmented Lagrangian Algorithm
 bobyqa                  Bound Optimization by Quadratic Approximation
+ccsaq                   Conservative Convex Separable Approximation
+                        with Affine Approximation plus Quadratic
+                        Penalty
 check.derivatives       Check analytic gradients of a function using
                         finite difference approximations
 cobyla                  Constrained Optimization by Linear

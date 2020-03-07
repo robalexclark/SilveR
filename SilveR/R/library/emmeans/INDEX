@@ -2,11 +2,13 @@ CLD                     Extract and display information on all pairwise
                         comparisons of estimated marginal means.
 MOats                   Oats data in multivariate form
 add_grouping            Add a grouping factor
-as.emmGrid              Convert to and from 'emmGrid' objects
+as.list.emmGrid         Convert to and from 'emmGrid' objects
 as.mcmc.emmGrid         Support for MCMC-based estimation
 auto.noise              Auto Pollution Filter Noise
 contrast                Contrasts and linear functions of EMMs
 contrast-methods        Contrast families
+eff_size                Calculate effect sizes and confidence bounds
+                        thereof
 emm                     Support for 'multcomp::glht'
 emmGrid-class           The 'emmGrid' class
 emm_list                The 'emm_list' class

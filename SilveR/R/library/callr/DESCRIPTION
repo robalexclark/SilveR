@@ -1,6 +1,6 @@
 Package: callr
 Title: Call R from R
-Version: 3.3.1
+Version: 3.4.2
 Authors@R: c(
     person("Gábor", "Csárdi", role = c("aut", "cre", "cph"),
            email = "csardi.gabor@gmail.com",
@@ -15,20 +15,19 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/r-lib/callr#readme
 BugReports: https://github.com/r-lib/callr/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Imports: processx (>= 3.4.0), R6, utils
-Suggests: cliapp, covr, crayon, knitr, pingr, ps, rmarkdown, rprojroot,
-        spelling, testthat, tibble, withr
+Suggests: cliapp, covr, crayon, fansi, pingr, ps, rprojroot, spelling,
+        testthat, tibble, withr
 Encoding: UTF-8
-VignetteBuilder: knitr
 Language: en-US
 NeedsCompilation: no
-Packaged: 2019-07-16 14:55:00 UTC; gaborcsardi
+Packaged: 2020-02-12 13:31:25 UTC; gaborcsardi
 Author: Gábor Csárdi [aut, cre, cph] (<https://orcid.org/0000-0001-7098-9676>),
   Winston Chang [aut],
   RStudio [cph, fnd],
   Mango Solutions [cph, fnd]
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-07-18 06:36:10 UTC
-Built: R 3.5.3; ; 2019-09-12 09:27:49 UTC; windows
+Date/Publication: 2020-02-12 14:30:05 UTC
+Built: R 3.6.3; ; 2020-03-03 02:21:16 UTC; windows

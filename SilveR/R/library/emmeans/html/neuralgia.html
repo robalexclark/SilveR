@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Neuralgia data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for neuralgia {emmeans}"><tr><td>neuralgia {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Neuralgia data</h2>
+
+<h3>Description</h3>
+
+<p>These data arise from a study of analgesic effects of treatments of elderly
+patients who have neuralgia. Two treatments and a placebo are compared. The 
+response variable is whether the patient reported pain or not. Researchers
+recorded the age and gender of 60 patients along with the duration of
+complaint before the treatment began.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+neuralgia
+</pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 60 observations and 5 variables:
+</p>
+
+<dl>
+<dt><code>Treatment</code></dt><dd><p>Factor with 3 levels <code>A</code>, <code>B</code>, and <code>P</code>.
+The latter is placebo</p>
+</dd>
+<dt><code>Sex</code></dt><dd><p>Factor with two levels <code>F</code> and <code>M</code></p>
+</dd>
+<dt><code>Age</code></dt><dd><p>Numeric covariate &ndash; patient's age in years</p>
+</dd>
+<dt><code>Duration</code></dt><dd><p>Numeric covariate &ndash; duration of the condition before
+beginning treatment</p>
+</dd>
+<dt><code>Pain</code></dt><dd><p>Binary response factor with levels <code>No</code> and <code>Yes</code></p>
+</dd>
+</dl>
+
+
+<h3>Source</h3>
+
+<p>Cai, Weijie (2014) <em>Making Comparisons Fair: How LS-Means Unify 
+the Analysis of Linear Models</em>, SAS Institute, Inc. Technical paper 142-2014,
+page 12, 
+<a href="http://support.sas.com/resources/papers/proceedings14/SAS060-2014.pdf">http://support.sas.com/resources/papers/proceedings14/SAS060-2014.pdf</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Model and analysis shown in the SAS report:
+neuralgia.glm &lt;- glm(Pain ~ Treatment * Sex + Age, family = binomial(),
+   data = neuralgia) 
+pairs(emmeans(neuralgia.glm, ~ Treatment, at = list(Sex = "F")), 
+    reverse = TRUE, type = "response", adjust = "bonferroni")
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

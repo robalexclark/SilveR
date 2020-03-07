@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Combine or subset 'emmGrid' objects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for rbind.emmGrid {emmeans}"><tr><td>rbind.emmGrid {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Combine or subset <code>emmGrid</code> objects</h2>
+
+<h3>Description</h3>
+
+<p>These functions provide methods for <code><a href="../../base/html/cbind.html">rbind</a></code> and
+<code><a href="../../base/html/Extract.html">[</a></code> that may be used to combine <code>emmGrid</code> objects
+together, or to extract a subset of cases. The primary reason for 
+doing this would be to obtain multiplicity-adjusted results for smaller
+or larger families of tests or confidence intervals.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'emmGrid'
+rbind(..., deparse.level = 1, adjust = "bonferroni")
+
+## S3 method for class 'emmGrid'
+e1 + e2
+
+## S3 method for class 'emmGrid'
+x[i, adjust, drop.levels = TRUE, ...]
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>In <code>rbind</code>, object(s) of class <code>emmGrid</code>. 
+In <code>"["</code>, it is ignored.</p>
+</td></tr>
+<tr valign="top"><td><code>deparse.level</code></td>
+<td>
+<p>(required but not used)</p>
+</td></tr>
+<tr valign="top"><td><code>adjust</code></td>
+<td>
+<p>Character value passed to <code><a href="update.emmGrid.html">update.emmGrid</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>e1</code></td>
+<td>
+<p>An <code>emmGrid</code> object</p>
+</td></tr>
+<tr valign="top"><td><code>e2</code></td>
+<td>
+<p>Another <code>emmGrid</code> object</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>An <code>emmGrid</code> object to be subsetted</p>
+</td></tr>
+<tr valign="top"><td><code>i</code></td>
+<td>
+<p>Integer vector of indexes</p>
+</td></tr>
+<tr valign="top"><td><code>drop.levels</code></td>
+<td>
+<p>Logical value. If <code>TRUE</code>, the <code>"levels"</code> slot in
+the returned object is updated to hold only the predictor levels that actually occur</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A revised object of class <code>emmGrid</code>
+</p>
+<p>The result of <code>e1 + e2</code> is the same as <code>rbind(e1, e2)</code>
+</p>
+
+
+<h3>Note</h3>
+
+<p><code>rbind</code> throws an error if there are incompatibilities in
+the objects' coefficients, covariance structures, etc. But they 
+are allowed to have different factors; a missing level <code>'.'</code>
+is added to factors as needed.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+warp.lm &lt;- lm(breaks ~ wool * tension, data = warpbreaks)
+warp.rg &lt;- ref_grid(warp.lm)
+
+# Show only 3 of the 6 cases
+summary(warp.rg[c(2,4,5)])
+
+# Do all pairwise comparisons within rows or within columns, 
+# all considered as one faily of tests:
+w.t &lt;- pairs(emmeans(warp.rg, ~ wool | tension))
+t.w &lt;- pairs(emmeans(warp.rg, ~ tension | wool))
+rbind(w.t, t.w, adjust = "mvt")
+update(w.t + t.w, adjust = "fdr")  ## same as abve except for adjustment
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

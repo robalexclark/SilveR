@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Effects of dietary protein on free plasma leucine...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for pigs {emmeans}"><tr><td>pigs {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Effects of dietary protein on free plasma leucine concentration in pigs</h2>
+
+<h3>Description</h3>
+
+<p>A two-factor experiment with some observations lost
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+pigs
+</pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 29 observations and 3 variables:
+</p>
+
+<dl>
+<dt>source</dt><dd><p>Source of protein in the diet (factor with 3 levels: 
+fish meal, soybean meal, dried skim milk)</p>
+</dd>
+<dt>percent</dt><dd><p>Protein percentage in the diet (numeric with 4 values:
+9, 12, 15, and 18)</p>
+</dd>
+<dt>conc</dt><dd><p>Concentration of free plasma leucine, in mcg/ml</p>
+</dd>
+</dl>
+
+
+<h3>Source</h3>
+
+<p>Windels HF (1964) PhD thesis, Univ. of Minnesota. (Reported as
+Problem 10.8 in Oehlert G (2000) <em>A First Course in Design and
+Analysis of Experiments</em>, licensed under Creative Commons,
+<a href="http://users.stat.umn.edu/~gary/Book.html">http://users.stat.umn.edu/~gary/Book.html</a>.) Observations 7, 22, 23,
+31, 33, and 35 have been omitted, creating a more notable imbalance.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  pigs.lm &lt;- lm(log(conc) ~ source + factor(percent), data = pigs)
+  emmeans(pigs.lm, "source")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.4.5 <a href="00Index.html">Index</a>]</div>
+</body></html>

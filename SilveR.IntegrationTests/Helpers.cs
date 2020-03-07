@@ -130,7 +130,6 @@ namespace SilveR.IntegrationTests
             string rawHtml = resultsOutputNode.InnerHtml;
             string formattedHtml = File.ReadAllText("ResultFormatting.txt") + rawHtml;
 
-
             HttpResponseMessage viewLogOutput = await client.GetAsync("/Analyses/ViewLog?analysisGuid=" + analysisGuid);
             HtmlDocument htmlLogOutputDocument = await GetHtml(viewLogOutput);
             HtmlNode logOutputNode = htmlLogOutputDocument.GetElementbyId("logOutput");

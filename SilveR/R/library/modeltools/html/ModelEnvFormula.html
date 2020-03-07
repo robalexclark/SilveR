@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Generate a model environment from a classical formula based...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for ModelEnvFormula {modeltools}"><tr><td>ModelEnvFormula {modeltools}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Generate a model environment from a 
+classical formula based interface. </h2>
+
+<h3>Description</h3>
+
+<p>A flexible implementation of the classical formula based interface.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ModelEnvFormula(formula, data = list(), subset = NULL, 
+                na.action = NULL, frame = NULL, 
+                enclos = sys.frame(sys.nframe()), other = list(), 
+                designMatrix = TRUE, responseMatrix = TRUE,
+                setHook = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p> a symbolic description of the model to be fit. </p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p> an optional data frame containing the variables in the model. 
+If not found in <code>data</code>, the variables are taken from
+<code>frame</code>, by default the environment from which
+<code>ModelEnvFormula</code> is called.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p> an optional vector specifying a subset of observations to
+be used in the fitting process. </p>
+</td></tr>
+<tr valign="top"><td><code>na.action</code></td>
+<td>
+<p> a function which indicates what should happen when the data
+contain <code>NA</code>'s. </p>
+</td></tr>
+<tr valign="top"><td><code>frame</code></td>
+<td>
+<p> an optional environment <code>formula</code> is evaluated in. </p>
+</td></tr>
+<tr valign="top"><td><code>enclos</code></td>
+<td>
+<p> specifies the enclosure passed to <code><a href="../../base/html/eval.html">eval</a></code> for
+evaluating the model frame. The model frame is evaluated in 
+<code>envir = frame</code> with <code>enclos = enclos</code>, 
+see <code><a href="../../base/html/eval.html">eval</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>other</code></td>
+<td>
+<p> an optional named list of additional formulae. </p>
+</td></tr>
+<tr valign="top"><td><code>designMatrix</code></td>
+<td>
+<p> a logical indicating whether the design matrix
+defined by the right hand side of <code>formula</code> 
+should be computed. </p>
+</td></tr>
+<tr valign="top"><td><code>responseMatrix</code></td>
+<td>
+<p> a logical indicating whether the design matrix
+defined by the left hand side of <code>formula</code>
+should be computed.  </p>
+</td></tr>
+<tr valign="top"><td><code>setHook</code></td>
+<td>
+<p> a list of functions to <code><a href="MEapply.html">MEapply</a></code> every
+time <code>set</code> is called on the object.  </p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p> additional arguments for be passed to function, for example
+<code>contrast.arg</code> to <code><a href="../../stats/html/model.matrix.html">model.matrix</a></code>. </p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function is an attempt to provide a flexible infrastucture for the
+implementation of classical formula based interfaces. The arguments
+<code>formula</code>, <code>data</code>, <code>subset</code> and <code>na.action</code> are well
+known and are defined in the same way as in <code><a href="../../stats/html/lm.html">lm</a></code>, for example.
+</p>
+<p><code>ModelEnvFormula</code> returns an object of class
+<code><a href="ModelEnvFormula-class.html">ModelEnvFormula-class</a></code> - a high level object for storing
+data improving upon the capabilities of <code>data.frame</code>s.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code><a href="ModelEnvFormula-class.html">ModelEnvFormula-class</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+### the `usual' interface
+data(iris)
+mf &lt;- ModelEnvFormula(Species ~ ., data = iris)
+mf
+
+### extract data from the ModelEnv object
+summary(mf@get("response"))
+summary(mf@get("input"))
+dim(mf@get("designMatrix"))
+
+### contrasts
+mf &lt;- ModelEnvFormula(Petal.Width ~ Species, data = iris, 
+                      contrasts.arg = list(Species = contr.treatment))
+attr(mf@get("designMatrix"), "contrasts")
+mf &lt;- ModelEnvFormula(Petal.Width ~ Species, data = iris, 
+                      contrasts.arg = list(Species = contr.sum))
+attr(mf@get("designMatrix"), "contrasts")
+
+### additional formulae
+mf &lt;- ModelEnvFormula(Petal.Width ~ Species, data = iris, 
+                      other = list(pl = ~ Petal.Length))
+ls(mf@env)
+identical(mf@get("pl")[[1]], iris[["Petal.Length"]])
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>modeltools</em> version 0.2-23 <a href="00Index.html">Index</a>]</div>
+</body></html>
