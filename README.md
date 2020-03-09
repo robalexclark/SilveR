@@ -1,6 +1,6 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 3.1.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.5.2.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 3.1.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.6.3.
 
 ### Branded as InVivoStat
 
@@ -20,11 +20,11 @@ SilveR is a self-hosted web app written in .net core, running in an Electron she
 
 #### [Windows](#windows)
 
-A stripped down install of R 3.5.2 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
+A stripped down install of R 3.6.3 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
 
 #### [Linux](#linux)
 
-For linux (only tested on Ubuntu so far) you will need to provide an install of R 3.5.2. To do this:
+For linux (only tested on Ubuntu so far) you will need to provide an install of R 3.6.3. To do this:
 
 1) Download the setup script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/setup-linux.sh and R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R into the same folder.
 
@@ -32,9 +32,9 @@ For linux (only tested on Ubuntu so far) you will need to provide an install of 
 
 #### [MacOS](#macos)
 
-For Mac you will need to install R 3.5.2 and run a script to install the required R packages. To do this:
+For Mac you will need to install R 3.6.3 and run a script to install the required R packages. To do this:
 
-1) Download and install R from https://cran.r-project.org/bin/macosx/R-3.5.2.pkg
+1) Download and install R from https://cran.r-project.org/bin/macosx/R-3.6.3.pkg
 
 2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R and run the script from the terminal prompt using 'sudo Rscript RPackagesInstall.R'
 

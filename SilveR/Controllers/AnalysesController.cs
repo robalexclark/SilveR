@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SilveR.Controllers
@@ -341,13 +343,24 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public FileContentResult ExportToPdf(string analysisGuid)
+        public FileContentResult ExportToHtml(string analysisGuid)
         {
-            //generate pdf using static method (but should really be a service?)
-            byte[] bytes = PdfGenerator.GeneratePdf(new Uri($"{Request.Scheme}://{Request.Host.Value}/Analyses/ResultsForExport?analysisGuid=" + analysisGuid));
+            using (WebClient client = new WebClient())
+            {
+                string htmlSource = client.DownloadString(new Uri($"{Request.Scheme}://{Request.Host.Value}/Analyses/ResultsForExport?analysisGuid=" + analysisGuid));
 
-            Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".pdf");
-            return File(bytes, "application/pdf");
+                htmlSource = htmlSource.Replace("/lib/bootstrap/css/bootstrap.min.css", "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
+
+                //include site.min.css into head
+                string css = client.DownloadString(new Uri($"{Request.Scheme}://{Request.Host.Value}/css/site.min.css"));
+
+                htmlSource = htmlSource.Replace(@"<link href=""/css/site.css"" rel=""stylesheet"" type=""text/css"" />","<style>"+ css+"</style>");
+
+                byte[] bytes = Encoding.UTF8.GetBytes(htmlSource);
+
+                Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".html");
+                return File(bytes, "application/html");
+            }
         }
 
         [HttpGet]

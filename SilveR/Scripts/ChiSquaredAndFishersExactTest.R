@@ -398,7 +398,7 @@ if (BarnardsExactTest == "Y") {
 	if (row ==2 && col == 2) {
 		fishdata2<-as.matrix(fishdata)
 
-		BT<-exact.test(fishdata2, alternative = hypB, npNumbers = 1000, interval = FALSE, method = "Z-pooled", model = "Binomial", cond.row=TRUE, to.plot=FALSE, ref.pvalue=TRUE)
+		BT<-exact.test(fishdata2, alternative = hypB, npNumbers = 1000, np.interval = FALSE, method = "Z-pooled", model = "Binomial", cond.row=TRUE, to.plot=FALSE, ref.pvalue=TRUE)
 		pvalueBT<-format(round(BT$p.value, 4), nsmall=4, scientific=FALSE)
 		pvalueBT<-format(round(BT$p.value, 4), nsmall=4, scientific=FALSE)
 		for (i in 1:(length(pvalueBT)))  {

@@ -130,8 +130,24 @@ namespace SilveR
             {
                 SilveRContext context = serviceScope.ServiceProvider.GetRequiredService<SilveRContext>();
 
-                //context.Database.EnsureCreated();
-                context.Database.Migrate();
+                bool retry = false;
+            retry:
+                try
+                {
+                    context.Database.Migrate();
+                }
+                catch
+                {
+                    if (!retry)
+                    {
+                        context.Database.EnsureDeleted();
+                        retry = true;
+                        goto retry;
+                    }
+                    else
+                        throw;
+                }
+
 
                 IEnumerable<Script> existingScripts = context.Scripts.ToList();
 
