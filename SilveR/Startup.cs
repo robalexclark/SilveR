@@ -40,7 +40,6 @@ namespace SilveR
 
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-
         }
 
         private readonly IConfigurationRoot configuration;

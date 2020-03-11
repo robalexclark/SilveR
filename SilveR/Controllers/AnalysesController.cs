@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -343,16 +343,16 @@ namespace SilveR.Controllers
         }
 
         [HttpGet]
-        public FileContentResult ExportToHtml(string analysisGuid)
+        public async Task<FileContentResult> ExportToHtml(string analysisGuid)
         {
-            using (WebClient client = new WebClient())
+            using (HttpClient client = new HttpClient())
             {
-                string htmlSource = client.DownloadString(new Uri($"{Request.Scheme}://{Request.Host.Value}/Analyses/ResultsForExport?analysisGuid=" + analysisGuid));
+                string htmlSource = await client.GetStringAsync(new Uri($"{Request.Scheme}://{Request.Host.Value}/Analyses/ResultsForExport?analysisGuid=" + analysisGuid));
 
                 htmlSource = htmlSource.Replace("/lib/bootstrap/css/bootstrap.min.css", "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
 
                 //include site.min.css into head
-                string css = client.DownloadString(new Uri($"{Request.Scheme}://{Request.Host.Value}/css/site.min.css"));
+                string css = await client.GetStringAsync(new Uri($"{Request.Scheme}://{Request.Host.Value}/css/site.min.css"));
 
                 htmlSource = htmlSource.Replace(@"<link href=""/css/site.css"" rel=""stylesheet"" type=""text/css"" />","<style>"+ css+"</style>");
 
