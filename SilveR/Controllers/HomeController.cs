@@ -13,7 +13,7 @@ namespace SilveR.Controllers
 {
     public class HomeController : Controller
     {
-        private const string R_VERSION = "3.6.3";
+        private readonly Version R_VERSION = new Version(3, 6);
 
         private readonly AppSettings appSettings;
 
@@ -27,7 +27,7 @@ namespace SilveR.Controllers
             //check R installed
             bool rInstalled = CheckRInstalled();
 
-            if (!rInstalled) //then major error as R is not found
+            if (!rInstalled) //then error as R is not found
             {
                 StringBuilder stringBuilder = new StringBuilder("R " + R_VERSION + " is not installed or is misconfigured." + Environment.NewLine);
 
@@ -92,7 +92,7 @@ namespace SilveR.Controllers
                 Process process = Process.Start(processStartInfo);
                 string processOutput = process.StandardError.ReadToEnd();
 
-                return processOutput.Contains(R_VERSION);
+                return processOutput.Contains(R_VERSION.ToString());
             }
             catch
             {

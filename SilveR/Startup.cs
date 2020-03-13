@@ -135,7 +135,7 @@ namespace SilveR
                 {
                     context.Database.Migrate();
                 }
-                catch
+                catch (Exception ex)
                 {
                     if (!retry)
                     {
@@ -144,7 +144,7 @@ namespace SilveR
                         goto retry;
                     }
                     else
-                        throw;
+                        throw new Exception("Database creation failed!", ex);
                 }
 
 

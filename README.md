@@ -24,11 +24,13 @@ A stripped down install of R 3.6.3 for windows with the correct packages is incl
 
 #### [Linux](#linux)
 
-For linux (only tested on Ubuntu so far) you will need to provide an install of R 3.6.3. To do this:
+For linux (only tested on Ubuntu 19.x so far) you will need to provide an install of R 3.6.3. To do this:
 
 1) Download the setup script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/setup-linux.sh and R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R into the same folder.
 
 2) Run the setup script from the terminal prompt using 'sudo ./setup-linux.sh'
+
+Note that we only support 19.x at this time. If you have a different Linux distro then as long as you can get R 3.6.x installed on your own and the subsequent R packages then you should be fine.
 
 #### [MacOS](#macos)
 

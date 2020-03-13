@@ -187,7 +187,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -281,7 +281,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -305,7 +305,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -329,7 +329,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -353,7 +353,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -377,7 +377,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -401,7 +401,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SurvivalAnalysis", testName + ".html"));
-            Assert.Equal(expectedHtml, statsOutput.HtmlResults);
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
     }
 }

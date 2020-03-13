@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,7 +83,7 @@ namespace SilveR.IntegrationTests
             Directory.CreateDirectory("ActualResults");
             Directory.CreateDirectory(Path.Combine("ActualResults", moduleName));
 
-            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), statsOutput.HtmlResults);
+            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
 
             List<string> logOutput = new List<string>();
 
@@ -148,27 +149,34 @@ namespace SilveR.IntegrationTests
 
         public static string RemoveAllImageNodes(string html)
         {
-            try
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
-                document.LoadHtml(html);
-
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
-
-                if (nodes != null)
+                try
                 {
-                    foreach (var node in nodes)
-                    {
-                        node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
-                    }
-                }
+                    HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+                    document.LoadHtml(html);
 
-                html = document.DocumentNode.OuterHtml;
-                return html;
+                    HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
+
+                    if (nodes != null)
+                    {
+                        foreach (var node in nodes)
+                        {
+                            node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
+                        }
+                    }
+
+                    html = document.DocumentNode.OuterHtml;
+                    return html;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
-            catch (Exception ex)
+            else //dont strip images on win
             {
-                throw ex;
+                return html;
             }
         }
     }
