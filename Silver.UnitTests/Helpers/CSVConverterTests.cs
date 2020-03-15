@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using Xunit;
 
@@ -41,7 +42,22 @@ namespace SilveR.UnitTests.Helpers
             //Arrange
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             string theData = GetTestCSVData();
-            theData = theData.Replace(',', ';');
+
+            //change the separator
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                theData = theData.Replace(',', ';'); //list separator for De on windows
+                theData = theData.Replace('.', ','); //points replaced with commas
+            }
+            else
+            {
+                theData = theData.Replace(',', ';'); //list separator for De on windows
+                theData = theData.Replace('.', ','); //points replaced with commas
+
+                theData = theData.Replace(';', '.'); //list separator for De on linux
+            }
+
+
             byte[] byteArray = Encoding.UTF8.GetBytes(theData);
 
             using (MemoryStream stream = new MemoryStream(byteArray))
@@ -55,7 +71,7 @@ namespace SilveR.UnitTests.Helpers
                 Assert.Equal("Trea t1", dataTable.Columns[2].ColumnName);
 
                 Assert.True((bool)dataTable.Rows[0][0]);
-                Assert.Equal("0.998758912", dataTable.Rows[0][1]);
+                Assert.Equal("0,998758912", dataTable.Rows[0][1]);
                 Assert.Equal(String.Empty, dataTable.Rows[10][4]);
                 Assert.Equal("C", dataTable.Rows[10][5]);
             }
