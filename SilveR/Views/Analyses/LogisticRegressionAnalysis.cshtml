@@ -1,4 +1,4 @@
-﻿@model SilveR.StatsModels.LinearRegressionAnalysisModel
+﻿@model SilveR.StatsModels.LogisticRegressionAnalysisModel
 
 @section Scripts {
     <script>
@@ -6,16 +6,16 @@
     </script>
 
     <environment names="Development">
-        <script defer src="~/js/stats/linearRegressionAnalysis.js"></script>
+        <script defer src="~/js/stats/logisticRegressionAnalysis.js"></script>
         <script defer src="~/js/openLinks.js"></script>
     </environment>
     <environment names="Production">
-        <script defer src="~/js/stats/linearRegressionAnalysis.min.js"></script>
+        <script defer src="~/js/stats/logisticRegressionAnalysis.min.js"></script>
     </environment>
 }
 
 @{
-    ViewBag.Title = "Linear Regression Analysis";
+    ViewBag.Title = "Logistic Regression Analysis";
 }
 
 <div class="row">
@@ -23,22 +23,23 @@
         <h2>@ViewBag.Title</h2>
     </div>
     <div class="col-md-6">
-        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Linear_Regression_Analysis.pdf')" class="btn btn-info pull-right">Help</a>
+        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Logistic_Regression_Analysis.pdf')" class="btn btn-info pull-right">Help</a>
     </div>
 </div>
 
-<form action="/Analyses/LinearRegressionAnalysis" class="form-horizontal mt-2" method="post">
+<form action="/Analyses/LogisticRegressionAnalysis" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
     <input asp-for="DatasetID" hidden />
+
     <div class="row">
         <div class="col-md-6">
 
             <div class="card">
                 <div class="card-header">Input Options</div>
                 <div class="card-body">
-                    <h4>Responses</h4>
+                    <h4>Response</h4>
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Response</label>
                         <div class="col-md-6">
@@ -70,17 +71,19 @@
                             <div><span asp-validation-for="ContinuousFactorsTransformation"></span></div>
                         </div>
                     </div>
-                    <br />
-
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Categorical factors</label>
+                        <label class="col-md-6 col-form-label">Treatment factors</label>
                         <div class="col-md-6">
-                            <select class="form-control" asp-for="CategoricalFactors"></select>
-                            <div><span asp-validation-for="CategoricalFactors"></span></div>
+                            <select class="form-control" asp-for="Treatments"></select>
+                            <div><span asp-validation-for="Treatments"></span></div>
                         </div>
                     </div>
-                    <br />
-
+                    <div class="form-group row">
+                        <div class="col-md-6 control-label">Interactions</div>
+                        <div class="col-md-6">
+                            <select id="Interactions" name="Interactions" size="4" class="form-control"></select>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Other design (block) factors</label>
                         <div class="col-md-6">
@@ -128,15 +131,9 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Coefficients</label>
+                        <label class="col-md-6 col-form-label">Table of overall effect tests</label>
                         <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="Coefficients" type="checkbox" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Adjusted R-squared</label>
-                        <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="AdjustedRSquared" type="checkbox" />
+                            <input class="checkbox-fix" asp-for="TableOfOverallEffectTests" type="checkbox" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -148,29 +145,48 @@
                     </div>
                     <br />
 
-                    <h4>Diagnostic plots</h4>
+                    <h4>Selected Effect Results</h4>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Residuals vs predicted plot</label>
+                        <label class="col-md-6 col-form-label">Effect</label>
                         <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="ResidualsVsPredictedPlot" type="checkbox" />
+                            <input class="form-control" asp-for="SelectedEffect" />
+                            <div><span asp-validation-for="SelectedEffect"></span></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Normal probability plot</label>
+                        <label class="col-md-6 col-form-label">Least square (predicted) means</label>
                         <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="NormalProbabilityPlot" type="checkbox" />
+                            <input class="checkbox-fix" asp-for="LSMeansSelected" type="checkbox" />
+                        </div>
+                    </div>
+                    <br />
+
+                    <h4>Post Hoc Tests</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">All pairwise comparisons</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="AllPairwise" />
+                            <div><span asp-validation-for="AllPairwise"></span></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Cook's distance plot</label>
+                        <label class="col-md-6 col-form-label">Generate comparisons dataset</label>
                         <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="CooksDistancePlot" type="checkbox" />
+                            <input class="checkbox-fix" asp-for="GenerateComparisonsDataset" type="checkbox" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Leverage plot</label>
+                        <label class="col-md-6 col-form-label">Comparisons back to control</label>
                         <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="LeveragePlot" type="checkbox" />
+                            <input class="form-control" asp-for="ComparisonsBackToControl" />
+                            <div><span asp-validation-for="ComparisonsBackToControl"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Control group</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="ControlGroup" />
+                            <div><span asp-validation-for="ControlGroup"></span></div>
                         </div>
                     </div>
                 </div>

@@ -182,6 +182,12 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> LogisticRegressionAnalysis(LogisticRegressionAnalysisModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> DoseResponseAndNonLinearRegressionAnalysis(DoseResponseAndNonLinearRegressionAnalysisModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);

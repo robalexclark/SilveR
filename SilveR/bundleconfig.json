@@ -92,6 +92,13 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/logisticRegressionAnalysis.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/logisticRegressionAnalysis.js",
+      "wwwroot/js/openLinks.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/stats/comparisonOfMeansPowerAnalysisDatasetBasedInputs.min.js",
     "inputFiles": [
       "wwwroot/js/stats/comparisonOfMeansPowerAnalysisDatasetBasedInputs.js",

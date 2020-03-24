@@ -265,7 +265,13 @@ HTML(add, align="left")
 #===================================================================================================================
 Ref_list<-R_refs()
 
-HTML.title("Statistical references", HR=2, align="left")
+if (UpdateIVS == "N") {
+	HTML.title("Statistical references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("References", HR=2, align="left")
+	HTML(Ref_list$IVS_ref, align="left")
+}
 HTML(Ref_list$BateClark_ref, align="left")
 
 if (allPairwiseTest== "BH" ) {
@@ -284,7 +290,12 @@ if (allPairwiseTest== "hommel" ) {
 	HTML("Hommel, G. (1988). A stagewise rejective multiple test procedure based on a modified Bonferroni test. Biometrika, 75, 383-386.", align="left")
 }
 
-HTML.title("R references", HR=2, align="left")
+if (UpdateIVS == "N") {
+	HTML.title("R references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("R references", HR=4, align="left")
+}
 HTML(Ref_list$R_ref , align="left")
 HTML(Ref_list$R2HTML_ref, align="left")
 HTML(Ref_list$multcomp_ref, align="left")

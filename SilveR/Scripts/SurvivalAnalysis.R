@@ -243,13 +243,24 @@ if (ShowPlot == "Y") {
 #===================================================================================================================
 Ref_list<-R_refs()
 
-HTML.title("Statistical references", HR=2, align="left")
+if (UpdateIVS == "N") {
+	HTML.title("Statistical references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("References", HR=2, align="left")
+	HTML(Ref_list$IVS_ref, align="left")
+}
 HTML(Ref_list$BateClark_ref,  align="left")
 if (ComparingCurves == "Y") {
 	HTML("Harrington, D.P. and Fleming, T.R. (1982). A class of rank test procedures for censored survival data. Biometrika 69, 553-566.", align="left")
 }
 
-HTML.title("R references", HR=2, align="left")
+if (UpdateIVS == "N") {
+	HTML.title("R references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("R references", HR=4, align="left")
+}
 HTML(Ref_list$R_ref , align="left")
 HTML(Ref_list$GGally_ref, align="left")
 HTML(Ref_list$RColorBrewers_ref, align="left")

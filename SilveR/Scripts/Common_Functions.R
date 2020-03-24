@@ -2,6 +2,9 @@
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
 
+#Software update
+UpdateIVS <- "N"
+
 #Beta warning
 Betawarn <- "N"
 BetaMessage <- "This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output."
@@ -947,7 +950,6 @@ NONCAT_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = "none") +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -955,6 +957,14 @@ NONCAT_CPP <- function() {
 		scale_fill_manual(values = Gr_palette_A) +
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
+
+	if (UpdateIVS == "N") {
+		 g <- g + theme(legend.position = "none") 
+	}
+	if (UpdateIVS == "Y") {
+		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+				labs(fill = "Animal_IVS")
+	}
 
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
@@ -969,7 +979,6 @@ ONECATSEP_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = "none") +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -977,6 +986,14 @@ ONECATSEP_CPP <- function() {
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_wrap(~l_l)
+
+	if (UpdateIVS == "N") {
+		 g <- g + theme(legend.position = "none") 
+	}
+	if (UpdateIVS == "Y") {
+		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+				labs(fill = "Animal_IVS")
+	}
 
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
@@ -991,7 +1008,6 @@ TWOCATSEP_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = "none") +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -1000,6 +1016,13 @@ TWOCATSEP_CPP <- function() {
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 
+	if (UpdateIVS == "N") {
+		 g <- g + theme(legend.position = "none") 
+	}
+	if (UpdateIVS == "Y") {
+		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+				labs(fill = "Animal_IVS")
+	}
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
@@ -1657,9 +1680,10 @@ R_refs <- function() {
 	Barnard_ref <- "Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact."
 
 	power_ref <- "Stephane Champely (2018). pwr: Basic Functions for Power Analysis. R package version 1.2-2. https://CRAN.R-project.org/package=pwr"
-
+	IVS_ref <- "When referring to InVivoStat, please cite 'InVivoStat, version 4.1'."
 
 	Refs <- list(
+		IVS_ref = IVS_ref,
 		R_ref = R_ref,
 		mtvnorm_ref = mtvnorm_ref,
 		GridExtra_ref = GridExtra_ref,

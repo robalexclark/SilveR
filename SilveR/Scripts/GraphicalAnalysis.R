@@ -926,7 +926,13 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NU
 	graphdata$Animal_IVS<-as.factor(eval(parse(text = paste("graphdata$", CaseIDFactor))))
 	graphdata<-graphdata[order(graphdata$Animal_IVS, graphdata$Time_IVS), ]
 } else	{
-	graphdata$Animal_IVS<-paste(graphdata$l_l  , "=" , as.factor(eval(parse(text = paste("graphdata$", CaseIDFactor)))), sep = "")
+
+	if (UpdateIVS =="N") {
+		graphdata$Animal_IVS<-paste(graphdata$l_l  , "=" , as.factor(eval(parse(text = paste("graphdata$", CaseIDFactor)))), sep = "")
+	}
+	if (UpdateIVS =="Y") {
+		graphdata$Animal_IVS<-paste(as.factor(eval(parse(text = paste("graphdata$", CaseIDFactor)))), " (", graphdata$l_l , ")", sep = "")
+	}
 	graphdata<-graphdata[order(graphdata$Animal_IVS, graphdata$Time_IVS), ]
 }
 
@@ -1737,14 +1743,25 @@ Ref_list <- R_refs()
 #Bate and Clark comment
 HTML(refxx, align = "left")
 
-HTML.title("Statistical references", HR = 2, align = "left")
+if (UpdateIVS == "N") {
+	HTML.title("Statistical references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("References", HR=2, align="left")
+	HTML(Ref_list$IVS_ref, align="left")
+}
 HTML(Ref_list$BateClark_ref, align = "left")
 
 if (BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS) == TRUE) {
     HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365. ", align = "left")
 }
 
-HTML.title("R references", HR = 2, align = "left")
+if (UpdateIVS == "N") {
+	HTML.title("R references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("R references", HR=4, align="left")
+}
 HTML(Ref_list$R_ref, align = "left")
 HTML(Ref_list$GGally_ref, align = "left")
 HTML(Ref_list$RColorBrewers_ref,  align = "left")

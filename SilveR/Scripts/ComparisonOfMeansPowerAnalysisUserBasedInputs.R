@@ -542,11 +542,22 @@ HTML("Biologically relevant effect: The size of effect that is of scientific int
 #===================================================================================================================
 Ref_list <- R_refs()
 
-HTML.title("Statistical references", HR = 2, align = "left")
+if (UpdateIVS == "N") {
+	HTML.title("Statistical references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("References", HR=2, align="left")
+	HTML(Ref_list$IVS_ref, align="left")
+}
 HTML(Ref_list$BateClark_ref, align = "left")
 #HTML("Harrison, D.A. and Brady, A.R. (2004). Sample size and power calculations using the noncentral t-distribution. The Stata Journal, 4(2), 142-153.", align = "left")
 
-HTML.title("R references", HR = 2, align = "left")
+if (UpdateIVS == "N") {
+	HTML.title("R references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("R references", HR=4, align="left")
+}
 HTML(Ref_list$R_ref,  align = "left")
 HTML(Ref_list$GGally_ref,  align = "left")
 HTML(Ref_list$RColorBrewers_ref,  align = "left")

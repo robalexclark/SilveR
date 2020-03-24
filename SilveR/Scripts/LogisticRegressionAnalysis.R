@@ -1,9 +1,3 @@
-#Parameter setup
-#Module type
-Module <- "SMPA"
-#Module <- "IFPA"
-
-#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(multcomp))
@@ -27,31 +21,25 @@ responseTransform <- Args[7]
 covariateTransform <- Args[8]
 FirstCatFactor <- Args[9]
 treatFactors <- Args[10]
-blockFactors <- Args[11]
-showANOVA <- Args[12]
-showPRPlot <- Args[13]
-showNormPlot <- Args[14]
-sig <- 1 - as.numeric(Args[15])
-sig2 <- 1 - as.numeric(Args[15])/2
-effectModel <- as.formula(Args[16])
-effectModel2 <- Args[16]
-selectedEffect <- Args[17]
-showLSMeans <- Args[18]
-allPairwiseTest <- Args[19]
 
-if (Module == "SMPA") {
-	backToControlTest <- Args[20]
-	cntrlGroup <- Args[21]
-	genpvals <- Args[22]
-}
+contFactors <- Args[11]
+contFactorTransform <- Args[12]
 
-if (Module == "IFPA") {
-	backToControlTest <- "NULL"
-	cntrlGroup <- "NULL"
-	genpvals <- Args[20]
-}
+blockFactors <- Args[13]
+showANOVA <- Args[14]
+tableOfOverallEffectTests <- Args[15]
+sig <- 1 - as.numeric(Args[16])
+sig2 <- 1 - as.numeric(Args[16])/2
+effectModel <- as.formula(Args[17])
+effectModel2 <- Args[17]
+selectedEffect <- Args[18]
+showLSMeans <- Args[19]
+allPairwiseTest <- Args[20]
 
-#source(paste(getwd(),"/Common_Functions.R", sep=""))
+backToControlTest <- Args[21]
+cntrlGroup <- Args[22]
+genpvals <- Args[23]
+
 
 #Print args
 if (Diplayargs == "Y"){
@@ -175,12 +163,8 @@ noeffects<-length(emodelChanges)-2
 #===================================================================================================================
 #Output HTML header
 if (Module == "SMPA") {
-	Title <-paste(branding, " Single Measure Parametric Analysis", sep="")
+	Title <-paste(branding, " Logistic Regression Analysis", sep="")
 }
-if (Module == "IFPA") {
-	Title <-paste(branding, " Incomplete Factorial Parametric Analysis", sep="")
-}
-
 HTML.title(Title, HR = 1, align = "left")
 
 #Software developement version warning
@@ -188,16 +172,6 @@ if (Betawarn == "Y") {
 	HTML.title("Warning", HR=2, align="left")
 	HTML(BetaMessage, align="left")
 }
-
-if (Module == "IFPA") {
-	#Warning
-	title<-c("Warning")
-	HTML.title(title, HR=2, align="left")
-
-	HTML.title("</bf> ", HR=2, align="left")
-	HTML("Warning: This module is currently under construction, care should be taken when considering the results. The results have not been verified.", align="left")
-}
-
 
 #===================================================================================================================
 # Testing the factorial combinations
@@ -221,11 +195,7 @@ if(FirstCatFactor != "NULL") {
 HTML.title(title, HR=2, align="left")
 
 if (Module == "SMPA") {
-	add<-paste(c("The  "), resp, " response is currently being analysed by the Single Measures Parametric Analysis module", sep="")
-}
-
-if (Module == "IFPA") {
-	add<-paste(c("The  "), resp, " response is currently being analysed by the Incomplete Factorial Parametric Analysis module", sep="")
+	add<-paste(c("The  "), resp, " response is currently being analysed by the Logistic Regression Analysis module", sep="")
 }
 
 if(FirstCatFactor != "NULL") {
@@ -401,7 +371,7 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 	}
 
 	#Performing the ANCOVA analysis
-	Covintfull<-lm(as.formula(CovIntModel), data=statdata, na.action = na.omit)
+	Covintfull<-glm(as.formula(CovIntModel), data=statdata, family="binomial", na.action = na.omit)
 
 	#Title + warning
 	HTML.title("Analysis of Covariance (ANCOVA) table for assessing covariate interactions", HR=2, align="left")
@@ -460,60 +430,13 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 				HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 			} 
 		}
-
-
-		if (Module == "IFPA") {
-			temx<-anova(Covintfull)
-
-			if (temx[dim(temx)[1],1] != 0) {
-				tempx<-anova(Covintfull)
-				temp2x<-(tempx)
-
-				col1x<-format(round(temp2x[2], 3), nsmall=3, scientific=FALSE)
-				col2x<-format(round(temp2x[3], 3), nsmall=3, scientific=FALSE)
-				col3x<-format(round(temp2x[4], 2), nsmall=2, scientific=FALSE)
-				col4x<-format(round(temp2x[5], 4), nsmall=4, scientific=FALSE)
-
-				sourcex<-rownames(temp2x)
-
-				# Residual label in ANOVA
-				sourcex[length(sourcex)] <- "Residual"
-
-				#STB March 2014 - Replacing : with * in ANOVA table
-				for (q in 1:notreatfactors) {
-					sourcex<-sub(":"," * ", sourcex) 
-				}
-				ivsanovax<-cbind(sourcex, col1x, temp2x[1], col2x, col3x, col4x)
-	
-				ivsanovax[length(unique(sourcex)),5]<-" "
-				ivsanovax[length(unique(sourcex)),6]<-" "
-
-				#STB May 2012 capitals changed
-				headx<-c("Effect", "Sums of squares", "Degrees of freedom","Mean square","F-value","p-value")
-				colnames(ivsanovax)<-headx
-
-				for (i in 1:(dim(ivsanovax)[1]-1))  {
-					if (temp2x[i,5]<0.0001) {
-						#STB March 2011 formatting p-values p<0.0001
-						# ivsanovax[i,6]<-0.0001
-						ivsanovax[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-						ivsanovax[i,6]<- paste("<",ivsanovax[i,6])
-					}
-				}
-
-				HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
-				HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
-				HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
-			} 
-		}
-
 	}
 }
 #===================================================================================================================
 #ANOVA table
 #===================================================================================================================
 #Analysis call
-threewayfull<-lm(model, data=statdata, na.action = na.omit)
+threewayfull<-glm(model, data=statdata, family = binomial(link="logit"), na.action = na.omit)
 
 #Testing the degrees of freedom
 
@@ -525,9 +448,9 @@ if (df.residual(threewayfull)<5) {
 #ANOVA Table
 if(showANOVA=="Y") {
 	if(FirstCatFactor != "NULL") {
-		HTML.title("Analysis of Covariance (ANCOVA) table", HR=2, align="left")
+		HTML.title("Analysis of deviance table", HR=2, align="left")
 	} else {
-		HTML.title("Analysis of variance (ANOVA) table", HR=2, align="left")
+		HTML.title("Analysis of deviance table", HR=2, align="left")
 	}
 
 	# Stop process if residual sums of squares are too close to zero
@@ -539,83 +462,32 @@ if(showANOVA=="Y") {
 	#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
 
 	if (Module == "SMPA") {
-		temp<-Anova(threewayfull, type=c("III"))[-1,]
-		col1<-format(round(temp[1], 3), nsmall=3, scientific=FALSE)
-		col2<-format(round(temp[1]/temp[2], 3), nsmall=3, scientific=FALSE)
-		col3<-format(round(temp[3], 2), nsmall=2, scientific=FALSE)
-		col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
-
-		source<-rownames(temp)
-
-		# Residual label in ANOVA
-		source[length(source)] <- "Residual"
-
-		#STB March 2014 - Replacing : with * in ANOVA table
-		for (q in 1:notreatfactors) {
-			source<-sub(":"," * ", source) 
-		}	
-		ivsanova<-cbind(source, col1,temp[2],col2,col3,col4)
-
-		ivsanova[length(unique(source)),5]<-" "
-		ivsanova[length(unique(source)),6]<-" "
-
-		#STB May 2012 capitals changed
-		head<-c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
-		colnames(ivsanova)<-head
-
-		for (i in 1:(dim(ivsanova)[1]-1)) {
-			if (temp[i,4]<0.0001) {
-				#STB March 2011 formatting p-values p<0.0001
-				#ivsanova[i,6]<-0.0001
-				ivsanova[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				ivsanova[i,6]<- paste("<",ivsanova[i,6])
-			}
-		}
-	
-		HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
-
-		if(FirstCatFactor != "NULL") {
-			#STB Error spotted:
-			HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
-		} else {
-			HTML("Comment: ANOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
-		}
-	}
-
-
-
-
-	if (Module == "IFPA") {
-		temp<-anova(threewayfull)
+#		temp<-Anova(threewayfull, type=c("III"), test="Wald")[-1,]
+		temp<-Anova(threewayfull, type=c("III"), test="Wald")
 		col1<-format(round(temp[2], 3), nsmall=3, scientific=FALSE)
-		col2<-format(round(temp[3], 3), nsmall=3, scientific=FALSE)
-		col3<-format(round(temp[4], 2), nsmall=2, scientific=FALSE)
-		col4<-format(round(temp[5], 4), nsmall=4, scientific=FALSE)
+		col2<-format(round(temp[3], 4), nsmall=4, scientific=FALSE)
 
 		source<-rownames(temp)
 
 		# Residual label in ANOVA
-		source[length(source)] <- "Residual"
+#		source[length(source)] <- "Residual"
 
 		#STB March 2014 - Replacing : with * in ANOVA table
 		for (q in 1:notreatfactors) {
 			source<-sub(":"," * ", source) 
 		}	
-		ivsanova<-cbind(source, col1,temp[1],col2,col3,col4)
-
-		ivsanova[length(unique(source)),5]<-" "
-		ivsanova[length(unique(source)),6]<-" "
+		ivsanova<-cbind(source, temp[1], col1,col2)
 
 		#STB May 2012 capitals changed
-		head<-c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
+		head<-c("Effect", "Degrees of freedom", "Chi-square", "p-value")
 		colnames(ivsanova)<-head
 
-		for (i in 1:(dim(ivsanova)[1]-1)) {
-			if (temp[i,5]<0.0001) {
+		for (i in 1:(dim(ivsanova)[1])) {
+			if (temp[i,3]<0.0001) {
 				#STB March 2011 formatting p-values p<0.0001
-				#ivsanova[i,6]<-0.0001
-				ivsanova[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				ivsanova[i,6]<- paste("<",ivsanova[i,6])
+				#ivsanova[i,5]<-0.0001
+				ivsanova[i,4]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+				ivsanova[i,4]<- paste("<",ivsanova[i,4])
 			}
 		}
 	
@@ -623,16 +495,18 @@ if(showANOVA=="Y") {
 
 		if(FirstCatFactor != "NULL") {
 			#STB Error spotted:
-			HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
+			HTML("Comment: Analysis of deviance table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 		} else {
-			HTML("Comment: ANOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
+			HTML("Comment: Analysis of deviance table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 		}
 	}
+
+
 
 	add<-paste(c("Conclusion"))
 	inte<-1
-	for(i in 1:(dim(ivsanova)[1]-1)) {
-		if (ivsanova[i,6]<= (1-sig)) {
+	for(i in 1:(dim(ivsanova)[1])) {
+		if (ivsanova[i,4]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
@@ -648,9 +522,9 @@ if(showANOVA=="Y") {
 			if(FirstCatFactor != "NULL") {
 
 			#STB July 2013 change wording to remove effects
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANCOVA table", sep="")
+			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the Analysis of deviance table", sep="")
 			} else {
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANOVA table", sep="")
+			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the Analysis of deviance table", sep="")
 			}
 		} 
 	if (dim(ivsanova)[1]<=2) {
@@ -662,18 +536,19 @@ if(showANOVA=="Y") {
 
 	HTML(add, align="left")
 	if(FirstCatFactor != "NULL") {
-		HTML("Tip: While it is a good idea to consider the overall tests in the ANCOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
+		HTML("Tip: While it is a good idea to consider the overall tests in the Analysis of deviance table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
 	} else { 
-		HTML("Tip: While it is a good idea to consider the overall tests in the ANOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
+		HTML("Tip: While it is a good idea to consider the overall tests in the Analysis of deviance table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
 	}
 }
+
 
 #===================================================================================================================
 #Fixed effect coefficients
 #===================================================================================================================
 if (ShowCoeff == "Y") {
 	HTML.title("Model coefficients", HR=2, align="left")
-	threewayfull<-lm(model, data=statdata, na.action = na.omit)
+	threewayfull<-glm(model, data=statdata, family = binomial(link="logit"), na.action = na.omit)
 	coeffs<- summary(threewayfull)$coefficient
 
 	col1<-format(round(coeffs[,1], 4), nsmall=4, scientific=FALSE)
@@ -681,7 +556,7 @@ if (ShowCoeff == "Y") {
 	col3<-format(round(coeffs[,3], 2), nsmall=2, scientific=FALSE)
 	col4<-format(round(coeffs[,4], 4), nsmall=4, scientific=FALSE)
 	coeffsx <- cbind(col1, col2, col3, col4)
-	colnames(coeffsx)<-c("Estimate", "Std. Error", "t-value", "p-value")
+	colnames(coeffsx)<-c("Estimate", "Std. Error", "z-value", "p-value")
 	for (i in 1:(dim(coeffsx)[1])) {
 		if (coeffs[i,4]<0.0001) {
 			coeffsx[i,4]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
@@ -694,48 +569,48 @@ if (ShowCoeff == "Y") {
 #===================================================================================================================
 #Covariate correlation table
 #===================================================================================================================
-if (CovariateRegressionCoefficients == "Y" && FirstCatFactor != "NULL") {
-
-	if (nocovars == 1) {
-		HTML.title("Covariate regression coefficient", HR=2, align="left")
-	} else {
-		HTML.title("Covariate regression coefficients", HR=2, align="left")
-	}
-	covtable_1<-coef(summary(threewayfull))
-	covtable<-data.frame(covtable_1)[c(2:(nocovars+1)),]
-
-	names <- rownames(covtable)
-	Estimate <-format(round(covtable$Estimate, 3), nsmall=3, scientific=FALSE) 
-	StdError <-format(round(covtable$Std..Error, 3), nsmall=3, scientific=FALSE) 
-	tvalue <-format(round(covtable$t.value, 2), nsmall=2, scientific=FALSE) 
-	Prt <-format(round(covtable$Pr...t.., 4), nsmall=4, scientific=FALSE) 
-	
-	covtable2 <-cbind(names, Estimate, StdError, tvalue, Prt)
-
-	for (k in 1:(dim(covtable2)[1])) {
-		if (as.numeric(covtable[k,4])<0.0001)  {
-			#STB March 2011 formatting p-values p<0.0001
-			#ivsanova[i,9]<-0.0001
-			covtable2[k,4]= "<0.0001"
-		}
-	}	
-	colnames(covtable2)<-c("Covariate", "Estimate", "Std error", "t-value", "p-value")
-	HTML(covtable2, classfirstline="second", align="left", row.names = "FALSE")
-}
+#if (CovariateRegressionCoefficients == "Y" && FirstCatFactor != "NULL") {
+#
+#	if (nocovars == 1) {
+#		HTML.title("Covariate regression coefficient", HR=2, align="left")
+#	} else {
+#		HTML.title("Covariate regression coefficients", HR=2, align="left")
+#	}
+#	covtable_1<-coef(summary(threewayfull))
+#	covtable<-data.frame(covtable_1)[c(2:(nocovars+1)),]
+#
+#	names <- rownames(covtable)
+#	Estimate <-format(round(covtable$Estimate, 3), nsmall=3, scientific=FALSE) 
+#	StdError <-format(round(covtable$Std..Error, 3), nsmall=3, scientific=FALSE) 
+#	tvalue <-format(round(covtable$t.value, 2), nsmall=2, scientific=FALSE) 
+#	Prt <-format(round(covtable$Pr...t.., 4), nsmall=4, scientific=FALSE) 
+#	
+#	covtable2 <-cbind(names, Estimate, StdError, tvalue, Prt)
+#
+#	for (k in 1:(dim(covtable2)[1])) {
+#		if (as.numeric(covtable[k,4])<0.0001)  {
+#			#STB March 2011 formatting p-values p<0.0001
+#			#ivsanova[i,9]<-0.0001
+#			covtable2[k,4]= "<0.0001"
+#		}
+#	}	
+#	colnames(covtable2)<-c("Covariate", "Estimate", "Std error", "t-value", "p-value")
+#	HTML(covtable2, classfirstline="second", align="left", row.names = "FALSE")
+#}
 
 #===================================================================================================================
 #Diagnostic plots
 #===================================================================================================================
-if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
-		HTML.title("Diagnostic plot", HR=2, align="left")
-}
-if(showPRPlot=="Y" && showNormPlot=="Y") {
-		HTML.title("Diagnostic plots", HR=2, align="left")
-}
+#if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
+#		HTML.title("Diagnostic plot", HR=2, align="left")
+#}
+#if(showPRPlot=="Y" && showNormPlot=="Y") {
+#		HTML.title("Diagnostic plots", HR=2, align="left")
+#}
 
 #Residual plots
 if(showPRPlot=="Y") {
-	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
+	HTML.title("Residuals vs. predicted plot", HR=2, align="left")
 
 	residualPlot <- sub(".html", "residualplot.png", htmlFile)
 	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
@@ -745,7 +620,7 @@ if(showPRPlot=="Y") {
 	dev.control("enable") 
 
 	#Graphical parameters
-	graphdata<-data.frame(cbind(predict(threewayfull),rstudent(threewayfull)))
+	graphdata<-data.frame(cbind(fitted(threewayfull),rstudent(threewayfull)))
 	graphdata$yvarrr_IVS <- graphdata$X2
 	graphdata$xvarrr_IVS <- graphdata$X1
 	XAxisTitle <- "Predicted values"
@@ -778,60 +653,159 @@ if(showPRPlot=="Y") {
 		linkToPdf3 <- paste ("<a href=\"",pdfFile_3,"\">Click here to view the PDF of the residuals vs. predicted plot</a>", sep = "")
 		HTML(linkToPdf3)
 	}
-	HTML("Tip: On this plot look to see if the spread of the points increases as the predicted values increase. If so the response may need transforming.", align="left")
-	HTML("Tip: Any observation with a residual less than -3 or greater than 3 (SD) should be investigated as a possible outlier.", align="left")
+#	HTML("Tip: On this plot look to see if the spread of the points increases as the predicted values increase. If so the response may need transforming.", align="left")
+#	HTML("Tip: Any observation with a residual less than -3 or greater than 3 (SD) should be investigated as a possible outlier.", align="left")
+	HTML("Tip: The residuals should be unbiased and homoscedastic.", align="left") 
 }
 
 #Normality plots
-if(showNormPlot=="Y") {
-	HTML.title("Normal probability plot", HR=3, align="left")
+#if(showNormPlot=="Y") {
+#	HTML.title("Normal probability plot", HR=3, align="left")
+#
+#	normPlot <- sub(".html", "normplot.png", htmlFile)
+#	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+#
+#	#STB July2013
+#	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
+#	dev.control("enable") 
+#
+#	#Graphical parameters
+#	te<-qqnorm(resid(threewayfull))
+#	graphdata<-data.frame(te$x,te$y)
+#	graphdata$xvarrr_IVS <-graphdata$te.x
+#	graphdata$yvarrr_IVS <-graphdata$te.y
+#	YAxisTitle <-"Sample Quantiles"
+#	XAxisTitle <-"Theoretical Quantiles"
+#	MainTitle2 <- " "
+#	w_Gr_jitscat <- 0
+#	h_Gr_jitscat <-  0
+#	infiniteslope <- "N"
+#	LinearFit <- "Y"
+#
+#	Gr_line_type<-Line_type_dashed
+#	Line_size <- 0.5
+#	Gr_alpha <- 1
+#	Line_type <-Line_type_dashed
+#
+#	#GGPLOT2 code
+#	NONCAT_SCAT("QQPLOT")
+#
+#	MainTitle2 <- ""
+#	#===================================================================================================================
+#	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
+#
+#	#STB July2013
+#	if (pdfout=="Y") {
+#		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf4), height = pdfheight, width = pdfwidth) 
+#		dev.set(2) 
+#		dev.copy(which=3) 
+#		dev.off(2)
+#		dev.off(3)
+#		pdfFile_4<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf4)
+#		linkToPdf4 <- paste ("<a href=\"",pdfFile_4,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
+#		HTML(linkToPdf4)
+#	}
+#	HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
+#}
 
-	normPlot <- sub(".html", "normplot.png", htmlFile)
-	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+#===================================================================================================================
+#Odds Ratios
+#===================================================================================================================
+CITitle<-paste("Table of log odds ratios with ",(sig*100),"% confidence intervals",sep="")
+HTML.title(CITitle, HR=2, align="left")
+
+ORtable<-exp(cbind(OR = coef(threewayfull), confint(threewayfull)))
+names<-c()
+	names[1]<-"Odds ratio"
+	names[2]<-paste("Lower ",(sig*100),"% CI",sep="")
+	names[3]<-paste("Upper ",(sig*100),"% CI",sep="")
+
+	colnames(ORtable)<-names
+
+HTML(ORtable, classfirstline="second", align="left", row.names = "FALSE")
+
+
+#===================================================================================================================
+#Plotting the model
+#===================================================================================================================
+
+	HTML.title("Scatterplot of observed data including the predicted fit", HR=2, align="left")
+
+	scatterPlotx <- sub(".html", "scatterPlotx.png", htmlFile)
+	png(scatterPlotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
 	#STB July2013
-	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
+	plotFilepdfx <- sub(".html", "scatterPlotx.pdf", htmlFile)
 	dev.control("enable") 
 
-	#Graphical parameters
-	te<-qqnorm(resid(threewayfull))
-	graphdata<-data.frame(te$x,te$y)
-	graphdata$xvarrr_IVS <-graphdata$te.x
-	graphdata$yvarrr_IVS <-graphdata$te.y
-	YAxisTitle <-"Sample Quantiles"
-	XAxisTitle <-"Theoretical Quantiles"
-	MainTitle2 <- " "
-	w_Gr_jitscat <- 0
-	h_Gr_jitscat <-  0
-	infiniteslope <- "N"
-	LinearFit <- "Y"
+	graphdata<- data.frame(matrix(ncol = 0, nrow = dim(statdata)[1]))
+	graphdata$xaxisvarrr_ivs<-as.numeric(eval(parse(text = paste("statdata$", selectedEffect))))
+	graphdata$yaxisvarrr_ivs<-eval(parse(text = paste("statdata$",resp)))
+	graphdata$Type <- "Raw data"
 
-	Gr_line_type<-Line_type_dashed
-	Line_size <- 0.5
-	Gr_alpha <- 1
-	Line_type <-Line_type_dashed
+	graphdata2<- data.frame(matrix(ncol = 0, nrow = dim(statdata)[1]))
+	graphdata2$yaxisvarrr_ivs<-predict(threewayfull,type = "response")
+	graphdata2$xaxisvarrr_ivs<-as.numeric(eval(parse(text = paste("statdata$", selectedEffect))))
+	graphdata2$Type <- "Prediction curve"
 
-	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	finaldata<-rbind(graphdata,graphdata2)
 
-	MainTitle2 <- ""
+
+	#Creating final dataset
+#	Type <- c(1:length(bv))
+#	for (i in 1:length(bv)) {Type[i]="Prediction curve"}
+#	finaldata<-data.frame(cbind(graphdata,bv, Type))
+	colnames(finaldata)<-c(selectedEffect, "Response", "Type")
+
+
+#	tempdata2<-graphdata[,c("xaxisvarrr_ivs", "yaxisvarrr_ivs")]
+
+#	#STB Feb 2016 - Replace length(tempdata2) with dim(tempdata2)[1]
+#	Type <- c(1:dim(tempdata2)[1])
+#	for (i in 1:dim(tempdata2)[1]) {
+#		Type[i]=" Assay standards"
+#	}
+#	tempdata2<-data.frame(tempdata2, Type)
+#	colnames(tempdata2)<-c("Dose", "Response", "Type")
+#	finaldata<-rbind(tempdata, tempdata2)
+
+	#New colour palette for this plot
+#	Col_palette <- c("#E41A1C" ,"black")
+#	BW_palette <- c("white", "black")
+#
+#	#BandW - Line included
+#	if (bandw == "Y") {
+#		Gr_palette <-BW_palette
+#	} else {
+#		Gr_palette <-Col_palette
+#	}
+#
+	Line_type <- Line_type_solid
+	MainTitle2<-""
+	XAxisTitle <- selectedEffect
+	YAxisTitle <- resp
+
+
+	#GGPlot2 code
+	Logregplot()
+
 	#===================================================================================================================
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
+	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlotx), Align="centre")
 
 	#STB July2013
 	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf4), height = pdfheight, width = pdfwidth) 
+		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdfx), height = pdfheight, width = pdfwidth) 
 		dev.set(2) 
 		dev.copy(which=3) 
 		dev.off(2)
 		dev.off(3)
-		pdfFile_4<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf4)
-		linkToPdf4 <- paste ("<a href=\"",pdfFile_4,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
-		HTML(linkToPdf4)
+		pdfFilex<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdfx)
+		linkToPdf <- paste ("<a href=\"",pdfFilex,"\">Click here to view the PDF of the scatterplot including predicted fit</a>", sep = "")
+		HTML(linkToPdfx)
 	}
-	HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
-}
 
+
+quit()
 #===================================================================================================================
 #LS Means plot and table
 #===================================================================================================================
@@ -2038,13 +2012,10 @@ Ref_list<-R_refs()
 #Bate and Clark comment
 HTML(refxx,  align="left")	
 
-if (UpdateIVS == "N") {
-	HTML.title("Statistical references", HR=2, align="left")
-}
-if (UpdateIVS == "Y") {
-	HTML.title("References", HR=2, align="left")
-	HTML(Ref_list$IVS_ref, align="left")
-}
+HTML.title("References", HR=2, align="left")
+HTML(Ref_list$IVS_ref, align="left")
+
+HTML.title("Statistical references", HR=4, align="left")
 HTML(Ref_list$BateClark_ref,  align="left")
 
 if(showANOVA=="Y") {
@@ -2089,12 +2060,7 @@ if (allPairwiseTest != "NULL" | backToControlTest !="NULL") {
 	}
 }
 
-if (UpdateIVS == "N") {
-	HTML.title("R references", HR=2, align="left")
-}
-if (UpdateIVS == "Y") {
-	HTML.title("R references", HR=4, align="left")
-}
+HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref ,  align="left")
 HTML(Ref_list$GGally_ref,  align="left")
 HTML(Ref_list$RColorBrewers_ref,  align="left")
