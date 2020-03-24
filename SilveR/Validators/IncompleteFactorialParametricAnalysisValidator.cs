@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 
 namespace SilveR.Validators
@@ -26,9 +25,17 @@ namespace SilveR.Validators
             allVars.AddVariables(ifpVariables.Response);
             allVars.AddVariables(ifpVariables.Covariates);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
-            if (!CheckFactorsHaveLevels(ifpVariables.Treatments, true)) return ValidationInfo;
+            //First create a list of catogorical variables selected (i.e. as treatments and other factors)
+            List<string> categorical = new List<string>();
+            categorical.AddVariables(ifpVariables.Treatments);
+            categorical.AddVariables(ifpVariables.OtherDesignFactors);
+
+            //check that the factors have at least 2 levels
+            if (!CheckFactorsHaveLevels(categorical, true))
+                return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
             if (!CheckResponsesPerLevel(ifpVariables.Treatments, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.Treatments)))
@@ -36,11 +43,6 @@ namespace SilveR.Validators
 
             if (!CheckResponsesPerLevel(ifpVariables.OtherDesignFactors, ifpVariables.Response, ReflectionExtensions.GetPropertyDisplayName<IncompleteFactorialParametricAnalysisModel>(i => i.OtherDesignFactors)))
                 return ValidationInfo;
-
-            //First create a list of catogorical variables selected (i.e. as treatments and other factors)
-            List<string> categorical = new List<string>();
-            categorical.AddVariables(ifpVariables.Treatments);
-            categorical.AddVariables(ifpVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
             if (!CategoricalAgainstContinuousVariableChecks(categorical, ifpVariables.Response))

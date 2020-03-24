@@ -51,14 +51,6 @@ namespace SilveR.Validators
                 }
             }
 
-            //?
-            if (!CheckFactorsHaveLevels(rmVariables.Treatments, true))
-                return ValidationInfo;
-            if (!CheckFactorsHaveLevels(rmVariables.RepeatedFactor, true))
-                return ValidationInfo;
-            if (!CheckFactorsHaveLevels(rmVariables.Subject, true))
-                return ValidationInfo;
-
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
@@ -66,6 +58,10 @@ namespace SilveR.Validators
             categorical.AddVariables(rmVariables.OtherDesignFactors);
             categorical.Add(rmVariables.RepeatedFactor);
             categorical.Add(rmVariables.Subject);
+
+            //check that the factors have at least 2 levels
+            if (!CheckFactorsHaveLevels(categorical, true))
+                return ValidationInfo;
 
             //do data checks on the treatments/other factors and response
             if (!CategoricalAgainstContinuousVariableChecks(categorical, rmVariables.Response))

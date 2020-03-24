@@ -105,6 +105,7 @@ namespace SilveR
             BrowserWindow browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
                 Title = Program.AppName,
+                Fullscreen = true,
                 Width = 1280,
                 Height = 1024,
                 AutoHideMenuBar = true,

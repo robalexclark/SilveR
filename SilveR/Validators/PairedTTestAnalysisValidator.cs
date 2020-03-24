@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 
 namespace SilveR.Validators
@@ -27,7 +26,8 @@ namespace SilveR.Validators
             allVars.AddVariables(pttVariables.Response);
             allVars.AddVariables(pttVariables.Covariates);
 
-            if (!CheckColumnNames(allVars)) return ValidationInfo;
+            if (!CheckColumnNames(allVars))
+                return ValidationInfo;
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categoricalVariables = new List<string>();
@@ -35,6 +35,7 @@ namespace SilveR.Validators
             categoricalVariables.AddVariables(pttVariables.OtherDesignFactors);
             categoricalVariables.AddVariables(pttVariables.Subject);
 
+            //check that the factors have at least 2 levels
             if (!CheckFactorsHaveLevels(categoricalVariables, true))
                 return ValidationInfo;
 

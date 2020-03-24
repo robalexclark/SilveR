@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 
 namespace SilveR.Validators
@@ -28,8 +27,14 @@ namespace SilveR.Validators
 
             if (!CheckColumnNames(allVars))
                 return ValidationInfo;
+            
+            //First create a list of catogorical variables selected (i.e. as treatments and other factors)
+            List<string> categorical = new List<string>();
+            categorical.AddVariables(smVariables.Treatments);
+            categorical.AddVariables(smVariables.OtherDesignFactors);
 
-            if (!CheckFactorsHaveLevels(smVariables.Treatments, true))
+            //check that the factors have at least 2 levels
+            if (!CheckFactorsHaveLevels(categorical, true))
                 return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
@@ -38,11 +43,6 @@ namespace SilveR.Validators
 
             if (!CheckResponsesPerLevel(smVariables.OtherDesignFactors, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<SingleMeasuresParametricAnalysisModel>(i => i.OtherDesignFactors)))
                 return ValidationInfo;
-
-            //First create a list of catogorical variables selected (i.e. as treatments and other factors)
-            List<string> categorical = new List<string>();
-            categorical.AddVariables(smVariables.Treatments);
-            categorical.AddVariables(smVariables.OtherDesignFactors);
 
             //do data checks on the treatments/other factors and response
             if (!CategoricalAgainstContinuousVariableChecks(categorical, smVariables.Response))
