@@ -182,6 +182,12 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> LogisticRegressionAnalysis(LogisticRegressionAnalysisModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> DoseResponseAndNonLinearRegressionAnalysis(DoseResponseAndNonLinearRegressionAnalysisModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
@@ -351,10 +357,14 @@ namespace SilveR.Controllers
 
                 htmlSource = htmlSource.Replace("/lib/bootstrap/css/bootstrap.min.css", "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
 
+                //remove the kendo css references
+                htmlSource = htmlSource.Replace(@"<link href=""/lib/kendo-ui/styles/kendo.common.min.css"" rel=""stylesheet"" type=""text/css"" />", "");
+                htmlSource = htmlSource.Replace(@"<link href=""/lib/kendo-ui/styles/kendo.bootstrap.min.css"" rel=""stylesheet"" type=""text/css"" />", "");
+
                 //include site.min.css into head
                 string css = await client.GetStringAsync(new Uri($"{Request.Scheme}://{Request.Host.Value}/css/site.min.css"));
 
-                htmlSource = htmlSource.Replace(@"<link href=""/css/site.css"" rel=""stylesheet"" type=""text/css"" />","<style>"+ css+"</style>");
+                htmlSource = htmlSource.Replace(@"<link href=""/css/site.css"" rel=""stylesheet"" type=""text/css"" />", "<style>" + css + "</style>");
 
                 byte[] bytes = Encoding.UTF8.GetBytes(htmlSource);
 

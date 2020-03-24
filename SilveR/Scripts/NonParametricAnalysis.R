@@ -1097,7 +1097,13 @@ if (RunFried == "Y") {
             #Bate and Clark comment
             HTML(refxx, align = "left")
 
-            HTML.title("Statistical references", HR = 2, align = "left")
+		if (UpdateIVS == "N") {
+			HTML.title("Statistical references", HR=2, align="left")
+		}
+		if (UpdateIVS == "Y") {
+			HTML.title("References", HR=2, align="left")
+			HTML(Ref_list$IVS_ref, align="left")
+		}
             HTML(Ref_list$BateClark_ref, align = "left")
             HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
             HTML("Kruskal, W.H. and Wallis, W.A. (1952). Use of ranks in one criterion variance analysis. JASA, 47, 583-621.", align = "left")
@@ -1127,7 +1133,13 @@ if (RunFried == "Y") {
             #Bate and Clark comment
             HTML(refxx,  align = "left")
 
-            HTML.title("Statistical references", HR = 2, align = "left")
+		if (UpdateIVS == "N") {
+			HTML.title("Statistical references", HR=2, align="left")
+		}
+		if (UpdateIVS == "Y") {
+			HTML.title("References", HR=2, align="left")
+			HTML(Ref_list$IVS_ref, align="left")
+		}
             HTML(Ref_list$BateClark_ref, align = "left")
             HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
             HTML("Mann, H.B. and Whitney, D.R. (1947). On a test of whether one of two random variables is stochastically larger than the other. Annals of Mathematical Statistics, 18, 50-60.", align = "left")
@@ -1162,7 +1174,13 @@ if (RunFried == "Y") {
         #Bate and Clark comment
         HTML(refxx, align = "left")
 
-        HTML.title("Statistical references", HR = 2, align = "left")
+ 	if (UpdateIVS == "N") {
+		HTML.title("Statistical references", HR=2, align="left")
+	}
+	if (UpdateIVS == "Y") {
+		HTML.title("References", HR=2, align="left")
+		HTML(Ref_list$IVS_ref, align="left")
+	}
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
@@ -1231,7 +1249,13 @@ if (RunFried == "Y") {
         #Bate and Clark comment
         HTML(refxx,  align = "left")
 
-        HTML.title("Statistical references", HR = 2, align = "left")
+	if (UpdateIVS == "N") {
+		HTML.title("Statistical references", HR=2, align="left")
+	}
+	if (UpdateIVS == "Y") {
+		HTML.title("References", HR=2, align="left")
+		HTML(Ref_list$IVS_ref, align="left")
+	}
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Mann, H.B. and Whitney, D.R. (1947). On a test of whether one of two random variables is stochastically larger than the other. Annals of Mathematical Statistics, 18, 50-60.", align = "left")
@@ -1286,7 +1310,13 @@ if (RunFried == "Y") {
         #Bate and Clark comment
         HTML(refxx,  align = "left")
 
-        HTML.title("Statistical references", HR = 2, align = "left")
+	if (UpdateIVS == "N") {
+		HTML.title("Statistical references", HR=2, align="left")
+	}
+	if (UpdateIVS == "Y") {
+		HTML.title("References", HR=2, align="left")
+		HTML(Ref_list$IVS_ref, align="left")
+	}
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
@@ -1327,14 +1357,26 @@ if (RunFried == "Y") {
         #Bate and Clark comment
         HTML(refxx,  align = "left")
 
-        HTML.title("Statistical references", HR = 2, align = "left")
+	if (UpdateIVS == "N") {
+		HTML.title("Statistical references", HR=2, align="left")
+	}
+	if (UpdateIVS == "Y") {
+		HTML.title("References", HR=2, align="left")
+		HTML(Ref_list$IVS_ref, align="left")
+	}
         HTML(Ref_list$BateClark_ref, align = "left")
         HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
         HTML("Steel, R.G.D. (1959). A multiple comparison rank sum test: treatments versus control. Biometrics, 15, 560-572. ", align = "left")
     }
 
     if (block != "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
-        HTML.title("Statistical references", HR = 2, align = "left")
+	if (UpdateIVS == "N") {
+		HTML.title("Statistical references", HR=2, align="left")
+	}
+	if (UpdateIVS == "Y") {
+		HTML.title("References", HR=2, align="left")
+		HTML(Ref_list$IVS_ref, align="left")
+	}
         HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
     }
 
@@ -1349,7 +1391,12 @@ if (RunFried != "Y") {
 #===================================================================================================================
 #References 
 #===================================================================================================================
-HTML.title("R references", HR = 2, align = "left")
+if (UpdateIVS == "N") {
+	HTML.title("R references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("R references", HR=4, align="left")
+}
 
 HTML(Ref_list$R_ref, align = "left")
 HTML(Ref_list$mtvnorm_ref, align = "left")

@@ -2,6 +2,9 @@
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
 
+#Software update
+UpdateIVS <- "N"
+
 #Beta warning
 Betawarn <- "N"
 BetaMessage <- "This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output."
@@ -947,7 +950,6 @@ NONCAT_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = "none") +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -955,6 +957,14 @@ NONCAT_CPP <- function() {
 		scale_fill_manual(values = Gr_palette_A) +
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
+
+	if (UpdateIVS == "N") {
+		 g <- g + theme(legend.position = "none") 
+	}
+	if (UpdateIVS == "Y") {
+		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+				labs(fill = "Animal_IVS")
+	}
 
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
@@ -969,7 +979,6 @@ ONECATSEP_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = "none") +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -977,6 +986,14 @@ ONECATSEP_CPP <- function() {
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_wrap(~l_l)
+
+	if (UpdateIVS == "N") {
+		 g <- g + theme(legend.position = "none") 
+	}
+	if (UpdateIVS == "Y") {
+		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+				labs(fill = "Animal_IVS")
+	}
 
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
@@ -991,7 +1008,6 @@ TWOCATSEP_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
-		theme(legend.position = "none") +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -1000,6 +1016,13 @@ TWOCATSEP_CPP <- function() {
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 
+	if (UpdateIVS == "N") {
+		 g <- g + theme(legend.position = "none") 
+	}
+	if (UpdateIVS == "Y") {
+		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+				labs(fill = "Animal_IVS")
+	}
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
@@ -1238,6 +1261,40 @@ OVERLAID_HIS <- function() {
 		}
 	}
 	suppressWarnings(print(gx))
+}
+
+#===================================================================================================================
+#Logistic regression plots
+#===================================================================================================================
+LogisticplotNonCat <- function() {
+	g <- ggplot(graphdata, aes(x = xvarrr_IVS, y = yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		theme(legend.position = "none") +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
+		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, size = Line_size) +
+		scale_y_continuous(breaks = c(0,1), labels = labelsz ) +
+		scale_x_continuous(breaks = pretty_breaks()) 
+	suppressWarnings(print(g))
+}
+
+LogisticplotOneCat <- function() {
+	g <- ggplot(graphdata, aes(x = xvarrr_IVS, y = yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		theme(legend.position = "none") +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		facet_wrap(~l_l) +
+		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
+		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, size = Line_size) +
+		scale_y_continuous(breaks = c(0,1), labels = labelsz ) +
+		scale_x_continuous(breaks = pretty_breaks()) 
+	suppressWarnings(print(g))
 }
 
 #===================================================================================================================
@@ -1524,6 +1581,49 @@ SURVIVALPLOT <- function() {
 }
 
 #===================================================================================================================
+#ROC plot 
+#===================================================================================================================
+
+ROCPLOT <- function() {
+#	p <- ggplot(grdata2, aes(time, surv, group = V3)) +
+#		theme_map +
+#		mytheme +
+#		theme(legend.position = Gr_legend_pos2) +
+#		ylab(YAxisTitle) +
+#		xlab(XAxisTitle) +
+#		ggtitle(MainTitle2) +
+#		coord_cartesian(ylim = c(-0.05, 1.05)) +
+#		scale_x_continuous(breaks = pretty_breaks()) +
+#		scale_y_continuous(breaks = pretty_breaks()) +
+#		scale_color_manual(values = Gr_palette) +
+#		scale_fill_manual(values = Gr_palette) +
+#		geom_step(aes(colour = V3), lty = Line_type, size = Line_size)
+#		grdatax = subset(grdata2, grdata2$n.event == 0)
+#
+#	if (dim(grdatax)[1] > 0) {
+#		p1 <- p + geom_point(data = grdatax, aes(x = time, y = surv, fill = V3), colour = "black", size = Point_size, shape = Point_shape)
+#	} else {
+#		p1 <- p
+#	}
+#	suppressWarnings(print(p1))
+#
+
+ g = ggplot() +
+		theme_map +
+		mytheme +
+    		xlab("False Positive Rate (1-Specificity)") +
+    		ylab("True Positive Rate (Sensitivity)") +
+		scale_x_continuous(breaks = pretty_breaks()) +
+		scale_y_continuous(breaks = pretty_breaks()) +
+#    		annotate("text", label = result, x = 0.875, y = 0.05, size = 5, colour = "red") +
+		geom_line(aes(x=c(0,1),y=c(0,1)), color="grey26", lty = Line_type_dashed, size = Line_size) +
+    		geom_line(data=pf,aes(x=FPR,y=TPR),colour = Gr_line , lty = Line_type_solid, size = Line_size) 
+
+		suppressWarnings(print(g))
+}
+
+
+#===================================================================================================================
 #Multivariate plots 
 #===================================================================================================================
 
@@ -1651,15 +1751,17 @@ R_refs <- function() {
 	ggdendro_ref <- "Andrie de Vries and Brian D. Ripley (2013). ggdendro: Tools for extracting dendrogram and tree diagram plot data for use with ggplot.. R package version 0.1-14. http://CRAN.R-project.org/package=ggdendro"
 	mixOmics_ref <- "Sebastien Dejean, Ignacio Gonzalez, Kim-Anh Le Cao with contributions from Pierre Monget, Jeff Coquery, FangZou Yao, Benoit Liquet and Florian Rohart (2013). mixOmics: Omics Data Integration Project. R package version 5.0-1. http://CRAN.R-project.org/package=mixOmics"
 	dplyr_ref <- "Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. https://CRAN.R-project.org/package=dplyr"
+	ROCRref<- "Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). “ROCR: visualizing classifier performance in R.” Bioinformatics, 21(20), 7881. <URL: http://rocr.bioinf.mpi-sb.mpg.de>."
 
 	BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
 	
 	Barnard_ref <- "Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact."
 
 	power_ref <- "Stephane Champely (2018). pwr: Basic Functions for Power Analysis. R package version 1.2-2. https://CRAN.R-project.org/package=pwr"
-
+	IVS_ref <- "When referring to InVivoStat, please cite 'InVivoStat, version 4.1'."
 
 	Refs <- list(
+		IVS_ref = IVS_ref,
 		R_ref = R_ref,
 		mtvnorm_ref = mtvnorm_ref,
 		GridExtra_ref = GridExtra_ref,
@@ -1688,7 +1790,8 @@ R_refs <- function() {
 		ggrepel_ref = ggrepel_ref,
 		mcview_ref = mcview_ref,
 		power_ref = power_ref,
-		dplyr_ref = dplyr_ref
+		dplyr_ref = dplyr_ref,
+		ROCRref = ROCRref
 	)
 	return(Refs)
 }

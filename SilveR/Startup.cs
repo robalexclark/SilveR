@@ -105,7 +105,6 @@ namespace SilveR
             BrowserWindow browserWindow = await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions
             {
                 Title = Program.AppName,
-                Fullscreen = true,
                 Width = 1280,
                 Height = 1024,
                 AutoHideMenuBar = true,
@@ -120,7 +119,11 @@ namespace SilveR
 
             Electron.Menu.SetContextMenu(browserWindow, contextMenu);
 
-            browserWindow.OnReadyToShow += () => browserWindow.Show();
+            browserWindow.OnReadyToShow += () =>
+            {
+                browserWindow.Show();
+                browserWindow.Maximize();
+            };
         }
 
 
@@ -209,6 +212,12 @@ namespace SilveR
                 {
                     Script linearRegression = new Script() { ScriptDisplayName = "Linear Regression Analysis", ScriptFileName = "LinearRegressionAnalysis", RequiresDataset = true };
                     context.Scripts.Add(linearRegression);
+                }
+
+                if (!existingScripts.Any(x => x.ScriptFileName == "LogisticRegressionAnalysis"))
+                {
+                    Script logisticRegression = new Script() { ScriptDisplayName = "Logistic Regression Analysis", ScriptFileName = "LogisticRegressionAnalysis", RequiresDataset = true };
+                    context.Scripts.Add(logisticRegression);
                 }
 
                 if (!existingScripts.Any(x => x.ScriptFileName == "DoseResponseAndNonLinearRegressionAnalysis"))

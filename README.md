@@ -8,7 +8,7 @@ The SilveR project is currently branded as InVivoStat as it is the cross platfor
 
 ## Getting Started
 
-Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.5.2 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
+Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.6.3 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
 
 ### Current Build
 

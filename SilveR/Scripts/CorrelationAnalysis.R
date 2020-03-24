@@ -894,8 +894,15 @@ Ref_list<-R_refs()
 #Bate and Clark comment
 HTML(refxx, align="left")	
 
-HTML.title("Statistical references", HR=2, align="left")
+if (UpdateIVS == "N") {
+	HTML.title("Statistical references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("References", HR=2, align="left")
+	HTML(Ref_list$IVS_ref, align="left")
+}
 HTML(Ref_list$BateClark_ref, align="left")
+
 if (method == "Pearson") {
 	HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition; Iowa State University Press, Iowa, USA.", align="left") 
 }
@@ -905,7 +912,14 @@ if (method == "Spearman") {
 if (method == "Spearman" || method == "Kendall") {
 	HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons. P185-194. ", align="left")
 }
-HTML.title("R references", HR=2, align="left")
+
+if (UpdateIVS == "N") {
+	HTML.title("R references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("R references", HR=4, align="left")
+}
+
 HTML(Ref_list$R_ref , align="left")
 HTML(Ref_list$GGally_ref, align="left")
 HTML(Ref_list$RColorBrewers_ref, align="left")

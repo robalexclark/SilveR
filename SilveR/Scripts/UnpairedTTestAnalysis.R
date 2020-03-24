@@ -744,14 +744,25 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 #===================================================================================================================
 Ref_list<-R_refs()
 
-HTML.title("Statistical references", HR=2, align="left")
+if (UpdateIVS == "N") {
+	HTML.title("Statistical references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("References", HR=2, align="left")
+	HTML(Ref_list$IVS_ref, align="left")
+}
 HTML(Ref_list$BateClark_ref, align="left")
 
 if(unequalCase == "Y") {
 	HTML("Welch, B.L. (1947). The generalization of Student's problem when several different population variances are involved. Biometrika, 34(1-2), 28-35.", align="left")
 }
 
-HTML.title("R references", HR=2, align="left")
+if (UpdateIVS == "N") {
+	HTML.title("R references", HR=2, align="left")
+}
+if (UpdateIVS == "Y") {
+	HTML.title("R references", HR=4, align="left")
+}
 HTML(Ref_list$R_ref ,  align="left")
 HTML(Ref_list$GGally_ref,  align="left")
 HTML(Ref_list$RColorBrewers_ref,  align="left")
