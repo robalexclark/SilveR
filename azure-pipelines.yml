@@ -15,7 +15,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.100
+      version: 3.1.201
 
   - task: DotNetCoreCLI@2
     displayName: dotnet restore
@@ -91,11 +91,11 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.100
+      version: 3.1.201
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '9.x'
+      versionSpec: '12.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
@@ -140,11 +140,11 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.100
+      version: 3.1.201
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '9.x'
+      versionSpec: '12.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
@@ -192,11 +192,11 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.100
+      version: 3.1.201
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '9.x'
+      versionSpec: '12.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
