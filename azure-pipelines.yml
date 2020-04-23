@@ -95,7 +95,7 @@ jobs:
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '9.x'
+      versionSpec: '12.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
@@ -144,7 +144,7 @@ jobs:
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '9.x'
+      versionSpec: '12.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
@@ -196,7 +196,7 @@ jobs:
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '9.x'
+      versionSpec: '12.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
