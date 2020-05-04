@@ -1616,14 +1616,15 @@ if(pairwiseTest == "AllComparisonsWithinSelected") {
 #===================================================================================================================
 #STB March 2014 - Creating a dataset of p-values
 if (genpvals == "Y" && (pairwiseTest == "AllComparisonsWithinSelected" || pairwiseTest == "AllPairwiseComparisons")) {
+
 	comparisons <- sub(".csv", "comparisons.csv",  Args[3])
 
 	for (i in 1:100) {
-		tabs_final2[,1]<-sub(","," ", tabs_final2[,1], fixed=TRUE)
+		tabs_final[,1]<-sub(","," ", tabs_final[,1], fixed=TRUE)
 	}
 
-	tabsx<- data.frame(tabs_final2[,6])
-	row <-data.frame(tabs_final2[,1])
+	tabsx<- data.frame(tabs_final[,7])
+	row <-data.frame(tabs_final[,1])
 
 	tabsx2<-cbind(row, tabsx)
 	colnames(tabsx2)<-c("Comparison", "p-value")

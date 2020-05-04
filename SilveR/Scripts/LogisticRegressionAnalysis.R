@@ -11,31 +11,6 @@ Args <- commandArgs(TRUE)
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
-#model <- Args[4]
-#scatterplotModel <- as.formula(Args[5])
-#positiveResult <- Args[6]
-#covariates <- Args[7]
-#covariateTransform <- Args[8]
-#FirstCatFactor <- Args[8]
-#treatFactors <- Args[9]
-#contFactors <- Args[10]
-#contFactorTransform <- Args[11]
-#blockFactors <- Args[12]
-#showANOVA <- Args[13]
-#tableOfOverallEffectTests <- Args[13]
-#modelPredictionAssessment <- Args[14]
-#rocCurve <- Args[15]
-#sig <- 1 - as.numeric(Args[16])
-#sig2 <- 1 - as.numeric(Args[16])/2
-#effectModel <- as.formula(Args[16])
-#effectModel2 <- Args[16]
-#selectedEffect <- Args[17]
-#showLSMeans <- Args[18]
-#allPairwiseTest <- Args[19]
-#backToControlTest <- Args[20]
-#cntrlGroup <- Args[21]
-#genpvals <- Args[22]
-
 model <- Args[4]
 scatterplotModel <- as.formula(Args[5])
 positiveResult <- Args[6]
@@ -237,261 +212,6 @@ if (nocovars > 0 && covariateTransform != "None") {
 }
 HTML(add, align="left")
 
-
-#===================================================================================================================
-#Plotting Predictions
-#===================================================================================================================
-HTML.title("Plot of model predictions", HR=2, align="left")
-
-threewayfull<-glm(model2, data=statdata, family = binomial(link="logit"), na.action = na.omit)
-
-if(nocontfactors > 1) {
-	HTML("This option is only available if the model contains a single continuous factor.", align="left")
-}
-
-if(nocontfactors == 1) {
-	#Warning messages when there are covariates or blocking factors 
-	if (noblockfactors>0 && nocovars>0 ) {
-		HTML("As you have selected blocking factor(s) and covariate(s) no plot has been generated.", align="left")
-	}
-	if (noblockfactors==0 && nocovars>0 ) {
-		HTML("As you have selected covariate(s) no plot has been generated.", align="left")
-	}
-	if (noblockfactors>0 && nocovars==0 ) {
-		HTML("As you have selected blocking factor(s) no plot has been generated.", align="left")
-	}
-}
-
-
-
-
-#Predictions when there is a single continuous factor only in the model
-if(noblockfactors==0 && nocovars==0 && notreatfactors == 0 && nocontfactors == 1)
-{
-	#Calculating the range of the continuous factor
-	Minrange = suppressWarnings(min(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE))
-	Maxrange = suppressWarnings(max(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE))
-
-	#Generating the prediction grid
-	newdata<- c(1:(100*(Maxrange - Minrange)))
-	id<-1
-	for (i in Minrange:(Maxrange-1)) {
-		for (j in 1:100) {
-			newdata[id+j] <- (Minrange+i-1)+ j/100
-		}
-		id =id +100
-	}
-	newdata<-data.frame(newdata)
-	colnames(newdata) <- ContinuousList[1]
-
-	#Generating the predictions
-	newdataPreds <- predict(threewayfull, newdata = newdata, type = "response")
-	newdataPreds<- cbind( newdataPreds, newdata)
-
-	#Generating the plot y-axis label
-	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
-		if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
-			labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-		} else {
-			labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-		}
-	}
-
-	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
-		labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
-		positiveResult2<- c(positiveResult)
-		labels2<- labels[!labels %in% positiveResult2]
-		labelsz<-c(labels2, positiveResult)
-	}
-
-	#Plotting the data
-	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
-	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-	
-	#STB July2013
-	plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Graphical parameters
-	graphdata<-statdata
-	graphdata$yvarrr_IVS <- statdata$temp_IVS_response
-	graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",ContinuousList[1])))
-	newdataPreds$yvarrr_IVS <- newdataPreds$newdataPreds
-	newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
-
-	XAxisTitle <- ContinuousList[1]
-	YAxisTitle <- resp
-	MainTitle2 <- ""
-	w_Gr_jitscat <- 0
-	h_Gr_jitscat <-  0
-	infiniteslope <- "Y"
-	ReferenceLine <- "NULL"
-	Line_type <- Line_type_solid	
-
-	#GGPLOT2 code
-	LogisticplotNonCat()
-	
-	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
-		linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the scatterplot</a>", sep = "")
-		HTML(linkToPdf1)
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Predictions when there is a single continuous factor only in the model
-if(noblockfactors==0 && nocovars==0 && notreatfactors ==1 && nocontfactors == 1)
-{
-
-trlevs <- length(levels(eval(parse(text = paste("statdata$", treatlist[1])))))
-
-	#Calculating the range of the continuous factor
-	Minrange = suppressWarnings(min(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE))
-	Maxrange = suppressWarnings(max(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE))
-
-	#Generating the prediction grid
-	newdata<- c(1:(100*(Maxrange - Minrange)))
-	id<-1
-	for (i in Minrange:(Maxrange-1)) {
-		for (j in 1:100) {
-			newdata[id+j] <- (Minrange+i-1)+ j/100
-		}
-		id =id +100
-	}
-
-	newdata<-data.frame(newdata)
-	newdata$treat_IVS_treat<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[1]
-	tempdata<-newdata
-	for (i in 2:trlevs){
-		temptempdata<-tempdata
-		temptempdata$treat_IVS_treat<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[i]
-		newdata <- rbind(newdata, temptempdata)
-	}
-	colnames(newdata) <- c(ContinuousList[1], treatlist[1])
-
-	#Generating the predictions
-	newdataPreds <- predict(threewayfull, newdata = newdata, type = "response")
-	newdataPreds<- cbind( newdataPreds, newdata)
-
-	#Generating the plot y-axis label
-	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
-		if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
-			labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-		} else {
-			labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-		}
-	}
-
-	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
-		labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
-		positiveResult2<- c(positiveResult)
-		labels2<- labels[!labels %in% positiveResult2]
-		labelsz<-c(labels2, positiveResult)
-	}
-
-	#Plotting the data
-	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
-	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-	
-	#STB July2013
-	plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Graphical parameters
-	graphdata<-statdata
-	graphdata$yvarrr_IVS <- statdata$temp_IVS_response
-	graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",ContinuousList[1])))
-	graphdata$l_l<- eval(parse(text = paste("graphdata$", treatlist[1])))
-
-	newdataPreds$yvarrr_IVS <- newdataPreds$newdataPreds
-	newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
-	newdataPreds$l_l<- eval(parse(text = paste("newdataPreds$", treatlist[1])))
-
-	XAxisTitle <- ContinuousList[1]
-	YAxisTitle <- resp
-	MainTitle2 <- ""
-	w_Gr_jitscat <- 0
-	h_Gr_jitscat <-  0
-	infiniteslope <- "Y"
-	ReferenceLine <- "NULL"
-	Line_type <- Line_type_solid	
-
-	#GGPLOT2 code
-	LogisticplotOneCat()
-	
-	void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
-		linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the scatterplot</a>", sep = "")
-		HTML(linkToPdf1)
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #===================================================================================================================
 #ANOVA table
 #===================================================================================================================
@@ -515,8 +235,6 @@ if(tableOfOverallEffectTests=="Y") {
 	}
 
 	#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
-
-#	temp<-Anova(threewayfull, type=c("III"), test="Wald")[-1,]
 	temp<-Anova(threewayfull, type=c("III"), test="Wald")
 	col1<-format(round(temp[2], 3), nsmall=3, scientific=FALSE)
 	col2<-format(round(temp[3], 4), nsmall=4, scientific=FALSE)
@@ -581,6 +299,395 @@ if(tableOfOverallEffectTests=="Y") {
 	HTML(add, align="left")
 }
 
+
+#===================================================================================================================
+#Plotting Predictions
+#===================================================================================================================
+HTML.title("Plot of model predictions", HR=2, align="left")
+
+threewayfull<-glm(model2, data=statdata, family = binomial(link="logit"), na.action = na.omit)
+
+if (plotOfModelPredicted == "Y") {
+
+	if(nocontfactors > 1) {
+		HTML("This option is only available if the model contains a single continuous factor.", align="left")
+	}
+
+	if(nocontfactors == 1) {
+		#Warning messages when there are covariates or blocking factors 
+		if (noblockfactors>0 && nocovars>0 ) {
+			HTML("As you have selected blocking factor(s) and covariate(s) no plot has been generated.", align="left")
+		}
+		if (noblockfactors==0 && nocovars>0 ) {
+			HTML("As you have selected covariate(s) no plot has been generated.", align="left")
+		}
+		if (noblockfactors>0 && nocovars==0 ) {
+			HTML("As you have selected blocking factor(s) no plot has been generated.", align="left")
+		}
+	}
+
+	#Predictions plot when there is a single continuous factor only in the model
+	if(noblockfactors==0 && nocovars==0 && notreatfactors == 0 && nocontfactors == 1) {
+
+		#Calculating the range of the continuous factor
+		Minrange = suppressWarnings(floor(min(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE)))
+		Maxrange = suppressWarnings(ceiling(max(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE)))
+
+		#Generating the prediction grid
+		newdata<- c(1:(100*(Maxrange - Minrange)))
+		id<-1
+		for (i in Minrange:(Maxrange-1)) {
+			for (j in 1:100) {
+				newdata[id+j] <- (Minrange+i-1)+ j/100
+			}
+			id =id +100
+		}
+		newdata<-data.frame(newdata)
+		colnames(newdata) <- ContinuousList[1]
+
+		#Generating the predictions
+		newdataPreds <- predict(threewayfull, newdata = newdata, type = "response")
+		newdataPreds<- cbind( newdataPreds, newdata)
+
+		#Generating the plot y-axis label
+		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
+			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
+				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+			} else {
+				labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+			}
+		}
+
+		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
+			labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
+			positiveResult2<- c(positiveResult)
+			labels2<- labels[!labels %in% positiveResult2]
+			labelsz<-c(labels2, positiveResult)
+		}
+
+		#Plotting the data
+		scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+		png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+		
+		#STB July2013
+		plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
+		dev.control("enable") 
+
+		#Graphical parameters
+		graphdata<-statdata
+		graphdata$yvarrr_IVS <- statdata$temp_IVS_response
+		graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",ContinuousList[1])))
+		newdataPreds$yvarrr_IVS <- newdataPreds$newdataPreds
+		newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
+
+		XAxisTitle <- ContinuousList[1]
+		YAxisTitle <- resp
+		MainTitle2 <- ""
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <-  0
+		infiniteslope <- "Y"
+		ReferenceLine <- "NULL"
+		Line_type <- Line_type_solid	
+
+		#GGPLOT2 code
+		LogisticplotNonCat()
+		
+		void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
+	
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
+			linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the scatterplot</a>", sep = "")
+			HTML(linkToPdf1)
+		}
+	}
+
+
+	#Predictions when there is a single continuous factor and a single categorical only in the model
+	if(noblockfactors==0 && nocovars==0 && notreatfactors ==1 && nocontfactors == 1) {
+		trlevs <- length(levels(eval(parse(text = paste("statdata$", treatlist[1])))))
+
+		#Calculating the range of the continuous factor
+		Minrange = suppressWarnings(floor(min(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE)))
+		Maxrange = suppressWarnings(ceiling(max(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE)))
+
+		#Generating the prediction grid
+		newdata<- c(1:(100*(Maxrange - Minrange)))
+		id<-1
+		for (i in Minrange:(Maxrange-1)) {
+			for (j in 1:100) {
+				newdata[id+j] <- (Minrange+i-1)+ j/100
+			}
+			id =id +100
+		}
+
+		newdata<-data.frame(newdata)
+		newdata$treat_IVS_treat<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[1]
+		tempdata<-newdata
+		for (i in 2:trlevs){
+			temptempdata<-tempdata
+			temptempdata$treat_IVS_treat<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[i]
+			newdata <- rbind(newdata, temptempdata)
+		}
+		colnames(newdata) <- c(ContinuousList[1], treatlist[1])
+
+		#Generating the predictions
+		newdataPreds <- predict(threewayfull, newdata = newdata, type = "response")
+		newdataPreds<- cbind( newdataPreds, newdata)
+	
+		#Generating the plot y-axis label
+		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
+			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
+				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+			} else {
+				labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+			}
+		}
+
+		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
+			labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
+			positiveResult2<- c(positiveResult)
+			labels2<- labels[!labels %in% positiveResult2]
+			labelsz<-c(labels2, positiveResult)
+		}
+
+		#Plotting the data
+		scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+		png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+	
+		#STB July2013
+		plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
+		dev.control("enable") 
+
+		#Graphical parameters
+		graphdata<-statdata
+		graphdata$yvarrr_IVS <- statdata$temp_IVS_response
+		graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",ContinuousList[1])))
+		graphdata$l_l<- eval(parse(text = paste("graphdata$", treatlist[1])))
+
+		newdataPreds$yvarrr_IVS <- newdataPreds$newdataPreds
+		newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
+		newdataPreds$l_l<- eval(parse(text = paste("newdataPreds$", treatlist[1])))
+
+		XAxisTitle <- ContinuousList[1]
+		YAxisTitle <- resp
+		MainTitle2 <- ""
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <-  0
+		infiniteslope <- "Y"
+		ReferenceLine <- "NULL"
+		Line_type <- Line_type_solid	
+
+		#GGPLOT2 code
+		LogisticplotOneCat()
+	
+		void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
+
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
+			linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the scatterplot</a>", sep = "")
+			HTML(linkToPdf1)
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	#Predictions when there is a single continuous factor and a single categorical only in the model
+	if(noblockfactors==0 && nocovars==0 && notreatfactors ==2 && nocontfactors == 1) {
+		trlevs1 <- length(levels(eval(parse(text = paste("statdata$", treatlist[1])))))
+		trlevs2 <- length(levels(eval(parse(text = paste("statdata$", treatlist[2])))))
+
+		#Calculating the range of the continuous factor
+		Minrange = suppressWarnings(min(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE))
+		Maxrange = suppressWarnings(max(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE))
+
+		#Generating the prediction grid
+		IDdata<- c(1:(100*(Maxrange - Minrange)))
+		id<-1
+		for (i in Minrange:(Maxrange-1)) {
+			for (j in 1:100) {
+				IDdata[id+j] <- (Minrange+i-1)+ j/100
+			}
+			id =id +100
+		}
+		IDdata<-data.frame(IDdata)
+
+		for (i in 1:trlevs1){
+			for (j in 1:trlevs2) {
+				temptempdata<-IDdata
+				temptempdata$treat_IVS_treat1<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[i]
+				temptempdata$treat_IVS_treat2<- levels(eval(parse(text = paste("statdata$", treatlist[2]))))[j]
+				if (i==1 && j==1) {
+					newdata <- temptempdata
+				} else {
+					newdata <- rbind(newdata, temptempdata)
+				}
+			}
+		}
+		colnames(newdata) <- c(ContinuousList[1], treatlist[1], treatlist[2])
+
+
+
+		#Generating the predictions
+		newdataPreds <- predict(threewayfull, newdata = newdata, type = "response")
+		newdataPreds<- cbind( newdataPreds, newdata)
+	
+		#Generating the plot y-axis label
+		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
+			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
+				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+			} else {
+				labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+			}
+		}
+
+		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
+			labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
+			positiveResult2<- c(positiveResult)
+			labels2<- labels[!labels %in% positiveResult2]
+			labelsz<-c(labels2, positiveResult)
+		}
+
+		#Plotting the data
+		scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
+		png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+	
+		#STB July2013
+		plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
+		dev.control("enable") 
+
+		#Graphical parameters
+		graphdata<-statdata
+		graphdata$yvarrr_IVS <- statdata$temp_IVS_response
+		graphdata$xvarrr_IVS <- eval(parse(text = paste("statdata$",ContinuousList[1])))
+		graphdata$firstcatvarrr_IVS<- eval(parse(text = paste("graphdata$", treatlist[1])))
+		graphdata$secondcatvarrr_IVS<- eval(parse(text = paste("graphdata$", treatlist[2])))
+
+		newdataPreds$yvarrr_IVS <- newdataPreds$newdataPreds
+		newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
+		newdataPreds$firstcatvarrr_IVS<- eval(parse(text = paste("newdataPreds$", treatlist[1])))
+		newdataPreds$secondcatvarrr_IVS<- eval(parse(text = paste("newdataPreds$", treatlist[2])))
+
+		XAxisTitle <- ContinuousList[1]
+		YAxisTitle <- resp
+		MainTitle2 <- ""
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <-  0
+		infiniteslope <- "Y"
+		ReferenceLine <- "NULL"
+		Line_type <- Line_type_solid	
+
+		#GGPLOT2 code
+		LogisticplotTwoCat()
+	
+		void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
+
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf1), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_1<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf1)
+			linkToPdf1 <- paste ("<a href=\"",pdfFile_1,"\">Click here to view the PDF of the scatterplot</a>", sep = "")
+			HTML(linkToPdf1)
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+#===================================================================================================================
+#Odds ratio
+#===================================================================================================================
+if (oddsRatio == "Y") {
+	HTML.title("Odds ratio", HR=2, align="left")
+
+	names <- rownames(data.frame(coef(threewayfull)))
+	names<-names[-1]
+	oddsR<- data.frame(exp(cbind(OR = coef(threewayfull), confint(threewayfull, level=(sig)))))
+	oddsR <- oddsR[-1,]
+	oddsR<-cbind(names, oddsR)
+	colnames(oddsR) <- c("Parameter", "Odds ratio", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
+	HTML(oddsR, classfirstline="second", align="left", row.names = "FALSE")
+
+	note<- c("Note: Confidence intervals are based on the profiled log-likelihood function.")
+	HTML(note, align="left")
+ 
+	note2<- c("To interpret these results: For a one-unit increase in the parameter, the odds ratio (given as a fold-change) 
+	indicates the corresponding increase/decrease in the probability that the response gives a 'positive result'." )
+	HTML(note2, align="left")
+}
+
 #===================================================================================================================
 #Generating confusion matrix
 #===================================================================================================================
@@ -615,6 +722,93 @@ if (modelPredictionAssessment == "Y") {
 	temp3 <- round(100*mean(tempdata$Prediction == tempdata$temp_IVS_response), 2)
 	conclusion <- paste("The model correctly classifies the responses in ", temp3, "% of the time." , sep = "")
 	HTML(conclusion, align="left")
+}
+
+#===================================================================================================================
+#Predictions
+#===================================================================================================================
+if (tableOfModelPredictions == "Y") {
+	HTML.title("Model predictions", HR=2, align="left")
+
+	predictions<- predict(threewayfull, type = "response")
+	Observations <- c(1:dim(statdata)[1])
+
+	predicts <- cbind(Observations, statdata, predictions)
+	colnames(predicts) <- c("Observation number", colnames(statdata), "Prediction")
+	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
+		predicts2 = subset(predicts, select = -c(temp_IVS_response_temp, temp_IVS_response) )
+	}
+	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
+		predicts2 = subset(predicts, select = -c(temp_IVS_response) )
+	}
+	HTML(predicts2, classfirstline="second", align="left", row.names = "FALSE")
+}
+
+#===================================================================================================================
+#Goodness of fit test
+#===================================================================================================================
+if (goodnessOfFitTest  == "Y" ) {
+	HTML.title("Hosmer-Lemeshow goodness of fit test", HR=2, align="left")
+
+	temprepsp<-c(statdata$temp_IVS_response)
+
+	#Generating the quantiles
+	neffects <-sum(temp[1])-1
+	vect <- vector(mode="numeric", length=neffects)
+	for (i in 1:neffects) {
+		vect[i] <- (0.9 - 0.1)/(neffects+1)*i+0.1
+	}
+
+	#Generate model predictions
+	pihat <- threewayfull$fitted
+	brks <- c(0,quantile(pihat, probs=vect),1)
+	brksL<-length(brks)-1
+	brkschi<-length(brks)-2
+
+	#categorise the observations according to deciles of the predicted probabilities
+	pihatcat <- cut(pihat, breaks=brks, labels=FALSE)
+
+	#Cycle through the groups 1 to x, counting the number observed 0s and 1s, and calculating the expected number of 0s and 1s
+	#To calculate the latter, we find the mean of the predicted probabilities in each group, and multiply this by the group size, which here is 10:
+	meanprobs <- array(0, dim=c(brksL,2))
+	expevents <- array(0, dim=c(brksL,2))
+	obsevents <- array(0, dim=c(brksL,2))
+
+	for (i in 1:brksL) {
+		meanprobs[i,1] <- mean(pihat[pihatcat==i])
+		expevents[i,1] <- sum(pihatcat==i)*meanprobs[i,1]
+		obsevents[i,1] <- sum(temprepsp[pihatcat==i])
+
+		meanprobs[i,2] <- mean(1-pihat[pihatcat==i])
+		expevents[i,2] <- sum(pihatcat==i)*meanprobs[i,2]
+		obsevents[i,2] <- sum(temprepsp[pihatcat==i])
+	}
+
+	#we can calculate the Hosmer-Lemeshow test statistic by the sum of (observed-expected)^2/expected across the 10x2 cells of the table
+	hosmerlemechi <- sum((obsevents-expevents)^2 / expevents)
+	col1a<-format(round(hosmerlemechi, 2), nsmall=2, scientific=FALSE)
+
+	hosmerlemepval <- pchisq(hosmerlemechi, df=brkschi, lower.tail=FALSE) 
+	col2a=format(round(hosmerlemepval, 4), nsmall=4, scientific=FALSE)
+	if (hosmerlemepval<0.0001) {
+		col2a<- "<0.0001"
+	}
+
+	hosmerlemetable <- data.frame(t(c("Test result", col1a, brkschi, col2a)))
+	colnames(hosmerlemetable)<-c(" ", "Chi-sq value", "Degrees of freedom", "p-value")
+	HTML(hosmerlemetable, classfirstline="second", align="left", row.names = "FALSE")
+
+	add<-paste(c("Conclusion"))
+	if (hosmerlemepval<= (1-sig)) {
+		add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is a statistically significant at the ", 1-sig , " level (", col2a ,"), indicating the model does not fit well.", sep="")
+	} 
+	if (hosmerlemepval > (1-sig)) {
+		add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is not statistically significant at the ", 1-sig , " level (", col2a ,"), indicating there is no evidence of poor fit.", sep="")
+	} 
+	HTML(add, align="left")
+
+	comment <- c("Note: The number of bins used in this caluclation is two more than the number of model parameters estimated.")
+	HTML(comment, align="left")
 }
 
 #===================================================================================================================
@@ -656,116 +850,6 @@ if (rocCurve == "Y") {
 	the better the model is at discriminating between positives and negatives. In this case the AUC of the curve is ", auc, ".", sep = "") 
 	HTML(AUCresult, align="left")
 } 
-
-
-#===================================================================================================================
-#Goodness of fit test
-#===================================================================================================================
-HTML.title("Hosmer-Lemeshow goodness of fit test", HR=2, align="left")
-
-temprepsp<-c(statdata$temp_IVS_response)
-
-#Generating the quantiles
-neffects <-sum(temp[1])-1
-vect <- vector(mode="numeric", length=neffects)
-for (i in 1:neffects) {
-	vect[i] <- (0.9 - 0.1)/(neffects+1)*i+0.1
-}
-
-#Generate model predictions
-pihat <- threewayfull$fitted
-brks <- c(0,quantile(pihat, probs=vect),1)
-brksL<-length(brks)-1
-brkschi<-length(brks)-2
-
-#categorise the observations according to deciles of the predicted probabilities
-pihatcat <- cut(pihat, breaks=brks, labels=FALSE)
-
-#Cycle through the groups 1 to x, counting the number observed 0s and 1s, and calculating the expected number of 0s and 1s
-#To calculate the latter, we find the mean of the predicted probabilities in each group, and multiply this by the group size, which here is 10:
-meanprobs <- array(0, dim=c(brksL,2))
-expevents <- array(0, dim=c(brksL,2))
-obsevents <- array(0, dim=c(brksL,2))
-
-for (i in 1:brksL) {
-	meanprobs[i,1] <- mean(pihat[pihatcat==i])
-	expevents[i,1] <- sum(pihatcat==i)*meanprobs[i,1]
-	obsevents[i,1] <- sum(temprepsp[pihatcat==i])
-
-	meanprobs[i,2] <- mean(1-pihat[pihatcat==i])
-	expevents[i,2] <- sum(pihatcat==i)*meanprobs[i,2]
-	obsevents[i,2] <- sum(temprepsp[pihatcat==i])
-}
-
-
-#we can calculate the Hosmer-Lemeshow test statistic by the sum of (observed-expected)^2/expected across the 10x2 cells of the table
-hosmerlemechi <- sum((obsevents-expevents)^2 / expevents)
-col1a<-format(round(hosmerlemechi, 2), nsmall=2, scientific=FALSE)
-
-hosmerlemepval <- pchisq(hosmerlemechi, df=brkschi, lower.tail=FALSE) 
-col2a=format(round(hosmerlemepval, 4), nsmall=4, scientific=FALSE)
-if (hosmerlemepval<0.0001) {
-	col2a<- "<0.0001"
-}
-
-hosmerlemetable <- data.frame(t(c("Test result", col1a, brkschi, col2a)))
-colnames(hosmerlemetable)<-c(" ", "Chi-sq value", "Degrees of freedom", "p-value")
-HTML(hosmerlemetable, classfirstline="second", align="left", row.names = "FALSE")
-
-add<-paste(c("Conclusion"))
-if (hosmerlemepval<= (1-sig)) {
-	add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is a statistically significant at the ", 1-sig , " level (", col2a ,"), indicating the model does not fit well.", sep="")
-} 
-if (hosmerlemepval > (1-sig)) {
-	add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is not statistically significant at the ", 1-sig , " level (", col2a ,"), indicating there is no evidence of poor fit.", sep="")
-} 
-
-HTML(add, align="left")
-
-comment <- c("Note: The number of bins used in this caluclation is two more than the number of model parameters estimated.")
-HTML(comment, align="left")
- 
-#===================================================================================================================
-#Odds ratio
-#===================================================================================================================
-HTML.title("Odds ratio", HR=2, align="left")
-
-names <- rownames(data.frame(coef(threewayfull)))
-names<-names[-1]
-oddsR<- data.frame(exp(cbind(OR = coef(threewayfull), confint(threewayfull, level=(sig)))))
-oddsR <- oddsR[-1,]
-oddsR<-cbind(names, oddsR)
-colnames(oddsR) <- c("Parameter", "Odds ratio", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
-HTML(oddsR, classfirstline="second", align="left", row.names = "FALSE")
-
-note<- c("Note: Confidence intervals are based on the profiled log-likelihood function.")
-HTML(note, align="left")
- 
-note2<- c("To interpret these results: For a one-unit increase in the parameter, the odds ratio (given as a fold-change) 
-indicates the corresponding increase/decrease in the probability that the response gives a 'positive result'." )
-HTML(note2, align="left")
-
-
-
-#===================================================================================================================
-#Predictions
-#===================================================================================================================
-HTML.title("Model predictions", HR=2, align="left")
-
-predictions<- predict(threewayfull, type = "response")
-Observations <- c(1:dim(statdata)[1])
-
-predicts <- cbind(Observations, statdata, predictions)
-colnames(predicts) <- c("Observation number", colnames(statdata), "Prediction")
-if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
-	predicts2 = subset(predicts, select = -c(temp_IVS_response_temp, temp_IVS_response) )
-}
-if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
-	predicts2 = subset(predicts, select = -c(temp_IVS_response) )
-}
-HTML(predicts2, classfirstline="second", align="left", row.names = "FALSE")
-
-
 
 #===================================================================================================================
 #Analysis description

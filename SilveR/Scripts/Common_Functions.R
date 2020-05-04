@@ -1297,6 +1297,22 @@ LogisticplotOneCat <- function() {
 	suppressWarnings(print(g))
 }
 
+LogisticplotTwoCat <- function() {
+	g <- ggplot(graphdata, aes(x = xvarrr_IVS, y = yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		theme(legend.position = "none") +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
+		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
+		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, size = Line_size) +
+		scale_y_continuous(breaks = c(0,1), labels = labelsz ) +
+		scale_x_continuous(breaks = pretty_breaks()) 
+	suppressWarnings(print(g))
+}
+
 #===================================================================================================================
 #Matrix plot (correlation module)
 #===================================================================================================================
@@ -1585,29 +1601,6 @@ SURVIVALPLOT <- function() {
 #===================================================================================================================
 
 ROCPLOT <- function() {
-#	p <- ggplot(grdata2, aes(time, surv, group = V3)) +
-#		theme_map +
-#		mytheme +
-#		theme(legend.position = Gr_legend_pos2) +
-#		ylab(YAxisTitle) +
-#		xlab(XAxisTitle) +
-#		ggtitle(MainTitle2) +
-#		coord_cartesian(ylim = c(-0.05, 1.05)) +
-#		scale_x_continuous(breaks = pretty_breaks()) +
-#		scale_y_continuous(breaks = pretty_breaks()) +
-#		scale_color_manual(values = Gr_palette) +
-#		scale_fill_manual(values = Gr_palette) +
-#		geom_step(aes(colour = V3), lty = Line_type, size = Line_size)
-#		grdatax = subset(grdata2, grdata2$n.event == 0)
-#
-#	if (dim(grdatax)[1] > 0) {
-#		p1 <- p + geom_point(data = grdatax, aes(x = time, y = surv, fill = V3), colour = "black", size = Point_size, shape = Point_shape)
-#	} else {
-#		p1 <- p
-#	}
-#	suppressWarnings(print(p1))
-#
-
  g = ggplot() +
 		theme_map +
 		mytheme +
