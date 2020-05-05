@@ -198,13 +198,30 @@ for (i in 1:length(pvals)) {
 	}
 }
 
+
+#Round unadjusted p-vlaues
+tablex<-matrix(nrow=length(pvalus), ncol=1)
+for ( i in 1:length(pvalus)) {
+	tablex[i,1]=format(round(pvalus[i], 4), nsmall=4, scientific=FALSE)
+}
+
+for (i in 1:length(pvalus)) {
+#STB march 2011 formatting p-values p<0.0001 
+	if (pvalus[i]<0.0001) {
+		# table[i,2]<-"<0.0001"
+		tablex[i,1]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+		tablex[i,1]<- paste("<",tablex[i,1])
+	}
+}
+
+
 #STB Jan 2017
 if (testtype == "UseDataSet") {
 	compzzzz <- statdata$compzzzz
-	table2<-data.frame(compzzzz,tempdata3,table)
+	table2<-data.frame(compzzzz,tablex,table)
 	colnames(table2)<-c("Comparison","Unadjusted p-value" , "Adjusted p-value")
 } else {
-	table2<-data.frame(tempdata3,table)
+	table2<-data.frame(tablex,table)
 	colnames(table2)<-c( "Unadjusted p-value" , "Adjusted p-value")
 }
 HTML(table2, classfirstline="second", align="left", row.names="FALSE")

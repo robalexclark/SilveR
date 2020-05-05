@@ -27,11 +27,18 @@ namespace SilveR.Validators
 
             if (!CheckColumnNames(allVars))
                 return ValidationInfo;
-            
+
+            if (CountResponses(lrVariables.Response) <= 1)
+            {
+                ValidationInfo.AddErrorMessage("Unfortunately as there are less than two valid responses in the dataset no analysis has been performed.");
+                return ValidationInfo;
+            }
+
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
             categorical.AddVariables(lrVariables.Treatments);
             categorical.AddVariables(lrVariables.OtherDesignFactors);
+            categorical.AddVariables(lrVariables.ContinuousFactors); //apparently continuous variables here count as categorical
 
             //check that the factors have at least 2 levels
             if (!CheckFactorsHaveLevels(categorical, true))
@@ -42,6 +49,7 @@ namespace SilveR.Validators
             if(distinctResponseValues != 2)
             {
                 ValidationInfo.AddErrorMessage("Response must have 2 distinct values.");
+                return ValidationInfo;
             }
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
@@ -54,6 +62,12 @@ namespace SilveR.Validators
             //do data checks on the treatments/other factors and response
             if (!CategoricalAgainstContinuousVariableChecks(categorical, lrVariables.Response))
                 return ValidationInfo;
+
+            foreach (string covariate in lrVariables.Covariates)
+            {
+                if (!CategoricalAgainstContinuousVariableChecks(categorical, covariate))
+                    return ValidationInfo;
+            }
 
             //check transformations
             if (lrVariables.ContinuousFactors != null)
@@ -85,7 +99,7 @@ namespace SilveR.Validators
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {
                 string factorType;
-                if (lrVariables.Treatments.Contains(catFactor))
+                if (lrVariables.Treatments != null && lrVariables.Treatments.Contains(catFactor))
                 {
                     factorType = ReflectionExtensions.GetPropertyDisplayName<LogisticRegressionAnalysisModel>(i => i.Treatments);
                 }
