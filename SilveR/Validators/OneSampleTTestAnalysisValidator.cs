@@ -1,4 +1,4 @@
-using SilveR.StatsModels;
+﻿using SilveR.StatsModels;
 
 namespace SilveR.Validators
 {

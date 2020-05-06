@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SilveR.Models;
 using SilveR.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using System.Globalization;
+using System.Text;
 
 namespace SilveR
 {
@@ -47,6 +47,8 @@ namespace SilveR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             string appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Program.AppName);
             Directory.CreateDirectory(appDataFolder); //create the app folder if it does not exist
 

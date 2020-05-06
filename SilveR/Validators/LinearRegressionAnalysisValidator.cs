@@ -1,4 +1,4 @@
-using SilveR.StatsModels;
+﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;

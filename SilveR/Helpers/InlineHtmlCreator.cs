@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SilveR.Helpers
 {
@@ -15,7 +16,7 @@ namespace SilveR.Helpers
             string htmlFile = resultsFiles.Single(x => x.EndsWith(".html") || x.EndsWith(".htm"));
 
             //read in the html and reconvert any dodgy characters back
-            string theHTML = File.ReadAllText(htmlFile);
+            string theHTML = File.ReadAllText(htmlFile, Encoding.UTF8);
 
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             theHTML = argFormatter.ConvertIllegalCharactersBack(theHTML);

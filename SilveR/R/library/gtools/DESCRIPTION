@@ -1,0 +1,40 @@
+Package: gtools
+Title: Various R Programming Tools
+Description: Functions to assist in R programming, including:
+  - assist in developing, updating, and maintaining R and R packages ('ask', 'checkRVersion',
+    'getDependencies', 'keywords', 'scat'),
+  - calculate the logit and inverse logit transformations ('logit', 'inv.logit'),
+  - test if a value is missing, empty or contains only NA and NULL values ('invalid'),
+  - manipulate R's .Last function ('addLast'),
+  - define macros ('defmacro'),
+  - detect odd and even integers ('odd', 'even'),
+  - convert strings containing non-ASCII characters (like single quotes) to plain ASCII ('ASCIIfy'),
+  - perform a binary search ('binsearch'),
+  - sort strings containing both numeric and character components ('mixedsort'),
+  - create a factor variable from the quantiles of a continuous variable ('quantcut'),
+  - enumerate permutations and combinations ('combinations', 'permutation'),
+  - calculate and convert between fold-change and log-ratio ('foldchange',
+    'logratio2foldchange', 'foldchange2logratio'),
+  - calculate probabilities and generate random numbers from Dirichlet distributions
+    ('rdirichlet', 'ddirichlet'),
+  - apply a function over adjacent subsets of a vector ('running'),
+  - modify the TCP\_NODELAY ('de-Nagle') flag for socket objects,
+  - efficient 'rbind' of data frames, even if the column names don't match ('smartbind'),
+  - generate significance stars from p-values ('stars.pval'),
+  - convert characters to/from ASCII codes ('asc', 'chr'),
+  - convert character vector to ASCII representation ('ASCIIfy').
+Version: 3.8.2
+Date: 2020-03-23
+Author: Gregory R. Warnes, Ben Bolker, and Thomas Lumley
+Maintainer: Gregory R. Warnes <greg@warnes.net>
+License: GPL-2
+Depends: methods, stats, utils
+URL: https://github.com/r-gregmisc/gtools
+BugReports: https://github.com/r-gregmisc/gtools/issues
+Language: en-US
+NeedsCompilation: yes
+Packaged: 2020-03-29 23:27:01 UTC; gwarnes
+Repository: CRAN
+Date/Publication: 2020-03-31 13:50:02 UTC
+Built: R 3.6.3; x86_64-w64-mingw32; 2020-04-02 13:33:11 UTC; windows
+Archs: i386, x64

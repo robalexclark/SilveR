@@ -1,4 +1,4 @@
-#Parameter setup
+﻿#Parameter setup
 #Module type
 Module <- "SMPA"
 #Module <- "IFPA"

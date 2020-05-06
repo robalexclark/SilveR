@@ -39,6 +39,7 @@ namespace SilveR.Validators
             categorical.AddVariables(lrVariables.Treatments);
             categorical.AddVariables(lrVariables.OtherDesignFactors);
             categorical.AddVariables(lrVariables.ContinuousFactors); //apparently continuous variables here count as categorical
+            categorical.AddVariables(lrVariables.Response);
 
             //check that the factors have at least 2 levels
             if (!CheckFactorsHaveLevels(categorical, true))
@@ -60,13 +61,16 @@ namespace SilveR.Validators
                 return ValidationInfo;
 
             //do data checks on the treatments/other factors and response
-            if (!CategoricalAgainstContinuousVariableChecks(categorical, lrVariables.Response))
+            if (!CategoricalAgainstContinuousVariableChecks(categorical, lrVariables.Response, ReflectionExtensions.GetPropertyDisplayName<LogisticRegressionAnalysisModel>(i => i.Response)))
                 return ValidationInfo;
 
-            foreach (string covariate in lrVariables.Covariates)
+            if (lrVariables.Covariates != null)
             {
-                if (!CategoricalAgainstContinuousVariableChecks(categorical, covariate))
-                    return ValidationInfo;
+                foreach (string covariate in lrVariables.Covariates)
+                {
+                    if (!CategoricalAgainstContinuousVariableChecks(categorical, covariate, ReflectionExtensions.GetPropertyDisplayName<LogisticRegressionAnalysisModel>(i => i.Covariates)))
+                        return ValidationInfo;
+                }
             }
 
             //check transformations
@@ -80,21 +84,11 @@ namespace SilveR.Validators
                 CheckTransformations(lrVariables.CovariateTransformation, lrVariables.Covariates, true);
             }
 
-            //do data checks on the treatments/other factors and covariate (if selected)
-            if (lrVariables.Covariates != null)
-            {
-                foreach (string covariate in lrVariables.Covariates)
-                {
-                    if (!CategoricalAgainstContinuousVariableChecks(categorical, covariate))
-                        return ValidationInfo;
-                }
-            }
-
             //if get here then no errors so return true
             return ValidationInfo;
         }
 
-        private bool CategoricalAgainstContinuousVariableChecks(List<string> categorical, string continuous)
+        private bool CategoricalAgainstContinuousVariableChecks(List<string> categorical, string continuous, string displayName)
         {
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {
@@ -128,14 +122,17 @@ namespace SilveR.Validators
                     continuousRow.Add(row[continuous].ToString());
                 }
 
+
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
-                    //Check that the "response" does not contains non-numeric data
-                    bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
-                    if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
+                    if (displayName != "Response")
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
-                        return false;
+                        bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
+                        if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
+                        {
+                            ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
+                            return false;
+                        }
                     }
 
                     //Check that there are no responses where the treatments are blank
