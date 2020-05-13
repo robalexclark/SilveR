@@ -156,7 +156,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Covariate (Covariate3) contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Covariate (Covariate3) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("LogisticRegressionAnalysis", testName, errors);
         }
 
@@ -499,12 +499,12 @@ namespace SilveR.IntegrationTests
             model.PositiveResult = "1";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            Helpers.SaveTestOutput("LogisticRegressionAnalysis", model, testName, statsOutput);
+            HttpResponseMessage response = await client.PostAsync("Analyses/LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LogisticRegressionAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Contains("The Continuous factor (Covariate3) contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
+            Helpers.SaveOutput("LogisticRegressionAnalysis", testName, errors);
         }
 
         [Fact]
@@ -526,7 +526,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Other design (block) factor (Covariate4) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Continuous factor (Covariate4) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("LogisticRegressionAnalysis", testName, errors);
         }
 

@@ -47,7 +47,7 @@ namespace SilveR.Validators
 
             //check that the response has two distinct values
             int distinctResponseValues = CountDistinctLevels(lrVariables.Response);
-            if(distinctResponseValues != 2)
+            if (distinctResponseValues != 2)
             {
                 ValidationInfo.AddErrorMessage("Response must have 2 distinct values.");
                 return ValidationInfo;
@@ -73,6 +73,19 @@ namespace SilveR.Validators
                 }
             }
 
+            if (lrVariables.ContinuousFactors != null)
+            {
+                foreach (string continuousFactor in lrVariables.ContinuousFactors)
+                {
+                    if (!CheckIsNumeric(continuousFactor))
+                    {
+                        ValidationInfo.AddErrorMessage("The Continuous factor (" + continuousFactor + ") contains non-numeric data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
+                        return ValidationInfo;
+                    }
+                }
+            }
+
+
             //check transformations
             if (lrVariables.ContinuousFactors != null)
             {
@@ -96,6 +109,10 @@ namespace SilveR.Validators
                 if (lrVariables.Treatments != null && lrVariables.Treatments.Contains(catFactor))
                 {
                     factorType = ReflectionExtensions.GetPropertyDisplayName<LogisticRegressionAnalysisModel>(i => i.Treatments);
+                }
+                else if (lrVariables.ContinuousFactors != null && lrVariables.ContinuousFactors.Contains(catFactor))
+                {
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<LogisticRegressionAnalysisModel>(i => i.ContinuousFactors);
                 }
                 else
                 {
@@ -130,7 +147,7 @@ namespace SilveR.Validators
                         bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
                         if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                         {
-                            ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
+                            ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                             return false;
                         }
                     }

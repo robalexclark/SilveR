@@ -126,7 +126,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Response (Resp4) contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Response (Resp4) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 
@@ -149,7 +149,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The Covariate (Cov4) contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
+            Assert.Contains("The Covariate (Cov4) contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
         }
 

@@ -1,4 +1,4 @@
-﻿#R Libraries
+#R Libraries
 
 suppressWarnings(library(car))
 suppressWarnings(library(R2HTML))
@@ -212,6 +212,35 @@ if (nocovars > 0 && covariateTransform != "None") {
 }
 HTML(add, align="left")
 
+
+#===================================================================================================================
+# Testing the factorial combinations
+#ind<-1
+#for (i in 1:notreatfactors) {
+#	ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
+#}
+#
+#if((length(unique(statdata$scatterPlotColumn))) != ind) {
+#	HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
+#	quit()
+#}
+
+
+#===================================================================================================================
+# Testing the continuous factor
+contid<-0
+if (contFactors !="NULL") {
+	for (i in 1:nocontfactors) {
+		if (length(levels(as.factor(eval(parse(text = paste("statdata$",ContinuousList[i])))))) ==2) {
+			contid = contid+1
+		}
+	}
+	if (contid > 0) {
+		HTML.title("Warning", HR=2, align="left")
+		HTML("Unfortunately one or more of the continuous factors has only two levels. This module does not support analysing continuous factors with only tow levels. Please change any such factors to categorical.", align="left")
+		quit()
+	}
+}
 #===================================================================================================================
 #ANOVA table
 #===================================================================================================================
@@ -380,7 +409,7 @@ if (plotOfModelPredicted == "Y") {
 		newdataPreds$yvarrr_IVS <- newdataPreds$newdataPreds
 		newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
 
-		XAxisTitle <- ContinuousList[1]
+		XAxisTitle <- namereplace(ContinuousList[1])
 		YAxisTitle <- resp
 		MainTitle2 <- ""
 		w_Gr_jitscat <- 0
@@ -750,6 +779,22 @@ if (tableOfModelPredictions == "Y") {
 if (goodnessOfFitTest  == "Y" ) {
 	HTML.title("Hosmer-Lemeshow goodness of fit test", HR=2, align="left")
 
+
+
+
+#llh <- logLik(threewayfull)
+#objectNull <- update(threewayfull, ~ 1, data=model.frame(threewayfull))
+#llhNull <- logLik(objectNull)
+#McFadden <- 1 - llh/llhNull
+#HTML(McFadden)
+#quit()
+
+
+
+
+
+
+
 	temprepsp<-c(statdata$temp_IVS_response)
 
 	#Generating the quantiles
@@ -912,11 +957,11 @@ if (noblockfactors==1 && blocklist != "NULL")  {
 		}
 		for (i in 1:noblockfactors) {
 			if (i<noblockfactors-1) {
-				add<-paste(add, blocklistsep[i], ", ", sep="")
+				add<-paste(add, blocklist[i], ", ", sep="")
 			} else	if (i<noblockfactors) {
-				add<-paste(add, blocklistsep[i], " and ", sep="")
+				add<-paste(add, blocklist[i], " and ", sep="")
 			} else if (i==noblockfactors) {
-				add<-paste(add, blocklistsep[i], sep="")
+				add<-paste(add, blocklist[i], sep="")
 			}
 		}
 		add<-paste(add, " as the blocking factors", sep="")
@@ -926,26 +971,26 @@ if (nocovars == 0) {
 	add<-paste(add, ". ", sep="")
 } else {
 	add<-paste(add, " and ",  sep="")
-	if (nocovlist == 1) {
-		add<-paste(add, covlistsep[1], " as the covariate.", sep="")
+	if (nocovars == 1) {
+		add<-paste(add, covlist[1], " as the covariate.", sep="")
 	} else {
-		for (i in 1:nocovlist) {
-			if (i<nocovlist-1)	{
-				add<-paste(add, covlistsep[i], ", ", sep="")
-			} else 	if (i<nocovlist) {
-				add<-paste(add, covlistsep[i], " and ", sep="")
-			} else if (i==nocovlist) {
-				add<-paste(add, covlistsep[i], " as the covariates.", sep="")
+		for (i in 1:nocovars) {
+			if (i<nocovars-1)	{
+				add<-paste(add, covlist[i], ", ", sep="")
+			} else 	if (i<nocovars) {
+				add<-paste(add, covlist[i], " and ", sep="")
+			} else if (i==nocovars) {
+				add<-paste(add, covlist[i], " as the covariates.", sep="")
 			}
 		}
 	}
 }
 
 if (nocovars != 0 && covariateTransform != "None") {
-	if (nocovlist == 1) {
-		add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
+	if (nocovars == 1) {
+		add<-paste(add, c(" The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	} else {
-		add<-paste(add, c("The covariates have been "), covariateTransform, " transformed prior to analysis.", sep="")
+		add<-paste(add, c(" The covariates have been "), covariateTransform, " transformed prior to analysis.", sep="")
 	}
 }
 

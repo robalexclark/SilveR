@@ -119,7 +119,8 @@ namespace SilveR.Validators
             //Check to see if the number of treatment levels selected is at least 2
             foreach (string factor in factors)
             {
-                if (!CheckFactorsHaveLevels(factor, multipleFactors)) return false;
+                if (!CheckFactorsHaveLevels(factor, multipleFactors))
+                    return false;
             }
 
             return true;

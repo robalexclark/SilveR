@@ -107,6 +107,12 @@ namespace SilveR.StatsModels
             //if the response is blank then remove that row
             dtNew.RemoveBlankRow(Response);
 
+            //Need to create a new column for the scatterplot data as we have to combine any interaction effects into one column
+            if (Treatments != null)
+            {
+                dtNew.CreateCombinedEffectColumn(Treatments, "scatterPlotColumn");
+            }
+
             //Now do transformations...
             if (ContinuousFactors != null)
             {

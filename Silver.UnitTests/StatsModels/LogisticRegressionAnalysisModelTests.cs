@@ -75,7 +75,7 @@ namespace SilveR.UnitTests.StatsModels
             string[] result = sut.ExportData();
 
             //Assert
-            Assert.Equal("Response1,Cont1,Cat1", result[0]);
+            Assert.Equal("Response1,Cont1,Cat1,scatterPlotColumn", result[0]);
             Assert.Equal(145, result.Count()); //as blank reponses are removed
             Assert.StartsWith("0.991702474728814,0.9", result[32]);
 
@@ -83,7 +83,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Contains("0.0281913694602691,0.0596479639729655", result[24]);
 
             //mainEffect check
-            Assert.EndsWith("0.0596479639729655,'3'", result[24]);
+            Assert.EndsWith("0.0596479639729655,'3',3", result[24]);
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace SilveR.UnitTests.StatsModels
             string[] result = sut.ExportData();
 
             //Assert
-            Assert.Equal("Response1,Cont1,Cat1,Cativs_amper_ivs2,Block3,Covariate", result[0]);
+            Assert.Equal("Response1,Cont1,Cat1,Cativs_amper_ivs2,Block3,Covariate,scatterPlotColumn", result[0]);
         }
 
         [Fact]

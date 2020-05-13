@@ -1743,8 +1743,8 @@ R_refs <- function() {
 	cluster_ref <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2013).  cluster: Cluster Analysis Basics and Extensions. R package version 1.14.4."
 	ggdendro_ref <- "Andrie de Vries and Brian D. Ripley (2013). ggdendro: Tools for extracting dendrogram and tree diagram plot data for use with ggplot.. R package version 0.1-14. http://CRAN.R-project.org/package=ggdendro"
 	mixOmics_ref <- "Sebastien Dejean, Ignacio Gonzalez, Kim-Anh Le Cao with contributions from Pierre Monget, Jeff Coquery, FangZou Yao, Benoit Liquet and Florian Rohart (2013). mixOmics: Omics Data Integration Project. R package version 5.0-1. http://CRAN.R-project.org/package=mixOmics"
-	dplyr_ref <- "Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. https://CRAN.R-project.org/package=dplyr"
-	ROCRref<- "Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). “ROCR: visualizing classifier performance in R.” Bioinformatics, 21(20), 7881. <URL: http://rocr.bioinf.mpi-sb.mpg.de>."
+	dplyr_ref <- "Hadley Wickham, Romain Francois, Lionel Henry and Kirill Müller (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. https://CRAN.R-project.org/package=dplyr"
+	ROCRref<- "Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). ROCR: visualizing classifier performance in R. Bioinformatics, 21(20), 7881. <URL: http://rocr.bioinf.mpi-sb.mpg.de>."
 
 	BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
 	

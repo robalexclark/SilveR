@@ -120,7 +120,7 @@ namespace SilveR.Validators
                     bool parsedOK = Double.TryParse(continuousRow[i], out double parsedValue);
                     if (!String.IsNullOrEmpty(continuousRow[i]) && !parsedOK)
                     {
-                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contain non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
+                        ValidationInfo.AddErrorMessage("The " + responseType + " (" + continuous + ") contains non-numerical data which cannot be processed. Please check the input data and make sure the data was entered correctly.");
                         return false;
                     }
 
