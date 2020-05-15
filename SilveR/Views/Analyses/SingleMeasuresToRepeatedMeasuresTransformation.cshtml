@@ -1,0 +1,109 @@
+﻿@model SilveR.StatsModels.SingleMeasuresToRepeatedMeasuresTransformationModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script defer src="~/js/stats/singleMeasuresToRepeatedMeasuresTransformation.js"></script>
+        <script defer src="~/js/openLinks.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/stats/singleMeasuresToRepeatedMeasuresTransformation.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Single Measures to Repeated Measures Transformation";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class="col-md-6">
+        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Summary_Statistics.pdf')" class="btn btn-info pull-right">Help</a>
+    </div>
+</div>
+
+<form action="/Analyses/SingleMeasuresToRepeatedMeasuresTransformation" class="form-horizontal mt-2" method="post">
+
+    @await Html.PartialAsync("AnalysisErrors")
+
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header">Responses</div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Responses</label>
+                        <div class="col-md-6">
+                            <select class="form-control" asp-for="Responses"></select>
+                            <div><span asp-validation-for="Responses"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Additional variables to include in new dataset</div>
+                <div class="card-body">                   
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Include all variables</label>
+                        <div class="col-md-6">
+                            <input asp-for="IncludeAllVariables" type="checkbox" class="checkbox-fix" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Selected variables</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="SelectedVariables" />
+                            <div><span asp-validation-for="SelectedVariables"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="card">
+                <div class="card-header">Name of new variables</div>
+                <div class="card-body">                   
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="ResponseName" />
+                            <div><span asp-validation-for="ResponseName"></span></div>
+                        </div>
+                    </div>
+                      <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Repeated factor</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="RepeatedFactorName" />
+                            <div><span asp-validation-for="RepeatedFactorName"></span></div>
+                        </div>
+                    </div>
+                      <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Subject factor</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="SubjectFactorName" />
+                            <div><span asp-validation-for="SubjectFactorName"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
+        </div>
+    </div>
+</form>

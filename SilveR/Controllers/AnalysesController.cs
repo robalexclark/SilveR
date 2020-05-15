@@ -259,6 +259,12 @@ namespace SilveR.Controllers
             return await RunAnalysis(model, ignoreWarnings);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SingleMeasuresToRepeatedMeasuresTransformation(SingleMeasuresToRepeatedMeasuresTransformationModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
         private async Task<IActionResult> RunAnalysis(AnalysisModelBase model, bool ignoreWarnings)
         {
             Dataset dataset = null;

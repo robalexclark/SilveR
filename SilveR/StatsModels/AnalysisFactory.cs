@@ -84,6 +84,9 @@ namespace SilveR.StatsModels
                 case "IncompleteFactorialParametricAnalysis":
                     model = new IncompleteFactorialParametricAnalysisModel(dataset);
                     break;
+                case "SingleMeasuresToRepeatedMeasuresTransformation":
+                    model = new SingleMeasuresToRepeatedMeasuresTransformationModel(dataset);
+                    break;
                 default:
                     throw new ArgumentException("Analysis type not found!");
             }

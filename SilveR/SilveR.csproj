@@ -118,6 +118,9 @@
     <None Update="Scripts\RepeatedMeasuresParametricAnalysis.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Scripts\SingleMeasuresToRepeatedMeasuresTransformation.R">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Scripts\SingleMeasuresParametricAnalysis.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

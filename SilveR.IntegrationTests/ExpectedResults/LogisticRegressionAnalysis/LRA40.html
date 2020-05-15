@@ -2978,7 +2978,9 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
- <h2> Hosmer-Lemeshow goodness of fit test</h2>
+ <h2> Goodness of fit tests</h2>
+
+ <h3> Hosmer-Lemeshow goodness of fit test</h3>
 
 
 <p align="left">
@@ -3011,6 +3013,35 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>Conclusion: The Hosmer-Lemeshow goodness of fit test is a statistically significant at the 0.05 level (<0.0001), indicating the model does not fit well.</p>
 
 <p class='character'>Note: The number of bins used in this caluclation is two more than the number of model parameters estimated.</p>
+
+ <h3> McFadden adjusted R-sq</h3>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>   </th>
+		<th>R-sq value  </th>
+		<th>Degrees of freedom</th> 
+	</tr> 
+<tr> 
+<td class="cellinside">Test result
+</td>
+<td class="cellinside">0.2616
+</td>
+<td class="cellinside">11
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+<p class='character'>McFadden's Rsq (McFadden, 1974) is defined as 1-[ln(LM)/ln(L0)], where ln(LM) is the log likelihood value for the fitted model and ln(L0) is the log likelihood for the null model with only an intercept as a predictor. The measure ranges from 0 to 1, with values closer to zero indicating that the model has no predictive power.</p>
 
  <h2> Receiver operating characteristic (ROC) curve</h2>
 

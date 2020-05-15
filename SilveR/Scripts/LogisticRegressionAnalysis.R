@@ -212,20 +212,21 @@ if (nocovars > 0 && covariateTransform != "None") {
 }
 HTML(add, align="left")
 
-
 #===================================================================================================================
 # Testing the factorial combinations
-#ind<-1
-#for (i in 1:notreatfactors) {
-#	ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
-#}
-#
-#if((length(unique(statdata$scatterPlotColumn))) != ind) {
-#	HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
-#	quit()
-#}
 
-
+if (treatFactors !="NULL") {
+	ind<-1
+	for (i in 1:notreatfactors) {
+		ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
+	}
+	
+	if((length(unique(statdata$scatterPlotColumn))) != ind) {
+		HTML.title("Warning", HR=2, align="left")
+		HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
+		quit()
+	}
+}
 #===================================================================================================================
 # Testing the continuous factor
 contid<-0
@@ -237,7 +238,7 @@ if (contFactors !="NULL") {
 	}
 	if (contid > 0) {
 		HTML.title("Warning", HR=2, align="left")
-		HTML("Unfortunately one or more of the continuous factors has only two levels. This module does not support analysing continuous factors with only tow levels. Please change any such factors to categorical.", align="left")
+		HTML("Unfortunately one or more of the continuous factors has only two levels. This module does not support analysing continuous factors with only two levels. Please define them as categorical factors.", align="left")
 		quit()
 	}
 }
@@ -253,44 +254,43 @@ if (df.residual(threewayfull)<5) {
 	HTML("Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.", align="left")
 }
 
+# Stop process if residual sums of squares are too close to zero
+if (deviance(threewayfull)<sqrt(.Machine$double.eps)) {
+	HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
+	quit()
+}
+
+#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
+temp<-Anova(threewayfull, type=c("III"), test="Wald")
+col1<-format(round(temp[2], 3), nsmall=3, scientific=FALSE)
+col2<-format(round(temp[3], 4), nsmall=4, scientific=FALSE)
+
+source<-rownames(temp)
+
+# Residual label in ANOVA
+
+#STB March 2014 - Replacing : with * in ANOVA table
+for (q in 1:notreatfactors) {
+	source<-sub(":"," * ", source) 
+}	
+ivsanova<-cbind(source, temp[1], col1,col2)
+
+#STB May 2012 capitals changed
+head<-c("Effect", "Degrees of freedom", "Chi-square", "p-value")
+colnames(ivsanova)<-head
+
+for (i in 1:(dim(ivsanova)[1])) {
+	if (temp[i,3]<0.0001) {
+		#STB March 2011 formatting p-values p<0.0001
+		#ivsanova[i,5]<-0.0001
+		ivsanova[i,4]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+		ivsanova[i,4]<- paste("<",ivsanova[i,4])
+	}
+}
+
 #Overall effects Table
 if(tableOfOverallEffectTests=="Y") {
 	HTML.title("Analysis of deviance table", HR=2, align="left")
-
-	# Stop process if residual sums of squares are too close to zero
-	if (deviance(threewayfull)<sqrt(.Machine$double.eps)) {
-		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
-		quit()
-	}
-
-	#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
-	temp<-Anova(threewayfull, type=c("III"), test="Wald")
-	col1<-format(round(temp[2], 3), nsmall=3, scientific=FALSE)
-	col2<-format(round(temp[3], 4), nsmall=4, scientific=FALSE)
-
-	source<-rownames(temp)
-
-	# Residual label in ANOVA
-
-	#STB March 2014 - Replacing : with * in ANOVA table
-	for (q in 1:notreatfactors) {
-		source<-sub(":"," * ", source) 
-	}	
-	ivsanova<-cbind(source, temp[1], col1,col2)
-
-	#STB May 2012 capitals changed
-	head<-c("Effect", "Degrees of freedom", "Chi-square", "p-value")
-	colnames(ivsanova)<-head
-
-	for (i in 1:(dim(ivsanova)[1])) {
-		if (temp[i,3]<0.0001) {
-			#STB March 2011 formatting p-values p<0.0001
-			#ivsanova[i,5]<-0.0001
-			ivsanova[i,4]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			ivsanova[i,4]<- paste("<",ivsanova[i,4])
-		}
-	}
-
 	HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
 
 	if(nocovars > 0) {
@@ -332,11 +332,10 @@ if(tableOfOverallEffectTests=="Y") {
 #===================================================================================================================
 #Plotting Predictions
 #===================================================================================================================
-HTML.title("Plot of model predictions", HR=2, align="left")
-
 threewayfull<-glm(model2, data=statdata, family = binomial(link="logit"), na.action = na.omit)
 
 if (plotOfModelPredicted == "Y") {
+	HTML.title("Plot of model predictions", HR=2, align="left")
 
 	if(nocontfactors > 1) {
 		HTML("This option is only available if the model contains a single continuous factor.", align="left")
@@ -530,29 +529,6 @@ if (plotOfModelPredicted == "Y") {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	#Predictions when there is a single continuous factor and a single categorical only in the model
 	if(noblockfactors==0 && nocovars==0 && notreatfactors ==2 && nocontfactors == 1) {
 		trlevs1 <- length(levels(eval(parse(text = paste("statdata$", treatlist[1])))))
@@ -656,43 +632,6 @@ if (plotOfModelPredicted == "Y") {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 #===================================================================================================================
@@ -777,23 +716,9 @@ if (tableOfModelPredictions == "Y") {
 #Goodness of fit test
 #===================================================================================================================
 if (goodnessOfFitTest  == "Y" ) {
-	HTML.title("Hosmer-Lemeshow goodness of fit test", HR=2, align="left")
+	HTML.title("Goodness of fit tests", HR=2, align="left")
 
-
-
-
-#llh <- logLik(threewayfull)
-#objectNull <- update(threewayfull, ~ 1, data=model.frame(threewayfull))
-#llhNull <- logLik(objectNull)
-#McFadden <- 1 - llh/llhNull
-#HTML(McFadden)
-#quit()
-
-
-
-
-
-
+	HTML.title("Hosmer-Lemeshow goodness of fit test", HR=3, align="left")
 
 	temprepsp<-c(statdata$temp_IVS_response)
 
@@ -854,6 +779,22 @@ if (goodnessOfFitTest  == "Y" ) {
 
 	comment <- c("Note: The number of bins used in this caluclation is two more than the number of model parameters estimated.")
 	HTML(comment, align="left")
+
+
+
+	HTML.title("McFadden adjusted R-sq", HR=3, align="left")
+	llh <- logLik(threewayfull)
+	objectNull <- update(threewayfull, ~ 1, data=model.frame(threewayfull))
+	llhNull <- logLik(objectNull)
+	McFadden <- 1 - llh/llhNull
+	tester<-print(McFadden)
+	tester1<-format(c(McFadden), digits = 4)
+	tester2<-attr(McFadden,"df")
+	tableMF<- data.frame("Test result", tester1, tester2)
+	colnames(tableMF)<- c(" ", "R-sq value", "Degrees of freedom") 
+
+	HTML(tableMF, classfirstline="second", align="left", row.names = "FALSE")
+	HTML("McFadden's Rsq (McFadden, 1974) is defined as 1-[ln(LM)/ln(L0)], where ln(LM) is the log likelihood value for the fitted model and ln(L0) is the log likelihood for the null model with only an intercept as a predictor. The measure ranges from 0 to 1, with values closer to zero indicating that the model has no predictive power.", align="left")
 }
 
 #===================================================================================================================
@@ -1017,15 +958,9 @@ if (UpdateIVS == "Y") {
 }
 HTML(Ref_list$BateClark_ref, align="left")
 
-#if(showANOVA=="Y") {
-#	HTML("Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.", align="left")
-#}
-#if(showCoefficients == "Y") {
-#	HTML("Chambers, J.M. and Hastie, T.J. (1992). Statistical Models in S. Wadsworth and Brooks-Cole advanced books and software.", align="left")
-#}
-#if(covariatelist != "NULL") {
-#	HTML("Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).", align="left")
-#}
+if(goodnessOfFitTest  == "Y") {
+	HTML("McFadden, D. (1974) Conditional Logit Analysis of Qualitative Choice Behavior. In: Zarembka, P., Ed., Frontiers in Econometrics, Academic Press, 105-142.", align="left")
+}
 
 if (UpdateIVS == "N") {
 	HTML.title("R references", HR=2, align="left")
@@ -1067,60 +1002,60 @@ if (showdataset=="Y")
 #===================================================================================================================
 #Show arguments - to be sorted
 #===================================================================================================================
+
+model <- Args[4]
+scatterplotModel <- as.formula(Args[5])
+positiveResult <- Args[6]
+covariates <- Args[7]
+covariateTransform <- Args[8]
+treatFactors <- Args[9]
+contFactors <- Args[10]
+contFactorTransform <- Args[11]
+blockFactors <- Args[12]
+tableOfOverallEffectTests <- Args[13]
+oddsRatio <- Args[14]
+modelPredictionAssessment <- Args[15]
+plotOfModelPredicted <- Args[16]
+tableOfModelPredictions <- Args[17]
+goodnessOfFitTest <- Args[18]
+rocCurve <- Args[19]
+sig <- 1 - as.numeric(Args[20])
+
 if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
 
 	HTML(paste("Response variable: ", resp, sep=""), align="left")
-	
-	if (responseTransform != "None") {
-		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
+	HTML(paste("Positive result: ", positiveResult, sep=""), align="left")
+
+	if(contFactors !="NULL") {
+		HTML(paste("Continuous factors: ", contFactors, sep=""), align="left")
 	}
-	
-	HTML(paste("Treatment factor(s): ", treatFactors, sep=""), align="left")
-	
+	if (contFactors !="NULL" && contFactorTransform != "None") {
+		HTML(paste("Continuous factor(s) transformation: ", contFactorTransform, sep=""), align="left")
+	}
+
+	if (treatFactors != "NULL") {
+		HTML(paste("Treatment factor(s): ", treatFactors, sep=""), align="left")
+	}
 	if (blockFactors != "NULL") {
 		HTML(paste("Other design (block) factor(s): ", blockFactors, sep=""), align="left")
 	}
 
-	if(FirstCatFactor != "NULL") {
+	if(covariates !="NULL") {
 		HTML(paste("Covariate(s): ", covariates, sep=""), align="left")
 	}
-
-	if (FirstCatFactor != "NULL" ) {
-		HTML(paste("Primary factor: ", FirstCatFactor, sep=""), align="left")
-	}
-
-	if (FirstCatFactor != "NULL" && covariateTransform != "None") {
+	if (covariates !="NULL" && covariateTransform != "None") {
 		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
 	}
 
-	HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""), align="left")
-	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
-	HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
+	HTML(paste("Output table of overall effects (Y/N): ", tableOfOverallEffectTests, sep=""), align="left")
+	HTML(paste("Output odds ratio (Y/N): ", oddsRatio, sep=""), align="left")
+	HTML(paste("Output model prediction assessment (Y/N): ", modelPredictionAssessment, sep=""), align="left")
+	HTML(paste("Output plot of model predictions (Y/N): ", plotOfModelPredicted, sep=""), align="left")
+	HTML(paste("Output table of model predictions (Y/N): ", tableOfModelPredictions, sep=""), align="left")
+	HTML(paste("Output goodness of fit tests (Y/N): ", goodnessOfFitTest, sep=""), align="left")
+	HTML(paste("Output ROC curve plot (Y/N): ", rocCurve, sep=""), align="left")
 	HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
-
-	if (showLSMeans != "N" && (Args[19] != "NULL" | backToControlTest != "NULL" ) ) {
-		HTML(paste("Selected effect (for pairwise mean comparisons): ", selectedEffect, sep=""), align="left")
-	}
-
-	HTML(paste("Output least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
-	
-
-	if (Args[19] != "NULL") {
-		HTML(paste("All pairwise comparisons procedure: ", allPairwiseTest, sep=""), align="left")
-	}
-
-	if (backToControlTest != "NULL" && backToControlTest != "none") {
-		HTML(paste("Comparisons back to control procedure: ", backToControlTest, sep=""), align="left")
-	}
-
-	if (backToControlTest == "none") {
-		HTML(paste("Comparisons back to control procedure: Unadjusted (LSD)"), align="left")
-	}
-
-	if ( backToControlTest != "NULL" ) {
-		HTML(paste("Control group: ", cntrlGroup, sep=""), align="left")
-	}
 }
 
 #===================================================================================================================
