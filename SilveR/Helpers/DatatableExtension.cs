@@ -46,7 +46,7 @@ namespace SilveR.Helpers
 
         public static string CheckDataTable(this DataTable dataTable)
         {
-            string[] tabooColumnCharList = { "+", "*", "~", "`", "\\" };
+            string[] tabooColumnCharList = { "+", "*", "~", "`", "\\", "," };
 
             //need to check here that no taboo characters are in the dataset
             foreach (DataColumn col in dataTable.Columns)
@@ -60,14 +60,14 @@ namespace SilveR.Helpers
                     if (col.ColumnName.Contains(s))
                     {
                         illegalCharFound = true;
-                        illegalCharMessage = "The dataset contains characters in the column headers that InVivoStat cannot handle (such as + * ` ~ \\)";
+                        illegalCharMessage = "The dataset contains characters in the column headers that InVivoStat cannot handle (such as + * ` ~ \\ ,)";
                         break;
                     }
                 }
 
                 if (!illegalCharFound)
                 {
-                    string[] tabooDataCharList = { "`" };
+                    string[] tabooDataCharList = { "`", "," };
 
                     foreach (DataRow row in dataTable.Rows)
                     {
@@ -76,7 +76,7 @@ namespace SilveR.Helpers
                             if (row[col.ColumnName] != null && row[col.ColumnName].ToString().Contains(s))
                             {
                                 illegalCharFound = true;
-                                illegalCharMessage = "The dataset contains characters in the main body of the data that we cannot handle (such as `)";
+                                illegalCharMessage = "The dataset contains characters in the main body of the data that we cannot handle (such as ` or ,)";
                                 break;
                             }
                         }

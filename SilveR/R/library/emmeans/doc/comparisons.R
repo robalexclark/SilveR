@@ -8,6 +8,14 @@ pigs.emm.s <- emmeans(pigs.lm, "source")
 pairs(pigs.emm.s)
 
 ## -----------------------------------------------------------------------------
+pwpm(pigs.emm.s)
+
+## -----------------------------------------------------------------------------
+pwpm(pigs.emm.s, means = FALSE, flip = TRUE,     # args for pwpm()
+     reverse = TRUE,                             # args for pairs()
+     side = ">", delta = 0.05, adjust = "none")  # args for test()
+
+## -----------------------------------------------------------------------------
 eff_size(pigs.emm.s, sigma = sigma(pigs.lm), edf = 23)
 
 ## -----------------------------------------------------------------------------

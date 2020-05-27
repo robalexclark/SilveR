@@ -10,7 +10,7 @@ suppressWarnings(library(multcomp))
 suppressWarnings(library(multcompView))
 suppressWarnings(library(car))
 suppressWarnings(library(R2HTML))
-suppressWarnings(library(lsmeans))
+suppressWarnings(library("emmeans"))
 
 #===================================================================================================================
 # retrieve args
@@ -841,19 +841,19 @@ if(showLSMeans =="Y") {
 	HTML.title(CITitle, HR=2, align="left")
 
 	#Calculate LS Means dataset
-	tabs<-lsmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
+	tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
 	x<-summary(tabs)
 	
 	if (Module == "IFPA") {
 		x<-na.omit(x)
 	}
 
-	x$Mean <-x$lsmean 
+	x$Mean <-x$emmean 
 	for (i in 1:dim(x)[1]) {
-		x$Lower[i] <- x$lsmean[i]  - x$SE[i]*qt(sig2, x$df[i])
-		x$Upper[i] <- x$lsmean[i]  + x$SE[i]*qt(sig2, x$df[i])
+		x$Lower[i] <- x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])
+		x$Upper[i] <- x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])
 	}
-	graphdata<-subset(x, select = -c(SE, df,lsmean, lower.CL, upper.CL )) 
+	graphdata<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
 
 	names <- c()
 	for (l in 1:factno) {
@@ -1039,10 +1039,10 @@ if(showLSMeans =="Y") {
 		x<-na.omit(x)
 	}
 
-	x$Mean <-format(round(x$lsmean, 3), nsmall=3, scientific=FALSE) 
+	x$Mean <-format(round(x$emmean, 3), nsmall=3, scientific=FALSE) 
 	for (i in 1:dim(x)[1]) {
-		x$Lower[i] <- format(round(x$lsmean[i]  - x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
-		x$Upper[i] <- format(round(x$lsmean[i]  + x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
+		x$Lower[i] <- format(round(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
+		x$Upper[i] <- format(round(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
 	}
 
 	names <- c("")
@@ -1051,7 +1051,7 @@ if(showLSMeans =="Y") {
 		names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
 	}
 
-	x2<-subset(x, select = -c(SE, df,lsmean, lower.CL, upper.CL )) 
+	x2<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
 
 	observ <- data.frame(c(1:dim(x)[1]))
 	x2 <- cbind(observ, x2)
@@ -1077,7 +1077,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 #LSMeans plot
 #===================================================================================================================
 #Calculate LS Means dataset
-	tabs<-lsmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
+	tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
 	x<-summary(tabs)
 
 	if (Module == "IFPA") {
@@ -1085,21 +1085,21 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 	}
 
 	if (responseTransform =="Log10") {
-		x$Mean <-10^(x$lsmean)
+		x$Mean <-10^(x$emmean)
 		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- 10^(x$lsmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
-			x$Upper[i] <- 10^(x$lsmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
+			x$Lower[i] <- 10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
+			x$Upper[i] <- 10^(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
 		}
 	}
 
 	if (responseTransform =="Loge") {
-		x$Mean <-exp(x$lsmean)
+		x$Mean <-exp(x$emmean)
 		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- exp(x$lsmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
-			x$Upper[i] <- exp(x$lsmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
+			x$Lower[i] <- exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
+			x$Upper[i] <- exp(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
 		}
 	}
-	graphdata<-subset(x, select = -c(SE, df,lsmean, lower.CL, upper.CL )) 
+	graphdata<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
 
 	names <- c()
 	for (l in 1:factno) {
@@ -1288,18 +1288,18 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 	}
 
 	if (responseTransform =="Log10") {
-		x$Mean <-format(round(10^(x$lsmean), 3), nsmall=3, scientific=FALSE) 
+		x$Mean <-format(round(10^(x$emmean), 3), nsmall=3, scientific=FALSE) 
 		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- format(round(10^(x$lsmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
-			x$Upper[i] <- format(round(10^(x$lsmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+			x$Lower[i] <- format(round(10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+			x$Upper[i] <- format(round(10^(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
 		}
 	}
 
 	if (responseTransform =="Loge") {
-		x$Mean <-format(round(exp(x$lsmean), 3), nsmall=3, scientific=FALSE) 
+		x$Mean <-format(round(exp(x$emmean), 3), nsmall=3, scientific=FALSE) 
 		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- format(round(exp(x$lsmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
-			x$Upper[i] <- format(round(exp(x$lsmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+			x$Lower[i] <- format(round(exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+			x$Upper[i] <- format(round(exp(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
 		}
 	}
 
@@ -1309,7 +1309,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 		names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
 	}
 
-	x2<-subset(x, select = -c(SE, df,lsmean, lower.CL, upper.CL )) 
+	x2<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
 
 	observ <- data.frame(c(1:dim(x)[1]))
 	x2 <- cbind(observ, x2)
@@ -1374,7 +1374,7 @@ if(allPairwiseTest != "NULL") {
 	if (allPairwiseTest== "Tukey") {
 		if ( tablen >1 ) {
 			set.seed(3)	
-			pwc = lsmeans(lm(model, data=statdata, na.action = na.omit) , eval(parse(text = paste("pairwise ~",selectedEffect))),   adjust = "tukey")
+			pwc = emmeans(lm(model, data=statdata, na.action = na.omit) , eval(parse(text = paste("pairwise ~",selectedEffect))),   adjust = "tukey")
 			pvals<-cld(pwc$contrast, sort=FALSE)[,6]
 			sigma<-cld(pwc$contrast, sort=FALSE)[,3]
 		} else {
@@ -2106,7 +2106,15 @@ HTML(Ref_list$scales_ref,  align="left")
 HTML(Ref_list$car_ref,  align="left")
 HTML(Ref_list$R2HTML_ref,  align="left")
 HTML(Ref_list$PROTO_ref,  align="left")
-HTML(Ref_list$LSMEANS_ref,  align="left")
+
+if (UpdateIVS == "Y") {
+	HTML(Ref_list$emmeans_ref,  align="left")
+}
+if (UpdateIVS == "N") {
+	HTML(Ref_list$LSMEANS_ref,  align="left")
+}
+
+HTML(Ref_list$emmeans_ref,  align="left")
 HTML(Ref_list$multcomp_ref,  align="left")
 HTML(Ref_list$mcview_ref,  align="left")
 
@@ -2171,8 +2179,12 @@ if (OutputAnalysisOps == "Y") {
 	HTML(paste("Output least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
 	
 
-	if (Args[19] != "NULL") {
+	if (Args[19] != "NULL" && Args[19] != "Unadjusted (LSD)") {
 		HTML(paste("All pairwise comparisons procedure: ", allPairwiseTest, sep=""), align="left")
+	}
+
+	if (Args[19] == "Unadjusted (LSD)") {
+		HTML(paste("All pairwise comparisons procedure: Unadjusted (LSD)"), align="left")
 	}
 
 	if (backToControlTest != "NULL" && backToControlTest != "none") {

@@ -34,6 +34,7 @@ oranges                 Sales of oranges
 pigs                    Effects of dietary protein on free plasma
                         leucine concentration in pigs
 plot.emmGrid            Plot an 'emmGrid' or 'summary_emm' object
+pwpm                    Pairwise P-value matrix (plus other statistics)
 pwpp                    Pairwise P-value plot
 qdrg                    Quick and dirty reference grid
 rbind.emmGrid           Combine or subset 'emmGrid' objects

@@ -11,7 +11,7 @@ if (valueType == "DatasetValues") {
 	suppressWarnings(library(multcomp))
 	suppressWarnings(library(multcompView))
 	suppressWarnings(library(car))
-	suppressWarnings(library(lsmeans))
+	suppressWarnings(library("emmeans"))
 }
 #===================================================================================================================
 # retrieve args
@@ -109,9 +109,9 @@ if(valueType=="DatasetValues") {
 	withinvar<- tempx[2,1] / tempx[2,2]
 
 	#Calculate effect variability
-	tabs<-lsmeans(threewayfull,eval(parse(text = paste("~","treatment2"))), data=statdata)
+	tabs<-emmeans(threewayfull,eval(parse(text = paste("~","treatment2"))), data=statdata)
 	x<-summary(tabs)
-	betweenvar <- var(x$lsmean)
+	betweenvar <- var(x$emmean)
 	ngps <- dim(x)[1]
 }
 
@@ -310,6 +310,9 @@ HTML(Ref_list$R2HTML_ref,  align = "left")
 HTML(Ref_list$PROTO_ref,  align = "left")
 #HTML(Ref_list$power_ref,  align = "left")
 HTML(Ref_list$dplyr_ref,  align = "left")
+if (UpdateIVS == "Y") {
+	HTML(Ref_list$emmeans_ref,  align="left")
+}
 
 #===================================================================================================================
 #Show dataset

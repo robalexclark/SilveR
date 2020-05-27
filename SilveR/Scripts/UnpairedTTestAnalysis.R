@@ -3,7 +3,7 @@
 
 suppressWarnings(library(multcomp))
 suppressWarnings(library(R2HTML))
-suppressWarnings(library(lsmeans))
+suppressWarnings(library("emmeans"))
 
 #===================================================================================================================
 # retrieve args
@@ -244,7 +244,7 @@ if (equalCase == "Y") {
 	add <- paste("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval",sep="")
 	HTML.title(add, HR=3, align="left")
 
-	mult2<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
+	mult2<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=emmGrid(pairwise ~mainEffect))
 	multci2<-confint(mult2, level=sig, calpha = univariate_calpha())
 	multp2<-summary(mult2, test=adjusted("none"))
 	pvals<-multp2$test$pvalues
@@ -334,7 +334,7 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 	HTML.title("Comparison of the geometric means as a back-transformed ratio", HR=3, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
-	mult<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
+	mult<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=emmGrid(pairwise ~mainEffect))
 	multci<-confint(mult, level=sig, calpha = univariate_calpha())
 	multp<-summary(mult, test=adjusted("none"))
 
@@ -605,7 +605,7 @@ if (unequalCase == "Y") {
 	HTML.title(add, HR=3, align="left")
 
 	#Required to generate table label only
-	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
+	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=emmGrid(pairwise ~mainEffect))
 	multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
 	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
 
@@ -694,7 +694,7 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 	#Required to generate table label only
-	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
+	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=emmGrid(pairwise ~mainEffect))
 	multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
 
 	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
@@ -774,6 +774,9 @@ HTML(Ref_list$scales_ref,  align="left")
 HTML(Ref_list$R2HTML_ref,  align="left")
 HTML(Ref_list$PROTO_ref,  align="left")
 HTML(Ref_list$multcomp_ref,  align="left")
+if (UpdateIVS == "Y") {
+	HTML(Ref_list$emmeans_ref,  align="left")
+}
 
 #===================================================================================================================
 #Show dataset

@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="emmeans package, Version 1.4.5" />
+<meta name="author" content="emmeans package, Version 1.4.6" />
 
 
 <title>Transformations and link functions in emmeans</title>
@@ -33,7 +33,7 @@
 
 
 <h1 class="title toc-ignore">Transformations and link functions in emmeans</h1>
-<h4 class="author">emmeans package, Version 1.4.5</h4>
+<h4 class="author">emmeans package, Version 1.4.6</h4>
 
 
 
@@ -49,7 +49,10 @@
 <li><a href="#special">Special transformations</a></li>
 <li><a href="#after">Specifying a transformation after the fact</a></li>
 <li><a href="#auto">Auto-detected transformations</a></li>
-<li><a href="#logs">Faking a log transformation</a></li>
+<li><a href="#logs">Faking a log transformation</a>
+<ol style="list-style-type: lower-alpha">
+<li><a href="#faking">Faking other transformations</a></li>
+</ol></li>
 <li><a href="#bias-adj">Bias adjustment</a></li>
 </ol>
 <p><a href="vignette-topics.html">Index of all vignette topics</a></p>
@@ -298,7 +301,15 @@ confint(piglog.emm.s, type = &quot;response&quot;)</code></pre>
 ## P value adjustment: tukey method for comparing a family of 3 estimates 
 ## Tests are performed on the log scale</code></pre>
 <p>These results are not identical, but very similar to the back-transformed confidence intervals <a href="#timing">above</a> for the EMMs and the <a href="comparisons.html#logs">pairwise ratios in the “comparisons” vignette</a>, where the fitted model actually used a log response.</p>
+<div id="faking" class="section level3">
+<h3>Faking other transformations</h3>
+<!-- @index Transformations!faking -->
+<p>It is possible to fake transformations other than the log. Just use the same method, e.g.</p>
+<pre class="r"><code>regrid(emm, transform = &quot;probit&quot;)</code></pre>
+<p>would re-grid the existing <code>emm</code> to the probit scale. Note that any estimates in <code>emm</code> outside of the interval <span class="math inline">\((0,1)\)</span> will be flagged as non-estimable.</p>
+<p>You may even fake an exotic transformation, e.g., via <code>transform = make.tran(&quot;boxcox&quot;, 0.329)</code>.</p>
 <p><a href="#contents">Back to Contents</a></p>
+</div>
 </div>
 <div id="bias-adj" class="section level2">
 <h2>Bias adjustment</h2>
@@ -333,7 +344,7 @@ confint(piglog.emm.s, type = &quot;response&quot;)</code></pre>
 <div id="insects" class="section level4">
 <h4>InsectSprays example</h4>
 <!-- @index Examples!`InsectSprays`;  Bias adjustment!When *not* to use; -->
-<p>To illustrate this, consider the <code>InsectSprays</code> data in the <strong>datasets</strong> package. The response variable is a count, and there is one treatment, the spray that is used. Let us model the count as a Poisson variable with (by defauylt) a square-root link; and obtain the EMMs, with and without a bias adjustment</p>
+<p>To illustrate this, consider the <code>InsectSprays</code> data in the <strong>datasets</strong> package. The response variable is a count, and there is one treatment, the spray that is used. Let us model the count as a Poisson variable with (by default) a square-root link; and obtain the EMMs, with and without a bias adjustment</p>
 <pre class="r"><code>ismod &lt;- glm(count ~ spray, data = InsectSprays, family = poisson())
 emmeans(ismod, &quot;spray&quot;, type = &quot;response&quot;, bias.adj = FALSE)</code></pre>
 <pre class="ro"><code>##  spray  rate    SE  df asymp.LCL asymp.UCL

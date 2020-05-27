@@ -91,6 +91,13 @@ ref_grid(mtcars.2)
 ## -----------------------------------------------------------------------------
 emmeans(mtcars.2, "Cyl", at = list(dispsq = 230.72^2))
 
+## ---- eval = FALSE------------------------------------------------------------
+#  deg <- 2
+#  mod <- lm(y ~ treat * poly(x, degree = deg), data = mydata)
+
+## ---- eval = FALSE------------------------------------------------------------
+#  emmeans(mod, ~ treat | x, at = list(x = 1:3), params = "deg")
+
 ## -----------------------------------------------------------------------------
 emmip(pigs.lm1, source ~ percent)
 emmip(ref_grid(pigs.lm2, cov.reduce = FALSE), source ~ percent)

@@ -51,6 +51,7 @@ set.seed(5041975)
 options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
 
 #Reconstruct the model statement
+model1 <- paste( "temp_IVS_response1 ~ " ,  unlist(strsplit(model ,"~"))[2])
 model2 <- paste( "temp_IVS_response ~ " ,  unlist(strsplit(model ,"~"))[2])
 
 #Response manipulations
@@ -73,8 +74,9 @@ if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
 }
 
 #Re-ordering the factor levels for the log odds ratio calculation
-if (levels(as.factor(eval(parse(text = paste("statdata$",resp)))))[1] != positiveResult) {
-	  statdata$temp_IVS_response = -1*statdata$temp_IVS_response + 1
+statdata$temp_IVS_response1 = statdata$temp_IVS_response
+if (levels(as.factor(eval(parse(text = paste("statdata$",resp)))))[1] == positiveResult) {
+	  statdata$temp_IVS_response1 = -1*statdata$temp_IVS_response + 1
 }
 
 #Number of factors in Selected effect
@@ -245,7 +247,7 @@ if (contFactors !="NULL") {
 #===================================================================================================================
 #ANOVA table
 #===================================================================================================================
-#Analysis call
+#Analysis call 
 threewayfull<-glm(model2, data=statdata, family = binomial(link="logit"), na.action = na.omit)
 
 #Testing the degrees of freedom
@@ -332,8 +334,6 @@ if(tableOfOverallEffectTests=="Y") {
 #===================================================================================================================
 #Plotting Predictions
 #===================================================================================================================
-threewayfull<-glm(model2, data=statdata, family = binomial(link="logit"), na.action = na.omit)
-
 if (plotOfModelPredicted == "Y") {
 	HTML.title("Plot of model predictions", HR=2, align="left")
 
@@ -379,11 +379,11 @@ if (plotOfModelPredicted == "Y") {
 
 		#Generating the plot y-axis label
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
-			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
-				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-			} else {
+#			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
+#				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+#			} else {
 				labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-			}
+#			}
 		}
 
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
@@ -470,11 +470,11 @@ if (plotOfModelPredicted == "Y") {
 	
 		#Generating the plot y-axis label
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
-			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
-				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-			} else {
+#			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
+#				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+#			} else {
 				labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-			}
+#			}
 		}
 
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
@@ -571,11 +571,11 @@ if (plotOfModelPredicted == "Y") {
 	
 		#Generating the plot y-axis label
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
-			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
-				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-			} else {
+#			if (as.numeric(positiveResult) == min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE)) {
+#				labelsz<-c(max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
+#			} else {
 				labelsz<-c(min(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE), max(eval(parse(text = paste("statdata$",resp))), na.rm = TRUE))
-			}
+#			}
 		}
 
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
@@ -640,10 +640,17 @@ if (plotOfModelPredicted == "Y") {
 if (oddsRatio == "Y") {
 	HTML.title("Odds ratio", HR=2, align="left")
 
-	names <- rownames(data.frame(coef(threewayfull)))
+	#Call is different to above as order may need reversing depening on positive result
+	threewayfull1<-glm(model1, data=statdata, family = binomial(link="logit"), na.action = na.omit)
+
+	names <- rownames(data.frame(coef(threewayfull1)))
 	names<-names[-1]
-	oddsR<- data.frame(exp(cbind(OR = coef(threewayfull), confint(threewayfull, level=(sig)))))
+	oddsR<- data.frame(exp(cbind(OR = coef(threewayfull1), confint(threewayfull1, level=(sig)))))
 	oddsR <- oddsR[-1,]
+	oddsR[1]<-format(round(oddsR[1], 2), nsmall=2, scientific=FALSE)
+	oddsR[2]<-format(round(oddsR[2], 2), nsmall=2, scientific=FALSE)
+	oddsR[3]<-format(round(oddsR[3], 2), nsmall=2, scientific=FALSE)
+
 	oddsR<-cbind(names, oddsR)
 	colnames(oddsR) <- c("Parameter", "Odds ratio", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
 	HTML(oddsR, classfirstline="second", align="left", row.names = "FALSE")
@@ -688,7 +695,7 @@ if (modelPredictionAssessment == "Y") {
 
 	#Generating the conclusion
 	temp3 <- round(100*mean(tempdata$Prediction == tempdata$temp_IVS_response), 2)
-	conclusion <- paste("The model correctly classifies the responses in ", temp3, "% of the time." , sep = "")
+	conclusion <- paste("The model correctly classifies the responses ", temp3, "% of the time." , sep = "")
 	HTML(conclusion, align="left")
 }
 
@@ -704,11 +711,16 @@ if (tableOfModelPredictions == "Y") {
 	predicts <- cbind(Observations, statdata, predictions)
 	colnames(predicts) <- c("Observation number", colnames(statdata), "Prediction")
 	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
-		predicts2 = subset(predicts, select = -c(temp_IVS_response_temp, temp_IVS_response) )
+		predicts2 = subset(predicts, select = -c(temp_IVS_response1, temp_IVS_response_temp, temp_IVS_response) )
 	}
 	if (is.numeric(eval(parse(text = paste("statdata$",resp))))==TRUE){
-		predicts2 = subset(predicts, select = -c(temp_IVS_response) )
+		predicts2 = subset(predicts, select = -c(temp_IVS_response1, temp_IVS_response) )
 	}
+
+	if (notreatfactors >0 ){
+		predicts2 = subset(predicts2, select = -c(scatterPlotColumn) )
+	}
+
 	HTML(predicts2, classfirstline="second", align="left", row.names = "FALSE")
 }
 
@@ -716,73 +728,73 @@ if (tableOfModelPredictions == "Y") {
 #Goodness of fit test
 #===================================================================================================================
 if (goodnessOfFitTest  == "Y" ) {
-	HTML.title("Goodness of fit tests", HR=2, align="left")
+#	HTML.title("Goodness of fit tests", HR=2, align="left")
 
-	HTML.title("Hosmer-Lemeshow goodness of fit test", HR=3, align="left")
+#	HTML.title("Hosmer-Lemeshow goodness of fit test", HR=3, align="left")
+#
+#	temprepsp<-c(statdata$temp_IVS_response)
+#
+#	#Generating the quantiles
+#	neffects <-sum(temp[1])-1
+#	vect <- vector(mode="numeric", length=neffects)
+#	for (i in 1:neffects) {
+#		vect[i] <- (0.9 - 0.1)/(neffects+1)*i+0.1
+#	}
+#
+#	#Generate model predictions
+#	pihat <- threewayfull$fitted
+#	brks <- c(0,quantile(pihat, probs=vect),1)
+#	brksL<-length(brks)-1
+#	brkschi<-length(brks)-2
+#
+#	#categorise the observations according to deciles of the predicted probabilities
+#	pihatcat <- cut(pihat, breaks=brks, labels=FALSE)
+#
+#	#Cycle through the groups 1 to x, counting the number observed 0s and 1s, and calculating the expected number of 0s and 1s
+#	#To calculate the latter, we find the mean of the predicted probabilities in each group, and multiply this by the group size, which here is 10:
+#	meanprobs <- array(0, dim=c(brksL,2))
+#	expevents <- array(0, dim=c(brksL,2))
+#	obsevents <- array(0, dim=c(brksL,2))
+#
+#	for (i in 1:brksL) {
+#		meanprobs[i,1] <- mean(pihat[pihatcat==i])
+#		expevents[i,1] <- sum(pihatcat==i)*meanprobs[i,1]
+#		obsevents[i,1] <- sum(temprepsp[pihatcat==i])
+#
+#		meanprobs[i,2] <- mean(1-pihat[pihatcat==i])
+#		expevents[i,2] <- sum(pihatcat==i)*meanprobs[i,2]
+#		obsevents[i,2] <- sum(temprepsp[pihatcat==i])
+#	}
+#
+#	#we can calculate the Hosmer-Lemeshow test statistic by the sum of (observed-expected)^2/expected across the 10x2 cells of the table
+#	hosmerlemechi <- sum((obsevents-expevents)^2 / expevents)
+#	col1a<-format(round(hosmerlemechi, 2), nsmall=2, scientific=FALSE)
+#
+#	hosmerlemepval <- pchisq(hosmerlemechi, df=brkschi, lower.tail=FALSE) 
+#	col2a=format(round(hosmerlemepval, 4), nsmall=4, scientific=FALSE)
+#	if (hosmerlemepval<0.0001) {
+#		col2a<- "<0.0001"
+#	}
+#
+#	hosmerlemetable <- data.frame(t(c("Test result", col1a, brkschi, col2a)))
+#	colnames(hosmerlemetable)<-c(" ", "Chi-sq value", "Degrees of freedom", "p-value")
+#	HTML(hosmerlemetable, classfirstline="second", align="left", row.names = "FALSE")
+#
+#	add<-paste(c("Conclusion"))
+#	if (hosmerlemepval<= (1-sig)) {
+#		add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is a statistically significant at the ", 1-sig , " level (", col2a ,"), indicating the model does not fit well.", sep="")
+#	} 
+#	if (hosmerlemepval > (1-sig)) {
+#		add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is not statistically significant at the ", 1-sig , " level (", col2a ,"), indicating there is no evidence of poor fit.", sep="")
+#	} 
+#	HTML(add, align="left")
+#
+#	comment <- c("Note: The number of bins used in this caluclation is two more than the number of model parameters estimated.")
+#	HTML(comment, align="left")
 
-	temprepsp<-c(statdata$temp_IVS_response)
-
-	#Generating the quantiles
-	neffects <-sum(temp[1])-1
-	vect <- vector(mode="numeric", length=neffects)
-	for (i in 1:neffects) {
-		vect[i] <- (0.9 - 0.1)/(neffects+1)*i+0.1
-	}
-
-	#Generate model predictions
-	pihat <- threewayfull$fitted
-	brks <- c(0,quantile(pihat, probs=vect),1)
-	brksL<-length(brks)-1
-	brkschi<-length(brks)-2
-
-	#categorise the observations according to deciles of the predicted probabilities
-	pihatcat <- cut(pihat, breaks=brks, labels=FALSE)
-
-	#Cycle through the groups 1 to x, counting the number observed 0s and 1s, and calculating the expected number of 0s and 1s
-	#To calculate the latter, we find the mean of the predicted probabilities in each group, and multiply this by the group size, which here is 10:
-	meanprobs <- array(0, dim=c(brksL,2))
-	expevents <- array(0, dim=c(brksL,2))
-	obsevents <- array(0, dim=c(brksL,2))
-
-	for (i in 1:brksL) {
-		meanprobs[i,1] <- mean(pihat[pihatcat==i])
-		expevents[i,1] <- sum(pihatcat==i)*meanprobs[i,1]
-		obsevents[i,1] <- sum(temprepsp[pihatcat==i])
-
-		meanprobs[i,2] <- mean(1-pihat[pihatcat==i])
-		expevents[i,2] <- sum(pihatcat==i)*meanprobs[i,2]
-		obsevents[i,2] <- sum(temprepsp[pihatcat==i])
-	}
-
-	#we can calculate the Hosmer-Lemeshow test statistic by the sum of (observed-expected)^2/expected across the 10x2 cells of the table
-	hosmerlemechi <- sum((obsevents-expevents)^2 / expevents)
-	col1a<-format(round(hosmerlemechi, 2), nsmall=2, scientific=FALSE)
-
-	hosmerlemepval <- pchisq(hosmerlemechi, df=brkschi, lower.tail=FALSE) 
-	col2a=format(round(hosmerlemepval, 4), nsmall=4, scientific=FALSE)
-	if (hosmerlemepval<0.0001) {
-		col2a<- "<0.0001"
-	}
-
-	hosmerlemetable <- data.frame(t(c("Test result", col1a, brkschi, col2a)))
-	colnames(hosmerlemetable)<-c(" ", "Chi-sq value", "Degrees of freedom", "p-value")
-	HTML(hosmerlemetable, classfirstline="second", align="left", row.names = "FALSE")
-
-	add<-paste(c("Conclusion"))
-	if (hosmerlemepval<= (1-sig)) {
-		add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is a statistically significant at the ", 1-sig , " level (", col2a ,"), indicating the model does not fit well.", sep="")
-	} 
-	if (hosmerlemepval > (1-sig)) {
-		add<-paste(add, ": The Hosmer-Lemeshow goodness of fit test is not statistically significant at the ", 1-sig , " level (", col2a ,"), indicating there is no evidence of poor fit.", sep="")
-	} 
-	HTML(add, align="left")
-
-	comment <- c("Note: The number of bins used in this caluclation is two more than the number of model parameters estimated.")
-	HTML(comment, align="left")
 
 
-
-	HTML.title("McFadden adjusted R-sq", HR=3, align="left")
+	HTML.title("McFadden's pseudo R-sq", HR=2, align="left")
 	llh <- logLik(threewayfull)
 	objectNull <- update(threewayfull, ~ 1, data=model.frame(threewayfull))
 	llhNull <- logLik(objectNull)
@@ -794,7 +806,7 @@ if (goodnessOfFitTest  == "Y" ) {
 	colnames(tableMF)<- c(" ", "R-sq value", "Degrees of freedom") 
 
 	HTML(tableMF, classfirstline="second", align="left", row.names = "FALSE")
-	HTML("McFadden's Rsq (McFadden, 1974) is defined as 1-[ln(LM)/ln(L0)], where ln(LM) is the log likelihood value for the fitted model and ln(L0) is the log likelihood for the null model with only an intercept as a predictor. The measure ranges from 0 to 1, with values closer to zero indicating that the model has no predictive power.", align="left")
+	HTML("McFadden's pseudo R-sq (McFadden, 1974) is defined as 1-[ln(LM)/ln(L0)], where ln(LM) is the log likelihood value for the fitted model and ln(L0) is the log likelihood for the null model with only an intercept as a predictor. The measure ranges from 0 to 1, with values closer to zero indicating that the model has no predictive power.", align="left")
 }
 
 #===================================================================================================================
@@ -812,6 +824,7 @@ if (rocCurve == "Y") {
 	#Area Under the Curve
 	auc = round(as.numeric(performance (pr, "auc")@y.values),2)
 	result = paste("AUC = ", round(auc,2))
+print(result)
 
 	#ROC plot
 	ROCPlot <- sub(".html", "ROCPlot.png", htmlFile)

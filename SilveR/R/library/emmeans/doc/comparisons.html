@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="emmeans package, Version 1.4.5" />
+<meta name="author" content="emmeans package, Version 1.4.6" />
 
 
 <title>Comparisons and contrasts in emmeans</title>
@@ -33,7 +33,7 @@
 
 
 <h1 class="title toc-ignore">Comparisons and contrasts in emmeans</h1>
-<h4 class="author">emmeans package, Version 1.4.5</h4>
+<h4 class="author">emmeans package, Version 1.4.6</h4>
 
 
 
@@ -69,6 +69,35 @@ pairs(pigs.emm.s)</code></pre>
 <!-- @index `adjust`; `summary()`!`adjust`; `summary()`!`infer` -->
 <p>In its out-of-the-box configuration, <code>pairs()</code> sets two defaults for <a href="confidence-intervals.html#summary"><code>summary()</code></a>: <code>adjust = &quot;tukey&quot;</code> (multiplicity adjustment), and <code>infer = c(FALSE, TRUE)</code> (test statistics, not confidence intervals). You may override these, of course, by calling <code>summary()</code> on the result with different values for these.</p>
 <p>In the example above, EMMs for later factor levels are subtracted from those for earlier levels; if you want the comparisons to go in the other direction, use <code>pairs(pigs.emm.s, reverse = TRUE)</code>. Also, in multi-factor situations, you may specify <code>by</code> factor(s) to perform the comparisons separately at the levels of those factors.</p>
+<div id="pwpm" class="section level3">
+<h3>Matrix displays</h3>
+<!-- @index `pwpm()`; Pairwise comparisons!Matrix displays; -->
+<p>The numerical main results associated with pairwise comparisons can be presented compactly in matrix form via the <code>pwpm()</code> function. We simply hand it the <code>emmGrid</code> object to use in making the comparisons:</p>
+<pre class="r"><code>pwpm(pigs.emm.s)</code></pre>
+<pre class="ro"><code>##        fish    soy   skim
+## fish [3.39] &lt;.0001 &lt;.0001
+## soy  -0.273 [3.67] 0.0570
+## skim -0.402 -0.130 [3.80]
+## 
+## Row and column labels: source
+## Upper triangle: P values   adjust = &quot;tukey&quot;
+## Diagonal: [Estimates] (emmean) 
+## Lower triangle: Comparisons (estimate)   earlier vs. later</code></pre>
+<p>This matrix shows the EMMs along the diagonal, <span class="math inline">\(P\)</span> values in the upper triangle, and the differences in the lower triangle. Options exist to switch off any one of these and to switch which triangle is used for the latter two. Also, optional arguments are passed. For instance, we can reverse the direction of the comparisons, suppress the display of EMMs, swap where the <span class="math inline">\(P\)</span> values go, and perform noninferiority tests with a threshold of 0.05 as follows:</p>
+<pre class="r"><code>pwpm(pigs.emm.s, means = FALSE, flip = TRUE,     # args for pwpm()
+     reverse = TRUE,                             # args for pairs()
+     side = &quot;&gt;&quot;, delta = 0.05, adjust = &quot;none&quot;)  # args for test()</code></pre>
+<pre class="ro"><code>##        fish    soy  skim
+## fish         0.273 0.402
+## soy  &lt;.0001        0.130
+## skim &lt;.0001 0.0013      
+## 
+## Row and column labels: source
+## Lower triangle: P values   side = &quot;&gt;&quot;  delta = 0.05
+## Upper triangle: Comparisons (estimate)   later vs. earlier</code></pre>
+<p>With all three <em>P</em> values so small, we have fish, soy, and skim in increasing order of noninferiority based on the given threshold.</p>
+<p>When more than one factor is present, an existing or newly specified <code>by</code> variables() can split the results into l list of matrices.</p>
+</div>
 <div id="effect-size" class="section level3">
 <h3>Effect size</h3>
 <!-- @index Effect size; Cohen's *d*; `eff_size()` -->
@@ -190,9 +219,9 @@ org.emml</code></pre>
 ## $contrasts
 ##  contrast estimate   SE df t.ratio p.value
 ##  2 - 1      -0.772 3.78 25 -0.204  0.9997 
-##  3 - 2       6.658 3.78 25  1.763  0.3245 
-##  4 - 3      -5.716 3.78 25 -1.513  0.4679 
-##  5 - 4       4.882 3.78 25  1.293  0.6128 
+##  3 - 2       6.658 3.78 25  1.763  0.3241 
+##  4 - 3      -5.716 3.78 25 -1.513  0.4680 
+##  5 - 4       4.882 3.78 25  1.293  0.6131 
 ##  6 - 5      -1.321 3.78 25 -0.350  0.9965 
 ## 
 ## P value adjustment: mvt method for 5 tests</code></pre>

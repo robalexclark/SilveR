@@ -24,6 +24,7 @@ This vignette covers the intricacies of transformations and link functions in **
   6. [Specifying a transformation after the fact](#after)
   6. [Auto-detected transformations](#auto)
   7. [Faking a log transformation](#logs)
+     a. [Faking other transformations](#faking)
   8. [Bias adjustment](#bias-adj)
   
 [Index of all vignette topics](vignette-topics.html) 
@@ -319,6 +320,20 @@ confidence intervals [above](#timing) for the EMMs and the [pairwise ratios in
 the "comparisons" vignette](comparisons.html#logs), where the fitted model
 actually used a log response.
 
+### Faking other transformations {#faking}
+<!-- @index Transformations!faking -->
+It is possible to fake transformations other than the log. Just use the same method,
+e.g.
+```{r, eval = FALSE}
+regrid(emm, transform = "probit")
+```
+would re-grid the existing `emm` to the probit scale. Note that any estimates in `emm`
+outside of the interval $(0,1)$ will be flagged as non-estimable.
+
+You may even fake an exotic transformation, e.g., via `transform = make.tran("boxcox", 0.329)`.
+
+
+
 
 [Back to Contents](#contents)
 
@@ -388,7 +403,7 @@ back-transformed parameter is already the mean.
 To illustrate this, consider
 the `InsectSprays` data in the **datasets** package. The response variable
 is a count, and there is one treatment, the spray that is used. Let us
-model the count as a Poisson variable with (by defauylt) a square-root link; and
+model the count as a Poisson variable with (by default) a square-root link; and
 obtain the EMMs, with and without a bias adjustment
 ```{r}
 ismod <- glm(count ~ spray, data = InsectSprays, family = poisson())

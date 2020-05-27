@@ -29,6 +29,7 @@ vignette: >
       * [versus *post hoc* comparisons](FAQs.html#anova)
       * [Type III](confidence-intervals.html#joint_tests)
   * [`aovList` objects](models.html#V)
+  * [`appx-satterthwaite` method](models.html#K)
   * [`as.data.frame()`](utilities.html#data)
   * `as.mcmc()`
       * [in *models: S*](models.html#S)
@@ -75,7 +76,7 @@ vignette: >
   * [`clm` models](models.html#O)
   * [**coda** package](sophisticated.html#bayesxtra)
   * [`coef()`](comparisons.html#contrasts)
-  * [Cohen's *d*](comparisons.html#pairwise)
+  * [Cohen's *d*](comparisons.html#pwpm)
   * [Compact letter displays](comparisons.html#CLD)
   * Comparisons
       * [Back-transforming](comparisons.html#logs)
@@ -135,8 +136,8 @@ vignette: >
 
 
   * [`eff` contrasts](comparisons.html#contrasts)
-  * [`eff_size()`](comparisons.html#pairwise)
-  * [Effect size](comparisons.html#pairwise)
+  * [`eff_size()`](comparisons.html#pwpm)
+  * [Effect size](comparisons.html#pwpm)
   * [`emm_basis()`](xtending.html#intro)
       * [Arguments and returned value](xtending.html#ebreqs)
       * [Communicating with `recover_data()`](xtending.html#communic)
@@ -406,8 +407,10 @@ vignette: >
       * [Interpreting](basics.html#pvalues)
   * [`pairs()`](comparisons.html#pairwise)
   * [Pairwise comparisons](comparisons.html#pairwise)
+      * [Matrix displays](comparisons.html#pwpm)
   * [`pairwise` contrasts](comparisons.html#contrasts)
   * [Pairwise *P*-value plots](comparisons.html#pwpp)
+  * [`params`](basics.html#params)
   * `plot()`
       * [nested factors](messy-data.html#cows)
   * [`plot.emmGrid()`](basics.html#plot.emmGrid)
@@ -434,6 +437,7 @@ vignette: >
       * [Reference grid](predictions.html#ref-grid)
       * [Total SD](predictions.html#feedlot)
   * [`print.summary_emm()`](basics.html#emmobj)
+  * [`pwpm()`](comparisons.html#pwpm)
   * [`pwpp()`](comparisons.html#pwpp)
 
 
@@ -544,6 +548,7 @@ vignette: >
       * [Back-transforming](confidence-intervals.html#tran)
       * [Bias adjustment](transformations.html#bias-adj)
       * [Custom](transformations.html#special)
+      * [faking](transformations.html#faking)
       * [Faking a log transformation](transformations.html#logs)
       * [with link function](transformations.html#tranlink)
       * [Log](comparisons.html#logs)
@@ -579,6 +584,7 @@ vignette: >
 ### V {#v}
 
 
+  * [Variables that are not predictors](basics.html#params)
   * [`vcovHook`](xtending.html#hooks)
   * Vignettes
       * [Basics](basics.html)

@@ -5,7 +5,7 @@ suppressWarnings(library(R2HTML))
 suppressWarnings(library(multcomp))
 suppressWarnings(library(nlme))
 suppressWarnings(library(contrast))
-suppressWarnings(library(lsmeans))
+suppressWarnings(library("emmeans"))
 
 #===================================================================================================================
 # retrieve args
@@ -812,7 +812,7 @@ if(showLSMeans=="Y") {
 	df<-anova(threewayfull)[dim(anova(threewayfull))[1],2]
 
 	#Calculate LS Means
-	tabs<-lsmeans(threewayfull,~Timezzz, data=statdata)
+	tabs<-emmeans(threewayfull,~Timezzz, data=statdata)
 
 	x<-summary(tabs)
 	LSM<-data.frame(x)
@@ -822,9 +822,9 @@ if(showLSMeans=="Y") {
 		LSM$DDF[i]<-df
 	}
 
-	LSM$Mean<-LSM$lsmean
-	LSM$Lower=LSM$lsmean-qt(1-(1-sig)/2,df)*LSM$SE
-	LSM$Upper=LSM$lsmean+qt(1-(1-sig)/2,df)*LSM$SE
+	LSM$Mean<-LSM$emmean
+	LSM$Lower=LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE
+	LSM$Upper=LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE
 	LSM$Group_IVSq_ <- LSM$Timezzz
 
 	CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
@@ -883,7 +883,7 @@ if(showLSMeans=="Y") {
 	colnames(rowz) <- c(CPXAxisTitle)
 	LSM <-cbind(rowz,LSM)
 
-	LSM<-subset(LSM, select = -c(df, SE, lower.CL, upper.CL ,DDF, lsmean,Timezzz, Group_IVSq_))
+	LSM<-subset(LSM, select = -c(df, SE, lower.CL, upper.CL ,DDF, emmean,Timezzz, Group_IVSq_))
 	colnames(LSM)<-c(CPXAxisTitle, "Mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
 
 	HTML(LSM, classfirstline="second", align="left", row.names="FALSE")
@@ -898,16 +898,16 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 
 	if (responseTransform =="Log10") {
-		LSMx$Mean<-10^(LSMx$lsmean)
-		LSMx$Lower=10^(LSMx$lsmean-qt(1-(1-sig)/2,df)*LSMx$SE)
-		LSMx$Upper=10^(LSMx$lsmean+qt(1-(1-sig)/2,df)*LSMx$SE)
+		LSMx$Mean<-10^(LSMx$emmean)
+		LSMx$Lower=10^(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
+		LSMx$Upper=10^(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
 		LSMx$Group_IVSq_ <- LSMx$Timezzz
 	}
 
 	if (responseTransform =="Loge") {
-		LSMx$Mean<-exp(LSMx$lsmean)
-		LSMx$Lower=exp(LSMx$lsmean-qt(1-(1-sig)/2,df)*LSMx$SE)
-		LSMx$Upper=exp(LSMx$lsmean+qt(1-(1-sig)/2,df)*LSMx$SE)
+		LSMx$Mean<-exp(LSMx$emmean)
+		LSMx$Lower=exp(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
+		LSMx$Upper=exp(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
 		LSMx$Group_IVSq_ <- LSMx$Timezzz
 	}
 
@@ -964,7 +964,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 	colnames(rowz) <- c(CPXAxisTitle)
 	LSMx <-cbind(rowz,LSMx)
 
-	LSMx<-subset(LSMx, select = -c(df, SE, lower.CL, upper.CL ,DDF,Timezzz, lsmean, Group_IVSq_))
+	LSMx<-subset(LSMx, select = -c(df, SE, lower.CL, upper.CL ,DDF,Timezzz, emmean, Group_IVSq_))
 	colnames(LSMx)<-c(CPXAxisTitle, "Geometric mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
 
 	HTML(LSMx, classfirstline="second", align="left", row.names = "FALSE")
@@ -1349,7 +1349,12 @@ HTML(Ref_list$nlme_ref,  align="left")
 HTML(Ref_list$R2HTML_ref,  align="left")
 HTML(Ref_list$PROTO_ref,  align="left")
 HTML(Ref_list$Contrast_ref,  align="left")
-HTML(Ref_list$LSMEANS_ref,  align="left")
+if (UpdateIVS == "Y") {
+	HTML(Ref_list$emmeans_ref,  align="left")
+}
+if (UpdateIVS == "N") {
+	HTML(Ref_list$LSMEANS_ref,  align="left")
+}
 HTML(Ref_list$multcomp_ref,  align="left")
 
 #===================================================================================================================

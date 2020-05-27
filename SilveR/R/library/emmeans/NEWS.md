@@ -1,5 +1,24 @@
 ## NEWS for the emmeans package
 
+emmeans 1.4.6
+-------------
+
+  * Improvements to `coxph` support for models with strata
+  * `emmeans()` with `specs` of class `list` now passes any `offset` 
+    and `trend` arguments (#179)
+  * Added `plim` argument to `pwpp()` to allow controlling the scale
+  * More documentation on using `params` (#180)
+  * Robustified support for `gls` objects when data are incomplete (#181)
+  * Fixed bug in `joint_tests()` and `test(..., joint = TRUE)` that
+    can occur with nontrivial `@dffun()` slots (#184)
+  * Improved support for Satterthwaite-based methods in `gls` (#185)
+    and renamed `boot-satterthwaite` to `appx-satterthwaite` (#176)
+  * Further repairs to nesting-related code (#186)
+  * Fix `transform` argument in `ref_grid()` so it is same as 
+    in `regrid()` (#188)
+  * Added `pwpm()` function for displaying estimates, pairwise 
+    comparisons, and *P* values in matrix form
+    
 
 emmeans 1.4.5
 -------------

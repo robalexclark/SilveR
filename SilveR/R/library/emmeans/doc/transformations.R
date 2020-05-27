@@ -73,6 +73,9 @@ piglog.emm.s <- regrid(emmeans(pigroot.lm, "source"), transform = "log")
 confint(piglog.emm.s, type = "response")
 pairs(piglog.emm.s, type = "response")
 
+## ---- eval = FALSE--------------------------------------------------------------------------------
+#  regrid(emm, transform = "probit")
+
 ## -------------------------------------------------------------------------------------------------
 sigma(pigs.lm)
 

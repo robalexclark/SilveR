@@ -5,7 +5,7 @@ suppressWarnings(library(multcomp))
 suppressWarnings(library(R2HTML))
 suppressWarnings(library(nlme))
 suppressWarnings(library(contrast))
-suppressWarnings(library(lsmeans))
+suppressWarnings(library("emmeans"))
 
 #===================================================================================================================
 # retrieve args
@@ -742,7 +742,7 @@ nosefactors<-(length(txtexpectedseChanges)-2)/2
 df<-anova(threewayfull)[dim(anova(threewayfull))[1],2]
 
 #Calculate LS Means
-tabs<-lsmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
+tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
 x<-summary(tabs)
 LSM<-data.frame(x)
 leng<-dim(LSM)[1]
@@ -751,9 +751,9 @@ for (i in 1:leng) {
 	LSM$DDF[i]<-df
 }
 
-LSM$Mean<-LSM$lsmean
-LSM$Lower=LSM$lsmean-qt(1-(1-sig)/2,df)*LSM$SE
-LSM$Upper=LSM$lsmean+qt(1-(1-sig)/2,df)*LSM$SE
+LSM$Mean<-LSM$emmean
+LSM$Lower=LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE
+LSM$Upper=LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE
 LSDATA<-data.frame(LSM)
 	
 #Creatign the final datasset to plot	
@@ -969,10 +969,10 @@ if(showLSMeans=="Y") {
 	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
 	HTML.title(CITitle2, HR=2, align="left")
 
-	LSDATA$Mean<-format(round(LSM$lsmean,3),nsmall=3)
+	LSDATA$Mean<-format(round(LSM$emmean,3),nsmall=3)
 	LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
 	LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
-	LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, lsmean, Group_IVSq_)) 
+	LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean, Group_IVSq_)) 
 
 	observ <- data.frame(c(1:dim(LSDATA2)[1]))
 	LSDATA3 <- cbind(observ, LSDATA2)
@@ -1006,14 +1006,14 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 #LSMeans plot
 #===================================================================================================================
 	if (responseTransform =="Log10") {
-			LSM$Mean<-10^(LSM$lsmean)
-			LSM$Lower=10^(LSM$lsmean-qt(1-(1-sig)/2,df)*LSM$SE)
-			LSM$Upper=10^(LSM$lsmean+qt(1-(1-sig)/2,df)*LSM$SE)
+			LSM$Mean<-10^(LSM$emmean)
+			LSM$Lower=10^(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
+			LSM$Upper=10^(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
 	}
 	if (responseTransform =="Loge") {
-			LSM$Mean<-exp(LSM$lsmean)
-			LSM$Lower=exp(LSM$lsmean-qt(1-(1-sig)/2,df)*LSM$SE)
-			LSM$Upper=exp(LSM$lsmean+qt(1-(1-sig)/2,df)*LSM$SE)
+			LSM$Mean<-exp(LSM$emmean)
+			LSM$Lower=exp(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
+			LSM$Upper=exp(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
 	}
 	LSDATA<-data.frame(LSM)
 
@@ -1237,7 +1237,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
 			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
 		}
-		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, lsmean, Group_IVSq_)) 
+		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean, Group_IVSq_)) 
 
 		observ <- data.frame(c(1:dim(LSDATA2)[1]))
 		LSDATA3 <- cbind(observ, LSDATA2)
@@ -1293,7 +1293,7 @@ if(covariance=="Unstructured") {
 
 if (covariance == "Unstructured") {
 	#Generating the differences and SEMs for the unstructured covariance
-	mult.lsm <- lsmeans(threewayfull, eval(parse(text = paste("~",selectedEffect))), data=statdata, df=dendf)
+	mult.lsm <- emmeans(threewayfull, eval(parse(text = paste("~",selectedEffect))), data=statdata, df=dendf)
 	multc<-contrast(mult.lsm, method="pairwise" , adjust = "none")
 	mult<-data.frame(summary(multc))
 	mult$ratio <- abs(mult$estimate / mult$SE)
@@ -1785,7 +1785,12 @@ HTML(Ref_list$nlme_ref,  align="left")
 HTML(Ref_list$R2HTML_ref,  align="left")
 HTML(Ref_list$PROTO_ref,  align="left")
 HTML(Ref_list$Contrast_ref,  align="left")
-HTML(Ref_list$LSMEANS_ref, align="left")
+if (UpdateIVS == "Y") {
+	HTML(Ref_list$emmeans_ref,  align="left")
+}
+if (UpdateIVS == "N") {
+	HTML(Ref_list$LSMEANS_ref,  align="left")
+}
 HTML(Ref_list$multcomp_ref,  align="left")
 
 #===================================================================================================================
