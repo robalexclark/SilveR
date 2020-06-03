@@ -2224,5 +2224,36 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task PTT73()
+        {
+            string testName = "PTT73";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "CVResp";
+            model.Subject = "CVAnimal1";
+            model.Treatment = "CVTime1";
+            model.OtherDesignFactors = new string[] { "Block4" };
+            model.ControlGroup = "2";
+            model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("One or more of the factors (Block4) has only one level present in the dataset. Please select another factor.", errors);
+            Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
+        }
     }
 }

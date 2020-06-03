@@ -38,6 +38,8 @@ namespace SilveR.Validators
             if (!CheckFactorsHaveLevels(lrVariables.CategoricalFactors, true))
                 return ValidationInfo;
 
+            if (!CheckFactorsHaveLevels(lrVariables.OtherDesignFactors, true))
+                return ValidationInfo;
 
             //First create a list of categorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();

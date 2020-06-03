@@ -2744,5 +2744,39 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task SMA87()
+        {
+            string testName = "SMA87";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
+            model.Response = "Resp5";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat6" };
+            model.OtherDesignFactors = new string[] { "T reat5" };
+            model.PrimaryFactor = "Treat6";
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hommel";
+            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ControlGroup = "2";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("One or more of the factors (T reat5) has only one level present in the dataset. Please select another factor.", errors);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
+        }
     }
 }

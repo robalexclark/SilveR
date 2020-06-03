@@ -34,6 +34,8 @@ install.packages("car", repo="https://www.stats.bris.ac.uk/R/")
 no
 install.packages("emmeans", repo="https://www.stats.bris.ac.uk/R/")
 no
+install.packages("detectseparation", repo="https://www.stats.bris.ac.uk/R/")
+no
 install.packages("ggdendro", repo="https://www.stats.bris.ac.uk/R/")
 no
 install.packages("BiocManager", repo="https://www.stats.bris.ac.uk/R/")

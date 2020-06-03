@@ -1,9 +1,10 @@
 ﻿#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
+IVS_version<- 4.1 
 
 #Software update
-UpdateIVS <- "N"
+UpdateIVS <- "Y"
 
 #Beta warning
 Betawarn <- "N"
@@ -955,23 +956,23 @@ NONCAT_CPP <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
 		scale_fill_manual(values = Gr_palette_A) +
-		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
+		geom_point(aes(colour = Animal_IVS ), size = 3, shape = 16) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
 
 	if (UpdateIVS == "N") {
-		 g <- g + theme(legend.position = "none") 
+		 g1 <- g + theme(legend.position = "none") 
 	}
 	if (UpdateIVS == "Y") {
-		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+		 g1 <- g + 	theme(legend.position = Gr_legend_pos) + 
 				labs(fill = "Animal_IVS")
 	}
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
-		g1 <- g
+		g2 <- g1
 	}
-	suppressWarnings(print(g1))
+	suppressWarnings(print(g2))
 }
 
 
@@ -991,7 +992,7 @@ ONECATSEP_CPP <- function() {
 		 g <- g + theme(legend.position = "none") 
 	}
 	if (UpdateIVS == "Y") {
-		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+		 g <- g + 	theme(legend.position = Gr_legend_pos) + 
 				labs(fill = "Animal_IVS")
 	}
 
@@ -1020,7 +1021,7 @@ TWOCATSEP_CPP <- function() {
 		 g <- g + theme(legend.position = "none") 
 	}
 	if (UpdateIVS == "Y") {
-		 g <- g + 	theme(legend.position = "Gr_legend_pos") + 
+		 g <- g + 	theme(legend.position = Gr_legend_pos) + 
 				labs(fill = "Animal_IVS")
 	}
 	if (ReferenceLine != "NULL") {
@@ -1754,7 +1755,8 @@ if (UpdateIVS == "N") {
 		Barnard_ref <- "Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact."
 	
 		power_ref <- "Stephane Champely (2018). pwr: Basic Functions for Power Analysis. R package version 1.2-2. https://CRAN.R-project.org/package=pwr"
-		IVS_ref <- "When referring to InVivoStat, please cite 'InVivoStat, version 4.1'."
+		IVS_ref <- paste("When referring to InVivoStat, please cite 'InVivoStat, version ", IVS_version, "'.", sep = "")
+		detectseparation_ref  <- capture.output(print(citation("detectseparation"),bibtex=F))[4]
 	
 		Refs <- list(
 			IVS_ref = IVS_ref,
@@ -1787,7 +1789,8 @@ if (UpdateIVS == "N") {
 			mcview_ref = mcview_ref,
 			power_ref = power_ref,
 			dplyr_ref = dplyr_ref,
-			ROCRref = ROCRref
+			ROCRref = ROCRref,
+			detectseparation_ref = detectseparation_ref
 		)
 		return(Refs)
 	}
@@ -1800,65 +1803,12 @@ if (UpdateIVS == "Y") {
 	R_refs <- function() {
 		R_ref <- "R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org."
 		BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
-
-		mtvnorm_ref  <- capture.output(print(citation("mvtnorm"),bibtex=F))[4]
-		GridExtra_ref  <- capture.output(print(citation("gridExtra"),bibtex=F))[4]
-		GGally_ref  <- capture.output(print(citation("GGally"),bibtex=F))[4]
-		RColorBrewers_ref  <- capture.output(print(citation("RColorBrewer"),bibtex=F))[4]
-		GGPLot2_ref  <- capture.output(print(citation("ggplot2"),bibtex=F))[4]
-		reshape_ref  <- capture.output(print(citation("reshape"),bibtex=F))[4]
-		plyr_ref  <- capture.output(print(citation("plyr"),bibtex=F))[4]
-		scales_ref  <- capture.output(print(citation("scales"),bibtex=F))[4]
-		car_ref  <- capture.output(print(citation("car"),bibtex=F))[4]
-		nlme_ref  <- capture.output(print(citation("nlme"),bibtex=F))[4]
-		#NPMC_ref  <- capture.output(print(citation("NPMC"),bibtex=F))[4]
-		R2HTML_ref  <- capture.output(print(citation("R2HTML"),bibtex=F))[4]
-		PROTO_ref  <- capture.output(print(citation("proto"),bibtex=F))[4]
-		Contrast_ref  <- capture.output(print(citation("contrast"),bibtex=F))[4]
-		emmeans_ref  <- capture.output(print(citation("emmeans"),bibtex=F))[4]
-		Survival_ref  <- capture.output(print(citation("survival"),bibtex=F))[4]
-		multcomp_ref  <- capture.output(print(citation("multcomp"),bibtex=F))[4]
-		extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
-		COIN_ref  <- capture.output(print(citation("coin"),bibtex=F))[4]
-		ggrepel_ref  <- capture.output(print(citation("ggrepel"),bibtex=F))[4]
-		mcview_ref <- capture.output(print(citation("multcompView"),bibtex=F))[4]
-		cluster_ref  <- capture.output(print(citation("cluster"),bibtex=F))[4]
-		ggdendro_ref  <- capture.output(print(citation("ggdendro"),bibtex=F))[4]
-		mixOmics_ref  <- capture.output(print(citation("mixOmics"),bibtex=F))[4]
-		dplyr_ref  <- capture.output(print(citation("dplyr"),bibtex=F))[4]
-		Barnard_ref  <- capture.output(print(citation("Exact"),bibtex=F))[4]
-		power_ref  <- capture.output(print(citation("pwr"),bibtex=F))[4]
+		IVS_ref <- paste("When referring to InVivoStat, please cite 'InVivoStat, version ", IVS_version, "'.", sep = "")
 
 		Refs <- list(
 			R_ref = R_ref,
-			mtvnorm_ref = mtvnorm_ref,
-			GridExtra_ref = GridExtra_ref,
-			GGally_ref = GGally_ref,
-			RColorBrewers_ref = RColorBrewers_ref,
-			GGPLot2_ref = GGPLot2_ref,
-			reshape_ref = reshape_ref,
-			plyr_ref = plyr_ref,
-			scales_ref = scales_ref,
-			car_ref = car_ref,
-			nlme_ref = nlme_ref,
-			#NPMC_ref = NPMC_ref,
-			R2HTML_ref = R2HTML_ref,
-			PROTO_ref = PROTO_ref,
-			Contrast_ref = Contrast_ref,
-			emmeans_ref = emmeans_ref,
-			Survival_ref = Survival_ref,
-			multcomp_ref = multcomp_ref,
-			cluster_ref = cluster_ref,
-			ggdendro_ref = ggdendro_ref,
-			mixOmics_ref = mixOmics_ref,
 			BateClark_ref = BateClark_ref,
-			Barnard_ref = Barnard_ref,
-			extrafont_ref = extrafont_ref,
-			COIN_ref=COIN_ref,
-			ggrepel_ref = ggrepel_ref,
-			mcview_ref = mcview_ref,
-			power_ref = power_ref,
-			dplyr_ref = dplyr_ref
+			IVS_ref = IVS_ref
               )
               return(Refs)
 	}

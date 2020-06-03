@@ -320,13 +320,17 @@ if (allPairwiseTest== "hommel" ) {
 
 if (UpdateIVS == "N") {
 	HTML.title("R references", HR=2, align="left")
-}
+	HTML(Ref_list$R_ref , align="left")
+	HTML(Ref_list$R2HTML_ref, align="left")
+	HTML(Ref_list$multcomp_ref, align="left")}
 if (UpdateIVS == "Y") {
 	HTML.title("R references", HR=4, align="left")
+	HTML(Ref_list$R_ref , align="left")
+	HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
+
+	HTML(paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = ""),  align="left")
 }
-HTML(Ref_list$R_ref , align="left")
-HTML(Ref_list$R2HTML_ref, align="left")
-HTML(Ref_list$multcomp_ref, align="left")
+
 
 #===================================================================================================================
 #Show arguments

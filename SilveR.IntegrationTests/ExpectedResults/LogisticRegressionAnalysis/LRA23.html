@@ -12,4 +12,6 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Warning</h2>
 
-<p class='character'>Unfortunately one or more of the continuous factors has only two levels. This module does not support analysing continuous factors with only two levels. Please define them as categorical factors.</p>
+<p class='character'>Unfortunately there is complete separation in the predictors. Separation occurs in logistic regression when the factors perfectly predict the outcome 
+and may produce infinite estimates for some model coefficients, see Mansournia et al. (2018). Care should be taken when reviewing this analysis as 
+the results in the analysis of deviance table, odds ratios, confidence intervals and model predictions may not be reliable. You could try simplifying the statistical model to avoid this issue.</p>

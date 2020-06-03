@@ -1,0 +1,11 @@
+import("ROI")
+import("lpSolveAPI")
+importFrom("methods", "getPackageName", "getFunction")
+importFrom("stats", "setNames", "terms", "aggregate")
+importFrom("utils", "tail")
+
+export("write.lp")
+export("read.lp")
+
+S3method("ROI_plugin_solution_dual", "lpsolve_solution")
+

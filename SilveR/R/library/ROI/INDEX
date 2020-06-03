@@ -1,0 +1,73 @@
+C_constraint            Conic Constraints
+F_constraint            Function Constraints
+F_objective             General (Nonlinear) Objective Function
+G                       Extract Gradient information
+J                       Extract Jacobian Information
+K_zero                  Cone Constructors
+L_constraint            Linear Constraints
+L_objective             Linear Objective Function
+NO_constraint           Class: '"NO_constraint"'
+OP                      Optimization Problem Constructor
+OP_signature            Optimization Problem Signature
+Q_constraint            Quadratic Constraints
+Q_objective             Quadratic Objective Function
+ROI_applicable_solvers
+                        Obtain Applicable Solvers
+ROI_available_solvers   Available Solvers
+ROI_options             ROI Options
+ROI_plugin_add_status_code_to_db
+                        Add Status Code to the Status Database
+ROI_plugin_build_equality_constraints
+                        Build Functional Equality Constraints
+ROI_plugin_build_inequality_constraints
+                        Build Functional Inequality Constraints
+ROI_plugin_canonicalize_solution
+                        Canonicalize Solution
+ROI_plugin_get_solver_name
+                        Get Solver Name
+ROI_plugin_make_signature
+                        Make Signatures
+ROI_plugin_register_reader_writer
+                        Register Reader / Writer Method
+ROI_plugin_register_reformulation
+                        Register Reformulation Method
+ROI_plugin_register_solver_control
+                        Register Solver Controls
+ROI_plugin_register_solver_method
+                        Register Solver Method
+ROI_plugin_solution_prim
+                        Extract solution from the solver.
+ROI_read                Read Optimization Problems
+ROI_reformulate         Reformulate a Optimization Problem
+ROI_registered_reader   List Registered Reader
+ROI_registered_reformulations
+                        Registered Reformulations
+ROI_registered_solver_control
+                        Registered Solver Controls
+ROI_registered_solvers
+                        Solver Tools
+ROI_registered_writer   Write Optimization Problems
+ROI_solve               Solve an Optimization Problem
+ROI_solver_signature    Obtain Solver Signature
+ROI_write               Write Optimization Problems
+US30                    Monthly return data for 30 of the largest US
+                        stocks
+V_bound                 Objective Variable Bounds
+as.L_term               Canonicalize the Linear Term
+as.Q_term               Canonicalize the Quadraric Term
+bound (Constructors)    bound
+bounds (Set/Get)        Bounds - Accessor and Mutator Functions
+constraint (Constructors)
+                        constraint
+constraint directions   Replicate '"=="', '">="' and '"<="' Signs
+constraints (Set/Get)   Constraints - Accessor and Mutator Functions
+equal                   Compare two Objects
+is.default_bound        Check for default bounds
+maximum (Set/Get)       Maximum - Accessor and Mutator Functions
+nlminb2                 Nonlinear programming with nonlinear
+                        constraints.
+objective (Set/Get)     Objective - Accessor and Mutator Functions
+rbind.constraint        Combine Constraints
+solution                Extract Solution
+types (Set/Get)         Types - Accessor and Mutator Functions
+vech                    Half-Vectorization

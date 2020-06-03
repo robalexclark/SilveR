@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>R: R Optimization Infrastructure</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+<h1> R Optimization Infrastructure
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;ROI&rsquo; version 0.3-3</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<p style="text-align: center;">
+<a href="#A">A</a>
+<a href="#B">B</a>
+<a href="#C">C</a>
+<a href="#D">D</a>
+<a href="#E">E</a>
+<a href="#F">F</a>
+<a href="#G">G</a>
+<a href="#I">I</a>
+<a href="#J">J</a>
+<a href="#K">K</a>
+<a href="#L">L</a>
+<a href="#M">M</a>
+<a href="#N">N</a>
+<a href="#O">O</a>
+<a href="#Q">Q</a>
+<a href="#R">R</a>
+<a href="#S">S</a>
+<a href="#T">T</a>
+<a href="#U">U</a>
+<a href="#V">V</a>
+</p>
+
+
+<h2><a name="A">-- A --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="ROI_constraint.html">as.constraint</a></td>
+<td>constraint</td></tr>
+<tr><td style="width: 25%;"><a href="C_constraint.html">as.C_constraint</a></td>
+<td>Conic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_constraint.html">as.F_constraint</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_constraint.html">as.F_constraint.constraint</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_constraint.html">as.F_constraint.NO_constraint</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_constraint.html">as.F_constraint.NULL</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_objective.html">as.F_objective</a></td>
+<td>General (Nonlinear) Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="L_constraint.html">as.L_constraint</a></td>
+<td>Linear Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="L_objective.html">as.L_objective</a></td>
+<td>Linear Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="as.L_term.html">as.L_term</a></td>
+<td>Canonicalize the Linear Term</td></tr>
+<tr><td style="width: 25%;"><a href="NO_constraint.html">as.NO_constraint</a></td>
+<td>Class: '"NO_constraint"'</td></tr>
+<tr><td style="width: 25%;"><a href="objective.html">as.objective</a></td>
+<td>Objective - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="OP.html">as.OP</a></td>
+<td>Optimization Problem Constructor</td></tr>
+<tr><td style="width: 25%;"><a href="Q_constraint.html">as.Q_constraint</a></td>
+<td>Quadratic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="Q_objective.html">as.Q_objective</a></td>
+<td>Quadratic Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="as.Q_term.html">as.Q_term</a></td>
+<td>Canonicalize the Quadraric Term</td></tr>
+<tr><td style="width: 25%;"><a href="as.Q_term.html">as.Q_term.list</a></td>
+<td>Canonicalize the Quadraric Term</td></tr>
+<tr><td style="width: 25%;"><a href="as.Q_term.html">as.Q_term.matrix</a></td>
+<td>Canonicalize the Quadraric Term</td></tr>
+<tr><td style="width: 25%;"><a href="as.Q_term.html">as.Q_term.NULL</a></td>
+<td>Canonicalize the Quadraric Term</td></tr>
+<tr><td style="width: 25%;"><a href="as.Q_term.html">as.Q_term.numeric</a></td>
+<td>Canonicalize the Quadraric Term</td></tr>
+<tr><td style="width: 25%;"><a href="as.Q_term.html">as.Q_term.simple_triplet_matrix</a></td>
+<td>Canonicalize the Quadraric Term</td></tr>
+<tr><td style="width: 25%;"><a href="V_bound.html">as.V_bound</a></td>
+<td>Objective Variable Bounds</td></tr>
+</table>
+
+<h2><a name="B">-- B --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="ROI_bound.html">bound (Constructors)</a></td>
+<td>bound</td></tr>
+<tr><td style="width: 25%;"><a href="Bounds_Accessor_Mutator.html">bounds</a></td>
+<td>Bounds - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="Bounds_Accessor_Mutator.html">bounds (Set/Get)</a></td>
+<td>Bounds - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="Bounds_Accessor_Mutator.html">bounds.OP</a></td>
+<td>Bounds - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="Bounds_Accessor_Mutator.html">bounds&lt;-</a></td>
+<td>Bounds - Accessor and Mutator Functions</td></tr>
+</table>
+
+<h2><a name="C">-- C --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="ROI_bound.html">c.bound</a></td>
+<td>bound</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_constraint.html">c.constraint</a></td>
+<td>constraint</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_constraint.html">constraint (Constructors)</a></td>
+<td>constraint</td></tr>
+<tr><td style="width: 25%;"><a href="signs.html">constraint directions</a></td>
+<td>Replicate '"=="', '"&gt;="' and '"&lt;="' Signs</td></tr>
+<tr><td style="width: 25%;"><a href="constraints.html">constraints</a></td>
+<td>Constraints - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="constraints.html">constraints (Set/Get)</a></td>
+<td>Constraints - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="constraints.html">constraints.OP</a></td>
+<td>Constraints - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="constraints.html">constraints&lt;-</a></td>
+<td>Constraints - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="C_constraint.html">C_constraint</a></td>
+<td>Conic Constraints</td></tr>
+</table>
+
+<h2><a name="D">-- D --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="ROI_constraint.html">dim.constraint</a></td>
+<td>constraint</td></tr>
+</table>
+
+<h2><a name="E">-- E --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="signs.html">eq</a></td>
+<td>Replicate '"=="', '"&gt;="' and '"&lt;="' Signs</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.character</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.integer</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.list</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.logical</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.L_constraint</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.NULL</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.numeric</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.Q_constraint</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.simple_triplet_matrix</a></td>
+<td>Compare two Objects</td></tr>
+<tr><td style="width: 25%;"><a href="equal.html">equal.V_bound</a></td>
+<td>Compare two Objects</td></tr>
+</table>
+
+<h2><a name="F">-- F --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="F_constraint.html">F_constraint</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_objective.html">F_objective</a></td>
+<td>General (Nonlinear) Objective Function</td></tr>
+</table>
+
+<h2><a name="G">-- G --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="G.html">G</a></td>
+<td>Extract Gradient information</td></tr>
+<tr><td style="width: 25%;"><a href="signs.html">geq</a></td>
+<td>Replicate '"=="', '"&gt;="' and '"&lt;="' Signs</td></tr>
+</table>
+
+<h2><a name="I">-- I --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="ROI_bound.html">is.bound</a></td>
+<td>bound</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_constraint.html">is.constraint</a></td>
+<td>constraint</td></tr>
+<tr><td style="width: 25%;"><a href="C_constraint.html">is.C_constraint</a></td>
+<td>Conic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="is.default_bound.html">is.default_bound</a></td>
+<td>Check for default bounds</td></tr>
+<tr><td style="width: 25%;"><a href="F_constraint.html">is.F_constraint</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="L_constraint.html">is.L_constraint</a></td>
+<td>Linear Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="NO_constraint.html">is.NO_constraint</a></td>
+<td>Class: '"NO_constraint"'</td></tr>
+<tr><td style="width: 25%;"><a href="Q_constraint.html">is.Q_constraint</a></td>
+<td>Quadratic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="V_bound.html">is.V_bound</a></td>
+<td>Objective Variable Bounds</td></tr>
+</table>
+
+<h2><a name="J">-- J --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="J.html">J</a></td>
+<td>Extract Jacobian Information</td></tr>
+<tr><td style="width: 25%;"><a href="J.html">J.L_constraint</a></td>
+<td>Extract Jacobian Information</td></tr>
+<tr><td style="width: 25%;"><a href="J.html">J.Q_constraint</a></td>
+<td>Extract Jacobian Information</td></tr>
+</table>
+
+<h2><a name="K">-- K --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="cone.html">K_expd</a></td>
+<td>Cone Constructors</td></tr>
+<tr><td style="width: 25%;"><a href="cone.html">K_expp</a></td>
+<td>Cone Constructors</td></tr>
+<tr><td style="width: 25%;"><a href="cone.html">K_lin</a></td>
+<td>Cone Constructors</td></tr>
+<tr><td style="width: 25%;"><a href="cone.html">K_powd</a></td>
+<td>Cone Constructors</td></tr>
+<tr><td style="width: 25%;"><a href="cone.html">K_powp</a></td>
+<td>Cone Constructors</td></tr>
+<tr><td style="width: 25%;"><a href="cone.html">K_psd</a></td>
+<td>Cone Constructors</td></tr>
+<tr><td style="width: 25%;"><a href="cone.html">K_soc</a></td>
+<td>Cone Constructors</td></tr>
+<tr><td style="width: 25%;"><a href="cone.html">K_zero</a></td>
+<td>Cone Constructors</td></tr>
+</table>
+
+<h2><a name="L">-- L --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="C_constraint.html">length.C_constraint</a></td>
+<td>Conic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="L_constraint.html">length.L_constraint</a></td>
+<td>Linear Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="Q_constraint.html">length.Q_constraint</a></td>
+<td>Quadratic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="signs.html">leq</a></td>
+<td>Replicate '"=="', '"&gt;="' and '"&lt;="' Signs</td></tr>
+<tr><td style="width: 25%;"><a href="L_constraint.html">L_constraint</a></td>
+<td>Linear Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="L_objective.html">L_objective</a></td>
+<td>Linear Objective Function</td></tr>
+</table>
+
+<h2><a name="M">-- M --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="maximum.html">maximum</a></td>
+<td>Maximum - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="maximum.html">maximum (Set/Get)</a></td>
+<td>Maximum - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="maximum.html">maximum&lt;-</a></td>
+<td>Maximum - Accessor and Mutator Functions</td></tr>
+</table>
+
+<h2><a name="N">-- N --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="nlminb2.html">nlminb2</a></td>
+<td>Nonlinear programming with nonlinear constraints.</td></tr>
+<tr><td style="width: 25%;"><a href="NO_constraint.html">NO_constraint</a></td>
+<td>Class: '"NO_constraint"'</td></tr>
+</table>
+
+<h2><a name="O">-- O --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="objective.html">objective</a></td>
+<td>Objective - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="objective.html">objective (Set/Get)</a></td>
+<td>Objective - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="objective.html">objective&lt;-</a></td>
+<td>Objective - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="OP.html">OP</a></td>
+<td>Optimization Problem Constructor</td></tr>
+<tr><td style="width: 25%;"><a href="OP_signature.html">OP_signature</a></td>
+<td>Optimization Problem Signature</td></tr>
+</table>
+
+<h2><a name="Q">-- Q --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="Q_constraint.html">Q_constraint</a></td>
+<td>Quadratic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="Q_objective.html">Q_objective</a></td>
+<td>Quadratic Objective Function</td></tr>
+</table>
+
+<h2><a name="R">-- R --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="rbind.constraint.html">rbind.constraint</a></td>
+<td>Combine Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_applicable_solvers.html">ROI_applicable_solvers</a></td>
+<td>Obtain Applicable Solvers</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_available_solvers.html">ROI_available_solvers</a></td>
+<td>Available Solvers</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_registered_solvers.html">ROI_installed_solvers</a></td>
+<td>Solver Tools</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_options.html">ROI_options</a></td>
+<td>ROI Options</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_add_status_code_to_db.html">ROI_plugin_add_status_code_to_db</a></td>
+<td>Add Status Code to the Status Database</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_build_equality_constraints.html">ROI_plugin_build_equality_constraints</a></td>
+<td>Build Functional Equality Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_build_inequality_constraints.html">ROI_plugin_build_inequality_constraints</a></td>
+<td>Build Functional Inequality Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_canonicalize_solution.html">ROI_plugin_canonicalize_solution</a></td>
+<td>Canonicalize Solution</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_get_solver_name.html">ROI_plugin_get_solver_name</a></td>
+<td>Get Solver Name</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_make_signature.html">ROI_plugin_make_signature</a></td>
+<td>Make Signatures</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_register_reader_writer.html">ROI_plugin_register_reader</a></td>
+<td>Register Reader / Writer Method</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_register_reader_writer.html">ROI_plugin_register_reader_writer</a></td>
+<td>Register Reader / Writer Method</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_register_reformulation.html">ROI_plugin_register_reformulation</a></td>
+<td>Register Reformulation Method</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_register_solver_control.html">ROI_plugin_register_solver_control</a></td>
+<td>Register Solver Controls</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_register_solver_method.html">ROI_plugin_register_solver_method</a></td>
+<td>Register Solver Method</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_register_reader_writer.html">ROI_plugin_register_writer</a></td>
+<td>Register Reader / Writer Method</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_aux</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_dual</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_msg</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_objval</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_prim</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_prim.OP_solution</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_prim.OP_solution_set</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_psd</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_status</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_plugin_solution.html">ROI_plugin_solution_status_code</a></td>
+<td>Extract solution from the solver.</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_read.html">ROI_read</a></td>
+<td>Read Optimization Problems</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_reformulate.html">ROI_reformulate</a></td>
+<td>Reformulate a Optimization Problem</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_registered_reader.html">ROI_registered_reader</a></td>
+<td>List Registered Reader</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_registered_reformulations.html">ROI_registered_reformulations</a></td>
+<td>Registered Reformulations</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_registered_solvers.html">ROI_registered_solvers</a></td>
+<td>Solver Tools</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_registered_solver_control.html">ROI_registered_solver_control</a></td>
+<td>Registered Solver Controls</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_registered_writer.html">ROI_registered_writer</a></td>
+<td>Write Optimization Problems</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_solve.html">ROI_solve</a></td>
+<td>Solve an Optimization Problem</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_solver_signature.html">ROI_solver_signature</a></td>
+<td>Obtain Solver Signature</td></tr>
+<tr><td style="width: 25%;"><a href="ROI_write.html">ROI_write</a></td>
+<td>Write Optimization Problems</td></tr>
+</table>
+
+<h2><a name="S">-- S --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="solution.html">solution</a></td>
+<td>Extract Solution</td></tr>
+</table>
+
+<h2><a name="T">-- T --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="C_constraint.html">terms.C_constraint</a></td>
+<td>Conic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_constraint.html">terms.F_constraint</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_objective.html">terms.F_objective</a></td>
+<td>General (Nonlinear) Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="L_constraint.html">terms.L_constraint</a></td>
+<td>Linear Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="L_objective.html">terms.L_objective</a></td>
+<td>Linear Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="Q_constraint.html">terms.Q_constraint</a></td>
+<td>Quadratic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="Q_objective.html">terms.Q_objective</a></td>
+<td>Quadratic Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="types.html">types</a></td>
+<td>Types - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="types.html">types (Set/Get)</a></td>
+<td>Types - Accessor and Mutator Functions</td></tr>
+<tr><td style="width: 25%;"><a href="types.html">types&lt;-</a></td>
+<td>Types - Accessor and Mutator Functions</td></tr>
+</table>
+
+<h2><a name="U">-- U --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="US30.html">US30</a></td>
+<td>Monthly return data for 30 of the largest US stocks</td></tr>
+</table>
+
+<h2><a name="V">-- V --</a></h2>
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="C_constraint.html">variable.names.C_constraint</a></td>
+<td>Conic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_constraint.html">variable.names.F_constraint</a></td>
+<td>Function Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="F_objective.html">variable.names.F_objective</a></td>
+<td>General (Nonlinear) Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="L_constraint.html">variable.names.L_constraint</a></td>
+<td>Linear Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="L_objective.html">variable.names.L_objective</a></td>
+<td>Linear Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="Q_constraint.html">variable.names.Q_constraint</a></td>
+<td>Quadratic Constraints</td></tr>
+<tr><td style="width: 25%;"><a href="Q_objective.html">variable.names.Q_objective</a></td>
+<td>Quadratic Objective Function</td></tr>
+<tr><td style="width: 25%;"><a href="vech.html">vech</a></td>
+<td>Half-Vectorization</td></tr>
+<tr><td style="width: 25%;"><a href="V_bound.html">V_bound</a></td>
+<td>Objective Variable Bounds</td></tr>
+</table>
+</body></html>

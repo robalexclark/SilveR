@@ -1,0 +1,29 @@
+Package: ROI
+Version: 0.3-3
+Title: R Optimization Infrastructure
+Authors@R: c( person("Kurt", "Hornik", role = "aut"),
+              person("David", "Meyer", role = "aut"),
+              person("Florian", "Schwendinger", role = "aut"),
+              person("Stefan", "Theussl", role = c("aut", "cre"), email = "Stefan.Theussl@R-Project.org"),
+              person("Diethelm", "Wuertz", role = "ctb") )
+Description: The R Optimization Infrastructure ('ROI') is a
+    sophisticated framework for handling optimization problems in R.
+	More information can be found on the 'ROI' homepage <http://roi.r-forge.r-project.org/>.
+Depends: R (>= 2.10)
+Imports: methods, registry (>= 0.5), slam, utils
+Suggests: numDeriv
+License: GPL-3
+URL: http://roi.r-forge.r-project.org/,
+        https://r-forge.r-project.org/projects/roi/
+RoxygenNote: 7.0.2
+NeedsCompilation: no
+Packaged: 2020-03-01 20:54:20 UTC; theussl
+Author: Kurt Hornik [aut],
+  David Meyer [aut],
+  Florian Schwendinger [aut],
+  Stefan Theussl [aut, cre],
+  Diethelm Wuertz [ctb]
+Maintainer: Stefan Theussl <Stefan.Theussl@R-Project.org>
+Repository: CRAN
+Date/Publication: 2020-03-01 21:30:10 UTC
+Built: R 3.6.3; ; 2020-03-02 12:51:40 UTC; windows

@@ -70,7 +70,7 @@ namespace SilveR.UnitTests.Helpers
             string message = dataTable.CheckDataTable();
 
             //Assert
-            Assert.StartsWith("The dataset contains characters in the column headers that InVivoStat cannot handle (such as + * ` ~ \\)", message);
+            Assert.StartsWith("The dataset contains characters in the column headers that InVivoStat cannot handle (such as + * ` ~ \\ ,)", message);
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace SilveR.UnitTests.Helpers
             string message = dataTable.CheckDataTable();
 
             //Assert
-            Assert.StartsWith("The dataset contains characters in the main body of the data that we cannot handle (such as `)", message);
+            Assert.StartsWith("The dataset contains characters in the main body of the data that we cannot handle (such as ` or ,)", message);
         }
 
         [Fact]

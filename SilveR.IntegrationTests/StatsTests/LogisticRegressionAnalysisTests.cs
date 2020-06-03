@@ -692,9 +692,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
             model.Response = "Response1a";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
-            model.ContinuousFactorsTransformation = "Square Root";
+            model.ContinuousFactorsTransformation = "None";
             model.Treatments = new string[] { "Cat1" };
-            model.PositiveResult = "1";
+            model.PositiveResult = "-1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -741,9 +741,9 @@ namespace SilveR.IntegrationTests
             LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
             model.Response = "Response1a";
-            model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont3" };
+            model.ContinuousFactors = new string[] { "Cont1" };
             model.Treatments = new string[] { "Cat1","Cat&2" };
-            model.PositiveResult = "1";
+            model.PositiveResult = "-1";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1038,9 +1038,10 @@ namespace SilveR.IntegrationTests
             LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
             model.Response = "Response1";
-            model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont3" };
+            model.ContinuousFactors = new string[] { "Cont1" };
             model.ContinuousFactorsTransformation = "Log10";
             model.Covariates = new string[] { "Covariate1" };
+            model.CovariateTransformation = "Log10";
             model.PositiveResult = "1";
 
             //Act
@@ -1064,7 +1065,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
             model.Response = "Response1";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
-            model.ContinuousFactorsTransformation = "Log2";
+            model.ContinuousFactorsTransformation = "Loge";
             model.Covariates = new string[] { "Covariate1" };
             model.PositiveResult = "0";
 
@@ -1087,7 +1088,7 @@ namespace SilveR.IntegrationTests
 
             LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
-            model.Response = "Response1";
+            model.Response = "Response1a";
             model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont3" };
             model.Covariates = new string[] { "Covariate1" };
             model.CovariateTransformation = "Square Root";
@@ -1673,7 +1674,7 @@ namespace SilveR.IntegrationTests
             LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
             model.Response = "Response1b";
-            model.ContinuousFactors = new string[] { "Cont1", "Cont2" };
+            model.ContinuousFactors = new string[] { "Cont1", "Cont2", "Cont3" };
             model.Covariates = new string[] { "Covariate1" };
             model.CovariateTransformation = "Square Root";
             model.PositiveResult = "Y";
@@ -1758,6 +1759,102 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Covariate1", "Covariate2" };
             model.CovariateTransformation = "Square Root";
             model.PositiveResult = "N";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("LogisticRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LogisticRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task LRA72()
+        {
+            string testName = "LRA72";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
+            model.Response = "Response1";
+            model.ContinuousFactors = new string[] { "Cont1" };
+            model.Treatments = new string[] { "Cat1" };
+            model.PositiveResult = "0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("LogisticRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LogisticRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task LRA73()
+        {
+            string testName = "LRA73";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
+            model.Response = "Response1a";
+            model.ContinuousFactors = new string[] { "Cont1" };
+            model.Treatments = new string[] { "Cat1" };
+            model.PositiveResult = "-1";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("LogisticRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LogisticRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task LRA74()
+        {
+            string testName = "LRA74";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
+            model.Response = "Response1a";
+            model.ContinuousFactors = new string[] { "Cont1" };
+            model.Treatments = new string[] { "Cat1" };
+            model.PositiveResult = "4";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("LogisticRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LogisticRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task LRA75()
+        {
+            string testName = "LRA75";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LogisticRegressionAnalysisModel model = new LogisticRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Logistic Regression").Key;
+            model.Response = "Response1b";
+            model.ContinuousFactors = new string[] { "Cont1" };
+            model.Treatments = new string[] { "Cat1" };
+            model.PositiveResult = "Y";
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));

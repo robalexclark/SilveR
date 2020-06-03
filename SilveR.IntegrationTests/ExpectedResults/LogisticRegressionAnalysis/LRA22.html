@@ -10,48 +10,8 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>The  Response 6 response is currently being analysed by the Logistic Regression Analysis module.</p>
 
- <h2> Analysis of deviance table</h2>
+ <h2> Warning</h2>
 
-
-<p align="left">
-<table cellspacing="0" border="1">
-<caption align="bottom" class="captiondataframe"></caption>
-<tr><td>
-	<table border="0" class="dataframe">
-	<tbody> 
-	<tr class="second"> 
-		<th>Effect  </th>
-		<th>Degrees of freedom  </th>
-		<th>Chi-square  </th>
-		<th>p-value</th> 
-	</tr> 
-<tr> 
-<td class="cellinside">(Intercept)
-</td>
-<td class="cellinside">1
-</td>
-<td class="cellinside">7.192
-</td>
-<td class="cellinside">0.0073
-</td></tr>
- 
-<tr> 
-<td class="cellinside">Cont1
-</td>
-<td class="cellinside">1
-</td>
-<td class="cellinside">8.193
-</td>
-<td class="cellinside">0.0042
-</td></tr>
- 
-	</tbody>
-</table>
- </td></tr></table>
- <br>
-
-<p class='character'>Comment: Analysis of deviance table calculated using a Type III model fit, see Armitage et al. (2001).</p>
-
-<p class='character'>Conclusion: There is a statistically significant overall difference between the levels of (Intercept), Cont1. </p>
-
- <h2> Plot of model predictions</h2>
+<p class='character'>Unfortunately there is complete separation in the predictors. Separation occurs in logistic regression when the factors perfectly predict the outcome 
+and may produce infinite estimates for some model coefficients, see Mansournia et al. (2018). Care should be taken when reviewing this analysis as 
+the results in the analysis of deviance table, odds ratios, confidence intervals and model predictions may not be reliable. You could try simplifying the statistical model to avoid this issue.</p>

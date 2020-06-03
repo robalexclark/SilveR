@@ -2544,5 +2544,32 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
+
+
+        [Fact]
+        public async Task RMA83()
+        {
+            string testName = "RMA83";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat 1" };
+            model.RepeatedFactor = "Day 1";
+            model.Subject = "Animal1";
+            model.OtherDesignFactors = new string[] { "Treat9" };
+            model.Covariance = "CompoundSymmetric";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("One or more of the factors (Treat9) has only one level present in the dataset. Please select another factor.", errors);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
+        }
     }
 }

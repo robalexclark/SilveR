@@ -1333,29 +1333,41 @@ HTML("Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 
 
 if (UpdateIVS == "N") {
 	HTML.title("R references", HR=2, align="left")
+	HTML(Ref_list$R_ref , align="left")
+	HTML(Ref_list$GGally_ref,  align="left")
+	HTML(Ref_list$RColorBrewers_ref,  align="left")
+	HTML(Ref_list$GGPLot2_ref,  align="left")
+	HTML(Ref_list$ggrepel_ref,  align="left")
+	HTML(Ref_list$reshape_ref,  align="left")
+	HTML(Ref_list$plyr_ref,  align="left")
+	HTML(Ref_list$scales_ref,  align="left")
+	HTML(Ref_list$nlme_ref,  align="left")
+	HTML(Ref_list$R2HTML_ref,  align="left")
+	HTML(Ref_list$PROTO_ref,  align="left")
+	HTML(Ref_list$Contrast_ref,  align="left")
+	HTML(Ref_list$LSMEANS_ref,  align="left")
+	HTML(Ref_list$multcomp_ref,  align="left")
 }
 if (UpdateIVS == "Y") {
 	HTML.title("R references", HR=4, align="left")
+	HTML(Ref_list$R_ref , align="left")
+	HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
+
+	HTML(paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], capture.output(print(citation("GGally"),bibtex=F))[6], capture.output(print(citation("GGally"),bibtex=F))[7], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], capture.output(print(citation("RColorBrewer"),bibtex=F))[5], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep=""),  align="left")
+	HTML(paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], capture.output(print(citation("ggrepel"),bibtex=F))[6], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], capture.output(print(citation("scales"),bibtex=F))[6], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], capture.output(print(citation("proto"),bibtex=F))[6], sep = ""),  align="left")
+	#extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
+
+	HTML(paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("nlme"),bibtex=F))[2], capture.output(print(citation("nlme"),bibtex=F))[3], capture.output(print(citation("nlme"),bibtex=F))[4], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("contrast"),bibtex=F))[4], capture.output(print(citation("contrast"),bibtex=F))[5], capture.output(print(citation("contrast"),bibtex=F))[6], sep = ""),  align="left")
+	HTML(paste(capture.output(print(citation("emmeans"),bibtex=F))[4], capture.output(print(citation("emmeans"),bibtex=F))[5], capture.output(print(citation("emmeans"),bibtex=F))[6], sep = ""),  align="left")
 }
-HTML(Ref_list$R_ref , align="left")
-HTML(Ref_list$GGally_ref,  align="left")
-HTML(Ref_list$RColorBrewers_ref,  align="left")
-HTML(Ref_list$GGPLot2_ref,  align="left")
-HTML(Ref_list$ggrepel_ref,  align="left")
-HTML(Ref_list$reshape_ref,  align="left")
-HTML(Ref_list$plyr_ref,  align="left")
-HTML(Ref_list$scales_ref,  align="left")
-HTML(Ref_list$nlme_ref,  align="left")
-HTML(Ref_list$R2HTML_ref,  align="left")
-HTML(Ref_list$PROTO_ref,  align="left")
-HTML(Ref_list$Contrast_ref,  align="left")
-if (UpdateIVS == "Y") {
-	HTML(Ref_list$emmeans_ref,  align="left")
-}
-if (UpdateIVS == "N") {
-	HTML(Ref_list$LSMEANS_ref,  align="left")
-}
-HTML(Ref_list$multcomp_ref,  align="left")
 
 #===================================================================================================================
 #Show dataset

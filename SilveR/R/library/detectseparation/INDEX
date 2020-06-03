@@ -1,0 +1,19 @@
+check_infinite_estimates
+                        Generic method for checking for infinite
+                        estimates
+check_infinite_estimates.glm
+                        A simple diagnostic of whether the maximum
+                        likelihood estimates are infinite
+detect_separation       Method for 'glm' that tests for data separation
+                        and finds which parameters have infinite
+                        maximum likelihood estimates in generalized
+                        linear models with binomial responses
+detect_separation_control
+                        Auxiliary function for the 'glm' interface when
+                        'method' is 'detect_separation'.
+detectseparation        detectseparation: Methods for Detecting and
+                        Checking for Separation and Infinite Maximum
+                        Likelihood Estimates
+endometrial             Histology grade and risk factors for 79 cases
+                        of endometrial cancer
+lizards                 Habitat preferences of lizards

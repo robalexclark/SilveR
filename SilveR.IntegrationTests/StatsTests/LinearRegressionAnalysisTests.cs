@@ -1597,5 +1597,37 @@ namespace SilveR.IntegrationTests
             Assert.Contains("The Categorical factor (Cat9) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);            
         }
+
+        [Fact]
+        public async Task LRA55()
+        {
+            string testName = "LRA55";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
+            model.Response = "Resp6";
+            model.ResponseTransformation = "None";
+            model.ContinuousFactors = new string[] { "Resp7" };
+            model.OtherDesignFactors = new string[] { "Cat7" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("One or more of the factors (Cat7) has only one level present in the dataset. Please select another factor.", errors);
+
+            Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
+        }
     }
 }
