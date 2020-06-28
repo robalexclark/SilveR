@@ -141,14 +141,14 @@ namespace SilveR.Controllers
         [HttpPost]
         public void OpenUrl(string url)
         {
-            if (url.StartsWith("http"))
-            {
+            //if (url.StartsWith("http"))
+            //{
                 Electron.Shell.OpenExternalAsync(url);
-            }
-            else
-            {
-                Electron.Shell.OpenItemAsync(Path.Combine(wwwRoot, url));
-            }
+            //}
+            //else
+            //{
+            //    Electron.Shell.OpenItemAsync(Path.Combine(wwwRoot, url));
+            //}
         }
     }
 }

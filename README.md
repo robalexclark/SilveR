@@ -38,7 +38,7 @@ For Mac you will need to install R 3.6.3 and run a script to install the require
 
 1) Download and install R from https://cran.r-project.org/bin/macosx/R-3.6.3.pkg
 
-2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R and run the script from the terminal prompt using 'sudo Rscript RPackagesInstall.R'
+2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R. Open the R editor/IDE (that was installed in the previous step). Copy and paste the code (or open the RPackagesInstall.R file) into the R editor and run it. The second half of the R script checks that the libraries have been installed correctly.
 
 
 #### Running Locally
