@@ -8,6 +8,7 @@
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 options(install.packages.check.source = "no")
+options(install.packages.compile.from.source = "never")
 
 install.packages("R2HTML", repo="https://www.stats.bris.ac.uk/R/")
 install.packages("ggplot2", repo="https://www.stats.bris.ac.uk/R/") 
