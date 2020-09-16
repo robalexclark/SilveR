@@ -294,10 +294,10 @@ namespace SilveR
                     context.Scripts.Add(incompleteFactorialAnalysis);
                 }
 
-                if (!existingScripts.Any(x => x.ScriptFileName == "SingleMeasuresToRepeatedMeasuresTransformation"))
+                if (!existingScripts.Any(x => x.ScriptFileName == "SingleMeasuresToRepeatedMeasuresDataTransformation"))
                 {
-                    Script singleMeasuresToRepeatedMeasuresTransformation = new Script() { ScriptDisplayName = "Single Measures to Repeated Measures Transformation", ScriptFileName = "SingleMeasuresToRepeatedMeasuresTransformation", RequiresDataset = true };
-                    context.Scripts.Add(singleMeasuresToRepeatedMeasuresTransformation);
+                    Script singleMeasuresToRepeatedMeasuresDataTransformation = new Script() { ScriptDisplayName = "Single Measures to Repeated Measures Data Transformation", ScriptFileName = "SingleMeasuresToRepeatedMeasuresDataTransformation", RequiresDataset = true };
+                    context.Scripts.Add(singleMeasuresToRepeatedMeasuresDataTransformation);
                 }
 
                 context.SaveChanges();

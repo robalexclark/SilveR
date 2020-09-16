@@ -122,8 +122,6 @@ namespace SilveR.Controllers
             }
             else if (selectedFile.Extension.ToUpper() == ".XLS" || selectedFile.Extension.ToUpper() == ".XLSX") //excel
             {
-                //System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-
                 //read in xls file
                 using (FileStream stream = selectedFile.OpenRead())
                 {

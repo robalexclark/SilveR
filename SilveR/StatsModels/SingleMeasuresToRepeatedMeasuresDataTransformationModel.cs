@@ -11,17 +11,21 @@ using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class SingleMeasuresToRepeatedMeasuresTransformationModel : AnalysisDataModelBase
+    public class SingleMeasuresToRepeatedMeasuresDataTransformationModel : AnalysisDataModelBase
     {
         [Required]
+        [HasAtLeastTwoEntries]
         [CheckUsedOnceOnly]
         [DisplayName("Responses")]
         public IEnumerable<string> Responses { get; set; }
 
+        [CheckUsedOnceOnly]
+        [DisplayName("SubjectFactor")]
+        public string SubjectFactor { get; set; }
+
         [DisplayName("Include all variables")]
         public bool IncludeAllVariables { get; set; }
 
-        [Required]
         [CheckUsedOnceOnly]
         [DisplayName("Selected variables")]
         public IEnumerable<string> SelectedVariables { get; set; }
@@ -36,10 +40,10 @@ namespace SilveR.StatsModels
         [DisplayName("Subject factor")]
         public string SubjectFactorName { get; set; }
 
-        public SingleMeasuresToRepeatedMeasuresTransformationModel() : base("SingleMeasuresToRepeatedMeasuresTransformation") { }
+        public SingleMeasuresToRepeatedMeasuresDataTransformationModel() : base("SingleMeasuresToRepeatedMeasuresDataTransformation") { }
 
-        public SingleMeasuresToRepeatedMeasuresTransformationModel(IDataset dataset)
-            : base(dataset, "SingleMeasuresToRepeatedMeasuresTransformation") { }
+        public SingleMeasuresToRepeatedMeasuresDataTransformationModel(IDataset dataset)
+            : base(dataset, "SingleMeasuresToRepeatedMeasuresDataTransformation") { }
 
 
         public override ValidationInfo Validate()
@@ -52,12 +56,15 @@ namespace SilveR.StatsModels
         {
             DataTable dtNew = DataTable.CopyForExport();
 
-            //Get the response, treatment and covariate columns by removing all other columns from the new datatable
-            foreach (string columnName in dtNew.GetVariableNames())
+            //Get the response, treatment and covariate columns by removing all other columns from the new datatable       
+            if (!IncludeAllVariables) //ONLY if "include all variables" is not selected
             {
-                if (!Responses.Contains(columnName) && !SelectedVariables.Contains(columnName))
+                foreach (string columnName in dtNew.GetVariableNames())
                 {
-                    dtNew.Columns.Remove(columnName);
+                    if (!Responses.Contains(columnName) && (SubjectFactor == null || !SubjectFactor.Contains(columnName)) && (SelectedVariables == null || !SelectedVariables.Contains(columnName)))
+                    {
+                        dtNew.Columns.Remove(columnName);
+                    }
                 }
             }
 
@@ -75,6 +82,7 @@ namespace SilveR.StatsModels
             List<Argument> args = new List<Argument>();
 
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Responses), Responses));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(SubjectFactor), SubjectFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(IncludeAllVariables), IncludeAllVariables));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedVariables), SelectedVariables));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseName), ResponseName));
@@ -89,8 +97,9 @@ namespace SilveR.StatsModels
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
             this.Responses = argHelper.LoadIEnumerableArgument(nameof(Responses));
+            this.SubjectFactor = argHelper.LoadStringArgument(nameof(SubjectFactor));
             this.IncludeAllVariables = argHelper.LoadBooleanArgument(nameof(IncludeAllVariables));
-            this.Responses = argHelper.LoadIEnumerableArgument(nameof(SelectedVariables));
+            this.SelectedVariables = argHelper.LoadIEnumerableArgument(nameof(SelectedVariables));
             this.ResponseName = argHelper.LoadStringArgument(nameof(ResponseName));
             this.RepeatedFactorName = argHelper.LoadStringArgument(nameof(RepeatedFactorName));
             this.SubjectFactorName = argHelper.LoadStringArgument(nameof(SubjectFactorName));
@@ -102,11 +111,12 @@ namespace SilveR.StatsModels
             StringBuilder arguments = new StringBuilder();
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Responses)); //4
-            arguments.Append(" " + argFormatter.GetFormattedArgument(IncludeAllVariables)); //5
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedVariables)); //6
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseName)); //7
-            arguments.Append(" " + argFormatter.GetFormattedArgument(RepeatedFactorName)); //8
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SubjectFactorName)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SubjectFactor, true)); //5
+            arguments.Append(" " + argFormatter.GetFormattedArgument(IncludeAllVariables)); //6
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedVariables)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseName, true)); //8
+            arguments.Append(" " + argFormatter.GetFormattedArgument(RepeatedFactorName, true)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SubjectFactorName, true)); //10
 
             return arguments.ToString().Trim();
         }

@@ -176,9 +176,9 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/js/stats/singleMeasuresToRepeatedMeasuresTransformation.min.js",
+    "outputFileName": "wwwroot/js/stats/singleMeasuresToRepeatedMeasuresDataTransformation.min.js",
     "inputFiles": [
-      "wwwroot/js/stats/singleMeasuresToRepeatedMeasuresTransformation.js",
+      "wwwroot/js/stats/singleMeasuresToRepeatedMeasuresDataTransformation.js",
       "wwwroot/js/openLinks.js"
     ]
   },

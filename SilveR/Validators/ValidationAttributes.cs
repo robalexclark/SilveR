@@ -162,7 +162,7 @@ namespace SilveR.Validators
             }
         }
     }
-
+             
 
     //SUMMARY STATS
     public class ValidateConfidenceLimitsAttribute : ValidationAttribute

@@ -1450,46 +1450,24 @@ HTML("Significance level: The chance that the experiment will give a false-posit
 #===================================================================================================================
 Ref_list<-R_refs()
 
-if (UpdateIVS == "N") {
-	HTML.title("Statistical references", HR=2, align="left")
-}
-if (UpdateIVS == "Y") {
-	HTML.title("References", HR=2, align="left")
-	HTML(Ref_list$IVS_ref, align="left")
-}
+HTML.title("References", HR=2, align="left")
+HTML(Ref_list$IVS_ref, align="left")
 HTML(Ref_list$BateClark_ref,  align="left")
 HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods (8th Edition). Iowa State University Press, Ames, Iowa.", align="left")
 
-if (UpdateIVS == "N") {
-	HTML.title("R references", HR=2, align="left")
-	HTML(Ref_list$R_ref ,  align="left")
-	HTML(Ref_list$GGally_ref,  align="left")
-	HTML(Ref_list$RColorBrewers_ref,  align="left")
-	HTML(Ref_list$GGPLot2_ref,  align="left")
-	HTML(Ref_list$reshape_ref,  align="left")
-	HTML(Ref_list$plyr_ref,  align="left")
-	HTML(Ref_list$scales_ref,  align="left")
-	HTML(Ref_list$nlme_ref,  align="left")
-	HTML(Ref_list$R2HTML_ref,  align="left")
-	HTML(Ref_list$PROTO_ref,  align="left")
-}
-if (UpdateIVS == "Y") {
-	HTML.title("R references", HR=4, align="left")
-	HTML(Ref_list$R_ref ,  align="left")
-	HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
-
-	HTML(paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], capture.output(print(citation("GGally"),bibtex=F))[6], capture.output(print(citation("GGally"),bibtex=F))[7], sep = ""),  align="left")
-	HTML(paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], capture.output(print(citation("RColorBrewer"),bibtex=F))[5], sep = ""),  align="left")
-	HTML(paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep=""),  align="left")
-	HTML(paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], capture.output(print(citation("ggrepel"),bibtex=F))[6], sep = ""),  align="left")
-	HTML(paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = ""),  align="left")
-	HTML(paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = ""),  align="left")
-	HTML(paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], capture.output(print(citation("scales"),bibtex=F))[6], sep = ""),  align="left")
-	HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], capture.output(print(citation("proto"),bibtex=F))[6], sep = ""),  align="left")
-	#extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
-	HTML(paste(capture.output(print(citation("nlme"),bibtex=F))[4], capture.output(print(citation("nlme"),bibtex=F))[5], capture.output(print(citation("nlme"),bibtex=F))[6], sep = ""),  align="left")
-}
-
+HTML.title("R references", HR=4, align="left")
+HTML(Ref_list$R_ref ,  align="left")
+HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
+HTML(paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], capture.output(print(citation("GGally"),bibtex=F))[6], capture.output(print(citation("GGally"),bibtex=F))[7], sep = ""),  align="left")
+HTML(paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], capture.output(print(citation("RColorBrewer"),bibtex=F))[5], sep = ""),  align="left")
+HTML(paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep=""),  align="left")
+HTML(paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], capture.output(print(citation("ggrepel"),bibtex=F))[6], sep = ""),  align="left")
+HTML(paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = ""),  align="left")
+HTML(paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = ""),  align="left")
+HTML(paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], capture.output(print(citation("scales"),bibtex=F))[6], sep = ""),  align="left")
+HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], capture.output(print(citation("proto"),bibtex=F))[6], sep = ""),  align="left")
+#extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
+HTML(paste(capture.output(print(citation("nlme"),bibtex=F))[4], capture.output(print(citation("nlme"),bibtex=F))[5], capture.output(print(citation("nlme"),bibtex=F))[6], sep = ""),  align="left")
 
 #===================================================================================================================
 #Show dataset

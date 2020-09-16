@@ -1,4 +1,4 @@
-﻿@model SilveR.StatsModels.SingleMeasuresToRepeatedMeasuresTransformationModel
+﻿@model SilveR.StatsModels.SingleMeasuresToRepeatedMeasuresDataTransformationModel
 
 @section Scripts {
     <script>
@@ -6,16 +6,16 @@
     </script>
 
     <environment names="Development">
-        <script defer src="~/js/stats/singleMeasuresToRepeatedMeasuresTransformation.js"></script>
+        <script defer src="~/js/stats/singleMeasuresToRepeatedMeasuresDataTransformation.js"></script>
         <script defer src="~/js/openLinks.js"></script>
     </environment>
     <environment names="Production">
-        <script defer src="~/js/stats/singleMeasuresToRepeatedMeasuresTransformation.min.js"></script>
+        <script defer src="~/js/stats/singleMeasuresToRepeatedMeasuresDataTransformation.min.js"></script>
     </environment>
 }
 
 @{
-    ViewBag.Title = "Single Measures to Repeated Measures Transformation";
+    ViewBag.Title = "Single Measures to Repeated Measures Data Transformation";
 }
 
 <div class="row">
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<form action="/Analyses/SingleMeasuresToRepeatedMeasuresTransformation" class="form-horizontal mt-2" method="post">
+<form action="/Analyses/SingleMeasuresToRepeatedMeasuresDataTransformation" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
 
@@ -46,6 +46,13 @@
                             <div><span asp-validation-for="Responses"></span></div>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Subject factor</label>
+                        <div class="col-md-6">
+                            <select class="form-control" asp-for="SubjectFactor"></select>
+                            <div><span asp-validation-for="SubjectFactor"></span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,7 +60,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">Additional variables to include in new dataset</div>
-                <div class="card-body">                   
+                <div class="card-body">
 
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Include all variables</label>
@@ -64,16 +71,16 @@
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Selected variables</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="SelectedVariables" />
+                            <select class="form-control" asp-for="SelectedVariables"></select>
                             <div><span asp-validation-for="SelectedVariables"></span></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-             <div class="card">
+            <br />
+            <div class="card">
                 <div class="card-header">Name of new variables</div>
-                <div class="card-body">                   
+                <div class="card-body">
 
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Response</label>
@@ -82,14 +89,14 @@
                             <div><span asp-validation-for="ResponseName"></span></div>
                         </div>
                     </div>
-                      <div class="form-group row">
+                    <div class="form-group row">
                         <label class="col-md-6 col-form-label">Repeated factor</label>
                         <div class="col-md-6">
                             <input class="form-control" asp-for="RepeatedFactorName" />
                             <div><span asp-validation-for="RepeatedFactorName"></span></div>
                         </div>
                     </div>
-                      <div class="form-group row">
+                    <div class="form-group row">
                         <label class="col-md-6 col-form-label">Subject factor</label>
                         <div class="col-md-6">
                             <input class="form-control" asp-for="SubjectFactorName" />

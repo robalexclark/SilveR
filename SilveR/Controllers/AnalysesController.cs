@@ -260,7 +260,7 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SingleMeasuresToRepeatedMeasuresTransformation(SingleMeasuresToRepeatedMeasuresTransformationModel model, bool ignoreWarnings)
+        public async Task<IActionResult> SingleMeasuresToRepeatedMeasuresDataTransformation(SingleMeasuresToRepeatedMeasuresDataTransformationModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);
         }

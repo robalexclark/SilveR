@@ -437,13 +437,8 @@ if (BarnardsExactTest == "Y") {
 #===================================================================================================================
 Ref_list<-R_refs()
 
-if (UpdateIVS == "N") {
-	HTML.title("Statistical references", HR=2, align="left")
-}
-if (UpdateIVS == "Y") {
-	HTML.title("References", HR=2, align="left")
-	HTML(Ref_list$IVS_ref, align="left")
-}
+HTML.title("References", HR=2, align="left")
+HTML(Ref_list$IVS_ref, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
 if(BarnardsExactTest == "Y" && row == 2 && col == 2)
@@ -451,24 +446,13 @@ if(BarnardsExactTest == "Y" && row == 2 && col == 2)
 	HTML("Lydersen, S., Fagerland, M.W. and Laake, P. (2009). Recommended tests for association in 2 x 2 tables. Statistics in Medicine, 28, 1159-1175.", align="left")
 }
 
-if (UpdateIVS == "N") {
-	HTML.title("R references", HR=2, align="left")
-	HTML(Ref_list$R_ref  ,  align="left")
-	HTML(Ref_list$R2HTML_ref, align="left")
-	if (BarnardsExactTest == "Y" && row ==2 && col == 2)
-	{
-		HTML(Ref_list$Barnard_ref, align="left")
-	}
-}
-if (UpdateIVS == "Y") {
-	HTML.title("R references", HR=4, align="left")
-	HTML(Ref_list$R_ref  ,  align="left")
-	HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
+HTML.title("R references", HR=4, align="left")
+HTML(Ref_list$R_ref  ,  align="left")
+HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
 
-	if (BarnardsExactTest == "Y" && row ==2 && col == 2)
-	{
-		HTML(paste(capture.output(print(citation("Exact"),bibtex=F))[4], capture.output(print(citation("Exact"),bibtex=F))[5], sep = ""),  align="left")
-	}
+if (BarnardsExactTest == "Y" && row ==2 && col == 2)
+{
+	HTML(paste(capture.output(print(citation("Exact"),bibtex=F))[4], capture.output(print(citation("Exact"),bibtex=F))[5], sep = ""),  align="left")
 }
 
 

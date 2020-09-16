@@ -8,7 +8,7 @@
     "appId": "com.electron.InVivoStat",
     "productName": "InVivoStat",
     "copyright": "Copyright 2020",
-    "buildVersion": "4.1.0",
+    "buildVersion": "4.2.0",
     "compression": "maximum",
     "directories": {
       "output": "../../../bin/Desktop"

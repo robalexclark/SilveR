@@ -1,13 +1,13 @@
 ﻿#Software branding
-#branding <- "InVivoStat (beta version)"
-branding <- "InVivoStat"
-IVS_version<- 4.1 
+branding <- "InVivoStat (beta version)"
+#branding <- "InVivoStat"
+IVS_version<- 4.2 
 
 #Software update
-UpdateIVS <- "Y"
+UpdateIVS <- "N"
 
 #Beta warning
-Betawarn <- "N"
+Betawarn <- "Y"
 BetaMessage <- "This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output."
 
 #Display arguments
@@ -959,13 +959,8 @@ NONCAT_CPP <- function() {
 		geom_point(aes(colour = Animal_IVS ), size = 3, shape = 16) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
 
-	if (UpdateIVS == "N") {
-		 g1 <- g + theme(legend.position = "none") 
-	}
-	if (UpdateIVS == "Y") {
-		 g1 <- g + 	theme(legend.position = Gr_legend_pos) + 
-				labs(fill = "Animal_IVS")
-	}
+	 g1 <- g + 	theme(legend.position = Gr_legend_pos) + 
+			labs(fill = "Animal_IVS")
 
 	if (ReferenceLine != "NULL") {
 		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
@@ -988,13 +983,9 @@ ONECATSEP_CPP <- function() {
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_wrap(~l_l)
 
-	if (UpdateIVS == "N") {
-		 g <- g + theme(legend.position = "none") 
-	}
-	if (UpdateIVS == "Y") {
-		 g <- g + 	theme(legend.position = Gr_legend_pos) + 
-				labs(fill = "Animal_IVS")
-	}
+	 g <- g + 	theme(legend.position = Gr_legend_pos) + 
+			labs(fill = "Animal_IVS")
+
 
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
@@ -1017,13 +1008,9 @@ TWOCATSEP_CPP <- function() {
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 
-	if (UpdateIVS == "N") {
-		 g <- g + theme(legend.position = "none") 
-	}
-	if (UpdateIVS == "Y") {
-		 g <- g + 	theme(legend.position = Gr_legend_pos) + 
-				labs(fill = "Animal_IVS")
-	}
+	 g <- g + 	theme(legend.position = Gr_legend_pos) + 
+			labs(fill = "Animal_IVS")
+
 	if (ReferenceLine != "NULL") {
 		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
@@ -1719,97 +1706,15 @@ PLSloadingsplot <- function() {
 refxx <- c("For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).")
 
 
-if (UpdateIVS == "N") {
+R_refs <- function() {
+	R_ref <- "R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org."
+	BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
+	IVS_ref <- paste("When referring to InVivoStat, please cite 'InVivoStat, version ", IVS_version, "'.", sep = "")
 
-	R_refs <- function() {
-		R_ref <- "R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org."
-		mtvnorm_ref <- "Alan Genz, Frank Bretz, Tetsuhisa Miwa, Xuefei Mi, Friedrich Leisch, Fabian Scheipl, Torsten Hothorn (2014). mvtnorm: Multivariate Normal and t Distributions. R package version 0.9-9997. URL http://CRAN.R-project.org/package=mvtnorm"
-		GridExtra_ref <- "Baptiste Auguie (2012). gridExtra: functions in Grid graphics. R  package version 0.9.1. http://CRAN.R-project.org/package=gridExtra"
-		GGally_ref <- "Barret Schloerke, Jason Crowley, Di Cook, Heike Hofmann, Hadley Wickham, Francois Briatte, Moritz Marbach and Edwin Thoen (2014). GGally: Extension to ggplot2. R package version 0.4.5. http://CRAN.R-project.org/package=GGally"
-		RColorBrewers_ref <- "Erich Neuwirth (2011). RColorBrewer: ColorBrewer palettes. R package  version 1.0-5. http://CRAN.R-project.org/package=RColorBrewer"
-		GGPLot2_ref <- "H. Wickham. ggplot2: elegant graphics for data analysis. Springer New York, 2009."
-		reshape_ref <- "H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007."
-		plyr_ref <- "Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL http://www.jstatsoft.org/v40/i01/."
-		scales_ref <- "Hadley Wickham (2012). scales: Scale functions for graphics. R package version 0.2.3. http://CRAN.R-project.org/package=scales"
-		car_ref <- "John Fox and Sanford Weisberg (2011). An {R} Companion to Applied Regression, Second Edition. Thousand Oaks CA: Sage. URL: http://socserv.socsci.mcmaster.ca/jfox/Books/Companion"
-		nlme_ref <- "Jose Pinheiro, Douglas Bates, Saikat DebRoy, Deepayan Sarkar and the R Development Core Team (2013). nlme: Linear and Nonlinear Mixed Effects Models. R package version 3.1-111."
-		NPMC_ref <- "Joerg Helms and Ullrich Munzel (2008). NPMC: Nonparametric Multiple Comparisons. R package version1.0-7."
-		R2HTML_ref <- "Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria."
-		PROTO_ref <- "Louis Kates and Thomas Petzoldt (2012). proto: Prototype object-based programming. R package version 0.3-10. http://CRAN.R-project.org/package=proto"
-		Contrast_ref <- "Max Kuhn, contributions from Steve Weston, Jed Wing, James Forester and Thorn Thaler (2013). contrast: A collection of contrast methods. R package version 0.19. http://CRAN.R-project.org/package=contrast"
-		LSMEANS_ref <- "Russell V. Lenth (2014). lsmeans: Least-Squares Means. R package version 2.00-1. http://CRAN.R-project.org/package=lsmeans"
-		Survival_ref <- "Therneau T (2014). _A Package for Survival Analysis in S_. R package version 2.37-7, URL: http://CRAN.R-project.org/package=survival."
-		multcomp_ref <- "Torsten Hothorn, Frank Bretz and Peter Westfall (2008). Simultaneous  Inference in General Parametric Models. Biometrical Journal 50(3),  346--363."
-		extrafont_ref <- "Winston Chang, (2014). extrafont: Tools for using fonts. R package version 0.17. http://CRAN.R-project.org/package=extrafont"
-		COIN_ref <- "Torsten Hothorn, Kurt Hornik, Mark A. van de Wiel, Achim Zeileis (2008). Implementing a Class of Permutation Tests: The coin Package. Journal of Statistical Software 28(8), 1-23. URL http://www.jstatsoft.org/v28/i08/."
-		ggrepel_ref <- "Kamil Slowikowski (2018). ggrepel: Automatically Position Non-Overlapping Text Labels with 'ggplot2'. R package version 0.8.0. https://CRAN.R-project.org/package=ggrepel"
-		mcview_ref<-  "Spencer Graves, Hans-Peter Piepho and Luciano Selzer with help from Sundar Dorai-Raj (2015). multcompView: Visualizations of Paired Comparisons. R package version 0.1-7. https://CRAN.R-project.org/package=multcompView"
-		cluster_ref <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2013).  cluster: Cluster Analysis Basics and Extensions. R package version 1.14.4."
-		ggdendro_ref <- "Andrie de Vries and Brian D. Ripley (2013). ggdendro: Tools for extracting dendrogram and tree diagram plot data for use with ggplot.. R package version 0.1-14. http://CRAN.R-project.org/package=ggdendro"
-		mixOmics_ref <- "Sebastien Dejean, Ignacio Gonzalez, Kim-Anh Le Cao with contributions from Pierre Monget, Jeff Coquery, FangZou Yao, Benoit Liquet and Florian Rohart (2013). mixOmics: Omics Data Integration Project. R package version 5.0-1. http://CRAN.R-project.org/package=mixOmics"
-		dplyr_ref <- "Hadley Wickham, Romain Francois, Lionel Henry and Kirill Müller (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6. https://CRAN.R-project.org/package=dplyr"
-		ROCRref<- "Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). ROCR: visualizing classifier performance in R. Bioinformatics, 21(20), 7881. <URL: http://rocr.bioinf.mpi-sb.mpg.de>."
-	
-		BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
-		
-		Barnard_ref <- "Peter Calhoun (2013). Exact: Unconditional Exact Test. R package version 1.4. http://CRAN.R-project.org/package=Exact."
-	
-		power_ref <- "Stephane Champely (2018). pwr: Basic Functions for Power Analysis. R package version 1.2-2. https://CRAN.R-project.org/package=pwr"
-		IVS_ref <- paste("When referring to InVivoStat, please cite 'InVivoStat, version ", IVS_version, "'.", sep = "")
-		detectseparation_ref  <- capture.output(print(citation("detectseparation"),bibtex=F))[4]
-	
-		Refs <- list(
-			IVS_ref = IVS_ref,
-			R_ref = R_ref,
-			mtvnorm_ref = mtvnorm_ref,
-			GridExtra_ref = GridExtra_ref,
-			GGally_ref = GGally_ref,
-			RColorBrewers_ref = RColorBrewers_ref,
-			GGPLot2_ref = GGPLot2_ref,
-			reshape_ref = reshape_ref,
-			plyr_ref = plyr_ref,
-			scales_ref = scales_ref,
-			car_ref = car_ref,
-			nlme_ref = nlme_ref,
-			NPMC_ref = NPMC_ref,
-			R2HTML_ref = R2HTML_ref,
-			PROTO_ref = PROTO_ref,
-			Contrast_ref = Contrast_ref,
-			LSMEANS_ref = LSMEANS_ref,
-			Survival_ref = Survival_ref,
-			multcomp_ref = multcomp_ref,
-			cluster_ref = cluster_ref,
-			ggdendro_ref = ggdendro_ref,
-			mixOmics_ref = mixOmics_ref,
-			BateClark_ref = BateClark_ref,
-			Barnard_ref = Barnard_ref,
-			extrafont_ref = extrafont_ref,
-			COIN_ref=COIN_ref,
-			ggrepel_ref = ggrepel_ref,
-			mcview_ref = mcview_ref,
-			power_ref = power_ref,
-			dplyr_ref = dplyr_ref,
-			ROCRref = ROCRref,
-			detectseparation_ref = detectseparation_ref
-		)
-		return(Refs)
-	}
-}
-
-
-
-if (UpdateIVS == "Y") {
-
-	R_refs <- function() {
-		R_ref <- "R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org."
-		BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
-		IVS_ref <- paste("When referring to InVivoStat, please cite 'InVivoStat, version ", IVS_version, "'.", sep = "")
-
-		Refs <- list(
-			R_ref = R_ref,
-			BateClark_ref = BateClark_ref,
-			IVS_ref = IVS_ref
-              )
-              return(Refs)
-	}
+	Refs <- list(
+		R_ref = R_ref,
+		BateClark_ref = BateClark_ref,
+		IVS_ref = IVS_ref
+             )
+             return(Refs)
 }
