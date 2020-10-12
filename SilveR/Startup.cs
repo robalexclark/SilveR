@@ -300,6 +300,12 @@ namespace SilveR
                     context.Scripts.Add(singleMeasuresToRepeatedMeasuresDataTransformation);
                 }
 
+                if (!existingScripts.Any(x => x.ScriptFileName == "AreaUnderCurveDataTransformation"))
+                {
+                    Script areaUnderCurveDataTransformation = new Script() { ScriptDisplayName = "Area Under Curve Data Transformation", ScriptFileName = "AreaUnderCurveDataTransformation", RequiresDataset = true };
+                    context.Scripts.Add(areaUnderCurveDataTransformation);
+                }
+
                 context.SaveChanges();
             }
         }

@@ -1040,6 +1040,25 @@ OVERLAID_CPP <- function() {
 	suppressWarnings(print(g1))
 }
 
+#AUC case profiles plot - addition of extra area call
+AUC_CPP <- function() {
+	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		scale_color_manual(values = Gr_palette_A) +
+		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
+		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
+		facet_wrap(~l_l) +
+		geom_area(aes(fill = Gr_fill, alpha = FillTransparency))
+	 g <- g + 	theme(legend.position = Gr_legend_pos) + 
+			labs(fill = "Animal_IVS")
+	suppressWarnings(print(g))
+}
+
+
 #===================================================================================================================
 #Box plot (Graphics module)
 #===================================================================================================================

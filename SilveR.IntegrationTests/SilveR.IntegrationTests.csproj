@@ -7,9 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.8" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -23,6 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC19.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC37.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\ChiSquaredAndFishersExactTest\CHI10.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -2559,6 +2565,150 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\SingleMeasuresParametricAnalysis\SMA88.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM10.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM11.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM12.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM13.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM14.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM15.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM16.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM17.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM18.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM19.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM20.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM21.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM23.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM24.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM25.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM26.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM27.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM28.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM3.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM30.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM31.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM32.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM33.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM34.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM35.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM36.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM37.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM38.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM39.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM4.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM40.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM41.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM42.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM43.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM44.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM45.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM46.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM47.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM48.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM49.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM5.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM6.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM7.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM8.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\SingleMeasuresToRepeatedMeasuresDataTransformation\SMtoRM9.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\SS22.html">

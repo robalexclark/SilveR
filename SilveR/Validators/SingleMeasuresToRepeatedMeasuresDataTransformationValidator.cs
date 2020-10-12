@@ -18,8 +18,12 @@ namespace SilveR.Validators
             //Create a list of all variables
             List<string> allVars = new List<string>();
             allVars.AddRange(srtVariables.Responses);
-            allVars.Add(srtVariables.SubjectFactor);
-            allVars.AddRange(srtVariables.SelectedVariables);
+
+            if (srtVariables.SubjectFactor != null)
+                allVars.Add(srtVariables.SubjectFactor);
+
+            if (srtVariables.SelectedVariables != null)
+                allVars.AddRange(srtVariables.SelectedVariables);
 
             if (!CheckColumnNames(allVars))
                 return ValidationInfo;

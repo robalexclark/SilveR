@@ -87,6 +87,9 @@ namespace SilveR.StatsModels
                 case "SingleMeasuresToRepeatedMeasuresDataTransformation":
                     model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel(dataset);
                     break;
+                case "AreaUnderCurveDataTransformation":
+                    model = new AreaUnderCurveDataTransformationModel(dataset);
+                    break;
                 default:
                     throw new ArgumentException("Analysis type not found!");
             }

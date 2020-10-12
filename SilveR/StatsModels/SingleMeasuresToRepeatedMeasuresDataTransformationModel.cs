@@ -48,8 +48,8 @@ namespace SilveR.StatsModels
 
         public override ValidationInfo Validate()
         {
-            //SummaryStatisticsValidator summaryStatisticsValidator = new SummaryStatisticsValidator(this);
-            return new ValidationInfo();// summaryStatisticsValidator.Validate();
+            SingleMeasuresToRepeatedMeasuresDataTransformationValidator singleMeasuresToRepeatedMeasuresDataTransformationValidator = new SingleMeasuresToRepeatedMeasuresDataTransformationValidator(this);
+            return singleMeasuresToRepeatedMeasuresDataTransformationValidator.Validate();
         }
 
         public override string[] ExportData()

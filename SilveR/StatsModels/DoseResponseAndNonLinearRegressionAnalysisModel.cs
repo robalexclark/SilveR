@@ -213,14 +213,7 @@ namespace SilveR.StatsModels
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            if (AnalysisType == AnalysisOption.FourParameter) //4
-            {
-                arguments.Append(" " + "FourParameter");
-            }
-            else
-            {
-                arguments.Append(" " + "Equation");
-            }
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AnalysisType.ToString())); //4
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //5
 

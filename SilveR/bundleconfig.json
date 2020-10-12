@@ -183,6 +183,13 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/areaUnderCurveDataTransformation.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/areaUnderCurveDataTransformation.js",
+      "wwwroot/js/openLinks.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/stats/oneSampleTTestAnalysis.min.js",
     "inputFiles": [
       "wwwroot/js/stats/oneSampleTTestAnalysis.js",
