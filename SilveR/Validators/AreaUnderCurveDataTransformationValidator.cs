@@ -22,17 +22,17 @@ namespace SilveR.Validators
             {
                 if (aucVariables.Response == null)
                 {
-                    ValidationInfo.AddErrorMessage("Response is required");
+                    ValidationInfo.AddErrorMessage("Response is required.");
                     return ValidationInfo;
                 }
                 else if (aucVariables.SubjectFactor == null)
                 {
-                    ValidationInfo.AddErrorMessage("Subject factor is required");
+                    ValidationInfo.AddErrorMessage("Subject Factor is required.");
                     return ValidationInfo;
                 }
                 else if (aucVariables.TimeFactor == null)
                 {
-                    ValidationInfo.AddErrorMessage("Time factor is required");
+                    ValidationInfo.AddErrorMessage("Time Factor is required.");
                     return ValidationInfo;
                 }
             }
@@ -40,7 +40,7 @@ namespace SilveR.Validators
             {
                 if (aucVariables.Responses == null)
                 {
-                    ValidationInfo.AddErrorMessage("Responses are required");
+                    ValidationInfo.AddErrorMessage("Responses are required.");
                     return ValidationInfo;
                 }
             }
@@ -123,12 +123,12 @@ namespace SilveR.Validators
                     bool isNumeric = Double.TryParse(s, out double numValue);
                     if (!isNumeric)
                     {
-                        ValidationInfo.AddErrorMessage("One or more of the numerical timepoints is not numeric");
+                        ValidationInfo.AddErrorMessage("One or more of the numerical timepoints is not numeric.");
                         return ValidationInfo;
                     }
                     else if (numValue < lastNo)
                     {
-                        ValidationInfo.AddErrorMessage("The timepoints are not monotonically increasing");
+                        ValidationInfo.AddErrorMessage("The timepoints are not monotonically increasing.");
                         return ValidationInfo;
 
                     }
@@ -141,7 +141,7 @@ namespace SilveR.Validators
             {
                 if (aucVariables.AUCOutput == AUCOutputType.AUCFromInitialTimepoint && aucVariables.TimeFactor.Count() == 1)
                 {
-                    ValidationInfo.AddErrorMessage("Only one timepoint found");
+                    ValidationInfo.AddErrorMessage("Only one timepoint found.");
                     return ValidationInfo;
                 }
 
@@ -156,7 +156,7 @@ namespace SilveR.Validators
             {
                 if (aucVariables.Responses.Count() == 1)
                 {
-                    ValidationInfo.AddErrorMessage("Only one response found");
+                    ValidationInfo.AddErrorMessage("Only one response found.");
                     return ValidationInfo;
                 }
             }

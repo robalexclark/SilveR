@@ -23,10 +23,127 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC16.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC17.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC18.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC19.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC20.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC21.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC23.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC24.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC25.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC26.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC27.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC28.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC30.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC31.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC32.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC33.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC34.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC35.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC36.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC37.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC38.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC39.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC40.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC41.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC42.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC43.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC44.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC45.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC46.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC47.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC48.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC49.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC50.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC51.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC52.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC53.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC6.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC7.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\AreaUnderCurveDataTransformation\AUC8.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\ChiSquaredAndFishersExactTest\CHI10.html">
