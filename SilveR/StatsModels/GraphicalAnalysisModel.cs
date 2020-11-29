@@ -111,6 +111,9 @@ namespace SilveR.StatsModels
         [ValidateCaseIDFactor]
         public string CaseIDFactor { get; set; }
 
+        [DisplayName("Show case ID's in legend")]
+        public bool ShowCaseIDsInLegend { get; set; }
+
         [DisplayName("Reference line")]
         public Nullable<decimal> ReferenceLine { get; set; }
 
@@ -192,6 +195,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalDistSelected), NormalDistSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CaseProfilesPlotSelected), CaseProfilesPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CaseIDFactor), CaseIDFactor));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ShowCaseIDsInLegend), ShowCaseIDsInLegend));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ReferenceLine), ReferenceLine));
 
             return args;
@@ -229,6 +233,7 @@ namespace SilveR.StatsModels
             this.NormalDistSelected = argHelper.LoadBooleanArgument(nameof(NormalDistSelected));
             this.CaseProfilesPlotSelected = argHelper.LoadBooleanArgument(nameof(CaseProfilesPlotSelected));
             this.CaseIDFactor = argHelper.LoadStringArgument(nameof(CaseIDFactor));
+            this.ShowCaseIDsInLegend = argHelper.LoadBooleanArgument(nameof(ShowCaseIDsInLegend));
             this.ReferenceLine = argHelper.LoadNullableDecimalArgument(nameof(ReferenceLine));
         }
 
@@ -311,14 +316,17 @@ namespace SilveR.StatsModels
             //Case ID Factor
             arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, true)); //27
 
+            //Case ID Factor
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ShowCaseIDsInLegend)); //28
+
             //Reference Line
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine.ToString(), false)); //28
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine.ToString(), false)); //29
 
             //Legend
-            arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //29
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //30
 
             //SEM Plot include data
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //30
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //31
 
             return arguments.ToString().Trim();
         }

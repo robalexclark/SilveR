@@ -186,8 +186,9 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "XAxisLevelsOrder", Value = "T3,T1" });
             arguments.Add(new Argument { Name = "FirstCatFactorLevelsOrder", Value = "T1" });
             arguments.Add(new Argument { Name = "SecondCatFactorLevelsOrder" });
+            arguments.Add(new Argument { Name = "ShowCaseIDsInLegend", Value = "False" });
 
-            Assert.Equal(27, arguments.Count);
+            Assert.Equal(28, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -203,7 +204,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.False(sut.LinearFitSelected);
             Assert.Equal("The Title", sut.MainTitle);
             Assert.False(sut.NormalDistSelected);
-            Assert.Equal("Outliers",sut.BoxplotOptions);
+            Assert.Equal("Outliers", sut.BoxplotOptions);
             Assert.Equal(5, sut.ReferenceLine);
             Assert.Equal("Resp 1", sut.Response);
             Assert.Equal("None", sut.ResponseTransformation);
@@ -220,6 +221,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("T3,T1", sut.XAxisLevelsOrder);
             Assert.Equal("T1", sut.FirstCatFactorLevelsOrder);
             Assert.Null(sut.SecondCatFactorLevelsOrder);
+            Assert.False(sut.ShowCaseIDsInLegend);
         }
 
         [Fact]
@@ -233,7 +235,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Treatment None Respivs_sp_ivs1 None Cat1 Cat2 Overlaid \"The Title\" \"The x axis\" \"The y axis\" T3,T1 T1 NULL Y N N N Outliers Y Column Y N Y Treativs_sp_ivs1 5 N N", result);
+            Assert.Equal("Treatment None Respivs_sp_ivs1 None Cat1 Cat2 Overlaid \"The Title\" \"The x axis\" \"The y axis\" T3,T1 T1 NULL Y N N N Outliers Y Column Y N Y Treativs_sp_ivs1 N 5 N N", result);
         }
 
 

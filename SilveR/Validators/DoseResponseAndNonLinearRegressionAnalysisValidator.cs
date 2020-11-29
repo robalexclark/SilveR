@@ -135,10 +135,19 @@ namespace SilveR.Validators
                     return ValidationInfo;
                 }
             }
-            else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation && !drnlrVariables.Equation.Contains("x"))
+            else if (drnlrVariables.AnalysisType == DoseResponseAndNonLinearRegressionAnalysisModel.AnalysisOption.Equation)
             {
-                ValidationInfo.AddErrorMessage("The formula should be of the form f=y(x) with x lower case.");
-                return ValidationInfo;
+                if (drnlrVariables.Equation == null)
+                {
+                    ValidationInfo.AddErrorMessage("An equation is required.");
+                    return ValidationInfo;
+                }
+
+                if (!drnlrVariables.Equation.Contains("x"))
+                {
+                    ValidationInfo.AddErrorMessage("The formula should be of the form f=y(x) with x lower case.");
+                    return ValidationInfo;
+                }
             }
 
             //if get here then no errors so return true

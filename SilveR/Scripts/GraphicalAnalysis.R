@@ -36,9 +36,10 @@ HistogramPlot <- Args[24]
 NormalDistFit <- Args[25]
 CaseProfilesPlot <- Args[26]
 CaseIDFactor <- Args[27]
-ReferenceLine <- Args[28]
-DisplayLegend <-Args[29]
-displaypointSEM<-Args[30]
+ShowCaseIDsInLegend <- Args[28]
+ReferenceLine <- Args[29]
+DisplayLegend <-Args[30]
+displaypointSEM<-Args[31]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 

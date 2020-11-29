@@ -255,6 +255,7 @@ graphdata$l_l <-graphdata$between
 XAxisTitle<-CPXAxisTitle
 MainTitle2 <-""
 ReferenceLine = "NULL"
+ShowCaseIDsInLegend<-"N"
 
 #Colour range for individual animals on case profiles plot
 temp<-IVS_F_cpplot_colour("Animal_IVS")

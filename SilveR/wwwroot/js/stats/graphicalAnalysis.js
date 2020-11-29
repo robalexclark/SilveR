@@ -131,12 +131,15 @@ function enableDisableHistogram() {
 function enableDisableCaseProfiles() {
     const caseProfiles = $("#CaseProfilesPlotSelected");
     const caseIDDropDown = $("#CaseIDFactor").data("kendoDropDownList");
+    const showCaseIDsInLegend = $("#ShowCaseIDsInLegend");
 
     if (caseProfiles.prop('checked')) {
         caseIDDropDown.enable(true);
+        showCaseIDsInLegend.prop('disabled', false);
     }
     else {
         caseIDDropDown.value(null);
         caseIDDropDown.enable(false);
+        showCaseIDsInLegend.prop('disabled', true);
     }
 }

@@ -959,8 +959,11 @@ NONCAT_CPP <- function() {
 		geom_point(aes(colour = Animal_IVS ), size = 3, shape = 16) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
 
-	 g1 <- g + 	theme(legend.position = Gr_legend_pos) + 
-			labs(fill = "Animal_IVS")
+	if (ShowCaseIDsInLegend=="N") {
+		g1<- g + theme(legend.position = "none") 
+	} else {
+		g1<-g
+	}
 
 	if (ReferenceLine != "NULL") {
 		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
@@ -981,18 +984,20 @@ ONECATSEP_CPP <- function() {
 		scale_color_manual(values = Gr_palette_A) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
-		facet_wrap(~l_l)
+		facet_wrap(~l_l) 
 
-	 g <- g + 	theme(legend.position = Gr_legend_pos) + 
-			labs(fill = "Animal_IVS")
-
+	if (ShowCaseIDsInLegend=="N") {
+		g1<- g + theme(legend.position = "none") 
+	} else {
+		g1<-g
+	}
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
-		g1 <- g
+		g2 <- g1
 	}
-	suppressWarnings(print(g1))
+	suppressWarnings(print(g2))
 }
 
 
@@ -1008,15 +1013,18 @@ TWOCATSEP_CPP <- function() {
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 
-	 g <- g + 	theme(legend.position = Gr_legend_pos) + 
-			labs(fill = "Animal_IVS")
+	if (ShowCaseIDsInLegend=="N") {
+		g1<- g + theme(legend.position = "none") 
+	} else {
+		g1<-g
+	}
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g2 <- g1+ geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 	} else {
-		g1 <- g
+		g2 <- g1
 	}
-	suppressWarnings(print(g1))
+	suppressWarnings(print(g2))
 }
 
 
@@ -1052,9 +1060,8 @@ AUC_CPP <- function() {
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
 		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
 		facet_wrap(~l_l) +
-		geom_area(aes(fill = Gr_fill, alpha = FillTransparency))
-	 g <- g + 	theme(legend.position = Gr_legend_pos) + 
-			labs(fill = "Animal_IVS")
+		geom_area(aes(fill = Gr_fill, alpha = FillTransparency)) +
+		theme(legend.position = "none") 
 	suppressWarnings(print(g))
 }
 

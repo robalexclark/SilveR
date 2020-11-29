@@ -1118,6 +1118,7 @@ namespace SilveR.IntegrationTests
             model.SelectedInputFormat = AreaUnderCurveDataTransformationModel.InputFormatType.SingleMeasuresFormat;
             model.Responses = new string[] { "Resp1", "Resp2", "Resp3", "Resp4" };
             model.NumericalTimePoints = "3,4,8,12";
+            model.IncludeAllVariables = true;
             model.AUCOutput = AreaUnderCurveDataTransformationModel.AUCOutputType.AUCFromInitialTimepoint;
 
             //Act
@@ -1192,6 +1193,7 @@ namespace SilveR.IntegrationTests
             model.SelectedInputFormat = AreaUnderCurveDataTransformationModel.InputFormatType.SingleMeasuresFormat;
             model.Responses = new string[] { "Resp1", "Resp2", "Resp3", "Resp4" };
             model.NumericalTimePoints = "3,4,8,12";
+            model.IncludeAllVariables = true;
             model.AUCOutput = AreaUnderCurveDataTransformationModel.AUCOutputType.AUCForChangeFromBaseline;
 
             //Act
