@@ -16,6 +16,8 @@ Diplayargs <- "N"
 #Display pdf disabled
 pdfout <- "N"
 
+options(encoding = "UTF-8")
+
 #===================================================================================================================
 #Import Graphical parameters from file
 #===================================================================================================================
@@ -951,6 +953,7 @@ NONCAT_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
+		theme(legend.position = Gr_legend_pos) +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -978,6 +981,7 @@ ONECATSEP_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
+		theme(legend.position = Gr_legend_pos) +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
@@ -1005,6 +1009,7 @@ TWOCATSEP_CPP <- function() {
 	g <- ggplot(graphdata, aes(Time_IVS, yvarrr_IVS)) +
 		theme_map +
 		mytheme +
+		theme(legend.position = Gr_legend_pos) +
 		ylab(YAxisTitle) +
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +

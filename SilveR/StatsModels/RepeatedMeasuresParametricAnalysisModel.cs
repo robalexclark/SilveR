@@ -57,6 +57,9 @@ namespace SilveR.StatsModels
         [DisplayName("Covariance")]
         public string Covariance { get; set; } = "Compound Symmetric";
 
+        [DisplayName("Compare covariance models")]
+        public bool CompareCovarianceModels { get; set; }
+
         [CheckUsedOnceOnly]
         [DisplayName("Covariates")]
         public IEnumerable<string> Covariates { get; set; }
@@ -231,32 +234,34 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance, false)); //8
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CompareCovarianceModels)); //9
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //10
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //11
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatments)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PrimaryFactor, true)); //12
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatments)); //13
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //14
-            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //15
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //14
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //17
+
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //18
 
             //assemble the effect model
-            arguments.Append(" " + argFormatter.GetFormattedArgument(GetEffectModel(), true)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GetEffectModel(), true)); //19
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedEffect, true)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedEffect, true)); //20
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //21
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonType.ToString(), false)); //21
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonType.ToString(), false)); //22
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(GenerateComparisonsDataset)); //22
+            arguments.Append(" " + argFormatter.GetFormattedArgument(GenerateComparisonsDataset)); //23
 
             return arguments.ToString().Trim();
         }
@@ -273,6 +278,7 @@ namespace SilveR.StatsModels
             this.Subject = argHelper.LoadStringArgument(nameof(Subject));
             this.ResponseTransformation = argHelper.LoadStringArgument(nameof(ResponseTransformation));
             this.Covariance = argHelper.LoadStringArgument(nameof(Covariance));
+            this.CompareCovarianceModels = argHelper.LoadBooleanArgument(nameof(CompareCovarianceModels));
             this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
             this.PrimaryFactor = argHelper.LoadStringArgument(nameof(PrimaryFactor));
             this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
@@ -297,6 +303,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Subject), Subject));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ResponseTransformation), ResponseTransformation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariance), Covariance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CompareCovarianceModels), CompareCovarianceModels));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PrimaryFactor), PrimaryFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));

@@ -1,4 +1,8 @@
-﻿#===================================================================================================================
+﻿testmodel <- "N"
+
+
+
+#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(multcomp))
@@ -20,21 +24,22 @@ timeFactor <- Args[5]
 subjectFactor <- Args[6]
 covariatelist <- Args[7]
 covariance <- Args[8]
-responseTransform <- Args[9]
-covariateTransform <- Args[10]
-FirstCatFactor <- Args[11]
-treatlist <- Args[12]
-blocklist <- Args[13]
-showANOVA <- Args[14]
-showPRPlot <- Args[15]
-showNormPlot <- Args[16]
-sig <- 1 - as.numeric(Args[17])
-effectModel <- as.formula(Args[18])
-effectModel2 <- Args[18]
-selectedEffect <- Args[19]
-showLSMeans <- Args[20]
-pairwiseTest <- Args[21]
-genpvals <- Args[22]
+compareCovarianceModels <- Args[9]
+responseTransform <- Args[10]
+covariateTransform <- Args[11]
+FirstCatFactor <- Args[12]
+treatlist <- Args[13]
+blocklist <- Args[14]
+showANOVA <- Args[15]
+showPRPlot <- Args[16]
+showNormPlot <- Args[17]
+sig <- 1 - as.numeric(Args[18])
+effectModel <- as.formula(Args[19])
+effectModel2 <- Args[19]
+selectedEffect <- Args[20]
+showLSMeans <- Args[21]
+pairwiseTest <- Args[22]
+genpvals <- Args[23]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -467,16 +472,64 @@ if (df.residual(threewayfullxxx) < 1) {
 	quit()
 } 
 
-if(covariance=="Compound Symmetric") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
-}
-if(covariance=="Autoregressive(1)") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
-}
-if(covariance=="Unstructured") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+if(covariance=="Compound Symmetric" || testmodel == "Y" ) {
+	threewayfullCS<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
 }
 
+if(covariance=="Autoregressive(1)"|| testmodel == "Y" ) {
+	threewayfullAR<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
+}
+
+if(covariance=="Unstructured"|| testmodel == "Y" ) {
+	threewayfullUN<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+}
+
+
+if(covariance=="Compound Symmetric") {
+	threewayfull<-threewayfullCS
+}
+if(covariance=="Autoregressive(1)") {
+	threewayfull<-threewayfullAR
+}
+if(covariance=="Unstructured") {
+	threewayfull<-threewayfullUN
+}
+
+#===================================================================================================================
+#Testing covariance model fits
+#===================================================================================================================
+if(testmodel == "Y" ) {
+	AIC_Out<-data.frame(AIC(threewayfullCS , threewayfullUN,threewayfullAR))
+	BIC_Out<-data.frame(BIC(threewayfullCS , threewayfullUN,threewayfullAR))
+
+	Critnames <- c("Compound Symmetric", "Unstructured", "Autoregressive (1)")
+
+	#AIC Manipulation
+	AIC_Out <- cbind (Critnames, AIC_Out)
+	AICtemp<- AIC_Out[,3]
+	col3<-format(round(AICtemp, 3), nsmall=3, scientific=FALSE)
+	AIC_Out<- AIC_Out[,-3]
+	AIC_Out<-cbind(AIC_Out, col3)
+	colnames(AIC_Out) <- c("Covariance Structure", "Degrees of freedom", "AIC")
+
+	#BIC Manipulation
+	BIC_Out <- cbind (Critnames, BIC_Out)
+	BICtemp<- BIC_Out[,3]
+	col3<-format(round(BICtemp, 3), nsmall=3, scientific=FALSE)
+	BIC_Out<- BIC_Out[,-3]
+	BIC_Out<-cbind(BIC_Out, col3)
+	colnames(BIC_Out) <- c("Covariance Structure", "Degrees of freedom", "AIC")
+
+	HTML.title("Comparing Covariance Structures", HR=2, align="left")
+
+	HTML.title("Table of Akaike information criterion (AIC) results", HR=3, align="left")
+	HTML(AIC_Out, classfirstline="second", align="left", row.names = "FALSE")
+
+	HTML.title("Table of Bayesian information criterion (BIC) results", HR=3, align="left")
+	HTML(BIC_Out, classfirstline="second", align="left", row.names = "FALSE")
+
+	HTML("Note: When comparing covariance structures, a lower AIC or BIC value indicates a better fit.", align="left")
+}
 #===================================================================================================================
 #ANOVA Table
 #===================================================================================================================
@@ -495,7 +548,7 @@ for (q in 1:notreatlist) {
 }
 
 ivsanova<-cbind(tempy, temp[1], temp[2], col3, col4)
-head<-c("Effect", "Num. df", "Den. df", "F-value", "p-value")
+head<-c("Effect", "Num. degrees of freedom", "Denom. degrees of freedom", "F-value", "p-value")
 colnames(ivsanova)<-head
 
 # Correction to code to ammend lowest p-value: STB Oct 2010
