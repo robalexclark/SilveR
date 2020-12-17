@@ -16,7 +16,7 @@ namespace SilveR.Helpers
             string htmlFile = resultsFiles.Single(x => x.EndsWith(".html") || x.EndsWith(".htm"));
 
             //read in the html and reconvert any dodgy characters back
-            string theHTML = File.ReadAllText(htmlFile, Encoding.GetEncoding(1252));
+            string theHTML = File.ReadAllText(htmlFile, Encoding.UTF8); // Encoding.GetEncoding(1252));
 
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             theHTML = argFormatter.ConvertIllegalCharactersBack(theHTML);
