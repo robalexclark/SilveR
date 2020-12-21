@@ -19,7 +19,7 @@ namespace SilveR.Validators
         public override ValidationInfo Validate()
         {
             //first just check to ensure that the user has actually selected something to output!
-            if (!gaVariables.SEMPlotSelected && !gaVariables.BoxplotSelected && !gaVariables.CaseProfilesPlotSelected && !gaVariables.HistogramSelected && !gaVariables.ScatterplotSelected)
+            if (!gaVariables.ErrorBarPlotSelected && !gaVariables.BoxplotSelected && !gaVariables.CaseProfilesPlotSelected && !gaVariables.HistogramSelected && !gaVariables.ScatterplotSelected)
             {
                 ValidationInfo.AddErrorMessage("You have not selected anything to output!");
                 return ValidationInfo;
@@ -65,7 +65,7 @@ namespace SilveR.Validators
                 ValidationInfo.AddWarningMessage("You have " + gaVariables.ResponseTransformation + " transformed the Response (" + gaVariables.Response + "). Unfortunately the Response is non-numerical and hence cannot be transformed. The transformation has been ignored.");
             }
 
-            if (!yIsNumeric && !String.IsNullOrEmpty(gaVariables.Response) && (gaVariables.HistogramSelected || gaVariables.CaseProfilesPlotSelected || gaVariables.BoxplotSelected || gaVariables.SEMPlotSelected))
+            if (!yIsNumeric && !String.IsNullOrEmpty(gaVariables.Response) && (gaVariables.HistogramSelected || gaVariables.CaseProfilesPlotSelected || gaVariables.BoxplotSelected || gaVariables.ErrorBarPlotSelected))
                 ValidationInfo.AddWarningMessage("Only the scatterplot option accepts non-numeric response variables. As the response is non-numeric, no plot other than a scatterplot can be produced.");
 
             //check that the cat factors are numeric
@@ -93,7 +93,7 @@ namespace SilveR.Validators
                 ValidationInfo.AddWarningMessage("As one of the axes is non-numeric, the best fit linear line is not included on the scatterplot.");
 
             //check if SEM or boxplot selected that x is numeric
-            if (xIsNumeric && (gaVariables.SEMPlotSelected || gaVariables.BoxplotSelected))
+            if (xIsNumeric && (gaVariables.ErrorBarPlotSelected || gaVariables.BoxplotSelected))
                 ValidationInfo.AddWarningMessage("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.");
 
             //check if the histogram is selected and the x-axis is blank

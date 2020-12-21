@@ -1,8 +1,4 @@
-﻿testmodel <- "N"
-
-
-
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(multcomp))
@@ -472,15 +468,15 @@ if (df.residual(threewayfullxxx) < 1) {
 	quit()
 } 
 
-if(covariance=="Compound Symmetric" || testmodel == "Y" ) {
+if(covariance=="Compound Symmetric" || compareCovarianceModels == "Y" ) {
 	threewayfullCS<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
 }
 
-if(covariance=="Autoregressive(1)"|| testmodel == "Y" ) {
+if(covariance=="Autoregressive(1)"|| compareCovarianceModels == "Y" ) {
 	threewayfullAR<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
 }
 
-if(covariance=="Unstructured"|| testmodel == "Y" ) {
+if(covariance=="Unstructured"|| compareCovarianceModels == "Y" ) {
 	threewayfullUN<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 }
 
@@ -498,7 +494,7 @@ if(covariance=="Unstructured") {
 #===================================================================================================================
 #Testing covariance model fits
 #===================================================================================================================
-if(testmodel == "Y" ) {
+if(compareCovarianceModels == "Y" ) {
 	AIC_Out<-data.frame(AIC(threewayfullCS , threewayfullUN,threewayfullAR))
 	BIC_Out<-data.frame(BIC(threewayfullCS , threewayfullUN,threewayfullAR))
 
@@ -510,24 +506,17 @@ if(testmodel == "Y" ) {
 	col3<-format(round(AICtemp, 3), nsmall=3, scientific=FALSE)
 	AIC_Out<- AIC_Out[,-3]
 	AIC_Out<-cbind(AIC_Out, col3)
-	colnames(AIC_Out) <- c("Covariance Structure", "Degrees of freedom", "AIC")
 
 	#BIC Manipulation
-	BIC_Out <- cbind (Critnames, BIC_Out)
-	BICtemp<- BIC_Out[,3]
+	BICtemp<- BIC_Out[,2]
 	col3<-format(round(BICtemp, 3), nsmall=3, scientific=FALSE)
-	BIC_Out<- BIC_Out[,-3]
-	BIC_Out<-cbind(BIC_Out, col3)
-	colnames(BIC_Out) <- c("Covariance Structure", "Degrees of freedom", "AIC")
+	
+	#Combine results
+	ModelComp<-cbind(AIC_Out, col3)
+	colnames(ModelComp) <- c("Covariance Structure", "Degrees of freedom", "Akaike information criterion (AIC)", "Bayesian information criterion (BIC)")
 
-	HTML.title("Comparing Covariance Structures", HR=2, align="left")
-
-	HTML.title("Table of Akaike information criterion (AIC) results", HR=3, align="left")
-	HTML(AIC_Out, classfirstline="second", align="left", row.names = "FALSE")
-
-	HTML.title("Table of Bayesian information criterion (BIC) results", HR=3, align="left")
-	HTML(BIC_Out, classfirstline="second", align="left", row.names = "FALSE")
-
+	HTML.title("Comparing models with different covariance structures", HR=2, align="left")
+	HTML(ModelComp, classfirstline="second", align="left", row.names = "FALSE")
 	HTML("Note: When comparing covariance structures, a lower AIC or BIC value indicates a better fit.", align="left")
 }
 #===================================================================================================================

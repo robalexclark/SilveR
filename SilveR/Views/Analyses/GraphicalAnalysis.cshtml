@@ -196,9 +196,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Means with SEMS plot</label>
+                        <label class="col-md-6 col-form-label">Means with error bar plot</label>
                         <div class="col-md-6">
-                            <input class="checkbox-fix" asp-for="SEMPlotSelected" type="checkbox" onclick="enableDisableSEMplot()" />
+                            <input class="checkbox-fix" asp-for="ErrorBarPlotSelected" type="checkbox" onclick="enableDisableErrorBarPlot()" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -212,6 +212,21 @@
                             <div class="form-check mt-2">
                                 <label class="form-check-label">
                                     <input asp-for="SEMType" type="radio" class="form-check-input" value="Line">Line plot
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="offset-md-2 col-md-4 col-form-label">Error bar type</label>
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="ErrorBarType" type="radio" class="form-check-input" value="SEM" checked="checked">SEM
+                                </label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="ErrorBarType" type="radio" class="form-check-input" value="ConfidenceInterval">Confidence interval
                                 </label>
                             </div>
                         </div>

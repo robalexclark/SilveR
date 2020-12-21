@@ -32,14 +32,15 @@ BoxPlot <- Args[20]
 BoxplotOptions <- Args[21]
 SEMPlot <- Args[22]
 SEMPlotType <- Args[23]
-HistogramPlot <- Args[24]
-NormalDistFit <- Args[25]
-CaseProfilesPlot <- Args[26]
-CaseIDFactor <- Args[27]
-ShowCaseIDsInLegend <- Args[28]
-ReferenceLine <- Args[29]
-DisplayLegend <-Args[30]
-displaypointSEM<-Args[31]
+ErrorBarType <- Args[24]
+HistogramPlot <- Args[25]
+NormalDistFit <- Args[26]
+CaseProfilesPlot <- Args[27]
+CaseIDFactor <- Args[28]
+ShowCaseIDsInLegend <- Args[29]
+ReferenceLine <- Args[30]
+DisplayLegend <-Args[31]
+displaypointSEM<-Args[32]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -704,9 +705,17 @@ if(ScatterPlot == "Y" && (is.numeric(graphdata$xvarrr_IVS)=="FALSE" || is.numeri
 #===================================================================================================================
 #Title
 if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && YAxisVars != "NULL") {
-	HTML.title("Observed means with standard errors plot", HR=2, align="left")
+	if (ErrorBarType == "SEM") {
+		HTML.title("Observed means with standard errors plot", HR=2, align="left")
+	} else {
+		HTML.title("Observed means with 95% confidence intervals plot", HR=2, align="left")
+	}
 } else if(SEMPlot == "Y" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL") && YAxisVars != "NULL") {
-	HTML.title("Categorised observed means with standard errors plot", HR=2, align="left")
+	if (ErrorBarType == "SEM") {
+		HTML.title("Categorised observed means with standard errors plot", HR=2, align="left")
+	} else {
+		HTML.title("Categorised observed means with 95% confidence intervals plot", HR=2, align="left")
+	}
 }
 
 #Warning message
@@ -728,7 +737,7 @@ h_Gr_jitSEM <- 0
 if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && is.numeric(graphdata$yvarrr_IVS)==TRUE ) {
 
 	#Creating the summary dataset
-	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
+	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
@@ -763,7 +772,7 @@ if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && is
 if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL") ) && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Creating the summary dataset
-	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
+	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
@@ -798,7 +807,7 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Creating the summary dataset
-	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+firstcatvarrr_IVS+secondcatvarrr_IVS, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
+	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+firstcatvarrr_IVS+secondcatvarrr_IVS, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
@@ -866,7 +875,7 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	}
 
 	#Creating the summary dataset
-	graphdataSEM_means<-  ddply(graphdataSEM_overall, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n))
+	graphdataSEM_means<-  ddply(graphdataSEM_overall, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
 
 	#Plot device setup
 	ncSEMPlotx <- sub(".html", "ncSEMPlotx.png", htmlFile)

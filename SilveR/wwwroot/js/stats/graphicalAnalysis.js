@@ -41,7 +41,7 @@ $(function () {
     enableDisableXAxisTransformation();
     enableDisableScatterplot();
     enableDisableBoxplot();
-    enableDisableSEMplot();
+    enableDisableErrorBarPlot();
     enableDisableHistogram();
     enableDisableCaseProfiles();
 
@@ -96,21 +96,22 @@ function enableDisableBoxplot() {
     }
 }
 
-function enableDisableSEMplot() {
-    const semplot = $("#SEMPlotSelected");
-    const columnRadBtn = $("#Column");
-    const lineRadBtn = $("#Line");
+function enableDisableErrorBarPlot() {
+    const errorBarPlot = $("#ErrorBarPlotSelected");
+
+    const semType = $("#SEMType");
+    const errorBarType = $("#ErrorBarType");
     const includeData = $("#SEMPlotIncludeData");
 
-    if (semplot.prop('checked')) {
-        columnRadBtn.prop('disabled', false);
-        lineRadBtn.prop('disabled', false);
+    if (errorBarPlot.prop('checked')) {
+        semType.prop('disabled', false);
+        errorBarType.prop('disabled', false);
         includeData.prop('disabled', false);
     }
     else {
         includeData.prop('checked', false);
-        columnRadBtn.prop('disabled', true);
-        lineRadBtn.prop('disabled', true);
+        semType.prop('disabled', true);
+        errorBarType.prop('disabled', true);
         includeData.prop('disabled', true);
     }
 }

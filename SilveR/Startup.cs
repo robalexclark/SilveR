@@ -115,11 +115,11 @@ namespace SilveR
 
             await browserWindow.WebContents.Session.ClearCacheAsync();
 
-            MenuItem[] contextMenu = new MenuItem[] {
-                new MenuItem { Label = "Copy", Accelerator = "CmdOrCtrl+C", Role = MenuRole.copy }
-            };
+            //MenuItem[] contextMenu = new MenuItem[] {
+            //    new MenuItem { Label = "Copy", Accelerator = "CmdOrCtrl+C", Role = MenuRole.copy }
+            //};
 
-            Electron.Menu.SetContextMenu(browserWindow, contextMenu);
+            //Electron.Menu.SetContextMenu(browserWindow, contextMenu);
 
             browserWindow.OnReadyToShow += () =>
             {

@@ -759,39 +759,50 @@ NONCAT_SEM <- function() {
 
 	if (SEMPlotType == "Column") {
 		if (FillTransparency == 1) {
-			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-				geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", alpha = FillTransparency) +
-				geom_hline(yintercept = 0)
+			if (ErrorBarType == "SEM") {
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+			} else {
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+			}
+			g2 <- g1 + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", alpha = FillTransparency) +
+				 geom_hline(yintercept = 0)
 		}
 		if (FillTransparency < 1) {
 			g1 <- g + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", alpha = FillTransparency) +
-				geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 				geom_hline(yintercept = 0)
+			if (ErrorBarType == "SEM") {
+				g2 <- g1 + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+			} else {
+				g2 <- g1 + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+			}
 		}
-
 	} else {
-		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape)
+		if (ErrorBarType == "SEM") {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+		} else {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+		}
+		g2 <- g1 + geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape)
 	}
 
 	if (DisplaySEMlines == "Y" && SEMPlotType != "Column" ) {
-		g2 <- g1 + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line) 
+		g3 <- g2 + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line) 
 	} else {
-		g2 <- g1
+		g3 <- g2
 	}
 	
 	if (displaypointSEM == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
-	} else {
-		g3 <- g2
-	}
-	if (ReferenceLine != "NULL") {
-		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g4 <- g3 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
 	} else {
 		g4 <- g3
 	}
-	suppressWarnings(print(g4))
+	if (ReferenceLine != "NULL") {
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g5 <- g4
+	}
+	suppressWarnings(print(g5))
 }
 
 
@@ -805,41 +816,53 @@ ONECATSEP_SEM <- function() {
 
 	if (SEMPlotType == "Column") {
 		if (FillTransparency == 1) {
-			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-				geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
+			if (ErrorBarType == "SEM") {
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+			} else {
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+			}
+			g2 <- g1 + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
 				facet_wrap(~l_l) +
 				geom_hline(yintercept = 0)
 		}
 		if (FillTransparency < 1) {
 			g1 <- g + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
-				geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 				facet_wrap(~l_l) +
 				geom_hline(yintercept = 0)
+			if (ErrorBarType == "SEM") {
+				g2 <- g1 + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+			} else {
+				g2 <- g1 + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+			}
 		}
 
 	} else {
-		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
+		if (ErrorBarType == "SEM") {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+		} else {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+		}
+		g2 <- g1 + geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
 			facet_wrap(~l_l)
 	}
 	if (DisplaySEMlines == "Y" && SEMPlotType != "Column") {
-		g2 <- g1 +stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+		g3 <- g2 +stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
 	} else {
-		g2 <- g1
+		g3 <- g2
 	}
 	
 	if (displaypointSEM == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM), pos = 'dodge')
-	} else {
-		g3 <- g2
-	}
-	if (ReferenceLine != "NULL") {
-		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g4 <- g3 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM), pos = 'dodge')
 	} else {
 		g4 <- g3
 	}
-	suppressWarnings(print(g4))
+	if (ReferenceLine != "NULL") {
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g5 <- g4
+	}
+	suppressWarnings(print(g5))
 }
 
 
@@ -853,41 +876,53 @@ TWOCATSEP_SEM <- function() {
 
 	if (SEMPlotType == "Column") {
 		if (FillTransparency == 1) {
-			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-				geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
+			if (ErrorBarType == "SEM") {
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+			} else {
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+			}
+			g2 <- g1 + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
 				facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
 				geom_hline(yintercept = 0)
 		}
 		if (FillTransparency < 1) {
 			g1 <- g + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
-				geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
 				facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
 				geom_hline(yintercept = 0)
+			if (ErrorBarType == "SEM") {
+				g2 <- g1 + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+			} else {
+				g2 <- g1 + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+			}
 		}
 	} else {
-		g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) +
-			geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
+		if (ErrorBarType == "SEM") {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+		} else {
+			g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+		}
+		g2 <- g1 + geom_point(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), colour = "black", size = Point_size, shape = Point_shape, fill = Gr_line) +
 			facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 	}
 
 	if (DisplaySEMlines == "Y" && SEMPlotType != "Column") {
-		g2 <- g1 +  stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+		g3 <- g2 +  stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
 	} else {
-		g2 <- g1
+		g3 <- g2
 	}
 	
 	if (displaypointSEM == "Y") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
-	} else {
-		g3 <- g2
-	}
-	if (ReferenceLine != "NULL") {
-		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g4 <- g3 + geom_point(size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
 	} else {
 		g4 <- g3
 	}
-	suppressWarnings(print(g4))
+	if (ReferenceLine != "NULL") {
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g5 <- g4
+	}
+	suppressWarnings(print(g5))
 }
 
 
@@ -904,46 +939,58 @@ OVERLAID_SEM <- function() {
 
 	if (SEMPlotType == "Column") {
 		if (FillTransparency == 1) {
-			g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") +
-				geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge', alpha = FillTransparency) +
+			if (ErrorBarType == "SEM") {
+				g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
+			} else {
+				g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
+			}
+			g2 <- g1 + geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge', alpha = FillTransparency) +
 				geom_hline(yintercept = 0)
 		}
 		if (FillTransparency < 1) {
 			g1 <- g + geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge', alpha = FillTransparency) +
-				geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") +
 				geom_hline(yintercept = 0)
+			if (ErrorBarType == "SEM") {
+				g2 <- g1 + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
+			} else {
+				g2 <- g1 + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
+			}
 		}
 	} else {
-		g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.1), colour = "black") +
-			geom_point(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, fill = l_l), colour = "black", size = Point_size, shape = Point_shape, pos = position_dodge(w = 0.1))
+		if (ErrorBarType == "SEM") {
+			g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.1), colour = "black") 
+		} else {
+			g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.1), colour = "black") 
+		}
+		g2 <- g1 + geom_point(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, fill = l_l), colour = "black", size = Point_size, shape = Point_shape, pos = position_dodge(w = 0.1))
 	}
 	
 	if (DisplaySEMlines == "Y" && SEMPlotType != "Column") {
-		g2 <- g1 +  stat_summary(data = graphdataSEM, fun.y = mean, geom = 'line', aes(group = l_l, colour = l_l), pos = position_dodge(w = 0.1))
+		g3 <- g2 +  stat_summary(data = graphdataSEM, fun.y = mean, geom = 'line', aes(group = l_l, colour = l_l), pos = position_dodge(w = 0.1))
 	} else {
-		g2 <- g1
+		g3 <- g2
 	}
 	
 	if (displaypointSEM == "Y" && SEMPlotType == "Column") {
 		Point_size2 <- Point_size / 1.5
-#		g3 <- g2 + geom_point(data = graphdataSEM_overall, pos = position_dodge(w = 0.9), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
-		g3 <- g2 + geom_point(data = graphdataSEM_overall, size = Point_size2, shape = Point_shape, position = position_jitterdodge(dodge.width = 1, jitter.width = w_Gr_jitSEM))
+#		g4 <- g3 + geom_point(data = graphdataSEM_overall, pos = position_dodge(w = 0.9), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM))
+		g4 <- g3 + geom_point(data = graphdataSEM_overall, size = Point_size2, shape = Point_shape, position = position_jitterdodge(dodge.width = 1, jitter.width = w_Gr_jitSEM))
 	}
 
 	if (displaypointSEM == "Y" && SEMPlotType == "Line") {
 		Point_size2 <- Point_size / 1.5
-		g3 <- g2 + geom_point(data = graphdataSEM, pos = position_dodge(w = 0.1), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM), pos = position_dodge(w = 0.1))
+		g4 <- g3 + geom_point(data = graphdataSEM, pos = position_dodge(w = 0.1), aes(group = l_l), size = Point_size2, shape = Point_shape, color = "black", fill = "black", position = position_jitter(w = w_Gr_jitSEM, h = h_Gr_jitSEM), pos = position_dodge(w = 0.1))
 	}
 
 	if (displaypointSEM == "N") {
-		g3 <- g2
-	}
-	if (ReferenceLine != "NULL") {
-		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
-	} else {
 		g4 <- g3
 	}
-	suppressWarnings(print(g4))
+	if (ReferenceLine != "NULL") {
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	} else {
+		g5 <- g4
+	}
+	suppressWarnings(print(g5))
 }
 
 #===================================================================================================================

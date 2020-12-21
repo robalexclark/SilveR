@@ -92,11 +92,15 @@ namespace SilveR.StatsModels
         public string BoxplotOptions { get; set; } = "Outliers";
 
 
-        [DisplayName("Mean with SEMS plot")]
-        public bool SEMPlotSelected { get; set; }
+        [DisplayName("Mean with error bar plot")]
+        public bool ErrorBarPlotSelected { get; set; }
 
         public enum SEMPlotType { Column = 0, Line = 1 }
         public SEMPlotType SEMType { get; set; } = SEMPlotType.Column;
+
+        public enum ErrorBarPlotType { SEM = 0, ConfidenceInterval = 1 }
+        public ErrorBarPlotType ErrorBarType { get; set; } = ErrorBarPlotType.SEM;
+
 
         [DisplayName("Histogram plot")]
         public bool HistogramSelected { get; set; }
@@ -189,8 +193,9 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(JitterSelected), JitterSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(BoxplotSelected), BoxplotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(BoxplotOptions), BoxplotOptions));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMPlotSelected), SEMPlotSelected));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ErrorBarPlotSelected), ErrorBarPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMType), SEMType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ErrorBarType), ErrorBarType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(HistogramSelected), HistogramSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalDistSelected), NormalDistSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CaseProfilesPlotSelected), CaseProfilesPlotSelected));
@@ -227,8 +232,10 @@ namespace SilveR.StatsModels
             this.JitterSelected = argHelper.LoadBooleanArgument(nameof(JitterSelected));
             this.BoxplotSelected = argHelper.LoadBooleanArgument(nameof(BoxplotSelected));
             this.BoxplotOptions = argHelper.LoadStringArgument(nameof(BoxplotOptions));
-            this.SEMPlotSelected = argHelper.LoadBooleanArgument(nameof(SEMPlotSelected));
+            this.ErrorBarPlotSelected = argHelper.LoadBooleanArgument(nameof(ErrorBarPlotSelected));
             this.SEMType = (SEMPlotType)Enum.Parse(typeof(SEMPlotType), argHelper.LoadStringArgument(nameof(SEMType)), true);
+            this.ErrorBarType = (ErrorBarPlotType)Enum.Parse(typeof(ErrorBarPlotType), argHelper.LoadStringArgument(nameof(ErrorBarType)), true);
+
             this.HistogramSelected = argHelper.LoadBooleanArgument(nameof(HistogramSelected));
             this.NormalDistSelected = argHelper.LoadBooleanArgument(nameof(NormalDistSelected));
             this.CaseProfilesPlotSelected = argHelper.LoadBooleanArgument(nameof(CaseProfilesPlotSelected));
@@ -299,34 +306,36 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(BoxplotOptions)); //21
 
             //SEM Plot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotSelected)); //22
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ErrorBarPlotSelected)); //22
 
             //Column plot type
             arguments.Append(" " + argFormatter.GetFormattedArgument(SEMType.ToString(), false)); //23
 
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ErrorBarType.ToString(), false)); //24
+
             //Histogram plot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(HistogramSelected)); //24
+            arguments.Append(" " + argFormatter.GetFormattedArgument(HistogramSelected)); //25
 
             //Normal distribution fit
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalDistSelected)); //25
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalDistSelected)); //26
 
             //Case profiles plot
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseProfilesPlotSelected)); //26
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseProfilesPlotSelected)); //27
 
             //Case ID Factor
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, true)); //27
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CaseIDFactor, true)); //28
 
             //Case ID Factor
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ShowCaseIDsInLegend)); //28
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ShowCaseIDsInLegend)); //29
 
             //Reference Line
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine.ToString(), false)); //29
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ReferenceLine.ToString(), false)); //30
 
             //Legend
-            arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //30
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DisplayLegend)); //31
 
             //SEM Plot include data
-            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //31
+            arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //32
 
             return arguments.ToString().Trim();
         }

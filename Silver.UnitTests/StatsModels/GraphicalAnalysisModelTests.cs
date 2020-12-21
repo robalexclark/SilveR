@@ -117,8 +117,8 @@ namespace SilveR.UnitTests.StatsModels
             var semPlotIncludeData = result.Single(x => x.Name == "SEMPlotIncludeData");
             Assert.Equal("False", semPlotIncludeData.Value);
 
-            var semPlotSelected = result.Single(x => x.Name == "SEMPlotSelected");
-            Assert.Equal("True", semPlotSelected.Value);
+            var ErrorBarPlotSelected = result.Single(x => x.Name == "ErrorBarPlotSelected");
+            Assert.Equal("True", ErrorBarPlotSelected.Value);
 
             var semType = result.Single(x => x.Name == "SEMType");
             Assert.Equal("Column", semType.Value);
@@ -174,8 +174,9 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "Response", Value = "Resp 1" });
             arguments.Add(new Argument { Name = "ResponseTransformation", Value = "None" });
             arguments.Add(new Argument { Name = "SEMPlotIncludeData", Value = "False" });
-            arguments.Add(new Argument { Name = "SEMPlotSelected", Value = "True" });
+            arguments.Add(new Argument { Name = "ErrorBarPlotSelected", Value = "True" });
             arguments.Add(new Argument { Name = "SEMType", Value = "Column" });
+            arguments.Add(new Argument { Name = "ErrorBarType", Value = "SEM" });
             arguments.Add(new Argument { Name = "ScatterplotSelected", Value = "True" });
             arguments.Add(new Argument { Name = "SecondCatFactor", Value = "Cat2" });
             arguments.Add(new Argument { Name = "StyleType", Value = "Overlaid" });
@@ -188,7 +189,7 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "SecondCatFactorLevelsOrder" });
             arguments.Add(new Argument { Name = "ShowCaseIDsInLegend", Value = "False" });
 
-            Assert.Equal(28, arguments.Count);
+            Assert.Equal(29, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -209,8 +210,9 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("Resp 1", sut.Response);
             Assert.Equal("None", sut.ResponseTransformation);
             Assert.False(sut.SEMPlotIncludeData);
-            Assert.True(sut.SEMPlotSelected);
+            Assert.True(sut.ErrorBarPlotSelected);
             Assert.Equal(GraphicalAnalysisModel.SEMPlotType.Column, sut.SEMType);
+            Assert.Equal(GraphicalAnalysisModel.ErrorBarPlotType.SEM, sut.ErrorBarType);
             Assert.True(sut.ScatterplotSelected);
             Assert.Equal("Cat2", sut.SecondCatFactor);
             Assert.Equal(GraphicalAnalysisModel.GraphStyleType.Overlaid, sut.StyleType);
@@ -235,7 +237,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Treatment None Respivs_sp_ivs1 None Cat1 Cat2 Overlaid \"The Title\" \"The x axis\" \"The y axis\" T3,T1 T1 NULL Y N N N Outliers Y Column Y N Y Treativs_sp_ivs1 N 5 N N", result);
+            Assert.Equal("Treatment None Respivs_sp_ivs1 None Cat1 Cat2 Overlaid \"The Title\" \"The x axis\" \"The y axis\" T3,T1 T1 NULL Y N N N Outliers Y Column SEM Y N Y Treativs_sp_ivs1 N 5 N N", result);
         }
 
 
@@ -259,7 +261,7 @@ namespace SilveR.UnitTests.StatsModels
                 Response = "Resp 1",
                 ResponseTransformation = "None",
                 SEMPlotIncludeData = false,
-                SEMPlotSelected = true,
+                ErrorBarPlotSelected = true,
                 SEMType = GraphicalAnalysisModel.SEMPlotType.Column,
                 ScatterplotSelected = true,
                 SecondCatFactor = "Cat2",

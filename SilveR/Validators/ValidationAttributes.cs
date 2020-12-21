@@ -78,7 +78,7 @@ namespace SilveR.Validators
         {
             GraphicalAnalysisModel ga = (GraphicalAnalysisModel)validationContext.ObjectInstance;
 
-            if (String.IsNullOrEmpty(ga.XAxis) && (ga.ScatterplotSelected || ga.BoxplotSelected || ga.SEMPlotSelected || ga.CaseProfilesPlotSelected))
+            if (String.IsNullOrEmpty(ga.XAxis) && (ga.ScatterplotSelected || ga.BoxplotSelected || ga.ErrorBarPlotSelected || ga.CaseProfilesPlotSelected))
             {
                 return new ValidationResult("X-axis variable required for all plots except histogram.");
             }

@@ -674,7 +674,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
             model.Response = "Cat2";
             model.XAxis = "Treat 1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -697,7 +697,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
             model.Response = "Resp 1";
             model.XAxis = "Time 1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -719,7 +719,7 @@ namespace SilveR.IntegrationTests
             GraphicalAnalysisModel model = new GraphicalAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
             model.Response = "Resp 1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2216,7 +2216,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Time 1";
             model.XAxisTransformation = "None";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
             model.ReferenceLine = 0.6m;
@@ -2254,7 +2254,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
@@ -2284,7 +2284,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
@@ -2326,7 +2326,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
@@ -2367,7 +2367,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Sqrt Resp 2";
@@ -2407,7 +2407,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
             model.SecondCatFactor = "Cat1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "LogeResp2";
@@ -2450,7 +2450,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.XAxisTransformation = "None";
             model.SecondCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp2";
@@ -2491,7 +2491,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Time 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Time 1 Cat 1";
             model.YAxisTitle = "Log10Resp2";
@@ -2531,7 +2531,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Square Root Resp2";
@@ -2561,7 +2561,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Treat 1 Cat 2";
             model.YAxisTitle = "Resp2";
@@ -2592,7 +2592,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp2";
@@ -2633,7 +2633,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Time 1 Cat 1 Cat 2 ";
             model.YAxisTitle = "Resp2";
@@ -2674,7 +2674,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Time 1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Anima 1";
             model.YAxisTitle = "Resp2";
@@ -2715,7 +2715,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Time 1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Animal 1 Time 1 Cat 1";
             model.YAxisTitle = "Resp2";
@@ -2755,7 +2755,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Cat5";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "";
@@ -2786,7 +2786,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat7";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "";
@@ -2818,7 +2818,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat8";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "";
@@ -2848,7 +2848,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Cat5";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
@@ -2879,7 +2879,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat7";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
@@ -2910,7 +2910,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat8";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
@@ -2940,7 +2940,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Cat5";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
@@ -2971,7 +2971,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat7";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
@@ -3002,7 +3002,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat8";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
@@ -3033,7 +3033,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Cat5";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
@@ -3061,7 +3061,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Cat5";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
@@ -3090,7 +3090,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat7";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
@@ -3119,7 +3119,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat6";
             model.SecondCatFactor = "Cat8";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
@@ -3146,7 +3146,7 @@ namespace SilveR.IntegrationTests
             model.ResponseTransformation = "None";
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
@@ -3186,7 +3186,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
@@ -3228,7 +3228,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
@@ -3268,7 +3268,7 @@ namespace SilveR.IntegrationTests
             model.XAxis = "Treat 1";
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
@@ -3309,7 +3309,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.FirstCatFactor = "Cat1";
             model.SecondCatFactor = "Cat2";
-            model.SEMPlotSelected = true;
+            model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
