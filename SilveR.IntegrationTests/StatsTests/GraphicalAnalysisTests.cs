@@ -2220,6 +2220,8 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
             model.ReferenceLine = 0.6m;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2257,8 +2259,9 @@ namespace SilveR.IntegrationTests
             model.ErrorBarPlotSelected = true;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 2";
-            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
             model.XAxisLevelsOrder = "T3,T2,T1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2288,9 +2291,10 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
-            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
             model.ReferenceLine = 0.6m;
             model.FirstCatFactorLevelsOrder = "2,1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2330,8 +2334,9 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp 2";
-            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.FirstCatFactorLevelsOrder = "2,1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2371,6 +2376,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Sqrt Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
             //Act
@@ -2411,10 +2417,11 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "LogeResp2";
-            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.ReferenceLine = -0.7m;
             model.XAxisLevelsOrder = "T3,T2,T1";
             model.SecondCatFactorLevelsOrder = "2,1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2454,8 +2461,9 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Time 1";
             model.YAxisTitle = "Resp2";
-            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.SecondCatFactorLevelsOrder = "B,A";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -2495,6 +2503,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Time 1 Cat 1";
             model.YAxisTitle = "Log10Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
             //Act
@@ -2535,6 +2544,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Square Root Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2565,6 +2575,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Treat 1 Cat 2";
             model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
             //Act
@@ -2596,6 +2607,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2637,6 +2649,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Time 1 Cat 1 Cat 2 ";
             model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
             //Act
@@ -2678,6 +2691,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "Anima 1";
             model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2719,6 +2733,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "Animal 1 Time 1 Cat 1";
             model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
 
             //Act
@@ -2759,6 +2774,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2790,6 +2806,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisLevelsOrder = "D,E,A,B,C";
 
@@ -2822,6 +2839,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2852,6 +2870,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2883,6 +2902,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2914,6 +2934,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2944,6 +2965,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -2975,6 +2997,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -3006,6 +3029,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.XAxisTitle = "";
             model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -3035,6 +3059,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Cat6";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -3063,6 +3088,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Cat6";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -3092,6 +3118,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Cat7";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -3121,6 +3148,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Cat8";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
 
             //Act
@@ -3148,6 +3176,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTransformation = "None";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
             model.MainTitle = "Title";
@@ -3188,6 +3217,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Cat1";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 8";
@@ -3230,6 +3260,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Cat2";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 8";
@@ -3270,6 +3301,7 @@ namespace SilveR.IntegrationTests
             model.FirstCatFactor = "Cat1";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 8";
@@ -3311,6 +3343,7 @@ namespace SilveR.IntegrationTests
             model.SecondCatFactor = "Cat2";
             model.ErrorBarPlotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.SEM;
             model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 8";
@@ -3812,6 +3845,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.ReferenceLine = 1m;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3838,6 +3872,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3864,6 +3899,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3890,6 +3926,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3919,6 +3956,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3957,6 +3995,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SecondCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -3994,6 +4033,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4031,6 +4071,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4070,6 +4111,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4108,6 +4150,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.SecondCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4145,6 +4188,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4182,6 +4226,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4219,6 +4264,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4246,6 +4292,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4273,6 +4320,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4300,6 +4348,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4327,6 +4376,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4354,6 +4404,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4381,6 +4432,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4408,6 +4460,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4436,6 +4489,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4464,6 +4518,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4492,6 +4547,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4520,6 +4576,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4558,6 +4615,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4586,6 +4644,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Animal2";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4614,6 +4673,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4652,6 +4712,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4690,6 +4751,7 @@ namespace SilveR.IntegrationTests
             model.CaseProfilesPlotSelected = true;
             model.CaseIDFactor = "Anima 1";
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = false;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4728,6 +4790,7 @@ namespace SilveR.IntegrationTests
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.ReferenceLine = 1m;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4755,6 +4818,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4782,6 +4846,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4809,6 +4874,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4839,6 +4905,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4878,6 +4945,7 @@ namespace SilveR.IntegrationTests
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
             model.SecondCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4916,6 +4984,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4954,6 +5023,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -4994,6 +5064,7 @@ namespace SilveR.IntegrationTests
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.ReferenceLine = 1m;
             model.FirstCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5033,6 +5104,7 @@ namespace SilveR.IntegrationTests
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.SecondCatFactorLevelsOrder = "2,1";
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5071,6 +5143,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5109,6 +5182,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5147,6 +5221,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5175,6 +5250,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5203,6 +5279,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5231,6 +5308,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5259,6 +5337,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5287,6 +5366,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5315,6 +5395,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5343,6 +5424,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5372,6 +5454,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5401,6 +5484,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5430,6 +5514,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5459,6 +5544,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5498,6 +5584,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5527,6 +5614,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Animal2";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5556,6 +5644,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5595,6 +5684,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5634,6 +5724,7 @@ namespace SilveR.IntegrationTests
             model.CaseIDFactor = "Anima 1";
             model.ShowCaseIDsInLegend = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.DisplayLegend = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -5641,6 +5732,1171 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA180()
+        {
+            string testName = "GRA180";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Time 1";
+            model.XAxisTransformation = "None";
+            model.ErrorBarPlotSelected = true;
+            model.XAxisTitle = "Time 1";
+            model.YAxisTitle = "Resp 2";
+            model.ReferenceLine = 0.6m;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA181()
+        {
+            string testName = "GRA181";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.ErrorBarPlotSelected = true;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Resp 2";
+            model.XAxisLevelsOrder = "T3,T2,T1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA182()
+        {
+            string testName = "GRA182";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Time 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "Time 1";
+            model.YAxisTitle = "Resp 2";
+            model.ReferenceLine = 0.6m;
+            model.FirstCatFactorLevelsOrder = "2,1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA183()
+        {
+            string testName = "GRA183";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Time 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "Time 1";
+            model.YAxisTitle = "Resp 2";
+            model.FirstCatFactorLevelsOrder = "2,1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA184()
+        {
+            string testName = "GRA184";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "Square Root";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Sqrt Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA185()
+        {
+            string testName = "GRA185";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "Loge";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.SecondCatFactor = "Cat1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "LogeResp2";
+            model.ReferenceLine = -0.7m;
+            model.XAxisLevelsOrder = "T3,T2,T1";
+            model.SecondCatFactorLevelsOrder = "2,1";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA186()
+        {
+            string testName = "GRA186";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Time 1";
+            model.XAxisTransformation = "None";
+            model.SecondCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "Time 1";
+            model.YAxisTitle = "Resp2";
+            model.SecondCatFactorLevelsOrder = "B,A";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA187()
+        {
+            string testName = "GRA187";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "Log10";
+            model.XAxis = "Time 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "Time 1 Cat 1";
+            model.YAxisTitle = "Log10Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The x-axis variable is numeric, for all plots other than scatterplot this will be treated as categorical.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA188()
+        {
+            string testName = "GRA188";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "Square Root";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Square Root Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA189()
+        {
+            string testName = "GRA189";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "Treat 1 Cat 2";
+            model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA190()
+        {
+            string testName = "GRA190";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA191()
+        {
+            string testName = "GRA191";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Time 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "Time 1 Cat 1 Cat 2 ";
+            model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA192()
+        {
+            string testName = "GRA192";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Anima 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Time 1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "Anima 1";
+            model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA193()
+        {
+            string testName = "GRA193";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp2";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Anima 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Time 1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "Animal 1 Time 1 Cat 1";
+            model.YAxisTitle = "Resp2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Line;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA194()
+        {
+            string testName = "GRA194";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA195()
+        {
+            string testName = "GRA195";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat7";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.XAxisLevelsOrder = "D,E,A,B,C";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA196()
+        {
+            string testName = "GRA196";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat8";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA197()
+        {
+            string testName = "GRA197";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp6";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA198()
+        {
+            string testName = "GRA198";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp6";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat7";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA199()
+        {
+            string testName = "GRA199";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp6";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat8";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA200()
+        {
+            string testName = "GRA200";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA201()
+        {
+            string testName = "GRA201";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat7";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA202()
+        {
+            string testName = "GRA202";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp7";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat8";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.XAxisTitle = "";
+            model.YAxisTitle = "Resp 2";
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+
+        [Fact]
+        public async Task GRA203()
+        {
+            string testName = "GRA203";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp6";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA204()
+        {
+            string testName = "GRA204";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp 100";
+            model.ResponseTransformation = "ArcSine";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA205()
+        {
+            string testName = "GRA205";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp6";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat7";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA206()
+        {
+            string testName = "GRA206";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp6";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Cat5";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat6";
+            model.SecondCatFactor = "Cat8";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA207()
+        {
+            string testName = "GRA207";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.XAxisTitle = "Treat 1";
+            model.MainTitle = "Title";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA208()
+        {
+            string testName = "GRA208";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Resp 8";
+            model.MainTitle = "Title";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA209()
+        {
+            string testName = "GRA209";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Resp 8";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA210()
+        {
+            string testName = "GRA210";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Resp 8";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
+            Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "GraphicalAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("GraphicalAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "GraphicalAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task GRA211()
+        {
+            string testName = "GRA211";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            GraphicalAnalysisModel model = new GraphicalAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Graphical").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "None";
+            model.XAxis = "Treat 1";
+            model.XAxisTransformation = "None";
+            model.FirstCatFactor = "Cat1";
+            model.SecondCatFactor = "Cat2";
+            model.ErrorBarPlotSelected = true;
+            model.StyleType = GraphicalAnalysisModel.GraphStyleType.Overlaid;
+            model.ErrorBarType = GraphicalAnalysisModel.ErrorBarPlotType.ConfidenceInterval;
+            model.SEMType = GraphicalAnalysisModel.SEMPlotType.Column;
+            model.XAxisTitle = "Treat 1";
+            model.YAxisTitle = "Resp 8";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/GraphicalAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing values whereas the x-axis variable (Treat 1) contains data. The corresponding x-axis variable values have been excluded from the analysis.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings

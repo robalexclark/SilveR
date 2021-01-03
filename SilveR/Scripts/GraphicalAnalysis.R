@@ -1877,7 +1877,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Re-ordered 2nd categorisation factor levels: ", Cat2labs, sep=""),  align="left")
 	}
 
-	if (ScatterPlot != "NULL") {
+	if (ScatterPlot != "N") {
 		HTML(paste("Output Scatterplot (Y/N): ", ScatterPlot, sep=""),  align="left")
 	}
 
@@ -1902,11 +1902,15 @@ if (OutputAnalysisOps == "Y") {
 	}
 
 	if (SEMPlot != "N") {
-		HTML(paste("Output Means with SEMs plot (Y/N): ", SEMPlot, sep=""),  align="left")
+		HTML(paste("Output Means with error bar plot (Y/N): ", SEMPlot, sep=""),  align="left")
+	}
+
+	if (SEMPlot != "N") {
+		HTML(paste("Error bar type: ", ErrorBarType, sep=""),  align="left")
 	}
 
 	if (SEMPlotType != "NULL" && SEMPlot != "N") {
-		HTML(paste("Means with SEMs plot type: ", SEMPlotType, sep=""),  align="left")
+		HTML(paste("Means with error bar plot type: ", SEMPlotType, sep=""),  align="left")
 	}
 
 	if (displaypointSEM != "NULL" && SEMPlot != "N") {
@@ -1927,6 +1931,10 @@ if (OutputAnalysisOps == "Y") {
 
 	if (CaseIDFactor != "NULL" && CaseProfilesPlot != "N") {
 		HTML(paste("Case ID factor: ", CaseIDFactor, sep=""),  align="left")
+	}
+
+	if (CaseIDFactor != "NULL" && CaseProfilesPlot != "N") {
+		HTML(paste("Shown case ID's in legend: ", ShowCaseIDsInLegend, sep=""),  align="left")
 	}
 
 	if (ReferenceLine != "NULL" ) {

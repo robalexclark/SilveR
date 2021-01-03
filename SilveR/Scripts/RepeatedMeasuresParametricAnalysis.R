@@ -1870,6 +1870,7 @@ if (OutputAnalysisOps == "Y") {
 	}
 
 	HTML(paste("Covariance structure: ", covariance, sep=""),  align="left")
+	HTML(paste("Compare covariance models: ", compareCovarianceModels, sep=""),  align="left")
 	
 	HTML(paste("Output table of overall effects (Y/N): ", showANOVA, sep=""),  align="left")
 	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""),  align="left")
