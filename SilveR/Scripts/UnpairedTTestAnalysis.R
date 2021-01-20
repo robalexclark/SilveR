@@ -17,7 +17,7 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 #STB - July 2012 rename response variable
 xxxresponsexxx <- Args[4]
 
-responseTransform <- Args[5]
+responseTransform <- tolower(Args[5])
 treatFactor <- Args[6]
 equalCase <-Args[7]
 unequalCase <- Args[8]
@@ -90,7 +90,7 @@ HTML.title("Response", HR=2, align="left")
 add<-paste("The  ", xxxresponsexxx, " response is currently being analysed by the Unpaired t-test Analysis module.", sep="")
 HTML(add, align="left")
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
 	HTML(add2, align="left")
 }
@@ -102,7 +102,7 @@ HTML(refxx, align="left")
 #Scatterplot
 #===================================================================================================================
 title<-c("Scatterplot of the observed data")
-if(responseTransform != "None") {
+if(responseTransform != "none") {
 	title<-paste(title, " (on the ", responseTransform, " scale)", sep="")
 }
 
@@ -288,7 +288,7 @@ if (equalCase == "Y") {
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||responseTransform =="Loge"))
+if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge"))
 {
 	#Table of LS Means
 	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
@@ -310,12 +310,12 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 	}
 
 	#STB Dec 2011 formatting 3dp
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		tab1<-format(round(10^(tab1), 3), nsmall=3, scientific=FALSE)
 		tab2<-format(round(10^(tab2), 3), nsmall=3, scientific=FALSE)
 		tab3<-format(round(10^(tab3), 3), nsmall=3, scientific=FALSE)
 	}
-	if (responseTransform =="Loge") {
+	if (responseTransform =="loge") {
 		tab1<-format(round(exp(tab1), 3), nsmall=3, scientific=FALSE)
 		tab2<-format(round(exp(tab2), 3), nsmall=3, scientific=FALSE)
 		tab3<-format(round(exp(tab3), 3), nsmall=3, scientific=FALSE)
@@ -343,14 +343,14 @@ if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||respo
 	tablen<-length(unique(rownames(multci$confint)))
 	tabs<-matrix(nrow=tablen, ncol=3)
 
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		for (i in 1:tablen) {
 			tabs[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
 			tabs[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
 			tabs[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
 		}
 	}
-	if (responseTransform =="Loge") {
+	if (responseTransform =="loge") {
 		for (i in 1:tablen) {
 			tabs[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
 			tabs[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
@@ -654,7 +654,7 @@ if (unequalCase == "Y") {
 #===================================================================================================================
 #Back transformed geometric means plot and table 
 #===================================================================================================================
-if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 
 	#Table of LS Means
 	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
@@ -662,13 +662,13 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 
 	#STB Dec 2011 formatting 3dp
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		vectormean2<-format(round(10^(vectormean2), 3), nsmall=3, scientific=FALSE)
 		vectorLCI2<-format(round(10^(vectorLCI2), 3), nsmall=3, scientific=FALSE)
 		vectorUCI2<-format(round(10^(vectorUCI2), 3), nsmall=3, scientific=FALSE)
 	}
 
-	if (responseTransform =="Loge") {
+	if (responseTransform =="loge") {
 		vectormean2<-format(round(exp(vectormean2), 3), nsmall=3, scientific=FALSE)
 		vectorLCI2<-format(round(exp(vectorLCI2), 3), nsmall=3, scientific=FALSE)
 		vectorUCI2<-format(round(exp(vectorUCI2), 3), nsmall=3, scientific=FALSE)
@@ -705,7 +705,7 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 	tablen<-1
 	tabs<-matrix(nrow=tablen, ncol=3)
 
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		for (i in 1:tablen) {
 			tabs[i,1]=format(round(10^(meandiff), 3), nsmall=3, scientific=FALSE)
 			tabs[i,2]=format(round(10^(lowerdiff), 3), nsmall=3, scientific=FALSE)
@@ -713,7 +713,7 @@ if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="Log10"||res
 		}
 	}
 
-	if (responseTransform =="Loge")	{
+	if (responseTransform =="loge")	{
 		for (i in 1:tablen) {
 			tabs[i,1]=format(round(exp(meandiff), 3), nsmall=3, scientific=FALSE)
 			tabs[i,2]=format(round(exp(lowerdiff), 3), nsmall=3, scientific=FALSE)
@@ -792,7 +792,7 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Response variable: ", xxxresponsexxx, sep=""),  align="left")
 
-	if (responseTransform != "None")
+	if (responseTransform != "none")
 	{ 
 		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
 	}

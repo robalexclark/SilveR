@@ -14,12 +14,12 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 #Copy Args
 model <- Args[4]
 covariatelist <- Args[5]
-responseTransform <- Args[6]
-covariateTransform <- Args[7]
+responseTransform <- tolower(Args[6])
+covariateTransform <- tolower(Args[7])
 FirstCatFactor <- Args[8]
 treatFactors <- Args[9]
 contFactors <- Args[10]
-contFactorTransform <- Args[11]
+contFactorTransform <- tolower(Args[11])
 blocklist <- Args[12]
 showANOVA <- Args[13]
 showCoefficients <- Args[14]
@@ -233,11 +233,11 @@ if(covariatelist != "NULL") {
 	add<-paste(add, ".", sep="")
 }
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add<-paste(add, c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
 }
 
-if (covariatelist !="NULL" && covariateTransform != "None") {
+if (covariatelist !="NULL" && covariateTransform != "none") {
 	if (nocovlist == 1) {
 		add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	} else {
@@ -255,7 +255,7 @@ if (nocontfactors == 1 && notreatfactors == 0) {
 	title<-c("Scatterplots of the observed data, including best-fit regression lines")
 }
 	
-if(responseTransform != "None" || contFactorTransform != "None") {
+if(responseTransform != "none" || contFactorTransform != "none") {
 	title<-paste(title, ", on the transformed scale", sep="")
 } 
 HTML.title(title, HR=2, align="left")
@@ -461,7 +461,7 @@ if(covariatelist != "NULL") {
 	if (PlotCat != "Overall") {
 		title<-paste(title, ", categorised by the primary factor", sep="")
 	}
-	if(responseTransform != "None" || covariateTransform != "None") {
+	if(responseTransform != "none" || covariateTransform != "none") {
 		title<-paste(title, " (on the transformed scale)", sep="")
 	} 
 	HTML.title(title, HR=2, align="left")
@@ -961,7 +961,7 @@ if (cooksDistancePlot =="Y") {
 	dev.control("enable") 
 
 	#GGPLOT2 code
-	NONCAT_SCAT("cook")
+	NONCAT_SCAT("COOK")
 
 	#Output code
 	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplotx), Align="centre")
@@ -1125,11 +1125,11 @@ if (covariatelist == "NULL") {
 	}
 }
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add<-paste(add, " The response was ", responseTransform, " transformed prior to analysis to stabilise the variance. ", sep="")
 }
 
-if (covariatelist !="NULL" && covariateTransform != "None") {
+if (covariatelist !="NULL" && covariateTransform != "none") {
 	if (nocovlist == 1) {
 		add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	} else {
@@ -1197,7 +1197,7 @@ if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
 
 	HTML(paste("Response variable: ", resp, sep=""),  align="left")
-	if (responseTransform != "None") {
+	if (responseTransform != "none") {
 		HTML(paste("Response variable transformation: ", responseTransform, sep=""),  align="left")
 	}
 
@@ -1205,7 +1205,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Continuous factor(s): ", contFactors, sep=""),  align="left")
 	}
 
-	if (contFactorTransform != "None"){
+	if (contFactorTransform != "none"){
 		HTML(paste("Continuous factor(s) transformation: ", contFactorTransform, sep=""),  align="left")
 	}
 
@@ -1225,7 +1225,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Primary factor: ", FirstCatFactor, sep=""),  align="left")
 	}
 
-	if (covariatelist != "NULL" && covariateTransform != "None") {
+	if (covariatelist != "NULL" && covariateTransform != "none") {
 		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""),  align="left")
 	}
 

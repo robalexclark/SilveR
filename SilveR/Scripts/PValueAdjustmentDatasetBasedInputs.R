@@ -14,7 +14,7 @@ Args <- commandArgs(TRUE)
 
 if (testtype == "UsePValues") {
 	pValues <- Args[4]
-	test <- Args[5]
+	Test <- tolower(Args[5])
 	sigLevel <- as.numeric(Args[6])
 }
 
@@ -22,7 +22,7 @@ if (testtype == "UseDataSet") {
 	statdata <- read.csv(Args[3], header=TRUE, sep=",")
 	pivs_hyphen_ivsvalue <- Args[4]
 	comparison_ivsvalue <- Args[5]
-	test <- Args[6]
+	Test <- tolower(Args[6])
 	sigLevel <- as.numeric(Args[7])
 }
 
@@ -32,6 +32,25 @@ if (testtype == "UseDataSet") {
 if (Diplayargs == "Y"){
 	print(Args)
 }
+
+#All pairwise test options
+TestText = Test
+if (Test=="holm") {
+	TestText= "Holm"
+} else if (Test=="hochberg") {
+	TestText= "Hochberg"
+} else if (Test=="hommel") {
+	TestText= "Hommel"
+} else if (Test=="bonferroni") {
+	TestText= "Bonferroni"
+} 
+if(Test=="benjamini-hochberg") {
+	TestText= "Benjamini-Hochberg"
+}
+if (TestText=="Benjamini-Hochberg") {
+	Test= "BH"
+}
+
 
 #===================================================================================================================
 #Setup the html file and associated css file
@@ -52,8 +71,8 @@ if (Betawarn == "Y") {
 	HTML(BetaMessage, align="left")
 }
 
-add<-paste(c("The input p-values for this module should be unadjusted p-values. These unadjusted p-values are adjusted using "), test, "'s multiple comparison procedure, ", sep="")
-print(is.numeric(eval(parse(text = paste("statdata$", pivs_hyphen_ivsvalue)))))
+add<-paste(c("The input p-values for this module should be unadjusted p-values. These unadjusted p-values are adjusted using "), TestText, "'s multiple comparison procedure, ", sep="")
+
 #Check the p-values are numerical
 if (testtype == "UseDataSet") {
 	if (is.numeric(eval(parse(text = paste("statdata$", pivs_hyphen_ivsvalue))))== FALSE) {
@@ -63,19 +82,19 @@ if (testtype == "UseDataSet") {
 	}
 }
 
-if (test=="Benjamini-Hochberg") {
+if (Test=="BH") {
 add <- paste(add, "Benjamini and Hochberg (1995).", sep="")
 }
-if (test=="Bonferroni") {
+if (Test=="bonferroni") {
 add <- paste(add, "Bonferroni (1936).", sep="")
 }
-if (test=="Hochberg") {
+if (Test=="hochberg") {
 add <- paste(add, "Hochberg (1988).", sep="")
 }
-if (test=="Holm") {
+if (Test=="holm") {
 add <- paste(add, "Holm (1979).", sep="")
 } 
-if (test=="Hommel") {
+if (Test=="hommel") {
 add <- paste(add, "Hommel (1988).", sep="")
 }
 HTML(add, align="left")
@@ -165,23 +184,8 @@ for (i in 1:length(expectedChanges)) {
 #===================================================================================================================
 #Code for all tests
 #===================================================================================================================
-#All pairwise test options
-
-allPairwiseTestText = test
-if (allPairwiseTestText=="Holm") {
-	allPairwiseTest= "holm"
-} else if (allPairwiseTestText=="Hochberg") {
-	allPairwiseTest= "hochberg"
-} else if (allPairwiseTestText=="Hommel") {
-	allPairwiseTest= "hommel"
-} else if (allPairwiseTestText=="Bonferroni") {
-	allPairwiseTest= "bonferroni"
-} else if (allPairwiseTestText=="Benjamini-Hochberg") {
-	allPairwiseTest= "BH"
-}
-
 #Calculating the adjusted p-values
-pvals<-p.adjust(pvalus, method = allPairwiseTest)
+pvals<-p.adjust(pvalus, method = Test)
 
 #Table for output
 table<-matrix(nrow=length(pvals), ncol=1)
@@ -252,7 +256,7 @@ inteperm<-inte
 index<-1
 for(i in 1:(dim(table2)[1])) {
 	if (pvals[i] <= (sigLevel) & inte==2) {
-		add<-paste(add, "The unadjusted p-value ", table2[i,1], " is statistically significant at the ", 100*(sigLevel), "% level, using ", test, "'s multiple comparison procedure.", sep="")
+		add<-paste(add, "The unadjusted p-value ", table2[i,1], " is statistically significant at the ", 100*(sigLevel), "% level, using ", TestText, "'s multiple comparison procedure.", sep="")
 	} 
 }
 
@@ -276,14 +280,14 @@ for(i in 1:(dim(table2)[1])) {
 }
 
 if (inte>2) {
-	add<-paste(add, "are statistically significant at the  ", 100*(sigLevel), "% level, using ", test, "'s multiple comparison procedure.", sep="")
+	add<-paste(add, "are statistically significant at the  ", 100*(sigLevel), "% level, using ", TestText, "'s multiple comparison procedure.", sep="")
 }
 
 if (inte==1) {
 	if (dim(table2)[1] >1) {
-		add<-paste(add, " There are no statistically significant p-values at the ", 100*(sigLevel), "% level, using ", test, "'s multiple comparison procedure.", sep="")
+		add<-paste(add, " There are no statistically significant p-values at the ", 100*(sigLevel), "% level, using ", TestText, "'s multiple comparison procedure.", sep="")
 	} else {
-		add<-paste(add, " The p-value is not statistically significant at the ", 100*(sigLevel), "% level, using ", test, "'s multiple comparison procedure.", sep="")
+		add<-paste(add, " The p-value is not statistically significant at the ", 100*(sigLevel), "% level, using ", TestText, "'s multiple comparison procedure.", sep="")
 	}
 }
 HTML(add, align="left")
@@ -297,19 +301,19 @@ HTML.title("References", HR=2, align="left")
 HTML(Ref_list$IVS_ref, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
-if (allPairwiseTest== "BH" ) {
+if (Test== "BH" ) {
 	HTML("Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. 	Journal of the Royal Statistical Society Series B, 57, 289-300. ", align="left")
 }
-if (allPairwiseTest== "bonferroni" ) {
+if (Test== "bonferroni" ) {
 	HTML("Bonferroni, C.E. (1936). Teoria statistica delle classi e calcolo delle probabilita.  Pubblicazioni del R Istituto Superiore di Scienze 	Economiche e Commerciali di Firenze, 8, 3-62.", align="left")
 }
-if (allPairwiseTest== "hochberg" ) {
+if (Test== "hochberg" ) {
 	HTML("Hochberg, Y. (1988). A sharper Bonferroni procedure for multiple tests of significance. Biometrika, 75, 800-803.", align="left")
 }
-if (allPairwiseTest== "holm" ) {
+if (Test== "holm" ) {
 	HTML("Holm, S. (1979). A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6, 65-70.", 	align="left")
 } 
-if (allPairwiseTest== "hommel" ) {
+if (Test== "hommel" ) {
 	HTML("Hommel, G. (1988). A stagewise rejective multiple test procedure based on a modified Bonferroni test. Biometrika, 75, 383-386.", align="left")
 }
 
@@ -334,7 +338,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("User entered p-values: ", pValues, sep=""), align="left")
 	}
 
-	HTML(paste("Multiple comparison adjustment used: ", test, sep=""), align="left")
+	HTML(paste("Multiple comparison adjustment used: ", TestText, sep=""), align="left")
 
 	HTML(paste("Significance level: ", sigLevel, sep=""), align="left")
 }

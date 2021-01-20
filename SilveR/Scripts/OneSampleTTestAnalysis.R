@@ -14,7 +14,7 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #STB - July 2012 rename response variable
 xxxresponsexxx <- Args[4]
-responseTransform <- Args[5]
+responseTransform <- tolower(Args[5])
 truemean <- as.numeric(Args[6])
 showCITable <- Args[7]
 showNormPlot <- Args[8]
@@ -95,7 +95,7 @@ if (resplength == 1) {
 }
 HTML(add, align="left")
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	if (resplength == 1) {
 		add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
 	} else {
@@ -211,7 +211,7 @@ if (showCITable == "Y") {
 #Calculate a confidence interval around the mean - log10 transformed
 #===================================================================================================================
 
-if (showCITable == "Y" && responseTransform == "Log10") {
+if (showCITable == "Y" && responseTransform == "log10") {
 	citable <- matrix(nrow=resplength, ncol=4)
 	for (i in 1:resplength) {
 		onet <- t.test (eval(parse(text = paste("statdata$", resplist[i]))), mu=truemean, conf.level = sig)
@@ -237,7 +237,7 @@ if (showCITable == "Y" && responseTransform == "Log10") {
 #Calculate a confidence interval around the mean - ln transformed
 #===================================================================================================================
 
-if (showCITable == "Y" && responseTransform == "Loge") {
+if (showCITable == "Y" && responseTransform == "loge") {
 	citable <- matrix(nrow=resplength, ncol=4)
 	for (i in 1:resplength) {
 		onet <- t.test (eval(parse(text = paste("statdata$", resplist[i]))), mu=truemean, conf.level = sig)
@@ -377,7 +377,7 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Response variable: ", resplistqq, sep=""),  align="left")
  
-	if (responseTransform != "None")
+	if (responseTransform != "none")
 	{ 
 		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
 	}

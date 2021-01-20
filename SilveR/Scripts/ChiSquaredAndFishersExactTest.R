@@ -17,7 +17,7 @@ GroupingFactor <- Args[5]
 ResponseCategories <- Args[6]
 ChiSquaredTest <- Args[7]
 FishersExactTest <-Args[8]
-FishersHypothesis <- Args[9]
+FishersHypothesis <- tolower(Args[9])
 BarnardsExactTest <- Args[10]
 #BarnardsHypothesis <- Args[11]
 #ControlGroup <- Args[12]
@@ -42,22 +42,22 @@ HTMLCSS(CSSfile = cssFile)
 #Parameter setup 
 
 #Hypotheses code
-if (FishersHypothesis == "Two-sided") {
+if (FishersHypothesis == "two-sided") {
 	hyp <- "two.sided"
 	hyptest <- "two-sided"
 } 
 
-if (FishersHypothesis == "Less-than") {
+if (FishersHypothesis == "less-than") {
 	hyp <- "less"
 	hyptest <- "one-sided (less than)"
 } 
 
-if (FishersHypothesis == "Greater-than") {
+if (FishersHypothesis == "greater-than") {
 	hyp <- "greater"
 	hyptest <- "one-sided (greater than)"
 } 
 
-BarnardsHypothesis <- "Two-sided"
+BarnardsHypothesis <- "two-sided"
 hypB <- "two.sided"
 hypBtest <- "two-sided"
 
@@ -372,11 +372,11 @@ if (FishersExactTest == "Y") {
 	row.names(temptable)<-rowname
 	HTML(temptable, classfirstline="second", align="left", row.names = "FALSE")		
 
-	if (FishersHypothesis != "Two-sided" && (lenA > 2 || lenB > 2)) {
+	if (FishersHypothesis != "two-sided" && (lenA > 2 || lenB > 2)) {
 		HTML("A one-sided Fisher's exact test is only available for 2 by 2 contingency tables, hence the two-sided test is presented.", align="left")
 	}
 
-	if (FishersHypothesis != "Two-sided" && lenA == 2 && lenB==2) {
+	if (FishersHypothesis != "two-sided" && lenA == 2 && lenB==2) {
 		add<-paste("The p-value presented is " , hyptest , ".", sep="")
 		HTML(add, align="left")
 	}

@@ -12,12 +12,12 @@ Args <- commandArgs(TRUE)
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
-DoseResponseType <- Args[4]
+DoseResponseType <- tolower(Args[4])
 ResponseVar <- Args[5]
-ResponseTransform <- Args[6]
+ResponseTransform <- tolower(Args[6])
 DoseVar <- Args[7]
 Offsetz <- Args[8]
-DoseTransform <- Args[9]
+DoseTransform <- tolower(Args[9])
 QCResponse <- Args[10]
 QCDose <- Args[11]
 Samples <- Args[12]
@@ -58,12 +58,12 @@ ReferenceLine <- "NULL"
 
 #Removing illegal characters
 
-if (DoseResponseType == "FourParameter") {
+if (DoseResponseType == "fourparameter") {
 	YAxisTitle<-paste(ResponseVar, " \n", sep = "")
 	XAxisTitle<-DoseVar
 }
 
-if (DoseResponseType == "Equation") {
+if (DoseResponseType == "equation") {
 	YAxisTitle<-EquationResponse
 	XAxisTitle<-EquationDose
 }
@@ -80,7 +80,7 @@ for (i in 1:10) {
 #===================================================================================================================
 #===================================================================================================================
 #===================================================================================================================
-if (DoseResponseType == "Equation") {
+if (DoseResponseType == "equation") {
 	#Output HTML header
 	Title <-paste(branding, " Non-Linear Regression Analysis", sep="")
 	HTML.title(Title, HR = 1, align = "left")
@@ -312,7 +312,7 @@ if (DoseResponseType == "Equation") {
 #Analysis based on a 4-parameter logistic equation
 #===================================================================================================================
 #===================================================================================================================
-if (DoseResponseType == "FourParameter") {
+if (DoseResponseType == "fourparameter") {
 
 	#Output HTML header
 	Title <-paste(branding, " Dose-response Analysis", sep="")
@@ -329,10 +329,10 @@ if (DoseResponseType == "FourParameter") {
 #===================================================================================================================
 	# Setting up the offset parameter
 	if(unique(eval(parse(text = paste("statdata$", DoseVar))))[1] == 0) {	
-		if (Offsetz  == "NULL" && DoseTransform == "Log10") {
+		if (Offsetz  == "NULL" && DoseTransform == "log10") {
 			offset <-(unique(eval(parse(text = paste("statdata$", DoseVar))))[2])/10
 		} 
-		if (Offsetz  == "NULL" && DoseTransform == "Loge") {
+		if (Offsetz  == "NULL" && DoseTransform == "loge") {
 			offset <-(unique(eval(parse(text = paste("statdata$", DoseVar))))[2])/exp(1)
 		} 
 		if (Offsetz  != "NULL" ) {
@@ -340,10 +340,10 @@ if (DoseResponseType == "FourParameter") {
 		}
 	} 
 	if(unique(eval(parse(text = paste("statdata$", DoseVar))))[1] != 0) {
-		if (Offsetz  == "NULL" && DoseTransform == "Log10") {
+		if (Offsetz  == "NULL" && DoseTransform == "log10") {
 			offset <-(unique(eval(parse(text = paste("statdata$", DoseVar))))[1])/10
 		}  
-		if (Offsetz  == "NULL" && DoseTransform == "Loge") {
+		if (Offsetz  == "NULL" && DoseTransform == "loge") {
 			offset <-(unique(eval(parse(text = paste("statdata$", DoseVar))))[1])/exp(1)
 		} 
 		if (Offsetz  != "NULL" ) {
@@ -361,36 +361,36 @@ if (DoseResponseType == "FourParameter") {
 	if (SlopeCoeff !="NULL") {
 		SlopeCoeffp <- as.numeric(SlopeCoeff)
 	}
-	if (ECIDCoeff !="NULL" && DoseTransform == "Log10") {
+	if (ECIDCoeff !="NULL" && DoseTransform == "log10") {
 		ECIDCoeffp <- log10(as.numeric(ECIDCoeff)+offset)
 	} 
-	if (ECIDCoeff !="NULL" && DoseTransform == "Loge") {
+	if (ECIDCoeff !="NULL" && DoseTransform == "loge") {
 		ECIDCoeffp <- log(as.numeric(ECIDCoeff)+offset)
 	}
 
 	# Setting up the concentration parameters
 	statdata$responsezzzz = eval(parse(text = paste("statdata$", ResponseVar)))
 
-	if (DoseTransform == "Log10") {
+	if (DoseTransform == "log10") {
 		statdata$logconczzzz = log10(eval(parse(text = paste("statdata$", DoseVar)))+offset)
 		statdata$conczzzz = eval(parse(text = paste("statdata$", DoseVar)))
 	}  
-	if (DoseTransform == "Loge") {
+	if (DoseTransform == "loge") {
 		statdata$logconczzzz = log(eval(parse(text = paste("statdata$", DoseVar)))+offset)
 		statdata$conczzzz = eval(parse(text = paste("statdata$", DoseVar)))
 	}
 
 	#Setting up graph titles
-	if (ResponseTransform == "None") {
+	if (ResponseTransform == "none") {
 		YAxisTitle <- YAxisTitle
 	} else {
 		YAxisTitle <- paste(ResponseTransform, " (", YAxisTitle, ")",  sep="")
 	}
 
-	if (DoseTransform == "Log10") {
+	if (DoseTransform == "log10") {
 	XAxisTitle <- paste(XAxisTitle, " (on the Log10 scale)",sep="")
 	}
-	if (DoseTransform == "Loge") {
+	if (DoseTransform == "loge") {
 	XAxisTitle <- paste(XAxisTitle, " (on the Loge scale)",sep="")
 	}
 
@@ -416,10 +416,10 @@ if (DoseResponseType == "FourParameter") {
 		slopep<-SlopeStartValue
 	}
 
-	if (DoseTransform == "Log10" && ECIDStartValue != "NULL") {
+	if (DoseTransform == "log10" && ECIDStartValue != "NULL") {
 		ed50p<-log10(as.numeric(ECIDStartValue))
 	}  
-	if (DoseTransform == "Loge" && ECIDStartValue != "NULL") {
+	if (DoseTransform == "loge" && ECIDStartValue != "NULL") {
 		ed50p<-log(as.numeric(ECIDStartValue))	
 	}   
 	if (ECIDStartValue == "NULL") {
@@ -435,17 +435,17 @@ if (DoseResponseType == "FourParameter") {
 	HTML.title("Response and dose variables", HR=2, align="left")
 
 	add<-paste("The  ", ResponseVar, " response is currently being analysed by the Dose-response and Non-Linear Regression Analysis module", sep="")
-	if(ResponseTransform != "None") {
+	if(ResponseTransform != "none") {
 		add<-paste(add, " and has been ", ResponseTransform, " transformed prior to analysis" , sep="")
 		add<-paste(add, ResponseTransform, sep="")
 	}
 	add<-paste(add, ".", sep="")
 	HTML(add, align="left")
 
-	if(DoseTransform == "Log10") {
+	if(DoseTransform == "log10") {
 		add<-paste(c("The dose variable ("), DoseVar, ") has been Log10 transformed prior to analysis.",sep="")
 	}  
-	if(DoseTransform == "Loge") {
+	if(DoseTransform == "loge") {
 		add<-paste(c("The dose variable ("), DoseVar, ") has been Loge transformed prior to analysis.",sep="")
 	}
 	HTML(add, align="left")
@@ -453,40 +453,40 @@ if (DoseResponseType == "FourParameter") {
 #===================================================================================================================
 #Fitting the model
 #===================================================================================================================
-	if        (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep,D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p), data=statdata)
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp,D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp,D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(D=minp), data=statdata) 
-	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(D=minp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp), data=statdata) 
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "Loge") {
+	if        (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), start=list(A=maxp,B=slopep,C= ed50p), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep,D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p), data=statdata)
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*B          )), start=list(B=slopep,C= ed50p), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp,D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (A        -D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp,D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(A=maxp,C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(A=maxp,B=slopep), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(D=minp), data=statdata) 
+	} else if (MinCoeff == "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~D         + (MaxCoeffp-D        )/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(D=minp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff == "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((C         -logconczzzz)*SlopeCoeffp)), start=list(C= ed50p), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff == "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (MaxCoeffp-MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*B          )), start=list(B=slopep), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+10^((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff == "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {dosefit<-nls(responsezzzz~MinCoeffp + (A        -MinCoeffp)/(1+exp((ECIDCoeffp-logconczzzz)*SlopeCoeffp)), start=list(A=maxp), data=statdata) 
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform != "loge") {
 		HTML.title("Warning", HR=2, align="left")
 		HTML("You need to estimate at least one of the parameters, hence no analysis has been performed.", align="left")
-	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "Loge") {
+	} else if (MinCoeff != "NULL"&& MaxCoeff != "NULL"&& SlopeCoeff != "NULL"&& ECIDCoeff != "NULL"&& DoseTransform == "loge") {
 		HTML.title("Warning", HR=2, align="left")		
 		HTML("You need to estimate at least one of the parameters, hence no analysis has been performed.", align="left")
 	} 
@@ -641,12 +641,12 @@ if (DoseResponseType == "FourParameter") {
 				loglower<-logED50-as.numeric(critval95)*ED50ERR
 				logupper<-logED50+as.numeric(critval95)*ED50ERR	
 	
-				if(DoseTransform == "Log10") {
+				if(DoseTransform == "log10") {
 					ED50<-10**logED50-offset
 					lower<-10**loglower-offset
 					upper<-10**logupper-offset
 				}		
-				if(DoseTransform == "Loge") {
+				if(DoseTransform == "loge") {
 					ED50<-exp(logED50)-offset
 					lower<-exp(loglower)-offset
 					upper<-exp(logupper)-offset
@@ -698,10 +698,10 @@ if (DoseResponseType == "FourParameter") {
 		}
 	}
 
-	if (ECIDCoeff !="NULL" && DoseTransform != "Loge") {
+	if (ECIDCoeff !="NULL" && DoseTransform != "loge") {
 		C <- log10(as.numeric(ECIDCoeff)+offset)
 	}  
-	if (ECIDCoeff !="NULL" && DoseTransform == "Loge") {
+	if (ECIDCoeff !="NULL" && DoseTransform == "loge") {
 		C <- log(as.numeric(ECIDCoeff)+offset)
 	}	
 	if (ECIDCoeff =="NULL" ) {
@@ -712,20 +712,20 @@ if (DoseResponseType == "FourParameter") {
 		}
 	}
 
-	if (ECIDCoeff !="NULL" && DoseTransform == "Log10") {
+	if (ECIDCoeff !="NULL" && DoseTransform == "log10") {
 		btC <- as.numeric(ECIDCoeff)
 	} 
-	if (ECIDCoeff !="NULL" && DoseTransform == "Loge") {
+	if (ECIDCoeff !="NULL" && DoseTransform == "loge") {
 		btC <- as.numeric(ECIDCoeff)
 	} 	
-	if (ECIDCoeff =="NULL" && DoseTransform == "Log10") {
+	if (ECIDCoeff =="NULL" && DoseTransform == "log10") {
 		for (i in 1:tablen) {
 			if (rownames(ictab)[i] == "C") {
 				btC <-10**(ictab[i,1])-offset
 			}
 		}
 	}  
-	if (ECIDCoeff =="NULL" && DoseTransform == "Loge") {
+	if (ECIDCoeff =="NULL" && DoseTransform == "loge") {
 		for (i in 1:tablen) {
 			if (rownames(ictab)[i] == "C") {
 				btC <-exp(ictab[i,1])-offset
@@ -801,10 +801,10 @@ if (DoseResponseType == "FourParameter") {
 		# Plot of data
 		statdata$QCresponsezzzz = eval(parse(text = paste("statdata$", QCResponse)))
 
-		if (DoseTransform == "Log10") {	
+		if (DoseTransform == "log10") {	
 			statdata$logQCconczzzz = log10(eval(parse(text = paste("statdata$", QCDose))))
 			statdata$QCconczzzz = eval(parse(text = paste("statdata$", QCDose)))
-		} else	if (DoseTransform == "Loge") {	
+		} else	if (DoseTransform == "loge") {	
 			statdata$logQCconczzzz = log(eval(parse(text = paste("statdata$", QCDose))))
 			statdata$QCconczzzz = eval(parse(text = paste("statdata$", QCDose)))
 		}
@@ -920,7 +920,7 @@ if (DoseResponseType == "FourParameter") {
 #===================================================================================================================
 		HTML.title("Table of QC summary statistics", HR=2, align="left")
 
-		if (DoseTransform == "Loge")	{
+		if (DoseTransform == "loge")	{
 			QCs$backtran<-C-(1/B)*log(((A-D)/(QCs$response-D))-1)
 			length <- length(unique(levels(as.factor(QCs$dose))))
 			vectorbtmean <-c(1:length)
@@ -937,7 +937,7 @@ if (DoseResponseType == "FourParameter") {
 				vectorN[i]=length(tempy)
 			}
 		}
-		if (DoseTransform == "Log10") {
+		if (DoseTransform == "log10") {
 			QCs$backtran<-C-(1/B)*log10(((A-D)/(QCs$response-D))-1)
 			length <- length(unique(levels(as.factor(QCs$dose))))
 			vectorbtmean <-c(1:length)
@@ -998,10 +998,10 @@ if (DoseResponseType == "FourParameter") {
 		HTML.title("Back-calculated sample responses", HR=2, align="left")
 
 		statdata$samplesresponsezzzz = eval(parse(text = paste("statdata$", Samples)))
-		if (DoseTransform == "Loge") {
+		if (DoseTransform == "loge") {
 			statdata$backtranss<-format(round(exp(C-(1/B)*log(((A-D)/(statdata$samplesresponsezzzz-D))-1))-offset, 3), nsmall=3, scientific=FALSE)
 		}
-		if (DoseTransform == "Log10") {
+		if (DoseTransform == "log10") {
 			statdata$backtranss<-format(round(10**(C-(1/B)*log10(((A-D)/(statdata$samplesresponsezzzz-D))-1))-offset, 3), nsmall=3, scientific=FALSE)
 		}
 
@@ -1048,7 +1048,7 @@ HTML(paste(capture.output(print(citation("mvtnorm"),bibtex=F))[4], capture.outpu
 #Show dataset
 #===================================================================================================================
 if (showdataset == "Y") {
-    if (DoseResponseType == "FourParameter") {
+    if (DoseResponseType == "fourparameter") {
         statdata2 <- subset(statdata, select = -c(responsezzzz, logconczzzz, conczzzz))
         if (QCResponse != "NULL" && QCDose != "NULL") {
             statdata2 <- subset(statdata2, select = -c(QCresponsezzzz, logQCconczzzz, QCconczzzz))
@@ -1058,7 +1058,7 @@ if (showdataset == "Y") {
         }
     }
 
-    if (DoseResponseType == "Equation") {
+    if (DoseResponseType == "equation") {
         statdata2 <- subset(statdata, select = -c(respzzzz, x, y, conczzzz))
     }
 
@@ -1077,11 +1077,11 @@ if (showdataset == "Y") {
 if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
 
-	if (DoseResponseType == "FourParameter")
+	if (DoseResponseType == "fourparameter")
 	{ 
 		HTML(paste("Response variable: ", ResponseVar, sep=""), align="left")
 
-		if (ResponseTransform != "None") {
+		if (ResponseTransform != "none") {
 			HTML(paste("Response variable transformation: ", ResponseTransform, sep=""), align="left")
 		}
 		HTML(paste("Dose variable: ", DoseVar, sep=""), align="left")

@@ -23,8 +23,8 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 model <- Args[4]
 scatterplotModel <- as.formula(Args[5])
 covariates <- Args[6]
-responseTransform <- Args[7]
-covariateTransform <- Args[8]
+responseTransform <- tolower(Args[7])
+covariateTransform <- tolower(Args[8])
 FirstCatFactor <- Args[9]
 treatFactors <- Args[10]
 blockFactors <- Args[11]
@@ -37,10 +37,10 @@ effectModel <- as.formula(Args[16])
 effectModel2 <- Args[16]
 selectedEffect <- Args[17]
 showLSMeans <- Args[18]
-allPairwiseTest <- Args[19]
+allPairwiseTest <- tolower(Args[19])
 
 if (Module == "SMPA") {
-	backToControlTest <- Args[20]
+	backToControlTest <- tolower(Args[20])
 	cntrlGroup <- Args[21]
 	genpvals <- Args[22]
 }
@@ -246,11 +246,11 @@ if(FirstCatFactor != "NULL") {
 	add<-paste(add, ".", sep="")
 }
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add<-paste(add, c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
 }
 
-if (covariates !="NULL" && covariateTransform != "None") {
+if (covariates !="NULL" && covariateTransform != "none") {
 	if (nocovars == 1) {
 		add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	} else {
@@ -263,7 +263,7 @@ HTML(add, align="left")
 #Scatterplot
 #===================================================================================================================
 title<-c("Scatterplot of the observed data")
-if(responseTransform != "None") {
+if(responseTransform != "none") {
 	title<-paste(title, " (on the ", responseTransform, " scale)", sep="")
 }
 HTML.title(title, HR=2, align="left")
@@ -313,7 +313,7 @@ if(FirstCatFactor != "NULL") {
 	} else {
 		title<-c("Plot of the response vs. the covariates, categorised by the primary factor")
 	}
-	if(responseTransform != "None" || covariateTransform != "None") {
+	if(responseTransform != "none" || covariateTransform != "none") {
 		title<-paste(title, " (on the transformed scale)", sep="")
 	} 
 	HTML.title(title, HR=2, align="left")
@@ -1068,7 +1068,7 @@ if(showLSMeans =="Y") {
 #===================================================================================================================
 #Back transformed geometric means plot and table 
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 	CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 	HTML.title(CITitle, HR=2, align="left")
 	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
@@ -1084,7 +1084,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 		x<-na.omit(x)
 	}
 
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		x$Mean <-10^(x$emmean)
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- 10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
@@ -1092,7 +1092,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 		}
 	}
 
-	if (responseTransform =="Loge") {
+	if (responseTransform =="loge") {
 		x$Mean <-exp(x$emmean)
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
@@ -1274,7 +1274,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 #===================================================================================================================
 #Table of back transformed means
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 
 	#STB May 2012 Updating "least square (predicted) means"
 	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
@@ -1287,7 +1287,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 		x<-na.omit(x)
 	}
 
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		x$Mean <-format(round(10^(x$emmean), 3), nsmall=3, scientific=FALSE) 
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- format(round(10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
@@ -1295,7 +1295,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 		}
 	}
 
-	if (responseTransform =="Loge") {
+	if (responseTransform =="loge") {
 		x$Mean <-format(round(exp(x$emmean), 3), nsmall=3, scientific=FALSE) 
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- format(round(exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
@@ -1341,19 +1341,32 @@ if(allPairwiseTest != "NULL") {
 
 	#All pairwise test options
 	allPairwiseTestText = allPairwiseTest
+
+	if(allPairwiseTest=="unadjusted (lsd)") {
+		allPairwiseTestText= "Unadjusted (LSD)"
+	}
+
 	if(allPairwiseTestText=="Unadjusted (LSD)") {
 		allPairwiseTest= "none"
-	} else if (allPairwiseTestText=="Holm") {
-		allPairwiseTest= "holm"
-	} else if (allPairwiseTestText=="Hochberg") {
-		allPairwiseTest= "hochberg"
-	} else if (allPairwiseTestText=="Hommel") {
-		allPairwiseTest= "hommel"
-	} else if (allPairwiseTestText=="Bonferroni") {
-		allPairwiseTest= "bonferroni"
-	} else if (allPairwiseTestText=="Benjamini-Hochberg") {
+	}
+
+	if(allPairwiseTest=="benjamini-hochberg") {
+		allPairwiseTestText= "Benjamini-Hochberg"
+	}
+
+	if (allPairwiseTestText=="Benjamini-Hochberg") {
 		allPairwiseTest= "BH"
 	}
+
+	if (allPairwiseTest=="holm") {
+		allPairwiseTestText= "Holm"
+	} else if (allPairwiseTest=="hochberg") {
+		allPairwiseTestText= "Hochberg"
+	} else if (allPairwiseTest=="hommel") {
+		allPairwiseTestText= "Hommel"
+	} else if (allPairwiseTest=="bonferroni") {
+		allPairwiseTestText= "Bonferroni"
+	} 
 
 	if (allPairwiseTest== "none") {
 		add<-paste(c("All pairwise comparisons without adjustment for multiplicity (LSD test)"))
@@ -1371,7 +1384,7 @@ if(allPairwiseTest != "NULL") {
 	multci<-confint(mult, level=sig, calpha = univariate_calpha())
 	tablen<-length(unique(rownames(multci$confint)))
 
-	if (allPairwiseTest== "Tukey") {
+	if (allPairwiseTest== "tukey") {
 		if ( tablen >1 ) {
 			set.seed(3)	
 			pwc = emmeans(lm(model, data=statdata, na.action = na.omit) , eval(parse(text = paste("pairwise ~",selectedEffect))),   adjust = "tukey")
@@ -1477,7 +1490,7 @@ if(allPairwiseTest != "NULL") {
 	HTML(add, align="left")
 
 #===================================================================================================================
-	if (allPairwiseTest == "Tukey") {
+	if (allPairwiseTest == "tukey") {
 		HTML("Warning: The results of Tukey's procedure are approximate if the sample sizes are not equal.", align="left")
 	}
 #	if(length(grep("\\*", effectModel)) == 0 && length(grep("\\+", effectModel)) == 0 && length(grep("\\+", model)) == 1)  {
@@ -1511,13 +1524,13 @@ if(allPairwiseTest != "NULL") {
 #Back transformed geometric means table 
 #===================================================================================================================
 if(allPairwiseTest != "NULL") {
-	if(GeomDisplay == "Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+	if(GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 		HTML.title("All pairwise comparisons as back-transformed ratios", HR=2, align="left")
 		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 		#Creating the table
 		tabsx<-matrix(nrow=tablen, ncol=3)
-		if (responseTransform =="Log10") {
+		if (responseTransform =="log10") {
 			for (i in 1:tablen) {
 				tabsx[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
 			}
@@ -1528,7 +1541,7 @@ if(allPairwiseTest != "NULL") {
 				tabsx[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
 			}
 		}
-		if (responseTransform =="Loge") {
+		if (responseTransform =="loge") {
 			for (i in 1:tablen) {
 				tabsx[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
 			}
@@ -1561,18 +1574,38 @@ if(allPairwiseTest != "NULL") {
 #===================================================================================================================
 backToControlTestText <- backToControlTest
 
+if(backToControlTest=="unadjusted (lsd)") {
+	backToControlTestText= "Unadjusted (LSD)"
+}
+
 if(backToControlTestText=="Unadjusted (LSD)") {
 	backToControlTest= "none"
-} else if (backToControlTestText=="Holm") {
-	backToControlTest= "holm"
-} else if (backToControlTestText=="Hochberg") {
-	backToControlTest= "hochberg"
-} else if (backToControlTestText=="Hommel") {
-	backToControlTest= "hommel"
-} else if (backToControlTestText=="Bonferroni") {
-	backToControlTest= "bonferroni"
-} else if (backToControlTestText=="Benjamini-Hochberg") {
+}
+
+if(backToControlTest=="benjamini-hochberg") {
+	backToControlTestText= "Benjamini-Hochberg"
+}
+
+if (backToControlTestText=="Benjamini-Hochberg") {
 	backToControlTest= "BH"
+}
+
+if(backToControlTest=="dunnett") {
+	backToControlTestText= "Dunnett"
+} 
+
+if (backToControlTestText=="Dunnett") {
+	backToControlTest= "Dunnett"
+}
+ 
+if (backToControlTest=="holm") {
+	backToControlTestText= "Holm"
+} else if (backToControlTest=="hochberg") {
+	backToControlTestText= "Hochberg"
+} else if (backToControlTest=="hommel") {
+	backToControlTestText= "Hommel"
+} else if (backToControlTest=="bonferroni") {
+	backToControlTestText= "Bonferroni"
 }
 
 #===================================================================================================================
@@ -1802,21 +1835,21 @@ if(backToControlTest != "NULL") {
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-if(backToControlTest != "NULL" && GeomDisplay == "Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+if(backToControlTest != "NULL" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 	HTML.title("All to one comparisons as back-transformed ratios", HR=2, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
 #Creating final table
 	tabs4x<-data.frame()
 
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		for ( i in 1:dim(tabs3)[1]) {
 			tabs4x[i,1]<-format(round(10^(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
 			tabs4x[i,2]<-format(round(10^(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
 			tabs4x[i,3]<-format(round(10^(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
 		}
 	}
-	if (responseTransform =="Loge") {
+	if (responseTransform =="loge") {
 		for ( i in 1:dim(tabs3)[1]) {
 			tabs4x[i,1]<-format(round(exp(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
 			tabs4x[i,2]<-format(round(exp(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
@@ -2009,7 +2042,7 @@ add<-paste(add, "Benjamini and Hochberg (1995). ", sep="")
 if (allPairwiseTest== "bonferroni" ) {
 add<-paste(add, "Bonferroni (1936). ", sep="")
 } 
-if (allPairwiseTest== "Tukey") {	
+if (allPairwiseTest== "tukey") {	
 add<-paste(add, "Braun (1994). ", sep="")
 } 
 if (allPairwiseTest== "hochberg" ) {
@@ -2022,7 +2055,7 @@ if (allPairwiseTest== "hommel" ) {
 add<-paste(add, "Hommel (1988). ", sep="")
 }
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add<-paste(add, " The response was ", responseTransform, " transformed prior to analysis to stabilise the variance. ", sep="")
 }
 
@@ -2054,7 +2087,7 @@ if (allPairwiseTest== "bonferroni" | backToControlTest=="bonferroni") {
 	HTML("<bf>Bonferroni, C.E. (1936). Teoria statistica delle classi e calcolo delle probabilita. Pubblicazioni del R Istituto Superiore di Scienze Economiche e Commerciali di Firenze, 8, 3-62.",  align="left")
 } 
 
-if (allPairwiseTest== "Tukey") {	
+if (allPairwiseTest== "tukey") {	
 	HTML("<bf>Braun, H.I., ed. (1994). The collected works of John W. Tukey. Vol. VIII: Multiple comparisons:1948-1983. New York: Chapman and Hall.",  align="left")
 } 
 
@@ -2129,7 +2162,7 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Response variable: ", resp, sep=""), align="left")
 	
-	if (responseTransform != "None") {
+	if (responseTransform != "none") {
 		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
 	}
 	
@@ -2147,7 +2180,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Primary factor: ", FirstCatFactor, sep=""), align="left")
 	}
 
-	if (FirstCatFactor != "NULL" && covariateTransform != "None") {
+	if (FirstCatFactor != "NULL" && covariateTransform != "none") {
 		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
 	}
 
@@ -2164,7 +2197,7 @@ if (OutputAnalysisOps == "Y") {
 	
 
 	if (Args[19] != "NULL" && Args[19] != "Unadjusted (LSD)") {
-		HTML(paste("All pairwise comparisons procedure: ", allPairwiseTest, sep=""), align="left")
+		HTML(paste("All pairwise comparisons procedure: ", allPairwiseTestText, sep=""), align="left")
 	}
 
 	if (Args[19] == "Unadjusted (LSD)") {
@@ -2172,7 +2205,7 @@ if (OutputAnalysisOps == "Y") {
 	}
 
 	if (backToControlTest != "NULL" && backToControlTest != "none") {
-		HTML(paste("Comparisons back to control procedure: ", backToControlTest, sep=""), align="left")
+		HTML(paste("Comparisons back to control procedure: ", backToControlTestText, sep=""), align="left")
 	}
 
 	if (backToControlTest == "none") {

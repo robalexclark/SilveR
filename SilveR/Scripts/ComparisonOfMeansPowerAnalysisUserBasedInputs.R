@@ -8,20 +8,20 @@ suppressWarnings(library(R2HTML))
 
 #Copy Args into variables
 Args <- commandArgs(TRUE)
-valueType <- Args[4]
+valueType <- tolower(Args[4])
 meanOrResponse <- Args[5]
-varianceTypeOrTreatment <- Args[6]
+varianceTypeOrTreatment <- tolower(Args[6])
 varianceAmntOrControl <- Args[7]
 sig <- as.numeric(Args[8])
-changesType <- Args[9]
+changesType <- tolower(Args[9])
 changesValue <- Args[10]
-plotSettingsType <- Args[11]
+plotSettingsType <- tolower(Args[11])
 plotSettingsFrom <- as.numeric(Args[12])
 plotSettingsTo <- as.numeric(Args[13])
 graphTitle <- Args[14]
 
 # Reading in dataset or values
-if (valueType=="DatasetValues") {
+if (valueType=="datasetvalues") {
 	#Read in data
 	statdata <- read.csv(Args[3], header=TRUE, sep=",")
 	#STB NOV2015 - Update to dataset print
@@ -37,7 +37,7 @@ if (valueType=="DatasetValues") {
 	}
 	varianceType <- varianceTypeOrTreatment
 	
-	if(varianceType=="Variance") {
+	if(varianceType=="variance") {
 		SD <- sqrt(as.numeric(varianceAmntOrControl))
 	} else {
 		SD <- as.numeric(varianceAmntOrControl)
@@ -74,9 +74,9 @@ for(i in 1:length(tempChanges[[1]])) { expectedChanges [length(expectedChanges )
 expectedChanges<-sort(expectedChanges)
 
 #Categorised factors
-if(plotSettingsType=="PowerAxis") {
-	if(valueType=="DatasetValues") {
-		if(changesType == "Absolute") {
+if(plotSettingsType=="poweraxis") {
+	if(valueType=="datasetvalues") {
+		if(changesType == "absolute") {
 			if (treatment== "NULL") {
 				powerFrom <- plotSettingsFrom ;
 				powerTo <- plotSettingsTo ;
@@ -95,7 +95,7 @@ if(plotSettingsType=="PowerAxis") {
 				sampleSizeTo <- ceiling(as.numeric(power.t.test(n=NULL,delta=expectedChanges[1], power=((powerTo/100)), sd=standev,sig.level=sig)[1]))
 			}
 		}
-		else if (changesType == "Percent") {
+		else if (changesType == "percent") {
 			predmeans<- unlist(lapply(split(eval(parse(text = paste("statdata$", response))),eval(parse(text= paste("statdata$", treatment)))), mean))
 			contrmean<-predmeans[control]
 			treatTemp<-as.factor(eval(parse(text = paste("statdata$", treatment))))
@@ -111,13 +111,13 @@ if(plotSettingsType=="PowerAxis") {
 			sampleSizeFrom <- floor(as.numeric(power.t.test(delta=temp11[length(temp11)], power=((powerFrom/100)),sd=standev, sig.level=sig)[1]))
 			sampleSizeTo <- ceiling(as.numeric(power.t.test(n=NULL,delta=temp11[1], power=((powerTo/100)), sd=standev,sig.level=sig)[1]))
 		}
-	} else if(valueType=="UserValues") {
-		if(changesType == "Absolute") {
+	} else if(valueType=="uservalues") {
+		if(changesType == "absolute") {
 			powerFrom <- plotSettingsFrom ;
 			powerTo <- plotSettingsTo ;
 			sampleSizeFrom <- floor(as.numeric(power.t.test(delta=expectedChanges[length(expectedChanges)],power=((powerFrom/100)),sd=SD, sig.level=sig)[1]))
 			sampleSizeTo <- ceiling(as.numeric(power.t.test(n=NULL,delta=expectedChanges[1],power=((powerTo/100)), sd=SD,sig.level=sig)[1]))
-		}  else if (changesType == "Percent") {
+		}  else if (changesType == "percent") {
 			groupMean <- as.numeric(meanOrResponse)
 			meanvec<-rep(groupMean,length(expectedChanges))
 			temp10<-expectedChanges/100
@@ -175,7 +175,7 @@ powercurvesactual<-function(standev, diffs) {
 	legtitle2<-rep(legtitle,length(diffs))
 	legtitle3<-paste(diffs,legtitle2)
 
-	if(plotSettingsType=="PowerAxis") {
+	if(plotSettingsType=="poweraxis") {
 		sample<-c(sampleSizeFrom:sampleSizeTo)
 	} else {
 		sample <- seq(sampleSizeFrom,sampleSizeTo, 0.01)
@@ -257,7 +257,7 @@ powercurvespercentage<-function(mean,standev,pcchange) {
 	legtitle2<-rep(legtitle,length(temp11))
 	legtitle3<-paste(pcchange,legtitle2)
 
-	if(plotSettingsType=="PowerAxis") {
+	if(plotSettingsType=="poweraxis") {
 		sample<-c(sampleSizeFrom:sampleSizeTo)
 	} else {
 		sample <- seq(sampleSizeFrom,sampleSizeTo, 0.01)
@@ -356,14 +356,14 @@ powercurvespercentageANOVA<-function(resp, treat, ctrl, pcchange) {
 #===================================================================================================================
 #Geberating the power curves
 #===================================================================================================================
-if (valueType == "UserValues") {
-	if(changesType == "Absolute") {
+if (valueType == "uservalues") {
+	if(changesType == "absolute") {
 		powercurvesactual(SD, expectedChanges)
-	} else if (changesType == "Percent") {
+	} else if (changesType == "percent") {
 		powercurvespercentage(groupMean, SD, expectedChanges) 
 	}
-} else if (valueType == "DatasetValues") {
-	if(changesType == "Absolute") {
+} else if (valueType == "datasetvalues") {
+	if(changesType == "absolute") {
 		if(treatment== "NULL") {
 			powercurvesactualANOVA2(eval(parse(text = paste("statdata$", response))), expectedChanges)
 		} else {
@@ -371,7 +371,7 @@ if (valueType == "UserValues") {
 			statdata<-cbind(statdata,treatTemp)
 			powercurvesactualANOVA(eval(parse(text = paste("statdata$", response))), statdata$treatTemp, expectedChanges)
 		}
-	} else if (changesType == "Percent") {
+	} else if (changesType == "percent") {
 		treatTemp<-as.factor(eval(parse(text = paste("statdata$", treatment))))
 		statdata<-cbind(statdata,treatTemp)
 		powercurvespercentageANOVA(eval(parse(text = paste("statdata$", response))), statdata$treatTemp, eval(control), expectedChanges)
@@ -384,10 +384,10 @@ if (valueType == "UserValues") {
 HTML.title("Selected results", HR=2, align="left")
 
 # Text if Power is selected
-if(plotSettingsType=="PowerAxis") {
+if(plotSettingsType=="poweraxis") {
 	#Selected results for user defined parameters
-	if (valueType == "UserValues") {
-		if(changesType == "Absolute") {
+	if (valueType == "uservalues") {
+		if(changesType == "absolute") {
 			sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 			for (j in 1:1) {
 				for(i in 1:length(sample))  {
@@ -398,7 +398,7 @@ if(plotSettingsType=="PowerAxis") {
 				}
 			}
 		}
-		if(changesType == "Percent") {
+		if(changesType == "percent") {
 			sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 			groupMean <- as.numeric(meanOrResponse)
 			meanvec<-rep(groupMean,length(expectedChanges))
@@ -413,8 +413,8 @@ if(plotSettingsType=="PowerAxis") {
 				}
 			}
 		}
-	} else if (valueType == "DatasetValues") {
-		if(changesType == "Absolute") {
+	} else if (valueType == "datasetvalues") {
+		if(changesType == "absolute") {
 			sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 			if(treatment== "NULL") {
 				testANOVA<-aov(eval(parse(text = paste("statdata$", response, "~1"))))
@@ -434,7 +434,7 @@ if(plotSettingsType=="PowerAxis") {
 				}
 			}
 		}
-		if(changesType == "Percent") {
+		if(changesType == "percent") {
 			sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 			treatTemp<-as.factor(eval(parse(text = paste("statdata$", treatment))))
 			statdata<-cbind(statdata,treatTemp)
@@ -458,8 +458,8 @@ if(plotSettingsType=="PowerAxis") {
 	}
 } else	{
 	#Selected results for user defined parameters
-	if (valueType == "UserValues") {
-		if(changesType == "Absolute") {
+	if (valueType == "uservalues") {
+		if(changesType == "absolute") {
 			sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 
 			for (j in 1:1) {
@@ -471,7 +471,7 @@ if(plotSettingsType=="PowerAxis") {
 					}
 				}
 			}
-		if(changesType == "Percent") {
+		if(changesType == "percent") {
 			sample<-c(plotSettingsFrom, floor((plotSettingsFrom+plotSettingsTo)/2), plotSettingsTo)
 			groupMean <- as.numeric(meanOrResponse)
 			meanvec<-rep(groupMean,length(expectedChanges))
@@ -486,8 +486,8 @@ if(plotSettingsType=="PowerAxis") {
 					}
 				}
 			}
-		} else if (valueType == "DatasetValues") {
-		if(changesType == "Absolute") {
+		} else if (valueType == "datasetvalues") {
+		if(changesType == "absolute") {
 			sample<-c(plotSettingsFrom, floor((plotSettingsFrom+plotSettingsTo)/2), plotSettingsTo)
 			if(treatment== "NULL") {
 				testANOVA<-aov(eval(parse(text = paste("statdata$", response, "~1"))))
@@ -507,7 +507,7 @@ if(plotSettingsType=="PowerAxis") {
 					}
 				}
 			}
-		if(changesType == "Percent") {
+		if(changesType == "percent") {
 			sample<-c(plotSettingsFrom, floor((plotSettingsFrom+plotSettingsTo)/2), plotSettingsTo)
 			treatTemp<-as.factor(eval(parse(text = paste("statdata$", treatment))))
 			statdata<-cbind(statdata,treatTemp)		
@@ -565,7 +565,7 @@ HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(
 #Show dataset
 #===================================================================================================================
 if (showdataset == "Y") {
-    if (valueType == "DatasetValues") {
+    if (valueType == "datasetvalues") {
 	    observ <- data.frame(c(1:dim(statdata_print)[1]))
 	    colnames(observ) <- c("Observation")
 	    statdata_print2 <- cbind(observ, statdata_print)
@@ -580,7 +580,7 @@ if (showdataset == "Y") {
 #===================================================================================================================
 if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
-	if (valueType == "DatasetValues") { 
+	if (valueType == "datasetvalues") { 
 		HTML(paste("Comparison of Means Power Analysis module used: Dataset based inputs"),  align="left")
 		HTML(paste("Response variable: ", meanOrResponse, sep=""),  align="left")
 		HTML(paste("Treatment factor: ", varianceTypeOrTreatment, sep=""),  align="left")
@@ -589,7 +589,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Comparison of Means Power Analysis module used: User based inputs"),  align="left")
 		HTML(paste("Group mean: ", meanOrResponse, sep=""),  align="left")
 
-		if (varianceTypeOrTreatment == "StandardDeviation") {
+		if (varianceTypeOrTreatment == "standarddeviation") {
 			HTML("Variability estimate entered as: Standard deviation",  align="left")
 			HTML(paste("Standard deviation estimate: ", varianceAmntOrControl, sep=""),  align="left")
 		} else {
@@ -602,10 +602,10 @@ if (OutputAnalysisOps == "Y") {
 	HTML(paste("Type of change investigated: ", changesType, sep=""), align="left")
 	HTML(paste("Change values investigated: ", changesValue, sep=""), align="left")
 
-	if (plotSettingsType == "PowerAxis")	{
-		HTML(paste("Power curve plots controlled by power range:"), align="left")
+	if (plotSettingsType == "poweraxis")	{
+		HTML(paste("Power curve plots controlled by: power range"), align="left")
 		} else {
-		HTML(paste("Power curve plots controlled by sample size range:"), align="left")
+		HTML(paste("Power curve plots controlled by: sample size range"), align="left")
 		}
 	HTML(paste("Plot setting from: ", plotSettingsFrom, sep=""), align="left")
 	HTML(paste("Plot setting to: ", plotSettingsTo, sep=""), align="left")

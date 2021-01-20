@@ -17,21 +17,21 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
 responses_IVS_ <- Args[4]
-responseTransform <- Args[5]
+responseTransform <- tolower(Args[5])
 catPred_ <- Args[6] 
 contPred_ <-Args[7]
 caseid_IVS_ <- Args[8]
-analysisType <- Args[9]
+analysisType <- tolower(Args[9])
 
 noOfClusters <- Args[10]
-distanceMethod <- Args[11]
-agglomerationMethod <- Args[12]
+distanceMethod <- tolower(Args[11])
+agglomerationMethod <- tolower(Args[12])
 plotLabels <- Args[13]
 
 noOfComponents <- Args[14]
 
-PCA_center <- Args[15]
-PCA_scale <- Args[16]
+PCA_center <- tolower(Args[15])
+PCA_scale <- tolower(Args[16])
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -118,25 +118,29 @@ rownames(Responses_IVS_) <- CaseIDs_IVS_
 # Principal components analysis
 #===================================================================================================================
 #===================================================================================================================
-if (analysisType == "PrincipalComponentsAnalysis" ) {
+if (analysisType == "principalcomponentsanalysis" ) {
 
 #PCA options
-if (PCA_center == "Centered_at_zero") { 
+if (PCA_center == "centered_at_zero") { 
+	PCA_center2 <- "Centered at zero"
 	PCA_c <- TRUE
 	PCA_c_text <- "have been centered at zero"
 }
 
-if (PCA_center == "Not_centered") {
+if (PCA_center == "not_centered") {
+	PCA_center2 <- "Not centered"
 	PCA_c <- FALSE
 	PCA_c_text <- "are not centered"
 }
 
-if (PCA_scale == "Unit_variance") { 
+if (PCA_scale == "unit_variance") { 
+	PCA_scale2 <- "Unit variance"
 	PCA_s <- TRUE
 	PCA_s_text <- "are scaled to have unit variance"
 }
 
-if (PCA_scale == "No_scaling") {
+if (PCA_scale == "no_scaling") {
+	PCA_scale2 <- "No scaling"
 	PCA_s <- FALSE
 	PCA_s_text <- "are not scaled"
 }
@@ -156,7 +160,7 @@ if (Betawarn == "Y") {
 HTML.title("Description", HR=2, align="left")
 description <- paste("The following responses are included in the PCA analysis: ", responses_IVS_ , ". ", sep = "") 
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	description<-paste(description, c("The responses have been "), responseTransform, " transformed prior to analysis. ", sep="")
 }
 
@@ -339,7 +343,7 @@ if (pdfout=="Y") {
 # Cluster analysis
 #===================================================================================================================
 #===================================================================================================================
-if (analysisType == "ClusterAnalysis" )
+if (analysisType == "clusteranalysis" )
 {
 
 #===================================================================================================================
@@ -349,38 +353,48 @@ if (analysisType == "ClusterAnalysis" )
 no_clust <- as.numeric(noOfClusters)
 
 #Distance method
-if (distanceMethod == "Euclidean") {
-		clus_dist <- "eu"
-	}
-if (distanceMethod == "Maximum") {
-		clus_dist <- "maximum"
-	}
-if (distanceMethod == "Manhattan") {
-		clus_dist <- "manhattan"
-	}
-if (distanceMethod == "Canberra") {
-		clus_dist <- "canberra"
-	}
-if (distanceMethod == "Binary") {
-		clus_dist <- "binary"
-	}
-if (distanceMethod == "Minkowski") {
-		clus_dist <- "minkowski"
-	}
+if (distanceMethod == "euclidean") {
+	distanceMethod2 <- "Euclidean"
+	clus_dist <- "eu"
+}
+if (distanceMethod == "maximum") {
+	distanceMethod2 <- "Maximum"
+	clus_dist <- "maximum"
+}
+if (distanceMethod == "manhattan") {
+	distanceMethod2 <- "Manhattan"
+	clus_dist <- "manhattan"
+}
+if (distanceMethod == "canberra") {
+	distanceMethod2 <- "Canberra"
+	clus_dist <- "canberra"
+}
+if (distanceMethod == "binary") {
+	distanceMethod2 <- "Binary"
+	clus_dist <- "binary"
+}
+if (distanceMethod == "minkowski") {
+	distanceMethod2 <- "Minkowski"
+	clus_dist <- "minkowski"
+}
 
 #Agglomeration method
-if (agglomerationMethod == "Ward.d2") {
-		clus_meth <- "ward.D2"
-	}
-if (agglomerationMethod == "Single") {
-		clus_meth <- "single"
-	}
-if (agglomerationMethod == "Complete") {
-		clus_meth <- "complete"
-	}
-if (agglomerationMethod == "Average") {
-		clus_meth <- "average"
-	}
+if (agglomerationMethod == "ward.d2") {
+	agglomerationMethod2 <- "Ward d2"
+	clus_meth <- "ward.D2"
+}
+if (agglomerationMethod == "single") {
+	agglomerationMethod2 <- "Single"
+	clus_meth <- "single"
+}
+if (agglomerationMethod == "complete") {
+	agglomerationMethod2 <- "Complete"
+	clus_meth <- "complete"
+}
+if (agglomerationMethod == "average") {
+	agglomerationMethod2 <- "Average"
+	clus_meth <- "average"
+}
 
 #Plot labels
 if (plotLabels == "Case ID") {
@@ -407,7 +421,7 @@ HTML("Warning, as the results of this analysis have not been independently verif
 
 #Description
 HTML.title("Description", HR=2, align="left")
-title <-paste("The cluster analysis has been performed using the ", agglomerationMethod , " clustering agglomeration method. Distances between the individual points are calculated using the ", distanceMethod , " distance measure. The analysis has been set-up to generate ", no_clust, " clusters.", sep = "")
+title <-paste("The cluster analysis has been performed using the ", agglomerationMethod2 , " clustering agglomeration method. Distances between the individual points are calculated using the ", distanceMethod2 , " distance measure. The analysis has been set-up to generate ", no_clust, " clusters.", sep = "")
 HTML(title, align="left")
 
 description <- paste("The following responses are included in the analysis: ", responses_IVS_, ". ", sep = "")
@@ -726,7 +740,7 @@ for (d in 1:resplength) {
 #Linear Disriminant Analysis
 #=================================================================================================================
 #=================================================================================================================
-if (analysisType == "LinearDiscriminantAnalysis" )
+if (analysisType == "lineardiscriminantanalysis" )
 {
 
 #===================================================================================================================
@@ -1012,7 +1026,7 @@ HTML("This table summarises the cases that are classified correctly, based on th
 #Partial Least Squares
 #===================================================================================================================
 #===================================================================================================================
-if (analysisType == "PartialLeastSquares" )
+if (analysisType == "partialleastsquares" )
 {
 usercomp <- as.numeric(noOfComponents)
 
@@ -1439,12 +1453,12 @@ HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(
 #extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
 HTML(paste(capture.output(print(citation("mvtnorm"),bibtex=F))[4], capture.output(print(citation("mvtnorm"),bibtex=F))[5], capture.output(print(citation("mvtnorm"),bibtex=F))[6], capture.output(print(citation("mvtnorm"),bibtex=F))[7], sep = ""),  align="left")
 
-if (analysisType == "ClusterAnalysis" ) {
+if (analysisType == "clusteranalysis" ) {
 	HTML(paste(capture.output(print(citation("cluster"),bibtex=F))[4], capture.output(print(citation("cluster"),bibtex=F))[5], capture.output(print(citation("cluster"),bibtex=F))[6], sep = ""),  align="left")
 	HTML(paste(capture.output(print(citation("ggdendro"),bibtex=F))[4], capture.output(print(citation("ggdendro"),bibtex=F))[5], capture.output(print(citation("ggdendro"),bibtex=F))[6], sep = ""),  align="left")
 }
 	
-if (analysisType == "PartialLeastSquares" ) {
+if (analysisType == "partialleastsquares" ) {
 	HTML(paste(capture.output(print(citation("mixOmics"),bibtex=F))[4], capture.output(print(citation("mixOmics"),bibtex=F))[5], capture.output(print(citation("mixOmics"),bibtex=F))[6], sep = ""),  align="left")
 }
 
@@ -1480,7 +1494,7 @@ if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
 
 	HTML(paste("Response variables: ", responses_IVS_, sep=""), align="left")
-	if (responseTransform != "None") {
+	if (responseTransform != "none") {
 		HTML(paste("Response variables transformation: ", responseTransform, sep=""), align="left")
 	}
 
@@ -1496,33 +1510,47 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Case ID: ", caseid_IVS_, sep=""), align="left")
 	}
 
-	HTML(paste("Analysis performed: ", analysisType, sep=""), align="left")
-
-	if (PCA_center != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
-		HTML(paste("Response centering: ", PCA_center, sep=""), align="left")
+	if (analysisType == "principalcomponentsanalysis") {	
+		HTML(paste("Analysis performed: Principal Components analysis"), align="left")
 	}
 
-	if (PCA_scale != "NULL" && analysisType == "PrincipalComponentsAnalysis") {
-		HTML(paste("Response scale: ", PCA_scale, sep=""), align="left")
+	if (analysisType == "clusteranalysis") {	
+		HTML(paste("Analysis performed: Cluster analysis"), align="left")
 	}
 
-	if (noOfClusters != "NULL" && analysisType == "ClusterAnalysis") {
+	if (analysisType == "lineardiscriminantanalysis") {	
+		HTML(paste("Analysis performed: Linear discriminant analysis"), align="left")
+	}
+
+#	if (analysisType == "partialleastsquares") {	
+#		HTML(paste("Analysis performed: Partial least squares analysis"), align="left")
+#	}
+
+	if (PCA_center != "NULL" && analysisType == "principalcomponentsanalysis") {
+		HTML(paste("Response centering: ", PCA_center2, sep=""), align="left")
+	}
+
+	if (PCA_scale != "NULL" && analysisType == "principalcomponentsanalysis") {
+		HTML(paste("Response scale: ", PCA_scale2, sep=""), align="left")
+	}
+
+	if (noOfClusters != "NULL" && analysisType == "clusteranalysis") {
 		HTML(paste("Number of clusters: ", noOfClusters, sep=""), align="left")
 	}
 
-	if (distanceMethod != "NULL" && analysisType == "ClusterAnalysis") {
-		HTML(paste("Distance method: ", distanceMethod, sep=""), align="left")
+	if (distanceMethod != "NULL" && analysisType == "clusteranalysis") {
+		HTML(paste("Distance method: ", distanceMethod2, sep=""), align="left")
 	}
 
-	if (agglomerationMethod != "NULL" && analysisType == "ClusterAnalysis") {
-		HTML(paste("Agglomeration method: ", agglomerationMethod, sep=""), align="left")
+	if (agglomerationMethod != "NULL" && analysisType == "clusteranalysis") {
+		HTML(paste("Agglomeration method: ", agglomerationMethod2, sep=""), align="left")
 	}
 
 	if (plotLabels != "NULL") {
 		HTML(paste("Plot labels: ", plotLabels, sep=""), align="left")
 	}
 
-	#if (noOfComponents != "NULL" && analysisType == "PartialLeastSquares") {
+	#if (noOfComponents != "NULL" && analysisType == "partialleastsquares") {
 	#	HTML(paste("Number of components: ", noOfComponents, sep=""), align="left")
 	#}
 }

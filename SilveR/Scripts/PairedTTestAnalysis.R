@@ -19,9 +19,9 @@ model <- as.formula(Args[4])
 timeFactor <- Args[5]
 subjectFactor <- Args[6]
 covariatelist <- Args[7]
-covariance <- Args[8]
-responseTransform <- Args[9]
-covariateTransform <- Args[10]
+covariance <- tolower(Args[8])
+responseTransform <- tolower(Args[9])
+covariateTransform <- tolower(Args[10])
 blocklist <- Args[11]
 showANOVA <- Args[12]
 showPRPlot <- Args[13]
@@ -187,25 +187,25 @@ if(covariatelist !="NULL") {
 }
 HTML(add, align="left")
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
 	HTML(add2, align="left")
 }
-if (covariatelist !="NULL" &&  covariateTransform != "None") {
+if (covariatelist !="NULL" &&  covariateTransform != "none") {
 	add3<-paste(c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	HTML(add3, align="left")
 }
 
-if(covariance=="Compound Symmetric" && dimfact >2) {
+if(covariance=="compound symmetric" && dimfact >2) {
 	add4<-paste("The repeated measures mixed model analysis is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
 	HTML(add4, align="left")
 }
-if(covariance=="Autoregressive(1)" && dimfact >2) {
+if(covariance=="autoregressive(1)" && dimfact >2) {
 	add4<-paste("The repeated measures mixed model analysis is using the first order autoregressive covariance structure to model the within-subject correlations. When using this structure you are assuming the levels of ", timeFactor, " are equally spaced and also that the variability of responses are the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
 	HTML(add4, align="left")
 	HTML("Warning: Make sure that the levels of the treatment factor occur in the correct order in the least square (predicted) means table. If they do not then this analysis may not be valid. The autoregressive covariance structure assumes that the order of the treatment factor levels is as defined in the least square (predicted) means table.", align="left")
 }
-if(covariance=="Unstructured" && dimfact >2) {
+if(covariance=="unstructured" && dimfact >2) {
 	HTML("The repeated measures mixed model analysis is using the unstructured covariance structure to model the within-subject correlations. When using this structure you are estimating many parameters. If the numbers of subjects used is small then these estimates may be unreliable, see Pinherio and Bates (2002).", align="left")
 }
 
@@ -213,7 +213,7 @@ if(covariance=="Unstructured" && dimfact >2) {
 # One-categorised case profiles plot
 #===================================================================================================================
 title<-c("Case profiles plot of the observed data")
-if(responseTransform != "None") {
+if(responseTransform != "none") {
 	title<-paste(title, " (on the ", responseTransform, " scale)", sep="")
 }
 HTML.title(title, HR=2, align="left")
@@ -356,7 +356,7 @@ if(covariatelist != "NULL") {
 	} else {
 		title<-c("Plot of the response vs. the covariates")
 	}
-	if(responseTransform != "None" || covariateTransform != "None") {
+	if(responseTransform != "none" || covariateTransform != "none") {
 		title<-paste(title, " (on the transformed scale)", sep="")
 	} 
 	title<-paste(title, ", categorised by the primary factor", sep="")
@@ -456,13 +456,13 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 	} else {
 
 		#Creating the analysis including covariates
-		if(covariance=="Compound Symmetric") {
+		if(covariance=="compound symmetric") {
 			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
 		}
-		if(covariance=="Autoregressive(1)") {
+		if(covariance=="autoregressive(1)") {
 			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
 		}
-		if(covariance=="Unstructured") {
+		if(covariance=="unstructured") {
 			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 		}
 
@@ -524,13 +524,13 @@ if (df.residual(threewayfullxxx) < 1) {
 	quit()
 } 
 
-if(covariance=="Compound Symmetric") {
+if(covariance=="compound symmetric") {
 	threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
 }
-if(covariance=="Autoregressive(1)") {
+if(covariance=="autoregressive(1)") {
 	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.4, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
 }
-if(covariance=="Unstructured") {
+if(covariance=="unstructured") {
 	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 }
 
@@ -893,19 +893,19 @@ if(showLSMeans=="Y") {
 #===================================================================================================================
 #Back transformed geometric means plot 
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 	CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 	HTML.title(CITitle, HR=2, align="left")
 	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 
-	if (responseTransform =="Log10") {
+	if (responseTransform =="log10") {
 		LSMx$Mean<-10^(LSMx$emmean)
 		LSMx$Lower=10^(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
 		LSMx$Upper=10^(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
 		LSMx$Group_IVSq_ <- LSMx$Timezzz
 	}
 
-	if (responseTransform =="Loge") {
+	if (responseTransform =="loge") {
 		LSMx$Mean<-exp(LSMx$emmean)
 		LSMx$Lower=exp(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
 		LSMx$Upper=exp(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
@@ -953,7 +953,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||resp
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 	HTML.title(CITitle2, HR=2, align="left")
 
@@ -1025,17 +1025,17 @@ if (showComps == "Y") {
 	dendf<-ivsanova[dim(ivsanova)[1],3]
 
 	if(dimfact > 1) {
-		if(covariance=="Compound Symmetric") {	
+		if(covariance=="compound symmetric") {	
 			test<-lme(model, random=~1|subjectzzzzzz,correlation=corCompSymm(), data=statdata, na.action = (na.omit), method = "REML")
 			mult<-glht(test, linfct=mcp(Timezzz="Tukey"), df=dendf)
 			multci<-confint(mult, level=sig, calpha = univariate_calpha())
 		}
-		if(covariance=="Autoregressive(1)") {	
+		if(covariance=="autoregressive(1)") {	
 			test<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(form=~as.numeric(Timezzz)|subjectzzzzzz), data=statdata, na.action = (na.omit), method = "REML")
 			mult<-glht(test, linfct=mcp(Timezzz="Tukey"), df=dendf)
 			multci<-confint(mult, level=sig, calpha = univariate_calpha())
 		}
-		if(covariance=="Unstructured") {	
+		if(covariance=="unstructured") {	
 			test<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 			mult<-glht(test, linfct=mcp(Timezzz="Tukey"), df=dendf)
 			multci<-confint(mult, level=sig, calpha = univariate_calpha())
@@ -1155,7 +1155,7 @@ if (showComps == "Y") {
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-	if(GeomDisplay == "Y" && (responseTransform =="Log10"||responseTransform =="Loge")) {
+	if(GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 	
 		HTML.title("All pairwise comparisons, as back-transformed ratios", HR=2, align="left")
 		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
@@ -1163,7 +1163,7 @@ if (showComps == "Y") {
 		tabs<-matrix(nrow=tablen, ncol=3)
 
 		if(dimfact > 1) {
-			if (responseTransform =="Log10") {
+			if (responseTransform =="log10") {
 				for (i in 1:tablen) {
 					tabs[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
 					tabs[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
@@ -1171,7 +1171,7 @@ if (showComps == "Y") {
 				}
 			}
 
-			if (responseTransform =="Loge") {
+			if (responseTransform =="loge") {
 				for (i in 1:tablen) {
 					tabs[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
 					tabs[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
@@ -1255,15 +1255,15 @@ if (dimfact > 2) {
 	add<-paste(add, "This was followed by planned comparisons on the predicted means to compare the levels of the ", timeFactor, ". ",  sep="")
 }
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add<-paste(add, " The response was ", responseTransform, " transformed prior to analysis to stabilise the variance.", sep="")
 }
 
-if (covariateTransform != "None" && responseTransform != "None") {
+if (covariateTransform != "none" && responseTransform != "none") {
 	add<-paste(add, " The covariate was also ", covariateTransform, " transformed. ", sep="")
 }
 
-if (responseTransform == "None" && covariateTransform != "None") {
+if (responseTransform == "none" && covariateTransform != "none") {
 	add<-paste(add, " The covariate was ", covariateTransform , " transformed prior to analysis.",sep="")
 }
 
@@ -1274,16 +1274,16 @@ if (dimfact ==2) {
 }
 
 if(dimfact > 2) {
-	if(covariance=="Compound Symmetric")
+	if(covariance=="compound symmetric")
 	{
 		add2<-paste("The compound symmetric covariance structure was used to model the within-subject correlations. When using this structure we assumed that the variability of the responses was the same at each level of ", timeFactor, " and the correlation between responses from any pair of levels of ", timeFactor, "  is the same." , sep="")
 		HTML(add2, align="left")
 	}
-	if(covariance=="Autoregressive(1)") {
+	if(covariance=="autoregressive(1)") {
 		add2<-paste("The first order autoregressive covariance structure was used to model the within-subject correlations. When using this structure we assumed that the variability of the responses was the same at each level of ", timeFactor, ". We also assumed that the correlation between responses from any pair of levels of ", timeFactor, " was related to the distance between them.",  sep="")
 		HTML(add2, align="left")
 	}
-	if(covariance=="Unstructured") {
+	if(covariance=="unstructured") {
 		add2<-paste("The unstructured covariance structure allowed the variability of the responses to be different, depending on the level of ", timeFactor, ". This structure also allowed the correlation between responses from any pair of levels of ", timeFactor,  " to be different. While this approach is the most general it should be used with care when there are few subjects, as many parameters need to be estimated. These estimates may not be very reliable.", sep="")
 		HTML(add2, align="left")
 	}
@@ -1363,7 +1363,7 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Response variable: ", resp, sep=""), align="left")
 
-	if (responseTransform != "None") {
+	if (responseTransform != "none") {
 		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
 	}
 
@@ -1379,7 +1379,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Covariate(s): ", covariatelist, sep=""), align="left")
 	}
 
-	if (covariateTransform != "None" && covariatelist != "NULL") {
+	if (covariateTransform != "none" && covariatelist != "NULL") {
 		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
 	}
 

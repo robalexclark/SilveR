@@ -12,7 +12,7 @@ Args <- commandArgs(TRUE)
 #Read in arguments
 statdata <- read.csv(Args[3], header = TRUE, sep = ",")
 
-DataFormatType <- Args[4]
+DataFormatType <- tolower(Args[4])
 Response <- Args[5]
 SubjectFactor <- Args[6]
 Time <- Args[7]
@@ -22,7 +22,7 @@ NumericalTimepoints <- Args[9]
 
 includeAllVariables <- Args[10]
 selectedVariables <- Args[11]
-aucOutputType <- Args[12]
+aucOutputType <- tolower(Args[12])
 
 #Print args
 if (Diplayargs == "Y"){
@@ -55,7 +55,7 @@ if (selectedVariables != "NULL") {
 }
 
 #Sort out timepoint list
-if (DataFormatType == "SingleMeasuresFormat") {
+if (DataFormatType == "singlemeasuresformat") {
 	times <-strsplit(NumericalTimepoints, ",")
 	timeslistx <- c("")
 	for(i in 1:length(times[[1]]))  { 
@@ -66,7 +66,7 @@ if (DataFormatType == "SingleMeasuresFormat") {
 }
 
 #Sort out variables list
-if (DataFormatType == "SingleMeasuresFormat") {
+if (DataFormatType == "singlemeasuresformat") {
 	resps <-strsplit(ResponseList, ",")
 	respslistx <- c("")
 	for(i in 1:length(resps[[1]]))  { 
@@ -95,14 +95,14 @@ if (Betawarn == "Y") {
 #Align datasets
 #===================================================================================================================
 #===================================================================================================================
-if (DataFormatType == "RepeatedMeasuresFormat") {
+if (DataFormatType == "repeatedmeasuresformat") {
 	finaldataset<-statdata
 	finaldataset$SubjectFactorxxx<-eval(parse(text = paste("finaldataset$",SubjectFactor)))
 	finaldataset$Timexxx<-eval(parse(text = paste("finaldataset$",Time)))
 	finaldataset$Responsexxx<-eval(parse(text = paste("finaldataset$",Response)))
 }
 
-if (DataFormatType == "SingleMeasuresFormat") {
+if (DataFormatType == "singlemeasuresformat") {
 	tempdataset<-statdata
 	tempdataset$SubjectFactorxxx<- c(1:dim(tempdataset)[1])
 
@@ -130,7 +130,7 @@ for (i in 1:index) {
 	#Break down dataset into individual animals
 	sub<-subset(finaldataset, finaldataset$SubjectFactorxxx == unique(levels(as.factor(finaldataset$SubjectFactorxxx)))[i])
 
-	if (aucOutputType!= "AUCFromTime0") {
+	if (aucOutputType!= "aucfromtime0") {
 		if(dim(sub)[1] == 1) {
 	  		HTML.title("Warning", HR=2, align="left")
 			Desc2 = c("For at least one of the subjects there is only a single observation present and hence the AUC cannot be calculated. Please remove these subjects from the dataset prior to calculating the AUC.")
@@ -138,7 +138,7 @@ for (i in 1:index) {
 			quit()
 		}
 	}
-	if (aucOutputType== "AUCFromTime0") {
+	if (aucOutputType== "aucfromtime0") {
 		if(dim(sub)[1] == 0) {
 	  		HTML.title("Warning", HR=2, align="left")
 			Desc2 = c("For at least one of the subjects there is only a single observation present and hence the AUC cannot be calculated. Please remove these subjects from the dataset prior to calculating the AUC.")
@@ -154,28 +154,28 @@ for (i in 1:index) {
 Title2 <-c("Input variables")
 HTML.title(Title2, HR = 1, align = "left")
 
-if (DataFormatType == "RepeatedMeasuresFormat") {
+if (DataFormatType == "repeatedmeasuresformat") {
 	Desc1 = paste("The responses are stored in the variable ", Response, ", the subjects are stored in the variable ", SubjectFactor, " and the time points are stored in variable ", Time , ".", sep = "")
 	HTML(Desc1, align="left")
 }
 
-if (DataFormatType == "SingleMeasuresFormat") {
+if (DataFormatType == "singlemeasuresformat") {
 	Desc1 = paste("The responses are stored in variables ", ResponseList, " and time points are ", NumericalTimepoints , ".", sep = "")
 	HTML(Desc1, align="left")
 }
 
 #Time for 0
-if (aucOutputType== "AUCFromTime0") {
+if (aucOutputType== "aucfromtime0") {
 	Desc2 = c("The area under curves (AUC) have been calculated assuming that the time course starts at 0.")
 	HTML(Desc2, align="left")
 }
 #AUC from initial timepoint (not centered at 0)
-if (aucOutputType== "AUCFromInitialTimepoint") {
+if (aucOutputType== "aucfrominitialtimepoint") {
 	Desc2 = c("The area under curves (AUC) have been calculated assuming that the time course starts from the initial timepoint for each individual.")
 	HTML(Desc2, align="left")
 }
 #Change from baseline AUC
-if (aucOutputType== "AUCForChangeFromBaseline") {
+if (aucOutputType== "aucforchangefrombaseline") {
 	Desc2 = c("The area under curves (AUC) have been calculated using the change from baseline responses.")
 	HTML(Desc2, align="left")
 }
@@ -213,7 +213,7 @@ for (i in 1:index) {
 	sub$Response_Adjxxx = sub$Responsexxx
 
 	#AUC from timepoint 0
-	if (aucOutputType== "AUCFromTime0") {
+	if (aucOutputType== "aucfromtime0") {
 		temp <- sub[1:1,]
 		temp$Response_Adjxxx <- 0
 		temp$Time_Adjxxx <- 0
@@ -221,12 +221,12 @@ for (i in 1:index) {
 	}
 
 	#AUC from initial timepoint (not centered at 0)
-	if (aucOutputType== "AUCFromInitialTimepoint") {
+	if (aucOutputType== "aucfrominitialtimepoint") {
 		sub$Time_Adjxxx = sub$Time_Adjxxx-min(sub$Time_Adjxxx, na.rm=TRUE)
 	}
 
 	#Change from baseline AUC
-	if (aucOutputType== "AUCForChangeFromBaseline") {
+	if (aucOutputType== "aucforchangefrombaseline") {
 		sub$Time_Adjxxx = sub$Time_Adjxxx-min(sub$Time_Adjxxx, na.rm=TRUE)
 		minresp <- sub$Responsexxx[1]
 		sub$Response_Adjxxx = sub$Responsexxx - minresp
@@ -271,7 +271,7 @@ Animal_IVS<- "SubjectFactorxxx"
 	
 
 #Adding in the 0 timepoint
-if (aucOutputType== "AUCFromTime0") {
+if (aucOutputType== "aucfromtime0") {
 	for (i in 1:index) {
 		temp <- graphdata[1:1,]
 		temp$Subject_IVS <- levels(as.factor(graphdata$Subject_IVS))[i]
@@ -283,7 +283,7 @@ if (aucOutputType== "AUCFromTime0") {
 }
 
 #Change from baseline response
-if (aucOutputType== "AUCForChangeFromBaseline") {
+if (aucOutputType== "aucforchangefrombaseline") {
 	graphdata2<-data.frame(matrix(nrow=1,ncol=dim(graphdata)[2]))
 	colnames(graphdata2)<-colnames(graphdata)
 	YAxisTitle <- "Change from baseline"
@@ -326,7 +326,7 @@ if (pdfout=="Y") {
 	HTML(linkToPdf23)
 }
 
-if (aucOutputType== "AUCForChangeFromBaseline") {
+if (aucOutputType== "aucforchangefrombaseline") {
 	comment <- c("Note that in the AUC calculation, any area corresponding to a negative change from baseline will be subtracted from the AUC total.")
 	HTML(comment, align="left")
 }
@@ -334,7 +334,7 @@ if (aucOutputType== "AUCForChangeFromBaseline") {
 #===================================================================================================================
 #Generate printout from repeated measures data
 #===================================================================================================================
-if (DataFormatType == "RepeatedMeasuresFormat") {
+if (DataFormatType == "repeatedmeasuresformat") {
 	ID<- c(1:index)
 	test2<-cbind(ID, test)
 
@@ -381,7 +381,7 @@ if (DataFormatType == "RepeatedMeasuresFormat") {
 #===================================================================================================================
 #Generate printout from single measures data
 #===================================================================================================================
-if (DataFormatType == "SingleMeasuresFormat") {
+if (DataFormatType == "singlemeasuresformat") {
 	ID<- c(1:index)
 	test2<-cbind(ID, test)
 
@@ -427,10 +427,10 @@ if (DataFormatType == "SingleMeasuresFormat") {
 #===================================================================================================================
 #Print of input data
 #===================================================================================================================
-if (DataFormatType == "RepeatedMeasuresFormat") {
+if (DataFormatType == "repeatedmeasuresformat") {
 	Title1 <-c("The original dataset in repeated measures format")
 }
-if (DataFormatType == "SingleMeasuresFormat") {
+if (DataFormatType == "singlemeasuresformat") {
 	Title1 <-c("The original dataset in single measures format")
 }
 

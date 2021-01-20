@@ -107,17 +107,17 @@ namespace SilveR.Models
             }
 
             List<string> optionLines = new List<string>();
-            optionLines.Add(nameof(this.LineTypeSolid) + " " + this.LineTypeSolid.ToLower());
-            optionLines.Add(nameof(this.LineTypeDashed) + " " + this.LineTypeDashed.ToLower());
+            optionLines.Add(nameof(this.LineTypeSolid) + " " + this.LineTypeSolid);
+            optionLines.Add(nameof(this.LineTypeDashed) + " " + this.LineTypeDashed);
             optionLines.Add(nameof(this.GraphicsFont) + " " + this.GraphicsFont);
-            optionLines.Add(nameof(this.FontStyle) + " " + this.FontStyle.ToLower());
+            optionLines.Add(nameof(this.FontStyle) + " " + this.FontStyle);
             optionLines.Add(nameof(this.GraphicsTextColour) + " " + this.GraphicsTextColour);
-            optionLines.Add(nameof(this.ColourFill) + " " + this.ColourFill.ToLower());
-            optionLines.Add(nameof(this.BWFill) + " " + this.BWFill.ToLower());
-            optionLines.Add(nameof(this.CategoryBarFill) + " " + this.CategoryBarFill.ToLower());
-            optionLines.Add(nameof(this.ColourLine) + " " + this.ColourLine.ToLower());
-            optionLines.Add(nameof(this.BWLine) + " " + this.BWLine.ToLower());
-            optionLines.Add(nameof(this.LegendTextColour) + " " + this.LegendTextColour.ToLower());
+            optionLines.Add(nameof(this.ColourFill) + " " + this.ColourFill);
+            optionLines.Add(nameof(this.BWFill) + " " + this.BWFill);
+            optionLines.Add(nameof(this.CategoryBarFill) + " " + this.CategoryBarFill);
+            optionLines.Add(nameof(this.ColourLine) + " " + this.ColourLine);
+            optionLines.Add(nameof(this.BWLine) + " " + this.BWLine);
+            optionLines.Add(nameof(this.LegendTextColour) + " " + this.LegendTextColour);
             optionLines.Add(nameof(this.LegendPosition) + " " + this.LegendPosition);
             optionLines.Add(nameof(this.PaletteSet) + " " + this.PaletteSet);
             optionLines.Add(nameof(this.OutputData) + " " + (this.OutputData ? "Y" : "N"));
