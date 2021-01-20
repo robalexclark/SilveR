@@ -57,7 +57,8 @@ namespace SilveR.Models
                 {
                     using (CsvParser parser = new CsvParser(textReader, CultureInfo.InvariantCulture))
                     {
-                        string[] headerRow = parser.Read();
+                        parser.Read();
+                        string[] headerRow = parser.Record;
                         foreach (string h in headerRow)
                         {
                             dataTable.Columns.Add(new DataColumn(h));

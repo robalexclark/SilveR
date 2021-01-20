@@ -12,12 +12,12 @@ graphdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
 XAxisVar <- Args[4]
-XAxisTransform <- Args[5]
+XAxisTransform <- tolower(Args[5])
 YAxisVars <- Args[6]
-YAxisTransform <- Args[7]
+YAxisTransform <- tolower(Args[7])
 FirstCatFactor <- Args[8]
 SecondCatFactor <- Args[9]
-GraphStyle <- Args[10]
+GraphStyle <- tolower(Args[10])
 MainTitle <- Args[11]
 XAxisTitle <- Args[12]
 XAxisTitleHist <- Args[12]
@@ -29,10 +29,10 @@ ScatterPlot <- Args[17]
 LinearFit <- Args[18]
 jitterfunction <- Args[19]
 BoxPlot <- Args[20]
-BoxplotOptions <- Args[21]
+BoxplotOptions <- tolower(Args[21])
 SEMPlot <- Args[22]
-SEMPlotType <- Args[23]
-ErrorBarType <- Args[24]
+SEMPlotType <- tolower(Args[23])
+ErrorBarType <- tolower(Args[24])
 HistogramPlot <- Args[25]
 NormalDistFit <- Args[26]
 CaseProfilesPlot <- Args[27]
@@ -334,11 +334,11 @@ add<-paste(add, " and the variable ", XAxisVar, " has been selected to define th
 }
 add<-paste(add, ". ", sep="")
 
-if (is.numeric(graphdata$yvarrr_IVS)=="TRUE" && YAxisTransform != "None") {
+if (is.numeric(graphdata$yvarrr_IVS)=="TRUE" && YAxisTransform != "none") {
 add<-paste(add, "The variable ", YAxisVars, " has been ", YAxisTransform, " transformed.", sep="")
 }
 
-if (XAxisVar != "NULL" && is.numeric(graphdata$xvarrr_IVS)=="TRUE" && XAxisTransform != "None") {
+if (XAxisVar != "NULL" && is.numeric(graphdata$xvarrr_IVS)=="TRUE" && XAxisTransform != "none") {
 add<-paste(add, " The variable ", XAxisVar, " has been ", XAxisTransform, " transformed.", sep="")
 }
 
@@ -551,7 +551,7 @@ if(ScatterPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" )
 #===================================================================================================================
 # One Categorised Seperate Scatterplot 
 #===================================================================================================================
-if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL"))  && GraphStyle == "Separate") {
+if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL"))  && GraphStyle == "separate") {
 
 	#Plot device setup
 	ncscatterplot2 <- sub(".html", "ncscatterplot2.png", htmlFile)
@@ -586,7 +586,7 @@ if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL"
 scalexy<-"fixed"
 
 # TWO CAT - seperate continuous
-if(ScatterPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && GraphStyle == "Separate") {
+if(ScatterPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && GraphStyle == "separate") {
 
 	#Plot device setup
 	scatterPlot <- sub(".html", "scatterPlot.png", htmlFile)
@@ -619,7 +619,7 @@ if(ScatterPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  
 #===================================================================================================================
 # Categorised overlaid Scatterplot 
 #===================================================================================================================
-if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL") || (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))    && GraphStyle == "Overlaid") {
+if(ScatterPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL") || (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))    && GraphStyle == "overlaid") {
 
 	#Plot device setup
 	ncscatterplot3 <- sub(".html", "ncscatterplot3.png", htmlFile)
@@ -705,13 +705,13 @@ if(ScatterPlot == "Y" && (is.numeric(graphdata$xvarrr_IVS)=="FALSE" || is.numeri
 #===================================================================================================================
 #Title
 if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && YAxisVars != "NULL") {
-	if (ErrorBarType == "SEM") {
+	if (ErrorBarType == "sem") {
 		HTML.title("Observed means with standard errors plot", HR=2, align="left")
 	} else {
 		HTML.title("Observed means with 95% confidence intervals plot", HR=2, align="left")
 	}
 } else if(SEMPlot == "Y" && (FirstCatFactor != "NULL" || SecondCatFactor != "NULL") && YAxisVars != "NULL") {
-	if (ErrorBarType == "SEM") {
+	if (ErrorBarType == "sem") {
 		HTML.title("Categorised observed means with standard errors plot", HR=2, align="left")
 	} else {
 		HTML.title("Categorised observed means with 95% confidence intervals plot", HR=2, align="left")
@@ -769,7 +769,7 @@ if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && is
 #===================================================================================================================
 # ONE CAT - seperate means with SEM plot
 #===================================================================================================================
-if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL") ) && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL") ) && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Creating the summary dataset
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
@@ -804,7 +804,7 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 #===================================================================================================================
 # TWO CAT - seperate means with SEM plot
 #===================================================================================================================
-if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Creating the summary dataset
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+firstcatvarrr_IVS+secondcatvarrr_IVS, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
@@ -839,7 +839,7 @@ if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && Gr
 #===================================================================================================================
 # Overlaid - means with SEM plot
 #===================================================================================================================
-if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "Overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Adding blanks where needed
 #	graphdataSEMx<-subset(graphdata, graphdata$catfact != "")
@@ -981,7 +981,7 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NU
 #===================================================================================================================
 # One-categorised case profiles plot
 #===================================================================================================================
-if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
 	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
@@ -1013,7 +1013,7 @@ if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "
 #===================================================================================================================
 # Two-cat case profiles plot
 #===================================================================================================================
-if(CaseProfilesPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(CaseProfilesPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
 	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
@@ -1045,7 +1045,7 @@ if(CaseProfilesPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NU
 #===================================================================================================================
 # Overlaid case profiles plot
 #===================================================================================================================
-if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "Overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(CaseProfilesPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Plot device setup
 	nccaseplot <- sub(".html", "nccaseplot.png", htmlFile)
@@ -1149,7 +1149,7 @@ if(BoxPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"   && 
 #===================================================================================================================
 # ONE CAT - seperate Boxplot
 #===================================================================================================================
-if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Generating the dataset boxdata
 	graphdata$allcat_IVS<-as.factor(paste(graphdata$xvarrr_IVS_BP, "xxxIVSxxx",graphdata$l_l, sep=""))
@@ -1212,7 +1212,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	outlierdata<-outlierdata[-1,]
 
 	#GGPLOT2 variable options
-	if (BoxplotOptions == "None") {
+	if (BoxplotOptions == "none") {
 		stats <- boxplot(yvarrr_IVS~allcat_IVS, data=graphdata, plot=FALSE)$stat
 		ymin  <- min(stats[1,], na.rm=TRUE)
 		ymax  <- max(stats[5,], na.rm=TRUE)
@@ -1253,7 +1253,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 #===================================================================================================================
 # TWO CAT - seperate Boxplot
 #===================================================================================================================
-if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Generating the dataset boxdata
 	graphdata$allcat_IVS<-as.factor(paste(graphdata$xvarrr_IVS_BP, "xxxIVSxxx",graphdata$firstcatvarrr_IVS, "xxxIVSxxx",graphdata$secondcatvarrr_IVS,  sep=""))
@@ -1309,7 +1309,7 @@ if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && G
 	outlierdata<-outlierdata[-1,]
 
 	#GGPLOT2 variable options
-	if (BoxplotOptions == "None") {
+	if (BoxplotOptions == "none") {
 		stats <- boxplot(yvarrr_IVS~allcat_IVS, data=graphdata, plot=FALSE)$stat
 		ymin  <- min(stats[1,], na.rm=TRUE)
 		ymax  <- max(stats[5,], na.rm=TRUE)
@@ -1350,7 +1350,7 @@ if(BoxPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"  && G
 #===================================================================================================================
 # ONE CAT - overlaid, Boxplot
 #===================================================================================================================
-if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "Overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Adding blanks where needed to the original dataset (for plotting all the data)
 	graphdataBOX<-graphdata
@@ -1384,7 +1384,7 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	}
 
 	#GGPLOT2 variable options
-	if (BoxplotOptions == "None")	{
+	if (BoxplotOptions == "none")	{
 		stats <- boxplot(yvarrr_IVS~l_l, data=graphdata, plot=FALSE)$stat
 		ymin  <- min(stats[1,], na.rm=TRUE)
 		ymax  <- max(stats[5,], na.rm=TRUE)
@@ -1535,10 +1535,10 @@ if(BoxPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 if(BoxPlot == "Y" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 	HTML("On the boxplot the median is denoted by the horizontal line within the box. The box indicates the interquartile range, where the lower and upper quartiles are calculated using the type 2 method, see Hyndman and Fan (1996). The whiskers extend to the most extreme data point which is no more than 1.5 times the length of the box away from the box.", align="left")
 
-	if (BoxplotOptions == "Outliers") {
+	if (BoxplotOptions == "outliers") {
 		HTML("Individual observations that lie outside the outlier range are included on the plot using stars.",  align="left")
 	}
-	if (BoxplotOptions == "Include Data"){
+	if (BoxplotOptions == "include data"){
 		HTML("The plot includes individual observations, denoted by black dots.", align="left")
 	}
 }
@@ -1612,7 +1612,7 @@ if(HistogramPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL"
 #===================================================================================================================
 #One-categorised seperate histogram
 #===================================================================================================================
-if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")) && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Dataset manipulations
 	#Creating normal distribution grid
@@ -1649,7 +1649,7 @@ if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NUL
 #===================================================================================================================
 #Two-categorised seperate histogram
 #===================================================================================================================
-if(HistogramPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "Separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(HistogramPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && GraphStyle == "separate" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Dataset manipulations
 	#Creating normal distribution grid
@@ -1693,7 +1693,7 @@ if(HistogramPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL"
 #===================================================================================================================
 #Overlaid histogram
 #===================================================================================================================
-if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "Overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
+if(HistogramPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") || (FirstCatFactor == "NULL" && SecondCatFactor != "NULL")|| (FirstCatFactor != "NULL" && SecondCatFactor != "NULL"))   && GraphStyle == "overlaid" && is.numeric(graphdata$yvarrr_IVS)==TRUE) {
 
 	#Dataset manipulations
 	#Creating a dataset with responses in seperate columns
@@ -1825,7 +1825,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Response variable: ", YAxisVars, sep=""),  align="left")
 	}
 
-	if (YAxisTransform != "None") {
+	if (YAxisTransform != "none") {
 		HTML(paste("Response variable transformation: ", YAxisTransform, sep=""),  align="left")
 	}
 
@@ -1833,7 +1833,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("X-axis variable: ", XAxisVar, sep=""),  align="left")
 	}
 
-	if (XAxisTransform  != "None") {
+	if (XAxisTransform  != "none") {
 		HTML(paste("X-axis variable transformation: ", XAxisTransform , sep=""),  align="left")
 	}
 
@@ -1893,11 +1893,11 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Output Boxplot (Y/N): ", BoxPlot, sep=""),  align="left")
 	}
 
-	if (BoxplotOptions == "Outliers" && BoxPlot != "N") {
+	if (BoxplotOptions == "outliers" && BoxPlot != "N") {
 		HTML(paste("Include outliers on Boxplot (Y/N): Y", sep=""),  align="left")
 	}
 
-	if (BoxplotOptions == "Include Data" &&BoxPlot != "N") {
+	if (BoxplotOptions == "include data" &&BoxPlot != "N") {
 		HTML(paste("Include observations on Boxplot (Y/N): Y", sep=""),  align="left")
 	}
 

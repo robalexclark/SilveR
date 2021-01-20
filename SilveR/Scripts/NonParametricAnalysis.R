@@ -16,7 +16,7 @@ response <- Args[4]
 treatment <- Args[5]
 block <- Args[6]
 sig <- 1 - as.numeric(Args[7])
-statstest <- Args[8]
+statstest <- tolower(Args[8])
 contlevel <- Args[9]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
@@ -635,7 +635,7 @@ Individual observations that lie outside the outlier range are included on the p
 #===================================================================================================================
 #Kruskall-Wallis and Mann Whitney
 #===================================================================================================================
-if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparisons" && leng == 2) || (statstest == "CompareToControl" && leng == 2))) {
+if (block == "NULL" && (statstest == "mannwhitney" || (statstest == "allcomparisons" && leng == 2) || (statstest == "comparetocontrol" && leng == 2))) {
     #Kruskal Wallis and Mann Whitney
     dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
@@ -710,7 +710,7 @@ if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparis
 #===================================================================================================================
 #Friedmans test
 #===================================================================================================================
-if (block != "NULL" && statstest == "MannWhitney") {
+if (block != "NULL" && statstest == "mannwhitney") {
     #Friedmans test
     HTML.title("Friedman Rank Sum test", HR = 2, align = "left")
 
@@ -752,7 +752,7 @@ if (block != "NULL" && statstest == "MannWhitney") {
 #===================================================================================================================
 #All comparisons tests - generating comparison labels
 #===================================================================================================================
-if (statstest == "AllComparisons") {
+if (statstest == "allcomparisons") {
     #Generating comparison labels 
     y <- 1
     allgroup1 <- unique(eval(parse(text = paste("statdata$", treatment))))[1]
@@ -789,7 +789,7 @@ if (statstest == "AllComparisons") {
 #===================================================================================================================
 #All comparisons tests - no blocks
 #===================================================================================================================
-if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
+if (block == "NULL" && (statstest == "allcomparisons" && leng >= 3)) {
     # Behrens Fisher test results
     HTML.title("All pairwise comparisons - Behrens Fisher tests", HR = 2, align = "left")
 
@@ -910,7 +910,7 @@ if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
 #===================================================================================================================
 #All comparisons tests - blocks
 #===================================================================================================================
-if (block != "NULL" && statstest == "AllComparisons") {
+if (block != "NULL" && statstest == "allcomparisons") {
     # Wilcoxon signed rank tests
     if (int > 2) {
         HTML.title("All pairwise comparisons - Wilcoxon Signed Rank tests", HR = 2, align = "left")
@@ -1006,7 +1006,7 @@ if (block != "NULL" && statstest == "AllComparisons") {
 #===================================================================================================================
 #Comparisons back to control - no blocks
 #===================================================================================================================
-if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
+if (block == "NULL" && (statstest == "comparetocontrol" && leng >= 3)) {
     #Steels all to one comparison
     HTML.title("Steel's all comparisons back to one", HR = 2, align = "left")
 
@@ -1059,7 +1059,7 @@ if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
 #===================================================================================================================
 #Comparisons back to control - blocks
 #===================================================================================================================
-if (block != "NULL" && (statstest == "CompareToControl" )) {
+if (block != "NULL" && (statstest == "comparetocontrol" )) {
     HTML.title("All comparisons back to one", HR = 2, align = "left")
     HTML("The 'all comparisons back to one' is not available as an 'Other design (block)' factor has been selected. Please use the  'all pairwise comparisons' option to generate the required results.", align = "left")
 }
@@ -1069,7 +1069,7 @@ if (block != "NULL" && (statstest == "CompareToControl" )) {
 Ref_list <- R_refs()
 
 if (RunFried == "Y") {
-    if (block == "NULL" && (statstest == "MannWhitney" || (statstest == "AllComparisons" && leng == 2) || (statstest == "CompareToControl" && leng == 2))) {
+    if (block == "NULL" && (statstest == "mannwhitney" || (statstest == "allcomparisons" && leng == 2) || (statstest == "comparetocontrol" && leng == 2))) {
         HTML.title("Analysis conclusions", HR = 2, align = "left")
         dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
@@ -1136,7 +1136,7 @@ if (RunFried == "Y") {
         }
     }
 
-    if (block != "NULL" && statstest == "MannWhitney") {
+    if (block != "NULL" && statstest == "mannwhitney") {
        HTML.title("Analysis conclusions", HR = 2, align = "left")
        dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
@@ -1171,7 +1171,7 @@ if (RunFried == "Y") {
     }
 
 
-    if (block == "NULL" && (statstest == "AllComparisons" && leng >= 3)) {
+    if (block == "NULL" && (statstest == "allcomparisons" && leng >= 3)) {
       HTML.title("Analysis conclusions", HR = 2, align = "left")
       add <- c(" ")
         textindex = 1
@@ -1242,7 +1242,7 @@ if (RunFried == "Y") {
         HTML("Wilcoxon, F. (1945). Individual comparisons by ranking methods. Biometrics Bulletin, 1, 80-83.", align = "left")
     }
 
-    if (block != "NULL" && statstest == "AllComparisons") {
+    if (block != "NULL" && statstest == "allcomparisons") {
        HTML.title("Analysis conclusions", HR = 2, align = "left")
        textindex2 <- 1
         add2 <- c(" ")
@@ -1296,7 +1296,7 @@ if (RunFried == "Y") {
         HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.", align = "left")
     }
 
-    if (block == "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
+    if (block == "NULL" && (statstest == "comparetocontrol" && leng >= 3)) {
        HTML.title("Analysis conclusions", HR = 2, align = "left")
        add <- c(" ")
         textindex = 1
@@ -1338,7 +1338,7 @@ if (RunFried == "Y") {
         HTML("Steel, R.G.D. (1959). A multiple comparison rank sum test: treatments versus control. Biometrics, 15, 560-572. ", align = "left")
     }
 
-    if (block != "NULL" && (statstest == "CompareToControl" && leng >= 3)) {
+    if (block != "NULL" && (statstest == "comparetocontrol" && leng >= 3)) {
 	HTML.title("References", HR=2, align="left")
 	HTML(Ref_list$IVS_ref, align="left")
         HTML("Hyndman, R.J. and Fan, Y. (1996). Sample quantiles in statistical packages. American Statistician 50, 361-365.", align = "left")
@@ -1406,21 +1406,21 @@ if (OutputAnalysisOps == "Y") {
 	    HTML(paste("Other design (block) factor: ", block, sep = ""), align = "left")
 	}
 
-	if (statstest == "MannWhitney" && dim == 2) {
-	    HTML(paste("Analysis type: Mann-Whitney"), align = "left")
+	if (statstest == "mannwhitney") {
+	    HTML(paste("Analysis type: Overall test"), align = "left")
 	}
 
-	if (statstest == "MannWhitney" && dim >= 3) {
-	    HTML(paste("Analysis type: Kruskal-Wallis"), align = "left")
+	if (statstest == "allcomparisons") {
+	    HTML(paste("Analysis type: All treatment comparisons"), align = "left")
 	}
 
-	if (statstest != "MannWhitney") {
-	    HTML(paste("Analysis type: ", statstest, sep = ""), align = "left")
+	if (statstest == "comparetocontrol") {
+	    HTML(paste("Analysis type: Compare to control"), align = "left")
 	}
 
 	HTML(paste("Significance level: ", 1 - sig, sep = ""), align = "left")
 
-	if (contlevel != "NULL" && statstest == "CompareToControl") {
+	if (contlevel != "NULL" && statstest == "comparetocontrol") {
 	    HTML(paste("Control group: ", contlevel, sep = ""), align = "left")
 	}
 }

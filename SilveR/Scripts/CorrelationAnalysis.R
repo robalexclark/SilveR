@@ -12,13 +12,13 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
 csResponses<-Args[4]
-transformation<-Args[5]
+transformation<-tolower(Args[5])
 firstCat<-Args[6]
 secondCat<-Args[7]
 thirdCat<-Args[8]
 fourthCat<-Args[9]
-method<-Args[10]
-hypothesis<-Args[11]
+method<-tolower(Args[10])
+hypothesis<-tolower(Args[11])
 estimate<-Args[12]
 statistic<-Args[13]
 pValueSelected<-Args[14]
@@ -53,13 +53,13 @@ graphdata<-statdata
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
 
-if (method == "Pearson") {method2="pearson"} 
-if (method == "Kendall") {method2="kendall"} 
-if (method == "Spearman") {method2="spearman"} 
+if (method == "pearson") {method2="Pearson"} 
+if (method == "kendall") {method2="Kendall"} 
+if (method == "spearman") {method2="Spearman"} 
 
 if (hypothesis == "2-sided") {hypothesis2="two.sided"} 
-if (hypothesis == "Less than") {hypothesis2="less"} 
-if (hypothesis == "Greater than") {hypothesis2="greater"} 
+if (hypothesis == "less than") {hypothesis2="less"} 
+if (hypothesis == "greater than") {hypothesis2="greater"} 
 
 #Breakdown the list of responses
 resplist<-c()
@@ -91,7 +91,7 @@ if (Betawarn == "Y") {
 
 #Title
 title<-"Responses"
-if (transformation != "None") {
+if (transformation != "none") {
 	title<-paste(title, c(" and transformations"), sep="")
 }
 HTML.title(title, HR=2, align="left")
@@ -105,7 +105,7 @@ if (resplength >2 ){
 }
 add<-paste(add, resplist[(resplength-1)], " and ", resplist[(resplength)], ". ", sep="")
 
-if (transformation != "None") {
+if (transformation != "none") {
 	add<-paste(add, c("The responses have been "), transformation, " transformed prior to analysis.", sep="")
 }
 HTML(add, align="left")
@@ -302,7 +302,7 @@ if (pValueSelected=="Y") {
 	colsno = colsno+1
 }
 
-#if (confidenceLimitsSelected=="Y" && method == "Pearson") {colsno = colsno+2}
+#if (confidenceLimitsSelected=="Y" && method == "pearson") {colsno = colsno+2}
 tablelen<-resplength*(resplength-1)/2
 correlationTable <-matrix(ncol=colsno,nrow=tablelen)
 
@@ -346,16 +346,16 @@ for (i in 1:(resplength-1)) {
 		testz<-na.omit(statdata$xy_IVS_)
 		pairn<-length(testz)
 
-		if (pairn<50 && method == "Kendall") {
+		if (pairn<50 && method == "kendall") {
 			indexn<-2
 		}
 
-		if (pairn<10 && method == "Spearman") {
+		if (pairn<10 && method == "spearman") {
 			indexn<-2
 		}
 
 		if (pairn>=3) {
-			correlation<-cor.test(~x_IVS_+y_IVS_, data=statdata, alternative=hypothesis2, method = method2, conf.level=(1-CIval), exact = FALSE)
+			correlation<-cor.test(~x_IVS_+y_IVS_, data=statdata, alternative=hypothesis2, method = method, conf.level=(1-CIval), exact = FALSE)
 			correlationTable[k,2]=resplist[i]
 			correlationTable[k,3]=" vs. "
 			correlationTable[k,4]=resplist[j]
@@ -410,24 +410,24 @@ if (k>1) {
 		if (hypothesis == "2-sided")  {
 			title<-paste(title, c(" two-sided "), sep="")
 		} 
-		if (hypothesis == "Less than") {
+		if (hypothesis == "less than") {
 			title<-paste(title, c(" one-sided (less than) "), sep="")
 		} 
-		if (hypothesis == "Greater than") {
+		if (hypothesis == "greater than") {
 			title<-paste(title, c(" one-sided (greater than) "), sep="")
 		} 
 		
-		title<-paste(title, method, c("'s "), sep="")	
+		title<-paste(title, method2, c("'s "), sep="")	
 	
-		if (method == "Pearson") {
+		if (method == "pearson") {
 			title<-paste(title, c("product moment "), sep="")
 		}
 	
-		if (method == "Kendall") {
+		if (method == "kendall") {
 			title<-paste(title, c("tau "), sep="")
 		}
 	
-		if (method == "Spearman") {
+		if (method == "spearman") {
 			title<-paste(title, c("rho "), sep="")
 		}
 		title<-paste(title, c("correlation coefficient"), sep="")	
@@ -717,10 +717,10 @@ for ( p in 1:length) {
 			testz<-na.omit(testdata$xy_IVS_)
 
 			pairn<-length(testz)
-			if (length(testz)<50 && method == "Kendall") {
+			if (length(testz)<50 && method == "kendall") {
 				indexn<-2
 			}
-			if (length(testz)<10 && method == "Spearman") {
+			if (length(testz)<10 && method == "spearman") {
 				indexn<-2
 			}
 			if (length(testz)<=2) {
@@ -731,7 +731,7 @@ for ( p in 1:length) {
 
 				#STB Aug 2011 - removing lines with infinite slope
 				if(length(unique(testdata$x_IVS_))!=1 && length(unique(testdata$y_IVS_))!=1) {
-				correlation<-cor.test(~x_IVS_+y_IVS_, data=testdata, alternative=hypothesis2, method = method2, conf.level=(1-CIval), exact = FALSE)
+				correlation<-cor.test(~x_IVS_+y_IVS_, data=testdata, alternative=hypothesis2, method = method, conf.level=(1-CIval), exact = FALSE)
 				} else {
 					correlation$estimate<-1000
 					correlation$statistic<-1000
@@ -812,22 +812,22 @@ if (k>2) {
 		if (hypothesis == "2-sided")  {
 			title<-paste(title, c(" two-sided "), sep="")
 		} 
-		if (hypothesis == "Less than") {
+		if (hypothesis == "less than") {
 			title<-paste(title, c(" one-sided (less than) "), sep="")
 		} 
-		if (hypothesis == "Greater than")  {
+		if (hypothesis == "greater than")  {
 			title<-paste(title, c(" one-sided (greater than) "), sep="")
 		} 
 	
-		title<-paste(title, method, c("'s "), sep="")	
+		title<-paste(title, method2, c("'s "), sep="")	
 	
-		if (method == "Pearson") {
+		if (method == "pearson") {
 			title<-paste(title, c("product moment "), sep="")
 		}
-		if (method == "Kendall") {
+		if (method == "kendall") {
 			title<-paste(title, c("tau "), sep="")
 		}
-		if (method == "Spearman") {
+		if (method == "spearman") {
 			title<-paste(title, c("rho "), sep="")
 		}
 		title<-paste(title, c("correlation coefficient "), sep="")	
@@ -876,13 +876,13 @@ if (k>2) {
 
 HTML.title("Analysis description", HR=2, align="left")
 
-if (method == "Pearson") {
+if (method == "pearson") {
 	HTML("The test statistic is based on Pearson's product moment correlation coefficient cor(x, y) and follows a t distribution with length(x)-2 degrees of freedom if the samples follow independent normal distributions, see Snedecor and Cochran (1989). ", align="left")
 }
-if (method == "Kendall") {
+if (method == "kendall") {
 	HTML("This test is a rank-based measure of association and can be used when the data are not necessarily from a bivariate normal distribution, see Hollander and Wolfe (1973). The test statistic is the estimate scaled to zero mean and unit variance, and is approximately normally distributed. ", align="left")
 }
-if (method == "Spearman")  {
+if (method == "spearman")  {
 	HTML("This test is a rank-based measure of association and can be used when the data are not necessarily from a bivariate normal distribution, see Hollander and Wolfe (1973). The p-values are computed using algorithm AS 89, see Best and Roberts (1975). ", align="left")
 }
 
@@ -898,13 +898,13 @@ HTML.title("References", HR=2, align="left")
 HTML(Ref_list$IVS_ref, align="left")
 HTML(Ref_list$BateClark_ref, align="left")
 
-if (method == "Pearson") {
+if (method == "pearson") {
 	HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition; Iowa State University Press, Iowa, USA.", align="left") 
 }
-if (method == "Spearman") {
+if (method == "spearman") {
 	HTML("Best, D.J. and Roberts, D.E. (1975). Algorithm AS 89: The Upper Tail Probabilities of Spearman's rho. Applied Statistics, 24, 377-379. ", align="left")
 }
-if (method == "Spearman" || method == "Kendall") {
+if (method == "spearman" || method == "kendall") {
 	HTML("Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons. P185-194. ", align="left")
 }
 
@@ -942,7 +942,7 @@ if (showdataset=="Y") {
 if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
 	HTML(paste("Response variables: ", csResponses, sep=""), align="left")
-	if (transformation != "None") {
+	if (transformation != "none") {
 		HTML(paste("Response variables transformation: ", transformation, sep=""), align="left")
 	}
 	if (firstCat != "NULL") {
@@ -957,7 +957,7 @@ if (OutputAnalysisOps == "Y") {
 	if (fourthCat != "NULL") {	
 		HTML(paste("Fourth categorisation factor: ", fourthCat, sep=""), align="left")
 	}
-	HTML(paste("Method: ", method, sep=""),  align="left")
+	HTML(paste("Method: ", method2, sep=""),  align="left")
 	HTML(paste("Hypothesis: ", hypothesis, sep=""),  align="left")
 
 	HTML(paste("Display correlation coefficient (Y/N): ", estimate, sep=""),  align="left")

@@ -12,8 +12,8 @@ print(Args)
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
-responseTransform <- Args[5]
-covariateTransform <- Args[6]
+responseTransform <- tolower(Args[5])
+covariateTransform <- tolower(Args[6])
 treatments <- Args[7]
 otherFactors <- Args[8]
 covariate <- Args[9]
@@ -197,12 +197,12 @@ if(covariate != "NULL") {
 }
 HTML(add, align="left")
 
-if (responseTransform != "None") {
+if (responseTransform != "none") {
 	add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.",sep="")
 	HTML(add2, align="left")
 }
 
-if (covariateTransform != "None") {
+if (covariateTransform != "none") {
 	add3<-paste(c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	HTML(add3, align="left")
 }
@@ -1504,7 +1504,7 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Response variable: ", resp, sep=""), align="left")
 
-	if (responseTransform != "None") {
+	if (responseTransform != "none") {
 		HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
 	}
 
@@ -1536,7 +1536,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Covariate(s): ", covariate, sep=""), align="left")
 	}
 
-	if (covariateTransform != "None") {
+	if (covariateTransform != "none") {
 		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
 	}
 

@@ -15,10 +15,10 @@ model <- Args[4]
 scatterplotModel <- as.formula(Args[5])
 positiveResult <- Args[6]
 covariates <- Args[7]
-covariateTransform <- Args[8]
+covariateTransform <- tolower(Args[8])
 treatFactors <- Args[9]
 contFactors <- Args[10]
-contFactorTransform <- Args[11]
+contFactorTransform <- tolower(Args[11])
 blockFactors <- Args[12]
 tableOfOverallEffectTests <- Args[13]
 oddsRatio <- Args[14]
@@ -196,7 +196,7 @@ if(nocovars > 0) {
 	add<-paste(add, ".", sep="")
 }
 
-if (nocovars > 0 && covariateTransform != "None") {
+if (nocovars > 0 && covariateTransform != "none") {
 	if (nocovars == 1) {
 		add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	} else {
@@ -971,7 +971,7 @@ if (nocovars == 0) {
 	}
 }
 
-if (nocovars != 0 && covariateTransform != "None") {
+if (nocovars != 0 && covariateTransform != "none") {
 	if (nocovars == 1) {
 		add<-paste(add, c(" The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 	} else {
@@ -1050,17 +1050,16 @@ if (showdataset=="Y")
 }
 
 #===================================================================================================================
-#Show arguments - to be sorted
+#Show arguments
 #===================================================================================================================
 
-model <- Args[4]
-scatterplotModel <- as.formula(Args[5])
+#Repeat of Copy Args as some get updated within the code
 positiveResult <- Args[6]
 covariates <- Args[7]
-covariateTransform <- Args[8]
+covariateTransform <- tolower(Args[8])
 treatFactors <- Args[9]
 contFactors <- Args[10]
-contFactorTransform <- Args[11]
+contFactorTransform <- tolower(Args[11])
 blockFactors <- Args[12]
 tableOfOverallEffectTests <- Args[13]
 oddsRatio <- Args[14]
@@ -1070,6 +1069,7 @@ tableOfModelPredictions <- Args[17]
 goodnessOfFitTest <- Args[18]
 rocCurve <- Args[19]
 sig <- 1 - as.numeric(Args[20])
+
 
 if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")

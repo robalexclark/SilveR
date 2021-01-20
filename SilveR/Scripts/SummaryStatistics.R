@@ -11,7 +11,7 @@ Args <- commandArgs(TRUE)
 #Read in arguments
 statdata <- read.csv(Args[3], header = TRUE, sep = ",")
 csResponses <- Args[4]
-transformation <- Args[5]
+transformation <- tolower(Args[5])
 firstCat <- Args[6]
 secondCat <- Args[7]
 thirdCat <- Args[8]
@@ -114,7 +114,7 @@ if (thirdCat != "NULL") {
 if (fourthCat != "NULL") {
 	add2 <- paste(add2, ", ", fourthCat, sep="")
 }
-if (transformation == "None")
+if (transformation == "none")
 {
 	add2 <- paste(add2, ".", sep="")
 } else {
@@ -762,7 +762,7 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Response variable(s): ", csResponses, sep=""),  align="left")
 
-	if (transformation != "None") {
+	if (transformation != "none") {
 		HTML(paste("Response variable(s) transformation: ", transformation, sep=""),  align="left")
 	}
 

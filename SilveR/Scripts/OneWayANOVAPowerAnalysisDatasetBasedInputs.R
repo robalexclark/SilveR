@@ -1,12 +1,12 @@
 ﻿#Select dataset type
-#valueType <- "UserValues"
-valueType <- "DatasetValues"
+#AnalysisType <- "UserValues"
+AnalysisType <- "DatasetValues"
 
 #===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(R2HTML))
-if (valueType == "DatasetValues") {
+if (AnalysisType == "DatasetValues") {
 	suppressWarnings(library(dplyr))
 	suppressWarnings(library(multcomp))
 	suppressWarnings(library(multcompView))
@@ -20,14 +20,14 @@ if (valueType == "DatasetValues") {
 #Copy Args into variables
 Args <- commandArgs(TRUE)
 
-if (valueType == "DatasetValues") {
+if (AnalysisType == "DatasetValues") {
 	statdata <- read.csv(Args[3], header=TRUE, sep=",")
-	valueType <- Args[4]
+	valueType <- tolower(Args[4])
 	response <- Args[5]
-	transformation <- Args[6]
+	transformation <- tolower(Args[6])
 	treatment <- Args[7]
 	sig <- as.numeric(Args[8])
-	plotSettingsType <- Args[9]
+	plotSettingsType <- tolower(Args[9])
 	plotSettingsFrom <- as.numeric(Args[10])
 	plotSettingsTo <- as.numeric(Args[11])
 	graphTitle <- Args[12]
@@ -35,14 +35,14 @@ if (valueType == "DatasetValues") {
 	statdata_print<-statdata
 }
 
-if (valueType == "UserValues") {
-	valueType <- Args[4]
+if (AnalysisType == "UserValues") {
+	valueType <- tolower(Args[4])
 	Treatmentmeans <- Args[5]
-	Variancetype <- Args[6]
+	Variancetype <- tolower(Args[6])
 	Variance <- Args[7]
 	Standdev <- Args[8]	
 	sig <- as.numeric(Args[9])
-	plotSettingsType <- Args[10]
+	plotSettingsType <- tolower(Args[10])
 	plotSettingsFrom <- as.numeric(Args[11])
 	plotSettingsTo <- as.numeric(Args[12])
 	graphTitle <- Args[13]
@@ -74,7 +74,7 @@ sampleSizeTo <- 15
 
 #Working out parameters from User defined parameters
 
-if (valueType == "UserValues") { 
+if (AnalysisType == "UserValues") { 
 	#Manipulating treatment mean list
 	notrs=0
 
@@ -90,17 +90,17 @@ if (valueType == "UserValues") {
 	betweenvar <- var(trlist)		
 
 	#Generating variance estimate
-	if (Variancetype == "Variance") {
+	if (Variancetype == "variance") {
 		withinvar <- as.numeric(Variance)
 	}
-	if (Variancetype == "StandardDeviation") {
+	if (Variancetype == "standarddeviation") {
 		withinvar <- as.numeric(Standdev)^2
 	}
 }
 
 
 #Working out parameters from dataset
-if(valueType=="DatasetValues") {
+if(AnalysisType=="DatasetValues") {
 	statdata$treatment2 <- as.factor(eval(parse(text = paste("statdata$",treatment))))
 	Model <- paste(response , " ~" , "treatment2", sep = "")
 	threewayfull<-lm(as.formula(Model), data=statdata, na.action = na.omit)
@@ -117,7 +117,7 @@ if(valueType=="DatasetValues") {
 }
 
 #Working out the graphical parameters
-if(plotSettingsType=="PowerAxis") {
+if(plotSettingsType=="poweraxis") {
 	powerFrom <- plotSettingsFrom 
 	powerTo <- plotSettingsTo 
 	sampleSizeFrom <- format(floor(as.numeric(power.anova.test(groups=ngps, between.var=betweenvar , within.var=withinvar, power=powerFrom/100, sig.level=sig)[2])), nsmall = 0, scientific = FALSE)
@@ -152,10 +152,10 @@ HTML("The statistical power generated is for the overall ANOVA test (i.e. an ove
 #Bate and Clark comment
 HTML(refxx, align="left")
 
-if (valueType=="DatasetValues")  {
+if (AnalysisType=="DatasetValues")  {
 	HTML.title("Response and treatment factor", HR = 2, align="left")
 	add <- paste ("The response analysed is ", response , ",  with ", treatment , " fitted as the single treatment factor." , sep = "") 
-	if (transformation != "None") {
+	if (transformation != "none") {
 		add<-paste(add, c("The response has been "), transformation, " transformed prior to analysis.", sep="")
 	}
 	HTML(add, align="left")
@@ -290,7 +290,7 @@ HTML(Ref_list$BateClark_ref, align = "left")
 #HTML("Harrison, D.A. and Brady, A.R. (2004). Sample size and power calculations using the noncentral t-distribution. The Stata Journal, 4(2), 142-153.", align = "left")
 
 HTML.title("R references", HR=4, align="left")
-HTML(Ref_list$R_ref,  align = "left")
+HTML(Ref_list$R_ref , align="left")
 HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
 
 HTML(paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], capture.output(print(citation("GGally"),bibtex=F))[6], capture.output(print(citation("GGally"),bibtex=F))[7], sep = ""),  align="left")
@@ -303,19 +303,18 @@ HTML(paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output
 HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], capture.output(print(citation("proto"),bibtex=F))[6], sep = ""),  align="left")
 #extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
 
-if (valueType == "DatasetValues") {
+if (AnalysisType == "DatasetValues") {
 	HTML(paste(capture.output(print(citation("dplyr"),bibtex=F))[4], capture.output(print(citation("dplyr"),bibtex=F))[5], capture.output(print(citation("dplyr"),bibtex=F))[6], sep = ""),  align="left")
 	HTML(paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = ""),  align="left")
 	HTML(paste(capture.output(print(citation("multcompView"),bibtex=F))[4], capture.output(print(citation("multcompView"),bibtex=F))[5], capture.output(print(citation("multcompView"),bibtex=F))[6], capture.output(print(citation("multcompView"),bibtex=F))[7], sep = ""),  align="left")
 	HTML(paste(capture.output(print(citation("car"),bibtex=F))[4], capture.output(print(citation("car"),bibtex=F))[5], capture.output(print(citation("car"),bibtex=F))[6], sep = ""),  align="left")
 	HTML(paste(capture.output(print(citation("emmeans"),bibtex=F))[4], capture.output(print(citation("emmeans"),bibtex=F))[5], capture.output(print(citation("emmeans"),bibtex=F))[6], sep = ""),  align="left")
 }
-
 #===================================================================================================================
 #Show dataset
 #===================================================================================================================
 if (showdataset == "Y") {
-    if (valueType == "DatasetValues") {
+    if (AnalysisType == "DatasetValues") {
 	    observ <- data.frame(c(1:dim(statdata_print)[1]))
 	    colnames(observ) <- c("Observation")
 	    statdata_print2 <- cbind(observ, statdata_print)
@@ -330,11 +329,11 @@ if (showdataset == "Y") {
 #===================================================================================================================
 if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
-	if (valueType == "DatasetValues") { 
+	if (AnalysisType == "DatasetValues") { 
 		HTML(paste("One-way ANOVA Power Analysis module used: Dataset based inputs"),  align="left")
 		HTML(paste("Response variable: ", response, sep=""),  align="left")
 
-		if (transformation != "None") {
+		if (transformation != "none") {
 			HTML(paste("Response variable transformation: ", transformation, sep = ""),  align="left")
 		}
 		HTML(paste("Treatment factor: ", treatment, sep=""),  align="left")
@@ -343,11 +342,11 @@ if (OutputAnalysisOps == "Y") {
 
 		HTML(paste("Group means: ", Treatmentmeans, sep=""),  align="left")
 
-		if (Variancetype == "Variance") {
+		if (Variancetype == "variance") {
 			HTML("Variability estimate type: Variance",  align="left")
 			HTML(paste("Variance estimate: ", Variance, sep=""),  align="left")
 		}
-		if (Variancetype == "StandardDeviation") {
+		if (Variancetype == "standarddeviation") {
 			HTML("Variability estimate type: Standard deviation",  align="left")
 			HTML(paste("Standard deviation estimate: ", Standdev, sep=""),  align="left")
 		}
@@ -355,10 +354,10 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Significance level: ", sig, sep=""), align="left")
 
-	if (plotSettingsType == "PowerAxis")	{
-		HTML(paste("Power curve plots defined by power range:"), align="left")
+	if (plotSettingsType == "poweraxis")	{
+		HTML(paste("Power curve plots defined by: power range"), align="left")
 		} else {
-		HTML(paste("Power curve plots defined by sample size range:"), align="left")
+		HTML(paste("Power curve plots defined by: sample size range"), align="left")
 		}
 	HTML(paste("Plot setting from: ", plotSettingsFrom, sep=""), align="left")
 	HTML(paste("Plot setting to: ", plotSettingsTo, sep=""), align="left")

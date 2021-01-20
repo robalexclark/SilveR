@@ -34,7 +34,8 @@ namespace SilveR.Helpers
             TextReader textReader = new StreamReader(stream);
             CsvParser parser = new CsvParser(textReader, cultureInfo);
 
-            string[] headerRow = parser.Read();
+            parser.Read();
+            string[] headerRow = parser.Record;
             for (int i = 0; i < headerRow.Count(); i++)
             {
                 DataColumn newCol;

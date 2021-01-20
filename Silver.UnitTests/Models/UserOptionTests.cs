@@ -19,17 +19,17 @@ namespace SilveR.UnitTests.Models
             List<string> optionLines = userOption.GetOptionLines().ToList();
 
             //Assert (test default user options)
-            Assert.Equal("LineTypeSolid solid", optionLines[0]);
-            Assert.Equal("LineTypeDashed dashed", optionLines[1]);
+            Assert.Equal("LineTypeSolid Solid", optionLines[0]);
+            Assert.Equal("LineTypeDashed Dashed", optionLines[1]);
             Assert.Equal("GraphicsFont Helvetica", optionLines[2]);
-            Assert.Equal("FontStyle plain", optionLines[3]);
+            Assert.Equal("FontStyle Plain", optionLines[3]);
             Assert.Equal("GraphicsTextColour Black", optionLines[4]);
-            Assert.Equal("ColourFill blue", optionLines[5]);
-            Assert.Equal("BWFill gray", optionLines[6]);
-            Assert.Equal("CategoryBarFill ivory", optionLines[7]);
-            Assert.Equal("ColourLine red", optionLines[8]);
-            Assert.Equal("BWLine black", optionLines[9]);
-            Assert.Equal("LegendTextColour white", optionLines[10]);
+            Assert.Equal("ColourFill Blue", optionLines[5]);
+            Assert.Equal("BWFill Gray", optionLines[6]);
+            Assert.Equal("CategoryBarFill Ivory", optionLines[7]);
+            Assert.Equal("ColourLine Red", optionLines[8]);
+            Assert.Equal("BWLine Black", optionLines[9]);
+            Assert.Equal("LegendTextColour White", optionLines[10]);
             Assert.Equal("LegendPosition Default", optionLines[11]);
             Assert.Equal("PaletteSet Set1", optionLines[12]);
             Assert.Equal("OutputData N", optionLines[13]);
