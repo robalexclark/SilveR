@@ -15,7 +15,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.201
+      version: 5.0.102
 
   - task: DotNetCoreCLI@2
     displayName: dotnet restore
@@ -38,7 +38,7 @@ jobs:
 
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/netcoreapp3.1/ActualResults/*'
+      rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/net5.0/ActualResults/*'
       archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
 
 
@@ -91,7 +91,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.201
+      version: 5.0.102
 
   - task: NodeTool@0
     inputs:
@@ -140,7 +140,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.201
+      version: 5.0.102
 
   - task: NodeTool@0
     inputs:
@@ -192,7 +192,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 3.1.201
+      version: 5.0.102
 
   - task: NodeTool@0
     inputs:
