@@ -341,7 +341,7 @@
                                 <div class="form-group">
                                     <label asp-for="GraphicsTextColour" class="control-label col-xs-4">Font colour</label>
                                     <div class="col-xs-8">
-                                        <input asp-for="GraphicsTextColour" type="text" class="form-control">
+                                        <input asp-for="GraphicsTextColour" type="text" class="form-control" list="Colours">
                                     </div>
                                     <span asp-validation-for="GraphicsTextColour" class="text-danger"></span>
                                 </div>
@@ -357,7 +357,7 @@
                                 <div class="form-group">
                                     <label asp-for="LegendTextColour" class="control-label col-xs-4">Title text colour</label>
                                     <div class="col-xs-8">
-                                        <input asp-for="LegendTextColour" type="text" class="form-control">
+                                        <input asp-for="LegendTextColour" type="text" class="form-control" list="Colours">
                                     </div>
                                     <span asp-validation-for="LegendTextColour" class="text-danger"></span>
                                 </div>

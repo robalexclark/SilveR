@@ -789,9 +789,9 @@ NONCAT_SEM <- function() {
 	if (SEMPlotType == "column") {
 		if (FillTransparency == 1) {
 			if (ErrorBarType == "sem") {
-				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = sehigher, ymin = selower), width = ErrorBarWidth2) 
 			} else {
-				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = cihigher, ymin = cilower), width = ErrorBarWidth2) 
 			}
 			g2 <- g1 + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", alpha = FillTransparency) +
 				 geom_hline(yintercept = 0)
@@ -846,9 +846,9 @@ ONECATSEP_SEM <- function() {
 	if (SEMPlotType == "column") {
 		if (FillTransparency == 1) {
 			if (ErrorBarType == "sem") {
-				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = sehigher, ymin = selower), width = ErrorBarWidth2) 
 			} else {
-				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = cihigher, ymin = cilower), width = ErrorBarWidth2) 
 			}
 			g2 <- g1 + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
 				facet_wrap(~l_l) +
@@ -906,9 +906,9 @@ TWOCATSEP_SEM <- function() {
 	if (SEMPlotType == "column") {
 		if (FillTransparency == 1) {
 			if (ErrorBarType == "sem") {
-				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y), width = ErrorBarWidth2) 
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = sehigher, ymin = selower), width = ErrorBarWidth2) 
 			} else {
-				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y), width = ErrorBarWidth2) 
+				g1 <- g + geom_errorbar(data = graphdata_SEM, aes(y = mean.y, ymax = cihigher, ymin = cilower), width = ErrorBarWidth2) 
 			}
 			g2 <- g1 + geom_bar(data = graphdata_SEM, aes(y = mean.y, x = xvarrr_IVS_SEM), stat = "identity", fill = Gr_fill, colour = "black", pos = 'dodge', alpha = FillTransparency) +
 				facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
@@ -969,9 +969,9 @@ OVERLAID_SEM <- function() {
 	if (SEMPlotType == "column") {
 		if (FillTransparency == 1) {
 			if (ErrorBarType == "sem") {
-				g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + se.y, ymin = mean.y - se.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
+				g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = sehigher, ymin = selower, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
 			} else {
-				g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = mean.y + ci.y, ymin = mean.y - ci.y, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
+				g1 <- g + geom_errorbar(data = graphdataSEM_means, aes(y = mean.y, ymax = cihigher, ymin = cilower, group = l_l), width = ErrorBarWidth2, pos = position_dodge(w = 0.9), colour = "black") 
 			}
 			g2 <- g1 + geom_bar(data = graphdataSEM_means, aes(y = mean.y, x = xvarrr_IVS_SEM, group = l_l, fill = l_l), stat = "identity", colour = "black", pos = 'dodge', alpha = FillTransparency) +
 				geom_hline(yintercept = 0)

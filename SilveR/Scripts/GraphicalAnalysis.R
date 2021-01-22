@@ -739,6 +739,25 @@ if(SEMPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL" && is
 	#Creating the summary dataset
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
 
+	#Reformatting error bars
+	graphdata_SEM$selower  = graphdata_SEM$mean.y - graphdata_SEM$se.y
+	graphdata_SEM$sehigher = graphdata_SEM$mean.y + graphdata_SEM$se.y
+	graphdata_SEM$cilower  = graphdata_SEM$mean.y - graphdata_SEM$ci.y
+	graphdata_SEM$cihigher = graphdata_SEM$mean.y + graphdata_SEM$ci.y
+
+	for ( i in 1:dim(graphdata_SEM)[1]) {
+		if (is.na(graphdata_SEM$mean.y[i]) =="FALSE") {
+			if (graphdata_SEM$mean.y[i] <0) {
+				graphdata_SEM$sehigher[i] = 0
+				graphdata_SEM$cihigher[i] = 0
+			}
+			if (graphdata_SEM$mean.y[i] >= 0) {
+				graphdata_SEM$selower[i] = 0
+				graphdata_SEM$cilower[i] = 0
+			}
+		}
+	}
+
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
 	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
@@ -774,6 +793,27 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 	#Creating the summary dataset
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
 
+
+	#Reformatting error bars
+	graphdata_SEM$selower  = graphdata_SEM$mean.y - graphdata_SEM$se.y
+	graphdata_SEM$sehigher = graphdata_SEM$mean.y + graphdata_SEM$se.y
+	graphdata_SEM$cilower  = graphdata_SEM$mean.y - graphdata_SEM$ci.y
+	graphdata_SEM$cihigher = graphdata_SEM$mean.y + graphdata_SEM$ci.y
+
+	for ( i in 1:dim(graphdata_SEM)[1]) {
+		if (is.na(graphdata_SEM$mean.y[i]) =="FALSE") {
+			if (graphdata_SEM$mean.y[i] <0) {
+				graphdata_SEM$sehigher[i] = 0
+				graphdata_SEM$cihigher[i] = 0
+			}
+			if (graphdata_SEM$mean.y[i] >= 0) {
+				graphdata_SEM$selower[i] = 0
+				graphdata_SEM$cilower[i] = 0
+			}
+		}
+	}
+
+
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
 	png(ncSEMPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
@@ -808,6 +848,26 @@ if(SEMPlot == "Y" && FirstCatFactor != "NULL" && SecondCatFactor != "NULL" && Gr
 
 	#Creating the summary dataset
 	graphdata_SEM<-  ddply(graphdata, ~xvarrr_IVS_SEM+firstcatvarrr_IVS+secondcatvarrr_IVS, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
+
+	#Reformatting error bars
+	graphdata_SEM$selower  = graphdata_SEM$mean.y - graphdata_SEM$se.y
+	graphdata_SEM$sehigher = graphdata_SEM$mean.y + graphdata_SEM$se.y
+	graphdata_SEM$cilower  = graphdata_SEM$mean.y - graphdata_SEM$ci.y
+	graphdata_SEM$cihigher = graphdata_SEM$mean.y + graphdata_SEM$ci.y
+
+	for ( i in 1:dim(graphdata_SEM)[1]) {
+		if (is.na(graphdata_SEM$mean.y[i]) =="FALSE") {
+			if (graphdata_SEM$mean.y[i] <0) {
+				graphdata_SEM$sehigher[i] = 0
+				graphdata_SEM$cihigher[i] = 0
+			}
+			if (graphdata_SEM$mean.y[i] >= 0) {
+				graphdata_SEM$selower[i] = 0
+				graphdata_SEM$cilower[i] = 0
+			}
+		}
+	}
+
 
 	#Plot device setup
 	ncSEMPlot <- sub(".html", "ncSEMPlot.png", htmlFile)
@@ -876,6 +936,25 @@ if(SEMPlot == "Y" && ((FirstCatFactor != "NULL" && SecondCatFactor == "NULL") ||
 
 	#Creating the summary dataset
 	graphdataSEM_means<-  ddply(graphdataSEM_overall, ~xvarrr_IVS_SEM+l_l, summarise, n=length(yvarrr_IVS), mean.y=mean(yvarrr_IVS), se.y=sd(yvarrr_IVS)/sqrt(n), ci.y=(qt(1 - (0.05 / 2), n - 1))*sd(yvarrr_IVS)/sqrt(n))
+
+	#Reformatting error bars
+	graphdataSEM_means$selower  = graphdataSEM_means$mean.y - graphdataSEM_means$se.y
+	graphdataSEM_means$sehigher = graphdataSEM_means$mean.y + graphdataSEM_means$se.y
+	graphdataSEM_means$cilower  = graphdataSEM_means$mean.y - graphdataSEM_means$ci.y
+	graphdataSEM_means$cihigher = graphdataSEM_means$mean.y + graphdataSEM_means$ci.y
+
+	for ( i in 1:dim(graphdataSEM_means)[1]) {
+		if (is.na(graphdataSEM_means$mean.y[i]) =="FALSE") {
+			if (graphdataSEM_means$mean.y[i] <0) {
+				graphdataSEM_means$sehigher[i] = 0
+				graphdataSEM_means$cihigher[i] = 0
+			}
+			if (graphdataSEM_means$mean.y[i] >= 0) {
+				graphdataSEM_means$selower[i] = 0
+				graphdataSEM_means$cilower[i] = 0
+			}
+		}
+	}
 
 	#Plot device setup
 	ncSEMPlotx <- sub(".html", "ncSEMPlotx.png", htmlFile)

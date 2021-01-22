@@ -389,4 +389,1237 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
- <h2> All pairwise comparisons using null's procedure</h2>
+ <h2> Analysis description</h2>
+
+<p class='character'>The data were analysed using a 3-way ANOVA approach, with Treat 17, Treat 18 and Treat 19 as the treatment factors. </p>
+
+<p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
+
+ <h2> References</h2>
+
+<p class='character'>When referring to InVivoStat, please cite 'InVivoStat, version 4.2'.</p>
+
+<p class='character'>Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+
+<p class='character'><bf> Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.</bf></p>
+
+ <h4> R references</h4>
+
+<p class='character'>R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org.</p>
+
+<p class='character'>  Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3,  Vienna, Austria.</p>
+
+<p class='character'>  Barret Schloerke, Jason Crowley, Di Cook, Francois Briatte, Moritz  Marbach, Edwin Thoen, Amos Elberg and Joseph Larmarange (2018).  GGally: Extension to 'ggplot2'. R package version 1.4.0.  https://CRAN.R-project.org/package=GGally</p>
+
+<p class='character'>  Erich Neuwirth (2014). RColorBrewer: ColorBrewer Palettes. R package  version 1.1-2. https://CRAN.R-project.org/package=RColorBrewer</p>
+
+<p class='character'>  H. Wickham. ggplot2: Elegant Graphics for Data Analysis.  Springer-Verlag New York, 2016.</p>
+
+<p class='character'>  Kamil Slowikowski (2019). ggrepel: Automatically Position  Non-Overlapping Text Labels with 'ggplot2'. R package version 0.8.1.  https://CRAN.R-project.org/package=ggrepel</p>
+
+<p class='character'>  H. Wickham. Reshaping data with the reshape package. Journal of  Statistical Software, 21(12), 2007.</p>
+
+<p class='character'>  Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data  Analysis. Journal of Statistical Software, 40(1), 1-29. URL  http://www.jstatsoft.org/v40/i01/.</p>
+
+<p class='character'>  Hadley Wickham and Dana Seidel (2019). scales: Scale Functions for  Visualization. R package version 1.1.0.  https://CRAN.R-project.org/package=scales</p>
+
+<p class='character'>  Gabor Grothendieck, Louis Kates and Thomas Petzoldt (2016). proto:  Prototype Object-Based Programming. R package version 1.0.0.  https://CRAN.R-project.org/package=proto</p>
+
+<p class='character'>  Torsten Hothorn, Frank Bretz and Peter Westfall (2008). Simultaneous  Inference in General Parametric Models. Biometrical Journal 50(3),  346--363.</p>
+
+<p class='character'>  Spencer Graves, Hans-Peter Piepho and Luciano Selzer with help from  Sundar Dorai-Raj (2019). multcompView: Visualizations of Paired  Comparisons. R package version 0.1-8.  https://CRAN.R-project.org/package=multcompView</p>
+
+<p class='character'>  John Fox and Sanford Weisberg (2019). An {R} Companion to Applied  Regression, Third Edition. Thousand Oaks CA: Sage. URL:  https://socialsciences.mcmaster.ca/jfox/Books/Companion/</p>
+
+<p class='character'>  Russell Lenth (2020). emmeans: Estimated Marginal Means, aka  Least-Squares Means. R package version 1.4.6.  https://CRAN.R-project.org/package=emmeans</p>
+
+ <h2> Analysis dataset</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Observation  </th>
+		<th>Treat 17  </th>
+		<th>Treat 18  </th>
+		<th>Treat 19  </th>
+		<th>Resp 13</th> 
+	</tr> 
+<tr> 
+<td class="cellinside"> 1
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.096
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 2
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.056
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 3
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.461
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 4
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.834
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 5
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.657
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 6
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.022
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 7
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.842
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 8
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.633
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 9
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.446
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">10
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.961
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">11
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.789
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">12
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.690
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">13
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.499
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">14
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.653
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">15
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.828
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">16
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.656
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">17
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.361
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">18
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.518
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">19
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.421
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">20
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.223
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">21
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.798
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">22
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.505
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">23
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.485
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">24
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.982
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">25
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.497
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">26
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.983
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">27
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.063
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">28
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.428
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">29
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.820
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">30
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.635
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">31
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.393
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">32
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.016
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">33
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.605
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">34
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.613
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">35
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.689
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">36
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.624
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">37
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.144
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">38
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.455
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">39
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.997
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">40
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.344
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">41
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.485
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">42
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.054
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">43
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.963
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">44
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.876
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">45
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.922
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">46
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.465
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">47
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.475
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">48
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.562
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">49
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.906
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">50
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.507
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">51
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.428
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">52
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.533
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">53
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.197
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">54
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.355
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">55
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.884
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">56
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.575
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">57
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.670
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">58
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.376
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">59
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.824
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">60
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.139
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">61
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.720
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">62
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.856
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">63
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.379
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">64
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.232
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">65
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.493
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">66
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.771
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">67
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.301
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">68
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.234
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">69
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.964
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">70
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.440
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">71
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.309
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">72
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">0.028
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">73
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.481
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">74
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.574
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">75
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.014
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">76
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.697
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">77
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.338
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">78
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.833
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">79
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.861
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">80
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.491
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">81
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.858
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">82
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.132
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">83
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.760
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">84
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">q
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.157
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">85
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.307
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">86
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.390
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">87
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.741
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">88
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.362
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">89
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.625
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">90
+</td>
+<td class="cellinside">'1'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.327
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">91
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.513
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">92
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.145
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">93
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.361
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">94
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.174
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">95
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.522
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">96
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">w
+</td>
+<td class="cellinside">'2'
+</td>
+<td class="cellinside">0.396
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+ <h2> Analysis options</h2>
+
+<p class='character'>Response variable: Resp 13</p>
+
+<p class='character'>Treatment factor(s): Treat 17,Treat 18,Treat 19</p>
+
+<p class='character'>Output ANOVA table (Y/N): Y</p>
+
+<p class='character'>Output residuals vs. predicted plot (Y/N): Y</p>
+
+<p class='character'>Output normal probability plot (Y/N): Y</p>
+
+<p class='character'>Significance level: 0.05</p>
+
+<p class='character'>Selected effect (for pairwise mean comparisons): Treat 17 * Treat 18 * Treat 19</p>
+
+<p class='character'>Output least square (predicted) means (Y/N): Y</p>

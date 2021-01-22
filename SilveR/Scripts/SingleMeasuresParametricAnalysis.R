@@ -46,8 +46,8 @@ if (Module == "SMPA") {
 }
 
 if (Module == "IFPA") {
-	backToControlTest <- "NULL"
-	cntrlGroup <- "NULL"
+	backToControlTest <- "null"
+	cntrlGroup <- "null"
 	genpvals <- Args[20]
 }
 
@@ -1337,7 +1337,7 @@ statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacemen
 statdata<- data.frame(cbind(statdata_num, statdata_char2))
 
 #All pairwise tests
-if(allPairwiseTest != "NULL") {
+if(allPairwiseTest != "null") {
 
 	#All pairwise test options
 	allPairwiseTestText = allPairwiseTest
@@ -1366,7 +1366,10 @@ if(allPairwiseTest != "NULL") {
 		allPairwiseTestText= "Hommel"
 	} else if (allPairwiseTest=="bonferroni") {
 		allPairwiseTestText= "Bonferroni"
+	} else if (allPairwiseTest=="tukey") {
+		allPairwiseTestText= "Tukey"
 	} 
+
 
 	if (allPairwiseTest== "none") {
 		add<-paste(c("All pairwise comparisons without adjustment for multiplicity (LSD test)"))
@@ -1471,7 +1474,7 @@ if(allPairwiseTest != "NULL") {
 		if (tabls[i,6]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", 100*(1-sig), "% level: ", rownames(tabls)[i], sep="")
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", rownames(tabls)[i], sep="")
 			} else {
 				inte<-inte+1
 				add<-paste(add, ", ", rownames(tabls)[i], sep="")
@@ -1480,9 +1483,9 @@ if(allPairwiseTest != "NULL") {
 	}
 	if (inte==1) {
 		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
 		} else {
-			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")
@@ -1523,7 +1526,7 @@ if(allPairwiseTest != "NULL") {
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-if(allPairwiseTest != "NULL") {
+if(allPairwiseTest != "null") {
 	if(GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 		HTML.title("All pairwise comparisons as back-transformed ratios", HR=2, align="left")
 		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
@@ -1610,7 +1613,7 @@ if (backToControlTest=="holm") {
 
 #===================================================================================================================
 #All to one comparisons
-if(backToControlTest != "NULL") {
+if(backToControlTest != "null") {
 
 	#Title
 	if (backToControlTest== "none") {
@@ -1801,7 +1804,7 @@ if(backToControlTest != "NULL") {
 		if (tabls[i,6]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", 100*(1-sig), "% level: ", tabs3$V14[i], sep="")
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", tabs3$V14[i], sep="")
 			} else {
 				inte<-inte+1
 				add<-paste(add, ", ", tabs3$V14[i], sep="")
@@ -1810,9 +1813,9 @@ if(backToControlTest != "NULL") {
 	}
 	if (inte==1) {
 		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
 		} else {
-			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")
@@ -1820,7 +1823,7 @@ if(backToControlTest != "NULL") {
 	HTML(add, align="left")
 
 	if (noeffects>testeffects)  {
-		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table we have assumed that certain higher order interactions are not significant, see log for more details.", align="left")
+		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table certain higher order interactions are assumed to be not significant, see log for more details.", align="left")
 	}
 	if (tablen > 1) {
 		if (backToControlTest== "none") {
@@ -1835,7 +1838,7 @@ if(backToControlTest != "NULL") {
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-if(backToControlTest != "NULL" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+if(backToControlTest != "null" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 	HTML.title("All to one comparisons as back-transformed ratios", HR=2, align="left")
 	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
@@ -2000,7 +2003,7 @@ if (allPairwiseTest== "none" | backToControlTest== "none") {
 	}
 }
 
-if (backToControlTest!= "NULL" & backToControlTest!= "none") {
+if (backToControlTest!= "null" & backToControlTest!= "none") {
 	add<-paste(add, "This was followed by comparisons of the predicted means of the ", selectedEffect , " factor back to the control group mean using ", backToControlTestText , "'s procedure, ", sep="")
 }
 
@@ -2025,7 +2028,7 @@ add<-paste(add, "Hommel (1988). ", sep="")
 
 
 
-if (allPairwiseTest!= "NULL" & allPairwiseTest!= "none") {
+if (allPairwiseTest!= "null" & allPairwiseTest!= "none") {
 	#STB May 2012 Updating "Selected"
 	add<-paste(add, "This was followed by all pairwise comparisons between the predicted means of the ", selectedEffect , sep="")
 	if (factno == 1) {
@@ -2111,8 +2114,8 @@ if(FirstCatFactor != "NULL") {
 	HTML("<bf> Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).",  align="left")
 }
 
-if (allPairwiseTest != "NULL" | backToControlTest !="NULL") {
-	if (tablen >1 & (allPairwiseTest== "none" | backToControlTest=="none"|allPairwiseTest!= "NULL" | backToControlTest=="NULL") ) 	{
+if (allPairwiseTest != "null" | backToControlTest !="null") {
+	if (tablen >1 & (allPairwiseTest== "none" | backToControlTest=="none"|allPairwiseTest!= "null" | backToControlTest=="null") ) 	{
 		HTML("<bf>Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.",  align="left")
 	}
 }
@@ -2196,7 +2199,7 @@ if (OutputAnalysisOps == "Y") {
 	HTML(paste("Output least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
 	
 
-	if (Args[19] != "NULL" && Args[19] != "Unadjusted (LSD)") {
+	if (allPairwiseTest != "null" && Args[19] != "Unadjusted (LSD)") {
 		HTML(paste("All pairwise comparisons procedure: ", allPairwiseTestText, sep=""), align="left")
 	}
 
@@ -2204,7 +2207,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("All pairwise comparisons procedure: Unadjusted (LSD)"), align="left")
 	}
 
-	if (backToControlTest != "NULL" && backToControlTest != "none") {
+	if (backToControlTest != "null" && backToControlTest != "none") {
 		HTML(paste("Comparisons back to control procedure: ", backToControlTestText, sep=""), align="left")
 	}
 
@@ -2212,7 +2215,7 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Comparisons back to control procedure: Unadjusted (LSD)"), align="left")
 	}
 
-	if ( backToControlTest != "NULL" ) {
+	if ( backToControlTest != "null" ) {
 		HTML(paste("Control group: ", cntrlGroup, sep=""), align="left")
 	}
 }

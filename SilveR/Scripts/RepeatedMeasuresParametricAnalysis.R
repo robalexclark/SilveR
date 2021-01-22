@@ -424,7 +424,7 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 
 			ivsanovax<-cbind(tempyx, tempx[1], tempx[2], col3x, col4x)
 
-			headx<-c("Effect", "Num. df","Den. df","F-value", "p-value")
+			headx<-c("Effect", "Num. degrees of freedom", "Denom. degrees of freedom", "F-value", "p-value")
 			colnames(ivsanovax)<-headx
 
 			# Correction to code to ammend lowest p-value: STB Oct 2010
@@ -1474,7 +1474,7 @@ if(pairwiseTest == "allpairwisecomparisons") {
 		if (tabs$V6[i] <= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")
 				add<-paste(add, "% level: ", sep="")
 				add<-paste(add, rows[i], sep="")
@@ -1487,15 +1487,15 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	}
 	if (inte==1) {
 		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
 		} else {
-			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")
 	}
 	HTML(add, align="left")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
+	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1593,7 +1593,7 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 		if (tabs$V6[i] <= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise tests are statistically significantly different at the  ", sep="")
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")
 				add<-paste(add, "% level: ", sep="")
 				add<-paste(add, temp[i], sep="")
@@ -1606,15 +1606,15 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 	}
 	if (inte==1) {
 		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
 		} else {
-			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")
 	}
 	HTML(add, align="left")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
+	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 
 #===================================================================================================================
 #Back transformed geometric means table 

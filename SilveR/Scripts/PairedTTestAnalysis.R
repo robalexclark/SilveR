@@ -328,7 +328,7 @@ if (dimfact ==2) {
 	Line_size <- 0.5
 
 #GGPLOT2 code
-	NONCAT_SCAT("paired")
+	NONCAT_SCAT("PAIRED")
 #===================================================================================================================
 	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
 
@@ -481,7 +481,7 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 			}
 
 			ivsanovax<-cbind(tempyx,tempx[1],tempx[2],col3x,col4x)
-			headx<-c("Effect", "Num. df","Den. df","F-value","p-value")
+			headx<-c("Effect", "Num. degrees of freedom", "Denom. degrees of freedom", "F-value", "p-value")
 			colnames(ivsanovax)<-headx
 
 			# Correction to code to ammend lowest p-value: STB Oct 2010
@@ -548,7 +548,7 @@ if(showANOVA=="Y") {
 	col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
 
 	ivsanova<-cbind(tempy, temp[1], temp[2], col3, col4)
-	head<-c("Effect" , "Num. df" , "Den. df" , "F-value" , "p-value")
+	head<-c("Effect", "Num. degrees of freedom", "Denom. degrees of freedom", "F-value", "p-value")
 	colnames(ivsanova)<-head
 
 	#STB - March 2011 Change p-value to be less than 0.0001
@@ -1121,9 +1121,9 @@ if (showComps == "Y") {
 			if (inte==1) {
 				inte<-inte+1
 				if (dimfact ==2) {
-					add<-paste(add, ": The pairwise test is statistically significant at the  ", sep="")
+					add<-paste(add, ": The pairwise comparison is statistically significant at the  ", sep="")
 				} else {
-					add<-paste(add, ": The following pairwise tests are statistically significant at the  ", sep="")
+					add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				}
 				add<-paste(add, 100*(1-sig), sep="")
 				add<-paste(add, "% level ", sep="")
@@ -1140,16 +1140,16 @@ if (showComps == "Y") {
 
 	if (inte==1) {
 		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise differences.", sep="")
+			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
 		} else {
-			add<-paste(add, ": The pairwise difference is not statistically significant.", sep="")
+			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")
 	}
 	HTML(add, align="left")
 	if (dimfact > 2) {
-		HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise tests you planned 	to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
+		HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparison you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 	}
 	
 #===================================================================================================================

@@ -235,7 +235,9 @@ if (ShowPlot == "Y") {
 	}
 
 	#Oct 2013 - inclusion of explanation of x on the KM plot
-	HTML("Censored observations are highlighted on the Kaplan-Meier survival plot with a filled circle.", align="left")
+	if (suppressWarnings(min(eval(parse(text = paste("statdata$", Censorshipqq))), na.rm = TRUE)) == 0 ) {
+		HTML("Censored observations are highlighted on the Kaplan-Meier survival plot with a filled circle.", align="left")
+	}
 }
 
 #===================================================================================================================

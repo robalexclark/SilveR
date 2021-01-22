@@ -502,8 +502,16 @@ if(covariatelist != "NULL") {
 		graphdatax <- subset(graphdata, catvartest != "N")
 		graphdata<-graphdatax
 
+
 		#GGPLOT2 code
-		OVERLAID_SCAT()
+		if (treatFactors !="NULL") {
+			OVERLAID_SCAT()
+		} else {
+			NONCAT_SCAT("none")
+		}
+
+		#GGPLOT2 code
+#		OVERLAID_SCAT()
 	
 		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
 

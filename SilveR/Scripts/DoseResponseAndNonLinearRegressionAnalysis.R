@@ -388,10 +388,10 @@ if (DoseResponseType == "fourparameter") {
 	}
 
 	if (DoseTransform == "log10") {
-	XAxisTitle <- paste(XAxisTitle, " (on the Log10 scale)",sep="")
+	XAxisTitle <- paste(XAxisTitle, " (on the log10 scale)",sep="")
 	}
 	if (DoseTransform == "loge") {
-	XAxisTitle <- paste(XAxisTitle, " (on the Loge scale)",sep="")
+	XAxisTitle <- paste(XAxisTitle, " (on the loge scale)",sep="")
 	}
 
 	# Setting up the start parameters - need to check user defined options
@@ -443,10 +443,10 @@ if (DoseResponseType == "fourparameter") {
 	HTML(add, align="left")
 
 	if(DoseTransform == "log10") {
-		add<-paste(c("The dose variable ("), DoseVar, ") has been Log10 transformed prior to analysis.",sep="")
+		add<-paste(c("The dose variable ("), DoseVar, ") has been log10 transformed prior to analysis.",sep="")
 	}  
 	if(DoseTransform == "loge") {
-		add<-paste(c("The dose variable ("), DoseVar, ") has been Loge transformed prior to analysis.",sep="")
+		add<-paste(c("The dose variable ("), DoseVar, ") has been loge transformed prior to analysis.",sep="")
 	}
 	HTML(add, align="left")
 
