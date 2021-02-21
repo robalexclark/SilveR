@@ -170,10 +170,11 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "Significance", Value = "0.9" });
             arguments.Add(new Argument { Name = "LSMeansSelected", Value = "True" });
             arguments.Add(new Argument { Name = "Covariance", Value = "Compound Symmetric" });
+            arguments.Add(new Argument { Name = "CompareCovarianceModels", Value = "False" });
             arguments.Add(new Argument { Name = "ControlGroup", Value = "2" });
             arguments.Add(new Argument { Name = "AllPairwiseComparisons", Value = "True" });
 
-            Assert.Equal(15, arguments.Count);
+            Assert.Equal(16, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -192,6 +193,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("0.9", sut.Significance);
             Assert.True(sut.LSMeansSelected);
             Assert.Equal("Compound Symmetric", sut.Covariance);
+            Assert.False(sut.CompareCovarianceModels);
             Assert.Equal("2", sut.ControlGroup);
             Assert.True(sut.AllPairwiseComparisons);
         }
@@ -208,7 +210,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Respivs_sp_ivs1~Cov1+Block1+Block2+Timezzz Day1 Animal1 Cov1 \"Compound Symmetric\" None None Block1,Block2 Y Y N N 2 0.05 N", result);
+            Assert.Equal("Respivs_sp_ivs1~Cov1+Block1+Block2+Timezzz Day1 Animal1 Cov1 \"Compound Symmetric\" N None None Block1,Block2 Y Y N N 2 0.05 N", result);
         }
 
         private PairedTTestAnalysisModel GetModel(IDataset dataset)

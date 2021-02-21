@@ -457,8 +457,8 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 #===================================================================================================================
 #Set up final model
 #===================================================================================================================
-#Test to see if there are 0 df, in which case end module
 
+#Test to see if there are 0 df, in which case end module
 model2 <- paste(Args[4] , " + ", subjectFactor , sep = "")
 threewayfullxxx<-lm(as.formula(model2) , data=statdata, na.action = (na.omit))
 
@@ -468,35 +468,41 @@ if (df.residual(threewayfullxxx) < 1) {
 	quit()
 } 
 
-if(covariance=="compound symmetric" || compareCovarianceModels == "Y" ) {
-	threewayfullCS<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
-}
-
-if(covariance=="autoregressive(1)"|| compareCovarianceModels == "Y" ) {
-	threewayfullAR<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
-}
-
-if(covariance=="unstructured"|| compareCovarianceModels == "Y" ) {
-	threewayfullUN<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
-}
-
-
 if(covariance=="compound symmetric") {
-	threewayfull<-threewayfullCS
+	threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
 }
+
 if(covariance=="autoregressive(1)") {
-	threewayfull<-threewayfullAR
+	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
 }
+
 if(covariance=="unstructured") {
-	threewayfull<-threewayfullUN
+	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 }
 
 #===================================================================================================================
 #Testing covariance model fits
 #===================================================================================================================
 if(compareCovarianceModels == "Y" ) {
+
+	#Set contrast options for Marginal overall tests
+	options(contrasts=c(unordered="contr.treatment", ordered="contr.poly"))
+
+	threewayfullCS<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
+	threewayfullAR<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
+	threewayfullUN<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+
 	AIC_Out<-data.frame(AIC(threewayfullCS , threewayfullUN,threewayfullAR))
 	BIC_Out<-data.frame(BIC(threewayfullCS , threewayfullUN,threewayfullAR))
+
+	temp<-c(
+		format(round(logLik(threewayfullCS, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
+		format(round(logLik(threewayfullUN, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
+		format(round(logLik(threewayfullAR, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE)
+		)
+
+	#Set contrast options for Marginal overall tests
+	options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
 
 	Critnames <- c("Compound Symmetric", "Unstructured", "Autoregressive (1)")
 
@@ -506,19 +512,21 @@ if(compareCovarianceModels == "Y" ) {
 	col3<-format(round(AICtemp, 3), nsmall=3, scientific=FALSE)
 	AIC_Out<- AIC_Out[,-3]
 	AIC_Out<-cbind(AIC_Out, col3)
-
+	
 	#BIC Manipulation
 	BICtemp<- BIC_Out[,2]
 	col3<-format(round(BICtemp, 3), nsmall=3, scientific=FALSE)
 	
+       
 	#Combine results
-	ModelComp<-cbind(AIC_Out, col3)
-	colnames(ModelComp) <- c("Covariance Structure", "Degrees of freedom", "Akaike information criterion (AIC)", "Bayesian information criterion (BIC)")
+	ModelComp<-cbind(AIC_Out, col3, temp)
+ 	colnames(ModelComp) <- c("Covariance Structure", "Degrees of freedom", "Akaike information criterion (AIC)", "Bayesian information criterion (BIC)", "Log-Likelihood")
 
 	HTML.title("Comparing models with different covariance structures", HR=2, align="left")
 	HTML(ModelComp, classfirstline="second", align="left", row.names = "FALSE")
 	HTML("Note: When comparing covariance structures, a lower AIC or BIC value indicates a better fit.", align="left")
 }
+
 #===================================================================================================================
 #ANOVA Table
 #===================================================================================================================

@@ -98,11 +98,15 @@ namespace SilveR.IntegrationTests
         {
             HttpResponseMessage response = await client.PostAsync("Analyses/" + analysisName, content);
             HtmlDocument doc = await GetHtml(response);
-            string script = doc.DocumentNode.Descendants().Last(n => n.Name == "script").InnerText;
-
-            if (String.IsNullOrEmpty(script))
+            var scriptBlock = doc.DocumentNode.Descendants().LastOrDefault(n => n.Name == "script");
+            if(scriptBlock == null)
             {
-                throw new InvalidOperationException("script is null - warnings/errors present?");
+                throw new InvalidOperationException("HTML OUTPUT ERROR:" + doc.ParsedText);
+            }
+
+            if (String.IsNullOrEmpty(scriptBlock.InnerText))
+            {
+                throw new InvalidOperationException("ERRORS/WARNINGS PREVENTED ANALYSIS:" + doc.ParsedText);
             }
             else if (doc.ParsedText.Contains("An unhandled exception occurred while processing the request."))
             {
@@ -110,7 +114,7 @@ namespace SilveR.IntegrationTests
                 throw new InvalidOperationException(error);
             }
 
-            string analysisGuid = script.Split("\"", StringSplitOptions.RemoveEmptyEntries)[1];
+            string analysisGuid = scriptBlock.InnerText.Split("\"", StringSplitOptions.RemoveEmptyEntries)[1];
 
             string jsonResponse = null;
             while (jsonResponse != "true")

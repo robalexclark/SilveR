@@ -1520,7 +1520,7 @@ namespace SilveR.IntegrationTests
             model.RepeatedFactor = "Day2";
             model.Covariance = "Unstructured";
             model.SelectedEffect = "Treat4 * Day2";
-            model.PrimaryFactor = "Treat 4";
+            model.PrimaryFactor = "Treat4";
             model.LSMeansSelected = true;
             model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
             model.NormalPlotSelected = true;
@@ -2545,7 +2545,6 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-
         [Fact]
         public async Task RMA83()
         {
@@ -2570,6 +2569,575 @@ namespace SilveR.IntegrationTests
             //Assert
             Assert.Contains("One or more of the factors (Treat9) has only one level present in the dataset. Please select another factor.", errors);
             Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, errors);
+        }
+
+        [Fact]
+        public async Task RMA84()
+        {
+            string testName = "RMA84";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1" };
+            model.RepeatedFactor = "Day 1";
+            model.Subject = "Animal1";
+            model.Covariance = "Compound Symmetric";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Day 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA85()
+        {
+            string testName = "RMA85";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1" };
+            model.RepeatedFactor = "Day 1";
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.Covariance = "Unstructured";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA86()
+        {
+            string testName = "RMA86";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1" };
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.RepeatedFactor = "Day 1";
+            model.Subject = "Animal1";
+            model.Covariance = "Autoregressive(1)";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA87()
+        {
+            string testName = "RMA87";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.RepeatedFactor = "Day 1";
+            model.Subject = "Animal1";
+            model.Covariance = "Compound Symmetric";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA88()
+        {
+            string testName = "RMA88";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.Covariates = new string[] { "Cov1" };
+            model.RepeatedFactor = "Day 1";
+            model.Subject = "Animal1";
+            model.Covariance = "Compound Symmetric";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA89()
+        {
+            string testName = "RMA89";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.RepeatedFactor = "Day 1";
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Subject = "Animal1";
+            model.Covariance = "Autoregressive(1)";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA90()
+        {
+            string testName = "RMA90";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
+            model.RepeatedFactor = "Day 1";
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.Covariance = "Compound Symmetric";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA91()
+        {
+            string testName = "RMA91";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4" };
+            model.RepeatedFactor = "Day2";
+            model.Subject = "Animal1";
+            model.Covariance = "Unstructured";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat4 * Day2";
+            model.PrimaryFactor = "Treat4";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA92()
+        {
+            string testName = "RMA92";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4" };
+            model.RepeatedFactor = "Day2";
+            model.Subject = "Animal2";
+            model.Covariates = new string[] { "Cov1" };
+            model.Covariance = "Autoregressive(1)";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat4 * Day2";
+            model.PrimaryFactor = "Treat4";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA93()
+        {
+            string testName = "RMA93";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4" };
+            model.RepeatedFactor = "Day2";
+            model.Subject = "Animal2";
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.Covariance = "Compound Symmetric";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat4 * Day2";
+            model.PrimaryFactor = "Treat4";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA94()
+        {
+            string testName = "RMA94";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat4", "Treat5", "Treat6" };
+            model.RepeatedFactor = "Day2";
+            model.Subject = "Animal2";
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Covariance = "Unstructured";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat4 * Treat5 * Day2";
+            model.PrimaryFactor = "Treat4";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA95()
+        {
+            string testName = "RMA95";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1" };
+            model.RepeatedFactor = "Day 1";
+            model.Subject = "Animal1";
+            model.Covariance = "Autoregressive(1)";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA96()
+        {
+            string testName = "RMA96";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Loge";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.RepeatedFactor = "Day 1";
+            model.Covariates = new string[] { "Cov1" };
+            model.Subject = "Animal1";
+            model.Covariance = "Autoregressive(1)";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Treat 2 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA97()
+        {
+            string testName = "RMA97";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp8";
+            model.ResponseTransformation = "Square Root";
+            model.Treatments = new string[] { "Treat 1", "Treat 2", "Treat3" };
+            model.RepeatedFactor = "Day 1";
+            model.OtherDesignFactors = new string[] { "Block1", "Block2" };
+            model.Subject = "Animal1";
+            model.Covariance = "Unstructured";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Treat 2 * Treat3 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllPairwiseComparisons;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp8) contains missing data.", warnings);
+            Helpers.SaveOutput("RepeatedMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA98()
+        {
+            string testName = "RMA98";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp12";
+            model.ResponseTransformation = "ArcSine";
+            model.Treatments = new string[] { "Treat17", "Treat18", "Treat19", "Treat20" };
+            model.RepeatedFactor = "Day3";
+            model.Subject = "Animal3";
+            model.Covariance = "Autoregressive(1)";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat17 * Treat18 * Treat19 * Treat20 * Day3";
+            model.PrimaryFactor = "Treat17";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task RMA99()
+        {
+            string testName = "RMA99";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            RepeatedMeasuresParametricAnalysisModel model = new RepeatedMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Repeated Measures Parametric").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat 1", "Treat 2" };
+            model.RepeatedFactor = "Day 1";
+            model.Covariates = new string[] { "Cov1", "Cov6", "Cov7" };
+            model.Subject = "Animal1";
+            model.Covariance = "Compound Symmetric";
+            model.CompareCovarianceModels = true;
+            model.SelectedEffect = "Treat 1 * Day 1";
+            model.PrimaryFactor = "Treat 1";
+            model.PRPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.NormalPlotSelected = true;
+            model.ComparisonType = RepeatedMeasuresParametricAnalysisModel.ComparisonOption.AllComparisonsWithinSelected;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "RepeatedMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("RepeatedMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "RepeatedMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
     }
 }

@@ -380,8 +380,8 @@ namespace SilveR.Controllers
 
                 byte[] bytes = Encoding.UTF8.GetBytes(htmlSource);
 
-                Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".html");
-                return File(bytes, "application/html");
+                //Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".html");
+                return File(bytes, "application/html", analysisGuid + ".html");
             }
         }
 
@@ -401,7 +401,7 @@ namespace SilveR.Controllers
 
             HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
 
-            byte[] zippedBytes = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 }; //
+            byte[] zippedBytes = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
             if (nodes != null)
             {
                 Dictionary<string, byte[]> files = new Dictionary<string, byte[]>();
@@ -415,8 +415,8 @@ namespace SilveR.Controllers
                 zippedBytes = GetZipArchive(files);
             }
 
-            Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".zip");
-            return File(zippedBytes, "application/zip");
+            //Response.Headers.Add("Content-Disposition", "inline; filename='" + analysisGuid + ".zip'");
+            return File(zippedBytes, "application/zip", analysisGuid + ".zip");
         }
 
         private byte[] GetZipArchive(Dictionary<string, byte[]> files)

@@ -55,6 +55,9 @@ namespace SilveR.StatsModels
         [DisplayName("Covariance")]
         public string Covariance { get; set; } = "Compound Symmetric";
 
+        [DisplayName("Compare covariance models")]
+        public bool CompareCovarianceModels { get; set; }
+
 
         [DisplayName("Table of overall effect tests")]
         public bool ANOVASelected { get; set; } = true;
@@ -161,6 +164,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariance), Covariance));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(CompareCovarianceModels), CompareCovarianceModels));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ANOVASelected), ANOVASelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlotSelected), PRPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlotSelected), NormalPlotSelected));
@@ -183,6 +187,7 @@ namespace SilveR.StatsModels
             this.OtherDesignFactors = argHelper.LoadIEnumerableArgument(nameof(OtherDesignFactors));
             this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
             this.Covariance = argHelper.LoadStringArgument(nameof(Covariance));
+            this.CompareCovarianceModels = argHelper.LoadBooleanArgument(nameof(CompareCovarianceModels));
             this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
             this.ANOVASelected = argHelper.LoadBooleanArgument(nameof(ANOVASelected));
             this.PRPlotSelected = argHelper.LoadBooleanArgument(nameof(PRPlotSelected));
@@ -210,22 +215,24 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(Covariance, false)); //8
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //9
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CompareCovarianceModels)); //9
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseTransformation, false)); //10
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CovariateTransformation, false)); //11
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //12
-            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //13
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //14
-            arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwiseComparisons)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //12
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AllPairwiseComparisons)); //16
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //17
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //18
+
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //19
 
             return arguments.ToString().Trim();
         }
@@ -245,7 +252,7 @@ namespace SilveR.StatsModels
                 model.Append(String.Join('+', OtherDesignFactors) + '+');
             }
 
-            if (Treatment !=null)
+            if (Treatment != null)
             {
                 model.Append("Timezzz"); //Time model needs zzz adding on the end for R to be able to recognise Time var
             }

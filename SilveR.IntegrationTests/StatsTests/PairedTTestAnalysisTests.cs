@@ -664,7 +664,7 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
-            
+
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
@@ -696,7 +696,7 @@ namespace SilveR.IntegrationTests
             model.NormalPlotSelected = true;
             model.LSMeansSelected = true;
             model.AllPairwiseComparisons = true;
-            
+
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
@@ -2254,6 +2254,264 @@ namespace SilveR.IntegrationTests
             //Assert
             Assert.Contains("One or more of the factors (Block4) has only one level present in the dataset. Please select another factor.", errors);
             Helpers.SaveOutput("PairedTTestAnalysis", testName, errors);
+        }
+
+        [Fact]
+        public async Task PTT74()
+        {
+            string testName = "PTT74";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp 1";
+            model.Subject = "Animal1";
+            model.Treatment = "Day1";
+            model.ControlGroup = "4";
+            model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PTT75()
+        {
+            string testName = "PTT75";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Subject = "Animal1";
+            model.Treatment = "Day1";
+            model.ControlGroup = "1";
+            model.Covariance = "Autoregressive(1)";
+            model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PTT76()
+        {
+            string testName = "PTT76";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Square Root";
+            model.Subject = "Animal1";
+            model.Treatment = "Day1";
+            model.ControlGroup = "4";
+            model.Covariance = "Unstructured";
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PTT77()
+        {
+            string testName = "PTT77";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp4";
+            model.ResponseTransformation = "Log10";
+            model.Subject = "Animal1";
+            model.Treatment = "Day1";
+            model.ControlGroup = "4";
+            model.Covariance = "Compound Symmetric";
+            model.Covariates = new string[] { "Cov1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp4) contains missing data.", warnings);
+            Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PTT78()
+        {
+            string testName = "PTT78";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp4";
+            model.ResponseTransformation = "Loge";
+            model.Subject = "Animal1";
+            model.Treatment = "Day1";
+            model.ControlGroup = "4";
+            model.Covariance = "Autoregressive(1)";
+            model.OtherDesignFactors = new string[] { "Block1" };
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp4) contains missing data.", warnings);
+            Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PTT79()
+        {
+            string testName = "PTT79";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp4";
+            model.ResponseTransformation = "Square Root";
+            model.Subject = "Animal1";
+            model.Treatment = "Day1";
+            model.ControlGroup = "1";
+            model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp4) contains missing data.", warnings);
+            Helpers.SaveOutput("PairedTTestAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PTT80()
+        {
+            string testName = "PTT80";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "Resp 1";
+            model.ResponseTransformation = "Log10";
+            model.Subject = "Animal1";
+            model.Treatment = "Day1";
+            model.Covariates = new string[] { "Cov1", "Cov7", "Cov8" };
+            model.ControlGroup = "1";
+            model.Covariance = "Unstructured";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
     }
 }

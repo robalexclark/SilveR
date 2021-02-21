@@ -20,16 +20,17 @@ timeFactor <- Args[5]
 subjectFactor <- Args[6]
 covariatelist <- Args[7]
 covariance <- tolower(Args[8])
-responseTransform <- tolower(Args[9])
-covariateTransform <- tolower(Args[10])
-blocklist <- Args[11]
-showANOVA <- Args[12]
-showPRPlot <- Args[13]
-showNormPlot <- Args[14]
-showComps <- Args[15]
-controlGroup <- Args[16]
-sig <- 1 - as.numeric(Args[17])
-showLSMeans <- Args[18]
+compareCovarianceModels <- Args[9]
+responseTransform <- tolower(Args[10])
+covariateTransform <- tolower(Args[11])
+blocklist <- Args[12]
+showANOVA <- Args[13]
+showPRPlot <- Args[14]
+showNormPlot <- Args[15]
+showComps <- Args[16]
+controlGroup <- Args[17]
+sig <- 1 - as.numeric(Args[18])
+showLSMeans <- Args[19]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -533,6 +534,54 @@ if(covariance=="autoregressive(1)") {
 if(covariance=="unstructured") {
 	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 }
+
+#===================================================================================================================
+#Testing covariance model fits
+#===================================================================================================================
+if(compareCovarianceModels == "Y" ) {
+
+	#Set contrast options for Marginal overall tests
+	options(contrasts=c(unordered="contr.treatment", ordered="contr.poly"))
+
+	threewayfullCS<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
+	threewayfullAR<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.4, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
+	threewayfullUN<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+
+	AIC_Out<-data.frame(AIC(threewayfullCS , threewayfullUN,threewayfullAR))
+	BIC_Out<-data.frame(BIC(threewayfullCS , threewayfullUN,threewayfullAR))
+
+	temp<-c(
+		format(round(logLik(threewayfullCS, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
+		format(round(logLik(threewayfullUN, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
+		format(round(logLik(threewayfullAR, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE)
+		)
+
+	#Set contrast options for Marginal overall tests
+	options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
+
+	Critnames <- c("Compound Symmetric", "Unstructured", "Autoregressive (1)")
+
+	#AIC Manipulation
+	AIC_Out <- cbind (Critnames, AIC_Out)
+	AICtemp<- AIC_Out[,3]
+	col3<-format(round(AICtemp, 3), nsmall=3, scientific=FALSE)
+	AIC_Out<- AIC_Out[,-3]
+	AIC_Out<-cbind(AIC_Out, col3)
+	
+	#BIC Manipulation
+	BICtemp<- BIC_Out[,2]
+	col3<-format(round(BICtemp, 3), nsmall=3, scientific=FALSE)
+	
+       
+	#Combine results
+	ModelComp<-cbind(AIC_Out, col3, temp)
+ 	colnames(ModelComp) <- c("Covariance Structure", "Degrees of freedom", "Akaike information criterion (AIC)", "Bayesian information criterion (BIC)", "Log-Likelihood")
+
+	HTML.title("Comparing models with different covariance structures", HR=2, align="left")
+	HTML(ModelComp, classfirstline="second", align="left", row.names = "FALSE")
+	HTML("Note: When comparing covariance structures, a lower AIC or BIC value indicates a better fit.", align="left")
+}
+
 
 #===================================================================================================================
 #ANOVA Table
@@ -1384,6 +1433,7 @@ if (OutputAnalysisOps == "Y") {
 	}
 
 	HTML(paste("Covariance structure: ", covariance, sep=""), align="left")
+	HTML(paste("Compare covariance models: ", compareCovarianceModels, sep=""),  align="left")
 
 	HTML(paste("Output table of overall effect tests (Y/N): ", showANOVA, sep=""), align="left")
 	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
