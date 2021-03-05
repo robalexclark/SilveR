@@ -364,7 +364,7 @@ namespace SilveR.UnitTests.Models
             Assert.Equal("Set1", userOption.PaletteSet);
             Assert.False(userOption.OutputData);
             Assert.False(userOption.OutputPlotsInBW);
-            Assert.False(userOption.GeometryDisplay);
+            Assert.Equal("NotDisplayed", userOption.GeometryDisplay);
             Assert.False(userOption.CovariateRegressionCoefficients);
             Assert.False(userOption.AssessCovariateInteractions);
             Assert.False(userOption.DisplayLSMeansLines);

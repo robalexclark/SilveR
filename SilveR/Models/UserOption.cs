@@ -58,7 +58,7 @@ namespace SilveR.Models
 
         public bool OutputPlotsInBW { get; set; } = false;
 
-        public bool GeometryDisplay { get; set; } = false;
+        public string GeometryDisplay { get; set; } = "NotDisplayed";
 
         public bool DisplayModelCoefficients { get; set; } = false;
 
@@ -123,7 +123,7 @@ namespace SilveR.Models
             optionLines.Add(nameof(this.OutputData) + " " + (this.OutputData ? "Y" : "N"));
             optionLines.Add(nameof(this.OutputAnalysisOptions) + " " + (this.OutputAnalysisOptions ? "Y" : "N"));
             optionLines.Add(nameof(this.OutputPlotsInBW) + " " + (this.OutputPlotsInBW ? "Y" : "N"));
-            optionLines.Add(nameof(this.GeometryDisplay) + " " + (this.GeometryDisplay ? "Y" : "N"));
+            optionLines.Add(nameof(this.GeometryDisplay) + " " + this.GeometryDisplay);
             optionLines.Add(nameof(this.DisplayModelCoefficients) + " " + (this.DisplayModelCoefficients ? "Y" : "N"));
             optionLines.Add(nameof(this.CovariateRegressionCoefficients) + " " + (this.CovariateRegressionCoefficients ? "Y" : "N"));
             optionLines.Add(nameof(this.AssessCovariateInteractions) + " " + (this.AssessCovariateInteractions ? "Y" : "N"));

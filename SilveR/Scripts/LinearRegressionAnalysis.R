@@ -160,7 +160,20 @@ YAxisTitle <-resp
 for (i in 1:10) {
 	YAxisTitle<-namereplace(YAxisTitle)
 }
-LS_YAxisTitle<-YAxisTitle
+
+#Add transformation to axis labels
+if (responseTransform != "none") {
+	YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+}
+
+if(covariatelist != "NULL") {
+	for (i in 1: nocovlist) {
+		#Add transformation to axis labels
+		if (covariateTransform != "none") {
+			XAxisTitleCov[i]<-axis_relabel(covariateTransform, XAxisTitleCov[i])
+		}
+	}
+}
 
 #Creating the model
 model<- paste(resp , "~" )
@@ -234,7 +247,15 @@ if(covariatelist != "NULL") {
 }
 
 if (responseTransform != "none") {
-	add<-paste(add, c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
+	add<-paste(add, c("The response has been "), responseTransform, " transformed prior to analysis. ", sep="")
+}
+
+if (contFactorTransform != "none") {
+	if (nocontfactors == 1) {
+		add<-paste(add, c("The continuous factor has been "), contFactorTransform, " transformed prior to analysis. ", sep="")
+	} else {
+		add<-paste(add, c("The continuous factors have been "), contFactorTransform, " transformed prior to analysis. ", sep="")
+	}
 }
 
 if (covariatelist !="NULL" && covariateTransform != "none") {
@@ -275,6 +296,12 @@ catvartest <- "Y"
 
 for (i in 1: length(ContinuousList)) {
 	XAxisTitle <- namereplace(ContinuousList[i])
+
+	#Add transformation to axis labels
+	if (responseTransform != "none") {
+		XAxisTitle<-axis_relabel(contFactorTransform, XAxisTitle)
+	}
+
 	graphdata$xvarrr_IVS <-eval(parse(text = paste("statdata$",ContinuousList[i])))
 
 	scatterPlot <- sub(".html", paste(i,"scatterPlot.png",sep=""), htmlFile)

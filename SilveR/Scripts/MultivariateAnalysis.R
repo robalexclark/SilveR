@@ -588,6 +588,17 @@ for (s in 1:length(levels(as.factor(stdata$catfact)))) {
 }
 
 graphdata<-matrixdata[-1,]
+
+#Change Axis labels if transformation performed
+if (responseTransform != "none") {
+	for (i in 1: dim(graphdata)[1]) {
+		graphdata$secondcatvarrr_IVS[i]<-axis_relabel(responseTransform, graphdata$secondcatvarrr_IVS[i])
+	}
+	for (i in 1: dim(graphdata)[1]) {
+		graphdata$firstcatvarrr_IVS[i]<-axis_relabel(responseTransform, graphdata$firstcatvarrr_IVS[i])
+	}
+}
+
 graphdata$catfact <- paste(graphdata$firstcatvarrr_IVS, graphdata$secondcatvarrr_IVS, sep = "")
 graphdata$catfact_2 <- paste(graphdata$firstcatvarrr_IVS, graphdata$secondcatvarrr_IVS, graphdata$l_li, sep = "")
 graphdata$l_l <- paste(graphdata$firstcatvarrr_IVS, graphdata$secondcatvarrr_IVS, sep = "")
@@ -667,7 +678,7 @@ for (d in 1:resplength) {
 			graphdata$xvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][d])))
 			graphdata$yvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][f])))
 			graphdata$l_l <- as.factor(graphdata$catfact)
-	
+
 			MainTitle2<-""
 			w_Gr_jitscat <- 0
 			h_Gr_jitscat <- 0
@@ -690,6 +701,15 @@ for (d in 1:resplength) {
 			}
 			for (z in 1:10) {
 				XAxisTitle<-namereplace(XAxisTitle) 
+			}
+
+			#Add transformation to axis labels
+			if (responseTransform != "none") {
+				XAxisTitle<-axis_relabel(responseTransform, XAxisTitle)
+			}
+			#Add transformation to axis labels
+			if (responseTransform != "none") {
+				YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
 			}
 
 			#Testing for with infinite slopes on scatterplot and re-ordering dataset if necessary

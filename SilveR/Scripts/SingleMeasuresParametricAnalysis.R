@@ -141,6 +141,7 @@ selectedEffectx<- namereplace(selectedEffect)
 
 #replace illegal characters in variable names
 YAxisTitle <-resp
+
 if(FirstCatFactor != "NULL") {
 	XAxisTitleCov<-covlist
 }
@@ -152,6 +153,21 @@ for (i in 1:10) {
 	if(FirstCatFactor != "NULL") {
 		for (i in 1: nocovars) {
 			XAxisTitleCov[i]<-namereplace(XAxisTitleCov[i])
+		}
+	}
+}
+
+BTYAxisTitle <- YAxisTitle
+#Add transformation to axis labels
+if (responseTransform != "none") {
+	YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+}
+
+if(FirstCatFactor != "NULL") {
+	for (i in 1: nocovars) {
+		#Add transformation to axis labels
+		if (covariateTransform != "none") {
+			XAxisTitleCov[i]<-axis_relabel(covariateTransform, XAxisTitleCov[i])
 		}
 	}
 }
@@ -836,151 +852,153 @@ if(showNormPlot=="Y") {
 #LS Means plot and table
 #===================================================================================================================
 if(showLSMeans =="Y") {
-	#STB May 2012 Updating "least square (predicted) means"
-	CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 
-	#Calculate LS Means dataset
-	tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
-	x<-summary(tabs)
+		#Calculate LS Means dataset
+		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
+		x<-summary(tabs)
 	
-	if (Module == "IFPA") {
-		x<-na.omit(x)
-	}
-
-	x$Mean <-x$emmean 
-	for (i in 1:dim(x)[1]) {
-		x$Lower[i] <- x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])
-		x$Upper[i] <- x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])
-	}
-	graphdata<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
-
-	names <- c()
-	for (l in 1:factno) {
-		names[l] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " Level", sep = "")
-	}
-	names[factno+1]<-"Mean"
-	names[factno+2]<-"Lower"
-	names[factno+3]<-"Upper"
-	colnames(graphdata)<-names
-
-	#Calculating dataset for plotting - including a Group factor for higher order interactions
-	graphdata$Group_IVSq_ <- graphdata[,1]
-
-	if (factno > 1) {
-		for (y in 2:factno) {
-			graphdata$Group_IVSq_ <- paste(graphdata$Group_IVSq_, ", ", graphdata[,y], sep = "") 
+		if (Module == "IFPA") {
+			x<-na.omit(x)
 		}
-	}	
 
-#other parameters for the plot
-	Gr_alpha <- 0
-	if (bandw != "N") {
-		Gr_fill <- BW_fill
-	} else {
-		Gr_fill <- Col_fill
-	}
-	YAxisTitle <- LS_YAxisTitle
-	XAxisTitle <- "Group"
-	MainTitle2 <- ""
-	Line_size <- Line_size2
+		x$Mean <-x$emmean 
+		for (i in 1:dim(x)[1]) {
+			x$Lower[i] <- x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])
+			x$Upper[i] <- x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])
+		}
+		graphdata<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
 
-	#Code for LS MEans plot
-	meanPlot <- sub(".html", "meanplot.png", htmlFile)
-	png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+		names <- c()
+		for (l in 1:factno) {
+			names[l] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " Level", sep = "")
+		}
+		names[factno+1]<-"Mean"
+		names[factno+2]<-"Lower"
+		names[factno+3]<-"Upper"
+		colnames(graphdata)<-names
+	
+#===================================================================================================================
+#Table of Least Square means
+#===================================================================================================================
+		#STB May 2012 Updating "least square (predicted) means"
+		CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=2, align="left")
 
-	#STB July2013
-	plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
-	dev.control("enable") 
+		#Calculate LS Means Table
+		x<-summary(tabs)
 
-	#GGPLOT2 code
-	if (factno == 1 || factno > 4) {
-		XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-		LSMPLOT_1()
-	}
+		if (Module == "IFPA") {
+			x<-na.omit(x)
+		}
+	
+		x$Mean <-format(round(x$emmean, 3), nsmall=3, scientific=FALSE) 
+		for (i in 1:dim(x)[1]) {
+			x$Lower[i] <- format(round(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
+			x$Upper[i] <- format(round(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
+		}
 
-	if (factno == 2) {
-		if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2])))) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$jj_1 <- graphdata[,1]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
+		names <- c("")
+		for (l in 1:factno) {
+			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+		}
 
+		x2<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
+
+		observ <- data.frame(c(1:dim(x)[1]))
+		x2 <- cbind(observ, x2)	
+
+		names[1]<-"Mean ID"
+		names[factno+2]<-"Mean"
+		names[factno+3]<-paste("Lower ",(sig*100),"% CI",sep="")
+		names[factno+4]<-paste("Upper ",(sig*100),"% CI",sep="")
+	
+		colnames(x2)<-names
+		HTML(x2, classfirstline="second", align="left", row.names = "FALSE")
+
+#===================================================================================================================
+#LS Means plot code
+#===================================================================================================================
+		#STB May 2012 Updating "least square (predicted) means"
+		CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle, HR=2, align="left")
+
+		#Calculating dataset for plotting - including a Group factor for higher order interactions
+		graphdata$Group_IVSq_ <- graphdata[,1]
+	
+		if (factno > 1) {
+			for (y in 2:factno) {
+				graphdata$Group_IVSq_ <- paste(graphdata$Group_IVSq_, ", ", graphdata[,y], sep = "") 
+			}
+		}	
+	
+		#other parameters for the plot
+		Gr_alpha <- 0
+		if (bandw != "N") {
+			Gr_fill <- BW_fill
 		} else {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$jj_1 <- graphdata[,2]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
+			Gr_fill <- Col_fill
 		}
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("none")
-	}
-
-	if (factno == 3) {
-		if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))  )) {
+		YAxisTitle <- LS_YAxisTitle
+		XAxisTitle <- "Group"
+		MainTitle2 <- ""
+		Line_size <- Line_size2
+	
+		#Code for LS MEans plot
+		meanPlot <- sub(".html", "meanplot.png", htmlFile)
+		png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+	
+		#STB July2013
+		plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
+		dev.control("enable") 
+	
+		#GGPLOT2 code
+		if (factno == 1 || factno > 4) {
 			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$jj_1 <- graphdata[,1]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
-
-		} else  if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3])))  ) {
-				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-				graphdata$jj_1 <- graphdata[,2]
-				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-				graphdata$catzz<-legendz
-				graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
-				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-				graphdata$catzz<-legendz
-				graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
-
-			} else {
-				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-				graphdata$jj_1 <- graphdata[,3]
-				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-				graphdata$catzz<-legendz
-				graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
+			LSMPLOT_1()
+		}
+	
+		if (factno == 2) {
+			if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2])))) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$jj_1 <- graphdata[,1]
 				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
 				graphdata$catzz<-legendz
-				graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
-			}
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("three")
-	}
-
-	if (factno == 4) {
-		if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,4])))) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$jj_1 <- graphdata[,1]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-			graphdata$catzz<-legendz
-			graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,4], sep = "") 
-
-		} else	if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,4])))) {
+				graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
+	
+			} else {
 				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
 				graphdata$jj_1 <- graphdata[,2]
 				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
 				graphdata$catzz<-legendz
 				graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
+			}
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("none")
+		}
+	
+		if (factno == 3) {
+			if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))  )) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$jj_1 <- graphdata[,1]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
 				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
 				graphdata$catzz<-legendz
 				graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
-				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-				graphdata$catzz<-legendz
-				graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,4], sep = "") 
-
-			} else 	if (length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,4])))) {
+	
+			} else  if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3])))  ) {
+					XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+					graphdata$jj_1 <- graphdata[,2]
+					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+					graphdata$catzz<-legendz
+					graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
+					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+					graphdata$catzz<-legendz
+					graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
+	
+				} else {
 					XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
 					graphdata$jj_1 <- graphdata[,3]
 					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
@@ -989,339 +1007,362 @@ if(showLSMeans =="Y") {
 					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
 					graphdata$catzz<-legendz
 					graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
-					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-					graphdata$catzz<-legendz
-					graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,4], sep = "") 
-
-				} else  {
-					XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-					graphdata$jj_1 <- graphdata[,4]
+				}
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("three")
+		}
+	
+		if (factno == 4) {
+			if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,4])))) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$jj_1 <- graphdata[,1]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+				graphdata$catzz<-legendz
+				graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,4], sep = "") 
+	
+			} else	if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,4])))) {
+					XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+					graphdata$jj_1 <- graphdata[,2]
 					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
 					graphdata$catzz<-legendz
 					graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
-					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-					graphdata$catzz<-legendz 
-					graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
 					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
 					graphdata$catzz<-legendz
-					graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
-				} 
-			Gr_palette<- palette_FUN("jj_2")
-			LSMPLOT_2("four")
+					graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
+					legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+					graphdata$catzz<-legendz
+					graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,4], sep = "") 
+	
+				} else 	if (length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,4])))) {
+						XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+						graphdata$jj_1 <- graphdata[,3]
+						legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+						graphdata$catzz<-legendz
+						graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
+						legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+						graphdata$catzz<-legendz
+						graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
+						legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+						graphdata$catzz<-legendz
+						graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,4], sep = "") 
+	
+					} else  {
+						XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+						graphdata$jj_1 <- graphdata[,4]
+						legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+						graphdata$catzz<-legendz
+						graphdata$jj_2 <- paste(graphdata$catzz, "= ",graphdata[,1], sep = "") 
+						legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+						graphdata$catzz<-legendz 
+						graphdata$jj_3 <- paste(graphdata$catzz, "= ",graphdata[,2], sep = "") 
+						legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+						graphdata$catzz<-legendz
+						graphdata$jj_4 <- paste(graphdata$catzz, "= ",graphdata[,3], sep = "") 
+					} 
+				Gr_palette<- palette_FUN("jj_2")
+				LSMPLOT_2("four")
+		}
+	
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlot), Align="left")
+	
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_5<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5)
+			linkToPdf5 <- paste ("<a href=\"",pdfFile_5,"\">Click here to view the PDF of the plot of least square (predicted) means</a>", sep = "")
+			HTML(linkToPdf5)
+		}
 	}
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlot), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5)
-		linkToPdf5 <- paste ("<a href=\"",pdfFile_5,"\">Click here to view the PDF of the plot of least square (predicted) means</a>", sep = "")
-		HTML(linkToPdf5)
-	}
-}
-#===================================================================================================================
-#Table of Least Square means
-#===================================================================================================================
-if(showLSMeans =="Y") {
-	#STB May 2012 Updating "least square (predicted) means"
-	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
-
-	#Calculate LS Means Table
-	x<-summary(tabs)
-
-	if (Module == "IFPA") {
-		x<-na.omit(x)
-	}
-
-	x$Mean <-format(round(x$emmean, 3), nsmall=3, scientific=FALSE) 
-	for (i in 1:dim(x)[1]) {
-		x$Lower[i] <- format(round(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
-		x$Upper[i] <- format(round(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
-	}
-
-	names <- c("")
-	for (l in 1:factno)
-	{
-		names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
-	}
-
-	x2<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
-
-	observ <- data.frame(c(1:dim(x)[1]))
-	x2 <- cbind(observ, x2)
-
-	names[1]<-"Mean ID"
-	names[factno+2]<-"Mean"
-	names[factno+3]<-paste("Lower ",(sig*100),"% CI",sep="")
-	names[factno+4]<-paste("Upper ",(sig*100),"% CI",sep="")
-
-	colnames(x2)<-names
-	HTML(x2, classfirstline="second", align="left", row.names = "FALSE")
 }
 
 #===================================================================================================================
 #Back transformed geometric means plot and table 
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
-	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
 
-#===================================================================================================================
-#LSMeans plot
-#===================================================================================================================
-#Calculate LS Means dataset
-	tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
-	x<-summary(tabs)
+		#Calculate LS Means dataset
+		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
+		x<-summary(tabs)
 
-	if (Module == "IFPA") {
-		x<-na.omit(x)
-	}
-
-	if (responseTransform =="log10") {
-		x$Mean <-10^(x$emmean)
-		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- 10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
-			x$Upper[i] <- 10^(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
+		if (Module == "IFPA") {
+			x<-na.omit(x)
 		}
-	}
 
-	if (responseTransform =="loge") {
-		x$Mean <-exp(x$emmean)
-		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
-			x$Upper[i] <- exp(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
+		if (responseTransform =="log10") {
+			x$Mean <-10^(x$emmean)
+			for (i in 1:dim(x)[1]) {
+				x$Lower[i] <- 10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
+				x$Upper[i] <- 10^(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
+			}
 		}
-	}
-	graphdata<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
-
-	names <- c()
-	for (l in 1:factno) {
-		names[l] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " Level", sep = "")
-	}
-	names[factno+1]<-"Mean"
-	names[factno+2]<-"Lower"
-	names[factno+3]<-"Upper"
-
-	colnames(graphdata)<-names
-
-	#Calculating dataset for plotting - including a Group factor for higher order interactions
-	graphdata$Group_IVSq_ <- graphdata[,1]
-
-	if (factno > 1) {
-		for (y in 2:factno) {
-			graphdata$Group_IVSq_ <- paste(graphdata$Group_IVSq_, ", ", graphdata[,y], sep = "") 
-		}
-	}	
-
-	#other parameters for the plot
-	Gr_alpha <- 0
-	if (bandw != "N") {
-		Gr_fill <- BW_fill
-	} else {
-		Gr_fill <- Col_fill
-	}
-	YAxisTitle <- LS_YAxisTitle
-	XAxisTitle <- "Group"
-	MainTitle2 <- ""
-	#Gr_line <-"black"
-	Line_size <- Line_size2
-
-	#Code for LS MEans plot
-	meanPlotq <- sub(".html", "meanplotq.png", htmlFile)
-	png(meanPlotq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf5q <- sub(".html", "meanplotq.pdf", htmlFile)
-	dev.control("enable") 
-
-	#GGPLOT2 code
-	if (factno == 1 || factno > 4) {
-		XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-		LSMPLOT_1()
-	}
-
-	if (factno == 2) {
-		if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2])))) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$jj_1 <- graphdata[,1]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-		} else {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$jj_1 <- graphdata[,2]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-		}
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("none")
-	}
-
-	if (factno == 3) {
-		if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))  )) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$jj_1 <- graphdata[,1]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-
-		} else  if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3])))  ) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$jj_1 <- graphdata[,2]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-
-		} else {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$jj_1 <- graphdata[,3]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-		}
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("three")
-	}
-
-	if (factno == 4) {
-		if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,4])))) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$jj_1 <- graphdata[,1]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-			graphdata$catzz<-legendz
-			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,4], sep = "") 
 	
-		} else	if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,4])))) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$jj_1 <- graphdata[,2]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-			graphdata$catzz<-legendz
-			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,4], sep = "") 
+		if (responseTransform =="loge") {
+			x$Mean <-exp(x$emmean)
+			for (i in 1:dim(x)[1]) {
+				x$Lower[i] <- exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]))
+				x$Upper[i] <- exp(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i]))
+			}
+		}
+		graphdata<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
+	
+		names <- c()
+		for (l in 1:factno) {
+			names[l] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " Level", sep = "")
+		}
+		names[factno+1]<-"Mean"
+		names[factno+2]<-"Lower"
+		names[factno+3]<-"Upper"
+	
+		colnames(graphdata)<-names
 
-		} else 	if (length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,4])))) {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$jj_1 <- graphdata[,3]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-			graphdata$catzz<-legendz
-			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,4], sep = "") 
 
-		} else  {
-			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
-			graphdata$jj_1 <- graphdata[,4]
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
-			graphdata$catzz<-legendz
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
-			graphdata$catzz<-legendz
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-			legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
-			graphdata$catzz<-legendz
-			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-		} 
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("four")
-	}
+#===================================================================================================================
+#Back transformed geometric table 
+#===================================================================================================================
+		#STB May 2012 Updating "least square (predicted) means"
+		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=2, align="left")
 
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotq), Align="left")
+		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+		if (GeomDisplay == "geometricmeansonly") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
 
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5q), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5q<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5q)
-		linkToPdf5q <- paste ("<a href=\"",pdfFile_5q,"\">Click here to view the PDF of the plot of back transformed geometric means</a>", sep = "")
-		HTML(linkToPdf5q)
+		#Calculate LS Means Table
+		x<-summary(tabs)
+	
+		if (Module == "IFPA") {
+			x<-na.omit(x)
+		}
+	
+		if (responseTransform =="log10") {
+			x$Mean <-format(round(10^(x$emmean), 3), nsmall=3, scientific=FALSE) 
+			for (i in 1:dim(x)[1]) {
+				x$Lower[i] <- format(round(10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+				x$Upper[i] <- format(round(10^(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+			}
+		}
+	
+		if (responseTransform =="loge") {
+			x$Mean <-format(round(exp(x$emmean), 3), nsmall=3, scientific=FALSE) 
+			for (i in 1:dim(x)[1]) {
+				x$Lower[i] <- format(round(exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+				x$Upper[i] <- format(round(exp(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
+			}
+		}
+	
+		names <- c("")
+		for (l in 1:factno)
+		{
+			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+		}
+	
+		x2<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
+	
+		observ <- data.frame(c(1:dim(x)[1]))
+		x2 <- cbind(observ, x2)
+	
+		names[1]<-"Mean ID"
+		names[factno+2]<-"Geometric mean"
+		names[factno+3]<-paste("Lower ",(sig*100),"% CI",sep="")
+		names[factno+4]<-paste("Upper ",(sig*100),"% CI",sep="")
+	
+		colnames(x2)<-names
+		HTML(x2, classfirstline="second", align="left", row.names = "FALSE")
+#===================================================================================================================
+#Geometric means plot
+#===================================================================================================================
+
+		CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle, HR=2, align="left")
+	
+		#Calculating dataset for plotting - including a Group factor for higher order interactions
+		graphdata$Group_IVSq_ <- graphdata[,1]
+	
+		if (factno > 1) {
+			for (y in 2:factno) {
+				graphdata$Group_IVSq_ <- paste(graphdata$Group_IVSq_, ", ", graphdata[,y], sep = "") 
+			}
+		}	
+	
+		#other parameters for the plot
+		Gr_alpha <- 0
+		if (bandw != "N") {
+			Gr_fill <- BW_fill
+		} else {
+			Gr_fill <- Col_fill
+		}
+		YAxisTitle <- BTYAxisTitle
+	
+		XAxisTitle <- "Group"
+		MainTitle2 <- ""
+		#Gr_line <-"black"
+		Line_size <- Line_size2
+	
+		#Code for LS MEans plot
+		meanPlotq <- sub(".html", "meanplotq.png", htmlFile)
+		png(meanPlotq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+	
+		#STB July2013
+		plotFilepdf5q <- sub(".html", "meanplotq.pdf", htmlFile)
+		dev.control("enable") 
+	
+		#GGPLOT2 code
+		if (factno == 1 || factno > 4) {
+			XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+			LSMPLOT_1()
+		}
+	
+		if (factno == 2) {
+			if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2])))) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$jj_1 <- graphdata[,1]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+			} else {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$jj_1 <- graphdata[,2]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+			}
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("none")
+		}
+	
+		if (factno == 3) {
+			if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))  )) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$jj_1 <- graphdata[,1]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+	
+			} else  if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3])))  ) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$jj_1 <- graphdata[,2]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+	
+			} else {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$jj_1 <- graphdata[,3]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+			}
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("three")
+		}
+	
+		if (factno == 4) {
+			if (length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,1]))) > length(unique(levels(graphdata[,4])))) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$jj_1 <- graphdata[,1]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+				graphdata$catzz<-legendz
+				graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,4], sep = "") 
+		
+			} else	if (length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,3]))) &&  length(unique(levels(graphdata[,2]))) > length(unique(levels(graphdata[,4])))) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$jj_1 <- graphdata[,2]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+				graphdata$catzz<-legendz
+				graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,4], sep = "") 
+	
+			} else 	if (length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,1]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,2]))) &&  length(unique(levels(graphdata[,3]))) > length(unique(levels(graphdata[,4])))) {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$jj_1 <- graphdata[,3]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+				graphdata$catzz<-legendz
+				graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,4], sep = "") 
+	
+			} else  {
+				XAxisTitle <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[4]
+				graphdata$jj_1 <- graphdata[,4]
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[1]
+				graphdata$catzz<-legendz
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[2]
+				graphdata$catzz<-legendz
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+				legendz <- unique (strsplit(selectedEffectx, "*",fixed = TRUE)[[1]])[3]
+				graphdata$catzz<-legendz
+				graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+			} 
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("four")
+		}
+	
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotq), Align="left")
+	
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5q), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_5q<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5q)
+			linkToPdf5q <- paste ("<a href=\"",pdfFile_5q,"\">Click here to view the PDF of the plot of back transformed geometric means</a>", sep = "")
+			HTML(linkToPdf5q)
+		}
 	}
 }
 #===================================================================================================================
 #Table of back transformed means
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
 
-	#STB May 2012 Updating "least square (predicted) means"
-	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
 
-	#Calculate LS Means Table
-	x<-summary(tabs)
 
-	if (Module == "IFPA") {
-		x<-na.omit(x)
 	}
-
-	if (responseTransform =="log10") {
-		x$Mean <-format(round(10^(x$emmean), 3), nsmall=3, scientific=FALSE) 
-		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- format(round(10^(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
-			x$Upper[i] <- format(round(10^(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
-		}
-	}
-
-	if (responseTransform =="loge") {
-		x$Mean <-format(round(exp(x$emmean), 3), nsmall=3, scientific=FALSE) 
-		for (i in 1:dim(x)[1]) {
-			x$Lower[i] <- format(round(exp(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
-			x$Upper[i] <- format(round(exp(x$emmean[i]  + x$SE[i]*qt(sig2, x$df[i])), 3), nsmall=3, scientific=FALSE)  
-		}
-	}
-
-	names <- c("")
-	for (l in 1:factno)
-	{
-		names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
-	}
-
-	x2<-subset(x, select = -c(SE, df,emmean, lower.CL, upper.CL )) 
-
-	observ <- data.frame(c(1:dim(x)[1]))
-	x2 <- cbind(observ, x2)
-
-	names[1]<-"Mean ID"
-	names[factno+2]<-"Mean"
-	names[factno+3]<-paste("Lower ",(sig*100),"% CI",sep="")
-	names[factno+4]<-paste("Upper ",(sig*100),"% CI",sep="")
-
-	colnames(x2)<-names
-	HTML(x2, classfirstline="second", align="left", row.names = "FALSE")
 }
+
+
 
 #===================================================================================================================
 #All Pairwise tests
@@ -1370,13 +1411,15 @@ if(allPairwiseTest != "null") {
 		allPairwiseTestText= "Tukey"
 	} 
 
-
 	if (allPairwiseTest== "none") {
 		add<-paste(c("All pairwise comparisons without adjustment for multiplicity (LSD test)"))
 	} else {
 		add<-paste("All pairwise comparisons using ", allPairwiseTestText, "'s procedure", sep="")
 	}
-	HTML.title(add, HR=2, align="left")
+
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		HTML.title(add, HR=2, align="left")
+	}
 
 	if (Module == "SMPA") {
 		mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
@@ -1445,7 +1488,10 @@ if(allPairwiseTest != "null") {
 
 	tabls<-cbind(rows, tabs)
 	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
-	HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+	}
 	rownames(tabls) <- rows
 
 #===================================================================================================================
@@ -1466,6 +1512,69 @@ if(allPairwiseTest != "null") {
 
 		write.csv(tabsxx, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
 	}
+
+#===================================================================================================================
+#Back transformed geometric means table 
+#===================================================================================================================
+	if(responseTransform =="log10"||responseTransform =="loge") {
+		if ( GeomDisplay != "notdisplayed") {
+
+			if (allPairwiseTest== "none") {
+				add<-paste(c("All pairwise comparisons as back-transformed ratios without adjustment for multiplicity (LSD test)"))
+			} else {
+				add<-paste("All pairwise comparisons as back-transformed ratios using ", allPairwiseTestText, "'s procedure", sep="")
+			}
+			HTML.title(add, HR=2, align="left")
+
+			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+			if (GeomDisplay == "geometricmeansonly") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+
+			#Creating the table
+			tabsx<-matrix(nrow=tablen, ncol=4)
+			if (responseTransform =="log10") {
+				for (i in 1:tablen) {
+					tabsx[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
+				}
+				for (i in 1:tablen) {
+				tabsx[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
+				}
+				for (i in 1:tablen) {
+					tabsx[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+				}
+			}
+			if (responseTransform =="loge") {
+				for (i in 1:tablen) {
+					tabsx[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
+			}
+				for (i in 1:tablen) {
+					tabsx[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
+				}
+				for (i in 1:tablen) {
+					tabsx[i,3]=format(round(exp(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+				}
+			}
+
+			tabsx[,4] <- tabs[,5]
+			rows<-rownames(multci$confint)
+			rows<-sub(" - "," / ", rows, fixed=TRUE)
+	
+			#STB June 2015	
+			for (i in 1:100) {
+				rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+			}
+	
+			lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
+			upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
+			tablsx<-cbind(rows, tabsx)
+			colnames(tablsx)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
+			HTML(tablsx, classfirstline="second", align="left", row.names = "FALSE")
+		}
+	}
+
 #===================================================================================================================
 	#Conclusion
 	add<-paste(c("Conclusion"))
@@ -1474,10 +1583,10 @@ if(allPairwiseTest != "null") {
 		if (tabls[i,6]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", rownames(tabls)[i], sep="")
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
 			} else {
 				inte<-inte+1
-				add<-paste(add, ", ", rownames(tabls)[i], sep="")
+				add<-paste(add, ", ", rows[i], sep="")
 			}
 		} 
 	}
@@ -1496,19 +1605,10 @@ if(allPairwiseTest != "null") {
 	if (allPairwiseTest == "tukey") {
 		HTML("Warning: The results of Tukey's procedure are approximate if the sample sizes are not equal.", align="left")
 	}
-#	if(length(grep("\\*", effectModel)) == 0 && length(grep("\\+", effectModel)) == 0 && length(grep("\\+", model)) == 1)  {
-#		add2<-paste(c(" "), " ", sep="")
-#		HTML(add2, align="left")
-#	} else	if (length(grep("\\*", model)) == 0 && length(grep("\\+", effectModel)) == 0 && length(grep("\\+", model)) == 0) {
-#		add2<-paste(c(" "), " ", sep="")
-#		HTML.title("<bf> ", HR=2, align="left")
-#		HTML(add2, align="left")
-#	} 
+
 	if (noeffects>testeffects)  {
 		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. ", align="left")
-#In the above table we have assumed that certain higher-order interactions are not significant and have removed them from the statistical model, see log for more details.", align="left")
 	}
-
 
 	if (tablen >1) {
 		if (allPairwiseTest == "none") {
@@ -1522,55 +1622,6 @@ if(allPairwiseTest != "null") {
 		HTML("Note: The confidence intervals quoted are not adjusted for multiplicity.", align="left")
 	}
 } 
-
-#===================================================================================================================
-#Back transformed geometric means table 
-#===================================================================================================================
-if(allPairwiseTest != "null") {
-	if(GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-		HTML.title("All pairwise comparisons as back-transformed ratios", HR=2, align="left")
-		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
-
-		#Creating the table
-		tabsx<-matrix(nrow=tablen, ncol=3)
-		if (responseTransform =="log10") {
-			for (i in 1:tablen) {
-				tabsx[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-			}
-			for (i in 1:tablen) {
-				tabsx[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-			}
-			for (i in 1:tablen) {
-				tabsx[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
-			}
-		}
-		if (responseTransform =="loge") {
-			for (i in 1:tablen) {
-				tabsx[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-			}
-			for (i in 1:tablen) {
-				tabsx[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-			}
-			for (i in 1:tablen) {
-				tabsx[i,3]=format(round(exp(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
-			}
-		}
-
-		rowsx<-rownames(multci$confint)
-		rowsx<-sub(" - "," / ", rowsx, fixed=TRUE)
-
-		#STB June 2015	
-		for (i in 1:100) {
-			rowsx<-sub("_ivs_dash_ivs_"," - ", rowsx, fixed=TRUE)
-		}
-
-		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-		tablsx<-cbind(rowsx, tabsx)
-		colnames(tablsx)<-c("Comparison","Ratio", lowerCI, upperCI)
-		HTML(tablsx, classfirstline="second", align="left", row.names = "FALSE")
-	}
-}
 
 #===================================================================================================================
 #Back to control comparisons
@@ -1614,14 +1665,15 @@ if (backToControlTest=="holm") {
 #===================================================================================================================
 #All to one comparisons
 if(backToControlTest != "null") {
-
-	#Title
-	if (backToControlTest== "none") {
-		add<-paste(c("All to one comparisons without adjustment for multiplicity (LSD test)"))
-	} else {
-		add<-paste("All to one comparisons using ", backToControlTestText, "'s procedure", sep="")
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		#Title
+		if (backToControlTest== "none") {
+			add<-paste(c("All to one comparisons without adjustment for multiplicity (LSD test)"))
+		} else {
+			add<-paste("All to one comparisons using ", backToControlTestText, "'s procedure", sep="")
+		}
+		HTML.title(add, HR=2, align="left")
 	}
-	HTML.title(add, HR=2, align="left")
 
 	#Creating the table of unadjusted p-values
 	#Generate all pairwise comparisons, unadjusted for multiplicity
@@ -1691,14 +1743,10 @@ if(backToControlTest != "null") {
 
 	for ( i in 1:tablen) {
 		tabs2[i,14] = paste(tabs2[i,12],  " - ", tabs2[i,13], sep = "")
-#STB
-#		tabs2[i,14] = paste(tabs2[i,12],  " vs. ", tabs2[i,13], sep = "")
 	}
 
 	#Subsetting to only the comparisons to control
 	tabs3<-subset(tabs2, V13 == cntrlGroup)
-#STB Dec 2018 - Not sure this is needed
-#	tabs3<-subset(tabs2, tabs2$V13 == cntrlGroup)
 
 	if (backToControlTest== "Dunnett") { 
 
@@ -1753,46 +1801,147 @@ if(backToControlTest != "null") {
 	#STB May 2012 correcting "SEM"
 	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
 
-	HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+	}
 
 #===================================================================================================================
 	#Plot of the comparisons back to control
-	CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle, HR=2, align="left")
 
-	#Code for LS MEans plot
-	meanPlotqq <- sub(".html", "meanplotqq.png", htmlFile)
-	png(meanPlotqq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+		#Code for LS MEans plot
+		meanPlotqq <- sub(".html", "meanplotqq.png", htmlFile)
+		png(meanPlotqq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
-	#STB July2013
-	plotFilepdf5qq <- sub(".html", "meanplotqq.pdf", htmlFile)
-	dev.control("enable") 
+		#STB July2013
+		plotFilepdf5qq <- sub(".html", "meanplotqq.pdf", htmlFile)
+		dev.control("enable") 
 
-	#Setting up the dataset
-	graphdata<-data.frame(tabs4)
-	graphdata$Mean<-as.numeric(graphdata$V1)
-	graphdata$Lower<-as.numeric(graphdata$V2)
-	graphdata$Upper<-as.numeric(graphdata$V3)
-	graphdata$Group_IVSq_<-tabs3$V14
-	Gr_intercept <- 0
-	XAxisTitle <- "Comparison"
-	YAxisTitle <- "Difference between the means"
-	Gr_line_type<-Line_type_dashed
+		#Setting up the dataset
+		graphdata<-data.frame(tabs4)
+		graphdata$Mean<-as.numeric(graphdata$V1)
+		graphdata$Lower<-as.numeric(graphdata$V2)
+		graphdata$Upper<-as.numeric(graphdata$V3)
+		graphdata$Group_IVSq_<-tabs3$V14
+		Gr_intercept <- 0
+		XAxisTitle <- "Comparison"
+		YAxisTitle <- "Difference between the means"
+		Gr_line_type<-Line_type_dashed
 
-	#GGPLOT2 code
-	LSMPLOT_diff()
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq), Align="left")
+		#GGPLOT2 code
+		LSMPLOT_diff()
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq), Align="left")
 
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq)
-		linkToPdf5qq <- paste ("<a href=\"",pdfFile_5qq,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
-		HTML(linkToPdf5qq)
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq)
+			linkToPdf5qq <- paste ("<a href=\"",pdfFile_5qq,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
+			HTML(linkToPdf5qq)
+		}	
+	}
+#===================================================================================================================
+#Back transformed geometric means table 
+#===================================================================================================================
+	if(responseTransform =="log10"||responseTransform =="loge") {
+		if (GeomDisplay != "notdisplayed") {
+
+			#Title
+			if (backToControlTest== "none") {
+				add<-paste(c("All to one comparisons as back-transformed ratios without adjustment for multiplicity (LSD test)"))
+			} else {
+				add<-paste("All to one comparisons as back-transformed ratios using ", backToControlTestText, "'s procedure", sep="")
+			}
+			HTML.title(add, HR=2, align="left")
+	
+			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+			if (GeomDisplay == "geometricmeansonly") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+	
+			#Creating final table
+			tabs4x<-data.frame()
+	
+			if (responseTransform =="log10") {
+				for ( i in 1:dim(tabs3)[1]) {
+					tabs4x[i,1]<-format(round(10^(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
+					tabs4x[i,2]<-format(round(10^(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
+					tabs4x[i,3]<-format(round(10^(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
+				}
+			}
+			if (responseTransform =="loge") {
+				for ( i in 1:dim(tabs3)[1]) {
+					tabs4x[i,1]<-format(round(exp(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
+					tabs4x[i,2]<-format(round(exp(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
+					tabs4x[i,3]<-format(round(exp(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
+				}
+			}
+			tabs4x[,4]<-tabs4[,5]
+	
+			tabs3$V14<-sub(" - "," / ", tabs3$V14, fixed=TRUE)
+		
+			#STB June 2015	
+			for (i in 1:100) {
+				tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
+			}
+		
+			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+	
+			tablsx <- cbind(tabs3$V14, tabs4x)
+			#STB May 2012 correcting "SEM"
+			colnames(tablsx)<-c("Comparison", "Ratio", lowerCI, upperCI, "p-value")
+				
+			HTML(tablsx, classfirstline="second", align="left", row.names = "FALSE")
+			
+#===================================================================================================================
+			#Plot of the comparisons back to control
+			CITitle<-paste("Plot of the comparisons between the back-transformed geometric  means with ",(sig*100),"% confidence intervals",sep="")
+			HTML.title(CITitle, HR=2, align="left")
+	
+			#Code for LS MEans plot
+			meanPlotqs <- sub(".html", "meanplotqs.png", htmlFile)
+			png(meanPlotqs,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+	
+			#STB July2013
+			plotFilepdf5qs <- sub(".html", "meanplotqs.pdf", htmlFile)
+			dev.control("enable") 
+		
+			#Setting up the dataset
+			graphdata<-data.frame(tabs4x)
+			graphdata$Mean<-as.numeric(graphdata$V1)
+			graphdata$Lower<-as.numeric(graphdata$V2)
+			graphdata$Upper<-as.numeric(graphdata$V3)
+			graphdata$Group_IVSq_<-tabs3$V14
+			Gr_intercept <- 1
+			XAxisTitle <- "Comparison"
+			YAxisTitle <- "Ratio of geometric means"
+		
+			#GGPLOT2 code
+			LSMPLOT_diff()
+	
+			void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqs), Align="left")
+	
+			#STB July2013
+			if (pdfout=="Y") {
+					pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qs), height = pdfheight, width = pdfwidth) 
+					dev.set(2) 
+					dev.copy(which=3) 
+					dev.off(2)
+					dev.off(3)
+					pdfFile_5qs<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qs)
+					linkToPdf5qs <- paste ("<a href=\"",pdfFile_5qs,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
+					HTML(linkToPdf5qs)
+			}
+		}
 	}
 
 #===================================================================================================================
@@ -1832,90 +1981,6 @@ if(backToControlTest != "null") {
 	} 
 	if (backToControlTest != "none") {
 		HTML("Note: The confidence intervals quoted are not adjusted for multiplicity.", align="left")
-	}
-}
-
-#===================================================================================================================
-#Back transformed geometric means table 
-#===================================================================================================================
-if(backToControlTest != "null" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	HTML.title("All to one comparisons as back-transformed ratios", HR=2, align="left")
-	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
-
-#Creating final table
-	tabs4x<-data.frame()
-
-	if (responseTransform =="log10") {
-		for ( i in 1:dim(tabs3)[1]) {
-			tabs4x[i,1]<-format(round(10^(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
-			tabs4x[i,2]<-format(round(10^(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
-			tabs4x[i,3]<-format(round(10^(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
-		}
-	}
-	if (responseTransform =="loge") {
-		for ( i in 1:dim(tabs3)[1]) {
-			tabs4x[i,1]<-format(round(exp(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
-			tabs4x[i,2]<-format(round(exp(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
-			tabs4x[i,3]<-format(round(exp(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
-		}
-	}
-
-	tabs3$V14<-sub(" - "," / ", tabs3$V14, fixed=TRUE)
-#STB2019
-#	tabs3$V14<-sub(" vs. "," / ", tabs3$V14, fixed=TRUE)
-
-	#STB June 2015	
-	for (i in 1:100) {
-		tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
-	}
-
-	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-
-	tablsx <- cbind(tabs3$V14, tabs4x)
-	#STB May 2012 correcting "SEM"
-	colnames(tablsx)<-c("Comparison", "Ratio", lowerCI, upperCI)
-	
-	HTML(tablsx, classfirstline="second", align="left", row.names = "FALSE")
-	
-#===================================================================================================================
-	#Plot of the comparisons back to control
-	CITitle<-paste("Plot of the comparisons between the back-transformed geometric  means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
-
-	#Code for LS MEans plot
-	meanPlotqs <- sub(".html", "meanplotqs.png", htmlFile)
-	png(meanPlotqs,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf5qs <- sub(".html", "meanplotqs.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Setting up the dataset
-	graphdata<-data.frame(tabs4x)
-	graphdata$Mean<-as.numeric(graphdata$V1)
-	graphdata$Lower<-as.numeric(graphdata$V2)
-	graphdata$Upper<-as.numeric(graphdata$V3)
-	graphdata$Group_IVSq_<-tabs3$V14
-	Gr_intercept <- 1
-	XAxisTitle <- "Comparison"
-	YAxisTitle <- "Ratio of differences between the geometric means"
-
-	#GGPLOT2 code
-	LSMPLOT_diff()
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqs), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qs), height = pdfheight, width = pdfwidth) 
-			dev.set(2) 
-			dev.copy(which=3) 
-			dev.off(2)
-			dev.off(3)
-			pdfFile_5qs<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qs)
-			linkToPdf5qs <- paste ("<a href=\"",pdfFile_5qs,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
-			HTML(linkToPdf5qs)
 	}
 }
 

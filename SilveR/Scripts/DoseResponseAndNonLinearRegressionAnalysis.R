@@ -14,7 +14,7 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 #Copy Args
 DoseResponseType <- tolower(Args[4])
 ResponseVar <- Args[5]
-ResponseTransform <- tolower(Args[6])
+responseTransform <- tolower(Args[6])
 DoseVar <- Args[7]
 Offsetz <- Args[8]
 DoseTransform <- tolower(Args[9])
@@ -59,7 +59,8 @@ ReferenceLine <- "NULL"
 #Removing illegal characters
 
 if (DoseResponseType == "fourparameter") {
-	YAxisTitle<-paste(ResponseVar, " \n", sep = "")
+#	YAxisTitle<-paste(ResponseVar, " \n", sep = "")
+	YAxisTitle<-ResponseVar
 	XAxisTitle<-DoseVar
 }
 
@@ -73,6 +74,15 @@ for (i in 1:10) {
 	YAxisTitle<-namereplace(YAxisTitle) 
 	XAxisTitle<-namereplace(XAxisTitle)
 }
+
+#Add transformation to axis labels
+if (responseTransform != "none") {
+	YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+}
+if (DoseTransform != "none") {
+	XAxisTitle<-axis_relabel(DoseTransform, XAxisTitle)
+}
+
 
 #===================================================================================================================
 #===================================================================================================================
@@ -380,20 +390,6 @@ if (DoseResponseType == "fourparameter") {
 		statdata$conczzzz = eval(parse(text = paste("statdata$", DoseVar)))
 	}
 
-	#Setting up graph titles
-	if (ResponseTransform == "none") {
-		YAxisTitle <- YAxisTitle
-	} else {
-		YAxisTitle <- paste(ResponseTransform, " (", YAxisTitle, ")",  sep="")
-	}
-
-	if (DoseTransform == "log10") {
-	XAxisTitle <- paste(XAxisTitle, " (on the log10 scale)",sep="")
-	}
-	if (DoseTransform == "loge") {
-	XAxisTitle <- paste(XAxisTitle, " (on the loge scale)",sep="")
-	}
-
 	# Setting up the start parameters - need to check user defined options
 	if (MinStartValue == "NULL") {
 	minp<-min(unlist(lapply(split(eval(parse(text = paste("statdata$", ResponseVar))),statdata$logconczzzz),mean)), na.rm=TRUE)
@@ -435,9 +431,9 @@ if (DoseResponseType == "fourparameter") {
 	HTML.title("Response and dose variables", HR=2, align="left")
 
 	add<-paste("The  ", ResponseVar, " response is currently being analysed by the Dose-response and Non-Linear Regression Analysis module", sep="")
-	if(ResponseTransform != "none") {
-		add<-paste(add, " and has been ", ResponseTransform, " transformed prior to analysis" , sep="")
-		add<-paste(add, ResponseTransform, sep="")
+	if(responseTransform != "none") {
+		add<-paste(add, " and has been ", responseTransform, " transformed prior to analysis" , sep="")
+		add<-paste(add, responseTransform, sep="")
 	}
 	add<-paste(add, ".", sep="")
 	HTML(add, align="left")
@@ -1081,8 +1077,8 @@ if (OutputAnalysisOps == "Y") {
 	{ 
 		HTML(paste("Response variable: ", ResponseVar, sep=""), align="left")
 
-		if (ResponseTransform != "none") {
-			HTML(paste("Response variable transformation: ", ResponseTransform, sep=""), align="left")
+		if (responseTransform != "none") {
+			HTML(paste("Response variable transformation: ", responseTransform, sep=""), align="left")
 		}
 		HTML(paste("Dose variable: ", DoseVar, sep=""), align="left")
 	

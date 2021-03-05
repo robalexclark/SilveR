@@ -64,6 +64,9 @@ HTMLCSS(CSSfile = cssFile)
 set.seed(5041975)
 
 #Graphical parameters
+XAxisTitleHist2<- XAxisTitleHist
+XAxisTitle2<-XAxisTitle
+YAxisTitle2<-YAxisTitle
 
 #Reference line
 if (ReferenceLine != "NULL") {
@@ -99,6 +102,7 @@ if (XAxisTitle == "NULL") {
 if (YAxisTitle == "NULL") {
 	YAxisTitle = YAxisVars
 }
+
 
 #Legend code for overlaid plots
 if (DisplayLegend == "N") {
@@ -308,7 +312,21 @@ for (i in 1:10) {
 #		graphdata$l_l<-namereplace(graphdata$l_l)
 	}
 }
+
+
+#Change histogram title
 XAxisTitleHist = YAxisTitle
+
+#Add transformation to axis labels
+if (YAxisTransform != "none" && YAxisTitle2 == "NULL") {
+	YAxisTitle<-axis_relabel(YAxisTransform, YAxisTitle)
+}
+if (YAxisTransform != "none" && XAxisTitleHist2 == "NULL") {
+	XAxisTitleHist<-axis_relabel(YAxisTransform, XAxisTitleHist)
+}
+if (XAxisTransform != "none" && XAxisTitle2 == "NULL") {
+	XAxisTitle<-axis_relabel(XAxisTransform, XAxisTitle)
+}
 
 #===================================================================================================================
 #Titles and description

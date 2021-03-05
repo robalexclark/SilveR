@@ -186,32 +186,34 @@ if (minval<5 && resplength > 1) {
 #Calculate a confidence interval around the mean - untransformed
 #===================================================================================================================
 if (showCITable == "Y") {
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 
-	citable <- matrix(nrow=resplength, ncol=4)
-	for (i in 1:resplength) {
-		onet <- t.test (eval(parse(text = paste("statdata$", resplist[i]))), mu=truemean, conf.level = sig)
-		citable[i,1] <- resplistqq[i]
-		citable[i,2] <- format(round(as.numeric(onet[5]), 3), nsmall=3, scientific=FALSE)
-		citable[i,3] <- format(round(as.numeric(onet$conf.int[1]), 3), nsmall=3, scientific=FALSE)  
-		citable[i,4] <- format(round(as.numeric(onet$conf.int[2]), 3), nsmall=3, scientific=FALSE)  
+		citable <- matrix(nrow=resplength, ncol=4)
+		for (i in 1:resplength) {
+			onet <- t.test (eval(parse(text = paste("statdata$", resplist[i]))), mu=truemean, conf.level = sig)
+			citable[i,1] <- resplistqq[i]
+			citable[i,2] <- format(round(as.numeric(onet[5]), 3), nsmall=3, scientific=FALSE)
+			citable[i,3] <- format(round(as.numeric(onet$conf.int[1]), 3), nsmall=3, scientific=FALSE)  
+			citable[i,4] <- format(round(as.numeric(onet$conf.int[2]), 3), nsmall=3, scientific=FALSE)  
+		}
+		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")  
+		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")  
+		colnames(citable) <- c("Response" , "Sample mean" ,  lowerCI ,  upperCI)
+	
+		if (resplength ==1) {
+			CITitle<-paste("Table of the sample mean with ",(sig*100),"% confidence interval",sep="")
+		} else {
+			CITitle<-paste("Table of the sample means with ",(sig*100),"% confidence intervals",sep="")
+		}
+		HTML.title(CITitle, HR=2, align="left")
+		HTML(citable, classfirstline="second", align="left", row.names = "FALSE")
 	}
-	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")  
-	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")  
-	colnames(citable) <- c("Response" , "Sample Mean" ,  lowerCI ,  upperCI)
-
-	if (resplength ==1) {
-		CITitle<-paste("Table of the sample mean with ",(sig*100),"% confidence interval",sep="")
-	} else {
-		CITitle<-paste("Table of the sample means with ",(sig*100),"% confidence intervals",sep="")
-	}
-	HTML.title(CITitle, HR=2, align="left")
-	HTML(citable, classfirstline="second", align="left", row.names = "FALSE")
 }
 #===================================================================================================================
 #Calculate a confidence interval around the mean - log10 transformed
 #===================================================================================================================
 
-if (showCITable == "Y" && responseTransform == "log10") {
+if (showCITable == "Y" && responseTransform == "log10" && GeomDisplay != "notdisplayed") {
 	citable <- matrix(nrow=resplength, ncol=4)
 	for (i in 1:resplength) {
 		onet <- t.test (eval(parse(text = paste("statdata$", resplist[i]))), mu=truemean, conf.level = sig)
@@ -222,7 +224,7 @@ if (showCITable == "Y" && responseTransform == "log10") {
 	}
 	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")  
 	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")  
-	colnames(citable) <- c("Response" , "Geometric Mean" ,  lowerCI ,  upperCI)
+	colnames(citable) <- c("Response" , "Geometric mean" ,  lowerCI ,  upperCI)
 
 	if (resplength ==1) {
 		CITitle<-paste("Table of the back-transformed geometric mean with ",(sig*100),"% confidence interval",sep="")
@@ -237,7 +239,7 @@ if (showCITable == "Y" && responseTransform == "log10") {
 #Calculate a confidence interval around the mean - ln transformed
 #===================================================================================================================
 
-if (showCITable == "Y" && responseTransform == "loge") {
+if (showCITable == "Y" && responseTransform == "loge" && GeomDisplay != "notdisplayed") {
 	citable <- matrix(nrow=resplength, ncol=4)
 	for (i in 1:resplength) {
 		onet <- t.test (eval(parse(text = paste("statdata$", resplist[i]))), mu=truemean, conf.level = sig)
@@ -248,7 +250,7 @@ if (showCITable == "Y" && responseTransform == "loge") {
 	}
 	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")  
 	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")  
-	colnames(citable) <- c("Response" , "Geometric Mean" ,  lowerCI ,  upperCI)
+	colnames(citable) <- c("Response" , "Geometric mean" ,  lowerCI ,  upperCI)
 
 	if (resplength ==1) {
 		CITitle<-paste("Table of the back-transformed geometric mean with ",(sig*100),"% confidence interval",sep="")

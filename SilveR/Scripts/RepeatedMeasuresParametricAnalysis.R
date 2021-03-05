@@ -53,7 +53,7 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
-#Parameter setuo
+#Parameter setup
 
 #STB 14OCT2015
 #Set contrast options for Marginal overall tests
@@ -128,7 +128,23 @@ for (i in 1:10) {
 		}
 	}
 }
+BTYAxisTitle<-YAxisTitle
+
+#Add transformation to axis labels
+if (responseTransform != "none") {
+	YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+}
+
+if(covariatelist != "NULL") {
+	for (i in 1: nocovlist) {
+		#Add transformation to axis labels
+		if (covariateTransform != "none") {
+			XAxisTitleCov[i]<-axis_relabel(covariateTransform, XAxisTitleCov[i])
+		}
+	}
+}
 LS_YAxisTitle<-YAxisTitle
+
 
 #Tidying up the selectedEffect
 selectedEffectname <-selectedEffect
@@ -777,308 +793,356 @@ if(showNormPlot=="Y") {
 }
 
 #===================================================================================================================
-# Plot of LS Means
+# Plot and table of LS Means
 #===================================================================================================================
-#Counting Treatment factors in selected Effect
-selectedEffect2<-gsub("*", " * ",selectedEffect,fixed=TRUE) 
-tempseChanges <-strsplit(selectedEffect2, " * ")
-
-txtexpectedseChanges <- c("")
-for(i in 1:length(tempseChanges[[1]]))  {
-	txtexpectedseChanges [length(txtexpectedseChanges )+1]=(tempseChanges[[1]][i]) 
-}
-nosefactors<-(length(txtexpectedseChanges)-2)/2
-
-#Identify within animal degrees of freedom
-df<-anova(threewayfull)[dim(anova(threewayfull))[1],2]
-
-#Calculate LS Means
-tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
-x<-summary(tabs)
-LSM<-data.frame(x)
-leng<-dim(LSM)[1]
-
-for (i in 1:leng) {
-	LSM$DDF[i]<-df
-}
-
-LSM$Mean<-LSM$emmean
-LSM$Lower=LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE
-LSM$Upper=LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE
-LSDATA<-data.frame(LSM)
-	
-#Creatign the final datasset to plot	
-LSDATA$Group_IVSq_<-LSM[,1]
-if (nosefactors > 1) {
-	for (i in 2:nosefactors) {
-		LSDATA$Group_IVSq_ <- paste(LSDATA$Group_IVSq_, " , " , LSDATA[,i] , sep="")
-	}
-}
-
 if(showLSMeans=="Y") {
-	Line_size <- Line_size2
+	#Counting Treatment factors in selected Effect
+	selectedEffect2<-gsub("*", " * ",selectedEffect,fixed=TRUE) 
+	tempseChanges <-strsplit(selectedEffect2, " * ")
 
-	CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
-
-	meanPlot <- sub(".html", "meanplot.png", htmlFile)
-	png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Parameters
-	graphdata<- LSDATA
-	graphdata$jj_1<- graphdata$Timezzz
-	Gr_alpha <- 0
-	if (bandw != "N") {
-		Gr_fill <- BW_fill
-	} else {
-		Gr_fill <- Col_fill
+	txtexpectedseChanges <- c("")
+	for(i in 1:length(tempseChanges[[1]]))  {
+		txtexpectedseChanges [length(txtexpectedseChanges )+1]=(tempseChanges[[1]][i]) 
 	}
-
-	YAxisTitle <- LS_YAxisTitle
-	XAxisTitle <- timeFactor_plot
-	MainTitle2 <- ""
-
-	#GGPLOT2 code
-	if (nosefactors == 1) {
-		graphdata$jj_2 <- graphdata[,1]
-		txtseChanges <- txtexpectedseChanges[2]
-		for (i in 1:20) {
-			txtseChanges<- namereplace(txtseChanges)
-		}
-		graphdata$catzz <- txtseChanges
-		graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("none")
+	nosefactors<-(length(txtexpectedseChanges)-2)/2
+	
+	#Identify within animal degrees of freedom
+	df<-anova(threewayfull)[dim(anova(threewayfull))[1],2]
+	
+	#Calculate LS Means
+	tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
+	x<-summary(tabs)
+	LSM<-data.frame(x)
+	leng<-dim(LSM)[1]
+	
+	for (i in 1:leng) {
+		LSM$DDF[i]<-df
 	}
-
-	if (nosefactors == 2)	{
-		if (length(unique(levels(graphdata[,1]))) <= length(unique(levels(graphdata[,2])))) {
-			graphdata$jj_2 <- graphdata[,1]
-			txtseChanges <- txtexpectedseChanges[2]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
 	
-			graphdata$jj_3 <- graphdata[,2]
-			txtseChanges <- txtexpectedseChanges[4]
-	
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-		} else {
-			graphdata$jj_2 <- graphdata[,2]
-			txtseChanges <- txtexpectedseChanges[4]
-			
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-			graphdata$jj_3 <- graphdata[,1]
-	
-			txtseChanges <- txtexpectedseChanges[2]
-	
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-		}
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("three")
-	}
-
-	if (nosefactors == 3) {
-		if (length(unique(levels(graphdata[,1]))) <= length(unique(levels(graphdata[,2])))  && length(unique(levels(graphdata[,1]))) <= length(unique(levels(graphdata[,3])))       ) {
-			graphdata$jj_2 <- graphdata[,1]
-			txtseChanges <- txtexpectedseChanges[2]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-
-			graphdata$jj_3 <- graphdata[,2]
-			txtseChanges <- txtexpectedseChanges[4]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-
-			graphdata$jj_4 <- graphdata[,3]
-			txtseChanges <- txtexpectedseChanges[6]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-		} else 	if (length(unique(levels(graphdata[,2]))) <= length(unique(levels(graphdata[,1])))  && length(unique(levels(graphdata[,2]))) <= length(unique(levels(graphdata[,3])))       ) {
-			graphdata$jj_2 <- graphdata[,2]
-			txtseChanges <- txtexpectedseChanges[4]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-			graphdata$jj_3 <- graphdata[,1]
-			txtseChanges <- txtexpectedseChanges[2]
-
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-			graphdata$jj_4 <- graphdata[,3]
-			txtseChanges <- txtexpectedseChanges[6]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-		} else 	{
- 			graphdata$jj_2 <- graphdata[,3]
-			txtseChanges <- txtexpectedseChanges[6]
-			for (i in 1:20) {
-			txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-			graphdata$jj_3 <- graphdata[,1]
-			txtseChanges <- txtexpectedseChanges[2]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-			graphdata$jj_4 <- graphdata[,2]
-			txtseChanges <- txtexpectedseChanges[4]
-			for (i in 1:20) {
-				txtseChanges<- namereplace(txtseChanges)
-			}
-			graphdata$catzz <- txtseChanges
-			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-		}
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("four")
-	}
-
-	if (nosefactors > 3) {
-		graphdata$jj_2 <- graphdata[,1]
-	
-		for (i in 4:nosefactors) {
-			graphdata$jj_2 <- paste (graphdata$jj_2, ", ", graphdata[,i], sep="")
-		}
-	
-		graphdata$jj_3 <- graphdata[,2]
-		txtseChanges <- txtexpectedseChanges[4]
-		for (i in 1:20) {
-			txtseChanges<- namereplace(txtseChanges)
-		}
-		graphdata$catzz <- txtseChanges
-		graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
-		graphdata$jj_4 <- graphdata[,3]
-		txtseChanges <- txtexpectedseChanges[6]
-		for (i in 1:20) {
-			txtseChanges<- namereplace(txtseChanges)
-		}
-		graphdata$catzz <- txtseChanges
-		graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-	
-		Gr_palette<- palette_FUN("jj_2")
-		LSMPLOT_2("four")
-	}
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlot), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5)
-		linkToPdf5 <- paste ("<a href=\"",pdfFile_5,"\">Click here to view the PDF of the plot of the least square (predicted) means</a>", sep = "")
-		HTML(linkToPdf5)
-	}
-}
+	LSM$Mean<-LSM$emmean
+	LSM$Lower=LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE
+	LSM$Upper=LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE
+	LSDATA<-data.frame(LSM)
 
 #===================================================================================================================
 # Table of LS Means
 #===================================================================================================================
-if(showLSMeans=="Y") {
-	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 
-	LSDATA$Mean<-format(round(LSM$emmean,3),nsmall=3)
-	LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
-	LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
-	LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean, Group_IVSq_)) 
+		CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=2, align="left")
 
-	observ <- data.frame(c(1:dim(LSDATA2)[1]))
-	LSDATA3 <- cbind(observ, LSDATA2)
+		LSDATA$Mean<-format(round(LSM$emmean,3),nsmall=3)
+		LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
+		LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
+		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean)) 	
 
-	names <- c()
-	for (l in 1:nosefactors) {
-		names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
-	}
+		observ <- data.frame(c(1:dim(LSDATA2)[1]))
+		LSDATA3 <- cbind(observ, LSDATA2)
 
-	names[1]<-"Mean ID"
-	names[nosefactors+2]<-timeFactor
-	names[nosefactors+3]<-"Mean"
-	names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
-	names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
+		names <- c()
+		for (l in 1:nosefactors) {
+			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+		}
 
-	colnames(LSDATA3)<-names
-	rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
+		names[1]<-"Mean ID"
+		names[nosefactors+2]<-timeFactor
+		names[nosefactors+3]<-"Mean"
+		names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
+		names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
 	
-	HTML(LSDATA3, classfirstline="second", align="left", row.names = "FALSE")
+		colnames(LSDATA3)<-names
+		rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
+		HTML(LSDATA3, classfirstline="second", align="left", row.names = "FALSE")
+
+#===================================================================================================================
+# Plot of LS Means
+#===================================================================================================================
+		#Creating the final datasset to plot
+		LSDATA<-data.frame(LSM)	
+		LSDATA$Group_IVSq_<-LSM[,1]
+		if (nosefactors > 1) {
+			for (i in 2:nosefactors) {
+				LSDATA$Group_IVSq_ <- paste(LSDATA$Group_IVSq_, " , " , LSDATA[,i] , sep="")
+			}
+		}
+
+		Line_size <- Line_size2
+
+		CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle, HR=2, align="left")
+
+
+		meanPlot <- sub(".html", "meanplot.png", htmlFile)
+		png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+		#STB July2013
+		plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
+		dev.control("enable") 
+
+		#Parameters
+		graphdata<- LSDATA
+		graphdata$jj_1<- graphdata$Timezzz
+		Gr_alpha <- 0
+		if (bandw != "N") {
+			Gr_fill <- BW_fill
+		} else {
+			Gr_fill <- Col_fill
+		}
+
+		YAxisTitle <- LS_YAxisTitle
+		XAxisTitle <- timeFactor_plot
+		MainTitle2 <- ""
+
+		#GGPLOT2 code
+		if (nosefactors == 1) {
+			graphdata$jj_2 <- graphdata[,1]
+			txtseChanges <- txtexpectedseChanges[2]
+			for (i in 1:20) {
+				txtseChanges<- namereplace(txtseChanges)
+			}
+			graphdata$catzz <- txtseChanges
+			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+	
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("none")
+		}
+
+		if (nosefactors == 2)	{
+			if (length(unique(levels(graphdata[,1]))) <= length(unique(levels(graphdata[,2])))) {
+				graphdata$jj_2 <- graphdata[,1]
+				txtseChanges <- txtexpectedseChanges[2]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+	
+				graphdata$jj_3 <- graphdata[,2]
+				txtseChanges <- txtexpectedseChanges[4]
+		
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+			} else {
+				graphdata$jj_2 <- graphdata[,2]
+				txtseChanges <- txtexpectedseChanges[4]
+				
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+				graphdata$jj_3 <- graphdata[,1]
+		
+				txtseChanges <- txtexpectedseChanges[2]
+		
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+			}
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("three")
+		}
+
+		if (nosefactors == 3) {
+			if (length(unique(levels(graphdata[,1]))) <= length(unique(levels(graphdata[,2])))  && length(unique(levels(graphdata[,1]))) <= length(unique(levels(graphdata[,3])))       ) {
+				graphdata$jj_2 <- graphdata[,1]
+				txtseChanges <- txtexpectedseChanges[2]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+	
+				graphdata$jj_3 <- graphdata[,2]
+				txtseChanges <- txtexpectedseChanges[4]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+	
+				graphdata$jj_4 <- graphdata[,3]
+				txtseChanges <- txtexpectedseChanges[6]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+			} else 	if (length(unique(levels(graphdata[,2]))) <= length(unique(levels(graphdata[,1])))  && length(unique(levels(graphdata[,2]))) <= length(unique(levels(graphdata[,3])))       ) {
+				graphdata$jj_2 <- graphdata[,2]
+				txtseChanges <- txtexpectedseChanges[4]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+				graphdata$jj_3 <- graphdata[,1]
+				txtseChanges <- txtexpectedseChanges[2]
+	
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+				graphdata$jj_4 <- graphdata[,3]
+				txtseChanges <- txtexpectedseChanges[6]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+			} else 	{
+	 			graphdata$jj_2 <- graphdata[,3]
+				txtseChanges <- txtexpectedseChanges[6]
+				for (i in 1:20) {
+				txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+				graphdata$jj_3 <- graphdata[,1]
+				txtseChanges <- txtexpectedseChanges[2]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
+				graphdata$jj_4 <- graphdata[,2]
+				txtseChanges <- txtexpectedseChanges[4]
+				for (i in 1:20) {
+					txtseChanges<- namereplace(txtseChanges)
+				}
+				graphdata$catzz <- txtseChanges
+				graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+			}
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("four")
+		}
+	
+		if (nosefactors > 3) {
+			graphdata$jj_2 <- graphdata[,1]
+		
+			for (i in 4:nosefactors) {
+				graphdata$jj_2 <- paste (graphdata$jj_2, ", ", graphdata[,i], sep="")
+			}
+		
+			graphdata$jj_3 <- graphdata[,2]
+			txtseChanges <- txtexpectedseChanges[4]
+			for (i in 1:20) {
+				txtseChanges<- namereplace(txtseChanges)
+			}
+			graphdata$catzz <- txtseChanges
+			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
+			graphdata$jj_4 <- graphdata[,3]	
+			txtseChanges <- txtexpectedseChanges[6]
+			for (i in 1:20) {
+				txtseChanges<- namereplace(txtseChanges)
+			}
+			graphdata$catzz <- txtseChanges
+			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
+		
+			Gr_palette<- palette_FUN("jj_2")
+			LSMPLOT_2("four")
+		}
+	
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlot), Align="left")
+	
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_5<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5)
+			linkToPdf5 <- paste ("<a href=\"",pdfFile_5,"\">Click here to view the PDF of the plot of the least square (predicted) means</a>", sep = "")
+			HTML(linkToPdf5)
+		}
+	}
 }
 
 #===================================================================================================================
-#Back transformed geometric means plot and table 
+#Back transformed geometric means table and plot 
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
-	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
 
-#===================================================================================================================
-#LSMeans plot
-#===================================================================================================================
-	if (responseTransform =="log10") {
-			LSM$Mean<-10^(LSM$emmean)
-			LSM$Lower=10^(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
-			LSM$Upper=10^(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
-	}
-	if (responseTransform =="loge") {
-			LSM$Mean<-exp(LSM$emmean)
-			LSM$Lower=exp(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
-			LSM$Upper=exp(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
-	}
-	LSDATA<-data.frame(LSM)
-
-	#CreatinG the final datasset to plot	
-	LSDATA$Group_IVSq_<-LSM[,1]
-	if (nosefactors > 1) {
-		for (i in 2:nosefactors) {
-			LSDATA$Group_IVSq_ <- paste(LSDATA$Group_IVSq_, " , " , LSDATA[,i] , sep="")
+		if (responseTransform =="log10") {
+				LSM$Mean<-10^(LSM$emmean)
+				LSM$Lower=10^(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
+				LSM$Upper=10^(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
 		}
-	}
+		if (responseTransform =="loge") {
+				LSM$Mean<-exp(LSM$emmean)
+				LSM$Lower=exp(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
+				LSM$Upper=exp(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
+		}
+		LSDATA<-data.frame(LSM)
 
-	if(showLSMeans=="Y") {
+#===================================================================================================================
+#Table of back transformed plot
+#===================================================================================================================
+		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=2, align="left")
+	
+		if (responseTransform =="log10") {
+			LSDATA$Mean<-format(round(LSM$Mean,3),nsmall=3)
+			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
+			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
+		}
+		if (responseTransform =="loge") {
+			LSDATA$Mean<-format(round(LSM$Mean,3),nsmall=3)
+			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
+			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
+		}
+		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean)) 
+
+		observ <- data.frame(c(1:dim(LSDATA2)[1]))
+		LSDATA3 <- cbind(observ, LSDATA2)
+
+		names <- c()
+		for (l in 1:nosefactors) {
+			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+		}
+	
+		names[1]<-"Mean ID"
+		names[nosefactors+2]<-timeFactor
+		names[nosefactors+3]<-"Geometric mean"
+		names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
+		names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
+		colnames(LSDATA3)<-names
+		rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
+	
+		HTML(LSDATA3, classfirstline="second", align="left", row.names = "FALSE")
+
+#===================================================================================================================
+#Back transformed geometric means plot 
+#===================================================================================================================
+		CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle, HR=2, align="left")
+
+		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+		if (GeomDisplay == "geometricmeansonly") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+
+		#CreatinG the final datasset to plot
+		LSDATA<-data.frame(LSM)		
+		LSDATA$Group_IVSq_<-LSM[,1]
+		if (nosefactors > 1) {
+			for (i in 2:nosefactors) {
+				LSDATA$Group_IVSq_ <- paste(LSDATA$Group_IVSq_, " , " , LSDATA[,i] , sep="")
+			}
+		}
 		Line_size <- Line_size2
-
+	
 		meanPlotd <- sub(".html", "meanplotd.png", htmlFile)
 		png(meanPlotd,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
 
@@ -1096,7 +1160,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||resp
 			Gr_fill <- Col_fill
 		}
 
-		YAxisTitle <- LS_YAxisTitle
+		YAxisTitle <- BTYAxisTitle
 		XAxisTitle <- timeFactor_plot
 		MainTitle2 <- ""
 
@@ -1134,7 +1198,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||resp
 			} else {
 				graphdata$jj_2 <- graphdata[,2]
 				txtseChanges <- txtexpectedseChanges[4]
-				
+					
 				for (i in 1:20) {
 					txtseChanges<- namereplace(txtseChanges)
 				}
@@ -1195,7 +1259,7 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||resp
 				graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
 				graphdata$jj_4 <- graphdata[,3]
 				txtseChanges <- txtexpectedseChanges[6]
-
+	
 				for (i in 1:20) {
 					txtseChanges<- namereplace(txtseChanges)
 				}
@@ -1230,14 +1294,14 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||resp
 			Gr_palette<- palette_FUN("jj_2")
 			LSMPLOT_2("four")
 		}
-	
+		
 		if (nosefactors > 3) {
 			graphdata$jj_2 <- graphdata[,1]
 	
 			for (i in 4:nosefactors) {
 				graphdata$jj_2 <- paste (graphdata$jj_2, ", ", graphdata[,i], sep="")
 			}
-	
+		
 			graphdata$jj_3 <- graphdata[,2]
 			txtseChanges <- txtexpectedseChanges[4]
 			for (i in 1:20) {
@@ -1247,13 +1311,13 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||resp
 			graphdata$jj_3 <- paste(graphdata$catzz, "=",graphdata[,2], sep = "") 
 			graphdata$jj_4 <- graphdata[,3]
 			txtseChanges <- txtexpectedseChanges[6]
-
+	
 			for (i in 1:20) {
 				txtseChanges<- namereplace(txtseChanges)
 			}
 			graphdata$catzz <- txtseChanges
 			graphdata$jj_4 <- paste(graphdata$catzz, "=",graphdata[,3], sep = "") 
-		
+	
 			Gr_palette<- palette_FUN("jj_2")
 			LSMPLOT_2("four")
 		}
@@ -1271,182 +1335,144 @@ if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||resp
 			linkToPdf5d <- paste ("<a href=\"",pdfFile_5d,"\">Click here to view the PDF of the plot of the back-transformed geometric means</a>", sep = "")
 			HTML(linkToPdf5d)
 		}
+	}
+}
 
 #===================================================================================================================
-#Table of LSMeans plot
+#All pairwise tests general code
 #===================================================================================================================
-		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-		HTML.title(CITitle2, HR=2, align="left")
+if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswithinselected") {
+
+	#Denominator degrees of freedom
+	dendf<-ivsanova[dim(ivsanova)[1],3]
+
+	#STB Jun 2015
+	#Creating dataset without dashes in
+
+	ivs_num_ivs <- rep(1:dim(statdata)[1])
+	ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
+	statdata_temp2<- data.frame(cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs ))
+	statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
+	statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
+	statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
+	statdata<- data.frame(cbind(statdata_num, statdata_char2))
 	
-		if (responseTransform =="log10") {
-			LSDATA$Mean<-format(round(LSM$Mean,3),nsmall=3)
-			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
-			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
+	statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
+	statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
+	statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
+	
+	#Re-generate analysis using new dataset without dashes
+	if(covariance=="compound symmetric") {
+		threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
+	}
+	if(covariance=="autoregressive(1)") {
+		threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
+	}
+	if(covariance=="unstructured") {
+		threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+	}
+	
+	if (covariance == "unstructured") {
+		#Generating the differences and SEMs for the unstructured covariance
+		mult.lsm <- emmeans(threewayfull, eval(parse(text = paste("~",selectedEffect))), data=statdata, df=dendf)
+		multc<-contrast(mult.lsm, method="pairwise" , adjust = "none")
+		mult<-data.frame(summary(multc))
+		mult$ratio <- abs(mult$estimate / mult$SE)
+		mult$pvals <- 2*pt(mult$ratio, dendf, lower=FALSE)
+		mult$tval<- abs(qt((1-sig)/2, dendf))
+		mult$lower <- mult$estimate - mult$tval * mult$SE
+		mult$upper <- mult$estimate + mult$tval * mult$SE
+	
+		#Creating the rownames for the splitting below
+		rows1 <-data.frame(mult$contrast)
+		rows2 <-mult$contrast
+		rownames(rows1)<-rows2
+		rows<-rownames(rows1)
+	
+		#Creating the final table tabs
+		tablen<-dim(mult)[1]
+		tabs<-data.frame(matrix(NA, nrow = tablen, ncol = 1))
+	
+		for (i in 1:tablen) {	
+			tabs$V1[i]=mult$estimate[i]
+		}		
+		for (i in 1:tablen) {
+			tabs$V2[i]=mult$lower[i]
 		}
-		if (responseTransform =="loge") {
-			LSDATA$Mean<-format(round(LSM$Mean,3),nsmall=3)
-			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
-			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
+		for (i in 1:tablen) {
+			tabs$V3[i]=mult$upper[i]
 		}
-		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean, Group_IVSq_)) 
-
-		observ <- data.frame(c(1:dim(LSDATA2)[1]))
-		LSDATA3 <- cbind(observ, LSDATA2)
-
-		names <- c()
-		for (l in 1:nosefactors) {
-			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+		for (i in 1:tablen) {
+			tabs$V4[i]=format(round(mult$SE[i], 3), nsmall=3, scientific=FALSE)
+		}
+		for (i in 1:tablen) {
+			tabs$V5[i]=format(round(mult$pvals[i], 4), nsmall=4, scientific=FALSE)
+		}
+		for (i in 1:tablen) {
+			tabs$V6[i]=mult$pvals[i]
+		}
+		for (i in 1:tablen)  {
+			if (mult$pvals[i]<0.0001) {
+				# STB - March 2011 formatting p<0.0001
+				tabs$V5[i]<-0.0001
+				tabs$V5[i]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+				tabs$V5[i]<- paste("<",tabs$V5[i])
+			}
 		}
 	
-		names[1]<-"Mean ID"
-		names[nosefactors+2]<-timeFactor
-		names[nosefactors+3]<-"Mean"
-		names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
-		names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
-		colnames(LSDATA3)<-names
-		rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
+		#removing the first column of the tabs dataset
+		tabs<-tabs[,-1]
+	} else {
+		#Creating the table of differences and SEMs for the AR(1) and CS structure and the tabs dataset
+		mult<-glht(threewayfull, linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))),df=dendf)
+		multci<-confint(mult, level=sig, calpha = univariate_calpha())
+		multp<-summary(mult, test=adjusted("none"))
+		rows<-rownames(multci$confint)
+		pvals<-multp$test$pvalues
+		sigma<-multp$test$sigma
+		tablen<-length(unique(rownames(multci$confint)))
+		tabs<-data.frame(nrow=tablen, ncol=6)
 	
-		HTML(LSDATA3, classfirstline="second", align="left", row.names = "FALSE")
-	}
-}
-
-#===================================================================================================================
-#All pairwise tests
-#===================================================================================================================
-#Denominator degrees of freedom
-dendf<-ivsanova[dim(ivsanova)[1],3]
-
-#STB Jun 2015
-#Creating dataset without dashes in
-
-ivs_num_ivs <- rep(1:dim(statdata)[1])
-ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
-statdata_temp2<- data.frame(cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs ))
-statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
-statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
-statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
-statdata<- data.frame(cbind(statdata_num, statdata_char2))
-
-statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
-statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
-statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
-
-#Re-generate analysis using new dataset without dashes
-if(covariance=="compound symmetric") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
-}
-if(covariance=="autoregressive(1)") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
-}
-if(covariance=="unstructured") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
-}
-
-if (covariance == "unstructured") {
-	#Generating the differences and SEMs for the unstructured covariance
-	mult.lsm <- emmeans(threewayfull, eval(parse(text = paste("~",selectedEffect))), data=statdata, df=dendf)
-	multc<-contrast(mult.lsm, method="pairwise" , adjust = "none")
-	mult<-data.frame(summary(multc))
-	mult$ratio <- abs(mult$estimate / mult$SE)
-	mult$pvals <- 2*pt(mult$ratio, dendf, lower=FALSE)
-	mult$tval<- abs(qt((1-sig)/2, dendf))
-	mult$lower <- mult$estimate - mult$tval * mult$SE
-	mult$upper <- mult$estimate + mult$tval * mult$SE
-
-	#Creating the rownames for the splitting below
-	rows1 <-data.frame(mult$contrast)
-	rows2 <-mult$contrast
-	rownames(rows1)<-rows2
-	rows<-rownames(rows1)
-
-	#Creating the final table tabs
-	tablen<-dim(mult)[1]
-	tabs<-data.frame(matrix(NA, nrow = tablen, ncol = 1))
-
-	for (i in 1:tablen) {	
-		tabs$V1[i]=mult$estimate[i]
-	}		
-	for (i in 1:tablen) {
-		tabs$V2[i]=mult$lower[i]
-	}
-	for (i in 1:tablen) {
-		tabs$V3[i]=mult$upper[i]
-	}
-	for (i in 1:tablen) {
-		tabs$V4[i]=format(round(mult$SE[i], 3), nsmall=3, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs$V5[i]=format(round(mult$pvals[i], 4), nsmall=4, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs$V6[i]=mult$pvals[i]
-	}
-	for (i in 1:tablen)  {
-		if (mult$pvals[i]<0.0001) {
+		for (i in 1:tablen) {
+			#STB Dec 2011 formatting 3dp
+			tabs[i,1]=multci$confint[i]
+		}
+		for (i in 1:tablen) {
+			tabs[i,2]=multci$confint[i+tablen]
+		}
+		for (i in 1:tablen) {
+			tabs[i,3]=multci$confint[i+2*tablen]
+		}
+		for (i in 1:tablen) {
+			tabs[i,4]=format(round(sigma[i], 3), nsmall=3, scientific=FALSE)
+		}
+		for (i in 1:tablen) {
+			tabs[i,5]=format(round(pvals[i], 4), nsmall=4, scientific=FALSE)
+		}
+		for (i in 1:tablen) {
+			tabs[i,6]=pvals[i]
+		}
+		for (i in 1:tablen) {
+			if (pvals[i]<0.0001) {
 			# STB - March 2011 formatting p<0.0001
-			tabs$V5[i]<-0.0001
-			tabs$V5[i]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			tabs$V5[i]<- paste("<",tabs$V5[i])
+				# tabs[i,5]<-0.0001
+				tabs[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+				tabs[i,5]<- paste("<",tabs[i,5])
+			}
 		}
 	}
 
-	#removing the first column of the tabs dataset
-	tabs<-tabs[,-1]
-} else {
-	#Creating the table of differences and SEMs for the AR(1) and CS structure and the tabs dataset
-	mult<-glht(threewayfull, linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))),df=dendf)
-	multci<-confint(mult, level=sig, calpha = univariate_calpha())
-	multp<-summary(mult, test=adjusted("none"))
-	rows<-rownames(multci$confint)
-	pvals<-multp$test$pvalues
-	sigma<-multp$test$sigma
-	tablen<-length(unique(rownames(multci$confint)))
-	tabs<-data.frame(nrow=tablen, ncol=6)
+	#Creating the list of comparisons
+	tell1<-t(data.frame(strsplit(rows, " - ")))[,1]
+	tell2<-t(data.frame(strsplit(rows, " - ")))[,2]
+	tell1a<-t(data.frame(strsplit(tell1, ",")))
+	tell2a<-t(data.frame(strsplit(tell2, ",")))
+	tell1b<-tell1a[,dim(tell1a)[2]]
+	tell2b<-tell2a[,dim(tell2a)[2]]
+	tellfinal<-cbind(tell1b,tell2b)
 
-	for (i in 1:tablen) {
-		#STB Dec 2011 formatting 3dp
-		tabs[i,1]=multci$confint[i]
-	}
-	for (i in 1:tablen) {
-		tabs[i,2]=multci$confint[i+tablen]
-	}
-	for (i in 1:tablen) {
-		tabs[i,3]=multci$confint[i+2*tablen]
-	}
-	for (i in 1:tablen) {
-		tabs[i,4]=format(round(sigma[i], 3), nsmall=3, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs[i,5]=format(round(pvals[i], 4), nsmall=4, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs[i,6]=pvals[i]
-	}
-	for (i in 1:tablen) {
-		if (pvals[i]<0.0001) {
-			# STB - March 2011 formatting p<0.0001
-			# tabs[i,5]<-0.0001
-			tabs[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			tabs[i,5]<- paste("<",tabs[i,5])
-		}
-	}
-}
-
-#Creating the list of comparisons
-tell1<-t(data.frame(strsplit(rows, " - ")))[,1]
-tell2<-t(data.frame(strsplit(rows, " - ")))[,2]
-tell1a<-t(data.frame(strsplit(tell1, ",")))
-tell2a<-t(data.frame(strsplit(tell2, ",")))
-tell1b<-tell1a[,dim(tell1a)[2]]
-tell2b<-tell2a[,dim(tell2a)[2]]
-tellfinal<-cbind(tell1b,tell2b)
-
-if(pairwiseTest == "allpairwisecomparisons") {
-	#Creatng dataset for printing
+	#Creating dataset for printing
 	tabs_final<-tabs
-
-	#Title
-	HTML.title("All pairwise comparisons, without adjustment for multiplicity", HR=2, align="left")
 
 	tabs_final[1]=format(round(tabs_final[1], 3), nsmall=3, scientific=FALSE)
 	tabs_final[2]=format(round(tabs_final[2], 3), nsmall=3, scientific=FALSE)
@@ -1456,8 +1482,6 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	for (i in 1:100) {
 		rows<-sub("_.._"," ", rows, fixed=TRUE)
 	}
-#STB2019
-#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
 
 	#STB June 2015	
 	for (i in 1:100) {
@@ -1469,128 +1493,188 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 	colnames(tabs_final)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 	tabs_final2<-subset(tabs_final, select = -c(temp)) 
-	
-	#print table
-	HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
-
-	#Conclusion
-	add<-paste(c("Conclusion"))
-	inte<-1
-	tempnames<-rownames(tabs_final)
-
-	for(i in 1:(dim(tabs)[1])) {
-		if (tabs$V6[i] <= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
-				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: ", sep="")
-				add<-paste(add, rows[i], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", sep="")
-				add<-paste(add, rows[i], sep="")
-			}
-		} 
-	}
-	if (inte==1) {
-		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
-		} else {
-			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
-		}
-	} else {
-		add<-paste(add, ". ", sep="")
-	}
-	HTML(add, align="left")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
-
-#===================================================================================================================
-#Back transformed geometric means table 
-#===================================================================================================================
-	if(GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-
-		HTML.title("All pairwise comparisons, as back-transformed ratios", HR=2, align="left")
-		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
-
-		#Creating data for printing
-		tabs_final_log<-tabs
-
-		if (responseTransform =="log10") {
-			tabs_final_log[1]<-10^tabs_final_log[1]
-			tabs_final_log[2]<-10^tabs_final_log[2]
-			tabs_final_log[3]<-10^tabs_final_log[3]
-			tabs_final_log[1]=format(round(tabs_final_log[1], 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[2]=format(round(tabs_final_log[2], 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[3]=format(round(tabs_final_log[3], 3), nsmall=3, scientific=FALSE)
-		}
-		if (responseTransform =="loge") {
-			tabs_final_log[1]=format(round(exp(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[2]=format(round(exp(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[3]=format(round(exp(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
-		}
-
-		#creating the final dataset for printing
-		tabs_final_log <- data.frame(tabs_final_log)
-
-		for (i in 1:100) {
-			rowslg<-sub("_.._"," ", rows, fixed=TRUE)
-		}
-		rowslg<-sub(" vs. "," / ", rowslg, fixed=TRUE)
-
-		#STB June 2015	
-		for (i in 1:100) {
-			rowslg<-sub("_ivs_dash_ivs_"," - ", rowslg, fixed=TRUE)
-		}
-
-		tabs_final_log <- cbind(rowslg, tabs_final_log)
-		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-		colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
-		tabs_final_log<-subset(tabs_final_log, select = -c(Stderror, pvalue , temp)) 
-	
-		#print table
-		HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
-	}
 }
 
 #===================================================================================================================
-
-if(pairwiseTest == "allcomparisonswithinselected") {
-	HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
-
-	#Creating the subsetted version of tabs dataset
-	tabs <- data.frame(cbind(tabs, tellfinal))
-	rownames(tabs)<-c(rows)
-	tabs<-subset(tabs, tell1b==tell2b)
-	tabs<-subset(tabs, select = -c(tell1b,tell2b)) 
-
-	#Creating the dataset for printing
-	tabs_final<-tabs
-	tabs_final[1]=format(round(tabs_final[1], 3), nsmall=3, scientific=FALSE)
-	tabs_final[2]=format(round(tabs_final[2], 3), nsmall=3, scientific=FALSE)
-	tabs_final[3]=format(round(tabs_final[3], 3), nsmall=3, scientific=FALSE)
-
-	#creating the final dataset for printing
-	temp<-rownames(tabs_final)
-
-	#STB June 2015
-#STB2019
-#	temp<-sub(" - "," vs. ", temp, fixed=TRUE)
-
-	#STB June 2015	
-	for (i in 1:100) {
-		temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
+#All pairwise tests 
+#===================================================================================================================
+if(pairwiseTest == "allpairwisecomparisons") {
+	#Title
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		HTML.title("All pairwise comparisons, without adjustment for multiplicity", HR=2, align="left")
 	}
 
-	tabs_final <- cbind(temp, tabs_final)
+	#print table
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
+	}
 
-	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-	colnames(tabs_final)<-c("Comparison","Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 
-	tabs_final2<-subset(tabs_final, select = -c(temp)) 
-	HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
+#===================================================================================================================
+#Back transformed geometric means table 
+#===================================================================================================================
+	if(responseTransform =="log10"||responseTransform =="loge") {
+		if ( GeomDisplay != "notdisplayed") {
+			HTML.title("All pairwise comparisons, as back-transformed ratios", HR=2, align="left")
+
+			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+			if (GeomDisplay == "geometricmeansonly") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+
+			#Creating data for printing
+			tabs_final_log<-tabs
+
+			if (responseTransform =="log10") {
+				tabs_final_log[1]<-10^tabs_final_log[1]
+				tabs_final_log[2]<-10^tabs_final_log[2]
+				tabs_final_log[3]<-10^tabs_final_log[3]
+				tabs_final_log[1]=format(round(tabs_final_log[1], 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[2]=format(round(tabs_final_log[2], 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[3]=format(round(tabs_final_log[3], 3), nsmall=3, scientific=FALSE)
+			}
+			if (responseTransform =="loge") {
+				tabs_final_log[1]=format(round(exp(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[2]=format(round(exp(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[3]=format(round(exp(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
+			}
+
+			#creating the final dataset for printing
+			tabs_final_log <- data.frame(tabs_final_log)
+
+			for (i in 1:100) {
+				rows<-sub("-","/", rows, fixed=TRUE)
+			}
+
+			tabs_final_log <- cbind(rows, tabs_final_log)
+			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+			colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
+			tabs_final_log<-subset(tabs_final_log, select = -c(Stderror,  temp)) 
+	
+			#print table
+			HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
+		}
+	}
+
+	#Conclusion
+	add<-paste(c("Conclusion"))
+	inte<-1
+	tempnames<-rownames(tabs_final)
+
+	for(i in 1:(dim(tabs)[1])) {
+		if (tabs$V6[i] <= (1-sig)) {
+			if (inte==1) {
+				inte<-inte+1
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
+				add<-paste(add, 100*(1-sig), sep="")
+				add<-paste(add, "% level: ", sep="")
+				add<-paste(add, rows[i], sep="")
+			} else {
+				inte<-inte+1
+				add<-paste(add, ", ", sep="")
+				add<-paste(add, rows[i], sep="")
+			}
+		} 
+	}
+	if (inte==1) {
+		if (tablen >1) {
+			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
+		} else {
+			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
+		}
+	} else {
+		add<-paste(add, ". ", sep="")
+	}
+	HTML(add, align="left")
+	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
+}
+#===================================================================================================================
+#All comparisons within time factor
+#===================================================================================================================
+if(pairwiseTest == "allcomparisonswithinselected") {
+		#Creating the subsetted version of tabs dataset
+		tabs <- data.frame(cbind(tabs, tellfinal))
+		rownames(tabs)<-c(rows)
+		tabs<-subset(tabs, tell1b==tell2b)
+		tabs<-subset(tabs, select = -c(tell1b,tell2b)) 
+
+		#Creating the dataset for printing
+		tabs_final<-tabs
+		tabs_final[1]=format(round(tabs_final[1], 3), nsmall=3, scientific=FALSE)
+		tabs_final[2]=format(round(tabs_final[2], 3), nsmall=3, scientific=FALSE)
+		tabs_final[3]=format(round(tabs_final[3], 3), nsmall=3, scientific=FALSE)
+
+		#creating the final dataset for printing
+		temp<-rownames(tabs_final)
+
+		#STB June 2015	
+		for (i in 1:100) {
+			temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
+		}
+
+		tabs_final <- cbind(temp, tabs_final)
+
+		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+		colnames(tabs_final)<-c("Comparison","Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
+
+		tabs_final2<-subset(tabs_final, select = -c(temp)) 
+
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
+		HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
+	}
+
+#===================================================================================================================
+#Back transformed geometric means table 
+#===================================================================================================================
+	if(responseTransform =="log10"||responseTransform =="loge") {
+		if (GeomDisplay != "notdisplayed") {
+
+			HTML.title("Pairwise comparisons within the levels of the repeated factor, as back-transformed ratios", HR=2, align="left")
+
+			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+			if (GeomDisplay == "geometricmeansonly") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+
+			#Creating data for printing
+			tabs_final_log<-tabs
+
+			if (responseTransform =="log10") {
+				tabs_final_log[1]=format(round(10^(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[2]=format(round(10^(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[3]=format(round(10^(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
+			}
+			if (responseTransform =="loge") {
+				tabs_final_log[1]=format(round(exp(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[2]=format(round(exp(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log[3]=format(round(exp(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
+			}
+
+			#creating the final dataset for printing
+			temp<-rownames(tabs_final_log)
+			temp<-sub(" - "," / ", temp, fixed=TRUE)
+
+			#STB June 2015	
+			for (i in 1:100) {
+			temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
+			}
+
+			tabs_final_log <- cbind(temp, tabs_final_log)
+			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+			colnames(tabs_final_log)<-c("Comparison", "Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
+			tabs_final_log<-subset(tabs_final_log, select = -c(Stderror,  temp)) 
+	
+			HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
+		}
+	}
 
 	#Conclusion
 	add<-paste(c("Conclusion"))
@@ -1623,45 +1707,6 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 	}
 	HTML(add, align="left")
 	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
-
-#===================================================================================================================
-#Back transformed geometric means table 
-#===================================================================================================================
-	if(GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-		HTML.title("Pairwise comparisons within the levels of the repeated factor, as back-transformed ratios", HR=2, align="left")
-		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
-
-		#Creating data for printing
-		tabs_final_log<-tabs
-
-		if (responseTransform =="log10") {
-			tabs_final_log[1]=format(round(10^(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[2]=format(round(10^(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[3]=format(round(10^(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
-		}
-		if (responseTransform =="loge") {
-			tabs_final_log[1]=format(round(exp(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[2]=format(round(exp(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log[3]=format(round(exp(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
-		}
-
-		#creating the final dataset for printing
-		templg<-rownames(tabs_final_log)
-		templg<-sub(" - "," / ", templg, fixed=TRUE)
-
-		#STB June 2015	
-		for (i in 1:100) {
-		templg<-sub("_ivs_dash_ivs_"," - ", templg, fixed=TRUE)
-		}
-
-		tabs_final_log <- cbind(templg, tabs_final_log)
-		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-		colnames(tabs_final_log)<-c("Comparison", "Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
-		tabs_final_log<-subset(tabs_final_log, select = -c(Stderror, pvalue, temp)) 
-	
-		HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
-	}
 }
 
 #===================================================================================================================

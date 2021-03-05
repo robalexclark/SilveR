@@ -51,6 +51,11 @@ for (i in 1:10) {
 	XAxisTitle<-namereplace(XAxisTitle)
 }
 
+if (responseTransform != "none") {
+	YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+}
+
+
 #Generate mainEffect factor
 statdata$mainEffect<-as.factor(eval(parse(text = paste("statdata$", treatFactor))))
 
@@ -235,14 +240,15 @@ if (equalCase == "Y") {
 	colnames(tables)<-c("Treatment level", "Mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
 
 	#STB May 2012 Updating "least square (predicted) means"
-	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=3, align="left")
-	HTML(tables, classfirstline="second", align="left", row.names = "FALSE")
+
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=3, align="left")
+		HTML(tables, classfirstline="second", align="left", row.names = "FALSE")
+	}
 
 	#===================================================================================================================
 	#Calculating the size of the arithmetic difference with 95%CI
-	add <- paste("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval",sep="")
-	HTML.title(add, HR=3, align="left")
 
 	mult2<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 	multci2<-confint(mult2, level=sig, calpha = univariate_calpha())
@@ -271,10 +277,7 @@ if (equalCase == "Y") {
 	
 
 	rows<-rownames(multci2$confint)
-#STB2019
-#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
 
-	#STB June 2015	
 	for (i in 1:100) {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
 	}
@@ -283,98 +286,109 @@ if (equalCase == "Y") {
 
 	tabls<-cbind(rows, tabs)
 	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
-	HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		add <- paste("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval",sep="")
+		HTML.title(add, HR=3, align="left")
+		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+	}
 }
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-if(equalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge"))
-{
-	#Table of LS Means
-	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=3, align="left")
-	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+if(equalCase == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
 
-	tab1<-c()
-	tab2<-c()
-	tab3<-c()
+	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
+		#Table of LS Means
+		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=3, align="left")
 
-	tabs<-confint(mult,level = sig, calpha = univariate_calpha() )
-	test<-tabs$confint
-	lengths<-length(unique(rownames(test)))
+		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+		if (GeomDisplay == "geometricmeansonly") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
 
-	for (i in 1:lengths) {
-		tab1[i]<-test[i,1]
-		tab2[i]<-test[i,2]
-		tab3[i]<-test[i,3]
-	}
+		tab1<-c()
+		tab2<-c()
+		tab3<-c()
 
-	#STB Dec 2011 formatting 3dp
-	if (responseTransform =="log10") {
-		tab1<-format(round(10^(tab1), 3), nsmall=3, scientific=FALSE)
-		tab2<-format(round(10^(tab2), 3), nsmall=3, scientific=FALSE)
-		tab3<-format(round(10^(tab3), 3), nsmall=3, scientific=FALSE)
-	}
-	if (responseTransform =="loge") {
-		tab1<-format(round(exp(tab1), 3), nsmall=3, scientific=FALSE)
-		tab2<-format(round(exp(tab2), 3), nsmall=3, scientific=FALSE)
-		tab3<-format(round(exp(tab3), 3), nsmall=3, scientific=FALSE)
-	}
+		tabsx<-confint(mult,level = sig, calpha = univariate_calpha() )
+		test<-tabsx$confint
+		lengths<-length(unique(rownames(test)))
 
+		for (i in 1:lengths) {
+			tab1[i]<-test[i,1]
+			tab2[i]<-test[i,2]
+			tab3[i]<-test[i,3]
+		}
+	
+		#STB Dec 2011 formatting 3dp
+		if (responseTransform =="log10") {
+			tab1<-format(round(10^(tab1), 3), nsmall=3, scientific=FALSE)
+			tab2<-format(round(10^(tab2), 3), nsmall=3, scientific=FALSE)
+			tab3<-format(round(10^(tab3), 3), nsmall=3, scientific=FALSE)
+		}
+		if (responseTransform =="loge") {
+			tab1<-format(round(exp(tab1), 3), nsmall=3, scientific=FALSE)
+			tab2<-format(round(exp(tab2), 3), nsmall=3, scientific=FALSE)
+			tab3<-format(round(exp(tab3), 3), nsmall=3, scientific=FALSE)
+		}
 
-	tab <- cbind(rownames(test), tab1, tab2, tab3)
-	colnames(tab)<-c("Treatment level ", "Geometric mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
-
-	HTML(tab, classfirstline="second", align="left", row.names = "FALSE")
+		tabx <- cbind(rownames(test), tab1, tab2, tab3)
+		colnames(tabx)<-c("Treatment level ", "Geometric mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
+		HTML(tabx, classfirstline="second", align="left", row.names = "FALSE")
 
 #===================================================================================================================
 #Calculating the size of the geometric ratio with 95%CI
 #V3.2 STB NOV2015
 #===================================================================================================================
-	HTML.title("Comparison of the geometric means as a back-transformed ratio", HR=3, align="left")
-	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
+		HTML.title("Comparison of the geometric means as a back-transformed ratio", HR=3, align="left")
+		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
-	mult<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
-	multci<-confint(mult, level=sig, calpha = univariate_calpha())
-	multp<-summary(mult, test=adjusted("none"))
+		mult<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
+		multci<-confint(mult, level=sig, calpha = univariate_calpha())
+		multp<-summary(mult, test=adjusted("none"))
 
-	pvals<-multp$test$pvalues
-	sigma<-multp$test$sigma
-	tablen<-length(unique(rownames(multci$confint)))
-	tabs<-matrix(nrow=tablen, ncol=3)
+		pvals<-multp$test$pvalues
+		sigma<-multp$test$sigma
+		tablen<-length(unique(rownames(multci$confint)))
+		tabsz<-matrix(nrow=tablen, ncol=4)
 
-	if (responseTransform =="log10") {
-		for (i in 1:tablen) {
-			tabs[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-			tabs[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-			tabs[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+		if (responseTransform =="log10") {
+			for (i in 1:tablen) {
+				tabsz[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
+				tabsz[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
+				tabsz[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+			}
 		}
-	}
-	if (responseTransform =="loge") {
-		for (i in 1:tablen) {
-			tabs[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-			tabs[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-			tabs[i,3]=format(round(exp(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+		if (responseTransform =="loge") {
+			for (i in 1:tablen) {
+				tabsz[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
+				tabsz[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
+				tabsz[i,3]=format(round(exp(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+			}
 		}
-	}
+		
+		tabsz[,4]<- tabs[,5]
+		rows<-rownames(multci$confint)
+
+		#STB2019
+		rows<-sub(" - "," / ", rows, fixed=TRUE)
+
+		#STB June 2015	
+		for (i in 1:100) {
+			rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+		}
+		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
+		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
 	
-
-	rows<-rownames(multci$confint)
-#STB2019
-	rows<-sub(" - "," / ", rows, fixed=TRUE)
-
-	#STB June 2015	
-	for (i in 1:100) {
-		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+		tablsz<-cbind(rows, tabsz)
+		colnames(tablsz)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
+		HTML(tablsz, classfirstline="second", align="left", row.names = "FALSE")
 	}
-	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-
-	tabls<-cbind(rows, tabs)
-	colnames(tabls)<-c("Comparison","Ratio", lowerCI, upperCI)
-	HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
 }
-
 
 #===================================================================================================================
 #Diagnostic plots (equal variance case)
@@ -506,8 +520,6 @@ if (equalCase == "Y") {
 	}
 }	
 
-
-
 #===================================================================================================================
 #Unequal variance case
 #===================================================================================================================
@@ -572,7 +584,7 @@ if (unequalCase == "Y") {
 		vectorLCI[i]= mean(eval(parse(text = paste("sub2$", xxxresponsexxx))), na.rm=TRUE)-qt(1-(1-sig)/2, (length(tempy)-1))*sd(eval(parse(text = paste("sub2$", xxxresponsexxx))), na.rm=TRUE) / (length(tempy))**(0.5)
 		vectorUCI[i]= mean(eval(parse(text = paste("sub2$", xxxresponsexxx))), na.rm=TRUE)+qt(1-(1-sig)/2, (length(tempy)-1))*sd(eval(parse(text = paste("sub2$", xxxresponsexxx))), na.rm=TRUE) / (length(tempy))**(0.5)
 	}
-
+	
 	#Required for back transformation 
 	vectormean2<- vectormean
 	vectorLCI2<-vectorLCI
@@ -594,15 +606,15 @@ if (unequalCase == "Y") {
 	colnames(table2)<-c("Treatment level", "Mean", CIlow, CIhigh)
 
 	#STB May 2012 Updating "least square (predicted) means"
-	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=3, align="left")
-	HTML(table2, align="left" , classfirstline="second", row.names = "FALSE")
 
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=3, align="left")
+		HTML(table2, align="left" , classfirstline="second", row.names = "FALSE")
+	}
 #===================================================================================================================
 #Calculating the size of the arithmetic difference with 95%CI
 #===================================================================================================================
-	add <-paste ("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval" , sep="") 
-	HTML.title(add, HR=3, align="left")
 
 	#Required to generate table label only
 	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
@@ -649,96 +661,107 @@ if (unequalCase == "Y") {
 
 	tabls<-cbind(rows, tabs)
 	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "p-value")
-	HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		add <-paste ("Comparison of the  least square (predicted) means with ",(sig*100),"% confidence interval" , sep="") 
+		HTML.title(add, HR=3, align="left")
+		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
+	}
 }
 #===================================================================================================================
 #Back transformed geometric means plot and table 
 #===================================================================================================================
-if(unequalCase == "Y" && GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+if(unequalCase == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
+		#Table of LS Means
+		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=3, align="left")
 
-	#Table of LS Means
-	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=3, align="left")
-	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+		if (GeomDisplay == "geometricmeansonly") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
 
-	#STB Dec 2011 formatting 3dp
-	if (responseTransform =="log10") {
-		vectormean2<-format(round(10^(vectormean2), 3), nsmall=3, scientific=FALSE)
-		vectorLCI2<-format(round(10^(vectorLCI2), 3), nsmall=3, scientific=FALSE)
-		vectorUCI2<-format(round(10^(vectorUCI2), 3), nsmall=3, scientific=FALSE)
-	}
-
-	if (responseTransform =="loge") {
-		vectormean2<-format(round(exp(vectormean2), 3), nsmall=3, scientific=FALSE)
-		vectorLCI2<-format(round(exp(vectorLCI2), 3), nsmall=3, scientific=FALSE)
-		vectorUCI2<-format(round(exp(vectorUCI2), 3), nsmall=3, scientific=FALSE)
-	}
-
-	rownms<-c(1:length)
-	for(i in 1:length) {
-	rownms[i]<-levels(as.factor(statdata$mainEffect))[i]
-	}
-
-	table2<-cbind(rownms,vectormean2,vectorLCI2,vectorUCI2)
-
-	CIlow<-paste("Lower ", 100*(sig), "% CI", sep="")
-	CIhigh<-paste("Upper ", 100*(sig), "% CI", sep="")
-	colnames(table2)<-c("Treatment level", "Geometric Mean", CIlow, CIhigh)
+		#STB Dec 2011 formatting 3dp
+		if (responseTransform =="log10") {
+			vectormean2<-format(round(10^(vectormean2), 3), nsmall=3, scientific=FALSE)
+			vectorLCI2<-format(round(10^(vectorLCI2), 3), nsmall=3, scientific=FALSE)
+			vectorUCI2<-format(round(10^(vectorUCI2), 3), nsmall=3, scientific=FALSE)
+		}
 	
-	HTML(table2, , align="left" , classfirstline="second", row.names = "FALSE")
+		if (responseTransform =="loge") {
+			vectormean2<-format(round(exp(vectormean2), 3), nsmall=3, scientific=FALSE)
+			vectorLCI2<-format(round(exp(vectorLCI2), 3), nsmall=3, scientific=FALSE)
+			vectorUCI2<-format(round(exp(vectorUCI2), 3), nsmall=3, scientific=FALSE)
+		}
+	
+		rownms<-c(1:length)
+		for(i in 1:length) {
+		rownms[i]<-levels(as.factor(statdata$mainEffect))[i]
+		}
+	
+		table2<-cbind(rownms,vectormean2,vectorLCI2,vectorUCI2)
+	
+		CIlow<-paste("Lower ", 100*(sig), "% CI", sep="")
+		CIhigh<-paste("Upper ", 100*(sig), "% CI", sep="")
+		colnames(table2)<-c("Treatment level", "Geometric Mean", CIlow, CIhigh)
+		
+		HTML(table2, , align="left" , classfirstline="second", row.names = "FALSE")
 
 #===================================================================================================================
 #Calculating the size of the geometric ratio with 95%CI
 #===================================================================================================================
-	HTML.title("Comparison of the geometric means as a back-transformed ratio", HR=3, align="left")
-	HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
-
-	#Required to generate table label only
-	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
-	multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
-
-	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
-
-	meandiff<- mult2$estimate[1] - mult2$estimate[2]
-	lowerdiff<- mult2$conf.int[1]
-	upperdiff<- mult2$conf.int[2]
-	tablen<-1
-	tabs<-matrix(nrow=tablen, ncol=3)
-
-	if (responseTransform =="log10") {
-		for (i in 1:tablen) {
-			tabs[i,1]=format(round(10^(meandiff), 3), nsmall=3, scientific=FALSE)
-			tabs[i,2]=format(round(10^(lowerdiff), 3), nsmall=3, scientific=FALSE)
-			tabs[i,3]=format(round(10^(upperdiff), 3), nsmall=3, scientific=FALSE)
-		}
-	}
-
-	if (responseTransform =="loge")	{
-		for (i in 1:tablen) {
-			tabs[i,1]=format(round(exp(meandiff), 3), nsmall=3, scientific=FALSE)
-			tabs[i,2]=format(round(exp(lowerdiff), 3), nsmall=3, scientific=FALSE)
-			tabs[i,3]=format(round(exp(upperdiff), 3), nsmall=3, scientific=FALSE)
-		}
-	}
+		HTML.title("Comparison of the geometric means as a back-transformed ratio", HR=3, align="left")
+		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 	
-	rows<-rownames(multci3$confint)
+		#Required to generate table label only
+		mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
+		multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
+	
+		mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
+	
+		meandiff<- mult2$estimate[1] - mult2$estimate[2]
+		lowerdiff<- mult2$conf.int[1]
+		upperdiff<- mult2$conf.int[2]
+		tablen<-1
+		tabsx<-matrix(nrow=tablen, ncol=4)
+	
+		if (responseTransform =="log10") {
+			for (i in 1:tablen) {
+				tabsx[i,1]=format(round(10^(meandiff), 3), nsmall=3, scientific=FALSE)
+				tabsx[i,2]=format(round(10^(lowerdiff), 3), nsmall=3, scientific=FALSE)
+				tabsx[i,3]=format(round(10^(upperdiff), 3), nsmall=3, scientific=FALSE)
+			}
+		}
+	
+		if (responseTransform =="loge")	{
+			for (i in 1:tablen) {
+				tabsx[i,1]=format(round(exp(meandiff), 3), nsmall=3, scientific=FALSE)
+				tabsx[i,2]=format(round(exp(lowerdiff), 3), nsmall=3, scientific=FALSE)
+				tabsx[i,3]=format(round(exp(upperdiff), 3), nsmall=3, scientific=FALSE)
+			}
+		}
+		tabsx[,4] <- tabs[,4]	
+		rows<-rownames(multci3$confint)
 
-#STB2019
-	rows<-sub(" - "," / ", rows, fixed=TRUE)
+		#STB2019
+		rows<-sub(" - "," / ", rows, fixed=TRUE)
 
-	#STB June 2015	
-	for (i in 1:100) {
-		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+		#STB June 2015	
+		for (i in 1:100) {
+			rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+		}
+	
+		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
+		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
+	
+		tablsx<-cbind(rows, tabsx)
+		colnames(tablsx)<-c("Comparison", "Ratio", lowerCI, upperCI, "p-value")
+		HTML(tablsx, classfirstline="second", align="left")
 	}
-
-	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-
-	tabls<-cbind(rows, tabs)
-	colnames(tabls)<-c("Comparison", "Ratio", lowerCI, upperCI)
-	HTML(tabls, classfirstline="second", align="left")
 }
-
 #===================================================================================================================
 #References
 #===================================================================================================================

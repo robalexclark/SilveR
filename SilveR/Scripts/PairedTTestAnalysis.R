@@ -115,6 +115,7 @@ if (covariatelist !="NULL") {
 YAxisTitle <-resp
 CPXAxisTitle <-timeFactor
 
+
 if(covariatelist !="NULL") {
 	XAxisTitleCov<-covlistsep
 }
@@ -129,6 +130,22 @@ for (i in 1:10) {
 		}
 	}
 }
+
+BTYAxisTitle <- YAxisTitle
+#Add transformation to axis labels
+if (responseTransform != "none") {
+	YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+}
+
+if(covariatelist != "NULL") {
+	for (i in 1: nocovlist) {
+		#Add transformation to axis labels
+		if (covariateTransform != "none") {
+			XAxisTitleCov[i]<-axis_relabel(covariateTransform, XAxisTitleCov[i])
+		}
+	}
+}
+
 LS_YAxisTitle<-YAxisTitle
 
 #Taking default factor levels
@@ -171,31 +188,28 @@ add<-paste(c("The  "), resp, " response is currently being analysed by the Exten
 
 if(covariatelist !="NULL") {
 	if (nocovlist == 1) {
-		add<-paste(add, ", with ", covlistsep[1] , " fitted as a covariate.", sep="")
+		add<-paste(add, ", with ", covlistsep[1] , " fitted as a covariate. ", sep="")
 	} 
 	if (nocovlist == 2) {
-		add<-paste(add, ", with ", covlistsep[1] , " and ", covlistsep[2] ," fitted as covariates.", sep="")
+		add<-paste(add, ", with ", covlistsep[1] , " and ", covlistsep[2] ," fitted as covariates. ", sep="")
 	}
 	if (nocovlist > 2) {	
 		add<-paste(add, ", with ", sep="")	
 		for (i in 1: (nocovlist -2)) {
 		add <- paste (add, covlistsep[i],  ", " , sep="")
 		}
-		add<-paste(add, covlistsep[(nocovlist -1)] , " and ", covlistsep[nocovlist] , " fitted as covariates.", sep="")
+		add<-paste(add, covlistsep[(nocovlist -1)] , " and ", covlistsep[nocovlist] , " fitted as covariates. ", sep="")
 	}
 } else {
-	add<-paste(add, ".", sep="")
+	add<-paste(add, ". ", sep="")
 }
-HTML(add, align="left")
-
 if (responseTransform != "none") {
-	add2<-paste(c("The response has been "), responseTransform, " transformed prior to analysis.", sep="")
-	HTML(add2, align="left")
+	add<-paste(add, c("The response has been "), responseTransform, " transformed prior to analysis. ", sep="")
 }
 if (covariatelist !="NULL" &&  covariateTransform != "none") {
-	add3<-paste(c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
-	HTML(add3, align="left")
+	add<-paste(add, c("The covariate has been "), covariateTransform, " transformed prior to analysis.", sep="")
 }
+HTML(add, align="left")
 
 if(covariance=="compound symmetric" && dimfact >2) {
 	add4<-paste("The repeated measures mixed model analysis is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
@@ -302,10 +316,25 @@ if (dimfact ==2) {
 	graphdata<-plotdata
 	graphdata$xvarrr_IVS <- plotdata$X1
 	graphdata$yvarrr_IVS <- plotdata$X2
-	XAxisTitle <- paste(timeFactor, " level: ", levels(statdata$Timezzz)[1], sep = "")
+
+	XAxisTitle <- timeFactor
 	XAxisTitle<-namereplace(XAxisTitle)
-	YAxisTitle <- paste(timeFactor, " level: ", levels(statdata$Timezzz)[2], sep = "")
+
+	if (responseTransform != "none") {
+		XAxisTitle<-axis_relabel(responseTransform, XAxisTitle)
+	}
+	XAxisTitle <- paste(XAxisTitle, ": level = ", levels(statdata$Timezzz)[1], sep = "")
+
+	YAxisTitle <- timeFactor
 	YAxisTitle<-namereplace(YAxisTitle)
+
+	if (responseTransform != "none") {
+		YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+	}
+	YAxisTitle <- paste(YAxisTitle, ": level = ", levels(statdata$Timezzz)[2], sep = "")
+
+
+
 
 	MainTitle2 <-""
 	w_Gr_jitscat <- 0
@@ -838,8 +867,9 @@ if(showNormPlot=="Y") {
 	HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
 }
 
+
 #===================================================================================================================
-# Plot of Least Square Means
+# Least Square Means general code
 #===================================================================================================================
 if(showLSMeans=="Y") {
 	statdata$betweenwithin<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
@@ -855,9 +885,7 @@ if(showLSMeans=="Y") {
 			index <-lens
 		}
 	}
-
-	# LS Means
-
+	
 	#Identify within animal degrees of freedom
 	df<-anova(threewayfull)[dim(anova(threewayfull))[1],2]
 
@@ -871,59 +899,15 @@ if(showLSMeans=="Y") {
 	for (i in 1:leng) {
 		LSM$DDF[i]<-df
 	}
-
+	
 	LSM$Mean<-LSM$emmean
 	LSM$Lower=LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE
 	LSM$Upper=LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE
 	LSM$Group_IVSq_ <- LSM$Timezzz
 
-	CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
-
-	meanPlot <- sub(".html", "meanplot.png", htmlFile)
-	png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Parameters
-	Gr_alpha <- 0
-	if (bandw != "N") {
-		Gr_fill <- BW_fill
-	} else {
-		Gr_fill <- Col_fill
-	}
-	YAxisTitle <- LS_YAxisTitle
-	XAxisTitle <- CPXAxisTitle
-	MainTitle2 <- ""
-	Gr_line <-"black"
-	graphdata<-LSM
-
-	#GGPLOT2 code
-	LSMPLOT_1()
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlot), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5)
-		linkToPdf5 <- paste ("<a href=\"",pdfFile_5,"\">Click here to view the PDF of the plot of the least square (predicted) means</a>", sep = "")
-		HTML(linkToPdf5)
-	}
-}
 #===================================================================================================================
 # Table of Least Square Means
 #===================================================================================================================
-if(showLSMeans=="Y") {
-	CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
-
 	LSMx<-LSM
 	LSM$Mean<-format(round(LSM$Mean,3),nsmall=3)
 	LSM$Lower<-format(round(LSM$Lower,3),nsmall=3)
@@ -932,99 +916,149 @@ if(showLSMeans=="Y") {
 	rowz <-data.frame(LSM$Timezzz)
 	colnames(rowz) <- c(CPXAxisTitle)
 	LSM <-cbind(rowz,LSM)
-
-	LSM<-subset(LSM, select = -c(df, SE, lower.CL, upper.CL ,DDF, emmean,Timezzz, Group_IVSq_))
+	LSM<-subset(LSM, select = -c(df, SE, lower.CL, upper.CL ,DDF, emmean,Timezzz,Group_IVSq_))
 	colnames(LSM)<-c(CPXAxisTitle, "Mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
 
-	HTML(LSM, classfirstline="second", align="left", row.names="FALSE")
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=2, align="left")
+		HTML(LSM, classfirstline="second", align="left", row.names="FALSE")
+	}
+
+#===================================================================================================================
+# Plot of Least Square Means
+#===================================================================================================================
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+
+		CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle, HR=2, align="left")
+
+		meanPlot <- sub(".html", "meanplot.png", htmlFile)
+		png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+		#STB July2013
+		plotFilepdf5 <- sub(".html", "meanplot.pdf", htmlFile)
+		dev.control("enable") 
+
+		#Parameters
+		Gr_alpha <- 0
+		if (bandw != "N") {
+			Gr_fill <- BW_fill
+		} else {
+			Gr_fill <- Col_fill
+		}
+		YAxisTitle <- LS_YAxisTitle
+		XAxisTitle <- CPXAxisTitle
+		MainTitle2 <- ""
+		Gr_line <-"black"
+		graphdata<-LSMx
+
+		#GGPLOT2 code
+		LSMPLOT_1()
+
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlot), Align="left")
+
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_5<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5)
+			linkToPdf5 <- paste ("<a href=\"",pdfFile_5,"\">Click here to view the PDF of the plot of the least square (predicted) means</a>", sep = "")
+			HTML(linkToPdf5)
+		}
+	}
 }
-
-#===================================================================================================================
-#Back transformed geometric means plot 
-#===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle, HR=2, align="left")
-	HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
-
-	if (responseTransform =="log10") {
-		LSMx$Mean<-10^(LSMx$emmean)
-		LSMx$Lower=10^(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
-		LSMx$Upper=10^(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
-		LSMx$Group_IVSq_ <- LSMx$Timezzz
-	}
-
-	if (responseTransform =="loge") {
-		LSMx$Mean<-exp(LSMx$emmean)
-		LSMx$Lower=exp(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
-		LSMx$Upper=exp(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
-		LSMx$Group_IVSq_ <- LSMx$Timezzz
-	}
-
-	meanPlotz <- sub(".html", "meanplotz.png", htmlFile)
-	png(meanPlotz,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf5z <- sub(".html", "meanplotz.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Parameters
-	Gr_alpha <- 0
-	if (bandw != "N") {
-		Gr_fill <- BW_fill
-	} else {
-		Gr_fill <- Col_fill
-	}
-	YAxisTitle <- LS_YAxisTitle
-	XAxisTitle <- CPXAxisTitle
-	MainTitle2 <- ""
-	Gr_line <-"black"
-	graphdata<-LSMx
-
-	#GGPLOT2 code
-	LSMPLOT_1()
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotz), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5z), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5z<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5z)
-		linkToPdf5z <- paste ("<a href=\"",pdfFile_5z,"\">Click here to view the PDF of the plot of the back-transformed geometric means</a>", sep = "")
-		HTML(linkToPdf5z)
-	}
-}	
 
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-if(GeomDisplay == "Y" && showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
-	HTML.title(CITitle2, HR=2, align="left")
+if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
+	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
 
-	LSMx$Mean<-format(round(LSMx$Mean,3),nsmall=3)
-	LSMx$Lower<-format(round(LSMx$Lower,3),nsmall=3)
-	LSMx$Upper<-format(round(LSMx$Upper,3),nsmall=3)
+		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle2, HR=2, align="left")
 
-	rowz <-data.frame(LSMx$Timezzz)
-	colnames(rowz) <- c(CPXAxisTitle)
-	LSMx <-cbind(rowz,LSMx)
+		if (responseTransform =="log10") {
+			LSMx$Mean<-10^(LSMx$emmean)
+			LSMx$Lower=10^(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
+			LSMx$Upper=10^(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
+			LSMx$Group_IVSq_ <- LSMx$Timezzz
+		}
 
-	LSMx<-subset(LSMx, select = -c(df, SE, lower.CL, upper.CL ,DDF,Timezzz, emmean, Group_IVSq_))
-	colnames(LSMx)<-c(CPXAxisTitle, "Geometric mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
+		if (responseTransform =="loge") {
+			LSMx$Mean<-exp(LSMx$emmean)
+			LSMx$Lower=exp(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
+			LSMx$Upper=exp(LSMx$emmean+qt(1-(1-sig)/2,df)*LSMx$SE)
+			LSMx$Group_IVSq_ <- LSMx$Timezzz
+		}
+		LSMxx <- LSMx
+		LSMx$Mean<-format(round(LSMx$Mean,3),nsmall=3)
+		LSMx$Lower<-format(round(LSMx$Lower,3),nsmall=3)
+		LSMx$Upper<-format(round(LSMx$Upper,3),nsmall=3)
 
-	HTML(LSMx, classfirstline="second", align="left", row.names = "FALSE")
+		rowz <-data.frame(LSMx$Timezzz)
+		colnames(rowz) <- c(CPXAxisTitle)
+		LSMx <-cbind(rowz,LSMx)
+
+		LSMx<-subset(LSMx, select = -c(df, SE, lower.CL, upper.CL ,DDF,Timezzz, emmean,Group_IVSq_))
+		colnames(LSMx)<-c(CPXAxisTitle, "Geometric mean", paste("Lower ",(sig*100),"% CI",sep=""), paste("Upper ",(sig*100),"% CI",sep=""))
+	
+		HTML(LSMx, classfirstline="second", align="left", row.names = "FALSE")
+	}
+#===================================================================================================================
+#Back transformed geometric means plot 
+#===================================================================================================================
+	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
+
+		CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
+		HTML.title(CITitle, HR=2, align="left")
+		HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+
+		meanPlotz <- sub(".html", "meanplotz.png", htmlFile)
+		png(meanPlotz,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+		#STB July2013
+		plotFilepdf5z <- sub(".html", "meanplotz.pdf", htmlFile)
+		dev.control("enable") 
+
+		#Parameters
+		Gr_alpha <- 0
+		if (bandw != "N") {
+			Gr_fill <- BW_fill
+		} else {
+			Gr_fill <- Col_fill
+		}
+		YAxisTitle <- BTYAxisTitle
+		XAxisTitle <- CPXAxisTitle
+		MainTitle2 <- ""
+		Gr_line <-"black"
+		graphdata<-LSMxx
+
+		#GGPLOT2 code
+		LSMPLOT_1()
+
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotz), Align="left")
+
+		#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5z), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_5z<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5z)
+			linkToPdf5z <- paste ("<a href=\"",pdfFile_5z,"\">Click here to view the PDF of the plot of the back-transformed geometric means</a>", sep = "")
+			HTML(linkToPdf5z)
+		}
+	}	
 }
 
 #===================================================================================================================
 #All pairwise tests
 #===================================================================================================================
-
-#STB NOV2015 Add extra condition to GUI
 if (showComps == "Y") {
 	statdata$mainEffect<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
 
@@ -1113,34 +1147,28 @@ if (showComps == "Y") {
 		}
 	}
 
-	if(dimfact > 2) {
-		add<-paste(c("All pairwise comparisons, without adjustment for multiplicity"))
-	} else {
-		add<-paste("Comparison between the least square (predicted) means, with " ,(sig*100),"% confidence interval",sep="")
-	}
-	HTML.title(add, HR=2, align="left")
-
 	rows<-rownames(multci$confint)
 	for (i in 1:100) {
 		rows<-sub("_.._"," ", rows, fixed=TRUE)
 	}
-#STB2019
-#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
-
 	tabls<-cbind(rows, tabs)
-
 	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-	
-	#STB May 2012 correcting "SEM"
+
 	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 	tabls2<-subset(tabls, select = -c(temp)) 
 
-	HTML(tabls2, classfirstline="second", align="left", row.names="FALSE")
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		if(dimfact > 2) {
+			add<-paste(c("All pairwise comparisons, without adjustment for multiplicity"))
+		} else {
+			add<-paste("Comparison between the least square (predicted) means, with " ,(sig*100),"% confidence interval",sep="")
+		}
+		HTML.title(add, HR=2, align="left")
 
-	if (dimfact > 2) {		
-		HTML("Tip: The p-values in this table are unadjusted for multiple comparisons. No options are available in this module to make multiple comparison adjustments because it is highly unlikely you would want to make all these pairwise comparisons. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
-	}	
+		HTML(tabls2, classfirstline="second", align="left", row.names="FALSE")
+	}
+	
 
 #===================================================================================================================
 #	#STB March 2014 - Creating a dataset of p-values
@@ -1158,6 +1186,58 @@ if (showComps == "Y") {
 #	row.names(tabsx) <- seq(nrow(tabsx)) 
 #	tabsx <-tabsx[-1,]
 #
+
+	
+#===================================================================================================================
+#Back transformed geometric means table 
+#===================================================================================================================
+	if(responseTransform =="log10"||responseTransform =="loge") {
+		if ( GeomDisplay != "notdisplayed") {
+			HTML.title("All pairwise comparisons, as back-transformed ratios", HR=2, align="left")
+
+			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+			if (GeomDisplay == "geometricmeansonly") {
+				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+			}
+
+			xtabs<-matrix(nrow=tablen, ncol=4)
+
+			if(dimfact > 1) {
+				if (responseTransform =="log10") {
+					for (i in 1:tablen) {
+						xtabs[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
+						xtabs[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
+						xtabs[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+					}
+				}
+	
+				if (responseTransform =="loge") {
+					for (i in 1:tablen) {
+						xtabs[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
+						xtabs[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
+						xtabs[i,3]=format(round(exp(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
+					}
+				}
+	
+				xtabs[,4] <- tabs[,5]
+				rows<-rownames(multci$confint)
+
+				for (i in 1:100) {
+					rows<-sub("_.._"," ", rows, fixed=TRUE)
+				}
+				rows<-sub(" - "," / ", rows, fixed=TRUE)
+				xtabls<-cbind(rows, xtabs)
+		
+				lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
+				upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")	
+	
+				colnames(xtabls)<-c("Comparison", "Ratio", lowerCI, upperCI, "p-value")
+				HTML(xtabls, classfirstline="second", align="left", row.names = "FALSE")
+			}	
+		}
+	}
 #===================================================================================================================
 
 	#Conclusion
@@ -1200,49 +1280,7 @@ if (showComps == "Y") {
 	if (dimfact > 2) {
 		HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparison you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 	}
-	
-#===================================================================================================================
-#Back transformed geometric means table 
-#===================================================================================================================
-	if(GeomDisplay == "Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	
-		HTML.title("All pairwise comparisons, as back-transformed ratios", HR=2, align="left")
-		HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed onto the original scale, where differences on the log scale become ratios when back-transformed.", align="left")
 
-		tabs<-matrix(nrow=tablen, ncol=3)
-
-		if(dimfact > 1) {
-			if (responseTransform =="log10") {
-				for (i in 1:tablen) {
-					tabs[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-					tabs[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-					tabs[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
-				}
-			}
-
-			if (responseTransform =="loge") {
-				for (i in 1:tablen) {
-					tabs[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-					tabs[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-					tabs[i,3]=format(round(exp(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
-				}
-			}
-
-			rows<-rownames(multci$confint)
-
-			for (i in 1:100) {
-				rows<-sub("_.._"," ", rows, fixed=TRUE)
-			}
-			rows<-sub(" - "," / ", rows, fixed=TRUE)
-			tabls<-cbind(rows, tabs)
-	
-			lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-			upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")	
-
-			colnames(tabls)<-c("Comparison", "Ratio", lowerCI, upperCI)
-			HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
-		}	
-	}
 }
 #===================================================================================================================
 #Analysis description

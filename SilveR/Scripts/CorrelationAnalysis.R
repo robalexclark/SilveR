@@ -12,7 +12,7 @@ statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Copy Args
 csResponses<-Args[4]
-transformation<-tolower(Args[5])
+responseTransform<-tolower(Args[5])
 firstCat<-Args[6]
 secondCat<-Args[7]
 thirdCat<-Args[8]
@@ -91,7 +91,7 @@ if (Betawarn == "Y") {
 
 #Title
 title<-"Responses"
-if (transformation != "none") {
+if (responseTransform != "none") {
 	title<-paste(title, c(" and transformations"), sep="")
 }
 HTML.title(title, HR=2, align="left")
@@ -105,8 +105,8 @@ if (resplength >2 ){
 }
 add<-paste(add, resplist[(resplength-1)], " and ", resplist[(resplength)], ". ", sep="")
 
-if (transformation != "none") {
-	add<-paste(add, c("The responses have been "), transformation, " transformed prior to analysis.", sep="")
+if (responseTransform != "none") {
+	add<-paste(add, c("The responses have been "), responseTransform, " transformed prior to analysis.", sep="")
 }
 HTML(add, align="left")
 
@@ -186,6 +186,13 @@ if (scatterplotSelected != "N") {
 					XAxisTitle<-namereplace(XAxisTitle)	
 				}
 
+				if (responseTransform != "none") {
+					XAxisTitle<-axis_relabel(responseTransform, XAxisTitle)
+				}
+				if (responseTransform != "none") {
+					YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+				}
+
 				#GGPLOT2 code
 				NONCAT_SCAT("NORMAL")
 				void <- HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", scatterPlot), Align="centre")
@@ -245,6 +252,16 @@ if (matrixPlotSelected != "N") {
 			}
 		}
 	}
+
+	if (responseTransform != "none") {
+		for (i in 1: dim(matrixdata)[1]) {
+			matrixdata$secondcatvarrr_IVS[i]<-axis_relabel(responseTransform, matrixdata$secondcatvarrr_IVS[i])
+		}
+		for (i in 1: dim(matrixdata)[1]) {
+			matrixdata$firstcatvarrr_IVS[i]<-axis_relabel(responseTransform, matrixdata$firstcatvarrr_IVS[i])
+		}
+	}
+
 
 	graphdata<-matrixdata[-1,]
 	graphdata$catfact <- paste(graphdata$firstcatvarrr_IVS, graphdata$secondcatvarrr_IVS, sep = "")
@@ -393,6 +410,16 @@ for (i in 1:(resplength-1)) {
 	}
 }
 
+#Add transformation label to the results table - not implemented for consitency with other modules
+#if (responseTransform != "none") {
+#	for (i in 1: dim(correlationTable)[1]) {
+#		correlationTable[i,2]<-axis_relabel(responseTransform, correlationTable[i,2])
+#	}
+#	for (i in 1: dim(correlationTable)[1]) {
+#		correlationTable[i,4]<-axis_relabel(responseTransform, correlationTable[i,4])
+#	}
+#}
+
 if (k>1) {
 	difference <- tablelen - (k-1)
 	correlationTable2 <-matrix(ncol=colsno,nrow=(tablelen - difference))
@@ -538,6 +565,13 @@ if (scatterplotSelected != "N") {
 					XAxisTitle<-namereplace(XAxisTitle) 
 				}
 
+				if (responseTransform != "none") {
+					XAxisTitle<-axis_relabel(responseTransform, XAxisTitle)
+				}
+				if (responseTransform != "none") {
+					YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
+				}
+
 				#Testing for with infinite slopes on scatterplot and re-ordering dataset if necessary
 				inf_slope<-IVS_F_infinite_slope_Cor()
 				infiniteslope <- inf_slope$infiniteslope
@@ -611,6 +645,16 @@ if (matrixPlotSelected != "N") {
 					matrixdata<-rbind(matrixdata,tempdata)
 				}
 			}
+		}
+	}
+
+	#Change Axis labels if transformation performed
+	if (responseTransform != "none") {
+		for (i in 1: dim(matrixdata)[1]) {
+			matrixdata$secondcatvarrr_IVS[i]<-axis_relabel(responseTransform, matrixdata$secondcatvarrr_IVS[i])
+		}
+		for (i in 1: dim(matrixdata)[1]) {
+			matrixdata$firstcatvarrr_IVS[i]<-axis_relabel(responseTransform, matrixdata$firstcatvarrr_IVS[i])
 		}
 	}
 
@@ -792,6 +836,15 @@ for ( p in 1:length) {
 	}
 }
 
+#Add transformation label to the results table - not implemented for consitency with other modules
+#if (responseTransform != "none") {
+#	for (i in 1: dim(correlationTable)[1]) {
+#		correlationTable[i,3]<-axis_relabel(responseTransform, correlationTable[i,3])
+#	}
+#	for (i in 1: dim(correlationTable)[1]) {
+#		correlationTable[i,5]<-axis_relabel(responseTransform, correlationTable[i,5])
+#	}
+#}
 
 if (k>2) {
 	difference <- tablelen - (k-1)
@@ -942,8 +995,8 @@ if (showdataset=="Y") {
 if (OutputAnalysisOps == "Y") {
 	HTML.title("Analysis options", HR=2, align="left")
 	HTML(paste("Response variables: ", csResponses, sep=""), align="left")
-	if (transformation != "none") {
-		HTML(paste("Response variables transformation: ", transformation, sep=""), align="left")
+	if (responseTransform != "none") {
+		HTML(paste("Response variables transformation: ", responseTransform, sep=""), align="left")
 	}
 	if (firstCat != "NULL") {
 		HTML(paste("First categorisation factor: ", firstCat, sep=""), align="left")

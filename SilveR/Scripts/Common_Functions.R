@@ -82,7 +82,7 @@ grparatext = read.table(userOptions)
 	bandw<- paste(grparatext$V2[16],sep="")
 
 #Display back-transformed geometric means
-	GeomDisplay<- paste(grparatext$V2[17],sep="")
+	GeomDisplay<- tolower(paste(grparatext$V2[17],sep=""))
 
 #Display model coefficients
 	ShowCoeff<- paste(grparatext$V2[18],sep="")
@@ -595,6 +595,27 @@ IVS_F_cpplot_colour <- function(subject) {
 	return(output)
 }
 
+
+#Relabel the y-axis following transformation
+axis_relabel <- function(tran, title) {
+	if (tran == "log10") {
+		title <- paste("log10(", title, ")", sep = "")
+	}
+	else if (tran == "loge") {
+		title <- paste("loge(", title, ")", sep = "")
+	}
+	else if (tran == "square root") {
+		title <- paste("sqrt(", title, ")", sep = "")
+	}
+	else if (tran == "arcsine") {
+		title <- paste("arcsine(", title, ")", sep = "")
+	}
+	else if (tran == "rank") {
+		title <- paste(title , " rank",  sep = "")
+	}
+}
+
+
 #===================================================================================================================
 #===================================================================================================================
 #Graphical GGPlot2 functions
@@ -633,27 +654,30 @@ NONCAT_SCAT <- function(typez) {
 			geom_hline(yintercept = 2, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
 			geom_hline(yintercept = 3, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
 			scale_y_continuous(breaks = -20:20) +
-			scale_x_continuous(breaks = pretty_breaks())
-
+			scale_x_continuous(breaks = pretty_breaks()) +
+			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g3 <- g2
 	}
 
 	if (typez == "COOK") {
-		g4 <- g3 + geom_hline(yintercept = cutoff, lty = Gr_line_type, size = Line_size, colour = Gr_line)
+		g4 <- g3 + geom_hline(yintercept = cutoff, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
+			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g4 <- g3
 	}
 
 	if (typez == "QQPLOT") {
 		g5 <- g4 + scale_x_continuous(breaks = pretty_breaks()) +
-			scale_y_continuous(breaks = pretty_breaks())
+			scale_y_continuous(breaks = pretty_breaks()) +
+			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g5 <- g4
 	}
 
 	if (typez == "PCAPLOT") {
-		g6 <- g5 + geom_text(size = 3, aes(label = obznames), hjust = 0, vjust = 1)
+		g6 <- g5 + geom_text(size = 3, aes(label = obznames), hjust = 0, vjust = 1) +
+			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g6 <- g5
 	}
@@ -665,7 +689,8 @@ NONCAT_SCAT <- function(typez) {
 		g8 <- g7
 	}
 	if (typez == "PAIRED") {
-		g9 <- g8 + geom_abline(slope=1, intercept=0, lty = Gr_line_type, size = Line_size, colour = Gr_line) 
+		g9 <- g8 + geom_abline(slope=1, intercept=0, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
+			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g9 <- g8
 	}

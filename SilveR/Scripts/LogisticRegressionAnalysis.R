@@ -130,6 +130,10 @@ if (covariates !="NULL") {
 
 #replace illegal characters in variable names
 YAxisTitle <-resp
+if(nocontfactors > 0) {
+	XAxisTitle <- namereplace(ContinuousList[1])
+}
+
 if(nocovars > 0) {
 	XAxisTitleCov<-covlist
 }
@@ -144,7 +148,24 @@ for (i in 1:10) {
 		}
 	}
 }
-LS_YAxisTitle<-YAxisTitle
+
+#Changing axis titles for transformations
+if(nocovars > 0) {
+	for (i in 1: nocovars) {
+		#Add transformation to axis labels
+		if (covariateTransform != "none") {
+			XAxisTitleCov[i]<-axis_relabel(covariateTransform, XAxisTitleCov[i])
+		}
+	}
+}
+if(nocontfactors > 0) {
+	for (i in 1: nocontfactors) {
+		#Add transformation to axis labels
+		if (contFactorTransform != "none") {
+			XAxisTitle[i]<-axis_relabel(contFactorTransform, XAxisTitle[i])
+		}
+	}
+}
 
 #STB June 2015 - Taking a copy of the dataset
 statdata_temp <-statdata
@@ -412,8 +433,8 @@ if (plotOfModelPredicted == "Y") {
 		newdataPreds$yvarrr_IVS <- newdataPreds$newdataPreds
 		newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
 
-		XAxisTitle <- namereplace(ContinuousList[1])
-		YAxisTitle <- resp
+#		XAxisTitle <- namereplace(ContinuousList[1])
+#		YAxisTitle <- resp
 		MainTitle2 <- ""
 		w_Gr_jitscat <- 0
 		h_Gr_jitscat <-  0
@@ -503,8 +524,8 @@ if (plotOfModelPredicted == "Y") {
 		newdataPreds$xvarrr_IVS <- eval(parse(text = paste("newdataPreds$",ContinuousList[1])))
 		newdataPreds$l_l<- eval(parse(text = paste("newdataPreds$", treatlist[1])))
 
-		XAxisTitle <- ContinuousList[1]
-		YAxisTitle <- resp
+#		XAxisTitle <- namereplace(ContinuousList[1])
+#		YAxisTitle <- resp
 		MainTitle2 <- ""
 		w_Gr_jitscat <- 0
 		h_Gr_jitscat <-  0
@@ -603,8 +624,8 @@ if (plotOfModelPredicted == "Y") {
 		newdataPreds$firstcatvarrr_IVS<- eval(parse(text = paste("newdataPreds$", treatlist[1])))
 		newdataPreds$secondcatvarrr_IVS<- eval(parse(text = paste("newdataPreds$", treatlist[2])))
 
-		XAxisTitle <- ContinuousList[1]
-		YAxisTitle <- resp
+#		XAxisTitle <- namereplace(ContinuousList[1])
+#		YAxisTitle <- resp
 		MainTitle2 <- ""
 		w_Gr_jitscat <- 0
 		h_Gr_jitscat <-  0

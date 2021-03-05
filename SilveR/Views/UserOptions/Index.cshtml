@@ -51,7 +51,11 @@
                                 <div class="form-group">
                                     <label asp-for="GeometryDisplay" class="control-label col-xs-4">Display geometric means</label>
                                     <div class="col-xs-8">
-                                        <input asp-for="GeometryDisplay" class="checkbox" type="checkbox">
+                                        <select asp-for="GeometryDisplay" type="text" class="form-control">
+                                            <option value="NotDisplayed">Not displayed</option>
+                                            <option value="GeometricMeansOnly">Geometric means only</option>
+                                            <option value="GeometricMeansAndPredictedMeansOnLogScale">Geometric means and predicted means on log scale</option>
+                                        </select>
                                     </div>
                                     <span asp-validation-for="GeometryDisplay" class="text-danger"></span>
                                 </div>

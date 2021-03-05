@@ -35,7 +35,7 @@ namespace SilveR.UnitTests.Models
             Assert.Equal("OutputData N", optionLines[13]);
             Assert.Equal("OutputAnalysisOptions N", optionLines[14]);
             Assert.Equal("OutputPlotsInBW N", optionLines[15]);
-            Assert.Equal("GeometryDisplay N", optionLines[16]);
+            Assert.Equal("GeometryDisplay NotDisplayed", optionLines[16]);
             Assert.Equal("DisplayModelCoefficients N", optionLines[17]);
             Assert.Equal("CovariateRegressionCoefficients N", optionLines[18]);
             Assert.Equal("AssessCovariateInteractions N", optionLines[19]);
