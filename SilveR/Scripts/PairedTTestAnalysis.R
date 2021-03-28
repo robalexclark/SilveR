@@ -317,24 +317,11 @@ if (dimfact ==2) {
 	graphdata$xvarrr_IVS <- plotdata$X1
 	graphdata$yvarrr_IVS <- plotdata$X2
 
-	XAxisTitle <- timeFactor
-	XAxisTitle<-namereplace(XAxisTitle)
+	YTITLE<-YAxisTitle	
 
-	if (responseTransform != "none") {
-		XAxisTitle<-axis_relabel(responseTransform, XAxisTitle)
-	}
-	XAxisTitle <- paste(XAxisTitle, ": level = ", levels(statdata$Timezzz)[1], sep = "")
-
-	YAxisTitle <- timeFactor
-	YAxisTitle<-namereplace(YAxisTitle)
-
-	if (responseTransform != "none") {
-		YAxisTitle<-axis_relabel(responseTransform, YAxisTitle)
-	}
-	YAxisTitle <- paste(YAxisTitle, ": level = ", levels(statdata$Timezzz)[2], sep = "")
-
-
-
+	TimeAxisTitle<-namereplace(timeFactor)
+	XAxisTitle <- paste(YAxisTitle, " [", TimeAxisTitle, ": level = ", levels(statdata$Timezzz)[1], "]", sep = "")
+	YAxisTitle <- paste(YAxisTitle, " [", TimeAxisTitle, ": level = ", levels(statdata$Timezzz)[2], "]", sep = "")
 
 	MainTitle2 <-""
 	w_Gr_jitscat <- 0
@@ -374,6 +361,9 @@ if (dimfact ==2) {
 		linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the covariate plot</a>", sep = "")
 		HTML(linkToPdf2)
 	}
+
+	#Put y axis title back as default
+	YAxisTitle<-YTITLE
 }
 
 #===================================================================================================================

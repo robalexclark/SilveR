@@ -298,7 +298,7 @@ for (i in 1: length(ContinuousList)) {
 	XAxisTitle <- namereplace(ContinuousList[i])
 
 	#Add transformation to axis labels
-	if (responseTransform != "none") {
+	if (contFactorTransform != "none") {
 		XAxisTitle<-axis_relabel(contFactorTransform, XAxisTitle)
 	}
 

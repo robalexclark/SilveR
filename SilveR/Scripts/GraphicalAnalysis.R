@@ -318,13 +318,13 @@ for (i in 1:10) {
 XAxisTitleHist = YAxisTitle
 
 #Add transformation to axis labels
-if (YAxisTransform != "none" && YAxisTitle2 == "NULL") {
+if (is.numeric(graphdata$yvarrr_IVS)=="TRUE" && YAxisTransform != "none" && YAxisTitle2 == "NULL") {
 	YAxisTitle<-axis_relabel(YAxisTransform, YAxisTitle)
 }
 if (YAxisTransform != "none" && XAxisTitleHist2 == "NULL") {
 	XAxisTitleHist<-axis_relabel(YAxisTransform, XAxisTitleHist)
 }
-if (XAxisTransform != "none" && XAxisTitle2 == "NULL") {
+if (is.numeric(graphdata$xvarrr_IVS)=="TRUE" && XAxisTransform != "none" && XAxisTitle2 == "NULL") {
 	XAxisTitle<-axis_relabel(XAxisTransform, XAxisTitle)
 }
 

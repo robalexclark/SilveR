@@ -1,13 +1,13 @@
 ﻿#Software branding
-branding <- "InVivoStat (beta version)"
-#branding <- "InVivoStat"
+#branding <- "InVivoStat (beta version)"
+branding <- "InVivoStat"
 IVS_version<- 4.2 
 
 #Software update
 UpdateIVS <- "N"
 
 #Beta warning
-Betawarn <- "Y"
+Betawarn <- "N"
 BetaMessage <- "This output has been generated using the beta test version of InVivoStat. Care should be taken when making decisions based on the output."
 
 #Display arguments
