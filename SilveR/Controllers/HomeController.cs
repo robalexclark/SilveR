@@ -1,6 +1,4 @@
-﻿using ElectronNET.API;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SilveR.Models;
 using System;
@@ -47,7 +45,7 @@ namespace SilveR.Controllers
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        stringBuilder.AppendLine("To install " + R_VERSION + " on mac see the setup instructions at <a href='https://github.com/robalexclark/SilveR#macos>https://github.com/robalexclark/SilveR#macos</a>");
+                        stringBuilder.AppendLine("To install " + R_VERSION + " on mac see the setup instructions at <a href='https://github.com/robalexclark/SilveR#macos'>https://github.com/robalexclark/SilveR#macos</a>");
                     }
                 }
 
@@ -92,7 +90,8 @@ namespace SilveR.Controllers
                 Process process = Process.Start(processStartInfo);
                 string processOutput = process.StandardError.ReadToEnd();
 
-                return processOutput.Contains(R_VERSION.ToString());
+                string rVersion = R_VERSION.ToString();
+                return processOutput.Contains(rVersion);
             }
             catch
             {
