@@ -305,6 +305,12 @@ namespace SilveR
                     context.Scripts.Add(areaUnderCurveDataTransformation);
                 }
 
+                if (!existingScripts.Any(x => x.ScriptFileName == "EquivalenceTOSTTest"))
+                {
+                    Script equivalenceTOSTTest = new Script() { ScriptDisplayName = "Equivalence TOST Test", ScriptFileName = "EquivalenceTOSTTest", RequiresDataset = true };
+                    context.Scripts.Add(equivalenceTOSTTest);
+                }
+
                 context.SaveChanges();
             }
         }

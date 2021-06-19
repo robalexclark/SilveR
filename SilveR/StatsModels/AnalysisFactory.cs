@@ -90,6 +90,9 @@ namespace SilveR.StatsModels
                 case "AreaUnderCurveDataTransformation":
                     model = new AreaUnderCurveDataTransformationModel(dataset);
                     break;
+                case "EquivalenceTOSTTest":
+                    model = new EquivalenceTOSTTestModel(dataset);
+                    break;
                 default:
                     throw new ArgumentException("Analysis type not found!");
             }

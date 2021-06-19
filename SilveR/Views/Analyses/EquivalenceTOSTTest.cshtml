@@ -1,0 +1,190 @@
+﻿@model SilveR.StatsModels.EquivalenceTOSTTestModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script defer src="~/js/stats/equivalenceTOSTTest.js"></script>
+        <script defer src="~/js/openLinks.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/stats/equivalenceTOSTTest.min.js"></script>
+    </environment>
+}
+
+@{
+    ViewBag.Title = "Equivalence TOST Test";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class="col-md-6">
+        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Single_Measures_Parametric_Analysis.pdf')" class="btn btn-info pull-right">Help</a>
+    </div>
+</div>
+
+<form action="/Analyses/EquivalenceTOSTTest" class="form-horizontal mt-2" method="post">
+
+    @await Html.PartialAsync("AnalysisErrors")
+
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
+                    <h4>Response</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Response" />
+                            <div><span asp-validation-for="Response"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response transformation</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="ResponseTransformation" />
+                            <div><span asp-validation-for="ResponseTransformation"></span></div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <h4>Factors</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Treatment factors</label>
+                        <div class="col-md-6">
+                            <select class="form-control" asp-for="Treatments"></select>
+                            <div><span asp-validation-for="Treatments"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6 control-label">Interactions</div>
+                        <div class="col-md-6">
+                            <select id="Interactions" name="Interactions" size="4" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Other design (block) factors</label>
+                        <div class="col-md-6">
+                            <select class="form-control" asp-for="OtherDesignFactors"></select>
+                            <div><span asp-validation-for="OtherDesignFactors"></span></div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <h4>Covariates</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Covariates</label>
+                        <div class="col-md-6">
+                            <select class="form-control" asp-for="Covariates"></select>
+                            <div><span asp-validation-for="Covariates"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Primary factor</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="PrimaryFactor" />
+                            <div><span asp-validation-for="PrimaryFactor"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Covariate transformation</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="CovariateTransformation" />
+                            <div><span asp-validation-for="CovariateTransformation"></span></div>
+                        </div>
+                    </div>
+
+                    <h4>Equivalence Bounds</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Lower bound</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="LowerBound" />
+                            <div><span asp-validation-for="LowerBound"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Upper bound</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="UpperBound" />
+                            <div><span asp-validation-for="UpperBound"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
+                    <h4>Overall Results</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Residuals vs. predicted plot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="PRPlotSelected" type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Normal probability plot</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="NormalPlotSelected" type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Significance level</label>
+                        <div class="col-md-6">
+                            <input asp-for="Significance" />
+                            <div><span asp-validation-for="Significance"></span></div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <h4>Selected Effect Results</h4>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Effect</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="SelectedEffect" />
+                            <div><span asp-validation-for="SelectedEffect"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Least square (predicted) means</label>
+                        <div class="col-md-6">
+                            <input class="checkbox-fix" asp-for="LSMeansSelected" type="checkbox" />
+                        </div>
+                    </div>
+                    <br />
+
+                    <h4>Post Hoc Tests</h4>                 
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Comparisons back to control</label>
+                        <div class="col-md-6">
+                            <input asp-for="ComparisonsBackToControl" type="checkbox" class="checkbox-fix"/>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Control group</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="ControlGroup" />
+                            <div><span asp-validation-for="ControlGroup"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
+        </div>
+    </div>
+</form>

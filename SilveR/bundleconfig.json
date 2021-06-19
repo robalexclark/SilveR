@@ -225,6 +225,13 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/equivalenceTOSTTest.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/equivalenceTOSTTest.js",
+      "wwwroot/js/openLinks.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/data/index.min.js",
     "inputFiles": [
       "wwwroot/js/data/index.js"
