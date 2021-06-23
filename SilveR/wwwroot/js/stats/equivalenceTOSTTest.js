@@ -168,17 +168,17 @@ function covariateBlockEnableDisable() {
 function selectedEffectsBlockEnableDisable() {
     const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
     const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
-    const comparisonsBackToControl = $('#ComparisonsBackToControl').data("kendoDropDownList");
+/*    const comparisonsBackToControl = $('#ComparisonsBackToControl');*/
     const controlGroup = $('#ControlGroup').data("kendoDropDownList");
 
     if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 0 && selectedEffectDropDown.value().indexOf("*") == -1) {
-        comparisonsBackToControl.enable(true);
+   /*     comparisonsBackToControl.enable(true);*/
         controlGroup.enable(true);
     }
     else {
-        comparisonsBackToControl.enable(false);
+/*        comparisonsBackToControl.enable(false);*/
         controlGroup.enable(false);
-        comparisonsBackToControl.value(null);
+/*        comparisonsBackToControl.value(null);*/
         controlGroup.value(null);
     }
 }

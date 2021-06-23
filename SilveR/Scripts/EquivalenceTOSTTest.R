@@ -1,11 +1,5 @@
-﻿#Parameter setup
-#Module type
-Module <- "SMPA"
-#Module <- "IFPA"
-
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
-
 suppressWarnings(library(multcomp))
 suppressWarnings(library(multcompView))
 suppressWarnings(library(car))
@@ -28,28 +22,19 @@ covariateTransform <- tolower(Args[8])
 FirstCatFactor <- Args[9]
 treatFactors <- Args[10]
 blockFactors <- Args[11]
-showANOVA <- Args[12]
-showPRPlot <- Args[13]
-showNormPlot <- Args[14]
-sig <- 1 - as.numeric(Args[15])
-sig2 <- 1 - as.numeric(Args[15])/2
+lowerEqB <- Args[12]
+upperEqB<- Args[13]
+showPRPlot <- Args[14]
+showNormPlot <- Args[15]
+sig <- 1 - as.numeric(Args[16])
+sig2 <- 1 - as.numeric(Args[16])/2
 effectModel <- as.formula(Args[16])
-effectModel2 <- Args[16]
-selectedEffect <- Args[17]
-showLSMeans <- Args[18]
-allPairwiseTest <- tolower(Args[19])
+effectModel2 <- Args[17]
+selectedEffect <- Args[18]
+showLSMeans <- Args[19]
+backToControlTest <- tolower(Args[20])
+cntrlGroup <- Args[21]
 
-if (Module == "SMPA") {
-	backToControlTest <- tolower(Args[20])
-	cntrlGroup <- Args[21]
-	genpvals <- Args[22]
-}
-
-if (Module == "IFPA") {
-	backToControlTest <- "null"
-	cntrlGroup <- "null"
-	genpvals <- Args[20]
-}
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -57,7 +42,7 @@ if (Module == "IFPA") {
 if (Diplayargs == "Y"){
 	print(Args)
 }
-
+quit()
 #===================================================================================================================
 #Setup the html file and associated css file
 htmlFile <- sub(".csv", ".html", Args[3]); #determine the file name of the html file
@@ -190,13 +175,7 @@ noeffects<-length(emodelChanges)-2
 #Titles and description
 #===================================================================================================================
 #Output HTML header
-if (Module == "SMPA") {
-	Title <-paste(branding, " Single Measure Parametric Analysis", sep="")
-}
-if (Module == "IFPA") {
-	Title <-paste(branding, " Incomplete Factorial Parametric Analysis", sep="")
-}
-
+Title <-paste(branding, " Single Measure Parametric Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
 #Software developement version warning
@@ -205,28 +184,16 @@ if (Betawarn == "Y") {
 	HTML(BetaMessage, align="left")
 }
 
-if (Module == "IFPA") {
-	#Warning
-	title<-c("Warning")
-	HTML.title(title, HR=2, align="left")
-
-	HTML.title("</bf> ", HR=2, align="left")
-	HTML("Warning: This module is currently under construction, care should be taken when considering the results. The results have not been verified.", align="left")
-}
-
-
 #===================================================================================================================
 # Testing the factorial combinations
-if (Module == "SMPA") {
-	ind<-1
-	for (i in 1:notreatfactors) {
-		ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
-	}
+ind<-1
+for (i in 1:notreatfactors) {
+	ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
+}
 
-	if((length(unique(statdata$scatterPlotColumn))) != ind) {
-		HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
-		quit()
-	}
+if((length(unique(statdata$scatterPlotColumn))) != ind) {
+	HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
+	quit()
 }
 #===================================================================================================================
 
@@ -236,13 +203,7 @@ if(FirstCatFactor != "NULL") {
 }
 HTML.title(title, HR=2, align="left")
 
-if (Module == "SMPA") {
-	add<-paste(c("The  "), resp, " response is currently being analysed by the Single Measures Parametric Analysis module", sep="")
-}
-
-if (Module == "IFPA") {
-	add<-paste(c("The  "), resp, " response is currently being analysed by the Incomplete Factorial Parametric Analysis module", sep="")
-}
+add<-paste(c("The  "), resp, " response is currently being analysed by the Single Measures Parametric Analysis module", sep="")
 
 if(FirstCatFactor != "NULL") {
 	if (nocovars == 1) {
@@ -434,95 +395,43 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 	}
 
 	if (df.residual(Covintfull)>0) {
-		if (Module == "SMPA") {
-			tempx<-Anova(Covintfull, type=c("III"))[-1,]
+		tempx<-Anova(Covintfull, type=c("III"))[-1,]
 
-			if (tempx[dim(tempx)[1],1] != 0) {
-				temp2x<-(tempx)
-				col1x<-format(round(temp2x[1], 3), nsmall=3, scientific=FALSE)
-				col2x<-format(round(temp2x[1]/temp2x[2], 3), nsmall=3, scientific=FALSE)
-				col3x<-format(round(temp2x[3], 2), nsmall=2, scientific=FALSE)
-				col4x<-format(round(temp2x[4], 4), nsmall=4, scientific=FALSE)
+		if (tempx[dim(tempx)[1],1] != 0) {
+			temp2x<-(tempx)
+			col1x<-format(round(temp2x[1], 3), nsmall=3, scientific=FALSE)
+			col2x<-format(round(temp2x[1]/temp2x[2], 3), nsmall=3, scientific=FALSE)
+			col3x<-format(round(temp2x[3], 2), nsmall=2, scientific=FALSE)
+			col4x<-format(round(temp2x[4], 4), nsmall=4, scientific=FALSE)
+			sourcex<-rownames(temp2x)
 
-				sourcex<-rownames(temp2x)
+			# Residual label in ANOVA
+			sourcex[length(sourcex)] <- "Residual"
 
-				# Residual label in ANOVA
-				sourcex[length(sourcex)] <- "Residual"
+			#STB March 2014 - Replacing : with * in ANOVA table
+			for (q in 1:notreatfactors) {
+				sourcex<-sub(":"," * ", sourcex) 
+			}
+			ivsanovax<-cbind(sourcex, col1x, temp2x[2], col2x, col3x, col4x)
 
-				#STB March 2014 - Replacing : with * in ANOVA table
-				for (q in 1:notreatfactors) {
-					sourcex<-sub(":"," * ", sourcex) 
+			ivsanovax[length(unique(sourcex)),5]<-" "
+			ivsanovax[length(unique(sourcex)),6]<-" "
+
+			#STB May 2012 capitals changed
+			headx<-c("Effect", "Sums of squares", "Degrees of freedom","Mean square","F-value","p-value")
+			colnames(ivsanovax)<-headx
+			for (i in 1:(dim(ivsanovax)[1]-1))  {
+				if (temp2x[i,4]<0.0001) {
+					#STB March 2011 formatting p-values p<0.0001
+					# ivsanovax[i,6]<-0.0001
+					ivsanovax[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+					ivsanovax[i,6]<- paste("<",ivsanovax[i,6])
 				}
-				ivsanovax<-cbind(sourcex, col1x, temp2x[2], col2x, col3x, col4x)
-	
-				ivsanovax[length(unique(sourcex)),5]<-" "
-				ivsanovax[length(unique(sourcex)),6]<-" "
-
-				#STB May 2012 capitals changed
-				headx<-c("Effect", "Sums of squares", "Degrees of freedom","Mean square","F-value","p-value")
-				colnames(ivsanovax)<-headx
-
-				for (i in 1:(dim(ivsanovax)[1]-1))  {
-					if (temp2x[i,4]<0.0001) {
-						#STB March 2011 formatting p-values p<0.0001
-						# ivsanovax[i,6]<-0.0001
-						ivsanovax[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-						ivsanovax[i,6]<- paste("<",ivsanovax[i,6])
-					}
-				}
-
-				HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
-				HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
-				HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
-			} 
-		}
-
-
-		if (Module == "IFPA") {
-			temx<-anova(Covintfull)
-
-			if (temx[dim(temx)[1],1] != 0) {
-				tempx<-anova(Covintfull)
-				temp2x<-(tempx)
-
-				col1x<-format(round(temp2x[2], 3), nsmall=3, scientific=FALSE)
-				col2x<-format(round(temp2x[3], 3), nsmall=3, scientific=FALSE)
-				col3x<-format(round(temp2x[4], 2), nsmall=2, scientific=FALSE)
-				col4x<-format(round(temp2x[5], 4), nsmall=4, scientific=FALSE)
-
-				sourcex<-rownames(temp2x)
-
-				# Residual label in ANOVA
-				sourcex[length(sourcex)] <- "Residual"
-
-				#STB March 2014 - Replacing : with * in ANOVA table
-				for (q in 1:notreatfactors) {
-					sourcex<-sub(":"," * ", sourcex) 
-				}
-				ivsanovax<-cbind(sourcex, col1x, temp2x[1], col2x, col3x, col4x)
-	
-				ivsanovax[length(unique(sourcex)),5]<-" "
-				ivsanovax[length(unique(sourcex)),6]<-" "
-
-				#STB May 2012 capitals changed
-				headx<-c("Effect", "Sums of squares", "Degrees of freedom","Mean square","F-value","p-value")
-				colnames(ivsanovax)<-headx
-
-				for (i in 1:(dim(ivsanovax)[1]-1))  {
-					if (temp2x[i,5]<0.0001) {
-						#STB March 2011 formatting p-values p<0.0001
-						# ivsanovax[i,6]<-0.0001
-						ivsanovax[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-						ivsanovax[i,6]<- paste("<",ivsanovax[i,6])
-					}
-				}
-
-				HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
-				HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
-				HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
-			} 
-		}
-
+			}
+			HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
+			HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
+			HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
+		} 
 	}
 }
 #===================================================================================================================
@@ -554,96 +463,49 @@ if(showANOVA=="Y") {
 
 	#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
 
-	if (Module == "SMPA") {
-		temp<-Anova(threewayfull, type=c("III"))[-1,]
-		col1<-format(round(temp[1], 3), nsmall=3, scientific=FALSE)
-		col2<-format(round(temp[1]/temp[2], 3), nsmall=3, scientific=FALSE)
-		col3<-format(round(temp[3], 2), nsmall=2, scientific=FALSE)
-		col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
+	temp<-Anova(threewayfull, type=c("III"))[-1,]
+	col1<-format(round(temp[1], 3), nsmall=3, scientific=FALSE)
+	col2<-format(round(temp[1]/temp[2], 3), nsmall=3, scientific=FALSE)
+	col3<-format(round(temp[3], 2), nsmall=2, scientific=FALSE)
+	col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
 
-		source<-rownames(temp)
+	source<-rownames(temp)
 
-		# Residual label in ANOVA
-		source[length(source)] <- "Residual"
+	# Residual label in ANOVA
+	source[length(source)] <- "Residual"
 
-		#STB March 2014 - Replacing : with * in ANOVA table
-		for (q in 1:notreatfactors) {
-			source<-sub(":"," * ", source) 
-		}	
-		ivsanova<-cbind(source, col1,temp[2],col2,col3,col4)
+	#STB March 2014 - Replacing : with * in ANOVA table
+	for (q in 1:notreatfactors) {
+		source<-sub(":"," * ", source) 
+	}	
+	ivsanova<-cbind(source, col1,temp[2],col2,col3,col4)
 
-		ivsanova[length(unique(source)),5]<-" "
-		ivsanova[length(unique(source)),6]<-" "
+	ivsanova[length(unique(source)),5]<-" "
+	ivsanova[length(unique(source)),6]<-" "
 
-		#STB May 2012 capitals changed
-		head<-c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
-		colnames(ivsanova)<-head
+	#STB May 2012 capitals changed
+	head<-c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
+	colnames(ivsanova)<-head
 
-		for (i in 1:(dim(ivsanova)[1]-1)) {
-			if (temp[i,4]<0.0001) {
-				#STB March 2011 formatting p-values p<0.0001
-				#ivsanova[i,6]<-0.0001
-				ivsanova[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				ivsanova[i,6]<- paste("<",ivsanova[i,6])
-			}
-		}
-	
-		HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
-
-		if(FirstCatFactor != "NULL") {
-			#STB Error spotted:
-			HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
-		} else {
-			HTML("Comment: ANOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
+	for (i in 1:(dim(ivsanova)[1]-1)) {
+		if (temp[i,4]<0.0001) {
+			#STB March 2011 formatting p-values p<0.0001
+			#ivsanova[i,6]<-0.0001
+			ivsanova[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+			ivsanova[i,6]<- paste("<",ivsanova[i,6])
 		}
 	}
 
+	HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
 
-
-
-	if (Module == "IFPA") {
-		temp<-anova(threewayfull)
-		col1<-format(round(temp[2], 3), nsmall=3, scientific=FALSE)
-		col2<-format(round(temp[3], 3), nsmall=3, scientific=FALSE)
-		col3<-format(round(temp[4], 2), nsmall=2, scientific=FALSE)
-		col4<-format(round(temp[5], 4), nsmall=4, scientific=FALSE)
-
-		source<-rownames(temp)
-
-		# Residual label in ANOVA
-		source[length(source)] <- "Residual"
-
-		#STB March 2014 - Replacing : with * in ANOVA table
-		for (q in 1:notreatfactors) {
-			source<-sub(":"," * ", source) 
-		}	
-		ivsanova<-cbind(source, col1,temp[1],col2,col3,col4)
-
-		ivsanova[length(unique(source)),5]<-" "
-		ivsanova[length(unique(source)),6]<-" "
-
-		#STB May 2012 capitals changed
-		head<-c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
-		colnames(ivsanova)<-head
-
-		for (i in 1:(dim(ivsanova)[1]-1)) {
-			if (temp[i,5]<0.0001) {
-				#STB March 2011 formatting p-values p<0.0001
-				#ivsanova[i,6]<-0.0001
-				ivsanova[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				ivsanova[i,6]<- paste("<",ivsanova[i,6])
-			}
-		}
-	
-		HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
-
-		if(FirstCatFactor != "NULL") {
-			#STB Error spotted:
-			HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
-		} else {
-			HTML("Comment: ANOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
-		}
+	if(FirstCatFactor != "NULL") {
+		#STB Error spotted:
+		HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
+	} else {
+		HTML("Comment: ANOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
 	}
+
+
 
 	add<-paste(c("Conclusion"))
 	inte<-1
@@ -858,10 +720,6 @@ if(showLSMeans =="Y") {
 		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
 		x<-summary(tabs)
 	
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-
 		x$Mean <-x$emmean 
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])
@@ -888,10 +746,6 @@ if(showLSMeans =="Y") {
 		#Calculate LS Means Table
 		x<-summary(tabs)
 
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-	
 		x$Mean <-format(round(x$emmean, 3), nsmall=3, scientific=FALSE) 
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- format(round(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
@@ -1095,10 +949,6 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
 		x<-summary(tabs)
 
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-
 		if (responseTransform =="log10") {
 			x$Mean <-10^(x$emmean)
 			for (i in 1:dim(x)[1]) {
@@ -1143,11 +993,7 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 
 		#Calculate LS Means Table
 		x<-summary(tabs)
-	
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-	
+
 		if (responseTransform =="log10") {
 			x$Mean <-format(round(10^(x$emmean), 3), nsmall=3, scientific=FALSE) 
 			for (i in 1:dim(x)[1]) {
@@ -1421,12 +1267,7 @@ if(allPairwiseTest != "null") {
 		HTML.title(add, HR=2, align="left")
 	}
 
-	if (Module == "SMPA") {
-		mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
-	}
-	if (Module == "IFPA") {
-		mult<-glht(lm(effectModel, data=statdata, na.action = na.omit), linfct=mcp(mainEffect="Tukey"))
-	}
+	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
 	multci<-confint(mult, level=sig, calpha = univariate_calpha())
 	tablen<-length(unique(rownames(multci$confint)))
 
