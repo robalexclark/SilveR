@@ -36,7 +36,7 @@ namespace SilveR.UnitTests.StatsModels
 
             //Assert
             Assert.IsAssignableFrom<IEnumerable<string>>(result);
-            Assert.Equal(new List<string>() { "0.1", "0.05", "0.01", "0.001" }, result);
+            Assert.Equal(new List<string>() { "0.1", "0.05", "0.025", "0.01", "0.001" }, result);
         }
 
 

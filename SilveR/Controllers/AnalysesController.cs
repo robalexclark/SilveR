@@ -281,8 +281,7 @@ namespace SilveR.Controllers
         private async Task<IActionResult> RunAnalysis(AnalysisModelBase model, bool ignoreWarnings)
         {
             Dataset dataset = null;
-            AnalysisDataModelBase analysisDataModelBase = model as AnalysisDataModelBase;
-            if (analysisDataModelBase != null)
+            if (model is AnalysisDataModelBase analysisDataModelBase)
             {
                 dataset = await repository.GetDatasetByID(analysisDataModelBase.DatasetID);
                 analysisDataModelBase.ReInitialize(dataset);

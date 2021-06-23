@@ -57,7 +57,7 @@ namespace SilveR.StatsModels
 
         public IEnumerable<string> SignificancesList
         {
-            get { return new List<string>() { "0.1", "0.05", "0.01", "0.001" }; }
+            get { return new List<string>() { "0.1", "0.05", "0.025", "0.01", "0.001" }; }
         }
 
         [DisplayName("Effect")]
@@ -66,22 +66,28 @@ namespace SilveR.StatsModels
         [DisplayName("Least square (predicted) means")]
         public bool LSMeansSelected { get; set; }
 
-        public IEnumerable<string> PairwiseTestList
-        {
-            get { return new List<string>() { String.Empty, "Unadjusted (LSD)", "Tukey", "Holm", "Hochberg", "Hommel", "Bonferroni", "Benjamini-Hochberg" }; }
-        }
-
-        [DisplayName("Comparisons back to control")]
-        public bool ComparisonsBackToControl { get; set; }
+        public enum ComparisonOption { AllPairwise = 0, ComparisonsToControl = 1 }
+        [DisplayName("Analysis type")]
+        public ComparisonOption ComparisonType { get; set; } = ComparisonOption.AllPairwise;
 
         [DisplayName("Control group")]
         public string ControlGroup { get; set; }
 
-        [DisplayName("Lower bound")]
-        public Nullable<int> LowerBound { get; set; } = 0;
+        public enum EquivalenceBoundsOption { Absolute = 0, Percentage = 1 }
+        [DisplayName("Equivalence Bounds type")]
+        public EquivalenceBoundsOption EquivalenceBoundsType { get; set; } = EquivalenceBoundsOption.Absolute;
 
-        [DisplayName("Upper bound")]
-        public Nullable<int> UpperBound { get; set; } = 0;
+        [DisplayName("Lower bound absolute")]
+        public Nullable<decimal> LowerBoundAbsolute { get; set; } = 0;
+
+        [DisplayName("Upper bound absolute")]
+        public Nullable<decimal> UpperBoundAbsolute { get; set; } = 0;
+
+        [DisplayName("Lower bound percentage")]
+        public Nullable<decimal> LowerBoundPercentage { get; set; } = 0;
+
+        [DisplayName("Upper bound percentage")]
+        public Nullable<decimal> UpperBoundPercentage { get; set; } = 0;
 
         public EquivalenceTOSTTestModel() : base("EquivalenceTOSTTest") { }
 
@@ -212,16 +218,26 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //11
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(LowerBound)); //12
-            arguments.Append(" " + argFormatter.GetFormattedArgument(UpperBound)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(EquivalenceBoundsType.ToString())); //12
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //14
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //15
+            if (EquivalenceBoundsType == EquivalenceBoundsOption.Absolute)
+            {
+                arguments.Append(" " + argFormatter.GetFormattedArgument(LowerBoundAbsolute)); //13
+                arguments.Append(" " + argFormatter.GetFormattedArgument(UpperBoundAbsolute)); //14
+            }
+            else
+            {
+                arguments.Append(" " + argFormatter.GetFormattedArgument(LowerBoundPercentage)); //13
+                arguments.Append(" " + argFormatter.GetFormattedArgument(UpperBoundPercentage)); //14
+            }
 
-            arguments.Append(" " + Significance); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalPlotSelected)); //16
+
+            arguments.Append(" " + Significance); //17
 
             //assemble the effect model
-            if (String.IsNullOrEmpty(SelectedEffect)) //16, 17
+            if (String.IsNullOrEmpty(SelectedEffect)) //18, 19
             {
                 arguments.Append(" " + "NULL");
                 arguments.Append(" " + "NULL");
@@ -232,11 +248,11 @@ namespace SilveR.StatsModels
                 arguments.Append(" " + argFormatter.GetFormattedArgument(SelectedEffect, true));
             }
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LSMeansSelected)); //20
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonsBackToControl)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ComparisonType.ToString())); //21
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, false)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, false)); //22
 
             return arguments.ToString().Trim();
         }
@@ -253,14 +269,17 @@ namespace SilveR.StatsModels
             this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
             this.PrimaryFactor = argHelper.LoadStringArgument(nameof(PrimaryFactor));
             this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
-            this.LowerBound = argHelper.LoadNullableIntArgument(nameof(LowerBound));
-            this.UpperBound = argHelper.LoadNullableIntArgument(nameof(UpperBound));
+            this.EquivalenceBoundsType = (EquivalenceBoundsOption)Enum.Parse(typeof(EquivalenceBoundsOption), argHelper.LoadStringArgument(nameof(EquivalenceBoundsType)), true);
+            this.LowerBoundAbsolute = argHelper.LoadNullableDecimalArgument(nameof(LowerBoundAbsolute));
+            this.UpperBoundAbsolute = argHelper.LoadNullableDecimalArgument(nameof(UpperBoundAbsolute));
+            this.LowerBoundPercentage = argHelper.LoadNullableDecimalArgument(nameof(LowerBoundPercentage));
+            this.UpperBoundPercentage = argHelper.LoadNullableDecimalArgument(nameof(UpperBoundPercentage));
             this.PRPlotSelected = argHelper.LoadBooleanArgument(nameof(PRPlotSelected));
             this.NormalPlotSelected = argHelper.LoadBooleanArgument(nameof(NormalPlotSelected));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
             this.SelectedEffect = argHelper.LoadStringArgument(nameof(SelectedEffect));
             this.LSMeansSelected = argHelper.LoadBooleanArgument(nameof(LSMeansSelected));
-            this.ComparisonsBackToControl = argHelper.LoadBooleanArgument(nameof(ComparisonsBackToControl));
+            this.ComparisonType = (ComparisonOption)Enum.Parse(typeof(ComparisonOption), argHelper.LoadStringArgument(nameof(ComparisonType)), true);
             this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
         }
 
@@ -275,14 +294,17 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PrimaryFactor), PrimaryFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(LowerBound), LowerBound));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(UpperBound), UpperBound));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(EquivalenceBoundsType), EquivalenceBoundsType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(LowerBoundAbsolute), LowerBoundAbsolute));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(UpperBoundAbsolute), UpperBoundAbsolute));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(LowerBoundPercentage), LowerBoundPercentage));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(UpperBoundPercentage), UpperBoundPercentage));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlotSelected), PRPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlotSelected), NormalPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SelectedEffect), SelectedEffect));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LSMeansSelected), LSMeansSelected));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(ComparisonsBackToControl), ComparisonsBackToControl));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ComparisonType), ComparisonType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
 
             return args;
@@ -369,30 +391,30 @@ namespace SilveR.StatsModels
             return interactions;
         }
 
-        public static List<string> DetermineSelectedEffectsList(List<string> selectedTreatments)
-        {
-            //assemble a complete list of main and interaction effects
-            List<string> effects = new List<string>();
-            effects.AddRange(selectedTreatments);
+        //public static List<string> DetermineSelectedEffectsList(List<string> selectedTreatments)
+        //{
+        //    //assemble a complete list of main and interaction effects
+        //    List<string> effects = new List<string>();
+        //    effects.AddRange(selectedTreatments);
 
-            List<string> interactions = DetermineInteractions(selectedTreatments);
+        //    List<string> interactions = DetermineInteractions(selectedTreatments);
 
-            effects.AddRange(interactions);
+        //    effects.AddRange(interactions);
 
-            //if the number of interaction effects is 4 or greater,
-            //then only the main effects and highest order effect are to be available
-            if (selectedTreatments.Count >= 4)
-            {
-                //remove any effect that is an interaction effect
-                for (int i = effects.Count - 1; i >= 0; i = i - 1)
-                {
-                    if (effects[i].Contains("*")) effects.Remove(effects[i]);
-                }
-                //add in the highest order interaction again
-                effects.Add(interactions[interactions.Count - 1].ToString());
-            }
+        //    //if the number of interaction effects is 4 or greater,
+        //    //then only the main effects and highest order effect are to be available
+        //    if (selectedTreatments.Count >= 4)
+        //    {
+        //        //remove any effect that is an interaction effect
+        //        for (int i = effects.Count - 1; i >= 0; i = i - 1)
+        //        {
+        //            if (effects[i].Contains("*")) effects.Remove(effects[i]);
+        //        }
+        //        //add in the highest order interaction again
+        //        effects.Add(interactions[interactions.Count - 1].ToString());
+        //    }
 
-            return effects;
-        }
+        //    return effects;
+        //}
     }
 }

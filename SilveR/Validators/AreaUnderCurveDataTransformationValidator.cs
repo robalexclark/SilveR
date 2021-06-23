@@ -111,7 +111,7 @@ namespace SilveR.Validators
             {
                 string[] split = aucVariables.NumericalTimePoints?.Split(',');
 
-                if (aucVariables.Responses.Count() != split.Count())
+                if (aucVariables.Responses.Count() != split.Length)
                 {
                     ValidationInfo.AddErrorMessage("The number of numerical timepoints has to equal the number of response variables selected.");
                     return ValidationInfo;
@@ -139,7 +139,7 @@ namespace SilveR.Validators
 
             if (aucVariables.SelectedInputFormat == InputFormatType.RepeatedMeasuresFormat)
             {
-                if (aucVariables.AUCOutput == AUCOutputType.AUCFromInitialTimepoint && aucVariables.TimeFactor.Count() == 1)
+                if (aucVariables.AUCOutput == AUCOutputType.AUCFromInitialTimepoint && aucVariables.TimeFactor.Length == 1)
                 {
                     ValidationInfo.AddErrorMessage("Only one timepoint found.");
                     return ValidationInfo;

@@ -44,17 +44,37 @@ $(function () {
         dataSource: theModel.transformationsList
     });
 
-    $("#LowerBound").kendoNumericTextBox({
+ 
+    $("#LowerBoundAbsolute").kendoNumericTextBox({
         format: '#.#',
         decimals: 1,
-        spinners: true
+        spinners: true,
+        step: 0.1
     });
 
-    $("#UpperBound").kendoNumericTextBox({
+    $("#UpperBoundAbsolute").kendoNumericTextBox({
         format: '#.#',
         decimals: 1,
-        spinners: true
+        spinners: true,
+        step: 0.1
     });
+
+    $("#LowerBoundPercentage").kendoNumericTextBox({
+        format: '#.#',
+        decimals: 1,
+        spinners: true,
+        min: 0,
+        max: 100
+    });
+
+    $("#UpperBoundPercentage").kendoNumericTextBox({
+        format: '#.#',
+        decimals: 1,
+        spinners: true,
+        min: 0,
+        max: 100
+    });
+
 
     $("#Significance").kendoDropDownList({
         dataSource: theModel.significancesList
@@ -106,6 +126,8 @@ $(function () {
     treatmentsChanged();
 
     covariateBlockEnableDisable();
+
+    enableDisableEquivalenceType();
 });
 
 function treatmentsChanged() {
@@ -168,17 +190,37 @@ function covariateBlockEnableDisable() {
 function selectedEffectsBlockEnableDisable() {
     const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
     const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
-    const comparisonsBackToControl = $('#ComparisonsBackToControl').data("kendoDropDownList");
     const controlGroup = $('#ControlGroup').data("kendoDropDownList");
 
     if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 0 && selectedEffectDropDown.value().indexOf("*") == -1) {
-        comparisonsBackToControl.enable(true);
         controlGroup.enable(true);
     }
     else {
-        comparisonsBackToControl.enable(false);
         controlGroup.enable(false);
-        comparisonsBackToControl.value(null);
         controlGroup.value(null);
+    }
+}
+
+function enableDisableEquivalenceType() {
+
+    const analysisType = $('input:radio[name="EquivalenceBoundsType"]:checked').val();
+
+    const lowerBoundAbsolute = $("#LowerBoundAbsolute").data("kendoNumericTextBox");
+    const upperBoundAbsolute = $("#UpperBoundAbsolute").data("kendoNumericTextBox");
+    const lowerBoundPercentage = $("#LowerBoundPercentage").data("kendoNumericTextBox");
+    const upperBoundPercentage = $("#UpperBoundPercentage").data("kendoNumericTextBox");
+
+    if (analysisType == "Absolute") {
+        lowerBoundAbsolute.enable(true);
+        upperBoundAbsolute.enable(true);
+
+        lowerBoundPercentage.enable(false);
+        upperBoundPercentage.enable(false);
+    } else {
+        lowerBoundAbsolute.enable(false);
+        upperBoundAbsolute.enable(false);
+
+        lowerBoundPercentage.enable(true);
+        upperBoundPercentage.enable(true);
     }
 }

@@ -303,12 +303,10 @@ namespace SilveR.Controllers
                     return Json(message);
                 }
             }
-#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex) //so much could go wrong here!
             {
                 return Json(ex.Message);
             }
-#pragma warning restore CA1031 // Do not catch general exception types
 
             return Json(true);
         }

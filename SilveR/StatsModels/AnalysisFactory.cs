@@ -12,91 +12,36 @@ namespace SilveR.StatsModels
 
         public static AnalysisModelBase CreateAnalysisModel(string scriptName, Dataset dataset)
         {
-            AnalysisModelBase model;
-            switch (scriptName)
+            AnalysisModelBase model = scriptName switch
             {
-                case "SummaryStatistics":
-                    model = new SummaryStatisticsModel(dataset);
-                    break;
-                case "SingleMeasuresParametricAnalysis":
-                    model = new SingleMeasuresParametricAnalysisModel(dataset);
-                    break;
-                case "RepeatedMeasuresParametricAnalysis":
-                    model = new RepeatedMeasuresParametricAnalysisModel(dataset);
-                    break;
-                case "PValueAdjustmentUserBasedInputs":
-                    model = new PValueAdjustmentUserBasedInputsModel();
-                    break;
-                case "PValueAdjustmentDatasetBasedInputs":
-                    model = new PValueAdjustmentDatasetBasedInputsModel(dataset);
-                    break;
-                case "PairedTTestAnalysis":
-                    model = new PairedTTestAnalysisModel(dataset);
-                    break;
-                case "UnpairedTTestAnalysis":
-                    model = new UnpairedTTestAnalysisModel(dataset);
-                    break;
-                case "OneSampleTTestAnalysis":
-                    model = new OneSampleTTestAnalysisModel(dataset);
-                    break;
-                case "CorrelationAnalysis":
-                    model = new CorrelationAnalysisModel(dataset);
-                    break;
-                case "LinearRegressionAnalysis":
-                    model = new LinearRegressionAnalysisModel(dataset);
-                    break;
-                case "LogisticRegressionAnalysis":
-                    model = new LogisticRegressionAnalysisModel(dataset);
-                    break;
-                case "DoseResponseAndNonLinearRegressionAnalysis":
-                    model = new DoseResponseAndNonLinearRegressionAnalysisModel(dataset);
-                    break;
-                case "NonParametricAnalysis":
-                    model = new NonParametricAnalysisModel(dataset);
-                    break;
-                case "ChiSquaredAndFishersExactTest":
-                    model = new ChiSquaredAndFishersExactTestModel(dataset);
-                    break;
-                case "SurvivalAnalysis":
-                    model = new SurvivalAnalysisModel(dataset);
-                    break;
-                case "GraphicalAnalysis":
-                    model = new GraphicalAnalysisModel(dataset);
-                    break;
-                case "ComparisonOfMeansPowerAnalysisUserBasedInputs":
-                    model = new ComparisonOfMeansPowerAnalysisUserBasedInputsModel();
-                    break;
-                case "ComparisonOfMeansPowerAnalysisDatasetBasedInputs":
-                    model = new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel(dataset);
-                    break;
-                case "OneWayANOVAPowerAnalysisUserBasedInputs":
-                    model = new OneWayANOVAPowerAnalysisUserBasedInputsModel();
-                    break;
-                case "OneWayANOVAPowerAnalysisDatasetBasedInputs":
-                    model = new OneWayANOVAPowerAnalysisDatasetBasedInputsModel(dataset);
-                    break;
-                case "MultivariateAnalysis":
-                    model = new MultivariateAnalysisModel(dataset);
-                    break;
-                case "NestedDesignAnalysis":
-                    model = new NestedDesignAnalysisModel(dataset);
-                    break;
-                case "IncompleteFactorialParametricAnalysis":
-                    model = new IncompleteFactorialParametricAnalysisModel(dataset);
-                    break;
-                case "SingleMeasuresToRepeatedMeasuresDataTransformation":
-                    model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel(dataset);
-                    break;
-                case "AreaUnderCurveDataTransformation":
-                    model = new AreaUnderCurveDataTransformationModel(dataset);
-                    break;
-                case "EquivalenceTOSTTest":
-                    model = new EquivalenceTOSTTestModel(dataset);
-                    break;
-                default:
-                    throw new ArgumentException("Analysis type not found!");
-            }
-
+                "SummaryStatistics" => new SummaryStatisticsModel(dataset),
+                "SingleMeasuresParametricAnalysis" => new SingleMeasuresParametricAnalysisModel(dataset),
+                "RepeatedMeasuresParametricAnalysis" => new RepeatedMeasuresParametricAnalysisModel(dataset),
+                "PValueAdjustmentUserBasedInputs" => new PValueAdjustmentUserBasedInputsModel(),
+                "PValueAdjustmentDatasetBasedInputs" => new PValueAdjustmentDatasetBasedInputsModel(dataset),
+                "PairedTTestAnalysis" => new PairedTTestAnalysisModel(dataset),
+                "UnpairedTTestAnalysis" => new UnpairedTTestAnalysisModel(dataset),
+                "OneSampleTTestAnalysis" => new OneSampleTTestAnalysisModel(dataset),
+                "CorrelationAnalysis" => new CorrelationAnalysisModel(dataset),
+                "LinearRegressionAnalysis" => new LinearRegressionAnalysisModel(dataset),
+                "LogisticRegressionAnalysis" => new LogisticRegressionAnalysisModel(dataset),
+                "DoseResponseAndNonLinearRegressionAnalysis" => new DoseResponseAndNonLinearRegressionAnalysisModel(dataset),
+                "NonParametricAnalysis" => new NonParametricAnalysisModel(dataset),
+                "ChiSquaredAndFishersExactTest" => new ChiSquaredAndFishersExactTestModel(dataset),
+                "SurvivalAnalysis" => new SurvivalAnalysisModel(dataset),
+                "GraphicalAnalysis" => new GraphicalAnalysisModel(dataset),
+                "ComparisonOfMeansPowerAnalysisUserBasedInputs" => new ComparisonOfMeansPowerAnalysisUserBasedInputsModel(),
+                "ComparisonOfMeansPowerAnalysisDatasetBasedInputs" => new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel(dataset),
+                "OneWayANOVAPowerAnalysisUserBasedInputs" => new OneWayANOVAPowerAnalysisUserBasedInputsModel(),
+                "OneWayANOVAPowerAnalysisDatasetBasedInputs" => new OneWayANOVAPowerAnalysisDatasetBasedInputsModel(dataset),
+                "MultivariateAnalysis" => new MultivariateAnalysisModel(dataset),
+                "NestedDesignAnalysis" => new NestedDesignAnalysisModel(dataset),
+                "IncompleteFactorialParametricAnalysis" => new IncompleteFactorialParametricAnalysisModel(dataset),
+                "SingleMeasuresToRepeatedMeasuresDataTransformation" => new SingleMeasuresToRepeatedMeasuresDataTransformationModel(dataset),
+                "AreaUnderCurveDataTransformation" => new AreaUnderCurveDataTransformationModel(dataset),
+                "EquivalenceTOSTTest" => new EquivalenceTOSTTestModel(dataset),
+                _ => throw new ArgumentException("Analysis type not found!"),
+            };
             return model;
         }
     }

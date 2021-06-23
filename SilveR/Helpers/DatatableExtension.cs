@@ -100,8 +100,8 @@ namespace SilveR.Helpers
 
                 foreach (DataRow r in data.Rows)
                 {
-                    double val; //get the value
-                    bool valOK = Double.TryParse(r[column].ToString(), out val);
+                    //get the value
+                    bool valOK = Double.TryParse(r[column].ToString(), out double val);
 
                     if (valOK) //then it is numeric 
                     {
@@ -133,8 +133,7 @@ namespace SilveR.Helpers
                 //go through each row in dataset replacing the original value with the rank
                 foreach (DataRow r in data.Rows)
                 {
-                    double val;
-                    bool valOK = Double.TryParse(r[column].ToString(), out val);
+                    bool valOK = Double.TryParse(r[column].ToString(), out double val);
 
                     if (valOK)
                     {
@@ -148,8 +147,8 @@ namespace SilveR.Helpers
             {
                 foreach (DataRow r in data.Rows)
                 {
-                    double val; //get the value
-                    bool valOK = Double.TryParse(r[column].ToString(), out val);
+                    //get the value
+                    bool valOK = Double.TryParse(r[column].ToString(), out double val);
 
                     if (valOK && transformation != "None") //if response value is number (and actually doing a transformation)
                     {
@@ -208,7 +207,7 @@ namespace SilveR.Helpers
             {
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    bool isNumeric = Double.TryParse(row[column].ToString(), out double vvoid);
+                    bool isNumeric = Double.TryParse(row[column].ToString(), out _);
 
                     if (!isNumeric && !String.IsNullOrEmpty(row[column].ToString()))
                         return false;
@@ -230,7 +229,7 @@ namespace SilveR.Helpers
             {
                 if (!firstHeader)
                 {
-                    headerOut = headerOut.Append(",");
+                    headerOut = headerOut.Append(',');
                 }
 
                 headerOut = headerOut.Append(col.ColumnName.Trim());
@@ -252,7 +251,7 @@ namespace SilveR.Helpers
                 {
                     if (!firstColumn)
                     {
-                        rowOut = rowOut.Append(",");
+                        rowOut = rowOut.Append(',');
                     }
 
                     string value = row[col.ColumnName].ToString();

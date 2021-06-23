@@ -24,7 +24,7 @@ namespace SilveR.UnitTests.Controllers
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
             mockRepository.Setup(x => x.GetDatasetByID(It.IsAny<int>())).ReturnsAsync(GetDataset());
 
-            ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
+            ValuesController sut = new ValuesController(mockRepository.Object);
 
             //Act
             IActionResult result = await sut.GetLevels("Treat1", 6, includeNull);
@@ -43,9 +43,8 @@ namespace SilveR.UnitTests.Controllers
         {
             //Arrange
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
+            ValuesController sut = new ValuesController(mockRepository.Object);
 
             //Act
             IActionResult result = sut.GetSMPAInteractions(new List<string> { "Treat1", "Treat2", "Treat3" });
@@ -61,9 +60,8 @@ namespace SilveR.UnitTests.Controllers
         {
             //Arrange
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
+            ValuesController sut = new ValuesController(mockRepository.Object);
 
             //Act
             IActionResult result = sut.GetSMPASelectedEffectsList(new List<string> { "Treat1", "Treat2", "Treat3" });
@@ -79,9 +77,8 @@ namespace SilveR.UnitTests.Controllers
         {
             //Arrange
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
+            ValuesController sut = new ValuesController(mockRepository.Object);
 
             //Act
             IActionResult result = sut.GetRMPAInteractions(new List<string> { "Treat1", "Treat2", "Treat3" });
@@ -98,9 +95,8 @@ namespace SilveR.UnitTests.Controllers
         {
             //Arrange
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
+            ValuesController sut = new ValuesController(mockRepository.Object);
 
             //Act
             IActionResult result = sut.GetRMPASelectedEffectsList(new List<string> { "Treat1", "Treat2", "Treat3" }, "Day1");
@@ -116,9 +112,8 @@ namespace SilveR.UnitTests.Controllers
         {
             //Arrange
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
+            ValuesController sut = new ValuesController(mockRepository.Object);
 
             //Act
             IActionResult result = sut.GetIncompleteFactorialInteractions(new List<string> { "Treat1", "Treat2", "Treat3" });
@@ -135,9 +130,8 @@ namespace SilveR.UnitTests.Controllers
         {
             //Arrange
             System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            Mock<IWebHostEnvironment> mockHostingEnvironment = new Mock<IWebHostEnvironment>();
             Mock<ISilveRRepository> mockRepository = new Mock<ISilveRRepository>();
-            ValuesController sut = new ValuesController(mockHostingEnvironment.Object, mockRepository.Object);
+            ValuesController sut = new ValuesController(mockRepository.Object);
 
             //Act
             IActionResult result = sut.GetIncompleteFactorialSelectedEffectsList(new List<string> { "Treat1", "Treat2", "Treat3" });

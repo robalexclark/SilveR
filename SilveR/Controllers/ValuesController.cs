@@ -7,7 +7,6 @@ using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,13 +14,11 @@ namespace SilveR.Controllers
 {
     public class ValuesController : Controller
     {
-        private readonly string wwwRoot;
         private readonly ISilveRRepository repository;
 
-        public ValuesController(IWebHostEnvironment hostingEnvironment, ISilveRRepository repository)
+        public ValuesController(ISilveRRepository repository)
         {
-            this.wwwRoot = hostingEnvironment.WebRootPath;
-            this.repository = repository;
+             this.repository = repository;
         }
 
         [HttpGet]

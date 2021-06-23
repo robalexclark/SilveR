@@ -19,7 +19,7 @@ namespace SilveR.Services
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _backgroundTask = Task.Run(BackgroundProceessing);
+            _backgroundTask = Task.Run(BackgroundProceessing, CancellationToken.None);
 
             return Task.CompletedTask;
         }

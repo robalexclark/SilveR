@@ -1,11 +1,5 @@
-﻿#Parameter setup
-#Module type
-Module <- "SMPA"
-#Module <- "IFPA"
-
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
-
 suppressWarnings(library(multcomp))
 suppressWarnings(library(multcompView))
 suppressWarnings(library(car))
@@ -28,28 +22,23 @@ covariateTransform <- tolower(Args[8])
 FirstCatFactor <- Args[9]
 treatFactors <- Args[10]
 blockFactors <- Args[11]
-showANOVA <- Args[12]
-showPRPlot <- Args[13]
-showNormPlot <- Args[14]
-sig <- 1 - as.numeric(Args[15])
-sig2 <- 1 - as.numeric(Args[15])/2
-effectModel <- as.formula(Args[16])
-effectModel2 <- Args[16]
-selectedEffect <- Args[17]
-showLSMeans <- Args[18]
-allPairwiseTest <- tolower(Args[19])
+EqBtype <- tolower(Args[12])
+lowerEqB <- as.numeric(Args[13])
+lowerEqBx <- Args[13]
+upperEqB<- as.numeric(Args[14])
+upperEqBx<- Args[14]
+showPRPlot <- Args[15]
+showNormPlot <- Args[16]
+sig <- 1 - as.numeric(Args[17])
+sig2 <- 1 - as.numeric(Args[17])/2
+sigeq <- 1 - as.numeric(Args[17])*2
+effectModel <- as.formula(Args[18])
+effectModel2 <- Args[18]
+selectedEffect <- Args[19]
+showLSMeans <- Args[20]
+backToControlTest <- tolower(Args[21])
+cntrlGroup <- Args[22]
 
-if (Module == "SMPA") {
-	backToControlTest <- tolower(Args[20])
-	cntrlGroup <- Args[21]
-	genpvals <- Args[22]
-}
-
-if (Module == "IFPA") {
-	backToControlTest <- "null"
-	cntrlGroup <- "null"
-	genpvals <- Args[20]
-}
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -186,17 +175,56 @@ for(i in 1:length(emodel[[1]]))  {
 }
 noeffects<-length(emodelChanges)-2
 
+
+
+#Defining the analysis type
+if (lowerEqBx != "NULL" && upperEqBx != "NULL") {
+	AnalysisType = "two-sided"
+}
+if (lowerEqBx == "NULL" && upperEqBx != "NULL") {
+	AnalysisType = "upper-sided"
+}
+if (lowerEqBx != "NULL" && upperEqBx == "NULL") {
+	AnalysisType = "lower-sided"
+}
+
+
+#Defining the percentage bounds
+if (EqBtype == "percentage") {
+	lowerEqBPC <- lowerEqB
+	upperEqBPC <- upperEqB
+
+	if (backToControlTest == "allpairwise") {
+		overallmean <- mean(eval(parse(text = paste("statdata$", resp))), na.rm = TRUE)
+	}
+	if (backToControlTest == "comparisonstocontrol") {
+		controldata <-  subset(statdata, statdata$mainEffect == cntrlGroup)
+		overallmean <- mean(eval(parse(text = paste("controldata$", resp))), na.rm = TRUE)
+	}
+
+	if (AnalysisType == "two-sided") {
+		lowerEqB <- overallmean - overallmean*lowerEqBPC/100
+		upperEqB <- overallmean + overallmean*upperEqBPC/100
+	}
+	if (AnalysisType == "lower-sided") {
+		lowerEqB <- overallmean - overallmean*lowerEqBPC/100
+	}
+	if (AnalysisType == "upper-sided") {
+		upperEqB <- overallmean + overallmean*upperEqBPC/100
+	}
+}
+
+
+
 #===================================================================================================================
 #Titles and description
 #===================================================================================================================
 #Output HTML header
-if (Module == "SMPA") {
-	Title <-paste(branding, " Single Measure Parametric Analysis", sep="")
+if (AnalysisType == "two-sided") {
+	Title <-paste(branding, " Equivalence TOST Test Analysis", sep="")
+} else {
+	Title <-paste(branding, " Equivalence Test Analysis", sep="")
 }
-if (Module == "IFPA") {
-	Title <-paste(branding, " Incomplete Factorial Parametric Analysis", sep="")
-}
-
 HTML.title(Title, HR = 1, align = "left")
 
 #Software developement version warning
@@ -205,44 +233,31 @@ if (Betawarn == "Y") {
 	HTML(BetaMessage, align="left")
 }
 
-if (Module == "IFPA") {
-	#Warning
-	title<-c("Warning")
-	HTML.title(title, HR=2, align="left")
-
-	HTML.title("</bf> ", HR=2, align="left")
-	HTML("Warning: This module is currently under construction, care should be taken when considering the results. The results have not been verified.", align="left")
-}
-
-
 #===================================================================================================================
 # Testing the factorial combinations
-if (Module == "SMPA") {
-	ind<-1
-	for (i in 1:notreatfactors) {
-		ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
-	}
+ind<-1
+for (i in 1:notreatfactors) {
+	ind=ind*length(unique(eval(parse(text = paste("statdata$",treatlist[i])))))
+}
 
-	if((length(unique(statdata$scatterPlotColumn))) != ind) {
-		HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
-		quit()
-	}
+if((length(unique(statdata$scatterPlotColumn))) != ind) {
+	HTML("Unfortunately not all combinations of the levels of the treatment factors are present in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors.", align="left")
+	quit()
 }
 #===================================================================================================================
 
 title<-c("Response")
 if(FirstCatFactor != "NULL") {
-	title<-paste(title, " and covariate", sep="")
+	title<-paste(title, ", covariate", sep="")
+}
+if (AnalysisType == "two-sided") {
+	title<-paste(title, " and equivalence bounds", sep="")
+} else {
+	title<-paste(title, " and equivalence bound", sep="")
 }
 HTML.title(title, HR=2, align="left")
 
-if (Module == "SMPA") {
-	add<-paste(c("The  "), resp, " response is currently being analysed by the Single Measures Parametric Analysis module", sep="")
-}
-
-if (Module == "IFPA") {
-	add<-paste(c("The  "), resp, " response is currently being analysed by the Incomplete Factorial Parametric Analysis module", sep="")
-}
+add<-paste(c("The  "), resp, " response is currently being analysed by the Equivalence (TOST) test Analysis module", sep="")
 
 if(FirstCatFactor != "NULL") {
 	if (nocovars == 1) {
@@ -274,6 +289,43 @@ if (covariates !="NULL" && covariateTransform != "none") {
 	}
 }
 HTML(add, align="left")
+
+
+#Generating the text for the eq bounds
+if (EqBtype == "absolute") {
+	if (AnalysisType == "two-sided") {
+		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqB, " and the upper equivalence bound is defined as ", upperEqB , ". As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+	}
+	if (AnalysisType == "lower-sided") {
+		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqB,  ". As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	}
+	if (AnalysisType == "upper-sided") {
+		addEB<-paste(c("The upper equivalence bound is defined as "), upperEqB,  ". As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	}
+}
+if (EqBtype == "percentage" && backToControlTest == "allpairwise") {
+	if (AnalysisType == "two-sided") {
+		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the overall response average). This is equivalent to ", lowerEqB, " on the original scale. The upper equivalence bound is defined as ", upperEqBPC , "%change (from the overall response average). This is equivalent to ", upperEqB, " on the original scale. As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+	}
+	if (AnalysisType == "lower-sided"&& backToControlTest == "comparisonstocontrol") {
+		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the overall response average). This is equivalent to ", lowerEqB, " on the original scale. As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	}
+	if (AnalysisType == "upper-sided"&& backToControlTest == "comparisonstocontrol") {
+		addEB<-paste(c("The upper equivalence bound is defined as "), upperEqBPC, "%change (from the overall response average). This is equivalent to ", upperEqB, " on the original scale. As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	}
+}
+if (EqBtype == "percentage" && backToControlTest == "comparisonstocontrol") {
+	if (AnalysisType == "two-sided") {
+		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the control group mean). This is equivalent to ", lowerEqB, " on the original scale. The upper equivalence bound is defined as ", upperEqBPC , "%change (from the control group mean). This is equivalent to ", upperEqB, " on the original scale. As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+	}
+	if (AnalysisType == "lower-sided"&& backToControlTest == "comparisonstocontrol") {
+		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the control group mean). This is equivalent to ", lowerEqB, " on the original scale. As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	}
+	if (AnalysisType == "upper-sided"&& backToControlTest == "comparisonstocontrol") {
+		addEB<-paste(c("The upper equivalence bound is defined as "), upperEqBPC, "%change (from the control group mean). This is equivalent to ", upperEqB, " on the original scale. As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	}
+}
+HTML(addEB, align="left")
 
 #===================================================================================================================
 #Scatterplot
@@ -434,95 +486,43 @@ if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
 	}
 
 	if (df.residual(Covintfull)>0) {
-		if (Module == "SMPA") {
-			tempx<-Anova(Covintfull, type=c("III"))[-1,]
+		tempx<-Anova(Covintfull, type=c("III"))[-1,]
 
-			if (tempx[dim(tempx)[1],1] != 0) {
-				temp2x<-(tempx)
-				col1x<-format(round(temp2x[1], 3), nsmall=3, scientific=FALSE)
-				col2x<-format(round(temp2x[1]/temp2x[2], 3), nsmall=3, scientific=FALSE)
-				col3x<-format(round(temp2x[3], 2), nsmall=2, scientific=FALSE)
-				col4x<-format(round(temp2x[4], 4), nsmall=4, scientific=FALSE)
+		if (tempx[dim(tempx)[1],1] != 0) {
+			temp2x<-(tempx)
+			col1x<-format(round(temp2x[1], 3), nsmall=3, scientific=FALSE)
+			col2x<-format(round(temp2x[1]/temp2x[2], 3), nsmall=3, scientific=FALSE)
+			col3x<-format(round(temp2x[3], 2), nsmall=2, scientific=FALSE)
+			col4x<-format(round(temp2x[4], 4), nsmall=4, scientific=FALSE)
+			sourcex<-rownames(temp2x)
 
-				sourcex<-rownames(temp2x)
+			# Residual label in ANOVA
+			sourcex[length(sourcex)] <- "Residual"
 
-				# Residual label in ANOVA
-				sourcex[length(sourcex)] <- "Residual"
+			#STB March 2014 - Replacing : with * in ANOVA table
+			for (q in 1:notreatfactors) {
+				sourcex<-sub(":"," * ", sourcex) 
+			}
+			ivsanovax<-cbind(sourcex, col1x, temp2x[2], col2x, col3x, col4x)
 
-				#STB March 2014 - Replacing : with * in ANOVA table
-				for (q in 1:notreatfactors) {
-					sourcex<-sub(":"," * ", sourcex) 
+			ivsanovax[length(unique(sourcex)),5]<-" "
+			ivsanovax[length(unique(sourcex)),6]<-" "
+
+			#STB May 2012 capitals changed
+			headx<-c("Effect", "Sums of squares", "Degrees of freedom","Mean square","F-value","p-value")
+			colnames(ivsanovax)<-headx
+			for (i in 1:(dim(ivsanovax)[1]-1))  {
+				if (temp2x[i,4]<0.0001) {
+					#STB March 2011 formatting p-values p<0.0001
+					# ivsanovax[i,6]<-0.0001
+					ivsanovax[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+					ivsanovax[i,6]<- paste("<",ivsanovax[i,6])
 				}
-				ivsanovax<-cbind(sourcex, col1x, temp2x[2], col2x, col3x, col4x)
-	
-				ivsanovax[length(unique(sourcex)),5]<-" "
-				ivsanovax[length(unique(sourcex)),6]<-" "
-
-				#STB May 2012 capitals changed
-				headx<-c("Effect", "Sums of squares", "Degrees of freedom","Mean square","F-value","p-value")
-				colnames(ivsanovax)<-headx
-
-				for (i in 1:(dim(ivsanovax)[1]-1))  {
-					if (temp2x[i,4]<0.0001) {
-						#STB March 2011 formatting p-values p<0.0001
-						# ivsanovax[i,6]<-0.0001
-						ivsanovax[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-						ivsanovax[i,6]<- paste("<",ivsanovax[i,6])
-					}
-				}
-
-				HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
-				HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
-				HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
-			} 
-		}
-
-
-		if (Module == "IFPA") {
-			temx<-anova(Covintfull)
-
-			if (temx[dim(temx)[1],1] != 0) {
-				tempx<-anova(Covintfull)
-				temp2x<-(tempx)
-
-				col1x<-format(round(temp2x[2], 3), nsmall=3, scientific=FALSE)
-				col2x<-format(round(temp2x[3], 3), nsmall=3, scientific=FALSE)
-				col3x<-format(round(temp2x[4], 2), nsmall=2, scientific=FALSE)
-				col4x<-format(round(temp2x[5], 4), nsmall=4, scientific=FALSE)
-
-				sourcex<-rownames(temp2x)
-
-				# Residual label in ANOVA
-				sourcex[length(sourcex)] <- "Residual"
-
-				#STB March 2014 - Replacing : with * in ANOVA table
-				for (q in 1:notreatfactors) {
-					sourcex<-sub(":"," * ", sourcex) 
-				}
-				ivsanovax<-cbind(sourcex, col1x, temp2x[1], col2x, col3x, col4x)
-	
-				ivsanovax[length(unique(sourcex)),5]<-" "
-				ivsanovax[length(unique(sourcex)),6]<-" "
-
-				#STB May 2012 capitals changed
-				headx<-c("Effect", "Sums of squares", "Degrees of freedom","Mean square","F-value","p-value")
-				colnames(ivsanovax)<-headx
-
-				for (i in 1:(dim(ivsanovax)[1]-1))  {
-					if (temp2x[i,5]<0.0001) {
-						#STB March 2011 formatting p-values p<0.0001
-						# ivsanovax[i,6]<-0.0001
-						ivsanovax[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-						ivsanovax[i,6]<- paste("<",ivsanovax[i,6])
-					}
-				}
-
-				HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
-				HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
-				HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
-			} 
-		}
-
+			}
+			HTML(ivsanovax, classfirstline="second", align="left", row.names = "FALSE")
+			HTML("Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.", align="left")
+			HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
+		} 
 	}
 }
 #===================================================================================================================
@@ -538,151 +538,7 @@ if (df.residual(threewayfull)<5) {
 	HTML("Unfortunately the residual degrees of freedom are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.", align="left")
 }
 
-#ANOVA Table
-if(showANOVA=="Y") {
-	if(FirstCatFactor != "NULL") {
-		HTML.title("Analysis of Covariance (ANCOVA) table", HR=2, align="left")
-	} else {
-		HTML.title("Analysis of variance (ANOVA) table", HR=2, align="left")
-	}
-
-	# Stop process if residual sums of squares are too close to zero
-	if (deviance(threewayfull)<sqrt(.Machine$double.eps)) {
-		HTML("The Residual Sums of Squares is close to zero indicating the model is overfitted (too many terms are included in the model). The model should be simplified in order to generate statistical test results." , align="left")
-		quit()
-	}
-
-	#STB Sept 2014 - Marginal sums of square to tie in with RM (also message below and covariate ANOVA above)	
-
-	if (Module == "SMPA") {
-		temp<-Anova(threewayfull, type=c("III"))[-1,]
-		col1<-format(round(temp[1], 3), nsmall=3, scientific=FALSE)
-		col2<-format(round(temp[1]/temp[2], 3), nsmall=3, scientific=FALSE)
-		col3<-format(round(temp[3], 2), nsmall=2, scientific=FALSE)
-		col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
-
-		source<-rownames(temp)
-
-		# Residual label in ANOVA
-		source[length(source)] <- "Residual"
-
-		#STB March 2014 - Replacing : with * in ANOVA table
-		for (q in 1:notreatfactors) {
-			source<-sub(":"," * ", source) 
-		}	
-		ivsanova<-cbind(source, col1,temp[2],col2,col3,col4)
-
-		ivsanova[length(unique(source)),5]<-" "
-		ivsanova[length(unique(source)),6]<-" "
-
-		#STB May 2012 capitals changed
-		head<-c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
-		colnames(ivsanova)<-head
-
-		for (i in 1:(dim(ivsanova)[1]-1)) {
-			if (temp[i,4]<0.0001) {
-				#STB March 2011 formatting p-values p<0.0001
-				#ivsanova[i,6]<-0.0001
-				ivsanova[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				ivsanova[i,6]<- paste("<",ivsanova[i,6])
-			}
-		}
-	
-		HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
-
-		if(FirstCatFactor != "NULL") {
-			#STB Error spotted:
-			HTML("Comment: ANCOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
-		} else {
-			HTML("Comment: ANOVA table calculated using a Type III model fit, see Armitage et al. (2001).", align="left")
-		}
-	}
-
-
-
-
-	if (Module == "IFPA") {
-		temp<-anova(threewayfull)
-		col1<-format(round(temp[2], 3), nsmall=3, scientific=FALSE)
-		col2<-format(round(temp[3], 3), nsmall=3, scientific=FALSE)
-		col3<-format(round(temp[4], 2), nsmall=2, scientific=FALSE)
-		col4<-format(round(temp[5], 4), nsmall=4, scientific=FALSE)
-
-		source<-rownames(temp)
-
-		# Residual label in ANOVA
-		source[length(source)] <- "Residual"
-
-		#STB March 2014 - Replacing : with * in ANOVA table
-		for (q in 1:notreatfactors) {
-			source<-sub(":"," * ", source) 
-		}	
-		ivsanova<-cbind(source, col1,temp[1],col2,col3,col4)
-
-		ivsanova[length(unique(source)),5]<-" "
-		ivsanova[length(unique(source)),6]<-" "
-
-		#STB May 2012 capitals changed
-		head<-c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
-		colnames(ivsanova)<-head
-
-		for (i in 1:(dim(ivsanova)[1]-1)) {
-			if (temp[i,5]<0.0001) {
-				#STB March 2011 formatting p-values p<0.0001
-				#ivsanova[i,6]<-0.0001
-				ivsanova[i,6]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				ivsanova[i,6]<- paste("<",ivsanova[i,6])
-			}
-		}
-	
-		HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
-
-		if(FirstCatFactor != "NULL") {
-			#STB Error spotted:
-			HTML("Comment: ANCOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
-		} else {
-			HTML("Comment: ANOVA table calculated using a Type I model fit, see Armitage et al. (2001).", align="left")
-		}
-	}
-
-	add<-paste(c("Conclusion"))
-	inte<-1
-	for(i in 1:(dim(ivsanova)[1]-1)) {
-		if (ivsanova[i,6]<= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
-			}
-		} 
-	}
-
-	if (inte==1) {
-		if (dim(ivsanova)[1]>2) {
-			if(FirstCatFactor != "NULL") {
-
-			#STB July 2013 change wording to remove effects
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANCOVA table", sep="")
-			} else {
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANOVA table", sep="")
-			}
-		} 
-	if (dim(ivsanova)[1]<=2) {
-			add<-paste(add, ": There is no statistically significant overall difference between the levels of the treatment factor", sep="")
-		}
-	} 
-
-	add<-paste(add, ". ", sep="")
-
-	HTML(add, align="left")
-	if(FirstCatFactor != "NULL") {
-		HTML("Tip: While it is a good idea to consider the overall tests in the ANCOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
-	} else { 
-		HTML("Tip: While it is a good idea to consider the overall tests in the ANOVA table, we should not rely on them when deciding whether or not to make pairwise comparisons.", align="left")
-	}
-}
+#ANOVA Table in here
 
 #===================================================================================================================
 #Fixed effect coefficients
@@ -739,114 +595,7 @@ if (CovariateRegressionCoefficients == "Y" && FirstCatFactor != "NULL") {
 	HTML(covtable2, classfirstline="second", align="left", row.names = "FALSE")
 }
 
-#===================================================================================================================
-#Diagnostic plots
-#===================================================================================================================
-if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
-		HTML.title("Diagnostic plot", HR=2, align="left")
-}
-if(showPRPlot=="Y" && showNormPlot=="Y") {
-		HTML.title("Diagnostic plots", HR=2, align="left")
-}
 
-#Residual plots
-if(showPRPlot=="Y") {
-	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
-
-	residualPlot <- sub(".html", "residualplot.png", htmlFile)
-	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Graphical parameters
-	graphdata<-data.frame(cbind(predict(threewayfull),rstudent(threewayfull)))
-	graphdata$yvarrr_IVS <- graphdata$X2
-	graphdata$xvarrr_IVS <- graphdata$X1
-	XAxisTitle <- "Predicted values"
-	YAxisTitle <- "Externally Studentised residuals"
-	MainTitle2 <- " "
-	w_Gr_jitscat <- 0
-	h_Gr_jitscat <-  0
-	infiniteslope <- "Y"
-
-	Gr_line_type<-Line_type_dashed
-
-	Line_size2 <- Line_size
-	Line_size <- 0.5
-
-	#GGPLOT2 code
-	NONCAT_SCAT("RESIDPLOT")
-
-	MainTitle2 <- ""
-
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", residualPlot), Align="centre")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf3), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_3<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf3)
-		linkToPdf3 <- paste ("<a href=\"",pdfFile_3,"\">Click here to view the PDF of the residuals vs. predicted plot</a>", sep = "")
-		HTML(linkToPdf3)
-	}
-	HTML("Tip: On this plot look to see if the spread of the points increases as the predicted values increase. If so the response may need transforming.", align="left")
-	HTML("Tip: Any observation with a residual less than -3 or greater than 3 (SD) should be investigated as a possible outlier.", align="left")
-}
-
-#Normality plots
-if(showNormPlot=="Y") {
-	HTML.title("Normal probability plot", HR=3, align="left")
-
-	normPlot <- sub(".html", "normplot.png", htmlFile)
-	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Graphical parameters
-	te<-qqnorm(resid(threewayfull))
-	graphdata<-data.frame(te$x,te$y)
-	graphdata$xvarrr_IVS <-graphdata$te.x
-	graphdata$yvarrr_IVS <-graphdata$te.y
-	YAxisTitle <-"Sample Quantiles"
-	XAxisTitle <-"Theoretical Quantiles"
-	MainTitle2 <- " "
-	w_Gr_jitscat <- 0
-	h_Gr_jitscat <-  0
-	infiniteslope <- "N"
-	LinearFit <- "Y"
-
-	Gr_line_type<-Line_type_dashed
-	Line_size <- 0.5
-	Gr_alpha <- 1
-	Line_type <-Line_type_dashed
-
-	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
-
-	MainTitle2 <- ""
-	#===================================================================================================================
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf4), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_4<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf4)
-		linkToPdf4 <- paste ("<a href=\"",pdfFile_4,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
-		HTML(linkToPdf4)
-	}
-	HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
-}
 
 #===================================================================================================================
 #LS Means plot and table
@@ -858,10 +607,6 @@ if(showLSMeans =="Y") {
 		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
 		x<-summary(tabs)
 	
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-
 		x$Mean <-x$emmean 
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i])
@@ -888,10 +633,6 @@ if(showLSMeans =="Y") {
 		#Calculate LS Means Table
 		x<-summary(tabs)
 
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-	
 		x$Mean <-format(round(x$emmean, 3), nsmall=3, scientific=FALSE) 
 		for (i in 1:dim(x)[1]) {
 			x$Lower[i] <- format(round(x$emmean[i]  - x$SE[i]*qt(sig2, x$df[i]), 3), nsmall=3, scientific=FALSE) 
@@ -1095,10 +836,6 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
 		x<-summary(tabs)
 
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-
 		if (responseTransform =="log10") {
 			x$Mean <-10^(x$emmean)
 			for (i in 1:dim(x)[1]) {
@@ -1143,11 +880,7 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 
 		#Calculate LS Means Table
 		x<-summary(tabs)
-	
-		if (Module == "IFPA") {
-			x<-na.omit(x)
-		}
-	
+
 		if (responseTransform =="log10") {
 			x$Mean <-format(round(10^(x$emmean), 3), nsmall=3, scientific=FALSE) 
 			for (i in 1:dim(x)[1]) {
@@ -1351,335 +1084,280 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 		}
 	}
 }
-#===================================================================================================================
-#Table of back transformed means
-#===================================================================================================================
-if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
 
 
 
-	}
-}
+
+
+
 
 
 
 #===================================================================================================================
 #All Pairwise tests
 #===================================================================================================================
-#STB Jun 2015
-#Creating dataset without dashes in
-ivs_num_ivs <- rep(1:dim(statdata)[1])
-ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
-statdata_temp2<- cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs )
-statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
-statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
-statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
-statdata<- data.frame(cbind(statdata_num, statdata_char2))
+if(backToControlTest == "allpairwise") {
 
-#All pairwise tests
-if(allPairwiseTest != "null") {
+	#STB Jun 2015
+	#Creating dataset without dashes in
+	ivs_num_ivs <- rep(1:dim(statdata)[1])
+	ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
+	statdata_temp2<- cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs )
+	statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
+	statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
+	statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
+	statdata<- data.frame(cbind(statdata_num, statdata_char2))
+
+	#All pairwise tests
 
 	#All pairwise test options
-	allPairwiseTestText = allPairwiseTest
+	allPairwiseTestText= "Unadjusted (LSD)"
+	allPairwiseTest= "none"
 
-	if(allPairwiseTest=="unadjusted (lsd)") {
-		allPairwiseTestText= "Unadjusted (LSD)"
-	}
-
-	if(allPairwiseTestText=="Unadjusted (LSD)") {
-		allPairwiseTest= "none"
-	}
-
-	if(allPairwiseTest=="benjamini-hochberg") {
-		allPairwiseTestText= "Benjamini-Hochberg"
-	}
-
-	if (allPairwiseTestText=="Benjamini-Hochberg") {
-		allPairwiseTest= "BH"
-	}
-
-	if (allPairwiseTest=="holm") {
-		allPairwiseTestText= "Holm"
-	} else if (allPairwiseTest=="hochberg") {
-		allPairwiseTestText= "Hochberg"
-	} else if (allPairwiseTest=="hommel") {
-		allPairwiseTestText= "Hommel"
-	} else if (allPairwiseTest=="bonferroni") {
-		allPairwiseTestText= "Bonferroni"
-	} else if (allPairwiseTest=="tukey") {
-		allPairwiseTestText= "Tukey"
-	} 
-
-	if (allPairwiseTest== "none") {
-		add<-paste(c("All pairwise comparisons without adjustment for multiplicity (LSD test)"))
-	} else {
-		add<-paste("All pairwise comparisons using ", allPairwiseTestText, "'s procedure", sep="")
-	}
+	add<-paste(c("All pairwise equivalence assessments"))
 
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 		HTML.title(add, HR=2, align="left")
 	}
 
-	if (Module == "SMPA") {
-		mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
-	}
-	if (Module == "IFPA") {
-		mult<-glht(lm(effectModel, data=statdata, na.action = na.omit), linfct=mcp(mainEffect="Tukey"))
-	}
-	multci<-confint(mult, level=sig, calpha = univariate_calpha())
+	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
+	multci<-confint(mult, level=sigeq, calpha = univariate_calpha())
 	tablen<-length(unique(rownames(multci$confint)))
-
-	if (allPairwiseTest== "tukey") {
-		if ( tablen >1 ) {
-			set.seed(3)	
-			pwc = emmeans(lm(model, data=statdata, na.action = na.omit) , eval(parse(text = paste("pairwise ~",selectedEffect))),   adjust = "tukey")
-			pvals<-cld(pwc$contrast, sort=FALSE)[,6]
-			sigma<-cld(pwc$contrast, sort=FALSE)[,3]
-		} else {
-			# Bug if Tukey selected and only 2 levels of selected effect
-			multp<-summary(mult, test=adjusted("none"))
-			pvals<-multp$test$pvalues
-			sigma<-multp$test$sigma
-		}
-	} else {
-		multp<-summary(mult, test=adjusted(allPairwiseTest))
-		pvals<-multp$test$pvalues
-		sigma<-multp$test$sigma
-	}
-
-	tabs<-matrix(nrow=tablen, ncol=5)
-	for (i in 1:tablen) {
-		#STB Dec 2011 increasing means to 3dp
-		tabs[i,1]=format(round(multci$confint[i], 3), nsmall=3, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs[i,2]=format(round(multci$confint[i+tablen], 3), nsmall=3, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs[i,3]=format(round(multci$confint[i+2*tablen], 3), nsmall=3, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs[i,4]=format(round(sigma[i], 3), nsmall=3, scientific=FALSE)
-	}
-	for (i in 1:tablen) {
-		tabs[i,5]=format(round(pvals[i], 4), nsmall=4, scientific=FALSE)
-	}
-	for (i in 1:tablen)  {
-		if (pvals[i]<0.0001)  {
-			#STB March 2011 - formatting p-values p<0.0001
-			#tabs[i,5]<-0.0001
-			tabs[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			tabs[i,5]<- paste("<",tabs[i,5])
-		}
-	}
-	
 	rows<-rownames(multci$confint)
-#STB 2019
-#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
-
-	#STB June 2015	
 	for (i in 1:1000) {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
 	}
 
-	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
+	if (AnalysisType == "two-sided") {
+		tabs<-matrix(nrow=tablen, ncol=6)
+		tabsNum<-data.frame(matrix(nrow=tablen, ncol=6))
+	} else {
+		tabs<-matrix(nrow=tablen, ncol=4)
+		tabsNum<-data.frame(matrix(nrow=tablen, ncol=4))
+	}	
+	for (i in 1:tablen) {
+		#STB Dec 2011 increasing means to 3dp
+		tabs[i,1]=format(round(multci$confint[i], 3), nsmall=3, scientific=FALSE)
+		tabsNum[i,1]=multci$confint[i]
+	}
 
-	tabls<-cbind(rows, tabs)
-	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
+	lowerCI<-paste("   Lower one-sided ",(sig*100),"% CI   ",sep="")
+	upperCI<-paste("   Upper one-sided ",(sig*100),"% CI   ",sep="")
 
+	#Two-sided
+	if (AnalysisType == "two-sided") {
+		for (i in 1:tablen) {
+			tabs[i,2]=format(round(multci$confint[i+tablen], 3), nsmall=3, scientific=FALSE)
+			tabs[i,3]=format(round(multci$confint[i+2*tablen], 3), nsmall=3, scientific=FALSE)
+			tabs[i,4]=lowerEqB
+			tabs[i,5]=upperEqB
+			tabs[i,6]="Inconclusive"
+	
+			tabsNum[i,2]=multci$confint[i+tablen]
+			tabsNum[i,3]=multci$confint[i+2*tablen]
+		}
+		for (i in 1:tablen) {
+			if(multci$confint[i+2*tablen] < lowerEqB) {
+				tabs[i,6]="Not equivalent"
+			}
+			if(multci$confint[i+tablen] > upperEqB) {
+				tabs[i,6]="Not equivalent"
+			}
+			if(multci$confint[i+2*tablen] < upperEqB && multci$confint[i+tablen] > lowerEqB) {
+				tabs[i,6]="Equivalent"
+			}
+		}
+		tabls<-cbind(rows, tabs)
+		tablsNum<-cbind(rows, tabsNum)
+		colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Lower equivalence bound", "Upper equivalence bound", "Equivalence assessment")
+	}
+	
+	#One-sided upper limit
+	if (AnalysisType == "upper-sided") {
+		for (i in 1:tablen) {
+			tabs[i,2]=format(round(multci$confint[i+2*tablen], 3), nsmall=3, scientific=FALSE)
+			tabsNum[i,2]=multci$confint[i+2*tablen]
+		}
+		for (i in 1:tablen) {
+			tabs[i,3]=upperEqB
+		}
+		for (i in 1:tablen) {
+			tabs[i,4]="Inconclusive"
+			if(multci$confint[i] > upperEqB) {
+				tabs[i,4]="Not equivalent"
+			}
+			if(multci$confint[i] < upperEqB && multci$confint[i+2*tablen] < upperEqB) {
+				tabs[i,4]="Equivalent"
+			}
+		}
+		tabls<-cbind(rows, tabs)
+		tablsNum<-cbind(rows, tabsNum)
+		colnames(tabls)<-c("Comparison", "Difference", upperCI, "Upper Eq. Bound", "Equivalence assessment")
+	}
+	
+	#One-sided lower limit
+	if (AnalysisType == "lower-sided") {
+		for (i in 1:tablen) {
+			tabs[i,2]=format(round(multci$confint[i+tablen], 3), nsmall=3, scientific=FALSE)
+			tabsNum[i,2]=multci$confint[i+tablen]
+		}
+		for (i in 1:tablen) {
+			tabs[i,3]=lowerEqB
+		}
+		for (i in 1:tablen) {
+			tabs[i,4]="Inconclusive"
+			if(multci$confint[i] < lowerEqB) {
+				tabs[i,4]="Not equivalent"
+			}
+			if(multci$confint[i] > lowerEqB && multci$confint[i+tablen] > lowerEqB) {
+				tabs[i,4]="Equivalent"
+			}
+		}
+		tabls<-cbind(rows, tabs)
+		tablsNum<-cbind(rows, tabsNum)
+		colnames(tabls)<-c("Comparison", "Difference", lowerCI, "Lower Eq. Bound", "Equivalence assessment")
+	}
+	
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
 	}
 	rownames(tabls) <- rows
-
-#===================================================================================================================
-	#STB March 2014 - Creating a dataset of p-values
-
-	if (genpvals == "Y" && allPairwiseTest == "none") {
-		comparisons <- sub(".csv", "comparisons.csv",  Args[3])
-		for (i in 1:tablen) {
-			tabs[i,5]=pvals[i]
-		}
-		tabsxx<- data.frame(tabs[,5])
-		for (i in 1:20) {
-			rows<-sub(","," and ", rows, fixed=TRUE)
-		}	
-		tabsxx<-cbind(rows, tabsxx)
-		colnames(tabsxx)<-c("Comparison", "p-value")
-		row.names(tabsxx) <- seq(nrow(tabsxx)) 
-
-		write.csv(tabsxx, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
+	
+	#Plot of the equivalence results
+	if (AnalysisType == "two-sided") {
+		CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% one-sided confidence intervals along with equivalence bounds",sep="")
+	} else {
+		CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% one-sided confidence interval along with equivalence bound",sep="")
 	}
+	HTML.title(CITitle, HR=2, align="left")
+
+	#Code for EQ plot
+	meanPlotqq <- sub(".html", "meanplotqq.png", htmlFile)
+	png(meanPlotqq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+	#STB July2013
+	plotFilepdf5qq <- sub(".html", "meanplotqq.pdf", htmlFile)
+	dev.control("enable") 
+
+	#Setting up the dataset
+	graphdata<-data.frame(tablsNum)
+	Gr_intercept <- 0
+	XAxisTitle <- "Difference"
+	YAxisTitle <- "Comparison"
+	Gr_line_type<-Line_type_dashed
+	Gr_line_typeint<-Line_type_dashed
+
+	if (AnalysisType == "two-sided") {
+		gr_lowerEqB<-lowerEqB
+		gr_upperEqB<-upperEqB
+	}
+	if (AnalysisType == "lower-sided") {
+		gr_lowerEqB<-lowerEqB
+	}
+	if (AnalysisType == "upper-sided") {
+		gr_upperEqB<-upperEqB
+	}
+
+	#GGPLOT2 code
+	EQPLOT(AnalysisType)
+	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq), Align="left")
+
+	#STB July2013
+	if (pdfout=="Y") {
+		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq), height = pdfheight, width = pdfwidth) 
+		dev.set(2) 
+		dev.copy(which=3) 
+		dev.off(2)
+		dev.off(3)
+		pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq)
+		linkToPdf5qq <- paste ("<a href=\"",pdfFile_5qq,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
+		HTML(linkToPdf5qq)
+	}	
 
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
-	if(responseTransform =="log10"||responseTransform =="loge") {
-		if ( GeomDisplay != "notdisplayed") {
-
-			if (allPairwiseTest== "none") {
-				add<-paste(c("All pairwise comparisons as back-transformed ratios without adjustment for multiplicity (LSD test)"))
-			} else {
-				add<-paste("All pairwise comparisons as back-transformed ratios using ", allPairwiseTestText, "'s procedure", sep="")
-			}
-			HTML.title(add, HR=2, align="left")
-
-			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
-				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
-			}
-			if (GeomDisplay == "geometricmeansonly") {
-				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
-			}
-
-			#Creating the table
-			tabsx<-matrix(nrow=tablen, ncol=4)
-			if (responseTransform =="log10") {
-				for (i in 1:tablen) {
-					tabsx[i,1]=format(round(10^(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-				}
-				for (i in 1:tablen) {
-				tabsx[i,2]=format(round(10^(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-				}
-				for (i in 1:tablen) {
-					tabsx[i,3]=format(round(10^(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
-				}
-			}
-			if (responseTransform =="loge") {
-				for (i in 1:tablen) {
-					tabsx[i,1]=format(round(exp(multci$confint[i]), 3), nsmall=3, scientific=FALSE)
-			}
-				for (i in 1:tablen) {
-					tabsx[i,2]=format(round(exp(multci$confint[i+tablen]), 3), nsmall=3, scientific=FALSE)
-				}
-				for (i in 1:tablen) {
-					tabsx[i,3]=format(round(exp(multci$confint[i+2*tablen]), 3), nsmall=3, scientific=FALSE)
-				}
-			}
-
-			tabsx[,4] <- tabs[,5]
-			rows<-rownames(multci$confint)
-			rows<-sub(" - "," / ", rows, fixed=TRUE)
-	
-			#STB June 2015	
-			for (i in 1:100) {
-				rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
-			}
-	
-			lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-			upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-			tablsx<-cbind(rows, tabsx)
-			colnames(tablsx)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
-			HTML(tablsx, classfirstline="second", align="left", row.names = "FALSE")
-		}
-	}
+#if(responseTransform =="log10"||responseTransform =="loge") {
+#	if ( GeomDisplay != "notdisplayed") {
+#		add<-paste(c("All pairwise equivalence assessments as back-transformed ratios"))
+#		HTML.title(add, HR=2, align="left")
+#
+#		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+#			HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+#		}
+#		if (GeomDisplay == "geometricmeansonly") {
+#			HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
+#		}
+#
+#		#Creating the table
+#	}
+#}
 
 #===================================================================================================================
 	#Conclusion
 	add<-paste(c("Conclusion"))
-	inte<-1
-	for(i in 1:(dim(tabls)[1])) {
-		if (tabls[i,6]<= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", rows[i], sep="")
-			}
-		} 
-	}
-	if (inte==1) {
-		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
-		} else {
-			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
-		}
-	} else {
-		add<-paste(add, ". ", sep="")
-	}
-	HTML(add, align="left")
-
-#===================================================================================================================
-	if (allPairwiseTest == "tukey") {
-		HTML("Warning: The results of Tukey's procedure are approximate if the sample sizes are not equal.", align="left")
-	}
+	HTML.title(add, HR=2, align="left")
 
 	if (noeffects>testeffects)  {
 		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. ", align="left")
 	}
 
-	if (tablen >1) {
-		if (allPairwiseTest == "none") {
-			HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of generating false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called planned comparisons, see Snedecor and Cochran (1989).", align="left")
+	inte<-1
+	for(i in 1:(dim(tabls)[1])) {
+		if (AnalysisType == "two-sided") {
+			if (tabls[i,7] ==  "Equivalent") {
+				if (inte==1) {
+					inte<-inte+1
+					add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
+				} else {
+					inte<-inte+1
+					add<-paste(add, ", ", rows[i], sep="")
+				}
+			} 
 		} else {
-			addx <- paste("Warning: This procedure makes an adjustment assuming you want to make all pairwise comparisons. If this is not the case then these tests may be unduly conservative. You may wish to use planned comparisons (using unadjusted p-values) instead, see Snedecor and Cochran (1989), or make a manual adjustment to the unadjusted p-values using the ", branding , " P-value Adjustment module.", sep="")
-			HTML(addx, align="left")
+			if (tabls[i,5] ==  "Equivalent") {
+				if (inte==1) {
+					inte<-inte+1
+					add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
+				} else {
+					inte<-inte+1
+					add<-paste(add, ", ", rows[i], sep="")
+				}
+			} 
 		}
 	}
-	if (allPairwiseTest != "none") {
-		HTML("Note: The confidence intervals quoted are not adjusted for multiplicity.", align="left")
+	
+	if (inte==1) {
+		if (dim(tabls)[1] >1) {
+			add<-paste(add, ": There are no equivalent pairwise comparisons.", sep="")
+		} else {
+			add<-paste(add, ": The pairwise comparison is not equivalent.", sep="")
+		}
+	} else {
+		add<-paste(add, ". ", sep="")
 	}
-} 
+	HTML(add, align="left")
+}
 
 #===================================================================================================================
 #Back to control comparisons
 #===================================================================================================================
-backToControlTestText <- backToControlTest
-
-if(backToControlTest=="unadjusted (lsd)") {
-	backToControlTestText= "Unadjusted (LSD)"
-}
-
-if(backToControlTestText=="Unadjusted (LSD)") {
-	backToControlTest= "none"
-}
-
-if(backToControlTest=="benjamini-hochberg") {
-	backToControlTestText= "Benjamini-Hochberg"
-}
-
-if (backToControlTestText=="Benjamini-Hochberg") {
-	backToControlTest= "BH"
-}
-
-if(backToControlTest=="dunnett") {
-	backToControlTestText= "Dunnett"
-} 
-
-if (backToControlTestText=="Dunnett") {
-	backToControlTest= "Dunnett"
-}
- 
-if (backToControlTest=="holm") {
-	backToControlTestText= "Holm"
-} else if (backToControlTest=="hochberg") {
-	backToControlTestText= "Hochberg"
-} else if (backToControlTest=="hommel") {
-	backToControlTestText= "Hommel"
-} else if (backToControlTest=="bonferroni") {
-	backToControlTestText= "Bonferroni"
-}
+backToControlTestText= "Unadjusted (LSD)"
 
 #===================================================================================================================
 #All to one comparisons
-if(backToControlTest != "null") {
+if(backToControlTest == "comparisonstocontrol") {
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 		#Title
-		if (backToControlTest== "none") {
-			add<-paste(c("All to one comparisons without adjustment for multiplicity (LSD test)"))
-		} else {
-			add<-paste("All to one comparisons using ", backToControlTestText, "'s procedure", sep="")
-		}
+		if (backToControlTest== "comparisonstocontrol") {
+			add<-paste(c("All to one pairwise equivalence assessments"))
+		} 
 		HTML.title(add, HR=2, align="left")
 	}
 
-	#Creating the table of unadjusted p-values
 	#Generate all pairwise comparisons, unadjusted for multiplicity
-
 	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
-	multci<-confint(mult, level=sig, calpha = univariate_calpha())
+	multci<-confint(mult, level=sigeq, calpha = univariate_calpha())
 	multp<-summary(mult, test=adjusted("none"))
 
 	#Creating a matrix of the differences
@@ -1693,7 +1371,6 @@ if(backToControlTest != "null") {
 	}
 
 	#Creating the unadjusted full column
-	pvals<-multp$test$pvalues
 	sigma<-multp$test$sigma
 	tstats<-Mod(as.numeric(multp$test$tstat))
 	tablen<-length(unique(rownames(multci$confint)))
@@ -1712,140 +1389,204 @@ if(backToControlTest != "null") {
 		tabs[i,4]=sigma[i]
 	}
 	for (i in 1:tablen) {
-		tabs[i,5]=pvals[i]
+		tabs[i,5]= diffz[i,1]
 	}
 	for (i in 1:tablen) {
-		tabs[i,6]= diffz[i,1]
+		tabs[i,6]= diffz[i,2]
 	}
 	for (i in 1:tablen) {
-		tabs[i,7]= diffz[i,2]
-	}
-	for (i in 1:tablen) {
-		tabs[i,8]= tstats[i]
+		tabs[i,7]= tstats[i]
 	}
 	tabs2<- tabs
-
 	for ( i in 1:tablen) {
-		if (tabs2[i,6] == cntrlGroup) {
-			tabs2[i,9] = -1*tabs2[i,1]
-			tabs2[i,10] = -1*tabs2[i,3]
-			tabs2[i,11] = -1*tabs2[i,2]
-			tabs2[i,12] = tabs2[i,7]
-			tabs2[i,13] = tabs2[i,6]
+		if (tabs2[i,5] == cntrlGroup) {
+			tabs2[i,8] = -1*tabs2[i,1]
+			tabs2[i,9] = -1*tabs2[i,3]
+			tabs2[i,10] = -1*tabs2[i,2]
+			tabs2[i,11] = tabs2[i,6]
+			tabs2[i,12] = tabs2[i,5]
 		} else {
-			tabs2[i,9] = tabs2[i,1]
-			tabs2[i,10] = tabs2[i,2]
-			tabs2[i,11] = tabs2[i,3]	
+			tabs2[i,8] = tabs2[i,1]
+			tabs2[i,9] = tabs2[i,2]
+			tabs2[i,10] = tabs2[i,3]	
+			tabs2[i,11] = tabs2[i,5]
 			tabs2[i,12] = tabs2[i,6]
-			tabs2[i,13] = tabs2[i,7]
 		}
 	}
 
 	for ( i in 1:tablen) {
-		tabs2[i,14] = paste(tabs2[i,12],  " - ", tabs2[i,13], sep = "")
+		tabs2[i,13] = paste(tabs2[i,11],  " - ", tabs2[i,12], sep = "")
 	}
+
 
 	#Subsetting to only the comparisons to control
-	tabs3<-subset(tabs2, V13 == cntrlGroup)
-
-	if (backToControlTest== "Dunnett") { 
-
-
-		for (i in 1:(length(levels(  eval(parse(text = paste("statdata$",selectedEffect))))))) {
-			if ( levels(eval(parse(text = paste("statdata$",selectedEffect))))[i] == cntrlGroup) {
-				refno=i
-			}
-		}
-
-		mult<-glht(lm(model, data=statdata, na.action = na.omit),  linfct=lsm(eval(parse(text = paste("trt.vs.ctrl ~",selectedEffect))), ref = refno ))
-		multci<-confint(mult, level=0.95, calpha = univariate_calpha())
-		multp<-summary(mult)
-		adjpval<-multp$test$pvalues
-		tabs3$V15<-adjpval
-	} else {
-		#Adjusting the p-values
-		unadjpval<-tabs3$V5
-		adjpval<-p.adjust(unadjpval, method = backToControlTest)
-		tabs3$V15<-adjpval
-	}
+	tabs3<-subset(tabs2, V12 == cntrlGroup)
 
 #===================================================================================================================
 	#Creating final table
 	tabs4<-data.frame()
 	for ( i in 1:dim(tabs3)[1]) {
-		tabs4[i,1]<-format(round(tabs3[i,9], 3), nsmall=3, scientific=FALSE)
-		tabs4[i,2]<-format(round(tabs3[i,10], 3), nsmall=3, scientific=FALSE)
-		tabs4[i,3]<-format(round(tabs3[i,11], 3), nsmall=3, scientific=FALSE)
-		tabs4[i,4]<-format(round(tabs3[i,4], 3), nsmall=3, scientific=FALSE)
-		tabs4[i,5]<-format(round(tabs3[i,15], 4), nsmall=4, scientific=FALSE)
-	}
+		tabs4[i,1]<-format(round(tabs3[i,8], 3), nsmall=3, scientific=FALSE)
 
-	for (i in 1:dim(tabs3)[1])  {
-		if (adjpval[i]<0.0001)  {
-			#STB March 2011 - formatting p-values p<0.0001
-			#tabs4[i,5]<-0.0001
-			tabs4[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-			tabs4[i,5]<- paste("<",tabs4[i,5])
+		if (AnalysisType == "two-sided") {
+			tabs4[i,2]<-format(round(tabs3[i,9], 3), nsmall=3, scientific=FALSE)
+			tabs4[i,3]<-format(round(tabs3[i,10], 3), nsmall=3, scientific=FALSE)
+			tabs4[i,4]=lowerEqB
+			tabs4[i,5]=upperEqB
+			tabs4[i,6]="Inconclusive"
+
+			for (i in 1:dim(tabs3)[1]) {
+				if(tabs3[i,10] < lowerEqB) {
+					tabs4[i,6]="Not equivalent"
+				}
+				if(tabs3[i,9] > upperEqB) {
+					tabs4[i,6]="Not equivalent"
+				}
+				if(tabs3[i,10] < upperEqB && tabs3[i,9] > lowerEqB) {
+					tabs4[i,6]="Equivalent"
+				}
+			}
+		}
+		if (AnalysisType == "lower-sided") {
+			tabs4[i,2]<-format(round(tabs3[i,9], 3), nsmall=3, scientific=FALSE)
+			tabs4[i,3]=lowerEqB
+			tabs4[i,4]="Inconclusive"
+
+			for (i in 1:dim(tabs3)[1]) {
+				if(tabs3[i,8] < lowerEqB) {
+					tabs4[i,4]="Not equivalent"
+				}
+				if(tabs3[i,9] > lowerEqB) {
+					tabs4[i,4]="Equivalent"
+				}
+			}
+		}
+
+		if (AnalysisType == "upper-sided") {
+			tabs4[i,2]<-format(round(tabs3[i,10], 3), nsmall=3, scientific=FALSE)
+			tabs4[i,3]=upperEqB
+			tabs4[i,4]="Inconclusive"
+	
+			for (i in 1:dim(tabs3)[1]) {
+				if(tabs3[i,8] > upperEqB) {
+					tabs4[i,4]="Not equivalent"
+				}
+				if(tabs3[i,10] < upperEqB) {
+					tabs4[i,4]="Equivalent"
+				}
+			}
 		}
 	}
 
+
 	#STB June 2015	
 	for (i in 1:100) {
-		tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
+		tabs3$V13<-sub("_ivs_dash_ivs_"," - ", tabs3$V13, fixed=TRUE)
 	}
 
-	tabls<-cbind(tabs3$V14, tabs4)
+	tabls<-cbind(tabs3$V13, tabs4)
 
-	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
-	#STB May 2012 correcting "SEM"
-	colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
+	lowerCI<-paste("   Lower one-sided ",(sig*100),"% CI   ",sep="")
+	upperCI<-paste("   Upper one-sided ",(sig*100),"% CI   ",sep="")
+
+	if (AnalysisType == "two-sided") {
+		colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Lower equivalence bound", "Upper equivalence bound", "Equivalence assessment")
+	}
+	if (AnalysisType == "lower-sided") {
+		colnames(tabls)<-c("Comparison", "Difference", lowerCI, "Lower equivalence bound", "Equivalence assessment")
+	}
+	if (AnalysisType == "upper-sided") {
+		colnames(tabls)<-c("Comparison", "Difference", upperCI, "Upper equivalence bound", "Equivalence assessment")
+	}
 
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
 	}
 
+	rows<- tabs3$V13 
 #===================================================================================================================
-	#Plot of the comparisons back to control
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% confidence intervals",sep="")
-		HTML.title(CITitle, HR=2, align="left")
+#Plot of the comparisons back to control
 
-		#Code for LS MEans plot
-		meanPlotqq <- sub(".html", "meanplotqq.png", htmlFile)
-		png(meanPlotqq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-		#STB July2013
-		plotFilepdf5qq <- sub(".html", "meanplotqq.pdf", htmlFile)
-		dev.control("enable") 
-
-		#Setting up the dataset
-		graphdata<-data.frame(tabs4)
-		graphdata$Mean<-as.numeric(graphdata$V1)
-		graphdata$Lower<-as.numeric(graphdata$V2)
-		graphdata$Upper<-as.numeric(graphdata$V3)
-		graphdata$Group_IVSq_<-tabs3$V14
-		Gr_intercept <- 0
-		XAxisTitle <- "Comparison"
-		YAxisTitle <- "Difference between the means"
-		Gr_line_type<-Line_type_dashed
-
-		#GGPLOT2 code
-		LSMPLOT_diff()
-		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq), Align="left")
-
-		#STB July2013
-		if (pdfout=="Y") {
-			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq), height = pdfheight, width = pdfwidth) 
-			dev.set(2) 
-			dev.copy(which=3) 
-			dev.off(2)
-			dev.off(3)
-			pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq)
-			linkToPdf5qq <- paste ("<a href=\"",pdfFile_5qq,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
-			HTML(linkToPdf5qq)
-		}	
+	if (AnalysisType == "two-sided") {
+		CITitle<-paste("Plot of the comparisons back to control between the predicted means with ",(sig*100),"% one-sided confidence intervals along with equivalence bounds",sep="")
+	} else {
+		CITitle<-paste("Plot of the comparisons back to control between the predicted means with ",(sig*100),"% one-sided confidence interval along with equivalence bound",sep="")
 	}
+	HTML.title(CITitle, HR=2, align="left")
+
+	#Code for EQ plot
+	meanPlotqq1 <- sub(".html", "meanplotqq1.png", htmlFile)
+	png(meanPlotqq1,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+	#STB July2013
+	plotFilepdf5qq1 <- sub(".html", "meanplotqq1.pdf", htmlFile)
+	dev.control("enable") 
+
+	#Setting up the dataset
+	graphdata<-data.frame()
+
+	if (AnalysisType == "two-sided") {
+		for ( i in 1:dim(tabs3)[1]) {
+			graphdata[i,1]<-tabs3[i,8]
+			graphdata[i,2]<-tabs3[i,9]
+			graphdata[i,3]<-tabs3[i,10]
+		}
+		graphdata<-cbind(tabs3$V13, graphdata)
+		colnames(graphdata)<-c("rows", "X1", "X2", "X3")
+		gr_lowerEqB<-lowerEqB
+		gr_upperEqB<-upperEqB
+	}
+	if (AnalysisType == "lower-sided") {
+		for ( i in 1:dim(tabs3)[1]) {
+			graphdata[i,1]<-tabs3[i,8]
+			graphdata[i,2]<-tabs3[i,9]
+		}
+		graphdata<-cbind(tabs3$V13, graphdata)
+		colnames(graphdata)<-c("rows", "X1", "X2")
+		gr_lowerEqB<-lowerEqB
+	}
+	if (AnalysisType == "upper-sided") {
+		for ( i in 1:dim(tabs3)[1]) {
+			graphdata[i,1]<-tabs3[i,8]
+			graphdata[i,2]<-tabs3[i,10]
+		}
+		graphdata<-cbind(tabs3$V13, graphdata)
+		colnames(graphdata)<-c("rows", "X1", "X2")
+		gr_upperEqB<-upperEqB
+	}
+	Gr_intercept <- 0
+	XAxisTitle <- "Difference"
+	YAxisTitle <- "Comparison"
+	Gr_line_type<-Line_type_dashed
+	Gr_line_typeint<-Line_type_dashed
+
+	if (AnalysisType == "two-sided") {
+		gr_lowerEqB<-lowerEqB
+		gr_upperEqB<-upperEqB
+	}
+	if (AnalysisType == "lower-sided") {
+		gr_lowerEqB<-lowerEqB
+	}
+	if (AnalysisType == "upper-sided") {
+		gr_upperEqB<-upperEqB
+	}
+
+	#GGPLOT2 code
+	EQPLOT(AnalysisType)
+	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq1), Align="left")
+
+	#STB July2013
+	if (pdfout=="Y") {
+		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq1), height = pdfheight, width = pdfwidth) 
+		dev.set(2) 
+		dev.copy(which=3) 
+		dev.off(2)
+		dev.off(3)
+		pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq1)
+		linkToPdf5qq1 <- paste ("<a href=\"",pdfFile_5qq1,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
+		HTML(linkToPdf5qq1)
+	}
+
 #===================================================================================================================
 #Back transformed geometric means table 
 #===================================================================================================================
@@ -1866,7 +1607,7 @@ if(backToControlTest != "null") {
 			if (GeomDisplay == "geometricmeansonly") {
 				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
 			}
-	
+		
 			#Creating final table
 			tabs4x<-data.frame()
 	
@@ -1884,7 +1625,6 @@ if(backToControlTest != "null") {
 					tabs4x[i,3]<-format(round(exp(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
 				}
 			}
-			tabs4x[,4]<-tabs4[,5]
 	
 			tabs3$V14<-sub(" - "," / ", tabs3$V14, fixed=TRUE)
 		
@@ -1892,25 +1632,25 @@ if(backToControlTest != "null") {
 			for (i in 1:100) {
 				tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
 			}
+			
+			lowerCI<-paste("Lower one-sided ",(sig*100),"% CI",sep="")
+			upperCI<-paste("Upper one-sided ",(sig*100),"% CI",sep="")
 		
-			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-	
 			tablsx <- cbind(tabs3$V14, tabs4x)
 			#STB May 2012 correcting "SEM"
-			colnames(tablsx)<-c("Comparison", "Ratio", lowerCI, upperCI, "p-value")
-				
+			colnames(tablsx)<-c("Comparison", "Ratio", lowerCI, upperCI)
+					
 			HTML(tablsx, classfirstline="second", align="left", row.names = "FALSE")
 			
 #===================================================================================================================
 			#Plot of the comparisons back to control
-			CITitle<-paste("Plot of the comparisons between the back-transformed geometric  means with ",(sig*100),"% confidence intervals",sep="")
+			CITitle<-paste("Plot of the comparisons back to the back-transformed geometric control means with ",(sig*100),"% one-sided confidence intervals",sep="")
 			HTML.title(CITitle, HR=2, align="left")
 	
 			#Code for LS MEans plot
 			meanPlotqs <- sub(".html", "meanplotqs.png", htmlFile)
 			png(meanPlotqs,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-	
+
 			#STB July2013
 			plotFilepdf5qs <- sub(".html", "meanplotqs.pdf", htmlFile)
 			dev.control("enable") 
@@ -1945,43 +1685,159 @@ if(backToControlTest != "null") {
 	}
 
 #===================================================================================================================
-	#Conclusions
+	#Conclusion
 	add<-paste(c("Conclusion"))
-	inte<-1
+	HTML.title(add, HR=2, align="left")
 
-	for(i in 1:(dim(tabls)[1])) {
-		if (tabls[i,6]<= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", tabs3$V14[i], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", tabs3$V14[i], sep="")
-			}
-		} 
+	if (noeffects>testeffects)  {
+		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table certain higher order interactions are assumed to be not significant, see log for more details.", align="left")
 	}
-	if (inte==1) {
-		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
+
+	inte<-1
+	for(i in 1:(dim(tabls)[1])) {
+		if (AnalysisType == "two-sided") {
+			if (tabs4[i,6] ==  "Equivalent") {
+				if (inte==1) {
+					inte<-inte+1
+					add<-paste(add, ": The following comparisons back to control are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
+				} else {
+					inte<-inte+1
+					add<-paste(add, ", ", rows[i], sep="")
+				}
+			} 
 		} else {
-			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
+			if (tabs4[i,4] ==  "Equivalent") {
+				if (inte==1) {
+					inte<-inte+1
+					add<-paste(add, ": The following comparisons back to control  are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
+				} else {
+					inte<-inte+1
+					add<-paste(add, ", ", rows[i], sep="")
+				}
+			} 
+		}
+	}
+
+	if (inte==1) {
+		if (dim(tabs4)[1] >1) {
+			add<-paste(add, ": There are no equivalent pairwise comparisons.", sep="")
+		} else {
+			add<-paste(add, ": The pairwise comparison is not equivalent.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")
 	}
 	HTML(add, align="left")
+}
 
-	if (noeffects>testeffects)  {
-		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table certain higher order interactions are assumed to be not significant, see log for more details.", align="left")
+
+#===================================================================================================================
+#Diagnostic plots
+#===================================================================================================================
+if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
+		HTML.title("Diagnostic plot", HR=2, align="left")
+}
+if(showPRPlot=="Y" && showNormPlot=="Y") {
+		HTML.title("Diagnostic plots", HR=2, align="left")
+}
+
+#Residual plots
+if(showPRPlot=="Y") {
+	HTML.title("Residuals vs. predicted plot", HR=3, align="left")
+
+	residualPlot <- sub(".html", "residualplot.png", htmlFile)
+	png(residualPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+	#STB July2013
+	plotFilepdf3 <- sub(".html", "residualplot.pdf", htmlFile)
+	dev.control("enable") 
+
+	#Graphical parameters
+	graphdata<-data.frame(cbind(predict(threewayfull),rstudent(threewayfull)))
+	graphdata$yvarrr_IVS <- graphdata$X2
+	graphdata$xvarrr_IVS <- graphdata$X1
+	XAxisTitle <- "Predicted values"
+	YAxisTitle <- "Externally Studentised residuals"
+	MainTitle2 <- " "
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
+	infiniteslope <- "Y"
+
+	Gr_line_type<-Line_type_dashed
+
+	Line_size2 <- Line_size
+	Line_size <- 0.5
+
+	#GGPLOT2 code
+	NONCAT_SCAT("RESIDPLOT")
+
+	MainTitle2 <- ""
+
+	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", residualPlot), Align="centre")
+
+	#STB July2013
+	if (pdfout=="Y") {
+		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf3), height = pdfheight, width = pdfwidth) 
+		dev.set(2) 
+		dev.copy(which=3) 
+		dev.off(2)
+		dev.off(3)
+		pdfFile_3<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf3)
+		linkToPdf3 <- paste ("<a href=\"",pdfFile_3,"\">Click here to view the PDF of the residuals vs. predicted plot</a>", sep = "")
+		HTML(linkToPdf3)
 	}
-	if (tablen > 1) {
-		if (backToControlTest== "none") {
-			HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of generating false positive results. Only use the pairwise tests you planned to make a-priori, these are the so called planned comparisons, see Snedecor and Cochran (1989).", align="left")
-		}
-	} 
-	if (backToControlTest != "none") {
-		HTML("Note: The confidence intervals quoted are not adjusted for multiplicity.", align="left")
+	HTML("Tip: On this plot look to see if the spread of the points increases as the predicted values increase. If so the response may need transforming.", align="left")
+	HTML("Tip: Any observation with a residual less than -3 or greater than 3 (SD) should be investigated as a possible outlier.", align="left")
+}
+
+#Normality plots
+if(showNormPlot=="Y") {
+	HTML.title("Normal probability plot", HR=3, align="left")
+
+	normPlot <- sub(".html", "normplot.png", htmlFile)
+	png(normPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+	#STB July2013
+	plotFilepdf4 <- sub(".html", "normplot.pdf", htmlFile)
+	dev.control("enable") 
+
+	#Graphical parameters
+	te<-qqnorm(resid(threewayfull))
+	graphdata<-data.frame(te$x,te$y)
+	graphdata$xvarrr_IVS <-graphdata$te.x
+	graphdata$yvarrr_IVS <-graphdata$te.y
+	YAxisTitle <-"Sample Quantiles"
+	XAxisTitle <-"Theoretical Quantiles"
+	MainTitle2 <- " "
+	w_Gr_jitscat <- 0
+	h_Gr_jitscat <-  0
+	infiniteslope <- "N"
+	LinearFit <- "Y"
+
+	Gr_line_type<-Line_type_dashed
+	Line_size <- 0.5
+	Gr_alpha <- 1
+	Line_type <-Line_type_dashed
+
+	#GGPLOT2 code
+	NONCAT_SCAT("QQPLOT")
+
+	MainTitle2 <- ""
+	#===================================================================================================================
+	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
+
+	#STB July2013
+	if (pdfout=="Y") {
+		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf4), height = pdfheight, width = pdfwidth) 
+		dev.set(2) 
+		dev.copy(which=3) 
+		dev.off(2)
+		dev.off(3)
+		pdfFile_4<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf4)
+		linkToPdf4 <- paste ("<a href=\"",pdfFile_4,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
+		HTML(linkToPdf4)
 	}
+	HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
 }
 
 #===================================================================================================================
@@ -1991,18 +1847,22 @@ HTML.title("Analysis description", HR=2, align="left")
 
 add<-c("The data were analysed using a ")
 
+if (AnalysisType == "two-sided") {
+	add<- paste(add, "Two one-sided (TOST) equivalence test", sep = "")
+} else {
+	add<- paste(add, "one-sided equivalence test", sep = "")
+}
 if (notreatfactors==1)  {
 	if(FirstCatFactor != "NULL") {
-		add<-paste(add, "1-way ANCOVA approach, with ", treatFactors, " as the treatment factor", sep="")
+		add<-paste(add, ", with ", treatFactors, " as the treatment factor", sep="")
 	} else {
-		add<-paste(add, "1-way ANOVA approach, with ", treatFactors, " as the treatment factor", sep="")
+		add<-paste(add, ", with ", treatFactors, " as the treatment factor", sep="")
 	}
 } else {
-	add<-paste(add, notreatfactors, sep="")
 	if(FirstCatFactor != "NULL") {
-		add<-paste(add, "-way ANCOVA approach, with ", sep="")
+		add<-paste(add, ", with ", sep="")
 	} else {
-		add<-paste(add, "-way ANOVA approach, with ", sep="")
+		add<-paste(add, ", with ", sep="")
 	}
 	for (i in 1:notreatfactors) {
 		if (i<notreatfactors-1)	{
@@ -2058,70 +1918,6 @@ if (FirstCatFactor == "NULL") {
 		}
 	}
 }
-if (allPairwiseTest== "none" | backToControlTest== "none") {
-	#STB May 2012 Updating "Selected"
-	add<-paste(add, "This was followed by Planned Comparisons of the predicted means to compare the levels of the ", selectedEffect , sep="")
-	if (factno == 1) {
-		add<-paste(add, " factor, Snedecor and Cochran (1989). ", sep="")
-	} else {
-		add<-paste(add, " interaction, Snedecor and Cochran (1989). ", sep="")
-	}
-}
-
-if (backToControlTest!= "null" & backToControlTest!= "none") {
-	add<-paste(add, "This was followed by comparisons of the predicted means of the ", selectedEffect , " factor back to the control group mean using ", backToControlTestText , "'s procedure, ", sep="")
-}
-
-if (backToControlTest=="BH") {
-add<-paste(add, "Benjamini and Hochberg (1995). ", sep="")
-}
-if (backToControlTest=="bonferroni") {
-add<-paste(add, "Bonferroni (1936). ", sep="")
-} 
-if (backToControlTest== "Dunnett") {
-add<-paste(add, "Dunnett (1955). ", sep="")
-}
-if (backToControlTest=="hochberg") {
-add<-paste(add, "Hochberg (1988). ", sep="")
-} 
-if (backToControlTest=="holm") {
-add<-paste(add, "Holm (1979). ", sep="")
-} 
-if (backToControlTest=="hommel") {
-add<-paste(add, "Hommel (1988). ", sep="")
-}
-
-
-
-if (allPairwiseTest!= "null" & allPairwiseTest!= "none") {
-	#STB May 2012 Updating "Selected"
-	add<-paste(add, "This was followed by all pairwise comparisons between the predicted means of the ", selectedEffect , sep="")
-	if (factno == 1) {
-		add<-paste(add, " factor ", sep="")
-	} else {
-		add<-paste(add, " interaction ", sep="")
-	}
-	add<-paste(add, " using ", allPairwiseTestText , "'s procedure, ", sep="")
-}
-
-if (allPairwiseTest== "BH" ) {
-add<-paste(add, "Benjamini and Hochberg (1995). ", sep="")
-}
-if (allPairwiseTest== "bonferroni" ) {
-add<-paste(add, "Bonferroni (1936). ", sep="")
-} 
-if (allPairwiseTest== "tukey") {	
-add<-paste(add, "Braun (1994). ", sep="")
-} 
-if (allPairwiseTest== "hochberg" ) {
-add<-paste(add, "Hochberg (1988). ", sep="")
-} 
-if (allPairwiseTest== "holm" ) {
-add<-paste(add, "Holm (1979). ", sep="")
-} 
-if (allPairwiseTest== "hommel" ) {
-add<-paste(add, "Hommel (1988). ", sep="")
-}
 
 if (responseTransform != "none") {
 	add<-paste(add, " The response was ", responseTransform, " transformed prior to analysis to stabilise the variance. ", sep="")
@@ -2143,47 +1939,8 @@ HTML.title("References", HR=2, align="left")
 HTML(Ref_list$IVS_ref, align="left")
 HTML(Ref_list$BateClark_ref,  align="left")
 
-if(showANOVA=="Y") {
-	HTML("<bf> Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.",  align="left")
-}
-
-if (allPairwiseTest== "BH" | backToControlTest=="BH") {
-	HTML("<bf>Benjamini, Y. and Hochberg, Y. (1995). Controlling the false discovery rate: a practical and powerful approach to multiple testing. Journal of the Royal Statistical Society Series B, 57, 289-300. ",  align="left")
-}
-
-if (allPairwiseTest== "bonferroni" | backToControlTest=="bonferroni") {
-	HTML("<bf>Bonferroni, C.E. (1936). Teoria statistica delle classi e calcolo delle probabilita. Pubblicazioni del R Istituto Superiore di Scienze Economiche e Commerciali di Firenze, 8, 3-62.",  align="left")
-} 
-
-if (allPairwiseTest== "tukey") {	
-	HTML("<bf>Braun, H.I., ed. (1994). The collected works of John W. Tukey. Vol. VIII: Multiple comparisons:1948-1983. New York: Chapman and Hall.",  align="left")
-} 
-
-if (backToControlTest== "Dunnett") {
-	HTML("<bf>Dunnett, C.W. (1955). A multiple comparison procedure for comparing several treatments with a control. Journal of the American Statistical Association, 50, 1096-1121.",  align="left")
-}
-
-if (allPairwiseTest== "hochberg" | backToControlTest=="hochberg") {
-	HTML("<bf>Hochberg, Y. (1988). A sharper Bonferroni procedure for multiple tests of significance. Biometrika, 75, 800-803.",  align="left")
-} 
-
-if (allPairwiseTest== "holm" | backToControlTest=="holm") {
-	HTML("<bf>Holm, S. (1979). A simple sequentially rejective multiple test procedure. Scandinavian Journal of Statistics, 6, 65-70.",  	align="left")
-} 
-
-if (allPairwiseTest== "hommel" | backToControlTest=="hommel") {
-	HTML("<bf>Hommel, G. (1988). A stagewise rejective multiple test procedure based on a modified Bonferroni test. Biometrika, 75, 383-386.",  	align="left")
-}
-
-if(FirstCatFactor != "NULL") {
-	HTML("<bf> Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).",  align="left")
-}
-
-if (allPairwiseTest != "null" | backToControlTest !="null") {
-	if (tablen >1 & (allPairwiseTest== "none" | backToControlTest=="none"|allPairwiseTest!= "null" | backToControlTest=="null") ) 	{
-		HTML("<bf>Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.",  align="left")
-	}
-}
+HTML("<bf> Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.",  align="left")
+HTML("<bf>Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.",  align="left")
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref ,  align="left")
@@ -2252,7 +2009,6 @@ if (OutputAnalysisOps == "Y") {
 		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
 	}
 
-	HTML(paste("Output ANOVA table (Y/N): ", showANOVA, sep=""), align="left")
 	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")
 	HTML(paste("Output normal probability plot (Y/N): ", showNormPlot, sep=""), align="left")
 	HTML(paste("Significance level: ", 1-sig, sep=""), align="left")
@@ -2263,21 +2019,8 @@ if (OutputAnalysisOps == "Y") {
 
 	HTML(paste("Output least square (predicted) means (Y/N): ", showLSMeans, sep=""), align="left")
 	
-
-	if (allPairwiseTest != "null" && Args[19] != "Unadjusted (LSD)") {
-		HTML(paste("All pairwise comparisons procedure: ", allPairwiseTestText, sep=""), align="left")
-	}
-
-	if (Args[19] == "Unadjusted (LSD)") {
-		HTML(paste("All pairwise comparisons procedure: Unadjusted (LSD)"), align="left")
-	}
-
-	if (backToControlTest != "null" && backToControlTest != "none") {
-		HTML(paste("Comparisons back to control procedure: ", backToControlTestText, sep=""), align="left")
-	}
-
 	if (backToControlTest == "none") {
-		HTML(paste("Comparisons back to control procedure: Unadjusted (LSD)"), align="left")
+		HTML(paste("Comparisons back to control procedure (Y/N): Y"), align="left")
 	}
 
 	if ( backToControlTest != "null" ) {

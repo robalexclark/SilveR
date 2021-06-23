@@ -8,73 +8,95 @@ namespace SilveR.Validators
 {
     public class EquivalenceTOSTTestValidator : ValidatorBase
     {
-        private readonly EquivalenceTOSTTestModel smVariables;
+        private readonly EquivalenceTOSTTestModel etVariables;
 
-        public EquivalenceTOSTTestValidator(EquivalenceTOSTTestModel sm)
-            : base(sm.DataTable)
+        public EquivalenceTOSTTestValidator(EquivalenceTOSTTestModel et)
+            : base(et.DataTable)
         {
-            smVariables = sm;
+            etVariables = et;
         }
 
         public override ValidationInfo Validate()
         {
             //go through all the column names, if any are numeric then stop the analysis
             List<string> allVars = new List<string>();
-            allVars.AddVariables(smVariables.Treatments);
-            allVars.AddVariables(smVariables.OtherDesignFactors);
-            allVars.Add(smVariables.Response);
-            allVars.AddVariables(smVariables.Covariates);
+            allVars.AddVariables(etVariables.Treatments);
+            allVars.AddVariables(etVariables.OtherDesignFactors);
+            allVars.Add(etVariables.Response);
+            allVars.AddVariables(etVariables.Covariates);
 
             if (!CheckColumnNames(allVars))
                 return ValidationInfo;
-            
+
             //First create a list of catogorical variables selected (i.e. as treatments and other factors)
             List<string> categorical = new List<string>();
-            categorical.AddVariables(smVariables.Treatments);
-            categorical.AddVariables(smVariables.OtherDesignFactors);
+            categorical.AddVariables(etVariables.Treatments);
+            categorical.AddVariables(etVariables.OtherDesignFactors);
 
             //check that the factors have at least 2 levels
             if (!CheckFactorsHaveLevels(categorical, true))
                 return ValidationInfo;
 
             //Do checks to ensure that treatments contain a response etc and the responses contain a treatment etc...
-            if (!CheckResponsesPerLevel(smVariables.Treatments, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<EquivalenceTOSTTestModel>(i => i.Treatments)))
+            if (!CheckResponsesPerLevel(etVariables.Treatments, etVariables.Response, ReflectionExtensions.GetPropertyDisplayName<EquivalenceTOSTTestModel>(i => i.Treatments)))
                 return ValidationInfo;
 
-            if (!CheckResponsesPerLevel(smVariables.OtherDesignFactors, smVariables.Response, ReflectionExtensions.GetPropertyDisplayName<EquivalenceTOSTTestModel>(i => i.OtherDesignFactors)))
+            if (!CheckResponsesPerLevel(etVariables.OtherDesignFactors, etVariables.Response, ReflectionExtensions.GetPropertyDisplayName<EquivalenceTOSTTestModel>(i => i.OtherDesignFactors)))
                 return ValidationInfo;
 
             //do data checks on the treatments/other factors and response
-            if (!CategoricalAgainstContinuousVariableChecks(categorical, smVariables.Response))
+            if (!CategoricalAgainstContinuousVariableChecks(categorical, etVariables.Response))
                 return ValidationInfo;
 
             //check transformations
-            CheckTransformations(smVariables.ResponseTransformation, smVariables.Response);
-
-            if (smVariables.Covariates != null)
+            if (etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage && etVariables.ComparisonType == EquivalenceTOSTTestModel.ComparisonOption.AllPairwise && etVariables.ResponseTransformation == "None")
             {
-                CheckTransformations(smVariables.CovariateTransformation, smVariables.Covariates, true);
+                ValidationInfo.AddWarningMessage("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the overall mean of the response.");
+            }
+            else if (etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage && etVariables.ComparisonType == EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl && etVariables.ResponseTransformation == "None")
+            {
+                ValidationInfo.AddWarningMessage("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the selected control group.");
+            }
+            else if (etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute && etVariables.ResponseTransformation.StartsWith("Log"))
+            {
+                ValidationInfo.AddErrorMessage("As you have chosen to log transformed the response, the comparisons between the predicted means will be in the form of ratios. This implies that the difference between the means will be a % change and hence you should select % boundaries rather than absolute boundaries.");
+                return ValidationInfo;
+            }
+            else if (etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage && !etVariables.ResponseTransformation.StartsWith("Log"))
+            {
+                ValidationInfo.AddErrorMessage("As you have selected to [sqrt, arsine, rank] transform the responses you should choose absolute boundaries rather than % boundaries. The absolute boundaries should be defined on the transformed scale rather than the original scale.");
+                return ValidationInfo;
+            }         
+
+            CheckTransformations(etVariables.ResponseTransformation, etVariables.Response);
+
+            if (etVariables.Covariates != null)
+            {
+                CheckTransformations(etVariables.CovariateTransformation, etVariables.Covariates, true);
             }
 
             //do data checks on the treatments/other factors and covariate (if selected)
-            if (smVariables.Covariates != null)
+            if (etVariables.Covariates != null)
             {
-                foreach (string covariate in smVariables.Covariates)
+                foreach (string covariate in etVariables.Covariates)
                 {
                     if (!CategoricalAgainstContinuousVariableChecks(categorical, covariate))
                         return ValidationInfo;
                 }
             }
 
-            if (smVariables.Covariates != null && String.IsNullOrEmpty(smVariables.PrimaryFactor))
+            if (etVariables.Covariates != null && String.IsNullOrEmpty(etVariables.PrimaryFactor))
             {
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
             }
 
-            if (smVariables.ComparisonsBackToControl && String.IsNullOrEmpty(smVariables.ControlGroup))
+            if (etVariables.ComparisonType == EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl && String.IsNullOrEmpty(etVariables.ControlGroup))
             {
                 ValidationInfo.AddErrorMessage("You have selected to compare back to a control but no control group is selected.");
             }
+
+         
+
 
             //if get here then no errors so return true
             return ValidationInfo;
@@ -85,7 +107,7 @@ namespace SilveR.Validators
             foreach (string catFactor in categorical) //go through each categorical factor and do the check on each
             {
                 string factorType;
-                if (smVariables.Treatments.Contains(catFactor))
+                if (etVariables.Treatments.Contains(catFactor))
                 {
                     factorType = ReflectionExtensions.GetPropertyDisplayName<EquivalenceTOSTTestModel>(i => i.Treatments);
                 }
@@ -95,7 +117,7 @@ namespace SilveR.Validators
                 }
 
                 string responseType;
-                if (smVariables.Response.Contains(continuous))
+                if (etVariables.Response.Contains(continuous))
                 {
                     responseType = ReflectionExtensions.GetPropertyDisplayName<EquivalenceTOSTTestModel>(i => i.Response);
                 }

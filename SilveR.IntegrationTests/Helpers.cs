@@ -211,8 +211,7 @@ namespace SilveR.IntegrationTests
                 return null;
             }
 
-            JToken token = metaToken as JToken;
-            if (token == null)
+            if (metaToken is not JToken token)
             {
                 return ToKeyValue(JObject.FromObject(metaToken));
             }
@@ -289,8 +288,7 @@ namespace SilveR.IntegrationTests
                     _level++;
                 }
 
-                var enumerableElement = element as IEnumerable;
-                if (enumerableElement != null)
+                if (element is IEnumerable enumerableElement)
                 {
                     foreach (object item in enumerableElement)
                     {
@@ -383,8 +381,8 @@ namespace SilveR.IntegrationTests
             if (o == null)
                 return ("null");
 
-            if (o is DateTime)
-                return (((DateTime)o).ToShortDateString());
+            if (o is DateTime time)
+                return (time.ToShortDateString());
 
             if (o is string)
                 return string.Format("\"{0}\"", o);

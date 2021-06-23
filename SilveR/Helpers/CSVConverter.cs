@@ -36,7 +36,7 @@ namespace SilveR.Helpers
 
             parser.Read();
             string[] headerRow = parser.Record;
-            for (int i = 0; i < headerRow.Count(); i++)
+            for (int i = 0; i < headerRow.Length; i++)
             {
                 DataColumn newCol;
 

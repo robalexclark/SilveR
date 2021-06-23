@@ -69,8 +69,7 @@ namespace SilveR.Services
                     //csvfilename is built from the analysis guid and is also used in R to name the output at this time
                     string csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");
 
-                    AnalysisDataModelBase analysisDataModelBase = analysisModel as AnalysisDataModelBase;
-                    if (analysisDataModelBase != null) //then has data component
+                    if (analysisModel is AnalysisDataModelBase analysisDataModelBase) //then has data component
                     {
                         string[] csvData = analysisDataModelBase.ExportData();
                         File.WriteAllLines(csvFileName, csvData);

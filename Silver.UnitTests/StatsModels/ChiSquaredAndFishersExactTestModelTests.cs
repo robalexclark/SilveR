@@ -39,7 +39,7 @@ namespace SilveR.UnitTests.StatsModels
 
             //Assert
             Assert.IsAssignableFrom<IEnumerable<string>>(result);
-            Assert.Equal(new List<string>() { "0.1", "0.05", "0.01", "0.001" }, result);
+            Assert.Equal(new List<string>() { "0.1", "0.05", "0.025", "0.01", "0.001" }, result);
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace SilveR.UnitTests.StatsModels
 
             //Assert
             Assert.Equal("Count,Group,Respcat", result[0]);
-            Assert.Equal(9, result.Count()); //as blank responses are removed
+            Assert.Equal(9, result.Length); //as blank responses are removed
             Assert.StartsWith("6,a_Tr,N", result[3]);
         }
 

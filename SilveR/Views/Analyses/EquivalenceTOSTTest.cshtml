@@ -103,18 +103,44 @@
                     </div>
 
                     <h4>Equivalence Bounds</h4>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Absolute" checked="checked" onclick="enableDisableEquivalenceType()">Absolute
+                        </label>
+                    </div>
+
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Lower bound</label>
+                        <label class="col-md-6 col-form-label">Lower bound absolute</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="LowerBound" />
-                            <div><span asp-validation-for="LowerBound"></span></div>
+                            <input class="form-control" asp-for="LowerBoundAbsolute" />
+                            <div><span asp-validation-for="LowerBoundAbsolute"></span></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Upper bound</label>
+                        <label class="col-md-6 col-form-label">Upper bound absolute</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="UpperBound" />
-                            <div><span asp-validation-for="UpperBound"></span></div>
+                            <input class="form-control" asp-for="UpperBoundAbsolute" />
+                            <div><span asp-validation-for="UpperBoundAbsolute"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-check mt-2">
+                        <label class="form-check-label">
+                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Percentage"  onclick="enableDisableEquivalenceType()">Percentage
+                        </label>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Lower bound percentage</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="LowerBoundPercentage" />
+                            <div><span asp-validation-for="LowerBoundPercentage"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Upper bound percentage</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="UpperBoundPercentage" />
+                            <div><span asp-validation-for="UpperBoundPercentage"></span></div>
                         </div>
                     </div>
                 </div>
@@ -163,11 +189,20 @@
                     </div>
                     <br />
 
-                    <h4>Post Hoc Tests</h4>                 
+                    <h4>Post Hoc Tests</h4>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Comparisons back to control</label>
+                        <label class="col-md-6 col-form-label">Comparison type</label>
                         <div class="col-md-6">
-                            <input asp-for="ComparisonsBackToControl" type="checkbox" class="checkbox-fix"/>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input asp-for="ComparisonType" type="radio" class="form-check-input" value="AllPairwise" onclick="enableDisableControlLevels()" checked="checked">All paiwise
+                                </label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <label class="form-check-label">
+                                    <input asp-for="ComparisonType" type="radio" class="form-check-input" value="ComparisonsToControl" onclick="enableDisableControlLevels()">Comparisons to control
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">

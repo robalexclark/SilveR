@@ -1,5 +1,4 @@
 ﻿using SilveR.StatsModels;
-using System.Linq;
 
 namespace SilveR.Validators
 {
