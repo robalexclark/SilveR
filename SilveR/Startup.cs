@@ -49,9 +49,16 @@ namespace SilveR
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            string appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Program.AppName);
-            Directory.CreateDirectory(appDataFolder); //create the app folder if it does not exist
+            AppSettings settings = configuration.GetSection(nameof(AppSettings)).Get<AppSettings>();
+            string customDbLocation = settings.CustomDbLocation;
 
+            string appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Program.AppName); //default db location
+            if (!String.IsNullOrWhiteSpace(customDbLocation))
+            {
+                appDataFolder = customDbLocation;
+            }
+
+            Directory.CreateDirectory(appDataFolder); //create the app folder if it does not exist
             services.AddDbContext<SilveRContext>(options => options.UseSqlite("Data Source=" + Path.Combine(appDataFolder, Program.AppName + ".db")));
             services.AddScoped<ISilveRRepository, SilveRRepository>();
 
@@ -91,9 +98,6 @@ namespace SilveR
             {
                 endpoints.MapDefaultControllerRoute(); // Map conventional MVC controllers using the default route
             });
-
-            // Open the Electron-Window here
-            //Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(new BrowserWindowOptions { Title = Program.AppName, Width = 1280, Height = 1024, AutoHideMenuBar = true, WebPreferences = new WebPreferences { NodeIntegration = false } }));
 
             if (HybridSupport.IsElectronActive)
             {
@@ -318,6 +322,7 @@ namespace SilveR
 
     public class AppSettings
     {
+        public string CustomDbLocation { get; set; }
         public string CustomRScriptLocation { get; set; }
     }
 }
