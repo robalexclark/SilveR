@@ -576,6 +576,7 @@ for (i in 1:(dim(ivsanova)[1])) {
 
 #Remove intercept row
 ivsanova <- ivsanova[-c(1), ] 
+temp <- temp[-c(1), ] 
 
 if(showANOVA=="Y") {
 	#STB July 2013 Change title
@@ -590,7 +591,7 @@ if(showANOVA=="Y") {
 	#Number of signficiant terms 
 	nosigs <- 0
 	for(i in 1:(dim(ivsanova)[1]))	{
-		if (ivsanova[i,5]<= (1-sig)) {
+		if (temp[i,4]<= (1-sig)) {
 			nosigs <- nosigs+1
 		}
 	}
@@ -599,7 +600,7 @@ if(showANOVA=="Y") {
 	index <- 0
 	for(i in 1:(dim(ivsanova)[1]))	{
 	#STB May 2012 correcting table reference
-		if (ivsanova[i,5]<= (1-sig)) {
+		if (temp[i,4]<= (1-sig)) {
 			index <- index+1
 			if (index == 1) {
 				add<-paste(add, ": At the ", 100*(1-sig), "% level", " there is a statistically significant overall difference between the levels of ", tempy[i+1], sep="")
