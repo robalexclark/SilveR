@@ -1579,8 +1579,8 @@ LSMPLOT_diff <- function() {
 #===================================================================================================================
 #Equivalence plot 
 #===================================================================================================================
-EQPLOT <- function(AnalysisType) {
-	g <- ggplot(graphdata, aes(x = X1, y = rows)) +
+EQPLOT2S <- function() {
+	g <- ggplot(graphdata, aes(x = X3, y = V9)) +
 		theme_map +
 		mytheme +
 		ylab(YAxisTitle) +
@@ -1589,23 +1589,34 @@ EQPLOT <- function(AnalysisType) {
 		scale_x_continuous(breaks = pretty_breaks()) +
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill)
 
-		if (AnalysisType =="two-sided") {
-			g1 <- g + geom_errorbar(aes(xmax = X3, xmin = X2), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
-			geom_vline(xintercept = gr_lowerEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line) +
-			geom_vline(xintercept = gr_upperEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
-		}
+		g1 <- g + geom_errorbar(aes(xmax = X4, xmin = X5), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+		geom_vline(xintercept = gr_lowerEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line) +
+		geom_vline(xintercept = gr_upperEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+	suppressWarnings(print(g1))
+}
+
+EQPLOT1S <- function(AnalysisType) {
+	g <- ggplot(graphdata, aes(x = X3, y = V7)) +
+		theme_map +
+		mytheme +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		scale_x_continuous(breaks = pretty_breaks()) +
+		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill)
 
 		if (AnalysisType =="upper-sided") {
-			g1 <- g + geom_errorbar(aes(xmax = X2, xmin = X1), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+			g1 <- g + geom_errorbar(aes(xmax = X3, xmin = X4), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
 			geom_vline(xintercept = gr_upperEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
 		}
 
 		if (AnalysisType =="lower-sided") {
-			g1 <- g + geom_errorbar(aes(xmax = X1, xmin = X2), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+			g1 <- g + geom_errorbar(aes(xmax = X3, xmin = X4), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
 			geom_vline(xintercept = gr_lowerEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line) 
 		}
 	suppressWarnings(print(g1))
 }
+
 #===================================================================================================================
 #Power plot 
 #===================================================================================================================

@@ -110,14 +110,14 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Lower bound absolute</label>
+                        <label class="col-md-6 col-form-label">Lower bound</label>
                         <div class="col-md-6">
                             <input class="form-control" asp-for="LowerBoundAbsolute" />
                             <div><span asp-validation-for="LowerBoundAbsolute"></span></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Upper bound absolute</label>
+                        <label class="col-md-6 col-form-label">Upper bound</label>
                         <div class="col-md-6">
                             <input class="form-control" asp-for="UpperBoundAbsolute" />
                             <div><span asp-validation-for="UpperBoundAbsolute"></span></div>
@@ -125,22 +125,22 @@
                     </div>
                     <div class="form-check mt-2">
                         <label class="form-check-label">
-                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Percentage"  onclick="enableDisableEquivalenceType()">Percentage
+                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Percentage"  onclick="enableDisableEquivalenceType()">Fold change
                         </label>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Lower bound percentage</label>
+                        <label class="col-md-6 col-form-label">Lower bound</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="LowerBoundPercentage" />
-                            <div><span asp-validation-for="LowerBoundPercentage"></span></div>
+                            <input class="form-control" asp-for="LowerBoundFoldChange" />
+                            <div><span asp-validation-for="LowerBoundFoldChange"></span></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Upper bound percentage</label>
+                        <label class="col-md-6 col-form-label">Upper bound</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="UpperBoundPercentage" />
-                            <div><span asp-validation-for="UpperBoundPercentage"></span></div>
+                            <input class="form-control" asp-for="UpperBoundFoldChange" />
+                            <div><span asp-validation-for="UpperBoundFoldChange"></span></div>
                         </div>
                     </div>
                 </div>

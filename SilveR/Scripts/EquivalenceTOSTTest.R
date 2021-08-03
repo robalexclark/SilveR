@@ -23,10 +23,10 @@ FirstCatFactor <- Args[9]
 treatFactors <- Args[10]
 blockFactors <- Args[11]
 EqBtype <- tolower(Args[12])
-lowerEqB <- as.numeric(Args[13])
-lowerEqBx <- Args[13]
-upperEqB<- as.numeric(Args[14])
-upperEqBx<- Args[14]
+lowerboundtest <- as.numeric(Args[13])
+upperboundtest <- as.numeric(Args[14])
+lowerboundtestN <- Args[13]
+upperboundtestN <- Args[14]
 showPRPlot <- Args[15]
 showNormPlot <- Args[16]
 sig <- 1 - as.numeric(Args[17])
@@ -41,7 +41,7 @@ cntrlGroup <- Args[22]
 
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
-
+print(Args)
 #Print args
 if (Diplayargs == "Y"){
 	print(Args)
@@ -178,22 +178,31 @@ noeffects<-length(emodelChanges)-2
 
 
 #Defining the analysis type
-if (lowerEqBx != "NULL" && upperEqBx != "NULL") {
+if (lowerboundtestN != "NULL" && upperboundtestN != "NULL") {
 	AnalysisType = "two-sided"
 }
-if (lowerEqBx == "NULL" && upperEqBx != "NULL") {
+if (lowerboundtestN == "NULL" && upperboundtestN != "NULL") {
 	AnalysisType = "upper-sided"
 }
-if (lowerEqBx != "NULL" && upperEqBx == "NULL") {
+if (lowerboundtestN != "NULL" && upperboundtestN == "NULL") {
 	AnalysisType = "lower-sided"
 }
 
-
 #Defining the percentage bounds
-if (EqBtype == "percentage") {
-	lowerEqBPC <- lowerEqB
-	upperEqBPC <- upperEqB
+lower      <- lowerboundtest
+upper      <- upperboundtest
 
+if (responseTransform =="log10") {
+	lower      <- log10(lowerboundtest)
+	upper      <- log10(upperboundtest)
+}
+
+if (responseTransform =="loge") {
+	lower      <- log(lowerboundtest)
+	upper      <- log(upperboundtest)
+}
+
+if (EqBtype == "percentage" && responseTransform == "none") {
 	if (backToControlTest == "allpairwise") {
 		overallmean <- mean(eval(parse(text = paste("statdata$", resp))), na.rm = TRUE)
 	}
@@ -203,14 +212,18 @@ if (EqBtype == "percentage") {
 	}
 
 	if (AnalysisType == "two-sided") {
-		lowerEqB <- overallmean - overallmean*lowerEqBPC/100
-		upperEqB <- overallmean + overallmean*upperEqBPC/100
+		lower <- overallmean - overallmean*lowerboundtest
+		upper <- overallmean + overallmean*upperboundtest
+		lowerboundtest <- lower
+		upperboundtest <- upper
 	}
 	if (AnalysisType == "lower-sided") {
-		lowerEqB <- overallmean - overallmean*lowerEqBPC/100
+		lower <- overallmean - overallmean*lowerboundtest
+		lowerboundtest <- lower
 	}
 	if (AnalysisType == "upper-sided") {
-		upperEqB <- overallmean + overallmean*upperEqBPC/100
+		upper <- overallmean + overallmean*upperboundtest
+		upperboundtest <- upper
 	}
 }
 
@@ -290,39 +303,43 @@ if (covariates !="NULL" && covariateTransform != "none") {
 }
 HTML(add, align="left")
 
+low<-format(round(lowerboundtest, 2), nsmall=2, scientific=FALSE)
+up<- format(round(upperboundtest, 2), nsmall=2, scientific=FALSE)
 
 #Generating the text for the eq bounds
 if (EqBtype == "absolute") {
 	if (AnalysisType == "two-sided") {
-		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqB, " and the upper equivalence bound is defined as ", upperEqB , ". As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as ", low , " and the upper equivalence bound is defined as ", up , ". As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "lower-sided") {
-		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqB,  ". As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as ", low ,  ". As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "upper-sided") {
-		addEB<-paste(c("The upper equivalence bound is defined as "), upperEqB,  ". As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The upper equivalence bound is defined as ", low,  ". As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 }
+
 if (EqBtype == "percentage" && backToControlTest == "allpairwise") {
 	if (AnalysisType == "two-sided") {
-		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the overall response average). This is equivalent to ", lowerEqB, " on the original scale. The upper equivalence bound is defined as ", upperEqBPC , "%change (from the overall response average). This is equivalent to ", upperEqB, " on the original scale. As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as ", low, " fold change (from the overall response average). The upper equivalence bound is defined as ", up , " fold change (from the overall response average). As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
 	}
-	if (AnalysisType == "lower-sided"&& backToControlTest == "comparisonstocontrol") {
-		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the overall response average). This is equivalent to ", lowerEqB, " on the original scale. As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	if (AnalysisType == "lower-sided") {
+		addEB<-paste("The lower equivalence bound is defined as ", low, " fold change (from the overall response average). As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
-	if (AnalysisType == "upper-sided"&& backToControlTest == "comparisonstocontrol") {
-		addEB<-paste(c("The upper equivalence bound is defined as "), upperEqBPC, "%change (from the overall response average). This is equivalent to ", upperEqB, " on the original scale. As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	if (AnalysisType == "upper-sided") {
+		addEB<-paste("The upper equivalence bound is defined as ", up, " fold change (from the overall response average). As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 }
+
 if (EqBtype == "percentage" && backToControlTest == "comparisonstocontrol") {
 	if (AnalysisType == "two-sided") {
-		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the control group mean). This is equivalent to ", lowerEqB, " on the original scale. The upper equivalence bound is defined as ", upperEqBPC , "%change (from the control group mean). This is equivalent to ", upperEqB, " on the original scale. As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as ", low, " fold change (from the control group mean). The upper equivalence bound is defined as ", up , " fold change (from the control group mean). As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
 	}
-	if (AnalysisType == "lower-sided"&& backToControlTest == "comparisonstocontrol") {
-		addEB<-paste(c("The lower equivalence bound is defined as "), lowerEqBPC, "%change (from the control group mean). This is equivalent to ", lowerEqB, " on the original scale. As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	if (AnalysisType == "lower-sided") {
+		addEB<-paste("The lower equivalence bound is defined as ", low, " fold change (from the control group mean). As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
-	if (AnalysisType == "upper-sided"&& backToControlTest == "comparisonstocontrol") {
-		addEB<-paste(c("The upper equivalence bound is defined as "), upperEqBPC, "%change (from the control group mean). This is equivalent to ", upperEqB, " on the original scale. As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+	if (AnalysisType == "upper-sided") {
+		addEB<-paste("The upper equivalence bound is defined as ", up, " fold change (from the control group mean). As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 }
 HTML(addEB, align="left")
@@ -601,7 +618,7 @@ if (CovariateRegressionCoefficients == "Y" && FirstCatFactor != "NULL") {
 #LS Means plot and table
 #===================================================================================================================
 if(showLSMeans =="Y") {
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+	if ( responseTransform != "log10" && responseTransform != "loge")  {
 
 		#Calculate LS Means dataset
 		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
@@ -829,8 +846,8 @@ if(showLSMeans =="Y") {
 #===================================================================================================================
 #Back transformed geometric means plot and table 
 #===================================================================================================================
-if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge")) {
-	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
+if(showLSMeans =="Y") {
+	if ( (responseTransform == "log10") || (responseTransform == "loge") ) {
 
 		#Calculate LS Means dataset
 		tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
@@ -1088,648 +1105,364 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 
 
 
-
-
-
-
-
 #===================================================================================================================
-#All Pairwise tests
+#Pairwise equivalence tests table
 #===================================================================================================================
-if(backToControlTest == "allpairwise") {
+lowerCI<-paste("   Lower one-sided ",(sig*100),"% CI   ",sep="")
+upperCI<-paste("   Upper one-sided ",(sig*100),"% CI   ",sep="")
 
-	#STB Jun 2015
-	#Creating dataset without dashes in
-	ivs_num_ivs <- rep(1:dim(statdata)[1])
-	ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
-	statdata_temp2<- cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs )
-	statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
-	statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
-	statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
-	statdata<- data.frame(cbind(statdata_num, statdata_char2))
+#Creating input dataset without dashes in
+ivs_num_ivs <- rep(1:dim(statdata)[1])
+ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
+statdata_temp2<- cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs )
+statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
+statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
+statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
+statdata<- data.frame(cbind(statdata_num, statdata_char2))
 
-	#All pairwise tests
 
-	#All pairwise test options
-	allPairwiseTestText= "Unadjusted (LSD)"
-	allPairwiseTest= "none"
-
-	add<-paste(c("All pairwise equivalence assessments"))
-
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML.title(add, HR=2, align="left")
-	}
-
-	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
-	multci<-confint(mult, level=sigeq, calpha = univariate_calpha())
-	tablen<-length(unique(rownames(multci$confint)))
-	rows<-rownames(multci$confint)
-	for (i in 1:1000) {
-		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
-	}
-
-	if (AnalysisType == "two-sided") {
-		tabs<-matrix(nrow=tablen, ncol=6)
-		tabsNum<-data.frame(matrix(nrow=tablen, ncol=6))
-	} else {
-		tabs<-matrix(nrow=tablen, ncol=4)
-		tabsNum<-data.frame(matrix(nrow=tablen, ncol=4))
-	}	
-	for (i in 1:tablen) {
-		#STB Dec 2011 increasing means to 3dp
-		tabs[i,1]=format(round(multci$confint[i], 3), nsmall=3, scientific=FALSE)
-		tabsNum[i,1]=multci$confint[i]
-	}
-
-	lowerCI<-paste("   Lower one-sided ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper one-sided ",(sig*100),"% CI   ",sep="")
-
-	#Two-sided
-	if (AnalysisType == "two-sided") {
-		for (i in 1:tablen) {
-			tabs[i,2]=format(round(multci$confint[i+tablen], 3), nsmall=3, scientific=FALSE)
-			tabs[i,3]=format(round(multci$confint[i+2*tablen], 3), nsmall=3, scientific=FALSE)
-			tabs[i,4]=lowerEqB
-			tabs[i,5]=upperEqB
-			tabs[i,6]="Inconclusive"
-	
-			tabsNum[i,2]=multci$confint[i+tablen]
-			tabsNum[i,3]=multci$confint[i+2*tablen]
-		}
-		for (i in 1:tablen) {
-			if(multci$confint[i+2*tablen] < lowerEqB) {
-				tabs[i,6]="Not equivalent"
-			}
-			if(multci$confint[i+tablen] > upperEqB) {
-				tabs[i,6]="Not equivalent"
-			}
-			if(multci$confint[i+2*tablen] < upperEqB && multci$confint[i+tablen] > lowerEqB) {
-				tabs[i,6]="Equivalent"
-			}
-		}
-		tabls<-cbind(rows, tabs)
-		tablsNum<-cbind(rows, tabsNum)
-		colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Lower equivalence bound", "Upper equivalence bound", "Equivalence assessment")
-	}
-	
-	#One-sided upper limit
-	if (AnalysisType == "upper-sided") {
-		for (i in 1:tablen) {
-			tabs[i,2]=format(round(multci$confint[i+2*tablen], 3), nsmall=3, scientific=FALSE)
-			tabsNum[i,2]=multci$confint[i+2*tablen]
-		}
-		for (i in 1:tablen) {
-			tabs[i,3]=upperEqB
-		}
-		for (i in 1:tablen) {
-			tabs[i,4]="Inconclusive"
-			if(multci$confint[i] > upperEqB) {
-				tabs[i,4]="Not equivalent"
-			}
-			if(multci$confint[i] < upperEqB && multci$confint[i+2*tablen] < upperEqB) {
-				tabs[i,4]="Equivalent"
-			}
-		}
-		tabls<-cbind(rows, tabs)
-		tablsNum<-cbind(rows, tabsNum)
-		colnames(tabls)<-c("Comparison", "Difference", upperCI, "Upper Eq. Bound", "Equivalence assessment")
-	}
-	
-	#One-sided lower limit
-	if (AnalysisType == "lower-sided") {
-		for (i in 1:tablen) {
-			tabs[i,2]=format(round(multci$confint[i+tablen], 3), nsmall=3, scientific=FALSE)
-			tabsNum[i,2]=multci$confint[i+tablen]
-		}
-		for (i in 1:tablen) {
-			tabs[i,3]=lowerEqB
-		}
-		for (i in 1:tablen) {
-			tabs[i,4]="Inconclusive"
-			if(multci$confint[i] < lowerEqB) {
-				tabs[i,4]="Not equivalent"
-			}
-			if(multci$confint[i] > lowerEqB && multci$confint[i+tablen] > lowerEqB) {
-				tabs[i,4]="Equivalent"
-			}
-		}
-		tabls<-cbind(rows, tabs)
-		tablsNum<-cbind(rows, tabsNum)
-		colnames(tabls)<-c("Comparison", "Difference", lowerCI, "Lower Eq. Bound", "Equivalence assessment")
-	}
-	
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
-	}
-	rownames(tabls) <- rows
-	
-	#Plot of the equivalence results
-	if (AnalysisType == "two-sided") {
-		CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% one-sided confidence intervals along with equivalence bounds",sep="")
-	} else {
-		CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% one-sided confidence interval along with equivalence bound",sep="")
-	}
-	HTML.title(CITitle, HR=2, align="left")
-
-	#Code for EQ plot
-	meanPlotqq <- sub(".html", "meanplotqq.png", htmlFile)
-	png(meanPlotqq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf5qq <- sub(".html", "meanplotqq.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Setting up the dataset
-	graphdata<-data.frame(tablsNum)
-	Gr_intercept <- 0
-	XAxisTitle <- "Difference"
-	YAxisTitle <- "Comparison"
-	Gr_line_type<-Line_type_dashed
-	Gr_line_typeint<-Line_type_dashed
-
-	if (AnalysisType == "two-sided") {
-		gr_lowerEqB<-lowerEqB
-		gr_upperEqB<-upperEqB
-	}
-	if (AnalysisType == "lower-sided") {
-		gr_lowerEqB<-lowerEqB
-	}
-	if (AnalysisType == "upper-sided") {
-		gr_upperEqB<-upperEqB
-	}
-
-	#GGPLOT2 code
-	EQPLOT(AnalysisType)
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq)
-		linkToPdf5qq <- paste ("<a href=\"",pdfFile_5qq,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
-		HTML(linkToPdf5qq)
-	}	
-
-#===================================================================================================================
-#Back transformed geometric means table 
-#===================================================================================================================
-#if(responseTransform =="log10"||responseTransform =="loge") {
-#	if ( GeomDisplay != "notdisplayed") {
-#		add<-paste(c("All pairwise equivalence assessments as back-transformed ratios"))
-#		HTML.title(add, HR=2, align="left")
-#
-#		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
-#			HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
-#		}
-#		if (GeomDisplay == "geometricmeansonly") {
-#			HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
-#		}
-#
-#		#Creating the table
-#	}
-#}
-
-#===================================================================================================================
-	#Conclusion
-	add<-paste(c("Conclusion"))
-	HTML.title(add, HR=2, align="left")
-
-	if (noeffects>testeffects)  {
-		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. ", align="left")
-	}
-
-	inte<-1
-	for(i in 1:(dim(tabls)[1])) {
-		if (AnalysisType == "two-sided") {
-			if (tabls[i,7] ==  "Equivalent") {
-				if (inte==1) {
-					inte<-inte+1
-					add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
-				} else {
-					inte<-inte+1
-					add<-paste(add, ", ", rows[i], sep="")
-				}
-			} 
-		} else {
-			if (tabls[i,5] ==  "Equivalent") {
-				if (inte==1) {
-					inte<-inte+1
-					add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
-				} else {
-					inte<-inte+1
-					add<-paste(add, ", ", rows[i], sep="")
-				}
-			} 
-		}
-	}
-	
-	if (inte==1) {
-		if (dim(tabls)[1] >1) {
-			add<-paste(add, ": There are no equivalent pairwise comparisons.", sep="")
-		} else {
-			add<-paste(add, ": The pairwise comparison is not equivalent.", sep="")
-		}
-	} else {
-		add<-paste(add, ". ", sep="")
-	}
-	HTML(add, align="left")
+#Creating all pairwise results
+mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
+multci<-confint(mult, level=sigeq, calpha = univariate_calpha())
+tablen<-length(unique(rownames(multci$confint)))
+rows<-rownames(multci$confint)
+for (i in 1:1000) {
+	rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
 }
 
-#===================================================================================================================
-#Back to control comparisons
-#===================================================================================================================
-backToControlTestText= "Unadjusted (LSD)"
+#Creating a matrix of the difference labels
+comps<-c(rownames(multci$confint))
+diffz <-matrix(nrow=length(comps), ncol=2)
+for (g in 1:length(comps)) {
+	comps2<-unlist(strsplit(comps[g]," - " ))[1]
+	comps3<-unlist(strsplit(comps[g]," - " ))[2]
+	diffz[g,1] = comps2
+	diffz[g,2] = comps3
+}
 
-#===================================================================================================================
-#All to one comparisons
-if(backToControlTest == "comparisonstocontrol") {
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		#Title
-		if (backToControlTest== "comparisonstocontrol") {
-			add<-paste(c("All to one pairwise equivalence assessments"))
-		} 
-		HTML.title(add, HR=2, align="left")
-	}
+#Generating a dataset with numeric levels in
+if (AnalysisType == "two-sided") {
+	tabsNum<-data.frame(matrix(nrow=tablen, ncol=8))
+} else {
+	tabsNum<-data.frame(matrix(nrow=tablen, ncol=6))
+}
 
-	#Generate all pairwise comparisons, unadjusted for multiplicity
-	mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
-	multci<-confint(mult, level=sigeq, calpha = univariate_calpha())
-	multp<-summary(mult, test=adjusted("none"))
+#Entries for both one-sided and two-sided tests
+for (i in 1:tablen) {
+	tabsNum[i,1]= diffz[i,1]
+	tabsNum[i,2]= diffz[i,2]
+	tabsNum[i,3]=multci$confint[i]
+}
 
-	#Creating a matrix of the differences
-	comps<-c(rownames(multci$confint))
-	diffz <-matrix(nrow=length(comps), ncol=2)
-	for (g in 1:length(comps)) {
-		comps2<-unlist(strsplit(comps[g]," - " ))[1]
-		comps3<-unlist(strsplit(comps[g]," - " ))[2]
-		diffz[g,1] = comps2
-		diffz[g,2] = comps3
-	}
-
-	#Creating the unadjusted full column
-	sigma<-multp$test$sigma
-	tstats<-Mod(as.numeric(multp$test$tstat))
-	tablen<-length(unique(rownames(multci$confint)))
-	tabs<-data.frame(nrow=tablen, ncol=15)
-
+#Two-sided table entries
+if (AnalysisType == "two-sided") {
 	for (i in 1:tablen) {
-		tabs[i,1]=multci$confint[i]
+		tabsNum[i,9] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
+		tabsNum[i,4]=multci$confint[i+tablen]
+		tabsNum[i,5]=multci$confint[i+2*tablen]
+		tabsNum[i,6]=lowerboundtest
+		tabsNum[i,7]=upperboundtest
+		tabsNum[i,8]="Inconclusive"
 	}
 	for (i in 1:tablen) {
-		tabs[i,2]=multci$confint[i+tablen]
-	}
-	for (i in 1:tablen) {
-		tabs[i,3]=multci$confint[i+2*tablen]
-	}
-	for (i in 1:tablen) {
-		tabs[i,4]=sigma[i]
-	}
-	for (i in 1:tablen) {
-		tabs[i,5]= diffz[i,1]
-	}
-	for (i in 1:tablen) {
-		tabs[i,6]= diffz[i,2]
-	}
-	for (i in 1:tablen) {
-		tabs[i,7]= tstats[i]
-	}
-	tabs2<- tabs
-	for ( i in 1:tablen) {
-		if (tabs2[i,5] == cntrlGroup) {
-			tabs2[i,8] = -1*tabs2[i,1]
-			tabs2[i,9] = -1*tabs2[i,3]
-			tabs2[i,10] = -1*tabs2[i,2]
-			tabs2[i,11] = tabs2[i,6]
-			tabs2[i,12] = tabs2[i,5]
-		} else {
-			tabs2[i,8] = tabs2[i,1]
-			tabs2[i,9] = tabs2[i,2]
-			tabs2[i,10] = tabs2[i,3]	
-			tabs2[i,11] = tabs2[i,5]
-			tabs2[i,12] = tabs2[i,6]
+		if(tabsNum[i,5] < lower) {
+			tabsNum[i,8]="Not equivalent"
+		}
+		if(tabsNum[i,4] > upper) {
+			tabsNum[i,8]="Not equivalent"
+		}
+		if(tabsNum[i,5] < upper && tabsNum[i,4] > lower) {
+			tabsNum[i,8]="Equivalent"
 		}
 	}
-
-	for ( i in 1:tablen) {
-		tabs2[i,13] = paste(tabs2[i,11],  " - ", tabs2[i,12], sep = "")
-	}
-
-
-	#Subsetting to only the comparisons to control
-	tabs3<-subset(tabs2, V12 == cntrlGroup)
-
-#===================================================================================================================
-	#Creating final table
-	tabs4<-data.frame()
-	for ( i in 1:dim(tabs3)[1]) {
-		tabs4[i,1]<-format(round(tabs3[i,8], 3), nsmall=3, scientific=FALSE)
-
-		if (AnalysisType == "two-sided") {
-			tabs4[i,2]<-format(round(tabs3[i,9], 3), nsmall=3, scientific=FALSE)
-			tabs4[i,3]<-format(round(tabs3[i,10], 3), nsmall=3, scientific=FALSE)
-			tabs4[i,4]=lowerEqB
-			tabs4[i,5]=upperEqB
-			tabs4[i,6]="Inconclusive"
-
-			for (i in 1:dim(tabs3)[1]) {
-				if(tabs3[i,10] < lowerEqB) {
-					tabs4[i,6]="Not equivalent"
-				}
-				if(tabs3[i,9] > upperEqB) {
-					tabs4[i,6]="Not equivalent"
-				}
-				if(tabs3[i,10] < upperEqB && tabs3[i,9] > lowerEqB) {
-					tabs4[i,6]="Equivalent"
-				}
-			}
-		}
-		if (AnalysisType == "lower-sided") {
-			tabs4[i,2]<-format(round(tabs3[i,9], 3), nsmall=3, scientific=FALSE)
-			tabs4[i,3]=lowerEqB
-			tabs4[i,4]="Inconclusive"
-
-			for (i in 1:dim(tabs3)[1]) {
-				if(tabs3[i,8] < lowerEqB) {
-					tabs4[i,4]="Not equivalent"
-				}
-				if(tabs3[i,9] > lowerEqB) {
-					tabs4[i,4]="Equivalent"
-				}
-			}
-		}
-
-		if (AnalysisType == "upper-sided") {
-			tabs4[i,2]<-format(round(tabs3[i,10], 3), nsmall=3, scientific=FALSE)
-			tabs4[i,3]=upperEqB
-			tabs4[i,4]="Inconclusive"
-	
-			for (i in 1:dim(tabs3)[1]) {
-				if(tabs3[i,8] > upperEqB) {
-					tabs4[i,4]="Not equivalent"
-				}
-				if(tabs3[i,10] < upperEqB) {
-					tabs4[i,4]="Equivalent"
-				}
-			}
-		}
-	}
-
-
-	#STB June 2015	
-	for (i in 1:100) {
-		tabs3$V13<-sub("_ivs_dash_ivs_"," - ", tabs3$V13, fixed=TRUE)
-	}
-
-	tabls<-cbind(tabs3$V13, tabs4)
-
-	lowerCI<-paste("   Lower one-sided ",(sig*100),"% CI   ",sep="")
-	upperCI<-paste("   Upper one-sided ",(sig*100),"% CI   ",sep="")
-
-	if (AnalysisType == "two-sided") {
-		colnames(tabls)<-c("Comparison", "Difference", lowerCI, upperCI, "Lower equivalence bound", "Upper equivalence bound", "Equivalence assessment")
-	}
-	if (AnalysisType == "lower-sided") {
-		colnames(tabls)<-c("Comparison", "Difference", lowerCI, "Lower equivalence bound", "Equivalence assessment")
-	}
-	if (AnalysisType == "upper-sided") {
-		colnames(tabls)<-c("Comparison", "Difference", upperCI, "Upper equivalence bound", "Equivalence assessment")
-	}
-
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML(tabls, classfirstline="second", align="left", row.names = "FALSE")
-	}
-
-	rows<- tabs3$V13 
-#===================================================================================================================
-#Plot of the comparisons back to control
-
-	if (AnalysisType == "two-sided") {
-		CITitle<-paste("Plot of the comparisons back to control between the predicted means with ",(sig*100),"% one-sided confidence intervals along with equivalence bounds",sep="")
-	} else {
-		CITitle<-paste("Plot of the comparisons back to control between the predicted means with ",(sig*100),"% one-sided confidence interval along with equivalence bound",sep="")
-	}
-	HTML.title(CITitle, HR=2, align="left")
-
-	#Code for EQ plot
-	meanPlotqq1 <- sub(".html", "meanplotqq1.png", htmlFile)
-	png(meanPlotqq1,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-	#STB July2013
-	plotFilepdf5qq1 <- sub(".html", "meanplotqq1.pdf", htmlFile)
-	dev.control("enable") 
-
-	#Setting up the dataset
-	graphdata<-data.frame()
-
-	if (AnalysisType == "two-sided") {
-		for ( i in 1:dim(tabs3)[1]) {
-			graphdata[i,1]<-tabs3[i,8]
-			graphdata[i,2]<-tabs3[i,9]
-			graphdata[i,3]<-tabs3[i,10]
-		}
-		graphdata<-cbind(tabs3$V13, graphdata)
-		colnames(graphdata)<-c("rows", "X1", "X2", "X3")
-		gr_lowerEqB<-lowerEqB
-		gr_upperEqB<-upperEqB
-	}
-	if (AnalysisType == "lower-sided") {
-		for ( i in 1:dim(tabs3)[1]) {
-			graphdata[i,1]<-tabs3[i,8]
-			graphdata[i,2]<-tabs3[i,9]
-		}
-		graphdata<-cbind(tabs3$V13, graphdata)
-		colnames(graphdata)<-c("rows", "X1", "X2")
-		gr_lowerEqB<-lowerEqB
-	}
-	if (AnalysisType == "upper-sided") {
-		for ( i in 1:dim(tabs3)[1]) {
-			graphdata[i,1]<-tabs3[i,8]
-			graphdata[i,2]<-tabs3[i,10]
-		}
-		graphdata<-cbind(tabs3$V13, graphdata)
-		colnames(graphdata)<-c("rows", "X1", "X2")
-		gr_upperEqB<-upperEqB
-	}
-	Gr_intercept <- 0
-	XAxisTitle <- "Difference"
-	YAxisTitle <- "Comparison"
-	Gr_line_type<-Line_type_dashed
-	Gr_line_typeint<-Line_type_dashed
-
-	if (AnalysisType == "two-sided") {
-		gr_lowerEqB<-lowerEqB
-		gr_upperEqB<-upperEqB
-	}
-	if (AnalysisType == "lower-sided") {
-		gr_lowerEqB<-lowerEqB
-	}
-	if (AnalysisType == "upper-sided") {
-		gr_upperEqB<-upperEqB
-	}
-
-	#GGPLOT2 code
-	EQPLOT(AnalysisType)
-	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq1), Align="left")
-
-	#STB July2013
-	if (pdfout=="Y") {
-		pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq1), height = pdfheight, width = pdfwidth) 
-		dev.set(2) 
-		dev.copy(which=3) 
-		dev.off(2)
-		dev.off(3)
-		pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq1)
-		linkToPdf5qq1 <- paste ("<a href=\"",pdfFile_5qq1,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
-		HTML(linkToPdf5qq1)
-	}
-
-#===================================================================================================================
-#Back transformed geometric means table 
-#===================================================================================================================
-	if(responseTransform =="log10"||responseTransform =="loge") {
-		if (GeomDisplay != "notdisplayed") {
-
-			#Title
-			if (backToControlTest== "none") {
-				add<-paste(c("All to one comparisons as back-transformed ratios without adjustment for multiplicity (LSD test)"))
+	if(backToControlTest == "comparisonstocontrol") {
+		tabsNum2 <- tabsNum
+		for ( i in 1:tablen) {
+			if (tabsNum[i,1] == cntrlGroup) {
+				tabsNum2[i,3] = -1*tabsNum[i,3]
+				tabsNum2[i,4] = -1*tabsNum[i,5]
+				tabsNum2[i,5] = -1*tabsNum[i,4]
+				tabsNum2[i,1] = tabsNum[i,2]
+				tabsNum2[i,2] = tabsNum[i,1]
+				tabsNum2[i,9] = paste(tabsNum[i,2] , " - ", tabsNum[i,1], sep  = "")
 			} else {
-				add<-paste("All to one comparisons as back-transformed ratios using ", backToControlTestText, "'s procedure", sep="")
-			}
-			HTML.title(add, HR=2, align="left")
-	
-			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
-				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are presented on the log scale. These results can be back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
-			}
-			if (GeomDisplay == "geometricmeansonly") {
-				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
-			}
-		
-			#Creating final table
-			tabs4x<-data.frame()
-	
-			if (responseTransform =="log10") {
-				for ( i in 1:dim(tabs3)[1]) {
-					tabs4x[i,1]<-format(round(10^(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
-					tabs4x[i,2]<-format(round(10^(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
-					tabs4x[i,3]<-format(round(10^(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
-				}
-			}
-			if (responseTransform =="loge") {
-				for ( i in 1:dim(tabs3)[1]) {
-					tabs4x[i,1]<-format(round(exp(tabs3[i,9]), 3), nsmall=3, scientific=FALSE)
-					tabs4x[i,2]<-format(round(exp(tabs3[i,10]), 3), nsmall=3, scientific=FALSE)
-					tabs4x[i,3]<-format(round(exp(tabs3[i,11]), 3), nsmall=3, scientific=FALSE)
-				}
-			}
-	
-			tabs3$V14<-sub(" - "," / ", tabs3$V14, fixed=TRUE)
-		
-			#STB June 2015	
-			for (i in 1:100) {
-				tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
-			}
-			
-			lowerCI<-paste("Lower one-sided ",(sig*100),"% CI",sep="")
-			upperCI<-paste("Upper one-sided ",(sig*100),"% CI",sep="")
-		
-			tablsx <- cbind(tabs3$V14, tabs4x)
-			#STB May 2012 correcting "SEM"
-			colnames(tablsx)<-c("Comparison", "Ratio", lowerCI, upperCI)
-					
-			HTML(tablsx, classfirstline="second", align="left", row.names = "FALSE")
-			
-#===================================================================================================================
-			#Plot of the comparisons back to control
-			CITitle<-paste("Plot of the comparisons back to the back-transformed geometric control means with ",(sig*100),"% one-sided confidence intervals",sep="")
-			HTML.title(CITitle, HR=2, align="left")
-	
-			#Code for LS MEans plot
-			meanPlotqs <- sub(".html", "meanplotqs.png", htmlFile)
-			png(meanPlotqs,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
-
-			#STB July2013
-			plotFilepdf5qs <- sub(".html", "meanplotqs.pdf", htmlFile)
-			dev.control("enable") 
-		
-			#Setting up the dataset
-			graphdata<-data.frame(tabs4x)
-			graphdata$Mean<-as.numeric(graphdata$V1)
-			graphdata$Lower<-as.numeric(graphdata$V2)
-			graphdata$Upper<-as.numeric(graphdata$V3)
-			graphdata$Group_IVSq_<-tabs3$V14
-			Gr_intercept <- 1
-			XAxisTitle <- "Comparison"
-			YAxisTitle <- "Ratio of geometric means"
-		
-			#GGPLOT2 code
-			LSMPLOT_diff()
-	
-			void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqs), Align="left")
-	
-			#STB July2013
-			if (pdfout=="Y") {
-					pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qs), height = pdfheight, width = pdfwidth) 
-					dev.set(2) 
-					dev.copy(which=3) 
-					dev.off(2)
-					dev.off(3)
-					pdfFile_5qs<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qs)
-					linkToPdf5qs <- paste ("<a href=\"",pdfFile_5qs,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
-					HTML(linkToPdf5qs)
+				tabsNum2[i,9] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
 			}
 		}
+		tabsNum <- tabsNum2
+		tabsNum<-subset(tabsNum, tabsNum[,2] == cntrlGroup)
 	}
-
-#===================================================================================================================
-	#Conclusion
-	add<-paste(c("Conclusion"))
-	HTML.title(add, HR=2, align="left")
-
-	if (noeffects>testeffects)  {
-		HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. In the above table certain higher order interactions are assumed to be not significant, see log for more details.", align="left")
-	}
-
-	inte<-1
-	for(i in 1:(dim(tabls)[1])) {
-		if (AnalysisType == "two-sided") {
-			if (tabs4[i,6] ==  "Equivalent") {
-				if (inte==1) {
-					inte<-inte+1
-					add<-paste(add, ": The following comparisons back to control are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
-				} else {
-					inte<-inte+1
-					add<-paste(add, ", ", rows[i], sep="")
-				}
-			} 
-		} else {
-			if (tabs4[i,4] ==  "Equivalent") {
-				if (inte==1) {
-					inte<-inte+1
-					add<-paste(add, ": The following comparisons back to control  are deemed equivalent at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
-				} else {
-					inte<-inte+1
-					add<-paste(add, ", ", rows[i], sep="")
-				}
-			} 
-		}
-	}
-
-	if (inte==1) {
-		if (dim(tabs4)[1] >1) {
-			add<-paste(add, ": There are no equivalent pairwise comparisons.", sep="")
-		} else {
-			add<-paste(add, ": The pairwise comparison is not equivalent.", sep="")
-		}
-	} else {
-		add<-paste(add, ". ", sep="")
-	}
-	HTML(add, align="left")
 }
 
+#One-sided upper limit table entries
+if (AnalysisType == "upper-sided") {
+	for (i in 1:tablen) {
+		tabsNum[i,7] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
+		tabsNum[i,4]=multci$confint[i+2*tablen]
+		tabsNum[i,5]=upperboundtest
+		tabsNum[i,6]="Inconclusive"
+	}
+	for (i in 1:tablen) {
+		if(tabsNum[i,3] > upper) {
+			tabsNum[i,6]="Not equivalent"
+		}
+		if(tabsNum[i,3] < upper && tabsNum[i,4] < upper) {
+			tabsNum[i,6]="Equivalent"
+		}
+	}
+	if(backToControlTest == "comparisonstocontrol") {
+		tabsNum2 <- tabsNum
+		for ( i in 1:tablen) {
+			if (tabsNum[i,1] == cntrlGroup) {
+				tabsNum2[i,3] = -1*tabsNum[i,3]
+				tabsNum2[i,4] = -1*multci$confint[i+tablen]
+				tabsNum2[i,1] = tabsNum[i,2]
+				tabsNum2[i,2] = tabsNum[i,1]
+				tabsNum2[i,7] = paste(tabsNum[i,2] , " - ", tabsNum[i,1], sep  = "")
+			} else {
+				tabsNum2[i,7] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
+			}
+		}
+		tabsNum <- tabsNum2
+		tabsNum<-subset(tabsNum, tabsNum[,2] == cntrlGroup)
+	}
+}
+	
+#One-sided lower limit table entries
+if (AnalysisType == "lower-sided") {
+	for (i in 1:tablen) {
+		tabsNum[i,7] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
+		tabsNum[i,4]=multci$confint[i+tablen]
+		tabsNum[i,5]=lowerboundtest
+		tabsNum[i,6]="Inconclusive"
+	}
+	for (i in 1:tablen) {
+		if(tabsNum[i,3] < lower) {
+			tabsNum[i,6]="Not equivalent"
+		}
+		if(tabsNum[i,3] > lower && tabsNum[i,4] > lower) {
+			tabsNum[i,6]="Equivalent"
+		}
+	}
+
+	if(backToControlTest == "comparisonstocontrol") {
+		tabsNum2 <- tabsNum
+		for ( i in 1:tablen) {
+			if (tabsNum[i,1] == cntrlGroup) {
+				tabsNum2[i,3] = -1*tabsNum[i,3]
+				tabsNum2[i,4] = -1*multci$confint[i+2*tablen]
+				tabsNum2[i,1] = tabsNum[i,2]
+				tabsNum2[i,2] = tabsNum[i,1]
+				tabsNum2[i,7] = paste(tabsNum[i,2] , " - ", tabsNum[i,1], sep  = "")
+			} else {
+				tabsNum2[i,7] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
+			}
+		}
+		tabsNum <- tabsNum2
+		tabsNum<-subset(tabsNum, tabsNum[,2] == cntrlGroup)
+	}
+}
+
+#Back transforming the log transformed values
+if(responseTransform =="log10") {
+	for (i in 1:dim(tabsNum)[1]) {	
+		tabsNum[i,3] = 10^(tabsNum[i,3])
+		tabsNum[i,4] = 10^(tabsNum[i,4])
+		if (AnalysisType == "two-sided") {
+			tabsNum[i,5] = 10^(tabsNum[i,5])
+			tabsNum[i,9] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
+		} else {
+			tabsNum[i,7] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
+		}
+	}
+}
+
+if(responseTransform =="loge") {
+	for (i in 1:dim(tabsNum)[1]) {	
+		tabsNum[i,3] = exp(tabsNum[i,3])
+		tabsNum[i,4] = exp(tabsNum[i,4])
+		if (AnalysisType == "two-sided") {
+			tabsNum[i,5] = exp(tabsNum[i,5])
+			tabsNum[i,9] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
+		} else {
+			tabsNum[i,7] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
+		}
+	}
+}
+
+
+
+
+#Creating the final dataset
+if (AnalysisType == "two-sided") {
+	tabs<-data.frame(matrix(nrow=dim(tabsNum)[1], ncol=7))
+} else {
+	tabs<-data.frame(matrix(nrow=dim(tabsNum)[1], ncol=5))
+}
+
+#Adding table names
+if (AnalysisType == "two-sided" && (responseTransform != "log10" && responseTransform != "loge")) {
+	colnames(tabs)<-c("Comparison", "Difference", lowerCI, upperCI, "Lower equivalence bound", "Upper equivalence bound", "Equivalence assessment")
+}
+if (AnalysisType == "lower-sided" && (responseTransform != "log10" && responseTransform != "loge")) {
+	colnames(tabs)<-c("Comparison", "Difference", lowerCI, "Lower equivalence bound", "Equivalence assessment")
+}
+if (AnalysisType == "upper-sided" && (responseTransform != "log10" && responseTransform != "loge")) {
+	colnames(tabs)<-c("Comparison", "Difference", upperCI, "Upper equivalence bound", "Equivalence assessment")
+}
+if (AnalysisType == "two-sided" && (responseTransform == "log10" || responseTransform == "loge")) {
+	colnames(tabs)<-c("Comparison", "Ratio", lowerCI, upperCI, "Lower equivalence bound", "Upper equivalence bound", "Equivalence assessment")
+}
+if (AnalysisType == "lower-sided" && (responseTransform == "log10" || responseTransform == "loge")) {
+	colnames(tabs)<-c("Comparison", "Ratio", lowerCI, "Lower equivalence bound", "Equivalence assessment")
+}
+if (AnalysisType == "upper-sided" && (responseTransform == "log10" || responseTransform == "loge")) {
+	colnames(tabs)<-c("Comparison", "Ratio", upperCI, "Upper equivalence bound", "Equivalence assessment")
+}
+
+#Creating the final table
+for (i in 1:dim(tabsNum)[1]) {
+	tabs[i,2]=format(round(tabsNum[i,3], 3), nsmall=3, scientific=FALSE)
+	tabs[i,3]=format(round(tabsNum[i,4], 3), nsmall=3, scientific=FALSE)
+}
+
+if (AnalysisType == "two-sided") {
+	for (i in 1:dim(tabsNum)[1]) {
+		tabs[i,1]=tabsNum[i,9]
+		tabs[i,4]=format(round(tabsNum[i,5], 3), nsmall=3, scientific=FALSE)
+		tabs[i,5]=tabsNum[i,6]
+		tabs[i,6]=tabsNum[i,7]
+		tabs[i,7]=tabsNum[i,8]
+	}
+}
+if (AnalysisType == "lower-sided" || AnalysisType == "upper-sided") {
+	for (i in 1:dim(tabsNum)[1]) {
+		tabs[i,1]=tabsNum[i,7]
+		tabs[i,4]=tabsNum[i,5]
+		tabs[i,5]=tabsNum[i,6]
+	}
+}
+
+#Pairwise tests title
+if(backToControlTest == "comparisonstocontrol") {
+	add<-paste(c("All pairwise equivalence assessments"))
+} else {
+	add<-paste(c("All to one pairwise equivalence assessments"))
+}
+HTML.title(add, HR=2, align="left")
+
+HTML(tabs, classfirstline="second", align="left", row.names = "FALSE")
+
+
+
+#===================================================================================================================
+#Pairwise equivalence tests
+#===================================================================================================================
+#Plot of the equivalence results
+if (AnalysisType == "two-sided" ) {
+	CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% one-sided confidence intervals along with equivalence bounds",sep="")
+	HTML.title(CITitle, HR=2, align="left")
+} 
+if ( AnalysisType == "upper-sided" || AnalysisType == "lower-sided"  ) {
+	CITitle<-paste("Plot of the comparisons between the predicted means with ",(sig*100),"% one-sided confidence interval along with equivalence bound",sep="")
+	HTML.title(CITitle, HR=2, align="left")
+}
+
+#Code for EQ plot
+meanPlotqq <- sub(".html", "meanplotqq.png", htmlFile)
+png(meanPlotqq,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+
+#STB July2013
+plotFilepdf5qq <- sub(".html", "meanplotqq.pdf", htmlFile)
+dev.control("enable") 
+
+#Setting up the dataset
+graphdata<-data.frame(tabsNum)
+Gr_intercept <- 0
+if (responseTransform != "log10" && responseTransform != "loge") {
+	XAxisTitle <- "Difference"
+} else {
+	XAxisTitle <- "Ratio"
+}
+YAxisTitle <- "Comparison"
+Gr_line_type<-Line_type_dashed
+Gr_line_typeint<-Line_type_dashed
+
+if (AnalysisType == "two-sided") {
+	gr_lowerEqB<-lowerboundtest
+	gr_upperEqB<-upperboundtest
+}
+if (AnalysisType == "lower-sided") {
+	gr_lowerEqB<-lowerboundtest
+}
+if (AnalysisType == "upper-sided") {
+	gr_upperEqB<-upperboundtest
+}
+
+#GGPLOT2 code
+if (AnalysisType == "two-sided") {
+	EQPLOT2S()
+} else {
+	EQPLOT1S(AnalysisType)
+}
+void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", meanPlotqq), Align="left")
+	
+#STB July2013
+if (pdfout=="Y") {
+	pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf5qq), height = pdfheight, width = pdfwidth) 
+	dev.set(2) 
+	dev.copy(which=3) 
+	dev.off(2)
+	dev.off(3)
+	pdfFile_5qq<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf5qq)
+	linkToPdf5qq <- paste ("<a href=\"",pdfFile_5qq,"\">Click here to view the PDF of the plot of comparisons back to control</a>", sep = "")
+	HTML(linkToPdf5qq)
+}	
+
+#===================================================================================================================
+#Conclusion
+add<-paste(c("Conclusion"))
+HTML.title(add, HR=2, align="left")
+
+if (noeffects>testeffects)  {
+	HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. ", align="left")
+}
+
+inte<-1
+for(i in 1:(dim(tabs)[1])) {
+	if (AnalysisType == "two-sided") {
+		if (tabs[i,7] ==  "Equivalent") {
+			if (inte==1) {
+				inte<-inte+1
+				add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", tabs[i,1], sep="")
+			} else {
+				inte<-inte+1
+				add<-paste(add, ", ", tabs[i,1], sep="")
+			}
+		} 
+	} else {
+		if (tabs[i,5] ==  "Equivalent") {
+			if (inte==1) {
+				inte<-inte+1
+				add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", tabs[i,1], sep="")
+			} else {
+				inte<-inte+1
+				add<-paste(add, ", ", tabs[i,1], sep="")
+			}
+		} 
+	}
+}
+	
+if (inte==1) {
+	if (dim(tabs)[1] >1) {
+		add<-paste(add, ": There are no equivalent pairwise comparisons.", sep="")
+	} else {
+		add<-paste(add, ": The pairwise comparison is not equivalent.", sep="")
+	}
+} else {
+	add<-paste(add, ". ", sep="")
+}
+HTML(add, align="left")
 
 #===================================================================================================================
 #Diagnostic plots
