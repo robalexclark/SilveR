@@ -737,7 +737,7 @@ if(showANOVA=="Y") {
 	add<-paste(c("Conclusion"))
 	inte<-1
 	for(i in 1:(dim(ivsanova)[1]-1)) {
-		if (ivsanova[i,6]<= (1-sig)) {
+		if (temp[i,4] <= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": There is a statistically significant overall effect of ", ivsanova[i,1], sep="")

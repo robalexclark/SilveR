@@ -652,7 +652,7 @@ if(showANOVA=="Y") {
 	#Number of signficiant terms 
 	nosigs <- 0
 	for(i in 1:(dim(ivsanova)[1]))	{
-		if (ivsanova[i,5]<= (1-sig)) {
+		if (temp[(i+1),4]<= (1-sig)) {
 			nosigs <- nosigs+1
 		}
 	}
@@ -661,7 +661,7 @@ if(showANOVA=="Y") {
 	index <- 0
 	for(i in 1:(dim(ivsanova)[1]))	{
 	#STB May 2012 correcting table reference
-		if (ivsanova[i,5]<= (1-sig)) {
+		if (temp[(i+1),4]<= (1-sig)) {
 			index <- index+1
 			if (index == 1) {
 				add<-paste(add, ": At the ", 100*(1-sig), "% level", " there is a statistically significant overall difference between the levels of ", tempy[i+1], sep="")
@@ -1236,7 +1236,7 @@ if (showComps == "Y") {
 	tempnames<-rownames(tabls)
 
 	for(i in 1:(dim(tabs)[1])) {
-		if (tabs$X6[i] <= (1-sig)) {
+		if (pvals[i] <= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
 				if (dimfact ==2) {

@@ -21,7 +21,7 @@ namespace SilveR.StatsModels
 
         [Required]
         [CheckUsedOnceOnly]
-        [HasAtLeastTwoEntries]
+        [HasAtLeastTwoEntries("If you only have one treatment factor you should select the SMPA module instead.")]
         [DisplayName("Treatment factors")]
         public IEnumerable<string> Treatments { get; set; }
 

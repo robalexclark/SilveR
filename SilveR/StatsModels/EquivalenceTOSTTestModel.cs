@@ -83,11 +83,11 @@ namespace SilveR.StatsModels
         [DisplayName("Upper bound absolute")]
         public Nullable<decimal> UpperBoundAbsolute { get; set; } = 0;
 
-        [DisplayName("Lower bound percentage")]
-        public Nullable<decimal> LowerBoundPercentage { get; set; } = 0;
+        [DisplayName("Lower bound fold")]
+        public Nullable<decimal> LowerBoundFoldChange { get; set; } = 0;
 
-        [DisplayName("Upper bound percentage")]
-        public Nullable<decimal> UpperBoundPercentage { get; set; } = 0;
+        [DisplayName("Upper bound fold")]
+        public Nullable<decimal> UpperBoundFoldChange { get; set; } = 0;
 
         public EquivalenceTOSTTestModel() : base("EquivalenceTOSTTest") { }
 
@@ -227,8 +227,8 @@ namespace SilveR.StatsModels
             }
             else
             {
-                arguments.Append(" " + argFormatter.GetFormattedArgument(LowerBoundPercentage)); //13
-                arguments.Append(" " + argFormatter.GetFormattedArgument(UpperBoundPercentage)); //14
+                arguments.Append(" " + argFormatter.GetFormattedArgument(LowerBoundFoldChange)); //13
+                arguments.Append(" " + argFormatter.GetFormattedArgument(UpperBoundFoldChange)); //14
             }
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(PRPlotSelected)); //15
@@ -272,8 +272,8 @@ namespace SilveR.StatsModels
             this.EquivalenceBoundsType = (EquivalenceBoundsOption)Enum.Parse(typeof(EquivalenceBoundsOption), argHelper.LoadStringArgument(nameof(EquivalenceBoundsType)), true);
             this.LowerBoundAbsolute = argHelper.LoadNullableDecimalArgument(nameof(LowerBoundAbsolute));
             this.UpperBoundAbsolute = argHelper.LoadNullableDecimalArgument(nameof(UpperBoundAbsolute));
-            this.LowerBoundPercentage = argHelper.LoadNullableDecimalArgument(nameof(LowerBoundPercentage));
-            this.UpperBoundPercentage = argHelper.LoadNullableDecimalArgument(nameof(UpperBoundPercentage));
+            this.LowerBoundFoldChange = argHelper.LoadNullableDecimalArgument(nameof(LowerBoundFoldChange));
+            this.UpperBoundFoldChange = argHelper.LoadNullableDecimalArgument(nameof(UpperBoundFoldChange));
             this.PRPlotSelected = argHelper.LoadBooleanArgument(nameof(PRPlotSelected));
             this.NormalPlotSelected = argHelper.LoadBooleanArgument(nameof(NormalPlotSelected));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
@@ -297,8 +297,8 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(EquivalenceBoundsType), EquivalenceBoundsType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LowerBoundAbsolute), LowerBoundAbsolute));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(UpperBoundAbsolute), UpperBoundAbsolute));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(LowerBoundPercentage), LowerBoundPercentage));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(UpperBoundPercentage), UpperBoundPercentage));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(LowerBoundFoldChange), LowerBoundFoldChange));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(UpperBoundFoldChange), UpperBoundFoldChange));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PRPlotSelected), PRPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NormalPlotSelected), NormalPlotSelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));

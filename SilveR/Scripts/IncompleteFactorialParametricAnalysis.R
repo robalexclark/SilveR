@@ -647,16 +647,31 @@ if(showANOVA=="Y") {
 
 	add<-paste(c("Conclusion"))
 	inte<-1
-	for(i in 1:(dim(ivsanova)[1]-1)) {
-		if (ivsanova[i,6]<= (1-sig)) {
-			if (inte==1) {
-				inte<-inte+1
-				add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
-			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
-			}
-		} 
+	if (Module == "SMPA") {
+		for(i in 1:(dim(ivsanova)[1]-1)) {
+			if (temp[i,4] <= (1-sig)) {
+				if (inte==1) {
+					inte<-inte+1
+					add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
+				} else {
+					inte<-inte+1
+					add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
+				}
+			} 
+		}
+	}
+	if (Module == "IFPA") {
+		for(i in 1:(dim(ivsanova)[1]-1)) {
+			if (temp[i,5] <= (1-sig)) {
+				if (inte==1) {
+					inte<-inte+1
+					add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
+				} else {
+					inte<-inte+1
+					add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
+				}
+			} 
+		}
 	}
 
 	if (inte==1) {
@@ -1580,7 +1595,7 @@ if(allPairwiseTest != "null") {
 	add<-paste(c("Conclusion"))
 	inte<-1
 	for(i in 1:(dim(tabls)[1])) {
-		if (tabls[i,6]<= (1-sig)) {
+		if (pvals[i]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
@@ -1950,7 +1965,7 @@ if(backToControlTest != "null") {
 	inte<-1
 
 	for(i in 1:(dim(tabls)[1])) {
-		if (tabls[i,6]<= (1-sig)) {
+		if (adjpval[i]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", tabs3$V14[i], sep="")

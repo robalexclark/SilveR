@@ -182,16 +182,21 @@ namespace SilveR.Validators
     }
 
 
-    //CORRELATION
     public class HasAtLeastTwoEntriesAttribute : ValidationAttribute
     {
+        private readonly string additionalErrorMessage;
+        public HasAtLeastTwoEntriesAttribute(string additionalErrorMessage = null)
+        {
+            this.additionalErrorMessage = additionalErrorMessage;
+        }
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             IEnumerable<object> iEnumerable = (IEnumerable<object>)value;
 
             if (iEnumerable == null || iEnumerable.Count() < 2)
             {
-                return new ValidationResult(validationContext.DisplayName + " requires at least two entries.");
+                return new ValidationResult((validationContext.DisplayName + " requires at least two entries. " + additionalErrorMessage).Trim());
             }
             else
             {

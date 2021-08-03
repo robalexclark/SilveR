@@ -1176,7 +1176,7 @@ if (RunFried == "Y") {
       add <- c(" ")
         textindex = 1
         for (y in 1:(int - 1)) {
-            if (allpairtable[y, 5] <= (1 - sig)) {
+            if (temp5zzz[y, 5] <= (1 - sig)) {
                 add <- paste(add, "The difference between groups ", sep = "")
                 add <- paste(add, allpairtable[y, 2], sep = "")
                 add <- paste(add, " and ", sep = "")
@@ -1301,7 +1301,7 @@ if (RunFried == "Y") {
        add <- c(" ")
         textindex = 1
         for (y in 1:(length(unique(eval(parse(text = paste("statdata$", treatment))))) - 1)) {
-            if (steeltable2[y, 5] <= (1 - sig)) {
+            if (as.numeric(temp5zzz[y, 5]) <= (1 - sig)) {
                 add <- paste(add, "The difference between groups ", sep = "")
                 add <- paste(add, steeltable2[y, 2], sep = "")
                 add <- paste(add, " and ", sep = "")

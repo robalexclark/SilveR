@@ -335,7 +335,7 @@ if(tableOfOverallEffectTests=="Y") {
 	add<-paste(c("Conclusion"))
 	inte<-1
 	for(i in 1:(dim(ivsanova)[1])) {
-		if (ivsanova[i,4]<= (1-sig)) {
+		if (temp[i,3]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")

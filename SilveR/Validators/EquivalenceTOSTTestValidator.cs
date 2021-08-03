@@ -66,7 +66,7 @@ namespace SilveR.Validators
             {
                 ValidationInfo.AddErrorMessage("As you have selected to [sqrt, arsine, rank] transform the responses you should choose absolute boundaries rather than % boundaries. The absolute boundaries should be defined on the transformed scale rather than the original scale.");
                 return ValidationInfo;
-            }         
+            }
 
             CheckTransformations(etVariables.ResponseTransformation, etVariables.Response);
 
@@ -95,8 +95,16 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("You have selected to compare back to a control but no control group is selected.");
             }
 
-         
+            if (etVariables.LowerBoundAbsolute > etVariables.UpperBoundAbsolute)
+            {
+                ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
 
+            }
+
+            if (etVariables.LowerBoundFoldChange > etVariables.UpperBoundFoldChange)
+            {
+                ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
+            }
 
             //if get here then no errors so return true
             return ValidationInfo;
