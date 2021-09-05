@@ -46,21 +46,21 @@ $(function () {
 
  
     $("#LowerBoundAbsolute").kendoNumericTextBox({
-        format: '#.#',
+        format: '#.##',
         decimals: 2,
         spinners: true,
         step: 0.1
     });
 
     $("#UpperBoundAbsolute").kendoNumericTextBox({
-        format: '#.#',
+        format: '#.##',
         decimals: 2,
         spinners: true,
         step: 0.1
     });
 
     $("#LowerBoundFoldChange").kendoNumericTextBox({
-        format: '#.#',
+        format: '#.##',
         decimals: 2,
         spinners: true,
         min: 0,
@@ -68,7 +68,7 @@ $(function () {
     });
 
     $("#UpperBoundFoldChange").kendoNumericTextBox({
-        format: '#.#',
+        format: '#.##',
         decimals: 2,
         spinners: true,
         min: 0,

@@ -98,7 +98,6 @@ namespace SilveR.Validators
             if (etVariables.LowerBoundAbsolute > etVariables.UpperBoundAbsolute)
             {
                 ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
-
             }
 
             if (etVariables.LowerBoundFoldChange > etVariables.UpperBoundFoldChange)

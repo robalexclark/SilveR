@@ -212,17 +212,17 @@ if (EqBtype == "percentage" && responseTransform == "none") {
 	}
 
 	if (AnalysisType == "two-sided") {
-		lower <-  -1*overallmean*lowerboundtest
-		upper <- overallmean*upperboundtest
+		lower <-  -1*overallmean*(1-lowerboundtest)
+		upper <- overallmean*(upperboundtest-1)
 		lowerboundtest <- lower
 		upperboundtest <- upper
 	}
 	if (AnalysisType == "lower-sided") {
-		lower <- -1*overallmean*lowerboundtest
+		lower <- -1*overallmean*(1-lowerboundtest)
 		lowerboundtest <- lower
 	}
 	if (AnalysisType == "upper-sided") {
-		upper <- overallmean*upperboundtest
+		upper <- overallmean*(upperboundtest-1)
 		upperboundtest <- upper
 	}
 }
@@ -1342,16 +1342,19 @@ for (i in 1:dim(tabsNum)[1]) {
 if (AnalysisType == "two-sided") {
 	for (i in 1:dim(tabsNum)[1]) {
 		tabs[i,1]=tabsNum[i,9]
-		tabs[i,4]=format(round(tabsNum[i,5], 2), nsmall=2, scientific=FALSE)
-		tabs[i,5]=format(round(tabsNum[i,6], 2), nsmall=2, scientific=FALSE)
-		tabs[i,6]=format(round(tabsNum[i,7], 2), nsmall=2, scientific=FALSE)
+		tabs[i,4]=format(round(tabsNum[i,5], 3), nsmall=3, scientific=FALSE)
+		tabs[i,5]=tabsNum[i,6]
+		tabs[i,6]=tabsNum[i,7]
+#		tabs[i,5]=format(round(tabsNum[i,6], 3), nsmall=3, scientific=FALSE)
+#		tabs[i,6]=format(round(tabsNum[i,7], 3), nsmall=3, scientific=FALSE)
 		tabs[i,7]=tabsNum[i,8]
 	}
 }
 if (AnalysisType == "lower-sided" || AnalysisType == "upper-sided") {
 	for (i in 1:dim(tabsNum)[1]) {
 		tabs[i,1]=tabsNum[i,7]
-		tabs[i,4]=format(round(tabsNum[i,5], 2), nsmall=2, scientific=FALSE)
+		tabs[i,4]=tabsNum[i,5]
+#		tabs[i,4]=format(round(tabsNum[i,5], 3), nsmall=3, scientific=FALSE)
 		tabs[i,5]=tabsNum[i,6]
 	}
 }
@@ -1441,13 +1444,19 @@ if (noeffects>testeffects)  {
 	HTML("Warning: It is not advisable to draw statistical inferences about a factor/interaction in the presence of a significant higher-order interaction involving that factor/interaction. ", align="left")
 }
 
+#Relabel entries
+for(i in 1:(dim(tabs)[1])) {
+	tabs[i,1] <- sub("-", " and ", tabs[i,1])
+	tabs[i,1] <- sub("/", " and ", tabs[i,1])
+}
+
 inte<-1
 for(i in 1:(dim(tabs)[1])) {
 	if (AnalysisType == "two-sided") {
 		if (tabs[i,7] ==  "Equivalent") {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", tabs[i,1], sep="")
+				add<-paste(add, ": The following means are deemed equivalent at the  ", 100*(1-sig), "% level: ", tabs[i,1], sep="")
 			} else {
 				inte<-inte+1
 				add<-paste(add, ", ", tabs[i,1], sep="")
@@ -1457,7 +1466,7 @@ for(i in 1:(dim(tabs)[1])) {
 		if (tabs[i,5] ==  "Equivalent") {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are deemed equivalent at the  ", 100*(1-sig), "% level: ", tabs[i,1], sep="")
+				add<-paste(add, ": The following means are deemed equivalent at the  ", 100*(1-sig), "% level: ", tabs[i,1], sep="")
 			} else {
 				inte<-inte+1
 				add<-paste(add, ", ", tabs[i,1], sep="")
@@ -1468,9 +1477,9 @@ for(i in 1:(dim(tabs)[1])) {
 	
 if (inte==1) {
 	if (dim(tabs)[1] >1) {
-		add<-paste(add, ": There are no equivalent pairwise comparisons.", sep="")
+		add<-paste(add, ": There are no equivalent means.", sep="")
 	} else {
-		add<-paste(add, ": The pairwise comparison is not equivalent.", sep="")
+		add<-paste(add, ": The means are not equivalent.", sep="")
 	}
 } else {
 	add<-paste(add, ". ", sep="")
