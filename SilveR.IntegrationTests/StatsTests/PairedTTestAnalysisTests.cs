@@ -2513,5 +2513,70 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task PTT81()
+        {
+            string testName = "PTT81";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "CVResp";
+            model.ResponseTransformation = "None";
+            model.Subject = "CVAnimal1";
+            model.Treatment = "CVTime1";
+            model.Covariates = new string[] { "CVCov" };
+            model.ControlGroup = "3";
+            model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = false;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PTT82()
+        {
+            string testName = "PTT82";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PairedTTestAnalysisModel model = new PairedTTestAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Paired t-test").Key;
+            model.Response = "CVResp2";
+            model.ResponseTransformation = "None";
+            model.Subject = "CVAnimal3";
+            model.Treatment = "CVTime3";
+            model.ControlGroup = "2";
+            model.Covariance = "Compound Symmetric";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.LSMeansSelected = true;
+            model.AllPairwiseComparisons = true;
+            model.CompareCovarianceModels = false;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PairedTTestAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PairedTTestAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PairedTTestAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }

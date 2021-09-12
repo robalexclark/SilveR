@@ -1629,5 +1629,66 @@ namespace SilveR.IntegrationTests
 
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
         }
+
+        [Fact]
+        public async Task LRA56()
+        {
+            string testName = "LRA56";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
+            model.Response = "Resp14";
+            model.ResponseTransformation = "None";
+            model.ContinuousFactors = new string[] { "Cont7" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("LinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task LRA57()
+        {
+            string testName = "LRA57";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
+            model.Response = "Resp15";
+            model.ResponseTransformation = "None";
+            model.ContinuousFactors = new string[] { "Cont8" };
+            model.CategoricalFactors = new string[] { "Cat13" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("LinearRegressionAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LinearRegressionAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }

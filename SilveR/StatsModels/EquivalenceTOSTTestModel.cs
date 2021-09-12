@@ -84,10 +84,10 @@ namespace SilveR.StatsModels
         public Nullable<decimal> UpperBoundAbsolute { get; set; } = 0;
 
         [DisplayName("Lower bound fold")]
-        public Nullable<decimal> LowerBoundFoldChange { get; set; } = 0;
+        public Nullable<decimal> LowerBoundFoldChange { get; set; }
 
         [DisplayName("Upper bound fold")]
-        public Nullable<decimal> UpperBoundFoldChange { get; set; } = 0;
+        public Nullable<decimal> UpperBoundFoldChange { get; set; }
 
         public EquivalenceTOSTTestModel() : base("EquivalenceTOSTTest") { }
 

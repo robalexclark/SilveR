@@ -14,7 +14,7 @@ namespace SilveR.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0");
+                .HasAnnotation("ProductVersion", "5.0.9");
 
             modelBuilder.Entity("SilveR.Models.Analysis", b =>
                 {
@@ -24,15 +24,15 @@ namespace SilveR.Migrations
 
                     b.Property<string>("AnalysisGuid")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(128);
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("DatasetID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("DatasetName")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateAnalysed")
                         .HasColumnType("datetime");
@@ -47,9 +47,9 @@ namespace SilveR.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Tag")
-                        .HasColumnType("TEXT")
                         .HasMaxLength(200)
-                        .IsUnicode(false);
+                        .IsUnicode(false)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("AnalysisID");
 
@@ -71,12 +71,12 @@ namespace SilveR.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ArgumentID");
 
@@ -93,8 +93,8 @@ namespace SilveR.Migrations
 
                     b.Property<string>("DatasetName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("TEXT");
@@ -122,13 +122,13 @@ namespace SilveR.Migrations
 
                     b.Property<string>("ScriptDisplayName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ScriptFileName")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ScriptID");
 
@@ -189,8 +189,8 @@ namespace SilveR.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("GeometryDisplay")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("GeometryDisplay")
+                        .HasColumnType("TEXT");
 
                     b.Property<double>("GraphicsBWHigh")
                         .HasColumnType("REAL");
@@ -306,6 +306,10 @@ namespace SilveR.Migrations
                         .HasForeignKey("ScriptID")
                         .HasConstraintName("FK_Analyses_Scripts")
                         .IsRequired();
+
+                    b.Navigation("Dataset");
+
+                    b.Navigation("Script");
                 });
 
             modelBuilder.Entity("SilveR.Models.Argument", b =>
@@ -316,6 +320,23 @@ namespace SilveR.Migrations
                         .HasConstraintName("FK_Arguments_Analyses")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Analysis");
+                });
+
+            modelBuilder.Entity("SilveR.Models.Analysis", b =>
+                {
+                    b.Navigation("Arguments");
+                });
+
+            modelBuilder.Entity("SilveR.Models.Dataset", b =>
+                {
+                    b.Navigation("Analysis");
+                });
+
+            modelBuilder.Entity("SilveR.Models.Script", b =>
+                {
+                    b.Navigation("Analysis");
                 });
 #pragma warning restore 612, 618
         }

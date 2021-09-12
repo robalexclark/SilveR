@@ -1360,7 +1360,7 @@ if (AnalysisType == "lower-sided" || AnalysisType == "upper-sided") {
 }
 
 #Pairwise tests title
-if(backToControlTest == "comparisonstocontrol") {
+if(backToControlTest != "comparisonstocontrol") {
 	add<-paste(c("All pairwise equivalence assessments"))
 } else {
 	add<-paste(c("All to one pairwise equivalence assessments"))
@@ -1603,9 +1603,9 @@ HTML.title("Analysis description", HR=2, align="left")
 add<-c("The data were analysed using a ")
 
 if (AnalysisType == "two-sided") {
-	add<- paste(add, "Two one-sided (TOST) equivalence test", sep = "")
+	add<- paste(add, "Two One-Sided (TOST) equivalence test, see Limentani et al. 2005", sep = "")
 } else {
-	add<- paste(add, "one-sided equivalence test", sep = "")
+	add<- paste(add, "one-sided equivalence test, see Limentani et al. 2005", sep = "")
 }
 if (notreatfactors==1)  {
 	if(FirstCatFactor != "NULL") {
@@ -1694,8 +1694,14 @@ HTML.title("References", HR=2, align="left")
 HTML(Ref_list$IVS_ref, align="left")
 HTML(Ref_list$BateClark_ref,  align="left")
 
-HTML("<bf> Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.",  align="left")
-HTML("<bf>Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.",  align="left")
+HTML("<bf> Limentani, G.B., Ringo, M.C., Ye, F., Bergquist, M.L. and MCSorley E.O. (2005). Beyond the t-test: Statistical equivalence testing. Analytical Chemistry, 77(11), 221-226.", align="left")
+
+if (AssessCovariateInteractions == "Y" && FirstCatFactor != "NULL") {
+	HTML("<bf> Armitage, P., Matthews, J.N.S. and Berry, G. (2001). Statistical Methods in Medical Research. 4th edition; John Wiley & Sons. New York.",  align="left")
+}
+if(FirstCatFactor != "NULL") {
+	HTML("<bf> Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).",  align="left")
+}
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref ,  align="left")
@@ -1762,6 +1768,15 @@ if (OutputAnalysisOps == "Y") {
 
 	if (FirstCatFactor != "NULL" && covariateTransform != "none") {
 		HTML(paste("Covariate(s) transformation: ", covariateTransform, sep=""), align="left")
+	}
+
+
+	HTML(paste("Equivalence bounds type: ", EqBtype, sep=""), align="left")
+	if (lowerboundtestN != "NULL") {
+		HTML(paste("Lower equivalence bound: ", lowerboundtest, sep=""), align="left")
+	}
+	if (upperboundtestN != "NULL") {
+		HTML(paste("Upper equivalence bound: ", upperboundtest, sep=""), align="left")
 	}
 
 	HTML(paste("Output residuals vs. predicted plot (Y/N): ", showPRPlot, sep=""), align="left")

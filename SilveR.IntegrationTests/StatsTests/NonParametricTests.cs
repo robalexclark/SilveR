@@ -2890,5 +2890,133 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task NP113()
+        {
+            string testName = "NP113";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            NonParametricAnalysisModel model = new NonParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
+            model.Response = "Resp21";
+            model.Treatment = "Treat23";
+            model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.AllComparisons;
+            model.Significance = "0.05";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Treatment factor (Treat23) has only two levels so a Mann-Whitney test will be presented.", warnings);
+            Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task NP114()
+        {
+            string testName = "NP114";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            NonParametricAnalysisModel model = new NonParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
+            model.Response = "Resp20";
+            model.Treatment = "Treat22";
+            model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.MannWhitney;
+            model.Significance = "0.05";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task NP115()
+        {
+            string testName = "NP115";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            NonParametricAnalysisModel model = new NonParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
+            model.Response = "Resp21";
+            model.Treatment = "Treat23";
+            model.Control = "1";
+            model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
+            model.Significance = "0.05";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Treatment factor (Treat23) has only two levels so a Mann-Whitney test will be presented.", warnings);
+            Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task NP116()
+        {
+            string testName = "NP116";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            NonParametricAnalysisModel model = new NonParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Non-parametric").Key;
+            model.Response = "Resp22";
+            model.Treatment = "Treat23";
+            model.Control = "1";
+            model.AnalysisType = NonParametricAnalysisModel.AnalysisOption.CompareToControl;
+            model.Significance = "0.05";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/NonParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Treatment factor (Treat23) has only two levels so a Mann-Whitney test will be presented.", warnings);
+            Helpers.SaveOutput("NonParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "NonParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("NonParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "NonParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
     }
 }

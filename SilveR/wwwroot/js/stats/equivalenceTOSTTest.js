@@ -49,14 +49,14 @@ $(function () {
         format: '#.##',
         decimals: 2,
         spinners: true,
-        step: 0.1
+        step: 0.01
     });
 
     $("#UpperBoundAbsolute").kendoNumericTextBox({
         format: '#.##',
         decimals: 2,
         spinners: true,
-        step: 0.1
+        step: 0.01
     });
 
     $("#LowerBoundFoldChange").kendoNumericTextBox({
@@ -216,9 +216,13 @@ function enableDisableEquivalenceType() {
 
         lowerBoundPercentage.enable(false);
         upperBoundPercentage.enable(false);
+        lowerBoundPercentage.value(null);
+        upperBoundPercentage.value(null);
     } else {
         lowerBoundAbsolute.enable(false);
         upperBoundAbsolute.enable(false);
+        lowerBoundAbsolute.value(null);
+        upperBoundAbsolute.value(null);
 
         lowerBoundPercentage.enable(true);
         upperBoundPercentage.enable(true);
