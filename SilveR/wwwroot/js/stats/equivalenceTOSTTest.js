@@ -59,7 +59,7 @@ $(function () {
         step: 0.01
     });
 
-    $("#LowerBoundFoldChange").kendoNumericTextBox({
+    $("#LowerBoundPercentageChange").kendoNumericTextBox({
         format: '#.##',
         decimals: 2,
         spinners: true,
@@ -67,7 +67,7 @@ $(function () {
         max: 100
     });
 
-    $("#UpperBoundFoldChange").kendoNumericTextBox({
+    $("#UpperBoundPercentageChange").kendoNumericTextBox({
         format: '#.##',
         decimals: 2,
         spinners: true,
@@ -207,8 +207,8 @@ function enableDisableEquivalenceType() {
 
     const lowerBoundAbsolute = $("#LowerBoundAbsolute").data("kendoNumericTextBox");
     const upperBoundAbsolute = $("#UpperBoundAbsolute").data("kendoNumericTextBox");
-    const lowerBoundPercentage = $("#LowerBoundFoldChange").data("kendoNumericTextBox");
-    const upperBoundPercentage = $("#UpperBoundFoldChange").data("kendoNumericTextBox");
+    const lowerBoundPercentage = $("#LowerBoundPercentageChange").data("kendoNumericTextBox");
+    const upperBoundPercentage = $("#UpperBoundPercentageChange").data("kendoNumericTextBox");
 
     if (analysisType == "Absolute") {
         lowerBoundAbsolute.enable(true);

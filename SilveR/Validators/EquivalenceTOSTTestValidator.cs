@@ -64,7 +64,7 @@ namespace SilveR.Validators
             }
             else if (etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage && !etVariables.ResponseTransformation.StartsWith("Log"))
             {
-                ValidationInfo.AddErrorMessage("As you have selected to [sqrt, arsine, rank] transform the responses you should choose absolute boundaries rather than % boundaries. The absolute boundaries should be defined on the transformed scale rather than the original scale.");
+                ValidationInfo.AddErrorMessage("As you have selected to [sqrt, arcsine, rank] transform the responses you should choose absolute boundaries rather than % boundaries. The absolute boundaries should be defined on the transformed scale rather than the original scale.");
                 return ValidationInfo;
             }
 
@@ -100,7 +100,7 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
             }
 
-            if (etVariables.LowerBoundFoldChange > etVariables.UpperBoundFoldChange)
+            if (etVariables.LowerBoundPercentageChange > etVariables.UpperBoundPercentageChange)
             {
                 ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
             }

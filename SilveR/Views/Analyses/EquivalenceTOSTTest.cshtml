@@ -23,7 +23,7 @@
         <h2>@ViewBag.Title</h2>
     </div>
     <div class="col-md-6">
-        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Single_Measures_Parametric_Analysis.pdf')" class="btn btn-info pull-right">Help</a>
+        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Equivalence_Test.pdf')" class="btn btn-info pull-right">Help</a>
     </div>
 </div>
 
@@ -105,7 +105,7 @@
                     <h4>Equivalence Bounds</h4>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Absolute" checked="checked" onclick="enableDisableEquivalenceType()">Absolute
+                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Absolute" checked="checked" onclick="enableDisableEquivalenceType()">Absolute change
                         </label>
                     </div>
 
@@ -125,22 +125,22 @@
                     </div>
                     <div class="form-check mt-2">
                         <label class="form-check-label">
-                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Percentage"  onclick="enableDisableEquivalenceType()">Fold change
+                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Percentage"  onclick="enableDisableEquivalenceType()">Percentage change
                         </label>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Lower bound</label>
+                        <label class="col-md-6 col-form-label">% decrease bound</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="LowerBoundFoldChange" />
-                            <div><span asp-validation-for="LowerBoundFoldChange"></span></div>
+                            <input class="form-control" asp-for="LowerBoundPercentageChange" />
+                            <div><span asp-validation-for="LowerBoundPercentageChange"></span></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Upper bound</label>
+                        <label class="col-md-6 col-form-label">% increase bound</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="UpperBoundFoldChange" />
-                            <div><span asp-validation-for="UpperBoundFoldChange"></span></div>
+                            <input class="form-control" asp-for="UpperBoundPercentageChange" />
+                            <div><span asp-validation-for="UpperBoundPercentageChange"></span></div>
                         </div>
                     </div>
                 </div>

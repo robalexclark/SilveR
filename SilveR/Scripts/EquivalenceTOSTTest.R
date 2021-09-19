@@ -193,13 +193,13 @@ lower      <- lowerboundtest
 upper      <- upperboundtest
 
 if (responseTransform =="log10") {
-	lower      <- log10(lowerboundtest)
-	upper      <- log10(upperboundtest)
+	lower      <- log10(1-lowerboundtest/100)
+	upper      <- log10(1+upperboundtest/100)
 }
 
 if (responseTransform =="loge") {
-	lower      <- log(lowerboundtest)
-	upper      <- log(upperboundtest)
+	lower      <- log(1-lowerboundtest/100)
+	upper      <- log(1+upperboundtest/100)
 }
 
 if (EqBtype == "percentage" && responseTransform == "none") {
@@ -212,22 +212,20 @@ if (EqBtype == "percentage" && responseTransform == "none") {
 	}
 
 	if (AnalysisType == "two-sided") {
-		lower <-  -1*overallmean*(1-lowerboundtest)
-		upper <- overallmean*(upperboundtest-1)
+		lower <-  -1*overallmean*(as.numeric(Args[13])/100)
+		upper <- overallmean*(as.numeric(Args[14])/100)
 		lowerboundtest <- lower
 		upperboundtest <- upper
 	}
 	if (AnalysisType == "lower-sided") {
-		lower <- -1*overallmean*(1-lowerboundtest)
+		lower <- -1*overallmean*(as.numeric(Args[13])/100)
 		lowerboundtest <- lower
 	}
 	if (AnalysisType == "upper-sided") {
-		upper <- overallmean*(upperboundtest-1)
+		upper <- overallmean*(as.numeric(Args[14])/100)
 		upperboundtest <- upper
 	}
 }
-
-
 
 #===================================================================================================================
 #Titles and description
@@ -322,37 +320,37 @@ if (EqBtype == "absolute") {
 
 if (responseTransform == "log10" || responseTransform == "loge") {
 	if (AnalysisType == "two-sided") {
-		addEB<-paste("The lower equivalence bound is defined as a ", low, " fold change. The upper equivalence bound is defined as ", up , " fold change. As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as a ", low, " % (decrease) change. The upper equivalence bound is defined as a ", up , " % (increase) change. As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "lower-sided") {
-		addEB<-paste("The lower equivalence bound is defined as a ", low, " fold change. As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as a ", low, " % (decrease) change. As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "upper-sided") {
-		addEB<-paste("The upper equivalence bound is defined as a ", up, " fold change. As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The upper equivalence bound is defined as a ", up, " % (increase) change. As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 }
 
 if (EqBtype == "percentage" && (responseTransform != "log10" && responseTransform != "loge") && backToControlTest == "allpairwise") {
 	if (AnalysisType == "two-sided") {
-		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " fold change (from the overall response mean). This is equivalent to an absolute difference of size ", low , ". The upper equivalence bound is defined as ", upperboundtestN , " fold change (from the overall response mean). This is equivalent to an absolute difference of size ", up , ". As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " % (decrease) change from the overall response mean. This is equivalent to an absolute change of size ", low , ". The upper equivalence bound is defined as a ", upperboundtestN , " % (increase) change from the overall response mean. This is equivalent to an absolute change of size ", up , ". As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "lower-sided") {
-		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " fold change (from the overall response mean). This is equivalent to an absolute difference of size ", low , ". As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " % (decrease) change from the overall response mean. This is equivalent to an absolute change of size ", low , ". As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "upper-sided") {
-		addEB<-paste("The upper equivalence bound is defined as a ", upperboundtestN, " fold change (from the overall response mean). This is equivalent to an absolute difference of size ", up , ". As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The upper equivalence bound is defined as a ", upperboundtestN, " % (increase) change from the overall response mean. This is equivalent to an absolute change of size ", up , ". As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 }
 
 if (EqBtype == "percentage" && (responseTransform != "log10" && responseTransform != "loge") && backToControlTest == "comparisonstocontrol") {
 	if (AnalysisType == "two-sided") {
-		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " fold change (from the control group mean). This is equivalent to an absolute difference of size ", low , ". The upper equivalence bound is defined as ", upperboundtestN , " fold change (from the control group mean). This is equivalent to an absolute difference of size ", up , ". As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " % (decrease) change from the control group mean. This is equivalent to an absolute change of size ", low , ". The upper equivalence bound is defined as a ", upperboundtestN , " % (increase) change from the control group mean. This is equivalent to an absolute change of size ", up , ". As both boundaries are defined a two one-sided (TOST) equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "lower-sided") {
-		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " fold change (from the control group mean). This is equivalent to an absolute difference of size ", low , ". As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The lower equivalence bound is defined as a ", lowerboundtestN, " % (decrease) change from the control group mean. This is equivalent to an absolute change of size ", low , ". As only a lower bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 	if (AnalysisType == "upper-sided") {
-		addEB<-paste("The upper equivalence bound is defined as a ", upperboundtestN, " fold change (from the control group mean). This is equivalent to an absolute difference of size ", up , ". As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
+		addEB<-paste("The upper equivalence bound is defined as a ", upperboundtestN, " % (increase) change from the control group mean. This is equivalent to an absolute change of size ", up , ". As only an upper bound has been defined a one-sided equivalence test has been performed.",   sep="")
 	}
 }
 HTML(addEB, align="left")
@@ -1173,20 +1171,9 @@ if (AnalysisType == "two-sided") {
 		tabsNum[i,9] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
 		tabsNum[i,4]=multci$confint[i+tablen]
 		tabsNum[i,5]=multci$confint[i+2*tablen]
-		tabsNum[i,6]=lowerboundtest
-		tabsNum[i,7]=upperboundtest
+		tabsNum[i,6]=lower
+		tabsNum[i,7]=upper
 		tabsNum[i,8]="Inconclusive"
-	}
-	for (i in 1:tablen) {
-		if(tabsNum[i,5] < lower) {
-			tabsNum[i,8]="Not equivalent"
-		}
-		if(tabsNum[i,4] > upper) {
-			tabsNum[i,8]="Not equivalent"
-		}
-		if(tabsNum[i,5] < upper && tabsNum[i,4] > lower) {
-			tabsNum[i,8]="Equivalent"
-		}
 	}
 	if(backToControlTest == "comparisonstocontrol") {
 		tabsNum2 <- tabsNum
@@ -1203,6 +1190,19 @@ if (AnalysisType == "two-sided") {
 			}
 		}
 		tabsNum <- tabsNum2
+	}
+	for (i in 1:tablen) {
+		if(tabsNum[i,5] < lower) {
+			tabsNum[i,8]="Not equivalent"
+		}
+		if(tabsNum[i,4] > upper) {
+			tabsNum[i,8]="Not equivalent"
+		}
+		if(tabsNum[i,5] < upper && tabsNum[i,4] > lower) {
+			tabsNum[i,8]="Equivalent"
+		}
+	}
+	if(backToControlTest == "comparisonstocontrol") {
 		tabsNum<-subset(tabsNum, tabsNum[,2] == cntrlGroup)
 	}
 }
@@ -1212,17 +1212,10 @@ if (AnalysisType == "upper-sided") {
 	for (i in 1:tablen) {
 		tabsNum[i,7] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
 		tabsNum[i,4]=multci$confint[i+2*tablen]
-		tabsNum[i,5]=upperboundtest
+		tabsNum[i,5]=upper
 		tabsNum[i,6]="Inconclusive"
 	}
-	for (i in 1:tablen) {
-		if(tabsNum[i,3] > upper) {
-			tabsNum[i,6]="Not equivalent"
-		}
-		if(tabsNum[i,3] < upper && tabsNum[i,4] < upper) {
-			tabsNum[i,6]="Equivalent"
-		}
-	}
+
 	if(backToControlTest == "comparisonstocontrol") {
 		tabsNum2 <- tabsNum
 		for ( i in 1:tablen) {
@@ -1237,6 +1230,17 @@ if (AnalysisType == "upper-sided") {
 			}
 		}
 		tabsNum <- tabsNum2
+	}
+
+	for (i in 1:tablen) {
+		if(tabsNum[i,3] > upper) {
+			tabsNum[i,6]="Not equivalent"
+		}
+		if(tabsNum[i,3] < upper && tabsNum[i,4] < upper) {
+			tabsNum[i,6]="Equivalent"
+		}
+	}
+	if(backToControlTest == "comparisonstocontrol") {
 		tabsNum<-subset(tabsNum, tabsNum[,2] == cntrlGroup)
 	}
 }
@@ -1244,18 +1248,10 @@ if (AnalysisType == "upper-sided") {
 #One-sided lower limit table entries
 if (AnalysisType == "lower-sided") {
 	for (i in 1:tablen) {
-		tabsNum[i,7] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
 		tabsNum[i,4]=multci$confint[i+tablen]
-		tabsNum[i,5]=lowerboundtest
+		tabsNum[i,5]=lower
 		tabsNum[i,6]="Inconclusive"
-	}
-	for (i in 1:tablen) {
-		if(tabsNum[i,3] < lower) {
-			tabsNum[i,6]="Not equivalent"
-		}
-		if(tabsNum[i,3] > lower && tabsNum[i,4] > lower) {
-			tabsNum[i,6]="Equivalent"
-		}
+		tabsNum[i,7] = paste(tabsNum[i,1] , " - ", tabsNum[i,2], sep  = "")
 	}
 
 	if(backToControlTest == "comparisonstocontrol") {
@@ -1272,6 +1268,16 @@ if (AnalysisType == "lower-sided") {
 			}
 		}
 		tabsNum <- tabsNum2
+	}
+	for (i in 1:tablen) {
+		if(tabsNum[i,3] < lower) {
+			tabsNum[i,6]="Not equivalent"
+		}
+		if(tabsNum[i,3] > lower && tabsNum[i,4] > lower) {
+			tabsNum[i,6]="Equivalent"
+		}
+	}
+	if(backToControlTest == "comparisonstocontrol") {
 		tabsNum<-subset(tabsNum, tabsNum[,2] == cntrlGroup)
 	}
 }
@@ -1279,26 +1285,32 @@ if (AnalysisType == "lower-sided") {
 #Back transforming the log transformed values
 if(responseTransform =="log10") {
 	for (i in 1:dim(tabsNum)[1]) {	
-		tabsNum[i,3] = 10^(tabsNum[i,3])
-		tabsNum[i,4] = 10^(tabsNum[i,4])
+		tabsNum[i,3] = (10^(tabsNum[i,3])-1)*100
+		tabsNum[i,4] = (10^(tabsNum[i,4])-1)*100
 		if (AnalysisType == "two-sided") {
-			tabsNum[i,5] = 10^(tabsNum[i,5])
+			tabsNum[i,5] = (10^(tabsNum[i,5])-1)*100
+			tabsNum[i,6] = (10^(tabsNum[i,6])-1)*100
+			tabsNum[i,7] = (10^(tabsNum[i,7])-1)*100
 			tabsNum[i,9] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
 		} else {
 			tabsNum[i,7] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
+			tabsNum[i,5] = (10^(tabsNum[i,5])-1)*100
 		}
 	}
 }
 
 if(responseTransform =="loge") {
 	for (i in 1:dim(tabsNum)[1]) {	
-		tabsNum[i,3] = exp(tabsNum[i,3])
-		tabsNum[i,4] = exp(tabsNum[i,4])
+		tabsNum[i,3] = (exp(tabsNum[i,3])-1)*100
+		tabsNum[i,4] = (exp(tabsNum[i,4])-1)*100
 		if (AnalysisType == "two-sided") {
-			tabsNum[i,5] = exp(tabsNum[i,5])
+			tabsNum[i,5] = (exp(tabsNum[i,5])-1)*100
+			tabsNum[i,6] = (exp(tabsNum[i,6])-1)*100
+			tabsNum[i,7] = (exp(tabsNum[i,7])-1)*100
 			tabsNum[i,9] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
 		} else {
 			tabsNum[i,7] = paste(tabsNum[i,1] , " / ", tabsNum[i,2])
+			tabsNum[i,5] = (exp(tabsNum[i,5])-1)*100
 		}
 	}
 }
@@ -1324,13 +1336,13 @@ if (AnalysisType == "upper-sided" && (responseTransform != "log10" && responseTr
 	colnames(tabs)<-c("Comparison", "Difference", upperCI, "Upper equivalence bound", "Equivalence assessment")
 }
 if (AnalysisType == "two-sided" && (responseTransform == "log10" || responseTransform == "loge")) {
-	colnames(tabs)<-c("Comparison", "Fold change", lowerCI, upperCI, "Lower equivalence bound", "Upper equivalence bound", "Equivalence assessment")
+	colnames(tabs)<-c("Comparison", "% change", lowerCI, upperCI, "Lower % change equivalence bound", "Upper % change equivalence bound", "Equivalence assessment")
 }
 if (AnalysisType == "lower-sided" && (responseTransform == "log10" || responseTransform == "loge")) {
-	colnames(tabs)<-c("Comparison", "Fold change", lowerCI, "Lower equivalence bound", "Equivalence assessment")
+	colnames(tabs)<-c("Comparison", "% change", lowerCI, "Lower % change equivalence bound", "Equivalence assessment")
 }
 if (AnalysisType == "upper-sided" && (responseTransform == "log10" || responseTransform == "loge")) {
-	colnames(tabs)<-c("Comparison", "Fold change", upperCI, "Upper equivalence bound", "Equivalence assessment")
+	colnames(tabs)<-c("Comparison", "% change", upperCI, "Upper % change equivalence bound", "Equivalence assessment")
 }
 
 #Creating the final table
@@ -1398,7 +1410,7 @@ Gr_intercept <- 0
 if (responseTransform != "log10" && responseTransform != "loge") {
 	XAxisTitle <- "Difference"
 } else {
-	XAxisTitle <- "Fold change"
+	XAxisTitle <- "% change"
 }
 YAxisTitle <- "Comparison"
 Gr_line_type<-Line_type_dashed
@@ -1414,6 +1426,34 @@ if (AnalysisType == "lower-sided") {
 if (AnalysisType == "upper-sided") {
 	gr_upperEqB<-upperboundtest
 }
+
+if (responseTransform == "log10" ) {
+	if (AnalysisType == "two-sided") {
+		gr_lowerEqB<-(10^(lower)-1)*100
+		gr_upperEqB<-(10^(upper)-1)*100
+	}
+	if (AnalysisType == "lower-sided") {
+		gr_lowerEqB<-(10^(lower)-1)*100
+	}
+	if (AnalysisType == "upper-sided") {
+		gr_upperEqB<-(10^(upper)-1)*100
+	}
+}
+
+if (responseTransform == "loge") {
+	if (AnalysisType == "two-sided") {
+		gr_lowerEqB<-(exp(lower)-1)*100
+		gr_upperEqB<-(exp(upper)-1)*100
+	}
+	if (AnalysisType == "lower-sided") {
+		gr_lowerEqB<-(exp(lower)-1)*100
+	}
+	if (AnalysisType == "upper-sided") {
+		gr_upperEqB<-(exp(upper)-1)*100
+	}
+}
+
+
 
 #GGPLOT2 code
 if (AnalysisType == "two-sided") {
