@@ -277,6 +277,12 @@ namespace SilveR.Controllers
             return await RunAnalysis(model, ignoreWarnings);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RRunner(RRunnerModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
 
         private async Task<IActionResult> RunAnalysis(AnalysisModelBase model, bool ignoreWarnings)
         {

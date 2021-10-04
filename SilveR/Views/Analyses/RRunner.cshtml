@@ -1,0 +1,97 @@
+﻿@model SilveR.StatsModels.RRunnerModel
+
+@section Scripts {
+<script>
+	var theModel = @Html.Raw(Json.Serialize(Model));
+</script>
+
+<environment names="Development">
+	<script defer src="~/js/stats/rrunner.js"></script>
+	<script defer src="~/js/openLinks.js"></script>
+</environment>
+<environment names="Production">
+	<script defer src="~/js/stats/rrunner.min.js"></script>
+</environment>
+}
+
+@{
+	ViewBag.Title = "R-Runner";
+}
+
+<div class="row">
+	<div class="col-md-6">
+		<h2>@ViewBag.Title</h2>
+	</div>
+	<div class="col-md-6">
+		<a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Summary_Statistics.pdf')" class="btn btn-info pull-right">Help</a>
+	</div>
+</div>
+
+<form action="/Analyses/RRunner" class="form-horizontal mt-2" method="post">
+
+	@await Html.PartialAsync("AnalysisErrors")
+
+	<input asp-for="DatasetID" hidden />
+
+	<div class="row">
+		<div class="col-md-6">
+
+			<div class="card">
+				<div class="card-header">Custom R Code</div>
+				<div class="card-body">
+					<textarea class="form-control" asp-for="CustomRCode" rows="10"></textarea>
+					<div><span asp-validation-for="CustomRCode"></span></div>
+				</div>
+			</div>
+			<br />
+			<div class="card">
+				<div class="card-header">Variables</div>
+				<div class="card-body">
+					<h4>Variables</h4>
+					<div class="form-group row">
+						<label class="col-md-6 col-form-label">Variable A</label>
+						<div class="col-md-6">
+							<select class="form-control" asp-for="VariableA"></select>
+							<div><span asp-validation-for="VariableA"></span></div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-6 col-form-label">Variable B</label>
+						<div class="col-md-6">
+							<select class="form-control" asp-for="VariableB"></select>
+							<div><span asp-validation-for="VariableB"></span></div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-6 col-form-label">Variable C</label>
+						<div class="col-md-6">
+							<select class="form-control" asp-for="VariableC"></select>
+							<div><span asp-validation-for="VariableC"></span></div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-6 col-form-label">Variable D</label>
+						<div class="col-md-6">
+							<select class="form-control" asp-for="VariableD"></select>
+							<div><span asp-validation-for="VariableD"></span></div>
+						</div>
+					</div>
+
+					<h4>Arguments</h4>
+					<div class="form-group row">
+						<label class="col-md-6 col-form-label">Arguments (one per line)</label>
+						<div class="col-md-6">
+							<textarea class="form-control" asp-for="RawArguments" rows="6"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row my-3">
+		<div class="col-md-12 text-right">
+			<button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
+		</div>
+	</div>
+</form>

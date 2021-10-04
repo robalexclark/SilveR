@@ -315,6 +315,12 @@ namespace SilveR
                     context.Scripts.Add(equivalenceTOSTTest);
                 }
 
+                if (!existingScripts.Any(x => x.ScriptFileName == "RRunner"))
+                {
+                    Script rRunner = new Script() { ScriptDisplayName = "R-Runner", ScriptFileName = "RRunner", RequiresDataset = true };
+                    context.Scripts.Add(rRunner);
+                }
+
                 context.SaveChanges();
             }
         }

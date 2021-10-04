@@ -232,6 +232,13 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/rrunner.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/rrunner.js",
+      "wwwroot/js/openLinks.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/data/index.min.js",
     "inputFiles": [
       "wwwroot/js/data/index.js"

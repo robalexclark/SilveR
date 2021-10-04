@@ -40,6 +40,7 @@ namespace SilveR.StatsModels
                 "SingleMeasuresToRepeatedMeasuresDataTransformation" => new SingleMeasuresToRepeatedMeasuresDataTransformationModel(dataset),
                 "AreaUnderCurveDataTransformation" => new AreaUnderCurveDataTransformationModel(dataset),
                 "EquivalenceTOSTTest" => new EquivalenceTOSTTestModel(dataset),
+                "RRunner" => new RRunnerModel(dataset),
                 _ => throw new ArgumentException("Analysis type not found!"),
             };
             return model;

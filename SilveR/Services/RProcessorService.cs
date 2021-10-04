@@ -49,6 +49,10 @@ namespace SilveR.Services
                     //get analysis
                     Analysis analysis = await silveRRepository.GetAnalysisComplete(analysisGuid);
 
+                    //load the analysis entity into the model so that arguments can be extracted
+                    AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
+                    analysisModel.LoadArguments(analysis.Arguments);
+
                     //save the useroptions to the working dir
                     UserOption userOptions = await silveRRepository.GetUserOptions();
 
@@ -60,11 +64,13 @@ namespace SilveR.Services
                     List<string> scriptLines = new List<string>();
                     scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", "Common_Functions.R")));
                     scriptLines.AddRange(File.ReadAllLines(Path.Combine(Startup.ContentRootPath, "Scripts", analysis.Script.ScriptFileName + ".R")));
-                    File.WriteAllLines(scriptFileName, scriptLines);
 
-                    //load the analysis entity into the model so that arguments can be extracted
-                    AnalysisModelBase analysisModel = AnalysisFactory.CreateAnalysisModel(analysis);
-                    analysisModel.LoadArguments(analysis.Arguments);
+                    if (analysisModel.CustomRCode != null)
+                    {
+                        scriptLines.Add(analysisModel.CustomRCode);
+                    }
+
+                    File.WriteAllLines(scriptFileName, scriptLines);
 
                     //csvfilename is built from the analysis guid and is also used in R to name the output at this time
                     string csvFileName = Path.Combine(workingDir, analysisGuid + ".csv");

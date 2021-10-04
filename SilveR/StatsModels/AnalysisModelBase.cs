@@ -13,6 +13,13 @@ namespace SilveR.StatsModels
             this.ScriptFileName = scriptFileName;
         }
 
+        public string CustomRCode { get; private set; }
+
+        public void SetCustomRCode(string rCode)
+        {
+            CustomRCode = rCode;
+        }
+
         public abstract ValidationInfo Validate();
 
         public abstract IEnumerable<Argument> GetArguments();
