@@ -105,6 +105,15 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
             }
 
+            if(etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute && (etVariables.LowerBoundAbsolute.HasValue == false && etVariables.UpperBoundAbsolute.HasValue == false))
+            {
+                ValidationInfo.AddErrorMessage("Absolute selected but bounds not entered.");
+            }
+            else if (etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage && (etVariables.LowerBoundPercentageChange.HasValue == false && etVariables.UpperBoundPercentageChange.HasValue == false))
+            {
+                ValidationInfo.AddErrorMessage("Percentage equivelence bounds selected but no bounds entered.");
+            }
+
             //if get here then no errors so return true
             return ValidationInfo;
         }

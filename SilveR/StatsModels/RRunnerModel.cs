@@ -15,9 +15,6 @@ namespace SilveR.StatsModels
     public class RRunnerModel : AnalysisDataModelBase
     {
         [Required]
-        public string CustomRCode { get; set; }
-
-        [Required]
         [DisplayName("Variable A")]
         public IEnumerable<string> VariableA { get; set; }
 
@@ -78,11 +75,14 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(VariableD)); //10
 
-            IEnumerable<string> argumentLines = Regex.Split(RawArguments, "\r\n|\r|\n");
-
-            foreach (string line in argumentLines.Where(x => !String.IsNullOrWhiteSpace(x)))
+            if (!String.IsNullOrWhiteSpace(RawArguments))
             {
-                arguments.Append(" " + line.Trim());
+                IEnumerable<string> argumentLines = Regex.Split(RawArguments, "\r\n|\r|\n");
+
+                foreach (string line in argumentLines.Where(x => !String.IsNullOrWhiteSpace(x)))
+                {
+                    arguments.Append(" " + line.Trim());
+                }
             }
 
             return arguments.ToString().Trim();
@@ -94,8 +94,6 @@ namespace SilveR.StatsModels
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
             this.CustomRCode = argHelper.LoadStringArgument(nameof(CustomRCode));
-
-            this.SetCustomRCode(this.CustomRCode);
 
             this.VariableA = argHelper.LoadIEnumerableArgument(nameof(VariableA));
             this.VariableB = argHelper.LoadIEnumerableArgument(nameof(VariableB));

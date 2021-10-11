@@ -31,6 +31,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Resp 1" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -53,6 +56,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp6";
             model.Treatments = new string[] { "Treat1" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -75,6 +81,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat7" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -98,6 +107,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Tre at4" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -120,6 +132,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp4";
             model.Treatments = new string[] { "Treat1" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -143,6 +158,9 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov4" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -165,6 +183,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp5";
             model.Treatments = new string[] { "Treat1" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -189,6 +210,9 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov5" };
             model.PrimaryFactor = "Treat1";
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -211,6 +235,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "T reat5" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -233,6 +260,9 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat6" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10;
+            model.UpperBoundPercentageChange = 20;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -336,7 +366,7 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Cov2" };
             model.CovariateTransformation = "Log10";
             model.PrimaryFactor = "Treat1";
-            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
             model.LowerBoundAbsolute = 10;
             model.UpperBoundAbsolute = 20;
 
@@ -364,7 +394,7 @@ namespace SilveR.IntegrationTests
             model.Covariates = new string[] { "Cov3" };
             model.CovariateTransformation = "Loge";
             model.PrimaryFactor = "Treat1";
-            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
             model.LowerBoundAbsolute = 10;
             model.UpperBoundAbsolute = 20;
 
@@ -528,6 +558,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp8";
             model.Treatments = new string[] { "Treat12", "Treat13" };
+            model.SelectedEffect = "Treat12";
             model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
             model.LowerBoundAbsolute = 10;
             model.UpperBoundAbsolute = 20;
@@ -553,6 +584,7 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
             model.Response = "Resp11";
             model.Treatments = new string[] { "Treat14" };
+            model.SelectedEffect = "Treat14";
             model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
             model.LowerBoundAbsolute = 10;
             model.UpperBoundAbsolute = 20;
@@ -612,7 +644,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The field Lower bound percentage must be between 0 and 100.", errors);
+            Assert.Contains("User cannot select a negative Percentage change.", errors);
             Helpers.SaveOutput("EquivalenceTOSTTest", testName, errors);
         }
 
@@ -637,7 +669,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("The field Lower bound percentage must be between 0 and 100.", errors);
+            Assert.Contains("User cannot select a negative Percentage change.", errors);
             Helpers.SaveOutput("EquivalenceTOSTTest", testName, errors);
         }
 
@@ -1531,7 +1563,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
             //model.LowerBoundAbsolute = 0.2m;
-            model.UpperBoundAbsolute = 10m;
+            model.UpperBoundPercentageChange = 10m;
             model.Significance = "0.05";
             model.PRPlotSelected = true;
             model.SelectedEffect = "Treat1";
@@ -1572,7 +1604,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
             //model.LowerBoundAbsolute = 0.2m;
-            model.UpperBoundAbsolute = 10m;
+            model.UpperBoundPercentageChange = 10m;
             model.Significance = "0.05";
             model.PRPlotSelected = true;
             model.SelectedEffect = "Treat1";
@@ -1614,7 +1646,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
             //model.LowerBoundAbsolute = 0.2m;
-            model.UpperBoundAbsolute = 10m;
+            model.UpperBoundPercentageChange = 10m;
             model.Significance = "0.05";
             model.PRPlotSelected = true;
             model.SelectedEffect = "Treat1";
@@ -1646,7 +1678,7 @@ namespace SilveR.IntegrationTests
             model.Treatments = new string[] { "Treat1" };
             model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
             //model.LowerBoundAbsolute = 0.2m;
-            model.UpperBoundAbsolute = 10m;
+            model.UpperBoundPercentageChange = 10m;
             model.Significance = "0.05";
             model.PRPlotSelected = true;
             model.SelectedEffect = "Treat1";

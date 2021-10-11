@@ -900,10 +900,10 @@ if(showLSMeans =="Y") {
 		HTML.title(CITitle2, HR=2, align="left")
 
 		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
-			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+			HTML("As the response was log transformed prior to analysis the means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 		}
 		if (GeomDisplay == "geometricmeansonly") {
-			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+			HTML("As the response was log transformed prior to analysis the means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 		}
 
 		#Calculate LS Means Table

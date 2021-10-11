@@ -84,11 +84,11 @@ namespace SilveR.StatsModels
         public Nullable<decimal> UpperBoundAbsolute { get; set; }
 
         [DisplayName("Lower bound percentage")]
-        [Range(0, 100)]
+        [Range(0, 1000, ErrorMessage = "User cannot select a negative Percentage change.")]
         public Nullable<decimal> LowerBoundPercentageChange { get; set; }
 
         [DisplayName("Upper bound percentage")]
-        [Range(0, 100)]
+        [Range(0, 1000, ErrorMessage = "User cannot select a negative Percentage change.")]
         public Nullable<decimal> UpperBoundPercentageChange { get; set; }
 
         public EquivalenceTOSTTestModel() : base("EquivalenceTOSTTest") { }
