@@ -15,9 +15,6 @@ namespace SilveR.StatsModels
     public class RRunnerModel : AnalysisDataModelBase
     {
         [Required]
-        public string CustomRCode { get; set; }
-
-        [Required]
         [DisplayName("Variable A")]
         public IEnumerable<string> VariableA { get; set; }
 
@@ -94,8 +91,6 @@ namespace SilveR.StatsModels
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
             this.CustomRCode = argHelper.LoadStringArgument(nameof(CustomRCode));
-
-            this.SetCustomRCode(this.CustomRCode);
 
             this.VariableA = argHelper.LoadIEnumerableArgument(nameof(VariableA));
             this.VariableB = argHelper.LoadIEnumerableArgument(nameof(VariableB));
