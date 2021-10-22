@@ -27,6 +27,18 @@ namespace SilveR.StatsModels
         [DisplayName("Variable D")]
         public IEnumerable<string> VariableD { get; set; }
 
+        [DisplayName("Variable E")]
+        public IEnumerable<string> VariableE { get; set; }
+
+        [DisplayName("Variable F")]
+        public IEnumerable<string> VariableF { get; set; }
+
+        [DisplayName("Variable G")]
+        public IEnumerable<string> VariableG { get; set; }
+
+        [DisplayName("Variable H")]
+        public IEnumerable<string> VariableH { get; set; }
+
         public string RawArguments { get; set; }
 
         public RRunnerModel() : base("RRunner") { }
@@ -68,12 +80,13 @@ namespace SilveR.StatsModels
             StringBuilder arguments = new StringBuilder();
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(VariableA)); //7
-
             arguments.Append(" " + argFormatter.GetFormattedArgument(VariableB)); //8
-
             arguments.Append(" " + argFormatter.GetFormattedArgument(VariableC)); //9
-
             arguments.Append(" " + argFormatter.GetFormattedArgument(VariableD)); //10
+            arguments.Append(" " + argFormatter.GetFormattedArgument(VariableE)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(VariableF)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(VariableG)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(VariableH)); //14
 
             if (!String.IsNullOrWhiteSpace(RawArguments))
             {
@@ -81,7 +94,7 @@ namespace SilveR.StatsModels
 
                 foreach (string line in argumentLines.Where(x => !String.IsNullOrWhiteSpace(x)))
                 {
-                    arguments.Append(" " + line.Trim());
+                    arguments.Append(" " + argFormatter.GetFormattedArgument(line.Trim()));
                 }
             }
 
@@ -99,6 +112,10 @@ namespace SilveR.StatsModels
             this.VariableB = argHelper.LoadIEnumerableArgument(nameof(VariableB));
             this.VariableC = argHelper.LoadIEnumerableArgument(nameof(VariableC));
             this.VariableD = argHelper.LoadIEnumerableArgument(nameof(VariableD));
+            this.VariableE = argHelper.LoadIEnumerableArgument(nameof(VariableE));
+            this.VariableF = argHelper.LoadIEnumerableArgument(nameof(VariableF));
+            this.VariableG = argHelper.LoadIEnumerableArgument(nameof(VariableG));
+            this.VariableH = argHelper.LoadIEnumerableArgument(nameof(VariableH));
             this.RawArguments = argHelper.LoadStringArgument(nameof(RawArguments));
         }
 
@@ -112,6 +129,11 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(VariableB), VariableB));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(VariableC), VariableC));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(VariableD), VariableD));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(VariableE), VariableE));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(VariableF), VariableF));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(VariableG), VariableG));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(VariableH), VariableH));
+
             args.Add(ArgumentHelper.ArgumentFactory(nameof(RawArguments), RawArguments));
 
             return args;

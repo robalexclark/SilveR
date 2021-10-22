@@ -17,5 +17,21 @@ $(function () {
         dataSource: theModel.availableVariables,
         value: theModel.variableD
     });
+    $("#VariableE").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.variableE
+    });
+    $("#VariableF").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.variableF
+    });
+    $("#VariableG").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.variableG
+    });
+    $("#VariableH").kendoMultiSelect({
+        dataSource: theModel.availableVariables,
+        value: theModel.variableH
+    });
 
 });
