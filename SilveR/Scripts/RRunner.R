@@ -9,7 +9,7 @@ suppressWarnings(library(R2HTML))
 Args <- commandArgs(TRUE)
 
 #Read in arguments
-statdata <- read.csv(Args[3], header = TRUE, sep = ",")
+statdata <- read.csv(Args[3], header=TRUE, sep=",")
 
 #Print args
 print(Args)
@@ -24,6 +24,5 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 HTMLCSS(CSSfile = cssFile)
 
 
-
 #Output HTML header
-HTML.title("<bf>InVivoStat Split-Plot Analysis", HR=1, align="left")
+HTML.title("<bf>InVivoStat R-Runner Module", HR=1, align="left")

@@ -125,7 +125,7 @@ jobs:
       tag: '4.3.0'
       title: '4.3.0'
       assetUploadMode: 'replace'
-      isPreRelease: true
+      isPreRelease: false
       isDraft: false
 
 
@@ -177,7 +177,7 @@ jobs:
       tag: '4.3.0'
       title: '4.3.0'
       assetUploadMode: 'replace'
-      isPreRelease: true
+      isPreRelease: false
       isDraft: false
 
 
@@ -226,5 +226,5 @@ jobs:
       tag: '4.3.0'
       title: '4.3.0'
       assetUploadMode: 'replace'
-      isPreRelease: true
+      isPreRelease: false
       isDraft: false

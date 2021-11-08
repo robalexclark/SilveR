@@ -145,7 +145,13 @@ namespace SilveR.StatsModels
                 }
             }
 
-            return dtNew.GetCSVArray();
+            string[] csvArray = dtNew.GetCSVArray();
+
+            //fix any columns with illegal chars here (at the end)
+            ArgumentFormatter argFormatter = new ArgumentFormatter();
+            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
+
+            return csvArray;
         }
 
 

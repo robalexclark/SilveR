@@ -7,7 +7,7 @@ suppressWarnings(library(nlme))
 #===================================================================================================================
 # retrieve args
 Args <- commandArgs(TRUE)
-print(Args)
+
 #Read in data
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
 

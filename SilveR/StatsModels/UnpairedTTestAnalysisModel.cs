@@ -85,7 +85,6 @@ namespace SilveR.StatsModels
             //Now do transformations...
             dtNew.TransformColumn(Response, ResponseTransformation);
 
-
             string[] csvArray = dtNew.GetCSVArray();
 
             //fix any columns with illegal chars here (at the end)

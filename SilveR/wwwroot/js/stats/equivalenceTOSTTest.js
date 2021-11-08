@@ -64,7 +64,7 @@ $(function () {
         decimals: 2,
         spinners: true,
         min: 0,
-        max: 100
+        max: 1000
     });
 
     $("#UpperBoundPercentageChange").kendoNumericTextBox({
@@ -72,7 +72,7 @@ $(function () {
         decimals: 2,
         spinners: true,
         min: 0,
-        max: 100
+        max: 1000
     });
 
 
