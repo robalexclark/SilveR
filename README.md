@@ -40,6 +40,12 @@ For Mac you will need to install R 3.6.3 and run a script to install the require
 
 2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R. Open the R editor/IDE (that was installed in the previous step). Copy and paste the code (or open the RPackagesInstall.R file) into the R editor and run it. The second half of the R script checks that the libraries have been installed correctly.
 
+3) It seems that macOS Big Sur onwards has issues where a symlink to Rscript is missing or miconfigured after the R install (resulting in InVivoStat claiming that R is not installed). To resolve this run the following two lines in the terminal
+
+```
+sudo ln -s /Library/Frameworks/R.framework/Resources/bin/Rscript /usr/local/bin/Rscript
+sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R /usr/local/bin/R
+```
 
 #### Running Locally
 
