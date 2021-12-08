@@ -82,6 +82,10 @@ if (FirstCatFactor != "NULL") {
 Line_size2 <- Line_size
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Control group
 cntrlGroup<-sub("-", "_ivs_dash_ivs_", cntrlGroup, fixed=TRUE)

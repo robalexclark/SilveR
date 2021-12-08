@@ -29,6 +29,11 @@ if (Diplayargs == "Y"){
 	print(Args)
 }
 
+#Graphoical parameters
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 #===================================================================================================================
 #Setup the html file and associated css file
 htmlFile <- sub(".csv", ".html", Args[3]);

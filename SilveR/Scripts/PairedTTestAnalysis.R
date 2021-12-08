@@ -6,7 +6,7 @@ suppressWarnings(library(multcomp))
 suppressWarnings(library(nlme))
 suppressWarnings(library(contrast))
 suppressWarnings(library("emmeans"))
-
+ 
 #===================================================================================================================
 # retrieve args
 Args <- commandArgs(TRUE)
@@ -57,6 +57,10 @@ graphdata<-statdata
 Gr_palette<-palette_FUN(timeFactor)
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #STB 14OCT2015
 #Set contrast options for Marginal overall tests

@@ -175,6 +175,10 @@ graphdata<-statdata
 Line_size2 <- Line_size
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #===================================================================================================================
 #Titles and description

@@ -68,6 +68,10 @@ Labelz_IVS_ <- "N"
 Line_size2 <- Line_size
 DisplayLSMeanslines <- "Y"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 # Setting up the parameters
 resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model

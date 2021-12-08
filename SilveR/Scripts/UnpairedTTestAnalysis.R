@@ -40,6 +40,10 @@ if (Diplayargs == "Y"){
 graphdata<-statdata
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Removing illegal characters
 YAxisTitle <-xxxresponsexxx
@@ -395,7 +399,7 @@ if(equalCase == "Y" && (responseTransform =="log10"||responseTransform =="loge")
 #===================================================================================================================
 if (equalCase == "Y") {
 	if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
-			HTML.title("Diagnostic plot", HR=2, align="left")
+			HTML.title("Diagnostic plot (assuming equal variances)", HR=2, align="left")
 	}
 	if(showPRPlot=="Y" && showNormPlot=="Y") {
 			HTML.title("Diagnostic plots (assuming equal variances)", HR=2, align="left")
@@ -563,6 +567,93 @@ if (unequalCase == "Y") {
 	}
 	HTML(add, align="left")
 }
+
+#===================================================================================================================
+#Diagnostic plots (unequal variance case)
+#===================================================================================================================
+if (unequalCase == "Y") {
+	if((showPRPlot=="Y" && showNormPlot=="N") || (showPRPlot=="N" && showNormPlot=="Y") ) {
+			HTML.title("Diagnostic plot (assuming unequal variances)", HR=2, align="left")
+	}
+	if(showPRPlot=="Y" && showNormPlot=="Y") {
+			HTML.title("Diagnostic plots (assuming unequal variances)", HR=2, align="left")
+	}
+
+	#Residual plots
+	if(showPRPlot=="Y") {
+		HTML.title("Residuals vs. predicted plot", HR=3, align="left")
+		HTML("This plot is not available for the unequal variance case.", align="left")
+	}
+
+#===================================================================================================================
+	#Normality plots
+	if(showNormPlot=="Y") {
+		HTML.title("Normal probability plots", HR=3, align="left")
+	
+
+		normPlotx <- sub(".html", "normplotx.png", htmlFile)
+		png(normPlotx,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+	
+		#STB July2013
+		plotFilepdf2x <- sub(".html", "normplotx.pdf", htmlFile)
+		dev.control("enable") 
+	
+		#Graphical parameters
+		YAxisTitle <-"Sample Quantiles"
+		XAxisTitle <-"Theoretical Quantiles"
+		w_Gr_jitscat <- 0
+		h_Gr_jitscat <-  0
+		infiniteslope <- "N"
+		LinearFit <- "Y"
+	
+		if (bandw != "N")  {
+			Gr_line <-BW_line
+			Gr_fill <- BW_fill
+		} else {
+			Gr_line <-Col_line
+			Gr_fill <- Col_fill
+		}
+		Gr_line_type<-Line_type_dashed
+	
+		Line_size <- 0.5
+		Gr_alpha <- 1
+		Line_type <-Line_type_dashed
+	
+		sub <- subset(statdata, statdata$mainEffect == unique(levels(as.factor(statdata$mainEffect)))[1])
+		te <- qqnorm(eval(parse(text = paste("sub$", xxxresponsexxx))))
+		graphdata<-data.frame(te$x,te$y)
+		graphdata$xvarrr_IVS <-graphdata$te.x
+		graphdata$yvarrr_IVS <-graphdata$te.y
+		MainTitle2 <- paste("Treatment =  ", unique(levels(as.factor(statdata$mainEffect)))[1], sep="")
+		p1 <- NONCAT_SCAT("QQPLOT")
+
+		sub <- subset(statdata, statdata$mainEffect == unique(levels(as.factor(statdata$mainEffect)))[2])
+		te <- qqnorm(eval(parse(text = paste("sub$", xxxresponsexxx))))
+		graphdata<-data.frame(te$x,te$y)
+		graphdata$xvarrr_IVS <-graphdata$te.x
+		graphdata$yvarrr_IVS <-graphdata$te.y
+		MainTitle2 <- paste("Treatment =  ", unique(levels(as.factor(statdata$mainEffect)))[2], sep="")
+		p2 <- NONCAT_SCAT("QQPLOT")
+
+		multiplot(p1, p2, cols=2)
+	
+		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlotx), Align="left")
+	
+	#STB July2013
+		if (pdfout=="Y") {
+			pdf(file=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", plotFilepdf2), height = pdfheight, width = pdfwidth) 
+			dev.set(2) 
+			dev.copy(which=3) 
+			dev.off(2)
+			dev.off(3)
+			pdfFile_2<-sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","",plotFilepdf2)
+			linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
+			HTML(linkToPdf2)
+		}
+		HTML("Note: The normal probability plots are generated seperately using the responses from each treatment group only.", align="left")
+		HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
+	}
+}	
 
 #===================================================================================================================
 # Means and Planned comparisons on the main effects

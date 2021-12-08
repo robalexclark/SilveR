@@ -33,6 +33,10 @@ if (Diplayargs == "Y"){
 #Graphical parameters
 graphdata<-statdata
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Breakdown the list of responses
 resplist <- c()

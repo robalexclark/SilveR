@@ -100,11 +100,6 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
             }
 
-            if (etVariables.LowerBoundPercentageChange > etVariables.UpperBoundPercentageChange)
-            {
-                ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
-            }
-
             if(etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute && (etVariables.LowerBoundAbsolute.HasValue == false && etVariables.UpperBoundAbsolute.HasValue == false))
             {
                 ValidationInfo.AddErrorMessage("Absolute selected but bounds not entered.");

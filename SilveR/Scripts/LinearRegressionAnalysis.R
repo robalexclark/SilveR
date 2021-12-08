@@ -69,6 +69,10 @@ if (FirstCatFactor == "NULL") {
 #Graphics parameter setup
 graphdata<-statdata
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 if (covariatelist != "NULL") {
 	Gr_palette<-palette_FUN(FirstCatFactor)

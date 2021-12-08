@@ -1,7 +1,7 @@
 ﻿#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
-IVS_version<- 4.3 
+IVS_version<- 4.4 
 
 #Software update
 UpdateIVS <- "N"
@@ -701,25 +701,40 @@ NONCAT_SCAT <- function(typez) {
 		g10 <- g9
 	}
 
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g11 <- g10 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
+#Only X range defined
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g11 <- g10 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g11 <- g10
 	}
-
-	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g12 <- g11 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+#Only Y range defined
+	if (is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g12 <- g11 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g12 <- g11
 	}
 
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g13 <- g12 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g13 <- g12 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g13 <- g12
 	}
 
-	suppressWarnings(print(g13))
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g14 <- g13 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g14 <- g13
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g15 <- g14 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g15 <- g14
+	}
+	suppressWarnings(print(g15))
 }
 
 
@@ -752,24 +767,39 @@ ONECATSEP_SCAT <- function() {
 	}
 
 	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g4 <- g3 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
+		g4 <- g3 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g4 <- g3
 	}
 
 	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g5 <- g4 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g5 <- g4 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g5 <- g4
 	}
 
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g6 <- g5
 	}
 
-	suppressWarnings(print(g6))
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g8 <- g7 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g8 <- g7
+	}
+
+	suppressWarnings(print(g8))
 }
 
 TWOCATSEP_SCAT <- function() {
@@ -799,23 +829,38 @@ TWOCATSEP_SCAT <- function() {
 		g3 <- g2
 	}
 	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g4 <- g3 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
+		g4 <- g3 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g4 <- g3
 	}
 
 	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g5 <- g4 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g5 <- g4 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g5 <- g4
 	}
 
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g6 <- g5
 	}
-	suppressWarnings(print(g6))
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g8 <- g7 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g8 <- g7
+	}
+	suppressWarnings(print(g8))
 }
 
 OVERLAID_SCAT <- function() {
@@ -854,23 +899,38 @@ OVERLAID_SCAT <- function() {
 	}
 
 	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g5 <- g4 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g5 <- g4
 	}
 
 	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g6 <- g5
 	}
 
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g7 <- g6 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g7 <- g6
 	}
-	suppressWarnings(print(g7))
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g8 <- g7 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g8 <- g7
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g9 <- g8 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g9 <- g8
+	}
+	suppressWarnings(print(g9))
 }
 
 #===================================================================================================================
@@ -931,7 +991,7 @@ NONCAT_SEM <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g6 <- g5
 	}
@@ -997,7 +1057,7 @@ ONECATSEP_SEM <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g6 <- g5
 	}
@@ -1063,7 +1123,7 @@ TWOCATSEP_SEM <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g6 <- g5
 	}
@@ -1137,7 +1197,7 @@ OVERLAID_SEM <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g6 <- g5
 	}
@@ -1172,12 +1232,37 @@ NONCAT_CPP <- function() {
 		g2 <- g1
 	}
 
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g3 <- g2 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g3 <- g2 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+	suppressWarnings(print(g7))
 }
 
 
@@ -1206,12 +1291,37 @@ ONECATSEP_CPP <- function() {
 		g2 <- g1
 	}
 
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g3 <- g2 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g3 <- g2 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+	suppressWarnings(print(g7))
 }
 
 
@@ -1240,12 +1350,37 @@ TWOCATSEP_CPP <- function() {
 		g2 <- g1
 	}
 
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g3 <- g2 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g3 <- g2 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+	suppressWarnings(print(g7))
 }
 
 
@@ -1267,12 +1402,37 @@ OVERLAID_CPP <- function() {
 		g1 <- g
 	}
 
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g2 <- g1 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g2 <- g1 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g3 <- g2 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g3 <- g2
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+	suppressWarnings(print(g6))
 }
 
 #AUC case profiles plot - addition of extra area call
@@ -1325,7 +1485,7 @@ NONCAT_BOX <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g4 <- g3
 	}
@@ -1369,7 +1529,7 @@ ONECATSEP_BOX <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g4 <- g3
 	}
@@ -1414,7 +1574,7 @@ TWOCATSEP_BOX <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g4 <- g3
 	}
@@ -1457,7 +1617,7 @@ OVERLAID_BOX <- function() {
 	}
 
 	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
 	} else {
 		g4 <- g3
 	}
@@ -2016,6 +2176,54 @@ PLSloadingsplot <- function() {
 		geom_line(aes(group = X2, color = X2), size = Line_size) +
 		geom_hline(yintercept = 0, lty = 3, size = 0.8, colour = "black")
 	suppressWarnings(print(g))
+}
+
+
+#===================================================================================================================
+# Multiple plot function (combining ggplots)
+#===================================================================================================================
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
 }
 
 #===================================================================================================================

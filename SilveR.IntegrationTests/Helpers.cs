@@ -173,9 +173,9 @@ namespace SilveR.IntegrationTests
                     html = document.DocumentNode.OuterHtml;
                     return html;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw ex;
+                    throw;
                 }
             }
             else //dont strip images on win

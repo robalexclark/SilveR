@@ -48,6 +48,10 @@ YAxisTitle = "Proportion surviving"
 MainTitle2 = ""
 Line_type<-Line_type_solid
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #replace illegal characters in variable names
 XAxisTitle <-Responseqq

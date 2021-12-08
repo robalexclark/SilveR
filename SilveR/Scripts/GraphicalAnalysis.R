@@ -46,12 +46,17 @@ XLimHigh<-Args[34]
 YLimLow<-Args[35]
 YLimHigh<- Args[36]
 
+XLimLow_num <- as.numeric(XLimLow)
+XLimHigh_num<-as.numeric(XLimHigh)
+YLimLow_num<-as.numeric(YLimLow)
+YLimHigh_num<- as.numeric(YLimHigh)
+
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
 #Print args
-#if (Diplayargs == "Y"){
+if (Diplayargs == "Y"){
 	print(Args)
-#}
+}
 
 #===================================================================================================================
 #Setup the html file and associated css file
@@ -1030,7 +1035,9 @@ if(CaseProfilesPlot == "Y"  && is.numeric(graphdata$yvarrr_IVS)==FALSE) {
 }
 
 #Global variables format
-graphdata$Time_IVS<-as.factor(graphdata$xvarrr_IVS)
+#graphdata$Time_IVS<-as.factor(graphdata$xvarrr_IVS)
+#Make x-axis potentially continuous in this module
+graphdata$Time_IVS<-graphdata$xvarrr_IVS
 graphdata$Subject_IVS<-eval(parse(text = paste("graphdata$", CaseIDFactor)))
 
 if(CaseProfilesPlot == "Y" && FirstCatFactor == "NULL" && SecondCatFactor == "NULL") {

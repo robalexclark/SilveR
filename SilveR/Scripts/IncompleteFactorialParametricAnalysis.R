@@ -92,6 +92,11 @@ if (is.numeric(statdata$mainEffect) == TRUE) {
 statdata$mainEffect<-as.factor(statdata$mainEffect)
 statdata$scatterPlotColumn<-as.factor(statdata$scatterPlotColumn)
 
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
+
 #Response
 resp <- unlist(strsplit(model ,"~"))[1] #get the response variable from the main model
 
