@@ -47,6 +47,20 @@ namespace SilveR.StatsModels
         [DisplayName("Display legend")]
         public bool DisplayLegend { get; set; } = true;
 
+
+        [DisplayName("X-axis min")]
+        public Nullable<decimal> XAxisMin { get; set; }
+
+        [DisplayName("X-axis max")]
+        public Nullable<decimal> XAxisMax { get; set; }
+
+        [DisplayName("Y-axis min")]
+        public Nullable<decimal> YAxisMin { get; set; }
+
+        [DisplayName("Y-axis max")]
+        public Nullable<decimal> YAxisMax { get; set; }
+
+
         [DisplayName("Include data")]
         public bool SEMPlotIncludeData { get; set; }
 
@@ -179,6 +193,13 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SecondCatFactor), SecondCatFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(StyleType), StyleType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(DisplayLegend), DisplayLegend));
+
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisMin), XAxisMin));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisMax), XAxisMax));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(YAxisMin), YAxisMin));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(YAxisMax), YAxisMax));
+
+
             args.Add(ArgumentHelper.ArgumentFactory(nameof(SEMPlotIncludeData), SEMPlotIncludeData));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(MainTitle), MainTitle));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(XAxisTitle), XAxisTitle));
@@ -218,6 +239,13 @@ namespace SilveR.StatsModels
             this.SecondCatFactor = argHelper.LoadStringArgument(nameof(SecondCatFactor));
             this.StyleType = (GraphStyleType)Enum.Parse(typeof(GraphStyleType), argHelper.LoadStringArgument(nameof(StyleType)), true);
             this.DisplayLegend = argHelper.LoadBooleanArgument(nameof(DisplayLegend));
+
+            this.XAxisMin = argHelper.LoadNullableDecimalArgument(nameof(XAxisMin));
+            this.XAxisMax = argHelper.LoadNullableDecimalArgument(nameof(XAxisMax));
+            this.YAxisMin = argHelper.LoadNullableDecimalArgument(nameof(YAxisMin));
+            this.YAxisMax = argHelper.LoadNullableDecimalArgument(nameof(YAxisMax));
+
+
             this.SEMPlotIncludeData = argHelper.LoadBooleanArgument(nameof(SEMPlotIncludeData));
             this.MainTitle = argHelper.LoadStringArgument(nameof(MainTitle));
             this.XAxisTitle = argHelper.LoadStringArgument(nameof(XAxisTitle));
@@ -336,6 +364,19 @@ namespace SilveR.StatsModels
 
             //SEM Plot include data
             arguments.Append(" " + argFormatter.GetFormattedArgument(SEMPlotIncludeData)); //32
+
+
+            //XAxisMin
+            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisMin)); //33
+
+            //XAxisMax
+            arguments.Append(" " + argFormatter.GetFormattedArgument(XAxisMax)); //34
+
+            //YAxisMin
+            arguments.Append(" " + argFormatter.GetFormattedArgument(YAxisMin)); //35
+
+            //YAxisMax
+            arguments.Append(" " + argFormatter.GetFormattedArgument(YAxisMax)); //36
 
             return arguments.ToString().Trim();
         }

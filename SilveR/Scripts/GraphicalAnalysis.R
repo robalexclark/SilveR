@@ -41,17 +41,13 @@ ShowCaseIDsInLegend <- Args[29]
 ReferenceLine <- Args[30]
 DisplayLegend <-Args[31]
 displaypointSEM<-Args[32]
-XLimLow <- Args[33]
-XLimHigh<-Args[34]
-YLimLow<-Args[35]
-YLimHigh<- Args[36]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
 #Print args
-#if (Diplayargs == "Y"){
+if (Diplayargs == "Y"){
 	print(Args)
-#}
+}
 
 #===================================================================================================================
 #Setup the html file and associated css file

@@ -700,26 +700,7 @@ NONCAT_SCAT <- function(typez) {
 	} else {
 		g10 <- g9
 	}
-
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g11 <- g10 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
-	} else {
-		g11 <- g10
-	}
-
-	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g12 <- g11 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g12 <- g11
-	}
-
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g13 <- g12 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
-	} else {
-		g13 <- g12
-	}
-
-	suppressWarnings(print(g13))
+	suppressWarnings(print(g10))
 }
 
 
@@ -750,26 +731,7 @@ ONECATSEP_SCAT <- function() {
 	} else {
 		g3 <- g2
 	}
-
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g4 <- g3 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
-	} else {
-		g4 <- g3
-	}
-
-	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g5 <- g4 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g5 <- g4
-	}
-
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
-	} else {
-		g6 <- g5
-	}
-
-	suppressWarnings(print(g6))
+	suppressWarnings(print(g3))
 }
 
 TWOCATSEP_SCAT <- function() {
@@ -798,24 +760,7 @@ TWOCATSEP_SCAT <- function() {
 	} else {
 		g3 <- g2
 	}
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g4 <- g3 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
-	} else {
-		g4 <- g3
-	}
-
-	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g5 <- g4 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g5 <- g4
-	}
-
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
-	} else {
-		g6 <- g5
-	}
-	suppressWarnings(print(g6))
+	suppressWarnings(print(g3))
 }
 
 OVERLAID_SCAT <- function() {
@@ -852,25 +797,7 @@ OVERLAID_SCAT <- function() {
 	} else {
 		g4 <- g3
 	}
-
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
-		g5 <- g4 + coord_cartesian(xlim=c(XLimLow, XLimHigh))
-	} else {
-		g5 <- g4
-	}
-
-	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g6 <- g5
-	}
-
-	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
-		g7 <- g6 + coord_cartesian(xlim=c(XLimLow, XLimHigh), ylim=c(YLimLow, YLimHigh))
-	} else {
-		g7 <- g6
-	}
-	suppressWarnings(print(g7))
+	suppressWarnings(print(g4))
 }
 
 #===================================================================================================================
@@ -929,13 +856,7 @@ NONCAT_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g6 <- g5
-	}
-	suppressWarnings(print(g6))
+	suppressWarnings(print(g5))
 }
 
 
@@ -995,13 +916,7 @@ ONECATSEP_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g6 <- g5
-	}
-	suppressWarnings(print(g6))
+	suppressWarnings(print(g5))
 }
 
 
@@ -1061,13 +976,7 @@ TWOCATSEP_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g6 <- g5
-	}
-	suppressWarnings(print(g6))
+	suppressWarnings(print(g5))
 }
 
 
@@ -1135,13 +1044,7 @@ OVERLAID_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g6 <- g5 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g6 <- g5
-	}
-	suppressWarnings(print(g6))
+	suppressWarnings(print(g5))
 }
 
 #===================================================================================================================
@@ -1171,13 +1074,7 @@ NONCAT_CPP <- function() {
 	} else {
 		g2 <- g1
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g3 <- g2 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g3 <- g2
-	}
-	suppressWarnings(print(g3))
+	suppressWarnings(print(g2))
 }
 
 
@@ -1205,13 +1102,7 @@ ONECATSEP_CPP <- function() {
 	} else {
 		g2 <- g1
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g3 <- g2 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g3 <- g2
-	}
-	suppressWarnings(print(g3))
+	suppressWarnings(print(g2))
 }
 
 
@@ -1239,13 +1130,7 @@ TWOCATSEP_CPP <- function() {
 	} else {
 		g2 <- g1
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g3 <- g2 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g3 <- g2
-	}
-	suppressWarnings(print(g3))
+	suppressWarnings(print(g2))
 }
 
 
@@ -1266,13 +1151,7 @@ OVERLAID_CPP <- function() {
 	} else {
 		g1 <- g
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g2 <- g1 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g2 <- g1
-	}
-	suppressWarnings(print(g2))
+	suppressWarnings(print(g1))
 }
 
 #AUC case profiles plot - addition of extra area call
@@ -1323,13 +1202,7 @@ NONCAT_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g4 <- g3
-	}
-	suppressWarnings(print(g4))
+	suppressWarnings(print(g3))
 }
 
 
@@ -1367,13 +1240,7 @@ ONECATSEP_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g4 <- g3
-	}
-	suppressWarnings(print(g4))
+	suppressWarnings(print(g3))
 }
 
 
@@ -1412,13 +1279,7 @@ TWOCATSEP_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g4 <- g3
-	}
-	suppressWarnings(print(g4))
+	suppressWarnings(print(g3))
 }
 
 
@@ -1455,13 +1316,7 @@ OVERLAID_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-
-	if (YLimLow != "NULL" && YLimHigh != "NULL") {
-		g4 <- g3 + coord_cartesian(ylim=c(YLimLow, YLimHigh))
-	} else {
-		g4 <- g3
-	}
-	suppressWarnings(print(g4))
+	suppressWarnings(print(g3))
 }
 
 #===================================================================================================================

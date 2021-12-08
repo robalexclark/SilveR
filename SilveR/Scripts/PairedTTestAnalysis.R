@@ -1240,14 +1240,14 @@ if (showComps == "Y") {
 			if (inte==1) {
 				inte<-inte+1
 				if (dimfact ==2) {
-					add<-paste(add, ": The pairwise comparison is statistically significant at the ", sep="")
+					add<-paste(add, ": The pairwise comparison is statistically significant at the  ", sep="")
 				} else {
-					add<-paste(add, ": The following pairwise comparisons are statistically significant at the ", sep="")
+					add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				}
 				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level", sep="")
+				add<-paste(add, "% level ", sep="")
 				if (dimfact > 2) {
-					add<-paste(add, " : ", rows[i], sep="")
+					add<-paste(add, ": ", rows[i], sep="")
 				}
 			} else {
 				inte<-inte+1
@@ -1276,12 +1276,12 @@ if (showComps == "Y") {
 #Analysis description
 HTML.title("Analysis description", HR=2, align="left")
 
-add<-c("The data were analysed using ")
+add<-c("The data were analysed using an ")
 
 if (dimfact ==2 ) { #&& covariatelist == "NULL") {
-	add<-paste(add, "an extended paired t-test, with treatment factor ", timeFactor, sep="")
+	add<-paste(add, "extended paired t-test, with treatment factor ", timeFactor, sep="")
 } else {
-	add<-paste(add, "a repeated measures mixed model approach, with treatment factor ", timeFactor, sep="")
+	add<-paste(add, "repeated measures mixed model approach, with treatment factor ", timeFactor, sep="")
 }
 
 if (blocklist != "NULL" && covariatelist != "NULL")  {
