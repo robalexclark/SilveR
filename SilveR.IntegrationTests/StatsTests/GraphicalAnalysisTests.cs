@@ -8157,7 +8157,7 @@ namespace SilveR.IntegrationTests
             model.XAxisTitle = "Treat 1";
             model.YAxisTitle = "Resp 1";
             model.FirstCatFactor = "Cat1";
-            model.FirstCatFactor = "Cat2";
+            model.SecondCatFactor = "Cat2";
             model.ScatterplotSelected = true;
             model.StyleType = GraphicalAnalysisModel.GraphStyleType.Separate;
             model.XAxisMin = 0;
