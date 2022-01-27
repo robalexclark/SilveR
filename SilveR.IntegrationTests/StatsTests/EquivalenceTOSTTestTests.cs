@@ -988,26 +988,26 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-		[Fact]
-		public async Task ETT38()
-		{
-			string testName = "ETT38";
+        [Fact]
+        public async Task ETT38()
+        {
+            string testName = "ETT38";
 
-			//Arrange
-			HttpClient client = _factory.CreateClient();
+            //Arrange
+            HttpClient client = _factory.CreateClient();
 
-			EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
-			model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
-			model.Response = "Resp 1";
-			model.Treatments = new string[] { "Treat1" };
-			model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
-			model.LowerBoundPercentageChange = 10m;
-			model.UpperBoundPercentageChange = 10m;
-			model.Significance = "0.05";
-			model.PRPlotSelected = true;
-			model.SelectedEffect = "Treat1";
-			model.LSMeansSelected = true;
-			model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat1" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundPercentageChange = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1028,27 +1028,27 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-		[Fact]
-		public async Task ETT39()
-		{
-			string testName = "ETT39";
+        [Fact]
+        public async Task ETT39()
+        {
+            string testName = "ETT39";
 
-			//Arrange
-			HttpClient client = _factory.CreateClient();
+            //Arrange
+            HttpClient client = _factory.CreateClient();
 
-			EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
-			model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
-			model.Response = "Resp 1";
-			model.Treatments = new string[] { "Treat1" };
-			model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
-			model.LowerBoundPercentageChange = 10m;
-			model.UpperBoundPercentageChange = 10m;
-			model.Significance = "0.05";
-			model.PRPlotSelected = true;
-			model.SelectedEffect = "Treat1";
-			model.LSMeansSelected = true;
-			model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
-			model.ControlGroup = "D1";
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp 1";
+            model.Treatments = new string[] { "Treat1" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundPercentageChange = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat1";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
+            model.ControlGroup = "D1";
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
@@ -1069,7 +1069,7 @@ namespace SilveR.IntegrationTests
             Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
         }
 
-		[Fact]
+        [Fact]
         public async Task ETT40()
         {
             string testName = "ETT40";
@@ -1687,6 +1687,444 @@ namespace SilveR.IntegrationTests
 
             //Act
             StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT59()
+        {
+            string testName = "ETT59";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
+            model.LowerBoundAbsolute = -0.2m;
+            model.UpperBoundAbsolute = 0.2m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT60()
+        {
+            string testName = "ETT60";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
+            model.LowerBoundAbsolute = -0.2m;
+            model.UpperBoundAbsolute = 0.2m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
+            model.ControlGroup = "2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT61()
+        {
+            string testName = "ETT61";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundPercentageChange = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the overall mean of the response.", warnings);
+            Helpers.SaveOutput("EquivalenceTOSTTest", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT62()
+        {
+            string testName = "ETT62";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundPercentageChange = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
+            model.ControlGroup = "2";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the selected control group.", warnings);
+            Helpers.SaveOutput("EquivalenceTOSTTest", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT63()
+        {
+            string testName = "ETT63";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
+            model.LowerBoundAbsolute = -0.2m;
+            //model.UpperoundAbsolute = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT64()
+        {
+            string testName = "ETT64";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
+            model.LowerBoundAbsolute = -0.2m;
+            //model.UpperoundAbsolute = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
+            model.ControlGroup = "2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT65()
+        {
+            string testName = "ETT65";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10m;
+            //model.UpperoundAbsolute = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the overall mean of the response.", warnings);
+            Helpers.SaveOutput("EquivalenceTOSTTest", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT66()
+        {
+            string testName = "ETT66";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            model.LowerBoundPercentageChange = 10m;
+            //model.UpperoundAbsolute = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
+            model.ControlGroup = "D1";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the selected control group.", warnings);
+            Helpers.SaveOutput("EquivalenceTOSTTest", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT67()
+        {
+            string testName = "ETT67";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
+            //model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundAbsolute = -0.2m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT68()
+        {
+            string testName = "ETT68";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute;
+            //model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundAbsolute = -0.2m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
+            model.ControlGroup = "2";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT69()
+        {
+            string testName = "ETT69";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            //model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundPercentageChange = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.AllPairwise;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the overall mean of the response.", warnings);
+            Helpers.SaveOutput("EquivalenceTOSTTest", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(modelIgnoreWarnings));
+            Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "EquivalenceTOSTTest", testName + ".html"));
+            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task ETT70()
+        {
+            string testName = "ETT70";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            EquivalenceTOSTTestModel model = new EquivalenceTOSTTestModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Equivalence TOST").Key;
+            model.Response = "Resp10";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat9" };
+            model.EquivalenceBoundsType = EquivalenceTOSTTestModel.EquivalenceBoundsOption.Percentage;
+            //model.LowerBoundPercentageChange = 10m;
+            model.UpperBoundPercentageChange = 10m;
+            model.Significance = "0.05";
+            model.PRPlotSelected = true;
+            model.SelectedEffect = "Treat9";
+            model.LSMeansSelected = true;
+            model.ComparisonType = EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl;
+            model.ControlGroup = "D1";
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/EquivalenceTOSTTest", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("As you have chosen the % equivalence bounds, the actual boundaries has been calculated as a % of the selected control group.", warnings);
+            Helpers.SaveOutput("EquivalenceTOSTTest", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "EquivalenceTOSTTest", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("EquivalenceTOSTTest", model, testName, statsOutput);
 
             //Assert

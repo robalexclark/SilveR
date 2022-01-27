@@ -78,9 +78,6 @@ if (is.numeric(statdata$mainEffect) == TRUE) {
 	cntrlGroup <- paste ("'",cntrlGroup,"'",sep="")
 }
 
-statdata$mainEffect<-as.factor(statdata$mainEffect)
-statdata$scatterPlotColumn<-as.factor(statdata$scatterPlotColumn)
-
 XLimLow <- "NULL"
 XLimHigh <- "NULL"
 YLimLow <- "NULL"
@@ -212,7 +209,17 @@ if (EqBtype == "percentage" && responseTransform == "none") {
 		overallmean <- mean(eval(parse(text = paste("statdata$", resp))), na.rm = TRUE)
 	}
 	if (backToControlTest == "comparisonstocontrol") {
-		controldata <-  subset(statdata, statdata$mainEffect == cntrlGroup)
+
+tempdata <- statdata
+tempdata$temp <- paste("T", tempdata$mainEffect, sep="")
+temocont<-paste("T", cntrlGroup, sep = "")
+if (is.numeric(statdata$mainEffect) == TRUE) {
+tempdata$temp <- paste("T'", tempdata$mainEffect, "'",sep="")
+}
+
+print(temocont)
+print(head(tempdata))
+		controldata <-  subset(tempdata, tempdata$temp == temocont)
 		overallmean <- mean(eval(parse(text = paste("controldata$", resp))), na.rm = TRUE)
 	}
 
@@ -231,6 +238,9 @@ if (EqBtype == "percentage" && responseTransform == "none") {
 		upperboundtest <- upper
 	}
 }
+
+statdata$mainEffect<-as.factor(statdata$mainEffect)
+statdata$scatterPlotColumn<-as.factor(statdata$scatterPlotColumn)
 
 #===================================================================================================================
 #Titles and description

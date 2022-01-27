@@ -90,7 +90,11 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("You have selected a covariate but no primary factor is selected.");
             }
 
-            if (etVariables.ComparisonType == EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl && String.IsNullOrEmpty(etVariables.ControlGroup))
+            if (etVariables.ComparisonType == EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl && etVariables.Treatments.Count() > 1)
+            {
+                ValidationInfo.AddErrorMessage("You have selected to compare back to a control but this is not possible with multiple treatments.");
+            }
+            else if (etVariables.ComparisonType == EquivalenceTOSTTestModel.ComparisonOption.ComparisonsToControl && String.IsNullOrEmpty(etVariables.ControlGroup))
             {
                 ValidationInfo.AddErrorMessage("You have selected to compare back to a control but no control group is selected.");
             }
@@ -100,7 +104,7 @@ namespace SilveR.Validators
                 ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
             }
 
-            if(etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute && (etVariables.LowerBoundAbsolute.HasValue == false && etVariables.UpperBoundAbsolute.HasValue == false))
+            if (etVariables.EquivalenceBoundsType == EquivalenceTOSTTestModel.EquivalenceBoundsOption.Absolute && (etVariables.LowerBoundAbsolute.HasValue == false && etVariables.UpperBoundAbsolute.HasValue == false))
             {
                 ValidationInfo.AddErrorMessage("Absolute selected but bounds not entered.");
             }
