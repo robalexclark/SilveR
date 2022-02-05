@@ -847,7 +847,8 @@ if(showNormPlot=="Y") {
 	Line_type <-Line_type_dashed
 
 	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
 
 	MainTitle2 <- ""
 	#===================================================================================================================

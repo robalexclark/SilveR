@@ -503,7 +503,8 @@ if (equalCase == "Y") {
 		Gr_alpha <- 1
 		Line_type <-Line_type_dashed
 	
-		NONCAT_SCAT("QQPLOT")
+		#NONCAT_SCAT("QQPLOT")
+		NONCAT_QQPLOT()
 		MainTitle2 <- ""
 	
 		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")

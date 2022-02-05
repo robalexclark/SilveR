@@ -1688,6 +1688,53 @@ OVERLAID_HIS <- function() {
 	suppressWarnings(print(gx))
 }
 
+
+#===================================================================================================================
+#QQ Plot (Summary Stats, SMPA, RMPA, etc.)
+#===================================================================================================================
+
+NONCAT_QQPLOT <- function(typez) {
+	g <- ggplot(graphdata, aes(sample = yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+                scale_x_continuous(breaks = pretty_breaks()) +
+		scale_y_continuous(breaks = pretty_breaks()) +
+		theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0)) +
+		stat_qq(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) +
+		stat_qq_line(lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
+	
+	if (scatterlabels == "Y") {
+		g2 <- g + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5,force = 10, point.padding=1)
+	} else {
+		g2 <- g
+	}
+	suppressWarnings(print(g2))
+}
+
+CAT_QQPLOT <- function() {
+	g <- ggplot(graphdata, aes(sample = yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		theme(legend.position = Gr_legend_pos) +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		scale_color_manual(values = Gr_palette) +
+		scale_fill_manual(values = Gr_palette) +
+		stat_qq(aes(fill = catfact), colour = "black", size = Point_size, shape = Point_shape) +
+		stat_qq_line(aes(colour = catfact), lty = Line_type, size = Line_size)
+
+	if (scatterlabels == "Y") {
+		g2 <- g + geom_text_repel(aes(label = rownames(graphdata), color = graphdata$l_l), size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+	} else {
+		g2 <- g
+	}
+	suppressWarnings(print(g2))
+}
+
 #===================================================================================================================
 #Logistic regression plots
 #===================================================================================================================

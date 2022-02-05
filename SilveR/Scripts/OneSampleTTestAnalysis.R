@@ -315,7 +315,9 @@ if (showNormPlot != "N" ) {
     	graphdata$yvarrr_IVS <- graphdata$te.y
 
     	#GGPLOT2 code
-    	NONCAT_SCAT("QQPLOT")
+ 	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
+
 #===================================================================================================================
     	void <- HTMLInsertGraph(GraphFileName = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]", "", normPlot), Align = "left")
 

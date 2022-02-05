@@ -949,7 +949,8 @@ if(showNormPlot=="Y") {
 	MainTitle2 <- ""
 
 	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
 
 	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
 

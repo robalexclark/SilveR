@@ -140,273 +140,345 @@ if ((firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCa
       HTML.title("Categorised summary statistics", HR=2, align="left")
 }
 
-for (i in 1:resplength) {
-	csResponses <- resplist[i]
+if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") {
+	for (i in 1:resplength) {
+		csResponses <- resplist[i]
+		#Setting up parameters and vectors
+	        length <- length(unique(levels(as.factor(statdata$catfact))))
+	        tablenames <- c(levels(as.factor(statdata$catfact)))
+	        table <- c(1:length)
+	        for (i in 1:length) {
+	        	table[i] = " "
+	        }
 
-        if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat != "NULL") {
+            	vectormean <- c(1:length)
+            	vectorN <- c(1:length)
+            	vectorStDev <- c(1:length)
+            	vectorVariances <- c(1:length)
+            	vectorStErr <- c(1:length)
+            	vectorMin <- c(1:length)
+            	vectorMax <- c(1:length)
+            	vectorMedian <- c(1:length)
+            	vectorLQ <- c(1:length)
+            	vectorUQ <- c(1:length)
+            	vectorCoeffVariation <- c(1:length)
+            	vectorUCI <- c(1:length)
+            	vectorLCI <- c(1:length)
 
-            #Setting up parameters and vectors
-            length <- length(unique(levels(as.factor(statdata$catfact))))
-            tablenames <- c(levels(as.factor(statdata$catfact)))
-            table <- c(1:length)
-            for (i in 1:length) {
-                table[i] = " "
-            }
+		#Generating the summary stats
+            	for (i in 1:length) {
+                	sub <- subset(statdata, statdata$catfact == unique(levels(as.factor(statdata$catfact)))[i])
+                	sub2 <- data.frame(sub)
+                	if (mean == "Y") {
+                	    vectormean[i] = mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
+                	}
+                	if (N == "Y") {
+                    		tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
+                    		vectorN[i] = length(tempy)
+                	}
+                	if (StDev == "Y") {
+                    		vectorStDev[i] = sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
+                	}
+                	if (Variances == "Y") {
+                    		vectorVariances[i] = var(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
+                	}
+                	if (StErr == "Y") {
+                    		tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
+                    		vectorStErr[i] = sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / (length(tempy)) ** (0.5)
+                	}
+                	if (MinMax == "Y") {
+                    		vectorMin[i] = suppressWarnings(min(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
+                	}
+                	if (MinMax == "Y") {
+                    		vectorMax[i] = suppressWarnings(max(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
+                	}
+                	if (MedianQuartile == "Y") {
+                    		vectorMedian[i] = median(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
+                	}
+               	 	if (MedianQuartile == "Y") {
+                    		vectorLQ[i] = quantile(eval(parse(text = paste("sub2$", csResponses))), 0.25, type = 2, na.rm = TRUE)
+                	}
+                	if (MedianQuartile == "Y") {
+                    		vectorUQ[i] = quantile(eval(parse(text = paste("sub2$", csResponses))), 0.75, type = 2, na.rm = TRUE)
+                	}
+                	if (CoeffVariation == "Y") {
+                    		vectorCoeffVariation[i] = 100 * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / abs(mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
+                	}
+                	if (confidenceLimits == "Y") {
+                    		tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
+                    		vectorLCI[i] = mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) - qt(1 - (1 - CIval) / 2, (length(tempy) - 1)) * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / (length(tempy)) ** (0.5)
+                	}
+                	if (confidenceLimits == "Y") {
+                    		tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
+                    		vectorUCI[i] = mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) + qt(1 - (1 - CIval) / 2, (length(tempy) - 1)) * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / (length(tempy)) ** (0.5)
+                	}
+            	}
 
-            vectormean <- c(1:length)
-            vectorN <- c(1:length)
-            vectorStDev <- c(1:length)
-            vectorVariances <- c(1:length)
-            vectorStErr <- c(1:length)
-            vectorMin <- c(1:length)
-            vectorMax <- c(1:length)
-            vectorMedian <- c(1:length)
-            vectorLQ <- c(1:length)
-            vectorUQ <- c(1:length)
-            vectorCoeffVariation <- c(1:length)
-            vectorUCI <- c(1:length)
-            vectorLCI <- c(1:length)
+            	#Generating final table dataset
+            	if (mean == "Y") {
+                	vectormean <- format(round(vectormean, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectormean)
+            	}
+            	if (N == "Y") {
+                	#vectorN<-format(round(vectormean, 4), nsmall=4, scientific=FALSE)
+                	table <- cbind(table, vectorN)
+            	}
+            	if (Variances == "Y") {
+                	vectorVariances <- format(round(vectorVariances, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorVariances)
+            	}
+            	if (StDev == "Y") {
+                	vectorStDev <- format(round(vectorStDev, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorStDev)
+            	}
+            	if (StErr == "Y") {
+                	vectorStErr <- format(round(vectorStErr, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorStErr)
+            	}
+            	if (CoeffVariation == "Y") {
+                	vectorCoeffVariation <- format(round(vectorCoeffVariation, 1), nsmall = 1, scientific = FALSE)
+                	table <- cbind(table, vectorCoeffVariation)
+            	}
+            	if (confidenceLimits == "Y") {
+                	vectorLCI <- format(round(vectorLCI, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorLCI)
+            	}
+            	if (confidenceLimits == "Y") {
+                	vectorUCI <- format(round(vectorUCI, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorUCI)
+            	}
+            	if (MinMax == "Y") {
+                	vectorMin <- format(round(vectorMin, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorMin)
+            	}
+            	if (MinMax == "Y") {
+                	vectorMax <- format(round(vectorMax, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorMax)
+            	}
+            	if (MedianQuartile == "Y") {
+                	vectorMedian <- format(round(vectorMedian, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorMedian)
+            	}
+            	if (MedianQuartile == "Y") {
+                	vectorLQ <- format(round(vectorLQ, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorLQ)
+            	}
+            	if (MedianQuartile == "Y") {
+                	vectorUQ <- format(round(vectorUQ, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorUQ)
+            	}
 
+ 	       	#Generating column names
+            	temp6 <- c("Categorisation Factor levels")
+            	if (mean == "Y") {
+            		hed1 <- c("Mean")
+                	temp6 <- cbind(temp6, hed1)
+            	}
+            	if (N == "Y") {
+                	hed2 <- c("N")
+                	temp6 <- cbind(temp6, hed2)
+            	}
+            	if (Variances == "Y") {
+                	hed4 <- c("Variance")
+                	temp6 <- cbind(temp6, hed4)
+            	}
+            	if (StDev == "Y") {
+                	#STB May 2012 changing header
+                	hed3 <- c("Std dev")
+                	temp6 <- cbind(temp6, hed3)
+            	}
+            	if (StErr == "Y") {
+                	#STB May 2012 changing header
+                	hed5 <- c("Std error")
+                	temp6 <- cbind(temp6, hed5)
+            	}
+           	if (CoeffVariation == "Y") {
+                	hed11 <- c("%CV")
+                	temp6 <- cbind(temp6, hed11)
+            	}
+            	if (confidenceLimits == "Y") {
+                	CIlow <- paste("Lower ", 100 * CIval, sep = "")
+                	CIlow <- paste(CIlow, "% CI", sep = "")
+                	hed12 <- c(CIlow)
+                	temp6 <- cbind(temp6, hed12)
+            	}
+            	if (confidenceLimits == "Y") {
+                	CIhigh <- paste("Upper ", 100 * CIval, sep = "")
+                	CIhigh <- paste(CIhigh, "% CI", sep = "")
+                	hed13 <- c(CIhigh)
+                	temp6 <- cbind(temp6, hed13)
+            	}
+            	if (MinMax == "Y") {
+                	hed6 <- c("Min")
+                	temp6 <- cbind(temp6, hed6)
+            	}
+            	if (MinMax == "Y") {
+                	hed7 <- c("Max")
+                	temp6 <- cbind(temp6, hed7)
+            	}
+            	if (MedianQuartile == "Y") {
+                	hed8 <- c("Median")
+                	temp6 <- cbind(temp6, hed8)
+            	}
+            	if (MedianQuartile == "Y") {
+                	hed9 <- c("Lower quartile")
+                	temp6 <- cbind(temp6, hed9)
+            	}
+            	if (MedianQuartile == "Y") {
+                	hed10 <- c("Upper quartile")
+                	temp6 <- cbind(temp6, hed10)
+            	}
 
-	    #Generating the summary stats
-            for (i in 1:length) {
-                sub <- subset(statdata, statdata$catfact == unique(levels(as.factor(statdata$catfact)))[i])
-                sub2 <- data.frame(sub)
-                if (mean == "Y") {
-                    vectormean[i] = mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
-                }
-                if (N == "Y") {
-                    tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
-                    vectorN[i] = length(tempy)
-                }
-                if (StDev == "Y") {
-                    vectorStDev[i] = sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
-                }
-                if (Variances == "Y") {
-                    vectorVariances[i] = var(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
-                }
-                if (StErr == "Y") {
-                    tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
-                    vectorStErr[i] = sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / (length(tempy)) ** (0.5)
-                }
-                if (MinMax == "Y") {
-                    vectorMin[i] = suppressWarnings(min(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
-                }
-                if (MinMax == "Y") {
-                    vectorMax[i] = suppressWarnings(max(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
-                }
-                if (MedianQuartile == "Y") {
-                    vectorMedian[i] = median(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
-                }
-                if (MedianQuartile == "Y") {
-                    vectorLQ[i] = quantile(eval(parse(text = paste("sub2$", csResponses))), 0.25, type = 2, na.rm = TRUE)
-                }
-                if (MedianQuartile == "Y") {
-                    vectorUQ[i] = quantile(eval(parse(text = paste("sub2$", csResponses))), 0.75, type = 2, na.rm = TRUE)
-                }
-                if (CoeffVariation == "Y") {
-                    vectorCoeffVariation[i] = 100 * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / abs(mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE))
-                }
-                if (confidenceLimits == "Y") {
-                    tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
-                    vectorLCI[i] = mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) - qt(1 - (1 - CIval) / 2, (length(tempy) - 1)) * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / (length(tempy)) ** (0.5)
-                }
-                if (confidenceLimits == "Y") {
-                    tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
-                    vectorUCI[i] = mean(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) + qt(1 - (1 - CIval) / 2, (length(tempy) - 1)) * sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE) / (length(tempy)) ** (0.5)
-                }
-            }
+  	    	#Generating row names
+            	rownms <- c(" ")
+            	for (i in 1:length) {
+                	rownms[i] <- levels(as.factor(statdata$catfact))[i]
+            	}
+	    	table <- table[,-1]
+            	table <- cbind(rownms, table)
+            	colnames(table) <- temp6
 
-            #Generating final table dataset
-            if (mean == "Y") {
-                vectormean <- format(round(vectormean, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectormean)
-            }
-            if (N == "Y") {
-                #vectorN<-format(round(vectormean, 4), nsmall=4, scientific=FALSE)
-                table <- cbind(table, vectorN)
-            }
-            if (Variances == "Y") {
-                vectorVariances <- format(round(vectorVariances, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorVariances)
-            }
-            if (StDev == "Y") {
-                vectorStDev <- format(round(vectorStDev, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorStDev)
-            }
-            if (StErr == "Y") {
-                vectorStErr <- format(round(vectorStErr, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorStErr)
-            }
-            if (CoeffVariation == "Y") {
-                vectorCoeffVariation <- format(round(vectorCoeffVariation, 1), nsmall = 1, scientific = FALSE)
-                table <- cbind(table, vectorCoeffVariation)
-            }
-            if (confidenceLimits == "Y") {
-                vectorLCI <- format(round(vectorLCI, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorLCI)
-            }
-            if (confidenceLimits == "Y") {
-                vectorUCI <- format(round(vectorUCI, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorUCI)
-            }
-            if (MinMax == "Y") {
-                vectorMin <- format(round(vectorMin, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorMin)
-            }
-            if (MinMax == "Y") {
-                vectorMax <- format(round(vectorMax, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorMax)
-            }
-            if (MedianQuartile == "Y") {
-                vectorMedian <- format(round(vectorMedian, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorMedian)
-            }
-            if (MedianQuartile == "Y") {
-                vectorLQ <- format(round(vectorLQ, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorLQ)
-            }
-            if (MedianQuartile == "Y") {
-                vectorUQ <- format(round(vectorUQ, 4), nsmall = 4, scientific = FALSE)
-                table <- cbind(table, vectorUQ)
-            }
+            	#Generating title for the tables
+            	add <- paste(c("Summary statistics for "), csResponses, sep = "")
+            	add <- paste(add, " categorised by ", sep = "")
 
-            #Generating column names
-            temp6 <- c("Categorisation Factor levels")
-            if (mean == "Y") {
-                hed1 <- c("Mean")
-                temp6 <- cbind(temp6, hed1)
-            }
-            if (N == "Y") {
-                hed2 <- c("N")
-                temp6 <- cbind(temp6, hed2)
-            }
-            if (Variances == "Y") {
-                hed4 <- c("Variance")
-                temp6 <- cbind(temp6, hed4)
-            }
-            if (StDev == "Y") {
-                #STB May 2012 changing header
-                hed3 <- c("Std dev")
-                temp6 <- cbind(temp6, hed3)
-            }
-            if (StErr == "Y") {
-                #STB May 2012 changing header
-                hed5 <- c("Std error")
-                temp6 <- cbind(temp6, hed5)
-            }
-           if (CoeffVariation == "Y") {
-                hed11 <- c("%CV")
-                temp6 <- cbind(temp6, hed11)
-            }
-            if (confidenceLimits == "Y") {
-                CIlow <- paste("Lower ", 100 * CIval, sep = "")
-                CIlow <- paste(CIlow, "% CI", sep = "")
-                hed12 <- c(CIlow)
-                temp6 <- cbind(temp6, hed12)
-            }
-            if (confidenceLimits == "Y") {
-                CIhigh <- paste("Upper ", 100 * CIval, sep = "")
-                CIhigh <- paste(CIhigh, "% CI", sep = "")
-                hed13 <- c(CIhigh)
-                temp6 <- cbind(temp6, hed13)
-            }
-            if (MinMax == "Y") {
-                hed6 <- c("Min")
-                temp6 <- cbind(temp6, hed6)
-            }
-            if (MinMax == "Y") {
-                hed7 <- c("Max")
-                temp6 <- cbind(temp6, hed7)
-            }
-            if (MedianQuartile == "Y") {
-                hed8 <- c("Median")
-                temp6 <- cbind(temp6, hed8)
-            }
-            if (MedianQuartile == "Y") {
-                hed9 <- c("Lower quartile")
-                temp6 <- cbind(temp6, hed9)
-            }
-            if (MedianQuartile == "Y") {
-                hed10 <- c("Upper quartile")
-                temp6 <- cbind(temp6, hed10)
-            }
+            	if (firstCat != "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat == "NULL") {
+                	add <- paste(add, firstCat, sep = "")
+            	} 
+	    	if (firstCat == "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat == "NULL") {
+                	add <- paste(add, secondCat, sep = "")
+            	} 
+            	if (firstCat == "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
+                	add <- paste(add, thirdCat, sep = "")
+            	} 
+            	if (firstCat == "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
+                	add <- paste(add, fourthCat, sep = "")
+            	}
+            	if (firstCat != "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat == "NULL") {
+                	add <- paste(add, firstCat, " and ", secondCat, sep = "")
+            	}
+            	if (firstCat != "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
+                	add <- paste(add, firstCat, " and ", thirdCat, sep = "")
+            	}
+            	if (firstCat != "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
+                	add <- paste(add, firstCat, " and ", fourthCat, sep = "")
+            	}
+            	if (firstCat == "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
+                	add <- paste(add, secondCat, " and ", thirdCat, sep = "")
+            	}
+            	if (firstCat == "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
+                	add <- paste(add, secondCat, " and ", fourthCat, sep = "")
+            	}
+            	if (firstCat == "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
+                	add <- paste(add, thirdCat, " and ", fourthCat, sep = "")
+            	}
+            	if (firstCat == "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
+                	add <- paste(add, secondCat, ", ", thirdCat, " and ", fourthCat, sep = "")
+            	}
+            	if (firstCat != "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
+               		add <- paste(add, firstCat, ", ", secondCat, " and ", thirdCat, sep = "")
+            	}
+            	if (firstCat != "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
+               		add <- paste(add, firstCat, ", ", secondCat, " and ", fourthCat, sep = "")
+            	}
+            	if (firstCat != "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
+               		add <- paste(add, firstCat, ", ", thirdCat, " and ", fourthCat, sep = "")
+            	}
+            	if (firstCat != "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
+               		add <- paste(add, firstCat, ", ", secondCat, ", ", thirdCat, " and ", fourthCat, sep = "")
+            	}
 
-  	    #Generating row names
-            rownms <- c(" ")
-            for (i in 1:length) {
-                rownms[i] <- levels(as.factor(statdata$catfact))[i]
-            }
-	    table <- table[,-1]
-            table <- cbind(rownms, table)
-            colnames(table) <- temp6
+		#Removing blank rows
+	    	if (rownms[1] == "") {
+			table2 <-table[-1,]
+	    	} else {
+			table2 <-table
+	    	}
 
-            #Generating title for the tables
-            add <- paste(c("Summary statistics for "), csResponses, sep = "")
-            add <- paste(add, " categorised by ", sep = "")
+	    	if (resplength == 1){
+            		#Output tables 
+            		HTML.title(add, HR = 2, align = "left")
+            	} else {
+            		HTML.title(add, HR = 3, align = "left")
+	   	}
+	    	HTML(table2, align = "left", classfirstline = "second", row.names = "FALSE")
+	}
 
-            if (firstCat != "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat == "NULL") {
-                add <- paste(add, firstCat, sep = "")
-            } 
-	    if (firstCat == "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat == "NULL") {
-                add <- paste(add, secondCat, sep = "")
-            } 
-            if (firstCat == "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
-                add <- paste(add, thirdCat, sep = "")
-            } 
-            if (firstCat == "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
-                add <- paste(add, fourthCat, sep = "")
-            }
-            if (firstCat != "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat == "NULL") {
-                add <- paste(add, firstCat, " and ", secondCat, sep = "")
-            }
-            if (firstCat != "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
-                add <- paste(add, firstCat, " and ", thirdCat, sep = "")
-            }
-            if (firstCat != "NULL" && secondCat == "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
-                add <- paste(add, firstCat, " and ", fourthCat, sep = "")
-            }
-            if (firstCat == "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
-                add <- paste(add, secondCat, " and ", thirdCat, sep = "")
-            }
-            if (firstCat == "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
-                add <- paste(add, secondCat, " and ", fourthCat, sep = "")
-            }
-            if (firstCat == "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
-                add <- paste(add, thirdCat, " and ", fourthCat, sep = "")
-            }
-            if (firstCat == "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
-                add <- paste(add, secondCat, ", ", thirdCat, " and ", fourthCat, sep = "")
-            }
-            if (firstCat != "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat == "NULL") {
-               add <- paste(add, firstCat, ", ", secondCat, " and ", thirdCat, sep = "")
-            }
-            if (firstCat != "NULL" && secondCat != "NULL" && thirdCat == "NULL" && fourthCat != "NULL") {
-               add <- paste(add, firstCat, ", ", secondCat, " and ", fourthCat, sep = "")
-            }
-            if (firstCat != "NULL" && secondCat == "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
-               add <- paste(add, firstCat, ", ", thirdCat, " and ", fourthCat, sep = "")
-            }
-            if (firstCat != "NULL" && secondCat != "NULL" && thirdCat != "NULL" && fourthCat != "NULL") {
-               add <- paste(add, firstCat, ", ", secondCat, ", ", thirdCat, " and ", fourthCat, sep = "")
-            }
-
-	    #Removing blank rows
-	    if (rownms[1] == "") {
-		table2 <-table[-1,]
-	    } else {
-		table2 <-table
-	    }
-
-	    if (resplength == 1){
-            	#Output tables 
-            	HTML.title(add, HR = 2, align = "left")
-            } else {
-            	HTML.title(add, HR = 3, align = "left")
-	   }
-	    HTML(table2, align = "left", classfirstline = "second", row.names = "FALSE")
+	#===================================================================================================================
+	#Normal probability plot
+	#===================================================================================================================
+	if (NormalProbabilityPlot != "N" && resplength > 1) {
+	    HTML.title("Normal probability plots", HR = 2, align = "left")
+	}
+	if (NormalProbabilityPlot != "N" ) {
+	#===================================================================================================================
+		#Graphical plot options
+	    	YAxisTitle <- "Sample Quantiles"
+	    	XAxisTitle <- "Theoretical Quantiles"
+	    	Line_size <- 0.5
+	    	Gr_alpha <- 1
+	    	Line_type <- Line_type_dashed
+	    	Gr_palette<-palette_FUN("catfact")
+	#===================================================================================================================
+   		index <- 1
+ 	
+		for (i in 1: (length(expectedChanges)-1)) {
+			normPlot2 <- sub(".html", "IVS", htmlFile)
+		    	normPlot2 <- paste(normPlot2, index, "normplot2.png", sep = "")
+		    	png(normPlot2, width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
+	
+	    		#STB July2013
+		   	plotFilepdf5 <- sub(".html", "IVS", htmlFile)
+	    		plotFilepdf5 <- paste(plotFilepdf5, index, "normplot.pdf", sep = "")
+	    		dev.control("enable")
+		
+			#Plot title text
+		    	csResponses <- resplist[index]
+		    	csResponsesqq <- resplistqq[index]
+		    	adda <- paste(c("Categorised Normal probability plot for "), csResponsesqq ,  sep = "")
+	
+#			if ((firstCat != "NULL" && secondCat != "NULL") || (firstCat != "NULL" && thirdCat != "NULL") || (firstCat != "NULL" && fourthCat != "NULL") || (secondCat != "NULL" && thirdCat != "NULL") || (secondCat != "NULL" && fourthCat != "NULL") || (thirdCat != "NULL" && fourthCat != "NULL") ) {
+#		        	adda <- paste(adda, "s", sep = "")
+#			}
+		
+			if (resplength == 1) {
+				HTML.title(adda, HR = 2, align = "left")
+			} else {
+			HTML.title(adda, HR = 3, align = "left")
+		}
+		
+		MainTitle2 <- ""
+		graphdata <- statdata
+		graphdata$yvarrr_IVS <- eval(parse(text = paste("statdata$", csResponses))) 
+	
+	    	#GGPLOT2 code
+		#NONCAT_SCAT("QQPLOT")
+		CAT_QQPLOT()
+	
+	#===================================================================================================================	
+	    	void <- HTMLInsertGraph(GraphFileName = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]", "", normPlot2), Align = "left")
+	
+	    	#STB July2013
+	    	if (pdfout == "Y") {
+	        	pdf(file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]", "", plotFilepdf5), height = pdfheight, width = pdfwidth)
+	        	dev.set(2)
+	        	dev.copy(which = 3)
+	        	dev.off(2)
+	        	dev.off(3)
+	        	pdfFile_5 <- sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]", "", plotFilepdf5)
+	        	linkToPdf5 <- paste("<a href=\"", pdfFile_5, "\">Click here to view the PDF of the normal probability plot</a>", sep = "")
+	        	HTML(linkToPdf5)
+	    	}
+	
+		index <- index +1
+	     }
+	
+	     HTML("Tip: Check that the points lie along the dotted lines. If not then the data may be non-normally distributed.", align="left")		
 	}
 }
+
+
+
 
 #===================================================================================================================
 #Non-categorisation analysis
@@ -695,7 +767,9 @@ if (NormalProbabilityPlot != "N" ) {
     	graphdata$yvarrr_IVS <- graphdata$te.y
 
     	#GGPLOT2 code
-    	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
+
 #===================================================================================================================
     	void <- HTMLInsertGraph(GraphFileName = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]", "", normPlot), Align = "left")
 
