@@ -1,4 +1,56 @@
 
+# ps 1.6.0
+
+* New function `ps_system_cpu_times()` to calculate system CPU times.
+
+* New function `ps_loadavg()` to show the Unix style load average.
+
+# ps 1.5.0
+
+* New function `ps_shared_libs()` to list the loaded shared libraries
+  of a process, on Windows.
+
+* New function `ps_shared_lib_users()` to list all processes that
+  loaded a certain shared library, on Windows.
+
+* New function `ps_descent()` to query the ancestry of a process.
+
+# ps 1.4.0
+
+* ps is now under the MIT license.
+
+* Process functions now default to the calling R process. So e.g. you can
+  write simply `ps_connections()` to list all network connections of the
+  current process, instead of `ps_connections(ps_handle())`.
+
+* New `ps_get_nice()` and `ps_set_nice()` functions to get and set the
+  priority of a process (#89).
+
+* New `ps_system_memory()` and `ps_system_swap()` functions, to
+  return information about system memory and swap usage.
+
+* New `ps_disk_partitions()` and `ps_disk_usage()` functions, they
+  return information about file systems, similarly to the `mount` and
+  `df` Unix commands.
+
+* New `ps_tty_size()` function to query the size of the terminal.
+
+* Fixed an issue in `CLeanupReporter()` that triggered random failures
+  on macOS.
+
+# ps 1.3.4
+
+* `ps_cpu_count()` now reports the correct number on Windows, even if
+  the package binary was built on a Windows version with a different
+  API (#77).
+
+# ps 1.3.3
+
+* New function `errno()` returns a table of `errno.h` error codes and
+  their description.
+
+* ps now compiles again on Solaris.
+
 # ps 1.3.2
 
 * ps now compiles again on unsupported platforms like Solaris.

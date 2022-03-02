@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Parallel mapply-like functionality</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bpmapply {BiocParallel}"><tr><td>bpmapply {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Parallel mapply-like functionality</h2>
+
+<h3>Description</h3>
+
+<p><code>bpmapply</code> applies <code>FUN</code> to first elements of <code>...</code>,
+the second elements and so on.  Any type of object in <code>...</code> is
+allowed, provided <code>length</code>, <code>[</code>, and <code>[[</code> methods are
+available. The return value is a <code>list</code> of length equal to the
+length of all objects provided, as with <code><a href="../../base/help/mapply.html">mapply</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+
+bpmapply(FUN, ..., MoreArgs=NULL, SIMPLIFY=TRUE, USE.NAMES=TRUE,
+    BPREDO=list(), BPPARAM=bpparam())
+
+## S4 method for signature 'ANY,missing'
+bpmapply(FUN, ..., MoreArgs=NULL, SIMPLIFY=TRUE, 
+    USE.NAMES=TRUE, BPREDO=list(), BPPARAM=bpparam())
+
+## S4 method for signature 'ANY,BiocParallelParam'
+bpmapply(FUN, ..., MoreArgs=NULL, 
+    SIMPLIFY=TRUE, USE.NAMES=TRUE, BPREDO=list(), BPPARAM=bpparam())
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+<p>The <code>function</code> to be applied to each element passed
+via <code>...</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Objects for which methods <code>length</code>, <code>[</code>, and
+<code>[[</code> are implemented. All objects must have the same length or
+shorter objects will be replicated to have length equal to the
+longest.
+</p>
+</td></tr>
+<tr valign="top"><td><code>MoreArgs</code></td>
+<td>
+<p>List of additional arguments to <code>FUN</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>SIMPLIFY</code></td>
+<td>
+
+<p>If <code>TRUE</code> the result will be simplified using
+<code><a href="../../base/html/lapply.html">simplify2array</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>USE.NAMES</code></td>
+<td>
+<p>If <code>TRUE</code> the result will be named.
+</p>
+</td></tr>
+<tr valign="top"><td><code>BPPARAM</code></td>
+<td>
+<p>An optional <code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> instance
+defining the parallel back-end to be used during evaluation.
+</p>
+</td></tr>
+<tr valign="top"><td><code>BPREDO</code></td>
+<td>
+<p>A <code>list</code> of output from <code>bpmapply</code> with one or
+more failed elements. When a list is given in <code>BPREDO</code>,
+<code>bpok</code> is used to identify errors, tasks are rerun and inserted
+into the original results.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>See <code>methods{bpmapply}</code> for additional methods, e.g.,
+<code>method?bpmapply("MulticoreParam")</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>See <code><a href="../../base/help/mapply.html">mapply</a></code>.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Michel Lang . Original code as attributed in
+<code><a href="../../parallel/html/mcdummies.html">mclapply</a></code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code><a href="../../BiocParallel/help/bpvec.html">bpvec</a></code> for parallel, vectorized calculations.
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> for possible values of <code>BPPARAM</code>.
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+methods("bpmapply")
+
+fun &lt;- function(greet, who) {
+    paste(Sys.getpid(), greet, who)
+}
+greet &lt;- c("morning", "night")
+who &lt;- c("sun", "moon")
+
+param &lt;- bpparam()
+original &lt;- bpworkers(param)
+bpworkers(param) &lt;- 2
+result &lt;- bpmapply(fun, greet, who, BPPARAM = param)
+cat(paste(result, collapse="\n"), "\n")
+bpworkers(param) &lt;- original
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

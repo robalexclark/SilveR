@@ -4,3 +4,5 @@ decode_colour           Decode RGB hex-strings into colour values
 encode_colour           Encode colours into RGB hex-strings
 manip_channel           Modify colour space channels in hex-encoded
                         colour strings
+native-encoding         Convert to and from the R native colour
+                        representation

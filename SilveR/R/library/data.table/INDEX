@@ -9,6 +9,7 @@ as.data.table.xts       Efficient xts to as.data.table conversion
 as.matrix               Convert a data.table to a matrix
 as.xts.data.table       Efficient data.table to xts conversion
 between                 Convenience functions for range subsets.
+cdatatable              data.table exported C routines
 chmatch                 Faster match of character vectors
 copy                    Copy an entire object
 data.table-class        S4 Definition for data.table
@@ -16,6 +17,7 @@ data.table-package      Enhanced data.frame
 datatable.optimize      Optimisations in data.table
 dcast.data.table        Fast dcast for data.table
 duplicated              Determine Duplicate Rows
+fcase                   fcase
 fcoalesce               Coalescing missing values
 fifelse                 Fast ifelse
 foverlaps               Fast overlap joins

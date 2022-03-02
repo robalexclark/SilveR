@@ -1,5 +1,4 @@
 ### R code from vignette source 'combine_maptools.Rnw'
-### Encoding: UTF-8
 
 ###################################################
 ### code chunk number 1: combine_maptools.Rnw:44-47

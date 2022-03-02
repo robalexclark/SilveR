@@ -175,6 +175,10 @@ graphdata<-statdata
 Line_size2 <- Line_size
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #===================================================================================================================
 #Titles and description
@@ -412,7 +416,7 @@ if (plotOfModelPredicted == "Y") {
 		}
 
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
-			labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
+			labels <- c(levels(as.factor(eval(parse(text = paste("statdata$",resp))))))
 			positiveResult2<- c(positiveResult)
 			labels2<- labels[!labels %in% positiveResult2]
 			labelsz<-c(labels2, positiveResult)
@@ -463,7 +467,7 @@ if (plotOfModelPredicted == "Y") {
 
 	#Predictions when there is a single continuous factor and a single categorical only in the model
 	if(noblockfactors==0 && nocovars==0 && notreatfactors ==1 && nocontfactors == 1) {
-		trlevs <- length(levels(eval(parse(text = paste("statdata$", treatlist[1])))))
+		trlevs <- length(levels(as.factor(eval(parse(text = paste("statdata$", treatlist[1]))))))
 
 		#Calculating the range of the continuous factor
 		Minrange = suppressWarnings(floor(min(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE)))
@@ -477,11 +481,15 @@ if (plotOfModelPredicted == "Y") {
 		}
 
 		newdata<-data.frame(newdata)
-		newdata$treat_IVS_treat<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[1]
-		tempdata<-newdata
+
+	tempdata<-newdata
+		newdata$treat_IVS_treat<- levels(as.factor(eval(parse(text = paste("statdata$", treatlist[1])))))[1]
+
+	
+
 		for (i in 2:trlevs){
-			temptempdata<-tempdata
-			temptempdata$treat_IVS_treat<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[i]
+			temptempdata<-data.frame(tempdata)
+			temptempdata$treat_IVS_treat<- levels(as.factor(eval(parse(text = paste("statdata$", treatlist[1])))))[i]
 			newdata <- rbind(newdata, temptempdata)
 		}
 		colnames(newdata) <- c(ContinuousList[1], treatlist[1])
@@ -500,7 +508,7 @@ if (plotOfModelPredicted == "Y") {
 		}
 
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
-			labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
+			labels <- c(levels(as.factor(eval(parse(text = paste("statdata$",resp))))))
 			positiveResult2<- c(positiveResult)
 			labels2<- labels[!labels %in% positiveResult2]
 			labelsz<-c(labels2, positiveResult)
@@ -553,8 +561,8 @@ if (plotOfModelPredicted == "Y") {
 
 	#Predictions when there is a single continuous factor and a single categorical only in the model
 	if(noblockfactors==0 && nocovars==0 && notreatfactors ==2 && nocontfactors == 1) {
-		trlevs1 <- length(levels(eval(parse(text = paste("statdata$", treatlist[1])))))
-		trlevs2 <- length(levels(eval(parse(text = paste("statdata$", treatlist[2])))))
+		trlevs1 <- length(levels(as.factor(eval(parse(text = paste("statdata$", treatlist[1]))))))
+		trlevs2 <- length(levels(as.factor(eval(parse(text = paste("statdata$", treatlist[2]))))))
 
 		#Calculating the range of the continuous factor
 		Minrange = suppressWarnings(min(eval(parse(text = paste("statdata$", ContinuousList[1]))), na.rm = TRUE))
@@ -571,8 +579,8 @@ if (plotOfModelPredicted == "Y") {
 		for (i in 1:trlevs1){
 			for (j in 1:trlevs2) {
 				temptempdata<-IDdata
-				temptempdata$treat_IVS_treat1<- levels(eval(parse(text = paste("statdata$", treatlist[1]))))[i]
-				temptempdata$treat_IVS_treat2<- levels(eval(parse(text = paste("statdata$", treatlist[2]))))[j]
+				temptempdata$treat_IVS_treat1<- levels(as.factor(eval(parse(text = paste("statdata$", treatlist[1])))))[i]
+				temptempdata$treat_IVS_treat2<- levels(as.factor(eval(parse(text = paste("statdata$", treatlist[2])))))[j]
 				if (i==1 && j==1) {
 					newdata <- temptempdata
 				} else {
@@ -598,7 +606,7 @@ if (plotOfModelPredicted == "Y") {
 		}
 
 		if (is.numeric(eval(parse(text = paste("statdata$",resp))))==FALSE){
-			labels <- c(levels(eval(parse(text = paste("statdata$",resp)))))
+			labels <- c(levels(as.factor(eval(parse(text = paste("statdata$",resp))))))
 			positiveResult2<- c(positiveResult)
 			labels2<- labels[!labels %in% positiveResult2]
 			labelsz<-c(labels2, positiveResult)

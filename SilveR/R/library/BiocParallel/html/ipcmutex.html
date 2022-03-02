@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Inter-process locks and counters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for ipcmutex {BiocParallel}"><tr><td>ipcmutex {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Inter-process locks and counters</h2>
+
+<h3>Description</h3>
+
+<p>Functions documented on this page enable locks and counters between
+processes on the <em>same</em> computer.
+</p>
+<p>Use <code>ipcid()</code> to generate a unique mutex or counter identifier. A
+mutex or counter with the same <code>id</code>, including those in different
+processes, share the same state.
+</p>
+<p><code>ipcremove()</code> removes external state associated with mutex or
+counters created with <code>id</code>.
+</p>
+<p><code>ipclock()</code> blocks until the lock is
+obtained. <code>ipctrylock()</code> tries to obtain the lock, returning
+immediately if it is not available. <code>ipcunlock()</code> releases the
+lock. <code>ipclocked()</code> queries the lock to determine whether it is
+currently held.
+</p>
+<p><code>ipcyield()</code> returns the current counter, and increments the
+value for subsequent calls. <code>ipcvalue()</code> returns the current
+counter without incrementing. <code>ipcreset()</code> sets the counter to
+<code>n</code>, such that the next call to <code>ipcyield()</code> or
+<code>ipcvalue()</code> returns <code>n</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## Utilities
+
+ipcid(id)
+
+ipcremove(id)
+
+## Locks
+
+ipclock(id)
+
+ipctrylock(id)
+
+ipcunlock(id)
+
+ipclocked(id)
+
+## Counters
+
+ipcyield(id)
+
+ipcvalue(id)
+
+ipcreset(id, n = 1)
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>character(1) identifier string for mutex or
+counter. <code>ipcid()</code> ensures that the identifier is universally
+unique.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>integer(1) value from which <code>ipcyield()</code> will
+increment.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Locks:
+</p>
+<p><code>ipclock()</code> creates a named lock, returning <code>TRUE</code>
+on success.
+</p>
+<p><code>trylock()</code> returns <code>TRUE</code> if the lock is
+obtained, <code>FALSE</code> otherwise.
+</p>
+<p><code>ipcunlock()</code> returns <code>TRUE</code> on success,
+<code>FALSE</code> (e.g., because there is nothing to unlock)
+otherwise.
+</p>
+<p><code>ipclocked()</code> returns <code>TRUE</code> when <code>id</code> is locked, and
+<code>FALSE</code> otherwise.
+</p>
+<p>Counters:
+</p>
+<p><code>ipcyield()</code> returns an integer(1) value representing the next
+number in sequence. The first value returned is 1.
+</p>
+<p><code>ipcvalue()</code> returns the value to be returned by the next call to
+<code>ipcyield()</code>, without incrementing the counter. If the counter is
+no longer available, <code>ipcyield()</code> returns <code>NA</code>.
+</p>
+<p><code>ipcreset()</code> returns <code>n</code>, invisibly.
+</p>
+<p>Utilities:
+</p>
+<p><code>ipcid()</code> returns a character(1) unique identifier, with
+<code>id</code> (if not missing) prepended.
+</p>
+<p><code>ipcremove()</code> returns (invisibly) <code>TRUE</code> if external
+resources were released or <code>FALSE</code> if not (e.g., because the
+resources has already been released).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+ipcid()
+
+## Locks
+
+id &lt;- ipcid()
+
+ipclock(id)
+ipctrylock(id)
+ipcunlock(id)
+ipctrylock(id)
+ipclocked(id)
+
+ipcremove(id)
+
+id &lt;- ipcid()
+system.time({
+    ## about 1s, .2s for each process instead of .2s if no lock
+    result &lt;- bplapply(1:2, function(i, id) {
+        BiocParallel::ipclock(id)
+        Sys.sleep(.2)
+        time &lt;- Sys.time()
+        BiocParallel::ipcunlock(id)
+        time
+    }, id)
+})
+ipcremove(id)
+diff(sort(unlist(result, use.names=FALSE)))
+
+## Counters
+
+id &lt;- ipcid()
+
+ipcyield(id)
+ipcyield(id)
+
+ipcvalue(id)
+ipcyield(id)
+
+ipcreset(id, 10)
+ipcvalue(id)
+ipcyield(id)
+
+ipcremove(id)
+
+id &lt;- ipcid()
+result &lt;- bplapply(1:2, function(i, id) {
+    BiocParallel::ipcyield(id)
+}, id)
+ipcremove(id)
+sort(unlist(result, use.names=FALSE))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,8 +1,14 @@
 ---
 title: "Rectangling"
 output: rmarkdown::html_vignette
+description: |
+  Rectangling is the art and craft of taking a deeply nested list (often 
+  sourced from wild caught JSON or XML) and taming it into a tidy data set of 
+  rows and columns. This vignette introduces you to the main rectangling tools
+  provided by tidyr: `unnest_longer()`, `unnest_wider()`, `unnest_auto()`,
+  and `hoist()`.
 vignette: >
-  %\VignetteIndexEntry{rectangling}
+  %\VignetteIndexEntry{Rectangling}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -68,7 +74,7 @@ users %>% hoist(user,
 
 `hoist()` removes the named components from the `user` list-column, so you can think of it as moving components out of the inner list into the top-level data frame. 
 
-## Github repos
+## GitHub repos
 
 We start off `gh_repos` similarly, by putting it in a tibble:
 
@@ -276,7 +282,7 @@ loc %>%
 
 ## Sharla Gelfand's discography
 
-We'll finish off with the most complex list, from [Sharla Gelfand's](https://sharla.party/posts/discog-purrr/) discography. We'll start the usual way: putting the list into a single column data frame, and then widening so each component is a column. I also parse the `date_added` column into a real date-time[^readr].
+We'll finish off with the most complex list, from [Sharla Gelfand's](https://sharla.party/post/discog-purrr/) discography. We'll start the usual way: putting the list into a single column data frame, and then widening so each component is a column. I also parse the `date_added` column into a real date-time[^readr].
 
 [^readr]: I'd normally use `readr::parse_datetime()` or `lubridate::ymd_hms()`, but I can't here because it's a vignette and I don't want to add a dependency to tidyr just to simplify one example.
 
@@ -303,7 +309,7 @@ The problem is that `basic_information` repeats the `id` column that's also stor
 
 ```{r}
 discs %>% 
-  select(-id) %>% 
+  select(!id) %>% 
   unnest_wider(basic_information)
 ```
 

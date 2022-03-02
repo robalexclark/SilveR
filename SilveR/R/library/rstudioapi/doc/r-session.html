@@ -27,6 +27,54 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -318,20 +366,20 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="session-interaction" class="section level2">
 <h2>Session Interaction</h2>
 <p>The <code>rstudioapi</code> package allows you to interact with the running R session in a couple useful ways: you can send code to the R console, or restart the R session.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># restart R, then run some code after</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>rstudioapi<span class="op">::</span><span class="kw">restartSession</span>(<span class="dt">command =</span> <span class="st">&quot;print(&#39;Welcome back!&#39;)&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># send some code to the console and execute it immediately</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>rstudioapi<span class="op">::</span><span class="kw">sendToConsole</span>(<span class="st">&quot;1 + 1&quot;</span>, <span class="dt">execute =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># restart R, then run some code after</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">restartSession</span>(<span class="at">command =</span> <span class="st">&quot;print(&#39;Welcome back!&#39;)&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># send some code to the console and execute it immediately</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">sendToConsole</span>(<span class="st">&quot;1 + 1&quot;</span>, <span class="at">execute =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="running-at-startup" class="section level2">
 <h2>Running at Startup</h2>
 <p>Typically, code that you want to run at the start of an R session is placed into an <code>.Rprofile</code> file (see <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/Startup.html">Initialization at the Start of a Session</a> for details). However, RStudio’s API hooks are not available until RStudio has fully started up, so most <code>rstudioapi</code> methods will not work inside <code>.Rprofile</code>.</p>
 <p>If you want to invoke <code>rstudioapi</code> methods on session startup, use the <code>rstudio.sessionInit</code> hook. For example, to print the RStudio version to the R console when the session begins:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">setHook</span>(<span class="st">&quot;rstudio.sessionInit&quot;</span>, <span class="cf">function</span>(newSession) {</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="cf">if</span> (newSession)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>    <span class="kw">message</span>(<span class="st">&quot;Welcome to RStudio &quot;</span>, rstudioapi<span class="op">::</span><span class="kw">getVersion</span>())</span>
-<span id="cb2-4"><a href="#cb2-4"></a>}, <span class="dt">action =</span> <span class="st">&quot;append&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setHook</span>(<span class="st">&quot;rstudio.sessionInit&quot;</span>, <span class="cf">function</span>(newSession) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (newSession)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;Welcome to RStudio &quot;</span>, rstudioapi<span class="sc">::</span><span class="fu">getVersion</span>())</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}, <span class="at">action =</span> <span class="st">&quot;append&quot;</span>)</span></code></pre></div>
 </div>
 
 

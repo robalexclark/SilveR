@@ -8,19 +8,30 @@
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.4.6" />
+<meta name="author" content="emmeans package, Version 1.7.2" />
 
 
 <title>Utilities and options for emmeans</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
 
 
-<style type="text/css">body {font-size: 11pt; font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;margin: 30px 50px 30px 50px; }h1,h2,h3,h4,h5,h6 { font-family: Arial,Helvetica,Sans-serif; }a { text-decoration: none; }a:link { color:darkblue; } a:visited { color:darkblue; } a:hover { color:dodgerblue; }a:active { color:dodgerblue; } code {color: #602000;font-family: "Lucida Console", Monaco, monospace; font-size: 90%;}.r { color: darkred; }.ro { color: darkgreen; background-color: #eeeeee; }.r code, a code, .ro code { color: inherit; }.vigindex ul { list-style-type: none; }.vigindex ul li { list-style: none; }.vigindex a code { color: inherit; }.vigindex li code { color: inherit; }</style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7Bfont%2Dsize%3A%2011pt%3B%20font%2Dfamily%3A%20%22Palatino%20Linotype%22%2C%20%22Book%20Antiqua%22%2C%20Palatino%2C%20serif%3Bmargin%3A%2030px%2050px%2030px%2050px%3B%20%7Dh1%2Ch2%2Ch3%2Ch4%2Ch5%2Ch6%20%7B%20font%2Dfamily%3A%20Arial%2CHelvetica%2CSans%2Dserif%3B%20%7Da%20%7B%20text%2Ddecoration%3A%20none%3B%20%7Da%3Alink%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Avisited%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Ahover%20%7B%20color%3Adodgerblue%3B%20%7Da%3Aactive%20%7B%20color%3Adodgerblue%3B%20%7D%20code%20%7Bcolor%3A%20%23602000%3Bfont%2Dfamily%3A%20%22Lucida%20Console%22%2C%20Monaco%2C%20monospace%3B%20font%2Dsize%3A%2090%25%3B%7D%2Er%20%7B%20color%3A%20darkred%3B%20%7D%2Ero%20%7B%20color%3A%20darkgreen%3B%20background%2Dcolor%3A%20%23eeeeee%3B%20%7D%2Ere%20%7B%20color%3A%20red%3B%7D%2Er%20code%2C%20a%20code%2C%20%2Ero%20code%2C%20%2Ere%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20ul%20%7B%20list%2Dstyle%2Dtype%3A%20none%3B%20%7D%2Evigindex%20ul%20li%20%7B%20list%2Dstyle%3A%20none%3B%20%7D%2Evigindex%20a%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20li%20code%20%7B%20color%3A%20inherit%3B%20%7D" type="text/css" />
 
 
 
@@ -33,7 +44,7 @@
 
 
 <h1 class="title toc-ignore">Utilities and options for emmeans</h1>
-<h4 class="author">emmeans package, Version 1.4.6</h4>
+<h4 class="author">emmeans package, Version 1.7.2</h4>
 
 
 
@@ -71,19 +82,21 @@ pigs.emm</code></pre>
 ## Results are given on the log (not the response) scale. 
 ## Confidence level used: 0.95</code></pre>
 <p>We see confidence intervals but not tests, by default. This happens as a result of internal settings in <code>pigs.emm.s</code> that are passed to <code>summary()</code> when the object is displayed. If we are going to work with this object a lot, we might want to change its internal settings rather than having to rely on explicitly calling <code>summary()</code> with several arguments. If so, just update the internal settings to what is desired; for example:</p>
-<pre class="r"><code>pigs.emm.s &lt;- update(pigs.emm, infer = c(TRUE, TRUE), null = log(35))
+<pre class="r"><code>pigs.emm.s &lt;- update(pigs.emm, infer = c(TRUE, TRUE), null = log(35),
+                     calc = c(n = &quot;.wgt.&quot;))
 pigs.emm.s</code></pre>
-<pre class="ro"><code>##  source emmean     SE df lower.CL upper.CL null t.ratio p.value
-##  fish     3.39 0.0367 23     3.32     3.47 3.56 -4.385  0.0002 
-##  soy      3.67 0.0374 23     3.59     3.74 3.56  2.988  0.0066 
-##  skim     3.80 0.0394 23     3.72     3.88 3.56  6.130  &lt;.0001 
+<pre class="ro"><code>##  source emmean     SE df  n lower.CL upper.CL null t.ratio p.value
+##  fish     3.39 0.0367 23 10     3.32     3.47 3.56  -4.385  0.0002
+##  soy      3.67 0.0374 23 10     3.59     3.74 3.56   2.988  0.0066
+##  skim     3.80 0.0394 23  9     3.72     3.88 3.56   6.130  &lt;.0001
 ## 
 ## Results are averaged over the levels of: percent 
 ## Results are given on the log (not the response) scale. 
 ## Confidence level used: 0.95</code></pre>
-<p>See <code>help(&quot;update.emmGrid&quot;)</code> for details on the keywords that can be changed. Mostly, they are the same as the names of arguments in the functions that construct these objects.</p>
-<p>Of course, we can always get what we want via calls to <code>test()</code>, <code>confint()</code> or <code>summary()</code> with appropriate arguments. But the <code>update()</code> function is more useful in sophisticated manipulations of objects, or called implicitly via the <code>options</code> argument in <code>emmeans()</code> and other functions. Those options are passed to <code>update()</code> just before the object is returned. For example, we could have done the above update within the <code>emmeans()</code> call as follows:</p>
-<pre class="r"><code>emmeans(pigs.lm, &quot;source&quot;, options = list(infer = c(TRUE, TRUE), null = log(35)))</code></pre>
+<p>Note that by adding of <code>calc</code>, we have set a default to calculate and display the sample size when the object is summarized. See <code>help(&quot;update.emmGrid&quot;)</code> for details on the keywords that can be changed. Mostly, they are the same as the names of arguments in the functions that construct these objects.</p>
+<p>Of course, we can always get what we want via calls to <code>test()</code>, <code>confint()</code> or <code>summary()</code> with appropriate arguments. But the <code>update()</code> function is more useful in sophisticated manipulations of objects, or called implicitly via the <code>...</code> or <code>options</code> argument in <code>emmeans()</code> and other functions. Those options are passed to <code>update()</code> just before the object is returned. For example, we could have done the above update within the <code>emmeans()</code> call as follows (results are not shown because they are the same as before):</p>
+<pre class="r"><code>emmeans(pigs.lm, &quot;source&quot;, infer = c(TRUE, TRUE), null = log(35),
+        calc = c(n = &quot;.wgt.&quot;))</code></pre>
 <p><a href="#contents">Back to contents</a></p>
 </div>
 <div id="options" class="section level2">
@@ -127,10 +140,10 @@ pigs.anal.p</code></pre>
 ## Intervals are back-transformed from the log scale 
 ## 
 ## $contrasts
-##  contrast ratio     SE df lower.CL upper.CL t.ratio p.value
-##  12 / 9    1.20 0.0671 23    1.038     1.38 3.202   0.0111 
-##  15 / 12   1.04 0.0604 23    0.896     1.20 0.650   0.8613 
-##  18 / 15   1.09 0.0750 23    0.912     1.29 1.194   0.5202 
+##  contrast ratio     SE df lower.CL upper.CL null t.ratio p.value
+##  12 / 9    1.20 0.0671 23    1.038     1.38    1   3.202  0.0112
+##  15 / 12   1.04 0.0604 23    0.896     1.20    1   0.650  0.8613
+##  18 / 15   1.09 0.0750 23    0.911     1.29    1   1.194  0.5202
 ## 
 ## Results are averaged over the levels of: source 
 ## Confidence level used: 0.95 
@@ -177,25 +190,25 @@ pigs.emm</code></pre>
 <p>Two or more <code>emmGrid</code> objects may be combined using the <code>rbind()</code> or <code>+</code> methods. The most common reason (or perhaps the only good reason) to do this is to combine EMMs or contrasts into one family for purposes of applying a multiplicity adjustment to tests or intervals. A user may want to combine the three pairwise comparisons of sources with the three comparisons above of consecutive percents into a single family of six tests with a suitable multiplicity adjustment. This is done quite simply:</p>
 <pre class="r"><code>rbind(pairs(pigs.emm.s), pigs.anal.p[[2]])</code></pre>
 <pre class="ro"><code>##  contrast    estimate     SE df t.ratio p.value
-##  fish - soy   -0.2728 0.0529 23 -5.153  0.0002 
-##  fish - skim  -0.4023 0.0542 23 -7.428  &lt;.0001 
-##  soy - skim   -0.1295 0.0530 23 -2.442  0.1364 
-##  12 - 9        0.1796 0.0561 23  3.202  0.0238 
-##  15 - 12       0.0378 0.0582 23  0.650  1.0000 
-##  18 - 15       0.0825 0.0691 23  1.194  1.0000 
+##  fish - soy   -0.2728 0.0529 23  -5.153  0.0002
+##  fish - skim  -0.4023 0.0542 23  -7.428  &lt;.0001
+##  soy - skim   -0.1295 0.0530 23  -2.442  0.1364
+##  12 - 9        0.1796 0.0561 23   3.202  0.0238
+##  15 - 12       0.0378 0.0582 23   0.650  1.0000
+##  18 - 15       0.0825 0.0691 23   1.194  1.0000
 ## 
 ## Results are averaged over some or all of the levels of: percent, source 
 ## Results are given on the log (not the response) scale. 
 ## P value adjustment: bonferroni method for 6 tests</code></pre>
 <p>The default adjustment is <code>&quot;bonferroni&quot;</code>; we could have specified something different via the <code>adjust</code> argument. An equivalent way to combine <code>emmGrid</code>s is via the addition operator. Any options may be provided by <code>update()</code>. Below, we combine the same results into a family but ask for the “exact” multiplicity adjustment.</p>
 <pre class="r"><code>update(pigs.anal.p[[2]] + pairs(pigs.emm.s), adjust = &quot;mvt&quot;)</code></pre>
-<pre class="ro"><code>##  contrast    ratio     SE df lower.CL upper.CL t.ratio p.value
-##  12 / 9      1.197 0.0671 23    1.022    1.402  3.202  0.0212 
-##  15 / 12     1.039 0.0604 23    0.881    1.224  0.650  0.9681 
-##  18 / 15     1.086 0.0750 23    0.894    1.320  1.194  0.7305 
-##  fish / soy  0.761 0.0403 23    0.656    0.884 -5.153  0.0002 
-##  fish / skim 0.669 0.0362 23    0.574    0.779 -7.428  &lt;.0001 
-##  soy / skim  0.879 0.0466 23    0.756    1.020 -2.442  0.1109 
+<pre class="ro"><code>##  contrast    ratio     SE df lower.CL upper.CL null t.ratio p.value
+##  12 / 9      1.197 0.0671 23    1.022    1.402    1   3.202  0.0214
+##  15 / 12     1.039 0.0604 23    0.881    1.224    1   0.650  0.9681
+##  18 / 15     1.086 0.0750 23    0.894    1.320    1   1.194  0.7305
+##  fish / soy  0.761 0.0403 23    0.656    0.884    1  -5.153  0.0002
+##  fish / skim 0.669 0.0362 23    0.574    0.779    1  -7.428  &lt;.0001
+##  soy / skim  0.879 0.0466 23    0.756    1.020    1  -2.442  0.1109
 ## 
 ## Results are averaged over some or all of the levels of: source, percent 
 ## Confidence level used: 0.95 
@@ -206,7 +219,7 @@ pigs.emm</code></pre>
 <p>Also evident in comparing these results is that settings are obtained from the first object combined. So in the second output, where they are combined in reverse order, we get both confidence intervals and tests, and transformation to the response scale.</p>
 <div id="brackets" class="section level6">
 <h6></h6>
-<!-- @index Selecting results; `[ ]` and `[[ ]]` operators@brackets -->
+<!-- @index Selecting results; Brackets (`[ ]` and `[[ ]]` operators) -->
 <p>To subset an <code>emmGrid</code> object, just use the subscripting operator <code>[]</code>. For instance,</p>
 <pre class="r"><code>pigs.emm[2:3]</code></pre>
 <pre class="ro"><code>##  source emmean     SE df lower.CL upper.CL
@@ -247,9 +260,9 @@ str(pigs.emm.ss)</code></pre>
 <p>Note that the new object has a nesting structure (see more about this in the <a href="messy-data.html#nesting">“messy-data” vignette</a>), with the reference factor nested in the new grouping factor. Now we can obtain means and comparisons for each group</p>
 <pre class="r"><code>emmeans(pigs.emm.ss, pairwise ~ type)</code></pre>
 <pre class="ro"><code>## $emmeans
-##  type      emmean     SE df lower.CL upper.CL
-##  animal      3.60 0.0267 23     3.54     3.65
-##  vegetable   3.67 0.0374 23     3.59     3.74
+##  type      emmean     SE df  n lower.CL upper.CL
+##  animal      3.60 0.0267 23 19     3.54     3.65
+##  vegetable   3.67 0.0374 23 10     3.59     3.74
 ## 
 ## Results are averaged over the levels of: percent, source 
 ## Results are given on the log (not the response) scale. 
@@ -257,7 +270,7 @@ str(pigs.emm.ss)</code></pre>
 ## 
 ## $contrasts
 ##  contrast           estimate     SE df t.ratio p.value
-##  animal - vegetable  -0.0716 0.0455 23 -1.573  0.1295 
+##  animal - vegetable  -0.0716 0.0455 23  -1.573  0.1295
 ## 
 ## Results are averaged over the levels of: percent, source 
 ## Results are given on the log (not the response) scale.</code></pre>
@@ -294,13 +307,13 @@ str(warp.fac)</code></pre>
 <pre class="r"><code>contrast(warp.fac, &quot;consec&quot;, by = &quot;wool&quot;)</code></pre>
 <pre class="ro"><code>## wool = A:
 ##  contrast estimate   SE   df t.ratio p.value
-##  M - L     -20.556 6.69 11.5 -3.074  0.0203 
-##  H - M       0.556 4.48 15.6  0.124  0.9899 
+##  M - L     -20.556 6.69 11.5  -3.074  0.0203
+##  H - M       0.556 4.48 15.6   0.124  0.9899
 ## 
 ## wool = B:
 ##  contrast estimate   SE   df t.ratio p.value
-##  M - L       0.556 4.55 16.0  0.122  0.9881 
-##  H - M     -10.000 3.54 12.0 -2.824  0.0269 
+##  M - L       0.556 4.55 16.0   0.122  0.9881
+##  H - M     -10.000 3.54 12.0  -2.824  0.0269
 ## 
 ## Degrees-of-freedom method: satterthwaite 
 ## P value adjustment: mvt method for 2 tests</code></pre>

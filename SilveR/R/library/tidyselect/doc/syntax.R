@@ -52,9 +52,6 @@ iris %>% select_loc(!ends_with("Width"))
 iris %>% select_loc(starts_with("Sepal") & !ends_with("Width"))
 
 ## -----------------------------------------------------------------------------
-iris %>% select_loc(starts_with("Sepal") / ends_with("Width"))
-
-## -----------------------------------------------------------------------------
 mtcars %>% select_loc(mpg, disp:hp)
 
 mtcars %>% select_loc(c(mpg, disp:hp))
@@ -109,13 +106,13 @@ mtcars %>% select_loc(foo = c(bar = c(mpg, cyl)))
 iris %>% select_loc(!Species, foo = Sepal.Width)
 
 ## -----------------------------------------------------------------------------
-iris %>% select_loc(is.numeric)
+iris %>% select_loc(where(is.numeric))
 
-iris %>% select_loc(is.factor)
+iris %>% select_loc(where(is.factor))
 
-iris %>% select_loc(is.numeric | is.factor)
+iris %>% select_loc(where(is.numeric) | where(is.factor))
 
-iris %>% select_loc(is.numeric & is.factor)
+iris %>% select_loc(where(is.numeric) & where(is.factor))
 
 ## -----------------------------------------------------------------------------
 iris %>% select_loc(force(c(1, 3)))
@@ -161,26 +158,6 @@ x %>% select_loc(all_of(y))
 
 ## -----------------------------------------------------------------------------
 mtcars %>% select_loc(cyl_pos)
-
-## ---- error = TRUE------------------------------------------------------------
-Species <- function(x) is.numeric(x)
-
-# Since `Species` is defined as a function, you won't get an error
-# even though the data-var doesn't exist:
-mtcars %>% select_loc(Species)
-
-# Use `all_of()` to be explicit that you want a data-var, not an env-var:
-mtcars %>% select_loc(all_of("Species"))
-
-## -----------------------------------------------------------------------------
-# By default the data-var has precedence over the env-var:
-iris %>% select_loc(Species)
-
-# Use the force operator `!!` to force the env-var `Species`:
-iris %>% select_loc(!!Species)
-
-# Use the env-expression `force()` to force the env-var `Species`:
-iris %>% select_loc(force(Species))
 
 ## ---- error = TRUE------------------------------------------------------------
 mtcars %>% select_loc(cyl^2)

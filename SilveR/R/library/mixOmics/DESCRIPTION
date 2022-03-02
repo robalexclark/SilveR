@@ -1,19 +1,19 @@
 Package: mixOmics
 Type: Package
 Title: Omics Data Integration Project
-Version: 6.10.8
+Version: 6.18.1
 Depends: R (>= 3.5.0), MASS, lattice, ggplot2
 Imports: igraph, ellipse, corpcor, RColorBrewer, parallel, dplyr,
         tidyr, reshape2, methods, matrixStats, rARPACK, gridExtra,
-        grDevices, graphics, stats, utils
+        grDevices, graphics, stats, ggrepel, BiocParallel, utils
 Suggests: BiocStyle, knitr, rmarkdown, testthat, rgl
 Authors@R: 
-    c(person("Kim-Anh", "Le Cao", role = c("aut", "cre"), email = "kimanh.lecao@unimelb.edu.au"), 
+    c(person("Kim-Anh", "Le Cao", role = "aut", email = "kimanh.lecao@unimelb.edu.au"), 
       person("Florian", "Rohart", role = "aut"), 
       person("Ignacio", "Gonzalez", role = "aut"),
       person("Sebastien", "Dejean", role = "aut"), 
       ## key contributors
-      person("Al", "Abadi", role = "ctb"), 
+      person("Al", "Abadi", "J", role = c("ctb", "cre"), email = "al.jal.abadi@gmail.com"), 
       person("Benoit", "Gautier", role = "ctb"), 
       person("Francois", "Bartolo", role = "ctb"), 
       ## also contributions from
@@ -21,33 +21,35 @@ Authors@R:
       person("Jeff", "Coquery", role = "ctb"),
       person("FangZou", "Yao", role = "ctb"),
       person("Benoit", "Liquet", role = "ctb"))
-Maintainer: Kim-Anh Le Cao <kimanh.lecao@unimelb.edu.au>
+Maintainer: Al J Abadi <al.jal.abadi@gmail.com>
 Description: Multivariate methods are well suited to large omics data sets where the number of variables (e.g. genes, proteins, metabolites) is much larger than the number of samples (patients, cells, mice). They have the appealing properties of reducing the dimension of the data by using instrumental variables (components), which are defined as combinations of all variables. Those components are then used to produce useful graphical outputs that enable better understanding of the relationships and correlation structures between the different data sets that are integrated. mixOmics offers a wide range of multivariate methods for the exploration and integration of biological datasets with a particular focus on variable selection. The package proposes several sparse multivariate models we have developed to identify the key variables that are highly correlated, and/or explain the biological outcome of interest. The data that can be analysed with mixOmics may come from high throughput sequencing technologies, such as omics data (transcriptomics, metabolomics, proteomics, metagenomics etc) but also beyond the realm of omics (e.g. spectral imaging). The methods implemented in mixOmics can also handle missing values without having to delete entire rows with missing data. A non exhaustive list of methods include variants of generalised Canonical Correlation Analysis, sparse Partial Least Squares and sparse Discriminant Analysis. Recently we implemented integrative methods to combine multiple data sets: N-integration with variants of Generalised Canonical Correlation Analysis and P-integration with variants of multi-group Partial Least Squares.
 License: GPL (>= 2)
 URL: http://www.mixOmics.org
 BugReports: https://github.com/mixOmicsTeam/mixOmics/issues/
 Repository: Bioconductor
 VignetteBuilder: knitr
-Packaged: 2020-01-30 05:39:20 UTC; biocbuild
+Date: 2021-07-15
+Packaged: 2021-11-18 19:56:44 UTC; biocbuild
 NeedsCompilation: no
 biocViews: ImmunoOncology, Microarray, Sequencing, Metabolomics,
         Metagenomics, Proteomics, GenePrediction, MultipleComparison,
         Classification, Regression
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
+Encoding: UTF-8
 git_url: https://git.bioconductor.org/packages/mixOmics
-git_branch: RELEASE_3_10
-git_last_commit: 03ad223
-git_last_commit_date: 2020-01-28
-Date/Publication: 2020-01-29
-Author: Kim-Anh Le Cao [aut, cre],
+git_branch: RELEASE_3_14
+git_last_commit: 5ef4960
+git_last_commit_date: 2021-11-17
+Date/Publication: 2021-11-18
+Author: Kim-Anh Le Cao [aut],
   Florian Rohart [aut],
   Ignacio Gonzalez [aut],
   Sebastien Dejean [aut],
-  Al Abadi [ctb],
+  Al J Abadi [ctb, cre],
   Benoit Gautier [ctb],
   Francois Bartolo [ctb],
   Pierre Monget [ctb],
   Jeff Coquery [ctb],
   FangZou Yao [ctb],
   Benoit Liquet [ctb]
-Built: R 3.6.2; ; 2020-01-30 14:34:15 UTC; windows
+Built: R 4.1.2; ; 2021-11-19 15:34:29 UTC; windows

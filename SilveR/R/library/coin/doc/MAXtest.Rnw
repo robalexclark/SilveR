@@ -24,7 +24,7 @@
 
 \newcommand{\R}{\mathbb{R} }
 \newcommand{\N}{\mathbb{N} }
-\newcommand{\C}{\mathbb{C} }
+%%\newcommand{\C}{\mathbb{C} }
 \newcommand{\V}{\mathbb{V}} %% cal{\mbox{\textnormal{Var}}} }
 %%\newcommand{\E}{\mathbb{E}} %%mathcal{\mbox{\textnormal{E}}} }
 \newcommand{\Var}{\mathbb{V}} %%mathcal{\mbox{\textnormal{Var}}} }

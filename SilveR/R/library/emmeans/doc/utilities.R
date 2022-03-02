@@ -9,11 +9,13 @@ pigs.emm <- emmeans(pigs.lm, "source")
 pigs.emm
 
 ## -------------------------------------------------------------------------------------------------
-pigs.emm.s <- update(pigs.emm, infer = c(TRUE, TRUE), null = log(35))
+pigs.emm.s <- update(pigs.emm, infer = c(TRUE, TRUE), null = log(35),
+                     calc = c(n = ".wgt."))
 pigs.emm.s
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  emmeans(pigs.lm, "source", options = list(infer = c(TRUE, TRUE), null = log(35)))
+#  emmeans(pigs.lm, "source", infer = c(TRUE, TRUE), null = log(35),
+#          calc = c(n = ".wgt."))
 
 ## -------------------------------------------------------------------------------------------------
 get_emm_option("emmeans")

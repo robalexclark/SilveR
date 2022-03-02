@@ -1,10 +1,10 @@
 ## ---- echo = FALSE, results = "hide", message = FALSE-------------------------
 require("emmeans")
 options(show.signif.stars = FALSE)
-knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
+knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro", class.message = "re")
 
 ## -----------------------------------------------------------------------------
-noise.lm <- lm(noise ~ size * type * side, data = auto.noise)
+noise.lm <- lm(noise/10 ~ size * type * side, data = auto.noise)
 anova(noise.lm)
 
 ## -----------------------------------------------------------------------------
@@ -45,6 +45,17 @@ joint_tests(noise.lm)
 
 ## -----------------------------------------------------------------------------
 joint_tests(noise.lm, by = "side")
+
+## -----------------------------------------------------------------------------
+mvcontrast(noise.emm, "pairwise", mult.name = c("type", "side"))
+
+## -----------------------------------------------------------------------------
+update(mvcontrast(noise.emm, "consec", mult.name = "side", by = "size"), 
+       by = NULL)
+
+## -----------------------------------------------------------------------------
+mvcontrast(update(noise.emm, submodel = ~ side + size + type), 
+           "pairwise", mult.name = c("type", "side"))
 
 ## -----------------------------------------------------------------------------
 fiber.lm <- lm(strength ~ diameter*machine, data = fiber)

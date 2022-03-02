@@ -27,6 +27,54 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -323,22 +371,22 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </ol>
 <div id="terminalexecute-scenario" class="section level2">
 <h2>TerminalExecute Scenario</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Start a command with results displayed in a terminal buffer</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>termId &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">terminalExecute</span>(<span class="st">&quot;ping rstudio.com&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># If viewing the result in the terminal buffer is sufficient,</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># then no need to do anything else. The command will continue</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># running and displaying its results without blocking the R session.</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># To obtain the results programmatically, wait for it to finish.</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="cf">while</span> (<span class="kw">is.null</span>(rstudioapi<span class="op">::</span><span class="kw">terminalExitCode</span>(termId))) {</span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="kw">Sys.sleep</span>(<span class="fl">0.1</span>)</span>
-<span id="cb1-11"><a href="#cb1-11"></a>}</span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a>result &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">terminalBuffer</span>(termId)</span>
-<span id="cb1-14"><a href="#cb1-14"></a></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co"># Delete the buffer and close the session in the IDE</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a>rstudioapi<span class="op">::</span><span class="kw">terminalKill</span>(termId)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start a command with results displayed in a terminal buffer</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>termId <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">terminalExecute</span>(<span class="st">&quot;ping rstudio.com&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If viewing the result in the terminal buffer is sufficient,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># then no need to do anything else. The command will continue</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># running and displaying its results without blocking the R session.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># To obtain the results programmatically, wait for it to finish.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (<span class="fu">is.null</span>(rstudioapi<span class="sc">::</span><span class="fu">terminalExitCode</span>(termId))) {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.1</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">terminalBuffer</span>(termId)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the buffer and close the session in the IDE</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">terminalKill</span>(termId)</span></code></pre></div>
 </div>
 <div id="interative-terminal-scenario" class="section level2">
 <h2>Interative Terminal Scenario</h2>
@@ -369,25 +417,25 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p><strong>No shell process or child processes</strong>: This happens if the associated R session has been closed (or suspended in the case of an inactive RStudio Server session).</p>
 <p>The <code>terminalRunning()</code> function returns <code>TRUE</code> if a terminal is in this state.</p>
 <p>If a terminal is not running, it can be started via interacting with it in the RStudio IDE, or via <code>terminalActivate()</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># start an interactive terminal using the shell selected in </span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># RStudio global options</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>myTerm &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">terminalCreate</span>()</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># ....</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># sometime later</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># ....</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="cf">if</span> (<span class="op">!</span>rstudioapi<span class="op">::</span><span class="kw">terminalRunning</span>(myTerm)) {</span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="co"># start the terminal shell back up, but don&#39;t bring to front</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>  rstudioapi<span class="op">::</span><span class="kw">terminalActivate</span>(myTerm, <span class="dt">show =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb2-11"><a href="#cb2-11"></a>  </span>
-<span id="cb2-12"><a href="#cb2-12"></a>  <span class="co"># wait for it to start</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a>  <span class="cf">while</span> (<span class="op">!</span>rstudioapi<span class="op">::</span><span class="kw">terminalRunning</span>(myTerm)) {</span>
-<span id="cb2-14"><a href="#cb2-14"></a>    <span class="kw">Sys.sleep</span>(<span class="fl">0.1</span>)</span>
-<span id="cb2-15"><a href="#cb2-15"></a>  }</span>
-<span id="cb2-16"><a href="#cb2-16"></a> </span>
-<span id="cb2-17"><a href="#cb2-17"></a>  <span class="co"># send a new command </span></span>
-<span id="cb2-18"><a href="#cb2-18"></a>  rstudioapi<span class="op">::</span><span class="kw">terminalSend</span>(myTerm, <span class="st">&quot;echo Hello</span><span class="ch">\n</span><span class="st">&quot;</span>) </span>
-<span id="cb2-19"><a href="#cb2-19"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start an interactive terminal using the shell selected in </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># RStudio global options</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>myTerm <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">terminalCreate</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ....</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># sometime later</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ....</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>rstudioapi<span class="sc">::</span><span class="fu">terminalRunning</span>(myTerm)) {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># start the terminal shell back up, but don&#39;t bring to front</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  rstudioapi<span class="sc">::</span><span class="fu">terminalActivate</span>(myTerm, <span class="at">show =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># wait for it to start</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="sc">!</span>rstudioapi<span class="sc">::</span><span class="fu">terminalRunning</span>(myTerm)) {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Sys.sleep</span>(<span class="fl">0.1</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># send a new command </span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  rstudioapi<span class="sc">::</span><span class="fu">terminalSend</span>(myTerm, <span class="st">&quot;echo Hello</span><span class="sc">\n</span><span class="st">&quot;</span>) </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>Running but not loaded in the IDE</strong>: On RStudio Server, the web browser can be closed but the R session and any associated terminal sessions keep running. If the web browser is reconnected, each terminal will be redisplayed in the IDE when it is selected. The <code>rstudioapi</code> functions may be used on a terminal in this state; for example, the buffer may still be fetched with <code>terminalBuffer()</code> even if the terminal isn’t loaded in the IDE (so long as the R session is still alive).</p>
 <p><strong>Terminated but still visible</strong>: Normally the terminal emulator for a given terminal session will close when the shell exits. If the option <strong>Close Terminal When Shell Exits</strong> is turned off, then the terminal buffer will remain loaded in the RStudio IDE until closed by the user or <code>terminalKill()</code>. Terminals started with <code>terminalExecute()</code> will always remain loaded when they finish running. To test a terminal for this state, <code>terminalExitCode()</code> will return a non-NULL value.</p>
 </div>

@@ -2,7 +2,7 @@
 /* C Header */
 
 /*
-    Copyright (C) 2017-2019 Torsten Hothorn
+    Copyright (C) 2017-2021 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 
@@ -150,4 +150,14 @@ extern SEXP libcoin_R_unpack_sym(
         fun = (SEXP(*)(SEXP, SEXP, SEXP))
             R_GetCCallable("libcoin", "R_unpack_sym");
     return fun(x, names, diagonly);
+}
+
+extern SEXP libcoin_R_pack_sym(
+    SEXP x
+) {
+    static SEXP(*fun)(SEXP) = NULL;
+    if (fun == NULL)
+        fun = (SEXP(*)(SEXP))
+            R_GetCCallable("libcoin", "R_pack_sym");
+    return fun(x);
 }

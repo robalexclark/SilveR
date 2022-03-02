@@ -1,3 +1,9 @@
+# forcats 0.5.1
+
+* Re-license as MIT (#277).
+
+* `fct_lump_n()` no longer uses a partial argument name (@malcolmbarrett, #276).
+
 # forcats 0.5.0
 
 * `as_factor()` gains a logical method that always returns a factor with

@@ -1,5 +1,4 @@
 ### R code from vignette source 'libcoin.Rnw'
-### Encoding: UTF-8
 
 ###################################################
 ### code chunk number 1: 1dex-1
@@ -27,7 +26,7 @@ tapply(y, x, sum)
 ### code chunk number 2: 1dex-2
 ###################################################
 ls2 <- LinStatExpCov(X = x, Y = matrix(y, ncol = 1))
-all.equal(ls1[-grep("Xfactor", names(ls1))], 
+all.equal(ls1[-grep("Xfactor", names(ls1))],
           ls2[-grep("Xfactor", names(ls2))])
 
 
@@ -40,11 +39,11 @@ ylev <- sort(unique(y))
 Y <- rbind(0, matrix(ylev, ncol = 1))
 iy <- .bincode(y, breaks = c(-Inf, ylev, Inf))
 ls3 <- LinStatExpCov(X = X, ix = ix, Y = Y, iy = iy)
-all.equal(ls1[-grep("Table", names(ls1))], 
+all.equal(ls1[-grep("Table", names(ls1))],
           ls3[-grep("Table", names(ls3))])
 ### works also with factors
 ls3 <- LinStatExpCov(X = X, ix = factor(ix), Y = Y, iy = factor(iy))
-all.equal(ls1[-grep("Table", names(ls1))], 
+all.equal(ls1[-grep("Table", names(ls1))],
           ls3[-grep("Table", names(ls3))])
 
 
@@ -52,7 +51,7 @@ all.equal(ls1[-grep("Table", names(ls1))],
 ### code chunk number 4: 2dex-2
 ###################################################
 ls4 <- LinStatExpCov(ix = ix, Y = Y, iy = iy)
-all.equal(ls3[-grep("Xfactor", names(ls3))], 
+all.equal(ls3[-grep("Xfactor", names(ls3))],
           ls4[-grep("Xfactor", names(ls4))])
 
 
@@ -539,5 +538,20 @@ u1 <- .Call(libcoin:::R_unpack_sym, s, NULL, 0L)
 u2 <- .Call(libcoin:::R_unpack_sym, s, NULL, 1L)
 
 stopifnot(isequal(m, u1) && isequal(diag(m), u2))
+
+
+###################################################
+### code chunk number 31: pack
+###################################################
+m <- matrix(c(4, 3, 2, 1,
+              3, 5, 4, 2,
+              2, 4, 6, 5,
+              1, 2, 5, 7),
+            ncol = 4)
+
+s <- m[lower.tri(m, diag = TRUE)]
+p <- .Call(libcoin:::R_pack_sym, m)
+
+stopifnot(isequal(s, p))
 
 

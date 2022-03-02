@@ -138,7 +138,7 @@ div.handler{
 hljs.LANGUAGES.r=function(a){var b="([a-zA-Z]|\\.[a-zA-Z.])[a-zA-Z0-9._]*";return{c:[a.HCM,{b:b,l:b,k:{keyword:"function if in break next repeat else for return switch while try tryCatch|10 stop warning require library attach detach source setMethod setGeneric setGroupGeneric setClass ...|10",literal:"NULL NA TRUE FALSE T F Inf NaN NA_integer_|10 NA_real_|10 NA_character_|10 NA_complex_|10"},r:0},{cN:"number",b:"0[xX][0-9a-fA-F]+[Li]?\\b",r:0},{cN:"number",b:"\\d+(?:[eE][+\\-]?\\d*)?L\\b",r:0},{cN:"number",b:"\\d+\\.(?!\\d)(?:i\\b)?",r:0},{cN:"number",b:"\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",r:0},{b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[a.BE],r:0},{cN:"string",b:"'",e:"'",c:[a.BE],r:0}]}}(hljs);
 </script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="https://yihui.name/js/center-img.js"></script>
+    <script src="https://yihui.org/js/center-img.js"></script>
   </head>
   <body>
     <div id="container">
@@ -209,7 +209,7 @@ highr:::cmd_latex
 <p>This data frame is passed to the <code>markup</code> argument in <code>hilight()</code>, so we are
 free to pass a modified version there. Suppose I want to use the command
 <code>\my&lt;*&gt;</code> instead of <code>\hl&lt;*&gt;</code>:</p></td><td class="code"><pre><code class="r">m = highr:::cmd_latex
-m[, 1] = sub(&quot;\\hl&quot;, &quot;\\my&quot;, m[, 1], fixed = TRUE)
+m[, 1] = sub(&#39;\\hl&#39;, &#39;\\my&#39;, m[, 1], fixed = TRUE)
 head(m)
 </code></pre>
 <pre><code>##              cmd1 cmd2
@@ -237,6 +237,6 @@ code. See <a href="https://github.com/yihui/highr/blob/master/R/highlight.R">htt
       </table><!--table end-->
     </div>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://yihui.name/knitr/js/docco-resize.js"></script>
+  <script src="https://yihui.org/knitr/js/docco-resize.js"></script>
   </body>
 </html>

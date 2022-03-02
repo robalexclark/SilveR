@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Schedule back-end Params</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bpschedule {BiocParallel}"><tr><td>bpschedule {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Schedule back-end Params</h2>
+
+<h3>Description</h3>
+
+<p>Use functions on this page to influence scheduling of parallel
+processing.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+bpschedule(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>An instance of a <code>BiocParallelParam</code> class, e.g.,
+<code><a href="../../BiocParallel/help/MulticoreParam.html">MulticoreParam</a></code>, <code><a href="../../BiocParallel/help/SnowParam.html">SnowParam</a></code>,
+<code><a href="../../BiocParallel/help/DoparParam.html">DoparParam</a></code>.
+</p>
+<p><code>x</code> can be missing, in which case the default back-end (see
+<code><a href="../../BiocParallel/help/register.html">register</a></code>) is used.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>bpschedule</code> returns a logical(1) indicating whether the parallel
+evaluation should occur at this point.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>bpschedule</code> returns a scalar logical.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan <a href="mailto:mtmorgan@fhcrc.org">mailto:mtmorgan@fhcrc.org</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> for possible values of <code>x</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+bpschedule(SnowParam())                 # TRUE
+bpschedule(MulticoreParam(2))           # FALSE on windows
+
+p &lt;- MulticoreParam()
+bpschedule(p)                           # TRUE
+bplapply(1:2, function(i, p) {
+    bpschedule(p)                       # FALSE
+}, p = p, BPPARAM=p)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

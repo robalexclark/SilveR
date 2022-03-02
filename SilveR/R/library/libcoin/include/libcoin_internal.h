@@ -2,7 +2,7 @@
 /* C Header */
 
 /*
-    Copyright (C) 2017-2019 Torsten Hothorn
+    Copyright (C) 2017-2021 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 
@@ -31,8 +31,8 @@
 #include <Rmath.h>
 #include <Rdefines.h>
 #include <R_ext/stats_package.h> /* for S_rcont2 */
-#include <R_ext/Applic.h> /* for dgemm */
-#include <R_ext/Lapack.h> /* for dgesdd */
+#include <Rversion.h>           // for R_VERSION
+#include <R_ext/Lapack.h> /* for dspev */
 
 /* C Macros */
 

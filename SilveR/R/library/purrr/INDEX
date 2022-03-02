@@ -8,9 +8,11 @@ compose                 Compose multiple functions
 cross                   Produce all combinations of list elements
 detect                  Find the value or position of the first match
 done                    Done box
-every                   Do every or some elements of a list satisfy a
-                        predicate?
+every                   Do every, some, or none of the elements of a
+                        list satisfy a predicate?
 exec                    Execute a function
+faq-adverbs-export      Best practices for exporting adverb-wrapped
+                        functions
 flatten                 Flatten a list of lists into a simple vector.
 has_element             Does a list contain an object?
 head_while              Find head/tail that all satisfies a predicate.
@@ -23,7 +25,8 @@ keep                    Keep or discard elements using a predicate
 lift                    Lift the domain of a function
 list_modify             Modify a list
 lmap                    Apply a function to list-elements of a list
-map                     Apply a function to each element of a vector
+map                     Apply a function to each element of a list or
+                        atomic vector
 map2                    Map over multiple inputs simultaneously.
 map_if                  Apply a function to each element of a vector
                         conditionally

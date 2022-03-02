@@ -1,9 +1,10 @@
 Package: compiler
-Version: 3.6.3
+Version: 4.1.2
 Priority: base
 Title: The R Compiler Package
 Author: Luke Tierney <luke-tierney@uiowa.edu>
-Maintainer: R Core Team <R-core@r-project.org>
+Maintainer: R Core Team <do-use-Contact-address@r-project.org>
+Contact: R-help mailing list <r-help@r-project.org>
 Description: Byte code compiler for R.
-License: Part of R 3.6.3
-Built: R 3.6.3; ; 2020-02-29 09:35:50 UTC; windows
+License: Part of R 4.1.2
+Built: R 4.1.2; ; 2021-11-01 18:35:05 UTC; windows

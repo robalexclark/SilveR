@@ -127,7 +127,7 @@ namespace SilveR
             browserWindow.OnReadyToShow += () =>
             {
                 browserWindow.Show();
-                browserWindow.Maximize();
+                //browserWindow.Maximize();
             };
         }
 

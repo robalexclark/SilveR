@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Tune the number of principal components in PCA</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for tune.pca {mixOmics}"><tr><td>tune.pca {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Tune the number of principal components in PCA</h2>
+
+<h3>Description</h3>
+
+<p><code>tune.pca</code> can be used to quickly visualise the proportion of explained
+variance for a large number of principal components in PCA.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+tune.pca(
+  X,
+  ncomp = NULL,
+  center = TRUE,
+  scale = FALSE,
+  max.iter = 500,
+  tol = 1e-09,
+  logratio = c("none", "CLR", "ILR"),
+  V = NULL,
+  multilevel = NULL
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>numeric matrix of predictors. <code>NA</code>s are allowed.</p>
+</td></tr>
+<tr valign="top"><td><code>ncomp</code></td>
+<td>
+<p>integer, the number of components to initially analyse in
+<code>tune.pca</code> to choose a final <code>ncomp</code> for <code>pca</code>. If
+<code>NULL</code>, function sets <code>ncomp = min(nrow(X), ncol(X))</code></p>
+</td></tr>
+<tr valign="top"><td><code>center</code></td>
+<td>
+<p>a logical value indicating whether the variables should be
+shifted to be zero centered. Alternately, a vector of length equal the
+number of columns of <code>X</code> can be supplied. The value is passed to
+<code><a href="../../base/html/scale.html">scale</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+<p>a logical value indicating whether the variables should be
+scaled to have unit variance before the analysis takes place. The default is
+<code>FALSE</code> for consistency with <code>prcomp</code> function, but in general
+scaling is advisable. Alternatively, a vector of length equal the number of
+columns of <code>X</code> can be supplied. The value is passed to
+<code><a href="../../base/html/scale.html">scale</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>max.iter</code></td>
+<td>
+<p>Integer, the maximum number of iterations.</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>Numeric, convergence tolerance criteria.</p>
+</td></tr>
+<tr valign="top"><td><code>logratio</code></td>
+<td>
+<p>one of ('none','CLR','ILR'). Default to 'none'</p>
+</td></tr>
+<tr valign="top"><td><code>V</code></td>
+<td>
+<p>Matrix used in the logratio transformation id provided.</p>
+</td></tr>
+<tr valign="top"><td><code>multilevel</code></td>
+<td>
+<p>Design matrix for multilevel analysis (for repeated
+measurements).</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The calculation is done either by a singular value decomposition of the
+(possibly centered and scaled) data matrix, if the data is complete or by
+using the NIPALS algorithm if there is data missing. Unlike
+<code><a href="../../stats/html/princomp.html">princomp</a></code>, the print method for these objects prints the
+results in a nice format and the <code>plot</code> method produces a bar plot of
+the percentage of variance explaned by the principal components (PCs).
+</p>
+<p>When using NIPALS (missing values), we make the assumption that the first
+(<code>min(ncol(X),</code> <code>nrow(X)</code>) principal components will account for
+100 % of the explained variance.
+</p>
+<p>Note that <code>scale= TRUE</code> cannot be used if there are zero or constant
+(for <code>center = TRUE</code>) variables.
+</p>
+<p>Components are omitted if their standard deviations are less than or equal
+to <code>comp.tol</code> times the standard deviation of the first component. With
+the default null setting, no components are omitted. Other settings for
+<code>comp.tol</code> could be <code>comp.tol = sqrt(.Machine$double.eps)</code>, which
+would omit essentially constant components, or <code>comp.tol = 0</code>.
+</p>
+<p>logratio transform and multilevel analysis are performed sequentially as
+internal pre-processing step, through <code><a href="../../mixOmics/help/logratio.transfo.html">logratio.transfo</a></code> and
+<code><a href="../../mixOmics/help/withinVariation.html">withinVariation</a></code> respectively.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>tune.pca</code> returns a list with class <code>"tune.pca"</code>
+containing the following components: </p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>sdev</code></td>
+<td>
+<p>the square root of the
+eigenvalues of the covariance/correlation matrix, though the calculation is
+actually done with the singular values of the data matrix).</p>
+</td></tr>
+<tr valign="top"><td><code>prop_expl_var</code></td>
+<td>
+<p>The proportion of explained variance accounted for
+by each principal component.</p>
+</td></tr>
+<tr valign="top"><td><code>cum.var</code></td>
+<td>
+<p>the cumulative proportion of explained variance accounted for
+by the sequential accumulation of principal components is calculated using
+the sum of the proportion of explained variance</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Ignacio González, Leigh Coonan, Kim-Anh Le Cao, Fangzhou Yao, 
+Florian Rohart, Al J Abadi
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../mixOmics/help/nipals.html">nipals</a></code>, <code><a href="../../mixOmics/help/biplot.html">biplot</a></code>,
+<code><a href="../../mixOmics/help/plotIndiv.html">plotIndiv</a></code>, <code><a href="../../mixOmics/help/plotVar.html">plotVar</a></code> and http://www.mixOmics.org
+for more details.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(liver.toxicity)
+tune &lt;- tune.pca(liver.toxicity$gene, center = TRUE, scale = TRUE)
+tune
+plot(tune)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

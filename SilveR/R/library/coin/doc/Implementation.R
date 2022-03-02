@@ -195,9 +195,10 @@ sexact <- function(object) {
   y <- object@ytrans
   perms <- permutations(nrow(x))
   pstats <- apply(perms, 1, function(p) sum(x[p,] * y))
-  pstats <- (pstats - expectation(object)) / sqrt(variance(object))
+  pstats <- (pstats - as.vector(expectation(object))) /
+      sqrt(as.vector(variance(object)))
   p <- function(q) 1 - mean(pstats > q)
-  new("PValue", p = p, pvalue = p)
+  new("PValue", name = "Exact Distribution", p = p, pvalue = p)
 }
 
 
@@ -209,13 +210,13 @@ independence_test(y ~ x, data = correxample, alternative = "less",
 
 
 ###################################################
-### code chunk number 23: Implementation.Rnw:837-838
+### code chunk number 23: Implementation.Rnw:867-868
 ###################################################
 mood_score <- function(y) (rank_trafo(y) - (sum(!is.na(y)) + 1) / 2)^2
 
 
 ###################################################
-### code chunk number 24: Implementation.Rnw:842-851
+### code chunk number 24: Implementation.Rnw:872-881
 ###################################################
 ip <- new("IndependenceProblem",
   y = rotarod["time"], x = rotarod["group"])
@@ -229,7 +230,7 @@ new("ScalarIndependenceTest", statistic = sits,
 
 
 ###################################################
-### code chunk number 25: Implementation.Rnw:855-857
+### code chunk number 25: Implementation.Rnw:885-887
 ###################################################
 independence_test(time ~ group, data = rotarod, ytrafo = mood_score,
   distribution = exact(algorithm = "split-up"))

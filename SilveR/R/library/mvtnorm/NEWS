@@ -1,8 +1,32 @@
 
+Changes in version 1.1-3 (2021-10-05)
+
+  o  fix diffs reported on M1mac
+
+
+Changes in version 1.1-2 (2021-06-07)
+
+  o  Miwa(n) now also works for non-zero mean|delta; n <= 4097, not 4098 (from C code);
+     optional 'checkCorr=' argument; documentation, one NOTE less.
+     Minimal C code cleanup.
+     mvt() <-> probval() simplification.
+     Handles +/-Inf as +/-maxval for non-orthrant probabilities (with a warning).
+
+  o  TVPACK() now also works when some (but not all) bounds are (-Inf, Inf).
+
+  o  mvtnorm() and mvt() now also return an attribute "algorithm" and gain optional
+     argument 'keepAttr' to allow returning bare numbers.
+
+
+Changes in version 1.1-1 (2020-06-09)
+
+  o  allow to turn-off symmetry checks (patch contributed by Feng Li <feng.li_at_cufe.edu.cn>
+
 Changes in version 1.1-0 (2020-02-24)
 
-  o  replace MVPHI and MVPHNV by calls to R's pnorm5, following
+  o  replace MVPHI and MVPHNV by calls to R's {p,q}norm5, following
      a suggestion by Benjamin Christoffersen <boennecd_at_gmail.com>
+
 
 Changes in version 1.0-12 (2020-01-06)
 
@@ -14,7 +38,7 @@ Changes in version 1.0-11 (2019-06-19)
 
 Changes in version 1.0-10 (2019-03-04)
 
-  o  eliminate warning when calling qmvt with arg sigma = 1 
+  o  eliminate warning when calling qmvt with arg sigma = 1
 
 
 Changes in version 1.0-9 (2019-02-28)
@@ -43,11 +67,11 @@ Changes in version 1.0-5 (2016-02-02)
 
 Changes in version 1.0-4 (2016-01-19)
 
-  o  a new algorithm for quantile estimation, again. Quantiles are 
+  o  a new algorithm for quantile estimation, again. Quantiles are
      now computed by a stochastic root finding algorithm. Note
      that f.quantile in the output of qmv{t,norm} is now (again)
      the squared difference between the cdf evaluated at the
-     quantile and the level. The \code{interval} argument to the 
+     quantile and the level. The \code{interval} argument to the
      quantile functions is used as a starting value for the
      root finder when available.
 
@@ -55,8 +79,8 @@ Changes in version 1.0-4 (2016-01-19)
 
 Changes in version 1.0-3 (2015-07-21)
 
-  o  new algorithm for quantile estimation. Quantiles are 
-     now computed by minimising the squared distance between the 
+  o  new algorithm for quantile estimation. Quantiles are
+     now computed by minimising the squared distance between the
      distribution function and the probability whereas previous versions
      used uniroot(). The procedure is now performed multiple times with
      difference random seeds in order to stabilise the results. The
@@ -85,7 +109,7 @@ Changes in version 1.0-0 (2014-07-08)
   o  After 14 years, we now feel safe enough to publish mvtnorm 1.0-0.
      Many packages depend, import, or suggest mvtnorm, so this version
      change also indicates that the package is now stable and, to a very
-     large extent, the API is frozen. We will of course continue to fix 
+     large extent, the API is frozen. We will of course continue to fix
      bugs or other problems but new features are unlikely to go into this
      package.
 

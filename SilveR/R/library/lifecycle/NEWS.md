@@ -1,3 +1,44 @@
+# lifecycle 1.0.1
+
+* `deprecate_soft()` now follows the verbosity option when called from
+  the global environment (#113).
+  
+* `last_warnings()` has been renamed to `last_lifecycle_warnings()`
+  and `last_warning()` has been removed. This is for compatibility
+  with the future `rlang::last_warnings()` function to be released in
+  the next rlang version.
+
+# lifecycle 1.0.0
+
+* New vignettes: 
+  * `vignette("stages")` describes the lifecycle stages 
+  * `vignette("manage")` teaches you how to manage lifecycle changes in 
+     functions you _use_.
+  * `vignette("communicate")` shows how to use lifecycle in functions that
+     you _write_.
+
+* In `deprecate_soft()`, `deprecate_warn()`, and `deprecate_stop()`:
+  
+  * You can deprecate an argument with `foo(arg)` instead of `foo(arg =)` (#78). 
+    This syntax is similar in spirit to the formal arguments  of function 
+    definitions. 
+    
+  * You can deprecate R6 methods by using `class$method()` (#54).
+  
+  * A character vector `details` is now converted into a bulleted list (#55).
+  
+  * Messages for non-prefix functions (like "`x<-`()" and "`%>%`()")
+    look a little nicer (#95).
+
+  * Manually printed warnings now omit the advice footer (#68).
+
+* Experimental `signal_stage()` can be used to signal that a function is 
+  experimental or superseded. These signals are not currently hooked up to any 
+  behaviour, but we'll add tools in a future release (#44).
+
+* `lifecycle_cnd_data()` has been removed; as far as I can tell it wasn't
+  used by anyone.
+
 
 # lifecycle 0.2.0
 
@@ -28,7 +69,7 @@
   repeatedly in unit tests.
 
 * Deprecation warnings now record a backtrace. Call
-  `lifecycle::last_warnings()` and `lifecycle::last_warning()` to
+  `lifecycle::last_lifecycle_warnings()` and `lifecycle::last_warning()` to
   print the warnings that occurred during the last command, along with
   their backtraces.
 

@@ -45,7 +45,7 @@ indices(flights)
 flights["JFK", on = "origin"]
 
 ## alternatively
-# flights[.("JFK"), on = "origin"] (or) 
+# flights[.("JFK"), on = "origin"] (or)
 # flights[list("JFK"), on = "origin"]
 
 ## -------------------------------------------------------------------------------------------------

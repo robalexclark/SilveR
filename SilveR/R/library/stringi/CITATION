@@ -1,12 +1,20 @@
-citHeader("To cite package 'stringi' in publications use:")
+bibentry(
+    bibtype = "article",
+    title  = "stringi: Fast and portable character string processing in R",
+    author = personList(as.person("Marek Gagolewski")),
+    journal = "Journal of Statistical Software",
+    year = "2021",
+    note = "to appear"
+#    volume = "x",
+#    pages = "x",
+#    doi = "x",
+)
 
-citEntry(entry = "Manual",
-  title = "R package stringi: Character string processing facilities",
-  author = personList(as.person("Marek Gagolewski")),
-  year = "2020",
-  url = "http://www.gagolewski.com/software/stringi/",
-  textVersion =
-  paste("Gagolewski M. and others (2020).",
-        "R package stringi: Character string processing facilities.",
-        "http://www.gagolewski.com/software/stringi/.")
+bibentry(
+    bibtype = "manual",
+    title = "stringi: Fast and portable character string processing in R",
+    author = personList(as.person("Marek Gagolewski")),
+    year = sub("-.*", "", meta$Date),
+    note = sprintf("R package version %s", meta$Version),
+    url = "https://stringi.gagolewski.com/"
 )

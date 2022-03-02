@@ -1,3 +1,10 @@
+# purrr 0.3.4
+
+* Added documentation for exporting functions created with purrr
+  adverb (@njtierney, #668). See `?faq-adverbs-export`.
+
+* Added `none()`, which tests that a predicate is false for all elements 
+  (the opposite of `every()`) (@AliciaSchep, #735).
 
 # purrr 0.3.3
 

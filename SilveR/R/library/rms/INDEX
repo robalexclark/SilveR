@@ -32,6 +32,7 @@ latex.cph               LaTeX Representation of a Fitted Cox Model
 latexrms                LaTeX Representation of a Fitted Model
 lrm                     Logistic Regression Model
 lrm.fit                 Logistic Model Fitter
+lrm.fit.bare            lrm.fit.bare
 matinv                  Total and Partial Matrix Inversion using
                         Gauss-Jordan Sweep Operator
 nomogram                Draw a Nomogram Representing a Regression Fit
@@ -44,15 +45,19 @@ orm.fit                 Ordinal Regression Model Fitter
 pentrace                Trace AIC and BIC vs. Penalty
 plot.Predict            Plot Effects of Variables Estimated by a
                         Regression Model Fit
+plot.contrast.rms       plot.contrast.rms
 plot.xmean.ordinaly     Plot Mean X vs. Ordinal Y
 plotp.Predict           Plot Effects of Variables Estimated by a
                         Regression Model Fit Using plotly
+poma                    Examine proportional odds and parallelism
+                        assumptions of 'orm' and 'lrm' model fits.
 pphsm                   Parametric Proportional Hazards form of AFT
                         Models
 predab.resample         Predictive Ability using Resampling
 predict.lrm             Predicted Values for Binary and Ordinal
                         Logistic Models
 predictrms              Predicted Values from Model Fit
+print.Glm               print.glm
 print.cph               Print cph Results
 print.ols               Print ols
 psm                     Parametric Survival Model

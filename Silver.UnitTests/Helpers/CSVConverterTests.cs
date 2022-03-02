@@ -44,18 +44,18 @@ namespace SilveR.UnitTests.Helpers
             string theData = GetTestCSVData();
 
             //change the separator
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
+            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            //{
                 theData = theData.Replace(',', ';'); //list separator for De on windows
                 theData = theData.Replace('.', ','); //points replaced with commas
-            }
-            else
-            {
-                theData = theData.Replace(',', ';'); //list separator for De on windows
-                theData = theData.Replace('.', ','); //points replaced with commas
+            //}
+            //else
+            //{
+            //    theData = theData.Replace(',', ';'); //list separator for De on windows
+            //    theData = theData.Replace('.', ','); //points replaced with commas
 
-                theData = theData.Replace(';', '.'); //list separator for De on linux
-            }
+            //    theData = theData.Replace(';', '.'); //list separator for De on linux
+            //}
 
 
             byte[] byteArray = Encoding.UTF8.GetBytes(theData);
@@ -85,18 +85,18 @@ namespace SilveR.UnitTests.Helpers
             string theData = GetTestCSVData();
 
             //change the separator
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
+            //if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            //{
                 theData = theData.Replace(',', ';'); //list separator for De on windows
                 theData = theData.Replace('.', ','); //points replaced with commas
-            }
-            else
-            {
-                theData = theData.Replace(',', ';'); //list separator for De on windows
-                theData = theData.Replace('.', ','); //points replaced with commas
+            //}
+            //else
+            //{
+            //    theData = theData.Replace(',', ';'); //list separator for De on windows
+            //    theData = theData.Replace('.', ','); //points replaced with commas
 
-                theData = theData.Replace(';', '.'); //list separator for De on linux
-            }
+            //    theData = theData.Replace(';', '.'); //list separator for De on linux
+            //}
 
 
             byte[] byteArray = Encoding.UTF8.GetBytes(theData);

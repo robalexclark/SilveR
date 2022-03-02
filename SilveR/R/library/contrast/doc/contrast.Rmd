@@ -1,0 +1,344 @@
+---
+title: "Contrast Methods"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Contrast Methods}
+output:
+  knitr:::html_vignette:
+    toc: yes
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  digits = 3,
+  collapse = TRUE,
+  comment = "#>"
+)
+options(digits = 3)
+library(knitr)
+library(contrast)
+library(nlme)
+library(ggplot2)
+library(geepack)
+library(dplyr)
+library(tidyr)
+options(useFancyQuotes = FALSE, width = 80)
+```
+
+## Introduction
+
+The purpose of the `contrast` package is to provide a standardized interface for testing linear combinations of parameters from common regression models. The syntax mimics the `contrast.Design` function from the `Design` library. The contrast class has been extended in this package to linear models produced using the functions `lm`, `glm`, `gls`, `lme` and `geese`. Other `R` functions with similar purposes exist in `R`, but the interfaces are different and many require the user to specify the contrast in terms of the parameter contrast coefficient vector. This package aims to simplify the process for the user.
+
+## Contrasts
+
+First, some notation:
+
+\begin{align}
+   n &= \text{number of samples} \notag \\
+   p &= \text{number of model parameters associated with fixed effects (excluding the intercept)} \notag \\
+   q &= \text{number of covariance parameters with random effects or correlations } \notag \\
+   Y &= \text{$n\times 1$ response vector} \notag \\
+   X &= \text{$n\times (p+1)$ model matrix} \notag \\
+   \beta &= \text{model parameters associated with fixed effects} \notag \\
+   \Sigma &= \text{covariance matrix associated with the fixed effects} \notag \\
+\end{align}
+
+This package uses one degree of freedom Wald tests to calculate p--values for linear combinations of parameters. For example, the basic linear model is of the form $y=X\beta+\epsilon$, where the individual errors are assumed to be iid $N(0, \sigma^2)$. Ordinary least squares provides us with estimates $\hat{\beta}$, $\hat{\sigma}^2$ and $\hat{\Sigma}$. Given a $(p+1)\times 1$ vector of constants, $c$, we can estimate a linear combination of parameters $\lambda = c'\beta$ by substituting the estimated parameter vectors: $\hat{\lambda} = c'\hat{\beta}$. Using basic linear algebra, $Var[\lambda] =  c'\Sigma c$. The statistic generated for contrasts is
+
+$$
+S = \frac{c'\hat{\beta}}{\sqrt{c'\hat{\Sigma} c}} 
+$$
+
+For linear models with normal errors, $S\sim T_{n-p-1}$ and there is no uncertainty about the distribution of the test statistic and the degrees of freedom. In other cases, this is not true. Asymptotics come into play for several models and there is some ambiguity as to whether a $t$ or normal distribution should be used to compute p--values (See Harrell, 2001, Section 9.2 for a discussion). We follow the conventions of each package: `glm`, `gls` and `lme` models use a $t$ distribution and a normal distribution is used for `gee` models. For models where there are extra covariance or correlation parameters, we again follow the lead of the package. For `gls` model, the degrees of freedom are $n-p$, while in `lme` models, it is $n-p-q$.
+
+The remainder of this document shows two examples and how the `contrast` function can be applied to different models.
+
+### Linear Models
+ 
+As an example, a gene expression experiment was run to assess the effect of a compound under two different diets: high fat and low fat. The main comparisons of interest are the difference between the treated and untreated groups within a diet. The interaction effect was a secondary hypothesis. For illustration, we only include the expression value of one of the genes.
+
+A summary of the design:
+
+```{r }
+library(contrast)
+library(dplyr)
+two_factor_crossed %>% 
+  group_by(diet, group) %>% 
+  count()
+```
+
+The study design was a two--way factorial with $n=24$:
+
+```{r example1Plot, fig = TRUE, echo = FALSE, width = 6, height = 4.25}
+library(ggplot2)
+theme_set(theme_bw() + theme(legend.position = "top"))
+ggplot(two_factor_crossed) +
+  aes(x = diet, y = expression, col = group, shape = group) +
+  geom_point() + 
+  geom_smooth(aes(group = group), method = lm, se = FALSE)
+```
+
+The cell means can be labeled as: 
+
+|          | Low Fat | High Fat |
+|----------|---------|----------|
+| Vehicle  | `A`     | `B`      |
+| Compound | `C`     | `D`      |
+
+The reference cell used by R  is cell $D$: the treated samples on a high fat diet.
+
+The model used is
+
+\begin{align}
+\log\text{Expression}_2 &= \beta_0  \notag \\
+	& + \beta_1\text{Vehicle Group} \notag \\
+	& + \beta_2\text{Low Fat Diet} \notag \\
+	& + \beta_{3}\text{Low Fat Diet and Vehicle Group}
+\end{align}
+
+so that $p=3$. Substituting the appropriate coefficients into each cell produces the parameters: 
+
+|          | Low Fat                                   | High Fat             |
+|----------|-------------------------------------------|----------------------|
+| Vehicle  | $\beta_0 + \beta_1 + \beta_2 + \beta_{3}$ | $\beta_0 +\beta_1$   |
+| Compound | $\beta_0 + \beta_2$                       | $\beta_0$            |
+
+This means that
+
+ * $\beta_2$ tests for diet effect in the treated samples ($C-D$)
+ * $\beta_1$ tests for a compounds effect in the high fat diet samples ($B-D$)
+
+Fitting the model specified by using `lm()`:
+
+```{r example1LinearMod}
+lm_fit_1 <- lm(expression ~ (group + diet)^2, data = two_factor_crossed)
+summary(lm_fit_1)
+```
+
+To test the treatment effect in the high fat diet, $D-B = -\beta_1$. This coefficient and hypothesis test for the difference between treated and un-treated in the high fat diet group is in the row labeled as `groupvehicle` in the output of `summary.lm()`. 
+
+
+To compare the compound data and the vehicle data in the low fat diet group, the information above can be used to derive that:
+
+\begin{align}
+C - A &= 	\beta_0 + \beta_2 -(\beta_0+\beta_1+\beta_2+\beta_{3}) \notag \\
+	&= -\beta_1 - \beta_{3} \notag
+\end{align}
+
+This hypothesis translates to testing $\beta_1 + \beta_{3} = 0$, or a contrast using $c=(0, 1, 0, 1)$. To get the results of the difference between treated and un-treated in the low fat diet group, we (finally) use the contrast function:
+
+```{r example1Contrast}
+high_fat <- contrast(lm_fit_1, 
+                     list(diet = "low fat", group = "vehicle"),
+                     list(diet = "low fat", group = "treatment"))
+print(high_fat, X = TRUE)
+```
+
+```{r example1ContrastStat, include = FALSE}
+basic_test_stat <- high_fat$testStat
+```   
+
+While the effect of treatment is significantly different when compared to vehicle for both diets, the difference is more pronounced in the high fat diet.
+
+Alternatively, both test can be done in the same call to `contrast()`:
+
+```{r eachTest}
+trt_effect <-
+  contrast(
+    lm_fit_1,
+    list(diet = levels(two_factor_crossed$diet), group = "vehicle"),
+    list(diet = levels(two_factor_crossed$diet), group = "treatment")
+  )
+print(trt_effect, X = TRUE)
+``` 
+
+
+Also, we can use the `type` argument to compute a single treatment effect averaging over the levels of the other factor:
+```{r meanEffect}
+mean_effect <-
+  contrast(
+    lm_fit_1,
+    list(diet = levels(two_factor_crossed$diet), group = "vehicle"),
+    list(diet = levels(two_factor_crossed$diet), group = "treatment"),
+    type = "average"
+  )  
+  
+print(mean_effect, X = TRUE)
+``` 
+
+ 
+Additionally, for ordinary linear regression models, there is an option to use sandwich estimates for the covariance matrix of the parameters. See the [sandwich](https://cran.r-project.org/package=sandwich) package for more details. Going back to our comparison of treated versus control in low fat samples, we can use the HC3 estimate in the contrast. 
+
+```{r example1Sand}
+high_fat_sand <- 
+  contrast(
+    lm_fit_1, 
+    list(diet = "low fat", group = "vehicle"),
+    list(diet = "low fat", group = "treatment"),
+    covType = "HC3"
+  )
+print(high_fat_sand)
+```
+
+
+The $t$-statistic associated with the sandwich estimate is `r round(high_fat_sand$testStat, 3)` versus `r round(basic_test_stat, 3)` using the traditional estimate of the covariance matrix.
+
+
+### Generalized Linear Model
+
+In this class of models, the distributional assumptions are expanded beyond the normal distribution to the general exponential family. Also, these models are linear in the sense that they are linear on a specified scale. The link function, denoted as $\eta$, is a function that defines how the linear predictor, $x'\beta$, enters the model. While there are several approaches to testing for statistical differences between models, such as the likelihood ratio or score tests, the Wald test is another method for assessing the statistical significance of linear combinations of model parameters. The basic Wald-type test uses the familiar statistic shown above to evaluate hypotheses. The distributional properties are exact for the normal distribution and asymptotically valid for other distributions in the exponential family. There are some issues with the Wald test (see Hauck and Donner, 1977). Whenever possible, likelihood ratio or score statistics are preferred, but these tests cannot handle some types of hypotheses, in which case the Wald test can be used.
+
+For the previous example, it is customary to log transform gene expression data using a base of 2, we can illustrate contrasts in generalized linear models using the log (base $e$) link. In this case, the actual model being fit is $\exp(x'\beta)$. 
+
+```{r example1GenLinearMod}
+glm_fit_1 <- glm(2^expression ~ (group + diet)^2, 
+                 data = two_factor_crossed, 
+                 family = gaussian(link = "log"))
+summary(glm_fit_1)
+high_fat <- 
+  contrast(glm_fit_1, 
+           list(diet = "low fat", group = "vehicle"),
+           list(diet = "low fat", group = "treatment")
+  )
+print(high_fat, X = TRUE)
+```
+
+
+The coefficients and p-values are not wildly different given that the scale is slightly different (i.e. log$_2$ versus log$_e$).
+
+### Generalized Least Squares
+
+In a second gene expression example, stem cells were differentiated using a set of factors (such as media types, cell spreads etc.). These factors were collapsed into a single cell environment configurations variable. The cell lines were assays over three days. Two of the configurations were only run on the first day and the other two were assays at baseline. 
+
+To get the materials, three donors provided materials. These donors provided (almost) equal replication across the two experimental factors (day and configuration). A summary of the design.
+
+```{r example2Data}
+library(tidyr)
+
+two_factor_incompl %>% 
+  group_by(subject, config, day) %>% 
+  count() %>% 
+  ungroup() %>% 
+  pivot_wider(
+    id_cols = c(config, day),
+    names_from = c(subject),
+    values_from = c(n)
+  )
+```
+
+
+The one of the goals of this experiment was to assess pre-specified differences in the configuration at each time point. For example, the differences between configurations A and B at day one is of interest. Also, the differences between configurations C and D at each time points were important.
+
+Since there are missing cells in the design, it is not a complete two-way factorial. One way to analyze this experiment is to further collapse the time and configuration data into a single variable and then specify each comparison using this factor.
+
+For example:
+
+```{r design2factor}
+two_factor_incompl %>% 
+  group_by(group) %>% 
+  count()
+```
+
+Using this new factor, we fit a linear model to this one-way design. We should account for the possible within-donor correlation. A generalized least square fit can do this, where we specify a correlation structure for the residuals. A compound-symmetry (a.k.a. exchangeable) correlation structure assumes that the within-donor correlation is constant. 
+
+The mdoel fit is:
+```{r design2gls}
+gls_fit <-  gls(expression ~ group, 
+               data = two_factor_incompl, 
+               corCompSymm(form = ~ 1 | subject))
+summary(gls_fit)
+```
+
+In this example, $n=23$ and $p=8$. This model estimates the residual variance and the within-subject correlation, so $q=2$. The default parameter estimates compare each group to the reference cell (day 1, configuration A). The summary table provides one of the p-values that we are interested in (configuration A vs. B at day 1). An example of obtaining the other p-values is shown below:
+
+```{r design2glsCont}
+print(
+  contrast(
+    gls_fit,
+    list(group = "4:C"),
+    list(group = "4:D")
+  ),
+  X = TRUE)     
+```
+
+
+```{r example2Plot, fig = TRUE, echo = FALSE, width = 6, height = 4.25}
+ggplot(two_factor_incompl) + 
+  aes(x = day, y = expression, col = config, shape = config) + 
+  geom_point() + 
+   stat_summary(fun.y=mean, aes(group = config), geom = "line")
+```
+
+### Linear Mixed Models via `lme`
+
+A similar model can be fit using a linear mixed model via the `lme()` function. In this case, we can add a random intercept attributable to the donors. This can produce the above compound symmetry model, but here the within donor-correlation is constrained to be positive.
+
+```{r design2lme}
+lme_fit <-  lme(expression ~ group, data = two_factor_incompl, random = ~1|subject)
+summary(lme_fit)
+
+print(
+  contrast(
+    lme_fit, 
+    list(group = "4:C"),
+    list(group = "4:D")
+  ),
+  X = TRUE)        
+```
+
+Comparing this to the `gls` model results, the default coefficients have identical parameter estimates, standard errors and test statistics, but their $p$-values are slightly different. This is due to the difference in how the degrees of freedom are calculated between these models. The same is true for the example contrast for the two models (15 versus 13 degrees of freedom).
+
+
+### Generalized Estimating Equations      
+      
+Yet another way to fit a model to these data would be to use a generalized linear model-type framework using normal errors and a log (base 2) link. To account for the within-donor variability, a generalized estimating equation approach can be used. We use the `geese()` function in the `geepack` package.
+
+```{r design2gee}
+gee_fit <-  geese(2^expression ~ group,
+                  data = two_factor_incompl,
+                  id = subject,
+                  family = gaussian(link = "log"),
+                  corstr = "exchangeable")
+summary(gee_fit)
+
+print(
+  contrast(
+    gee_fit, 
+    list(group = "4:C"),
+    list(group = "4:D")
+  ),
+  X = TRUE)   
+```
+
+For this model, a simple Wald test is calculated. The contrast shows a more significant p-value than the other models, partly due to the scale and partly due to the distributional assumptions about the test statistic.
+
+## Fold changes
+
+The `contrast()` method also computes fold changes using the follow process:
+
+ * For the two groups defined by the `a` and `b` arguments, the predicted outcomes are computed. When the model objects is generated by either `glm` or `geese`, the linear predictor is calculated.
+ * The two predicted values are optionally transformed by the `fcFunc` argument. For our gene expression example, we might use \verb+function(u) 2^u+, while for generalized linear models we might use the inverse link function from the `family` object. 
+ * The predicted value for the `a` group is divided by the predicted value for the `b` group.
+ * If the `fcType` argument is `"simple"`, the ratio is returned as the fold change. `fcType = "log"` returns the log (base $e$) of the ratio. If the type is `"signed"`, a different calculation is used. If the simple ratio is less than one, the negative reciprocal of the ratio is returned; otherwise the fold change is equal to the simple ratio
+
+
+The fold change results are contained in the output as `foldchange`. From the first example:
+
+```{r ex1FC}
+trt_effect <- 
+  contrast(lm_fit_1, 
+           list(diet = levels(two_factor_crossed$diet), group = "vehicle"),
+           list(diet = levels(two_factor_crossed$diet), group = "treatment"),
+           fcfunc = function(u) 2^u
+  )  
+print(trt_effect, X = TRUE)
+trt_effect$foldChange
+``` 
+
+
+## References
+
+
+ * Harrell, F. E. (2001), _Regression Modeling Strategies_. New York: Springer-Verlag.
+
+ * Hauck, W. W. and Donner, A.  (1977), Wald's Test as Applied to Hypotheses in Logit Analysis. _Journal of the American Statistical Association_,  72, 851-863.

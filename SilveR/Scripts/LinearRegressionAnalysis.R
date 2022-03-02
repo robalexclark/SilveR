@@ -69,6 +69,10 @@ if (FirstCatFactor == "NULL") {
 #Graphics parameter setup
 graphdata<-statdata
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 if (covariatelist != "NULL") {
 	Gr_palette<-palette_FUN(FirstCatFactor)
@@ -945,7 +949,8 @@ if(showNormPlot=="Y") {
 	MainTitle2 <- ""
 
 	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
 
 	void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlot), Align="left")
 

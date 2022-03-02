@@ -1,17 +1,36 @@
 Package: contrast
-Version: 0.21
-Date: 2016-09-22
 Title: A Collection of Contrast Methods
-Author: Max Kuhn, contributions from Steve Weston, Jed Wing, 
-  James Forester and Thorn Thaler 
-Maintainer: Max Kuhn <mxkuhn@gmail.com>
-Depends: R (>= 2.2.1), rms
-Suggests: lattice
-Imports: nlme, Hmisc, geepack, MASS, sandwich
-Description: One degree of freedom contrasts for lm, glm, gls, and geese objects.
+Version: 0.24.1
+Date: 2021-12-14
+Authors@R: c(
+    person(given = "Alan",  family = "O'Callaghan", email = "alan.ocallaghan@outlook.com", role = c("cre")),
+    person(given = "Max",   family = "Kuhn", role = "aut"),
+    person(given = "Steve", family = "Weston", role = "aut"),
+    person(given = "Jed",   family = "Wing", role = "aut"),
+    person(given = "James", family = "Forester", role = "aut"),
+    person(given = "Thorn", family = "Thaler", role = "aut"))
+Description: One degree of freedom contrasts for 'lm', 'glm', 'gls', and 'geese' objects.
 License: GPL-2
+URL: https://github.com/Alanocallaghan/contrast
+BugReports: https://github.com/Alanocallaghan/contrast/issues
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 2.10)
+Imports: nlme, sandwich, rms
+Suggests: knitr, kableExtra, dplyr, ggplot2, tidyr, rmarkdown,
+        testthat, covr, geepack, splines
+RoxygenNote: 7.0.2.9000
+VignetteBuilder: knitr
+Language: en-US
 NeedsCompilation: no
-Packaged: 2016-09-22 14:44:28 UTC; kuhna03
+Packaged: 2021-12-14 23:05:24 UTC; alan
+Author: Alan O'Callaghan [cre],
+  Max Kuhn [aut],
+  Steve Weston [aut],
+  Jed Wing [aut],
+  James Forester [aut],
+  Thorn Thaler [aut]
+Maintainer: Alan O'Callaghan <alan.ocallaghan@outlook.com>
 Repository: CRAN
-Date/Publication: 2016-09-22 17:09:58
-Built: R 3.6.3; ; 2020-03-03 07:20:17 UTC; windows
+Date/Publication: 2021-12-14 23:40:02 UTC
+Built: R 4.1.2; ; 2022-02-15 05:46:39 UTC; windows

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Enable parallelization on batch systems</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for BatchJobsParam-class {BiocParallel}"><tr><td>BatchJobsParam-class {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Enable parallelization on batch systems</h2>
+
+<h3>Description</h3>
+
+<p>This class is used to parameterize scheduler options on managed
+high-performance computing clusters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+BatchJobsParam(workers, cleanup = TRUE, 
+    work.dir = getwd(), stop.on.error = TRUE, seed = NULL,
+    resources = NULL, conffile = NULL, cluster.functions = NULL, 
+    progressbar = TRUE, jobname = "BPJOB",
+    reg.pars=list(seed=seed, work.dir=work.dir),
+    conf.pars=list(conffile=conffile, cluster.functions=cluster.functions),
+    submit.pars=list(resources=resources),
+    ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>workers</code></td>
+<td>
+<p><code>integer(1)</code></p>
+</td></tr></table>
+<p> Number of workers to divide tasks
+(e.g., elements in the first argument of <code>bplapply</code>)
+between. On Multicore and SSH backends, this defaults to all
+available nodes.  On managed (e.g., slurm, SGE) clusters
+<code>workers</code> defaults to <code>NA</code>, meaning that the number of
+workers equals the number of tasks.  See argument
+<code>n.chunks</code> in <code><a href="../../BBmisc/help/chunk.html">chunk</a></code> and
+<code><a href="../../BatchJobs/help/submitJobs.html">submitJobs</a></code> for more information.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>cleanup</code></td>
+<td>
+<p><code>logical(1)</code></p>
+</td></tr></table>
+<p> BatchJobs creates temporary
+directories in the <code>work.dir</code>. If <code>cleanup</code> is set to
+<code>TRUE</code> (default), the directories are removed from the file
+systems automatically. Set this to <code>FALSE</code> whenever it
+might become necessary to utilize any special functionality
+provided by BatchJobs. To retrieve the registry, call
+<code><a href="../../BatchJobs/help/loadRegistry.html">loadRegistry</a></code> on the temporary
+directory.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>work.dir</code></td>
+<td>
+<p><code>character(1)</code></p>
+</td></tr></table>
+<p> Directory to store temporary
+files. Note that this must be shared across computational nodes
+if you use a distributed computing backend. Default ist the
+current working directory of <code>R</code>, see
+<code><a href="../../base/help/getwd.html">getwd</a></code>. Ignored when <code>reg.pars</code> is
+provided.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>stop.on.error</code></td>
+<td>
+<p><code>logical(1)</code></p>
+</td></tr></table>
+<p> Stop all jobs as soon as one
+jobs fails (<code>stop.on.error == TRUE</code>) or wait for all jobs
+to terminate.  Default is <code>TRUE</code>.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>seed</code></td>
+<td>
+<p><code>integer(1L)</code></p>
+</td></tr></table>
+<p> Set an initial seed for the RNG. See
+<code><a href="../../BatchJobs/help/makeRegistry.html">makeRegistry</a></code> for more information.
+Default is <code>NULL</code> where a random seed is chosen upon
+initialization. Ignored when <code>reg.pars</code> is provided.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>resources</code></td>
+<td>
+<p><code>list()</code></p>
+</td></tr></table>
+<p> List of job specific resources
+passed to <code><a href="../../BatchJobs/help/submitJobs.html">submitJobs</a></code>.  Default is
+<code>NULL</code> where the resources defined in the configuration are
+used. Ignored when <code>submit.pars</code> is provided.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>conffile</code></td>
+<td>
+<p><code>character(1)</code></p>
+</td></tr></table>
+<p> URI to a custom BatchJobs
+configuration file used for execution.  Default is <code>NULL</code>
+which relies on BatchJobs to handle configuration files. Ignored
+when <code>conf.pars</code> is provided.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>cluster.functions</code></td>
+<td>
+<p>ClusterFunctions</p>
+</td></tr></table>
+<p> Specify a specific
+cluster backend using on of the constructors provided by
+BatchJobs, see
+<a href="../../BatchJobs/help/makeClusterFunctions.html">ClusterFunctions</a>.
+Default is <code>NULL</code> where the default cluster functions
+defined in the configuration are used. Ignored when
+<code>conf.pars</code> is provided.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>progressbar</code></td>
+<td>
+<p><code>logical(1)</code></p>
+</td></tr>
+</table>
+<p>Suppress the progress bar used in BatchJobs and be less verbose.
+Default is <code>FALSE</code>.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>jobname</code></td>
+<td>
+<p><code>character(1)</code></p>
+</td></tr></table>
+<p> Job name that is prepended
+to the output log and result files. Default is &quot;BPJOB&quot;.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>reg.pars</code></td>
+<td>
+<p><code>list()</code></p>
+</td></tr>
+</table>
+<p>List of parameters passed to <code>BatchJobs::makeRegistry()</code>. When
+present, user-supplied arguments <code>seed</code> and <code>work.dir</code>
+to <code>BatchJobsParam</code> are ignored.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>conf.pars</code></td>
+<td>
+<p><code>list()</code></p>
+</td></tr>
+</table>
+<p>List of parameters passed to <code>BatchJobs::setConfig()</code>. When
+present, user-supplied arguments <code>conffile</code>,
+<code>cluster.functions</code> to <code>BatchJobsParam</code> are ignored.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>submit.pars</code></td>
+<td>
+<p><code>list()</code></p>
+</td></tr>
+</table>
+<p>List of parameters passed to <code>BatchJobs::submitJobs</code>. When
+present, user-supplied argument <code>resources</code> to
+<code>BatchJobsParam</code> is ignored. <code>submitJobs</code> parameters
+<code>reg</code>, <code>id</code> cannot be set.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Addition arguments, currently not handled.</p>
+</td></tr>
+</table>
+
+
+<h3>BatchJobsParam constructor</h3>
+
+<p>Return an object with specified values. The object may be saved to
+disk or reused within a session.
+</p>
+
+
+<h3>Methods</h3>
+
+<p>The following generics are implemented and perform as documented on
+the corresponding help page: <code><a href="../../BiocParallel/help/bpworkers.html">bpworkers</a></code>,
+<code><a href="../../BiocParallel/help/bpnworkers.html">bpnworkers</a></code>, <code><a href="../../BiocParallel/help/bpstart.html">bpstart</a></code>,
+<code><a href="../../BiocParallel/help/bpstop.html">bpstop</a></code>, <code><a href="../../BiocParallel/help/bpisup.html">bpisup</a></code>, <code><a href="../../BiocParallel/help/bpbackend.html">bpbackend</a></code>,
+<code><a href="../../BiocParallel/help/bpbackend+3C-.html">bpbackend&lt;-</a></code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Michel Lang, <a href="mailto:michellang@gmail.com">mailto:michellang@gmail.com</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>getClass("BiocParallelParam")</code> for additional parameter classes.
+</p>
+<p><code>register</code> for registering parameter classes for use in parallel
+evaluation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+p &lt;- BatchJobsParam(progressbar=FALSE)
+bplapply(1:10, sqrt, BPPARAM=p)
+
+## Not run: 
+## see vignette for additional explanation
+funs &lt;- makeClusterFunctionsSLURM("~/slurm.tmpl")
+param &lt;- BatchJobsParam(4, cluster.functions=funs)
+register(param)
+bplapply(1:10, function(i) sqrt)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,12 +1,19 @@
 Package: purrr
 Title: Functional Programming Tools
-Version: 0.3.3
-Authors@R: c(
-    person("Lionel", "Henry", , "lionel@rstudio.com", c("aut", "cre")),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", "aut"),
-    person("RStudio", role = c("cph", "fnd"))
-    )
-Description: A complete and consistent functional programming toolkit for R.
+Version: 0.3.4
+Authors@R: 
+    c(person(given = "Lionel",
+             family = "Henry",
+             role = c("aut", "cre"),
+             email = "lionel@rstudio.com"),
+      person(given = "Hadley",
+             family = "Wickham",
+             role = "aut",
+             email = "hadley@rstudio.com"),
+      person(given = "RStudio",
+             role = c("cph", "fnd")))
+Description: A complete and consistent functional programming
+    toolkit for R.
 License: GPL-3 | file LICENSE
 URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
 BugReports: https://github.com/tidyverse/purrr/issues
@@ -17,14 +24,14 @@ Suggests: covr, crayon, dplyr (>= 0.7.8), knitr, rmarkdown, testthat,
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 NeedsCompilation: yes
-Packaged: 2019-10-17 08:02:23 UTC; lionel
+Packaged: 2020-04-16 21:54:48 UTC; hadley
 Author: Lionel Henry [aut, cre],
   Hadley Wickham [aut],
   RStudio [cph, fnd]
 Maintainer: Lionel Henry <lionel@rstudio.com>
 Repository: CRAN
-Date/Publication: 2019-10-18 12:40:05 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-03 01:06:35 UTC; windows
+Date/Publication: 2020-04-17 12:10:07 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 21:19:40 UTC; windows
 Archs: i386, x64

@@ -118,6 +118,22 @@ require("ggplot2")
 emmip(pigs.lm1, ~ percent | source, CIs = TRUE) +
     geom_point(aes(x = percent, y = log(conc)), data = pigs, pch = 2, color = "blue")
 
+## ---- eval = FALSE------------------------------------------------------------
+#  ci <- confint(mtcars.rg_d.c, level = 0.90, adjust = "scheffe")
+#  xport <- print(ci, export = TRUE)
+#  cat("<font color = 'blue'>\n")
+#  knitr::kable(xport$summary, align = "r")
+#  for (a in xport$annotations) cat(paste(a, "<br>"))
+#  cat("</font>\n")
+
+## ---- results = "asis", echo = FALSE------------------------------------------
+ci <- confint(mtcars.rg_d.c, level = 0.90, adjust = "scheffe")
+xport <- print(ci, export = TRUE)
+cat("<font color = 'blue'>\n")
+knitr::kable(xport$summary, align = "r")
+for (a in xport$annotations) cat(paste(a, "<br>"))
+cat("</font>\n")
+
 ## -----------------------------------------------------------------------------
 emmeans(pigs.lm1, "percent", weights = "cells")
 

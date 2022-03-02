@@ -11,8 +11,6 @@ namespace SilveR.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Version R_VERSION = new Version(3, 6);
-
         private readonly AppSettings appSettings;
 
         public HomeController(IOptions<AppSettings> appSettings)
@@ -27,7 +25,7 @@ namespace SilveR.Controllers
 
             if (!rInstalled) //then error as R is not found
             {
-                StringBuilder stringBuilder = new StringBuilder("R " + R_VERSION + " is not installed or is misconfigured." + Environment.NewLine);
+                StringBuilder stringBuilder = new StringBuilder("R is not installed or is misconfigured." + Environment.NewLine);
 
                 if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation) && !System.IO.File.Exists(appSettings.CustomRScriptLocation))
                 {
@@ -37,15 +35,15 @@ namespace SilveR.Controllers
                 {
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                        stringBuilder.AppendLine("R " + R_VERSION + " should have been installed but is missing from the expected location. Please reinstall the application or check your custom location.");
+                        stringBuilder.AppendLine("R should have been installed but is missing from the expected location. Please reinstall the application or check your custom location.");
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
-                        stringBuilder.AppendLine("To install " + R_VERSION + " on linux see the setup instructions at <a href='https://github.com/robalexclark/SilveR#linux'>https://github.com/robalexclark/SilveR#linux</a>");
+                        stringBuilder.AppendLine("To install R on linux see the setup instructions at <a href='https://github.com/robalexclark/SilveR#linux'>https://github.com/robalexclark/SilveR#linux</a>");
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {
-                        stringBuilder.AppendLine("To install " + R_VERSION + " on mac see the setup instructions at <a href='https://github.com/robalexclark/SilveR#macos'>https://github.com/robalexclark/SilveR#macos</a>");
+                        stringBuilder.AppendLine("To install R on mac see the setup instructions at <a href='https://github.com/robalexclark/SilveR#macos'>https://github.com/robalexclark/SilveR#macos</a>");
                     }
                 }
 
@@ -90,8 +88,7 @@ namespace SilveR.Controllers
                 Process process = Process.Start(processStartInfo);
                 string processOutput = process.StandardError.ReadToEnd();
 
-                string rVersion = R_VERSION.ToString();
-                return processOutput.Contains(rVersion);
+                return processOutput.StartsWith("R");
             }
             catch
             {

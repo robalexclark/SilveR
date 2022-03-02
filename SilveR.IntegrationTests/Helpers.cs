@@ -83,15 +83,19 @@ namespace SilveR.IntegrationTests
             Directory.CreateDirectory("ActualResults");
             Directory.CreateDirectory(Path.Combine("ActualResults", moduleName));
 
-            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
-
+            //write the log first
             List<string> logOutput = new List<string>();
-
             logOutput.Add(ObjectDumper.Dump(analysisModel));
             logOutput.Add("------------------------------------------------------------------------------------------------------------------");
             logOutput.Add(statsOutput.LogText);
 
             File.WriteAllLines(Path.Combine("ActualResults", moduleName, testName + ".log"), logOutput);
+
+            //write the results if it exists
+            if (statsOutput.HtmlResults == null)
+                throw new Exception("No results output!");
+
+            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         public static async Task<StatsOutput> SubmitAnalysis(HttpClient client, string analysisName, FormUrlEncodedContent content)
@@ -99,7 +103,7 @@ namespace SilveR.IntegrationTests
             HttpResponseMessage response = await client.PostAsync("Analyses/" + analysisName, content);
             HtmlDocument doc = await GetHtml(response);
             var scriptBlock = doc.DocumentNode.Descendants().LastOrDefault(n => n.Name == "script");
-            if(scriptBlock == null)
+            if (scriptBlock == null)
             {
                 throw new InvalidOperationException("HTML OUTPUT ERROR:" + doc.ParsedText);
             }
@@ -129,11 +133,13 @@ namespace SilveR.IntegrationTests
             HtmlDocument htmlResultsOutputDocument = await GetHtml(viewResultsResponse);
             HtmlNode resultsOutputNode = htmlResultsOutputDocument.GetElementbyId("resultsOutput");
 
-            if (resultsOutputNode == null)
-                throw new Exception("No results output!");
+            string formattedHtml = null;
+            if (resultsOutputNode != null) //if its null then an error has occurred but we don't throw here as we still want the log
+            {
+                string rawHtml = resultsOutputNode.InnerHtml;
+                formattedHtml = File.ReadAllText("ResultFormatting.txt") + rawHtml;
+            }
 
-            string rawHtml = resultsOutputNode.InnerHtml;
-            string formattedHtml = File.ReadAllText("ResultFormatting.txt") + rawHtml;
 
             HttpResponseMessage viewLogOutput = await client.GetAsync("/Analyses/ViewLog?analysisGuid=" + analysisGuid);
             HtmlDocument htmlLogOutputDocument = await GetHtml(viewLogOutput);
@@ -151,7 +157,7 @@ namespace SilveR.IntegrationTests
             return doc;
         }
 
-        public static string RemoveAllImageNodes(string html)
+        public static string FixForUnixOSs(string html)
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -160,6 +166,7 @@ namespace SilveR.IntegrationTests
                     HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
                     document.LoadHtml(html);
 
+                    //strip images on *nix
                     HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
 
                     if (nodes != null)
@@ -171,17 +178,27 @@ namespace SilveR.IntegrationTests
                     }
 
                     html = document.DocumentNode.OuterHtml;
+
+                    //fix the carrige return codes
+                    html = html.Replace("\r\n", Environment.NewLine);
+
+                    //fix the quotes
+                    html = html.Replace("“", "\"");
+                    html = html.Replace("”", "\"");
+
                     return html;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    throw ex;
+                    throw;
                 }
             }
-            else //dont strip images on win
+            else if (html.Contains("Time3Â£") && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                return html;
+                html = html.Replace("Time3Â£", "Time3£");
             }
+
+            return html;
         }
     }
 

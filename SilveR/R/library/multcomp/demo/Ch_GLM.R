@@ -277,7 +277,7 @@ confint(warpbreaks.mc, calpha = cbon)
 ### chunk number 42: warpbreaksCLD
 ###################################################
 warpbreaks.cld <- cld(warpbreaks.mc)
-plot(warpbreaks.cld, xlab = "Tension", ylab = "Breaks")
+plot(warpbreaks.cld)
 
 
 ###################################################

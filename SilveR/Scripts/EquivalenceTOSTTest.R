@@ -78,8 +78,10 @@ if (is.numeric(statdata$mainEffect) == TRUE) {
 	cntrlGroup <- paste ("'",cntrlGroup,"'",sep="")
 }
 
-statdata$mainEffect<-as.factor(statdata$mainEffect)
-statdata$scatterPlotColumn<-as.factor(statdata$scatterPlotColumn)
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Response
 resp <- unlist(strsplit(model ,"~"))[1] #get the response variable from the main model
@@ -207,7 +209,17 @@ if (EqBtype == "percentage" && responseTransform == "none") {
 		overallmean <- mean(eval(parse(text = paste("statdata$", resp))), na.rm = TRUE)
 	}
 	if (backToControlTest == "comparisonstocontrol") {
-		controldata <-  subset(statdata, statdata$mainEffect == cntrlGroup)
+
+tempdata <- statdata
+tempdata$temp <- paste("T", tempdata$mainEffect, sep="")
+temocont<-paste("T", cntrlGroup, sep = "")
+if (is.numeric(statdata$mainEffect) == TRUE) {
+tempdata$temp <- paste("T'", tempdata$mainEffect, "'",sep="")
+}
+
+print(temocont)
+print(head(tempdata))
+		controldata <-  subset(tempdata, tempdata$temp == temocont)
 		overallmean <- mean(eval(parse(text = paste("controldata$", resp))), na.rm = TRUE)
 	}
 
@@ -226,6 +238,9 @@ if (EqBtype == "percentage" && responseTransform == "none") {
 		upperboundtest <- upper
 	}
 }
+
+statdata$mainEffect<-as.factor(statdata$mainEffect)
+statdata$scatterPlotColumn<-as.factor(statdata$scatterPlotColumn)
 
 #===================================================================================================================
 #Titles and description
@@ -303,7 +318,6 @@ HTML(add, align="left")
 
 low<-format(round(lowerboundtest, 2), nsmall=2, scientific=FALSE)
 up<- format(round(upperboundtest, 2), nsmall=2, scientific=FALSE)
-
 
 #Generating the text for the eq bounds
 if (EqBtype == "absolute") {
@@ -1615,7 +1629,8 @@ if(showNormPlot=="Y") {
 	Line_type <-Line_type_dashed
 
 	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
 
 	MainTitle2 <- ""
 	#===================================================================================================================

@@ -58,6 +58,10 @@ new <- dim(statdata)[1]
 #Graphical parameters
 Labelz_IVS_ <- "Y"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Setting up the Case ID variable
 if (caseid_IVS_ == "NULL") {

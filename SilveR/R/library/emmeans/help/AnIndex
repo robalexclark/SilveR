@@ -13,10 +13,8 @@ as.list.emmGrid	as.emmGrid
 as.mcmc.emmGrid	mcmc-support
 as.mcmc.list.emmGrid	mcmc-support
 auto.noise	auto.noise
-CLD	CLD.emmGrid
-CLD.emmGrid	CLD.emmGrid
 cld.emmGrid	CLD.emmGrid
-CLD.emm_list	emm_list-object
+cld.emm_list	CLD.emmGrid
 coef.emmGrid	contrast
 confint.emmGrid	summary.emmGrid
 consec.emmc	emmc-functions
@@ -33,6 +31,8 @@ emmeans	emmeans
 emmGrid-class	emmGrid-class
 emmip	emmip
 emmip.default	emmip
+emmip_ggplot	emmip
+emmip_lattice	emmip
 emmobj	emmobj
 emm_basis	extending-emmeans
 emm_defaults	emm_options
@@ -42,6 +42,7 @@ emtrends	emtrends
 extending-emmeans	extending-emmeans
 feedlot	feedlot
 fiber	fiber
+force_regular	rbind.emmGrid
 get.lsm.option	wrappers
 get_emm_option	emm_options
 glht-support	glht-support
@@ -50,6 +51,7 @@ glht.emmlf	glht-support
 hpd.summary	hpd.summary
 identity.emmc	emmc-functions
 joint_tests	joint_tests
+levels<-.emmGrid	update.emmGrid
 lsm	wrappers
 lsm.options	wrappers
 lsmeans	wrappers
@@ -62,6 +64,7 @@ mean_chg.emmc	emmc-functions
 MOats	MOats
 modelparm.emmwrap	glht-support
 models	models
+mvcontrast	mvcontrast
 neuralgia	neuralgia
 nutrition	nutrition
 oranges	oranges
@@ -83,12 +86,14 @@ pwpm	pwpm
 pwpp	pwpp
 qdrg	qdrg
 rbind.emmGrid	rbind.emmGrid
+rbind.emm_list	rbind.emmGrid
 recover_data	extending-emmeans
 recover_data.call	extending-emmeans
 ref_grid	ref_grid
 regrid	regrid
 revpairwise.emmc	emmc-functions
 str.emmGrid	emmGrid-methods
+subset.emmGrid	rbind.emmGrid
 summary.emmGrid	summary.emmGrid
 test	summary.emmGrid
 test.emmGrid	summary.emmGrid
@@ -96,7 +101,9 @@ trt.vs.ctrl.emmc	emmc-functions
 trt.vs.ctrl1.emmc	emmc-functions
 trt.vs.ctrlk.emmc	emmc-functions
 tukey.emmc	emmc-functions
+ubds	ubds
 update.emmGrid	update.emmGrid
+update.summary_emm	update.emmGrid
 vcov.emmGrid	emmGrid-methods
 wrappers	wrappers
 xtable.emmGrid	xtable.emmGrid

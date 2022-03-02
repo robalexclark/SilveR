@@ -1,4 +1,13 @@
 Exact                   Unconditional Exact Tests R Package
-exact.reject.region     Rejection Region for 2x2 Tables
-exact.test              Unconditional Exact Tests for 2x2 tables
-power.exact.test        Power Calculations for 2x2 Tables
+exact.reject.region     Rejection Region for 2x2 Tables with
+                        Independent Samples
+exact.test              Unconditional Exact Tests for 2x2 Tables with
+                        Independent Samples
+paired.exact.test       Unconditional Exact Tests for 2x2 Tables with
+                        Paired Samples
+paired.reject.region    Rejection Region for 2x2 Tables with Paired
+                        Samples
+power.exact.test        Power Calculations for 2x2 Tables with
+                        Independent Samples
+power.paired.test       Power Calculations for 2x2 Tables with Paired
+                        Samples

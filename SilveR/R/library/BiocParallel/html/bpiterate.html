@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Parallel iteration over an indeterminate number of data...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bpiterate {BiocParallel}"><tr><td>bpiterate {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Parallel iteration over an indeterminate number of data chunks</h2>
+
+<h3>Description</h3>
+
+<p><code>bpiterate</code> iterates over an indeterminate number of data chunks
+(e.g., records in a file). Each chunk is processed by parallel workers
+in an asynchronous fashion; as each worker finishes it receives a
+new chunk. Data are traversed a single time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+bpiterate(ITER, FUN, ..., BPPARAM=bpparam())
+
+## S4 method for signature 'ANY,ANY,missing'
+bpiterate(ITER, FUN, ..., BPPARAM=bpparam())
+
+## S4 method for signature 'ANY,ANY,BatchtoolsParam'
+bpiterate(
+    ITER, FUN, ..., REDUCE, init, reduce.in.order=FALSE, BPPARAM=bpparam()
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>ITER</code></td>
+<td>
+
+<p>A function with no arguments that returns an object to process,
+generally a chunk of data from a file. When no objects
+are left (i.e., end of file) it should return NULL and continue to
+return NULL regardless of the number of times it is invoked after
+reaching the end of file. This function is run on the master.
+</p>
+</td></tr>
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+
+<p>A function to process the object returned by <code>ITER</code>;
+run on parallel workers separate from the master. When
+BPPARAM is a MulticoreParam, FUN is 'decorated' with additional
+arguments and therefore must have ... in the signature.
+</p>
+</td></tr>
+<tr valign="top"><td><code>BPPARAM</code></td>
+<td>
+<p>An optional <code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> instance
+determining the parallel back-end to be used during evaluation, or a
+<code>list</code> of <code>BiocParallelParam</code> instances, to be applied in
+sequence for nested calls to <code>bpiterate</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>REDUCE</code></td>
+<td>
+<p>Optional function that combines (reduces)
+output from <code>FUN</code>. As each worker returns, the data are
+combined with the <code>REDUCE</code> function.  <code>REDUCE</code> takes 2
+arguments; one is the current result and the other is the output of
+<code>FUN</code> from a worker that just finished.</p>
+</td></tr>
+<tr valign="top"><td><code>init</code></td>
+<td>
+<p>Optional initial value for <code>REDUCE</code>; must be of the
+same type as the object returned from <code>FUN</code>.  When supplied,
+<code>reduce.in.order</code> is set to TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>reduce.in.order</code></td>
+<td>
+<p>Logical. When TRUE, REDUCE is applied to the
+results from the workers in the same order the tasks were sent out.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments to other methods, and named arguments for
+<code>FUN</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Supported for <code>SnowParam</code>, <code>MulticoreParam</code> and
+<code>BatchtoolsParam</code>.
+</p>
+<p><code>bpiterate</code> iterates through an unknown number of data
+chunks, dispatching chunks to parallel workers as they
+become available. In contrast, other <code>bp*apply</code> functions
+such as <code>bplapply</code> or <code>bpmapply</code> require the number of
+data chunks to be specified ahead of time. This quality makes
+<code>bpiterate</code> useful for iterating through files of unknown length.
+</p>
+<p><code>ITER</code> serves up chunks of data until the end of the file
+is reached at which point it returns NULL. Note that <code>ITER</code>
+should continue to return NULL reguardless of the number of times
+it is invoked after reaching the end of the file. <code>FUN</code>
+is applied to each object (data chunk) returned by <code>ITER</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>By default, a <code>list</code> the same length as the number of chunks in
+<code>ITER()</code>. When <code>REDUCE</code> is used, the return is consistent
+with application of the reduction.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerie Obenchain <a href="mailto:vobencha@fhcrc.org">mailto:vobencha@fhcrc.org</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code><a href="../../BiocParallel/help/bpvec.html">bpvec</a></code> for parallel, vectorized calculations.
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/bplapply.html">bplapply</a></code> for parallel, lapply-like calculations.
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> for details of <code>BPPARAM</code>.
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/BatchtoolsParam.html">BatchtoolsParam</a></code> for details of <code>BatchtoolsParam</code>.
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+if (require(Rsamtools) &amp;&amp; require(RNAseqData.HNRNPC.bam.chr14) &amp;&amp;
+    require(GenomicAlignments) &amp;&amp; require(ShortRead)) {
+
+  ## ----------------------------------------------------------------------
+  ## Iterate through a BAM file
+  ## ----------------------------------------------------------------------
+
+  ## Select a single file and set 'yieldSize' in the BamFile object.
+  fl &lt;- RNAseqData.HNRNPC.bam.chr14_BAMFILES[[1]]
+  bf &lt;- BamFile(fl, yieldSize = 300000)
+
+  ## bamIterator() is initialized with a BAM file and returns a function.
+  ## The return function requires no arguments and iterates through the
+  ## file returning data chunks the size of yieldSize.
+  bamIterator &lt;- function(bf) {
+      done &lt;- FALSE
+      if (!isOpen( bf))
+	  open(bf)
+
+      function() {
+	  if (done)
+	      return(NULL)
+	  yld &lt;- readGAlignments(bf)
+	  if (length(yld) == 0L) {
+	      close(bf)
+	      done &lt;&lt;- TRUE
+	      NULL
+	  } else yld
+      }
+  }
+
+  ## FUN counts reads in a region of interest.
+  roi &lt;- GRanges("chr14", IRanges(seq(19e6, 107e6, by = 10e6), width = 10e6))
+  counter &lt;- function(reads, roi, ...) {
+      countOverlaps(query = roi, subject = reads)
+  }
+
+  ## Initialize the iterator.
+  ITER &lt;- bamIterator(bf)
+
+  ## The number of chunks returned by ITER() determines the result length.
+  bpparam &lt;- MulticoreParam(workers = 3)
+  ## bpparam &lt;- BatchtoolsParam(workers = 3), see ?BatchtoolsParam
+  bpiterate(ITER, counter, roi = roi, BPPARAM = bpparam)
+
+  ## Re-initialize the iterator and combine on the fly with REDUCE:
+  ITER &lt;- bamIterator(bf)
+  bpparam &lt;- MulticoreParam(workers = 3)
+  bpiterate(ITER, counter, REDUCE = sum, roi = roi, BPPARAM = bpparam)
+
+  ## ----------------------------------------------------------------------
+  ## Iterate through a FASTA file
+  ## ----------------------------------------------------------------------
+
+  ## Set data chunk size with 'n' in the FastqStreamer object.
+  sp &lt;- SolexaPath(system.file('extdata', package = 'ShortRead'))
+  fl &lt;- file.path(analysisPath(sp), "s_1_sequence.txt")
+
+  ## Create an iterator that returns data chunks the size of 'n'.
+  fastqIterator &lt;- function(fqs) {
+      done &lt;- FALSE
+      if (!isOpen(fqs))
+	  open(fqs)
+
+      function() {
+	  if (done)
+	      return(NULL)
+	  yld &lt;- yield(fqs)
+	  if (length(yld) == 0L) {
+	      close(fqs)
+	      done &lt;&lt;- TRUE
+	      NULL
+	  } else yld
+      }
+  }
+
+  ## The process function summarizes the number of times each sequence occurs.
+  summary &lt;- function(reads, ...) {
+       ShortRead::tables(reads, n = 0)$distribution
+  }
+
+  ## Create a param.
+  bpparam &lt;- SnowParam(workers = 2)
+
+  ## Initialize the streamer and iterator.
+  fqs &lt;- FastqStreamer(fl, n = 100)
+  ITER &lt;- fastqIterator(fqs)
+  bpiterate(ITER, summary, BPPARAM = bpparam)
+
+  ## Results from the workers are combined on the fly when REDUCE is used.
+  ## Collapsing the data in this way can substantially reduce memory
+  ## requirements.
+  fqs &lt;- FastqStreamer(fl, n = 100)
+  ITER &lt;- fastqIterator(fqs)
+  bpiterate(ITER, summary, REDUCE = merge, all = TRUE, BPPARAM = bpparam)
+
+  }
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

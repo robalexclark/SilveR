@@ -74,7 +74,7 @@ htmlwidgets:::toJSON2(unname(head(iris, 8)), dataframe = 'column', pretty = TRUE
 htmlwidgets:::toJSON2(head(iris, 8), dataframe = 'values', pretty = TRUE)
 ```
 
-As a real example, the [dygraphs](https://rstudio.github.io/dygraphs) widget uses this function to transpose the "file" (data) argument it gets from the R side before passing it on to the dygraphs library:
+As a real example, the [dygraphs](https://rstudio.github.io/dygraphs/) widget uses this function to transpose the "file" (data) argument it gets from the R side before passing it on to the dygraphs library:
 
 ```javascript
 renderValue: function(x) {
@@ -147,7 +147,7 @@ Note these features about custom JSON serializers require the **shiny** version 
 
 As you would expect, character vectors passed from R to JavaScript are converted to JavaScript strings. However, what if you want to allow users to provide custom JavaScript functions for formatting, drawing, or event handling? For this case, the **htmlwidgets** package includes a `JS()` function that allows you to request that a character value is evaluated as JavaScript when it is received on the client.
 
-For example, the [dygraphs](https://rstudio.github.io/dygraphs) widget includes a `dyCallbacks` function that allows the user to provide callback functions for a variety of contexts. These callbacks are "marked" as containing JavaScript so that they can be converted to actual JavaScript functions on the client:
+For example, the [dygraphs](https://rstudio.github.io/dygraphs/) widget includes a `dyCallbacks` function that allows the user to provide callback functions for a variety of contexts. These callbacks are "marked" as containing JavaScript so that they can be converted to actual JavaScript functions on the client:
 
 ```r
 callbacks <- list(
@@ -159,7 +159,7 @@ callbacks <- list(
 )
 ```
 
-Another example is in the [DT](https://rstudio.github.io/DT) (DataTables) widget, where users can specify an `initCallback` with JavaScript to execute after the table is loaded and initialized:
+Another example is in the [DT](https://rstudio.github.io/DT/) (DataTables) widget, where users can specify an `initCallback` with JavaScript to execute after the table is loaded and initialized:
 
 ```r
 datatable(head(iris, 20), options = list(
@@ -177,12 +177,13 @@ If multiple arguments are passed to `JS()` (as in the above example), they will 
 Typically the HTML "housing" for a widget is just a `<div>` element, and this is correspondingly the default behavior for new widgets that don't specify otherwise. However, sometimes you need a different element type. For example, the [sparkline](https://github.com/htmlwidgets/sparkline) widget requires a `<span>` element so implements the following custom HTML generation function:
 
 ```r
-sparkline_html <- function(id, style, class, ...){
+widget_html.sparkline <- function(id, style, class, ...){
   tags$span(id = id, class = class)
 }
 ```
 
-Note that this function is looked up within the package implementing the widget by the convention `widgetname_html` so it need not be formally exported from your package or otherwise registered with **htmlwidgets**.
+Note that this function is looked up within the package implementing the widget by the convention <code>widget_html.<em>widgetname</em></code> so it need not be formally exported from your package or otherwise registered with **htmlwidgets**.
+
+(**htmlwidgets** 1.5.2 and earlier used a convention of <code><em>widgetname</em>_html</code>. This is still supported for now, but the new <code>widget_html.<em>widgetname</em></code> convention is recommended going forward, as it seems less likely to lead to false positives.)
 
 Most widgets won't need a custom HTML function but if you need to generate custom HTML for your widget (e.g. you need an `<input>` or a `<span>` rather than a `<div>`) then you should use the **htmltools** package (as demonstrated by the code above).
-

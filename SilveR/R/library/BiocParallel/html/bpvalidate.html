@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Tools for developing functions for parallel execution in...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bpvalidate {BiocParallel}"><tr><td>bpvalidate {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Tools for developing functions for parallel execution in
+distributed memory</h2>
+
+<h3>Description</h3>
+
+<p><code>bpvalidate</code> interrogates the function environment and search path
+to locate undefined symbols.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+bpvalidate(fun, signal = c("warning", "error", "silent"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>fun</code></td>
+<td>
+<p>The function to be checked. <code>typeof(fun)</code> must return
+either <code>"closure"</code> or <code>"builtin"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>signal</code></td>
+<td>
+<p><code>character(1)</code> matching <code>"warning", "error",
+    "silent"</code> or a function with signature <code>(..., call.)</code> to be
+invoked when reporting errors. Using <code>"silent"</code> suppresses
+output; <code>"warning"</code> and <code>"error"</code> emit warnings or errors
+when <code>fun</code> contains references to unknown variables or
+variables defined in the global environment (and hence not
+serialized to workers).</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>bpvalidate</code> tests if a function can be run in a distributed memory
+environment (e.g., SOCK clusters, Windows machines). <code>bpvalidate</code> looks
+in the environment of <code>fun</code>, in the NAMESPACE exports of libraries
+loaded in <code>fun</code>, and along the search path to identify any symbols 
+outside the scope of <code>fun</code>.
+</p>
+<p><code>bpvalidate</code> can be used to check functions passed to the bp* family
+of functions in <code>BiocParallel</code> or other packages that support parallel
+evaluation on clusters such as <code>snow</code>, <code>BatchJobs</code>, <code>Rmpi</code>, 
+etc.
+</p>
+
+<dl>
+<dt>testing package functions</dt><dd>
+<p>The environment of a function defined inside a package is the 
+NAMESPACE of the package. It is important to test these functions
+as they will be called from within the package, with the appropriate
+environment. Specifically, do not copy/paste the function into
+the workspace; once this is done the GlobalEnv becomes the function
+environment.
+</p>
+<p>To test a package function, load the package then call the function by 
+name (myfun) or explicitly (mypkg:::myfun) if not exported.
+</p>
+</dd>
+<dt>testing workspace functions</dt><dd>
+<p>The environment of a function defined in the workspace is the GlobalEnv.
+Because these functions do not have an associated package NAMESPACE,
+the functions and variables used in the body must be explicitly passed
+or defined. See examples.
+</p>
+<p>Defining functions in the workspace is often done during development or
+testing. If the function is later moved inside a package, it can be
+rewritten in a more lightweight form by taking advantage of imported
+symbols in the package NAMESPACE.
+</p>
+</dd>
+</dl>
+
+<p>NOTE: <code>bpvalidate</code> does not currently work on Generics.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>BPValidate</code> summarizing symbols identified in
+the global environment or search path, or undefined in the
+enviornments the function was defined in. Details are only available
+via 'show()'.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan <a href="mailto:mtmorgan.bioc@gmail.com">mailto:mtmorgan.bioc@gmail.com</a> and
+Valerie Obenchain.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## ---------------------------------------------------------------------
+## Interactive use
+## ---------------------------------------------------------------------
+
+fun &lt;- function()
+    .__UNKNOWN_SYMBOL__
+bpvalidate(fun, "silent")
+
+## ---------------------------------------------------------------------
+## Testing package functions
+## ---------------------------------------------------------------------
+
+## Not run: 
+library(myPkg)
+
+## Test exported functions by name or the double colon:
+bpvalidate(myExportedFun)
+bpvalidate(myPkg::myExportedFun)
+
+## Non-exported functions are called with the triple colon:
+bpvalidate(myPkg:::myInternalFun)
+
+## End(Not run)
+
+## ---------------------------------------------------------------------
+## Testing workspace functions
+## ---------------------------------------------------------------------
+
+## Functions defined in the workspace have the .GlobalEnv as their
+## environment. Often the symbols used inside the function body
+## are not defined in .GlobalEnv and must be passed explicitly.
+
+## Loading libraries:
+## In 'fun1' countBam() is flagged as unknown:
+fun1 &lt;- function(fl, ...) 
+    countBam(fl)
+v &lt;- bpvalidate(fun1)
+
+## countBam() is not defined in .GlobalEnv and must be passed as
+## an argument or made available by loading the library.
+fun2 &lt;- function(fl, ...) {
+    Rsamtools::countBam(fl)
+}
+v &lt;- bpvalidate(fun2)
+
+## Passing arguments:
+## 'param' is defined in the workspace but not passed to 'fun3'. 
+## bpvalidate() flags 'param' as being found '.GlobalEnv' which means
+## it is not defined in the function environment or inside the function.
+library(Rsamtools)
+param &lt;- ScanBamParam(flag=scanBamFlag(isMinusStrand=FALSE))
+
+fun3 &lt;- function(fl, ...) {
+  Rsamtools::countBam(fl, param=param)
+}
+v &lt;- bpvalidate(fun3)
+
+## 'param' is explicitly passed by adding it as a formal argument.
+fun4 &lt;- function(fl, ..., param) {
+  Rsamtools::countBam(fl, param=param)
+}
+bpvalidate(fun4)
+
+## The corresponding call to a bp* function includes 'param':
+## Not run: 
+bplapply(files, fun4, param=param, BPPARAM=SnowParam(2))
+
+## End(Not run)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

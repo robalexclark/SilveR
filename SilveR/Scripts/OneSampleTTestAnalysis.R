@@ -33,6 +33,10 @@ if (Diplayargs == "Y"){
 #Graphical parameters
 graphdata<-statdata
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Breakdown the list of responses
 resplist <- c()
@@ -311,7 +315,9 @@ if (showNormPlot != "N" ) {
     	graphdata$yvarrr_IVS <- graphdata$te.y
 
     	#GGPLOT2 code
-    	NONCAT_SCAT("QQPLOT")
+ 	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
+
 #===================================================================================================================
     	void <- HTMLInsertGraph(GraphFileName = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]", "", normPlot), Align = "left")
 

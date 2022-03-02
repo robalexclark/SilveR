@@ -82,9 +82,14 @@ if (FirstCatFactor != "NULL") {
 Line_size2 <- Line_size
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Control group
-cntrlGroup<-sub("-", "_ivs_dash_ivs_", cntrlGroup, fixed=TRUE)
+cntrlGroup<-gsub("-", "xxxivsdashivsxxx", cntrlGroup, fixed=TRUE)
+cntrlGroup<-gsub(" ", "xxxivsspaceivsxxx", cntrlGroup, fixed=TRUE)
 if (is.numeric(statdata$mainEffect) == TRUE) {
 	cntrlGroup <- paste ("'",cntrlGroup,"'",sep="")
 }
@@ -100,7 +105,6 @@ factno<-length(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]]))
 
 #STB June 2015 - Taking a copies of the dataset
 statdata_temp <-statdata
-
 
 #calculating number of block factors
 noblockfactors=0
@@ -651,11 +655,11 @@ if(showANOVA=="Y") {
 		for(i in 1:(dim(ivsanova)[1]-1)) {
 			if (temp[i,4] <= (1-sig)) {
 				if (inte==1) {
-					inte<-inte+1
 					add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
-				} else {
 					inte<-inte+1
+				} else {
 					add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
+					inte<-inte+1
 				}
 			} 
 		}
@@ -664,11 +668,11 @@ if(showANOVA=="Y") {
 		for(i in 1:(dim(ivsanova)[1]-1)) {
 			if (temp[i,5] <= (1-sig)) {
 				if (inte==1) {
-					inte<-inte+1
 					add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
-				} else {
 					inte<-inte+1
+				} else {
 					add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
+					inte<-inte+1
 				}
 			} 
 		}
@@ -843,7 +847,8 @@ if(showNormPlot=="Y") {
 	Line_type <-Line_type_dashed
 
 	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
 
 	MainTitle2 <- ""
 	#===================================================================================================================
@@ -1377,21 +1382,22 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 	}
 }
 
-
+#===================================================================================================================
+#Pairwise tests - update dataset
+#===================================================================================================================
+#Creating dataset without dashes in
+ivs_num_ivs <- rep(1:dim(statdata)[1])
+ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
+statdata_temp2<- data.frame(cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs ))
+statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
+statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
+statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="xxxivsdashivsxxx"))
+statdata_char3 <- as.data.frame(sapply(statdata_char2,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
+statdata<- data.frame(cbind(statdata_num, statdata_char3))
 
 #===================================================================================================================
 #All Pairwise tests
 #===================================================================================================================
-#STB Jun 2015
-#Creating dataset without dashes in
-ivs_num_ivs <- rep(1:dim(statdata)[1])
-ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
-statdata_temp2<- cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs )
-statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
-statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
-statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
-statdata<- data.frame(cbind(statdata_num, statdata_char2))
-
 #All pairwise tests
 if(allPairwiseTest != "null") {
 
@@ -1440,8 +1446,10 @@ if(allPairwiseTest != "null") {
 		mult<-glht(lm(model, data=statdata, na.action = na.omit), linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))))
 	}
 	if (Module == "IFPA") {
+		statdata$mainEffect <- as.factor(statdata$mainEffect)
 		mult<-glht(lm(effectModel, data=statdata, na.action = na.omit), linfct=mcp(mainEffect="Tukey"))
 	}
+
 	multci<-confint(mult, level=sig, calpha = univariate_calpha())
 	tablen<-length(unique(rownames(multci$confint)))
 
@@ -1488,14 +1496,27 @@ if(allPairwiseTest != "null") {
 			tabs[i,5]<- paste("<",tabs[i,5])
 		}
 	}
-	
+
+#STB 2022	
 	rows<-rownames(multci$confint)
-#STB 2019
-#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
+	for (i in 1:100) {
+		rows<-sub(" - ","xxxcomparisonxxx", rows, fixed=TRUE)
+	}
 
 	#STB June 2015	
-	for (i in 1:1000) {
-		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+	for (i in 1:100) {
+		rows<-sub("xxxivsdashivsxxx","-", rows, fixed=TRUE)
+	}
+	#STB June 2015	
+	for (i in 1:100) {
+		rows<-sub(" ",",", rows, fixed=TRUE)
+	}
+	#STB June 2015	
+	for (i in 1:100) {
+		rows<-sub("xxxivsspaceivsxxx"," ", rows, fixed=TRUE)
+	}
+	for (i in 1:100) {
+		rows<-sub("xxxcomparisonxxx"," - ", rows, fixed=TRUE)
 	}
 
 	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
@@ -1512,16 +1533,17 @@ if(allPairwiseTest != "null") {
 #===================================================================================================================
 	#STB March 2014 - Creating a dataset of p-values
 
+	compdata<-tabs
 	if (genpvals == "Y" && allPairwiseTest == "none") {
 		comparisons <- sub(".csv", "comparisons.csv",  Args[3])
 		for (i in 1:tablen) {
-			tabs[i,5]=pvals[i]
+			compdata[i,5]=pvals[i]
 		}
-		tabsxx<- data.frame(tabs[,5])
+		tabsxx<- data.frame(compdata[,5])
 		for (i in 1:20) {
-			rows<-sub(","," and ", rows, fixed=TRUE)
+			rowsx<-gsub(","," and ", rows, fixed=TRUE)
 		}	
-		tabsxx<-cbind(rows, tabsxx)
+		tabsxx<-cbind(rowsx, tabsxx)
 		colnames(tabsxx)<-c("Comparison", "p-value")
 		row.names(tabsxx) <- seq(nrow(tabsxx)) 
 
@@ -1574,14 +1596,29 @@ if(allPairwiseTest != "null") {
 			}
 
 			tabsx[,4] <- tabs[,5]
+
+
+#STB 2022	
 			rows<-rownames(multci$confint)
-			rows<-sub(" - "," / ", rows, fixed=TRUE)
-	
+			for (i in 1:100) {
+				rows<-sub(" - ","xxxcomparisonxxx", rows, fixed=TRUE)
+			}
 			#STB June 2015	
 			for (i in 1:100) {
-				rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+				rows<-sub("xxxivsdashivsxxx","-", rows, fixed=TRUE)
 			}
-	
+			#STB June 2015	
+			for (i in 1:100) {
+				rows<-sub(" ",",", rows, fixed=TRUE)
+			}
+			#STB June 2015	
+			for (i in 1:100) {
+				rows<-sub("xxxivsspaceivsxxx"," ", rows, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				rows<-sub("xxxcomparisonxxx"," / ", rows, fixed=TRUE)
+			}
+
 			lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 			upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
 			tablsx<-cbind(rows, tabsx)
@@ -1598,10 +1635,10 @@ if(allPairwiseTest != "null") {
 		if (pvals[i]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", rows[i], sep="")
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: (1) ", rows[i], sep="")
 			} else {
+				add<-paste(add, ", (", inte , ") ", rows[i], sep="")
 				inte<-inte+1
-				add<-paste(add, ", ", rows[i], sep="")
 			}
 		} 
 	}
@@ -1699,6 +1736,7 @@ if(backToControlTest != "null") {
 
 	#Creating a matrix of the differences
 	comps<-c(rownames(multci$confint))
+
 	diffz <-matrix(nrow=length(comps), ncol=2)
 	for (g in 1:length(comps)) {
 		comps2<-unlist(strsplit(comps[g]," - " ))[1]
@@ -1764,14 +1802,11 @@ if(backToControlTest != "null") {
 	tabs3<-subset(tabs2, V13 == cntrlGroup)
 
 	if (backToControlTest== "Dunnett") { 
-
-
-		for (i in 1:(length(levels(  eval(parse(text = paste("statdata$",selectedEffect))))))) {
-			if ( levels(eval(parse(text = paste("statdata$",selectedEffect))))[i] == cntrlGroup) {
+		for (i in 1:(length(levels(as.factor(eval(parse(text = paste("statdata$",selectedEffect)))))))) {
+			if ( levels(as.factor(eval(parse(text = paste("statdata$",selectedEffect)))))[i] == cntrlGroup) {
 				refno=i
 			}
 		}
-
 		mult<-glht(lm(model, data=statdata, na.action = na.omit),  linfct=lsm(eval(parse(text = paste("trt.vs.ctrl ~",selectedEffect))), ref = refno ))
 		multci<-confint(mult, level=0.95, calpha = univariate_calpha())
 		multp<-summary(mult)
@@ -1804,10 +1839,25 @@ if(backToControlTest != "null") {
 		}
 	}
 
-	#STB June 2015	
-	for (i in 1:100) {
-		tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
-	}
+#STB 2022	
+			for (i in 1:100) {
+				tabs3$V14<-sub(" - ","xxxcomparisonxxx", tabs3$V14, fixed=TRUE)
+			}
+			#STB June 2015	
+			for (i in 1:100) {
+				tabs3$V14<-sub("xxxivsdashivsxxx","-", tabs3$V14, fixed=TRUE)
+			}
+			#STB June 2015	
+			for (i in 1:100) {
+				tabs3$V14<-sub(" ",",", tabs3$V14, fixed=TRUE)
+			}
+			#STB June 2015	
+			for (i in 1:100) {
+				tabs3$V14<-sub("xxxivsspaceivsxxx"," ", tabs3$V14, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				tabs3$V14<-sub("xxxcomparisonxxx"," - ", tabs3$V14, fixed=TRUE)
+			}
 
 	tabls<-cbind(tabs3$V14, tabs4)
 
@@ -1900,14 +1950,22 @@ if(backToControlTest != "null") {
 				}
 			}
 			tabs4x[,4]<-tabs4[,5]
-	
-			tabs3$V14<-sub(" - "," / ", tabs3$V14, fixed=TRUE)
-		
+			tabs3$V14<-paste(tabs3$V12, "xxxcomparisonxxx", tabs3$V13)
+
+#STB 2022	
 			#STB June 2015	
 			for (i in 1:100) {
-				tabs3$V14<-sub("_ivs_dash_ivs_"," - ", tabs3$V14, fixed=TRUE)
+				tabs3$V14<-sub("xxxivsdashivsxxx","-", tabs3$V14, fixed=TRUE)
 			}
-		
+			#STB June 2015	
+			for (i in 1:100) {
+				tabs3$V14<-sub("xxxivsspaceivsxxx"," ", tabs3$V14, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				tabs3$V14<-sub("xxxcomparisonxxx"," / ", tabs3$V14, fixed=TRUE)
+			}
+
+			tabls<-cbind(tabs3$V14, tabs4)
 			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
 			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 	
@@ -1968,10 +2026,10 @@ if(backToControlTest != "null") {
 		if (adjpval[i]<= (1-sig)) {
 			if (inte==1) {
 				inte<-inte+1
-				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: ", tabs3$V14[i], sep="")
+				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", 100*(1-sig), "% level: (1) ", tabs3$V14[i], sep="")
 			} else {
+				add<-paste(add, ", (", inte , ") ", tabs3$V14[i], sep="")
 				inte<-inte+1
-				add<-paste(add, ", ", tabs3$V14[i], sep="")
 			}
 		} 
 	}

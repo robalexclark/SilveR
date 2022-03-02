@@ -1,6 +1,6 @@
 Package: zoo
-Version: 1.8-7
-Date: 2020-01-10
+Version: 1.8-9
+Date: 2021-03-06
 Title: S3 Infrastructure for Regular and Irregular Time Series (Z's
         Ordered Observations)
 Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org",
@@ -17,12 +17,12 @@ Description: An S3 class with methods for totally ordered indexed
              standard generics.
 Depends: R (>= 3.1.0), stats
 Suggests: AER, coda, chron, fts, ggplot2 (>= 3.0.0), mondate, scales,
-        strucchange, timeDate, timeSeries, tis, tseries, xts
+        stinepack, strucchange, timeDate, timeSeries, tis, tseries, xts
 Imports: utils, graphics, grDevices, lattice (>= 0.20-27)
 License: GPL-2 | GPL-3
-URL: http://zoo.R-Forge.R-project.org/
+URL: https://zoo.R-Forge.R-project.org/
 NeedsCompilation: yes
-Packaged: 2020-01-10 16:08:51 UTC; zeileis
+Packaged: 2021-03-06 02:13:38 UTC; zeileis
 Author: Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),
   Gabor Grothendieck [aut],
   Jeffrey A. Ryan [aut],
@@ -30,6 +30,6 @@ Author: Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),
   Felix Andrews [ctb]
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
 Repository: CRAN
-Date/Publication: 2020-01-10 21:20:02 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-03 01:06:43 UTC; windows
+Date/Publication: 2021-03-09 16:20:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:13:23 UTC; windows
 Archs: i386, x64

@@ -2,7 +2,7 @@
 //
 // DataFrame.h: Rcpp R/C++ interface class library -- data frames
 //
-// Copyright (C) 2010 - 2015  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2010 - 2021  Dirk Eddelbuettel and Romain Francois
 //
 // This file is part of Rcpp.
 //
@@ -79,8 +79,32 @@ namespace Rcpp{
             if (Rf_isNull(rn))
                 return 0;
             if (TYPEOF(rn) == INTSXP && LENGTH(rn) == 2 && INTEGER(rn)[0] == NA_INTEGER)
-                return abs(INTEGER(rn)[1]);
+                return std::abs(INTEGER(rn)[1]);
             return LENGTH(rn);
+        }
+
+	template <typename T>
+        void push_back( const T& object){
+            Parent::push_back(object);
+            set_type_after_push();
+        }
+
+        template <typename T>
+        void push_back( const T& object, const std::string& name ){
+            Parent::push_back(object, name);
+            set_type_after_push();
+        }
+
+        template <typename T>
+        void push_front( const T& object){
+            Parent::push_front(object);
+            set_type_after_push();
+        }
+
+        template <typename T>
+        void push_front( const T& object, const std::string& name){
+            Parent::push_front(object, name);
+            set_type_after_push();
         }
 
         // Offer multiple variants to accomodate both old interface here and signatures in other classes
@@ -103,6 +127,29 @@ namespace Rcpp{
             } else{
                 Shield<SEXP> y(internal::convert_using_rfunction( x, "as.data.frame" )) ;
                 Parent::set__( y ) ;
+            }
+        }
+
+        void set_type_after_push(){
+            int max_rows = 0;
+            bool invalid_column_size = false;
+            List::iterator it;
+            // Get the maximum number of rows
+            for (it = Parent::begin(); it != Parent::end(); ++it) {
+                if (Rf_xlength(*it) > max_rows) {
+                    max_rows = Rf_xlength(*it);
+                }
+            }
+            for (it = Parent::begin(); it != Parent::end(); ++it) {
+                if (Rf_xlength(*it) == 0 || ( Rf_xlength(*it) > 1 && max_rows % Rf_xlength(*it) != 0 )) {
+                    // We have a column that is not an integer fraction of the largest
+                    invalid_column_size = true;
+                }
+            }
+            if (invalid_column_size) {
+                warning("Column sizes are not equal in DataFrame::push_back, object degrading to List\n");
+            } else {
+                set__(Parent::get__());
             }
         }
 

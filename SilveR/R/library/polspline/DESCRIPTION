@@ -1,6 +1,6 @@
 Package: polspline
-Version: 1.1.17
-Date: 2019-11-07
+Version: 1.1.19
+Date: 2020-05-15
 Title: Polynomial Spline Routines
 Authors@R: c(person("Charles", "Kooperberg", role = c("aut", "cre"),
 	             email = "clk@fredhutch.org"),
@@ -14,12 +14,12 @@ Description: Routines for the polynomial spline fitting routines
 Imports: stats, graphics
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2019-11-07 19:04:59 UTC; clk
+Packaged: 2020-05-15 17:14:53 UTC; clk
 Author: Charles Kooperberg [aut, cre],
   Cleve Moler [ctb] (LINPACK routines in src),
   Jack Dongarra [ctb] (LINPACK routines in src)
 Maintainer: Charles Kooperberg <clk@fredhutch.org>
 Repository: CRAN
-Date/Publication: 2019-11-07 21:30:02 UTC
-Built: R 3.6.1; x86_64-w64-mingw32; 2019-11-12 11:55:36 UTC; windows
+Date/Publication: 2020-05-15 19:00:02 UTC
+Built: R 4.1.1; x86_64-w64-mingw32; 2021-09-10 16:03:23 UTC; windows
 Archs: i386, x64

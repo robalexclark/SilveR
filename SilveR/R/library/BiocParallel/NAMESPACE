@@ -1,0 +1,124 @@
+useDynLib("BiocParallel", .registration = TRUE)
+
+import(methods)
+
+importFrom(stats, setNames, terms, runif)
+
+importFrom(utils, capture.output, find, head, relist,
+           setTxtProgressBar, txtProgressBar)
+importFrom(parallel, nextRNGStream, nextRNGSubStream)
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S4 classes
+###
+
+exportClass(
+    BiocParallelParam,
+    MulticoreParam,
+    SnowParam,
+    DoparParam,
+    SerialParam,
+    BatchJobsParam,
+    BatchtoolsParam,
+    BPValidate
+)
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export non-generic functions
+###
+
+export(
+    MulticoreParam, SnowParam, DoparParam, SerialParam, BatchJobsParam,
+    BatchtoolsParam,
+
+    ## register
+    register, registered, bpparam,
+
+    ## accessor
+    bpnworkers,
+
+    ## error handlers
+    bptry,
+
+    ## helpers
+    bploop,                             # worker, manager loops
+    multicoreWorkers, snowWorkers,
+    batchtoolsWorkers, batchtoolsCluster, batchtoolsRegistryargs,
+    batchtoolsTemplate,
+    bpvalidate, bpok, bperrorTypes,
+    bprunMPIslave,
+    bprunMPIworker,
+
+    ## ipcmutex
+    ipcid, ipcremove, ipclock, ipctrylock, ipcunlock, ipclocked,
+    ipcyield, ipcvalue, ipcreset
+)
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S4 generics and methods defined in BiocParallel
+###
+
+export(
+    bplapply, bpvec, bpvectorize, bpmapply, bpaggregate, bpiterate,
+
+    ## bp-controls
+    bpworkers, "bpworkers<-", bpbackend, "bpbackend<-",
+    bptasks, "bptasks<-", bpjobname, "bpjobname<-",
+    bpstart, bpstop, bpisup,
+    bpstopOnError, "bpstopOnError<-",
+    bpprogressbar, "bpprogressbar<-", bpRNGseed, "bpRNGseed<-",
+    bptimeout, "bptimeout<-", bpexportglobals, "bpexportglobals<-",
+    bpforceGC, "bpforceGC<-",
+    bplog, "bplog<-", bplogdir, "bplogdir<-",
+    bpthreshold, "bpthreshold<-", bpresultdir, "bpresultdir<-",
+
+    ## schedule
+    bpschedule
+)
+
+### Same list as above.
+exportMethods(
+    bplapply, bpvec, bpvectorize, bpmapply, bpaggregate, bpiterate,
+
+    ## bp-controls
+    bpworkers, "bpworkers<-", bpbackend, "bpbackend<-",
+    bptasks, "bptasks<-", bpjobname, "bpjobname<-",
+    bpstart, bpstop, bpisup,
+    bpstopOnError, "bpstopOnError<-",
+    bpprogressbar, "bpprogressbar<-", bpRNGseed, "bpRNGseed<-",
+    bptimeout, "bptimeout<-", bplog, "bplog<-", bplogdir, "bplogdir<-",
+    bpthreshold, "bpthreshold<-", bpresultdir, "bpresultdir<-",
+
+    ## schedule
+    bpschedule
+)
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S4 methods for generics not defined in BiocParallel
+###
+
+exportMethods(
+    show
+)
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S3 methods
+###
+
+S3method(print, remote_error)
+S3method(print, bplist_error)
+
+S3method(bploop, lapply)
+S3method(bploop, iterate)
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export 'developer' API for extending BiocParallelParam
+###
+
+export(
+    .BiocParallelParam_prototype, .prototype_update, .prettyPath,
+    .send_to, .recv_any, .send, .recv, .close, .send_all, .recv_all,
+    .bpstart_impl, .bpstop_impl, .bpworker_impl,
+    .bplapply_impl, .bpiterate_impl,
+    .error_worker_comm
+)

@@ -44,7 +44,7 @@ $(function () {
         dataSource: theModel.transformationsList
     });
 
- 
+
     $("#LowerBoundAbsolute").kendoNumericTextBox({
         format: '#.##',
         decimals: 2,
@@ -167,7 +167,7 @@ function selectedEffectChanged() {
     controlGroup.value(null);
     controlGroup.dataSource.read({ treatment: $("#SelectedEffect").val(), datasetID: $("#DatasetID").val(), includeNull: true });
 
-    selectedEffectsBlockEnableDisable();
+    enableDisableControlLevels();
 }
 
 function covariateBlockEnableDisable() {
@@ -187,19 +187,28 @@ function covariateBlockEnableDisable() {
     }
 }
 
-function selectedEffectsBlockEnableDisable() {
-    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
-    const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
-    const controlGroup = $('#ControlGroup').data("kendoDropDownList");
+//function selectedEffectsBlockEnableDisable() {
+//    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
 
-    if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 0 && selectedEffectDropDown.value().indexOf("*") == -1) {
-        controlGroup.enable(true);
-    }
-    else {
-        controlGroup.enable(false);
-        controlGroup.value(null);
-    }
-}
+//    const comparisonsBackToControl = $("[Value='ComparisonsToControl']");
+//    const allPairwise = $("[Value='AllPairwise']");
+//    const controlGroup = $('#ControlGroup').data("kendoDropDownList");
+
+//    if (treatmentMultiSelect != null && treatmentMultiSelect.value().length > 1 && selectedEffectDropDown.value().indexOf("*") == -1) {
+//        comparisonsBackToControl.attr('disabled', 'disabled');
+//        comparisonsBackToControl.checked = false;
+//        allPairwise.checked = true;
+
+//        controlGroup.enable(false);
+//        controlGroup.value(null);
+//    }
+//    else {
+//        comparisonsBackToControl.removeAttr('disabled', 'disabled');
+//        controlGroup.enable(true);
+//    }
+
+//    enableDisableControlLevels();
+//}
 
 function enableDisableEquivalenceType() {
 
@@ -226,5 +235,22 @@ function enableDisableEquivalenceType() {
 
         lowerBoundPercentage.enable(true);
         upperBoundPercentage.enable(true);
+    }
+}
+
+function enableDisableControlLevels() {
+    const treatmentMultiSelect = $("#Treatments").data("kendoMultiSelect");
+    const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
+    const comparisonsBackToControlChecked = $("[Value='ComparisonsToControl']:checked").val();
+
+    const controlDropDown = $("#ControlGroup").data("kendoDropDownList");
+
+    if (comparisonsBackToControlChecked != null && treatmentMultiSelect.value().length == 1 && selectedEffectDropDown.value().indexOf("*") == -1) {
+        controlDropDown.enable(true);
+    }
+    else {
+        controlDropDown.select(-1);
+        controlDropDown.value(null);
+        controlDropDown.enable(false);
     }
 }

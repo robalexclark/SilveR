@@ -30,16 +30,17 @@ export(
        space,
        textplot,
        venn,
-       wapply
+       wapply,
+       reorder.factor
 )
 
 importFrom(gtools, invalid)
 importFrom(gtools, odd)
-importFrom(gdata, nobs)
-importFrom(gdata, reorder.factor)
+importFrom(gtools, mixedsort)
 
 importFrom(stats, reorder)
 importFrom(stats, na.omit)
+importFrom(stats, nobs)
 
 importFrom(caTools, runsd)
 importFrom(caTools, runmean)
@@ -72,6 +73,8 @@ S3method(textplot, character)
 S3method(textplot, data.frame)
 S3method(textplot, default)
 S3method(textplot, matrix)
+
+S3method(reorder, factor)
 
 # imports recommended by R CMD check
 importFrom("grDevices", "col2rgb", "contourLines", "dev.flush",

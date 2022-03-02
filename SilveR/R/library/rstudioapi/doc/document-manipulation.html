@@ -27,6 +27,54 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -315,40 +363,40 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">eval =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>The <code>rstudioapi</code> package provides a small family of functions that can be used to interact with documents open in an RStudio session. For example, the following code could be used to insert a ‘last modified’ comment at the start of a document:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># construct the text to be inserted</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>fmt &lt;-<span class="st"> &quot;# This document was last modified on %s.</span><span class="ch">\n</span><span class="st">&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>text &lt;-<span class="st"> </span><span class="kw">sprintf</span>(fmt, <span class="kw">Sys.Date</span>())</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># specify a range where this text should be inserted; here,</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># we use the first line; that is, the &#39;range&#39; between the start</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># of the first row, and the start of the second row</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a>range &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">document_range</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>))</span>
-<span id="cb2-9"><a href="#cb2-9"></a>rstudioapi<span class="op">::</span><span class="kw">insertText</span>(range, text)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># construct the text to be inserted</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="st">&quot;# This document was last modified on %s.</span><span class="sc">\n</span><span class="st">&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(fmt, <span class="fu">Sys.Date</span>())</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># specify a range where this text should be inserted; here,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># we use the first line; that is, the &#39;range&#39; between the start</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># of the first row, and the start of the second row</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>range <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">document_range</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>), <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">0</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">insertText</span>(range, text)</span></code></pre></div>
 <p>By default, these APIs target the editor instance either currently focused by the user, or when no such editor is currently focused, the last focused editor. If you need to target a specific editor instance (for example, you want to write code that inserts text into the console), you can use <code>getConsoleEditorContext()</code> to get the <code>id</code> for the console editor:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># get console editor id</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>context &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">getConsoleEditorContext</span>()</span>
-<span id="cb3-3"><a href="#cb3-3"></a>id &lt;-<span class="st"> </span>context<span class="op">$</span>id</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># send some R code to the console</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>rstudioapi<span class="op">::</span><span class="kw">insertText</span>(<span class="dt">text =</span> <span class="st">&quot;print(1 + 1)&quot;</span>, <span class="dt">id =</span> id)</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># see also: `getActiveEditorContext()`, `getSourceEditorContext()`</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get console editor id</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>context <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">getConsoleEditorContext</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> context<span class="sc">$</span>id</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># send some R code to the console</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">insertText</span>(<span class="at">text =</span> <span class="st">&quot;print(1 + 1)&quot;</span>, <span class="at">id =</span> id)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># see also: `getActiveEditorContext()`, `getSourceEditorContext()`</span></span></code></pre></div>
 <p>You can also modify the cursor position through the use of the <code>setCursorPosition()</code> and <code>setSelectionRanges()</code> APIs.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># put the cursor at the end of the document -- note that here,</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># `Inf` is automatically truncated to the actual length of the</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># document</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>rstudioapi<span class="op">::</span><span class="kw">setCursorPosition</span>(<span class="ot">Inf</span>)</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># select the first 10 even lines in the document</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>ranges &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dt">by =</span> <span class="dv">2</span>, <span class="dt">length.out =</span> <span class="dv">10</span>), <span class="cf">function</span>(start) {</span>
-<span id="cb4-8"><a href="#cb4-8"></a>  rstudioapi<span class="op">::</span><span class="kw">document_range</span>(</span>
-<span id="cb4-9"><a href="#cb4-9"></a>    <span class="kw">c</span>(start, <span class="dv">0</span>),</span>
-<span id="cb4-10"><a href="#cb4-10"></a>    <span class="kw">c</span>(start, <span class="ot">Inf</span>)</span>
-<span id="cb4-11"><a href="#cb4-11"></a>  )</span>
-<span id="cb4-12"><a href="#cb4-12"></a>})</span>
-<span id="cb4-13"><a href="#cb4-13"></a>rstudioapi<span class="op">::</span><span class="kw">setSelectionRanges</span>(ranges)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># put the cursor at the end of the document -- note that here,</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># `Inf` is automatically truncated to the actual length of the</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># document</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">setCursorPosition</span>(<span class="cn">Inf</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># select the first 10 even lines in the document</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>ranges <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq</span>(<span class="dv">2</span>, <span class="at">by =</span> <span class="dv">2</span>, <span class="at">length.out =</span> <span class="dv">10</span>), <span class="cf">function</span>(start) {</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  rstudioapi<span class="sc">::</span><span class="fu">document_range</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(start, <span class="dv">0</span>),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(start, <span class="cn">Inf</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">setSelectionRanges</span>(ranges)</span></code></pre></div>
 <p>See the <code>?&quot;rstudio-documents&quot;</code> help page for more details.</p>
 
 

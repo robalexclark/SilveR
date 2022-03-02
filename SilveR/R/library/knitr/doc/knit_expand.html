@@ -220,7 +220,7 @@ knit_expand(text = &#39;The value of pi is {{pi}}.&#39;)
 <pre><code class="r">knit_expand(text = &#39;The value of a is {{a}}, so a + 1 is {{a+1}}.&#39;, a = rnorm(1))
 </code></pre>
 
-<pre><code>## [1] &quot;The value of a is -0.661394264859485, so a + 1 is 0.338605735140515.&quot;
+<pre><code>## [1] &quot;The value of a is -1.63678361916298, so a + 1 is -0.636783619162982.&quot;
 </code></pre>
 
 <pre><code class="r">knit_expand(text = &#39;The area of a circle with radius {{r}} is {{pi*r^2}}&#39;, r = 5)
@@ -258,7 +258,7 @@ knit_expand(text = &#39;The value of pi is {{pi}}.&#39;)
 <pre><code class="r">knit_expand(text = &#39;you cannot see the value of x {{x=rnorm(1)}}but it is indeed created: x = {{x}}&#39;)
 </code></pre>
 
-<pre><code>## [1] &quot;you cannot see the value of x but it is indeed created: x = 0.659101853922743&quot;
+<pre><code>## [1] &quot;you cannot see the value of x but it is indeed created: x = 0.890301941176353&quot;
 </code></pre>
 
 <pre><code class="r">res = knit_expand(text = c(&#39; x | x^2&#39;, &#39;{{x=1:5;paste(sprintf(&quot;%2d | %3d&quot;, x, x^2), collapse = &quot;\n&quot;)}}&#39;))
@@ -273,7 +273,7 @@ cat(res)
 ##  5 |  25
 </code></pre>
 
-<p>The m4 example: <a href="http://en.wikipedia.org/wiki/M4_(computer_language)">http://en.wikipedia.org/wiki/M4_(computer_language)</a></p>
+<p>The m4 example: <a href="https://en.wikipedia.org/wiki/M4_(computer_language)">https://en.wikipedia.org/wiki/M4_(computer_language)</a></p>
 
 <pre><code class="r">res = knit_expand(text = c(&#39;{{i=0;h2=function(x){i&lt;&lt;-i+1;sprintf(&quot;&lt;h2&gt;%d. %s&lt;/h2&gt;&quot;, i, x)} }}&lt;html&gt;&#39;,
 &#39;{{h2(&quot;First Section&quot;)}}&#39;, &#39;{{h2(&quot;Second Section&quot;)}}&#39;, &#39;{{h2(&quot;Conclusion&quot;)}}&#39;, &#39;&lt;/html&gt;&#39;))

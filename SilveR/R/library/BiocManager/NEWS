@@ -1,3 +1,88 @@
+CHANGES IN VERSION 1.30.16
+-------------------------
+
+BUG FIXES
+
+    o Ensure that the `force` argument is passed along after installation of
+      `BiocVersion` (#105, @lshep, @jwokaty)
+    o Fix typo in `.VERSION_MAP_SENTINEL` (`RSPM` column name).
+
+CHANGES IN VERSION 1.30.15
+-------------------------
+
+BUG FIXES
+
+    o `.skip_if_misconfigured` function should work with
+      `_R_CHECK_DEPENDS_ONLY=true`
+    o Switch to `interactive()` only examples for `available()`
+
+CHANGES IN VERSION 1.30.14
+-------------------------
+
+BUG FIXES
+
+    o `install` now passes the `force` argument to `install_github`
+      (#101, @lgeistlinger)
+    o Treat warnings as warnings internally in `install.packages()`
+      (#100, @biobenkj)
+    o Check version validity `.onAttach` rather than `.onLoad`
+
+CHANGES IN VERSION 1.30.13
+-------------------------
+
+NEW FEATURES
+
+    o Downloading the same version of a remote package already installed will
+      be avoided unless the user supplies `force=TRUE` to `install`.
+
+USER VISIBLE CHANGES
+
+    o Devel users on a newer version of R will not get an error when the minor
+      version of R is +1 of the recommended
+
+BUG FIXES
+
+    o Added a warning and informative message when a package is 'not available'
+      (#85, @LTLA).
+    o `BIOCONDUCTOR_CONFIG_FILE` now included in the documentation for
+      `install` (#93, @glin).
+
+
+
+CHANGES IN VERSION 1.30.12
+-------------------------
+
+NEW FEATURES
+
+    o 'BIOCONDUCTOR_CONFIG_FILE' option allows users to provide an offline
+      and local configuration file (config.yaml) for version validation.
+
+    o Bioconductor 'BioCbooks' repository now available in Bioconductor
+      versions >= "3.12"
+
+USER VISIBLE CHANGES
+
+    o Enable use of historical snapshots ('MRAN' or 'RSPM' via
+      `options(BiocManager.snapshots=)`) to install CRAN packages for
+      out-of-date Bioconductor versions.
+
+    o Respect `options(repos = c(CRAN = "..."))`. See
+      https://github.com/Bioconductor/BiocManager/issues/69
+
+BUG FIXES
+
+    o Increase timeout from 1 to 5 minutes (300 seconds) to make
+      download of large packages more robust.
+
+CHANGES IN VERSION 1.30.10
+-------------------------
+
+MINOR CHANGES
+
+    o Restore startup message with recommended version
+
+    o Update mis-configuration skip in tests
+
 CHANGES IN VERSION 1.30.9
 -------------------------
 

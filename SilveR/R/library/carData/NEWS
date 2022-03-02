@@ -1,3 +1,13 @@
+Version 3.0-5
+
+o Small improvements to docs.
+
+Version 3.0-4
+
+o Added "long"-format version of the O'Brien-Kaiser repeated-measures data set.
+
+o Fix some typos in doc for CES11 data set (fixes courtesy of Andi Fugard).
+
 Version 3.0-3
 
 o Update references in docs and DESCRIPTION.

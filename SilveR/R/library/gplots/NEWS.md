@@ -1,9 +1,22 @@
-Release 3.0.2 - 2020-02-22
+Release 3.1.0 - 2020-09-12
+--------------------------
+Major change:
+- Removed gdata from imports by bringing into the package the functions nobs and reorder.factor.
+  - Removed the gdata package from "imports" since it is currently broken and is scheduled to archive in 2020-09-25 (leading to gplots to be archived as well, unless this is resolved). By removing this connection, gplots will be able to remain safely on CRAN. In prectice, I've moved reorder.factor and nobs into this package, as well as removed the use of 'nobs' from some examples.
+  - Added the reorder.factor and nobs function (from gdata)
+
+
+Release 3.0.4 - 2020-07-05
+--------------------------
+Bug Fixes:
+- Fix "no visible global function definition for '%||%'": The package imports .memberDend and .midDend from stats in an unsafe way (i.e. using :::). I've moved to manually copy-pasting the functions into the package in order to keep it a bit safer. It has the downside of not using whartever improvements/bugfixes are intrudced to these functions moving forward. But for the time being, it's a reasonable solution.
+
+Release 3.0.3 - 2020-02-26
 --------------------------
 
 Misc
 - Tal Galili took over to make sure the package stays on CRAN.
-
+- Moved to knitr
 
 Release 3.0.1 - 2016-03-30
 --------------------------

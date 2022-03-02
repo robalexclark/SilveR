@@ -1,7 +1,7 @@
 ﻿#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
-IVS_version<- 4.3 
+IVS_version<- 4.4 
 
 #Software update
 UpdateIVS <- "N"
@@ -311,46 +311,47 @@ namereplace2 <- function(axistitle) {
 }
 
 namereplace <- function(axistitle) {
-	for (i in 1:20) {
-		axistitle <- sub("ivs_questionmark_ivs", "?", axistitle)
-		axistitle <- sub("ivs_tilde_ivs", "~", axistitle)
-		axistitle <- sub("ivs_star_ivs", "*", axistitle)
-		axistitle <- sub("ivs_plus_ivs", "+", axistitle)
-		axistitle <- sub("ivs_sp_ivs", " ", axistitle)
-		axistitle <- sub("ivs_ob_ivs", "(", axistitle)
-		axistitle <- sub("ivs_cb_ivs", ")", axistitle)
-		axistitle <- sub("ivs_div_ivs", "/", axistitle)
-		axistitle <- sub("ivs_pc_ivs", "%", axistitle)
-		axistitle <- sub("ivs_hash_ivs", "#", axistitle)
-		axistitle <- sub("ivs_pt_ivs", ".", axistitle)
-		axistitle <- sub("ivs_hyphen_ivs", "-", axistitle)
-		axistitle <- sub("ivs_at_ivs", "@", axistitle)
-		axistitle <- sub("ivs_colon_ivs", ":", axistitle)
-		axistitle <- sub("ivs_exclam_ivs", "!", axistitle)
-		axistitle <- sub("ivs_quote_ivs", "`", axistitle)
-		axistitle <- sub("ivs_pound_ivs", "£", axistitle)
-		axistitle <- sub("ivs_dollar_ivs", "$", axistitle)
-		axistitle <- sub("ivs_hat_ivs", "^", axistitle)
-		axistitle <- sub("ivs_amper_ivs", "&", axistitle)
-		axistitle <- sub("ivs_obrace_ivs", "{", axistitle)
-		axistitle <- sub("ivs_cbrace_ivs", "}", axistitle)
-		axistitle <- sub("ivs_semi_ivs", ";", axistitle)
-		axistitle <- sub("ivs_pipe_ivs", "|", axistitle)
-		axistitle <- sub("ivs_slash_ivs", "\\", axistitle)
-		axistitle <- sub("ivs_osb_ivs", "[", axistitle)
-		axistitle <- sub("ivs_csb_ivs", "]", axistitle)
-		axistitle <- sub("ivs_eq_ivs", "=", axistitle)
-		axistitle <- sub("ivs_lt_ivs", "<", axistitle)
-		axistitle <- sub("ivs_gt_ivs", ">", axistitle)
-		axistitle <- sub("ivs_dblquote_ivs", "\"", axistitle)
-	}
+	#for (i in 1:20) {
+		axistitle <- gsub("ivs_questionmark_ivs", "?", axistitle)
+		axistitle <- gsub("ivs_tilde_ivs", "~", axistitle)
+		axistitle <- gsub("ivs_star_ivs", "*", axistitle)
+		axistitle <- gsub("ivs_plus_ivs", "+", axistitle)
+		axistitle <- gsub("ivs_sp_ivs", " ", axistitle)
+		axistitle <- gsub("ivs_ob_ivs", "(", axistitle)
+		axistitle <- gsub("ivs_cb_ivs", ")", axistitle)
+		axistitle <- gsub("ivs_div_ivs", "/", axistitle)
+		axistitle <- gsub("ivs_pc_ivs", "%", axistitle)
+		axistitle <- gsub("ivs_hash_ivs", "#", axistitle)
+		axistitle <- gsub("ivs_pt_ivs", ".", axistitle)
+		axistitle <- gsub("ivs_hyphen_ivs", "-", axistitle)
+		axistitle <- gsub("ivs_at_ivs", "@", axistitle)
+		axistitle <- gsub("ivs_colon_ivs", ":", axistitle)
+		axistitle <- gsub("ivs_exclam_ivs", "!", axistitle)
+		axistitle <- gsub("ivs_quote_ivs", "`", axistitle)
+		axistitle <- gsub("ivs_pound_ivs", "£", axistitle)
+		axistitle <- gsub("ivs_dollar_ivs", "$", axistitle)
+		axistitle <- gsub("ivs_hat_ivs", "^", axistitle)
+		axistitle <- gsub("ivs_amper_ivs", "&", axistitle)
+		axistitle <- gsub("ivs_obrace_ivs", "{", axistitle)
+		axistitle <- gsub("ivs_cbrace_ivs", "}", axistitle)
+		axistitle <- gsub("ivs_semi_ivs", ";", axistitle)
+		axistitle <- gsub("ivs_pipe_ivs", "|", axistitle)
+		axistitle <- gsub("ivs_slash_ivs", "\\", axistitle)
+		axistitle <- gsub("ivs_osb_ivs", "[", axistitle)
+		axistitle <- gsub("ivs_csb_ivs", "]", axistitle)
+		axistitle <- gsub("ivs_eq_ivs", "=", axistitle)
+		axistitle <- gsub("ivs_lt_ivs", "<", axistitle)
+		axistitle <- gsub("ivs_gt_ivs", ">", axistitle)
+		axistitle <- gsub("ivs_dblquote_ivs", "\"", axistitle)
+	#}
+
 	return(axistitle)
 }
 
 
 namereplaceGSUB <- function(axistitle) {
 
-	for (i in 1:20) {
+	#for (i in 1:20) {
 		axistitle <- gsub("ivs_questionmark_ivs", "?", axistitle)
 		axistitle <- gsub("ivs_tilde_ivs", "~", axistitle)
 		axistitle <- gsub("ivs_star_ivs", "*", axistitle)
@@ -383,7 +384,8 @@ namereplaceGSUB <- function(axistitle) {
 		axistitle <- gsub("ivs_lt_ivs", "<", axistitle)
 		axistitle <- gsub("ivs_gt_ivs", ">", axistitle)
 		axistitle <- gsub("ivs_dblquote_ivs", "\"", axistitle)
- 	}
+ 	#}
+	 
 	return(axistitle)
 }
 
@@ -700,7 +702,41 @@ NONCAT_SCAT <- function(typez) {
 	} else {
 		g10 <- g9
 	}
-	suppressWarnings(print(g10))
+
+#Only X range defined
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g11 <- g10 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g11 <- g10
+	}
+#Only Y range defined
+	if (is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g12 <- g11 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g12 <- g11
+	}
+
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g13 <- g12 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g13 <- g12
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g14 <- g13 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g14 <- g13
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g15 <- g14 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g15 <- g14
+	}
+	suppressWarnings(print(g15))
 }
 
 
@@ -731,7 +767,41 @@ ONECATSEP_SCAT <- function() {
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g4 <- g3 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g8 <- g7 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g8 <- g7
+	}
+
+	suppressWarnings(print(g8))
 }
 
 TWOCATSEP_SCAT <- function() {
@@ -760,7 +830,39 @@ TWOCATSEP_SCAT <- function() {
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g4 <- g3 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g8 <- g7 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g8 <- g7
+	}
+	suppressWarnings(print(g8))
 }
 
 OVERLAID_SCAT <- function() {
@@ -797,7 +899,40 @@ OVERLAID_SCAT <- function() {
 	} else {
 		g4 <- g3
 	}
-	suppressWarnings(print(g4))
+
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g8 <- g7 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g8 <- g7
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g9 <- g8 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g9 <- g8
+	}
+	suppressWarnings(print(g9))
 }
 
 #===================================================================================================================
@@ -856,7 +991,13 @@ NONCAT_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-	suppressWarnings(print(g5))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+	suppressWarnings(print(g6))
 }
 
 
@@ -916,7 +1057,13 @@ ONECATSEP_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-	suppressWarnings(print(g5))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+	suppressWarnings(print(g6))
 }
 
 
@@ -976,7 +1123,13 @@ TWOCATSEP_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-	suppressWarnings(print(g5))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+	suppressWarnings(print(g6))
 }
 
 
@@ -1044,7 +1197,13 @@ OVERLAID_SEM <- function() {
 	} else {
 		g5 <- g4
 	}
-	suppressWarnings(print(g5))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+	suppressWarnings(print(g6))
 }
 
 #===================================================================================================================
@@ -1074,7 +1233,38 @@ NONCAT_CPP <- function() {
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g3 <- g2 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g3 <- g2
+	}
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+	suppressWarnings(print(g7))
 }
 
 
@@ -1102,7 +1292,38 @@ ONECATSEP_CPP <- function() {
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g3 <- g2 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g3 <- g2
+	}
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+	suppressWarnings(print(g7))
 }
 
 
@@ -1130,7 +1351,38 @@ TWOCATSEP_CPP <- function() {
 	} else {
 		g2 <- g1
 	}
-	suppressWarnings(print(g2))
+
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g3 <- g2 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g3 <- g2
+	}
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g7 <- g6 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g7 <- g6
+	}
+	suppressWarnings(print(g7))
 }
 
 
@@ -1151,7 +1403,38 @@ OVERLAID_CPP <- function() {
 	} else {
 		g1 <- g
 	}
-	suppressWarnings(print(g1))
+
+	if (XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow == "NULL" && YLimHigh == "NULL") {
+		g2 <- g1 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g2 <- g1
+	}
+	if (XLimLow == "NULL" && XLimHigh == "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g3 <- g2 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g3 <- g2
+	}
+#X and Y defined, both numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num), ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+
+#X and Y defined, X numeric
+	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) != "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g5 <- g4 + coord_cartesian(xlim=c(XLimLow_num, XLimHigh_num))
+	} else {
+		g5 <- g4
+	}
+
+#X and Y defined, Y numeric
+	if (is.numeric(graphdata$xvarrr_IVS) != "TRUE" &&  is.numeric(graphdata$yvarrr_IVS) == "TRUE" &&  XLimLow != "NULL" && XLimHigh != "NULL" && YLimLow != "NULL" && YLimHigh != "NULL") {
+		g6 <- g5 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g6 <- g5
+	}
+	suppressWarnings(print(g6))
 }
 
 #AUC case profiles plot - addition of extra area call
@@ -1202,7 +1485,13 @@ NONCAT_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 
@@ -1240,7 +1529,13 @@ ONECATSEP_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 
@@ -1279,7 +1574,13 @@ TWOCATSEP_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 
@@ -1316,7 +1617,13 @@ OVERLAID_BOX <- function() {
 	} else {
 		g3 <- g2
 	}
-	suppressWarnings(print(g3))
+
+	if (YLimLow != "NULL" && YLimHigh != "NULL") {
+		g4 <- g3 + coord_cartesian(ylim=c(YLimLow_num, YLimHigh_num))
+	} else {
+		g4 <- g3
+	}
+	suppressWarnings(print(g4))
 }
 
 #===================================================================================================================
@@ -1381,6 +1688,53 @@ OVERLAID_HIS <- function() {
 		}
 	}
 	suppressWarnings(print(gx))
+}
+
+
+#===================================================================================================================
+#QQ Plot (Summary Stats, SMPA, RMPA, etc.)
+#===================================================================================================================
+
+NONCAT_QQPLOT <- function(typez) {
+	g <- ggplot(graphdata, aes(sample = yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+                scale_x_continuous(breaks = pretty_breaks()) +
+		scale_y_continuous(breaks = pretty_breaks()) +
+		theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0)) +
+		stat_qq(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) +
+		stat_qq_line(lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
+	
+	if (scatterlabels == "Y") {
+		g2 <- g + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5,force = 10, point.padding=1)
+	} else {
+		g2 <- g
+	}
+	suppressWarnings(print(g2))
+}
+
+CAT_QQPLOT <- function() {
+	g <- ggplot(graphdata, aes(sample = yvarrr_IVS)) +
+		theme_map +
+		mytheme +
+		theme(legend.position = Gr_legend_pos) +
+		ylab(YAxisTitle) +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		scale_color_manual(values = Gr_palette) +
+		scale_fill_manual(values = Gr_palette) +
+		stat_qq(aes(fill = catfact), colour = "black", size = Point_size, shape = Point_shape) +
+		stat_qq_line(aes(colour = catfact), lty = Line_type, size = Line_size)
+
+	if (scatterlabels == "Y") {
+		g2 <- g + geom_text_repel(aes(label = rownames(graphdata), color = graphdata$l_l), size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+	} else {
+		g2 <- g
+	}
+	suppressWarnings(print(g2))
 }
 
 #===================================================================================================================
@@ -1871,6 +2225,54 @@ PLSloadingsplot <- function() {
 		geom_line(aes(group = X2, color = X2), size = Line_size) +
 		geom_hline(yintercept = 0, lty = 3, size = 0.8, colour = "black")
 	suppressWarnings(print(g))
+}
+
+
+#===================================================================================================================
+# Multiple plot function (combining ggplots)
+#===================================================================================================================
+# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+# - cols:   Number of columns in layout
+# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+#
+# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+# then plot 1 will go in the upper left, 2 will go in the upper right, and
+# 3 will go all the way across the bottom.
+#
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
 }
 
 #===================================================================================================================

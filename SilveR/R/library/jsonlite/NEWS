@@ -1,3 +1,27 @@
+1.8.0
+ - Remove all calls to setOldClass() for R >= 4.0 (#378)
+
+1.7.3
+ - Fix memory bug in toJSON(pretty=TRUE) for 0-length vectors (#366)
+ - Ported rbind_pages() to use vctrs::vec_rbind (#352)
+ - Fix error serializing S4 class extending SEXPTYPE for certain types (#364)
+ - Fix citibike example in API vignette
+
+1.7.2
+ - Special case 'blob' vctrs to prevent boxing of base64 output strings
+ - Fix a unit test for new stricter all.equal() for environments in base-R
+
+1.7.1
+ - Always rename the 'sf_column' column to 'geometry' in toJSON(sf = 'geojson') because
+   that is what the spec says.
+ - Add asJSON method for ITime.
+ - Fix toJSON() for encoding strings in multibyte locale on Windows
+ - serializeJSON() now supports S4 "pseudo-null" (i.e. empty slots)
+
+1.7.0
+ - Add support for 'sf' classes in toJSON() conform GeoJSON spec.
+ - Fix a unit test due to a change in rgdal
+
 1.6.1
  - Fix bug in C_collapse_array_pretty_inner declarationdetected by CRAN LTO
  - Better handing of NA in timestamps with POSIXt = 'mongo'

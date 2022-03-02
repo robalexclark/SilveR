@@ -11,7 +11,7 @@ importFrom("stats", "aggregate", "as.formula", "coef", "confint", "cov2cor",
            "delete.response", "df.residual", "fitted",
            "get_all_vars", "model.frame", "model.matrix", "model.weights", "p.adjust",
            "p.adjust.methods", "pchisq", "pf", "pnorm", "predict",
-           "printCoefmat", "pt", "terms", "vcov", "xtabs")
+           "printCoefmat", "pt", "terms", "vcov", "xtabs", "na.exclude")
 
 export(glht, contrMat, univariate, adjusted, Ftest, Chisqtest, mcp, modelparm,
        adjusted_calpha, univariate_calpha, parm, cftest, cld, mmm, mlf)

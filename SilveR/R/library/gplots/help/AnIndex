@@ -36,6 +36,7 @@ print.hist2d	hist2d
 qqnorm.aov	qqnorm.aov
 redblue	colorpanel
 redgreen	colorpanel
+reorder.factor	reorder
 residplot	residplot
 rich.colors	rich.colors
 rtPCR	rtPCR

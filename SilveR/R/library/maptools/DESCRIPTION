@@ -1,6 +1,6 @@
 Package: maptools
-Version: 0.9-9
-Date: 2019-12-01
+Version: 1.1-3
+Date: 2022-03-08
 Title: Tools for Handling Spatial Objects
 Authors@R: c(
 	person("Roger", "Bivand", role = c("cre", "aut"), email = "Roger.Bivand@nhh.no", comment=c(ORCID="0000-0003-2392-6140")),
@@ -23,12 +23,14 @@ Authors@R: c(
 	person("Karl Ove", "Hufthammer", role = "ctb"),
 	person("Thomas", "Jagger", role = "ctb"),
 	person("Kent", "Johnson", role = "ctb"),
+        person("Matthew", "Lewis", role = "ctb", comment=c(ORCID="0000-0003-2244-4078")),
 	person("Sebastian", "Luque", role = "ctb"),
 	person("Don", "MacQueen", role = "ctb"),
 	person("Andrew", "Niccolai", role = "ctb"),
 	person("Edzer", "Pebesma", role = "ctb"),
 	person("Oscar", "Perpiñán Lamigueiro", role = "ctb"),
         person("Ethan", "Plunkett", role = "ctb"),
+	person("Ege", "Rubak", role = "ctb", comment=c(ORCID="0000-0002-6675-533X")),
 	person("Tom", "Short", role = "ctb"),
 	person("Greg", "Snow", role = "ctb"),
 	person("Ben", "Stabler", role = "ctb"),
@@ -38,16 +40,17 @@ Encoding: UTF-8
 Depends: R (>= 2.10), sp (>= 1.0-11)
 Imports: foreign (>= 0.8), methods, grid, lattice, stats, utils,
         grDevices
-Suggests: rgeos (>= 0.1-8), spatstat (>= 1.60), PBSmapping, maps,
-        RColorBrewer, raster, polyclip, spatstat.utils
-Enhances: gpclib, RArcInfo
-Description: Set of tools for manipulating geographic data. It includes binary access to 'GSHHG' shoreline files. The package also provides interface wrappers for exchanging spatial objects with packages such as 'PBSmapping', 'spatstat', 'maps', 'RArcInfo', and others.
+Suggests: rgeos (>= 0.1-8), spatstat.geom (>= 1.65-0), PBSmapping,
+        maps, RColorBrewer, raster, polyclip, plotrix, spatstat.linnet
+        (>= 1.65-3), spatstat.utils (>= 1.19.0), spatstat (>= 2.0-0)
+Enhances: gpclib
+Description: Please note that 'maptools' will be retired by the end of 2023, plan transition at your earliest convenience; some functionality will be moved to 'sp'. Set of tools for manipulating geographic data. It includes binary access to 'GSHHG' shoreline files. The package also provides interface wrappers for exchanging spatial objects with packages such as 'PBSmapping', 'spatstat.geom', 'maps', and others.
 License: GPL (>= 2)
 URL: http://maptools.r-forge.r-project.org/,
-        http://r-forge.r-project.org/projects/maptools/
+        https://r-forge.r-project.org/projects/maptools/
 RoxygenNote: 6.1.1
 NeedsCompilation: yes
-Packaged: 2019-12-01 13:43:38 UTC; rsb
+Packaged: 2022-03-08 10:37:01 UTC; rsb
 Author: Roger Bivand [cre, aut] (<https://orcid.org/0000-0003-2392-6140>),
   Nicholas Lewin-Koh [aut],
   Edzer Pebesma [ctb],
@@ -68,12 +71,14 @@ Author: Roger Bivand [cre, aut] (<https://orcid.org/0000-0003-2392-6140>),
   Karl Ove Hufthammer [ctb],
   Thomas Jagger [ctb],
   Kent Johnson [ctb],
+  Matthew Lewis [ctb] (<https://orcid.org/0000-0003-2244-4078>),
   Sebastian Luque [ctb],
   Don MacQueen [ctb],
   Andrew Niccolai [ctb],
   Edzer Pebesma [ctb],
   Oscar Perpiñán Lamigueiro [ctb],
   Ethan Plunkett [ctb],
+  Ege Rubak [ctb] (<https://orcid.org/0000-0002-6675-533X>),
   Tom Short [ctb],
   Greg Snow [ctb],
   Ben Stabler [ctb],
@@ -81,6 +86,6 @@ Author: Roger Bivand [cre, aut] (<https://orcid.org/0000-0003-2392-6140>),
   Rolf Turner [ctb]
 Maintainer: Roger Bivand <Roger.Bivand@nhh.no>
 Repository: CRAN
-Date/Publication: 2019-12-01 20:10:11 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-03 01:07:09 UTC; windows
+Date/Publication: 2022-03-08 13:00:08 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-03-08 13:20:53 UTC; windows
 Archs: i386, x64

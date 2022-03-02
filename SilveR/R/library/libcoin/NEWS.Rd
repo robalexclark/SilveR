@@ -2,6 +2,37 @@
 \name{NEWS}
 \title{NEWS file for the \pkg{libcoin} package}
 
+\section{Changes in Version 1.0-9 (20YY-MM-DD)}{
+  \itemize{
+    \item \code{R_MPinv_sym} can now determine the full dimension of the packed
+          input \code{x} by setting \code{n} to \code{0L}.
+    \item Add \code{#define USE_FC_LEN_T} to header as requested by CRAN
+          2021-09-25.
+  }
+}
+
+\section{Changes in Version 1.0-8 (2021-02-08)}{
+  \itemize{
+    \item Fix LaTeX problem.
+  }
+}
+
+\section{Changes in Version 1.0-7 (2021-01-15)}{
+  \itemize{
+    \item Correct spelling in error message.
+    \item Regression tests updated for \pkg{coin} 1.4-0.
+  }
+}
+
+\section{Changes in Version 1.0-6 (2020-08-13)}{
+  \itemize{
+    \item Interface to \code{S_rcont2} changed in \pkg{stats}, thanks
+          to Martin Maechler for a fix.
+    \item New function \code{R_pack_sym} for transforming a symmetric matrix to
+          lower-packed storage mode.
+  }
+}
+
 \section{Changes in Version 1.0-5 (2019-08-22)}{
   \itemize{
     \item New function \code{R_unpack_sym} for unpacking a symmetric matrix

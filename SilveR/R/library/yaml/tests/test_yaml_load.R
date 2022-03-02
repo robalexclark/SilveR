@@ -456,13 +456,14 @@ test_invalid_omap_causes_error <- function() {
   checkException(yaml.load("--- !omap\n- sup?"))
 }
 
-test_expressions_are_implicitly_converted_with_warning <- function() {
+test_expressions_are_not_implicitly_converted_with_warning <- function() {
   warnings <- captureWarnings({
     x <- yaml.load("!expr |\n  function() \n  {\n    'hey!'\n  }")
   })
-  checkEquals("function", class(x))
-  checkEquals("hey!", x())
-  checkEquals("Evaluating R expressions (!expr) will soon require explicit `eval.expr` option (see yaml.load help)", warnings)
+  checkEquals("function() \n{\n  'hey!'\n}", x)
+#  checkEquals("function", class(x))
+#  checkEquals("hey!", x())
+  checkEquals("Evaluating R expressions (!expr) requires explicit `eval.expr=TRUE` option (see yaml.load help)", warnings)
 }
 
 test_expressions_are_explicitly_converted_without_warning <- function() {
@@ -480,7 +481,7 @@ test_expressions_are_explicitly_not_converted <- function() {
 }
 
 test_invalid_expressions_cause_error <- function() {
-  checkException(yaml.load("!expr |\n  1+"))
+  checkException(yaml.load("!expr |\n  1+", eval.expr=TRUE))
 }
 
 # NOTE: this works, but R_tryEval doesn't return when called non-interactively
@@ -657,4 +658,13 @@ test_explicit_bool_tag_for_invalid_value <- function() {
   })
   checkEquals(expected, result)
   checkEquals(c("NAs introduced by coercion: foo is not a recognized boolean value"), warnings)
+}
+
+test_builtin_as_handler_works <- function() {
+  x <- "{a: 1, b: 2, c: 3}"
+  warnings <- captureWarnings({
+    results <- yaml.load(x, handlers=list(int=as.double))
+  })
+  checkEquals(class(results$a), "numeric")
+  checkEquals(0, length(warnings))
 }

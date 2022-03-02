@@ -1,12 +1,18 @@
-## ----init----------------------------------------------------------------
+## ---- include = FALSE---------------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+## ----init---------------------------------------------------------------------
 library(ggplot2)
 library(ggdendro)
 
-## ----dendrogram----------------------------------------------------------
+## ----dendrogram---------------------------------------------------------------
 hc <- hclust(dist(USArrests), "ave")
 ggdendrogram(hc, rotate = FALSE, size = 2)
 
-## ----dendro1-------------------------------------------------------------
+## ----dendro1------------------------------------------------------------------
 model <- hclust(dist(USArrests), "ave")
 dhc <- as.dendrogram(model)
 # Rectangular lines
@@ -17,12 +23,12 @@ p <- ggplot(segment(ddata)) +
   scale_y_reverse(expand = c(0.2, 0))
 p
 
-## ----dendro-2------------------------------------------------------------
+## ----dendro-2-----------------------------------------------------------------
 p + 
   coord_flip() + 
   theme_dendro()
 
-## ----dendro-3------------------------------------------------------------
+## ----dendro-3-----------------------------------------------------------------
 ddata <- dendro_data(dhc, type = "triangle")
 ggplot(segment(ddata)) + 
   geom_segment(aes(x = x, y = y, xend = xend, yend = yend)) + 
@@ -30,7 +36,7 @@ ggplot(segment(ddata)) +
   scale_y_reverse(expand = c(0.2, 0)) +
   theme_dendro()
 
-## ----tree----------------------------------------------------------------
+## ----tree---------------------------------------------------------------------
 if(require(tree)){
   data(cpus, package = "MASS")
   model <- tree(log10(perf) ~ syct + mmin + mmax + cach + chmin + chmax, 
@@ -47,7 +53,7 @@ if(require(tree)){
     theme_dendro()
 }
 
-## ----rpart---------------------------------------------------------------
+## ----rpart--------------------------------------------------------------------
 if(require(rpart)){
   model <- rpart(Kyphosis ~ Age + Number + Start, 
                  method = "class", data = kyphosis)
@@ -62,7 +68,7 @@ if(require(rpart)){
     theme_dendro()
 }
 
-## ----twins---------------------------------------------------------------
+## ----twins--------------------------------------------------------------------
 if(require(cluster)){
   model <- agnes(votes.repub, metric = "manhattan", stand = TRUE)
   dg <- as.dendrogram(model)

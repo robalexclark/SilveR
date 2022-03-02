@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Resume computation with partial results</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bpok {BiocParallel}"><tr><td>bpok {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Resume computation with partial results</h2>
+
+<h3>Description</h3>
+
+<p>Identifies unsuccessful results returned from <code>bplapply</code>,
+<code>bpmapply</code>, <code>bpvec</code>, <code>bpaggregate</code> or <code>bpvectorize</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+
+  bpok(x, type = bperrorTypes())
+
+  bperrorTypes()
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>Results returned from a call to <code>bp*apply</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+
+<p>A character(1) error type, from the vector returned by
+<code>bperrorTypes()</code> and described below
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>bpok()</code> returns a <code>logical()</code> vector: FALSE for any jobs
+that resulted in an error. <code>x</code> is the result list output by
+<code>bplapply</code>, <code>bpmapply</code>, <code>bpvec</code>, <code>bpaggregate</code> or
+<code>bpvectorize</code>.
+</p>
+<p><code>bperrorTypes()</code> returns a character() vector of possible error
+types generated during parallel evaluation. Types are:
+</p>
+
+<ul>
+<li><p><code>bperror</code>: Any of the following errors. This is the
+default value for <code>bpok()</code>.
+</p>
+</li>
+<li><p><code>remote_error</code>: An <em>R</em> error occurring while
+evaluating <code>FUN()</code>, e.g., taking the square root of a
+character vector, <code>sqrt("One")</code>.
+</p>
+</li>
+<li><p><code>unevaluated_error</code>: When <code>*Param(stop.on.error =
+        TRUE)</code> (default), a remote error halts evaluation of other
+tasks assigned to the same worker. The return value for these
+unevaluated elements is an error of type
+<code>unevaluated_error</code>.
+</p>
+</li>
+<li><p><code>not_available_error</code>: Only produced by
+<code>DoparParam()</code> when a remote error occurs during evaluation
+of an element of <code>X</code> &ndash; <code>DoparParam()</code> sets all values
+after the remote error to this class.
+</p>
+</li>
+<li><p><code>worker_comm_error</code>: An error occurring while trying to
+communicate with workers, e.g., when a worker quits unexpectedly.
+when this type of error occurs, the length of the result may
+differ from the length of the input <code>X</code>.
+
+</p>
+</li></ul>
+
+
+
+<h3>Author(s)</h3>
+
+<p>Michel Lang, Martin Morgan and Valerie Obenchain</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## -----------------------------------------------------------------------
+## Catch errors: 
+## -----------------------------------------------------------------------
+
+## By default 'stop.on.error' is TRUE in BiocParallelParam objects.  If
+## 'stop.on.error' is TRUE an ill-fated bplapply() simply stops,
+## displaying the error message.
+param &lt;- SnowParam(workers = 2, stop.on.error = TRUE)
+tryCatch({
+    bplapply(list(1, "two", 3), sqrt, BPPARAM = param)
+}, error=identity)
+
+## If 'stop.on.error' is FALSE then the computation continues. Errors
+## are signalled but the full evaluation can be retrieved
+param &lt;- SnowParam(workers = 2, stop.on.error = FALSE)
+X &lt;- list(1, "two", 3)
+result &lt;- bptry(bplapply(X, sqrt, BPPARAM = param))
+result
+
+## Check for errors:
+fail &lt;- !bpok(result)
+fail
+
+## Access the traceback with attr():
+tail(attr(result[[2]], "traceback"), 5)
+
+## -----------------------------------------------------------------------
+## Resume calculations: 
+## -----------------------------------------------------------------------
+
+## The 'resume' mechanism is triggered by supplying a list of partial
+## results as 'BPREDO'. Data elements that failed are rerun and merged
+## with previous results.
+
+## A call of sqrt() on the character "2" returns an error. Fix the input
+## data by changing the character "2" to a numeric 2:
+X_mod &lt;- list(1, 2, 3)
+bplapply(X_mod, sqrt, BPPARAM = param , BPREDO = result)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

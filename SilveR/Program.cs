@@ -16,7 +16,7 @@ namespace SilveR
         public static CultureInfo UserCulture { get; private set; } = CultureInfo.CurrentCulture;
 
         public static void Main(string[] args)
-        {
+                  {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .Enrich.FromLogContext()

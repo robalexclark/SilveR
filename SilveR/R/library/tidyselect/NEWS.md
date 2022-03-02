@@ -1,3 +1,52 @@
+# tidyselect 1.1.2
+
+* Fix for CRAN checks.
+
+* Better compatibility with rlang 1.0.0 errors. More to come soon.
+
+
+# tidyselect 1.1.1
+
+* Fix for CRAN checks.
+
+* tidyselect has been re-licensed as MIT (#217).
+
+
+# tidyselect 1.1.0
+
+* Predicate functions must now be wrapped with `where()`.
+
+  ```{r}
+  iris %>% select(where(is.factor))
+  ```
+
+  We made this change to avoid puzzling error messages when a variable
+  is unexpectedly missing from the data frame and there is a
+  corresponding function in the environment:
+
+  ```{r}
+  # Attempts to invoke `data()` function
+  data.frame(x = 1) %>% select(data)
+  ```
+
+  Now tidyselect will correctly complain about a missing variable
+  rather than trying to invoke a function.
+
+  For compatibility we will support predicate functions starting with
+  `is` for 1 version.
+
+* `eval_select()` gains an `allow_rename` argument. If set to `FALSE`,
+  renaming variables with the `c(foo = bar)` syntax is an error.
+  This is useful to implement purely selective behaviour (#178).
+
+* Fixed issue preventing repeated deprecation messages when
+  `tidyselect_verbosity` is set to `"verbose"` (#184).
+
+* `any_of()` now preserves the order of the input variables (#186).
+
+* The return value of `eval_select()` is now always named, even when
+  inputs are constant (#173).
+
 
 # tidyselect 1.0.0
 
@@ -60,14 +109,6 @@ information.
   intuitive to use.
 
   Many thanks to Irene Steves (@isteves) for suggesting this UI.
-
-* Binary `/` is now short for set difference. These expressions are
-  now equivalent:
-
-  ```r
-  iris %>% select(starts_with("Sepal") / ends_with("Width"))
-  iris %>% select(starts_with("Sepal"), -ends_with("Width"))
-  ```
 
 * You can now use predicate functions in selection contexts:
 

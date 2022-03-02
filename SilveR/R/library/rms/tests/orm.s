@@ -29,7 +29,7 @@ max(abs(w))
 
 m <- Mean(g)
 formals(m) <- list(lp=NULL, intercepts=runif(30000), values=runif(30001),
-                   interceptRef=3, cumprob=function(x) 1 / (1 + exp(-x)))
+                   conf.int=0, interceptRef=3, cumprob=function(x) 1 / (1 + exp(-x)))
 system.time(m(1))
 system.time(m(1:100))
 system.time(m(1:1000))
@@ -89,7 +89,8 @@ qu <- Quantile(g)
 ## Prob Y <= j, j = 1, ... 10 = .1, .2, ..., 1
 ## .1 quantile = 1, .2 quantile = 2, ..., .9 quantile = 9
 formals(qu) <- list(q=.5, lp=0, intercepts=qlogis(seq(.9,.1,by=-.1)),
-                    values=1:10, interceptRef=1, cumprob=plogis, inverse=qlogis)
+                    values=1:10, interceptRef=1, cumprob=plogis, inverse=qlogis,
+                    conf.int=0, method='interpolated')
 for(a in c(.01, seq(0, 1, by=.05), .99))
   cat(a, qu(a, qlogis(.9)), '\n')
 
@@ -227,3 +228,22 @@ abline(a=co[1], b=co[2], col='gray70')
 ## Compare coefficients with those from partial likelihood (Cox model)
 orm(y ~ pol(x1,2), family=loglog)
 cph(Surv(y) ~ pol(x1,2))
+
+
+## Simulate from a linear model with normal residuals and compute
+## quantiles for one x value, two ways
+
+set.seed(7)
+n <- 10000
+x <- rnorm(n)
+y <- round(x + rnorm(n), 2)
+f <- ols(y ~ x)
+k <- coef(f)
+s <- f$stats['Sigma']
+print(c(k, s))
+k[1] + qnorm((1:3)/4) * s
+
+g <- orm(y ~ x, family='probit')
+quant <- Quantile(g)
+lp <- predict(g, data.frame(x=0))
+for(qu in (1:3)/4) print(quant(qu, lp))

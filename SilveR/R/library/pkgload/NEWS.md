@@ -1,4 +1,84 @@
+# pkgload 1.2.4
+
+* Lionel Henry is now the maintainer.
+
+* `load_all()` automatically registers package translations, if found.
+
+# pkgload 1.2.3
+
+* pkgload now forces all bindings on unload. This fixes errors and inconsistencies when dangling references force lazy bindings after unload or reload.
+
+* `load_all()` now restores S3 methods registered by third party packages (#163).
+
+* `load_dll()` will now preserve the DLL name when loading instead of always using the package name. This allows packages to include DLL's with different names (#162, @dfalbel).
+
+# pkgload 1.2.2
+
+# pkgload 1.2.1
+
+* `unload()` no longer unregisters methods for generics of the package being unloaded. This way dangling references to generics defined in the stale namespace still work as expected (r-lib/vctrs#1341).
+* `load_all()` will now work for packages that have testthat tests but do not have testthat installed (#151)
+* The `pkgbuild` dependency has been moved to `Suggests`, as it is only needed for packages with compiled code.
+
+* `load_all()` will now work for packages that have testthat tests but do not have testthat installed (#151)
+
+* `load_all(warn_conflicts = TRUE)` becomes more narrow and only warns when a *function* in the global environment masks a *function* in the package, consistent with the docs (#125, #143 @jennybc).
+
+* `load_all()` no longer does a comprehensive check on the `DESCRIPTION` file when loading, instead just checking that it exists and starts with Package (#149, @malcolmbarrett)
+
+* `unload()` no longer warns when it can't unload a namespace.
+
+# pkgload 1.2.0
+
+* Fix test failure in R 4.1 with regards to S4 method registration
+
+* `load_all()` now preserves existing namespaces in working order. In
+  particular, it doesn't unload the package's shared library and keeps
+  it loaded instead. When reloading, a copy of the SO for the new
+  namespace is loaded from a temporary location. These temporary SOs
+  are only unloaded on GC and deleted from their temporary location
+  via a weak reference attached to the namespace.
+
+  This mechanism ensures that lingering references to the namespace
+  keep working as expected. Consequently the namespace
+  propagation routine that was added to pkgload as a workaround has
+  been removed.
+
+  Note that `.Call()` invocations that pass a string symbol rather
+  than a structured symbol may keep crashing, because R will look into
+  the most recently loaded SO of a given name. Since symbol
+  registration is now the norm, we don't expect this to cause much
+  trouble.
+
+* `load_all()` no longer forces all bindings of a namespace to avoid
+  lazy-load errors. Instead, it removes exported S3 methods from the
+  relevant tables.
+
+  - This improves the loading behaviour with packages that define
+    objects in their namespaces lazily (e.g. with `delayedAssign()`).
+
+  - This also makes `load_all()` more predictable after a method has
+    been removed from the package. It is now actually removed from the
+    generic table. It would previously linger until R was restarted.
+
+* If `load_all()` attaches testthat, it automatically suppresses conflicts.
+
+# pkgload 1.1.0
+
+* `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
+
+* `load_all()` now issues a warning if exported objects conflict with objects defined in the global environment (#112)
+
+* `run_example()` arguments `run` and `test` are deprecated in favor of the (hopefully) more clear `run_dontrun` and `run_donttest` (#107).
+
+* Internal fixes for compatibility with the future 4.1.0 release.
+
 # pkgload 1.0.2
+
+* `shim_question()` now works for topics from the R base package that are passed with the double colon operator (e.g. `base::min`) (@mdequeljoe, #99).
+
+* `load_all()` now allows using explicitly qualified, exported names in test
+  helpers (@klmr, #95).
 
 * `load_all()` gains a `compile` argument which controls more finely whether to
   compile the code or not. The `recompile` argument is now deprecated and will

@@ -105,6 +105,41 @@
                             <input class="checkbox-fix" asp-for="DisplayLegend" type="checkbox" />
                         </div>
                     </div>
+
+					<div class="form-group row">
+						<label class="col-md-6 col-form-label">Continuous axis ranges</label>
+						<div class="col-md-6">
+							<div class="form-group row">
+								<label class="col-md-6 col-form-label">X-axis min</label>
+								<div class="col-md-6">
+									<input class="form-control" asp-for="XAxisMin" />
+									<div><span asp-validation-for="XAxisMin"></span></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-6 col-form-label">X-axis max</label>
+								<div class="col-md-6">
+									<input class="form-control" asp-for="XAxisMax" />
+									<div><span asp-validation-for="XAxisMax"></span></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-6 col-form-label">Y-axis min</label>
+								<div class="col-md-6">
+									<input class="form-control" asp-for="YAxisMin" />
+									<div><span asp-validation-for="YAxisMin"></span></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-6 col-form-label">Y-axis max</label>
+								<div class="col-md-6">
+									<input class="form-control" asp-for="YAxisMax" />
+									<div><span asp-validation-for="YAxisMax"></span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
                 </div>
             </div>
         </div>

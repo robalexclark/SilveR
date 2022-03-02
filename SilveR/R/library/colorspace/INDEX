@@ -6,9 +6,11 @@ RGB                     Create RGB Colors
 USSouthPolygon          Polygon for County Map of US South States:
                         Alabama, Georgia, and South Carolina
 XYZ                     Create XYZ Colors
+adjust_transparency     Adjust or Extract Transparency of Colors
 choose_palette          Graphical User Interface for Choosing HCL Color
                         Palettes
 color-class             Class "color"
+contrast_ratio          W3C Contrast Ratio
 coords                  Extract the Numerical Coordinates of a Color
 cvd                     Color Vision Deficiency (CVD) Conversion Tables
 cvd_emulator            Graphical User Interface to Check Images for
@@ -36,6 +38,18 @@ rainbow_hcl             HCL (and HSV) Color Palettes Corresponding to
 readRGB                 Read RGB Color Descriptions
 readhex                 Read Hexadecimal Color Descriptions
 sRGB                    Create sRGB Colors
+scale_colour_binned_diverging
+                        HCL-Based Binned Diverging Color Scales for
+                        ggplot2
+scale_colour_binned_divergingx
+                        HCL-Based Binned Flexible Diverging Scales for
+                        ggplot2
+scale_colour_binned_qualitative
+                        HCL-Based Binned Qualitative Color Scales for
+                        ggplot2
+scale_colour_binned_sequential
+                        HCL-Based Binned Sequential Color Scales for
+                        ggplot2
 scale_colour_continuous_diverging
                         HCL-Based Continuous Diverging Color Scales for
                         ggplot2

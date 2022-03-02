@@ -777,13 +777,21 @@ quantile(over500, c(0.025, 0.975))
 
 
 ###################################################
-### code chunk number 79: csdacm.Rnw:1047-1048
+### code chunk number 79: csdacm.Rnw:1046-1047
 ###################################################
-fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+run <- require(rgdal, quietly=TRUE)
 
 
 ###################################################
-### code chunk number 80: csdacm.Rnw:1050-1053 (eval = FALSE)
+### code chunk number 80: csdacm.Rnw:1051-1054
+###################################################
+if (run) {
+  fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
+}
+
+
+###################################################
+### code chunk number 81: csdacm.Rnw:1056-1059 (eval = FALSE)
 ###################################################
 ## x <- readGDAL(fn, output.dim = c(120, 132))
 ## x$band1[x$band1 <= 0] <- NA
@@ -791,40 +799,48 @@ fn <- system.file("pictures/erdas_spnad83.tif", package = "rgdal")[1]
 
 
 ###################################################
-### code chunk number 81: csdacm.Rnw:1064-1070
+### code chunk number 82: csdacm.Rnw:1070-1082
 ###################################################
+if (run) {
 library(rgdal)
 x <- GDAL.open(fn)
 class(x)
+}
+if (run) {
 x.subs <- x[1:100, 1:100, 1]
 class(x.subs)
+}
+if (run) {
 gridparameters(x.subs)
+}
 
 
 ###################################################
-### code chunk number 82: csdacm.Rnw:1088-1089
+### code chunk number 83: csdacm.Rnw:1100-1101
 ###################################################
 options("width"=50)
 
 
 ###################################################
-### code chunk number 83: csdacm.Rnw:1091-1096
+### code chunk number 84: csdacm.Rnw:1103-1110
 ###################################################
+if (run) {
 setClass("SpatialGDAL",
     representation("Spatial", grid = "GridTopology", grod = "GDALReadOnlyDataset", 
 # NOT TOO WIDE
 		name = "character"))
 setClass("SpatialGDALWrite", "SpatialGDAL")
+}
 
 
 ###################################################
-### code chunk number 84: csdacm.Rnw:1098-1099
+### code chunk number 85: csdacm.Rnw:1112-1113
 ###################################################
 options("width"=70)
 
 
 ###################################################
-### code chunk number 85: csdacm.Rnw:1110-1126 (eval = FALSE)
+### code chunk number 86: csdacm.Rnw:1124-1140 (eval = FALSE)
 ###################################################
 ## x <- open.SpatialGDAL(fn)
 ## nrows <- GDALinfo(fn)["rows"]
@@ -845,7 +861,7 @@ options("width"=70)
 
 
 ###################################################
-### code chunk number 86: csdacm.Rnw:1133-1140 (eval = FALSE)
+### code chunk number 87: csdacm.Rnw:1147-1154 (eval = FALSE)
 ###################################################
 ## setMethod("[", "SpatialGDAL",
 ##     function(x, i, j, ... , drop = FALSE)
@@ -857,7 +873,7 @@ options("width"=70)
 
 
 ###################################################
-### code chunk number 87: csdacm.Rnw:1166-1167
+### code chunk number 88: csdacm.Rnw:1180-1181
 ###################################################
 options("width"=owidth)
 

@@ -48,6 +48,10 @@ YAxisTitle = "Proportion surviving"
 MainTitle2 = ""
 Line_type<-Line_type_solid
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #replace illegal characters in variable names
 XAxisTitle <-Responseqq
@@ -109,7 +113,7 @@ if (SummaryResults == "Y") {
 	for (i in 1:nogps) {
 		table2[i,7] = format(round(table1[i,7],1),nsmall=1)
 	}
-	table2<-subset(table2, select = -c(X.rmean, X.se.rmean.))
+	table2<-subset(table2, select = -c(rmean, se.rmean.))
 	table2<- cbind(rnms, table2)
 	lowerz <- paste("Lower ", sig*100, "% CI", sep="")
 	upperz <- paste("Upper ", sig*100, "% CI", sep="")

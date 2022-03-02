@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Arrow sample plot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plotArrow {mixOmics}"><tr><td>plotArrow {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Arrow sample plot</h2>
+
+<h3>Description</h3>
+
+<p>Represents samples from multiple coordinates to assess the alignment in the
+latent space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plotArrow(
+  object,
+  comp = c(1, 2),
+  ind.names = TRUE,
+  group = NULL,
+  col.per.group = NULL,
+  col = NULL,
+  ind.names.position = c("start", "end"),
+  ind.names.size = 2,
+  pch = NULL,
+  pch.size = 2,
+  arrow.alpha = 0.6,
+  arrow.size = 0.5,
+  arrow.length = 0.2,
+  legend = if (is.null(group)) FALSE else TRUE,
+  legend.title = NULL,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>object of class inheriting from <span class="pkg">mixOmics</span>: <code>PLS,
+sPLS, rCC, rGCCA, sGCCA, sGCCDA</code></p>
+</td></tr>
+<tr valign="top"><td><code>comp</code></td>
+<td>
+<p>integer vector of length two (or three to 3d). The components
+that will be used on the horizontal and the vertical axis respectively to
+project the individuals.</p>
+</td></tr>
+<tr valign="top"><td><code>ind.names</code></td>
+<td>
+<p>either a character vector of names for the individuals to
+be plotted, or <code>FALSE</code> for no names. If <code>TRUE</code>, the row names of
+the first (or second) data matrix is used as names (see Details).</p>
+</td></tr>
+<tr valign="top"><td><code>group</code></td>
+<td>
+<p>Factor indicating the group membership for each sample.</p>
+</td></tr>
+<tr valign="top"><td><code>col.per.group</code></td>
+<td>
+<p>character (or symbol) color to be used when 'group' is
+defined. Vector of the same length as the number of groups.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>character (or symbol) color to be used, possibly vector.</p>
+</td></tr>
+<tr valign="top"><td><code>ind.names.position</code></td>
+<td>
+<p>One of c('start', 'end') indicating where to show
+the ind.names . Not used in block analyses, where centroids are used.</p>
+</td></tr>
+<tr valign="top"><td><code>ind.names.size</code></td>
+<td>
+<p>Numeric, sample name size.</p>
+</td></tr>
+<tr valign="top"><td><code>pch</code></td>
+<td>
+<p>plot character. A character string or a named vector of single
+characters or integers whose names match those of <code>object$variates</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>pch.size</code></td>
+<td>
+<p>Numeric, sample point character size.</p>
+</td></tr>
+<tr valign="top"><td><code>arrow.alpha</code></td>
+<td>
+<p>Numeric between 0 and 1 determining the opacity of arrows.</p>
+</td></tr>
+<tr valign="top"><td><code>arrow.size</code></td>
+<td>
+<p>Numeric, variable arrow head size.</p>
+</td></tr>
+<tr valign="top"><td><code>arrow.length</code></td>
+<td>
+<p>Numeric, length of the arrow head in 'cm'.</p>
+</td></tr>
+<tr valign="top"><td><code>legend</code></td>
+<td>
+<p>Logical, whether to show the legend if <code>group != NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>legend.title</code></td>
+<td>
+<p>Character, the legend title if <code>group != NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Not currently used.
+sample size to display sample names.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Graphical of the samples (individuals) is displayed in a superimposed manner
+where each sample will be indicated using an arrow. The start of the arrow
+indicates the location of the sample in <i>X</i> in one plot, and the tip the
+location of the sample in <i>Y</i> in the other plot. Short arrows indicate a
+strong agreement between the matching data sets, long arrows a disagreement
+between the matching data sets. The representation space is scaled using the
+range of coordinates so minimum and maximum values are equal for all blocks.
+Since the algorithm maximises the covariance of these components, the
+absolute values do not affect the alignment.
+</p>
+<p>For objects of class <code>"GCCA"</code> and if there are more than 2 blocks, the
+start of the arrow indicates the centroid between all data sets for a given
+individual and the tips of the arrows the location of that individual in
+each block.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A ggplot object
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Al J Abadi
+</p>
+
+
+<h3>References</h3>
+
+<p>Lê Cao, K.-A., Martin, P.G.P., Robert-Granie, C. and Besse, P.
+(2009). Sparse canonical methods for biological data integration:
+application to a cross-platform study. <em>BMC Bioinformatics</em>
+<b>10</b>:34.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../graphics/html/arrows.html">arrows</a></code>, <code><a href="../../graphics/html/text.html">text</a></code>, <code><a href="../../graphics/html/points.html">points</a></code> and
+http://mixOmics.org/graphics for more details.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## plot of individuals for objects with two datasets only (X and Y)
+# ----------------------------------------------------
+data(nutrimouse)
+X &lt;- nutrimouse$lipid
+Y &lt;- nutrimouse$gene
+nutri.res &lt;- rcc(X, Y, ncomp = 3, lambda1 = 0.064, lambda2 = 0.008)
+
+## plot of individuals for objects of class 'pls' or 'spls'
+# ----------------------------------------------------
+plotArrow(nutri.res)
+## customise the ggplot object as you wish
+plotArrow(nutri.res) + geom_vline(xintercept = 0, alpha = 0.5) + 
+    geom_hline(yintercept = 0, alpha = 0.5) +
+    labs(x = 'Dim 1' , y = 'Dim 2', title = 'Nutrimouse') +
+    theme_minimal()
+## individual name position
+plotArrow(nutri.res, ind.names.position = 'end')
+plotArrow(nutri.res, comp = c(1,3))
+## custom pch
+plotArrow(nutri.res, pch = 10, pch.size = 3)
+plotArrow(nutri.res, pch = c(X = 1, Y = 0))
+## custom arrow
+plotArrow(nutri.res, arrow.alpha = 0.6, arrow.size = 0.6, arrow.length = 0.15)
+
+## group samples
+plotArrow(nutri.res, group = nutrimouse$genotype)
+plotArrow(nutri.res, group = nutrimouse$genotype, legend.title = 'Genotype')
+
+## custom ind.names
+plotArrow(nutri.res,
+           ind.names = paste0('ID', rownames(nutrimouse$gene)), 
+           ind.names.size = 3)
+
+## plot of individuals for objects of class 'pls' or 'spls'
+# ----------------------------------------------------
+data(liver.toxicity)
+X &lt;- liver.toxicity$gene
+Y &lt;- liver.toxicity$clinic
+toxicity.spls &lt;- spls(X, Y, ncomp = 3, keepX = c(50, 50, 50),
+                      keepY = c(10, 10, 10))
+
+# colors indicate time of necropsy, text is the dose, label at start of arrow
+plotArrow(toxicity.spls,  group = liver.toxicity$treatment[, 'Time.Group'],
+           ind.names  = liver.toxicity$treatment[, 'Dose.Group'],
+           legend = TRUE, position.names = 'start', legend.title = 'Time.Group')
+
+## individual representation for objects of class 'sgcca' (or 'rgcca')
+# ----------------------------------------------------
+data(nutrimouse)
+Y = unmap(nutrimouse$diet)
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid, Y = Y)
+design1 = matrix(c(0,1,1,1,0,1,1,1,0), ncol = 3, nrow = 3, byrow = TRUE)
+nutrimouse.sgcca &lt;- wrapper.sgcca(X = data,
+                                  design = design1,
+                                  penalty = c(0.3, 0.5, 1),
+                                  ncomp = 3,
+                                  scheme = "centroid")
+
+plotArrow(nutrimouse.sgcca, group = nutrimouse$genotype, ind.names = TRUE, 
+           legend.title = 'Genotype' )
+
+## custom pch by block
+blocks &lt;- names(nutrimouse.sgcca$variates)
+pch &lt;- seq_along(blocks)
+names(pch) &lt;- blocks
+pch
+#&gt;   gene   lipid     Y 
+#&gt;   1       2        3 
+p &lt;- plotArrow(nutrimouse.sgcca, group = nutrimouse$genotype, ind.names = TRUE, 
+           pch = pch, legend.title = 'Genotype')
+
+p
+
+### further customise the ggplot object
+# custom labels
+p + labs(x = 'Variate 1',
+         y = 'Variate 2') +
+    guides(
+        shape = guide_legend(title = 'BLOCK')
+    ) 
+# TODO include these customisations into function args
+## custom shapes
+p + scale_shape_manual(values = c(
+    centroid = 1,
+    gene = 2,
+    lipid = 3,
+    Y = 4
+))
+
+## individual representation for objects of class 'sgccda'
+# ----------------------------------------------------
+# Note: the code differs from above as we use a 'supervised' GCCA analysis
+data(nutrimouse)
+Y = nutrimouse$diet
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid)
+design1 = matrix(c(0,1,0,1), ncol = 2, nrow = 2, byrow = TRUE)
+
+nutrimouse.sgccda1 &lt;- 
+    wrapper.sgccda(X = data,
+                   Y = Y,
+                   design = design1,
+                   ncomp = 2,
+                   keepX = list(gene = c(10,10), lipid = c(15,15)),
+                   scheme = "centroid")
+
+
+## Default colours correspond to outcome Y
+plotArrow(nutrimouse.sgccda1)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

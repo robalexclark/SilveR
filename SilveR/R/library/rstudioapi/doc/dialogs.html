@@ -27,6 +27,54 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -317,29 +365,29 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <p>Using the <code>rstudioapi</code> package, you can request input from the user with various dialogs.</p>
 <p>The <code>selectFile()</code> and <code>selectDirectory()</code> APIs allow you to request the name of an existing or non-existing path on the system.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># request the path to an existing .csv file on disk</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>path &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">selectFile</span>(<span class="dt">caption =</span> <span class="st">&quot;Select CSV File&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3"></a>                               <span class="dt">filter =</span> <span class="st">&quot;CSV Files (*.csv)&quot;</span>,</span>
-<span id="cb1-4"><a href="#cb1-4"></a>                               <span class="dt">existing =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># now, you could read the data using e.g. &#39;readr::read_csv()&#39;</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>data &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(path)</span>
-<span id="cb1-8"><a href="#cb1-8"></a></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># request a file path (e.g. where you would like to save a new file)</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>target &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">selectFile</span>(<span class="dt">caption =</span> <span class="st">&quot;Save File&quot;</span>,</span>
-<span id="cb1-11"><a href="#cb1-11"></a>                                 <span class="dt">label =</span> <span class="st">&quot;Save&quot;</span>,</span>
-<span id="cb1-12"><a href="#cb1-12"></a>                                 <span class="dt">existing =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb1-13"><a href="#cb1-13"></a></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># save data to the path provided by the user</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="kw">saveRDS</span>(data, <span class="dt">file =</span> target)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># request the path to an existing .csv file on disk</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">selectFile</span>(<span class="at">caption =</span> <span class="st">&quot;Select CSV File&quot;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">filter =</span> <span class="st">&quot;CSV Files (*.csv)&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">existing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># now, you could read the data using e.g. &#39;readr::read_csv()&#39;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(path)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># request a file path (e.g. where you would like to save a new file)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">selectFile</span>(<span class="at">caption =</span> <span class="st">&quot;Save File&quot;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">label =</span> <span class="st">&quot;Save&quot;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">existing =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># save data to the path provided by the user</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data, <span class="at">file =</span> target)</span></code></pre></div>
 <p>Use <code>rstudioapi::askForPassword()</code> to request a password, or other credentials, from a user.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>token &lt;-<span class="st"> </span>rstudioapi<span class="op">::</span><span class="kw">askForPassword</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">prompt =</span> <span class="st">&quot;Please provide your GitHub access token.&quot;</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>token <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">askForPassword</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">prompt =</span> <span class="st">&quot;Please provide your GitHub access token.&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Use <code>rstudioapi::showDialog()</code> to display an informative dialog to the user. This dialog is used to report some kind of status or information to the user; it does not request any input.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>rstudioapi<span class="op">::</span><span class="kw">showDialog</span>(<span class="dt">title =</span> <span class="st">&quot;Hello, world!&quot;</span>,</span>
-<span id="cb3-2"><a href="#cb3-2"></a>                       <span class="dt">message =</span> <span class="st">&quot;You&#39;re &lt;b&gt;awesome!&lt;/b&gt;&quot;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3"></a>                       <span class="dt">url =</span> <span class="st">&quot;http://www.example.com&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">showDialog</span>(<span class="at">title =</span> <span class="st">&quot;Hello, world!&quot;</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">message =</span> <span class="st">&quot;You&#39;re &lt;b&gt;awesome!&lt;/b&gt;&quot;</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">url =</span> <span class="st">&quot;http://www.example.com&quot;</span>)</span></code></pre></div>
 
 
 

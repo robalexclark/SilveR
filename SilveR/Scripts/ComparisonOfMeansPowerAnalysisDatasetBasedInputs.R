@@ -140,6 +140,10 @@ if(graphTitle=="NULL") {
 	graphTitle <- paste (graphTitle, " \n", sep = "")
 }
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #===================================================================================================================
 #Output HTML header

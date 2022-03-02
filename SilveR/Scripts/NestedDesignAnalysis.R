@@ -54,6 +54,10 @@ sipowerttest<-function(delta,sd,n,sig.level) {
 #===================================================================================================================
 #Graphical parameter setup
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #STB Edits so that covariate can be non-null but treatments are null -  17Oct2010
 if (treatments=="NULL" && covariate == "NULL")	{

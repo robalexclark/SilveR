@@ -1,5 +1,5 @@
 Package: lpSolveAPI
-Version: 5.5.2.0-17.6
+Version: 5.5.2.0-17.7
 Title: R Interface to 'lp_solve' Version 5.5.2.0
 Author: lp_solve <http://lpsolve.sourceforge.net/> [aut],
         Kjell Konis [aut],
@@ -11,8 +11,8 @@ Description: The lpSolveAPI package provides an R interface to 'lp_solve',
     (SOS) models.
 License: LGPL-2
 NeedsCompilation: yes
-Packaged: 2020-01-09 22:25:57 UTC; florian
+Packaged: 2020-06-12 10:41:08 UTC; florian
 Repository: CRAN
-Date/Publication: 2020-01-10 12:20:16 UTC
-Built: R 3.6.2; x86_64-w64-mingw32; 2020-01-15 18:40:48 UTC; windows
+Date/Publication: 2020-06-14 16:20:03 UTC
+Built: R 4.1.1; x86_64-w64-mingw32; 2021-09-10 16:06:22 UTC; windows
 Archs: i386, x64

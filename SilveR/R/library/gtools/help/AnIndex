@@ -14,11 +14,13 @@ chr	asc
 combinations	combinations
 ddirichlet	dirichlet
 defmacro	defmacro
+dirichlet	dirichlet
 ELISA	ELISA
 even	oddeven
 foldchange	foldchange
 foldchange2logratio	foldchange
 getDependencies	getDependencies
+gtools	gtools
 gtools-defunct	gtools-defunct
 gtools-deprecated	gtools-deprecated
 inv.logit	logit
@@ -32,6 +34,7 @@ mixedorder	mixedsort
 mixedsort	mixedsort
 na.replace	na.replace
 odd	oddeven
+oddeven	oddeven
 permutations	combinations
 permute	permute
 quantcut	quantcut
@@ -39,11 +42,14 @@ rdirichlet	dirichlet
 roman2int	roman2int
 running	running
 scat	scat
+script_file	script_file
+script_path	script_file
 setTCPNoDelay	setTCPNoDelay
 smartbind	smartbind
 split_path	split_path
 sprint	gtools-defunct
 stars.pval	stars.pval
+stat_mode	stat_mode
 strmacro	defmacro
 unByteCode	unByteCode
 unByteCodeAssign	unByteCode

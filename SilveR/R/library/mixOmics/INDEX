@@ -3,6 +3,7 @@ auroc                   Area Under the Curve (AUC) and Receiver
                         Operating Characteristic (ROC) curves for
                         supervised classification
 background.predict      Calculate prediction areas
+biplot                  biplot methods for 'pca' family
 block.pls               N-integration with Projection to Latent
                         Structures models (PLS)
 block.plsda             N-integration with Projection to Latent
@@ -19,21 +20,24 @@ cim                     Clustered Image Maps (CIMs) ("heat maps")
 cimDiablo               Clustered Image Maps (CIMs) ("heat maps") for
                         DIABLO
 circosPlot              circosPlot for DIABLO
-color.jet               Color Palette for mixOmics
+colors                  Color Palette for mixOmics
 diverse.16S             16S microbiome data: most diverse bodysites
                         from HMP
 estim.regul             Estimate the parameters of regularization for
                         Regularized CCA
-explained_variance      Calculation of explained variance
+explained_variance      Calculates the proportion of explained variance
+                        of multivariate components
 get.confusion_matrix    Create confusion table and calculate the
                         Balanced Error Rate
-image.estim.regul       Plot the cross-validation score.
+image.tune.rcc          Plot the cross-validation score.
 imgCor                  Image Maps of Correlation Matrices between two
                         Data Sets
+impute.nipals           Impute missing values using NIPALS algorithm
 ipca                    Independent Principal Component Analysis
 linnerud                Linnerud Dataset
 liver.toxicity          Liver Toxicity Data
-logratio.transfo        Log-ratio transformation
+logratio-transformations
+                        Log-ratio transformation
 map                     Classification given Probabilities
 mat.rank                Matrix Rank
 mint.block.pls          NP-integration
@@ -52,6 +56,7 @@ mint.splsda             P-integration with Discriminant Analysis and
                         variable selection
 mixOmics                PLS-derived methods: one function to rule them
                         all!
+mixOmics-package        'Omics Data Integration Project
 multidrug               Multidrug Resistence Data
 nearZeroVar             Identification of zero- or near-zero variance
                         predictors
@@ -61,17 +66,19 @@ nipals                  Non-linear Iterative Partial Least Squares
                         (NIPALS) algorithm
 nutrimouse              Nutrimouse Dataset
 pca                     Principal Components Analysis
-pcatune                 Tune the number of principal components in PCA
 perf                    Compute evaluation criteria for PLS, sPLS,
                         PLS-DA, sPLS-DA, MINT and DIABLO
-plot.perf               Plot for model performance
+plot.pca                Show (s)pca explained variance plots
+plot.perf               Plot for model performance for PSLDA analyses
+plot.perf.pls           Plot for model performance for PLS analyses
 plot.rcc                Canonical Correlations Plot
-plot.tune               Plot for model performance
-plot.tune.rcc           Plot the cross-validation score.
+plot.tune               Plot model performance
 plotArrow               Arrow sample plot
 plotDiablo              Graphical output for the DIABLO framework
 plotIndiv               Plot of Individuals (Experimental Units)
 plotLoadings            Plot of Loading vectors
+plotMarkers             Plot the values for multivariate markers in
+                        block analyses
 plotVar                 Plot of Variables
 pls                     Partial Least Squares (PLS) Regression
 plsda                   Partial Least Squares Discriminant Analysis
@@ -93,8 +100,7 @@ stemcells               Human Stem Cells Data
 study_split             divides a data matrix in a list of matrices
                         defined by a factor
 summary                 Summary Methods for CCA and PLS objects
-tune                    Generic function to choose the parameters in
-                        the different methods in mixOmics
+tune                    Wrapper function to tune pls-derived methods.
 tune.block.splsda       Tuning function for block.splsda method
                         (N-integration with sparse Discriminant
                         Analysis)
@@ -102,7 +108,8 @@ tune.mint.splsda        Estimate the parameters of mint.splsda method
 tune.pca                Tune the number of principal components in PCA
 tune.rcc                Estimate the parameters of regularization for
                         Regularized CCA
-tune.spls               Tuning functions for sPLS method
+tune.spca               Tune number of selected variables for spca
+tune.spls               Tuning functions for sPLS and PLS functions
 tune.splsda             Tuning functions for sPLS-DA method
 tune.splslevel          Tuning functions for multilevel sPLS method
 unmap                   Dummy matrix for an outcome factor

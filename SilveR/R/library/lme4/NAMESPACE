@@ -5,7 +5,7 @@ importFrom("graphics", par, plot)
 importFrom("grid", gpar, viewport)
 importFrom("splines", backSpline, interpSpline, periodicSpline)
 importFrom("methods", as, getDataPart, extends, is, new, cbind2, rbind2,
-           show, slot, slotNames, setRefClass)
+           show, slot, slotNames, setRefClass, getClass)
 importFrom("stats",
            AIC, BIC, anova, approx, approxfun,
            as.formula, asOneSidedFormula, ave,
@@ -26,7 +26,6 @@ importFrom("stats",
            rstudent,
            runif, sd, setNames, simulate, symnum, terms, terms.formula,
            update, update.formula, var, vcov, weights)
-
 importFrom("utils", flush.console, packageVersion, sessionInfo, stack, str, capture.output)
 if(getRversion() >= "3.5.0") {
     importFrom("utils", warnErrList)
@@ -52,9 +51,9 @@ importFrom("MASS", negative.binomial, theta.ml)
 importFrom("boot", boot.ci)
 
 ## generics we provide methods for and re-export:
-importFrom("nlme", fixef,ranef, VarCorr, getGroups)
+importFrom("nlme", fixef,ranef, VarCorr, getGroups, getData)
 
-importFrom("Matrix", drop0, rankMatrix, sparseMatrix,
+importFrom("Matrix", drop0, rankMatrix, sparseMatrix, sparse.model.matrix,
            forceSymmetric, fac2sparse, KhatriRao, Diagonal, .bdiag,
            as.matrix, bdiag)
 importClassesFrom("Matrix", corMatrix, dgCMatrix, dpoMatrix, dCHMsimpl)
@@ -98,6 +97,7 @@ export(isNested)
 export(isREML)
 export(isSingular)
 export(lFormula)
+export(lme4_testlevel)
 export(lmer)
 export(lmerControl, glmerControl, nlmerControl,
        .makeCC)
@@ -118,6 +118,7 @@ export(mkLmerDevfun)
 export(mkMerMod)
 export(mkRespMod)
 export(mkReTrms)
+export(mkNewReTrms)
 export(mkVarCorr)
 export(mkParsTemplate)
 export(mkDataTemplate)
@@ -126,7 +127,7 @@ export(NelderMead)
 export(ngrps)
 export(nlformula)
 export(nlmer)
-export(nloptwrap)
+export(nloptwrap, nlminbwrap)# export both (1st has been there "forever")
 export(nlsResp)
 export(nobars)
 export(optimizeGlmer)
@@ -142,9 +143,11 @@ if(getRversion() >= "3.3.0") {
     export(sigma)
 }
 export(.simulateFun)
+export(simulate.formula)
 export(subbars)
 export(updateGlmerDevfun)
 export(VarCorr)
+export(getData)
 export(varianceProf)
 
 ## print() and print.summary() utilities -- other [NG]LMM packages can import
@@ -198,6 +201,7 @@ S3method(fitted,merMod)
 S3method(fixef,merMod)
 S3method(formula,lmList4)
 S3method(formula,merMod)
+S3method(getData,merMod)
 ## S3method(fortify,merMod)# but don't hide:
 export(fortify.merMod)
 S3method(getME, merMod)
@@ -238,6 +242,13 @@ S3method(rstudent,merMod)
 S3method(sigma,merMod)
 S3method(simulate,merMod)
 S3method(simulate,formula)
+S3method(simulate,formula_lhs_)
+S3method(simulate,formula_lhs_matrix)
+S3method(simulate,formula_lhs_numeric)
+S3method(simulate,formula_lhs_factor)
+S3method(simulate,formula_lhs_integer)
+S3method(simulate,formula_lhs_logical)
+S3method(simulate,formula_lhs)
 S3method(splom,thpr)
 S3method(summary,allFit)
 S3method(summary,merMod)

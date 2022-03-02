@@ -60,10 +60,20 @@ root <- rprojroot::is_r_package
 The `root` object contains a function that helps locating files below the root
 of your package, regardless of your current working directory.
 If you are sure that your working directory is somewhere below your project's root,
-use the `root$find_file()` function:
+use the `root$find_file()` function.
+In this example here, we're starting in the `vignettes` subdirectory and find the original `DESCRIPTION` file:
 
 ```{r}
+basename(getwd())
 readLines(root$find_file("DESCRIPTION"), 3)
+```
+
+There is one exception: if the first component passed to `find_file()` is already an absolute path.
+This allows safely applying this function to paths that may be absolute or relative:
+
+```{r}
+path <- root$find_file()
+readLines(root$find_file(path, "DESCRIPTION"), 3)
 ```
 
 You can also
@@ -200,7 +210,7 @@ rel_path_from_root <- find_root_file("R", "rrmake.R", criterion = has_file("DESC
 Since Examples A and B used different working directories, `rel_path_from_vignettes` and `rel_path_from_testthat` were different. This is an issue when trying to re-use the same code. This issue is solved by using *rprojroot*: the function `find_root_file()` finds a file relative from the root, where the root is determined from checking the criterion with `has_file()`. 
 
 
-Note that the follow code produces identical results when building the vignette *and* when sourcing the chunk in RStudio, provided that the current working directory is the project root or anywhere below. So, we can check to make sure that *rprojroot* has succesfully determined the correct path:
+Note that the follow code produces identical results when building the vignette *and* when sourcing the chunk in RStudio, provided that the current working directory is the project root or anywhere below. So, we can check to make sure that *rprojroot* has successfully determined the correct path:
 
 ```{r}
 # Specify a path/to/file relative to the root
@@ -224,7 +234,7 @@ In addition, character values are coerced to `has_file` criteria by default, thi
 (This feature is used by the introductory example.)
 
 ```{r}
-as.root_criterion("DESCRIPTION")
+as_root_criterion("DESCRIPTION")
 ```
 
 The return value of these functions can be stored and reused;
@@ -337,7 +347,7 @@ is_testthat
 ```
 
 The example code below lists all files in the
-[hierarchy](https://github.com/krlmlr/rprojroot/tree/master/tests/testthat/hierarchy)
+[hierarchy](https://github.com/r-lib/rprojroot/tree/master/tests/testthat/hierarchy)
 test directory.
 It uses two project root lookups in total,
 so that it also works when rendering the vignette (*sigh*):

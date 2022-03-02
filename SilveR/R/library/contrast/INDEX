@@ -1,1 +1,5 @@
 contrast.lm             General Contrasts of Regression Coefficients
+print.contrast          Print a Contrast Object
+two_factor_crossed      Complete Two-Factor Experiment
+two_factor_incompl      Incomplete Two-Factor Experiment with Repeated
+                        Measurments

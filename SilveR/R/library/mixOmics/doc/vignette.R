@@ -367,7 +367,7 @@ coordinates <- plotVar(MyResult.spls, plot = FALSE)
 
 ## -----------------------------------------------------------------------------
 plotArrow(MyResult.spls,group=nutrimouse$diet, legend = TRUE,
-          X.label = 'PLS comp 1', Y.label = 'PLS comp 2')
+          X.label = 'PLS comp 1', Y.label = 'PLS comp 2', legend.title = 'Diet')
 
 ## -----------------------------------------------------------------------------
 MySelectedVariables <- selectVar(MyResult.spls, comp = 1)
@@ -379,25 +379,38 @@ plotLoadings(MyResult.spls, comp = 1, size.name = rel(0.5))
 
 ## ----eval=TRUE----------------------------------------------------------------
 MyResult.pls <- pls(X,Y, ncomp = 4)  
-set.seed(30) # for reproducbility in this vignette, otherwise increase nrepeat
+set.seed(30) # for reproducibility in this vignette, otherwise increase nrepeat
 perf.pls <- perf(MyResult.pls, validation = "Mfold", folds = 5,
                   progressBar = FALSE, nrepeat = 10)
-plot(perf.pls$Q2.total)
-abline(h = 0.0975)
+plot(perf.pls, criterion = 'Q2.total')
 
-## ----eval=TRUE----------------------------------------------------------------
+## ---- eval=TRUE, message='hide'-----------------------------------------------
 list.keepX <- c(2:10, 15, 20)
-# tuning based on MAE
-set.seed(30) # for reproducbility in this vignette, otherwise increase nrepeat
-tune.spls.MAE <- tune.spls(X, Y, ncomp = 3,
+# tuning based on correlations
+set.seed(30) # for reproducibility in this vignette, otherwise increase nrepeat
+tune.spls.cor <- tune.spls(X, Y, ncomp = 3,
                            test.keepX = list.keepX,
                            validation = "Mfold", folds = 5,
                            nrepeat = 10, progressBar = FALSE,
-                           measure = 'MAE')
-plot(tune.spls.MAE, legend.position = 'topright')
+                           measure = 'cor')
+plot(tune.spls.cor, measure = 'cor')
 
 ## -----------------------------------------------------------------------------
-tune.spls.MAE$choice.keepX
+tune.spls.cor$choice.keepX
+
+## -----------------------------------------------------------------------------
+# tuning both X and Y
+set.seed(30) # for reproducibility in this vignette, otherwise increase nrepeat
+tune.spls.cor.XY <- tune.spls(X, Y, ncomp = 3,
+                           test.keepX = c(8, 20, 50),
+                           test.keepY = c(4, 8, 16),
+                           validation = "Mfold", folds = 5,
+                           nrepeat = 10, progressBar = FALSE,
+                           measure = 'cor')
+## visualise correlations
+plot(tune.spls.cor.XY, measure = 'cor')
+## visualise RSS
+plot(tune.spls.cor.XY, measure = 'RSS')
 
 ## ----overview-DIABLO, echo=FALSE, message=FALSE-------------------------------
 library(mixOmics)

@@ -2,7 +2,7 @@
 /* C Header */
 
 /*
-    Copyright (C) 2017-2019 Torsten Hothorn
+    Copyright (C) 2017-2021 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 
@@ -447,6 +447,12 @@ extern
            SEXP x,
            SEXP names,
            SEXP diagonly
+       )
+       ;
+extern 
+       SEXP R_pack_sym
+       (
+           SEXP x
        )
        ;
 

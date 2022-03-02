@@ -76,27 +76,37 @@ summary(ref_grid(wine.clm, mode = "scale"), type = "response")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  cbpp <- transform(lme4::cbpp, unit = 1:56)
+#  require("bayestestR")
+#  options(contrasts = c("contr.bayes", "contr.poly"))
 #  cbpp.rstan <- rstanarm::stan_glmer(
 #      cbind(incidence, size - incidence) ~ period + (1|herd) + (1|unit),
 #      data = cbpp, family = binomial,
-#      chains = 2, cores = 1, seed = 12345, iter = 500)
+#      prior = student_t(df = 5, location = 0, scale = 2, autoscale = FALSE),
+#      chains = 2, cores = 1, seed = 2021.0120, iter = 1000)
+#  cbpp_prior.rstan <- update(cbpp.rstan, prior_PD = TRUE)
 #  cbpp.rg <- ref_grid(cbpp.rstan)
+#  cbpp_prior.rg <- ref_grid(cbpp_prior.rstan)
 
 ## ----echo = FALSE---------------------------------------------------------------------------------
 cbpp.rg <- do.call(emmobj, 
     readRDS(system.file("extdata", "cbpprglist", package = "emmeans")))
+cbpp_prior.rg <- do.call(emmobj, 
+    readRDS(system.file("extdata", "cbpppriorrglist", package = "emmeans")))
 cbpp.sigma <- readRDS(system.file("extdata", "cbppsigma", package = "emmeans"))
 
 ## -------------------------------------------------------------------------------------------------
 cbpp.rg
 
 ## -------------------------------------------------------------------------------------------------
-period.emm <- emmeans(cbpp.rg, "period")
-period.emm
+summary(cbpp.rg)
 
 ## -------------------------------------------------------------------------------------------------
 require("coda")
-summary(as.mcmc(period.emm))
+summary(as.mcmc(cbpp.rg))
+
+## -------------------------------------------------------------------------------------------------
+bayestestR::bayesfactor_parameters(pairs(cbpp.rg), prior = pairs(cbpp_prior.rg))
+bayestestR::p_rope(pairs(cbpp.rg), range = c(-0.25, 0.25))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  cbpp.sigma = as.matrix(cbpp.rstan$stanfit)[, 78:79]

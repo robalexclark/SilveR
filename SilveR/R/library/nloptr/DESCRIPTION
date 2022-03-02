@@ -1,9 +1,8 @@
 Package: nloptr
 Type: Package
 Title: R Interface to NLopt
-Version: 1.2.2
-Date: 2020-02-29
-Authors@R: c(person("Jelmer", "Ypma", role = c("aut", "cre"),
+Version: 2.0.0
+Authors@R: c(person("Jelmer", "Ypma", role = "aut",
                     email = "uctpjyy@ucl.ac.uk"),
              person(c("Steven", "G."), "Johnson", role = "aut",
                     comment = "author of the NLopt C library"),
@@ -16,30 +15,45 @@ Authors@R: c(person("Jelmer", "Ypma", role = c("aut", "cre"),
              person("Kurt", "Hornik", role = "ctb",
                     comment = "build process on multiple OS"),
              person("Julien", "Chiquet", role = "ctb"),
-             person(given = "Avraham", family = "Adler", 
-                    role = "ctb", email="Avraham.Adler@gmail.com",
+             person("Avraham", "Adler", role = "ctb", 
+                    email = "Avraham.Adler@gmail.com",
                     comment = c("removal deprecated calls from tests",
-                      ORCID = "0000-0002-3039-0703")))
+                      ORCID = "0000-0002-3039-0703")),
+             person("Xiongtao", "Dai", role = "ctb"), 
+             person("Aymeric", "Stamm", role = c("ctb", "cre"), 
+                    email = "aymeric.stamm@math.cnrs.fr", 
+                    comment = c(ORCID = "0000-0002-8725-3654")),
+             person("Jeroen", "Ooms", role = "ctb",
+                    email = "jeroen@berkeley.edu"))
 Description: 
     Solve optimization problems using an R interface to NLopt. NLopt is a 
     free/open-source library for nonlinear optimization, providing a common
     interface for a number of different free optimization routines available
     online as well as original implementations of various other algorithms.
-    See <http://ab-initio.mit.edu/wiki/index.php/NLopt_Introduction> for more
-    information on the available algorithms. During installation of nloptr on 
-    Unix-based systems, the installer checks whether the NLopt library is
-    installed on the system. If the NLopt library cannot be found, the code
-    is compiled using the NLopt source included in the nloptr package.
-SystemRequirements: A system installation of NLopt >= 2.4.0 (with
-        headers) will be used if available.
-License: LGPL-3
-Suggests: testthat (>= 0.8.1), knitr, rmarkdown, inline (>= 0.3.14)
-LazyLoad: yes
-NeedsCompilation: yes
+    See <https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/> for more
+    information on the available algorithms. Building from included sources 
+    requires 'CMake'. On Linux and 'macOS', if a suitable system build of 
+    NLopt (2.7.0 or later) is found, it is used; otherwise, it is built 
+    from included sources via 'CMake'. On Windows, NLopt is obtained through 
+    'rwinlib' for 'R <= 4.1.x' or grabbed from the 'Rtools42 toolchain' for 
+    'R >= 4.2.0'.
+License: LGPL (>= 3)
+SystemRequirements: cmake (for building from included source, i.e. on
+        macOS or on Linux if no system build, version >= 2.7.0, is
+        found)
+Biarch: true
+Encoding: UTF-8
+RoxygenNote: 7.1.2
+LinkingTo: testthat
+Suggests: knitr, rmarkdown, xml2, testthat (>= 3.0.0), covr
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
-Packaged: 2020-02-29 21:44:07 UTC; Jelmer
-Author: Jelmer Ypma [aut, cre],
+Config/testthat/edition: 3
+URL: https://astamm.github.io/nloptr/index.html,
+        https://github.com/astamm/nloptr
+BugReports: https://github.com/astamm/nloptr/issues
+NeedsCompilation: yes
+Packaged: 2022-01-21 18:46:32 UTC; stamm-a
+Author: Jelmer Ypma [aut],
   Steven G. Johnson [aut] (author of the NLopt C library),
   Hans W. Borchers [ctb],
   Dirk Eddelbuettel [ctb],
@@ -47,9 +61,12 @@ Author: Jelmer Ypma [aut, cre],
   Kurt Hornik [ctb] (build process on multiple OS),
   Julien Chiquet [ctb],
   Avraham Adler [ctb] (removal deprecated calls from tests,
-    <https://orcid.org/0000-0002-3039-0703>)
-Maintainer: Jelmer Ypma <uctpjyy@ucl.ac.uk>
+    <https://orcid.org/0000-0002-3039-0703>),
+  Xiongtao Dai [ctb],
+  Aymeric Stamm [ctb, cre] (<https://orcid.org/0000-0002-8725-3654>),
+  Jeroen Ooms [ctb]
+Maintainer: Aymeric Stamm <aymeric.stamm@math.cnrs.fr>
 Repository: CRAN
-Date/Publication: 2020-02-29 22:20:02 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-02 23:47:19 UTC; windows
+Date/Publication: 2022-01-26 18:42:43 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-15 06:23:42 UTC; windows
 Archs: i386, x64

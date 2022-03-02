@@ -1,7 +1,7 @@
 Package: multcomp
 Title: Simultaneous Inference in General Parametric Models
-Version: 1.4-12
-Date: 2020-01-07
+Version: 1.4-18
+Date: 2022-01-04
 Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"), 
                     email = "Torsten.Hothorn@R-project.org", comment = c(ORCID = "0000-0001-8301-0471")), 
         person("Frank", "Bretz", role = "aut"), 
@@ -20,13 +20,13 @@ Depends: stats, graphics, mvtnorm (>= 1.0-10), survival (>= 2.39-4),
 Imports: sandwich (>= 2.3-0), codetools
 Suggests: lme4 (>= 0.999375-16), nlme, robustbase, coin, MASS, foreign,
         xtable, lmtest, coxme (>= 2.2-1), SimComp, ISwR, tram (>=
-        0.2-5)
+        0.2-5), fixest (>= 0.10)
 URL: http://multcomp.R-forge.R-project.org The publishers web page is
         http://www.crcpress.com/product/isbn/9781584885740
 LazyData: yes
 License: GPL-2
 NeedsCompilation: no
-Packaged: 2020-01-09 14:01:26 UTC; hothorn
+Packaged: 2022-01-04 15:10:22 UTC; hothorn
 Author: Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),
   Frank Bretz [aut],
   Peter Westfall [aut],
@@ -35,5 +35,5 @@ Author: Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),
   Susan Scheibe [ctb]
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Repository: CRAN
-Date/Publication: 2020-01-10 17:50:08 UTC
-Built: R 3.6.3; ; 2020-03-03 04:06:48 UTC; windows
+Date/Publication: 2022-01-04 17:30:07 UTC
+Built: R 4.1.2; ; 2022-02-15 01:28:44 UTC; windows

@@ -3,7 +3,7 @@
 ###################################################
 ### code chunk number 1: venn.Rnw:34-36
 ###################################################
-library(gplots)
+suppressMessages(library(gplots))
 venn( list(A=1:5,B=4:6,C=c(4,8:10)) )
 
 

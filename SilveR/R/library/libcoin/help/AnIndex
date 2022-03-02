@@ -1,0 +1,4 @@
+ctabs	ctabs
+doTest	doTest
+LinStatExpCov	LinStatExpCov
+lmult	LinStatExpCov
