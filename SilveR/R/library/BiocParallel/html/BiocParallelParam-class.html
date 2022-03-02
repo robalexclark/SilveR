@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: BiocParallelParam objects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for BiocParallelParam-class {BiocParallel}"><tr><td>BiocParallelParam-class {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>BiocParallelParam objects</h2>
+
+<h3>Description</h3>
+
+<p>The <code>BiocParallelParam</code> virtual class stores configuration parameters
+for parallel execution. Concrete subclasses include <code>SnowParam</code>, 
+<code>MulticoreParam</code>, <code>BatchtoolsParam</code>, and <code>DoparParam</code>
+and <code>SerialParam</code>.
+</p>
+
+
+<h3>Details</h3>
+
+<p><code>BiocParallelParam</code> is the virtual base class on which other
+parameter objects build. There are 5 concrete subclasses:
+</p>
+
+<dl>
+<dt></dt><dd><p><code>SnowParam</code>: distributed memory computing</p>
+</dd>
+<dt></dt><dd><p><code>MulticoreParam</code>: shared memory computing</p>
+</dd>
+<dt></dt><dd><p><code>BatchtoolsParam</code>: scheduled cluster computing</p>
+</dd>
+<dt></dt><dd><p><code>DoparParam</code>: foreach computing</p>
+</dd>
+<dt></dt><dd><p><code>SerialParam</code>: non-parallel execution</p>
+</dd>
+</dl>
+
+<p>The parameter objects hold configuration parameters related to the 
+method of parallel execution such as shared memory, independent
+memory or computing with a cluster scheduler.
+</p>
+
+
+<h3>Construction</h3>
+
+<p>The <code>BiocParallelParam</code> class is virtual and has no constructor. 
+Instances of the subclasses can be created with the following:
+</p>
+
+<ul>
+<li> <p><code>SnowParam()</code>
+</p>
+</li>
+<li> <p><code>MulticoreParam()</code>
+</p>
+</li>
+<li> <p><code>BatchtoolsParam()</code>
+</p>
+</li>
+<li> <p><code>DoparParam()</code>
+</p>
+</li>
+<li> <p><code>SerialParam()</code>
+</p>
+</li></ul>
+
+
+
+<h3>Accessors</h3>
+
+
+
+<h4>Back-end control</h4>
+
+<p>In the code below <code>BPPARAM</code> is a <code>BiocParallelParam</code> object.
+</p>
+
+<dl>
+<dt></dt><dd>
+<p><code>bpworkers(x)</code>, <code>bpworkers(x, ...)</code>:
+<code>integer(1)</code> or <code>character()</code>. Gets the number or names of 
+the back-end workers. The setter is supported for SnowParam and 
+MulticoreParam only.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpnworkers(x)</code>:
+<code>integer(1)</code>. Gets the number of the back-end workers.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bptasks(x)</code>, <code>bptasks(x) &lt;- value</code>:
+<code>integer(1)</code>. Get or set the number of tasks for a
+job. <code>value</code> must be a scalar integer &gt;= 0L. This argument
+applies to <code>SnowParam</code> and <code>MulticoreParam</code> only;
+<code>DoparParam</code> and <code>BatchtoolsParam</code> have their own
+approach to dividing a job among workers.
+</p>
+<p>We define a job as a single call to a function such as <code>bplapply</code>, 
+<code>bpmapply</code> etc. A task is the division of the
+<code>X</code> argument into chunks. When <code>tasks == 0</code> (default),
+<code>X</code> is divided by the number of workers. This approach distributes
+<code>X</code> in (approximately) equal chunks.
+</p>
+<p>A <code>tasks</code> value of &gt; 0 dictates the total number of
+tasks. Values can range from 1 (all of <code>X</code> to a single
+worker) to the length of <code>X</code> (each element of <code>X</code>
+to a different worker); values greater than <code>length(X)</code>
+(e.g., <code>.Machine$integer.max</code>) are rounded to <code>length(X)</code>.
+</p>
+<p>When the length of <code>X</code> is less than the number of workers each
+element of <code>X</code> is sent to a worker and <code>tasks</code> is ignored.
+Another case where the <code>tasks</code> value is ignored is when using the
+<code>bpiterate</code> function; the number of tasks are defined by the number
+of data chunks returned by the <code>ITER</code> function. 
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpstart(x)</code>:
+<code>logical(1)</code>. Starts the back-end, if necessary.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpstop(x)</code>:
+<code>logical(1)</code>. Stops the back-end, if necessary and possible.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpisup(x)</code>:
+<code>logical(1)</code>. Tests whether the back-end is available for
+processing, returning a scalar logical value. <code>bp*</code>
+functions such as <code>bplapply</code> automatically start the
+back-end if necessary.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpbackend(x)</code>, <code>bpbackend(x) &lt;- value</code>: 
+Gets or sets the parallel <code>bpbackend</code>. Not all back-ends can
+be retrieved; see <code>methods("bpbackend")</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bplog(x)</code>, <code>bplog(x) &lt;- value</code>:
+Get or enable logging, if available.  <code>value</code> must be a
+<code>logical(1)</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpthreshold(x)</code>, <code>bpthreshold(x) &lt;- value</code>: Get or
+set the logging threshold. <code>value</code> must be a
+<code>character(1)</code> string of one of the levels defined in the
+<code>futile.logger</code> package: &ldquo;TRACE&rdquo;, &ldquo;DEBUG&rdquo;,
+&ldquo;INFO&rdquo;, &ldquo;WARN&rdquo;, &ldquo;ERROR&rdquo;, or &ldquo;FATAL&rdquo;.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bplogdir(x)</code>, <code>bplogdir(x) &lt;- value</code>: Get or set an
+optional directory for saving log files. The directory must
+already exist with read / write ability.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpresultdir(x)</code>, <code>bpresultdir(x) &lt;- value</code>: Get or
+set an optional directory for saving results as 'rda' files. The
+directory must already exist with read / write ability.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bptimeout(x)</code>, <code>bptimeout(x) &lt;- value</code>:
+<code>numeric(1)</code> Time (in seconds) allowed for worker to
+complete a task.  This value is passed to base::setTimeLimit()
+as both the <code>cpu</code> and <code>elapsed</code> arguments. If the
+computation exceeds <code>timeout</code> an error is thrown with
+message 'reached elapsed time limit'.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpexportglobals(x)</code>, <code>bpexportglobals(x) &lt;- value</code>: 
+<code>logical(1)</code> Export <code>base::options()</code> from manager to
+workers? Default <code>TRUE</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpprogressbar(x)</code>, <code>bpprogressbar(x) &lt;- value</code>: 
+Get or set the value to enable text progress bar. 
+<code>value</code> must be a <code>logical(1)</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpRNGseed(x)</code>, <code>bpRNGseed(x) &lt;- value</code>:
+Get or set the seed for random number generaton. <code>value</code> must be a
+<code>numeric(1)</code> or <code>NULL</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpjobname(x)</code>, <code>bpjobname(x) &lt;- value</code>: 
+Get or set the job name.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpforceGC(x)</code>, <code>bpforceGC(x) &lt;- value</code>:
+Get or set whether 'garbage collection' should be invoked at the
+end of each call to <code>FUN</code>.
+</p>
+</dd>
+</dl>
+
+
+
+
+<h4>Error Handling</h4>
+
+<p>In the code below <code>BPPARAM</code> is a <code>BiocParallelParam</code> object.
+</p>
+
+<dl>
+<dt></dt><dd>
+<p><code>bpstopOnError(x)</code>, <code>bpstopOnError(x) &lt;- value</code>:
+<code>logical()</code>. Controls if the job stops when an error is hit.
+</p>
+<p><code>stop.on.error</code> controls whether the job stops after an 
+error is thrown. When <code>TRUE</code>, the output contains all 
+successfully completed results up to and including the error. 
+When <code>stop.on.error == TRUE</code> all computations stop once the 
+error is hit. When <code>FALSE</code>, the job runs to completion 
+and successful results are returned along with any error messages.
+</p>
+</dd>
+</dl>
+
+
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Evaluation</h4>
+
+<p>In the code below <code>BPPARAM</code> is a <code>BiocParallelParam</code> object.
+Full documentation for these functions are on separate man pages: see
+?<code>bpmapply</code>, ?<code>bplapply</code>, ?<code>bpvec</code>, ?<code>bpiterate</code> and
+?<code>bpaggregate</code>.
+</p>
+
+<dl>
+<dt></dt><dd>
+<p><code>bpmapply(FUN, ..., MoreArgs=NULL, SIMPLIFY=TRUE, USE.NAMES=TRUE,
+                       BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bplapply(X, FUN, ..., 
+                       BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpvec(X, FUN, ..., AGGREGATE=c, BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpiterate(ITER, FUN, ..., BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpaggregate(x, data, FUN, ..., BPPARAM=bpparam())</code>
+</p>
+</dd>
+</dl>
+
+
+
+
+<h4>Other</h4>
+
+<p>In the code below <code>BPPARAM</code> is a <code>BiocParallelParam</code> object.
+</p>
+
+<dl>
+<dt></dt><dd>
+<p><code>show(x)</code>
+</p>
+</dd>
+</dl>
+
+
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan and Valerie Obenchain.</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code><a href="../../BiocParallel/help/SnowParam.html">SnowParam</a></code> for computing in distributed memory
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/MulticoreParam.html">MulticoreParam</a></code> for computing in shared memory
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/BatchtoolsParam.html">BatchtoolsParam</a></code> for computing with cluster schedulers
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/DoparParam.html">DoparParam</a></code> for computing with foreach
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/SerialParam.html">SerialParam</a></code> for non-parallel execution
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+
+getClass("BiocParallelParam")
+
+## For examples see ?SnowParam, ?MulticoreParam, ?BatchtoolsParam 
+## and ?SerialParam.
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -2,7 +2,7 @@
 CoordSf                 Visualise sf objects
 aes                     Construct aesthetic mappings
 aes_                    Define aesthetic mappings programmatically
-aes_colour_fill_alpha   Colour related aesthetics: colour, fill and
+aes_colour_fill_alpha   Colour related aesthetics: colour, fill, and
                         alpha
 aes_eval                Control aesthetic evaluation
 aes_group_order         Aesthetics: grouping
@@ -14,7 +14,7 @@ aes_position            Position related aesthetics: x, y, xmin, xmax,
 annotate                Create an annotation layer
 annotation_custom       Annotation: Custom grob
 annotation_logticks     Annotation: log tick marks
-annotation_map          Annotation: a maps
+annotation_map          Annotation: a map
 annotation_raster       Annotation: high-performance rectangular tiling
 autolayer               Create a ggplot layer appropriate to a
                         particular data type
@@ -40,18 +40,19 @@ fortify                 Fortify a model with data.
 geom_abline             Reference lines: horizontal, vertical, and
                         diagonal
 geom_bar                Bar charts
-geom_bin2d              Heatmap of 2d bin counts
+geom_bin_2d             Heatmap of 2d bin counts
 geom_blank              Draw nothing
 geom_boxplot            A box and whiskers plot (in the style of Tukey)
-geom_contour            2d contours of a 3d surface
+geom_contour            2D contours of a 3D surface
 geom_count              Count overlapping points
 geom_crossbar           Vertical intervals: lines, crossbars &
                         errorbars
 geom_density            Smoothed density estimates
-geom_density_2d         Contours of a 2d density estimate
+geom_density_2d         Contours of a 2D density estimate
 geom_dotplot            Dot plot
 geom_errorbarh          Horizontal error bars
 geom_freqpoly           Histograms and frequency polygons
+geom_function           Draw a function as a continuous curve
 geom_hex                Hexagonal heatmap of 2d bin counts
 geom_jitter             Jittered points
 geom_label              Text
@@ -69,6 +70,7 @@ geom_smooth             Smoothed conditional means
 geom_spoke              Line segments parameterised by location,
                         direction and distance
 geom_violin             Violin plot
+get_alt_text            Extract alt text from a plot
 ggplot                  Create a new ggplot
 ggproto                 Create a new ggproto object
 ggsave                  Save a ggplot (or other grid object) with
@@ -88,7 +90,7 @@ labs                    Modify axis, legend, and plot labels
 lims                    Set scale limits
 luv_colours             'colors()' in Luv space
 margin                  Theme elements
-mean_se                 Calculate mean and standard error
+mean_se                 Calculate mean and standard error of the mean
 midwest                 Midwest demographics
 mpg                     Fuel economy data from 1999 to 2008 for 38
                         popular models of cars
@@ -108,9 +110,10 @@ qplot                   Quick plot
 resolution              Compute the "resolution" of a numeric vector
 scale_alpha             Alpha transparency scales
 scale_colour_brewer     Sequential, diverging and qualitative colour
-                        scales from colorbrewer.org
+                        scales from ColorBrewer
 scale_colour_continuous
                         Continuous and binned colour scales
+scale_colour_discrete   Discrete colour scales
 scale_colour_gradient   Gradient colour scales
 scale_colour_grey       Sequential grey colour scales
 scale_colour_hue        Evenly spaced colours for discrete data
@@ -131,7 +134,6 @@ seals                   Vector field of seal movements
 sec_axis                Specify a secondary axis
 stat_ecdf               Compute empirical cumulative distribution
 stat_ellipse            Compute normal data ellipses
-stat_function           Compute function for each x value
 stat_identity           Leave data as is
 stat_sf_coordinates     Extract coordinates from 'sf' objects
 stat_summary_2d         Bin and summarise in 2d (rectangle & hexagons)

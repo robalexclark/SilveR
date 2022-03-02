@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Try expression evaluation, recovering from bperror signals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bptry {BiocParallel}"><tr><td>bptry {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Try expression evaluation, recovering from bperror signals</h2>
+
+<h3>Description</h3>
+
+<p>This function is meant to be used as a wrapper around
+<code>bplapply()</code> and friends, returning the evaluated expression
+rather than signalling an error.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+bptry(expr, ..., bplist_error, bperror)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>expr</code></td>
+<td>
+<p>An R expression; see <code><a href="../../base/html/conditions.html">tryCatch</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>bplist_error</code></td>
+<td>
+
+<p>A &lsquo;handler&rsquo; function of a single argument, used to catch
+<code>bplist_error</code> conditions signalled by <code>expr</code>. A
+<code>bplist_error</code> condition is signalled when an element of
+<code>bplapply</code> and other iterations contain a evaluation that
+failed. When missing, the default retrieves the &ldquo;result&rdquo;
+attribute from the error, containing the partially evaluated
+results.
+</p>
+<p>Setting <code>bplist_error=identity</code> returns the evaluated
+condition.
+</p>
+<p>Setting <code>bplist_error=stop</code> passes the condition to other
+handlers, notably the handler provided by <code>bperror</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>bperror</code></td>
+<td>
+
+<p>A &lsquo;handler&rsquo; function of a single argument, use to catch
+<code>bperror</code> conditions signalled by <code>expr</code>. A <code>bperror</code>
+is a base class to all errors signaled by <span class="pkg">BiocParallel</span>
+code. When missing, the default returns the condition without
+signalling an error.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Additional named handlers passed to <code>tryCatch()</code>. These
+user-provided handlers are evaluated before default handlers
+<code>bplist_error</code>, <code>bperror</code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>The partially evaluated list of results.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan <a href="mailto:martin.morgan@roswellpark.org">martin.morgan@roswellpark.org</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../base/html/conditions.html">tryCatch</a></code>, <code><a href="../../BiocParallel/help/bplapply.html">bplapply</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+param = registered()[[1]]
+param
+X = list(1, "2", 3)
+bptry(bplapply(X, sqrt))                         # bplist_error handler
+bptry(bplapply(X, sqrt), bplist_error=identity)  # bperror handler
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

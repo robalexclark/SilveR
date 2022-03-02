@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot for model performance for PLS analyses</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plot.perf.pls {mixOmics}"><tr><td>plot.perf.pls {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot for model performance for PLS analyses</h2>
+
+<h3>Description</h3>
+
+<p>Function to plot performance criteria, such as MSEP, RMSEP, <i>R^2</i>,
+<i>Q^2</i> for s/PLS methods as a function of the number of components.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'perf.pls.mthd'
+plot(
+  x,
+  criterion = "MSEP",
+  xlab = "Number of components",
+  ylab = NULL,
+  LimQ2 = 0.0975,
+  LimQ2.col = "grey30",
+  sd = NULL,
+  pch = 1,
+  pch.size = 3,
+  cex = 1.2,
+  col = color.mixo(1),
+  title = NULL,
+  ...
+)
+
+## S3 method for class 'perf.spls.mthd'
+plot(
+  x,
+  criterion = "MSEP",
+  xlab = "Number of components",
+  ylab = NULL,
+  LimQ2 = 0.0975,
+  LimQ2.col = "grey30",
+  sd = NULL,
+  pch = 1,
+  pch.size = 3,
+  cex = 1.2,
+  col = color.mixo(1),
+  title = NULL,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>an <code>perf.pls</code> object.</p>
+</td></tr>
+<tr valign="top"><td><code>criterion</code></td>
+<td>
+<p>character string. What type of validation criterion to plot
+for <code>pls</code> or <code>spls</code>. One of <code>"MSEP"</code>, <code>"RMSEP"</code>,
+<code>"R2"</code> or <code>"Q2"</code>. More measures available for pls2 methods. See
+<code><a href="../../mixOmics/help/perf.html">perf</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>xlab, ylab</code></td>
+<td>
+<p>titles for <i>x</i> and <i>y</i> axes.  Typically character
+strings, but can be expressions (e.g., <code>expression(R^2)</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>LimQ2</code></td>
+<td>
+<p>numeric value. Signification limit for the components in the
+model. Default is <code>LimQ2 = 0.0975</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>LimQ2.col</code></td>
+<td>
+<p>character string specifying the color for the <code>LimQ2</code>
+line to be plotted. If <code>"none"</code> the line will not be plotted.</p>
+</td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+<p>If 'nrepeat' was used in the call to 'perf', error bar shows the
+standard deviation if sd=TRUE. For mint objects sd is set to FALSE as the
+number of repeats is 1.</p>
+</td></tr>
+<tr valign="top"><td><code>pch</code></td>
+<td>
+<p>Plot character to use.</p>
+</td></tr>
+<tr valign="top"><td><code>pch.size</code></td>
+<td>
+<p>Plot character size to use.</p>
+</td></tr>
+<tr valign="top"><td><code>cex</code></td>
+<td>
+<p>A numeric which adjusts the font size in the plot.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>Character. Colour to be used for data points.</p>
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+<p>Character, Plot title. Not used by PLS2 feature-wise measure
+plots.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Not used.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>plot.perf</code> creates one plot for each response variable in the model,
+laid out in a multi-panel display. See ?perf for examples.
+</p>
+
+
+<h3>Value</h3>
+
+<p>none
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Al J Abadi
+</p>
+
+
+<h3>References</h3>
+
+<p>Rohart F, Gautier B, Singh A, Lê Cao K-A. mixOmics: an R package for 'omics
+feature selection and multiple data integration. PLoS Comput Biol 13(11):
+e1005752
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../mixOmics/help/pls.html">pls</a></code>, <code><a href="../../mixOmics/help/spls.html">spls</a></code>, <code><a href="../../mixOmics/help/plsda.html">plsda</a></code>,
+<code><a href="../../mixOmics/help/splsda.html">splsda</a></code>, <code><a href="../../mixOmics/help/perf.html">perf</a></code>.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

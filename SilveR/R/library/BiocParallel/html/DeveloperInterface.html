@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Developer interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for DeveloperInterface {BiocParallel}"><tr><td>DeveloperInterface {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Developer interface</h2>
+
+<h3>Description</h3>
+
+<p>Functions documented on this page are meant for developers wishing to
+implement <code>BPPARAM</code> objects that extend the
+<code>BiocParallelParam</code> virtual class to support additional parallel
+back-ends.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## class extension
+
+.prototype_update(prototype, ...)
+
+## manager interface
+
+.send_to(backend, node, value)
+.recv_any(backend)
+.send_all(backend, value)
+.recv_all(backend)
+
+## worker interface
+
+.send(worker, value)
+.recv(worker)
+.close(worker)
+
+## supporting implementations
+
+.bpstart_impl(x)
+.bpworker_impl(worker)
+.bplapply_impl(X, FUN, ..., BPREDO = list(), BPPARAM = bpparam())
+.bpiterate_impl(ITER, FUN, ..., REDUCE, init, reduce.in.order = FALSE,
+    BPPARAM = bpparam())
+.bpstop_impl(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>prototype</code></td>
+<td>
+
+<p>A named <code>list</code> of default values for reference class
+fields.
+</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>A <code>BPPARAM</code> instance.
+</p>
+</td></tr>
+<tr valign="top"><td><code>backend</code></td>
+<td>
+
+<p>An object containing information about the cluster, returned by
+<code>bpbackend(&lt;BPPARAM&gt;)</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>worker</code></td>
+<td>
+
+<p>The object to which the worker communicates via <code>.send</code> and
+<code>.recv</code>. <code>.close</code> terminates the worker.
+</p>
+</td></tr>
+<tr valign="top"><td><code>node</code></td>
+<td>
+
+<p>An integer value indicating the node in the backend to which
+values are to be sent or received.
+</p>
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+
+<p>Any R object, to be sent to or from workers.
+</p>
+</td></tr>
+<tr valign="top"><td><code>X, ITER, FUN, REDUCE, init, reduce.in.order, BPREDO, BPPARAM</code></td>
+<td>
+
+<p>See <code>bplapply</code> and <code>bpiterate</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>For <code>.prototype_update()</code>, name-value pairs to initialize
+derived and base class fields.
+</p>
+<p>For <code>.bplapply_impl()</code>, <code>.bpiterate_impl()</code>, additional
+arguments to <code>FUN()</code>; see <code>bplapply</code> and <code>bpiterate</code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Start a BPPARM implementation by creating a reference class, e.g.,
+extending the virtual class <code>BiocParallelParam</code>. Because of
+idiosyncracies in reference class field initialization, an instance of
+the class should be created by calling the generator returned by
+<code>setRefClass()</code> with a list of key-value pairs providing default
+parameteter arguments. The default values for the
+<code>BiocParallelParam</code> base class is provided in a list
+<code>.BiocParallelParam_prototype</code>, and the function
+<code>.prototype_update()</code> updates a prototype with new values,
+typically provided by the user. See the example below.
+</p>
+<p>BPPARAM implementations need to implement <code>bpstart()</code> and
+<code>bpstop()</code> methods; they may also need to implement,
+<code>bplapply()</code> and <code>bpiterate()</code> methods. Each method usually
+performs implementation-specific functionality before calling the next
+(BiocParallelParam) method.  To avoid the intricacies of multiple
+dispatch, the bodies of BiocParallelParam methods are available for
+direct use as exported symbols.
+</p>
+
+<ul>
+<li> <p><code>bpstart,BiocParallelParam-method</code>
+(<code>.bpstart_impl()</code>) initiates logging, random number generation,
+and registration of finalizers to ensure that started clusters are
+stopped.
+</p>
+</li>
+<li> <p><code>bpstop,BiocParallelParam-method</code> (<code>.bpstop_impl()</code>)
+ensures appropriate clean-up of stopped clusters, including sending
+the DONE semaphore. <code>bpstart()</code> will usually arrange for
+workers to enter <code>.bpworker_impl()</code> to listen for and evaluate
+tasks.
+</p>
+</li>
+<li> <p><code>bplapply,ANY,BiocParallelParam-method</code> and
+<code>bpiterate,ANY,BiocParallelParam-method</code>
+(<code>.bplapply_impl()</code>, <code>.bpiterate_impl()</code>) implement:
+serial evaluation when there is a single core or task available;
+<code>BPREDO</code> functionality, and parallel lapply-like or iterative
+calculation.
+</p>
+</li></ul>
+
+<p>Invoke <code>.bpstart_impl()</code>, <code>.bpstop_impl()</code>,
+<code>.bplapply_impl()</code>, and <code>.bpiterate_impl()</code> after any
+BPPARAM-specific implementation details.
+</p>
+<p>New implementations will also implement <code>bpisup()</code> and
+<code>bpbackend()</code> / <code>bpbackend&lt;-()</code>; there are no default
+methods.
+</p>
+<p>The <em>backends</em> (object returned by <code>bpbackend()</code>) of new
+BPPARAM implementations must support <code>length()</code> (number of
+nodes). In addition, the backends must support <code>.send_to()</code> and
+<code>.recv_any()</code> manager and <code>.send()</code>, <code>.recv()</code>, and
+<code>.close()</code> worker methods. Default <code>.send_all()</code> and
+<code>.recv_all()</code> methods are implemented as simple iterations along
+the <code>length(cluster)</code>, invoking <code>.send_to()</code> or
+<code>.recv_any()</code> on each iteration.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The return value of <code>.prototype_update()</code> is a list with elements
+in <code>prototype</code> substituted with key-value pairs provided in
+<code>...</code>.
+</p>
+<p>All <code>send*</code> and <code>recv*</code> functions are endomorphic, returning a
+<code>cluster</code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+##
+## Extend BiocParallelParam; `.A()` is not meant for the end user
+##
+
+.A &lt;- setRefClass(
+    "A",
+    contains = "BiocParallelParam",
+    fields = list(id = "character")
+)
+
+## Use a prototype for default values, including the prototype for
+## inheritted fields
+
+.A_prototype &lt;- c(
+    list(id = "default_id"),
+    .BiocParallelParam_prototype
+)
+
+## Provide a constructor for the user
+
+A &lt;- function(...) {
+    prototype &lt;- .prototype_update(.A_prototype, ...)
+    do.call(.A, prototype)
+}
+
+## Provide an R function for field access
+
+bpid &lt;- function(x)
+    x$id
+
+## Create and use an instance, overwriting default values
+
+bpid(A())
+
+a &lt;- A(id = "my_id", threshold = "WARN")
+bpid(a)
+bpthreshold(a)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -22,7 +22,7 @@ importFrom("stats" ## potentially all these (we import into 'lme4a'):
 importClassesFrom("methods", ANY, call, character, environment, envRefClass,
                   integer, list, matrix, numeric, oldClass)
 
-importMethodsFrom("methods", show)
+importMethodsFrom("methods", coerce, show)
 importFrom("methods"
 	   , callGeneric, as, is, extends, new
 	   , getClass, getClassDef, validObject

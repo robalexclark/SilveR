@@ -1,9 +1,9 @@
 Package: data.table
-Version: 1.12.8
+Version: 1.14.2
 Title: Extension of `data.frame`
 Authors@R: c(
   person("Matt","Dowle",           role=c("aut","cre"), email="mattjdowle@gmail.com"),
-  person("Arun","Srinivasan",      role="aut",          email="arunkumar.sriniv@gmail.com"),
+  person("Arun","Srinivasan",      role="aut",          email="asrini@pm.me"),
   person("Jan","Gorecki",          role="ctb"),
   person("Michael","Chirico",      role="ctb"),
   person("Pasha","Stetsenko",      role="ctb"),
@@ -28,6 +28,10 @@ Authors@R: c(
   person("Francois","Cocquemas",   role="ctb"),
   person("Matthieu","Gomez",       role="ctb"),
   person("Philippe","Chataignon",  role="ctb"),
+  person("Nello","Blaser",         role="ctb"),
+  person("Dmitry","Selivanov",     role="ctb"),
+  person("Andrey","Riabushenko",   role="ctb"),
+  person("Cheng","Lee",            role="ctb"),
   person("Declan","Groves",        role="ctb"),
   person("Daniel","Possenriede",   role="ctb"),
   person("Felipe","Parages",       role="ctb"),
@@ -43,20 +47,35 @@ Authors@R: c(
   person("Manish","Saraswat",      role="ctb"),
   person("Morgan","Jacob",         role="ctb"),
   person("Michael","Schubmehl",    role="ctb"),
-  person("Davis","Vaughan",        role="ctb"))
+  person("Davis","Vaughan",        role="ctb"),
+  person("Toby","Hocking",         role="ctb"),
+  person("Leonardo","Silvestri",   role="ctb"),
+  person("Tyson","Barrett",        role="ctb"),
+  person("Jim","Hester",           role="ctb"),
+  person("Anthony","Damico",       role="ctb"),
+  person("Sebastian","Freundt",    role="ctb"),
+  person("David","Simons",         role="ctb"),
+  person("Elliott","Sales de Andrade", role="ctb"),
+  person("Cole","Miller",          role="ctb"),
+  person("Jens Peder","Meldgaard", role="ctb"),
+  person("Vaclav","Tlapak",        role="ctb"),
+  person("Kevin","Ushey",          role="ctb"),
+  person("Dirk","Eddelbuettel",    role="ctb"),
+  person("Ben","Schwen",           role="ctb"))
 Depends: R (>= 3.1.0)
 Imports: methods
-Suggests: bit64, curl, R.utils, knitr, xts, nanotime, zoo, yaml
+Suggests: bit64 (>= 4.0.0), bit (>= 4.0.4), curl, R.utils, xts,
+        nanotime, zoo (>= 1.8-1), yaml, knitr, rmarkdown
 SystemRequirements: zlib
 Description: Fast aggregation of large data (e.g. 100GB in RAM), fast ordered joins, fast add/modify/delete of columns by group using no copies at all, list columns, friendly and fast character-separated-value read/write. Offers a natural and flexible syntax, for faster development.
 License: MPL-2.0 | file LICENSE
-URL: http://r-datatable.com, https://Rdatatable.gitlab.io/data.table,
+URL: https://r-datatable.com, https://Rdatatable.gitlab.io/data.table,
         https://github.com/Rdatatable/data.table
 BugReports: https://github.com/Rdatatable/data.table/issues
 VignetteBuilder: knitr
 ByteCompile: TRUE
 NeedsCompilation: yes
-Packaged: 2019-12-08 22:28:25.859 UTC; mdowle
+Packaged: 2021-09-23 03:10:37 UTC; mdowle
 Author: Matt Dowle [aut, cre],
   Arun Srinivasan [aut],
   Jan Gorecki [ctb],
@@ -83,6 +102,10 @@ Author: Matt Dowle [aut, cre],
   Francois Cocquemas [ctb],
   Matthieu Gomez [ctb],
   Philippe Chataignon [ctb],
+  Nello Blaser [ctb],
+  Dmitry Selivanov [ctb],
+  Andrey Riabushenko [ctb],
+  Cheng Lee [ctb],
   Declan Groves [ctb],
   Daniel Possenriede [ctb],
   Felipe Parages [ctb],
@@ -98,9 +121,23 @@ Author: Matt Dowle [aut, cre],
   Manish Saraswat [ctb],
   Morgan Jacob [ctb],
   Michael Schubmehl [ctb],
-  Davis Vaughan [ctb]
+  Davis Vaughan [ctb],
+  Toby Hocking [ctb],
+  Leonardo Silvestri [ctb],
+  Tyson Barrett [ctb],
+  Jim Hester [ctb],
+  Anthony Damico [ctb],
+  Sebastian Freundt [ctb],
+  David Simons [ctb],
+  Elliott Sales de Andrade [ctb],
+  Cole Miller [ctb],
+  Jens Peder Meldgaard [ctb],
+  Vaclav Tlapak [ctb],
+  Kevin Ushey [ctb],
+  Dirk Eddelbuettel [ctb],
+  Ben Schwen [ctb]
 Maintainer: Matt Dowle <mattjdowle@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-12-09 10:30:10 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-02 23:46:54 UTC; windows
+Date/Publication: 2021-09-27 16:30:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:12:58 UTC; windows
 Archs: i386, x64

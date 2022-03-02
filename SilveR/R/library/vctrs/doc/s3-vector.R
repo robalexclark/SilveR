@@ -15,7 +15,7 @@ new_percent <- function(x = double()) {
   new_vctr(x, class = "vctrs_percent")
 }
 
-x <- new_percent(c(seq(0, 1, length = 4), NA))
+x <- new_percent(c(seq(0, 1, length.out = 4), NA))
 x
 
 str(x)
@@ -29,10 +29,6 @@ percent <- function(x = double()) {
 ## -----------------------------------------------------------------------------
 new_percent()
 percent()
-
-## -----------------------------------------------------------------------------
-#' @importFrom methods setOldClass
-methods::setOldClass(c("vctrs_percent", "vctrs_vctr"))
 
 ## -----------------------------------------------------------------------------
 is_percent <- function(x) {
@@ -67,28 +63,13 @@ tibble::tibble(x)
 
 str(x)
 
-## -----------------------------------------------------------------------------
-vec_ptype2.MYCLASS <- function(x, y, ...) UseMethod("vec_ptype2.MYCLASS", y)
-vec_ptype2.MYCLASS.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
-
-vec_cast.MYCLASS <- function(x, to, ...) UseMethod("vec_cast.MYCLASS")
-vec_cast.MYCLASS.default <- function(x, to, ...) vec_default_cast(x, to)
-
-## -----------------------------------------------------------------------------
-vec_ptype2.vctrs_percent <- function(x, y, ...) UseMethod("vec_ptype2.vctrs_percent", y)
-vec_ptype2.vctrs_percent.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
-
-## ---- include = FALSE---------------------------------------------------------
-s3_register("vctrs::vec_ptype2", "vctrs_percent")
-
 ## ---- error = TRUE------------------------------------------------------------
 vec_ptype2("bogus", percent())
 vec_ptype2(percent(), NA)
 vec_ptype2(NA, percent())
+
+## -----------------------------------------------------------------------------
+vec_ptype2(percent(), percent())
 
 ## -----------------------------------------------------------------------------
 vec_ptype2.vctrs_percent.vctrs_percent <- function(x, y, ...) new_percent()
@@ -99,13 +80,6 @@ vec_ptype2.double.vctrs_percent <- function(x, y, ...) double()
 
 ## -----------------------------------------------------------------------------
 vec_ptype_show(percent(), double(), percent())
-
-## -----------------------------------------------------------------------------
-vec_cast.vctrs_percent <- function(x, to, ...) UseMethod("vec_cast.vctrs_percent")
-vec_cast.vctrs_percent.default <- function(x, to, ...) vec_default_cast(x, to)
-
-## ---- include = FALSE---------------------------------------------------------
-s3_register("vctrs::vec_cast", "vctrs_percent")
 
 ## -----------------------------------------------------------------------------
 vec_cast.vctrs_percent.vctrs_percent <- function(x, to, ...) x
@@ -143,6 +117,20 @@ as_percent <- function(x) {
 }
 
 ## -----------------------------------------------------------------------------
+as_percent <- function(x, ...) {
+  UseMethod("as_percent")
+}
+
+as_percent.default <- function(x, ...) {
+  vec_cast(x, new_percent())
+}
+
+as_percent.character <- function(x) {
+  value <- as.numeric(gsub(" *% *$", "", x)) / 100
+  new_percent(value)
+}
+
+## -----------------------------------------------------------------------------
 new_decimal <- function(x = double(), digits = 2L) {
   vec_assert(x, ptype = double())
   vec_assert(digits, ptype = integer(), size = 1)
@@ -164,7 +152,7 @@ format.vctrs_decimal <- function(x, ...) {
 }
 
 vec_ptype_abbr.vctrs_decimal <- function(x, ...) {
-  paste0("dec")
+  "dec"
 }
 
 x <- decimal(runif(10), 1L)
@@ -180,15 +168,6 @@ vec_ptype_full.vctrs_decimal <- function(x, ...) {
 }
 
 x
-
-## -----------------------------------------------------------------------------
-vec_ptype2.vctrs_decimal <- function(x, y, ...) UseMethod("vec_ptype2.vctrs_decimal", y)
-vec_ptype2.vctrs_decimal.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
-
-vec_cast.vctrs_decimal <- function(x, to, ...) UseMethod("vec_cast.vctrs_decimal")
-vec_cast.vctrs_decimal.default <- function(x, to, ...) vec_default_cast(x, to)
 
 ## -----------------------------------------------------------------------------
 vec_ptype2.vctrs_decimal.vctrs_decimal <- function(x, y, ...) {
@@ -272,15 +251,15 @@ unclass(x)[[1]] # the first component, the number of seconds
 new_rational <- function(n = integer(), d = integer()) {
   vec_assert(n, ptype = integer())
   vec_assert(d, ptype = integer())
-  
+
   new_rcrd(list(n = n, d = d), class = "vctrs_rational")
 }
 
 ## -----------------------------------------------------------------------------
-rational <- function(n, d) {
+rational <- function(n = integer(), d = integer()) {
   c(n, d) %<-% vec_cast_common(n, d, .to = integer())
   c(n, d) %<-% vec_recycle_common(n, d)
-  
+
   new_rational(n, d)
 }
 
@@ -294,14 +273,24 @@ length(x)
 fields(x)
 field(x, "n")
 
+## ---- error = TRUE------------------------------------------------------------
+x
+
+str(x)
+
+## -----------------------------------------------------------------------------
+vec_data(x)
+
+str(vec_data(x))
+
 ## -----------------------------------------------------------------------------
 format.vctrs_rational <- function(x, ...) {
   n <- field(x, "n")
   d <- field(x, "d")
-  
+
   out <- paste0(n, "/", d)
   out[is.na(n) | is.na(d)] <- NA
-  
+
   out
 }
 
@@ -314,16 +303,10 @@ x
 str(x)
 
 ## -----------------------------------------------------------------------------
-vec_ptype2.vctrs_rational <- function(x, y, ...) UseMethod("vec_ptype2.vctrs_rational", y)
-vec_ptype2.vctrs_rational.default <- function(x, y, ..., x_arg = "x", y_arg = "y") {
-  vec_default_ptype2(x, y, x_arg = x_arg, y_arg = y_arg)
-}
 vec_ptype2.vctrs_rational.vctrs_rational <- function(x, y, ...) new_rational()
 vec_ptype2.vctrs_rational.integer <- function(x, y, ...) new_rational()
 vec_ptype2.integer.vctrs_rational <- function(x, y, ...) new_rational()
 
-vec_cast.vctrs_rational <- function(x, to, ...) UseMethod("vec_cast.vctrs_rational")
-vec_cast.vctrs_rational.default <- function(x, to, ...) vec_default_cast(x, to)
 vec_cast.vctrs_rational.vctrs_rational <- function(x, to, ...) x
 vec_cast.double.vctrs_rational <- function(x, to, ...) field(x, "n") / field(x, "d")
 vec_cast.vctrs_rational.integer <- function(x, to, ...) rational(x, 1)
@@ -335,7 +318,7 @@ new_decimal2 <- function(l, r, scale = 2L) {
   vec_assert(l, ptype = integer())
   vec_assert(r, ptype = integer())
   vec_assert(scale, ptype = integer(), size = 1L)
-  
+
   new_rcrd(list(l = l, r = r), scale = scale, class = "vctrs_decimal2")
 }
 
@@ -344,7 +327,7 @@ decimal2 <- function(l, r, scale = 2L) {
   r <- vec_cast(r, integer())
   c(l, r) %<-% vec_recycle_common(l, r)
   scale <- vec_cast(scale, integer())
-  
+
   # should check that r < 10^scale
   new_decimal2(l = l, r = r, scale = scale)
 }
@@ -365,7 +348,7 @@ vec_proxy(x)
 x == rational(1, 1)
 
 ## -----------------------------------------------------------------------------
-# Thanks to Matthew Lundberg: https://stackoverflow.com/a/21504113/16632 
+# Thanks to Matthew Lundberg: https://stackoverflow.com/a/21504113/16632
 gcd <- function(x, y) {
   r <- x %% y
   ifelse(r, gcd(y, r), y)
@@ -375,10 +358,10 @@ vec_proxy_equal.vctrs_rational <- function(x, ...) {
   n <- field(x, "n")
   d <- field(x, "d")
   gcd <- gcd(n, d)
-  
+
   data.frame(n = n / gcd, d = d / gcd)
 }
-vec_proxy(x)
+vec_proxy_equal(x)
 
 x == rational(1, 1)
 
@@ -450,10 +433,10 @@ vec_proxy_compare.vctrs_poly <- function(x, ...) {
   x_raw <- vec_data(x)
   # First figure out the maximum length
   n <- max(vapply(x_raw, length, integer(1)))
-  
+
   # Then expand all vectors to this length by filling in with zeros
   full <- lapply(x_raw, function(x) c(rep(0L, n - length(x)), x))
-  
+
   # Then turn into a data frame
   as.data.frame(do.call(rbind, full))
 }
@@ -547,32 +530,96 @@ vec_arith.numeric.vctrs_meter <- function(op, x, y, ...) {
 }
 
 meter(2) * 10
-10 * meter(2) 
+meter(2) * as.integer(10)
+10 * meter(2)
 meter(20) / 10
 10 / meter(20)
 meter(20) + 10
 
 ## -----------------------------------------------------------------------------
 vec_arith.vctrs_meter.MISSING <- function(op, x, y, ...) {
-  switch(op, 
+  switch(op,
     `-` = x * -1,
     `+` = x,
     stop_incompatible_op(op, x, y)
   )
 }
--meter(1) 
-+meter(1) 
+-meter(1)
++meter(1)
+
+## ----eval = FALSE-------------------------------------------------------------
+#  #' Internal vctrs methods
+#  #'
+#  #' @import vctrs
+#  #' @keywords internal
+#  #' @name pizza-vctrs
+#  NULL
 
 ## -----------------------------------------------------------------------------
-#' @method vec_cast vctrs_percent
-#' @export
-#' @export vec_cast.vctrs_percent
-vec_cast.vctrs_percent <- function(x, to, ...) {
-} 
-
-## -----------------------------------------------------------------------------
-#' @method vec_cast.binned double
-#' @export
-vec_cast.binned.double <- function(x, y, ...) {
+new_percent <- function(x = double()) {
+  vec_assert(x, double())
+  new_vctr(x, class = "pizza_percent")
 }
+
+## -----------------------------------------------------------------------------
+# for compatibility with the S4 system
+methods::setOldClass(c("pizza_percent", "vctrs_vctr"))
+
+## -----------------------------------------------------------------------------
+#' `percent` vector
+#'
+#' This creates a double vector that represents percentages so when it is
+#' printed, it is multiplied by 100 and suffixed with `%`.
+#'
+#' @param x A numeric vector
+#' @return An S3 vector of class `pizza_percent`.
+#' @export
+#' @examples
+#' percent(c(0.25, 0.5, 0.75))
+percent <- function(x = double()) {
+  x <- vec_cast(x, double())
+  new_percent(x)
+}
+
+## -----------------------------------------------------------------------------
+#' @export
+#' @rdname percent
+is_percent <- function(x) {
+  inherits(x, "pizza_percent")
+}
+
+## -----------------------------------------------------------------------------
+#' @param x
+#'  * For `percent()`: A numeric vector
+#'  * For `is_percent()`: An object to test.
+
+## ----eval = FALSE-------------------------------------------------------------
+#  #' @export
+#  format.pizza_percent <- function(x, ...) {
+#    out <- formatC(signif(vec_data(x) * 100, 3))
+#    out[is.na(x)] <- NA
+#    out[!is.na(x)] <- paste0(out[!is.na(x)], "%")
+#    out
+#  }
+#  
+#  #' @export
+#  vec_ptype_abbr.pizza_percent <- function(x, ...) {
+#    "prcnt"
+#  }
+
+## ---- eval = FALSE------------------------------------------------------------
+#  #' @export
+#  vec_ptype2.vctrs_percent.vctrs_percent <- function(x, y, ...) new_percent()
+#  #' @export
+#  vec_ptype2.double.vctrs_percent <- function(x, y, ...) double()
+#  
+#  #' @export
+#  vec_cast.pizza_percent.pizza_percent <- function(x, to, ...) x
+#  #' @export
+#  vec_cast.pizza_percent.double <- function(x, to, ...) percent(x)
+#  #' @export
+#  vec_cast.double.pizza_percent <- function(x, to, ...) vec_data(x)
+
+## ---- eval = FALSE------------------------------------------------------------
+#  expect_error(vec_c(1, "a"), class = "vctrs_error_incompatible_type")
 

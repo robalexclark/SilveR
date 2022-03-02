@@ -1,6 +1,6 @@
 Package: tidyselect
 Title: Select from a Set of Strings
-Version: 1.0.0
+Version: 1.1.2
 Authors@R: c(
     person("Lionel", "Henry", ,"lionel@rstudio.com", c("aut", "cre")),
     person("Hadley", "Wickham", ,"hadley@rstudio.com", "aut"),
@@ -11,24 +11,24 @@ Description: A backend for the selecting functions of the 'tidyverse'.
     packages in a way that is consistent with other 'tidyverse'
     interfaces for selection.
 Depends: R (>= 3.2)
-Imports: ellipsis, glue (>= 1.3.0), purrr (>= 0.3.2), rlang (>= 0.4.3),
-        vctrs (>= 0.2.2)
+Imports: ellipsis, glue (>= 1.3.0), purrr (>= 0.3.2), rlang (>= 1.0.1),
+        vctrs (>= 0.3.0)
 Suggests: covr, crayon, dplyr, knitr, magrittr, rmarkdown, testthat (>=
-        2.3.0), tibble (>= 2.1.3), withr
-License: GPL-3
+        3.1.1), tibble (>= 2.1.3), withr
+License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 ByteCompile: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.2
 URL: https://tidyselect.r-lib.org, https://github.com/r-lib/tidyselect
 BugReports: https://github.com/r-lib/tidyselect/issues
 VignetteBuilder: knitr
+Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2020-01-27 18:35:49 UTC; lionel
+Packaged: 2022-02-21 14:59:24 UTC; lionel
 Author: Lionel Henry [aut, cre],
   Hadley Wickham [aut],
   RStudio [cph]
 Maintainer: Lionel Henry <lionel@rstudio.com>
 Repository: CRAN
-Date/Publication: 2020-01-27 20:20:02 UTC
-Built: R 3.6.3; ; 2020-03-03 03:26:53 UTC; windows
+Date/Publication: 2022-02-21 16:00:02 UTC
+Built: R 4.1.2; ; 2022-02-22 11:29:03 UTC; windows

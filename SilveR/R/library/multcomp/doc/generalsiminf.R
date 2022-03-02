@@ -213,7 +213,7 @@ trees513$species <- trees513$species[,drop = TRUE]
 ###################################################
 ### code chunk number 22: trees-lmer
 ###################################################
-mmod <- lmer(damage ~ species - 1 + (1 | lattice / plot),
+mmod <- glmer(damage ~ species - 1 + (1 | lattice / plot),
               data = trees513, family = binomial())
 K <- diag(length(fixef(mmod)))
 

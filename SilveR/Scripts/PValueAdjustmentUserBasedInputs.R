@@ -51,7 +51,8 @@ if (TestText=="Benjamini-Hochberg") {
 	Test= "BH"
 }
 
-
+#Remove ^ symbol
+pValues<-gsub("^<", "<", pValues, fixed=TRUE)
 #===================================================================================================================
 #Setup the html file and associated css file
 htmlFile <- sub(".csv", ".html", Args[3]); #determine the file name of the html file
@@ -134,7 +135,7 @@ if (testtype == "UsePValues")
 {
 	tempChanges <-strsplit(pValues, ",")
 }
-
+	
 txtexpectedChanges <- c("")
 expectedChanges <- numeric(0)
 lessindex<-1

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Internal Functions for SNOW-style Parallel Evaluation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bploop {BiocParallel}"><tr><td>bploop {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Internal Functions for SNOW-style Parallel Evaluation</h2>
+
+<h3>Description</h3>
+
+<p>The functions documented on this page are primarily for use within
+<span class="pkg">BiocParallel</span> to enable SNOW-style parallel evaluation, using
+communication between manager and worker nodes through sockets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'lapply'
+bploop(manager, X, FUN, ARGS, BPPARAM, ...)
+
+## S3 method for class 'iterate'
+bploop(manager, ITER, FUN, ARGS, BPPARAM,
+       REDUCE, init, reduce.in.order, progress.length, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>manager</code></td>
+<td>
+<p>An object representing the manager node. For workers,
+this is the node to which the worker will communicate. For managers,
+this is the form of iteration &ndash; <code>lapply</code> or <code>iterate</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>A vector of jobs to be performed.</p>
+</td></tr>
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+<p>A function to apply to each job.</p>
+</td></tr>
+<tr valign="top"><td><code>ARGS</code></td>
+<td>
+<p>A list of arguments to be passed to <code>FUN</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>BPPARAM</code></td>
+<td>
+<p>An instance of a <code>BiocParallelParam</code> class.</p>
+</td></tr>
+<tr valign="top"><td><code>ITER</code></td>
+<td>
+<p>A function used to generate jobs. No more jobs are
+available when <code>ITER()</code> returns <code>NULL</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>REDUCE</code></td>
+<td>
+<p>(Optional) A function combining two values returned by
+<code>FUN</code> into a single value.</p>
+</td></tr>
+<tr valign="top"><td><code>init</code></td>
+<td>
+<p>(Optional) Initial value for reduction.</p>
+</td></tr>
+<tr valign="top"><td><code>reduce.in.order</code></td>
+<td>
+<p>(Optional) logical(1) indicating that
+reduction must occur in the order jobs are dispatched
+(<code>TRUE</code>) or that reduction can occur in the order jobs are
+completed (<code>FALSE</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments, ignored in all cases.</p>
+</td></tr>
+<tr valign="top"><td><code>progress.length</code></td>
+<td>
+<p>(Optional) The length of the progress bar. Used
+by <code>bploop.lapply</code> to indicate use of a progress bar rather
+than iterator.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Workers enter a loop. They wait to receive a message (<span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> list) from
+the <code>manager</code>. The message contains a <code>type</code> element, with
+evaluation as follows:
+</p>
+
+<dl>
+<dt>&ldquo;EXEC&rdquo;</dt><dd><p>Execute the <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> code in the message, returning
+the result to the <code>manager</code>.</p>
+</dd>
+<dt>&ldquo;DONE&rdquo;</dt><dd><p>Signal termination to the <code>manager</code>,
+terminate the worker.</p>
+</dd>
+</dl>
+
+<p>Managers under <code>lapply</code> dispatch pre-determined jobs, <code>X</code>,
+to workers, collecting the results from and dispatching new jobs to
+the first available worker.  The manager returns a list of results, in
+a one-to-one correspondence with the order of jobs supplied, when all
+jobs have been evaluated.
+</p>
+<p>Managers under <code>iterate</code> dispatch an undetermined number of jobs
+to workers, collecting previous jobs from and dispatching new jobs to
+the first available worker. Dispatch continues until available jobs
+are exhausted. The return value is by default a list of results in a
+one-to-one correspondence with the order of jobs supplied. The return
+value is influenced by <code>REDUCE</code>, <code>init</code>, and
+<code>reduce.in.order</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerie Obenchain, Martin Morgan. Derived from similar functionality
+in the <span class="pkg">snow</span> and <span class="pkg">parallel</span> packages.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## These functions are not meant to be called by the end user.
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

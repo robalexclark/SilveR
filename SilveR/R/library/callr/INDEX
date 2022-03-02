@@ -28,3 +28,5 @@ rscript                 Run an R script
 rscript_process         External 'Rscript' process
 rscript_process_options
                         Create options for an rscript_process object
+supported_archs         Find supported sub-architectures for the
+                        current R installation

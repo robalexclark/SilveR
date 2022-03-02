@@ -1510,3 +1510,235 @@ to look at only the first component.
 1.  Modified call to class(x) in crq.fit.pow() as in 5.53 
 
 2.  changed http to https in crq.Rd
+
+5.55
+
+1.  Fixed bug in predict.rq.process for Fhat reported by Vincenzo Coia.
+
+2.  Fixed bug in AIC.rqs to use correct edf reported by Brian Cade.
+
+5.57
+
+1.  Added link to a new fitting method by He, Pan, Tan and Zhou that uses
+a smoothed version of the usual piecewise linear QR objective and gradient
+descent.  This approach is MUCH faster than interior point on large problems
+especially those with large p.  See ?rq.fit.conquer for further details.
+
+2.  There is also a new multiplier bootstrap for inference.  At the moment
+it is automatically invoked only when the original fitting method is
+"conquer".
+
+5.58  
+
+1.  Added new fitting and bootstrap methods employing preprocessing, as
+implemented by Blaise Melly, see ?rq.fit.ppro for further details.  For
+large applications with moderately fine grids for tau these methods should
+speed things up considerably.
+
+5.61
+
+1.  Fixed inconsistent author entry for Melly.
+
+2.  Moved definition of eps up in rq() to resolve problems in packages
+vdg and qrjoint.
+
+5.65 
+
+1.  Made two changes in rq.fit.lasso that I hope will improve robustness of
+the fitting, thanks to report by Yuanzhi Li.  Only time will tell, with the
+help of further testing.  
+
+    o beta default was changed to conform with rq.fit.fnb code
+    o wn initialization was also changed to conform to rq.fit.fnb.
+
+5.66
+
+1.  Added rq.fit.ppro and boot.rq.pxy to exported objects in NAMESPACE.
+They were documented but invisible heretofore.
+
+2.  Commented out the warning about too many bad fixups in boot.rq.pxy
+since it was making too much noise.
+
+5.68
+
+1.  Added  a subset argument to the rqss function as requested by Brian Cade.
+This seemed more difficult than expected as a R-help inquiry of 21/9/2020
+indicates.
+
+2.  Added a Dorder argument to the qss function, which when Dorder = 0 results
+in penalization of the fitted function itself, rather than its derivative.
+See the vinaigrette:  conformal.Rnw for an example.
+
+3.  Noticed that the demo rqsslasso.R had an argument bandcol that generated
+a warning -- "not a graphical parameter" -- I think that this was intended to
+be bcol in plot.rqss which when changed now works as originally intended.
+
+5.70
+
+1.  Further fiddling with rqss to get the fake.formula trickery to work.  Had
+to ask John Fox (car package) and James Craig (tidyvpc package) to modify
+their code to provide explicit data arguments when rqss was called inside
+their functions and added a note to warn others of this necessity.
+
+5.71
+
+1.  Added ParetoTest function and friends to do tail exponent estimation and
+inference based on original code of Chernozhukov and Fernandez-Val.
+
+2.  Added new "se" option to summary.rq to implement the extreme CI estimates
+of Chernozhukov and Fernandez-Val.  For the moment I've commented out a
+warning about tau not being extreme enough to justify the use of this option.
+
+3.  Modified plot.summary.rq so that one can pass a matrix of ylim values to
+assure that two summary.rq plots have the same scale.  A suggestion born of
+Victor's  totally legitimate critique of my extremal QR vinaigrette,  now
+modified to fix this.
+
+5.74
+
+1.  Fixed bug in rq.fit.sfn so that all the control parameters are passed.
+
+2.  Modified summary.rq so that the "nid" option can now use "sfn" fitting
+if the original fitted object was computed with "sfn".  This is the first
+step in trying to get the "boot" methods to behave similarly.
+
+3.  After the upgrade to catalina and then upgrading R and gfortran and xcode Command
+Line Tools I was getting compilation errors with stdio.h not found.  This
+was eventually resolved by removing my .R/Makevars file which pointed to
+obsolete clang compilers and libraries.  I've now also removed clang6 and
+clang7 from /usr/local since they are now irrelevant.
+
+4.  The code for clustered bootstrap is now adapted so that if method = "sfn"
+is used for the initial fitting then it will also be used for the
+bootstrapping.  This speeds things up considerably.  A potential issue that
+is still unresolved here is that I am not allowing users to pass control
+parameters, so one has to hope that default choices work.  My naive attempt
+to pass the control list from the initial fit produced a "memory not mapped"
+segfault, presumably because the spwy bootstrap method uses one extra
+observation than the initial fitting.
+
+5.75
+
+1.  Implemented weights for rqss fitting when there are qss terms, as
+suggested by the ConfidenceQuant package of Zhang et al.  This is prepatory
+to exploring their implementation of lambda selection and BLB inference.
+Note that they don't undo the weighting when computing residuals which
+may or may not be important.  As currently implemented, I do undo the
+weighting.
+
+2.  Added Munge function to mangle formulas for rqss (used in demo(MCV)
+
+3.  Added demo MCV to illustrate lambda selection via k-fold CV.
+
+5.79
+
+1.  In preparation for some attempt to rationalize the multiple estimation and
+inference methods, I poked around to see whether I could find a workable
+version of ratfor to use to write new wrapper code for various extensions.
+Eventually I found an updated C version maintained by Brian Gaeke that worked
+for all of my existing ratfor code with the exception of rqbr.r which emits a
+gfortran warning about goto's jumping across blocks (see email from Gaeke on
+23/11/20).  This isn't really a problem since I have functional f77 code for
+this anyway.  The point is that going forward, at least for the foreseeable I
+have a workable ratfor.
+
+2.  Added two new estimation methods qfnb and pfnb designed to speed up
+estimation for large problems with many taus. The former just puts calls to
+the existing fnb routine inside a fortran loop, the latter translates the ppro
+preprocessing method into ratfor.  This seems to help quite a lot as
+experiments in my ongoing vinaigrette show, but there is probably still some
+fine tuning that could be done.  I have the feeling that it would be worthwhile
+being more aggressive about reducing the sample size as n grows.
+
+3.  Changed default m0 parameter for rq.fit.pfnb so that it was proportional
+to n^(2/3) rather than n which seems to speed things up considerably.
+
+5.80
+
+1.  Added a new bootstrap method boot.rq.pwxy which calls a fortran
+preprocessing subroutine.  Generation of random exponentials is done inside
+the loop thanks to grexp() and some C trickery documented in the R Extensions
+manual.  For large problems this promises to be much quicker than other  prior
+methods, presuming that I can get the interface with summary() and boot.rq()
+working.
+
+2.  Added a more elaborate iteration count object to the return from
+boot.rq.pwxy that provides information on the number of "fixups" as well as
+FN iterations and final sample size.
+
+3.  Removed the standardize argument from rq.fit.conquer which seems to have
+been removed from the argument list of conquer::conquer.
+
+4.  Changed the BLB procedure so that it uses pwxy rather than wxy, pending
+further investigation...
+
+5.  Changed the rq.fit.pfnb procedure so that it knows how to do only one tau.
+
+5.81
+
+1.  rq.fit.pfn and rq.fit.pfnb now return nit info as part of my effort to
+investigate how to set tuning parameters for these functions.
+
+2.  changed rq.fit.fnb so that non-zero exit status from an error (stop) to a
+warning.  Experiments with large p examples involving factor variables
+suggested that these cases were often harmless.  As long as 10 or more
+iterations were done, these exits were generally just stepy being too fussy
+about the cholesky factorization.
+
+3.  Changed plot.rqss so that it returned all the confidence band information
+not just for the last one.  Thanks to Zehra Atik for the bug report on this.
+
+5.82
+
+1.  Fixed rq.fit.pfnb to work with vector x.
+
+2.  Added q489 function to compute univariate sample quantile via literal
+translation of the original (Algol 68) code of Floyd and Rivest.
+
+5.83
+
+1.  In response to Brian Ripley's email of 11/1/21 several ratfor/fortran
+changes were made:  ddot was declared double in boot.f and rls.f, the routine
+spwy.[rf] was removed since it was never actually functional, and several
+nonconforming tab characters were removed from sparskit.f.
+
+2.  Added a new plotting function for qss objects with Dorder 0 that imposes
+the piecewise constant feature of the fit.
+
+3.  Added options for increasing and decreasing constraints for the Dorder 0
+qss functions. By setting lambda to zero, one can get something equivalent to
+the solution from the isotone package using their weighted fractile option.
+
+5.84
+
+1.  The changes to plot.rqss in the last version messed up plotting for qss
+objects, this is (hopefully) now restored to prior functionality.
+
+5.85
+
+1.  Added doi info for K 2005, and K et al (2017) at Uwe's suggestion.
+
+2.  modified qss code to test is.numeric(x) rather than is.vector(x) to
+avoid the fact that is.vector(x) is false, if x happens to have attributes
+other than names.  Thanks to Wolfgang Viechtbauer and Terry Therneau for
+help in tracking this down. The Rstudio function haven::read_dta() adds
+an attribute to the data.frame it constructs to indicate that the data was
+born in the hell of Stata.
+
+3.  Added predict.qts1 function which was somehow neglected when I made
+the conformal QR vinaigrette. 
+
+4.  Added a LassoLambdaHat function to compute the Belloni-Chernozhukov
+lambdahat interval.  And modified rq.fit.lasso to use this as the default 
+lambda selection rule if lambda is not specified.
+
+5.87
+
+1.  At the suggestion of Adelchi Azzalini conquer package was moved to "suggested"
+rather than "imported"  which lightened the dependency graph considerably.
+
+2.  change in anova.rqlist to broaden pattern matching for variable names at
+the suggestion of Max Gordon.  Uses the relatively new \(x) syntax which may
+cause problems for those on old R installations.
+
+

@@ -82,6 +82,8 @@ sigmaHat                Return the scale estimate for a regression
                         model
 some                    Sample a Few Elements of an Object
 spreadLevelPlot         Spread-Level Plots
+strings2factors         Convert Character-String Variables in a Data
+                        Frame to Factors
 subsets                 Plot Output from regsubsets Function in leaps
                         package
 symbox                  Boxplots for transformations to symmetry

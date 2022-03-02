@@ -180,6 +180,62 @@ namespace SilveR.Validators
             if (!CheckLevelsOrdering(gaVariables.SecondCatFactorLevelsOrder, gaVariables.SecondCatFactor, ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.SecondCatFactorLevelsOrder), ReflectionExtensions.GetPropertyDisplayName<GraphicalAnalysisModel>(i => i.SecondCatFactor)))
                 return ValidationInfo;
 
+            if(gaVariables.HistogramSelected && (gaVariables.XAxisMin.HasValue || gaVariables.XAxisMax.HasValue))
+            {
+                ValidationInfo.AddWarningMessage("For the histogram plot the axis ranges cannot be changed.");
+            }
+
+            if (gaVariables.BoxplotSelected && (gaVariables.XAxisMin.HasValue || gaVariables.XAxisMax.HasValue))
+            {
+                ValidationInfo.AddWarningMessage("For the boxplot the X-axis range cannot be changed.");
+            }
+
+            if (gaVariables.CaseProfilesPlotSelected && !xIsNumeric && (gaVariables.XAxisMin.HasValue || gaVariables.XAxisMax.HasValue))
+            {
+                ValidationInfo.AddWarningMessage("On the case profiles plot, as the X-axis variable is categorical the X-axis range cannot be changed.");
+            }
+
+            if (gaVariables.ErrorBarPlotSelected && (gaVariables.XAxisMin.HasValue || gaVariables.XAxisMax.HasValue))
+            {
+                ValidationInfo.AddWarningMessage("For the Means with error bars plot the X-axis range cannot be changed.");
+            }
+
+            if (gaVariables.ScatterplotSelected && !yIsNumeric && (gaVariables.YAxisMin.HasValue || gaVariables.YAxisMax.HasValue))
+            {
+                ValidationInfo.AddWarningMessage("On the scatterplot, as the Y-axis variable is categorical the Y-axis range cannot be changed.");
+            }
+
+            if (gaVariables.ScatterplotSelected && !xIsNumeric && (gaVariables.XAxisMin.HasValue || gaVariables.XAxisMax.HasValue))
+            {
+                ValidationInfo.AddWarningMessage("On the scatterplot, as the X-axis variable is categorical the X-axis range cannot be changed.");
+            }
+
+
+            if (gaVariables.XAxisMin.HasValue != gaVariables.XAxisMax.HasValue)
+            {
+                ValidationInfo.AddErrorMessage("You have only defined one of the values for the X-axis range - both are required to generate the plot.");
+                return ValidationInfo;
+            }
+
+            if (gaVariables.YAxisMin.HasValue != gaVariables.YAxisMax.HasValue)
+            {
+                ValidationInfo.AddErrorMessage("You have only defined one of the values for the Y-axis range - both are required to generate the plot.");
+                return ValidationInfo;
+            }
+
+            if (gaVariables.XAxisMin>= gaVariables.XAxisMax)
+            {
+                ValidationInfo.AddErrorMessage("For the X-axis range, the minimum value needs to be less than the maximum.");
+                return ValidationInfo;
+            }
+
+            if (gaVariables.YAxisMin >= gaVariables.YAxisMax)
+            {
+                ValidationInfo.AddErrorMessage("For the Y-axis range, the minimum value needs to be less than the maximum.");
+                return ValidationInfo;
+            }
+
+
             //if get here then no errors so return true
             return ValidationInfo;
         }

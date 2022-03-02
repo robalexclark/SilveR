@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Enable multi-core parallel evaluation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for MulticoreParam-class {BiocParallel}"><tr><td>MulticoreParam-class {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Enable multi-core parallel evaluation</h2>
+
+<h3>Description</h3>
+
+<p>This class is used to parameterize single computer multicore parallel
+evaluation on non-Windows computers. <code>multicoreWorkers()</code> chooses
+the number of workers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+
+## constructor
+## ------------------------------------
+
+MulticoreParam(workers = multicoreWorkers(), tasks = 0L,
+               stop.on.error = TRUE,
+               progressbar = FALSE, RNGseed = NULL,
+               timeout = 30L * 24L * 60L * 60L, exportglobals=TRUE,
+               log = FALSE, threshold = "INFO", logdir = NA_character_,
+               resultdir = NA_character_, jobname = "BPJOB",
+               force.GC = TRUE,
+               manager.hostname = NA_character_, manager.port = NA_integer_,
+               ...)
+
+## detect workers
+## ------------------------------------
+
+multicoreWorkers()
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>workers</code></td>
+<td>
+
+<p><code>integer(1)</code> Number of workers. Defaults to all cores available as
+determined by <code>detectCores</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>tasks</code></td>
+<td>
+
+<p><code>integer(1)</code>. The number of tasks per job. <code>value</code> must be a
+scalar integer &gt;= 0L.
+</p>
+<p>In this documentation a job is defined as a single call to a function, such
+as <code>bplapply</code>, <code>bpmapply</code> etc. A task is the division of the
+<code>X</code> argument into chunks.
+</p>
+<p>When <code>tasks == 0</code> (default, except when <code>progressbar =
+    TRUE</code>), <code>X</code> is divided as evenly as possible over the number of
+workers.
+</p>
+<p>A <code>tasks</code> value of &gt; 0 specifies the exact number of
+tasks. Values can range from 1 (all of <code>X</code> to a single worker)
+to the length of <code>X</code> (each element of <code>X</code> to a different
+worker).
+</p>
+<p>When the length of <code>X</code> is less than the number of workers each
+element of <code>X</code> is sent to a worker and <code>tasks</code> is ignored.
+</p>
+<p>When the length of <code>X</code> is less than <code>tasks</code>, <code>tasks</code>
+is treated as <code>length(X)</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>stop.on.error</code></td>
+<td>
+
+<p><code>logical(1)</code> Enable stop on error.
+</p>
+</td></tr>
+<tr valign="top"><td><code>progressbar</code></td>
+<td>
+
+<p><code>logical(1)</code> Enable progress bar (based on
+plyr:::progress_text). Enabling the progress bar changes the
+<em>default</em> value of <code>tasks</code> to <code>.Machine$integer.max</code>, so
+that progress is reported for each element of <code>X</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>RNGseed</code></td>
+<td>
+
+<p><code>integer(1)</code> Seed for random number generation. The seed is
+used to set a new, independent random number stream for each
+element of <code>X</code>. The ith element recieves the same stream seed,
+regardless of use of <code>SerialParam()</code>, <code>SnowParam()</code>, or
+<code>MulticoreParam()</code>, and regardless of worker or task
+number. When <code>RNGseed = NULL</code>, a random seed is used.
+</p>
+</td></tr>
+<tr valign="top"><td><code>timeout</code></td>
+<td>
+
+<p><code>numeric(1)</code> Time (in seconds) allowed for worker to complete a task.
+This value is passed to base::setTimeLimit() as both the <code>cpu</code> and
+<code>elapsed</code> arguments. If the computation exceeds <code>timeout</code> an
+error is thrown with message 'reached elapsed time limit'.
+</p>
+</td></tr>
+<tr valign="top"><td><code>exportglobals</code></td>
+<td>
+
+<p><code>logical(1)</code> Export <code>base::options()</code> from manager to
+workers? Default <code>TRUE</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>log</code></td>
+<td>
+
+<p><code>logical(1)</code> Enable logging.
+</p>
+</td></tr>
+<tr valign="top"><td><code>threshold</code></td>
+<td>
+
+<p><code>character(1)</code> Logging threshold as defined in <code>futile.logger</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>logdir</code></td>
+<td>
+
+<p><code>character(1)</code> Log files directory. When not provided, log
+messages are returned to stdout.
+</p>
+</td></tr>
+<tr valign="top"><td><code>resultdir</code></td>
+<td>
+
+<p><code>character(1)</code> Job results directory. When not provided, results
+are returned as an <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object (list) to the workspace.
+</p>
+</td></tr>
+<tr valign="top"><td><code>jobname</code></td>
+<td>
+
+<p><code>character(1)</code> Job name that is prepended to log and result files.
+Default is &quot;BPJOB&quot;.
+</p>
+</td></tr>
+<tr valign="top"><td><code>force.GC</code></td>
+<td>
+
+<p><code>logical(1)</code> Whether to invoke the garbage collector after each
+call to <code>FUN</code>. The default (<code>TRUE</code>, explicitly
+call the garbage collection) can slow parallel computation, but is
+necessary when each call to <code>FUN</code> allocates a 'large' amount of
+memory. If <code>FUN</code> allocates little memory, then considerable
+performance improvements are gained by setting <code>force.GC = FALSE</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>manager.hostname</code></td>
+<td>
+
+<p><code>character(1)</code> Host name of manager node. See 'Global Options',
+in <code><a href="../../BiocParallel/help/SnowParam.html">SnowParam</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>manager.port</code></td>
+<td>
+
+<p><code>integer(1)</code> Port on manager with which workers
+communicate. See 'Global Options' in <code><a href="../../BiocParallel/help/SnowParam.html">SnowParam</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Additional arguments passed to <code><a href="../../parallel/html/makeCluster.html">makeCluster</a></code>
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>MulticoreParam</code> is used for shared memory computing. Under the hood
+the cluster is created with <code>makeCluster(..., type ="FORK")</code> from
+the <code>parallel</code> package.
+</p>
+<p>The default number of workers is determined by
+<code>multicoreWorkers()</code>. On windows, the number of multicore workers
+is always 1. Otherwise, the default is determined by an environment
+variable <code>R_PARALLELLY_AVAILABLECORES_FALLBACK</code> (see the
+parallely package) or <code>BIOCPARALLEL_WORKER_NUMBER</code> or, if those
+are not set, the maximum of 1 and <code>parallel::detectCores() -
+  2</code>. Machines with 3 or fewer cores, or machines where number of cores
+cannot be determined, are assigned a single worker. Machines with more
+than 127 cores are limited to the number of <em>R</em> connections
+available when the workers start; this is 128 (a hard-coded limit in
+<em>R</em>) minus the number of open connections as returned by
+<code>nrow(showConnections(all=TRUE))</code>. The option <code>mc.cores</code> can
+be used to specify an arbitrary number of workers, e.g.,
+<code>options(mc.cores=4L)</code>. The <em>Bioconductor</em> build system
+enforces a maximum of 4 workers. The environment variable
+<code>_R_CHECK_LIMIT_CORES_</code> (as on CRAN) enforces a maximum of 2
+workers.
+</p>
+<p>A FORK transport starts workers with the <code>mcfork</code> function and
+communicates between master and workers using socket connections.
+<code>mcfork</code> builds on fork() and thus a Linux cluster is not supported.
+Because FORK clusters are Posix based they are not supported on
+Windows. When <code>MulticoreParam</code> is created/used in Windows it
+defaults to <code>SerialParam</code> which is the equivalent of using a
+single worker.
+</p>
+
+<dl>
+<dt>error handling:</dt><dd>
+<p>By default all computations are attempted and partial results
+are returned with any error messages.
+</p>
+
+<ul>
+<li> <p><code>stop.on.error</code> A <code>logical</code>. Stops all jobs as soon
+as one job fails or wait for all jobs to terminate. When
+<code>FALSE</code>, the return value is a list of successful results
+along with error messages as 'conditions'.
+</p>
+</li>
+<li><p> The <code>bpok(x)</code> function returns a <code>logical()</code> vector
+that is FALSE for any jobs that threw an error. The input
+<code>x</code> is a list output from a bp*apply function such as
+<code>bplapply</code> or <code>bpmapply</code>.
+</p>
+</li></ul>
+
+</dd>
+<dt>logging:</dt><dd>
+<p>When <code>log = TRUE</code> the <code>futile.logger</code> package is loaded on
+the workers. All log messages written in the <code>futile.logger</code> format
+are captured by the logging mechanism and returned in real-time
+(i.e., as each task completes) instead of after all jobs have finished.
+</p>
+<p>Messages sent to <em>stdout</em> and <em>stderr</em> are returned to
+the workspace by default. When <code>log = TRUE</code> these
+are diverted to the log output. Those familiar with the <code>outfile</code>
+argument to <code>makeCluster</code> can think of <code>log = FALSE</code> as
+equivalent to <code>outfile = NULL</code>; providing a <code>logdir</code> is the
+same as providing a name for <code>outfile</code> except that BiocParallel
+writes a log file for each task.
+</p>
+<p>The log output includes additional statistics such as memory use
+and task runtime. Memory use is computed by calling gc(reset=TRUE)
+before code evaluation and gc() (no reseet) after. The output of the
+second gc() call is sent to the log file. There are many ways to
+track memory use - this particular approach was taken because it is
+consistent with how the BatchJobs package reports memory on the
+workers.
+</p>
+</dd>
+<dt>log and result files:</dt><dd>
+<p>Results and logs can be written to a file instead of returned to
+the workspace. Writing to files is done from the master as each task
+completes. Options can be set with the <code>logdir</code> and
+<code>resultdir</code> fields in the constructor or with the accessors,
+<code>bplogdir</code> and <code>bpresultdir</code>.
+</p>
+</dd>
+<dt>random number generation:</dt><dd>
+<p>For <code>MulticoreParam</code>, <code>SnowParam</code>, and
+<code>SerialParam</code>, random number generation is controlled through
+the <code>RNGseed = </code> argument. BiocParallel uses the
+L'Ecuyer-CMRG random number generator described in the parallel
+package to generate independent random number streams. One stream
+is associated with each element of <code>X</code>, and used to seed the
+random number stream for the application of <code>FUN()</code> to
+<code>X[[i]]</code>. Thus setting <code>RNGseed = </code> ensures
+reproducibility across <code>MulticoreParam()</code>,
+<code>SnowParam()</code>, and <code>SerialParam()</code>, regardless of worker
+or task number. The default value <code>RNGseed = NULL</code> means that
+each evaluation of <code>bplapply</code> proceeds independently.
+</p>
+<p>For details of the L'Ecuyer generator, see ?<code>clusterSetRNGStream</code>.
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Constructor</h3>
+
+
+<dl>
+<dt></dt><dd>
+<p><code>MulticoreParam(workers = multicoreWorkers(), tasks = 0L,
+                           stop.on.error = FALSE,
+                           tasks = 0L, progressbar = FALSE, RNGseed = NULL,
+                           timeout = Inf, exportglobals=TRUE,
+                           log = FALSE, threshold = "INFO",
+                           logdir = NA_character_, resultdir = NA_character_,
+                           manager.hostname = NA_character_,
+                           manager.port = NA_integer_, ...)</code>:
+</p>
+<p>Return an object representing a FORK cluster. The cluster is not
+created until <code>bpstart</code> is called. Named arguments in <code>...</code>
+are passed to <code>makeCluster</code>.
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Accessors: Logging and results</h3>
+
+<p>In the following code, <code>x</code> is a <code>MulticoreParam</code> object.
+</p>
+
+<dl>
+<dt></dt><dd>
+<p><code>bpprogressbar(x)</code>, <code>bpprogressbar(x) &lt;- value</code>:
+Get or set the value to enable text progress bar.
+<code>value</code> must be a <code>logical(1)</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpjobname(x)</code>, <code>bpjobname(x) &lt;- value</code>:
+Get or set the job name.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpRNGseed(x)</code>, <code>bpRNGseed(x) &lt;- value</code>:
+Get or set the seed for random number generaton. <code>value</code> must be a
+<code>numeric(1)</code> or <code>NULL</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bplog(x)</code>, <code>bplog(x) &lt;- value</code>:
+Get or set the value to enable logging. <code>value</code> must be a
+<code>logical(1)</code>.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpthreshold(x)</code>, <code>bpthreshold(x) &lt;- value</code>:
+Get or set the logging threshold. <code>value</code> must be a
+<code>character(1)</code> string of one of the levels defined in the
+<code>futile.logger</code> package: &ldquo;TRACE&rdquo;, &ldquo;DEBUG&rdquo;,
+&ldquo;INFO&rdquo;, &ldquo;WARN&rdquo;, &ldquo;ERROR&rdquo;, or &ldquo;FATAL&rdquo;.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bplogdir(x)</code>, <code>bplogdir(x) &lt;- value</code>:
+Get or set the directory for the log file. <code>value</code> must be a
+<code>character(1)</code> path, not a file name. The file is written out as
+LOGFILE.out. If no <code>logdir</code> is provided and <code>bplog=TRUE</code> log
+messages are sent to stdout.
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpresultdir(x)</code>, <code>bpresultdir(x) &lt;- value</code>:
+Get or set the directory for the result files. <code>value</code> must be a
+<code>character(1)</code> path, not a file name. Separate files are written for
+each job with the prefix JOB (e.g., JOB1, JOB2, etc.).  When no
+<code>resultdir</code> is provided the results are returned to the session as
+<code>list</code>.
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Accessors: Back-end control</h3>
+
+<p>In the code below <code>x</code> is a <code>MulticoreParam</code> object.  See the
+?<code>BiocParallelParam</code> man page for details on these accessors.
+</p>
+
+<dl>
+<dt></dt><dd><p><code>bpworkers(x)</code></p>
+</dd>
+<dt></dt><dd><p><code>bpnworkers(x)</code></p>
+</dd>
+<dt></dt><dd><p><code>bptasks(x)</code>, <code>bptasks(x) &lt;- value</code></p>
+</dd>
+<dt></dt><dd><p><code>bpstart(x)</code></p>
+</dd>
+<dt></dt><dd><p><code>bpstop(x)</code></p>
+</dd>
+<dt></dt><dd><p><code>bpisup(x)</code></p>
+</dd>
+<dt></dt><dd><p><code>bpbackend(x)</code>, <code>bpbackend(x) &lt;- value</code></p>
+</dd>
+</dl>
+
+
+
+<h3>Accessors: Error Handling</h3>
+
+<p>In the code below <code>x</code> is a <code>MulticoreParam</code> object. See the
+?<code>BiocParallelParam</code> man page for details on these accessors.
+</p>
+
+<dl>
+<dt></dt><dd><p><code>bpstopOnError(x)</code>, <code>bpstopOnError(x) &lt;- value</code></p>
+</dd>
+</dl>
+
+
+
+<h3>Methods: Evaluation</h3>
+
+<p>In the code below <code>BPPARAM</code> is a <code>MulticoreParam</code> object.
+Full documentation for these functions are on separate man pages: see
+?<code>bpmapply</code>, ?<code>bplapply</code>, ?<code>bpvec</code>, ?<code>bpiterate</code> and
+?<code>bpaggregate</code>.
+</p>
+
+<dl>
+<dt></dt><dd>
+<p><code>bpmapply(FUN, ..., MoreArgs=NULL, SIMPLIFY=TRUE,
+                     USE.NAMES=TRUE, BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bplapply(X, FUN, ..., BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpvec(X, FUN, ..., AGGREGATE=c, BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpiterate(ITER, FUN, ..., BPPARAM=bpparam())</code>
+</p>
+</dd>
+<dt></dt><dd>
+<p><code>bpaggregate(x, data, FUN, ..., BPPARAM=bpparam())</code>
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Methods: Other</h3>
+
+<p>In the code below <code>x</code> is a <code>MulticoreParam</code> object.
+</p>
+
+<dl>
+<dt></dt><dd>
+<p><code>show(x)</code>:
+Displays the <code>MulticoreParam</code> object.
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Global Options</h3>
+
+<p>See the 'Global Options' section of <code><a href="../../BiocParallel/help/SnowParam.html">SnowParam</a></code> for
+manager host name and port defaults.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan <a href="mailto:mtmorgan@fhcrc.org">mailto:mtmorgan@fhcrc.org</a> and Valerie Obenchain</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>register</code> for registering parameter classes for use in
+parallel evaluation.
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/SnowParam.html">SnowParam</a></code> for computing in distributed memory
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/BatchJobsParam.html">BatchJobsParam</a></code> for computing with cluster schedulers
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/DoparParam.html">DoparParam</a></code> for computing with foreach
+</p>
+</li>
+<li> <p><code><a href="../../BiocParallel/help/SerialParam.html">SerialParam</a></code> for non-parallel evaluation
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+## -----------------------------------------------------------------------
+## Job configuration:
+## -----------------------------------------------------------------------
+
+## MulticoreParam supports shared memory computing. The object fields
+## control the division of tasks, error handling, logging and
+## result format.
+bpparam &lt;- MulticoreParam()
+bpparam
+
+## By default the param is created with the maximum available workers
+## determined by multicoreWorkers().
+multicoreWorkers()
+
+## Fields are modified with accessors of the same name:
+bplog(bpparam) &lt;- TRUE
+dir.create(resultdir &lt;- tempfile())
+bpresultdir(bpparam) &lt;- resultdir
+bpparam
+
+## -----------------------------------------------------------------------
+## Logging:
+## -----------------------------------------------------------------------
+
+## When 'log == TRUE' the workers use a custom script (in BiocParallel)
+## that enables logging and access to other job statistics. Log messages
+## are returned as each job completes rather than waiting for all to finish.
+
+## In 'fun', a value of 'x = 1' will throw a warning, 'x = 2' is ok
+## and 'x = 3' throws an error. Because 'x = 1' sleeps, the warning
+## should return after the error.
+
+X &lt;- 1:3
+fun &lt;- function(x) {
+    if (x == 1) {
+        Sys.sleep(2)
+        sqrt(-x)                   ## warning
+        x
+    } else if (x == 2) {
+        x                          ## ok
+    } else if (x == 3) {
+        sqrt("FOO")                ## error
+    }
+}
+
+## By default logging is off. Turn it on with the bplog()&lt;- setter
+## or by specifying 'log = TRUE' in the constructor.
+bpparam &lt;- MulticoreParam(3, log = TRUE, stop.on.error = FALSE)
+res &lt;- tryCatch({
+    bplapply(X, fun, BPPARAM=bpparam)
+}, error=identity)
+res
+
+## When a 'logdir' location is given the messages are redirected to a file:
+## Not run: 
+bplogdir(bpparam) &lt;- tempdir()
+bplapply(X, fun, BPPARAM = bpparam)
+list.files(bplogdir(bpparam))
+
+## End(Not run)
+
+## -----------------------------------------------------------------------
+## Managing results:
+## -----------------------------------------------------------------------
+
+## By default results are returned as a list. When 'resultdir' is given
+## files are saved in the directory specified by job, e.g., 'TASK1.Rda',
+## 'TASK2.Rda', etc.
+## Not run: 
+dir.create(resultdir &lt;- tempfile())
+bpparam &lt;- MulticoreParam(2, resultdir = resultdir, stop.on.error = FALSE)
+bplapply(X, fun, BPPARAM = bpparam)
+list.files(bpresultdir(bpparam))
+
+## End(Not run)
+
+## -----------------------------------------------------------------------
+## Error handling:
+## -----------------------------------------------------------------------
+
+## When 'stop.on.error' is TRUE the job is terminated as soon as an
+## error is hit. When FALSE, all computations are attempted and partial
+## results are returned along with errors. In this example the number of
+## 'tasks' is set to equal the length of 'X' so each element is run
+## separately. (Default behavior is to divide 'X' evenly over workers.)
+
+## All results along with error:
+bpparam &lt;- MulticoreParam(2, tasks = 4, stop.on.error = FALSE)
+res &lt;- bptry(bplapply(list(1, "two", 3, 4), sqrt, BPPARAM = bpparam))
+res
+
+## Calling bpok() on the result list returns TRUE for elements with no error.
+bpok(res)
+
+## -----------------------------------------------------------------------
+## Random number generation:
+## -----------------------------------------------------------------------
+
+## Random number generation is controlled with the 'RNGseed' field.
+## This seed is passed to parallel::clusterSetRNGStream
+## which uses the L'Ecuyer-CMRG random number generator and distributes
+## streams to members of the cluster.
+
+bpparam &lt;- MulticoreParam(3, RNGseed = 7739465)
+bplapply(seq_len(bpnworkers(bpparam)), function(i) rnorm(1), BPPARAM = bpparam)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

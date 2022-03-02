@@ -1,7 +1,45 @@
 \name{NEWS}
 \title{NEWS file for the Exact package}
 
-\section{Changes in Version 2.0 (2019-09-08)}{
+\section{Changes in Version 3.1 (2021-11-26)}{
+  \itemize{
+
+    \item{Added tsmethod parameter to unconditional paired tests}
+
+    \item{Added "UCM" test and changed names of method options for unconditional paired tests}
+    
+    \item{Fixed issue with unconditional paired tests where confidence bounds are not possible based on extreme delta}
+    
+    \item{Fixed error message for two independent sample tests when confidence bounds are either 0 or 1.  Thanks to Ping Mahling for pointing out this issue}
+  }
+}
+
+
+\section{Changes in Version 3.0 (2021-09-01)}{
+  \itemize{
+
+    \item{Added unconditional exact tests to compare two paired proportions!  Three functions are added: paired.exact.test, paired.reject.region, and power.paired.test}
+    
+    \item{Fixed issues with CSM test and greatly improved computation time.  Added the parameter "useStoredCSM", which uses a stored pre-computed CSM ordering matrix for sample sizes with max(n1,n2) <= 100 for two independent proportions and sample size <= 200 for two paired proportions.  Stored CSM ordering matrix is around 25MB, so is loaded from the ExactData R package from GitHub using the drat R package}
+
+    \item{For two independent proportions, removed method option "csm approximate", changed method option "chisq" to "pearson chisq", and removed ref.pvalue option in exact.reject.region() and power.exact.test() functions.  Added more checks to make it more user-friendly}
+  }
+}
+
+
+\section{Changes in Version 2.1 (2020-10-01)}{
+  \itemize{
+    
+    \item{Fixed non-inferiority (equivalence) tests and confidence interval calculations.  Code can now perform these tests and CIs for all methods}
+
+    \item{Added tsmethod parameter.  This allows user to perform a two-sided test by either squaring the statistic (default; previous versions), or by performing one-sided test and doubling the p-value}
+    
+    \item{Removed precision parameter and use rootSolve R package to determine confidence interval}
+  }
+}
+
+
+\section{Changes in Version 2.0 (2019-10-14)}{
   \itemize{
     
     \item{Added \code{exact.reject.region} function}

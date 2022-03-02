@@ -67,10 +67,16 @@ cluster_edge_betweenness
                         betweenness
 cluster_fast_greedy     Community structure via greedy optimization of
                         modularity
+cluster_fluid_communities
+                        Community detection algorithm based on
+                        interacting fluids
 cluster_infomap         Infomap community finding
 cluster_label_prop      Finding communities based on propagating labels
 cluster_leading_eigen   Community structure detecting based on the
                         leading eigenvector of the community matrix
+cluster_leiden          Finding community structure of a graph using
+                        the Leiden algorithm of Traag, van Eck &
+                        Waltman.
 cluster_louvain         Finding community structure by multi-level
                         optimization of modularity
 cluster_optimal         Optimal community structure
@@ -220,7 +226,7 @@ is_directed             Check whether a graph is directed
 is_graphical            Is a degree sequence graphical?
 is_igraph               Is this object an igraph graph?
 is_matching             Graph matching
-is_min_separator        Minumal vertex separators
+is_min_separator        Minimal vertex separators
 is_named                Named graphs
 is_printer_callback     Is this a printer callback?
 is_separator            Vertex separators

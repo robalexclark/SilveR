@@ -1,5 +1,4 @@
 ### R code from vignette source 'multcomp-examples.Rnw'
-### Encoding: UTF-8
 
 ###################################################
 ### code chunk number 1: setup

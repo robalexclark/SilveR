@@ -1,6 +1,18 @@
 \name{NEWS} 
 \title{News for Package 'sp'}
-\section{Changes in version 1.4-1 (2020-xx-yy)}{
+\section{Changes in version 1.4-6 (2020-08-27)}{
+\itemize{
+	\item add CRS cache and update CRS print method; https://github.com/edzer/sp/pull/103
+}
+}
+
+\section{Changes in version 1.4-2 (2020-05-20)}{
+\itemize{
+	\item Adding a wkt() method and muting internal warnings; https://github.com/edzer/sp/pull/76
+}
+}
+
+\section{Changes in version 1.4-1 (2020-02-29)}{
 \itemize{
 	\item warn on NULL projargs in CRS(); https://github.com/edzer/sp/pull/74
 }
@@ -33,7 +45,7 @@
   \itemize{
 	\item update sp gallery, see \url{https://edzer.github.io/sp/}
 	\item move \code{methods} from Imports: to Depends:
-    \item improve base plot methods for \code{SpatialGridDataFrame} and \code{SpatialPixelsDataFrame} objects, see \url{http://r-spatial.org/r/2016/03/08/plotting-spatial-grids.html} for examples
+    \item improve base plot methods for \code{SpatialGridDataFrame} and \code{SpatialPixelsDataFrame} objects, see \url{https://r-spatial.org/r/2016/03/08/plotting-spatial-grids.html} for examples
 	\item improve the graticule \code{labels} methods, see \code{?gridlines}
 	\item fix hole assignment for triangles, reported in \url{https://stat.ethz.ch/pipermail/r-sig-geo/2016-March/024214.html}
     \item \code{as.SpatialPolygons.GridTopology} drops rownames of coordinates generated, but keeps coordinate (column) names from the \code{cellcentre.offset} slot of the grid

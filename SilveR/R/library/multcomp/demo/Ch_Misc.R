@@ -167,6 +167,8 @@ abline(h = 467, lty=3)
 ###################################################
 ### chunk number 22: ad-1
 ###################################################
+if (FALSE) {
+### asd.sim doesn't exist in asd anymore
 library("asd")
 res <- asd.sim(nsamp = c(110, 110), early = c(0.3, 0.3), 
      final = c(0.3, 0.3), nsim = 10000, corr = 1, select = 1, 
@@ -204,34 +206,27 @@ lines(lowess(d,res[3,]), lty="13")
 lines(lowess(d,res[4,]), lty="F5")
 legend(0.22,0.55,c("A","B","C","D"), lty=c("11", "44", "13", "F5"), bty = "n")
 
+}
 
 ###################################################
 ### chunk number 25: mcpmod-1
 ###################################################
 library("DoseFinding")
-candMods <- list(linear = NULL, emax = 0.2, 
-     logistic = c(0.25, 0.09))
+candMods <- Mods(linear = NULL, emax = 0.2, 
+     logistic = c(0.25, 0.09), doses = c(0, 0.05, 0.2, 0.6, 1))
 
 
 ###################################################
 ### chunk number 26: mcpmod-2
 ###################################################
-doses <- c(0, 0.05, 0.2, 0.6, 1)
-plotModels(candMods, doses, base = 0, maxEff = 1)
-
-
-###################################################
-### chunk number 27: mcpmod-3
-###################################################
-print(plotModels(candMods, doses, base = 0, maxEff = 1, scal = 1.2))
-
+plot(candMods, base = 0, maxEff = 1)
 
 ###################################################
 ### chunk number 28: mcpmod-4
 ###################################################
 data("biom", package = "DoseFinding")
-res <- MCPMod(resp ~ dose, biom, candMods, alpha = 0.05, 
-     pVal = TRUE, clinRel = 0.4)
+res <- MCPMod(dose, resp, biom, candMods, alpha = 0.05, 
+     pVal = TRUE, Delta=0.5)
 
 
 ###################################################

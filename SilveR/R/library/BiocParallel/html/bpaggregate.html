@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Apply a function on subsets of data frames</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bpaggregate {BiocParallel}"><tr><td>bpaggregate {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Apply a function on subsets of data frames</h2>
+
+<h3>Description</h3>
+
+<p>This is a parallel version of <code><a href="../../stats/help/aggregate.html">aggregate</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+
+## S4 method for signature 'formula,BiocParallelParam'
+bpaggregate(x, data, FUN, ..., 
+    BPREDO=list(), BPPARAM=bpparam())
+
+## S4 method for signature 'data.frame,BiocParallelParam'
+bpaggregate(x, by, FUN, ..., 
+    simplify=TRUE, BPREDO=list(), BPPARAM=bpparam())
+
+## S4 method for signature 'matrix,BiocParallelParam'
+bpaggregate(x, by, FUN, ..., 
+    simplify=TRUE, BPREDO=list(), BPPARAM=bpparam())
+
+## S4 method for signature 'ANY,missing'
+bpaggregate(x, ..., BPREDO=list(), BPPARAM=bpparam())
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>A <code>data.frame</code>, <code>matrix</code> or a formula.
+</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>A list of factors by which <code>x</code> is split;
+applicable when <code>x</code> is <code>data.frame</code> or <code>matrix</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>A <code>data.frame</code>; applicable when <code>x</code> is a
+<code>formula</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+<p>Function to apply.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments for <code>FUN</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>simplify</code></td>
+<td>
+<p>If set to <code>TRUE</code>, the return values of <code>FUN</code>
+will be simplified using <code><a href="../../base/html/lapply.html">simplify2array</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>BPPARAM</code></td>
+<td>
+<p>An optional <code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> instance
+determining the parallel back-end to be used during evaluation.
+</p>
+</td></tr>
+<tr valign="top"><td><code>BPREDO</code></td>
+<td>
+<p>A <code>list</code> of output from <code>bpaggregate</code> with one
+or more failed elements. When a list is given in <code>BPREDO</code>,
+<code>bpok</code> is used to identify errors, tasks are rerun and inserted
+into the original results.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>bpaggregate</code> is a generic with methods for <code>data.frame</code>
+<code>matrix</code> and <code>formula</code> objects. <code>x</code> is divided
+into subsets according to factors in <code>by</code>. Data chunks are 
+sent to the workers, <code>FUN</code> is applied and results are returned
+as a <code>data.frame</code>.
+</p>
+<p>The function is similar in spirit to <code><a href="../../stats/help/aggregate.html">aggregate</a></code>
+from the stats package but <code><a href="../../stats/help/aggregate.html">aggregate</a></code> is not 
+explicitly called. The <code>bpaggregate</code> <code>formula</code> method 
+reformulates the call and dispatches to the <code>data.frame</code> method 
+which in turn distributes data chunks to workers with <code>bplapply</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>See <code><a href="../../stats/help/aggregate.html">aggregate</a></code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan <a href="mailto:mtmorgan@fhcrc.org">mailto:mtmorgan@fhcrc.org</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+if (interactive() &amp;&amp; require(Rsamtools) &amp;&amp; require(GenomicAlignments)) {
+
+  fl &lt;- system.file("extdata", "ex1.bam", package="Rsamtools")
+  param &lt;- ScanBamParam(what = c("flag", "mapq"))
+  gal &lt;- readGAlignments(fl, param=param) 
+
+  ## Report the mean map quality by range cutoff:
+  cutoff &lt;- rep(0, length(gal))
+  cutoff[start(gal) &gt; 1000 &amp; start(gal) &lt; 1500] &lt;- 1
+  cutoff[start(gal) &gt; 1500] &lt;- 2 
+  bpaggregate(as.data.frame(mcols(gal)$mapq), list(cutoff = cutoff), mean)
+
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

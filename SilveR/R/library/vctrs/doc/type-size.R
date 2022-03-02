@@ -135,9 +135,6 @@ allow_lossy_cast(
   to_ptype = integer()
 )
 
-## ---- echo = FALSE, fig.cap="Summary of vctrs casting rules"------------------
-knitr::include_graphics("../man/figures/combined.png", dpi = 300)
-
 ## -----------------------------------------------------------------------------
 x <- sample(1:10)
 df <- data.frame(x = x)

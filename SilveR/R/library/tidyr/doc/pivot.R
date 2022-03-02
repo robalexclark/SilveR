@@ -15,7 +15,7 @@ relig_income
 
 ## -----------------------------------------------------------------------------
 relig_income %>% 
-  pivot_longer(-religion, names_to = "income", values_to = "count")
+  pivot_longer(!religion, names_to = "income", values_to = "count")
 
 ## -----------------------------------------------------------------------------
 billboard
@@ -29,16 +29,26 @@ billboard %>%
     values_drop_na = TRUE
   )
 
-## -----------------------------------------------------------------------------
-billboard %>% 
-  pivot_longer(
-    cols = starts_with("wk"), 
-    names_to = "week", 
-    names_prefix = "wk",
-    names_ptypes = list(week = integer()),
-    values_to = "rank",
-    values_drop_na = TRUE,
-  )
+## ---- eval = FALSE------------------------------------------------------------
+#  billboard %>%
+#    pivot_longer(
+#      cols = starts_with("wk"),
+#      names_to = "week",
+#      names_prefix = "wk",
+#      names_transform = list(week = as.integer),
+#      values_to = "rank",
+#      values_drop_na = TRUE,
+#    )
+
+## ---- eval = FALSE------------------------------------------------------------
+#  billboard %>%
+#    pivot_longer(
+#      cols = starts_with("wk"),
+#      names_to = "week",
+#      names_transform = list(week = readr::parse_number),
+#      values_to = "rank",
+#      values_drop_na = TRUE,
+#    )
 
 ## -----------------------------------------------------------------------------
 who
@@ -51,20 +61,21 @@ who %>% pivot_longer(
   values_to = "count"
 )
 
-## -----------------------------------------------------------------------------
-who %>% pivot_longer(
-  cols = new_sp_m014:newrel_f65,
-  names_to = c("diagnosis", "gender", "age"), 
-  names_pattern = "new_?(.*)_(.)(.*)",
-  names_ptypes = list(
-    gender = factor(levels = c("f", "m")),
-    age = factor(
-      levels = c("014", "1524", "2534", "3544", "4554", "5564", "65"), 
-      ordered = TRUE
-    )
-  ),
-  values_to = "count",
-)
+## ---- eval = FALSE------------------------------------------------------------
+#  who %>% pivot_longer(
+#    cols = new_sp_m014:newrel_f65,
+#    names_to = c("diagnosis", "gender", "age"),
+#    names_pattern = "new_?(.*)_(.)(.*)",
+#    names_transform = list(
+#      gender = ~ readr::parse_factor(.x, levels = c("f", "m")),
+#      age = ~ readr::parse_factor(
+#        .x,
+#        levels = c("014", "1524", "2534", "3544", "4554", "5564", "65"),
+#        ordered = TRUE
+#      )
+#    ),
+#    values_to = "count",
+#  )
 
 ## -----------------------------------------------------------------------------
 family <- tribble(
@@ -81,7 +92,7 @@ family
 ## -----------------------------------------------------------------------------
 family %>% 
   pivot_longer(
-    -family, 
+    !family, 
     names_to = c(".value", "child"), 
     names_sep = "_", 
     values_drop_na = TRUE
@@ -111,17 +122,21 @@ pnl <- tibble(
 
 pnl %>% 
   pivot_longer(
-    -c(x, a, b), 
+    !c(x, a, b), 
     names_to = c(".value", "time"), 
     names_pattern = "(.)(.)"
   )
 
 ## -----------------------------------------------------------------------------
-df <- tibble(x = 1:3, y = 4:6, y = 5:7, y = 7:9, .name_repair = "minimal")
+df <- tibble(id = 1:3, y = 4:6, y = 5:7, y = 7:9, .name_repair = "minimal")
 df
 
 ## -----------------------------------------------------------------------------
-df %>% pivot_longer(-x, names_to = "name", values_to = "value")
+df %>% pivot_longer(!id, names_to = "name", values_to = "value")
+
+## -----------------------------------------------------------------------------
+df <- tibble(id = 1:3, x1 = 4:6, x2 = 5:7, y1 = 7:9, y2 = 10:12)
+df %>% pivot_longer(!id, names_to = ".value", names_pattern = "(.).")
 
 ## -----------------------------------------------------------------------------
 fish_encounters
@@ -133,7 +148,7 @@ fish_encounters %>% pivot_wider(names_from = station, values_from = seen)
 fish_encounters %>% pivot_wider(
   names_from = station, 
   values_from = seen,
-  values_fill = list(seen = 0)
+  values_fill = 0
 )
 
 ## -----------------------------------------------------------------------------
@@ -171,11 +186,115 @@ production %>% pivot_wider(
 )
 
 ## -----------------------------------------------------------------------------
+production %>% pivot_wider(
+  names_from = c(product, country), 
+  values_from = production,
+  names_sep = ".",
+  names_prefix = "prod."
+)
+
+production %>% pivot_wider(
+  names_from = c(product, country), 
+  values_from = production,
+  names_glue = "prod_{product}_{country}"
+)
+
+## -----------------------------------------------------------------------------
 us_rent_income
 
 ## -----------------------------------------------------------------------------
 us_rent_income %>% 
   pivot_wider(names_from = variable, values_from = c(estimate, moe))
+
+## -----------------------------------------------------------------------------
+weekdays <- c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+
+daily <- tibble(
+  day = factor(c("Tue", "Thu", "Fri", "Mon"), levels = weekdays),
+  value = c(2, 3, 1, 5)
+)
+
+daily
+
+## -----------------------------------------------------------------------------
+pivot_wider(daily, names_from = day, values_from = value)
+
+## -----------------------------------------------------------------------------
+pivot_wider(daily, names_from = day, values_from = value, names_expand = TRUE)
+
+## -----------------------------------------------------------------------------
+percentages <- tibble(
+  year = c(2018, 2019, 2020, 2020),
+  type = factor(c("A", "B", "A", "B"), levels = c("A", "B")),
+  percentage = c(100, 100, 40, 60)
+)
+
+percentages
+
+pivot_wider(
+  percentages,
+  names_from = c(year, type),
+  values_from = percentage,
+  names_expand = TRUE,
+  values_fill = 0
+)
+
+## -----------------------------------------------------------------------------
+daily <- mutate(daily, type = factor(c("A", "B", "B", "A")))
+daily
+
+## -----------------------------------------------------------------------------
+pivot_wider(
+  daily, 
+  names_from = type, 
+  values_from = value,
+  values_fill = 0
+)
+
+## -----------------------------------------------------------------------------
+pivot_wider(
+  daily, 
+  names_from = type, 
+  values_from = value,
+  values_fill = 0,
+  id_expand = TRUE
+)
+
+## -----------------------------------------------------------------------------
+updates <- tibble(
+  county = c("Wake", "Wake", "Wake", "Guilford", "Guilford"),
+  date = c(as.Date("2020-01-01") + 0:2, as.Date("2020-01-03") + 0:1),
+  system = c("A", "B", "C", "A", "C"),
+  value = c(3.2, 4, 5.5, 2, 1.2)
+)
+
+updates
+
+## -----------------------------------------------------------------------------
+pivot_wider(
+  updates, 
+  id_cols = county, 
+  names_from = system, 
+  values_from = value
+)
+
+## -----------------------------------------------------------------------------
+pivot_wider(
+  updates, 
+  id_cols = county, 
+  names_from = system, 
+  values_from = value,
+  unused_fn = list(date = max)
+)
+
+## -----------------------------------------------------------------------------
+pivot_wider(
+  updates, 
+  id_cols = county, 
+  names_from = system, 
+  values_from = value,
+  unused_fn = list(date = list)
+)
 
 ## -----------------------------------------------------------------------------
 contacts <- tribble(
@@ -230,7 +349,7 @@ multi <- tribble(
 
 ## -----------------------------------------------------------------------------
 multi2 <- multi %>% 
-  pivot_longer(-id, values_drop_na = TRUE) %>% 
+  pivot_longer(!id, values_drop_na = TRUE) %>% 
   mutate(checked = TRUE)
 multi2
 
@@ -240,12 +359,12 @@ multi2 %>%
     id_cols = id,
     names_from = value, 
     values_from = checked, 
-    values_fill = list(checked = FALSE)
+    values_fill = FALSE
   )
 
 ## -----------------------------------------------------------------------------
 spec <- relig_income %>% build_longer_spec(
-  cols = -religion, 
+  cols = !religion, 
   names_to = "income",
   values_to = "count"
 )

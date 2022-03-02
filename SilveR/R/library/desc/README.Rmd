@@ -1,22 +1,26 @@
+---
+output: github_document
+---
 
 ```{r, setup, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
   comment = "#>",
   tidy = FALSE,
-  error = FALSE,
-  fig.width = 8,
-  fig.height = 8)
+  error = FALSE
+)
 ```
 
 # desc
 
 > Parse DESCRIPTION files
 
-[![Linux Build Status](https://travis-ci.org/r-lib/desc.svg?branch=master)](https://travis-ci.org/r-lib/desc)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/desc?svg=true)](https://ci.appveyor.com/project/gaborcsardi/desc)
-[![](http://www.r-pkg.org/badges/version/desc)](http://www.r-pkg.org/pkg/desc)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/desc)](http://www.r-pkg.org/pkg/desc)
-[![Coverage Status](https://img.shields.io/codecov/c/github/r-lib/desc/master.svg)](https://codecov.io/github/r-lib/desc?branch=master)
+<!-- badges: start -->
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![R-CMD-check](https://github.com/r-lib/desc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/desc/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/desc/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/desc?branch=main)
+[![](https://www.r-pkg.org/badges/version/desc)](https://www.r-pkg.org/pkg/desc)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/desc)](https://www.r-pkg.org/pkg/desc)
+<!-- badges: end -->
 
 Parse, manipulate and reformat DESCRIPTION files. The package
 provides two APIs, one is object oriented, the other one is
@@ -39,7 +43,7 @@ procedural and manipulates the files *in place*.
 ## Installation
 
 ```{r eval = FALSE}
-source("https://install-github.me/r-lib/desc")
+install.packages("desc")
 ```
 
 ## The object oriented API
@@ -50,16 +54,23 @@ library(desc)
 
 ### Introduction
 
-The object oriented API uses [R6](https://github.com/wch/R6) classes.
+The object oriented API uses [R6](https://github.com/r-lib/R6) classes.
 
 ### Loading or creating new `DESCRIPTION` files
 
-A new `description` object can be created by reading a `DESCRPTION`
+A new `description` object can be created by reading a `DESCRIPTION`
 file form the disk. By default the `DESCRIPTION` file in the current
 directory is read:
 
-```{r}
+```{r include = FALSE}
+desc <- description$new("tools/pkg1")
+```
+
+```{r eval = FALSE}
 desc <- description$new()
+```
+
+```{r}
 desc
 ```
 
@@ -122,10 +133,24 @@ Authors information, when specified via the `Authors@R` field,
 also has a simplified API:
 
 ```{r}
-desc <- description$new("DESCRIPTION2")
+desc <- description$new("tools/pkg2")
 desc$get_authors()
 desc$add_author("Bugs", "Bunny", email = "bb@acme.com")
 desc$add_me()
+desc$add_author_gh("jeroen")
+desc$get_authors()
+```
+
+If the `Author` field is specified, it can be changed to a `Authors@R` field
+using `coerce_authors_at_r()`, incorporating the `Maintainer` information if necessary: 
+
+```{r, error = TRUE}
+desc <- description$new("!new")
+desc$del("Authors@R")
+desc$del("Maintainer")
+desc$set(Author = "Gábor Csárdi <csardi.gabor@gmail.com>")
+desc$get_authors()
+desc$coerce_authors_at_r()
 desc$get_authors()
 ```
 
@@ -155,6 +180,16 @@ So the full list of dependencies are now
 ```{r}
 desc_get_deps()
 ```
+
+```{r include = FALSE}
+desc_del_dep("newpackage")
+```
+
+## Code of Conduct
+
+Please note that the desc project is released with a
+[Contributor Code of Conduct](http://r-lib.github.io/desc/dev/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
 
 ## License
 

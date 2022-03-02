@@ -1,6 +1,6 @@
 Package: plyr
 Title: Tools for Splitting, Applying and Combining Data
-Version: 1.8.5
+Version: 1.8.6
 Authors@R: 
     person(given = "Hadley",
            family = "Wickham",
@@ -25,10 +25,10 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
 NeedsCompilation: yes
-Packaged: 2019-12-09 22:21:13 UTC; hadley
+Packaged: 2020-03-02 23:46:56 UTC; hadley
 Author: Hadley Wickham [aut, cre]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
-Date/Publication: 2019-12-10 11:30:12 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-03 01:06:30 UTC; windows
+Date/Publication: 2020-03-03 14:40:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 21:19:56 UTC; windows
 Archs: i386, x64

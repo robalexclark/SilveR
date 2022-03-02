@@ -236,7 +236,7 @@ namespace SilveR.Services
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {
                         message = message + "No R install could be found on this system. It is recommended that you copy and run the following shell script to install the correct version of R. Then, click the 'Install R packages' button under settings to install the correct R packages." + Environment.NewLine;
-                        message = message + "apt-get install r-base-core=3.5.2-1build1 -y";
+                        message = message + "apt-get install r-base -y";
                     }
                     else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                     {

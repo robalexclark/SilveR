@@ -2,6 +2,7 @@
 
 %% packages
 \usepackage{amsfonts,amstext,amsmath}
+\usepackage{lmodern}
 
 %% need no \usepackage{Sweave.sty}
 \SweaveOpts{eps = FALSE, keep.source = TRUE, echo = FALSE}
@@ -12,7 +13,7 @@
 %\VignettePackage{coin}
 
 %% math commands
-\newcommand{\R}{\mathbb{R} }
+\newcommand{\R}{\mathbb{R}}
 \newcommand{\Var}{\COV}
 \newcommand{\V}{\COV}
 \newcommand{\z}{\mathbf{z}}
@@ -24,7 +25,11 @@
 \newcommand{\x}{\mathbf{x}}
 \newcommand{\y}{\mathbf{y}}
 \renewcommand{\t}{\mathbf{t}}
-\renewcommand{\vec}{\text{vec}}
+\newcommand{\mub}{\boldsymbol{\mu}}
+\newcommand{\sigmab}{\boldsymbol{\sigma}}
+\newcommand{\Sigmab}{\boldsymbol{\Sigma}}
+\let\vec\relax
+\DeclareMathOperator{\vec}{vec}
 
 %% code commands
 \newcommand{\Rclass}[1]{\code{"#1"}}
@@ -55,7 +60,7 @@
   conceptual framework that embeds different permutation test procedures into a common
   theory, a computational framework is established in \pkg{coin} that
   likewise embeds the corresponding \proglang{R} functionality in a common
-  \proglang{S}4 class structure with associated generic functions.
+  \proglang{S4} class structure with associated generic functions.
   As a consequence, the computational tools in \pkg{coin} inherit
   the flexibility of the underlying theory and conditional inference
   functions for important special cases can be set up easily.
@@ -176,7 +181,7 @@ tests, are implemented in
 many different statistical computing environments.
 These implementations, for example
 \code{wilcox.test()} for the Wilcoxon-Mann-Whitney test or
-\code{mantelhaen.test()} for the Cochran-Mantel-Haenszel $\chi^2$ test in \proglang{R} \citep{rcore2007}
+\code{mantelhaen.test()} for the Cochran-Mantel-Haenszel $\chi^2$ test in \proglang{R} \citep{rcore2019}
 or the tools implemented in \pkg{StatXact} \citep{StatXact6},
 \pkg{LogXact} \citep{LogXact8}, or \proglang{Stata} \citep{Stata}---see \cite{Oster2002,Oster2003}
 for an overview---all follow the classical classification scheme of inference procedures and
@@ -184,20 +189,20 @@ offer procedures for location problems, scale problems, correlation,
 or nominal and ordered categorical data.
 Thus, each test procedure is
 implemented separately, maybe with the exception of conditional
-versions of linear rank statistics \citep{theory-of-:-1999} in \texttt{NPAR1WAY}
+versions of linear rank statistics \citep{theory-of-:-1999} in \texttt{PROC NPAR1WAY}
 as available in \proglang{SAS} \citep{SAS}.
 
 Theoretical insights by \cite{StrasserWeber1999} open up the way
 to a unified treatment of a huge class of permutation
 tests. The \pkg{coin} package for \underline{co}nditional \underline{in}ference
 is the computational counterpart to this theoretical framework,
-implemented in the \proglang{R} system for statistical computing \citep{rcore2007}.
+implemented in the \proglang{R} system for statistical computing \citep{rcore2019}.
 \cite{Hothorn:2006:AmStat} introduce the package and illustrate the
 transition from theory to practice. Here, we focus on the design principles upon which the
 \pkg{coin} implementation is based as well as on the more technical issues
 that need to be addressed in the implementation of such conceptual
 tools.
-Within package \pkg{coin}, formal \proglang{S}4 classes describe the data model
+Within package \pkg{coin}, formal \proglang{S4} classes describe the data model
 and the conditional test procedures,
 consisting of multivariate linear statistics, univariate test statistics
 and a reference distribution. Thus, one can work with objects representing
@@ -211,22 +216,22 @@ thus providing the computational counterpart of the theoretical framework of
 \cite{StrasserWeber1999}.
 
 Here, we start out with an illustrative application of \code{independence_test()}
-to a small 2-sample problem (see Table~\ref{rotarod}) and then continue to
+to a small two-sample problem (see Table~\ref{rotarod}) and then continue to
 introduce the underlying computational building blocks using the same data set.
 The data was used previously by \cite{Bergmann:2000} as a challenging example
 in a comparison of test statistics and $p$-values of the Wilcoxon-Mann-Whitney
 rank sum test as reported by eleven statistical packages.
-More specifically, $n = 24$ rats received a fixed oral dose of a centrally
+More specifically, $n = \Sexpr{nrow(rotarod)}$ rats received a fixed oral dose of a centrally
 acting muscle relaxant as active treatment or a saline solvent as control. The animals were
 placed on a rotating cylinder and the length of time each rat remained on the cylinder was
 measured, up to a maximum of $300$ seconds. The rats were randomly assigned to the control
 and treatment groups, thus a re-randomization test as implemented
 in \code{independence_test()} is the appropriate way to investigate
 if the response is independent of the group assignment. The data are particularly
-challenging because of the many ties in the (right-censored) response ($\Sexpr{sum(rotarod$time == 300)}$
+challenging because of the many ties in the (right-censored) response ($\Sexpr{sum(rotarod[["time"]] == 300)}$
 observations take the maximal value $300$) and the quasi-complete separation (smaller values of time
 are only observed in the treatment group). Conceptually, this makes computation of the
-two-sided exact $p$-value for any 2-sample contrast very simple:
+two-sided exact $p$-value for any two-sample contrast very simple:
 $p = 2 \cdot {19 \choose 12} / {24 \choose 12} =
 \Sexpr{round(2 * choose(19, 12) / choose(24, 12), digits = 5)}$. However,
 in software, this often makes computations of the exact $p$-value more difficult
@@ -235,14 +240,15 @@ because several simple algorithms fail.
 \begin{table}[t]
 \begin{center}
 \begin{tabular}{|r|rrrrrrrrrrrr|}
-\hline
-\code{group} & \multicolumn{12}{|l|}{\code{time}} \\ \hline
-control & \Sexpr{paste(rotarod$time[1:12], collapse = " & ")} \\
-treatment & \Sexpr{paste(sort(rotarod$time[13:24]), collapse = " & ")} \\
-\hline
+  \hline
+  \code{group} & \multicolumn{12}{|l|}{\code{time}} \\
+  \hline
+  control & \Sexpr{paste(rotarod[["time"]][1:12], collapse = " & ")} \\
+  treatment & \Sexpr{paste(sort(rotarod[["time"]][13:24]), collapse = " & ")} \\
+  \hline
 \end{tabular}
 \caption{The \code{rotarod} data: length of \code{time} on rotating cylinder by
-\code{group}.  \label{rotarod}}
+  \code{group}. \label{rotarod}}
 \end{center}
 \end{table}
 
@@ -275,7 +281,7 @@ computed, from which a $p$-value is derived, and everything is wrapped
 into an object that can be conveniently printed or queried for more
 detailed information. After briefly reviewing the underlying theory from
 \cite{StrasserWeber1999} in Section~\ref{sec:theory}, we introduce
-formal \proglang{S}4 classes and methods capturing all the outlined
+formal \proglang{S4} classes and methods capturing all the outlined
 steps in Section~\ref{sec:class}. Section~\ref{sec:ui} provides further
 information about high-level user interfaces and extensibility, and
 Section~\ref{sec:practice} further illustrates how to employ the
@@ -290,34 +296,34 @@ In the following we give a brief overview of the general theory for permutation 
 as developed by \cite{StrasserWeber1999} and implemented by \cite{Hothorn:2006:AmStat}.
 
 The task is to test the independence of two variables $\Y$ and $\X$
-from sample spaces $\mathcal{Y}$ and $\mathcal{X}$ which may
+from sample spaces $\sY$ and $\sX$ which may
 be measured at arbitrary scales and may be multivariate as well.
-In addition, $b \in \{1, \dots, k\}$, a factor measured at $k$ levels, indicates a certain block
+In addition, $B \in \{1, \dots, r\}$, a nominal factor with $r$ levels, indicates a certain block
 structure of the observations: for example study centers in a
 multi-center randomized clinical trial where only a re-randomization of observations within blocks
 is admissible.
 We are interested in testing the null hypothesis
-\begin{eqnarray*}
-  H_0: D(\Y | \X, b) = D(\Y | b)
-\end{eqnarray*}
-of conditional independence of $\Y$ and $\X$ within blocks~$b$ against
+\begin{equation*}
+  H_0: D(\Y | \X, B) = D(\Y | B)
+\end{equation*}
+of conditional independence of $\Y$ and $\X$ within blocks~$B$ against
 arbitrary alternatives, for example shift or scale alternatives, linear trends,
 association in contingency tables etc.
 \cite{StrasserWeber1999} suggest deriving
 scalar test statistics for testing $H_0$ from multivariate linear statistics
 of the form
-\begin{eqnarray} \label{linstat}
-\T =  \sum_{j = 1}^k \T_j \in \R^{pq}
-\end{eqnarray}
+\begin{equation} \label{linstat}
+  \T = \sum_{j = 1}^r \T_j \in \R^{pq}
+\end{equation}
 where the linear statistic for each block is given by
-\begin{eqnarray*}
-\T_j = \vec\left(\sum_{i = 1}^n I(b_i = j) w_i g(\X_i) h(\Y_i)^\top\right)
-\in \R^{pq}.
-\end{eqnarray*}
+\begin{equation*}
+  \T_j = \vec \left( \sum_{i = 1}^n I(B_i = j) w_i g(\X_i) h(\Y_i)^\top \right)
+         \in \R^{pq}.
+\end{equation*}
 The function $I(\cdot)$ is the indicator function and $\vec$
 denotes the vec operator (which stacks the columns of a matrix).
-Here, $g: \mathcal{X} \rightarrow \R^{p \times 1}$ is a transformation of
-the $\X$ measurements and $h: \mathcal{Y} \rightarrow
+Here, $g: \sX \rightarrow \R^{p \times 1}$ is a transformation of
+the $\X$ measurements and $h: \sY \rightarrow
 \R^{q \times 1}$ is a transformation of the $\Y$ values. The function $h(\Y_i)
 = h(\Y_i, (\Y_1, \dots, \Y_n))$ is also called \emph{influence function} and
 may depend on the full vector of responses
@@ -325,42 +331,43 @@ $(\Y_1, \dots, \Y_n)$, however only
 in a permutation symmetric way, i.e., the value of the
 function must not depend on the order in which $\Y_1, \dots, \Y_n$ appear.
 The case weights $w_i$ are assumed to be integer-valued, indicating
-that $w_i$ observations with realizations $\Y_i$, $\X_i$ and $b_i$
+that $w_i$ observations of $\Y_i$, $\X_i$ and $B_i$, $i = 1, \dots, n$,
 are available, with default $w_i \equiv 1$.
 
-The distribution of $\T$  depends on the joint
+The distribution of $\T$ depends on the joint
 distribution of $\Y$ and $\X$, which is unknown under almost all practical
 circumstances. At least under the null hypothesis one can dispose of this
 dependency by fixing $\X_1, \dots, \X_n$ and conditioning on all possible
-permutations of the responses $\Y_1, \dots, \Y_n$ within block $j, j = 1, \dots, k$.
-The conditional expectation $\mu \in \R^{pq}$ and covariance
-$\Sigma \in \R^{pq \times pq}$
+permutations of the responses $\Y_1, \dots, \Y_n$ within block $j$, where $j = 1, \dots, r$.
+The conditional expectation $\mub \in \R^{pq}$ and covariance
+$\Sigmab \in \R^{pq \times pq}$
 of $\T$ under $H_0$ given
-all permutations $\sigma \in S$ of the responses are derived by
+all permutations $S$ of the responses are derived by
 \cite{StrasserWeber1999} and are given in Appendix~\ref{app}.
 Having the conditional expectation and covariance at hand we are able to
 standardize an observed linear statistic $\t \in \R^{pq}$ (of the form
 given in Equation~\ref{linstat}) and aggregate it to some univariate test
-statistic $c = c(\t, \mu,\Sigma)$. Various choices for $c(\t, \mu,\Sigma)$
+statistic $c = c(\t, \mub, \Sigmab)$. Various choices for $c(\t, \mub, \Sigmab)$
 are conceivable, e.g., a quadratic form or a maximum type statistic
 (see Section~\ref{sec:class}).
 In the latter case, a natural first step
 is to standardize each of the $pq$ statistics in $\t$ by its expectation and
 standard deviation:
-\begin{eqnarray} \label{standstat}
-\z = \text{diag}(\Sigma)^{-1/2} (\mathbf{t} - \mu).
-\end{eqnarray}
+\begin{equation} \label{standstat}
+  \z = \sigmab^{-1/2} (\t - \mub).
+\end{equation}
+where $\sigmab \in \R^{pq}$ is the conditional variance, i.e., the diagonal
+elements of the conditional covariance $\Sigmab$.
 
 In the following, we describe a class structure for representing these
 theoretical objects along with possible choices of test statistics $c$
 and computations or approximations of the associated reference
 distributions.
 
-
 \section{A class structure for permutation tests} \label{sec:class}
 
 In this section, the theory of permutation tests, as briefly outlined in the previous
-section, is captured in a set of \proglang{S}4 classes and methods: In
+section, is captured in a set of \proglang{S4} classes and methods: In
 Section~\ref{sec:data}, we suggest objects representing the data and the independence
 problem, for which a test statistic is computed subsequently.
 Objects for the associated reference distribution are constructed in Section~\ref{sec:distr}.
@@ -373,9 +380,9 @@ for the whole testing procedure.
 
 \subsubsection{Data structure}
 
-We are provided with $n$ observations
-$(\Y_i, \X_i, b_i, w_i), i = 1, \dots, n.$
-In addition to variables $\X$, $\Y$, and $b$, it is convenient (for
+We are provided with $n$ realizations of
+$(\Y_i, \X_i, B_i, w_i)$.
+In addition to the variables $\X$, $\Y$, and $B$, it is convenient (for
 example to efficiently represent large contingency tables)
 to include case weights $w_i$, defaulting to $w_i \equiv 1$.
 This data structure is represented by class \Rclass{IndependenceProblem}:
@@ -409,8 +416,8 @@ Note that, in addition to the data, hypothesis and permutation scheme, the
 test statistic $\T$ is defined by objects of class \Rclass{IndependenceTestProblem}
 as well.
 
-In the simplest case of both $\X$ and $\Y$ being univariate
-factors at $p$ and $q$ levels, $g$ and $h$ are
+In the case of both $\X$ and $\Y$ being univariate
+factors with $p$ and $q$ levels, $g$ and $h$ are
 the corresponding dummy codings and the linear statistic $\T$ is the
 (vectorized) $p \times q$ contingency table of $\X$ and $\Y$. In the rats example,
 the default dummy coding for factor \code{group} is employed and a rank
@@ -419,16 +426,17 @@ transformation (via \code{rank_trafo()}) is applied to \code{time}.
 itp <- new("IndependenceTestProblem", ip, ytrafo = rank_trafo)
 @
 
-The linear statistic $\T$, its conditional expectation $\mu$ and covariance $\Sigma$
-are stored in objects of class \Rclass{IndependenceLinearStatistic}:
+The linear statistic and its conditional expectation and covariance are stored
+in objects of class \Rclass{IndependenceLinearStatistic}:
 <<IndependenceLinearStatistic, results = tex>>=
 toLatex(c2t("IndependenceLinearStatistic"))
 @
-Class \Rclass{VarCovar} represents either a complete covariance matrix
-or its diagonal elements only. By default, only the conditional variances
-are stored, the whole covariance matrix can be computed as needed (see below).
-In the rotating rats example, such an object is easily created via
-
+The $j$th column of the $pq \times r$ matrices \code{linearstatistic} and
+\code{expectation} corresponds to $\T_j$ and $\mub_j$, respectively.  The
+\code{covariance} slot is a $pq (pq + 1) / 2 \times r$ matrix where each column
+corresponds to the lower triangular elements of $\Sigmab_j$, but the full
+covariance matrix can be extracted as needed (see below).  In the rotating rats
+example, such an object is easily created via
 <<Ex-IndependenceLinearStatistic, echo = TRUE>>=
 ils <- new("IndependenceLinearStatistic", itp)
 @
@@ -440,37 +448,49 @@ statistic(ils, type = "linear")
 @
 This is simply the sum of the average ranks in the control group, i.e., $180 = 12 \cdot 15$
 because all 12 observations have the maximal average rank 15. Additionally, the associated
-conditional mean and variance under $H_0$ can be computed via:
+conditional mean and variance under $H_0$ can be computed using
 <<Ex-IndependenceLinearStatistic-statistic, echo = TRUE>>=
 expectation(ils)
 variance(ils)
 @
 based upon which we can now set up a test statistic.
 
-
 \subsubsection{Test statistics} \label{sec:teststat}
 
 \begin{table}[tb]
 \begin{center}
 \begin{tabular}{lp{9.5cm}}
-\hline
-Function & Description \\ \hline
-\code{statistic(object, type)} & Extraction of the linear statistic $\t$ (\code{type = "linear"}),
-                                 the centered statistic $\t - \mu$ (\code{type = "centered"}),
-                                 the standardized statistic $\z$ (\code{type = "standardized"}) or
-                                 the final test statistic $c$ (\code{type = "test"}, only for
-                                 objects inheriting from \Rclass{IndependenceTestStatistic}). \\
-\code{expectation(object)} & Extraction of the conditional expectation~$\mu$. \\
-\code{covariance(object)} & Extraction of the complete conditional covariance
-  matrix~$\Sigma$. \\
-\code{variance(object)} & Extraction of the diagonal elements of the conditional covariance matrix
-                          $\text{diag}(\Sigma)$. \\ \hline
+  \hline
+  Function & Description \\
+  \hline
+  \code{statistic(object, type, partial)}
+           & Extraction of the aggregated (\code{partial = FALSE}) or partial
+             (\code{partial = TRUE}) linear statistic (\code{type = "linear"})
+             $\t$ or $\t_j$, centered statistic (\code{type = "centered"})
+             $\t - \mub$ or $\t_j - \mub_j$, and standardized statistic
+             (\code{type = "standardized"}) $\z$ or $\z_j$, respectively.  For
+             objects inheriting from \Rclass{IndependenceTestStatistic}, the
+             univariate test statistic $c$ (\code{type = "test"}). \\
+  \code{expectation(object, partial)}
+           & Extraction of the aggregated (\code{partial = FALSE}) or partial
+             (\code{partial = TRUE}) conditional expectation $\mub$ or $\mub_j$,
+             respectively. \\
+  \code{variance(object, partial)}
+           & Extraction of the aggregated (\code{partial = FALSE}) or partial
+             (\code{partial = TRUE}) conditional variance $\sigmab$ or
+             $\sigmab_j$, respectively. \\
+  \code{covariance(object, invert, partial)}
+           & Extraction of the aggregated (\code{partial = FALSE}) or partial
+             (\code{partial = TRUE}) conditional covariance
+             (\code{invert = FALSE}) $\Sigmab$ or $\Sigmab_j$, and its
+             Moore-Penrose inverse (\code{invert = TRUE}) $\Sigmab^+$ or
+             $\Sigmab_j^+$, respectively. \\
+  \hline
 \end{tabular}
 \caption{\label{tab:generics} List of generic functions with
   methods for classes inheriting from \Rclass{IndependenceLinearStatistic}.}
 \end{center}
 \end{table}
-
 
 The specification of the inference procedure is completed by the definition
 of a univariate test statistic $c$
@@ -490,18 +510,17 @@ associated univariate test statistics:
 scalar test statistics $c_\text{scalar}$, maximum-type statistics $c_\text{max}$ and quadratic
 forms $c_\text{quad}$.
 In case of univariate linear statistics $\t$, i.e., for $pq = 1$, a natural test statistic $c$
-is simply the standardized linear statistic
-\begin{eqnarray*}
-c_\text{scalar}(\t, \mu, \Sigma) =
-\frac{\t - \mu}{\sqrt{\Sigma}} = \z.
-\end{eqnarray*}
+is simply the standardized linear statistic (Equation~\ref{standstat})
+\begin{equation*}
+  c_\text{scalar}(\t, \mub, \Sigmab) = \z.
+\end{equation*}
 A special class is available for this
 <<ScalarIndependenceTestStatistic, results = tex>>=
 toLatex(c2t("ScalarIndependenceTestStatistic"))
 @
 that also defines a character vector specifying the alternative to
 test against (\code{"two.sided"}, \code{"greater"} and \code{"less"}).
-Thus, the construction  of a scalar test statistic corresponds
+Thus, the construction of a scalar test statistic corresponds
 to the construction of a suitable object via
 <<Ex-ScalarIndependenceTestStatistic, echo = TRUE>>=
 sits <- new("ScalarIndependenceTestStatistic", ils,
@@ -513,7 +532,7 @@ in the introductory example.
 In the multivariate case ($pq > 1$), a natural extension is to employ a
 maximum-type statistic of the form
 \begin{displaymath}
-  c_\text{max}(\mathbf{t}, \mu, \Sigma)  =
+  c_\text{max}(\t, \mub, \Sigmab) =
   \begin{cases}
     \max \left| \z \right| & \text{(``two-sided'')}, \\
     \min \left( \z \right) & \text{(``less'')}, \\
@@ -527,13 +546,12 @@ in quotes.  Again a special class
 toLatex(c2t("MaxTypeIndependenceTestStatistic"))
 @
 
-
-Alternatively, a quadratic form $c_\text{quad}(\mathbf{t}, \mu, \Sigma)  =
-(\mathbf{t} - \mu)^\top \Sigma^+ (\mathbf{t} - \mu)$ can be used as test statistic. It
+Alternatively, a quadratic form $c_\text{quad}(\t, \mub, \Sigmab) =
+(\t - \mub)^\top \Sigmab^+ (\t - \mub)$ can be used as test statistic. It
 is computationally more expensive because the Moore-Penrose
-inverse $\Sigma^+$ of $\Sigma$ is involved. Such statistics are represented
+inverse $\Sigmab^+$ of $\Sigmab$ is involved. Such statistics are represented
 by objects of class \Rclass{QuadTypeIndependenceTestStatistic} defining slots
-for $\Sigma^+$ and its rank (degrees of freedom):
+for the lower triangular part of $\Sigmab^+$ and its rank (degrees of freedom):
 <<QuadTypeIndependenceTestStatistic, results = tex>>=
 toLatex(c2t("QuadTypeIndependenceTestStatistic"))
 @
@@ -543,10 +561,10 @@ quadratic forms cannot be applied to one-sided hypotheses.
 \subsection{Representation of conditional null distributions} \label{sec:distr}
 
 The conditional distribution (or an approximation thereof)
-and thus the $p$-value corresponding to the statistic $c(\mathbf{t}, \mu, \Sigma)$ can be
+and thus the $p$-value corresponding to the statistic $c(\t, \mub, \Sigmab)$ can be
 computed in several different ways. For some special forms of the
 linear statistic, the exact distribution of the test statistic is tractable.
-For 2-sample problems, the shift algorithm by \cite{axact-dist:1986,exakte-ver:1987}
+For two-sample problems, the shift algorithm by \cite{axact-dist:1986,exakte-ver:1987}
 and the split-up algorithm by
 \cite{vdWiel2001} are implemented as part of the package.
 
@@ -560,8 +578,8 @@ confidence intervals are available from the binomial distribution.
 
 \citet[Theorem 2.3]{StrasserWeber1999} showed that the
 conditional distribution of linear statistics $\T$ with conditional
-expectation $\mu$ and covariance $\Sigma$ tends to a multivariate normal
-distribution with parameters $\mu$ and $\Sigma$ as $\sum_{i = 1}^n I(b_i = j)w_i \rightarrow \infty$ for all $j = 1, \dots, k$.
+expectation $\mub$ and covariance $\Sigmab$ tends to a multivariate normal
+distribution with parameters $\mub$ and $\Sigmab$ as $\sum_{i = 1}^n I(B_i = j)w_i \rightarrow \infty$ for all $j = 1, \dots, r$.
 Thus, the asymptotic conditional distribution of the standardized linear statistic $\z$
 is normal and therefore, $p$-values for scalar or maximum-type univariate statistics
 can be computed directly in the univariate case ($pq = 1$)
@@ -570,7 +588,7 @@ or approximated by numerical algorithms
 in package \pkg{mvtnorm} \citep{PKG:mvtnorm}
 in the multivariate setting. For quadratic forms
 $c_\text{quad}$ which follow a $\chi^2$ distribution with degrees of freedom
-given by the rank of $\Sigma$ \citep[see][Chapter 29]{johnsonkotz1970},
+given by the rank of $\Sigmab$ \citep[see][Chapter 29]{johnsonkotz1970},
 asymptotic probabilities can be computed straightforwardly.
 
 A null distribution is represented by either a distribution (and $p$-value) function
@@ -596,43 +614,54 @@ inheritance from \Rclass{PValue} (an example is given in Section~\ref{sec:ui}).
 \begin{table}[tb]
 \begin{center}
 \begin{tabular}{lp{9.5cm}}
-\hline
-Class & Description \\
-\hline
-\Rclass{ExactNullDistribution} & Exact conditional null distribution (e.g.,
-  computed via the shift algorithm). \\
-\Rclass{ApproxNullDistribution} & Approximation of the exact conditional
-  distribution using conditional Monte Carlo procedures. \\
-\Rclass{AsymptNullDistribution} & Asymptotic conditional
-  distribution (via multivariate normal or $\chi^2$ distribution). \\
-\hline
-Method & Description \\
-\hline
-\code{pvalue(object)} & Computation of the $p$-value (plus a confidence interval if
-  Monte Carlo procedures have been used) based on an observed test statistic $c$ and its
-  conditional null distribution. \\
-\code{midpvalue(object)} & Computation of the mid-$p$-value (plus a confidence interval if
-  Monte Carlo procedures have been used) based on an observed test statistic $c$ and its
-  conditional null distribution. \\
-\code{pvalue_interval(object)} & Computation of the $p$-value interval
-  based on an observed test statistic $c$ and its conditional null distribution. \\
-\code{size(object, alpha, type)} & Computation of the test size at the nominal
-  significance level $\alpha$ using either the rejection region corresponding to
-  the $p$-value (\code{type = "p-value"}) or the mid-$p$-value
-  (\code{type = "mid-p-value"}). \\
-\code{dperm(object, x)} & Evaluation of the probability density function at $x$. \\
-\code{pperm(object, q)} & Evaluation of the cumulative distribution function for quantile $q$.\\
-\code{qperm(object, p)} & Evaluation of the quantile function for probability $p$.\\
-\code{rperm(object, n)} & Generation of $n$ random numbers from the null distribution.\\
-\code{support(object)}  & Extraction of the support of the null distribution.\\
-\hline
+  \hline
+  Class & Description \\
+  \hline
+  \Rclass{ExactNullDistribution}
+        & Exact conditional null distribution (e.g., computed via the shift
+          algorithm). \\
+  \Rclass{ApproxNullDistribution}
+        & Approximation of the exact conditional distribution using conditional
+          Monte Carlo procedures. \\
+  \Rclass{AsymptNullDistribution}
+        & Asymptotic conditional distribution (via multivariate normal or
+          $\chi^2$ distribution). \\
+  \hline
+  Method & Description \\
+  \hline
+  \code{pvalue(object)}
+         & Computation of the $p$-value (and a confidence interval if Monte
+           Carlo procedures have been used) based on an observed test statistic
+           $c$ and its conditional null distribution. \\
+  \code{midpvalue(object)}
+         & Computation of the mid-$p$-value (and a confidence interval if Monte
+           Carlo procedures have been used) based on an observed test statistic
+           $c$ and its conditional null distribution. \\
+  \code{pvalue_interval(object)}
+         & Computation of the $p$-value interval based on an observed test
+           statistic $c$ and its conditional null distribution. \\
+  \code{size(object, alpha, type)}
+         & Computation of the test size at the nominal significance level
+           $\alpha$ using either the rejection region corresponding to the
+           $p$-value (\code{type = "p-value"}) or the mid-$p$-value
+           (\code{type = "mid-p-value"}). \\
+  \code{dperm(object, x)}
+         & Evaluation of the probability density function at $x$. \\
+  \code{pperm(object, q)}
+         & Evaluation of the cumulative distribution function for quantile
+           $q$. \\
+  \code{qperm(object, p)}
+         & Evaluation of the quantile function for probability $p$. \\
+  \code{rperm(object, n)}
+         & Generation of $n$ random numbers from the null distribution. \\
+  \code{support(object)}
+         & Extraction of the support of the null distribution. \\
+  \hline
 \end{tabular}
 \caption{\label{tab:dists} Classes and methods for conditional null distributions.}
 \end{center}
 \end{table}
 The \code{support()} function returns the support of a discrete distribution.
-
-
 
 Using these tools, the exact $p$-value for the independence test on the rotating rats
 along with the complete exact reference distribution (allowing
@@ -647,7 +676,6 @@ For maximum-type statistics $c_\text{max}$, single-step and step-down
 multiplicity adjusted $p$-values based on the limiting distribution and
 conditional Monte Carlo methods \citep[see][]{WestfallYoung1993} are
 available as well.
-
 
 \subsection{Objects for conditional tests} \label{sec:testobj}
 
@@ -678,7 +706,6 @@ objects of class \Rclass{IndependenceTest} as well. Thus, all theoretical entiti
 introduced in Section~\ref{sec:theory} are now captured in a single
 object of class \Rclass{IndependenceTest} and all methods for extracting
 information from it are readily available.
-
 
 \section{Interfaces to permutation inference} \label{sec:ui}
 
@@ -734,7 +761,7 @@ An optional blocking factor can specified after a vertical bar, e.g.,
 y1 + y2 ~ x1 + x2 | block
 \end{Sinput}
 This specifies an independence problem between two $\Y$ variables and two $\X$ variables (in case
-all variables are numeric the linear statistic is 4-dimensional with
+all variables are numeric the linear statistic is four-dimensional with
 $p = 2$ and $q = 2$) for each level in \code{block}. As usual, \code{data}, \code{weights}
 and \code{subset} arguments can be specified as well. Based on all these
 arguments the \Rclass{IndependenceProblem} is built and simply passed on
@@ -742,12 +769,11 @@ to the \code{independence_test()} method described above.
 
 For (simple) categorical data, there is yet another way of specifying the
 independence problem, namely via the \Rclass{table} method of
-\code{independence_test()}. Its first argument is allowed to be a 2- or 3-dimensional
+\code{independence_test()}. Its first argument is allowed to be a two- or three-dimensional
 table: The first two margins are interpreted as univariate categorical
 $\X$ and $\Y$ variables and the optional third margin is taken to be the
 blocking factor. Again, an \Rclass{IndependenceProblem} object is derived
 from this and passed on to the associated method.
-
 
 \subsection{Null distributions}
 
@@ -760,7 +786,8 @@ supply a function that can compute a \Rclass{PValue} object from an
 For the most important special cases, suitable function
 \emph{generators} are provided in \pkg{coin}. For example, the function
 \code{approximate(nresample = 1000)} returns a Monte Carlo function that draws
-\code{nresample} (default: \Sexpr{formals(approximate)$nresample}) random permutations.  Similarly, \code{exact()}
+\code{nresample} (default: \Sexpr{formals(approximate)[["nresample"]]}) random
+permutations.  Similarly, \code{exact()}
 and \code{approximate()} return functions computing the exact or
 asymptotic null distributions, respectively. Again, computational
 details in the computation of the null distribution can be controlled
@@ -790,9 +817,10 @@ sexact <- function(object) {
   y <- object@ytrans
   perms <- permutations(nrow(x))
   pstats <- apply(perms, 1, function(p) sum(x[p,] * y))
-  pstats <- (pstats - expectation(object)) / sqrt(variance(object))
+  pstats <- (pstats - as.vector(expectation(object))) /
+      sqrt(as.vector(variance(object)))
   p <- function(q) 1 - mean(pstats > q)
-  new("PValue", p = p, pvalue = p)
+  new("PValue", name = "Exact Distribution", p = p, pvalue = p)
 }
 @
 Note that above implementation is kept simple for the purpose of
@@ -814,11 +842,13 @@ transformation based on the scale of each variable (individually) in a data fram
 \code{data}:
 \begin{Sinput}
 trafo(data, numeric_trafo = id_trafo, factor_trafo = f_trafo,
-  surv_trafo = logrank_trafo, var_trafo = NULL, block = NULL)
+  ordered_trafo = of_trafo, surv_trafo = logrank_trafo,
+  var_trafo = NULL, block = NULL)
 \end{Sinput}
 The identity transformation is used for numeric variables (\code{id_trafo()}),
-factors are transformed to indicator variables (\code{f_trafo()}),
-and censored variables are transformed to logrank scores (\code{logrank_trafo()}).
+nominal factors are transformed to indicator variables (\code{f_trafo()}),
+ordered factors are transformed to equally spaced scores (\code{of_trafo()}),
+and right-censored variables are transformed to logrank scores (\code{logrank_trafo()}).
 In \code{f_trafo()} a set of $k$ indicator functions is used for a factor
 with $k$ levels, unless $k = 2$ for which a univariate indicator function
 is employed. A named list containing different transformations to be applied
@@ -872,55 +902,104 @@ be conveniently provided within the \pkg{coin} framework, so that both
 packages will become deprecated in the future.
 
 \begin{table}[tb]
+\small
 \begin{center}
-\begin{tabular}{lllll} \\ \hline
-Test & \code{xtrafo} $g$ & \code{ytrafo} $h$ & \code{teststat} $c$ \\ \hline
-\multicolumn{4}{c}{} \\
-\multicolumn{4}{c}{Independent samples} \\
-\multicolumn{4}{c}{} \\
-Wilcoxon-Mann-Whitney & \code{f_trafo()} & \code{rank_trafo()} &
-\code{"scalar"} \\
-Normal quantiles & \code{f_trafo()} & \code{normal_trafo()} &
-\code{"scalar"} \\
-Median &  \code{f_trafo()} & \code{median_trafo()} &
-\code{"scalar"} \\
-Ansari-Bradley &  \code{f_trafo()} & \code{ansari_trafo()} &
-\code{"scalar"} \\
-Logrank & \code{f_trafo()} & \code{logrank_trafo()} &
-\code{"quadratic"} \\
-Kruskal-Wallis &  \code{f_trafo()} & \code{rank_trafo()} &
-\code{"quadratic"} \\
-Fligner & \code{f_trafo()} & \code{fligner_trafo()} &
-\code{"quadratic"} \\
-Spearman &  \code{rank_trafo()} & \code{rank_trafo()} &
-\code{"scalar"} \\
-Cochran-Mantel-Haenszel & \code{f_trafo()} & \code{f_trafo()} &
-\code{"quadratic"} \\
-Pearson's $\chi^2$ &  \code{f_trafo()} & \code{f_trafo()} &
-\code{"quadratic"} \\
-Cochran-Armitage / Linear &  scores & any & \code{"scalar"} \\
-Association &         &     &                 \\
-$K$-sample permutation test &  \code{f_trafo()} & any & any \\
-Maximally selected statistics &  \code{maxstat_trafo()} & any & \code{"maximum"} \\
-\multicolumn{4}{c}{} \\
-\multicolumn{4}{c}{Dependent samples} \\
-\multicolumn{4}{c}{} \\
-Friedman &  \code{f_trafo()} & \code{rank_trafo()} &
-\code{"quadratic"} \\
-Stuart-Maxwell &  \code{f_trafo()} & \code{f_trafo()} &
-\code{"quadratic"} \\
-Wilcoxon signed-rank &  \code{f_trafo()} & \code{rank_trafo()} &
-\code{"scalar"} \\ \hline
+\begin{tabular}{lllll} \\
+  \hline
+  Test & \code{xtrafo} $g$ & \code{ytrafo} $h$ & \code{teststat} $c$ \\
+  \hline
+  \multicolumn{4}{c}{} \\
+  \multicolumn{4}{c}{Independent samples} \\
+  \multicolumn{4}{c}{} \\
+  Fisher-Pitman
+       & \code{f_trafo()} & \code{id_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Wilcoxon-Mann-Whitney
+       & \code{f_trafo()} & \code{rank_trafo()}
+       & \code{"scalar"} \\
+  Kruskal-Wallis
+       & \code{f_trafo()} & \code{rank_trafo()}
+       & \code{"quadratic"} \\
+  van der Waerden
+       & \code{f_trafo()} & \code{normal_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Brown-Mood
+       & \code{f_trafo()} & \code{median_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Savage
+       & \code{f_trafo()} & \code{savage_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Klotz
+       & \code{f_trafo()} & \code{klotz_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Mood
+       & \code{f_trafo()} & \code{mood_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Ansari-Bradley
+       & \code{f_trafo()} & \code{ansari_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Fligner-Killeen
+       & \code{f_trafo()} & \code{fligner_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Weighted logrank
+       & \code{f_trafo()} & \code{logrank_trafo()}
+       & \code{"scalar"}/\code{"quadratic"} \\
+  Spearman
+       & \code{rank_trafo()} & \code{rank_trafo()}
+       & \code{"scalar"} \\
+  Fisher-Yates
+       & \code{normal_trafo()} & \code{normal_trafo()}
+       & \code{"scalar"} \\
+  Quadrant
+       & \code{median_trafo()} & \code{median_trafo()}
+       & \code{"scalar"} \\
+  Koziol-Nemec
+       & \code{koziol_trafo()} & \code{koziol_trafo()}
+       & \code{"scalar"} \\
+  Cochran-Mantel-Haenszel
+       & \code{f_trafo()} & \code{f_trafo()}
+       & \code{"quadratic"} \\
+  Pearson's $\chi^2$
+       & \code{f_trafo()} & \code{f_trafo()}
+       & \code{"quadratic"} \\
+  Cochran-Armitage
+       & \code{of_trafo()} & \code{f_trafo()}
+       & \code{"scalar"} \\
+  Linear association
+       & \code{of_trafo()} & any
+       & \code{"scalar"} \\
+  $K$-sample permutation test
+       & \code{f_trafo()} & any
+       & any \\
+  Maximally selected statistics
+       & \code{maxstat_trafo()} & any
+       & \code{"maximum"} \\
+  \multicolumn{4}{c}{} \\
+  \multicolumn{4}{c}{Dependent samples} \\
+  \multicolumn{4}{c}{} \\
+  Friedman
+       & \code{f_trafo()} & \code{rank_trafo()}
+       & \code{"quadratic"} \\
+  Page
+       & \code{of_trafo()} & \code{rank_trafo()}
+       & \code{"scalar"} \\
+  Wilcoxon signed-rank
+       & \code{f_trafo()} & \code{rank_trafo()}
+       & \code{"scalar"} \\
+  Marginal homogeneity
+       & \code{f_trafo()} & \code{f_trafo()}
+       & \code{"quadratic"} \\
+  (McNemar, Cochran's Q, etc.)
+       & &
+       & \\
+  \hline
 \end{tabular}
-\caption{Representations of the conditional counterparts of
-         important classical tests in \pkg{coin}. \label{confct}}
+\caption{Representations of the conditional counterparts of important classical
+  tests in \pkg{coin}. \label{confct}}
 \end{center}
 \end{table}
 
-
-
 \section{Permutation tests in practice: A categorical data example} \label{sec:practice}
-
 
 The job satisfaction of African-American males in the USA \citep[][Table
 7.8]{agresti2002} is described by measures of income and reported job
@@ -948,7 +1027,7 @@ cotabplot(js,
   panel_args = list(margins = c(3, 1, 2, 3.5)))
 @
 \caption{Conditional mosaic plot of job satisfaction and income given gender.
-         \label{jsplot}}
+  \label{jsplot}}
 \end{center}
 \end{figure}
 The Cochran-Mantel-Haenszel test---a classical test for testing independence
@@ -983,7 +1062,7 @@ that higher income categories seem to be associated with higher job
 satisfaction. Thus, to direct power against ordered alternatives,
 a linear-by-linear association statistic \citep{agresti2002} should be used
 instead of the omnibus $\chi^2$ statistic. This can be conveniently performed
-within \pkg{coin}, e.g., using simple equi-distant scores and a Monte Carlo
+within \pkg{coin}, e.g., using simple equidistant scores and a Monte Carlo
 approximation of the null distribution:
 <<jobsatisfaction-ordinal, echo = TRUE>>=
 it <- independence_test(js, distribution = approximate(nresample = 10000),
@@ -1000,7 +1079,7 @@ from independence---a maximum-type statistic is also useful for contingency tabl
 To complete our tour of \pkg{coin} tools for categorical data, we briefly illustrate
 this approach using the job satisfaction data again (even though a maximum-type statistic is
 clearly not very powerful for the dependence pattern in this data set).
-The maximum-type test is set up  easily:
+The maximum-type test is set up easily:
 <<jobsatisfaction-max, echo = TRUE>>=
 independence_test(js, teststat = "maximum")
 @
@@ -1020,18 +1099,16 @@ adjusted $p$-value is due to simulation variance.
 For more practical examples, including
 applications with numeric variables, we refer to \cite{Hothorn:2006:AmStat}.
 
-
-
 \section{Odds and ends} \label{sec:oddsandends}
 
 \paragraph{Internal functionality.}
 
 The core functionality, i.e., a small set of
 functions computing the linear statistic $\T$ (both for the original and
-permuted data), the conditional expectation~$\mu$
-and conditional covariance matrix~$\Sigma$, is coded in \proglang{C}.
+permuted data), the conditional expectation~$\mub$
+and conditional covariance matrix~$\Sigmab$, is coded in \proglang{C}.
 The shift and split-up algorithms \citep{axact-dist:1986,exakte-ver:1987,vdWiel2001}
-for computing the exact null distribution in 2-sample problems with univariate response
+for computing the exact null distribution in two-sample problems with univariate response
 as well as conditional Monte Carlo procedures for approximating the
 exact conditional null distribution are implemented in \proglang{C} as well.
 (In addition,
@@ -1042,11 +1119,10 @@ browseURL(system.file("documentation", "html", "index.html",
   package = "coin"))
 @
 The naming scheme of the \proglang{C} routines distinguishes between functions
-only called at the \proglang{C} level (\code{C_}\textit{foo}) and functions which can
-be called from \proglang{R} via the \code{.Call} interface (\code{R_}\textit{foo}).
+only called at the \proglang{C} level (\code{C_<foo>}) and functions which can
+be called from \proglang{R} via the \code{.Call} interface (\code{R_<foo>}).
 Such functions are available for most of the internal \proglang{C} functions to enable
 unit testing.
-
 
 \paragraph{Quality assurance.}
 
@@ -1065,12 +1141,12 @@ procedures we refer to the \proglang{R} transcript files in directory
 
 The \pkg{coin} package imports packages \pkg{mvtnorm}
 \citep{PKG:mvtnorm} for the evaluation of the multivariate normal
-distribution and package \pkg{modeltools} \citep{PKG:modeltools} for
+distribution and \pkg{modeltools} \citep{PKG:modeltools} for
 formula parsing.
 The class structure, internal functionality, user interface and examples are
-based on \pkg{coin} version \Sexpr{packageDescription("coin")$Version}, available
-under the terms of the General Public License from \url{http://CRAN.R-project.org/}.
-\proglang{R} version \Sexpr{paste(version$major, version$minor, sep = ".")} \citep{rcore2007}
+based on \pkg{coin} version \Sexpr{packageDescription("coin")[["Version"]]}, available
+under the terms of the General Public License from \url{https://CRAN.R-project.org/}.
+\proglang{R} version \Sexpr{getRversion()} \citep{rcore2019}
 was used for the computations, Figure~\ref{jsplot} was created using the \pkg{vcd}
 package \citep{vcd}.
 
@@ -1083,8 +1159,6 @@ under grant HO 3242/1-3.
 
 \bibliography{coin}
 
-\newpage
-
 \begin{appendix}
 
 \section{Expectation and covariance} \label{app}
@@ -1092,43 +1166,40 @@ under grant HO 3242/1-3.
 The conditional expectation and covariance matrix of linear statistics
 $\T$ as given in Equation~\ref{linstat} in Section~\ref{sec:theory} are computed
 as follows.
-Let $w_{\cdot j} = \sum_{i = 1}^n I(b_i = j)w_i$ denote the sum of the weights
+Let $w_{\cdot j} = \sum_{i = 1}^n I(B_i = j) w_i$ denote the sum of the weights
 in block $j$ and $S_j$ the set of all permutations of the observations in block $j$.
 The conditional expectation of the transformation $h$ in block $j$ is
-\begin{eqnarray*}
-\E(h | S_j) = w_{\cdot j}^{-1} \sum_i I(b_i = j)w_i h(\Y_i) \in \R^q
-\end{eqnarray*}
-with corresponding $q \times q$ covariance matrix
-\begin{eqnarray*}
-\V(h | S_j) = w_{\cdot j}^{-1} \sum_i I(b_i = j)w_i \left(h(\Y_i) - \E(h | S_j)
-\right) \left(h(\Y_i) - \E(h | S_j)\right)^\top.
-\end{eqnarray*}
+\begin{equation*}
+  \E(h | S_j) = w_{\cdot j}^{-1} \sum_i I(B_i = j) w_i h(\Y_i) \in \R^q
+\end{equation*}
+with corresponding conditional covariance matrix
+\begin{equation*}
+  \V(h | S_j) = w_{\cdot j}^{-1} \sum_i I(B_i = j) w_i \left( h(\Y_i) - \E(h | S_j)
+                \right) \left( h(\Y_i) - \E(h | S_j) \right)^\top \in \R^{q \times q}.
+\end{equation*}
 This is the basis for computing the conditional expectation and covariance of the linear statistic
 $\T_j$ in block $j$:
-\begin{eqnarray*}
-\mu_j & = & \E(\T_j | S_j) = \vec \left( \left( \sum_{i = 1}^n I(b_i = j)w_i g(\X_i) \right) \E(h | S_j)^\top
-\right)
-\end{eqnarray*}
+\begin{equation*}
+  \mub_j = \E(\T_j | S_j) =
+           \vec \left( \left( \sum_{i = 1}^n I(B_i = j) w_i g(\X_i) \right) \E(h | S_j)^\top \right)
+\end{equation*}
 and
-\begin{eqnarray*}
-\Sigma_j & = & \V(\T_j | S_j) \nonumber \\
-& = &
-    \frac{w_{\cdot j}}{w_{\cdot j} - 1}  \V(h | S_j) \otimes
-        \left(\sum_i I(b_i = j) w_i  \left( g(\X_i) \otimes g(\X_i)^\top\right) \right)
-\label{expectcovar}
-\\
-& - & \frac{1}{w_{\cdot j} - 1}  \V(h | S_j)  \otimes \left(
-        \sum_i I(b_i = j) w_i g(\X_i) \right)
-\otimes \left( \sum_i I(b_i = j) w_i g(\X_i)\right)^\top
-\nonumber
-\end{eqnarray*}
+\begin{align*}
+  \Sigmab_j &= \V(\T_j | S_j) \\
+            &= \frac{w_{\cdot j}}{w_{\cdot j} - 1} \V(h | S_j) \otimes
+               \left( \sum_i I(B_i = j) w_i \left( g(\X_i) \otimes g(\X_i)^\top \right) \right)
+               \label{expectcovar} \\
+            &- \frac{1}{w_{\cdot j} - 1} \V(h | S_j) \otimes
+               \left( \sum_i I(B_i = j) w_i g(\X_i) \right) \otimes
+               \left( \sum_i I(B_i = j) w_i g(\X_i) \right)^\top
+\end{align*}
 where $\otimes$ is the Kronecker product. The conditional
-expectation and covariance of $\T$, aggregated over all $k$ blocks, are
+expectation and covariance of $\T$, aggregated over all $r$ blocks, are
 then given by
-\begin{eqnarray*}
-\E(\T | S_j) & = & \mu  \; = \; \sum_{j = 1}^k \mu_j  \; = \; \sum_{j = 1}^k \E(\T_j | S_j), \\
-\V(\T | S_j) & = & \Sigma \; = \; \sum_{j = 1}^k \Sigma_j \; = \; \sum_{j = 1}^k \V(\T_j | S_j).
-\end{eqnarray*}
+\begin{align*}
+  \E(\T | S_j) &= \mub = \sum_{j = 1}^r \mub_j = \sum_{j = 1}^r \E(\T_j | S_j), \\
+  \V(\T | S_j) &= \Sigmab = \sum_{j = 1}^r \Sigmab_j = \sum_{j = 1}^r \V(\T_j | S_j).
+\end{align*}
 
 \end{appendix}
 

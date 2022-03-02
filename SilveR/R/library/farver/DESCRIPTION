@@ -1,7 +1,7 @@
 Package: farver
 Type: Package
 Title: High Performance Colour Space Manipulation
-Version: 2.0.3
+Version: 2.1.0
 Authors@R: 
     c(person(given = "Thomas Lin",
              family = "Pedersen",
@@ -29,18 +29,18 @@ Description: The encoding of colour can be handled in many different ways, using
 License: MIT + file LICENSE
 Encoding: UTF-8
 SystemRequirements: C++11
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 URL: https://farver.data-imaginist.com,
         https://github.com/thomasp85/farver
 BugReports: https://github.com/thomasp85/farver/issues
 Suggests: testthat (>= 2.1.0), covr
 NeedsCompilation: yes
-Packaged: 2020-01-16 10:42:44 UTC; thomas
+Packaged: 2021-02-28 19:00:15 UTC; thomas
 Author: Thomas Lin Pedersen [cre, aut]
     (<https://orcid.org/0000-0002-5147-4711>),
   Berendea Nicolae [aut] (Author of the ColorSpace C++ library),
   Romain François [aut] (<https://orcid.org/0000-0002-2444-4226>)
 Repository: CRAN
-Date/Publication: 2020-01-16 13:40:07 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-03-02 23:46:29 UTC; windows
+Date/Publication: 2021-02-28 19:30:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:12:43 UTC; windows
 Archs: i386, x64

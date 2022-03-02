@@ -1,3 +1,87 @@
+Changes to Version 3.0-12
+
+  o hccm() now reports an interpretable error, except for type = "hc0" or "hc1", when there are cases with hatvalues = 1 (following problem reported by Peng Ding).
+  
+  o Fix bug in rownames in dfbetasPlots.lm() (reported by Shu Fai Cheun).
+
+  o Package 'rio' was moved from Imports to Suggests. Both Import() and Export() now check for the availability of 'rio' first and report an error otherwise.
+
+Changes to Version 3.0-11
+  
+  o boxCox() function now allows the use of any of the usual graphics parameters in the plot() function.  If particuar boxCox(model, main="my title") will add a title to the plot, and boxCox(model, main="") will suppress it.
+  
+  o car::Boot(object, method="residual") will work for method="residual" only if the car package has been previously attached via either library(car) or require(car).  
+  
+  o Added error checking with vcov. argument.  Changed vcov.boot to print a warning of bootstrap replicates that returned NA
+  
+  o Introduced brief.tbl(), which simply calls print(), to cope with changes to tibbles.
+  
+  o qqPlot() fills (shades) confidence envelopes by default, and smoothers for scatterplots fill variance (spread) envelopes by default (suggestions of Michael Friendly).
+  
+  o Fixed problem in infIndexPlot.influence.lme() (reported by Francis L. Huang).
+  
+  o New "polr" and "svyolr" methods for vif() (following report by Abra Jeffers).
+  
+  o Make linearHypothesis() and Anova() work with "svyolr" objects via their default methods.
+  
+  o Regularize handling of vcov. argument in Anova() and linearHypothesis().
+  
+  o vcov. argument now works with Anova() for models produced by lme4::lmer() and glmer(), (fixing a bug reported by Amy MacDougall).
+  
+  o New linearHypothesis.lmList() method.
+  
+  o New "lm" method for symbox().
+  
+  o New cex and pt.wts arguments for avPlot() "lm" and "glm" methods, and for mcPlot.lm().
+  
+  o Fix handling of imatrix argument to Anova.mlm() (suggestion of Benedikt Langenberg).
+  
+  o Remove influence.merMod() and related methods in favor of versions of these methods in the lme4 package.
+  
+  o Rewrite "embedding" vignette.
+  
+  o Small fixes and improvements.
+
+Changes to Version 3.0-10
+
+  o Fixed as error when using parameter name "(Intercept)" with deltaMethod().  
+  
+  o Several changes to Boot() to correct bugs, support the plinear algorithm, to correct use of weights for lm, and allow use of weights for nls.
+  
+  o Fix quantregLine() to work with development version 5.69 of quantreg package (following heads-up from Roger Koenker).
+  
+Changes to Version 3.0-9
+  
+  o Declare linearHypothesis.survreg() method, previously omitted from NAMESPACE (following question by Robert Dinterman); tweaks to survreg methods for linearHypothesis(), Anova(), and deltaMethod() to make them more robust.
+  
+  o Fix bug in hccm() when model matrix includes just one column (reported by Justin Yap).
+  
+  o Fix buglet in scatterplotMatrix.formula() when groups specified.
+  
+  o Several functions are now generic: avPlots(), ceresPlots(), crPlots(), mcPlots().
+  
+  o Enable spread smoothers for crPlot(), ceresPlot(), and residualPlot() (suggestion of Dave Armstrong).
+  
+  o Small changes to docs.
+
+Changes to Version 3.0-8
+
+  o Import() now defaults to stringsAsFactors=FALSE to match the default behavior of read.table() as of R 4.0.0.
+  
+  o New strings2factors() function to convert character variables in a data frame to factors.
+  
+  o Added data.frame method for S().
+  
+  o Fixed a bug in estimateTransform.lm() that returned the correct answer with an unneeded warning.
+  
+  o Fixed Anova.coxph() to handle weights properly (problem reported by Daniel Morillo Cuadrado).
+
+Changes to Version 3.0-7
+
+  o Fixed boxCox(), powerTransform() to work when 'car' package is not attached
+  
+  o Fixed Anova() to work with "lme" models without an intercept (to fix bug reported by Benjamin Tyner).
+
 Changes to Version 3.0-6
 
   o Explicitly import utils::globalVariables() (suggestion of Vince Carey).

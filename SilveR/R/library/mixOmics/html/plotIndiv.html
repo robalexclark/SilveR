@@ -1,0 +1,856 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot of Individuals (Experimental Units)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plotIndiv {mixOmics}"><tr><td>plotIndiv {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot of Individuals (Experimental Units)</h2>
+
+<h3>Description</h3>
+
+<p>This function provides scatter plots for individuals (experimental units)
+representation in (sparse)(I)PCA, (regularized)CCA, (sparse)PLS(DA) and
+(sparse)(R)GCCA(DA).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plotIndiv(object, ...)
+
+## S3 method for class 'mint.pls'
+plotIndiv(
+  object,
+  comp = NULL,
+  study = "global",
+  rep.space = c("X-variate", "XY-variate", "Y-variate", "multi"),
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  subtitle,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  ...
+)
+
+## S3 method for class 'mint.spls'
+plotIndiv(
+  object,
+  comp = NULL,
+  study = "global",
+  rep.space = c("X-variate", "XY-variate", "Y-variate", "multi"),
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  subtitle,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  ...
+)
+
+## S3 method for class 'mint.plsda'
+plotIndiv(
+  object,
+  comp = NULL,
+  study = "global",
+  rep.space = c("X-variate", "XY-variate", "Y-variate", "multi"),
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  subtitle,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  ...
+)
+
+## S3 method for class 'mint.splsda'
+plotIndiv(
+  object,
+  comp = NULL,
+  study = "global",
+  rep.space = c("X-variate", "XY-variate", "Y-variate", "multi"),
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  subtitle,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  ...
+)
+
+## S3 method for class 'pca'
+plotIndiv(
+  object,
+  comp = NULL,
+  ind.names = TRUE,
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  Z.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  pch.levels,
+  alpha = 0.2,
+  axes.box = "box",
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.title.pch = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  ...
+)
+
+## S3 method for class 'mixo_pls'
+plotIndiv(
+  object,
+  comp = NULL,
+  rep.space = NULL,
+  ind.names = TRUE,
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  subtitle,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  Z.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  pch.levels,
+  alpha = 0.2,
+  axes.box = "box",
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.title.pch = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  background = NULL,
+  ...
+)
+
+## S3 method for class 'sgcca'
+plotIndiv(
+  object,
+  comp = NULL,
+  blocks = NULL,
+  ind.names = TRUE,
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  subtitle,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  Z.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  pch.levels,
+  alpha = 0.2,
+  axes.box = "box",
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.title.pch = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  ...
+)
+
+## S3 method for class 'rgcca'
+plotIndiv(
+  object,
+  comp = NULL,
+  blocks = NULL,
+  ind.names = TRUE,
+  group,
+  col.per.group,
+  style = "ggplot2",
+  ellipse = FALSE,
+  ellipse.level = 0.95,
+  centroid = FALSE,
+  star = FALSE,
+  title = NULL,
+  subtitle,
+  legend = FALSE,
+  X.label = NULL,
+  Y.label = NULL,
+  Z.label = NULL,
+  abline = FALSE,
+  xlim = NULL,
+  ylim = NULL,
+  col,
+  cex,
+  pch,
+  pch.levels,
+  alpha = 0.2,
+  axes.box = "box",
+  layout = NULL,
+  size.title = rel(2),
+  size.subtitle = rel(1.5),
+  size.xlabel = rel(1),
+  size.ylabel = rel(1),
+  size.axis = rel(0.8),
+  size.legend = rel(1),
+  size.legend.title = rel(1.1),
+  legend.title = "Legend",
+  legend.title.pch = "Legend",
+  legend.position = "right",
+  point.lwd = 1,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>object of class inherited from any <span class="pkg">mixOmics</span>: <code>PLS,
+sPLS, PLS-DA, SPLS-DA, rCC, PCA, sPCA, IPCA, sIPCA, rGCCA, sGCCA, sGCCDA</code></p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Optional arguments or type par can be added with <code>style =
+'graphics'</code></p>
+</td></tr>
+<tr valign="top"><td><code>comp</code></td>
+<td>
+<p>integer vector of length two (or three to 3d). The components
+that will be used on the horizontal and the vertical axis respectively to
+project the individuals.</p>
+</td></tr>
+<tr valign="top"><td><code>study</code></td>
+<td>
+<p>Indicates which study-specific outputs to plot. A character
+vector containing some levels of <code>object$study</code>, &quot;all.partial&quot; to plot
+all studies or &quot;global&quot; is expected. Default to &quot;global&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>rep.space</code></td>
+<td>
+<p>For objects of class <code>"pca", "plsda", "plsda"</code> default
+is <code>"X-variate"</code>.  For the objects of class <code>"pls", "rcc"</code> default
+is a panel plot representing each data subspace. For objects of class
+<code>"rgcca"</code> and <code>"sgcca"</code>, numerical value(s) indicating the block
+data set to represent needs to be specified.</p>
+</td></tr>
+<tr valign="top"><td><code>group</code></td>
+<td>
+<p>factor indicating the group membership for each sample, useful
+for ellipse plots. Coded as default for the supervised methods <code>PLS-DA,
+SPLS-DA,sGCCDA</code>, but needs to be input for the unsupervised methods
+<code>PCA, sPCA, IPCA, sIPCA, PLS, sPLS, rCC, rGCCA, sGCCA</code></p>
+</td></tr>
+<tr valign="top"><td><code>col.per.group</code></td>
+<td>
+<p>character (or symbol) color to be used when 'group' is
+defined. Vector of the same length as the number of groups.</p>
+</td></tr>
+<tr valign="top"><td><code>style</code></td>
+<td>
+<p>argument to be set to either <code>'graphics'</code>,
+<code>'lattice'</code>, <code>'ggplot2'</code> or <code>'3d'</code> for a style of plotting.
+Default set to 'ggplot2'. See details. <code>3d</code> is not available for MINT
+objects.</p>
+</td></tr>
+<tr valign="top"><td><code>ellipse</code></td>
+<td>
+<p>Logical indicating if ellipse plots should be plotted. In the
+non supervised objects <code>PCA, sPCA, IPCA, sIPCA, PLS, sPLS, rCC, rGCCA,
+sGCCA</code> ellipse plot is only be plotted if the argument <code>group</code> is
+provided. In the <code>PLS-DA, SPLS-DA,sGCCDA</code> supervised object, by default
+the ellipse will be plotted accoding to the outcome <code>Y</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>ellipse.level</code></td>
+<td>
+<p>Numerical value indicating the confidence level of
+ellipse being plotted when <code>ellipse =TRUE</code> (i.e. the size of the
+ellipse). The default is set to 0.95, for a 95% region.</p>
+</td></tr>
+<tr valign="top"><td><code>centroid</code></td>
+<td>
+<p>Logical indicating whether centroid points should be
+plotted. In the non supervised objects <code>PCA, sPCA, IPCA, sIPCA, PLS,
+sPLS, rCC, rGCCA, sGCCA</code> the centroid will only be plotted if the argument
+<code>group</code> is provided. The centroid will be calculated based on the group
+categories. In the supervised objects <code>PLS-DA, SPLS-DA,sGCCDA</code> the
+centroid will be calculated according to the outcome <code>Y</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>star</code></td>
+<td>
+<p>Logical indicating whether a star plot should be plotted, with
+arrows starting from the centroid (see argument <code>centroid</code>, and ending
+for each sample belonging to each group or outcome. In the non supervised
+objects <code>PCA, sPCA, IPCA, sIPCA, PLS, sPLS, rCC, rGCCA, sGCCA</code> star
+plot is only be plotted if the argument <code>group</code> is provided. In the
+supervised objects <code>PLS-DA, SPLS-DA,sGCCDA</code> the star plot is plotted
+according to the outcome <code>Y</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+<p>set of characters indicating the title plot.</p>
+</td></tr>
+<tr valign="top"><td><code>subtitle</code></td>
+<td>
+<p>subtitle for each plot, only used when several <code>block</code>
+or <code>study</code> are plotted.</p>
+</td></tr>
+<tr valign="top"><td><code>legend</code></td>
+<td>
+<p>Logical. Whether the legend should be added. Default is FALSE.</p>
+</td></tr>
+<tr valign="top"><td><code>X.label</code></td>
+<td>
+<p>x axis titles.</p>
+</td></tr>
+<tr valign="top"><td><code>Y.label</code></td>
+<td>
+<p>y axis titles.</p>
+</td></tr>
+<tr valign="top"><td><code>abline</code></td>
+<td>
+<p>should the vertical and horizontal line through the center be
+plotted? Default set to <code>FALSE</code></p>
+</td></tr>
+<tr valign="top"><td><code>xlim, ylim</code></td>
+<td>
+<p>numeric list of vectors of length 2 and length
+=length(blocks), giving the x and y coordinates ranges.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>character (or symbol) color to be used, possibly vector.</p>
+</td></tr>
+<tr valign="top"><td><code>cex</code></td>
+<td>
+<p>numeric character (or symbol) expansion, possibly vector.</p>
+</td></tr>
+<tr valign="top"><td><code>pch</code></td>
+<td>
+<p>plot character. A character string or a vector of single
+characters or integers. See <code><a href="../../graphics/html/points.html">points</a></code> for all alternatives.</p>
+</td></tr>
+<tr valign="top"><td><code>layout</code></td>
+<td>
+<p>layout parameter passed to mfrow. Only used when <code>study</code>
+is not &quot;global&quot;</p>
+</td></tr>
+<tr valign="top"><td><code>size.title</code></td>
+<td>
+<p>size of the title</p>
+</td></tr>
+<tr valign="top"><td><code>size.subtitle</code></td>
+<td>
+<p>size of the subtitle</p>
+</td></tr>
+<tr valign="top"><td><code>size.xlabel</code></td>
+<td>
+<p>size of xlabel</p>
+</td></tr>
+<tr valign="top"><td><code>size.ylabel</code></td>
+<td>
+<p>size of ylabel</p>
+</td></tr>
+<tr valign="top"><td><code>size.axis</code></td>
+<td>
+<p>size of the axis</p>
+</td></tr>
+<tr valign="top"><td><code>size.legend</code></td>
+<td>
+<p>size of the legend</p>
+</td></tr>
+<tr valign="top"><td><code>size.legend.title</code></td>
+<td>
+<p>size of the legend title</p>
+</td></tr>
+<tr valign="top"><td><code>legend.title</code></td>
+<td>
+<p>title of the legend</p>
+</td></tr>
+<tr valign="top"><td><code>legend.position</code></td>
+<td>
+<p>position of the legend, one of &quot;bottom&quot;, &quot;left&quot;,
+&quot;top&quot; and &quot;right&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>point.lwd</code></td>
+<td>
+<p><code>lwd</code> of the points, used when <code>ind.names =
+FALSE</code></p>
+</td></tr>
+<tr valign="top"><td><code>ind.names</code></td>
+<td>
+<p>either a character vector of names for the individuals to
+be plotted, or <code>FALSE</code> for no names. If <code>TRUE</code>, the row names of
+the first (or second) data matrix is used as names (see Details).</p>
+</td></tr>
+<tr valign="top"><td><code>Z.label</code></td>
+<td>
+<p>z axis titles (when style = '3d').</p>
+</td></tr>
+<tr valign="top"><td><code>pch.levels</code></td>
+<td>
+<p>Only used when <code>pch</code> is different from <code>col</code> or
+<code>col.per.group</code>, ie when <code>pch</code> creates a second factor. Only used
+for the legend.</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>Semi-transparent colors (0 &lt; <code>'alpha'</code> &lt; 1)</p>
+</td></tr>
+<tr valign="top"><td><code>axes.box</code></td>
+<td>
+<p>for style '3d', argument to be set to either <code>'axes'</code>,
+<code>'box'</code>, <code>'bbox'</code> or <code>'all'</code>, defining the shape of the box.</p>
+</td></tr>
+<tr valign="top"><td><code>legend.title.pch</code></td>
+<td>
+<p>title of the second legend created by <code>pch</code>, if
+any.</p>
+</td></tr>
+<tr valign="top"><td><code>background</code></td>
+<td>
+<p>color the background by the predicted class, see
+<code><a href="../../mixOmics/help/background.predict.html">background.predict</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>blocks</code></td>
+<td>
+<p>integer value or name(s) of block(s) to be plotted using the
+GCCA module. &quot;average&quot; and &quot;weighted.average&quot; will create average and
+weighted average plots, respectively. See details and examples.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>plotIndiv</code> method makes scatter plot for individuals representation
+depending on the subspace of projection. Each point corresponds to an
+individual.
+</p>
+<p>If <code>ind.names=TRUE</code> and row names is <code>NULL</code>, then
+<code>ind.names=1:n</code>, where <code>n</code> is the number of individuals. Also, if
+<code>pch</code> is an input, then <code>ind.names</code> is set to FALSE as we do not
+show both names and shapes.
+</p>
+<p><code>plotIndiv</code> can have a two layers legend. This is especially convenient
+when you have two grouping factors, such as a gender effect and a study
+effect, and you want to highlight both simulatenously on the graphical
+output. A first layer is coded by the <code>group</code> factor, the second by the
+<code>pch</code> argument. When <code>pch</code> is missing, a single layer legend is
+shown. If the <code>group</code> factor is missing, the <code>col</code> argument is
+used to create the grouping factor <code>group</code>. When a second grouping
+factor is needed and added via <code>pch</code>, <code>pch</code> needs to be a vector
+of length the number of samples. In the case where <code>pch</code> is a vector or
+length the number of groups, then we consider that the user wants a
+different <code>pch</code> for each level of <code>group</code>. This leads to a single
+layer legend and we merge <code>col</code> and <code>pch</code>. In the similar case
+where <code>pch</code> is a single value, then this value is used to represent all
+samples. See examples below for object of class plsda and splsda.
+</p>
+<p>In the specific case of a single 'omics supervised model
+(<code><a href="../../mixOmics/help/plsda.html">plsda</a></code>, <code><a href="../../mixOmics/help/splsda.html">splsda</a></code>), users can overlay prediction
+results to sample plots in order to visualise the prediction areas of each
+class, via the <code>background</code> input parameter. Note that this
+functionality is only available for models with less than 2 components as
+the surfaces obtained for higher order components cannot be projected onto a
+2D representation in a meaningful way. For more details, see
+<code><a href="../../mixOmics/help/background.predict.html">background.predict</a></code>
+</p>
+<p>The argument <code>block = 'average'</code> averages the components from all blocks
+to produce a consensus plot. The argument <code>block='weighted.average'</code> is
+a weighted average of the components according to their correlation with the
+outcome Y.
+</p>
+<p>For customized plots (i.e. adding points, text), use the style = 'graphics'
+(default is ggplot2).
+</p>
+<p>Note: the ellipse options were borrowed from the <span class="pkg">ellipse</span>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>none
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ignacio González, Benoit Gautier, Francois Bartolo, Florian Rohart,
+Kim-Anh Lê Cao, Al J Abadi
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../graphics/html/text.html">text</a></code>, <code><a href="../../mixOmics/help/background.predict.html">background.predict</a></code>,
+<code><a href="../../graphics/html/points.html">points</a></code> and http://mixOmics.org/graphics for more details.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+
+## plot of individuals for objects of class 'rcc'
+# ----------------------------------------------------
+data(nutrimouse)
+X &lt;- nutrimouse$lipid
+Y &lt;- nutrimouse$gene
+nutri.res &lt;- rcc(X, Y, ncomp = 3, lambda1 = 0.064, lambda2 = 0.008)
+
+# default, panel plot for X and Y subspaces
+plotIndiv(nutri.res)
+
+
+## Not run: 
+
+# ellipse with respect to genotype in the XY space,
+# names also indicate genotype
+plotIndiv(nutri.res, rep.space= 'XY-variate',
+ellipse = TRUE, ellipse.level = 0.9,
+group = nutrimouse$genotype, ind.names = nutrimouse$genotype)
+
+# ellipse with respect to genotype in the XY space, with legend
+plotIndiv(nutri.res, rep.space= 'XY-variate', group = nutrimouse$genotype,
+legend = TRUE)
+
+
+# lattice style
+plotIndiv(nutri.res, rep.space= 'XY-variate', group = nutrimouse$genotype,
+legend = TRUE, style = 'lattice')
+
+# classic style, in the Y space
+plotIndiv(nutri.res, rep.space= 'Y-variate', group = nutrimouse$genotype,
+legend = TRUE, style = 'graphics')
+
+## plot of individuals for objects of class 'pls' or 'spls'
+# ----------------------------------------------------
+data(liver.toxicity)
+X &lt;- liver.toxicity$gene
+Y &lt;- liver.toxicity$clinic
+toxicity.spls &lt;- spls(X, Y, ncomp = 3, keepX = c(50, 50, 50),
+keepY = c(10, 10, 10))
+
+#default
+plotIndiv(toxicity.spls)
+
+
+# two layers legend: a first grouping with Time.Group and 'group'
+# and a second with Dose.Group and 'pch'
+plotIndiv(toxicity.spls, rep.space="X-variate", ind.name = FALSE,
+group = liver.toxicity$treatment[, 'Time.Group'], # first factor
+pch = as.numeric(factor(liver.toxicity$treatment$Dose.Group)), #second factor
+pch.levels =liver.toxicity$treatment$Dose.Group, 
+legend = TRUE)
+
+
+
+# indicating the centroid
+plotIndiv(toxicity.spls, rep.space= 'X-variate', ind.names = FALSE,
+group = liver.toxicity$treatment[, 'Time.Group'], centroid = TRUE)
+
+# indicating the star and centroid
+plotIndiv(toxicity.spls, rep.space= 'X-variate', ind.names = FALSE,
+group = liver.toxicity$treatment[, 'Time.Group'], centroid = TRUE, star = TRUE)
+
+
+# indicating the star and ellipse
+plotIndiv(toxicity.spls, rep.space= 'X-variate', ind.names = FALSE,
+group = liver.toxicity$treatment[, 'Time.Group'], centroid = TRUE,
+star = TRUE, ellipse = TRUE)
+
+
+
+# in the Y space, colors indicate time of necropsy, text is the dose
+plotIndiv(toxicity.spls, rep.space= 'Y-variate',
+group = liver.toxicity$treatment[, 'Time.Group'],
+ind.names = liver.toxicity$treatment[, 'Dose.Group'],
+legend = TRUE)
+
+
+## plot of individuals for objects of class 'plsda' or 'splsda'
+# ----------------------------------------------------
+data(breast.tumors)
+X &lt;- breast.tumors$gene.exp
+Y &lt;- breast.tumors$sample$treatment
+
+splsda.breast &lt;- splsda(X, Y,keepX=c(10,10),ncomp=2)
+
+# default option: note the outcome color is included by default!
+plotIndiv(splsda.breast)
+
+# also check ?background.predict for to visualise the prediction
+# area with a plsda or splsda object!
+
+
+
+# default option with no ind name: pch and color are set automatically
+plotIndiv(splsda.breast, ind.names = FALSE, comp = c(1, 2))
+
+# default option with no ind name: pch and color are set automatically, 
+# with legend
+plotIndiv(splsda.breast, ind.names = FALSE, comp = c(1, 2), legend = TRUE)
+
+# trying the different styles
+plotIndiv(splsda.breast, ind.names = TRUE, comp = c(1, 2),
+ellipse = TRUE, style = "ggplot2", cex = c(1, 1))
+plotIndiv(splsda.breast, ind.names = TRUE, comp = c(1, 2),
+ellipse = TRUE, style = "lattice", cex = c(1, 1))
+
+# changing pch of the two groups
+plotIndiv(splsda.breast, ind.names = FALSE, comp = c(1, 2),
+pch = c(15,16), legend = TRUE)
+
+# creating a second grouping factor with a pch of length 3,
+#  which is recycled to obtain a vector of length n
+plotIndiv(splsda.breast, ind.names = FALSE, comp = c(1, 2),
+pch = c(15,16,17), legend = TRUE)
+
+#same thing as
+pch.indiv = c(rep(15:17,15), 15, 16) # length n
+plotIndiv(splsda.breast, ind.names = FALSE, comp = c(1, 2),
+pch = pch.indiv, legend = TRUE)
+
+# change the names of the second legend with pch.levels
+plotIndiv(splsda.breast, ind.names = FALSE, comp = c(1, 2),
+pch = 15:17, pch.levels = c("a","b","c"),legend = TRUE)
+
+
+## plot of individuals for objects of class 'mint.plsda' or 'mint.splsda'
+# ----------------------------------------------------
+data(stemcells)
+res = mint.splsda(X = stemcells$gene, Y = stemcells$celltype, ncomp = 2, 
+                  keepX = c(10, 5), study = stemcells$study)
+
+plotIndiv(res)
+
+
+#plot study-specific outputs for all studies
+plotIndiv(res, study = "all.partial")
+
+#plot study-specific outputs for study "2"
+plotIndiv(res, study = "2")
+
+
+## variable representation for objects of class 'sgcca' (or 'rgcca')
+# ----------------------------------------------------
+
+data(nutrimouse)
+Y = unmap(nutrimouse$diet)
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid, Y = Y)
+design1 = matrix(c(0,1,1,1,0,1,1,1,0), ncol = 3, nrow = 3, byrow = TRUE)
+nutrimouse.sgcca &lt;- wrapper.sgcca(X = data,
+design = design1,
+penalty = c(0.3, 0.5, 1),
+ncomp = 3,
+scheme = "horst")
+
+# default style: one panel for each block
+plotIndiv(nutrimouse.sgcca)
+
+# for the block 'lipid' with ellipse plots and legend, different styles
+plotIndiv(nutrimouse.sgcca, group = nutrimouse$diet, legend =TRUE,
+ellipse = TRUE, ellipse.level = 0.5, blocks = "lipid", title = 'my plot')
+plotIndiv(nutrimouse.sgcca, style = "lattice", group = nutrimouse$diet,
+legend = TRUE, ellipse = TRUE, ellipse.level = 0.5, blocks = "lipid",
+title = 'my plot')
+plotIndiv(nutrimouse.sgcca, style = "graphics", group = nutrimouse$diet,
+legend = TRUE, ellipse = TRUE, ellipse.level = 0.5, blocks = "lipid",
+title = 'my plot')
+
+
+## variable representation for objects of class 'sgccda'
+# ----------------------------------------------------
+
+# Note: the code differs from above as we use a 'supervised' GCCA analysis
+data(nutrimouse)
+Y = nutrimouse$diet
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid)
+design1 = matrix(c(0,1,0,1), ncol = 2, nrow = 2, byrow = TRUE)
+
+nutrimouse.sgccda1 &lt;- wrapper.sgccda(X = data,
+Y = Y,
+design = design1,
+ncomp = 2,
+keepX = list(gene = c(10,10), lipid = c(15,15)),
+scheme = "centroid")
+
+
+# plotIndiv
+# ----------
+
+# displaying all blocks. bu default colors correspond to outcome Y
+plotIndiv(nutrimouse.sgccda1)
+
+
+# displaying only 2 blocks
+plotIndiv(nutrimouse.sgccda1, blocks = c(1,2), group = nutrimouse$diet)
+
+# include the average plot (average the components across datasets)
+plotIndiv(nutrimouse.sgccda1, blocks = "average", group = nutrimouse$diet)
+
+# include the weighted average plot (average of components weighted by 
+# correlation of each dataset with Y)
+plotIndiv(
+    nutrimouse.sgccda1,
+    blocks = c("average", "weighted.average"),
+    group = nutrimouse$diet
+)
+
+# with some ellipse, legend and title
+plotIndiv(nutrimouse.sgccda1, blocks = c(1,2), group = nutrimouse$diet,
+ellipse = TRUE, legend = TRUE, title = 'my sample plot')
+
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

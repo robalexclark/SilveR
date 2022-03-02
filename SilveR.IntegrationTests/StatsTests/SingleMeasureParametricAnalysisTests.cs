@@ -507,7 +507,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -530,7 +530,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -552,7 +552,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "D0";
 
             //Act
@@ -561,7 +561,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -593,7 +593,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -617,7 +617,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat2";
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "F";
 
             //Act
@@ -626,7 +626,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -650,7 +650,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat2";
             model.AllPairwise = "Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hochberg";
             model.ControlGroup = "F";
 
             //Act
@@ -659,7 +659,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -683,7 +683,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat2";
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "F";
 
             //Act
@@ -692,7 +692,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -717,7 +717,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat1";
             model.AllPairwise = "Bonferroni";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Bonferroni";
             model.ControlGroup = "D1";
 
             //Act
@@ -726,7 +726,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -752,7 +752,7 @@ namespace SilveR.IntegrationTests
             model.LSMeansSelected = true;
             model.SelectedEffect = "Treat1";
             model.AllPairwise = "Benjamini-Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Benjamini-Hochberg";
             model.ControlGroup = "D10";
 
             //Act
@@ -761,7 +761,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -787,7 +787,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "D0";
 
             //Act
@@ -796,7 +796,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -831,7 +831,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -857,7 +857,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "D0";
 
             //Act
@@ -866,7 +866,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -889,7 +889,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hochberg";
             model.ControlGroup = "D0";
 
             //Act
@@ -898,7 +898,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -921,7 +921,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "D0";
 
             //Act
@@ -930,7 +930,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -954,7 +954,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Bonferroni";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Bonferroni";
             model.ControlGroup = "D0";
 
             //Act
@@ -963,7 +963,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -987,7 +987,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Benjamini-Hochberg";
             model.ControlGroup = "D0";
 
             //Act
@@ -996,7 +996,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1020,7 +1020,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "F";
 
             //Act
@@ -1029,7 +1029,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1063,7 +1063,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1089,7 +1089,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "D0";
 
             //Act
@@ -1098,7 +1098,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1124,7 +1124,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hochberg";
             model.ControlGroup = "D0";
 
             //Act
@@ -1133,7 +1133,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1159,7 +1159,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "D0";
 
             //Act
@@ -1168,7 +1168,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1194,7 +1194,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Bonferroni";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Bonferroni";
             model.ControlGroup = "D0";
 
             //Act
@@ -1203,7 +1203,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1226,7 +1226,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Benjamini-Hochberg";
             model.ControlGroup = "D0";
 
             //Act
@@ -1235,7 +1235,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1265,7 +1265,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1296,7 +1296,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1320,7 +1320,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "M";
 
             //Act
@@ -1329,7 +1329,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1360,7 +1360,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1392,7 +1392,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1418,7 +1418,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Bonferroni";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Bonferroni";
             model.ControlGroup = "D0";
 
             //Act
@@ -1427,7 +1427,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1460,7 +1460,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1486,7 +1486,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "D0";
 
             //Act
@@ -1495,7 +1495,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1530,7 +1530,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1553,7 +1553,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "D0";
 
             //Act
@@ -1562,7 +1562,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1588,7 +1588,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hochberg";
             model.ControlGroup = "D0";
 
             //Act
@@ -1597,7 +1597,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1620,7 +1620,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat8";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "A";
 
             //Act
@@ -1629,7 +1629,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1663,7 +1663,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1697,7 +1697,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1720,7 +1720,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "1";
 
             //Act
@@ -1739,7 +1739,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1762,7 +1762,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hochberg";
             model.ControlGroup = "1";
 
             //Act
@@ -1781,7 +1781,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1805,7 +1805,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "1";
 
             //Act
@@ -1824,7 +1824,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1849,7 +1849,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Bonferroni";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Bonferroni";
             model.ControlGroup = "1";
 
             //Act
@@ -1868,7 +1868,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1893,7 +1893,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
             model.AllPairwise = "Benjamini-Hochberg";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Benjamini-Hochberg";
             model.ControlGroup = "1";
 
             //Act
@@ -1912,7 +1912,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -1938,7 +1938,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "1";
 
             //Act
@@ -1957,7 +1957,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2002,7 +2002,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2029,7 +2029,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat10";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "1";
 
             //Act
@@ -2048,7 +2048,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2078,7 +2078,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2107,7 +2107,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2136,7 +2136,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2165,7 +2165,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2196,7 +2196,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2237,7 +2237,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2260,7 +2260,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTestGroup1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "1";
 
             //Act
@@ -2269,7 +2269,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2302,7 +2302,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2327,7 +2327,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTEstGroup2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "1";
 
             //Act
@@ -2336,7 +2336,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2361,7 +2361,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "PVTEstGroup2";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "1";
 
             //Act
@@ -2370,7 +2370,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2393,7 +2393,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "CVTreat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "B";
 
             //Act
@@ -2402,7 +2402,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2432,7 +2432,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2462,7 +2462,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2492,7 +2492,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2517,7 +2517,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Unadjusted (LSD)";
             model.ControlGroup = "D0";
 
             //Act
@@ -2526,7 +2526,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2559,7 +2559,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2592,7 +2592,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2619,7 +2619,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat1";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "D0";
 
             //Act
@@ -2628,7 +2628,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2663,7 +2663,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2697,7 +2697,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2723,7 +2723,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "2";
 
             //Act
@@ -2742,7 +2742,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -2767,7 +2767,7 @@ namespace SilveR.IntegrationTests
             model.SelectedEffect = "Treat9";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
-            model.ComparisonsBackToControl = model.AllPairwise;
+            model.ComparisonsBackToControl = "Hommel";
             model.ControlGroup = "2";
 
             //Act
@@ -2777,6 +2777,192 @@ namespace SilveR.IntegrationTests
             //Assert
             Assert.Contains("One or more of the factors (T reat5) has only one level present in the dataset. Please select another factor.", errors);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, errors);
+        }
+
+        [Fact]
+        public async Task SMA88()
+        {
+            string testName = "SMA88";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
+            model.Response = "Resp 16";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat20" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat20";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Unadjusted (LSD)";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task SMA89()
+        {
+            string testName = "SMA89";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
+            model.Response = "Resp 16";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat20" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat20";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Tukey";
+            model.ComparisonsBackToControl = "Dunnett";
+            model.ControlGroup = "D 10";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task SMA90()
+        {
+            string testName = "SMA90";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
+            model.Response = "Resp 16";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat20" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat20";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Holm";
+            model.ComparisonsBackToControl = "Holm";
+            model.ControlGroup = "D3-";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task SMA91()
+        {
+            string testName = "SMA91";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
+            model.Response = "Resp 16";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat20", "Treat21" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat20";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hochberg";
+            model.ComparisonsBackToControl = "Hochberg";
+            model.ControlGroup = "D-0";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task SMA92()
+        {
+            string testName = "SMA92";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
+            model.Response = "Resp 16";
+            model.ResponseTransformation = "Log10";
+            model.Treatments = new string[] { "Treat20", "Treat21" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat20 * Treat21";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Hommel";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task SMA93()
+        {
+            string testName = "SMA93";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
+            model.Response = "Resp 16";
+            model.ResponseTransformation = "None";
+            model.Treatments = new string[] { "Treat20", "Treat21" };
+            model.Significance = "0.05";
+            model.ANOVASelected = true;
+            model.PRPlotSelected = true;
+            model.NormalPlotSelected = true;
+            model.SelectedEffect = "Treat20 * Treat21";
+            model.LSMeansSelected = true;
+            model.AllPairwise = "Tukey";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "SingleMeasuresParametricAnalysis", testName + ".html"));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
     }
 }

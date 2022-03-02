@@ -1,11 +1,12 @@
 Package: tools
-Version: 3.6.3
+Version: 4.1.2
 Priority: base
 Title: Tools for Package Development
 Author: R Core Team
-Maintainer: R Core Team <R-core@r-project.org>
+Maintainer: R Core Team <do-use-Contact-address@r-project.org>
+Contact: R-help mailing list <r-help@r-project.org>
 Description: Tools for package development, administration and documentation.
-License: Part of R 3.6.3
+License: Part of R 4.1.2
 Suggests: codetools, methods, xml2, curl, commonmark
 NeedsCompilation: yes
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-02-29 09:35:49 UTC; windows
+Built: R 4.1.2; x86_64-w64-mingw32; 2021-11-01 18:35:04 UTC; windows

@@ -7,14 +7,14 @@ IndependenceLinearStatistic-class
 IndependenceProblem-class
                         Class '"IndependenceProblem"'
 IndependenceTest-class
-                        Class '"IndependenceTest"' and its subclasses
+                        Class '"IndependenceTest"' and Its Subclasses
 IndependenceTestProblem-class
                         Class '"IndependenceTestProblem"'
 IndependenceTestStatistic-class
-                        Class '"IndependenceTestStatistic"' and its
-                        subclasses
+                        Class '"IndependenceTestStatistic"' and Its
+                        Subclasses
 NullDistribution-class
-                        Class '"NullDistribution"' and its subclasses
+                        Class '"NullDistribution"' and Its Subclasses
 PValue-class            Class '"PValue"'
 SymmetryProblem-class   Class '"SymmetryProblem"'
 VarCovar-class          Class '"VarCovar"' and its subclasses
@@ -49,7 +49,7 @@ pvalue-methods          Computation of the p-Value, Mid-p-Value,
 rotarod                 Rotating Rats
 sign_test               Symmetry Tests
 spearman_test           Correlation Tests
-statistic-methods       Extraction of the Test Statistic and Linear
+statistic-methods       Extraction of the Test Statistic and the Linear
                         Statistic
 surv_test               Two- and K-Sample Tests for Censored Data
 symmetry_test           General Symmetry Test

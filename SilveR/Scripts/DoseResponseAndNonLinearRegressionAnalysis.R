@@ -55,6 +55,10 @@ HTMLCSS(CSSfile = cssFile)
 #Graphics parameter setup
 graphdata<-statdata
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #Removing illegal characters
 

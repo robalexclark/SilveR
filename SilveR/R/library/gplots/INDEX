@@ -25,6 +25,7 @@ plotCI                  Plot Error Bars and Confidence Intervals
 plotmeans               Plot Group Means and Confidence Intervals
 qqnorm.aov              Makes a half or full normal plot for the
                         effects from an aov model
+reorder.factor          Reorder the Levels of a Factor
 residplot               Undocumented functions
 rich.colors             Rich Color Palettes
 rtPCR                   Teratogenesis rtPCR data

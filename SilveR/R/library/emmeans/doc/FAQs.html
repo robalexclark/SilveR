@@ -8,19 +8,30 @@
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.4.6" />
+<meta name="author" content="emmeans package, Version 1.7.2" />
 
 
 <title>FAQs for emmeans</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
 
 
-<style type="text/css">body {font-size: 11pt; font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;margin: 30px 50px 30px 50px; }h1,h2,h3,h4,h5,h6 { font-family: Arial,Helvetica,Sans-serif; }a { text-decoration: none; }a:link { color:darkblue; } a:visited { color:darkblue; } a:hover { color:dodgerblue; }a:active { color:dodgerblue; } code {color: #602000;font-family: "Lucida Console", Monaco, monospace; font-size: 90%;}.r { color: darkred; }.ro { color: darkgreen; background-color: #eeeeee; }.r code, a code, .ro code { color: inherit; }.vigindex ul { list-style-type: none; }.vigindex ul li { list-style: none; }.vigindex a code { color: inherit; }.vigindex li code { color: inherit; }</style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7Bfont%2Dsize%3A%2011pt%3B%20font%2Dfamily%3A%20%22Palatino%20Linotype%22%2C%20%22Book%20Antiqua%22%2C%20Palatino%2C%20serif%3Bmargin%3A%2030px%2050px%2030px%2050px%3B%20%7Dh1%2Ch2%2Ch3%2Ch4%2Ch5%2Ch6%20%7B%20font%2Dfamily%3A%20Arial%2CHelvetica%2CSans%2Dserif%3B%20%7Da%20%7B%20text%2Ddecoration%3A%20none%3B%20%7Da%3Alink%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Avisited%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Ahover%20%7B%20color%3Adodgerblue%3B%20%7Da%3Aactive%20%7B%20color%3Adodgerblue%3B%20%7D%20code%20%7Bcolor%3A%20%23602000%3Bfont%2Dfamily%3A%20%22Lucida%20Console%22%2C%20Monaco%2C%20monospace%3B%20font%2Dsize%3A%2090%25%3B%7D%2Er%20%7B%20color%3A%20darkred%3B%20%7D%2Ero%20%7B%20color%3A%20darkgreen%3B%20background%2Dcolor%3A%20%23eeeeee%3B%20%7D%2Ere%20%7B%20color%3A%20red%3B%7D%2Er%20code%2C%20a%20code%2C%20%2Ero%20code%2C%20%2Ere%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20ul%20%7B%20list%2Dstyle%2Dtype%3A%20none%3B%20%7D%2Evigindex%20ul%20li%20%7B%20list%2Dstyle%3A%20none%3B%20%7D%2Evigindex%20a%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20li%20code%20%7B%20color%3A%20inherit%3B%20%7D" type="text/css" />
 
 
 
@@ -33,7 +44,7 @@
 
 
 <h1 class="title toc-ignore">FAQs for emmeans</h1>
-<h4 class="author">emmeans package, Version 1.4.6</h4>
+<h4 class="author">emmeans package, Version 1.7.2</h4>
 
 
 
@@ -44,6 +55,7 @@
 <ol style="list-style-type: decimal">
 <li><a href="#what">What are EMMs/lsmeans?</a></li>
 <li><a href="#fastest">What is the fastest way to obtain EMMs and pairwise comparisons?</a></li>
+<li><a href="#nopairs">I wanted comparisons, but all I get is (nothing)</a></li>
 <li><a href="#qdrg">The model I fitted is not supported by <strong>emmeans</strong></a></li>
 <li><a href="#interactions">I have three (or two or four) factors that interact</a></li>
 <li><a href="#trends">I have covariate(s) that interact(s) with factor(s)</a></li>
@@ -58,6 +70,7 @@
 <li><a href="#additive">I get exactly the same comparisons for each “by” group</a></li>
 <li><a href="#anova">My ANOVA <em>F</em> is significant, but no pairwise comparisons are</a></li>
 <li><a href="#notukey">I asked for a Tukey adjustments, but that’s not what I got</a></li>
+<li><a href="#noadjust"><code>emmeans()</code> completely ignores my P-value adjustments</a></li>
 <li><a href="#nowelch"><code>emmeans()</code> gives me pooled <em>t</em> tests, but I expected Welch’s <em>t</em></a></li>
 </ol>
 <p><a href="vignette-topics.html">Index of all vignette topics</a></p>
@@ -77,6 +90,15 @@
 </ol>
 <p>The point here is that <code>emmeans()</code> summarizes the <em>model</em>, not the data directly. If you use a bad model, you will get bad results. And if you use a good model, you will get appropriate results. It’s up to you: it’s your research—is it important?</p>
 <p><a href="#contents">Back to Contents</a></p>
+</div>
+<div id="nopairs" class="section level2">
+<h2>I wanted comparisons, but all I get is (nothing)</h2>
+<!-- @index Comparisons result in `(nothing)`; `(nothing)` in output@nothing -->
+<p>This happens when you have only one estimate; and you can’t compare it with itself! This is turn can happen when you have a situation like this: you have fitted</p>
+<pre><code>mod &lt;- lm(RT ~ treat, data = mydata)</code></pre>
+<p>and <code>treat</code> is coded in your dataset with numbers 1, 2, 3, … . Since <code>treat</code> is a numeric predictor, <code>emmeans()</code> just reduces it to a single number, its mean, rather than separate values for each treatment. Also, please note that this is almost certainly NOT the model you want, because it forces an assumption that the treatment effects all fall on a straight line. You should fit a model like</p>
+<pre><code>mod &lt;- lm(RT ~ factor(treat), data = mydata)</code></pre>
+<p>then you will have much better luck with comparisons.</p>
 </div>
 <div id="qdrg" class="section level2">
 <h2>The model I fitted is not supported by <strong>emmeans</strong></h2>
@@ -116,7 +138,7 @@
 </div>
 <div id="numeric" class="section level2">
 <h2>emmeans() doesn’t work as expected</h2>
-<!-- @index Covariates!`emmeans()` doesn't work; Covariates!`cov.keep; Covariates!`cov.reduce;  -->
+<!-- @index Covariates!`emmeans()` doesn't work; Covariates!`cov.keep`; Covariates!`cov.reduce`;  -->
 <p>Equivalently, users ask how to get <em>post hoc</em> comparisons when we have covariates rather than factors. Yes, it does work, but you have to tell it the appropriate reference grid.</p>
 <p>But before saying more, I have a question for you: <em>Are you sure your model is meaningful?</em></p>
 <ul>
@@ -155,9 +177,9 @@ emmeans(pg.lm, consec ~ percent)</code></pre>
 ## 
 ## $contrasts
 ##  contrast estimate     SE df t.ratio p.value
-##  12 - 9     0.1796 0.0561 23 3.202   0.0114 
-##  15 - 12    0.0378 0.0582 23 0.650   0.8613 
-##  18 - 15    0.0825 0.0691 23 1.194   0.5201 
+##  12 - 9     0.1796 0.0561 23   3.202  0.0110
+##  15 - 12    0.0378 0.0582 23   0.650  0.8614
+##  18 - 15    0.0825 0.0691 23   1.194  0.5200
 ## 
 ## Results are averaged over the levels of: source 
 ## Results are given on the log (not the response) scale. 
@@ -206,9 +228,19 @@ emmeans(pg.lm, consec ~ percent)</code></pre>
 <!-- @index Tukey adjustment!Ignored or changed -->
 <p>There are two reasons this could happen:</p>
 <ol style="list-style-type: decimal">
-<li>There are only two means (or only two in each <code>by</code> group). Thus there is only one comparison. When there is only one thing to test, there is no multiplicity issue, and hence no multiplicity adjustment to the <em>P</em> values.</li>
+<li>There is only one comparison in each <code>by</code> group (see next topic).</li>
 <li>A Tukey adjustment is inappropriate. The Tukey adjustment is appropriate for pairwise comparisons of means. When you have some other set of contrasts, the Tukey method is deemed unsuitable and the Sidak method is used instead. A suggestion is to use <code>&quot;mvt&quot;</code> adjustment (which is exact); we don’t default to this because it can require a lot of computing time for a large set of contrasts or comparisons.</li>
 </ol>
+</div>
+<div id="noadjust" class="section level2">
+<h2><code>emmeans()</code> completely ignores my P-value adjustments</h2>
+<!-- @index *P* values!Adjustment is ignored -->
+<p>This happens when there are only two means (or only two in each <code>by</code> group). Thus there is only one comparison. When there is only one thing to test, there is no multiplicity issue, and hence no multiplicity adjustment to the <em>P</em> values.</p>
+<p>If you wish to apply a <em>P</em>-value adjustment to all tests across all groups, you need to null-out the <code>by</code> variable and summarize, as in the following:</p>
+<pre class="r"><code>EMM &lt;- emmeans(model, ~ treat | group)   # where treat has 2 levels
+pairs(EMM, adjust = &quot;sidak&quot;)   # adjustment is ignored - only 1 test per group
+summary(pairs(EMM), by = NULL, adjust = &quot;sidak&quot;)   # all are in one group now</code></pre>
+<p>Note that if you put <code>by = NULL</code> <em>inside</em> the call to <code>pairs()</code>, then this causes all <code>treat</code>,<code>group</code> combinations to be compared.</p>
 <p><a href="#contents">Back to Contents</a></p>
 </div>
 <div id="nowelch" class="section level2">

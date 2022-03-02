@@ -1,6 +1,6 @@
 ## ----setup, echo=FALSE--------------------------------------------------------
 library(knitr)
-opts_chunk$set(warning=FALSE, message=FALSE)
+opts_chunk$set(warning = FALSE, message = FALSE)
 
 ## ----lmfit--------------------------------------------------------------------
 lmfit <- lm(mpg ~ wt, mtcars)
@@ -18,13 +18,13 @@ augment(lmfit)
 glance(lmfit)
 
 ## ----glmfit-------------------------------------------------------------------
-glmfit <- glm(am ~ wt, mtcars, family="binomial")
+glmfit <- glm(am ~ wt, mtcars, family = "binomial")
 tidy(glmfit)
 augment(glmfit)
 glance(glmfit)
 
 ## -----------------------------------------------------------------------------
-nlsfit <- nls(mpg ~ k / wt + b, mtcars, start=list(k=1, b=0))
+nlsfit <- nls(mpg ~ k / wt + b, mtcars, start = list(k = 1, b = 0))
 tidy(nlsfit)
 augment(nlsfit, mtcars)
 glance(nlsfit)
@@ -42,7 +42,8 @@ glance(tt)
 glance(wt)
 
 ## -----------------------------------------------------------------------------
-chit <- chisq.test(xtabs(Freq ~ Sex + Class, data = as.data.frame(Titanic)))
+chit <- chisq.test(xtabs(Freq ~ Sex + Class, 
+                         data = as.data.frame(Titanic)))
 tidy(chit)
 augment(chit)
 

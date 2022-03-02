@@ -42,6 +42,23 @@ pairs(neuralgia.emm, reverse = TRUE)
 ## -------------------------------------------------------------------------------------------------
 emmip(neuralgia.glm, Sex ~ Treatment)
 
+## ---- fig.height = 1.5----------------------------------------------------------------------------
+neur.Trt.emm <- suppressMessages(emmeans(neuralgia.glm, "Treatment"))
+plot(neur.Trt.emm)   # Link scale by default
+plot(neur.Trt.emm, type = "response")
+
+## ---- fig.height = 1.5----------------------------------------------------------------------------
+plot(neur.Trt.emm, type = "scale")
+
+## ---- fig.height = 1.5----------------------------------------------------------------------------
+plot(neur.Trt.emm, type = "scale", breaks = seq(0.10, 0.90, by = 0.10),
+     minor_breaks = seq(0.05, 0.95, by = 0.05))
+
+## ---- fig.height = 1.5----------------------------------------------------------------------------
+plot(neur.Trt.emm, type = "response") +
+  ggplot2::scale_x_continuous(trans = scales::asn_trans(),
+                              breaks = seq(0.10, 0.90, by = 0.10))
+
 ## -------------------------------------------------------------------------------------------------
 warp.glm <- glm(sqrt(breaks) ~ wool*tension, family = Gamma, data = warpbreaks)
 ref_grid(warp.glm)
@@ -75,6 +92,55 @@ pairs(piglog.emm.s, type = "response")
 
 ## ---- eval = FALSE--------------------------------------------------------------------------------
 #  regrid(emm, transform = "probit")
+
+## -------------------------------------------------------------------------------------------------
+pct.diff.tran <- list(
+    linkfun = function(mu) log(mu/100 + 1),
+    linkinv = function(eta) 100 * (exp(eta) - 1),
+    mu.eta = function(eta) 100 * exp(eta),
+    name = "log(pct.diff)"
+)
+
+update(pairs(piglog.emm.s, type = "response"), 
+       tran = pct.diff.tran, inv.lbl = "pct.diff")
+
+## ---- message = FALSE-----------------------------------------------------------------------------
+fiber.lm <- lm(scale(strength) ~ machine * scale(diameter), data = fiber)
+emmeans(fiber.lm, "machine")   # on the standardized scale
+emmeans(fiber.lm, "machine", type = "response")   # strength scale
+
+## -------------------------------------------------------------------------------------------------
+emtrends(fiber.lm, "machine", var = "diameter")
+
+## -------------------------------------------------------------------------------------------------
+emtrends(fiber.lm, "machine", var = "diameter", transform = "response")
+
+## -------------------------------------------------------------------------------------------------
+with(fiber, c(mean = mean(diameter), sd = sd(diameter)))
+emtrends(fiber.lm, "machine", var = "scale(diameter, 24.133, 4.324)")
+
+## -------------------------------------------------------------------------------------------------
+coef(fiber.lm)[4:6]
+
+## ---- eval = FALSE--------------------------------------------------------------------------------
+#  mod <- some.fcn(scale(RT) ~ group + (1|subject), data = mydata)
+#  emmeans(mod, "group", type = "response",
+#          tran = make.tran("scale", y = mydata$RT))
+
+## ---- eval = FALSE--------------------------------------------------------------------------------
+#  mod <- with(make.tran("scale", y = mydata$RT),
+#              some.fcn(linkfun(RT) ~ group + (1|subject), data = mydata))
+#  emmeans(mod, "group", type = "response")
+
+## ---- message = FALSE-----------------------------------------------------------------------------
+fib.lm <- lm(strength ~ machine * diameter, data = fiber)
+
+# On raw scale:
+emmeans(fib.lm, "machine")
+
+# On standardized scale:
+tran <- make.tran("scale", y = fiber$strength)
+emmeans(fib.lm, "machine", transform = tran)
 
 ## -------------------------------------------------------------------------------------------------
 sigma(pigs.lm)

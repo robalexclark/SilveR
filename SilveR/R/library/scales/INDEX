@@ -9,14 +9,12 @@ breaks_log              Breaks for log axes
 breaks_pretty           Pretty breaks for date/times
 breaks_width            Equally spaced breaks
 brewer_pal              Colour Brewer palette (discrete)
-censor                  Censor any values outside of range
 col2hcl                 Modify standard R colour in hcl colour space.
 col_numeric             Colour mapping
 colour_ramp             Fast colour interpolation
 cscale                  Continuous scale
 date_trans              Transformation for dates (class Date)
 dichromat_pal           Dichromat (colour-blind) palette (discrete)
-discard                 Discard any values outside of range
 div_gradient_pal        Diverging colour gradient (continuous).
 dscale                  Discrete scale
 exp_trans               Exponential transformation (inverse of log
@@ -49,6 +47,7 @@ log_trans               Log transformations
 manual_pal              Manual palette (discrete)
 minor_breaks_width      Minor breaks
 muted                   Mute standard colour
+oob                     Out of bounds handling
 probability_trans       Probability transformation
 reciprocal_trans        Reciprocal transformation
 rescale                 Rescale continuous vector to have specified
@@ -63,8 +62,6 @@ reverse_trans           Reverse transformation
 seq_gradient_pal        Sequential colour gradient palette (continuous)
 shape_pal               Shape palette (discrete)
 sqrt_trans              Square-root transformation
-squish                  Squish values into range
-squish_infinite         Squish infinite values to range
 time_trans              Transformation for date-times (class POSIXt)
 train_continuous        Train (update) a continuous scale
 train_discrete          Train (update) a discrete scale

@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Color Palette for mixOmics</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for colors {mixOmics}"><tr><td>colors {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Color Palette for mixOmics</h2>
+
+<h3>Description</h3>
+
+<p>The functions create a vector of <code>n</code> &quot;contiguous&quot; colors (except the
+<code>color.mixo</code> which are colors used internally to fit our logo colors).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+color.mixo(num.vector)
+
+color.GreenRed(n, alpha = 1)
+
+color.jet(n, alpha = 1)
+
+color.spectral(n, alpha = 1)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>num.vector</code></td>
+<td>
+<p>for <code>color.mixo</code> an integer vector specifying which
+colors to use in the mixOmics palette (there are only 10 colors available.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>an integer, the number of colors <i>(&ge;q 1)</i> to be in the
+palette.</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>a numeric value between 0 and 1 for alpha channel (opacity).</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The function <code>color.jet(n)</code> create color scheme, beginning with dark
+blue, ranging through shades of blue, cyan, green, yellow and red, and
+ending with dark red. This colors palette is suitable for displaying ordered
+(symmetric) data, with <code>n</code> giving the number of colors desired.
+</p>
+
+
+<h3>Value</h3>
+
+<p>For <code>color.jet(n)</code>, <code>color.spectral(n)</code>,
+<code>color.GreenRed(n)</code> a character vector, <code>cv</code>, of color names. This
+can be used either to create a user-defined color palette for subsequent
+graphics by <code>palette(cv)</code>, a <code>col=</code> specification in graphics
+functions or in <code>par</code>.
+</p>
+<p>For <code>color.mixo</code>, a vector of colors matching the mixOmics logo (10
+colors max.)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ignacio Gonzalez, Kim-Anh Lê Cao, Benoit Gautier, Al J Abadi
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../grDevices/html/colorRamp.html">colorRamp</a></code>, <code><a href="../../grDevices/html/palette.html">palette</a></code>,
+<code><a href="../../mixOmics/help/colors.html">colors</a></code> for the vector of built-in &quot;named&quot; colors;
+<code><a href="../../grDevices/html/hsv.html">hsv</a></code>, <code><a href="../../grDevices/html/gray.html">gray</a></code>, <code><a href="../../grDevices/html/palettes.html">rainbow</a></code>,
+<code><a href="../../grDevices/html/palettes.html">terrain.colors</a></code>, ... to construct colors; and
+<code><a href="../../grDevices/html/palettes.html">heat.colors</a></code>, <code><a href="../../grDevices/html/palettes.html">topo.colors</a></code> for images.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+# -----------------------
+# jet colors
+# ----------------------
+par(mfrow = c(3, 1))
+z &lt;- seq(-1, 1, length = 125)
+for (n in c(11, 33, 125)) {
+image(matrix(z, ncol = 1), col = color.jet(n),
+xaxt = 'n', yaxt = 'n', main = paste('n = ', n))
+box()
+par(usr = c(-1, 1, -1, 1))
+axis(1, at = c(-1, 0, 1))
+}
+
+## Not run: 
+# -----------------------
+# spectral colors
+# ----------------------
+par(mfrow = c(3, 1))
+z &lt;- seq(-1, 1, length = 125)
+for (n in c(11, 33, 125)) {
+image(matrix(z, ncol = 1), col = color.spectral(n),
+xaxt = 'n', yaxt = 'n', main = paste('n = ', n))
+box()
+par(usr = c(-1, 1, -1, 1))
+axis(1, at = c(-1, 0, 1))
+}
+
+# -----------------------
+# GreenRed colors
+# ----------------------
+par(mfrow = c(3, 1))
+z &lt;- seq(-1, 1, length = 125)
+for (n in c(11, 33, 125)) {
+image(matrix(z, ncol = 1), col = color.GreenRed(n),
+xaxt = 'n', yaxt = 'n', main = paste('n = ', n))
+box()
+par(usr = c(-1, 1, -1, 1))
+axis(1, at = c(-1, 0, 1))
+}
+
+# # --------------------------------
+# mixOmics colors
+# # -------------------------------
+data(nutrimouse)
+X &lt;- nutrimouse$lipid
+Y &lt;- nutrimouse$gene
+nutri.res &lt;- rcc(X, Y, ncomp = 3, lambda1 = 0.064, lambda2 = 0.008)
+
+my.colors = color.mixo(1:5)
+my.pch = ifelse(nutrimouse$genotype == 'wt', 16, 17)
+#plotIndiv(nutri.res, ind.names = FALSE, group = my.colors, pch = my.pch, cex = 1.5)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -6,7 +6,7 @@ suppressWarnings(library(multcomp))
 suppressWarnings(library(nlme))
 suppressWarnings(library(contrast))
 suppressWarnings(library("emmeans"))
-
+ 
 #===================================================================================================================
 # retrieve args
 Args <- commandArgs(TRUE)
@@ -57,6 +57,10 @@ graphdata<-statdata
 Gr_palette<-palette_FUN(timeFactor)
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 #STB 14OCT2015
 #Set contrast options for Marginal overall tests
@@ -836,7 +840,8 @@ if(showNormPlot=="Y") {
 	Line_type <-Line_type_dashed
 
 	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
 
 	MainTitle2 <- ""
 
@@ -1240,19 +1245,19 @@ if (showComps == "Y") {
 			if (inte==1) {
 				inte<-inte+1
 				if (dimfact ==2) {
-					add<-paste(add, ": The pairwise comparison is statistically significant at the  ", sep="")
+					add<-paste(add, ": The pairwise comparison is statistically significant at the ", sep="")
 				} else {
-					add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
+					add<-paste(add, ": The following pairwise comparisons are statistically significant at the ", sep="")
 				}
 				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level ", sep="")
+				add<-paste(add, "% level", sep="")
 				if (dimfact > 2) {
-					add<-paste(add, ": ", rows[i], sep="")
+					add<-paste(add, " : (1) ", rows[i], sep="")
 				}
 			} else {
-				inte<-inte+1
-				add<-paste(add, ", ", sep="")
+				add<-paste(add, ", (", inte, ") ", sep="")
 				add<-paste(add, rows[i], sep="")
+				inte<-inte+1
 			}
 		} 
 	}
@@ -1276,12 +1281,12 @@ if (showComps == "Y") {
 #Analysis description
 HTML.title("Analysis description", HR=2, align="left")
 
-add<-c("The data were analysed using an ")
+add<-c("The data were analysed using ")
 
 if (dimfact ==2 ) { #&& covariatelist == "NULL") {
-	add<-paste(add, "extended paired t-test, with treatment factor ", timeFactor, sep="")
+	add<-paste(add, "an extended paired t-test, with treatment factor ", timeFactor, sep="")
 } else {
-	add<-paste(add, "repeated measures mixed model approach, with treatment factor ", timeFactor, sep="")
+	add<-paste(add, "a repeated measures mixed model approach, with treatment factor ", timeFactor, sep="")
 }
 
 if (blocklist != "NULL" && covariatelist != "NULL")  {

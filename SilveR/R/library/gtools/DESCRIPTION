@@ -22,9 +22,10 @@ Description: Functions to assist in R programming, including:
   - efficient 'rbind' of data frames, even if the column names don't match ('smartbind'),
   - generate significance stars from p-values ('stars.pval'),
   - convert characters to/from ASCII codes ('asc', 'chr'),
-  - convert character vector to ASCII representation ('ASCIIfy').
-Version: 3.8.2
-Date: 2020-03-23
+  - convert character vector to ASCII representation ('ASCIIfy'),
+  - apply title capitalization rules to a character vector ('capwords').
+Version: 3.9.2
+Date: 2021-06-03
 Author: Gregory R. Warnes, Ben Bolker, and Thomas Lumley
 Maintainer: Gregory R. Warnes <greg@warnes.net>
 License: GPL-2
@@ -32,9 +33,11 @@ Depends: methods, stats, utils
 URL: https://github.com/r-gregmisc/gtools
 BugReports: https://github.com/r-gregmisc/gtools/issues
 Language: en-US
+Suggests: car, gplots, knitr, rstudioapi, SGP, taxize
+RoxygenNote: 7.1.1
 NeedsCompilation: yes
-Packaged: 2020-03-29 23:27:01 UTC; gwarnes
+Packaged: 2021-06-03 15:27:57 UTC; warnes
 Repository: CRAN
-Date/Publication: 2020-03-31 13:50:02 UTC
-Built: R 3.6.3; x86_64-w64-mingw32; 2020-04-02 13:33:11 UTC; windows
+Date/Publication: 2021-06-06 10:00:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:16:08 UTC; windows
 Archs: i386, x64

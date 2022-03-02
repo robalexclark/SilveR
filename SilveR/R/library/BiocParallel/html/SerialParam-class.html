@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Enable serial evaluation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for SerialParam-class {BiocParallel}"><tr><td>SerialParam-class {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Enable serial evaluation</h2>
+
+<h3>Description</h3>
+
+<p>This class is used to parameterize serial evaluation, primarily to
+facilitate easy transition from parallel to serial code.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+SerialParam(
+    stop.on.error = TRUE,
+    progressbar = FALSE,
+    RNGseed = NULL,
+    timeout = 30L * 24L * 60L * 60L,
+    log = FALSE,
+    threshold = "INFO",
+    logdir = NA_character_,
+    resultdir = NA_character_,
+    jobname = "BPJOB",
+    force.GC = FALSE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>stop.on.error</code></td>
+<td>
+
+<p><code>logical(1)</code> Enable stop on error.
+</p>
+</td></tr>
+<tr valign="top"><td><code>progressbar</code></td>
+<td>
+
+<p><code>logical(1)</code> Enable progress bar (based on plyr:::progress_text).
+</p>
+</td></tr>
+<tr valign="top"><td><code>RNGseed</code></td>
+<td>
+
+<p><code>integer(1)</code> Seed for random number generation. The seed is
+used to set a new, independent random number stream for each
+element of <code>X</code>. The ith element recieves the same stream seed,
+regardless of use of <code>SerialParam()</code>, <code>SnowParam()</code>, or
+<code>MulticoreParam()</code>, and regardless of worker or task
+number. When <code>RNGseed = NULL</code>, a random seed is used.
+</p>
+</td></tr>
+<tr valign="top"><td><code>timeout</code></td>
+<td>
+
+<p><code>numeric(1)</code> Time (in seconds) allowed for worker to complete a task.
+This value is passed to base::setTimeLimit() as both the <code>cpu</code> and
+<code>elapsed</code> arguments. If the computation exceeds <code>timeout</code> an
+error is thrown with message 'reached elapsed time limit'.
+</p>
+</td></tr>
+<tr valign="top"><td><code>log</code></td>
+<td>
+
+<p><code>logical(1)</code> Enable logging.
+</p>
+</td></tr>
+<tr valign="top"><td><code>threshold</code></td>
+<td>
+
+<p><code>character(1)</code> Logging threshold as defined in <code>futile.logger</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>logdir</code></td>
+<td>
+
+<p><code>character(1)</code> Log files directory. When not provided, log
+messages are returned to stdout.
+</p>
+</td></tr>
+<tr valign="top"><td><code>resultdir</code></td>
+<td>
+
+<p><code>character(1)</code> Job results directory. When not provided, results
+are returned as an <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object (list) to the workspace.
+</p>
+</td></tr>
+<tr valign="top"><td><code>jobname</code></td>
+<td>
+
+<p><code>character(1)</code> Job name that is prepended to log and result files.
+Default is &quot;BPJOB&quot;.
+</p>
+</td></tr>
+<tr valign="top"><td><code>force.GC</code></td>
+<td>
+
+<p><code>logical(1)</code> Whether to invoke the garbage collector after each
+call to <code>FUN</code>. The default (<code>FALSE</code>, do not explicitly
+call the garbage collection) rarely needs to be changed.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>SerialParam</code> is used for serial computation on a single
+node. Using <code>SerialParam</code> in conjunction with <code>bplapply</code>
+differs from use of <code>lapply</code> because it provides features such as
+error handling, logging, and random number use consistent with
+<code>SnowParam</code> and <code>MulticoreParam</code>.
+</p>
+
+<dl>
+<dt>error handling:</dt><dd>
+<p>By default all computations are attempted and partial results
+are returned with any error messages.
+</p>
+
+<ul>
+<li> <p><code>stop.on.error</code> A <code>logical</code>. Stops all jobs as soon
+as one job fails or wait for all jobs to terminate. When
+<code>FALSE</code>, the return value is a list of successful results
+along with error messages as 'conditions'.
+</p>
+</li>
+<li><p> The <code>bpok(x)</code> function returns a <code>logical()</code> vector
+that is FALSE for any jobs that threw an error. The input
+<code>x</code> is a list output from a bp*apply function such as
+<code>bplapply</code> or <code>bpmapply</code>.
+</p>
+</li></ul>
+
+</dd>
+<dt>logging:</dt><dd>
+<p>When <code>log = TRUE</code> the <code>futile.logger</code> package is loaded on
+the workers. All log messages written in the <code>futile.logger</code> format
+are captured by the logging mechanism and returned real-time
+(i.e., as each task completes) instead of after all jobs have finished.
+</p>
+<p>Messages sent to <em>stdout</em> and <em>stderr</em> are returned to
+the workspace by default. When <code>log = TRUE</code> these
+are diverted to the log output. Those familiar with the <code>outfile</code>
+argument to <code>makeCluster</code> can think of <code>log = FALSE</code> as
+equivalent to <code>outfile = NULL</code>; providing a <code>logdir</code> is the
+same as providing a name for <code>outfile</code> except that BiocParallel
+writes a log file for each task.
+</p>
+<p>The log output includes additional statistics such as memory use
+and task runtime. Memory use is computed by calling gc(reset=TRUE)
+before code evaluation and gc() (no reseet) after. The output of the
+second gc() call is sent to the log file. There are many ways to
+track memory use - this particular approach was taken because it is
+consistent with how the BatchJobs package reports memory on the
+workers.
+</p>
+</dd>
+<dt>log and result files:</dt><dd>
+<p>Results and logs can be written to a file instead of returned to
+the workspace. Writing to files is done from the master as each task
+completes. Options can be set with the <code>logdir</code> and
+<code>resultdir</code> fields in the constructor or with the accessors,
+<code>bplogdir</code> and <code>bpresultdir</code>.
+</p>
+</dd>
+<dt>random number generation:</dt><dd>
+<p>For <code>MulticoreParam</code>, <code>SnowParam</code>, and
+<code>SerialParam</code>, random number generation is controlled through
+the <code>RNGseed = </code> argument. BiocParallel uses the
+L'Ecuyer-CMRG random number generator described in the parallel
+package to generate independent random number streams. One stream
+is associated with each element of <code>X</code>, and used to seed the
+random number stream for the application of <code>FUN()</code> to
+<code>X[[i]]</code>. Thus setting <code>RNGseed = </code> ensures
+reproducibility across <code>MulticoreParam()</code>,
+<code>SnowParam()</code>, and <code>SerialParam()</code>, regardless of worker
+or task number. The default value <code>RNGseed = NULL</code> means that
+each evaluation of <code>bplapply</code> proceeds independently.
+</p>
+<p>For details of the L'Ecuyer generator, see ?<code>clusterSetRNGStream</code>.
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Constructor</h3>
+
+
+<dl>
+<dt></dt><dd>
+<p><code>SerialParam()</code>:
+</p>
+<p>Return an object to be used for serial evaluation of otherwise
+parallel functions such as <code><a href="../../BiocParallel/help/bplapply.html">bplapply</a></code>,
+<code><a href="../../BiocParallel/help/bpvec.html">bpvec</a></code>.
+</p>
+</dd>
+</dl>
+
+
+
+<h3>Methods</h3>
+
+<p>The following generics are implemented and perform as documented on
+the corresponding help page (e.g., <code>?bpworkers</code>):
+<code><a href="../../BiocParallel/help/bpworkers.html">bpworkers</a></code>. <code><a href="../../BiocParallel/help/bpisup.html">bpisup</a></code>, <code><a href="../../BiocParallel/help/bpstart.html">bpstart</a></code>,
+<code><a href="../../BiocParallel/help/bpstop.html">bpstop</a></code>, are implemented, but do not have any
+side-effects.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan <a href="mailto:mtmorgan@fhcrc.org">mailto:mtmorgan@fhcrc.org</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>getClass("BiocParallelParam")</code> for additional parameter classes.
+</p>
+<p><code>register</code> for registering parameter classes for use in parallel
+evaluation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+p &lt;- SerialParam()
+simplify2array(bplapply(1:10, sqrt, BPPARAM=p))
+bpvec(1:10, sqrt, BPPARAM=p)
+
+## Not run: 
+register(SerialParam(), default=TRUE)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -25,8 +25,8 @@ confint.merMod          Compute Confidence Intervals for Parameters of
                         a [ng]lmer Fit
 convergence             Assessing Convergence for Fitted Models
 devcomp                 Extract the deviance component list
-devfun2                 Deviance function defined in terms of standard
-                        deviations/correlations
+devfun2                 Deviance Function in Terms of Standard
+                        Deviations/Correlations
 drop1.merMod            Drop all possible single fixed-effect terms
                         from a mixed effect model
 dummy                   Dummy variables (experimental)
@@ -54,7 +54,7 @@ hatvalues.merMod        Diagonal elements of the hat matrix
 influence.merMod        Influence Diagnostics for Mixed-Effects Models
 isNested                Is f1 nested within f2?
 isREML                  Check characteristics of models
-isSingular              Test fitted model for (near) singularity
+isSingular              Test Fitted Model for (Near) Singularity
 lmList                  Fit List of lm or glm Objects with a Common
                         Model
 lmList4-class           Class "lmList4" of 'lm' Objects on Common Model
@@ -63,6 +63,8 @@ lmResp-class            Reference Classes for Response Modules,
                         '"(lm|glm|nls|lmer)Resp"'
 lme4-package            Linear, generalized linear, and nonlinear mixed
                         models
+lme4_testlevel          Detect testing level for lme4 examples and
+                        tests
 lmer                    Fit Linear Mixed-Effects Models
 lmerControl             Control of Mixed Model Fitting
 merMod-class            Class "merMod" of Fitted Mixed-Effect Models
@@ -99,6 +101,8 @@ refit                   Refit a (merMod) Model with a Different
 refitML                 Refit a Model by Maximum Likelihood Criterion
 residuals.merMod        residuals of merMod objects
 sigma                   Extract Residual Standard Deviation 'Sigma'
+simulate.formula        A 'simulate' Method for 'formula' objects that
+                        dispatches based on the Left-Hand Side
 simulate.merMod         Simulate Responses From 'merMod' Object
 sleepstudy              Reaction times in a sleep deprivation study
 subbars                 "Sub[stitute] Bars"

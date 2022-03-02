@@ -68,6 +68,10 @@ Labelz_IVS_ <- "N"
 Line_size2 <- Line_size
 DisplayLSMeanslines <- "Y"
 ReferenceLine <- "NULL"
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 
 # Setting up the parameters
 resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
@@ -773,7 +777,8 @@ if(showNormPlot=="Y") {
 	Line_type <-Line_type_dashed
 
 	#GGPLOT2 code
-	NONCAT_SCAT("QQPLOT")
+	#NONCAT_SCAT("QQPLOT")
+	NONCAT_QQPLOT()
 	
 	MainTitle2 <- ""
 
@@ -1355,14 +1360,15 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 	statdata_temp2<- data.frame(cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs ))
 	statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
 	statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
-	statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="_ivs_dash_ivs_"))
-	statdata<- data.frame(cbind(statdata_num, statdata_char2))
-	
+	statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="xxxivsdashivsxxx"))
+	statdata_char3 <- as.data.frame(sapply(statdata_char2,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
+
+	statdata<- data.frame(cbind(statdata_num, statdata_char3))
 	statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
 	statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
 	statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
 	
-	#Re-generate analysis using new dataset without dashes
+	#Re-generate analysis using new dataset without dashes or spaces
 	if(covariance=="compound symmetric") {
 		threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
 	}
@@ -1389,14 +1395,12 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 		rows2 <-mult$contrast
 		rownames(rows1)<-rows2
 		rows<-rownames(rows1)
-	
-		#Creating the final table tabs
+
 		tablen<-dim(mult)[1]
 		tabs<-data.frame(matrix(NA, nrow = tablen, ncol = 1))
-	
-		for (i in 1:tablen) {	
+		for (i in 1:tablen) {
 			tabs$V1[i]=mult$estimate[i]
-		}		
+		}
 		for (i in 1:tablen) {
 			tabs$V2[i]=mult$lower[i]
 		}
@@ -1404,7 +1408,10 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 			tabs$V3[i]=mult$upper[i]
 		}
 		for (i in 1:tablen) {
-			tabs$V4[i]=format(round(mult$SE[i], 3), nsmall=3, scientific=FALSE)
+			tabs$V4[i]=mult$SE[i]
+		}
+		for (i in 1:tablen) {
+			tabs$V7[i]=rows[i]
 		}
 		for (i in 1:tablen) {
 			tabs$V5[i]=format(round(mult$pvals[i], 4), nsmall=4, scientific=FALSE)
@@ -1420,9 +1427,7 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 				tabs$V5[i]<- paste("<",tabs$V5[i])
 			}
 		}
-	
-		#removing the first column of the tabs dataset
-		tabs<-tabs[,-1]
+	tabs<- tabs[,-1]
 	} else {
 		#Creating the table of differences and SEMs for the AR(1) and CS structure and the tabs dataset
 		mult<-glht(threewayfull, linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))),df=dendf)
@@ -1432,7 +1437,7 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 		pvals<-multp$test$pvalues
 		sigma<-multp$test$sigma
 		tablen<-length(unique(rownames(multci$confint)))
-		tabs<-data.frame(nrow=tablen, ncol=6)
+		tabs<-data.frame(nrow=tablen, ncol=7)
 	
 		for (i in 1:tablen) {
 			#STB Dec 2011 formatting 3dp
@@ -1461,41 +1466,32 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 				tabs[i,5]<- paste("<",tabs[i,5])
 			}
 		}
+		for (i in 1:tablen) {
+			tabs[i,7] <- rows[i]
+		}
 	}
 
-	#Creating the list of comparisons
-	tell1<-t(data.frame(strsplit(rows, " - ")))[,1]
-	tell2<-t(data.frame(strsplit(rows, " - ")))[,2]
-	tell1a<-t(data.frame(strsplit(tell1, ",")))
-	tell2a<-t(data.frame(strsplit(tell2, ",")))
-	tell1b<-tell1a[,dim(tell1a)[2]]
-	tell2b<-tell2a[,dim(tell2a)[2]]
-	tellfinal<-cbind(tell1b,tell2b)
+#Create variables with the factor levels in
+	tabs$V8 <- tabs$V7
+	tabs$V8 <- gsub(" - ","xxxcomparisonxxx", rows, fixed=TRUE)
+	tabs$V8 <- gsub(" ","xxxlevelgapxxx", tabs$V8, fixed=TRUE)
 
-	#Creating dataset for printing
-	tabs_final<-tabs
+#Seperating out the two sets of factors
+	tabs2 <- data.frame(do.call("rbind", strsplit(as.character(tabs$V8), "xxxcomparisonxxx", fixed = TRUE)))
+	colnames(tabs2)<- c("xxxfirstcompxxx", "xxxsecondcompxxx")
 
-	tabs_final[1]=format(round(tabs_final[1], 3), nsmall=3, scientific=FALSE)
-	tabs_final[2]=format(round(tabs_final[2], 3), nsmall=3, scientific=FALSE)
-	tabs_final[3]=format(round(tabs_final[3], 3), nsmall=3, scientific=FALSE)
+#Pulling out the time variable
+	tabs3 <- data.frame(do.call("rbind", strsplit(as.character(tabs2$xxxfirstcompxxx), "xxxlevelgapxxx", fixed = TRUE)))
+	tabs4<-tabs3[ , ncol(tabs3), drop = FALSE]
 
-	#creating the final dataset for printing
-	for (i in 1:100) {
-		rows<-sub("_.._"," ", rows, fixed=TRUE)
-	}
+	tabs5 <- data.frame(do.call("rbind", strsplit(as.character(tabs2$xxxsecondcompxxx), "xxxlevelgapxxx", fixed = TRUE)))
+	tabs6<-tabs5[ , ncol(tabs5), drop = FALSE]
 
-	#STB June 2015	
-	for (i in 1:100) {
-		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
-	}
+	tabs7 <- cbind(tabs4, tabs6)
+	colnames(tabs7) <- c("xxxTime1xxx", "xxxTime2xxx")
 
-	tabs_final <- cbind(rows, tabs_final)
-	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-	colnames(tabs_final)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
-	tabs_final2<-subset(tabs_final, select = -c(temp)) 
+	tabs<-cbind(tabs, tabs7)
 }
-
 #===================================================================================================================
 #All pairwise tests 
 #===================================================================================================================
@@ -1505,10 +1501,40 @@ if(pairwiseTest == "allpairwisecomparisons") {
 		HTML.title("All pairwise comparisons, without adjustment for multiplicity", HR=2, align="left")
 	}
 
+	#Creating dataset for printing
+	tabs_final <- data.frame(tabs$V8)
+	tabs_final$V2=format(round(tabs[1], 3), nsmall=3, scientific=FALSE)
+	tabs_final$V3=format(round(tabs[2], 3), nsmall=3, scientific=FALSE)
+	tabs_final$V4=format(round(tabs[3], 3), nsmall=3, scientific=FALSE)
+	tabs_final$V5=tabs$V4
+	tabs_final$V6=tabs$V5
+
+	for (i in 1:100) {
+		tabs_final$tabs.V8<-sub("xxxlevelgapxxx",", ", tabs_final$tabs.V8, fixed=TRUE)
+	}
+	#STB June 2015	
+	for (i in 1:100) {
+		tabs_final$tabs.V8<-sub("xxxivsdashivsxxx","-", tabs_final$tabs.V8, fixed=TRUE)
+	}
+
+	#STB June 2015	
+	for (i in 1:100) {
+		tabs_final$tabs.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final$tabs.V8, fixed=TRUE)
+	}
+	for (i in 1:100) {
+		tabs_final$tabs.V8<-sub("xxxcomparisonxxx"," - ", tabs_final$tabs.V8, fixed=TRUE)
+	}
+
+	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+	colnames(tabs_final)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
+
+
 	#print table
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
+		HTML(tabs_final, classfirstline="second", align="left", row.names = "FALSE")
 	}
+
 
 
 #===================================================================================================================
@@ -1525,58 +1551,72 @@ if(pairwiseTest == "allpairwisecomparisons") {
 				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
 			}
 
-			#Creating data for printing
-			tabs_final_log<-tabs
+			#Creating dataset for printing
+			tabs_final_log <- data.frame(tabs$V8)
 
 			if (responseTransform =="log10") {
-				tabs_final_log[1]<-10^tabs_final_log[1]
-				tabs_final_log[2]<-10^tabs_final_log[2]
-				tabs_final_log[3]<-10^tabs_final_log[3]
-				tabs_final_log[1]=format(round(tabs_final_log[1], 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[2]=format(round(tabs_final_log[2], 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[3]=format(round(tabs_final_log[3], 3), nsmall=3, scientific=FALSE)
-			}
-			if (responseTransform =="loge") {
-				tabs_final_log[1]=format(round(exp(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[2]=format(round(exp(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[3]=format(round(exp(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log$V2=format(round(10^tabs[1], 3), nsmall=3, scientific=FALSE)
+				tabs_final_log$V3=format(round(10^tabs[2], 3), nsmall=3, scientific=FALSE)
+				tabs_final_log$V4=format(round(10^tabs[3], 3), nsmall=3, scientific=FALSE)
+				tabs_final_log$V5=tabs$V5
 			}
 
-			#creating the final dataset for printing
-			tabs_final_log <- data.frame(tabs_final_log)
+			if (responseTransform =="loge") {
+				tabs_final_log$V2=format(round(exp(tabs[1]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log$V3=format(round(exp(tabs[2]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log$V4=format(round(exp(tabs[3]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_log$V5=tabs$V5
+			}
 
 			for (i in 1:100) {
-				rows<-sub("-","/", rows, fixed=TRUE)
+				tabs_final_log$tabs.V8<-sub("xxxlevelgapxxx",", ", tabs_final_log$tabs.V8, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				tabs_final_log$tabs.V8<-sub("xxxivsdashivsxxx","-", tabs_final_log$tabs.V8, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				tabs_final_log$tabs.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_log$tabs.V8, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				tabs_final_log$tabs.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_log$tabs.V8, fixed=TRUE)
 			}
 
-			tabs_final_log <- cbind(rows, tabs_final_log)
 			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
 			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-			colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
-			tabs_final_log<-subset(tabs_final_log, select = -c(Stderror,  temp)) 
-	
+			colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
+
 			#print table
 			HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
 		}
 	}
 
-	#Conclusion
+#===================================================================================================================
+#Conclusion
+#===================================================================================================================
+
 	add<-paste(c("Conclusion"))
 	inte<-1
-	tempnames<-rownames(tabs_final)
 
 	for(i in 1:(dim(tabs)[1])) {
 		if (tabs$V6[i] <= (1-sig)) {
 			if (inte==1) {
-				inte<-inte+1
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: ", sep="")
-				add<-paste(add, rows[i], sep="")
-			} else {
+				add<-paste(add, "% level: (", inte , ") ", sep="")
+				if(responseTransform =="log10"||responseTransform =="loge") {
+					add<-paste(add, tabs_final_log$Comparison[i], sep="")
+				} else {
+					add<-paste(add, tabs_final$Comparison[i], sep="")
+				}
 				inte<-inte+1
-				add<-paste(add, ", ", sep="")
-				add<-paste(add, rows[i], sep="")
+			} else {
+				add<-paste(add, " (", inte , ") ", sep="")
+				if(responseTransform =="log10"||responseTransform =="loge") {
+					add<-paste(add, tabs_final_log$Comparison[i], sep="")
+				} else {
+					add<-paste(add, tabs_final$Comparison[i], sep="")
+				}
+				inte<-inte+1
 			}
 		} 
 	}
@@ -1591,42 +1631,51 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	}
 	HTML(add, align="left")
 	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
+
+
+
 }
+
 #===================================================================================================================
 #All comparisons within time factor
 #===================================================================================================================
 if(pairwiseTest == "allcomparisonswithinselected") {
-		#Creating the subsetted version of tabs dataset
-		tabs <- data.frame(cbind(tabs, tellfinal))
-		rownames(tabs)<-c(rows)
-		tabs<-subset(tabs, tell1b==tell2b)
-		tabs<-subset(tabs, select = -c(tell1b,tell2b)) 
+	HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
+	#Creating the subsetted version of tabs dataset
+	tabs_red<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
 
-		#Creating the dataset for printing
-		tabs_final<-tabs
-		tabs_final[1]=format(round(tabs_final[1], 3), nsmall=3, scientific=FALSE)
-		tabs_final[2]=format(round(tabs_final[2], 3), nsmall=3, scientific=FALSE)
-		tabs_final[3]=format(round(tabs_final[3], 3), nsmall=3, scientific=FALSE)
+	#Creating dataset for printing
+	tabs_final_red <- data.frame(tabs_red$V8)
+	tabs_final_red$V2=format(round(tabs_red[1], 3), nsmall=3, scientific=FALSE)
+	tabs_final_red$V3=format(round(tabs_red[2], 3), nsmall=3, scientific=FALSE)
+	tabs_final_red$V4=format(round(tabs_red[3], 3), nsmall=3, scientific=FALSE)
+	tabs_final_red$V5=tabs_red$V4
+	tabs_final_red$V6=tabs_red$V5
 
-		#creating the final dataset for printing
-		temp<-rownames(tabs_final)
+	for (i in 1:100) {
+		tabs_final_red$tabs_red.V8<-sub("xxxlevelgapxxx",", ", tabs_final_red$tabs_red.V8, fixed=TRUE)
+	}
+	#STB June 2015	
+	for (i in 1:100) {
+		tabs_final_red$tabs_red.V8<-sub("xxxivsdashivsxxx","-", tabs_final_red$tabs_red.V8, fixed=TRUE)
+	}
 
-		#STB June 2015	
-		for (i in 1:100) {
-			temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
-		}
+	#STB June 2015	
+	for (i in 1:100) {
+		tabs_final_red$tabs_red.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_red$tabs_red.V8, fixed=TRUE)
+	}
+	for (i in 1:100) {
+		tabs_final_red$tabs_red.V8<-sub("xxxcomparisonxxx"," - ", tabs_final_red$tabs_red.V8, fixed=TRUE)
+	}
 
-		tabs_final <- cbind(temp, tabs_final)
+	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+	colnames(tabs_final_red)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
 
-		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-		colnames(tabs_final)<-c("Comparison","Difference", lowerCI, upperCI, "Std error", "p-value", "temp")
 
-		tabs_final2<-subset(tabs_final, select = -c(temp)) 
-
+	#print table
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
-		HTML(tabs_final2, classfirstline="second", align="left", row.names = "FALSE")
+		HTML(tabs_final_red, classfirstline="second", align="left", row.names = "FALSE")
 	}
 
 #===================================================================================================================
@@ -1644,56 +1693,78 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
 			}
 
-			#Creating data for printing
-			tabs_final_log<-tabs
+			#Creating the subsetted version of tabs dataset
+			tabs_redl<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
 
+			#Creating dataset for printing
+			tabs_final_redl <- data.frame(tabs_redl$V8)
 			if (responseTransform =="log10") {
-				tabs_final_log[1]=format(round(10^(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[2]=format(round(10^(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[3]=format(round(10^(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V2=format(round(10^tabs_redl[1], 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V3=format(round(10^tabs_redl[2], 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V4=format(round(10^tabs_redl[3], 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V5=tabs_redl$V5
 			}
+
 			if (responseTransform =="loge") {
-				tabs_final_log[1]=format(round(exp(tabs_final_log[1]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[2]=format(round(exp(tabs_final_log[2]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log[3]=format(round(exp(tabs_final_log[3]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V2=format(round(exp(tabs_redl[1]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V3=format(round(exp(tabs_redl[2]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V4=format(round(exp(tabs_redl[3]), 3), nsmall=3, scientific=FALSE)
+				tabs_final_redl$V5=tabs_redl$V5
 			}
 
-			#creating the final dataset for printing
-			temp<-rownames(tabs_final_log)
-			temp<-sub(" - "," / ", temp, fixed=TRUE)
-
-			#STB June 2015	
 			for (i in 1:100) {
-			temp<-sub("_ivs_dash_ivs_"," - ", temp, fixed=TRUE)
+				tabs_final_redl$tabs_redl.V8<-sub("xxxlevelgapxxx",", ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
 			}
 
-			tabs_final_log <- cbind(temp, tabs_final_log)
+			for (i in 1:100) {
+				tabs_final_redl$tabs_redl.V8<-sub("xxxivsdashivsxxx","-", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				tabs_final_redl$tabs_redl.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
+			}
+			for (i in 1:100) {
+				tabs_final_redl$tabs_redl.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
+			}
+
 			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
 			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-			colnames(tabs_final_log)<-c("Comparison", "Ratio", lowerCI, upperCI, "Stderror", "pvalue", "temp")
-			tabs_final_log<-subset(tabs_final_log, select = -c(Stderror,  temp)) 
-	
-			HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
+			colnames(tabs_final_redl)<-c("Comparison", "Difference", lowerCI, upperCI, "p-value")
+
+			#print table
+			if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+				HTML(tabs_final_redl, classfirstline="second", align="left", row.names = "FALSE")
+			}
+
 		}
 	}
 
-	#Conclusion
+#===================================================================================================================
+#Conclusion
+#===================================================================================================================
+
 	add<-paste(c("Conclusion"))
 	inte<-1
-	tempnames<-rownames(tabs_final)
 
-	for(i in 1:(dim(tabs)[1])) {
-		if (tabs$V6[i] <= (1-sig)) {
+	for(i in 1:(dim(tabs_red)[1])) {
+		if (tabs_red$V6[i] <= (1-sig)) {
 			if (inte==1) {
-				inte<-inte+1
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: ", sep="")
-				add<-paste(add, temp[i], sep="")
-			} else {
+				add<-paste(add, "% level: (", inte , ") ", sep="")
+				if(responseTransform =="log10"||responseTransform =="loge") {
+					add<-paste(add, tabs_final_redl$Comparison[i], sep="")
+				} else {
+					add<-paste(add, tabs_final_red$Comparison[i], sep="")
+				}
 				inte<-inte+1
-				add<-paste(add, ", ", sep="")
-				add<-paste(add, temp[i], sep="")
+			} else {
+				add<-paste(add, " (", inte , ") ", sep="")
+				if(responseTransform =="log10"||responseTransform =="loge") {
+					add<-paste(add, tabs_final_redl$Comparison[i], sep="")
+				} else {
+					add<-paste(add, tabs_final_red$Comparison[i], sep="")
+				}
+				inte<-inte+1
 			}
 		} 
 	}
@@ -1712,17 +1783,21 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 
 #===================================================================================================================
 #STB March 2014 - Creating a dataset of p-values
-if (genpvals == "Y" && (pairwiseTest == "allcomparisonswithinselected" || pairwiseTest == "allpairwisecomparisons")) {
+if (genpvals == "Y" && pairwiseTest == "allpairwisecomparisons") {
 
 	comparisons <- sub(".csv", "comparisons.csv",  Args[3])
+	tabsx<- data.frame(tabs$V6)
+	row <-data.frame(tabs_final$Comparison)
+	tabsx2<-cbind(row, tabsx)
+	colnames(tabsx2)<-c("Comparison", "p-value")
+	row.names(tabsx2) <- seq(nrow(tabsx2)) 
+	write.csv(tabsx2, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
+}
+if (genpvals == "Y" && pairwiseTest == "allcomparisonswithinselected" ) {
 
-	for (i in 1:100) {
-		tabs_final[,1]<-sub(","," ", tabs_final[,1], fixed=TRUE)
-	}
-
-	tabsx<- data.frame(tabs_final[,7])
-	row <-data.frame(tabs_final[,1])
-
+	comparisons <- sub(".csv", "comparisons.csv",  Args[3])
+	tabsx<- data.frame(tabs_red$V6)
+	row <-data.frame(tabs_final_red$Comparison)
 	tabsx2<-cbind(row, tabsx)
 	colnames(tabsx2)<-c("Comparison", "p-value")
 	row.names(tabsx2) <- seq(nrow(tabsx2)) 

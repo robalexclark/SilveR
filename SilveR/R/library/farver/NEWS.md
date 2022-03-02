@@ -1,3 +1,9 @@
+# farver 2.1.0
+
+* Added support for OKLab and OKLch (polar version of OKLab) colour spaces
+* Added `encode_native()` and `decode_native()` to convert back and forth 
+  between the internal R colour format.
+
 # farver 2.0.3
 
 * Fixed a bug in colour comparison where the blue channel got ignored 

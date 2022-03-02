@@ -51,13 +51,13 @@ test_empty_nested_vector_is_converted <- function() {
 
 test_list_is_converted_as_omap <- function() {
   x <- list(a=1:2, b=3:4)
-  expected <- "!omap\n- a:\n  - 1\n  - 2\n- b:\n  - 3\n  - 4\n"
+  expected <- "!!omap\n- a:\n  - 1\n  - 2\n- b:\n  - 3\n  - 4\n"
   checkEquals(expected, as.yaml(x, omap=TRUE))
 }
 
 test_nested_list_is_converted_as_omap <- function() {
   x <- list(a=list(c=list(e=1L, f=2L)), b=list(d=list(g=3L, h=4L)))
-  expected <- "!omap\n- a: !omap\n  - c: !omap\n    - e: 1\n    - f: 2\n- b: !omap\n  - d: !omap\n    - g: 3\n    - h: 4\n"
+  expected <- "!!omap\n- a: !!omap\n  - c: !!omap\n    - e: 1\n    - f: 2\n- b: !!omap\n  - d: !!omap\n    - g: 3\n    - h: 4\n"
   checkEquals(expected, as.yaml(x, omap=TRUE))
 }
 
@@ -439,4 +439,19 @@ test_custom_tag_for_unnamed_list <- function() {
   expected <- "!foo\n- 1.0\n- 2.0\n- 3.0\n"
   result <- as.yaml(x)
   checkEquals(expected, result)
+}
+
+test_quotes_for_string <- function() {
+  port_def <- "80:80"
+  attr(port_def, "quoted") <- TRUE
+  x <- list(ports = list(port_def))
+  result <- as.yaml(x)
+  expected <- "ports:\n- \"80:80\"\n"
+  checkEquals(expected, result)
+}
+
+test_no_dots_at_end <- function()
+{
+  result <- yaml::as.yaml(list(eol = "\n", a = 1), line.sep = "\n")
+  checkEquals("eol: |2+\n\na: 1.0\n", result)
 }

@@ -14,9 +14,9 @@ sandwich                Making Sandwiches with Bread and Meat
 vcovBS                  (Clustered) Bootstrap Covariance Matrix
                         Estimation
 vcovCL                  Clustered Covariance Matrix Estimation
-vcovHAC                 Heteroskedasticity and Autocorrelation
+vcovHAC                 Heteroscedasticity and Autocorrelation
                         Consistent (HAC) Covariance Matrix Estimation
-vcovHC                  Heteroskedasticity-Consistent Covariance Matrix
+vcovHC                  Heteroscedasticity-Consistent Covariance Matrix
                         Estimation
 vcovOPG                 Outer-Product-of-Gradients Covariance Matrix
                         Estimation

@@ -1,13 +1,13 @@
-## ----echo=FALSE, comment=''----------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 htmlwidgets:::toJSON2(head(iris, 3), pretty = TRUE)
 
-## ----echo=FALSE, comment=''----------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 htmlwidgets:::toJSON2(head(iris, 3), dataframe = 'row', pretty = TRUE)
 
-## ----echo=FALSE, comment=''----------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 htmlwidgets:::toJSON2(unname(head(iris, 8)), dataframe = 'column', pretty = TRUE)
 
-## ----echo=FALSE, comment=''----------------------------------------------
+## ----echo=FALSE, comment=''---------------------------------------------------
 htmlwidgets:::toJSON2(head(iris, 8), dataframe = 'values', pretty = TRUE)
 
 ## ----eval=FALSE, code=head(capture.output(htmlwidgets:::toJSON2),-1), tidy=FALSE----
@@ -24,9 +24,9 @@ htmlwidgets:::toJSON2(head(iris, 8), dataframe = 'values', pretty = TRUE)
 #          keep_vec_names = keep_vec_names, json_verbatim = TRUE,
 #          ...)
 #  }
-#  <bytecode: 0x7fe511839ae0>
+#  <bytecode: 0x7f859bf06f20>
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  fooWidget <- function(data, name, ...) {
 #    # ... process the data ...
 #    params <- list(foo = data, bar = TRUE)
@@ -35,7 +35,7 @@ htmlwidgets:::toJSON2(head(iris, 8), dataframe = 'values', pretty = TRUE)
 #    htmlwidgets::createWidget(name, x = params, ...)
 #  }
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  fooWidget <- function(data, name, ..., JSONArgs = list(digits = 7)) {
 #    # ... process the data ...
 #    params <- list(foo = data, bar = TRUE)
@@ -44,10 +44,10 @@ htmlwidgets:::toJSON2(head(iris, 8), dataframe = 'values', pretty = TRUE)
 #    htmlwidgets::createWidget(name, x = params, ...)
 #  }
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  options(htmlwidgets.TOJSON_ARGS = list(digits = 7, pretty = TRUE))
 
-## ----eval=FALSE----------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  fooWidget <- function(data, name, ...) {
 #    # ... process the data ...
 #    params <- list(foo = data, bar = TRUE)

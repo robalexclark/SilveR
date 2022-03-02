@@ -6,7 +6,7 @@ author:
 - name: Martin Morgan
   affiliation: Roswell Park Comprehensive Cancer Center, Buffalo, NY
 output:
-  BiocStyle::html_document:
+  html_document:
       toc: true
 vignette: |
   %\VignetteIndexEntry{Installing and Managing Bioconductor Packages}
@@ -56,6 +56,13 @@ Installed packages can be updated to their current version with
 BiocManager::install()
 ```
 
+CRAN packages for out-of-date _Bioconductor_ releases can be installed
+from the [Microsoft _R_ Application Network][MRAN] or [RStudio Package
+Manager][RSPM]; see `?BiocManager.snapshot` to change this behavior.
+
+[MRAN]: https://mran.microsoft.com/timemachine
+[RSPM]: https://packagemanager.rstudio.com/client/#/repos/2/overview
+
 ## Version and validity of installations
 
 Use `version()` to discover the version of _Bioconductor_ currently in
@@ -88,8 +95,8 @@ Warning message:
 bit "bit"   "/home/mtmorgan/R/x86_64-pc-linux-gnu-library/3.5-Bioc-3.8"
 ff  "ff"    "/home/mtmorgan/R/x86_64-pc-linux-gnu-library/3.5-Bioc-3.8"
     Installed Built   ReposVer Repository
-bit "1.1-12"  "3.5.0" "1.1-13" "https://cran.rstudio.com/src/contrib"
-ff  "2.2-13"  "3.5.0" "2.2-14" "https://cran.rstudio.com/src/contrib"
+bit "1.1-12"  "3.5.0" "1.1-13" "https://cloud.r-project.org/src/contrib"
+ff  "2.2-13"  "3.5.0" "2.2-14" "https://cloud.r-project.org/src/contrib"
 >
 ```
 
@@ -166,6 +173,31 @@ _R_
 BiocManager::valid()
 ```
 
+## Timeout during package download
+
+Large packages can take a long time to downloaded over poor internet
+connects. The BiocManager package sets the time limit to 300 seconds,
+using `options(timeout = 300)`. Only part of a package may download,
+e.g., only 15.1 of 79.4 MB in the example below
+
+```
+trying URL 'https://bioconductor.org/packages/3.12/data/annotation/src/contrib/org.Hs.eg.db_3.12.0.tar.gz'
+Content type 'application/x-gzip' length 83225518 bytes (79.4 MB)
+=========
+downloaded 15.1 MB
+```
+
+or perhaps with a warning (often difficult to see in the output)
+
+```
+Error in download.file(url, destfile, method, mode = "wb", ...) :
+...
+...: Timeout of 300 seconds was reached
+...
+```
+
+Try increasing the download timeout, e.g, `options(timeout = 600)`.
+
 # Advanced use
 
 ## Changing version
@@ -212,7 +244,7 @@ Set the environment variable `R_LIBS_USER` to this directory, and invoke _R_.
 Command line examples for Linux are
 
 - Linux: `R_LIBS_USER=~/R/3.5-Bioc-3.7 R`
-- macOS: `R_LIBS_USER=~~/Library/R/3.5-Bioc-3.7/library R`
+- macOS: `R_LIBS_USER=~/Library/R/3.5-Bioc-3.7/library R`
 - Windows: `cmd /C "set R_LIBS_USER=C:\Users\USER_NAME\Documents\R\3.5-Bioc-3.7 && R"`
 
 Once in _R_, confirm that the version-specific library path has been set
@@ -250,10 +282,12 @@ steps.
 
     ```{r, eval = FALSE}
     options(
-        repos = "file:///path/to/CRAN-mirror",
+        repos = c(CRAN_mirror = "file:///path/to/CRAN-mirror"),
         BioC_mirror = "file:///path/to/Bioc-mirror"
     )
     ```
+
+   Validate repository setting by reviewing the output of `repositories()`.
 
 2. Create an environment variable or option, e.g.,
 
@@ -271,6 +305,21 @@ steps.
 
 BiocManager can then be used for subsequent installations, e.g.,
 `BiocManager::install(c("ggplot2", "GenomicRanges"))`.
+
+### Offline config.yaml
+
+_BiocManager_ also expects to reference an online configuration yaml
+file for Bioconductor version validation at
+https://bioconductor.org/config.yaml. With offline use, users are
+expected to either host this file locally or provide their `config.yaml`
+version. The package allows either an environment variable or R-specific
+option to locate this file, e.g.,
+
+    ```{r, eval = FALSE}
+    options(
+        BIOCONDUCTOR_CONFIG_FILE = "file:///path/to/config.yaml"
+    )
+    ```
 
 # How it works -- details for advanced trouble-shooting
 
@@ -305,7 +354,7 @@ BiocManager could write information to a cache on the user disk, but
 this is not a robust solution for a number of reasons. Is there any
 other way that _R_ could keep track of version information? Yes, by
 installing a _Bioconductor_ package (BiocVersion) whose sole purpose is
-to indicate the version of _Bioconductor_ in use. 
+to indicate the version of _Bioconductor_ in use.
 
 By default, BiocManager installs the BiocVersion package corresponding
 to the most recent released version of _Bioconductor_ for the version
@@ -357,7 +406,7 @@ with more than one BiocVersion package installed. This might occur for
 instance if a 'system administrator' installed BiocVersion, and then a
 user installed their own version. In this circumstance, it seems
 appropriate to standardize the installation by repeatedly calling
-`remove.pacakges("BiocVersion")` until all versions are removed, and
+`remove.packages("BiocVersion")` until all versions are removed, and
 then installing the desired version.
 
 # `sessionInfo()`

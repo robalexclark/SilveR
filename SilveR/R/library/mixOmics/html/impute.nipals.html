@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Impute missing values using NIPALS algorithm</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for impute.nipals {mixOmics}"><tr><td>impute.nipals {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Impute missing values using NIPALS algorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function uses <code><a href="../../mixOmics/help/nipals.html">nipals</a></code> function to decompose
+<code>X</code> into a set of components (<code>t</code>), (pseudo-) singular-values
+(<code>eig</code>), and feature loadings (<code>p</code>). The original matrix is then
+approximated/reconstituted using the following equation:
+</p>
+<p style="text-align: center;"><i>\hat{X} = t * diag(eig) * t(p)</i></p>
+ 
+<p>The missing values from <code>X</code> are then approximated from this matrix. It
+is best to ensure enough number of components are used in order to best
+impute the missing values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+impute.nipals(X, ncomp, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>X</code></td>
+<td>
+<p>A numeric matrix containing missing values</p>
+</td></tr>
+<tr valign="top"><td><code>ncomp</code></td>
+<td>
+<p>Positive integer, the number of components to derive from
+<code>X</code> using the <code><a href="../../mixOmics/help/nipals.html">nipals</a></code> function and reconstitute
+the original matrix</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Optional arguments passed to <code><a href="../../mixOmics/help/nipals.html">nipals</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A numeric matrix with missing values imputed.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Al J Abadi
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../mixOmics/help/impute.nipals.html">impute.nipals</a></code>, <code><a href="../../mixOmics/help/pca.html">pca</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data("nutrimouse")
+X &lt;- data.matrix(nutrimouse$lipid)
+## add missing values to X to impute and compare to actual values
+set.seed(42)
+na.ind &lt;- sample(seq_along(X), size = 10)
+true.values &lt;- X[na.ind]
+X[na.ind] &lt;- NA
+X.impute &lt;- impute.nipals(X = X, ncomp = 5)
+## compare
+round(X.impute[na.ind], 2)
+true.values
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

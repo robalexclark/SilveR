@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Maintain a global registry of available back-end Params</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for register {BiocParallel}"><tr><td>register {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Maintain a global registry of available back-end Params</h2>
+
+<h3>Description</h3>
+
+<p>Use functions on this page to add to or query a registry of back-ends,
+including the default for use when no <code>BPPARAM</code> object is
+provided to functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+register(BPPARAM, default=TRUE)
+registered(bpparamClass)
+bpparam(bpparamClass)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>BPPARAM</code></td>
+<td>
+
+<p>An instance of a <code>BiocParallelParam</code> class, e.g.,
+<code><a href="../../BiocParallel/help/MulticoreParam.html">MulticoreParam</a></code>, <code><a href="../../BiocParallel/help/SnowParam.html">SnowParam</a></code>,
+<code><a href="../../BiocParallel/help/DoparParam.html">DoparParam</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>default</code></td>
+<td>
+
+<p>Make this the default <code>BiocParallelParam</code> for subsequent
+evaluations? If <code>FALSE</code>, the argument is placed at the lowest
+priority position.
+</p>
+</td></tr>
+<tr valign="top"><td><code>bpparamClass</code></td>
+<td>
+
+<p>When present, the text name of the <code>BiocParallelParam</code> class
+(e.g., &ldquo;MulticoreParam&rdquo;) to be retrieved from the
+registry. When absent, a list of all registered instances is
+returned.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The registry is a list of back-ends with configuration parameters 
+for parallel evaluation. The first list entry is the default and is 
+used by <code>BiocParallel</code> functions when no <code>BPPARAM</code> argument 
+is supplied.
+</p>
+<p>At load time the registry is populated with default backends. On Windows
+these are <code>SnowParam</code> and <code>SerialParam</code> and on non-Windows 
+<code>MulticoreParam</code>, <code>SnowParam</code> and <code>SerialParam</code>.
+When <code>snowWorkers()</code> or <code>multicoreWorkers</code> returns a single
+core, only <code>SerialParm</code> is registered.
+</p>
+<p>The <code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> objects are constructed from global
+options of the corresponding name, or from the default constructor (e.g.,
+<code>SnowParam()</code>) if no option is specified. The user can set customizations
+during start-up (e.g., in an <code>.Rprofile</code> file) with, for instance,
+<code>options(MulticoreParam=quote(MulticoreParam(workers=8)))</code>.
+</p>
+<p>The act of &ldquo;registering&rdquo; a back-end modifies the existing
+<code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> in the list; only one param of each 
+type can be present in the registry. When <code>default=TRUE</code>, the 
+newly registered param is moved to the top of the list thereby making 
+it the default. When <code>default=FALSE</code>, the param is modified 
+'in place' vs being moved to the top.
+</p>
+<p><code>bpparam()</code>, invoked with no arguments, returns the default 
+<code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> instance from the registry.
+When called with the text name of a <code>bpparamClass</code>, the 
+global options are consulted first,
+e.g., <code>options(MulticoreParam=MulticoreParam())</code> and then the
+value of <code>registered(bpparamClass)</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>register</code> returns, invisibly, a list of registered back-ends.
+</p>
+<p><code>registered</code> returns the back-end of type <code>bpparamClass</code> or,
+if <code>bpparamClass</code> is missing,  a list of all registered back-ends.
+</p>
+<p><code>bpparam</code> returns the back-end of type <code>bpparamClass</code> or,
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Morgan <a href="mailto:mtmorgan@fhcrc.org">mailto:mtmorgan@fhcrc.org</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> for possible values of <code>BPPARAM</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## ----------------------------------------------------------------------
+## The registry 
+## ----------------------------------------------------------------------
+
+## The default registry.
+default &lt;- registered()
+default
+
+## When default = TRUE the last param registered becomes the new default.
+snowparam &lt;- SnowParam(workers = 3, type = "SOCK")
+register(snowparam, default = TRUE)
+registered()
+
+## Retrieve the default back-end,
+bpparam()
+
+## or a specific BiocParallelParam.
+bpparam("SnowParam")
+
+## restore original registry -- push the defaults in reverse order
+for (param in rev(default))
+    register(param)
+
+## ----------------------------------------------------------------------
+## Specifying a back-end for evaluation
+## ----------------------------------------------------------------------
+
+## The back-end of choice is given as the BPPARAM argument to
+## the BiocParallel functions. None, one, or multiple back-ends can be
+## used.
+
+bplapply(1:6, sqrt, BPPARAM = MulticoreParam(3))
+
+## When not specified, the default from the registry is used.
+bplapply(1:6, sqrt)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

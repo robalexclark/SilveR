@@ -13,7 +13,7 @@
 \newcommand{\RR}{\textsf{R} }
 \newcommand{\X}{\mathbf{X}}
 \newcommand{\W}{\mathbf{W}}
-\newcommand{\C}{\mathbf{C}}
+\newcommand{\Cmat}{\mathbf{C}}
 \newcommand{\K}{\mathbf{K}}
 \newcommand{\x}{\mathbf{x}}
 \newcommand{\y}{\mathbf{y}}
@@ -209,8 +209,8 @@ However, in the presence of an intercept term, the full parameter vector
 $\theta = c(\mu, \beta_1, \dots, \beta_j)$ can't be estimated due to singularities
 in the corresponding design matrix. Therefore, a vector of 
 \emph{contrasts} $\gamma^\star$ of the original parameter vector $\gamma$ is fitted.
-More technically, a contrast matrix $\C$ is included into this model such that
-$\beta = \C \gamma^\star$
+More technically, a contrast matrix $\Cmat$ is included into this model such that
+$\beta = \Cmat \gamma^\star$
 any we only obtain estimates for $\gamma^\star$, but not for $\gamma$:
 <<aov-constrasts, echo = TRUE>>=
 aov.ex2 <- aov(y ~ x, data = ex)
@@ -223,7 +223,7 @@ nothing but differences in means for one baseline group
 contr.treatment(table(ex$x))
 K %*% contr.treatment(table(ex$x)) %*% coef(aov.ex2)[-1]
 @
-so that $\K \C \hat{\beta}^\star = \K \hat{\beta}$.
+so that $\K \Cmat \hat{\beta}^\star = \K \hat{\beta}$.
 
 When the \Rcmd{mcp} function is used to specify linear hypotheses, the
 \Rcmd{glht} function takes care of contrasts. Within \Rcmd{mcp}, the matrix of

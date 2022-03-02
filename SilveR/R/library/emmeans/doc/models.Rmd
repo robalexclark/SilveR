@@ -43,14 +43,15 @@ Scroll down or follow the links to those groups for more information.
 |averaging    |MuMIn    |[I](#I)  |                                                             |
 |betareg      |betareg  |[B](#B)  |`mode = c("link", "precision", "phi.link",`                  |
 |             |         |         |`  "variance", "quantile")`                                  |
-|brmsfit      |brms     |[S](#S)  |Only simpler models                                          |
+|brmsfit      |brms     |[P](#P)  |Supported in **brms** package                                          |
 |carbayes     |CARBayes |[S](#S)  |`data` is required                                           |
 |clm          |ordinal  |[O](#O)  |`mode = c("latent", "linear.predictor", "cum.prob",`         |
 |             |         |         |`  "exc.prob", "prob", "mean.class", "scale")`               |
 |clmm         |ordinal  |[O](#O)  |Like `clm` but no `"scale"` mode                             |
 |coxme        |coxme    |[G](#G)  |                                                             |
 |coxph        |survival |[G](#G)  |                                                             |
-|gam          |mgcv     |[G](#G)  |`freq = FALSE`, `unconditional = FALSE`                      |
+|gam          |mgcv     |[G](#G)  |`freq = FALSE`, `unconditional = FALSE`,                     |
+|             |         |         |`what = c("location", "scale", "shape", "rate", "prob.gt.0")`|
 |gamm         |mgcv     |[G](#G)  |`call = object$gam$call`                                     |
 |Gam          |gam      |[G](#G)  |`nboot = 800`                                                |
 |gamlss       |gamlss   |[H](#H)  |`what = c("mu", "sigma", "nu", "tau")`                       |
@@ -64,17 +65,22 @@ Scroll down or follow the links to those groups for more information.
 |glmmadmb     |glmmADMB |         |No longer supported                                          |
 |glmmPQL      |MASS     |[G](#G)  |inherits `lm` support                                        |
 |glmmTMB      |glmmTMB  |[P](#P)  |Supported in **glmmTMB** package (dev. version only?)        |
-|gls          |nlme     |[K](#K)  |`mode = c("auto", "df.error", "satterthwaite")`              |
+|gls          |nlme     |[K](#K)  |`mode = c("auto", "df.error", "satterthwaite", "asymptotic")`|
+|gnls         |nlme     |[A](#A)  |Supports `params` part. Requires `param = "<name>"`          |
 |hurdle       |pscl     |[C](#C)  |`mode = c("response", "count", "zero", "prob0"),`            |
 |             |         |         |`lin.pred = c(FALSE, TRUE)`                                  |
 |lm           |stats    |[A](#A)  |Several other classes inherit from this and may be supported |
 |lme          |nlme     |[K](#K)  |`sigmaAdjust = c(TRUE, FALSE),`                              |
-|             |         |         |`mode = c("auto", containment", "satterthwaite")`            |
+|             |         |         |`mode = c("auto", containment", "satterthwaite", "asymptotic"),`|
+|             |         |         |`extra.iter = 0`                                             |
 |lmerMod      |lme4     |[L](#L)  |`lmer.df = c("kenward-roger", "satterthwaite", "asymptotic")`, |
 |             |         |         |`pbkrtest.limit = 3000`,  `disable.pbkrtest = FALSE`.        |
 |             |         |         |`emm_options(lmer.df =, pbkrtest.limit =, disable.pbkrtest =)` |
+|lqm,lqmm     |lqmm     |[Q](#Q)  |`tau = "0.5"` (must match an entry in `object$tau`)          |
+|             |         |         |Optional: `method`, `R`, `seed`, `startQR` (must be fully spelled-out) |
 |manova       |stats    |[M](#M)  |`mult.name`, `mult.levs`                                     |
 |maov         |stats    |[M](#M)  |`mult.name`, `mult.levs`                                     |
+|mblogit      |mclogit  |[P](#P)  |Supported in **mclogit** (overrides previous minimal support here)  |
 |mcmc         |mcmc     |[S](#S)  |May require `formula`, `data`                                |
 |MCMCglmm     |MCMCglmm |[S](#S)  |(see also [M](#M#))  `mult.name`, `mult.levs`, `trait`,              |
 |             |         |         |`mode = c("default", "multinomial")`; `data` is required     |
@@ -84,16 +90,20 @@ Scroll down or follow the links to those groups for more information.
 |mmer         |sommer   |[G](#G)  |                                                             |
 |multinom     |nnet     |[N](#N)  |`mode = c("prob", "latent")`                                 |
 |             |         |         |Always include response in specs for `emmeans()`             |
-|nauf         |nauf.*xxx* |[P](#P)  |Supported in **nauf** package                                |
-|nlme         |nlme     |[A](#A)  |Supports fixed part. Requires `param`                        |
+|nauf         |nauf.*xxx* |[P](#P)  |Supported in **nauf** package                              |
+|nlme         |nlme     |[A](#A)  |Supports fixed part. Requires `param = "<name>"`             |
 |polr         |MASS     |[O](#O)  |`mode = c("latent", "linear.predictor", "cum.prob",`         |
 |             |         |         |`"exc.prob", "prob", "mean.class")`                          |
 |rlm          |MASS     |[A](#A)  |inherits `lm` support                                        |
 |rms          |rms      |[O](#O)  |`mode = ("middle", "latent", "linear.predictor",`            |
 |             |         |         |`"cum.prob", "exc.prob", "prob", "mean.class")`              |
+|rq,rqs       |quantreg |[Q](#Q)  |`tau = "0.5"` (must match an entry in `object$tau`)          |
+|             |         |         |Optional: `se`, `R`, `bsmethod`, etc.                        |
+|rlmerMod     |robustlmm|[P](#P)  |Supported in **robustlmm** package                           |
 |rsm          |rsm      |[P](#P)  |Supported in **rsm** package                                 |
 |stanreg      |rstanarm |[S](#S)  |Args for `stanreg_`*xxx* similar to those for *xxx*          |
 |survreg      |survival |[A](#A)  |                                                             |
+|svyglm       |survey   |[A](#A)  |                                                             |
 |zeroinfl     |pscl     |[C](#C)  |`mode = c("response", "count", "zero", "prob0")`,            |
 |             |         |         |`lin.pred = c(FALSE, TRUE)`                                  |
 
@@ -190,6 +200,10 @@ part. Unfortunately, that is missing its `call` component, so the user
 must supply it in the `call` argument (e.g., `call = quote(gamm(y ~ s(x), data = dat))`) 
 or give the dataset in the `data` argument. Alternatively (and recommended), 
 you may first set `object$gam$call` to the quoted call ahead of time.
+The `what` arguments are used to select which model formula to use: 
+`"location", "scale"` apply to `gaulss` and `gevlss`
+families, `"shape"` applies only to `gevlss`, and `"rate", "prob.gt.0"` 
+apply to `ziplss`.
 
 With `gam::Gam` objects, standard errors are estimated using a bootstrap
 method when there are any smoothers involved. Accordingly, there is an 
@@ -241,19 +255,27 @@ is `2*s^4 / Var(s^2)`. In case our numerical methods for this fail, we also
 offer `mode = "appx-satterthwaite"` as a backup, by which quantities related to
 `Var(s^2)` are obtained by randomly perturbing the response values. Currently,
 only `"appx-satterthwaite"` is available for `lme` objects, and it is used
-if `"satterthwaite"` is requested. (Note: Previously, `"appx-satterthwaite"` was
+if `"satterthwaite"` is requested. 
+Because `appx-satterthwaite` is simulation-based, results may vary if the same 
+analysis is repeated. An `extra.iter` argument may be added to request additional simulation runs (at [possibly considerable] cost of repeating the model-fitting that many more times).
+(Note: Previously, `"appx-satterthwaite"` was
 termed `"boot-satterthwaite"`; this is still supported for backward compatibility.
 The "boot" was abandoned because it is really an approximation method, not
 a bootstrap method in the sense as many statistical methods.)
 
-The alternative method is `"df.error"` (for `gls`) and
+An alternative method is `"df.error"` (for `gls`) and
 `"containment"` (for `lme`). `df.error` is just the error degrees of freedom for
 the model, minus the number of extra random effects estimated; it generally
-over-estimates the degrees of freedom. `"containment"` determines the degrees of
+over-estimates the degrees of freedom. The `asymptotic` mode simply sets the 
+degrees of freedom to infinity.
+"containment"` mode (for `lme` models) determines the degrees of
 freedom for the coarsest grouping involved in the contrast or linear function
 involved, so it tends to under-estimate the degrees of freedom.
 The default is `mode = "auto"`, which uses Satterthwaite if there are estimated 
 random effects and the non-Satterthwaite option otherwise.
+
+The `extra.iter` argument is ignored unless the d.f. method is (or defaults to) 
+`appx-satterthwaite`.
 
 [Back to quick reference](#quickref)
 
@@ -332,6 +354,7 @@ if `resp` is a response with *k* levels, `emmeans(model, ~ resp
 `trt`; but `emmeans(model, ~ trt)` will just yield the average
 probability of 1/*k* for each `trt`.
 
+
 [Back to quick reference](#quickref)
 
 ## Group O - Ordinal responses {#O}
@@ -396,7 +419,19 @@ together.
 
 Models in this group have their **emmeans** support provided by the package
 that implements the model-fitting procedure. Users should refer to the
-package documentation for details on **emmeans** support.
+package documentation for details on **emmeans** support. In some cases, a
+package's models may have been supported here in **emmeans**; if so, the 
+other package's support overrides it.
+
+
+## Q -- Quantile regression {#Q}
+
+The argument `tau` should match (within a very small margin) one of the quantiles 
+actually specified in fitting the model; otherwise an error results. In these models, the
+covariance matrix is obtained via the model's `summary()` method with `covariance = TRUE`.
+The user may specify one or more of the other arguments for `summary` or to be passed
+to, say, a bootstrap routine. If so, those optional arguments must be spelled-out completely
+(e.g., `start` will *not* be matched to `startQR`).
 
 
 ## S -- Sampling (MCMC) methods {#S}
@@ -430,8 +465,9 @@ name its levels. In other models such as a multinomial model, use the
 `mode` argument to specify the type of model, and `trait = <factor name>` 
 to specify the name of the data column that contains the levels of the factor response.
 
-Support for the **brms** package is provided but it is quite rudimentary and 
-usable only for the primary fixed effects and the simpler models.
+The **brms** package version 2.13 and later, has its own `emmeans` support. 
+Refer to the documentation in that package.
+
 
 [Back to quick reference](#quickref)
 

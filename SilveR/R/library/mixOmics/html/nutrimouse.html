@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Nutrimouse Dataset</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for nutrimouse {mixOmics}"><tr><td>nutrimouse {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Nutrimouse Dataset</h2>
+
+<h3>Description</h3>
+
+<p>The <code>nutrimouse</code> dataset contains the expression measure of 120 genes
+potentially involved in nutritional problems and the concentrations of 21
+hepatic fatty acids for forty mice.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+data(nutrimouse)
+</pre>
+
+
+<h3>Format</h3>
+
+<p>A list containing the following components: </p>
+
+<dl>
+<dt>list(&quot;gene&quot;)</dt><dd><p>data frame with 40 observations on 120 numerical
+variables.</p>
+</dd> <dt>list(&quot;lipid&quot;)</dt><dd><p>data frame with 40 observations on 21
+numerical variables.</p>
+</dd> <dt>list(&quot;diet&quot;)</dt><dd><p>factor of 5 levels containing 40
+labels for the diet factor.</p>
+</dd> <dt>list(&quot;genotype&quot;)</dt><dd><p>factor of 2 levels
+containing 40 labels for the diet factor.</p>
+</dd> </dl>
+
+
+
+<h3>Details</h3>
+
+<p>The data sets come from a nutrigenomic study in the mouse (Martin <em>et
+al.</em>, 2007) in which the effects of five regimens with contrasted fatty acid
+compositions on liver lipids and hepatic gene expression in mice were
+considered. Two sets of variables were acquired on forty mice:
+</p>
+ <ul>
+<li><p> gene: expressions of 120 genes measured in liver cells,
+selected (among about 30,000) as potentially relevant in the context of the
+nutrition study. These expressions come from a nylon macroarray with
+radioactive labelling;
+</p>
+</li>
+<li><p> lipid: concentrations (in percentages) of 21 hepatic fatty acids
+measured by gas chromatography. </p>
+</li></ul>
+
+<p>Biological units (mice) were cross-classified according to two factors
+experimental design (4 replicates):
+</p>
+ <ul>
+<li><p> Genotype: 2-levels factor, wild-type (WT) and
+PPAR<i>&alpha;</i> -/- (PPAR).
+</p>
+</li>
+<li><p> Diet: 5-levels factor. Oils used for experimental diets preparation
+were corn and colza oils (50/50) for a reference diet (REF), hydrogenated
+coconut oil for a saturated fatty acid diet (COC), sunflower oil for an
+Omega6 fatty acid-rich diet (SUN), linseed oil for an Omega3-rich diet (LIN)
+and corn/colza/enriched fish oils for the FISH diet (43/43/14). </p>
+</li></ul>
+
+
+
+<h3>Value</h3>
+
+<p>none
+</p>
+
+
+<h3>Source</h3>
+
+<p>The <code>nutrimouse</code> dataset was provided by Pascal Martin from the
+Toxicology and Pharmacology Laboratory, National Institute for Agronomic
+Research, French.
+</p>
+
+
+<h3>References</h3>
+
+<p>Martin, P. G. P., Guillou, H., Lasserre, F., Déjean, S., Lan,
+A., Pascussi, J.-M., San Cristobal, M., Legrand, P., Besse, P. and Pineau,
+T. (2007). Novel aspects of PPAR<i>&alpha;</i>-mediated regulation of lipid
+and xenobiotic metabolism revealed through a multrigenomic study.
+<em>Hepatology</em> <b>54</b>, 767-777.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

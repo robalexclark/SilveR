@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Transform vectorized functions into parallelized, vectorized...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for bpvectorize {BiocParallel}"><tr><td>bpvectorize {BiocParallel}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Transform vectorized functions into parallelized, vectorized function</h2>
+
+<h3>Description</h3>
+
+<p>This transforms a vectorized function into a parallel, vectorized
+function. Any function <code>FUN</code> can be used, provided its
+parallelized argument (by default, the first argument) has a
+<code>length</code> and <code>[</code> method defined, and the return value of
+<code>FUN</code> can be concatenated with <code>c</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+bpvectorize(FUN, ..., BPREDO=list(), BPPARAM=bpparam())
+
+## S4 method for signature 'ANY,ANY'
+bpvectorize(FUN, ..., BPREDO=list(), BPPARAM=bpparam())
+
+## S4 method for signature 'ANY,missing'
+bpvectorize(FUN, ..., BPREDO=list(), 
+    BPPARAM=bpparam())
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+<p>A function whose first argument has a <code>length</code> and can
+be subset <code>[</code>, and whose evaluation would benefit by splitting
+the argument into subsets, each one of which is independently
+transformed by <code>FUN</code>. The return value of <code>FUN</code> must
+support concatenation with <code>c</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments to parallization, unused.
+</p>
+</td></tr>
+<tr valign="top"><td><code>BPPARAM</code></td>
+<td>
+<p>An optional <code><a href="../../BiocParallel/help/BiocParallelParam.html">BiocParallelParam</a></code> instance
+determining the parallel back-end to be used during evaluation.
+</p>
+</td></tr>
+<tr valign="top"><td><code>BPREDO</code></td>
+<td>
+<p>A <code>list</code> of output from <code>bpvectorize</code> with one
+or more failed elements. When a list is given in <code>BPREDO</code>,
+<code>bpok</code> is used to identify errors, tasks are rerun and inserted
+into the original results.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The result of <code>bpvectorize</code> is a function with signature
+<code>...</code>; arguments to the returned function are the original
+arguments <code>FUN</code>. <code>BPPARAM</code> is used for parallel evaluation.
+</p>
+<p>When <code>BPPARAM</code> is a class for which no method is defined (e.g.,
+<code><a href="../../BiocParallel/help/SerialParam.html">SerialParam</a></code>), <code>FUN(X)</code> is used.
+</p>
+<p>See <code>methods{bpvectorize}</code> for additional methods, if any.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A function taking the same arguments as <code>FUN</code>, but evaluated
+using <code><a href="../../BiocParallel/help/bpvec.html">bpvec</a></code> for parallel evaluation across available
+cores.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ryan Thompson <a href="mailto:rct@thompsonclan.org">mailto:rct@thompsonclan.org</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>bpvec</code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+psqrt &lt;- bpvectorize(sqrt) ## default parallelization
+psqrt(1:10)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocParallel</em> version 1.28.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -121,7 +121,7 @@ The version 0.24 was begun about April 1 2003
 
 The version 0.25 was begun about April 16 2003
 
-   o fixed a bug in chol.matrix.csr that incorrected allocated
+   o fixed a bug in chol.matrix.csr that incorrectly allocated
    	space in large problems
 
 The version 0.26 was done April 26 2003
@@ -258,7 +258,7 @@ The version 0.54
 		things S4 method dispatch to find functions in SparseM
 		that were hidden from view  when it didn't have a NAMESPACE.
 		The original problem child was det() which SparseM declared
-		generic, but this wasn't visible to Bivand spatial package.
+		generic, but this wasn't visible to Bivand's spatial package.
 		Use requires various import directives in the NAMESPACE
 		of the importing package, however quantreg  which uses SparseM
 		for certain nonparametric regression problems worked without
@@ -535,3 +535,8 @@ The version 1.78
 
 1.  Changed check for symmetry to use all.equal() in response to an error
 reported by Brian Ripley.
+
+The version 1.79
+
+1.  Removed a "f_" from the .Fortran call in chol2csr following bug report
+by Alex Ballantynea (Melbourne U)

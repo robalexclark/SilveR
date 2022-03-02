@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: circosPlot for DIABLO</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for circosPlot {mixOmics}"><tr><td>circosPlot {mixOmics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>circosPlot for DIABLO</h2>
+
+<h3>Description</h3>
+
+<p>Displays variable correlation among different blocks
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'block.splsda'
+circosPlot(
+  object,
+  comp = 1:min(object$ncomp),
+  cutoff,
+  color.Y,
+  blocks = NULL,
+  color.blocks,
+  color.cor,
+  var.names = NULL,
+  showIntraLinks = FALSE,
+  line = FALSE,
+  size.legend = 0.8,
+  ncol.legend = 1,
+  size.variables = 0.25,
+  size.labels = 1,
+  legend = TRUE,
+  linkWidth = 1,
+  ...
+)
+
+## S3 method for class 'block.spls'
+circosPlot(object, ..., group = NULL, Y.name = "Y")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class inheriting from <code>"block.splsda"</code> or
+<code>"blocks.spls"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>comp</code></td>
+<td>
+<p>Numeric vector indicating which component to plot. Default to
+all</p>
+</td></tr>
+<tr valign="top"><td><code>cutoff</code></td>
+<td>
+<p>Only shows links with a correlation higher than <code>cutoff</code></p>
+</td></tr>
+<tr valign="top"><td><code>color.Y</code></td>
+<td>
+<p>a character vector of colors to be used for the levels of the
+outcome</p>
+</td></tr>
+<tr valign="top"><td><code>blocks</code></td>
+<td>
+<p>Character or integer vector indicating which blocks to show.
+Default to all</p>
+</td></tr>
+<tr valign="top"><td><code>color.blocks</code></td>
+<td>
+<p>a character vector of colors to be used for the blocks</p>
+</td></tr>
+<tr valign="top"><td><code>color.cor</code></td>
+<td>
+<p>a character vector of two colors. First one is for the
+negative correlation, second one is for the positive correlation</p>
+</td></tr>
+<tr valign="top"><td><code>var.names</code></td>
+<td>
+<p>Optional parameter. A list of length the number of blocks
+in <code>object$X</code>, containing the names of the variables of each block. If
+<code>NULL</code>, the colnames of the data matrix are used.</p>
+</td></tr>
+<tr valign="top"><td><code>showIntraLinks</code></td>
+<td>
+<p>if TRUE, shows the correlation higher than the
+threshold inside each block.</p>
+</td></tr>
+<tr valign="top"><td><code>line</code></td>
+<td>
+<p>if TRUE, shows the overall expression of the selected variables.
+see examples.</p>
+</td></tr>
+<tr valign="top"><td><code>size.legend</code></td>
+<td>
+<p>size of the legend</p>
+</td></tr>
+<tr valign="top"><td><code>ncol.legend</code></td>
+<td>
+<p>number of columns for the legend</p>
+</td></tr>
+<tr valign="top"><td><code>size.variables</code></td>
+<td>
+<p>size of the variable labels</p>
+</td></tr>
+<tr valign="top"><td><code>size.labels</code></td>
+<td>
+<p>size of the block labels</p>
+</td></tr>
+<tr valign="top"><td><code>legend</code></td>
+<td>
+<p>Logical. Whether the legend should be added. Default is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>linkWidth</code></td>
+<td>
+<p>Numeric. Specifies the range of sizes used for lines linking
+the correlated variables (see details). Must be of length 2 or 1. Default to c(1). See details.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>For object of class <code>block.splsda</code>, advanced plot parameters:
+</p>
+
+<ul>
+<li> <p><b>var.adj</b> Numeric. Adjusts the radial location of variable names in 
+units of the arc band width. Positive values push feature names radially 
+outward. Default to -0.33. See examples.
+</p>
+</li>
+<li> <p><b>block.labels.adj</b> Numeric between -1 and 1. Adjusts the radial
+location of block names radially inward or outward. Default to 0. See examples.
+</p>
+</li>
+<li> <p><b>blocks.link</b> Character vector of blocks. If provided, only correlations
+from features of these blocks are shown using links. See examples.
+</p>
+</li></ul>
+
+<p>For object of class <code>block.spls</code>, all listed and advanced arguments
+passed to the <code>block.splsda</code> method.</p>
+</td></tr>
+<tr valign="top"><td><code>group</code></td>
+<td>
+<p>The grouping factor used when <code>line = TRUE</code></p>
+</td></tr>
+<tr valign="top"><td><code>Y.name</code></td>
+<td>
+<p>Character, the name of the <code>Y</code> block</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>circosPlot</code> function depicts correlations of variables selected with
+<code>block.splsda</code> or <code>block.spls</code> among different blocks, using a
+generalisation of the method presented in González et al 2012. If
+<code>ncomp</code> is specified, then only the variables selected on that component
+are displayed.
+</p>
+<p>The <code>linkWidth</code> argument specifies the width of the links drawn.
+If a vector of length 2 is provided, the smaller value will correspond to
+a similarity values designated by <code>cutoff</code> argument, while the 
+larger value will be used for a link with perfect similarity (1), if any.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If saved in an object, the circos plot will output the similarity
+matrix and the names of the variables displayed on the plot (see
+<code>attributes(object)</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Michael Vacher, Amrit Singh, Florian Rohart, Kim-Anh Lê Cao, Al J Abadi
+</p>
+
+
+<h3>References</h3>
+
+<p>Singh A., Gautier B., Shannon C., Vacher M., Rohart F., Tebbutt
+S. and Lê Cao K.A. (2016). DIABLO: multi omics integration for biomarker
+discovery. BioRxiv available here:
+<a href="http://biorxiv.org/content/early/2016/08/03/067611">http://biorxiv.org/content/early/2016/08/03/067611</a>
+</p>
+<p>mixOmics article:
+</p>
+<p>Rohart F, Gautier B, Singh A, Lê Cao K-A. mixOmics: an R package for 'omics
+feature selection and multiple data integration. PLoS Comput Biol 13(11):
+e1005752
+</p>
+<p>González I., Lê Cao K.A., Davis M.J., Déjean S. (2012). Visualising
+associations between paired 'omics' data sets. <em>BioData Mining</em>;
+<b>5</b>(1).
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../mixOmics/help/block.splsda.html">block.splsda</a></code>, references and
+http://www.mixOmics.org/mixDIABLO for more details.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(nutrimouse)
+Y = nutrimouse$diet
+data = list(gene = nutrimouse$gene, lipid = nutrimouse$lipid)
+design = matrix(c(0,1,1,1,0,1,1,1,0), ncol = 3, nrow = 3, byrow = TRUE)
+
+
+nutrimouse.sgccda &lt;- wrapper.sgccda(X=data,
+Y = Y,
+design = design,
+keepX = list(gene=c(10,10), lipid=c(15,15)),
+ncomp = 2,
+scheme = "horst")
+
+circosPlot(nutrimouse.sgccda, cutoff = 0.7)
+## links widths based on strength of their similarity
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, linkWidth = c(1, 10))
+## custom legend
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, size.legend = 1.1)
+
+## more customisation
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, size.legend = 1.1, color.Y = 1:5, 
+           color.blocks = c("green","brown"), color.cor = c("magenta", "purple"))
+    
+par(mfrow=c(2,2))
+
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, size.legend = 1.1)
+## also show intra-block correlations
+circosPlot(nutrimouse.sgccda, cutoff = 0.7,
+           size.legend = 1.1, showIntraLinks = TRUE)
+## show lines
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, line = TRUE, ncol.legend = 1,
+           size.legend = 1.1, showIntraLinks = TRUE)
+## custom line legends
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, line = TRUE, ncol.legend = 2,
+           size.legend = 1.1, showIntraLinks = TRUE)
+par(mfrow=c(1,1))
+
+## adjust feature and block names radially
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, size.legend = 1.1)
+circosPlot(nutrimouse.sgccda, cutoff = 0.7, size.legend = 1.1, 
+           var.adj = 0.8, block.labels.adj = -0.5)
+## ---  example using breast.TCGA data
+data("breast.TCGA")
+data = list(mrna = breast.TCGA$data.train$mrna, 
+            mirna = breast.TCGA$data.train$mirna, 
+            protein = breast.TCGA$data.train$protein)
+list.keepX = list(mrna = rep(20, 2), mirna = rep(10,2), protein = c(10, 2))
+
+TCGA.block.splsda = block.splsda(X = data, 
+                             Y =breast.TCGA$data.train$subtype,
+                             ncomp = 2, keepX = list.keepX, 
+                             design = 'full')
+circosPlot(TCGA.block.splsda, cutoff = 0.7, line=TRUE)
+## show only first 2 blocks
+circosPlot(TCGA.block.splsda, cutoff = 0.7, line=TRUE, blocks = c(1,2))
+## show only correlations including the mrna block features
+circosPlot(TCGA.block.splsda, cutoff = 0.7, blocks.link = 'mrna')
+
+data("breast.TCGA")
+data = list(mrna = breast.TCGA$data.train$mrna, mirna = breast.TCGA$data.train$mirna)
+list.keepX = list(mrna = rep(20, 2), mirna = rep(10,2))
+list.keepY = c(rep(10, 2))
+
+TCGA.block.spls = block.spls(X = data, 
+                             Y = breast.TCGA$data.train$protein,
+                             ncomp = 2, keepX = list.keepX, 
+                             keepY = list.keepY, design = 'full')
+circosPlot(TCGA.block.spls, group = breast.TCGA$data.train$subtype, cutoff = 0.7, 
+           Y.name = 'protein')
+## only show links including mrna
+circosPlot(TCGA.block.spls, group = breast.TCGA$data.train$subtype, cutoff = 0.7, 
+           Y.name = 'protein', blocks.link = 'mrna')
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>mixOmics</em> version 6.18.1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

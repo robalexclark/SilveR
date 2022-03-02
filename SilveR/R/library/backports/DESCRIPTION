@@ -1,7 +1,7 @@
 Package: backports
 Type: Package
 Title: Reimplementations of Functions Introduced Since R-3.0.0
-Version: 1.1.5
+Version: 1.4.1
 Authors@R: c(
     person("Michel", "Lang", NULL, "michellang@gmail.com",
       role = c("cre", "aut"), comment = c(ORCID = "0000-0001-9754-0393")),
@@ -20,13 +20,12 @@ License: GPL-2 | GPL-3
 NeedsCompilation: yes
 ByteCompile: yes
 Depends: R (>= 3.0.0)
-Imports: utils
 Encoding: UTF-8
-RoxygenNote: 6.1.1
-Packaged: 2019-10-02 18:35:28 UTC; michel
+RoxygenNote: 7.1.2
+Packaged: 2021-12-13 10:49:30 UTC; michel
 Author: Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>),
   R Core Team [aut]
 Repository: CRAN
-Date/Publication: 2019-10-02 20:20:02 UTC
-Built: R 3.6.1; x86_64-w64-mingw32; 2019-10-03 09:20:43 UTC; windows
+Date/Publication: 2021-12-13 11:30:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2021-12-15 00:12:34 UTC; windows
 Archs: i386, x64

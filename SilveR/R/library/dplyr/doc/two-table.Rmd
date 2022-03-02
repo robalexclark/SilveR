@@ -1,5 +1,10 @@
 ---
 title: "Two-table verbs"
+description: >
+  Most dplyr verbs work with a single data set, but most data analyses involve
+  multiple datasets. This vignette introduces you to the dplyr verbs that 
+  work with more one than data set, and introduces to the mutating joins, 
+  filtering joins, and the set operations.
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Two-table verbs}
@@ -11,9 +16,6 @@ vignette: >
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 5)
 library(dplyr)
-knit_print.tbl_df <- function(x, options) {
-  knitr::knit_print(trunc_mat(x), options)
-}
 ```
 
 It's rare that a data analysis involves only a single table of data. In practice, you'll normally have many tables that contribute to an analysis, and you need flexible tools to combine them. In dplyr, there are three families of verbs that work with two tables at a time:
@@ -27,16 +29,16 @@ It's rare that a data analysis involves only a single table of data. In practice
 * Set operations, which combine the observations in the data sets as if they 
   were set elements.
 
-(This discussion assumes that you have [tidy data](http://www.jstatsoft.org/v59/i10/), where the rows are observations and the columns are variables. If you're not familiar with that framework, I'd recommend reading up on it first.)
+(This discussion assumes that you have [tidy data](https://www.jstatsoft.org/v59/i10/), where the rows are observations and the columns are variables. If you're not familiar with that framework, I'd recommend reading up on it first.)
 
 All two-table verbs work similarly. The first two arguments are `x` and `y`, and provide the tables to combine. The output is always a new table with the same type as `x`.
 
 ## Mutating joins
 
-Mutating joins allow you to combine variables from multiple tables. For example, take the nycflights13 data. In one table we have flight information with an abbreviation for carrier, and in another we have a mapping between abbreviations and full names. You can use a join to add the carrier names to the flight data:
+Mutating joins allow you to combine variables from multiple tables. For example, consider the flights and airlines data from the nycflights13 package. In one table we have flight information with an abbreviation for carrier, and in another we have a mapping between abbreviations and full names. You can use a join to add the carrier names to the flight data:
 
 ```{r, warning = FALSE}
-library("nycflights13")
+library(nycflights13)
 # Drop unimportant variables so it's easier to understand the join results.
 flights2 <- flights %>% select(year:day, hour, origin, dest, tailnum, carrier)
 
@@ -86,7 +88,7 @@ There are four types of mutating join, which differ in their behaviour when a ma
 
 ```{r}
 df1 <- tibble(x = c(1, 2), y = 2:1)
-df2 <- tibble(x = c(1, 3), a = 10, b = "a")
+df2 <- tibble(x = c(3, 1), a = 10, b = "a")
 ```
 
   * `inner_join(x, y)` only includes observations that match in both `x` and `y`.
@@ -104,7 +106,7 @@ df2 <- tibble(x = c(1, 3), a = 10, b = "a")
     ```
   
   * `right_join(x, y)` includes all observations in `y`. It's equivalent to 
-    `left_join(y, x)`, but the columns will be ordered differently.
+    `left_join(y, x)`, but the columns and rows will be ordered differently.
   
     ```{r}
     df1 %>% right_join(df2)
@@ -132,7 +134,7 @@ df1 %>% left_join(df2)
 
 ## Filtering joins
 
-Filtering joins match obserations in the same way as mutating joins, but affect the observations, not the variables. There are two types:
+Filtering joins match observations in the same way as mutating joins, but affect the observations, not the variables. There are two types:
 
 * `semi_join(x, y)` __keeps__ all observations in `x` that have a match in `y`.
 * `anti_join(x, y)` __drops__ all observations in `x` that have a match in `y`.
@@ -183,56 +185,6 @@ intersect(df1, df2)
 union(df1, df2)
 setdiff(df1, df2)
 setdiff(df2, df1)
-```
-
-
-## Coercion rules
-
-When joining tables, dplyr is a little more conservative than base R about the types of variable that it considers equivalent. This is mostly likely to surprise if you're working factors:
-
-  * Factors with different levels are coerced to character with a warning:
-    
-    ```{r}
-    df1 <- tibble(x = 1, y = factor("a"))
-    df2 <- tibble(x = 2, y = factor("b"))
-    full_join(df1, df2) %>% str()
-    ```
-
-  * Factors with the same levels in a different order are coerced to character 
-    with a warning:
-  
-    ```{r}
-    df1 <- tibble(x = 1, y = factor("a", levels = c("a", "b")))
-    df2 <- tibble(x = 2, y = factor("b", levels = c("b", "a")))
-    full_join(df1, df2) %>% str()
-    ```
-
-  * Factors are preserved only if the levels match exactly:
-    
-    ```{r}
-    df1 <- tibble(x = 1, y = factor("a", levels = c("a", "b")))
-    df2 <- tibble(x = 2, y = factor("b", levels = c("a", "b")))
-    full_join(df1, df2) %>% str()
-    ```    
-
-  * A factor and a character are coerced to character with a warning:
-    
-    ```{r}
-    df1 <- tibble(x = 1, y = "a")
-    df2 <- tibble(x = 2, y = factor("a"))
-    full_join(df1, df2) %>% str()
-    ```
-    
-Otherwise logicals will be silently upcast to integer, and integer to numeric, but coercing to character will raise an error:
-
-```{r, error = TRUE, purl = FALSE}
-df1 <- tibble(x = 1, y = 1L)
-df2 <- tibble(x = 2, y = 1.5)
-full_join(df1, df2) %>% str()
-
-df1 <- tibble(x = 1, y = 1L)
-df2 <- tibble(x = 2, y = "a")
-full_join(df1, df2) %>% str()
 ```
 
 ## Multiple-table verbs

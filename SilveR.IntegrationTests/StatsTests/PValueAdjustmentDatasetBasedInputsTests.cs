@@ -39,7 +39,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PValueAdjustmentDatasetBasedInputs", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
 
         [Fact]
@@ -63,7 +63,31 @@ namespace SilveR.IntegrationTests
 
             //Assert
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PValueAdjustmentDatasetBasedInputs", testName + ".html"));
-            Assert.Equal(Helpers.RemoveAllImageNodes(expectedHtml), Helpers.RemoveAllImageNodes(statsOutput.HtmlResults));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
+        }
+
+        [Fact]
+        public async Task PVA3()
+        {
+            string testName = "PVA3";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            PValueAdjustmentDatasetBasedInputsModel model = new PValueAdjustmentDatasetBasedInputsModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "P-value Adjustment Dataset").Key;
+            model.PValues = "p-value - PVA3";
+            model.DatasetLabels = "Comparison - PVA2";
+            model.SelectedTest = "Hochberg";
+            model.Significance = "0.05";
+
+            //Act
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "PValueAdjustmentDatasetBasedInputs", new FormUrlEncodedContent(model.ToKeyValue()));
+            Helpers.SaveTestOutput("PValueAdjustmentDatasetBasedInputs", model, testName, statsOutput);
+
+            //Assert
+            string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "PValueAdjustmentDatasetBasedInputs", testName + ".html"));
+            Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
     }
 }

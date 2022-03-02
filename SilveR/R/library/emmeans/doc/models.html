@@ -8,19 +8,30 @@
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.4.6" />
+<meta name="author" content="emmeans package, Version 1.7.2" />
 
 
 <title>Models supported by emmeans</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
 
 
-<style type="text/css">body {font-size: 11pt; font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;margin: 30px 50px 30px 50px; }h1,h2,h3,h4,h5,h6 { font-family: Arial,Helvetica,Sans-serif; }a { text-decoration: none; }a:link { color:darkblue; } a:visited { color:darkblue; } a:hover { color:dodgerblue; }a:active { color:dodgerblue; } code {color: #602000;font-family: "Lucida Console", Monaco, monospace; font-size: 90%;}.r { color: darkred; }.ro { color: darkgreen; background-color: #eeeeee; }.r code, a code, .ro code { color: inherit; }.vigindex ul { list-style-type: none; }.vigindex ul li { list-style: none; }.vigindex a code { color: inherit; }.vigindex li code { color: inherit; }</style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7Bfont%2Dsize%3A%2011pt%3B%20font%2Dfamily%3A%20%22Palatino%20Linotype%22%2C%20%22Book%20Antiqua%22%2C%20Palatino%2C%20serif%3Bmargin%3A%2030px%2050px%2030px%2050px%3B%20%7Dh1%2Ch2%2Ch3%2Ch4%2Ch5%2Ch6%20%7B%20font%2Dfamily%3A%20Arial%2CHelvetica%2CSans%2Dserif%3B%20%7Da%20%7B%20text%2Ddecoration%3A%20none%3B%20%7Da%3Alink%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Avisited%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Ahover%20%7B%20color%3Adodgerblue%3B%20%7Da%3Aactive%20%7B%20color%3Adodgerblue%3B%20%7D%20code%20%7Bcolor%3A%20%23602000%3Bfont%2Dfamily%3A%20%22Lucida%20Console%22%2C%20Monaco%2C%20monospace%3B%20font%2Dsize%3A%2090%25%3B%7D%2Er%20%7B%20color%3A%20darkred%3B%20%7D%2Ero%20%7B%20color%3A%20darkgreen%3B%20background%2Dcolor%3A%20%23eeeeee%3B%20%7D%2Ere%20%7B%20color%3A%20red%3B%7D%2Er%20code%2C%20a%20code%2C%20%2Ero%20code%2C%20%2Ere%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20ul%20%7B%20list%2Dstyle%2Dtype%3A%20none%3B%20%7D%2Evigindex%20ul%20li%20%7B%20list%2Dstyle%3A%20none%3B%20%7D%2Evigindex%20a%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20li%20code%20%7B%20color%3A%20inherit%3B%20%7D" type="text/css" />
 
 
 
@@ -33,7 +44,7 @@
 
 
 <h1 class="title toc-ignore">Models supported by emmeans</h1>
-<h4 class="author">emmeans package, Version 1.4.6</h4>
+<h4 class="author">emmeans package, Version 1.7.2</h4>
 
 
 
@@ -47,6 +58,12 @@
 <!-- @index Models!Quick reference -->
 <p>Here is an alphabetical list of model classes that are supported, and the arguments that apply. Detailed documentation follows, with objects grouped by the code in the “Group” column. Scroll down or follow the links to those groups for more information.</p>
 <table>
+<colgroup>
+<col width="14%" />
+<col width="9%" />
+<col width="9%" />
+<col width="66%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Object.class</th>
@@ -89,8 +106,8 @@
 <tr class="even">
 <td align="left">brmsfit</td>
 <td align="left">brms</td>
-<td align="center"><a href="#S">S</a></td>
-<td align="left">Only simpler models</td>
+<td align="center"><a href="#P">P</a></td>
+<td align="left">Supported in <strong>brms</strong> package</td>
 </tr>
 <tr class="odd">
 <td align="left">carbayes</td>
@@ -132,91 +149,103 @@
 <td align="left">gam</td>
 <td align="left">mgcv</td>
 <td align="center"><a href="#G">G</a></td>
-<td align="left"><code>freq = FALSE</code>, <code>unconditional = FALSE</code></td>
+<td align="left"><code>freq = FALSE</code>, <code>unconditional = FALSE</code>,</td>
 </tr>
 <tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"><code>what = c(&quot;location&quot;, &quot;scale&quot;, &quot;shape&quot;, &quot;rate&quot;, &quot;prob.gt.0&quot;)</code></td>
+</tr>
+<tr class="odd">
 <td align="left">gamm</td>
 <td align="left">mgcv</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left"><code>call = object$gam$call</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Gam</td>
 <td align="left">gam</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left"><code>nboot = 800</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">gamlss</td>
 <td align="left">gamlss</td>
 <td align="center"><a href="#H">H</a></td>
 <td align="left"><code>what = c(&quot;mu&quot;, &quot;sigma&quot;, &quot;nu&quot;, &quot;tau&quot;)</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">gee</td>
 <td align="left">gee</td>
 <td align="center"><a href="#E">E</a></td>
 <td align="left"><code>vcov.method = c(&quot;naive&quot;, &quot;robust&quot;)</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">geeglm</td>
 <td align="left">geepack</td>
 <td align="center"><a href="#E">E</a></td>
 <td align="left"><code>vcov.method = c(&quot;vbeta&quot;, &quot;vbeta.naiv&quot;, &quot;vbeta.j1s&quot;,</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>&quot;vbeta.fij&quot;, &quot;robust&quot;, &quot;naive&quot;)</code> or a matrix</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">geese</td>
 <td align="left">geepack</td>
 <td align="center"><a href="#E">E</a></td>
 <td align="left">Like <code>geeglm</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">glm</td>
 <td align="left">stats</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">glm.nb</td>
 <td align="left">MASS</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left">Requires <code>data</code> argument</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">glmerMod</td>
 <td align="left">lme4</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">glmmadmb</td>
 <td align="left">glmmADMB</td>
 <td align="center"></td>
 <td align="left">No longer supported</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">glmmPQL</td>
 <td align="left">MASS</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left">inherits <code>lm</code> support</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">glmmTMB</td>
 <td align="left">glmmTMB</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>glmmTMB</strong> package (dev. version only?)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">gls</td>
 <td align="left">nlme</td>
 <td align="center"><a href="#K">K</a></td>
-<td align="left"><code>mode = c(&quot;auto&quot;, &quot;df.error&quot;, &quot;satterthwaite&quot;)</code></td>
+<td align="left"><code>mode = c(&quot;auto&quot;, &quot;df.error&quot;, &quot;satterthwaite&quot;, &quot;asymptotic&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td align="left">gnls</td>
+<td align="left">nlme</td>
+<td align="center"><a href="#A">A</a></td>
+<td align="left">Supports <code>params</code> part. Requires <code>param = &quot;&lt;name&gt;&quot;</code></td>
 </tr>
 <tr class="even">
 <td align="left">hurdle</td>
@@ -246,37 +275,61 @@
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
-<td align="left"><code>mode = c(&quot;auto&quot;, containment&quot;, &quot;satterthwaite&quot;)</code></td>
+<td align="left"><code>mode = c(&quot;auto&quot;, containment&quot;, &quot;satterthwaite&quot;, &quot;asymptotic&quot;),</code></td>
 </tr>
 <tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"><code>extra.iter = 0</code></td>
+</tr>
+<tr class="even">
 <td align="left">lmerMod</td>
 <td align="left">lme4</td>
 <td align="center"><a href="#L">L</a></td>
 <td align="left"><code>lmer.df = c(&quot;kenward-roger&quot;, &quot;satterthwaite&quot;, &quot;asymptotic&quot;)</code>,</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>pbkrtest.limit = 3000</code>, <code>disable.pbkrtest = FALSE</code>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>emm_options(lmer.df =, pbkrtest.limit =, disable.pbkrtest =)</code></td>
 </tr>
+<tr class="odd">
+<td align="left">lqm,lqmm</td>
+<td align="left">lqmm</td>
+<td align="center"><a href="#Q">Q</a></td>
+<td align="left"><code>tau = &quot;0.5&quot;</code> (must match an entry in <code>object$tau</code>)</td>
+</tr>
 <tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left">Optional: <code>method</code>, <code>R</code>, <code>seed</code>, <code>startQR</code> (must be fully spelled-out)</td>
+</tr>
+<tr class="odd">
 <td align="left">manova</td>
 <td align="left">stats</td>
 <td align="center"><a href="#M">M</a></td>
 <td align="left"><code>mult.name</code>, <code>mult.levs</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">maov</td>
 <td align="left">stats</td>
 <td align="center"><a href="#M">M</a></td>
 <td align="left"><code>mult.name</code>, <code>mult.levs</code></td>
+</tr>
+<tr class="odd">
+<td align="left">mblogit</td>
+<td align="left">mclogit</td>
+<td align="center"><a href="#P">P</a></td>
+<td align="left">Supported in <strong>mclogit</strong> (overrides previous minimal support here)</td>
 </tr>
 <tr class="even">
 <td align="left">mcmc</td>
@@ -342,7 +395,7 @@
 <td align="left">nlme</td>
 <td align="left">nlme</td>
 <td align="center"><a href="#A">A</a></td>
-<td align="left">Supports fixed part. Requires <code>param</code></td>
+<td align="left">Supports fixed part. Requires <code>param = &quot;&lt;name&gt;&quot;</code></td>
 </tr>
 <tr class="odd">
 <td align="left">polr</td>
@@ -375,20 +428,44 @@
 <td align="left"><code>&quot;cum.prob&quot;, &quot;exc.prob&quot;, &quot;prob&quot;, &quot;mean.class&quot;)</code></td>
 </tr>
 <tr class="even">
+<td align="left">rq,rqs</td>
+<td align="left">quantreg</td>
+<td align="center"><a href="#Q">Q</a></td>
+<td align="left"><code>tau = &quot;0.5&quot;</code> (must match an entry in <code>object$tau</code>)</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left">Optional: <code>se</code>, <code>R</code>, <code>bsmethod</code>, etc.</td>
+</tr>
+<tr class="even">
+<td align="left">rlmerMod</td>
+<td align="left">robustlmm</td>
+<td align="center"><a href="#P">P</a></td>
+<td align="left">Supported in <strong>robustlmm</strong> package</td>
+</tr>
+<tr class="odd">
 <td align="left">rsm</td>
 <td align="left">rsm</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>rsm</strong> package</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">stanreg</td>
 <td align="left">rstanarm</td>
 <td align="center"><a href="#S">S</a></td>
 <td align="left">Args for <code>stanreg_</code><em>xxx</em> similar to those for <em>xxx</em></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">survreg</td>
 <td align="left">survival</td>
+<td align="center"><a href="#A">A</a></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">svyglm</td>
+<td align="left">survey</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left"></td>
 </tr>
@@ -439,7 +516,7 @@
 <p>Most models in this group receive only standard support as in <a href="#A">Group A</a>, but typically the tests and confidence intervals are asymptotic. Thus the <code>df</code> column for tabular results will be <code>Inf</code>.</p>
 <p>Some objects in this group <em>require</em> that the original or reference dataset be provided when calling <code>ref_grid()</code> or <code>emmeans()</code>.</p>
 <p>In the case of <code>mgcv::gam</code> objects, there are optional <code>freq</code> and <code>unconditional</code> arguments as is detailed in the documentation for <code>mgcv::vcov.gam()</code>. Both default to <code>FALSE</code>. The value of <code>unconditional</code> matters only if <code>freq = FALSE</code> and <code>object$Vc</code> is non-null.</p>
-<p>For <code>mgcv::gamm</code> objects, <code>emmeans()</code> results are based on the <code>object$gam</code> part. Unfortunately, that is missing its <code>call</code> component, so the user must supply it in the <code>call</code> argument (e.g., <code>call = quote(gamm(y ~ s(x), data = dat))</code>) or give the dataset in the <code>data</code> argument. Alternatively (and recommended), you may first set <code>object$gam$call</code> to the quoted call ahead of time.</p>
+<p>For <code>mgcv::gamm</code> objects, <code>emmeans()</code> results are based on the <code>object$gam</code> part. Unfortunately, that is missing its <code>call</code> component, so the user must supply it in the <code>call</code> argument (e.g., <code>call = quote(gamm(y ~ s(x), data = dat))</code>) or give the dataset in the <code>data</code> argument. Alternatively (and recommended), you may first set <code>object$gam$call</code> to the quoted call ahead of time. The <code>what</code> arguments are used to select which model formula to use: <code>&quot;location&quot;, &quot;scale&quot;</code> apply to <code>gaulss</code> and <code>gevlss</code> families, <code>&quot;shape&quot;</code> applies only to <code>gevlss</code>, and <code>&quot;rate&quot;, &quot;prob.gt.0&quot;</code> apply to <code>ziplss</code>.</p>
 <p>With <code>gam::Gam</code> objects, standard errors are estimated using a bootstrap method when there are any smoothers involved. Accordingly, there is an optional <code>nboot</code> argument that sets the number of bootstrap replications used to estimate the variances and covariances of the smoothing portions of the model. Generally, it is better to use models fitted via <code>mgcv::gam()</code> rather than <code>gam::gam()</code>.</p>
 <p><a href="#quickref">Back to quick reference</a></p>
 </div>
@@ -459,8 +536,9 @@
 <!-- @index `lme` models; `gls` models; Satterthwaite d.f.; Containment d.f.; 
      `appx-satterthwaite` method; `boot-satterthwaite` method -->
 <p>The <code>sigmaAdjust</code> argument is a logical value that defaults to <code>TRUE</code>. It is comparable to the <code>adjustSigma</code> option in <code>nlme::summary.lme</code> (the name-mangling is to avoid conflicts with the often-used <code>adjust</code> argument), and determines whether or not a degrees-of-freedom adjustment is performed with models fitted using the ML method.</p>
-<p>The optional <code>mode</code> argument affects the degrees of freedom. The <code>mode = &quot;satterthwaite&quot;</code> option determines degrees of freedom via the Satterthwaite method: If <code>s^2</code> is the estimate of some variance, then its Satterthwaite d.f. is <code>2*s^4 / Var(s^2)</code>. In case our numerical methods for this fail, we also offer <code>mode = &quot;appx-satterthwaite&quot;</code> as a backup, by which quantities related to <code>Var(s^2)</code> are obtained by randomly perturbing the response values. Currently, only <code>&quot;appx-satterthwaite&quot;</code> is available for <code>lme</code> objects, and it is used if <code>&quot;satterthwaite&quot;</code> is requested. (Note: Previously, <code>&quot;appx-satterthwaite&quot;</code> was termed <code>&quot;boot-satterthwaite&quot;</code>; this is still supported for backward compatibility. The “boot” was abandoned because it is really an approximation method, not a bootstrap method in the sense as many statistical methods.)</p>
-<p>The alternative method is <code>&quot;df.error&quot;</code> (for <code>gls</code>) and <code>&quot;containment&quot;</code> (for <code>lme</code>). <code>df.error</code> is just the error degrees of freedom for the model, minus the number of extra random effects estimated; it generally over-estimates the degrees of freedom. <code>&quot;containment&quot;</code> determines the degrees of freedom for the coarsest grouping involved in the contrast or linear function involved, so it tends to under-estimate the degrees of freedom. The default is <code>mode = &quot;auto&quot;</code>, which uses Satterthwaite if there are estimated random effects and the non-Satterthwaite option otherwise.</p>
+<p>The optional <code>mode</code> argument affects the degrees of freedom. The <code>mode = &quot;satterthwaite&quot;</code> option determines degrees of freedom via the Satterthwaite method: If <code>s^2</code> is the estimate of some variance, then its Satterthwaite d.f. is <code>2*s^4 / Var(s^2)</code>. In case our numerical methods for this fail, we also offer <code>mode = &quot;appx-satterthwaite&quot;</code> as a backup, by which quantities related to <code>Var(s^2)</code> are obtained by randomly perturbing the response values. Currently, only <code>&quot;appx-satterthwaite&quot;</code> is available for <code>lme</code> objects, and it is used if <code>&quot;satterthwaite&quot;</code> is requested. Because <code>appx-satterthwaite</code> is simulation-based, results may vary if the same analysis is repeated. An <code>extra.iter</code> argument may be added to request additional simulation runs (at [possibly considerable] cost of repeating the model-fitting that many more times). (Note: Previously, <code>&quot;appx-satterthwaite&quot;</code> was termed <code>&quot;boot-satterthwaite&quot;</code>; this is still supported for backward compatibility. The “boot” was abandoned because it is really an approximation method, not a bootstrap method in the sense as many statistical methods.)</p>
+<p>An alternative method is <code>&quot;df.error&quot;</code> (for <code>gls</code>) and <code>&quot;containment&quot;</code> (for <code>lme</code>). <code>df.error</code> is just the error degrees of freedom for the model, minus the number of extra random effects estimated; it generally over-estimates the degrees of freedom. The <code>asymptotic</code> mode simply sets the degrees of freedom to infinity. “containment”<code>mode (for</code>lme<code>models) determines the degrees of freedom for the coarsest grouping involved in the contrast or linear function involved, so it tends to under-estimate the degrees of freedom. The default is</code>mode = “auto”`, which uses Satterthwaite if there are estimated random effects and the non-Satterthwaite option otherwise.</p>
+<p>The <code>extra.iter</code> argument is ignored unless the d.f. method is (or defaults to) <code>appx-satterthwaite</code>.</p>
 <p><a href="#quickref">Back to quick reference</a></p>
 </div>
 <div id="L" class="section level2">
@@ -500,7 +578,11 @@
 </div>
 <div id="P" class="section level2">
 <h2>P – Other packages</h2>
-<p>Models in this group have their <strong>emmeans</strong> support provided by the package that implements the model-fitting procedure. Users should refer to the package documentation for details on <strong>emmeans</strong> support.</p>
+<p>Models in this group have their <strong>emmeans</strong> support provided by the package that implements the model-fitting procedure. Users should refer to the package documentation for details on <strong>emmeans</strong> support. In some cases, a package’s models may have been supported here in <strong>emmeans</strong>; if so, the other package’s support overrides it.</p>
+</div>
+<div id="Q" class="section level2">
+<h2>Q – Quantile regression</h2>
+<p>The argument <code>tau</code> should match (within a very small margin) one of the quantiles actually specified in fitting the model; otherwise an error results. In these models, the covariance matrix is obtained via the model’s <code>summary()</code> method with <code>covariance = TRUE</code>. The user may specify one or more of the other arguments for <code>summary</code> or to be passed to, say, a bootstrap routine. If so, those optional arguments must be spelled-out completely (e.g., <code>start</code> will <em>not</em> be matched to <code>startQR</code>).</p>
 </div>
 <div id="S" class="section level2">
 <h2>S – Sampling (MCMC) methods</h2>
@@ -509,7 +591,7 @@
 <p>Models fitted using MCMC methods contain a sample from the posterior distribution of fixed-effect coefficients. In some cases (e.g., results of <code>MCMCpack::MCMCregress()</code> and <code>MCMCpack::MCMCpoisson()</code>), the object may include a <code>&quot;call&quot;</code> attribute that <code>emmeans()</code> can use to reconstruct the data and obtain a basis for the EMMs. If not, a <code>formula</code> and <code>data</code> argument are provided that may help produce the right results. In addition, the <code>contrasts</code> specifications are not necessarily recoverable from the object, so the system default must match what was actually used in fitting the model.</p>
 <p>The <code>summary.emmGrid()</code> method provides credibility intervals (HPD intervals) of the results, and ignores the frequentist-oriented arguments (<code>infer</code>, <code>adjust</code>, etc.) An <code>as.mcmc()</code> method is provided that creates an <code>mcmc</code> object that can be summarized or plotted using the <strong>coda</strong> package (or others that support those objects). It provides a posterior sample of EMMs, or contrasts thereof, for the given reference grid, based on the posterior sample of the fixed effects from the model object.</p>
 <p>In <code>MCMCglmm</code> objects, the <code>data</code> argument is required; however, if you save it as a member of the model object (e.g., <code>object$data = quote(mydata)</code>), that removes the necessity of specifying it in each call. The special keyword <code>trait</code> is used in some models. When the response is multivariate and numeric, <code>trait</code> is generated automatically as a factor in the reference grid, and the arguments <code>mult.levels</code> can be used to name its levels. In other models such as a multinomial model, use the <code>mode</code> argument to specify the type of model, and <code>trait = &lt;factor name&gt;</code> to specify the name of the data column that contains the levels of the factor response.</p>
-<p>Support for the <strong>brms</strong> package is provided but it is quite rudimentary and usable only for the primary fixed effects and the simpler models.</p>
+<p>The <strong>brms</strong> package version 2.13 and later, has its own <code>emmeans</code> support. Refer to the documentation in that package.</p>
 <p><a href="#quickref">Back to quick reference</a></p>
 </div>
 <div id="V" class="section level2">

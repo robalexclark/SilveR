@@ -31,7 +31,7 @@ exportClasses(matrix.csr, matrix.csc, matrix.ssr, matrix.ssc, matrix.coo, matrix
 ## Exporting S4 methods {*not* for S3 !}
 exportMethods(as.matrix.csr, as.matrix.csc, as.matrix.ssr, as.matrix.ssc, as.matrix.coo,
 	as.matrix, t, dim, diff, diag, "diag<-", norm, chol, backsolve,
-	solve, model.matrix, model.response, "%*%", kronecker, "image")
+	solve, model.matrix, model.response, "%*%", kronecker, image)
 
 S3method(coef, slm)
 S3method(fitted, slm)

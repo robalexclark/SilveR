@@ -16,3 +16,5 @@ pb-modcomp              Model comparison using parametric bootstrap
                         methods.
 pb-refdist              Calculate reference distribution using
                         parametric bootstrap
+sat-modcomp             F-test and degrees of freedom based on
+                        Satterthwaite approximation

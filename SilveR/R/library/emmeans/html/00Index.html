@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><title>R: Estimated Marginal Means, aka Least-Squares Means</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
-</head><body>
+</head><body><div class="container">
 <h1> Estimated Marginal Means, aka Least-Squares Means
 <img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
 </h1>
@@ -11,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;emmeans&rsquo; version 1.4.6</h2>
+</div><h2>Documentation for package &lsquo;emmeans&rsquo; version 1.7.2</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -80,14 +81,10 @@
 <h2><a name="C">-- C --</a></h2>
 
 <table width="100%">
-<tr><td style="width: 25%;"><a href="CLD.emmGrid.html">CLD</a></td>
-<td>Extract and display information on all pairwise comparisons of estimated marginal means.</td></tr>
-<tr><td style="width: 25%;"><a href="CLD.emmGrid.html">CLD.emmGrid</a></td>
-<td>Extract and display information on all pairwise comparisons of estimated marginal means.</td></tr>
 <tr><td style="width: 25%;"><a href="CLD.emmGrid.html">cld.emmGrid</a></td>
-<td>Extract and display information on all pairwise comparisons of estimated marginal means.</td></tr>
-<tr><td style="width: 25%;"><a href="emm_list-object.html">CLD.emm_list</a></td>
-<td>The 'emm_list' class</td></tr>
+<td>Compact letter displays</td></tr>
+<tr><td style="width: 25%;"><a href="CLD.emmGrid.html">cld.emm_list</a></td>
+<td>Compact letter displays</td></tr>
 <tr><td style="width: 25%;"><a href="contrast.html">coef.emmGrid</a></td>
 <td>Contrasts and linear functions of EMMs</td></tr>
 <tr><td style="width: 25%;"><a href="summary.emmGrid.html">confint.emmGrid</a></td>
@@ -130,6 +127,10 @@
 <td>Interaction-style plots for estimated marginal means</td></tr>
 <tr><td style="width: 25%;"><a href="emmip.html">emmip.default</a></td>
 <td>Interaction-style plots for estimated marginal means</td></tr>
+<tr><td style="width: 25%;"><a href="emmip.html">emmip_ggplot</a></td>
+<td>Interaction-style plots for estimated marginal means</td></tr>
+<tr><td style="width: 25%;"><a href="emmip.html">emmip_lattice</a></td>
+<td>Interaction-style plots for estimated marginal means</td></tr>
 <tr><td style="width: 25%;"><a href="emmobj.html">emmobj</a></td>
 <td>Construct an 'emmGrid' object from scratch</td></tr>
 <tr><td style="width: 25%;"><a href="extending-emmeans.html">emm_basis</a></td>
@@ -153,6 +154,8 @@
 <td>Feedlot data</td></tr>
 <tr><td style="width: 25%;"><a href="fiber.html">fiber</a></td>
 <td>Fiber data</td></tr>
+<tr><td style="width: 25%;"><a href="rbind.emmGrid.html">force_regular</a></td>
+<td>Combine or subset 'emmGrid' objects</td></tr>
 </table>
 
 <h2><a name="G">-- G --</a></h2>
@@ -194,6 +197,8 @@
 <h2><a name="L">-- L --</a></h2>
 
 <table width="100%">
+<tr><td style="width: 25%;"><a href="update.emmGrid.html">levels&lt;-.emmGrid</a></td>
+<td>Update an 'emmGrid' object</td></tr>
 <tr><td style="width: 25%;"><a href="wrappers.html">lsm</a></td>
 <td>Wrappers for alternative naming of EMMs</td></tr>
 <tr><td style="width: 25%;"><a href="wrappers.html">lsm.options</a></td>
@@ -223,6 +228,8 @@
 <td>Support for 'multcomp::glht'</td></tr>
 <tr><td style="width: 25%;"><a href="models.html">models</a></td>
 <td>Models supported in 'emmeans'</td></tr>
+<tr><td style="width: 25%;"><a href="mvcontrast.html">mvcontrast</a></td>
+<td>Multivariate contrasts</td></tr>
 </table>
 
 <h2><a name="N">-- N --</a></h2>
@@ -290,6 +297,8 @@
 <table width="100%">
 <tr><td style="width: 25%;"><a href="rbind.emmGrid.html">rbind.emmGrid</a></td>
 <td>Combine or subset 'emmGrid' objects</td></tr>
+<tr><td style="width: 25%;"><a href="rbind.emmGrid.html">rbind.emm_list</a></td>
+<td>Combine or subset 'emmGrid' objects</td></tr>
 <tr><td style="width: 25%;"><a href="extending-emmeans.html">recover_data</a></td>
 <td>Support functions for model extensions</td></tr>
 <tr><td style="width: 25%;"><a href="extending-emmeans.html">recover_data.call</a></td>
@@ -297,7 +306,7 @@
 <tr><td style="width: 25%;"><a href="ref_grid.html">ref_grid</a></td>
 <td>Create a reference grid from a fitted model</td></tr>
 <tr><td style="width: 25%;"><a href="regrid.html">regrid</a></td>
-<td>Reconstruct a reference grid with a new transformation or posterior sample</td></tr>
+<td>Reconstruct a reference grid with a new transformation or simulations</td></tr>
 <tr><td style="width: 25%;"><a href="emmc-functions.html">revpairwise.emmc</a></td>
 <td>Contrast families</td></tr>
 </table>
@@ -307,6 +316,8 @@
 <table width="100%">
 <tr><td style="width: 25%;"><a href="emmGrid-methods.html">str.emmGrid</a></td>
 <td>Miscellaneous methods for 'emmGrid' objects</td></tr>
+<tr><td style="width: 25%;"><a href="rbind.emmGrid.html">subset.emmGrid</a></td>
+<td>Combine or subset 'emmGrid' objects</td></tr>
 <tr><td style="width: 25%;"><a href="summary.emmGrid.html">summary.emmGrid</a></td>
 <td>Summaries, predictions, intervals, and tests for 'emmGrid' objects</td></tr>
 </table>
@@ -331,7 +342,11 @@
 <h2><a name="U">-- U --</a></h2>
 
 <table width="100%">
+<tr><td style="width: 25%;"><a href="ubds.html">ubds</a></td>
+<td>Unbalanced dataset</td></tr>
 <tr><td style="width: 25%;"><a href="update.emmGrid.html">update.emmGrid</a></td>
+<td>Update an 'emmGrid' object</td></tr>
+<tr><td style="width: 25%;"><a href="update.emmGrid.html">update.summary_emm</a></td>
 <td>Update an 'emmGrid' object</td></tr>
 </table>
 
@@ -374,4 +389,4 @@
 <tr><td style="width: 25%;"><a href="summary.emmGrid.html">[.summary_emm</a></td>
 <td>Summaries, predictions, intervals, and tests for 'emmGrid' objects</td></tr>
 </table>
-</body></html>
+</div></body></html>

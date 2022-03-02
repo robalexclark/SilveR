@@ -21,11 +21,11 @@ Description: Various R programming tools for plotting data, including:
   - plotting means and confidence intervals ('plotCI', 'plotmeans'),
   - spacing points in an x-y plot so they don't overlap ('space').
 Depends: R (>= 3.0)
-Imports: gtools, gdata, stats, caTools, KernSmooth
+Imports: gtools, stats, caTools, KernSmooth
 Suggests: grid, MASS, knitr
 VignetteBuilder: knitr
-Version: 3.0.3
-Date: 2020-02-26
+Version: 3.1.1
+Date: 2020-11-28
 Authors@R: c(
     person("Gregory R.", "Warnes", , role = "aut"),
     person("Ben", "Bolker", , role = "aut"),
@@ -45,7 +45,7 @@ License: GPL-2
 URL: https://github.com/talgalili/gplots
 BugReports: https://github.com/talgalili/gplots/issues
 NeedsCompilation: no
-Packaged: 2020-02-24 06:26:54 UTC; talgalili
+Packaged: 2020-11-28 13:04:00 UTC; talgalili
 Author: Gregory R. Warnes [aut],
   Ben Bolker [aut],
   Lodewijk Bonebakker [aut],
@@ -61,5 +61,5 @@ Author: Gregory R. Warnes [aut],
   Tal Galili [ctb, cre]
 Maintainer: Tal Galili <tal.galili@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-02-25 01:20:07 UTC
-Built: R 3.6.3; ; 2020-05-04 23:54:31 UTC; windows
+Date/Publication: 2020-11-28 13:50:02 UTC
+Built: R 4.1.2; ; 2022-02-14 21:23:58 UTC; windows

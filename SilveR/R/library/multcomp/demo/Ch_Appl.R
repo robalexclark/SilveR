@@ -252,8 +252,8 @@ print(bwplot(lp ~ pos.x, data=immer2.cld,
 ### chunk number 32: immer-9
 ###################################################
 library("HH")
-immer.mmc <- glht.mmc(immer.aov, linfct = mcp(Var = "Tukey"), 
-                       focus = "Var", lmat.rows = 2:5)
+immer.mmc <- glht(immer.aov, linfct = mcp(Var = "Tukey"), 
+                  focus = "Var", lmat.rows = 2:5)
 
 
 ###################################################
@@ -283,6 +283,8 @@ layout(matrix(1:2, ncol = 1))
 plot(immer.mmc, ry=c(85, 122), x.offset = 8, 
      main = "Mean-mean multiple comparison plot", main2 = "",
      col.mca.signif = "grey")
+### plot.matchMMC doesn't exist in HH
+if (FALSE) {
 plot.matchMMC(immer.mmc$mca, main = "Tiebreaker plot",
               col.signif = "grey")
 
@@ -291,7 +293,7 @@ plot.matchMMC(immer.mmc$mca, main = "Tiebreaker plot",
 ### chunk number 37: immer-11a
 ###################################################
 plot.matchMMC(immer.mmc$mca, main = "")
-
+}
 
 ###################################################
 ### chunk number 38: immer-12
@@ -306,8 +308,8 @@ row.names(immer.lmat) <- c("M","P","S","T","V")
 ###################################################
 ### chunk number 39: immer-12
 ###################################################
-immer.mmc2 <- glht.mmc(immer.aov, linfct = mcp(Var = "Tukey"), 
-                        focus.lmat = immer.lmat)
+immer.mmc2 <- glht(immer.aov, linfct = mcp(Var = "Tukey"), 
+                   focus.lmat = immer.lmat)
 
 
 ###################################################
@@ -762,11 +764,9 @@ plot(alzheimer.ci, xlab = "Probability of suffering from Alzheimer's disease",
 ###################################################
 ### chunk number 93: alm-0
 ###################################################
-if (!file.exists("AML_Bullinger.rda")) {
-    load(url("http://www.stat.uni-muenchen.de/~hothorn/data/AML_Bullinger.rda", open = "r"))
-} else {
-    load("AML_Bullinger.rda")
-}
+library("TH.data")
+load(file.path(path.package(package = "TH.data"), "rda", "AML_Bullinger.rda"))
+
 risk <- rep(0, nrow(clinical))
 rlev <- levels(clinical[, "Cytogenetic.group"])
 risk[clinical[, "Cytogenetic.group"] %in% rlev[c(7,8,4)]] <- "low"
@@ -815,7 +815,7 @@ levels(trees513$species)[5:6] <- c("ash/maple/elm", "hardwood")
 ###################################################
 ### chunk number 99: tree-2
 ###################################################
-trees513.lme <- lmer(damage ~ species -1 + (1 | lattice/plot), 
+trees513.lme <- glmer(damage ~ species -1 + (1 | lattice/plot), 
                       data = trees513, family = binomial())
 K <- diag(length(fixef(trees513.lme)))
 

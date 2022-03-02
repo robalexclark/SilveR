@@ -50,6 +50,10 @@ statdataprint<-statdata
 #Graphical parameters
 graphdata<-statdata
 
+XLimLow <- "NULL"
+XLimHigh <- "NULL"
+YLimLow <- "NULL"
+YLimHigh <- "NULL"
 Labelz_IVS_ <- "N"
 ReferenceLine <- "NULL"
 
