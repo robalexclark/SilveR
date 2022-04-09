@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <Version>4.4.0</Version>
+    <Version>4.5.0</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>SilveR.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <AssemblyVersion>4.4.0.0</AssemblyVersion>
-    <FileVersion>4.4.0.0</FileVersion>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyVersion>4.5.0.0</AssemblyVersion>
+    <FileVersion>4.5.0.0</FileVersion>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
@@ -26,9 +26,9 @@
     <PackageReference Include="ElectronNET.API" Version="13.5.1" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.15" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.15" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
