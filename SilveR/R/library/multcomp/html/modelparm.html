@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Generic Accessor Function for Model Parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for modelparm {multcomp}"><tr><td>modelparm {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Generic Accessor Function for Model Parameters </h2>
+
+<h3>Description</h3>
+
+<p>Extract model parameters and their covariance matrix as well as 
+degrees of freedom (if available) from a fitted model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+modelparm(model, coef., vcov., df, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>a fitted model,
+for example an object returned by <code><a href="../../stats/html/lm.html">lm</a></code>,
+<code><a href="../../stats/html/glm.html">glm</a></code>, <code><a href="../../stats/html/aov.html">aov</a></code>, <code><a href="../../survival/help/survreg.html">survreg</a></code>,
+<code><a href="../../fixest/help/fixest.html">fixest</a></code>, or <code><a href="../../lme4/help/lmer.html">lmer</a></code> etc. </p>
+</td></tr>
+<tr valign="top"><td><code>coef.</code></td>
+<td>
+<p> an accessor function for the model parameters. Alternatively, the vector of coefficients.</p>
+</td></tr>
+<tr valign="top"><td><code>vcov.</code></td>
+<td>
+<p> an accessor function for the covariance matrix of the
+model parameters. Alternatively, the covariance matrix directly.</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p> an optional specification of the degrees of freedom to be used in
+subsequent computations. </p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p> additional arguments, currently ignored. </p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>One can't expect <code><a href="../../stats/html/coef.html">coef</a></code> and <code><a href="../../stats/html/vcov.html">vcov</a></code> methods 
+for arbitrary models to
+return a vector of <i>p</i> fixed effects model parameters (<code>coef</code>)
+and corresponding <i>p \times p</i> covariance matrix (<code>vcov</code>).
+</p>
+<p>The <code>coef.</code> and <code>vcov.</code> arguments can be used to define
+modified <code>coef</code> or <code>vcov</code> methods for a specific model.
+Methods for <code><a href="../../lme4/help/lmer.html">lmer</a></code>, <code><a href="../../fixest/help/fixest.html">fixest</a></code>, 
+and <code><a href="../../survival/help/survreg.html">survreg</a></code> objects are available (internally).
+</p>
+<p>For objects inheriting from class <code><a href="../../stats/html/lm.html">lm</a></code> the degrees of 
+freedom are determined from <code>model</code> and the corresponding
+multivariate t distribution is used by all methods to <code><a href="../../multcomp/help/glht.html">glht</a></code>
+objects. By default, the asymptotic multivariate normal distribution
+is used in all other cases unless <code>df</code> is specified by the user.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>modelparm</code> with elements
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>coef</code></td>
+<td>
+<p>model parameters</p>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p>covariance matrix of model parameters</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p>degrees of freedom</p>
+</td></tr>
+</table>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

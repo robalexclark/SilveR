@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;Matrix&rsquo; version 1.4-0</h2>
+</div><h2>Documentation for package &lsquo;Matrix&rsquo; version 1.4-1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -430,8 +430,6 @@
 <td>Class "diagonalMatrix" of Diagonal Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="dsyMatrix-class.html">diag-method</a></td>
 <td>Symmetric Dense (Packed | Non-packed) Numeric Matrices</td></tr>
-<tr><td style="width: 25%;"><a href="dtpMatrix-class.html">diag-method</a></td>
-<td>Packed Triangular Dense Matrices - "dtpMatrix"</td></tr>
 <tr><td style="width: 25%;"><a href="dtrMatrix-class.html">diag-method</a></td>
 <td>Triangular, dense, numeric matrices</td></tr>
 <tr><td style="width: 25%;"><a href="ldenseMatrix-class.html">diag-method</a></td>
@@ -442,16 +440,20 @@
 <td>Symmetric Dense Logical Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="ltrMatrix-class.html">diag-method</a></td>
 <td>Triangular Dense Logical Matrices</td></tr>
-<tr><td style="width: 25%;"><a href="ndenseMatrix-class.html">diag-method</a></td>
-<td>Virtual Class "ndenseMatrix" of Dense Logical Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="ngeMatrix-class.html">diag-method</a></td>
+<td>Class "ngeMatrix" of General Dense Nonzero-pattern Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="nsyMatrix-class.html">diag-method</a></td>
+<td>Symmetric Dense Nonzero-Pattern Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="ntrMatrix-class.html">diag-method</a></td>
+<td>Triangular Dense Logical Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="packedMatrix-class.html">diag-method</a></td>
+<td>Class '"packedMatrix"' of packed dense symmetric/triangular Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="sparseMatrix-class.html">diag-method</a></td>
 <td>Virtual Class "sparseMatrix" - Mother of Sparse Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="dgeMatrix-class.html">diag&lt;--method</a></td>
 <td>Class "dgeMatrix" of Dense Numeric (S4 Class) Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="dsyMatrix-class.html">diag&lt;--method</a></td>
 <td>Symmetric Dense (Packed | Non-packed) Numeric Matrices</td></tr>
-<tr><td style="width: 25%;"><a href="dtpMatrix-class.html">diag&lt;--method</a></td>
-<td>Packed Triangular Dense Matrices - "dtpMatrix"</td></tr>
 <tr><td style="width: 25%;"><a href="dtrMatrix-class.html">diag&lt;--method</a></td>
 <td>Triangular, dense, numeric matrices</td></tr>
 <tr><td style="width: 25%;"><a href="lgeMatrix-class.html">diag&lt;--method</a></td>
@@ -466,6 +468,8 @@
 <td>Symmetric Dense Nonzero-Pattern Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="ntrMatrix-class.html">diag&lt;--method</a></td>
 <td>Triangular Dense Logical Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="packedMatrix-class.html">diag&lt;--method</a></td>
+<td>Class '"packedMatrix"' of packed dense symmetric/triangular Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="diagU2N.html">diagN2U</a></td>
 <td>Transform Triangular Matrices from Unit Triangular to General Triangular and Back</td></tr>
 <tr><td style="width: 25%;"><a href="Diagonal.html">Diagonal</a></td>
@@ -506,6 +510,8 @@
 <td>Class "compMatrix" of Composite (Factorizable) Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="dMatrix-class.html">dMatrix-class</a></td>
 <td>(Virtual) Class "dMatrix" of "double" Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="dmperm.html">dmperm</a></td>
+<td>Dulmage-Mendelsohn Permutation / Decomposition</td></tr>
 <tr><td style="width: 25%;"><a href="dpoMatrix-class.html">dpoMatrix-class</a></td>
 <td>Positive Semi-definite Dense (Packed | Non-packed) Numeric Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="dpoMatrix-class.html">dppMatrix-class</a></td>
@@ -945,6 +951,8 @@
 <td>Representation of Packed and Unpacked (Dense) Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="unpack.html">pack-method</a></td>
 <td>Representation of Packed and Unpacked (Dense) Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="packedMatrix-class.html">packedMatrix-class</a></td>
+<td>Class '"packedMatrix"' of packed dense symmetric/triangular Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="Cholesky-class.html">pBunchKaufman-class</a></td>
 <td>Cholesky and Bunch-Kaufman Decompositions</td></tr>
 <tr><td style="width: 25%;"><a href="Cholesky-class.html">pCholesky-class</a></td>
@@ -1219,8 +1227,6 @@
 <td>Symmetric Dense (Packed | Non-packed) Numeric Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="dtCMatrix-class.html">t-method</a></td>
 <td>Triangular, (compressed) sparse column matrices</td></tr>
-<tr><td style="width: 25%;"><a href="dtpMatrix-class.html">t-method</a></td>
-<td>Packed Triangular Dense Matrices - "dtpMatrix"</td></tr>
 <tr><td style="width: 25%;"><a href="dtrMatrix-class.html">t-method</a></td>
 <td>Triangular, dense, numeric matrices</td></tr>
 <tr><td style="width: 25%;"><a href="indMatrix-class.html">t-method</a></td>
@@ -1243,6 +1249,8 @@
 <td>Triangular Dense Logical Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="pMatrix-class.html">t-method</a></td>
 <td>Permutation matrices</td></tr>
+<tr><td style="width: 25%;"><a href="packedMatrix-class.html">t-method</a></td>
+<td>Class '"packedMatrix"' of packed dense symmetric/triangular Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="sparseVector-class.html">t-method</a></td>
 <td>Sparse Vector Classes</td></tr>
 <tr><td style="width: 25%;"><a href="graph2T.html">T2graph</a></td>
@@ -1438,6 +1446,8 @@
 <td>Class "abIndex" of Abstract Index Vectors</td></tr>
 <tr><td style="width: 25%;"><a href="dMatrix-class.html">[-method</a></td>
 <td>(Virtual) Class "dMatrix" of "double" Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="packedMatrix-class.html">[-method</a></td>
+<td>Class '"packedMatrix"' of packed dense symmetric/triangular Matrices</td></tr>
 <tr><td style="width: 25%;"><a href="sparseVector-class.html">[-method</a></td>
 <td>Sparse Vector Classes</td></tr>
 <tr><td style="width: 25%;"><a href="Xtrct-methods.html">[-methods</a></td>

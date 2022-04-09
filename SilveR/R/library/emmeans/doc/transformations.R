@@ -26,7 +26,7 @@ pigs.remm.s <- emmeans(regrid(pigs.rg), "source")
 summary(pigs.remm.s, infer = TRUE, null = 35)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  pigs.remm.s <- emmeans(pigs.lm, "source", transform = "response")
+#  pigs.remm.s <- emmeans(pigs.lm, "source", regrid = "response")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  emmeans(pigs.lm, "source", type = "response")
@@ -113,7 +113,7 @@ emmeans(fiber.lm, "machine", type = "response")   # strength scale
 emtrends(fiber.lm, "machine", var = "diameter")
 
 ## -------------------------------------------------------------------------------------------------
-emtrends(fiber.lm, "machine", var = "diameter", transform = "response")
+emtrends(fiber.lm, "machine", var = "diameter", regrid = "response")
 
 ## -------------------------------------------------------------------------------------------------
 with(fiber, c(mean = mean(diameter), sd = sd(diameter)))
@@ -140,7 +140,7 @@ emmeans(fib.lm, "machine")
 
 # On standardized scale:
 tran <- make.tran("scale", y = fiber$strength)
-emmeans(fib.lm, "machine", transform = tran)
+emmeans(fib.lm, "machine", regrid = tran)
 
 ## -------------------------------------------------------------------------------------------------
 sigma(pigs.lm)

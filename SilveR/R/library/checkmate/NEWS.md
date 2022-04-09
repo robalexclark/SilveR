@@ -1,3 +1,24 @@
+# Version 2.1.0
+* New arguments `n.chars` and `max.chars` for `checkCharacter()` and
+  `checkString()`.
+* Checks for integerish now compare the tolerance with the difference to the
+  nearest integer with `>` instead of `>=` to allow specifying a tolerance of
+  exactly `0` (#177).
+* Checks for integerish now check for class `Date` an `POSIXt`.
+* Coercion of double to integer in `assertInt()` and `assertIntegerish()` now
+  round to the nearest integer instead of always rounding via `trunc()`.
+* Fixed an error message where the wrong variable name was reported by
+  `assert()` (#182).
+* Checks on POSIXct dates with storage mode integer should now work instead of
+  raising an exception (#175).
+* `*Matrix()` and `*Array()` now allow different storage types than the one
+  specified if all values are missing (#184).
+* Function `assert()` now supports collecting assertions via `AssertCollection`
+  (#112).
+* New exported C function `qcheck()` (#180).
+* Fixed a bug in `checkFunction(..., ordered = TRUE)` (#204).
+* Removed deprecated S macro `DOUBLE_EPS` from C source.
+
 # Version 2.0.0
 * Expectations now optionally support the package `tinytest`.
   `tinytest` is used as backend if it is attached, otherwise checkmate defaults

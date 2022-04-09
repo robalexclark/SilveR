@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Model Parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for parm {multcomp}"><tr><td>parm {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Model Parameters </h2>
+
+<h3>Description</h3>
+
+<p>Directly specify estimated model parameters and their covariance matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+parm(coef, vcov, df = 0)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>coef</code></td>
+<td>
+<p> estimated coefficients.</p>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p> estimated covariance matrix of the coefficients.</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p> an optional specification of the degrees of freedom to be used in
+subsequent computations. </p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>When only estimated model parameters and the corresponding
+covariance matrix is available for simultaneous inference
+using <code><a href="../../multcomp/help/glht.html">glht</a></code> (for example, when only the results
+but not the original data are available or, even worse, when the model
+has been fitted outside R), function <code>parm</code> sets up an
+object <code><a href="../../multcomp/help/glht.html">glht</a></code> is able to compute on (mainly 
+by offering <code>coef</code> and <code>vcov</code> methods).
+</p>
+<p>Note that the linear function in <code><a href="../../multcomp/help/glht.html">glht</a></code> can't 
+be specified via <code><a href="../../multcomp/help/mcp.html">mcp</a></code> since the model terms
+are missing.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>parm</code> with elements
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>coef</code></td>
+<td>
+<p>model parameters</p>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p>covariance matrix of model parameters</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p>degrees of freedom</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## example from
+## Bretz, Hothorn, and Westfall (2002). 
+## On multiple comparisons in R. R News, 2(3):14-17.
+
+beta &lt;- c(V1 = 14.8, V2 = 12.6667, V3 = 7.3333, V4 = 13.1333)
+Sigma &lt;- 6.7099 * (diag(1 / c(20, 3, 3, 15)))
+confint(glht(model = parm(beta, Sigma, 37),
+             linfct = c("V2 - V1 &gt;= 0", 
+                        "V3 - V1 &gt;= 0", 
+                        "V4 - V1 &gt;= 0")), 
+        level = 0.9)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

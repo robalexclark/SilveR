@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert an 'Rnw' document to PDF</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for rnw2pdf {knitr}"><tr><td>rnw2pdf {knitr}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert an &lsquo;<span class="file">Rnw</span>&rsquo; document to PDF</h2>
+
+<h3>Description</h3>
+
+<p>Call <code><a href="../../knitr/help/knit.html">knit</a>()</code> to compile the &lsquo;<span class="file">.Rnw</span>&rsquo; input to &lsquo;<span class="file">.tex</span>&rsquo;,
+and then <code>tinytex::<a href="../../tinytex/help/latexmk.html">latexmk</a>()</code> to convert &lsquo;<span class="file">.tex</span>&rsquo; to
+&lsquo;<span class="file">.pdf</span>&rsquo;.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+rnw2pdf(
+  input,
+  output = with_ext(input, "pdf"),
+  compiler = "xelatex",
+  envir = parent.frame(),
+  quiet = FALSE,
+  clean = TRUE,
+  error = FALSE,
+  ...
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>input</code></td>
+<td>
+<p>Path to the input file.</p>
+</td></tr>
+<tr valign="top"><td><code>output</code></td>
+<td>
+<p>Path of the PDF output file. By default, it uses the same name
+as the <code>input</code>, but changes the file extension to &quot;.pdf&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>compiler, ...</code></td>
+<td>
+<p>The LaTeX engine and other arguments to be passed to
+<code>tinytex::<a href="../../tinytex/help/latexmk.html">latexmk</a>()</code>. The default compiler is
+<code>xelatex</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>envir</code></td>
+<td>
+<p>Environment in which code chunks are to be evaluated, for
+example, <code><a href="../../base/html/sys.parent.html">parent.frame</a>()</code>, <code><a href="../../base/html/environment.html">new.env</a>()</code>, or
+<code><a href="../../base/html/environment.html">globalenv</a>()</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>quiet</code></td>
+<td>
+<p>Boolean; suppress the progress bar and messages?</p>
+</td></tr>
+<tr valign="top"><td><code>clean</code></td>
+<td>
+<p>If <code>TRUE</code>, the intermediate files will be removed.</p>
+</td></tr>
+<tr valign="top"><td><code>error</code></td>
+<td>
+<p>If <code>FALSE</code>, knitting stops when any error occurs.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function is similar to <code><a href="../../knitr/help/knit2pdf.html">knit2pdf</a>()</code>, with the following differences:
+</p>
+
+<ol>
+<li><p> The default compiler is &quot;xelatex&quot; instead of &quot;pdflatex&quot;.
+</p>
+</li>
+<li> <p><code>output</code> uses the file extension &quot;.pdf&quot; instead of &quot;.tex&quot;.
+</p>
+</li>
+<li><p> Before knitting, it tries to remove the <code>output</code> file and will throw a clear error if the file cannot be removed.
+</p>
+</li>
+<li> <p><code>output</code> could be under any dir, not necessarily the same directory as <code>input</code>.
+</p>
+</li>
+<li><p> It cleans up intermediate files by default, including the &quot;.tex&quot; file.
+</p>
+</li>
+<li><p> It stops knitting when any error occurs (by setting the chunk option <code>error = FALSE</code>).
+</p>
+</li></ol>
+
+
+
+<h3>Value</h3>
+
+<p>The <code>output</code> file path.
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>knitr</em> version 1.39 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

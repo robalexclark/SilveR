@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Testing Estimated Coefficients</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for cftest {multcomp}"><tr><td>cftest {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Testing Estimated Coefficients </h2>
+
+<h3>Description</h3>
+
+<p>A convenience function for univariate testing via z- and t-tests of 
+estimated model coefficients
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+cftest(model, parm, test = univariate(), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>a fitted model.</p>
+</td></tr>
+<tr valign="top"><td><code>parm</code></td>
+<td>
+<p>a vector of parameters to be tested, either a character vector
+of names or an integer.</p>
+</td></tr>
+<tr valign="top"><td><code>test</code></td>
+<td>
+<p> a function for computing p values, see <code><a href="../../multcomp/help/summary.glht.html">summary.glht</a></code>.</p>
+</td></tr>  
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>additional arguments passed to <code><a href="../../multcomp/help/summary.glht.html">summary.glht</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The usual z- or t-tests are tested without adjusting for 
+multiplicity.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>summary.glht</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../lmtest/help/coeftest.html">coeftest</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  lmod &lt;- lm(dist ~ speed, data = cars)
+  summary(lmod)
+  cftest(lmod)
+  
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

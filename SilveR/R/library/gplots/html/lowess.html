@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Scatter Plot Smoothing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for lowess {gplots}"><tr><td>lowess {gplots}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Scatter Plot Smoothing</h2>
+
+<h3>Description</h3>
+
+<p>The <code>lowess</code> function performs the computations for the
+<em>LOWESS</em> smoother (see the reference below).
+<code>lowess</code> returns a an object containing components
+<code>x</code> and <code>y</code> which give the coordinates of the smooth.
+The smooth can then be added to a plot of the original
+points with the function <code>lines</code>.
+</p>
+<p>Alternatively, <code>plot</code> can be called directly on the object
+returned from <code>lowess</code> and the 'lowess' method for <code>plot</code>
+will generate a scatterplot of the original data with a <code>lowess</code>
+line superimposed.
+</p>
+<p>Finally, the <code>plotLowess</code> function both calculates the
+<code>lowess</code> smooth and plots the original data with a <code>lowess</code>
+smooth.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+lowess(x, ...)
+
+## Default S3 method:
+lowess(x, y=NULL, f=2/3, iter=3L, delta=0.01 *
+       diff(range(x)), ...)
+
+## S3 method for class 'formula'
+lowess(formula,data=parent.frame(), ..., subset, f=2/3,
+       iter=3L, delta=.01*diff(range(mf[-response])))
+
+## S3 method for class 'lowess'
+plot(x, y, ..., col.lowess="red", lty.lowess=2)
+
+plotLowess(formula, data=parent.frame(), ..., subset=parent.frame(),
+           col.lowess="red", lty.lowess=2  )
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p> formula providing a single dependent variable (y) and
+an single independent variable (x) to use as coordinates in the
+scatter plot.</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>a data.frame (or list) from which the variables in &lsquo;formula&rsquo;
+should be taken.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p> an optional vector specifying a subset of observations
+to be used in the fitting process. </p>
+</td></tr>
+<tr valign="top"><td><code>x, y</code></td>
+<td>
+<p>vectors giving the coordinates of the points in the scatter
+plot. Alternatively a single plotting structure can be specified.</p>
+</td></tr>
+<tr valign="top"><td><code>f</code></td>
+<td>
+<p>the smoother span. This gives the proportion of points in
+the plot which influence the smooth at each value.
+Larger values give more smoothness.</p>
+</td></tr>
+<tr valign="top"><td><code>iter</code></td>
+<td>
+<p>the number of robustifying iterations which should be
+performed.
+Using smaller values of <code>iter</code> will make <code>lowess</code> run
+faster.</p>
+</td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+<p>values of <code>x</code> which lie within <code>delta</code>
+of each other replaced by a single value in the output from
+<code>lowess</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>parameters for methods.</p>
+</td></tr>
+<tr valign="top"><td><code>col.lowess, lty.lowess</code></td>
+<td>
+<p>color and line type for plotted line</p>
+</td></tr>
+</table>
+
+
+<h3>References</h3>
+
+<p>Cleveland, W. S. (1979)
+Robust locally weighted regression and smoothing scatterplots.
+<em>J. Amer. Statist. Assoc.</em> <b>74</b>, 829&ndash;836.
+</p>
+<p>Cleveland, W. S. (1981)
+LOWESS: A program for smoothing scatterplots by robust locally weighted
+regression. <em>The American Statistician</em>, <b>35</b>, 54.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../stats/html/loess.html">loess</a></code> (in package <code>modreg</code>), a newer
+formula based version of <code>lowess</code> (with different defaults!).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(cars)
+
+#
+# x,y method
+#
+plot(cars$speed, cars$dist, main="lowess(cars)")
+lines(lowess(cars$speed, cars$dist), col=2)
+lines(lowess(cars$speed, cars$dist, f=.2), col=3)
+legend(5, 120, c(paste("f=", c("2/3", ".2"))), lty=1, col=2:3)
+
+#
+# formula method: plot, then calculate the lowess smoother,
+#                 then add smooth to the plot
+#
+plot(dist ~ speed, data=cars, main="lowess(cars)")
+lines(lowess(dist ~ speed, data=cars), col=2, lty=2)
+lines(lowess(dist ~ speed, data=cars, f=.2), col=3) # smaller bandwith
+legend(5, 120, c(paste("f=", c("2/3", ".2"))), lty=1, col=2:3)
+
+#
+# formula method: calculate lowess() smoother, then call plot()
+#                  on the lowess object
+#
+lw &lt;- lowess(dist ~ speed, data=cars)
+plot(lw, main="lowess(cars)"  )
+
+#
+# formula method: calculate and plot in a single command
+#
+plotLowess(dist ~ speed, data=cars, main="lowess(cars)")
+
+ 
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>gplots</em> version 3.1.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

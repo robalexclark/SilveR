@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     </style>
 
 
+
 <style type="text/css">
   code {
     white-space: pre;
@@ -377,8 +378,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div id="browsers-do-not-interpret-ansi-csi-sgr-sequences" class="section level3">
 <h3>Browsers Do Not Interpret ANSI CSI SGR Sequences</h3>
-<p>Over the past few years color has been gaining traction in the R terminal, particularly since Gábor Csárdi’s <a href="https://github.com/r-lib/crayon">crayon</a> made it easy to format text with <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI CSI SGR sequences</a>. At the same time the advent of JJ Alaire and Yihui Xie <code>rmarkdown</code> and <code>knitr</code> packages, along with John MacFarlane <code>pandoc</code>, made it easy to automatically incorporate R code and output in HTML documents.</p>
-<p>Unfortunately ANSI CSI SGR sequences are not recognized by web browsers and end up rendering weirdly<a href="#f1"><sup>1</sub></a>:</p>
+<p>Over the past few years color has been gaining traction in the R
+terminal, particularly since Gábor Csárdi’s <a href="https://github.com/r-lib/crayon">crayon</a> made it easy to format
+text with <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI
+CSI SGR sequences</a>. At the same time the advent of JJ Alaire and
+Yihui Xie <code>rmarkdown</code> and <code>knitr</code> packages, along
+with John MacFarlane <code>pandoc</code>, made it easy to automatically
+incorporate R code and output in HTML documents.</p>
+<p>Unfortunately ANSI CSI SGR sequences are not recognized by web
+browsers and end up rendering weirdly<a href="#f1"><sup>1</sub></a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sgr.string <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="sc">\033</span><span class="st">[43;34mday &gt; night</span><span class="sc">\033</span><span class="st">[0m&quot;</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="sc">\033</span><span class="st">[44;33mdawn &lt; dusk</span><span class="sc">\033</span><span class="st">[0m&quot;</span></span>
@@ -389,31 +397,44 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="automatically-convert-ansi-csi-sgr-to-html" class="section level3">
 <h3>Automatically Convert ANSI CSI SGR to HTML</h3>
-<p><code>fansi</code> provides the <code>to_html</code> function which converts the ANSI CSI SGR sequences and OSC hyperlinks into HTML markup. When we combine it with <code>knitr::knit_hooks</code> we can modify the rendering of the <code>rmarkdown</code> document such that ANSI CSI SGR encoding is shown in the equivalent HTML.</p>
-<p><code>fansi::set_knit_hooks</code> is a convenience function that does just this. You should call it in an <code>rmarkdown</code> document with the:</p>
+<p><code>fansi</code> provides the <code>to_html</code> function which
+converts the ANSI CSI SGR sequences and OSC hyperlinks into HTML markup.
+When we combine it with <code>knitr::knit_hooks</code> we can modify the
+rendering of the <code>rmarkdown</code> document such that ANSI CSI SGR
+encoding is shown in the equivalent HTML.</p>
+<p><code>fansi::set_knit_hooks</code> is a convenience function that
+does just this. You should call it in an <code>rmarkdown</code> document
+with the:</p>
 <ul>
 <li>Chunk option <code>results</code> set to “asis”.</li>
 <li>Chunk option <code>comments</code> set to “” (empty string).</li>
 <li>The <code>knitr::knit_hooks</code> object as an argument.</li>
 </ul>
-<p>The corresponding <code>rmarkdown</code> hunk should look as follows:</p>
+<p>The corresponding <code>rmarkdown</code> hunk should look as
+follows:</p>
 <pre><code>```{r, comment=&quot;&quot;, results=&quot;asis&quot;}
 old.hooks &lt;- fansi::set_knit_hooks(knitr::knit_hooks)
 ```</code></pre>
 <STYLE type="text/css" scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </STYLE>
-<p>We run this function for its side effects, which cause the output to be displayed as intended:</p>
+<p>We run this function for its side effects, which cause the output to
+be displayed as intended:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(sgr.string)</span></code></pre></div>
 <PRE class="fansi fansi-output"><CODE>## <span style="color: #0000BB; background-color: #BBBB00;">day &gt; night</span>
 ## <span style="color: #BBBB00; background-color: #0000BB;">dawn &lt; dusk</span>
 </CODE></PRE>
-<p>If you are seeing extra line breaks in your output you may need to use:</p>
+<p>If you are seeing extra line breaks in your output you may need to
+use:</p>
 <pre><code>```{r, comment=&quot;&quot;, results=&quot;asis&quot;}
 old.hooks &lt;- fansi::set_knit_hooks(knitr::knit_hooks, split.nl=TRUE)
 ```</code></pre>
-<p>If you use <code>crayon</code> to generate your ANSI CSI SGR style strings you may need to set <code>options(crayon.enabled=TRUE)</code>, as in some cases <code>crayon</code> suppresses the SGR markup if it thinks it is not outputting to a terminal.</p>
-<p>We can also set hooks for the other types of outputs, and add some additional CSS styles.</p>
+<p>If you use <code>crayon</code> to generate your ANSI CSI SGR style
+strings you may need to set <code>options(crayon.enabled=TRUE)</code>,
+as in some cases <code>crayon</code> suppresses the SGR markup if it
+thinks it is not outputting to a terminal.</p>
+<p>We can also set hooks for the other types of outputs, and add some
+additional CSS styles.</p>
 <pre><code>```{r, comment=&quot;&quot;, results=&quot;asis&quot;}
 styles &lt;- c(
   getOption(&quot;fansi.style&quot;, dflt_css()),  # default style
@@ -458,7 +479,12 @@ PRE.fansi-message {background-color: #AAAADD;}
 ## �[44;33mdawn &lt; dusk�[0m</code></pre>
 <p>See <code>?fansi::set_knit_hooks</code> for details.</p>
 <hr />
-<p><a name="f1"></a><sup>1</sup>For illustrative purposes we output raw ANSI CSI SGR sequences in this document. However, because the ESC control character causes problems with some HTML rendering services we replace it with the � symbol. Depending on the browser and process it would normally not be visible at all, or substituted with some other symbol.</p>
+<p><a name="f1"></a><sup>1</sup>For illustrative purposes we output raw
+ANSI CSI SGR sequences in this document. However, because the ESC
+control character causes problems with some HTML rendering services we
+replace it with the � symbol. Depending on the browser and process it
+would normally not be visible at all, or substituted with some other
+symbol.</p>
 </div>
 
 

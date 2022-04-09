@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
     </style>
 
 
+
 <style type="text/css">
   code {
     white-space: pre;
@@ -333,10 +334,16 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<p>This vignette shows you how to create custom expectations that work identically to the built-in <code>expect_</code> functions. Since these functions will need to be loaded when your package is loaded for testing, it is recommended that <code>expect_</code> functions be defined in <code>test-helpers.R</code> in your packages <code>R/</code> directory.</p>
+<p>This vignette shows you how to create custom expectations that work
+identically to the built-in <code>expect_</code> functions. Since these
+functions will need to be loaded when your package is loaded for
+testing, it is recommended that <code>expect_</code> functions be
+defined in <code>test-helpers.R</code> in your packages <code>R/</code>
+directory.</p>
 <div id="creating-an-expectation" class="section level2">
 <h2>Creating an expectation</h2>
-<p>There are three main parts to writing an expectation, as illustrated by <code>expect_length()</code>:</p>
+<p>There are three main parts to writing an expectation, as illustrated
+by <code>expect_length()</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>expect_length <span class="ot">&lt;-</span> <span class="cf">function</span>(object, n) {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Capture object and label</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  act <span class="ot">&lt;-</span> <span class="fu">quasi_label</span>(rlang<span class="sc">::</span><span class="fu">enquo</span>(object), <span class="at">arg =</span> <span class="st">&quot;object&quot;</span>)</span>
@@ -354,21 +361,38 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="quasi-labelling" class="section level2">
 <h2>Quasi-labelling</h2>
-<p>The first step in any expectation is to capture the actual object, and generate a label for it to use if a failure occur. All testthat expectations support quasiquotation so that you can unquote variables. This makes it easier to generate good labels when the expectation is called from a function or within a for loop.</p>
-<p>By convention, the first argument to every <code>expect_</code> function is called <code>object</code>, and you capture it’s value (<code>val</code>) and label (<code>lab</code>) with <code>act &lt;- quasi_label(enquo(object))</code>, where <code>act</code> is short for actual.</p>
+<p>The first step in any expectation is to capture the actual object,
+and generate a label for it to use if a failure occur. All testthat
+expectations support quasiquotation so that you can unquote variables.
+This makes it easier to generate good labels when the expectation is
+called from a function or within a for loop.</p>
+<p>By convention, the first argument to every <code>expect_</code>
+function is called <code>object</code>, and you capture it’s value
+(<code>val</code>) and label (<code>lab</code>) with
+<code>act &lt;- quasi_label(enquo(object))</code>, where
+<code>act</code> is short for actual.</p>
 <div id="verify-the-expectation" class="section level3">
 <h3>Verify the expectation</h3>
-<p>Next, you should verify the expectation. This often involves a little computation (here just figuring out the <code>length</code>), and you should typically store the results back into the <code>act</code> object.</p>
+<p>Next, you should verify the expectation. This often involves a little
+computation (here just figuring out the <code>length</code>), and you
+should typically store the results back into the <code>act</code>
+object.</p>
 <p>Next you call <code>expect()</code>. This has two arguments:</p>
 <ol style="list-style-type: decimal">
-<li><p><code>ok</code>: was the expectation successful? This is usually easy to write</p></li>
-<li><p><code>failure_message</code>: What informative error message should be reported to the user so that they can diagnose the problem. This is often hard to write!</p>
-<p>For historical reasons, most built-in expectations generate these with <code>sprintf()</code>, but today I’d recommend using the <a href="https://glue.tidyverse.org">glue</a> package</p></li>
+<li><p><code>ok</code>: was the expectation successful? This is usually
+easy to write</p></li>
+<li><p><code>failure_message</code>: What informative error message
+should be reported to the user so that they can diagnose the problem.
+This is often hard to write!</p>
+<p>For historical reasons, most built-in expectations generate these
+with <code>sprintf()</code>, but today I’d recommend using the <a href="https://glue.tidyverse.org">glue</a> package</p></li>
 </ol>
 </div>
 <div id="invisibly-return-the-input" class="section level3">
 <h3>Invisibly return the input</h3>
-<p>Expectation functions are called primarily for their side-effects (triggering a failure), so should invisibly return their input, <code>act$val</code>. This allows expectations to be chained:</p>
+<p>Expectation functions are called primarily for their side-effects
+(triggering a failure), so should invisibly return their input,
+<code>act$val</code>. This allows expectations to be chained:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_type</span>(<span class="st">&quot;list&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_s3_class</span>(<span class="st">&quot;data.frame&quot;</span>) <span class="sc">%&gt;%</span> </span>
@@ -377,7 +401,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="succeed-and-fail" class="section level2">
 <h2><code>succeed()</code> and <code>fail()</code></h2>
-<p>For expectations with more complex logic governing when success or failure occurs, you can use <code>succeed()</code> and <code>fail()</code>. These are simple wrappers around <code>expect()</code> that allow you to write code that looks like this:</p>
+<p>For expectations with more complex logic governing when success or
+failure occurs, you can use <code>succeed()</code> and
+<code>fail()</code>. These are simple wrappers around
+<code>expect()</code> that allow you to write code that looks like
+this:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>expect_length <span class="ot">&lt;-</span> <span class="cf">function</span>(object, n) {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  act <span class="ot">&lt;-</span> <span class="fu">quasi_label</span>(rlang<span class="sc">::</span><span class="fu">enquo</span>(object), <span class="at">arg =</span> <span class="st">&quot;object&quot;</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -393,14 +421,15 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="testing-your-expectations" class="section level2">
 <h2>Testing your expectations</h2>
-<p>Use the expectations <code>expect_success()</code> and <code>expect_failure()</code> to test your expectation.</p>
+<p>Use the expectations <code>expect_success()</code> and
+<code>expect_failure()</code> to test your expectation.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;length computed correctly&quot;</span>, {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_success</span>(<span class="fu">expect_length</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_failure</span>(<span class="fu">expect_length</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="st">&quot;has length 1, not length 2.&quot;</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_success</span>(<span class="fu">expect_length</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">10</span>))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_success</span>(<span class="fu">expect_length</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], <span class="dv">5</span>))</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Test passed 😀</span></span></code></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Test passed 🥇</span></span></code></pre></div>
 </div>
 
 

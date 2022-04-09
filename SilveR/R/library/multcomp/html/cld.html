@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Set up a compact letter display of all pair-wise comparisons</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for cld {multcomp}"><tr><td>cld {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Set up a compact letter display of all pair-wise comparisons</h2>
+
+<h3>Description</h3>
+
+<p>Extract information from <code>glht</code>, <code>summary.glht</code> or
+<code>confint.glht</code> objects which is required to create
+and plot compact letter displays of all pair-wise comparisons.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'summary.glht'
+cld(object, level = 0.05, decreasing = FALSE, ...)
+## S3 method for class 'glht'
+cld(object, level = 0.05, decreasing = FALSE, ...)
+## S3 method for class 'confint.glht'
+cld(object, decreasing = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+
+<p>An object of class <code>glht</code>, <code>summary.glht</code> or <code>confint.glht</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>level</code></td>
+<td>
+
+<p>Significance-level to be used to term a specific pair-wise
+comparison significant.
+</p>
+</td></tr>
+<tr valign="top"><td><code>decreasing</code></td>
+<td>
+
+<p>logical. Should the order of the letters be increasing or decreasing?
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>additional arguments.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function extracts all the information from <code>glht</code>,
+<code>summary.glht</code> or <code>confint.glht</code> objects that is required
+to create a compact letter display of all pair-wise comparisons.
+In case the contrast matrix is not of type <code>"Tukey"</code>, an error
+is issued. In case of <code>confint.glht</code> objects, a pair-wise comparison
+is termed significant whenever a particular confidence interval contains 0.
+Otherwise, p-values are compared to the value of <code>"level"</code>.
+Once, this information is extracted, plotting of all pair-wise
+comparisons can be carried out.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>cld</code>, a list with items:
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>y</code></td>
+<td>
+
+<p>Values of the response variable of the original model.
+</p>
+</td></tr>
+<tr valign="top"><td><code>yname</code></td>
+<td>
+
+<p>Name of the response variable.
+</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>Values of the variable used to compute Tukey contrasts.
+</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+
+<p>Weights used in the fitting process.
+</p>
+</td></tr>
+<tr valign="top"><td><code>lp</code></td>
+<td>
+
+<p>Predictions from the fitted model.
+</p>
+</td></tr>
+<tr valign="top"><td><code>covar</code></td>
+<td>
+
+<p>A logical indicating whether the fitted model contained covariates.
+</p>
+</td></tr>
+<tr valign="top"><td><code>signif</code></td>
+<td>
+
+<p>Vector of logicals indicating significant differences with
+hyphenated names that identify pair-wise comparisons.
+</p>
+</td></tr>
+</table>
+
+
+<h3>References</h3>
+
+<p>Hans-Peter Piepho (2004), An Algorithm for a Letter-Based
+Representation of All-Pairwise Comparisons, <em>Journal of
+Computational and Graphical Statistics</em>, <b>13</b>(2), 456&ndash;466.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../multcomp/help/glht.html">glht</a></code>
+<code><a href="../../multcomp/help/plot.cld.html">plot.cld</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  ### multiple comparison procedures
+  ### set up a one-way ANOVA
+  data(warpbreaks)
+  amod &lt;- aov(breaks ~ tension, data = warpbreaks)
+  ### specify all pair-wise comparisons among levels of variable "tension"
+  tuk &lt;- glht(amod, linfct = mcp(tension = "Tukey"))
+  ### extract information
+  tuk.cld &lt;- cld(tuk)
+  ### use sufficiently large upper margin
+  old.par &lt;- par(mai=c(1,1,1.25,1), no.readonly = TRUE)
+  ### plot
+  plot(tuk.cld)
+  par(old.par)
+  
+  ### now using covariates
+  data(warpbreaks)
+  amod2 &lt;- aov(breaks ~ tension + wool, data = warpbreaks)
+  ### specify all pair-wise comparisons among levels of variable "tension"
+  tuk2 &lt;- glht(amod2, linfct = mcp(tension = "Tukey"))
+  ### extract information
+  tuk.cld2 &lt;- cld(tuk2)
+  ### use sufficiently large upper margin
+  old.par &lt;- par(mai=c(1,1,1.25,1), no.readonly = TRUE)
+  ### plot using different colors
+  plot(tuk.cld2, col=c("black", "red", "blue"))
+  par(old.par)
+
+  ### set up all pair-wise comparisons for count data
+  data(Titanic)
+  mod &lt;- glm(Survived ~ Class, data = as.data.frame(Titanic), weights = Freq, family = binomial())
+  ### specify all pair-wise comparisons among levels of variable "Class"
+  glht.mod &lt;- glht(mod, mcp(Class = "Tukey"))
+  ### extract information
+  mod.cld &lt;- cld(glht.mod)
+  ### use sufficiently large upper margin
+  old.par &lt;- par(mai=c(1,1,1.5,1), no.readonly = TRUE)
+  ### plot
+  plot(mod.cld)
+  par(old.par)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

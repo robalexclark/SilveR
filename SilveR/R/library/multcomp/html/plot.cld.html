@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot a cld object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plot.cld {multcomp}"><tr><td>plot.cld {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot a cld object</h2>
+
+<h3>Description</h3>
+
+<p>Plot information of <code>glht</code>, <code>summary.glht</code> or <code>confint.glht</code>
+objects stored as <code>cld</code> objects together with a compact
+letter display of all pair-wise comparisons.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'cld'
+plot(x, type = c("response", "lp"), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>An object of class <code>cld</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+
+<p>Should the response or the linear predictor (lp) be plotted.
+If there are any covariates, the lp is automatically used. To
+use the response variable, set <code>type="response"</code> and <code>covar=FALSE</code>
+of the <code>cld</code> object.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Other optional print parameters which are passed to the plotting functions.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function plots the information stored in <code>glht</code>, <code>summary.glht</code> or
+<code>confint.glht</code> objects. Prior to plotting, these objects have to be converted to
+<code>cld</code> objects (see <code><a href="../../multcomp/help/cld.html">cld</a></code> for details).
+All types of plots include a compact letter display (cld) of all pair-wise comparisons.
+Equal letters indicate no significant differences. Two levels are significantly
+different, in case they do not have any letters in common.
+If the fitted model contains any covariates, a boxplot of the linear predictor is
+generated with the cld within the upper margin. Otherwise, three different types
+of plots are used depending on the class of variable <code>y</code> of the <code>cld</code> object.
+In case of <code>class(y) == "numeric"</code>, a boxplot is generated using the response variable,
+classified according to the levels of the variable used for the Tukey contrast
+matrix. Is <code>class(y) == "factor"</code>, a mosaic plot is generated, and the cld is printed
+above. In case of <code>class(y) == "Surv"</code>, a plot of fitted survival functions is generated
+where the cld is plotted within the legend.
+The compact letter display is computed using the algorithm of Piepho (2004).
+Note: The user has to provide a sufficiently large upper margin which can be used to
+depict the compact letter display (see examples).
+</p>
+
+
+<h3>References</h3>
+
+<p>Hans-Peter Piepho (2004), An Algorithm for a Letter-Based Representation of All-Pairwise Comparisons,
+<em>Journal of Computational and Graphical Statistics</em>, <b>13</b>(2), 456&ndash;466.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../multcomp/help/glht.html">glht</a></code>
+<code><a href="../../multcomp/help/cld.html">cld</a></code>
+<code><a href="../../multcomp/help/cld.summary.glht.html">cld.summary.glht</a></code>
+<code><a href="../../multcomp/help/cld.confint.glht.html">cld.confint.glht</a></code>
+<code><a href="../../multcomp/help/cld.glht.html">cld.glht</a></code>
+<code><a href="../../graphics/html/boxplot.html">boxplot</a></code>
+<code><a href="../../graphics/html/mosaicplot.html">mosaicplot</a></code>
+<code><a href="../../survival/html/plot.survfit.html">plot.survfit</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  ### multiple comparison procedures
+  ### set up a one-way ANOVA
+  data(warpbreaks)
+  amod &lt;- aov(breaks ~ tension, data = warpbreaks)
+  ### specify all pair-wise comparisons among levels of variable "tension"
+  tuk &lt;- glht(amod, linfct = mcp(tension = "Tukey"))
+  ### extract information
+  tuk.cld &lt;- cld(tuk)
+  ### use sufficiently large upper margin
+  old.par &lt;- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
+  ### plot
+  plot(tuk.cld)
+  par(old.par)
+
+  ### now using covariates
+  amod2 &lt;- aov(breaks ~ tension + wool, data = warpbreaks)
+  tuk2 &lt;- glht(amod2, linfct = mcp(tension = "Tukey"))
+  tuk.cld2 &lt;- cld(tuk2)
+  old.par &lt;- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
+  ### use different colors for boxes
+  plot(tuk.cld2, col=c("green", "red", "blue"))
+  par(old.par)
+  
+  ### get confidence intervals
+  ci.glht &lt;- confint(tuk)
+  ### plot them
+  plot(ci.glht)
+  old.par &lt;- par(mai=c(1,1,1.25,1), no.readonly=TRUE)
+  ### use 'confint.glht' object to plot all pair-wise comparisons
+  plot(cld(ci.glht), col=c("white", "blue", "green"))
+  par(old.par)
+  
+  ### set up all pair-wise comparisons for count data
+  data(Titanic)
+  mod &lt;- glm(Survived ~ Class, data = as.data.frame(Titanic), 
+             weights = Freq, family = binomial())
+  ### specify all pair-wise comparisons among levels of variable "Class"
+  glht.mod &lt;- glht(mod, mcp(Class = "Tukey"))
+  ### extract information
+  mod.cld &lt;- cld(glht.mod)
+  ### use sufficiently large upper margin
+  old.par &lt;- par(mai=c(1,1,1.5,1), no.readonly=TRUE)
+  ### plot
+  plot(mod.cld)
+  par(old.par)
+  
+  ### set up all pair-wise comparisons of a Cox-model
+  if (require("survival") &amp;&amp; require("MASS")) {
+    ### construct 4 classes of age
+    Melanoma$Cage &lt;- factor(sapply(Melanoma$age, function(x){
+                            if( x &lt;= 25 ) return(1)
+                            if( x &gt; 25 &amp; x &lt;= 50 ) return(2)
+                            if( x &gt; 50 &amp; x &lt;= 75 ) return(3)
+                            if( x &gt; 75 &amp; x &lt;= 100) return(4) }
+                           ))
+    ### fit Cox-model
+    cm &lt;- coxph(Surv(time, status == 1) ~ Cage, data = Melanoma)
+    ### specify all pair-wise comparisons among levels of "Cage"
+    cm.glht &lt;- glht(cm, mcp(Cage = "Tukey"))
+    # extract information &amp; plot
+    old.par &lt;- par(no.readonly=TRUE)
+    ### use mono font family
+    if (dev.interactive())
+        old.par &lt;- par(family = "mono")
+    plot(cld(cm.glht), col=c("black", "red", "blue", "green"))
+    par(old.par)
+  }
+
+  if (require("nlme") &amp;&amp; require("lme4")) {
+    data("ergoStool", package = "nlme")
+
+    stool.lmer &lt;- lmer(effort ~ Type + (1 | Subject),
+                       data = ergoStool)
+    glme41 &lt;- glht(stool.lmer, mcp(Type = "Tukey"))
+
+    old.par &lt;- par(mai=c(1,1,1.5,1), no.readonly=TRUE)
+    plot(cld(glme41))
+    par(old.par)
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

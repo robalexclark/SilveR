@@ -11,12 +11,12 @@ namespace SilveR
 {
     public static class Program
     {
-        public static string AppName { get; private set; } = "InVivoStat";
-        public static string AppVersion { get; private set; } = "v" + Assembly.GetEntryAssembly().GetName().Version.Major + "." + Assembly.GetEntryAssembly().GetName().Version.Minor + "." + Assembly.GetEntryAssembly().GetName().Version.Build;
-        public static CultureInfo UserCulture { get; private set; } = CultureInfo.CurrentCulture;
+        public static string AppName { get; } = "InVivoStat";
+        public static string AppVersion { get;} = "v" + Assembly.GetEntryAssembly().GetName().Version.Major + "." + Assembly.GetEntryAssembly().GetName().Version.Minor + "." + Assembly.GetEntryAssembly().GetName().Version.Build;
+        public static CultureInfo UserCulture { get;} = CultureInfo.CurrentCulture;
 
         public static void Main(string[] args)
-                  {
+        {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .Enrich.FromLogContext()

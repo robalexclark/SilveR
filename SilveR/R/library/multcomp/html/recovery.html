@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Recovery Time Data Set</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for recovery {multcomp}"><tr><td>recovery {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Recovery Time Data Set </h2>
+
+<h3>Description</h3>
+
+<p>Recovery time after surgery.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data("recovery")</pre>
+
+
+<h3>Format</h3>
+
+<p>This data frame contains the following variables
+</p>
+
+<dl>
+<dt>blanket</dt><dd><p>blanket type, a factor at four levels: <code>b0</code>, <code>b1</code>,
+<code>b2</code>, and <code>b3</code>.</p>
+</dd>
+<dt>minutes</dt><dd><p>response variable: recovery time after a surgical 
+procedure.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>A company developed specialized heating blankets designed to help the
+body heat following a surgical procedure. Four types of blankets
+were tried on surgical patients with the aim of comparing the
+recovery time of patients. One of the blanket was a standard blanket
+that had been in use already in various hospitals. 
+</p>
+
+
+<h3>Source</h3>
+
+<p>P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
+<em>Multiple Comparisons and Multiple Tests Using the SAS System</em>.
+Cary, NC: SAS Institute Inc., page 66.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  ### set up one-way ANOVA
+  amod &lt;- aov(minutes ~ blanket, data = recovery)
+
+  ### set up multiple comparisons: one-sided Dunnett contrasts
+  rht &lt;- glht(amod, linfct = mcp(blanket = "Dunnett"), 
+              alternative = "less")
+
+  ### cf. Westfall et al. (1999, p. 80)
+  confint(rht, level = 0.9)
+
+  ### the same
+  rht &lt;- glht(amod, linfct = mcp(blanket = c("b1 - b0 &gt;= 0", 
+                                             "b2 - b0 &gt;= 0", 
+                                             "b3 - b0 &gt;= 0")))
+  confint(rht, level = 0.9)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,4 +1,8 @@
 
+Changes in 1.4-19 (2022-04-25)
+
+    o    proper use of inherits in user-contributed code
+
 Changes in 1.4-18 (2022-01-04)
 
     o    add support for fixest objects (donated by Grant McDermott)

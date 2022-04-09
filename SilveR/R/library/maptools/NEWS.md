@@ -1,6 +1,10 @@
 # Please note that **maptools** will be retired by the end of 2023, plan transition at your earliest convenience; some functionality will be moved to **sp**.
 
-# Version 1.1-3 (development, rev. 400-)
+# Version 1.1-4 (development)
+
+* remove escaping of underscore in manual pages
+
+# Version 1.1-3 (2022-03-08, rev. 400)
 
 * Fix unconditional library(RColor-Brewer) call in help pages
 

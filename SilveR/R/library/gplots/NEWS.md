@@ -1,4 +1,40 @@
-Release 3.1.0 - 2020-09-12
+Release 3.1.3 - 2022-04-24
+--------------------------
+Bug Fixes:
+- Fix warning:
+
+checking Rd files ... [1s/2s] WARNING
+checkRd: (7) barplot2.Rd:219: invalid email address: marc\_schwartz@comcast.net
+checkRd: (7) venn.Rd:59: invalid email address: steffen\_moeller@gmx.de
+
+- Fix note:
+
+checking Rd cross-references ... NOTE
+Undeclared package ‘r2d2’ in Rd xrefs
+
+- Fix note:
+
+Found if() conditions comparing class() to string:
+File 'gplots/R/heatmap.2.R': if (class(col) == "function") ...
+Use inherits() (or maybe is()) instead.
+
+Release 3.1.2 - 2021-01-09
+--------------------------
+Bug Fixes:
+- heatmap.2: Also use key.title in cases without density #4
+
+
+
+
+Release 3.1.1 - 2020-11-28
+--------------------------
+Bug Fixes:
+- Fix "Error in plot.window(...) : need finite 'ylim' values" in "Running examples in 'gplots-Ex.R' failed"
+
+
+
+
+Release 3.1.0 - 2020-09-18
 --------------------------
 Major change:
 - Removed gdata from imports by bringing into the package the functions nobs and reorder.factor.

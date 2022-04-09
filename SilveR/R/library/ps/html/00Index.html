@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;ps&rsquo; version 1.6.0</h2>
+</div><h2>Documentation for package &lsquo;ps&rsquo; version 1.7.0</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 </ul>
@@ -63,6 +63,8 @@
 <td>Full path of the executable of a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_kill_tree.html">ps_find_tree</a></td>
 <td>Mark a process and its (future) child tree</td></tr>
+<tr><td style="width: 25%;"><a href="ps_get_cpu_affinity.html">ps_get_cpu_affinity</a></td>
+<td>Query or set CPU affinity</td></tr>
 <tr><td style="width: 25%;"><a href="ps_get_nice.html">ps_get_nice</a></td>
 <td>Get or set the priority of a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_uids.html">ps_gids</a></td>
@@ -80,9 +82,11 @@
 <tr><td style="width: 25%;"><a href="ps_kill_tree.html">ps_kill_tree</a></td>
 <td>Mark a process and its (future) child tree</td></tr>
 <tr><td style="width: 25%;"><a href="ps_loadavg.html">ps_loadavg</a></td>
-<td>Return the average system load over the last 1, 5 and 15 minutes as a tuple. The “load” represents the processes which are in a runnable state, either using the CPU or waiting to use the CPU (e.g. waiting for disk I/O). On Windows this is emulated by using a Windows API that spawns a thread which keeps running in background and updates results every 5 seconds, mimicking the UNIX behavior. Thus, on Windows, the first time this is called and for the next 5 seconds it will return a meaningless (0.0, 0.0, 0.0) vector. The numbers returned only make sense if related to the number of CPU cores installed on the system. So, for instance, a value of 3.14 on a system with 10 logical CPUs means that the system load was 31.4% percent over the last N minutes.</td></tr>
+<td>Return the average system load over the last 1, 5 and 15 minutes as a tuple.</td></tr>
 <tr><td style="width: 25%;"><a href="ps_kill_tree.html">ps_mark_tree</a></td>
 <td>Mark a process and its (future) child tree</td></tr>
+<tr><td style="width: 25%;"><a href="ps_memory_info.html">ps_memory_full_info</a></td>
+<td>Memory usage information</td></tr>
 <tr><td style="width: 25%;"><a href="ps_memory_info.html">ps_memory_info</a></td>
 <td>Memory usage information</td></tr>
 <tr><td style="width: 25%;"><a href="ps_name.html">ps_name</a></td>
@@ -107,6 +111,8 @@
 <td>Resume (continue) a stopped process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_send_signal.html">ps_send_signal</a></td>
 <td>Send signal to a process</td></tr>
+<tr><td style="width: 25%;"><a href="ps_get_cpu_affinity.html">ps_set_cpu_affinity</a></td>
+<td>Query or set CPU affinity</td></tr>
 <tr><td style="width: 25%;"><a href="ps_get_nice.html">ps_set_nice</a></td>
 <td>Get or set the priority of a process</td></tr>
 <tr><td style="width: 25%;"><a href="ps_shared_libs.html">ps_shared_libs</a></td>

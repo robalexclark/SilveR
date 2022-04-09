@@ -28,6 +28,7 @@ groupkm                 Kaplan-Meier Estimates vs. a Continuous
                         Variable
 hazard.ratio.plot       Hazard Ratio Plot
 ie.setup                Intervening Event Setup
+impactPO                Impact of Proportional Odds Assumpton
 latex.cph               LaTeX Representation of a Fitted Cox Model
 latexrms                LaTeX Representation of a Fitted Model
 lrm                     Logistic Regression Model
@@ -59,6 +60,7 @@ predict.lrm             Predicted Values for Binary and Ordinal
 predictrms              Predicted Values from Model Fit
 print.Glm               print.glm
 print.cph               Print cph Results
+print.impactPO          Print Result from impactPO
 print.ols               Print ols
 psm                     Parametric Survival Model
 residuals.cph           Residuals for a cph Fit

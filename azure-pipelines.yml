@@ -15,7 +15,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: 5.x
+      version: 6.x
 
   - task: DotNetCoreCLI@2
     displayName: dotnet restore
@@ -38,7 +38,7 @@ jobs:
 
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/net5.0/ActualResults/*'
+      rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/net6.0/ActualResults/*'
       archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
 
 
@@ -73,8 +73,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.4.0'
-      title: '4.4.0'
+      tag: '4.5.0'
+      title: '4.5.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -93,9 +93,14 @@ jobs:
       packageType: 'sdk'
       version: 5.x
 
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: 6.x
+
   - task: NodeTool@0
     inputs:
-      versionSpec: '14.x'
+      versionSpec: '16.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
@@ -107,12 +112,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for Win-x64
 
-  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.4.0.exe" $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.4.0.exe
+  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.5.0.exe" $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.5.0.exe
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.4.0.exe'
+      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.5.0.exe'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -122,8 +127,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.4.0'
-      title: '4.4.0'
+      tag: '4.5.0'
+      title: '4.5.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -142,9 +147,14 @@ jobs:
       packageType: 'sdk'
       version: 5.x
 
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: 6.x
+
   - task: NodeTool@0
     inputs:
-      versionSpec: '14.x'
+      versionSpec: '16.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
@@ -159,12 +169,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for Linux
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.4.0.AppImage $(Build.ArtifactStagingDirectory)'  
-    displayName: Copy InVivoStat Setup 4.4.0.AppImage
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.5.0.AppImage $(Build.ArtifactStagingDirectory)'  
+    displayName: Copy InVivoStat Setup 4.5.0.AppImage
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.4.0.AppImage'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.5.0.AppImage'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -174,8 +184,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.4.0'
-      title: '4.4.0'
+      tag: '4.5.0'
+      title: '4.5.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -188,15 +198,20 @@ jobs:
     vmImage: 'macOS-10.15'
 
   steps:
-
+  
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
       version: 5.x
 
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      version: 6.x
+
   - task: NodeTool@0
     inputs:
-      versionSpec: '14.x'
+      versionSpec: '16.x'
 
   - script: dotnet tool install ElectronNET.CLI -g
     displayName: Install Electron.Net CLI
@@ -208,12 +223,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for MacOS
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.4.0.dmg $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.4.0.dmg
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.5.0.dmg $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.5.0.dmg
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.4.0.dmg'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.5.0.dmg'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -223,8 +238,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.4.0'
-      title: '4.4.0'
+      tag: '4.5.0'
+      title: '4.5.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false

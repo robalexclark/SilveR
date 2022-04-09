@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Produce a Boxplot Annotated with the Number of Observations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for boxplot2 {gplots}"><tr><td>boxplot2 {gplots}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Produce a Boxplot Annotated with the Number of Observations</h2>
+
+<h3>Description</h3>
+
+<p>This funcntion uses <code>boxplot</code> to produce a boxplot which is then 
+annotated with the number of observations in each group.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+boxplot2(..., top=FALSE, shrink=1, textcolor=NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p> parameters passed to <code>boxplot</code>. </p>
+</td></tr>
+<tr valign="top"><td><code>top</code></td>
+<td>
+<p> logical indicating whether the number of observations
+should be added to the top or the bottom of the plotting
+region. Defaults to <code>FALSE</code>. </p>
+</td></tr>
+<tr valign="top"><td><code>shrink</code></td>
+<td>
+<p> value to shrink character size (cex) when annotating.</p>
+</td></tr>
+<tr valign="top"><td><code>textcolor</code></td>
+<td>
+<p> text color. </p>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p>This function replaces <code>boxplot.n</code>, which has been deprecated
+avoid potential problems with S3 method dispatching.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Gregory R. Warnes <a href="mailto:greg@warnes.net">greg@warnes.net</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../graphics/html/boxplot.html">boxplot</a></code>,
+<code><a href="../../graphics/html/text.html">text</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(state)
+
+# n's at bottom
+boxplot2( state.area ~ state.region)
+
+# n's at top
+boxplot2( state.area ~ state.region, top=TRUE)
+
+# small red text
+boxplot2( state.area ~ state.region, shrink=0.8, textcolor="red") 
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>gplots</em> version 3.1.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

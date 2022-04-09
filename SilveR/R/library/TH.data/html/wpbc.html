@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Wisconsin Prognostic Breast Cancer Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for wpbc {TH.data}"><tr><td>wpbc {TH.data}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Wisconsin Prognostic Breast Cancer Data</h2>
+
+<h3>Description</h3>
+
+<p>Each record represents follow-up data for one breast cancer
+case.  These are consecutive patients seen by Dr. Wolberg
+since 1984, and include only those cases exhibiting invasive
+breast cancer and no evidence of distant metastases at the
+time of diagnosis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data("wpbc")</pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 198 observations on the following 34 variables.
+</p>
+
+<dl>
+<dt><code>status</code></dt><dd><p>a factor with levels <code>N</code> (nonrecur) and
+<code>R</code> (recur)</p>
+</dd>
+<dt><code>time</code></dt><dd><p>recurrence time (for <code>status == "R"</code>) or
+disease-free time (for <code>status == "N"</code>). </p>
+</dd>
+<dt><code>mean_radius</code></dt><dd><p>radius (mean of distances from center to points on the perimeter) (mean).</p>
+</dd>
+<dt><code>mean_texture</code></dt><dd><p>texture (standard deviation of gray-scale values) (mean).</p>
+</dd>
+<dt><code>mean_perimeter</code></dt><dd><p>perimeter (mean).</p>
+</dd>
+<dt><code>mean_area</code></dt><dd><p>area (mean).</p>
+</dd>
+<dt><code>mean_smoothness</code></dt><dd><p>smoothness (local variation in radius lengths) (mean).</p>
+</dd>
+<dt><code>mean_compactness</code></dt><dd><p>compactness (mean).</p>
+</dd>
+<dt><code>mean_concavity</code></dt><dd><p>concavity (severity of concave portions of the contour) (mean).</p>
+</dd>
+<dt><code>mean_concavepoints</code></dt><dd><p>concave points (number of concave portions of the contour) (mean).</p>
+</dd>
+<dt><code>mean_symmetry</code></dt><dd><p>symmetry (mean).</p>
+</dd>
+<dt><code>mean_fractaldim</code></dt><dd><p>fractal dimension (mean).</p>
+</dd>
+<dt><code>SE_radius</code></dt><dd><p>radius (mean of distances from center to points on the perimeter) (SE).</p>
+</dd>
+<dt><code>SE_texture</code></dt><dd><p>texture (standard deviation of gray-scale values) (SE).</p>
+</dd>
+<dt><code>SE_perimeter</code></dt><dd><p>perimeter (SE).</p>
+</dd>
+<dt><code>SE_area</code></dt><dd><p>area (SE).</p>
+</dd>
+<dt><code>SE_smoothness</code></dt><dd><p>smoothness (local variation in radius lengths) (SE).</p>
+</dd>
+<dt><code>SE_compactness</code></dt><dd><p>compactness (SE).</p>
+</dd>
+<dt><code>SE_concavity</code></dt><dd><p>concavity (severity of concave portions of the contour) (SE).</p>
+</dd>
+<dt><code>SE_concavepoints</code></dt><dd><p>concave points (number of concave portions of the contour) (SE).</p>
+</dd>
+<dt><code>SE_symmetry</code></dt><dd><p>symmetry (SE).</p>
+</dd>
+<dt><code>SE_fractaldim</code></dt><dd><p>fractal dimension (SE).</p>
+</dd>
+<dt><code>worst_radius</code></dt><dd><p>radius (mean of distances from center to points on the perimeter) (worst).</p>
+</dd>
+<dt><code>worst_texture</code></dt><dd><p>texture (standard deviation of gray-scale values) (worst).</p>
+</dd>
+<dt><code>worst_perimeter</code></dt><dd><p>perimeter (worst).</p>
+</dd>
+<dt><code>worst_area</code></dt><dd><p>area (worst).</p>
+</dd>
+<dt><code>worst_smoothness</code></dt><dd><p>smoothness (local variation in radius lengths) (worst).</p>
+</dd>
+<dt><code>worst_compactness</code></dt><dd><p>compactness  (worst).</p>
+</dd>
+<dt><code>worst_concavity</code></dt><dd><p>concavity (severity of concave portions of the contour) (worst).</p>
+</dd>
+<dt><code>worst_concavepoints</code></dt><dd><p>concave points (number of concave portions of the contour) (worst).</p>
+</dd>
+<dt><code>worst_symmetry</code></dt><dd><p>symmetry (worst).</p>
+</dd>
+<dt><code>worst_fractaldim</code></dt><dd><p>fractal dimension (worst).</p>
+</dd>
+<dt><code>tsize</code></dt><dd><p>diameter of the excised tumor in centimeters.</p>
+</dd>
+<dt><code>pnodes</code></dt><dd><p>number of positive axillary lymph nodes observed at time of surgery.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>The first 30 features are computed from a digitized image of a
+fine needle aspirate (FNA) of a breast mass.  They describe
+characteristics of the cell nuclei present in the image.
+</p>
+<p>There are two possible learning problems: predicting <code>status</code> or predicting
+the time to recur.
+</p>
+<p>1) Predicting field 2, outcome: R = recurrent, N = non-recurrent
+- Dataset should first be filtered to reflect a particular
+endpoint; e.g., recurrences before 24 months = positive,
+non-recurrence beyond 24 months = negative.
+- 86.3
+previous version of this data.
+</p>
+<p>2) Predicting Time To Recur (field 3 in recurrent records)
+- Estimated mean error 13.9 months using Recurrence Surface
+Approximation.
+</p>
+<p>The data are originally available from the UCI machine learning repository, see
+<a href="http://www.ics.uci.edu/~mlearn/databases/breast-cancer-wisconsin/">http://www.ics.uci.edu/~mlearn/databases/breast-cancer-wisconsin/</a>.
+</p>
+
+
+<h3>Source</h3>
+
+<p>W. Nick Street, Olvi L. Mangasarian and William H. Wolberg (1995).
+An inductive learning approach to prognostic prediction.
+In A. Prieditis and S. Russell, editors, <em>Proceedings of the
+Twelfth International Conference on Machine Learning</em>, pages
+522&ndash;530, San Francisco, Morgan Kaufmann.
+</p>
+<p>Peter Buehlmann and Torsten Hothorn (2007),
+Boosting algorithms: regularization, prediction and model fitting.
+<em>Statistical Science</em>, <b>22</b>(4), 477&ndash;505.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+    data("wpbc", package = "TH.data")
+
+    ### fit logistic regression model 
+    coef(glm(status ~ ., data = wpbc[,colnames(wpbc) != "time"],
+             family = binomial()))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>TH.data</em> version 1.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

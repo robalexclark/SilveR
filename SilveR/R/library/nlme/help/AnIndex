@@ -445,8 +445,6 @@ residuals.lmeStruct	residuals.lmeStruct
 residuals.lmList	residuals.lmList
 residuals.nlmeStruct	residuals.nlmeStruct
 reStruct	reStruct
-sigma	lmeObject
-sigma.lme	lmeObject
 simulate.lme	simulate.lme
 solve.pdBlocked	solve.pdMat
 solve.pdDiag	solve.pdMat

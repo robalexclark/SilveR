@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Detergent Durability Data Set</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for detergent {multcomp}"><tr><td>detergent {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Detergent Durability Data Set </h2>
+
+<h3>Description</h3>
+
+<p>Detergent durability in an incomplete two-way design.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data("detergent")</pre>
+
+
+<h3>Format</h3>
+
+<p>This data frame contains the following variables
+</p>
+
+<dl>
+<dt>detergent</dt><dd><p>detergent, a factor at levels <code>A</code>, <code>B</code>, 
+<code>C</code>, <code>D</code>, and <code>E</code>.</p>
+</dd>
+<dt>block</dt><dd><p>block, a factor at levels <code>B_1</code>, ..., <code>B_10</code>.</p>
+</dd>
+<dt>plates</dt><dd><p>response variable: number of plates washed before 
+the foam disappears.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>Plates were washed with five detergent varieties, in ten blocks. A complete
+design would have 50 combinations, here only three detergent varieties 
+in each block were applied in a balanced incomplete block design. Note that
+there are six observations taken at each detergent level.
+</p>
+
+
+<h3>Source</h3>
+
+<p>H. Scheffe (1959). <em>The Analysis of Variance</em>. 
+New York: John Wiley &amp; Sons, page 189.
+</p>
+<p>P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
+<em>Multiple Comparisons and Multiple Tests Using the SAS System</em>.
+Cary, NC: SAS Institute Inc., page 189.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  ### set up two-way ANOVA without interactions
+  amod &lt;- aov(plates ~ block + detergent, data = detergent)
+
+  ### set up all-pair comparisons
+  dht &lt;- glht(amod, linfct = mcp(detergent = "Tukey"))
+
+  ### see Westfall et al. (1999, p. 190)
+  confint(dht)
+
+  ### see Westfall et al. (1999, p. 192)
+  summary(dht, test = univariate())
+  ## Not run: 
+  summary(dht, test = adjusted("Shaffer"))
+  summary(dht, test = adjusted("Westfall"))
+  
+## End(Not run)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

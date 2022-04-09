@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Polyclass: polychotomous regression and multiple...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for beta.polyclass {polspline}"><tr><td>beta.polyclass {polspline}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Polyclass: polychotomous regression and multiple classification</h2>
+
+<h3>Description</h3>
+
+<p>Produces a beta-plot for a <code>polyclass</code> object.  </p>
+
+
+<h3>Usage</h3>
+
+<pre>beta.polyclass(fit, which, xsp = 0.4, cex) </pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>fit</code></td>
+<td>
+<p><code>polyclass</code> object, typically the result of <code><a href="../../polspline/help/polyclass.html">polyclass</a></code>.  </p>
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+<p>which classes should be compared? Default is to compare all classes.  </p>
+</td></tr>
+<tr valign="top"><td><code>xsp</code></td>
+<td>
+<p>location of the vertical line to the left of the axis. Useful for making 
+high quality, device dependent, graphics.  </p>
+</td></tr>
+<tr valign="top"><td><code>cex</code></td>
+<td>
+<p>character size. Default is whatever the present character size is. 
+Useful for making high quality, device dependent, graphics. 
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A beta plot. One line for each basis function. The left part of the plot 
+indicates the basis function, the right half the relative location of the 
+betas (coefficients) of that basis function, normalized with respect 
+to parent basis functions, for all classes. The scaling is supposed 
+to suggest a relative importance of the basis functions. This may 
+suggest which basis functions are important for separating particular classes. 
+</p>
+
+
+<h3>Note</h3>
+
+<p>This is not a generic function, and the complete name, beta.polyclass, has to
+be specified.</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Charles Kooperberg <a href="mailto:clk@fredhutch.org">clk@fredhutch.org</a>.</p>
+
+
+<h3>References</h3>
+
+<p> Charles Kooperberg, Smarajit Bose, and  Charles J. Stone (1997). 
+Polychotomous regression. <em>Journal of the American Statistical
+Association</em>, <b>92</b>, 117&ndash;127.
+</p>
+<p>Charles J. Stone, Mark Hansen, Charles Kooperberg, and Young K. Truong. 
+The use of polynomial splines and their tensor products in extended
+linear modeling (with discussion) (1997).  <em>Annals of Statistics</em>,
+<b>25</b>, 1371&ndash;1470.</p>
+
+
+<h3>See Also</h3>
+
+ 
+<p><code><a href="../../polspline/help/polyclass.html">polyclass</a></code>,
+<code><a href="../../polspline/help/plot.polyclass.html">plot.polyclass</a></code>, 
+<code><a href="../../polspline/help/summary.polyclass.html">summary.polyclass</a></code>, 
+<code><a href="../../polspline/help/cpolyclass.html">cpolyclass</a></code>, 
+<code><a href="../../polspline/help/ppolyclass.html">ppolyclass</a></code>, 
+<code><a href="../../polspline/help/rpolyclass.html">rpolyclass</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(iris)
+fit.iris &lt;- polyclass(iris[,5], iris[,1:4])
+beta.polyclass(fit.iris)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>polspline</em> version 1.1.20 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

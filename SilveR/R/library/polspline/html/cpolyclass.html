@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Polyclass: polychotomous regression and multiple...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for cpolyclass {polspline}"><tr><td>cpolyclass {polspline}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Polyclass: polychotomous regression and multiple classification</h2>
+
+<h3>Description</h3>
+
+<p> Classify new cases (<code>cpolyclass</code>), compute class probabilities
+for new cases (<code>ppolyclass</code>), and generate random multinomials for new cases
+(<code>rpolyclass</code>) for a <code><a href="../../polspline/help/polyclass.html">polyclass</a></code> model.</p>
+
+
+<h3>Usage</h3>
+
+<pre>cpolyclass(cov, fit)
+ppolyclass(data, cov, fit) 
+rpolyclass(n, cov, fit) </pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cov</code></td>
+<td>
+<p> covariates. Should be a matrix with <code>fit\$ncov</code> columns.  
+For <code>rpolyclass</code> <code>cov</code> should either have one row, in 
+which case all random numbers are based on the same covariates, or <code>n</code> 
+rows in which case each random number has its own covariates.  </p>
+</td></tr>
+<tr valign="top"><td><code>fit</code></td>
+<td>
+ <p><code>polyclass</code> object, typically the result of <code><a href="../../polspline/help/polyclass.html">polyclass</a></code>. </p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>there are several possibilities. If data is a vector with as many elements 
+as cov has rows, each element of data corresponds to a row of cov; if 
+only one value is given, the probability of being in that class is computed 
+for all sets of covariates. If data is omitted, all class probabilities are 
+provided. 
+</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p> number of pseudo random numbers to be generated.  </p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p> Most likely classes (<code>cpolyclass</code>),
+probabilities (<code>cpolyclass</code>), or
+random classes according to the estimated probabilities (<code>rpolyclass</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Charles Kooperberg <a href="mailto:clk@fredhutch.org">clk@fredhutch.org</a>.</p>
+
+
+<h3>References</h3>
+
+<p> Charles Kooperberg, Smarajit Bose, and  Charles J. Stone (1997).
+Polychotomous regression. <em>Journal of the American Statistical
+Association</em>, <b>92</b>, 117&ndash;127.
+</p>
+<p>Charles J. Stone, Mark Hansen, Charles Kooperberg, and Young K. Truong.
+The use of polynomial splines and their tensor products in extended
+linear modeling (with discussion) (1997).  <em>Annals of Statistics</em>,
+<b>25</b>, 1371&ndash;1470.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../polspline/help/polyclass.html">polyclass</a></code>,
+<code><a href="../../polspline/help/plot.polyclass.html">plot.polyclass</a></code>, 
+<code><a href="../../polspline/help/summary.polyclass.html">summary.polyclass</a></code>,
+<code><a href="../../polspline/help/beta.polyclass.html">beta.polyclass</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(iris)
+fit.iris &lt;- polyclass(iris[,5], iris[,1:4])
+class.iris &lt;- cpolyclass(iris[,1:4], fit.iris)
+table(class.iris, iris[,5])
+prob.setosa &lt;- ppolyclass(1, iris[,1:4], fit.iris)
+prob.correct &lt;- ppolyclass(iris[,5], iris[,1:4], fit.iris) 
+rpolyclass(100, iris[64,1:4], fit.iris)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>polspline</em> version 1.1.20 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

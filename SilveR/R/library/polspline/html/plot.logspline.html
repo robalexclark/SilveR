@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Logspline Density Estimation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plot.logspline {polspline}"><tr><td>plot.logspline {polspline}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Logspline Density Estimation </h2>
+
+<h3>Description</h3>
+
+<p>Plots a <code>logspline</code> density, distribution function, hazard 
+function or survival function 
+from 
+a logspline density that was fitted using
+the 1997 knot addition and deletion algorithm (<code><a href="../../polspline/help/logspline.html">logspline</a></code>). 
+The 1992 algorithm is available using the <code><a href="../../polspline/help/oldlogspline.html">oldlogspline</a></code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>## S3 method for class 'logspline'
+plot(x, n = 100, what = "d", add = FALSE, xlim, xlab = "",
+ylab = "", type = "l", ...) 
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code>logspline</code> object, typically the result of <code><a href="../../polspline/help/logspline.html">logspline</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>the number of equally spaced points at which to plot the density.  </p>
+</td></tr>
+<tr valign="top"><td><code>what</code></td>
+<td>
+<p>what should be plotted: 
+<code>"d"</code> (density), <code>"p"</code> (distribution function), <code>"s"</code> (survival 
+function) or <code>"h"</code> (hazard function).  </p>
+</td></tr>
+<tr valign="top"><td><code>add</code></td>
+<td>
+<p>should the plot be added to an existing plot.</p>
+</td></tr>
+<tr valign="top"><td><code>xlim</code></td>
+<td>
+
+<p>range of data on which to plot. Default is from the 1th to the 99th percentile of
+the density, extended by 10% on each end.</p>
+</td></tr>
+<tr valign="top"><td><code>xlab,ylab</code></td>
+<td>
+<p>labels plotted on the axes.  </p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>type of plot.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>other plotting options, as desired</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function produces a plot of a <code><a href="../../polspline/help/logspline.html">logspline</a></code> fit at <code>n</code> equally 
+spaced points roughly covering the support of the density. (Use 
+<code>xlim = c(from, to)</code> to change the range of these points.) 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Charles Kooperberg <a href="mailto:clk@fredhutch.org">clk@fredhutch.org</a>.</p>
+
+
+<h3>References</h3>
+
+<p>Charles Kooperberg and Charles J. Stone.  Logspline density estimation
+for censored data (1992). <em>Journal of Computational and Graphical
+Statistics</em>, <b>1</b>, 301&ndash;328.
+</p>
+<p>Charles J. Stone, Mark Hansen, Charles Kooperberg, and Young K. Truong.
+The use of polynomial splines and their tensor products in extended
+linear modeling (with discussion) (1997).  <em>Annals of Statistics</em>,
+<b>25</b>, 1371&ndash;1470.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../polspline/help/logspline.html">logspline</a></code>,      
+<code><a href="../../polspline/help/summary.logspline.html">summary.logspline</a></code>,
+<code><a href="../../polspline/help/dlogspline.html">dlogspline</a></code>,
+<code><a href="../../polspline/help/plogspline.html">plogspline</a></code>,
+<code><a href="../../polspline/help/qlogspline.html">qlogspline</a></code>,
+<code><a href="../../polspline/help/rlogspline.html">rlogspline</a></code>,
+</p>
+<p><code><a href="../../polspline/help/oldlogspline.html">oldlogspline</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+y &lt;- rnorm(100)
+fit &lt;- logspline(y)       
+plot(fit) 
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>polspline</em> version 1.1.20 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

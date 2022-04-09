@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Frankonian Tree Damage Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for trees513 {multcomp}"><tr><td>trees513 {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Frankonian Tree Damage Data </h2>
+
+<h3>Description</h3>
+
+<p>Damages on young trees caused by deer browsing.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data("trees513")</pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 2700 observations on the following 4 variables.
+</p>
+
+<dl>
+<dt><code>damage</code></dt><dd><p>a factor with levels <code>yes</code> and <code>no</code>
+indicating whether or not the trees has been damaged by game animals,
+mostly roe deer.</p>
+</dd>
+<dt><code>species</code></dt><dd><p>a factor with levels <code>spruce</code>, <code>fir</code>, 
+<code>pine</code>, <code>softwood (other)</code>, <code>beech</code>, <code>oak</code>, <code>ash/maple/elm/lime</code>, 
+and <code>hardwood (other)</code>.</p>
+</dd>
+<dt><code>lattice</code></dt><dd><p>a factor with levels <code>1</code>, ..., <code>53</code>, 
+essentially a number indicating the position of the sampled area.</p>
+</dd>
+<dt><code>plot</code></dt><dd><p>a factor with levels <code>x_1</code>, ..., <code>x_5</code> where
+<code>x</code> is the lattice. <code>plot</code>
+is nested within <code>lattice</code> and is a replication for each lattice point.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>In most parts of Germany, the natural or artificial
+regeneration of forests is difficult due to a high browsing
+intensity. Young trees suffer from browsing damage, mostly by roe
+and red deer. In order to estimate the browsing intensity for
+several tree species, the Bavarian State Ministry of Agriculture
+and Foresty conducts a survey every three years. Based on
+the estimated percentage of damaged trees, suggestions for
+the implementation or modification of deer management plans are made.
+The survey takes place in all 756 game management districts
+(&lsquo;Hegegemeinschaften&rsquo;) in Bavaria. The data given here are from 
+the game management district number 513 &lsquo;Unterer Aischgrund&rsquo;
+(located in Frankonia between Erlangen and H\&quot;ochstadt) in 2006. The data
+of 2700 trees include the species and a binary
+variable indicating whether or not the tree suffers from damage caused
+by deer browsing.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Bayerisches Staatsministerium fuer Landwirtschaft und Forsten (2006),
+Forstliche Gutachten zur Situation der Waldverjuengung 2006.
+<a href="https://www.stmelf.bayern.de/wald/">https://www.stmelf.bayern.de/wald/</a>
+</p>
+<p>Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
+Simultaneous Inference in General Parametric Models.   
+<em>Biometrical Journal</em>, <b>50</b>(3), 346&ndash;363;
+See <code>vignette("generalsiminf", package = "multcomp")</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  summary(trees513)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

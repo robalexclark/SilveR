@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot Group Means and Confidence Intervals</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for plotmeans {gplots}"><tr><td>plotmeans {gplots}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Plot Group Means and Confidence Intervals</h2>
+
+<h3>Description</h3>
+
+<p>Plot group means and confidence intervals.</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plotmeans(formula, data=NULL, subset, na.action,
+          bars=TRUE, p=0.95, minsd=0, minbar, maxbar,
+          xlab=names(mf)[2], ylab=names(mf)[1], mean.labels=FALSE,
+          ci.label=FALSE, n.label=TRUE, text.n.label="n=",
+          digits=getOption("digits"), col="black", barwidth=1,
+          barcol="blue", connect=TRUE, ccol=
+          col, legends=names(means), xaxt, use.t=TRUE,
+          lwd=par("lwd"), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>symbolic expression specifying the outcome (continuous)
+and grouping variable (factor).  See lm() for details.</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>optional data frame containing the variables in the model.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>an optional vector specifying a subset of observations to be
+used in the fitting process.</p>
+</td></tr>
+<tr valign="top"><td><code>na.action</code></td>
+<td>
+<p>a function which indicates what should happen when the data
+contain &lsquo;NA&rsquo;s.  See lm() for details. </p>
+</td></tr>
+<tr valign="top"><td><code>bars</code></td>
+<td>
+<p>a logical value indicating whether confidence interval
+bars should be plotted. Defaults to TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>p</code></td>
+<td>
+<p>confidence level for error bars.  Defaults to 0.95.</p>
+</td></tr>
+<tr valign="top"><td><code>minsd</code></td>
+<td>
+<p>minumum permitted value for the standard deviation within
+each factor level.  Any standard deviation estimates smaller than
+<code>minsd</code> will be replaced with <code>minsd</code>. Defaults to 0.</p>
+</td></tr>
+<tr valign="top"><td><code>minbar</code></td>
+<td>
+<p>minumum allowed value for bar ends.  If specified,
+values smaller than <code>minbar</code> will be replaced with
+<code>minbar</code>. </p>
+</td></tr>
+<tr valign="top"><td><code>maxbar</code></td>
+<td>
+<p>maximum allowed value for bar ends.  If specified,
+values larger than <code>maxbar</code> will be replaced with
+<code>maxbar</code>. </p>
+</td></tr>
+<tr valign="top"><td><code>xlab</code></td>
+<td>
+<p>x-axis label.</p>
+</td></tr>
+<tr valign="top"><td><code>ylab</code></td>
+<td>
+<p>y-axis label.</p>
+</td></tr>
+<tr valign="top"><td><code>mean.labels</code></td>
+<td>
+<p> either a logical value indicating whether the circles
+representing the group means should be replaced with text giving the
+actual mean values or a vector containing labels to use
+instead. Defaults to FALSE.</p>
+</td></tr>
+<tr valign="top"><td><code>ci.label</code></td>
+<td>
+<p> a logical value indicating whether text giving the
+actual interval end values should be placed at the end of each
+confidence interval bar. Defaults to FALSE.</p>
+</td></tr>
+<tr valign="top"><td><code>n.label</code></td>
+<td>
+<p> a logical value indicating whether text giving the number of
+observations in each group should should be added to the plot. </p>
+</td></tr>
+<tr valign="top"><td><code>text.n.label</code></td>
+<td>
+<p>Prefix text for labeling observation counts.
+Defaults to &quot;n=&quot;. </p>
+</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+<p> number of significant digits to use when displaying
+mean or confidince limit values.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p> color of cicles marking group means.  Default is &quot;black&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>barwidth</code></td>
+<td>
+<p> linewidth of interval bars and end marks. Default is
+1.</p>
+</td></tr>
+<tr valign="top"><td><code>barcol</code></td>
+<td>
+<p> color of interval bars and end marks.  Default is
+&quot;blue&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>connect</code></td>
+<td>
+<p> either a logical value indicating whether the means of
+each group should be connected by a line, or a list of vectors giving the
+index of bars that should be connected by a line. Defaults to TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>ccol</code></td>
+<td>
+<p> color of lines used to connect means. Defaults to the
+same color as &quot;col&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>legends</code></td>
+<td>
+<p> vector containing strings used to label groups along
+the x axis. Defaults to group names.</p>
+</td></tr>
+<tr valign="top"><td><code>xaxt</code></td>
+<td>
+<p>A character which specifies the axis type. Specifying &lsquo;&quot;n&quot;&rsquo;
+causes an axis to be set up, but not plotted.</p>
+</td></tr>
+<tr valign="top"><td><code>use.t</code></td>
+<td>
+<p> a logical value indicating whether the t distribution
+should be used to compute confidence intervals.  If <code>TRUE</code>, the
+default, a t distribution will the correct number of degrees of
+freedom for each group be used.  If <code>FALSE</code>, the a normal
+distribution will be used.</p>
+</td></tr>
+<tr valign="top"><td><code>lwd</code></td>
+<td>
+<p>Width of connecting lines  </p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p> optional plotting parameters. </p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Gregory R. Warnes <a href="mailto:greg@warnes.net">greg@warnes.net</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../gplots/help/plotCI.html">plotCI</a></code>, <code><a href="../../graphics/html/boxplot.html">boxplot</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  # library(gplots)
+  # show comparison with boxplot
+  data(state)
+  plotmeans(state.area ~ state.region)
+
+  # show some color and mean labels
+  plotmeans(state.area ~ state.region,
+             mean.labels=TRUE, digits=-3,
+             col="red", connect=FALSE)
+
+  # show how to specify which means should be connected
+  plotmeans(state.area ~ state.region, connect=list(1:2, 3:4),
+            ccol="red", pch=7 )
+
+  # more complicated example showing how to show an interaction
+  data(esoph)
+  par(las=2,                        # use perpendicular axis labels
+      mar=c(10.1,4.1,4.1,2.1),      # create enough space for long x labels
+      mgp=c(8,1,0)                  # move x axis legend down to avoid overlap
+      )
+  plotmeans(ncases/ncontrols ~ interaction(agegp , alcgp, sep ="   "),
+            connect=list(1:6,7:12,13:18,19:24),
+            barwidth=2,
+            col="dark green",
+            data=esoph,
+            xlab="Age Group and Alcohol Consumption",
+            ylab="# Cases / # Controls",
+            ylim = c(-.9,1.4),
+            main=c("Fraction of Cases for by Age and Alcohol Consumption",
+                   "Ile-et-Vilaine Esophageal Cancer Study")
+            )
+  abline(v=c(6.5, 12.5, 18.5), lty=2)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>gplots</em> version 3.1.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1316,6 +1316,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -1336,6 +1337,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -1516,12 +1520,12 @@ div.tocify {
 ## plan transition to sf/stars/terra functions using GDAL and PROJ
 ## at your earliest convenience.
 ## 
-## rgdal: version: 1.5-27, (SVN revision 1148)
+## rgdal: version: 1.5-28, (SVN revision 1158)
 ## Geospatial Data Abstraction Library extensions to R successfully loaded
-## Loaded GDAL runtime: GDAL 3.3.2, released 2021/09/01
+## Loaded GDAL runtime: GDAL 3.4.0, released 2021/11/04
 ## Path to GDAL shared files: /usr/share/gdal
 ## GDAL binary built with GEOS: TRUE 
-## Loaded PROJ runtime: Rel. 7.2.1, January 1st, 2021, [PJ_VERSION: 721]
+## Loaded PROJ runtime: Rel. 8.2.0, November 1st, 2021, [PJ_VERSION: 820]
 ## Path to PROJ shared files: /home/edzer/.local/share/proj:/usr/share/proj
 ## PROJ CDN enabled: FALSE
 ## Linking to sp version:1.4-6
@@ -1541,7 +1545,7 @@ div.tocify {
 <p>Fine-grained control may be obtained using <code>rgdal::rgdal_extSoftVersion()</code>:</p>
 <pre class="r"><code>rgdal::rgdal_extSoftVersion()</code></pre>
 <pre><code>##           GDAL GDAL_with_GEOS           PROJ             sp           EPSG 
-##        &quot;3.3.2&quot;         &quot;TRUE&quot;        &quot;7.2.1&quot;        &quot;1.4-6&quot;      &quot;v10.008&quot;</code></pre>
+##        &quot;3.4.0&quot;         &quot;TRUE&quot;        &quot;8.2.0&quot;        &quot;1.4-6&quot;      &quot;v10.038&quot;</code></pre>
 <p>and its shorter version, testing only PROJ &gt;= 6 (and GDAL &gt;= 3):</p>
 <pre class="r"><code>rgdal::new_proj_and_gdal()</code></pre>
 <pre><code>## [1] TRUE</code></pre>

@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.7.2" />
+<meta name="author" content="emmeans package, Version 1.7.3" />
 
 
 <title>Models supported by emmeans</title>
@@ -31,6 +31,7 @@
 
 
 
+
 <link rel="stylesheet" href="data:text/css,body%20%7Bfont%2Dsize%3A%2011pt%3B%20font%2Dfamily%3A%20%22Palatino%20Linotype%22%2C%20%22Book%20Antiqua%22%2C%20Palatino%2C%20serif%3Bmargin%3A%2030px%2050px%2030px%2050px%3B%20%7Dh1%2Ch2%2Ch3%2Ch4%2Ch5%2Ch6%20%7B%20font%2Dfamily%3A%20Arial%2CHelvetica%2CSans%2Dserif%3B%20%7Da%20%7B%20text%2Ddecoration%3A%20none%3B%20%7Da%3Alink%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Avisited%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Ahover%20%7B%20color%3Adodgerblue%3B%20%7Da%3Aactive%20%7B%20color%3Adodgerblue%3B%20%7D%20code%20%7Bcolor%3A%20%23602000%3Bfont%2Dfamily%3A%20%22Lucida%20Console%22%2C%20Monaco%2C%20monospace%3B%20font%2Dsize%3A%2090%25%3B%7D%2Er%20%7B%20color%3A%20darkred%3B%20%7D%2Ero%20%7B%20color%3A%20darkgreen%3B%20background%2Dcolor%3A%20%23eeeeee%3B%20%7D%2Ere%20%7B%20color%3A%20red%3B%7D%2Er%20code%2C%20a%20code%2C%20%2Ero%20code%2C%20%2Ere%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20ul%20%7B%20list%2Dstyle%2Dtype%3A%20none%3B%20%7D%2Evigindex%20ul%20li%20%7B%20list%2Dstyle%3A%20none%3B%20%7D%2Evigindex%20a%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20li%20code%20%7B%20color%3A%20inherit%3B%20%7D" type="text/css" />
 
 
@@ -44,7 +45,7 @@
 
 
 <h1 class="title toc-ignore">Models supported by emmeans</h1>
-<h4 class="author">emmeans package, Version 1.7.2</h4>
+<h4 class="author">emmeans package, Version 1.7.3</h4>
 
 
 
@@ -529,7 +530,7 @@
 <h2>Group I – Multiple models (via imputation or averaging)</h2>
 <!-- @index Multiple imputation; Model averaging; `averaging` models; `mira` models -->
 <p>These objects are the results of fitting several models with different predictor subsets or imputed values. The <code>bhat</code> and <code>V</code> slots are obtained via averaging and, in the case of multiple imputation, adding a multiple of the between-imputation covariance per Rubin’s rules.</p>
-<p>Support for <code>MuMIn::averaging</code> objects may be somewhat dodgy, as it is not clear that all supported model classes will work. The object <em>must</em> have a <code>&quot;modelList&quot;</code> attribute (obtained by constructing the object explicitly from a model list or by including <code>fit = TRUE</code> in the call). And each model should be fitted with <code>data</code> as a <strong>named</strong> argument in the call; or else provide a <code>data</code> argument in the call to <code>emmeans()</code> or <code>ref_grid()</code>. No estimability checking is done at present: if/when it is added, a linear function will be estimable only if it is estimable in <em>all</em> models included in the averaging.</p>
+<p>Support for <code>MuMIn::averaging</code> objects may be somewhat dodgy, as it is not clear that all supported model classes will work. The object <em>must</em> have a <code>&quot;modelList&quot;</code> attribute (obtained by constructing the object explicitly from a model list or by including <code>fit = TRUE</code> in the call). And each model should be fitted with <code>data</code> as a <strong>named</strong> argument in the call; or else provide a <code>data</code> argument in the call to <code>emmeans()</code> or <code>ref_grid()</code>. Only ``full’’ averaging is supported; conditional averaging can result in non-positive-definite covariance matrices, and so cannot be considered. No estimability checking is done at present (not clear what we even mean by it).</p>
 </div>
 <div id="K" class="section level2">
 <h2>Group K – <code>gls</code> and <code>lme</code> models</h2>
@@ -538,6 +539,7 @@
 <p>The <code>sigmaAdjust</code> argument is a logical value that defaults to <code>TRUE</code>. It is comparable to the <code>adjustSigma</code> option in <code>nlme::summary.lme</code> (the name-mangling is to avoid conflicts with the often-used <code>adjust</code> argument), and determines whether or not a degrees-of-freedom adjustment is performed with models fitted using the ML method.</p>
 <p>The optional <code>mode</code> argument affects the degrees of freedom. The <code>mode = &quot;satterthwaite&quot;</code> option determines degrees of freedom via the Satterthwaite method: If <code>s^2</code> is the estimate of some variance, then its Satterthwaite d.f. is <code>2*s^4 / Var(s^2)</code>. In case our numerical methods for this fail, we also offer <code>mode = &quot;appx-satterthwaite&quot;</code> as a backup, by which quantities related to <code>Var(s^2)</code> are obtained by randomly perturbing the response values. Currently, only <code>&quot;appx-satterthwaite&quot;</code> is available for <code>lme</code> objects, and it is used if <code>&quot;satterthwaite&quot;</code> is requested. Because <code>appx-satterthwaite</code> is simulation-based, results may vary if the same analysis is repeated. An <code>extra.iter</code> argument may be added to request additional simulation runs (at [possibly considerable] cost of repeating the model-fitting that many more times). (Note: Previously, <code>&quot;appx-satterthwaite&quot;</code> was termed <code>&quot;boot-satterthwaite&quot;</code>; this is still supported for backward compatibility. The “boot” was abandoned because it is really an approximation method, not a bootstrap method in the sense as many statistical methods.)</p>
 <p>An alternative method is <code>&quot;df.error&quot;</code> (for <code>gls</code>) and <code>&quot;containment&quot;</code> (for <code>lme</code>). <code>df.error</code> is just the error degrees of freedom for the model, minus the number of extra random effects estimated; it generally over-estimates the degrees of freedom. The <code>asymptotic</code> mode simply sets the degrees of freedom to infinity. “containment”<code>mode (for</code>lme<code>models) determines the degrees of freedom for the coarsest grouping involved in the contrast or linear function involved, so it tends to under-estimate the degrees of freedom. The default is</code>mode = “auto”`, which uses Satterthwaite if there are estimated random effects and the non-Satterthwaite option otherwise.</p>
+<p>User reports indicate that models with special terms like <code>poly()</code> are not adequately supported by <code>gls</code> in that the needed basis is not recoverable from its <code>terms</code> component. This is not a problem with <code>lme</code>.</p>
 <p>The <code>extra.iter</code> argument is ignored unless the d.f. method is (or defaults to) <code>appx-satterthwaite</code>.</p>
 <p><a href="#quickref">Back to quick reference</a></p>
 </div>

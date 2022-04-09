@@ -1,3 +1,148 @@
+# igraph 1.3.1
+
+Fixed:
+
+- `graph_from_adjacency_matrix()` now works with sparse matrices even if the
+  cell values in the sparse matrix are unspecified.
+- Fixed crash in `cluster_walktrap()` when `modularity=FALSE` and `membership=FALSE`
+- `edge_attr()` does not ignore its `index=...` argument any more.
+- `automorphisms()`, `automorphism_group()` and `canonical_permutation()` now
+  allow all possible values supported by the C core in the `sh` argument.
+  Earlier versions supported only `"fm"`.
+- The `vertex.frame.width` plotting parameter now allows zero and negative
+  values; these will simply remove the outline of the corresponding vertex.
+- The documentation of the `sh` argument of the BLISS isomorphism algorithm in
+  `isomorphic()` was fixed; earlier versions incorrectly referred to `sh1` and
+  `sh2`.
+- `dominator_tree()` now conforms to its documentation with respect to the
+  `dom` component of the result: it contains the indices of the dominator
+  vertices for each vertex and -1 for the root of the dominator tree.
+- Mentions of the `"power"` algorithm of `page_rank()` have been removed from
+  the documentation, as this method is no longer available.
+- Several other documentation fixes to bring the docs up to date with new behaviours
+  in igraph 1.3.
+
+# igraph 1.3.0
+
+The C core is updated to 0.9.7, fixing a range of bugs and introducing a number
+of new functions.
+
+Added:
+
+- `has_eulerian_path()` and `has_eulerian_cycle()` decides whether there is an
+  Eulerian path or cycle in the graph.
+- `eulerian_path()` and `eulerian_cycle()` returns the edges and vertices in an
+  Eulerian path or cycle in the graph.
+- `any_loop()` checks whether a graph contains at least one loop edge.
+- `is_tree()` checks whether a graph is a tree and also finds a possible root
+- `to_prufer()` converts a tree graph into its Prufer sequence
+- `make_from_prufer()` creates a tree graph from its Prufer sequence
+- `sample_tree()` to sample labelled trees uniformly at random
+- `sample_spanning_tree()` to sample spanning trees of an undirected graph
+  uniformly at random
+- `automorphisms()` and `canonical_permutation()` now supports vertex colors
+- `random_edge_walk()` to record the edges traversed during a random walk
+- `harmonic_centrality()` calculates the harmonic centrality of vertices,
+  optionally with a cutoff on path lengths
+- `mean_distance()` now supports edge weights and it can also return the number
+  of unconnected vertex pairs when `details=TRUE` is passed as an argument
+- `greedy_vertex_coloring()` finds vertex colorings based on a simple greedy
+  algorithm.
+- `bridges()` finds the bridges (cut-edges) of a graph
+- The frame width of circle, rectangle and square vertex shapes can now be
+  adjusted on plots with the `frame.width` vertex attribute or the
+  `vertex.frame.width` keyword argument, thanks to @simoncarrignon .
+  See PR #500 for more details.
+- `automorphism_group()` returns a possible (not necessarily minimal)
+  generating set of the automorphism group of a graph.
+- `global_efficiency()` calculates the global efficiency of the graph.
+- `local_efficiency()` calculates the local efficiency of each vertex in a graph.
+- `average_local_efficiency()` calculates the average local efficiency across
+  the set of vertices in a graph.
+- `rewire(each_edge(...))` now supports rewiring only one endpoint of each edge.
+- `realize_degseq()` generates graphs from degree sequences in a deterministic
+  manner. It is also available as `make_(degseq(..., deterministic=TRUE))`.
+- `clique_size_counts()` counts cliques of different sizes without storing them all.
+- `feedback_arc_set()` finds a minimum-weight feedback arc set in a graph, either
+  with an exact integer programming algorithm or with a linear-time approximation.
+- `make_bipartite_graph()` now handles vertices with names.
+- `shortest_paths()` now supports graphs with negative edge weights.
+- `min_cut()` now supports s-t mincuts even if `value.only=FALSE`.
+- `as.matrix()` now supports converting an igraph graph to an adjacency or edge
+  list matrix representation. See `as.matrix.igraph()` for more details. This
+  function was migrated from `intergraph`; thanks to Michal Bojanowski.
+
+Fixed:
+
+- `is_connected()` now returns FALSE for the null graph
+- Calling `length()` on a graph now returns the number of vertices to make it
+  consistent with indexing the graph with `[[`.
+- `diameter()` now corrently returns infinity for disconnected graphs when
+  `unconnected=FALSE`. Previous versions returned the number of vertices plus
+  one, which was clearly invalid for weighted graphs.
+- `mean_distance()` now correctly treats the path length between disconnected
+  vertices as infinite when `unconnected=FALSE`. Previous versions used the
+  number of vertices plus one, adding a bias towards this number, even if the
+  graph was weighted and the number of vertices plus one was not a path length
+  that could safely have been considered as being longer than any "valid" path.
+- `layout_with_sugiyama()` now handles the case of exactly one extra virtual
+  node correctly; fixes #85
+- `bfs()` and `dfs()` callback functions now correctly receive 1-based vertex
+  indices and ranks; it used to be zero-based in earlier versions
+- Accidentally returning a non-logical value from a `bfs()` or `dfs()` callback
+  does not crash R any more
+- Calling `print()` on a graph with a small `max.lines` value (smaller than the
+  number of lines needed to print the attribute list and the header) does not
+  raise an error any more; fixes #179
+- `as_adjacency_matrix(edges=TRUE, sparse=TRUE)` now consistently returns the
+  last edge ID for each cell in the matrix instead of summing them.
+- Using the `+` and `-` operators with a `path()` object consisting of two
+  vertices is now handled correctly; fixes #355
+- `topo_sort()` now throws an error if the input graph is not acyclic instead
+  of returning an incorrect partial ordering.
+- Weighted transitivity calculations (i.e. `transitivity(mode="barrat")` now
+  throw an error for multigraphs; the implementation does not work correctly
+  for multigraphs and earlier versions did not warn about this.
+
+Changed:
+
+- The `neimode` argument of `bfs()` and `dfs()` was renamed to `mode` for sake
+  of consistency with other functions. The old argument name is deprecated and
+  will be removed in 1.4.0.
+- `bfs()` and `dfs()` callback functions now correctly receive 1-based vertex
+  indices and ranks; it used to be zero-based in earlier versions. (This is
+  actually a bugfix so it's also mentioned in the "Fixed" section).
+- `closeness()`, `betweenness()` and `edge_betweenness()` now all take a
+  `cutoff` argument on their own. `estimate_closeness()`, `estimate_betweenness()`
+  and `estimate_edge_betweenness()` became aliases, with identical signature.
+  They are _not_ deprecated but their implementation might change in future
+  versions to provide proper estimation schemes instead of a simple cutoff-based
+  approximation. If you explicitly need cutoffs and you want your results to be
+  reproducible with future versions, use `closeness()`, `betweenness()` and
+  `edge_betweenness()` in your code with a `cutoff` argument.
+- `closeness()` now only considers _reachable_ vertices during the calculation;
+  in other words, closeness centrality is now calculated on a per-component
+  basis for disconnected graphs. Earlier versions considered _all_ vertices.
+
+Deprecated:
+
+- Using `cutoff=0` for `closeness()`, `betweenness()` and `edge_betweenness()`
+  is deprecated; if you want exact scores, use a negative cutoff. `cutoff=0`
+  will be interpreted literally from igraph 1.4.0.
+- `centr_degree_tmax()` now prints a warning when it is invoked without an
+  explicit `loops` argument. `loops` will be mandatory from igraph 1.4.0.
+- The `nexus_list()`, `nexus_info()`, `nexus_get()` and `nexus_search()`
+  functions now return an error informing the user that the Nexus graph
+  repository has been taken offline (actually, several years ago). These
+  functions will be removed in 1.4.0.
+- The `edges` argument of `as_adjacency_matrix()` is deprecated; it will be
+  removed in igraph 1.4.0.
+
+Removed:
+
+- The deprecated `page_rank_old()` function and the deprecated `power` method of
+  `page_rank()` were removed.
+
 # igraph 1.2.11
 
 Dec 27, 2021
@@ -9,6 +154,7 @@ No user visible changes.
 Dec 14, 2021
 
 Fixed:
+
 - The macOS versions of `igraph` were accidentally built without GraphML
   support on CRAN; this should now be fixed.
 
@@ -31,10 +177,12 @@ Oct 15, 2021
 The C core is updated to 0.8.5, fixing a range of bugs and introducing a number of new functions.
 
 Added:
+
 - cluster_leiden added (#399).
 - cluster_fluid_communities added (#454)
 
 Fixed:
+
 - `make_lattice()` correctly rounds `length` to the nearest integer while
   printing a warning (#115).
 - `make_empty_graph(NULL)` now prints an error instead of producing an
@@ -52,6 +200,7 @@ Fixed:
   any more (#387).
 
 Deprecated:
+
 - The `membership` argument of `modularity.matrix()` is now deprecated as the
   function never needed it anyway.
 - `modularity()` now prints a warning when it is applied on a directed graph
@@ -69,6 +218,7 @@ Deprecated:
   networks with multiple edges.
 
 Misc:
+
 - Documentation improvements.
 
 # igraph 1.2.6

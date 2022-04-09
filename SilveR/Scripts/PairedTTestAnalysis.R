@@ -1418,7 +1418,9 @@ HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(
 #extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
 
 HTML(paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("nlme"),bibtex=F))[2], capture.output(print(citation("nlme"),bibtex=F))[3], capture.output(print(citation("nlme"),bibtex=F))[4], sep = ""),  align="left")
+#HTML(paste(capture.output(print(citation("nlme"),bibtex=F))[2], capture.output(print(citation("nlme"),bibtex=F))[3], sep = ""),  align="left")
+#Hard coded version as font causes error
+HTML(paste("Pinheiro J, Bates D, DebRoy S, Sarkar D, R Core Team (2022). _nlme: Linear and Nonlinear Mixed Effects Models_. R package version 3.1-155.", sep = ""),  align="left")
 HTML(paste(capture.output(print(citation("contrast"),bibtex=F))[4], capture.output(print(citation("contrast"),bibtex=F))[5], capture.output(print(citation("contrast"),bibtex=F))[6], sep = ""),  align="left")
 HTML(paste(capture.output(print(citation("emmeans"),bibtex=F))[4], capture.output(print(citation("emmeans"),bibtex=F))[5], capture.output(print(citation("emmeans"),bibtex=F))[6], sep = ""),  align="left")
 

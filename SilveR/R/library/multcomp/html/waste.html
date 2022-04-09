@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Industrial Waste Data Set</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for waste {multcomp}"><tr><td>waste {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Industrial Waste Data Set </h2>
+
+<h3>Description</h3>
+
+<p>Industrial waste output in a manufactoring plant.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>data("waste")</pre>
+
+
+<h3>Format</h3>
+
+<p>This data frame contains the following variables
+</p>
+
+<dl>
+<dt>temp</dt><dd><p>temperature, a factor at three levels: <code>low</code>, <code>medium</code>, <code>high</code>.</p>
+</dd>
+<dt>envir</dt><dd><p>environment, a factor at five levels: <code>env1</code> ... <code>env5</code>.</p>
+</dd>
+<dt>waste</dt><dd><p>response variable: waste output in a manufacturing plant.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>The data are from an experiment designed to study the effect of temperature
+(<code>temp</code>) and environment (<code>envir</code>) on waste output in a manufactoring plant.
+Two replicate measurements were taken at each temperature / environment combination.
+</p>
+
+
+<h3>Source</h3>
+
+<p>P. H. Westfall, R. D. Tobias, D. Rom, R. D. Wolfinger, Y. Hochberg (1999).
+<em>Multiple Comparisons and Multiple Tests Using the SAS System</em>.
+Cary, NC: SAS Institute Inc., page 177.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  ### set up two-way ANOVA with interactions
+  amod &lt;- aov(waste ~ temp * envir, data=waste)
+
+  ### comparisons of main effects only
+  K &lt;- glht(amod, linfct = mcp(temp = "Tukey"))$linfct
+  K
+  glht(amod, K)
+
+  ### comparisons of means (by averaging interaction effects)
+  low &lt;- grep("low:envi", colnames(K))
+  med &lt;- grep("medium:envi", colnames(K))
+  K[1, low] &lt;- 1 / (length(low) + 1)
+  K[2, med] &lt;- 1 / (length(low) + 1)
+  K[3, med] &lt;- 1 / (length(low) + 1)
+  K[3, low] &lt;- - 1 / (length(low) + 1)
+  K
+  confint(glht(amod, K))
+
+  ### same as TukeyHSD
+  TukeyHSD(amod, "temp")
+
+  ### set up linear hypotheses for all-pairs of both factors
+  wht &lt;- glht(amod, linfct = mcp(temp = "Tukey", envir = "Tukey"))
+
+  ### cf. Westfall et al. (1999, page 181)
+  summary(wht, test = adjusted("Shaffer"))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

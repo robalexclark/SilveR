@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Defunct functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for gplots-defunct {gplots}"><tr><td>gplots-defunct {gplots}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Defunct functions</h2>
+
+<h3>Description</h3>
+
+<p>These functions are defunct and have been removed from the gplots package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+   boxplot.n(..., top=FALSE, shrink=1, textcolor=NULL)
+   plot.lm2(
+            x,
+            which = 1:5,
+            caption = c("Residuals vs Fitted", "Normal Q-Q plot",
+              "Scale-Location plot", "Cook's distance plot"),
+            panel = panel.smooth,
+            sub.caption = deparse(x$call),
+            main = "",
+            ask,
+            ...,
+            id.n = 3,
+            labels.id = names(residuals(x)),
+            cex.id = 0.75,
+            band=TRUE,
+            rug=TRUE,
+            width=1/10,
+            max.n=5000
+            )
+  smartlegend(x = c("left", "center", "right"),
+             y = c("top", "center", "bottom"),
+             ...,
+             inset = 0.05)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>ask,
+band,
+caption,
+cex.id,
+id.n,
+inset,
+labels.id,
+main,
+max.n,
+panel,
+rug,
+shrink,
+sub.caption,
+textcolor,
+top,
+which,
+width,
+x,
+y,
+...</code></td>
+<td>
+<p>see man page for the corresponding replacement function</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>These functions are no longer available.  Please refer to the manual page
+for the replacement function:
+</p>
+
+<ul>
+<li> <p><code>boxplot.n</code> has been replaced by <code><a href="../../gplots/help/boxplot2.html">boxplot2</a></code>
+</p>
+</li>
+<li> <p><code>plot.lm2</code> has been replaced by <code><a href="../../gplots/help/lmplot2.html">lmplot2</a></code>
+</p>
+</li>
+<li> <p><code>smartlegend</code> is no longer needed because relative
+positioning has been implemented in <code><a href="../../graphics/help/legend.html">legend</a></code>.
+</p>
+</li></ul>
+
+
+
+<h3>Author(s)</h3>
+
+<p>Gregory R. Warnes <a href="mailto:greg@warnes.net">greg@warnes.net</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../gplots/help/boxplot2.html">boxplot2</a></code>,
+<code><a href="../../gplots/help/lmplot2.html">lmplot2</a></code>,
+<code><a href="../../graphics/help/legend.html">legend</a></code>,
+<code><a href="../../base/help/Defunct.html">Defunct</a></code>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>gplots</em> version 3.1.3 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

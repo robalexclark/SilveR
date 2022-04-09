@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Logspline Density Estimation - 1992 to 1997 version</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for oldlogspline.to.logspline {polspline}"><tr><td>oldlogspline.to.logspline {polspline}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Logspline Density Estimation - 1992 to 1997 version </h2>
+
+<h3>Description</h3>
+
+<p>Translates an <code>oldlogspline</code> object in an
+<code>logspline</code> object. This routine is mostly used in <code>logspline</code>,
+as it allows the routine to use <code>oldlogspline</code> for some situations
+where <code>logspline</code> crashes. The other use is when you have censored data,
+and thus have to use <code>oldlogspline</code> to fit, but wish to use the
+auxiliary routines from <code>logspline</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre>oldlogspline.to.logspline(obj, data) </pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>obj</code></td>
+<td>
+
+<p>object of class <code>logspline</code>
+</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>the original data. Used to compute the <code>range</code> component of the
+new object. if <code>data</code> is not available, the 1/(n+1) and n/(n+1)
+quantiles of the fitted distribution are used for <code>range</code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p> object of the class <code>logspline</code>. The <code>call</code> component
+of the new object is not useful. The <code>delete</code> component of the old
+object is ignored.</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Charles Kooperberg <a href="mailto:clk@fredhutch.org">clk@fredhutch.org</a>.</p>
+
+
+<h3>References</h3>
+
+<p>Charles Kooperberg and Charles J. Stone.  Logspline density estimation
+for censored data (1992). <em>Journal of Computational and Graphical
+Statistics</em>, <b>1</b>, 301&ndash;328.
+</p>
+<p>Charles J. Stone, Mark Hansen, Charles Kooperberg, and Young K. Truong.
+The use of polynomial splines and their tensor products in extended
+linear modeling (with discussion) (1997).  <em>Annals of Statistics</em>,
+<b>25</b>, 1371&ndash;1470.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../polspline/help/logspline.html">logspline</a></code>,
+<code><a href="../../polspline/help/oldlogspline.html">oldlogspline</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- rnorm(100)
+fit.old &lt;- oldlogspline(x)
+fit.translate &lt;- oldlogspline.to.logspline(fit.old,x)
+fit.new &lt;- logspline(x)
+plot(fit.new)
+plot(fit.old,add=TRUE,col=2)
+#
+# should look almost the same, the differences are the
+# different fitting routines
+#
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>polspline</em> version 1.1.20 <a href="00Index.html">Index</a>]</div>
+</div></body></html>
