@@ -26,6 +26,7 @@
     </style>
 
 
+
 <style type="text/css">
   code {
     white-space: pre;
@@ -232,16 +233,18 @@ It is size-unstable for the same reasons as <code>sapply()</code>.</p></li>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="st">&quot;x&quot;</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;FALSE&quot; &quot;x&quot;</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(<span class="cn">FALSE</span>, <span class="st">&quot;x&quot;</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error: Can&#39;t combine `..1` &lt;logical&gt; and `..2` &lt;character&gt;.</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="fu">list</span>(<span class="dv">1</span>))</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(<span class="cn">FALSE</span>, <span class="fu">list</span>(<span class="dv">1</span>))</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error: Can&#39;t combine `..1` &lt;logical&gt; and `..2` &lt;list&gt;.</span></span></code></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Can&#39;t combine `..1` &lt;logical&gt; and `..2` &lt;character&gt;.</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">FALSE</span>, <span class="fu">list</span>(<span class="dv">1</span>))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(<span class="cn">FALSE</span>, <span class="fu">list</span>(<span class="dv">1</span>))</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Can&#39;t combine `..1` &lt;logical&gt; and `..2` &lt;list&gt;.</span></span></code></pre></div>
 </div>
 <div id="incompatible-vectors-and-non-vectors" class="section level3">
 <h3>Incompatible vectors and non-vectors</h3>
@@ -253,7 +256,7 @@ It is size-unstable for the same reasons as <code>sapply()</code>.</p></li>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (x, ...) </span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; UseMethod(&quot;mean&quot;)</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x7f87de841660&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;bytecode: 0x134c1ec28&gt;</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;environment: namespace:base&gt;</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
@@ -267,13 +270,15 @@ It is size-unstable for the same reasons as <code>sapply()</code>.</p></li>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;x&quot;</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 0 4</span></span></code></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4 1 2</span></span></code></pre></div>
 <p><code>vec_c()</code> throws an error if the inputs are not vectors or not automatically coercible:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(mean, <span class="fu">globalenv</span>())</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error: `..1` must be a vector, not a function.</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(<span class="fu">Sys.Date</span>(), <span class="fu">factor</span>(<span class="st">&quot;x&quot;</span>), <span class="st">&quot;x&quot;</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error: Can&#39;t combine `..1` &lt;date&gt; and `..2` &lt;factor&lt;bf275&gt;&gt;.</span></span></code></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! `..1` must be a vector, not a function.</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(<span class="fu">Sys.Date</span>(), <span class="fu">factor</span>(<span class="st">&quot;x&quot;</span>), <span class="st">&quot;x&quot;</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error:</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Can&#39;t combine `..1` &lt;date&gt; and `..2` &lt;factor&lt;bf275&gt;&gt;.</span></span></code></pre></div>
 </div>
 <div id="factors" class="section level3">
 <h3>Factors</h3>
@@ -282,7 +287,8 @@ It is size-unstable for the same reasons as <code>sapply()</code>.</p></li>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fb <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="st">&quot;b&quot;</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(fa, fb)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1 1</span></span></code></pre></div>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] a b</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levels: a b</span></span></code></pre></div>
 <p>(This is documented in <code>c()</code> but is still undesirable.)</p>
 <p><code>vec_c()</code> returns a factor taking the union of the levels. This behaviour is motivated by pragmatics: there are many places in base R that automatically convert character vectors to factors, so enforcing stricter behaviour would be unnecessarily onerous. (This is backed up by experience with <code>dplyr::bind_rows()</code>, which is stricter and is a common source of user difficulty.)</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(fa, fb)</span>
@@ -297,7 +303,7 @@ It is size-unstable for the same reasons as <code>sapply()</code>.</p></li>
 <p><code>c()</code> strips the time zone associated with date-times:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>datetime_nz <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;2020-01-01 09:00&quot;</span>, <span class="at">tz =</span> <span class="st">&quot;Pacific/Auckland&quot;</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(datetime_nz)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2019-12-31 21:00:00 CET&quot;</span></span></code></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;2020-01-01 09:00:00 NZDT&quot;</span></span></code></pre></div>
 <p>This behaviour is documented in <code>?DateTimeClasses</code> but is the source of considerable user pain.</p>
 <p><code>vec_c()</code> preserves time zones:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vec_c</span>(datetime_nz)</span>
@@ -443,7 +449,7 @@ It is size-unstable for the same reasons as <code>sapply()</code>.</p></li>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &lt;NA&gt;  big   big   small small</span></span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levels: small big</span></span>
 <span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="fu">if_else</span>(x <span class="sc">&gt;</span> <span class="dv">2</span>, <span class="fu">Sys.Date</span>(), <span class="fu">Sys.Date</span>() <span class="sc">+</span> <span class="dv">7</span>)</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA           &quot;2021-05-06&quot; &quot;2021-05-06&quot; &quot;2021-04-29&quot; &quot;2021-04-29&quot;</span></span></code></pre></div>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA           &quot;2022-04-20&quot; &quot;2022-04-20&quot; &quot;2022-04-13&quot; &quot;2022-04-13&quot;</span></span></code></pre></div>
 <p>By using <code>vec_size()</code> and <code>vec_slice()</code>, this definition of <code>if_else()</code> automatically works with data.frames and matrices:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">if_else</span>(x <span class="sc">&gt;</span> <span class="dv">2</span>, <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span>), <span class="fu">data.frame</span>(<span class="at">y =</span> <span class="dv">2</span>))</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    x  y</span></span>

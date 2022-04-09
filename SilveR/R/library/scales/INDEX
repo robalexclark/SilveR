@@ -12,6 +12,7 @@ brewer_pal              Colour Brewer palette (discrete)
 col2hcl                 Modify standard R colour in hcl colour space.
 col_numeric             Colour mapping
 colour_ramp             Fast colour interpolation
+compose_trans           Compose two or more transformations together
 cscale                  Continuous scale
 date_trans              Transformation for dates (class Date)
 dichromat_pal           Dichromat (colour-blind) palette (discrete)
@@ -27,14 +28,14 @@ hms_trans               Transformation for times (class hms)
 hue_pal                 Hue palette (discrete)
 identity_pal            Identity palette
 identity_trans          Identity transformation (do nothing)
-label_bytes             Label bytes (1 kb, 2 MB, etc)
+label_bytes             Label bytes (1 kB, 2 MB, etc)
 label_date              Label date/times
 label_dollar            Label currencies ($100, $2.50, etc)
+label_log               Label numbers in log format (10^3, 10^6, etc)
 label_number            Label numbers in decimal format (e.g. 0.12,
                         1,234)
 label_number_auto       Label numbers, avoiding scientific notation
                         where possible
-label_number_si         Label numbers with SI prefixes (2k, 1M, 5T etc)
 label_ordinal           Label ordinal numbers (1st, 2nd, 3rd, etc)
 label_parse             Label with mathematical annotations
 label_percent           Label percentages (2.5%, 50%, etc)

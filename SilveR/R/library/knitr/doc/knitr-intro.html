@@ -12,7 +12,7 @@
 
 <meta name="author" content="Yihui Xie" />
 
-<meta name="date" content="2021-12-15" />
+<meta name="date" content="2022-04-26" />
 
 <title>Not An Introduction to knitr</title>
 
@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -393,17 +394,25 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Not An Introduction to knitr</h1>
 <h4 class="author">Yihui Xie</h4>
-<h4 class="date">2021-12-15</h4>
+<h4 class="date">2022-04-26</h4>
 
 
 
-<p>The <strong>knitr</strong> package <span class="citation">(Xie 2016)</span> is an alternative tool to Sweave based on a different design with more features. This document is not an introduction, but only serves as a placeholder to guide you to the real manuals, which are available on the package website <a href="https://yihui.org/knitr/" class="uri">https://yihui.org/knitr/</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and remember to read the help pages of functions in this package. There is a book <span class="citation">(Xie 2015)</span> for this package, but it may not be useful to those who prefer digging out information on the web.</p>
-<p>Anyway, here is a code chunk that shows you can compile vignettes with <strong>knitr</strong> as well using R 3.0.x, which supports non-Sweave vignettes:</p>
+<p>The <strong>knitr</strong> package <span class="citation">(Xie
+2016)</span> is an alternative tool to Sweave based on a different
+design with more features. This document is not an introduction, but
+only serves as a placeholder to guide you to the real manuals, which are
+available on the package website <a href="https://yihui.org/knitr/" class="uri">https://yihui.org/knitr/</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and remember to read
+the help pages of functions in this package. There is a book <span class="citation">(Xie 2015)</span> for this package, but it may not be
+useful to those who prefer digging out information on the web.</p>
+<p>Anyway, here is a code chunk that shows you can compile vignettes
+with <strong>knitr</strong> as well using R 3.0.x, which supports
+non-Sweave vignettes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">4</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">20</span>)</span></code></pre></div>
-<pre><code>##  [1] -0.13615  0.30414 -0.43579  0.10366  2.05781 -0.58616 -1.01068  1.86792
-##  [9] -1.43558  0.35942 -0.01088 -0.66068 -0.65325 -0.31110 -0.40346  0.81121
-## [17]  0.42322 -0.07710  0.05240 -0.25150</code></pre>
+<pre><code>##  [1] -0.432492 -1.934594  0.090109 -0.537050  0.349098  0.156540 -0.202615
+##  [8] -2.024916 -0.940910  0.602132  0.624322 -0.422067 -0.706236 -1.168691
+## [15] -0.481862  0.272402 -0.528331 -0.497320 -0.008859 -1.556787</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> <span class="fu">coef</span>(fit)</span></code></pre></div>
 <table>
@@ -448,10 +457,12 @@ A scatterplot with a regression line.
 <h2 class="unnumbered">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-xie2013" class="csl-entry">
-Xie, Yihui. 2015. <em>Dynamic Documents with <span>R</span> and Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
+Xie, Yihui. 2015. <em>Dynamic Documents with <span>R</span> and
+Knitr</em>. 2nd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
 </div>
 <div id="ref-R-knitr" class="csl-entry">
-———. 2016. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
+———. 2016. <em>Knitr: A General-Purpose Package for Dynamic Report
+Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
 </div>
 </div>
 </div>

@@ -3,6 +3,17 @@
 \newcommand{\ghpr}{\href{https://github.com/RcppCore/RcppEigen/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/RcppCore/RcppEigen/issues/#1}{##1}}
 
+\section{Changes in RcppEigen version 0.3.3.9.2 (2022-04-05)}{
+  \itemize{
+    \item Added test coverage in continuous integration
+    \item Added new tests to increase test coverage
+    \item Small improvement to the RcppEigen.package.skeleton() code
+    \item Small updates and edits to README.md and inst/CITATION
+    \item Use R_xlen_t for vector rows and columns (by Mikael Jagan)
+    \item Support USE_FC_LEN_T by adding FCONE to two dgesdd
+  }
+}
+
 \section{Changes in RcppEigen version 0.3.3.9.1 (2020-12-17)}{
   \itemize{
     \item Upgraded to Eigen 3.3.9 (Dirk in \ghpr{92} fixing \ghit{91}).

@@ -5,6 +5,7 @@ GiniMd                  Gini's Mean Difference
 HmiscOverview           Overview of Hmisc Library
 Lag                     Lag a Numeric, Character, or Factor Vector
 Merge                   Merge Multiple Data Frames or Data Tables
+R2Measures              R2Measures
 Save                    Faciliate Use of save and load to Remote
                         Directories
 abs.error.pred          Indexes of Absolute Prediction Error for Linear

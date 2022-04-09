@@ -104,20 +104,20 @@ R
 # Our package does not have a LICENSE file, trying to find the root results in an error
 R()
 
-## -----------------------------------------------------------------------------
-# Define a function that computes file paths below the current root
-F <- is_r_package$make_fix_file()
-F
+## ----eval = (Sys.getenv("IN_PKGDOWN") != "")----------------------------------
+#  # Define a function that computes file paths below the current root
+#  F <- is_r_package$make_fix_file()
+#  F
+#  
+#  # Show contents of the NAMESPACE file in our project
+#  readLines(F("NAMESPACE"))
 
-# Show contents of the NAMESPACE file in our project
-readLines(F("NAMESPACE"))
-
-## -----------------------------------------------------------------------------
-# Print the size of the namespace file, working directory outside the project
-withr::with_dir(
-  "../..",
-  file.size(F("NAMESPACE"))
-)
+## ----eval = (Sys.getenv("IN_PKGDOWN") != "")----------------------------------
+#  # Print the size of the namespace file, working directory outside the project
+#  withr::with_dir(
+#    "../..",
+#    file.size(F("NAMESPACE"))
+#  )
 
 ## -----------------------------------------------------------------------------
 is_testthat

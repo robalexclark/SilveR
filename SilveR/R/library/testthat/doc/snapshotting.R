@@ -71,7 +71,7 @@ f <- function() {
 }
 
 ## -----------------------------------------------------------------------------
-test_that("f() makes lots of noice", {
+test_that("f() makes lots of noise", {
   expect_snapshot(f())
 })
 

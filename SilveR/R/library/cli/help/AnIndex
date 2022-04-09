@@ -1,3 +1,4 @@
+cli-package	cli-package
 ansi-styles	ansi-styles
 ansi_align	ansi_align
 ansi_chartr	ansi_toupper
@@ -253,4 +254,5 @@ unicode-width-workaround	unicode-width-workaround
 utf8_graphemes	utf8_graphemes
 utf8_nchar	utf8_nchar
 utf8_substr	utf8_substr
+_PACKAGE	cli-package
 __cli_update_due	cli_progress_bar

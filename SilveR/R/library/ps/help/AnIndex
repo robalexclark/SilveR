@@ -1,3 +1,4 @@
+ps-package	ps-package
 as.character.ps_handle	ps_handle
 CleanupReporter	CleanupReporter
 errno	errno
@@ -19,6 +20,7 @@ ps_environ	ps_environ
 ps_environ_raw	ps_environ
 ps_exe	ps_exe
 ps_find_tree	ps_kill_tree
+ps_get_cpu_affinity	ps_get_cpu_affinity
 ps_get_nice	ps_get_nice
 ps_gids	ps_uids
 ps_handle	ps_handle
@@ -29,6 +31,7 @@ ps_kill	ps_kill
 ps_kill_tree	ps_kill_tree
 ps_loadavg	ps_loadavg
 ps_mark_tree	ps_kill_tree
+ps_memory_full_info	ps_memory_info
 ps_memory_info	ps_memory_info
 ps_name	ps_name
 ps_num_fds	ps_num_fds
@@ -41,6 +44,7 @@ ps_pids	ps_pids
 ps_ppid	ps_ppid
 ps_resume	ps_resume
 ps_send_signal	ps_send_signal
+ps_set_cpu_affinity	ps_get_cpu_affinity
 ps_set_nice	ps_get_nice
 ps_shared_libs	ps_shared_libs
 ps_shared_lib_users	ps_shared_lib_users
@@ -58,3 +62,4 @@ ps_users	ps_users
 ps_windows_nice_values	ps_get_nice
 signals	signals
 with_process_cleanup	ps_kill_tree
+_PACKAGE	ps-package

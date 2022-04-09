@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;igraph&rsquo; version 1.2.11</h2>
+</div><h2>Documentation for package &lsquo;igraph&rsquo; version 1.3.1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
@@ -92,6 +92,8 @@
 <td>Find Bonacich alpha centrality scores of network positions</td></tr>
 <tr><td style="width: 25%;"><a href="alpha_centrality.html">alpha_centrality</a></td>
 <td>Find Bonacich alpha centrality scores of network positions</td></tr>
+<tr><td style="width: 25%;"><a href="which_multiple.html">any_loop</a></td>
+<td>Find the multiple or loop edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">any_multiple</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="are_adjacent.html">are.connected</a></td>
@@ -107,9 +109,9 @@
 <tr><td style="width: 25%;"><a href="arpack.html">arpack_defaults</a></td>
 <td>ARPACK eigenvector calculation</td></tr>
 <tr><td style="width: 25%;"><a href="articulation_points.html">articulation.points</a></td>
-<td>Articulation points of a graph</td></tr>
+<td>Articulation points and bridges of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="articulation_points.html">articulation_points</a></td>
-<td>Articulation points of a graph</td></tr>
+<td>Articulation points and bridges of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="communities.html">as.dendrogram.communities</a></td>
 <td>Functions to deal with the result of network community detection</td></tr>
 <tr><td style="width: 25%;"><a href="as.directed.html">as.directed</a></td>
@@ -120,6 +122,8 @@
 <td>Conversion to igraph</td></tr>
 <tr><td style="width: 25%;"><a href="as.igraph.html">as.igraph.igraphHRG</a></td>
 <td>Conversion to igraph</td></tr>
+<tr><td style="width: 25%;"><a href="as.matrix.igraph.html">as.matrix.igraph</a></td>
+<td>Convert igraph objects to adjacency or edge list matrices</td></tr>
 <tr><td style="width: 25%;"><a href="as.directed.html">as.undirected</a></td>
 <td>Convert between directed and undirected graphs</td></tr>
 <tr><td style="width: 25%;"><a href="communities.html">asPhylo</a></td>
@@ -190,8 +194,12 @@
 <td>Optimal edge curvature when plotting graphs</td></tr>
 <tr><td style="width: 25%;"><a href="automorphisms.html">automorphisms</a></td>
 <td>Number of automorphisms</td></tr>
+<tr><td style="width: 25%;"><a href="automorphism_group.html">automorphism_group</a></td>
+<td>Generating set of the automorphism group of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="distances.html">average.path.length</a></td>
 <td>Shortest (directed or undirected) paths between vertices</td></tr>
+<tr><td style="width: 25%;"><a href="global_efficiency.html">average_local_efficiency</a></td>
+<td>Efficiency of a graph</td></tr>
 </table>
 
 <h2><a name="B">-- B --</a></h2>
@@ -237,6 +245,8 @@
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="power_centrality.html">bonpow</a></td>
 <td>Find Bonacich Power Centrality Scores of Network Positions</td></tr>
+<tr><td style="width: 25%;"><a href="articulation_points.html">bridges</a></td>
+<td>Articulation points and bridges of a graph</td></tr>
 </table>
 
 <h2><a name="C">-- C --</a></h2>
@@ -303,11 +313,13 @@
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">cit_types</a></td>
 <td>Random citation graphs</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">clique.number</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">cliques</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">clique_num</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="cliques.html">clique_size_counts</a></td>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="closeness.html">closeness</a></td>
 <td>Closeness centrality of vertices</td></tr>
 <tr><td style="width: 25%;"><a href="closeness.html">closeness.estimate</a></td>
@@ -337,7 +349,7 @@
 <tr><td style="width: 25%;"><a href="cluster_spinglass.html">cluster_spinglass</a></td>
 <td>Finding communities in graphs based on statistical meachanics</td></tr>
 <tr><td style="width: 25%;"><a href="cluster_walktrap.html">cluster_walktrap</a></td>
-<td>Community strucure via short random walks</td></tr>
+<td>Community structure via short random walks</td></tr>
 <tr><td style="width: 25%;"><a href="cocitation.html">cocitation</a></td>
 <td>Cocitation coupling</td></tr>
 <tr><td style="width: 25%;"><a href="communities.html">code.length</a></td>
@@ -401,7 +413,9 @@
 <tr><td style="width: 25%;"><a href="count_isomorphisms.html">count_isomorphisms</a></td>
 <td>Count the number of isomorphic mappings between two graphs</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">count_max_cliques</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="weighted_cliques.html">count_max_weighted_cliques</a></td>
+<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="count_motifs.html">count_motifs</a></td>
 <td>Graph motifs</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">count_multiple</a></td>
@@ -570,6 +584,10 @@
 <td>Closeness centrality of vertices</td></tr>
 <tr><td style="width: 25%;"><a href="betweenness.html">estimate_edge_betweenness</a></td>
 <td>Vertex and edge betweenness centrality</td></tr>
+<tr><td style="width: 25%;"><a href="has_eulerian_path.html">eulerian_cycle</a></td>
+<td>Find Eulerian paths or cycles in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="has_eulerian_path.html">eulerian_path</a></td>
+<td>Find Eulerian paths or cycles in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="eigen_centrality.html">evcent</a></td>
 <td>Find Eigenvector Centrality Scores of Network Positions</td></tr>
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">exportPajek</a></td>
@@ -587,6 +605,8 @@
 <td>Diameter of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cluster_fast_greedy.html">fastgreedy.community</a></td>
 <td>Community structure via greedy optimization of modularity</td></tr>
+<tr><td style="width: 25%;"><a href="feedback_arc_set.html">feedback_arc_set</a></td>
+<td>Finding a feedback arc set in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="fit_hrg.html">fit_hrg</a></td>
 <td>Fit a hierarchical random graph model</td></tr>
 <tr><td style="width: 25%;"><a href="fit_power_law.html">fit_power_law</a></td>
@@ -603,6 +623,8 @@
 <td>Create graphs from an incidence matrix</td></tr>
 <tr><td style="width: 25%;"><a href="graph_from_literal.html">from_literal</a></td>
 <td>Creating (small) graphs via a simple interface</td></tr>
+<tr><td style="width: 25%;"><a href="make_from_prufer.html">from_prufer</a></td>
+<td>Create an undirected tree graph from its Prufer sequence</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_bipartite_graph.html">full_bipartite_graph</a></td>
 <td>Create a full bipartite graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_citation_graph.html">full_citation_graph</a></td>
@@ -652,6 +674,8 @@
 <td>Diameter of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="girth.html">girth</a></td>
 <td>Girth of a graph</td></tr>
+<tr><td style="width: 25%;"><a href="global_efficiency.html">global_efficiency</a></td>
+<td>Efficiency of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="read_graph.html">GML</a></td>
 <td>Reading foreign file formats</td></tr>
 <tr><td style="width: 25%;"><a href="sample_gnm.html">gnm</a></td>
@@ -831,7 +855,9 @@
 <tr><td style="width: 25%;"><a href="graph_id.html">graph_id</a></td>
 <td>Get the id of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="graph_version.html">graph_version</a></td>
-<td>Igraph data structure versions</td></tr>
+<td>igraph data structure versions</td></tr>
+<tr><td style="width: 25%;"><a href="greedy_vertex_coloring.html">greedy_vertex_coloring</a></td>
+<td>Greedy vertex coloring</td></tr>
 <tr><td style="width: 25%;"><a href="sample_grg.html">grg</a></td>
 <td>Geometric random graphs</td></tr>
 <tr><td style="width: 25%;"><a href="sample_grg.html">grg.game</a></td>
@@ -853,8 +879,14 @@
 <h2><a name="H">-- H --</a></h2>
 
 <table width="100%">
+<tr><td style="width: 25%;"><a href="harmonic_centrality.html">harmonic_centrality</a></td>
+<td>Harmonic centrality of vertices</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">has.multiple</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="has_eulerian_path.html">has_eulerian_cycle</a></td>
+<td>Find Eulerian paths or cycles in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="has_eulerian_path.html">has_eulerian_path</a></td>
+<td>Find Eulerian paths or cycles in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="head_of.html">head_of</a></td>
 <td>Head of the edge(s) in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="head_print.html">head_print</a></td>
@@ -1068,6 +1100,8 @@
 <td>Simple graphs</td></tr>
 <tr><td style="width: 25%;"><a href="subgraph_isomorphic.html">is_subgraph_isomorphic_to</a></td>
 <td>Decide if a graph is subgraph isomorphic to another one</td></tr>
+<tr><td style="width: 25%;"><a href="is_tree.html">is_tree</a></td>
+<td>Decide whether a graph is a tree.</td></tr>
 <tr><td style="width: 25%;"><a href="is_weighted.html">is_weighted</a></td>
 <td>Weighted graphs</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">ivs</a></td>
@@ -1097,13 +1131,15 @@
 <tr><td style="width: 25%;"><a href="laplacian_matrix.html">laplacian_matrix</a></td>
 <td>Graph Laplacian</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">largest.cliques</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">largest.independent.vertex.sets</a></td>
 <td>Independent vertex sets</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">largest_cliques</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">largest_ivs</a></td>
 <td>Independent vertex sets</td></tr>
+<tr><td style="width: 25%;"><a href="weighted_cliques.html">largest_weighted_cliques</a></td>
+<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">lastcit.game</a></td>
 <td>Random citation graphs</td></tr>
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">last_cit</a></td>
@@ -1214,6 +1250,8 @@
 <td>List names of graph attributes</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_attr_names.html">list.vertex.attributes</a></td>
 <td>List names of vertex attributes</td></tr>
+<tr><td style="width: 25%;"><a href="global_efficiency.html">local_efficiency</a></td>
+<td>Efficiency of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="local_scan.html">local_scan</a></td>
 <td>Compute local scan statistics on graphs</td></tr>
 </table>
@@ -1237,6 +1275,8 @@
 <td>Neighborhood of graph vertices</td></tr>
 <tr><td style="width: 25%;"><a href="make_empty_graph.html">make_empty_graph</a></td>
 <td>A graph with no edges</td></tr>
+<tr><td style="width: 25%;"><a href="make_from_prufer.html">make_from_prufer</a></td>
+<td>Create an undirected tree graph from its Prufer sequence</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_bipartite_graph.html">make_full_bipartite_graph</a></td>
 <td>Create a full bipartite graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_citation_graph.html">make_full_citation_graph</a></td>
@@ -1264,9 +1304,9 @@
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">maxcohesion</a></td>
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">maximal.cliques</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">maximal.cliques.count</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">maximal.independent.vertex.sets</a></td>
 <td>Independent vertex sets</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">maximal_ivs</a></td>
@@ -1280,11 +1320,13 @@
 <tr><td style="width: 25%;"><a href="max_cardinality.html">max_cardinality</a></td>
 <td>Maximum cardinality search</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">max_cliques</a></td>
-<td>The functions find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">max_cohesion</a></td>
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="max_flow.html">max_flow</a></td>
 <td>Maximum flow in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="weighted_cliques.html">max_weighted_cliques</a></td>
+<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="distances.html">mean_distance</a></td>
 <td>Shortest (directed or undirected) paths between vertices</td></tr>
 <tr><td style="width: 25%;"><a href="sir.html">median.sir</a></td>
@@ -1382,11 +1424,7 @@
 <td>Generate scale-free graphs according to the Barabasi-Albert model</td></tr>
 <tr><td style="width: 25%;"><a href="page_rank.html">page.rank</a></td>
 <td>The Page Rank algorithm</td></tr>
-<tr><td style="width: 25%;"><a href="page_rank.html">page.rank.old</a></td>
-<td>The Page Rank algorithm</td></tr>
 <tr><td style="width: 25%;"><a href="page_rank.html">page_rank</a></td>
-<td>The Page Rank algorithm</td></tr>
-<tr><td style="width: 25%;"><a href="page_rank.html">page_rank_old</a></td>
 <td>The Page Rank algorithm</td></tr>
 <tr><td style="width: 25%;"><a href="read_graph.html">Pajek</a></td>
 <td>Reading foreign file formats</td></tr>
@@ -1480,12 +1518,16 @@
 <td>Generate random graphs according to the Erdos-Renyi model</td></tr>
 <tr><td style="width: 25%;"><a href="layout_randomly.html">randomly</a></td>
 <td>Randomly place vertices on a plane or in 3d space</td></tr>
+<tr><td style="width: 25%;"><a href="random_walk.html">random_edge_walk</a></td>
+<td>Random walk on a graph</td></tr>
 <tr><td style="width: 25%;"><a href="random_walk.html">random_walk</a></td>
 <td>Random walk on a graph</td></tr>
 <tr><td style="width: 25%;"><a href="read_graph.html">read.graph</a></td>
 <td>Reading foreign file formats</td></tr>
 <tr><td style="width: 25%;"><a href="read_graph.html">read_graph</a></td>
 <td>Reading foreign file formats</td></tr>
+<tr><td style="width: 25%;"><a href="realize_degseq.html">realize_degseq</a></td>
+<td>Creating a graph from a given degree sequence, deterministically</td></tr>
 <tr><td style="width: 25%;"><a href="reciprocity.html">reciprocity</a></td>
 <td>Reciprocity of graphs</td></tr>
 <tr><td style="width: 25%;"><a href="delete_edge_attr.html">remove.edge.attribute</a></td>
@@ -1577,6 +1619,8 @@
 <td>Sampling a random integer sequence</td></tr>
 <tr><td style="width: 25%;"><a href="sample_smallworld.html">sample_smallworld</a></td>
 <td>The Watts-Strogatz small-world model</td></tr>
+<tr><td style="width: 25%;"><a href="sample_spanning_tree.html">sample_spanning_tree</a></td>
+<td>Samples from the spanning trees of a graph randomly and uniformly</td></tr>
 <tr><td style="width: 25%;"><a href="sample_sphere_surface.html">sample_sphere_surface</a></td>
 <td>Sample vectors uniformly from the surface of a sphere</td></tr>
 <tr><td style="width: 25%;"><a href="sample_sphere_volume.html">sample_sphere_volume</a></td>
@@ -1585,6 +1629,8 @@
 <td>Graph generation based on different vertex types</td></tr>
 <tr><td style="width: 25%;"><a href="sample_traits_callaway.html">sample_traits_callaway</a></td>
 <td>Graph generation based on different vertex types</td></tr>
+<tr><td style="width: 25%;"><a href="sample_tree.html">sample_tree</a></td>
+<td>Sample trees randomly and uniformly</td></tr>
 <tr><td style="width: 25%;"><a href="sample_sbm.html">sbm</a></td>
 <td>Sample stochastic block model</td></tr>
 <tr><td style="width: 25%;"><a href="sample_sbm.html">sbm.game</a></td>
@@ -1648,6 +1694,8 @@
 <tr><td style="width: 25%;"><a href="simplified.html">simplified</a></td>
 <td>Constructor modifier to drop multiple and loop edges</td></tr>
 <tr><td style="width: 25%;"><a href="simplify.html">simplify</a></td>
+<td>Simple graphs</td></tr>
+<tr><td style="width: 25%;"><a href="simplify.html">simplify_and_colorize</a></td>
 <td>Simple graphs</td></tr>
 <tr><td style="width: 25%;"><a href="sir.html">sir</a></td>
 <td>SIR model on graphs</td></tr>
@@ -1762,6 +1810,8 @@
 <td>Topological sorting of vertices in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="topo_sort.html">topo_sort</a></td>
 <td>Topological sorting of vertices in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="to_prufer.html">to_prufer</a></td>
+<td>Convert a tree graph to its Prufer sequence</td></tr>
 <tr><td style="width: 25%;"><a href="sample_traits_callaway.html">traits</a></td>
 <td>Graph generation based on different vertex types</td></tr>
 <tr><td style="width: 25%;"><a href="sample_traits_callaway.html">traits_callaway</a></td>
@@ -1802,7 +1852,7 @@
 <tr><td style="width: 25%;"><a href="unique.igraph.vs.html">unique.igraph.vs</a></td>
 <td>Remove duplicate vertices from a vertex sequence</td></tr>
 <tr><td style="width: 25%;"><a href="upgrade_graph.html">upgrade_graph</a></td>
-<td>Igraph data structure versions</td></tr>
+<td>igraph data structure versions</td></tr>
 </table>
 
 <h2><a name="V">-- V --</a></h2>
@@ -1846,9 +1896,13 @@
 
 <table width="100%">
 <tr><td style="width: 25%;"><a href="cluster_walktrap.html">walktrap.community</a></td>
-<td>Community strucure via short random walks</td></tr>
+<td>Community structure via short random walks</td></tr>
 <tr><td style="width: 25%;"><a href="sample_smallworld.html">watts.strogatz.game</a></td>
 <td>The Watts-Strogatz small-world model</td></tr>
+<tr><td style="width: 25%;"><a href="weighted_cliques.html">weighted_cliques</a></td>
+<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="weighted_cliques.html">weighted_clique_num</a></td>
+<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">which_loop</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">which_multiple</a></td>
@@ -1932,6 +1986,10 @@
 <td>Add vertices, edges or another graph to a graph</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-minus.html">-.igraph</a></td>
 <td>Delete vertices or edges from a graph</td></tr>
+<tr><td style="width: 25%;"><a href="dot-apply_modifiers.html">.apply_modifiers</a></td>
+<td>Applies a set of constructor modifiers to an already constructed graph.</td></tr>
+<tr><td style="width: 25%;"><a href="dot-extract_constructor_and_modifiers.html">.extract_constructor_and_modifiers</a></td>
+<td>Takes an argument list and extracts the constructor specification and constructor modifiers from it.</td></tr>
 <tr><td style="width: 25%;"><a href="sub-.igraph.html">[.igraph</a></td>
 <td>Query and manipulate a graph as it were an adjacency matrix</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-es-indexing.html">[.igraph.es</a></td>

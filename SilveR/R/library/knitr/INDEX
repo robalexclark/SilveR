@@ -66,6 +66,8 @@ opts_knit               Options for the knitr package
 opts_template           Template for creating reusable chunk options
 pandoc                  A Pandoc wrapper to convert documents to other
                         formats
+partition_chunk         Partition chunk options from the code chunk
+                        body
 pat_rnw                 Set regular expressions to read input documents
 plot_crop               Crop a plot (remove the edges) using PDFCrop or
                         ImageMagick
@@ -77,6 +79,7 @@ read_chunk              Read chunks from an external script
 read_rforge             Read source code from R-Forge
 render_html             Set or get output hooks for different output
                         formats
+rnw2pdf                 Convert an 'Rnw' document to PDF
 rocco                   Knit R Markdown using the classic Docco style
 rst2pdf                 A wrapper for rst2pdf
 set_alias               Set aliases for chunk options

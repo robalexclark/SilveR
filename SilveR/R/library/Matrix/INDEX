@@ -72,6 +72,7 @@ dgeMatrix-class         Class "dgeMatrix" of Dense Numeric (S4 Class)
 diagU2N                 Transform Triangular Matrices from Unit
                         Triangular to General Triangular and Back
 diagonalMatrix-class    Class "diagonalMatrix" of Diagonal Matrices
+dmperm                  Dulmage-Mendelsohn Permutation / Decomposition
 dpoMatrix-class         Positive Semi-definite Dense (Packed |
                         Non-packed) Numeric Matrices
 drop0                   Drop "Explicit Zeroes" from a Sparse Matrix
@@ -134,6 +135,8 @@ nsyMatrix-class         Symmetric Dense Nonzero-Pattern Matrices
 ntrMatrix-class         Triangular Dense Logical Matrices
 number-class            Class "number" of Possibly Complex Numbers
 pMatrix-class           Permutation matrices
+packedMatrix-class      Class '"packedMatrix"' of packed dense
+                        symmetric/triangular Matrices
 printSpMatrix           Format and Print Sparse Matrices Flexibly
 qr-methods              QR Decomposition - S4 Methods and Generic
 rankMatrix              Rank of a Matrix

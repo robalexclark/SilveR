@@ -55,6 +55,7 @@ html.naprint.delete	rmsMisc
 html.summary.rms	summary.rms
 html.validate	validate
 ie.setup	ie.setup
+impactPO	impactPO
 interactions.containing	rmsMisc
 latex.anova.rms	anova.rms
 latex.bj	latexrms
@@ -159,6 +160,7 @@ print.fastbw	fastbw
 print.gIndex	gIndex
 print.Glm	print.Glm
 print.Gls	Gls
+print.impactPO	print.impactPO
 print.lrm	lrm
 print.lrtest	rmsMisc
 print.nomogram	nomogram

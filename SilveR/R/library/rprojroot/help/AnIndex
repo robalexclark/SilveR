@@ -20,6 +20,7 @@ has_file_pattern	root_criterion
 is.root_criterion	deprecated
 is_drake_project	criteria
 is_git_root	criteria
+is_pkgdown_project	criteria
 is_projectile_project	criteria
 is_remake_project	criteria
 is_root_criterion	root_criterion

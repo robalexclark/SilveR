@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.7.2" />
+<meta name="author" content="emmeans package, Version 1.7.3" />
 
 
 <title>Transformations and link functions in emmeans</title>
@@ -31,6 +31,7 @@
 
 
 
+
 <link rel="stylesheet" href="data:text/css,body%20%7Bfont%2Dsize%3A%2011pt%3B%20font%2Dfamily%3A%20%22Palatino%20Linotype%22%2C%20%22Book%20Antiqua%22%2C%20Palatino%2C%20serif%3Bmargin%3A%2030px%2050px%2030px%2050px%3B%20%7Dh1%2Ch2%2Ch3%2Ch4%2Ch5%2Ch6%20%7B%20font%2Dfamily%3A%20Arial%2CHelvetica%2CSans%2Dserif%3B%20%7Da%20%7B%20text%2Ddecoration%3A%20none%3B%20%7Da%3Alink%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Avisited%20%7B%20color%3Adarkblue%3B%20%7D%20a%3Ahover%20%7B%20color%3Adodgerblue%3B%20%7Da%3Aactive%20%7B%20color%3Adodgerblue%3B%20%7D%20code%20%7Bcolor%3A%20%23602000%3Bfont%2Dfamily%3A%20%22Lucida%20Console%22%2C%20Monaco%2C%20monospace%3B%20font%2Dsize%3A%2090%25%3B%7D%2Er%20%7B%20color%3A%20darkred%3B%20%7D%2Ero%20%7B%20color%3A%20darkgreen%3B%20background%2Dcolor%3A%20%23eeeeee%3B%20%7D%2Ere%20%7B%20color%3A%20red%3B%7D%2Er%20code%2C%20a%20code%2C%20%2Ero%20code%2C%20%2Ere%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20ul%20%7B%20list%2Dstyle%2Dtype%3A%20none%3B%20%7D%2Evigindex%20ul%20li%20%7B%20list%2Dstyle%3A%20none%3B%20%7D%2Evigindex%20a%20code%20%7B%20color%3A%20inherit%3B%20%7D%2Evigindex%20li%20code%20%7B%20color%3A%20inherit%3B%20%7D" type="text/css" />
 
 
@@ -44,7 +45,7 @@
 
 
 <h1 class="title toc-ignore">Transformations and link functions in emmeans</h1>
-<h4 class="author">emmeans package, Version 1.7.2</h4>
+<h4 class="author">emmeans package, Version 1.7.3</h4>
 
 
 
@@ -161,10 +162,10 @@ summary(pigs.remm.s, infer = TRUE, null = 35)</code></pre>
 <p>These results all differ from either of the previous two summaries – again, because the averaging is done on the <code>conc</code> scale rather than the <code>log(conc)</code> scale.</p>
 <div id="regrid" class="section level6">
 <h6></h6>
-<!-- @index `regrid()`!`transform` vs. `type` -->
-<p>Note: For those who want to routinely back-transform before averaging, the <code>transform</code> argument in <code>ref_grid()</code> simplifies this. The first two steps above could have been done more easily as follows:</p>
-<pre class="r"><code>pigs.remm.s &lt;- emmeans(pigs.lm, &quot;source&quot;, transform = &quot;response&quot;)</code></pre>
-<p>But don’t get <code>transform</code> and <code>type</code> confused. The <code>transform</code> argument is passed to <code>regrid()</code> after the reference grid is constructed, whereas the <code>type</code> argument is simply remembered and used by <code>summary()</code>. So a similar-looking call:</p>
+<!-- @index `regrid()`!`regrid` vs. `type`; `ref_grid()`!`regrid` argument -->
+<p>Note: For those who want to routinely back-transform before averaging, the <code>regrid</code> argument in <code>ref_grid()</code> simplifies this. The first two steps above could have been done more easily as follows:</p>
+<pre class="r"><code>pigs.remm.s &lt;- emmeans(pigs.lm, &quot;source&quot;, regrid = &quot;response&quot;)</code></pre>
+<p>But don’t get <code>regrid</code> and <code>type</code> confused. The <code>regrid</code> argument is passed to <code>regrid()</code> (as the <code>transform</code> argument) after the reference grid is constructed, whereas the <code>type</code> argument is simply remembered and used by <code>summary()</code>. So a similar-looking call:</p>
 <pre class="r"><code>emmeans(pigs.lm, &quot;source&quot;, type = &quot;response&quot;)</code></pre>
 <p>will compute the results we have seen for <code>pigs.emm.s</code> – back-transformed <em>after</em> averaging on the log scale.</p>
 <p>Remember again: When it comes to transformations, timing is everything.</p>
@@ -377,7 +378,7 @@ update(pairs(piglog.emm.s, type = &quot;response&quot;),
 <div id="stdize" class="section level2">
 <h2>Standardized response</h2>
 <!-- @index Transformations!Standardizing; Transformations!`scale()`;
-    `scale()`; Standardized response; Examples!`fiber` -->
+    `scale()`; Standardized response; Examples!`fiber`; `regrid` argument -->
 <p>In some disciplines, it is common to fit a model to a standardized response variable. R’s base function <code>scale()</code> makes this easy to do; but it is important to notice that <code>scale(y)</code> is more complicated than, say, <code>sqrt(y)</code>, because <code>scale(y)</code> requires all the values of <code>y</code> in order to determine the centering and scaling parameters. The <code>ref_grid()</code> function (called by `emmeans() and others) tries to detect the scaling parameters. To illustrate:</p>
 <pre class="r"><code>fiber.lm &lt;- lm(scale(strength) ~ machine * scale(diameter), data = fiber)
 emmeans(fiber.lm, &quot;machine&quot;)   # on the standardized scale</code></pre>
@@ -404,8 +405,8 @@ emmeans(fiber.lm, &quot;machine&quot;)   # on the standardized scale</code></pre
 ##  C                0.174 0.0418  9   0.0791    0.268
 ## 
 ## Confidence level used: 0.95</code></pre>
-<p>These slopes are (change in <code>scale(strength)</code>) / (change in <code>diameter</code>); that is, we didn’t do anything to undo the response transformation, but the trend is based on exactly the variable specified, <code>diameter</code>. To get (change in <code>strength</code>) / (change in <code>diameter</code>), we need to undo the response transformation, and that is done via <code>transform</code> (which invokes <code>regrid()</code> after the reference grid is constructed):</p>
-<pre class="r"><code>emtrends(fiber.lm, &quot;machine&quot;, var = &quot;diameter&quot;, transform = &quot;response&quot;)</code></pre>
+<p>These slopes are (change in <code>scale(strength)</code>) / (change in <code>diameter</code>); that is, we didn’t do anything to undo the response transformation, but the trend is based on exactly the variable specified, <code>diameter</code>. To get (change in <code>strength</code>) / (change in <code>diameter</code>), we need to undo the response transformation, and that is done via <code>regrid</code> (which invokes <code>regrid()</code> after the reference grid is constructed):</p>
+<pre class="r"><code>emtrends(fiber.lm, &quot;machine&quot;, var = &quot;diameter&quot;, regrid = &quot;response&quot;)</code></pre>
 <pre class="ro"><code>##  machine diameter.trend    SE df lower.CL upper.CL
 ##  A                1.104 0.194  9    0.666     1.54
 ##  B                0.857 0.224  9    0.351     1.36
@@ -455,7 +456,7 @@ emmeans(fib.lm, &quot;machine&quot;)</code></pre>
 ## Confidence level used: 0.95</code></pre>
 <pre class="r"><code># On standardized scale:
 tran &lt;- make.tran(&quot;scale&quot;, y = fiber$strength)
-emmeans(fib.lm, &quot;machine&quot;, transform = tran)</code></pre>
+emmeans(fib.lm, &quot;machine&quot;, regrid = tran)</code></pre>
 <pre class="ro"><code>##  machine   emmean    SE df lower.CL upper.CL
 ##  A        0.00444 0.156  9   -0.349    0.358
 ##  B        0.28145 0.172  9   -0.109    0.672
@@ -463,7 +464,7 @@ emmeans(fib.lm, &quot;machine&quot;, transform = tran)</code></pre>
 ## 
 ## Results are given on the scale(40.2, 4.97) (not the response) scale. 
 ## Confidence level used: 0.95</code></pre>
-<p>In the latter call, the <code>transform</code> argument causes <code>regrid()</code> to be called after the reference grid is constructed.</p>
+<p>In the latter call, the <code>regrid</code> argument causes <code>regrid()</code> to be called after the reference grid is constructed.</p>
 <p><a href="#contents">Back to Contents</a></p>
 </div>
 </div>

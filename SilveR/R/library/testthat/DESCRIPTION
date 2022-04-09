@@ -1,6 +1,6 @@
 Package: testthat
 Title: Unit Testing for R
-Version: 3.1.2
+Version: 3.1.4
 Authors@R: 
     c(person(given = "Hadley",
              family = "Wickham",
@@ -19,11 +19,11 @@ License: MIT + file LICENSE
 URL: https://testthat.r-lib.org, https://github.com/r-lib/testthat
 BugReports: https://github.com/r-lib/testthat/issues
 Depends: R (>= 3.1)
-Imports: brio, callr (>= 3.5.1), cli (>= 2.2.0), crayon (>= 1.3.4),
+Imports: brio, callr (>= 3.5.1), cli (>= 3.3.0), crayon (>= 1.3.4),
         desc, digest, ellipsis (>= 0.2.0), evaluate, jsonlite,
         lifecycle, magrittr, methods, pkgload, praise, processx, ps (>=
-        1.3.4), R6 (>= 2.2.0), rlang (>= 0.4.9), utils, waldo (>=
-        0.2.4), withr (>= 2.4.3)
+        1.3.4), R6 (>= 2.2.0), rlang (>= 1.0.1), utils, waldo (>=
+        0.4.0), withr (>= 2.4.3)
 Suggests: covr, curl (>= 0.9.5), diffviewer (>= 0.1.0), knitr, mockery,
         rmarkdown, rstudioapi, shiny, usethis, vctrs (>= 0.1.0), xml2
 VignetteBuilder: knitr
@@ -33,12 +33,12 @@ Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2022-01-20 21:10:39 UTC; hadleywickham
+Packaged: 2022-04-25 18:19:15 UTC; hadleywickham
 Author: Hadley Wickham [aut, cre],
   RStudio [cph, fnd],
   R Core team [ctb] (Implementation of utils::recover())
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
-Date/Publication: 2022-01-20 22:40:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-15 04:50:23 UTC; windows
+Date/Publication: 2022-04-26 12:20:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-04-28 18:12:21 UTC; windows
 Archs: i386, x64

@@ -436,6 +436,7 @@ putKeyEmpty	labcurve
 Quantile	transace
 Quantile.areg.boot	transace
 Quantile2	spower
+R2Measures	R2Measures
 rcorr	rcorr
 rcorr.cens	rcorr.cens
 rcorrcens	rcorr.cens
@@ -482,6 +483,7 @@ show.pch	show.pch
 showPsfrag	showPsfrag
 simMarkovOrd	simMarkovOrd
 simplifyDims	simplifyDims
+simPOcuts	popower
 simRegOrd	simRegOrd
 sKey	legendfunctions
 smean.cl.boot	smean.sd

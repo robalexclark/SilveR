@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Heft: hazard estimation with flexible tails</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for summary.heft {polspline}"><tr><td>summary.heft {polspline}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Heft: hazard estimation with flexible tails</h2>
+
+<h3>Description</h3>
+
+<p>This function summarizes both the stepwise selection process of the
+model fitting by <code><a href="../../polspline/help/heft.html">heft</a></code>, as well as the final model
+that was selected using AIC/BIC.</p>
+
+
+<h3>Usage</h3>
+
+<pre>## S3 method for class 'heft'
+summary(object, ...) 
+## S3 method for class 'heft'
+print(x, ...) </pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object,x</code></td>
+<td>
+ <p><code>heft</code> object, typically the result of <code><a href="../../polspline/help/heft.html">heft</a></code>.  </p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>other arguments are ignored.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>These function produce identical printed output. The main body 
+is a table with six columns: 
+</p>
+<p>the first column is a possible number 
+of knots for the fitted model; 
+</p>
+<p>the second column is 0 if the model was fitted during the 
+addition stage and 1 if the model was fitted during the deletion stage; 
+</p>
+<p>the third column is the log-likelihood for the fit; 
+</p>
+<p>the fourth column is <code>-2 * loglikelihood + penalty * (dimension)</code>,
+which is the AIC criterion - <code>heft</code> selected the model with
+the minimum value of AIC;
+</p>
+<p>the fifth and sixth columns give the 
+endpoints of the interval of values of penalty that would yield the 
+model with the indicated number of knots. (<code>NA</code>s imply that the model is 
+not optimal for any choice of penalty.)  
+</p>
+<p>At the bottom of the table the 
+number of knots corresponding to the selected model is reported, as are 
+the value of penalty that was used and the coefficients of the log-based 
+terms in the fitted model and their standard errors. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Charles Kooperberg <a href="mailto:clk@fredhutch.org">clk@fredhutch.org</a>.</p>
+
+
+<h3>References</h3>
+
+<p>Charles Kooperberg, Charles J. Stone and Young K. Truong (1995).
+Hazard regression.  <em>Journal of the American Statistical
+Association</em>, <b>90</b>, 78-94.
+</p>
+<p>Charles J. Stone, Mark Hansen, Charles Kooperberg, and Young K. Truong.
+The use of polynomial splines and their tensor products in extended
+linear modeling (with discussion) (1997).  <em>Annals of Statistics</em>,
+<b>25</b>, 1371&ndash;1470.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../polspline/help/heft.html">heft</a></code>,
+<code><a href="../../polspline/help/plot.heft.html">plot.heft</a></code>,
+<code><a href="../../polspline/help/dheft.html">dheft</a></code>,
+<code><a href="../../polspline/help/hheft.html">hheft</a></code>,
+<code><a href="../../polspline/help/pheft.html">pheft</a></code>,
+<code><a href="../../polspline/help/qheft.html">qheft</a></code>,
+<code><a href="../../polspline/help/rheft.html">rheft</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+fit1 &lt;- heft(testhare[,1], testhare[,2])
+summary(fit1)
+# modify tail behavior
+fit2 &lt;- heft(testhare[,1], testhare[,2], leftlog = FALSE, rightlog = FALSE, 
+    leftlin = TRUE)   
+summary(fit2)
+fit3 &lt;- heft(testhare[,1], testhare[,2], penalty = 0)   # select largest model
+summary(fit3)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>polspline</em> version 1.1.20 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

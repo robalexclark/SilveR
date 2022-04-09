@@ -1,3 +1,70 @@
+# scales 1.2.0
+
+## New features
+
+* `label_number()`:
+
+  * New `style_positive` and `style_negative` argument control how positive and
+    negative numbers are styled (#249, #262).
+  
+  * The `prefix` comes after the negative sign, rather than before it, yielding 
+    (e.g) the correct `-$1` instead of `$-1`.
+
+  * New `scale_cut` argument enables independent scaling of different parts of 
+    the range. This is useful in `label_dollar()`  to support scaling 
+    of large numbers by suffix (e.g. "M" for million, "B" for billion). It can 
+    be used with `cut_short_scale()` when billion = thousand million and 
+    `cut_long_scale()` when billion = million million (initial implementation
+    provided by @davidchall). Additionally, the accuracy is now computed per 
+    scale category, so rescaled values can have different numbers of decimal 
+    places (#339).
+
+  * `label_number_si()` is deprecated because it previously used
+    [short scale abbreviations](https://en.wikipedia.org/wiki/Long_and_short_scales)
+    instead of the correct [SI prefixes](https://en.wikipedia.org/wiki/Metric_prefix).
+    You can mimic the previous results with 
+    `label_number(scale_cut = cut_scale_short())` or get real SI labels with
+    `label_number(scale_cut = cut_SI("m"))` (#339, with help from @davidchall).
+
+* `label_bytes()` now correctly accounts for the `scale` argument when choosing
+  auto units (@davidchall, #235).
+
+* `label_date()` and `label_time()` gain a `locale` argument that allows you
+  to set the locale used to generate day and month names (#309).
+
+* New `label_log()` displays the base and a superscript exponent, for use with
+  logarithmic axes (@davidchall, #312).
+
+* New `compose_trans()` allows arbitrary composition of transformers. This
+  is mostly easily achieved by passing a character vector whenever you might
+  previously have passed the name of a single transformer. For example,
+  `scale_y_continuous(trans = c("log10", "reverse"))` will create a 
+  reverse log-10 scale (#287).
+
+## Bug fixes and minor improvements
+
+* `breaks_width()` now supports units like `"3 months"` in the `offset`
+  argument.
+
+* `col_quantile()` no longer errors if data is sufficiently skewed that we
+  can't generate the requested number of unique colours (#294).
+
+* `dollar(negative_parens)` is deprecated in favour of `style_negative = "parens"`.
+
+* `hue_pal()` respects `h.start` once again (#288).
+
+* `label_number_auto()` correctly formats single numbers that are greater than
+  1e+06 without an error (@karawoo, #321)
+
+* `manual_pal()` now always returns an unnamed colour vector, which is easy to
+  use with `ggplot2::discrete_scale()` (@yutannihilation, #284).
+
+* `time_trans()` and `date_trans()` have `domains` of the correct type so that 
+  they can be transformed without error (#298).
+
+* Internal `precision()`, used when `accuracy = NULL`, now avoids displaying
+  unnecessary digits (@davidchall, #304).
+
 # scales 1.1.1
 
 * `breaks_width()` now handles `difftime`/`hms` objects (@bhogan-mitre, #244).
@@ -193,7 +260,7 @@
  
 * `expand_range()` arguments `mul` and `add` now affect scales with a range of 0    
   (@dpseidel, 
-  [ggplot2-2281](https://www.github.com/tidyverse/ggplot2/issues/2281)).
+  [ggplot2-2281](https://github.com/tidyverse/ggplot2/issues/2281)).
 
 * `extended_breaks()` now allows user specification of the `labeling::extended()` 
   argument `only.loose` to permit more flexible breaks specification 
@@ -237,12 +304,12 @@
 * `scale_continuous()` uses a more correct check for numeric values.
 
 * NaN is correctly recognised as a missing value by the gradient palettes
-  ([ggplot2-1482](https://www.github.com/tidyverse/ggplot2/issues/1482)).
+  ([ggplot2-1482](https://github.com/tidyverse/ggplot2/issues/1482)).
   
 # scales 0.3.0
 
 * `rescale()` preserves missing values in input when the range of `x` is
-  (effectively) 0 ([ggplot2-985](https://www.github.com/tidyverse/ggplot2/issues/985)).
+  (effectively) 0 ([ggplot2-985](https://github.com/tidyverse/ggplot2/issues/985)).
 
 * Continuous colour palettes now use `colour_ramp()` instead of `colorRamp()`.
   This only supports interpolation in Lab colour space, but is hundreds of

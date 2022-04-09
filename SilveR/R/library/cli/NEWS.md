@@ -1,9 +1,23 @@
 
+# cli 3.3.0
+
+* `style_hyperlink()` no longer breaks if the env varible `VTE_VERSION`
+  is of the form `\d{4}`, i.e., 4 consecutive numbers (#441, @michaelchirico)
+
+* `ansi_*()` functions support ANSI hyperlinks again (#444).
+
+* Turning off ANSI colors via the `cli.num_colors` option or the
+  `R_CLI_NUM_COLORS` or the `NO_COLOR` environment variable now also turns off
+  ANSI hyperlinks (#447).
+
+* `symbol` now only has two variants: UTF-8 and ASCII. There are no special
+  variants for RStudio and Windows RGui any more (#424).
+
 # cli 3.2.0
 
 ## Breaking change
 
-* The `cli_theme_dark` option is know known as `cli.theme_dark`, to be
+* The `cli_theme_dark` option is now known as `cli.theme_dark`, to be
   consistent with all other cli option names (#380).
 
 ## Other changes

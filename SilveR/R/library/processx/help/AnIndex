@@ -1,3 +1,4 @@
+processx-package	processx-package
 base64_decode	base64_decode
 base64_encode	base64_decode
 close.processx_connection	processx_connections
@@ -21,6 +22,7 @@ default_pty_options	default_pty_options
 is_valid_fd	processx_connections
 poll	poll
 process	process
+processx	processx-package
 processx_conn_close	processx_connections
 processx_conn_is_incomplete	processx_connections
 processx_conn_read_chars	processx_connections

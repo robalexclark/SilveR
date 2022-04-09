@@ -12,17 +12,48 @@
 
 <meta name="author" content="Michel Lang" />
 
-<meta name="date" content="2020-02-05" />
+<meta name="date" content="2022-04-20" />
 
 <title>Setup tinytest</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -105,6 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -302,27 +334,38 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Setup tinytest</h1>
 <h4 class="author">Michel Lang</h4>
-<h4 class="date">2020-02-05</h4>
+<h4 class="date">2022-04-20</h4>
 
 
 
 <div id="setup-tinytest" class="section level2">
 <h2>Setup <code>tinytest</code></h2>
-<p>Setting up the <code>tinytest</code> framework is covered in detail in the documentation of <a href="https://cran.r-project.org/package=tinytest">tinytest</a>. Quick summary:</p>
+<p>Setting up the <code>tinytest</code> framework is covered in detail
+in the documentation of <a href="https://cran.r-project.org/package=tinytest">tinytest</a>. Quick
+summary:</p>
 <ol style="list-style-type: decimal">
-<li>In the package root directory, call <code>tinytest::setup_tinytest(&quot;.&quot;)</code>.</li>
-<li>Edit/add R scripts with unit tests to the directory <code>inst/tinytest</code>.</li>
+<li>In the package root directory, call
+<code>tinytest::setup_tinytest(&quot;.&quot;)</code>.</li>
+<li>Edit/add R scripts with unit tests to the directory
+<code>inst/tinytest</code>.</li>
 </ol>
 </div>
 <div id="setup-checkmate" class="section level2">
 <h2>Setup <code>checkmate</code></h2>
 <ol style="list-style-type: decimal">
-<li><p>Edit your <code>DESCRIPTION</code> and add <code>checkmate</code> to <code>Suggests</code> unless it is already listed in <code>Imports</code> for its assertions.</p></li>
-<li><p>In <strong>each</strong> test file which calls an expectation from <code>checkmate</code>, you must include the following lines at the beginning of the file:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(<span class="st">&quot;tinytest&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(<span class="st">&quot;checkmate&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">using</span>(<span class="st">&quot;checkmate&quot;</span>)</span></code></pre></div>
-<p>If you forget the last line, expectations will not get reported correctly in the summary. Also note that sourcing a file which includes <code>using(&quot;checkmate&quot;)</code> is <strong>not</strong> sufficient.</p></li>
+<li><p>Edit your <code>DESCRIPTION</code> and add <code>checkmate</code>
+to <code>Suggests</code> unless it is already listed in
+<code>Imports</code> for its assertions.</p></li>
+<li><p>In <strong>each</strong> test file which calls an expectation
+from <code>checkmate</code>, you must include the following lines at the
+beginning of the file:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tinytest&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;checkmate&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">using</span>(<span class="st">&quot;checkmate&quot;</span>)</span></code></pre></div>
+<p>If you forget the last line, expectations will not get reported
+correctly in the summary. Also note that sourcing a file which includes
+<code>using(&quot;checkmate&quot;)</code> is <strong>not</strong>
+sufficient.</p></li>
 <li><p>Check if everything works with <code>R CMD check</code>.</p></li>
 </ol>
 </div>

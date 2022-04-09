@@ -15,9 +15,13 @@ howto-faq-coercion-data-frame
                         (Data frames)
 howto-faq-fix-scalar-type-error
                         FAQ - Why isn't my class treated as a vector?
+internal-faq-matches-algorithm
+                        Internal FAQ - Implementation of
+                        'vec_locate_matches()'
 internal-faq-ptype2-identity
                         Internal FAQ - 'vec_ptype2()', 'NULL', and
                         unspecified vectors
+list_drop_empty         Drop empty elements from a list
 list_of                 'list_of' S3 class for homogenous lists
 name_spec               Name specifications
 new_data_frame          Assemble attributes for data frame construction
@@ -41,7 +45,10 @@ vec_fill_missing        Fill in missing values with the previous or
                         following value
 vec_identify_runs       Runs
 vec_init                Initialize a vector
+vec_interleave          Interleave many vectors into one vector
 vec_is_list             Is the object a list?
+vec_locate_matches      Locate observations matching specified
+                        conditions
 vec_match               Find matching observations across vectors
 vec_names               Get or set the names of a vector
 vec_order               Order and sort vectors

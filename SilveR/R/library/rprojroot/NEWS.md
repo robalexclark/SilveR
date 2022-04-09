@@ -1,3 +1,11 @@
+<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+
+# rprojroot 2.0.3 (2022-03-25)
+
+- Add `is_pkgdown_project` root criterion looking for a `_pkgdown.yml`, `_pkgdown.yaml`, `pkgdown/_pkgdown.yml` and/or `inst/_pkgdown.yml` file (#79, @salim-b).
+- Avoid `LazyData` in `DESCRIPTION`.
+
+
 # rprojroot 2.0.2 (2020-11-15)
 
 ## Features

@@ -1,0 +1,339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: General Linear Hypotheses</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for glht {multcomp}"><tr><td>glht {multcomp}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> General Linear Hypotheses </h2>
+
+<h3>Description</h3>
+
+<p>General linear hypotheses and multiple comparisons 
+for parametric models, including generalized linear models, 
+linear mixed effects models, and survival models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'matrix'
+glht(model, linfct, 
+    alternative = c("two.sided", "less", "greater"), 
+    rhs = 0, ...)
+## S3 method for class 'character'
+glht(model, linfct, ...)
+## S3 method for class 'expression'
+glht(model, linfct, ...)
+## S3 method for class 'mcp'
+glht(model, linfct, ...)
+## S3 method for class 'mlf'
+glht(model, linfct, ...)
+mcp(..., interaction_average = FALSE, covariate_average = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p> a fitted model, 
+for example an object returned by <code><a href="../../stats/html/lm.html">lm</a></code>, 
+<code><a href="../../stats/html/glm.html">glm</a></code>, or <code><a href="../../stats/html/aov.html">aov</a></code> etc. It is 
+assumed that <code><a href="../../stats/html/coef.html">coef</a></code> and 
+<code><a href="../../stats/html/vcov.html">vcov</a></code> methods are available for 
+<code>model</code>. For multiple comparisons of
+means, methods <code><a href="../../stats/html/model.matrix.html">model.matrix</a></code>, 
+<code><a href="../../stats/html/model.frame.html">model.frame</a></code> and <code><a href="../../stats/html/terms.html">terms</a></code>
+are expected to be available for <code>model</code> as well.</p>
+</td></tr>
+<tr valign="top"><td><code>linfct</code></td>
+<td>
+<p> a specification of the linear hypotheses to be tested. 
+Linear functions can be specified by either the matrix
+of coefficients or by symbolic descriptions of 
+one or more linear hypotheses. Multiple comparisons
+in AN(C)OVA models are specified by objects returned from
+function <code>mcp</code>.</p>
+</td></tr></table>
+<p>.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>alternative</code></td>
+<td>
+<p> a character string specifying the alternative 
+hypothesis, must be one of '&quot;two.sided&quot;' (default), '&quot;greater&quot;' or
+'&quot;less&quot;'.  You can specify just the initial letter.</p>
+</td></tr>
+<tr valign="top"><td><code>rhs</code></td>
+<td>
+<p> an optional numeric vector specifying the 
+right hand side of the hypothesis.</p>
+</td></tr>
+<tr valign="top"><td><code>interaction_average</code></td>
+<td>
+<p>logical indicating if comparisons are
+averaging over interaction terms. Experimental!</p>
+</td></tr>
+<tr valign="top"><td><code>covariate_average</code></td>
+<td>
+<p>logical indicating if comparisons are
+averaging over additional covariates. Experimental!</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p> additional arguments to function <code><a href="../../multcomp/help/modelparm.html">modelparm</a></code> in all
+<code>glht</code> methods. For function <code>mcp</code>,
+multiple comparisons are defined by 
+matrices or symbolic descriptions specifying contrasts
+of factor levels where the arguments correspond
+to factor names.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>A general linear hypothesis refers to null hypotheses of the form
+<i>H_0: K &theta; = m</i> for some parametric model
+<code>model</code> with parameter estimates <code>coef(model)</code>. 
+</p>
+<p>The null hypothesis is specified by a linear function <i>K &theta;</i>, 
+the direction of the alternative and the right hand side <i>m</i>.
+Here, <code>alternative</code> equal to <code>"two.sided"</code> refers to 
+a null hypothesis <i>H_0: K &theta; = m</i>, whereas
+<code>"less"</code> corresponds to <i>H_0: K &theta; &ge; m</i> and  
+<code>"greater"</code> refers to 
+<i>H_0: K &theta; &le; m</i>. The right hand side vector <i>m</i> can be defined
+via the <code>rhs</code> argument.
+</p>
+<p>The generic method <code>glht</code> dispatches on its second argument
+(<code>linfct</code>). There are three ways, and thus methods, 
+to specify linear functions to be tested:
+</p>
+<p>1) The <code>matrix</code> of coefficients <i>K</i> can be specified directly
+via the <code>linfct</code> argument. In this case,
+the number of columns of this matrix needs to correspond to the number of
+parameters estimated by <code>model</code>. It is assumed that
+appropriate <code>coef</code> and <code>vcov</code> methods are available
+for <code>model</code> (<code><a href="../../multcomp/help/modelparm.html">modelparm</a></code> deals with some exceptions). 
+</p>
+<p>2) A symbolic description,
+either a <code>character</code> or <code>expression</code> vector passed to <code>glht</code>
+via its <code>linfct</code> argument, can be used to define
+the null hypothesis. A symbolic description must be interpretable as a valid
+R expression consisting of both the left and right hand side 
+of a linear hypothesis.
+Only the names of <code>coef(model)</code> must be used as variable
+names. The alternative is given by
+the direction under the null hypothesis (<code>=</code> or <code>==</code>
+refer to <code>"two.sided"</code>, <code>&lt;=</code> means
+<code>"greater"</code> and <code>&gt;=</code> indicates 
+<code>"less"</code>). Numeric vectors of length one
+are valid values for the right hand side.
+</p>
+<p>3) Multiple comparisons of means are defined by objects
+of class <code>mcp</code> as returned by the <code>mcp</code> function.
+For each factor, which is included in <code>model</code> 
+as independent variable,
+a contrast matrix or a symbolic description of the contrasts
+can be specified as arguments to <code>mcp</code>. A symbolic
+description may be a <code>character</code> or <code>expression</code> 
+where the factor levels
+are only used as variables names. In addition,
+the <code>type</code> argument to the contrast generating function
+<code><a href="../../multcomp/help/contrMat.html">contrMat</a></code> may serve as a symbolic description of 
+contrasts as well.
+</p>
+<p>4) The <code>lsm</code> function in package <code>lsmeans</code> offers a symbolic
+interface for the definition of least-squares means for factor combinations
+which is very helpful when more complex contrasts are of special interest.
+</p>
+<p>The <code>mcp</code> function must be used with care when defining parameters
+of interest in two-way ANOVA or ANCOVA models. Here, the definition
+of treatment differences (such as Tukey's all-pair comparisons or Dunnett's
+comparison with a control) might be problem specific. 
+Because it is impossible to determine the parameters of interest
+automatically in this case, <code>mcp</code> in multcomp
+version 1.0-0 and higher generates comparisons for the main effects
+only, ignoring covariates and interactions (older versions
+automatically averaged over interaction terms). A warning is given. We refer to
+Hsu (1996), Chapter 7, and Searle (1971), Chapter 7.3, 
+for further discussions and examples on this
+issue.
+</p>
+<p><code>glht</code> extracts the number of degrees of freedom
+for models of class <code>lm</code> (via <code><a href="../../multcomp/help/modelparm.html">modelparm</a></code>) and the
+exact multivariate t distribution is evaluated. For all other
+models, results rely on the normal approximation. Alternatively, the 
+degrees of freedom to be used for the evaluation of multivariate
+t distributions can be given by the additional <code>df</code> argument to
+<code><a href="../../multcomp/help/modelparm.html">modelparm</a></code> specified via <code>...</code>.
+</p>
+<p><code>glht</code> methods return a specification of the null hypothesis
+<i>H_0: K &theta; = m</i>. The value of the linear function
+<i>K &theta;</i> can be extracted using the <code><a href="../../stats/html/coef.html">coef</a></code> method and
+the corresponding covariance matrix is available from the 
+<code><a href="../../stats/html/vcov.html">vcov</a></code> method. Various simultaneous and univariate tests and 
+confidence intervals are available from <code><a href="../../multcomp/help/summary.glht.html">summary.glht</a></code>
+and <code><a href="../../multcomp/help/confint.glht.html">confint.glht</a></code> methods, respectively.
+</p>
+<p>A more detailed description of the underlying methodology is
+available from Hothorn et al. (2008) and Bretz et al. (2010).
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>glht</code>, more specifically a list with elements
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>a fitted model, used in the call to <code>glht</code></p>
+</td></tr>
+<tr valign="top"><td><code>linfct</code></td>
+<td>
+<p> the matrix of linear functions</p>
+</td></tr>
+<tr valign="top"><td><code>rhs</code></td>
+<td>
+<p> the vector of right hand side values <i>m</i></p>
+</td></tr>
+<tr valign="top"><td><code>coef</code></td>
+<td>
+<p> the values of the linear functions</p>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p> the covariance matrix of the values of the linear functions</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p> optionally, the degrees of freedom when the exact t 
+distribution is used for inference</p>
+</td></tr>
+<tr valign="top"><td><code>alternative</code></td>
+<td>
+<p> a character string specifying the alternative
+hypothesis</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p> optionally, a character string giving the name of the specific procedure</p>
+</td></tr>
+</table>
+<p>with <code>print</code>, <code><a href="../../base/html/summary.html">summary</a></code>, 
+<code><a href="../../stats/html/confint.html">confint</a></code>, <code><a href="../../stats/html/coef.html">coef</a></code> and <code><a href="../../stats/html/vcov.html">vcov</a></code> 
+methods being available. When called with <code>linfct</code> being an
+<code>mcp</code> object, an additional element <code>focus</code> is available
+storing the names of the factors under test.
+</p>
+
+
+<h3>References</h3>
+
+<p>Frank Bretz, Torsten Hothorn and Peter Westfall (2010),
+<em>Multiple Comparisons Using R</em>, CRC Press, Boca Raton.
+</p>
+<p>Shayle R. Searle (1971), <em>Linear Models</em>.
+John Wiley &amp; Sons, New York.
+</p>
+<p>Jason C. Hsu (1996), <em>Multiple Comparisons</em>.
+Chapman &amp; Hall, London.
+</p>
+<p>Torsten Hothorn, Frank Bretz and Peter Westfall (2008),
+Simultaneous Inference in General Parametric Models.
+<em>Biometrical Journal</em>, <b>50</b>(3), 346&ndash;363;
+See <code>vignette("generalsiminf", package = "multcomp")</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+  ### multiple linear model, swiss data
+  lmod &lt;- lm(Fertility ~ ., data = swiss)
+
+  ### test of H_0: all regression coefficients are zero 
+  ### (ignore intercept)
+
+  ### define coefficients of linear function directly
+  K &lt;- diag(length(coef(lmod)))[-1,]
+  rownames(K) &lt;- names(coef(lmod))[-1]
+  K
+
+  ### set up general linear hypothesis
+  glht(lmod, linfct = K)
+
+  ### alternatively, use a symbolic description 
+  ### instead of a matrix 
+  glht(lmod, linfct = c("Agriculture = 0",
+                        "Examination = 0",
+                        "Education = 0",
+                        "Catholic = 0",
+                        "Infant.Mortality = 0"))
+
+
+  ### multiple comparison procedures
+  ### set up a one-way ANOVA
+  amod &lt;- aov(breaks ~ tension, data = warpbreaks)
+
+  ### set up all-pair comparisons for factor `tension'
+  ### using a symbolic description (`type' argument 
+  ### to `contrMat()')
+  glht(amod, linfct = mcp(tension = "Tukey"))
+
+  ### alternatively, describe differences symbolically
+  glht(amod, linfct = mcp(tension = c("M - L = 0", 
+                                      "H - L = 0",
+                                      "H - M = 0")))
+
+  ### alternatively, define contrast matrix directly
+  contr &lt;- rbind("M - L" = c(-1, 1, 0),
+                 "H - L" = c(-1, 0, 1), 
+                 "H - M" = c(0, -1, 1))
+  glht(amod, linfct = mcp(tension = contr))
+
+  ### alternatively, define linear function for coef(amod)
+  ### instead of contrasts for `tension'
+  ### (take model contrasts and intercept into account)
+  glht(amod, linfct = cbind(0, contr %*% contr.treatment(3)))
+
+
+  ### mix of one- and two-sided alternatives
+  warpbreaks.aov &lt;- aov(breaks ~ wool + tension,
+                      data = warpbreaks)
+
+  ### contrasts for `tension'
+  K &lt;- rbind("L - M" = c( 1, -1,  0),     
+             "M - L" = c(-1,  1,  0),       
+             "L - H" = c( 1,  0, -1),     
+             "M - H" = c( 0,  1, -1))
+
+  warpbreaks.mc &lt;- glht(warpbreaks.aov, 
+                        linfct = mcp(tension = K),
+                        alternative = "less")
+
+  ### correlation of first two tests is -1
+  cov2cor(vcov(warpbreaks.mc))
+
+  ### use smallest of the two one-sided
+  ### p-value as two-sided p-value -&gt; 0.0232
+  summary(warpbreaks.mc)
+
+  ### more complex models: Continuous outcome logistic
+  ### regression; parameters are log-odds ratios
+  if (require("tram")) {
+      confint(glht(Colr(breaks ~ wool + tension, 
+                        data = warpbreaks), 
+                   linfct = mcp("tension" = "Tukey")))
+  }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>multcomp</em> version 1.4-19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

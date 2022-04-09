@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Lspec: logspline estimation of a spectral distribution</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for clspec {polspline}"><tr><td>clspec {polspline}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Lspec: logspline estimation of a spectral distribution</h2>
+
+<h3>Description</h3>
+
+<p>Autocorrelations, autocovariances
+(<code>clspec</code>), spectral densities and line spectrum (<code>dlspec</code>),
+spectral distributions (<code>plspec</code>) or a
+random time series(<code>rlspec</code>) from a model fitted with <code><a href="../../polspline/help/lspec.html">lspec</a></code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre>clspec(lag, fit, cov = TRUE, mm) 
+dlspec(freq, fit) 
+plspec(freq, fit, mm) 
+rlspec(n, fit, mean = 0, cosmodel = FALSE, mm)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>lag</code></td>
+<td>
+<p> vector of integer-valued lags for which the  autocorrelations or autocorrelations are to be computed.  </p>
+</td></tr>
+<tr valign="top"><td><code>fit</code></td>
+<td>
+ <p><code>lspec</code> object, typically the result of <code><a href="../../polspline/help/lspec.html">lspec</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>cov</code></td>
+<td>
+<p> compute autocovariances (<code>TRUE</code>) or autocorrelations (<code>FALSE</code>).  </p>
+</td></tr>
+<tr valign="top"><td><code>mm</code></td>
+<td>
+<p> number of points used in integration and the fft. Default is the 
+smallest power of two larger than <code>max(fit\$sample, max(lag),1024)</code>  for
+<code>clspec</code> and <code>plspec</code>
+or the smallest power of two larger than <code>max(fit\$sample, n, max(lag),
+1024)</code> for  (<code>rlspec</code>).  </p>
+</td></tr>
+<tr valign="top"><td><code>freq</code></td>
+<td>
+<p> vector of frequencies. For <code>plspec</code> frequencies should be between <i>-pi</i> and <i>pi</i>.  </p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p> length of the random time series to be generated.  </p>
+</td></tr>
+<tr valign="top"><td><code>mean</code></td>
+<td>
+<p> mean level of the time series to be generated.  </p>
+</td></tr>
+<tr valign="top"><td><code>cosmodel</code></td>
+<td>
+<p> indicate that the data should be generated from a model with constant 
+harmonic terms rather than a true Gaussian time series.  </p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Autocovariances or autocorrelations (<code>clspec</code>); 
+values of the spectral distribution at the requested frequencies. (<code>plspec</code>); 
+random time series of length <code>n</code> (<code>rlspec</code>); 
+or a  list with three components  (<code>dlspec</code>):
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>the  spectral density evaluated at the vector of frequencies,</p>
+</td></tr>
+<tr valign="top"><td><code>modfreq</code></td>
+<td>
+<p>modified frequencies of the form <i>(2pi*j/T)</i> that are close to the 
+frequencies that were requested,</p>
+</td></tr>
+<tr valign="top"><td><code>m</code></td>
+<td>
+<p>mass of the line spectrum at the modified frequencies.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p> Charles Kooperberg <a href="mailto:clk@fredhutch.org">clk@fredhutch.org</a>.</p>
+
+
+<h3>References</h3>
+
+ 
+<p>Charles Kooperberg, Charles J. Stone, and Young K. Truong (1995). 
+Logspline Estimation of a Possibly Mixed Spectral Distribution.
+<em>Journal of Time Series Analysis</em>, <b>16</b>, 359-388.
+</p>
+<p>Charles J. Stone, Mark Hansen, Charles Kooperberg, and Young K. Truong. 
+The use of polynomial splines and their tensor products in extended
+linear modeling (with discussion) (1997).  <em>Annals of Statistics</em>,
+<b>25</b>, 1371&ndash;1470.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../polspline/help/lspec.html">lspec</a></code>, <code><a href="../../polspline/help/plot.lspec.html">plot.lspec</a></code>, <code><a href="../../polspline/help/summary.lspec.html">summary.lspec</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(co2)
+co2.detrend &lt;- lm(co2~c(1:length(co2)))$residuals
+fit &lt;- lspec(co2.detrend)
+clspec(0:12,fit)
+plspec((0:314)/100, fit)
+dlspec((0:314)/100, fit)
+rlspec(length(co2),fit)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>polspline</em> version 1.1.20 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

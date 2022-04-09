@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;vctrs&rsquo; version 0.3.8</h2>
+</div><h2>Documentation for package &lsquo;vctrs&rsquo; version 0.4.1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -46,10 +46,18 @@
 <td>FAQ - How to implement ptype2 and cast methods? (Data frames)</td></tr>
 <tr><td style="width: 25%;"><a href="howto-faq-fix-scalar-type-error.html">howto-faq-fix-scalar-type-error</a></td>
 <td>FAQ - Why isn't my class treated as a vector?</td></tr>
+<tr><td style="width: 25%;"><a href="internal-faq-matches-algorithm.html">internal-faq-matches-algorithm</a></td>
+<td>Internal FAQ - Implementation of 'vec_locate_matches()'</td></tr>
 <tr><td style="width: 25%;"><a href="internal-faq-ptype2-identity.html">internal-faq-ptype2-identity</a></td>
 <td>Internal FAQ - 'vec_ptype2()', 'NULL', and unspecified vectors</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">is_list_of</a></td>
 <td>'list_of' S3 class for homogenous lists</td></tr>
+<tr><td style="width: 25%;"><a href="vec_is_list.html">list_all_vectors</a></td>
+<td>Is the object a list?</td></tr>
+<tr><td style="width: 25%;"><a href="vec_is_list.html">list_check_all_vectors</a></td>
+<td>Is the object a list?</td></tr>
+<tr><td style="width: 25%;"><a href="list_drop_empty.html">list_drop_empty</a></td>
+<td>Drop empty elements from a list</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">list_of</a></td>
 <td>'list_of' S3 class for homogenous lists</td></tr>
 <tr><td style="width: 25%;"><a href="vec_size.html">list_sizes</a></td>
@@ -100,6 +108,8 @@
 <td>Cast a vector to a specified type</td></tr>
 <tr><td style="width: 25%;"><a href="vec_bind.html">vec_cbind</a></td>
 <td>Combine many data frames into one data frame</td></tr>
+<tr><td style="width: 25%;"><a href="vec_is_list.html">vec_check_list</a></td>
+<td>Is the object a list?</td></tr>
 <tr><td style="width: 25%;"><a href="vec_chop.html">vec_chop</a></td>
 <td>Chopping</td></tr>
 <tr><td style="width: 25%;"><a href="vec_compare.html">vec_compare</a></td>
@@ -130,12 +140,16 @@
 <td>Initialize a vector</td></tr>
 <tr><td style="width: 25%;"><a href="vec_seq_along.html">vec_init_along</a></td>
 <td>Useful sequences</td></tr>
+<tr><td style="width: 25%;"><a href="vec_interleave.html">vec_interleave</a></td>
+<td>Interleave many vectors into one vector</td></tr>
 <tr><td style="width: 25%;"><a href="vec_assert.html">vec_is</a></td>
 <td>Assert an argument has known prototype and/or size</td></tr>
 <tr><td style="width: 25%;"><a href="vec_size.html">vec_is_empty</a></td>
 <td>Number of observations</td></tr>
 <tr><td style="width: 25%;"><a href="vec_is_list.html">vec_is_list</a></td>
 <td>Is the object a list?</td></tr>
+<tr><td style="width: 25%;"><a href="vec_locate_matches.html">vec_locate_matches</a></td>
+<td>Locate observations matching specified conditions</td></tr>
 <tr><td style="width: 25%;"><a href="vec_match.html">vec_match</a></td>
 <td>Find matching observations across vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_names.html">vec_names</a></td>

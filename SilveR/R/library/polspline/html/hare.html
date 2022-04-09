@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Hare: hazard regression</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for hare {polspline}"><tr><td>hare {polspline}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Hare: hazard regression</h2>
+
+<h3>Description</h3>
+
+<p>Fit a hazard regression model: linear splines are used to model
+the baseline hazard, covariates, and interactions. Fitted models
+can be, but do not need to be, proportional hazards models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>hare(data, delta, cov, penalty, maxdim, exclude, include, prophaz = FALSE,
+additive = FALSE, linear, fit, silent = TRUE) 
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+
+<p>vector of observations. Observations may or may not be right censored. All 
+observations should be nonnegative. 
+</p>
+</td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+
+<p>binary vector with the same length as <code>data</code>. Elements of <code>data</code> 
+for which the corresponding element of <code>delta</code> is 0 are assumed to be 
+right censored, elements of <code>data</code> 
+for which the corresponding element of <code>delta</code> is 1 are assumed to be 
+uncensored. If <code>delta</code> is missing, all observations are assumed to be uncensored. 
+</p>
+</td></tr>
+<tr valign="top"><td><code>cov</code></td>
+<td>
+
+<p>covariates: matrix with as many rows as the length of <code>data</code>. May be omitted 
+if there are no covariates. (If there are no covariates, however,
+<code><a href="../../polspline/help/heft.html">heft</a></code> will provide a more flexible model using cubic splines.)
+</p>
+</td></tr>
+<tr valign="top"><td><code>penalty</code></td>
+<td>
+
+<p>the parameter to be used in the AIC criterion. The method chooses 
+the number of knots that minimizes <code>-2 * loglikelihood + penalty * (dimension)</code>. 
+The default is to use <code>penalty = log(samplesize)</code> as in BIC. The effect of 
+this parameter is summarized in <code><a href="../../polspline/help/summary.hare.html">summary.hare</a></code>. 
+</p>
+</td></tr>
+<tr valign="top"><td><code>maxdim</code></td>
+<td>
+
+<p>maximum dimension (default is <i>\code{6 * length(data)^0.2}</i>. 
+</p>
+</td></tr>
+<tr valign="top"><td><code>exclude</code></td>
+<td>
+
+<p>combinations to be excluded - this should be a matrix with 2 
+columns - if for example <code>exclude[1, 1] = 2</code> and <code>exclude[1, 2] = 3</code> no 
+interaction between covariate 2 and 3 is included. 0 represents time. 
+</p>
+</td></tr>
+<tr valign="top"><td><code>include</code></td>
+<td>
+
+<p>those combinations that can be included. Should have the same format 
+as <code>exclude</code>. Only one of <code>exclude</code> and <code>include</code> can be specified .
+</p>
+</td></tr>
+<tr valign="top"><td><code>prophaz</code></td>
+<td>
+<p> should the model selection be restricted to proportional hazards models?  </p>
+</td></tr>
+<tr valign="top"><td><code>additive</code></td>
+<td>
+<p> should the model selection be restricted to additive models?  </p>
+</td></tr>
+<tr valign="top"><td><code>linear</code></td>
+<td>
+
+<p>vector indicating for which of the variables no knots should 
+be entered. For example, if <code>linear = c(2, 3)</code> no knots for either covariate 
+2 or 3 are entered. 0 represents time. The default is none.
+</p>
+</td></tr>
+<tr valign="top"><td><code>fit</code></td>
+<td>
+
+<p><code><a href="../../polspline/help/hare.html">hare</a></code> object. If  <code>fit</code> is specified, <code><a href="../../polspline/help/hare.html">hare</a></code> adds 
+basis functions starting with those in <code>fit</code>. 
+</p>
+</td></tr>
+<tr valign="top"><td><code>silent</code></td>
+<td>
+
+<p>suppresses the printing of diagnostic output about basis functions added 
+or deleted, Rao-statistics, Wald-statistics and log-likelihoods. 
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>An object of class
+<code>hare</code>, which is organized to serve as input for <code><a href="../../polspline/help/plot.hare.html">plot.hare</a></code>, 
+<code><a href="../../polspline/help/summary.hare.html">summary.hare</a></code>, <code><a href="../../polspline/help/dhare.html">dhare</a></code> (conditional density), <code><a href="../../polspline/help/hhare.html">hhare</a></code>
+(conditional hazard rate), <code><a href="../../polspline/help/phare.html">phare</a></code> (conditional probabilities), <code><a href="../../polspline/help/qhare.html">qhare</a></code>
+(conditional quantiles), and <code><a href="../../polspline/help/rhare.html">rhare</a></code> (random numbers). 
+The object is a list with the following members: 
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>ncov</code></td>
+<td>
+<p> number of covariates.  </p>
+</td></tr>
+<tr valign="top"><td><code>ndim</code></td>
+<td>
+<p> number of dimensions of the fitted model.  </p>
+</td></tr>
+<tr valign="top"><td><code>fcts</code></td>
+<td>
+<p> matrix of size <code>ndim x 6</code>. each row is a basis function. 
+First element: first covariate involved (0 means time); 
+</p>
+<p>second element: which knot (0 means: constant (time) or linear (covariate)); 
+</p>
+<p>third element: second covariate involved (<code>NA</code> means: this is a function of one variable); 
+</p>
+<p>fourth element: knot involved (if the third element is <code>NA</code>, of no relevance); 
+</p>
+<p>fifth element: beta; 
+</p>
+<p>sixth element: standard error of beta.</p>
+</td></tr>
+<tr valign="top"><td><code>knots</code></td>
+<td>
+
+<p>a matrix with <code>ncov</code> rows.
+Covariate <code>i</code> has row <code>i+1</code>, time has row 1. 
+First column: number of knots in this dimension;
+other columns: the knots, appended with <code>NA</code>s to make it a matrix.
+</p>
+</td></tr>
+<tr valign="top"><td><code>penalty</code></td>
+<td>
+<p> the parameter used in the AIC criterion.</p>
+</td></tr>
+<tr valign="top"><td><code>max</code></td>
+<td>
+<p> maximum element of survival data.</p>
+</td></tr>
+<tr valign="top"><td><code>ranges</code></td>
+<td>
+<p> column <code>i</code> gives the range of the <code>i</code>-th covariate.</p>
+</td></tr>
+<tr valign="top"><td><code>logl</code></td>
+<td>
+
+<p>matrix with two columns. The <code>i</code>-th element of the first column  
+is the loglikelihood of the model of dimension <code>i</code>. The second column indicates whether this 
+model was fitted during the addition stage (1) or during the deletion stage (0). 
+</p>
+</td></tr>
+<tr valign="top"><td><code>sample</code></td>
+<td>
+<p> sample size.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p> Charles Kooperberg <a href="mailto:clk@fredhutch.org">clk@fredhutch.org</a>.</p>
+
+
+<h3>References</h3>
+
+<p>Charles Kooperberg, Charles J. Stone and Young K. Truong (1995).
+Hazard regression.  <em>Journal of the American Statistical
+Association</em>, <b>90</b>, 78-94.
+</p>
+<p>Charles J. Stone, Mark Hansen, Charles Kooperberg, and Young K. Truong.
+The use of polynomial splines and their tensor products in extended
+linear modeling (with discussion) (1997).  <em>Annals of Statistics</em>,
+<b>25</b>, 1371&ndash;1470.</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../polspline/help/heft.html">heft</a></code>,
+<code><a href="../../polspline/help/plot.hare.html">plot.hare</a></code>,
+<code><a href="../../polspline/help/summary.hare.html">summary.hare</a></code>,
+<code><a href="../../polspline/help/dhare.html">dhare</a></code>,
+<code><a href="../../polspline/help/hhare.html">hhare</a></code>,
+<code><a href="../../polspline/help/phare.html">phare</a></code>,
+<code><a href="../../polspline/help/qhare.html">qhare</a></code>,
+<code><a href="../../polspline/help/rhare.html">rhare</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+fit &lt;- hare(testhare[,1], testhare[,2], testhare[,3:8]) 
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>polspline</em> version 1.1.20 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

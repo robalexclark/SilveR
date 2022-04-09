@@ -1,3 +1,29 @@
+# waldo 0.4.0
+
+* Atomic S3 classes with format methods now use those methods when 
+  displaying comparisons (#98). If the printed representation is the
+  same, they fallback to displaying the underlying data.
+
+* Rowwise data frame comparisons are now much much faster (#116),
+  and respect the `max_diffs` argument (@krlmlr, #110).
+
+* Unnamed environments now compare by value, not by reference (i.e. if 
+  two environments contain the same values, they compare the same, even
+  if they're different environments) (#127). Environments that contain
+  self-references are handled correctly (#117). Differences between pairs 
+  of environments are only ever reported once.
+
+* In the unlikely event that you have bare CHARSXP objects, waldo now
+  handles them (#121).
+
+* S4 objects are labelled with their class, not all superclasses (#125).
+
+* `compare_proxy()` ignores the `"index"` attribute for data tables 
+  (@krlmlr, #107), and works again for `RProtoBuf`  objects 
+  (@MichaelChirico, #119)
+
+* Infinite values can be compared with a tolerance (@dmurdoch, #122).
+
 # waldo 0.3.1
 
 * `compare()`ing data frames now works independently of `option(max.print)` 
