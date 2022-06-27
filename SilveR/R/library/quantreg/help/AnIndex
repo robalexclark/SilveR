@@ -62,6 +62,7 @@ logLik.rqs	rq.object
 logLik.rqss	rqss.object
 lprq	lprq
 Mammals	Mammals
+MelTemp	MelTemp
 Munge	Munge
 nlrq	nlrq
 nlrq.control	nlrq.control

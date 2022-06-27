@@ -1,10 +1,34 @@
+# igraph 1.3.2
+
+The C core is updated to 0.9.9, fixing a range of bugs.
+
+Fixed:
+
+- The length of size-zero `communities` objects is now reported correctly.
+- `layout_with_kk()` would fail to produce reasonable results with the default initial
+  coordinates. This has been corrected, however, this function no longer produces
+  precisely the same output for a given graph as before. To restore the previous
+  behaviour, use `layout_with_kk(g, coord=layout_in_circle(g))` in 2D or
+  `layout_with_kk(g, dim=3, coord=layout_on_sphere(g))` in 3D.
+- Indexing an `igraph.vs` object with `v[x, na_ok=T]` now correctly handles the
+  `na_ok` argument in all cases; previous versions ignored it when `x` was
+  a single number.
+
+Other:
+
+ - Documentation improvements and fixes.
+
 # igraph 1.3.1
 
 Fixed:
 
 - `graph_from_adjacency_matrix()` now works with sparse matrices even if the
   cell values in the sparse matrix are unspecified.
-- Fixed crash in `cluster_walktrap()` when `modularity=FALSE` and `membership=FALSE`
+- Fixed crash in `cluster_walktrap()` when `modularity=FALSE` and `membership=FALSE`.
+- `cluster_walktrap()` no longer accepts invalid weight vectors.
+- `cluster_walktrap()` no longer returns a modularity vector of invalid length for
+  disconnected graphs. This also fixes some rare failures of this function on
+  weighted disconnected graphs.
 - `edge_attr()` does not ignore its `index=...` argument any more.
 - `automorphisms()`, `automorphism_group()` and `canonical_permutation()` now
   allow all possible values supported by the C core in the `sh` argument.
@@ -16,7 +40,7 @@ Fixed:
   `sh2`.
 - `dominator_tree()` now conforms to its documentation with respect to the
   `dom` component of the result: it contains the indices of the dominator
-  vertices for each vertex and -1 for the root of the dominator tree.
+  vertices for each vertex and `-1` for the root of the dominator tree.
 - Mentions of the `"power"` algorithm of `page_rank()` have been removed from
   the documentation, as this method is no longer available.
 - Several other documentation fixes to bring the docs up to date with new behaviours

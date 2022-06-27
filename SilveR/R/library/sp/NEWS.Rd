@@ -1,5 +1,10 @@
 \name{NEWS} 
 \title{News for Package 'sp'}
+\section{Changes in version 1.5-0 (2022-06-03)}{
+\itemize{
+	\item merge the evolution branch from rsbivand/sp@evolution
+}
+}
 \section{Changes in version 1.4-7 (2022-04-18)}{
 \itemize{
 	\item remove S-compatibility DOUBLE_* macros; https://github.com/edzer/sp/pull/115

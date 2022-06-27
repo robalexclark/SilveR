@@ -3,9 +3,11 @@
 library(tibble)
 library(vctrs)
 
-knitr::opts_chunk$set(error = TRUE)
-
-tibble:::set_fansi_hooks()
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error = TRUE
+)
 tibble:::set_dftbl_hooks()
 
 options(

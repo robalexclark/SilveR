@@ -1,4 +1,3 @@
-using ControlledForms.IntegrationTests;
 using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;

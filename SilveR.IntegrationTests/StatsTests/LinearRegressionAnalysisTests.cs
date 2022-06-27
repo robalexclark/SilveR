@@ -1,4 +1,3 @@
-using ControlledForms.IntegrationTests;
 using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
@@ -1444,11 +1443,11 @@ namespace SilveR.IntegrationTests
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
-            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Continuous factor (Resp10) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
-            Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
+            Assert.Contains("The Continuous factor (Resp10) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", warnings);
+            Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
         }
 
         [Fact]
@@ -1595,7 +1594,7 @@ namespace SilveR.IntegrationTests
 
             //Assert
             Assert.Contains("The Categorical factor (Cat9) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", errors);
-            Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);            
+            Helpers.SaveOutput("LinearRegressionAnalysis", testName, errors);
         }
 
         [Fact]
@@ -1690,5 +1689,39 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "LinearRegressionAnalysis", testName + ".html"));
             Assert.Equal(Helpers.FixForUnixOSs(expectedHtml), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task LRA58()
+        {
+            string testName = "LRA58";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            LinearRegressionAnalysisModel model = new LinearRegressionAnalysisModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Linear Regression").Key;
+            model.Response = "Response1";
+            model.ResponseTransformation = "None";
+            model.ContinuousFactors = new string[] { "Resp3" };
+            model.Covariates = new string[] { "Resp5" };
+            model.ANOVASelected = true;
+            model.Coefficients = true;
+            model.AdjustedRSquared = true;
+            model.ResidualsVsPredictedPlot = true;
+            model.NormalProbabilityPlot = true;
+            model.CooksDistancePlot = true;
+            model.LeveragePlot = true;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Continuous factor (Resp3) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", warnings);
+            Assert.Contains("The Covariate (Resp5) contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.", warnings);
+            Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
+        }
+
+
     }
 }

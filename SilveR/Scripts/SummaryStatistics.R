@@ -18,17 +18,18 @@ thirdCat <- Args[8]
 fourthCat <- Args[9]
 mean <- Args[10]
 N <- Args[11]
-StDev <- Args[12]
-Variances <- Args[13]
-StErr <- Args[14]
-MinMax <- Args[15]
-MedianQuartile <- Args[16]
-CoeffVariation <- Args[17]
-confidenceLimits <- Args[18]
-CIval2 <- as.numeric(Args[19])
+sum <- Args[12]
+StDev <- Args[13]
+Variances <- Args[14]
+StErr <- Args[15]
+MinMax <- Args[16]
+MedianQuartile <- Args[17]
+CoeffVariation <- Args[18]
+confidenceLimits <- Args[19]
+CIval2 <- as.numeric(Args[20])
 CIval <- CIval2 / 100
-NormalProbabilityPlot <- Args[20]
-ByCategoriesAndOverall <- Args[21]
+NormalProbabilityPlot <- Args[21]
+ByCategoriesAndOverall <- Args[22]
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -150,9 +151,9 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
 	        for (i in 1:length) {
 	        	table[i] = " "
 	        }
-
             	vectormean <- c(1:length)
             	vectorN <- c(1:length)
+			vectorsum  <- c(1:length)
             	vectorStDev <- c(1:length)
             	vectorVariances <- c(1:length)
             	vectorStErr <- c(1:length)
@@ -175,6 +176,9 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
                 	if (N == "Y") {
                     		tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
                     		vectorN[i] = length(tempy)
+                	}
+                	if (sum == "Y") {
+                	    vectorsum[i] = sum(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
                 	}
                 	if (StDev == "Y") {
                     		vectorStDev[i] = sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
@@ -222,6 +226,10 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
             	if (N == "Y") {
                 	#vectorN<-format(round(vectormean, 4), nsmall=4, scientific=FALSE)
                 	table <- cbind(table, vectorN)
+            	}
+            	if (sum == "Y") {
+                	vectorsum <- format(round(vectorsum, 4), nsmall = 4, scientific = FALSE)
+                	table <- cbind(table, vectorsum)
             	}
             	if (Variances == "Y") {
                 	vectorVariances <- format(round(vectorVariances, 4), nsmall = 4, scientific = FALSE)
@@ -277,6 +285,10 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
             	if (N == "Y") {
                 	hed2 <- c("N")
                 	temp6 <- cbind(temp6, hed2)
+            	}
+            	if (sum == "Y") {
+                	hed2x <- c("Sum")
+                	temp6 <- cbind(temp6, hed2x)
             	}
             	if (Variances == "Y") {
                 	hed4 <- c("Variance")
@@ -449,8 +461,11 @@ if (firstCat != "NULL" || secondCat != "NULL" || thirdCat != "NULL" || fourthCat
 		
 		MainTitle2 <- ""
 		graphdata <- statdata
-		graphdata$yvarrr_IVS <- eval(parse(text = paste("statdata$", csResponses))) 
-	
+		graphdata$names <- c(1:nrow(graphdata))
+		graphdata <- graphdata[!is.na(eval(parse(text = paste("graphdata$", csResponses)))),]
+		graphdata$yvarrr_IVS <- eval(parse(text = paste("graphdata$", csResponses))) 
+
+
 	    	#GGPLOT2 code
 		#NONCAT_SCAT("QQPLOT")
 		CAT_QQPLOT()
@@ -506,6 +521,7 @@ for (i in 1:resplength) {
 
         vectormean <- c(1:length)
         vectorN <- c(1:length)
+        vectorsum <- c(1:length)
         vectorStDev <- c(1:length)
         vectorVariances <- c(1:length)
         vectorStErr <- c(1:length)
@@ -529,6 +545,9 @@ for (i in 1:resplength) {
             if (N == "Y") {
                 tempy <- na.omit(eval(parse(text = paste("sub2$", csResponses))))
                 vectorN[i] = length(tempy)
+            }
+            if (sum == "Y") {
+                vectorsum[i] = sum(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
             }
             if (StDev == "Y") {
                 vectorStDev[i] = sd(eval(parse(text = paste("sub2$", csResponses))), na.rm = TRUE)
@@ -575,6 +594,10 @@ for (i in 1:resplength) {
         }
         if (N == "Y") {
             table <- cbind(table, vectorN)
+        }
+        if (sum == "Y") {
+             vectorsum <- format(round(vectorsum, 4), nsmall = 4, scientific = FALSE)
+             table <- cbind(table, vectorsum)
         }
         if (Variances == "Y") {
             vectorVariances <- format(round(vectorVariances, 4), nsmall = 4, scientific = FALSE)
@@ -633,6 +656,10 @@ for (i in 1:resplength) {
         if (N == "Y") {
             hed2 <- c("N")
             temp6 <- cbind(temp6, hed2)
+        }
+        if (sum == "Y") {
+            hed2x <- c("Sum")
+            temp6 <- cbind(temp6, hed2x)
         }
 	if (Variances == "Y") {
             hed4 <- c("Variance")
@@ -763,8 +790,10 @@ if (NormalProbabilityPlot != "N" ) {
     	MainTitle2 <- ""
     	te <- qqnorm(eval(parse(text = paste("statdata$", csResponses))))
     	graphdata <- data.frame(te$x, te$y)
+	graphdata <- graphdata[!is.na(te$y),]
     	graphdata$xvarrr_IVS <- graphdata$te.x
     	graphdata$yvarrr_IVS <- graphdata$te.y
+	graphdata$names <- c(1:length(graphdata$te.x))
 
     	#GGPLOT2 code
 	#NONCAT_SCAT("QQPLOT")
@@ -861,6 +890,7 @@ if (OutputAnalysisOps == "Y") {
 	}
 	HTML(paste("Output mean (Y/N): ", mean, sep=""),  align="left")
 	HTML(paste("Output sample size  (Y/N): ", N, sep=""),  align="left")
+	HTML(paste("Output sum  (Y/N): ", sum, sep=""),  align="left")
 	HTML(paste("Output variance (Y/N): ", Variances, sep=""),  align="left")
 	HTML(paste("Output standard deviation (Y/N): ", StDev, sep=""),  align="left")
 	HTML(paste("Output standard error of mean (Y/N): ", StErr, sep=""),  align="left")

@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Reference-Scaled Average Bioequivalence</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%7Bbackground%2Dcolor%3A%23fff%3Bmargin%3A1em%20auto%3Bmax%2Dwidth%3A700px%3Boverflow%3Avisible%3Bpadding%2Dleft%3A2em%3Bpadding%2Dright%3A2em%3Bfont%2Dsize%3A14px%3Bline%2Dheight%3A1%2E35%3Bhyphens%3Aauto%3Bfont%2Dfamily%3A%22Open%20Sans%22%2C%22Helvetica%20Neue%22%2CHelvetica%2CArial%2Csans%2Dserif%7D%23header%7Btext%2Dalign%3Acenter%7D%23TOC%7Bclear%3Aboth%3Bmargin%3A0%203em%3Bpadding%3A4px%3Bwidth%3Aauto%3Bborder%3A1px%20solid%20%23ccc%3Bborder%2Dradius%3A5px%3Bbackground%2Dcolor%3A%23fbfbfb%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A1%2E2em%7D%23TOC%20%2Etoctitle%7Bfont%2Dweight%3Abold%3Bfont%2Dsize%3A15px%3Bmargin%2Dleft%3A5px%7D%23TOC%20ul%7Bpadding%2Dleft%3A40px%3Bmargin%3A5px%20auto%205px%20%2D1%2E5em%7D%23TOC%20ul%20ul%7Bmargin%2Dleft%3A%2D2em%7D%23TOC%20li%7Blist%2Dstyle%2Dtype%3Anone%3Bline%2Dheight%3A16px%7Dtable%7Bmargin%3A1em%20auto%3Bborder%2Dwidth%3A1px%3Bborder%2Dcolor%3A%23ddd%3Bborder%2Dstyle%3Aoutset%3Bborder%2Dcollapse%3Acollapse%7Dtable%20th%7Bborder%2Dwidth%3A2px%3Bpadding%3A5px%3Bborder%2Dstyle%3Ainset%7Dtable%20td%7Bborder%2Dwidth%3A1px%3Bborder%2Dstyle%3Ainset%3Bline%2Dheight%3A18px%3Bpadding%3A5px%205px%7Dtable%2Ctable%20th%2Ctable%20td%7Bborder%2Dleft%2Dstyle%3Anone%3Bborder%2Dright%2Dstyle%3Anone%7Dtable%20thead%2C%20table%20%2Eeven%7Bbackground%2Dcolor%3A%23f7f7f7%7Dp%7Bmargin%3A0%2E5em%200%7Dsup%2Csub%7Bposition%3Arelative%3Bvertical%2Dalign%3Abaseline%3Btop%3A%2D0%2E4em%7Dsub%7Btop%3A0%2E4em%7Dblockquote%7Bbackground%2Dcolor%3A%23fffff6%3Bpadding%3A0%2E25em%200%2E75em%7Dhr%7Bborder%2Dstyle%3Asolid%3Bborder%3Anone%3Bborder%2Dtop%3A1px%20solid%20%23777%3Bmargin%3A28px%200%7Ddl%7Bmargin%2Dleft%3A0%7Ddl%20dd%7Bmargin%2Dbottom%3A13px%3Bmargin%2Dleft%3A13px%7Ddl%20dt%7Bfont%2Dweight%3A700%7Dul%7Bmargin%2Dtop%3A0%7Dul%20li%7Blist%2Dstyle%3Acircle%20outside%7Dul%20ul%7Bmargin%2Dbottom%3A0%7D%2Ehl%7Bbackground%2Dcolor%3A%23FFFF99%7Dpre%2C%20code%7Bbackground%2Dcolor%3A%23f7f7f7%3Bborder%2Dradius%3A3px%3Bcolor%3A%23333%3Bwhite%2Dspace%3Apre%2Dwrap%7Dpre%7Bborder%2Dradius%3A3px%3Bmargin%3A5px%200%2010px%200%3Bpadding%3A10px%7Dpre%3Anot%28%5Bclass%5D%29%7Bbackground%2Dcolor%3A%23f7f7f7%7Dcode%7Bfont%2Dsize%3A85%25%3Bfont%2Dfamily%3AConsolas%2CMonaco%2C%27Lucida%20Console%27%2C%27Courier%20New%27%2C%27Courier%27%2Cmonospace%7Dp%20%3E%20code%2Cli%20%3E%20code%7Bpadding%3A2px%200%7Dfigure%2C%2Ecaption%7Btext%2Dalign%3Acenter%7Dimg%7Bdisplay%3Ablock%3Bmargin%3A0%20auto%200%20auto%3Bbackground%2Dcolor%3A%23FFF%3Bpadding%3A2px%3Bborder%2Dradius%3A5px%3Bborder%3A1px%20solid%20%23CCC%7Dh1%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A4px%3B%3Bline%2Dheight%3A30px%3Bletter%2Dspacing%3A%2E5px%3Bborder%2Dbottom%3A3px%20solid%20%23f7f7f7%3Bfont%2Dsize%3A175%25%3Bhyphens%3Anone%7D%2Etitle%7Bmargin%2Dtop%3A1%2E5em%7Dh2%7Bborder%2Dbottom%3A2px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A2px%3Bfont%2Dsize%3A145%25%7Dh3%7Bborder%2Dbottom%3A1px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bfont%2Dsize%3A120%25%7Dh4%7Bmargin%2Dleft%3A8px%3Bfont%2Dsize%3A110%25%7D%2Eauthor%7Bfont%2Dsize%3A91%25%3Bmargin%2Dleft%3A0%3Bmargin%2Dbottom%3A0%3Bfont%2Dstyle%3Anormal%7Dh5%2C%20h6%7Bborder%2Dbottom%3A1px%20solid%20%23ccc%3Bfont%2Dsize%3A105%25%7Da%7Bcolor%3A%230033dd%3Btext%2Ddecoration%3Anone%7Da%3Ahover%7Bcolor%3A%236666ff%7Da%3Avisited%7Bcolor%3A%23800080%7Da%3Avisited%3Ahover%7Bcolor%3A%23BB00BB%7Da%5Bhref%5E%3D%22http%3A%22%5D%7Bcolor%3A%23696969%3Bborder%2Dbottom%3A1px%20dotted%20%23000%7Da%5Bhref%5E%3D%22https%3A%22%5D%7Bborder%2Dbottom%3A1px%20dotted%20%23000%3Bcolor%3A%23696969%7Dcode%20%3E%20%2Ekw%7Bcolor%3A%23555%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Edt%7Bcolor%3A%23902000%7D%20code%20%3E%20%2Edv%7Bcolor%3A%2340a070%7D%20code%20%3E%20%2Ebn%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Efl%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Ech%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Est%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Eco%7Bcolor%3A%23888888%3Bfont%2Dstyle%3Aitalic%7D%20code%20%3E%20%2Eot%7Bcolor%3A%23007020%7D%20code%20%3E%20%2Eal%7Bcolor%3A%23f00%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Efu%7Bcolor%3A%23900%3Bfont%2Dweight%3A700%7D%20%20code%20%3E%20%2Eer%7Bcolor%3A%23a61717%3Bbackground%2Dcolor%3A%23e3d2d2%7D%20%2Etop%7Bdisplay%3Ainline%3Bposition%3Afixed%3Bbottom%3A0%3Bright%3A0%3Bpadding%3A0%3Bfont%2Dsize%3A108px%7D%2Etop%20img%7Bborder%3Anone%7Da%2Etoplink%3Alink%7Bbackground%2Dimage%3Aurl%28data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAXVBMVEUAAABcgJzu7u%2F%2B%2F%2F%2Ft7u9ri6XN1%2BG1xdKtv82nusl2k6tkhqH6%2B%2FzZ4uiGoLVvj6je4%2BeXrsCTq71ujKbAzdehtMScscGNprl7mK9fgp7k6Ork5%2BrX3uPT2%2BFoh6ODMk%2FHAAAAAXRSTlMAQObYZgAAANFJREFUKM%2BFk%2B0aQzAMRpsW1XZlmGFf93%2BZM4skxji%2F1OHp2zRRhImu8CH4wkWjfjnZFIjUnpY2K2FBmQlpcliRG7IVbFDNPodNctwX%2FpBNmWUq38p8n%2FwWmFrrCzB2zJWKpR55DHx%2BoyIthqeeuPMPUTn69KaRpAfEqQKf%2BkQzHb4slKdQEocHUeFbgqWdDxBQh1dzZXdumhS1B6QTmqpE0aCWmqK5Pe24LNWGjlxUGY2KylfSrrUVF1olREYXutsO%2B8100Ir7jXw0BsdDdDCCb%2FerCdkTmcUbAAAAAElFTkSuQmCC%29%3Bbackground%2Drepeat%3Ano%2Drepeat%3Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E6%3Bfilter%3Aalpha%28opacity%3D60%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Da%2Etoplink%3Ahover%2Ca%2Etoplink%3Aactive%7Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E4%3Bfilter%3Aalpha%28opacity%3D40%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Dcode%20span%2Eco%7Bfont%2Dstyle%3Anormal%7D%23nav%7Bposition%3Aabsolute%3Btop%3A0%3Bfloat%3Aleft%3Bbackground%2Dcolor%3A%23084262%3Bborder%3Anone%7D%23nav%20ul%7Bwidth%3A100%25%3Blist%2Dstyle%2Dtype%3Anone%3Btext%2Dalign%3Acenter%3Bcolor%3A%23fff%3Bfont%2Dsize%3A%2E75em%3Bletter%2Dspacing%3A2px%3Bfont%2Dweight%3A700%3Bmargin%3A0%3Bpadding%3A0%7D%23nav%20ul%20li%7Bdisplay%3Ainline%7D%23nav%20ul%20li%20a%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23084262%3Btext%2Ddecoration%3Anone%3Bfloat%3Aleft%3Bborder%2Dright%3A1px%20solid%20%237394B4%3Bcursor%3Apointer%3Bpadding%3A%2E5em%2011%2E5px%7D%23nav%20ul%20li%20a%3Ahover%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23257B9D%7D%40media%20print%7B%23nav%2C%23TOC%2C%23TOC%20%2Etoctitle%2C%23TOC%20ul%2C%23TOC%20ul%20ul%2C%23TOC%20li%7Bdisplay%3Anone%7D%7D" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Reference-Scaled Average Bioequivalence</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#defaults">Defaults</a></li>
+<li><a href="#sample-size">Sample Size</a>
+<ul>
+<li><a href="#highly-variable-drugs-drug-products">Highly Variable Drugs / Drug Products</a>
+<ul>
+<li><a href="#ema">EMA</a></li>
+<li><a href="#health-canada">Health Canada</a></li>
+<li><a href="#gulf-cooperation-council">Gulf Cooperation Council</a></li>
+<li><a href="#fda">FDA</a></li>
+</ul></li>
+<li><a href="#narrow-therapeutic-index-drugs-fda-cde">Narrow Therapeutic Index Drugs (FDA, CDE)</a></li>
+<li><a href="#highly-variable-narrow-therapeutic-index-drugs-fda-cde">Highly Variable Narrow Therapeutic Index Drugs (FDA, CDE)</a></li>
+</ul></li>
+<li><a href="#power">Power</a></li>
+<li><a href="#type-i-error">Type I Error</a>
+<ul>
+<li><a href="#iteratively-adjusted-α">Iteratively adjusted α</a></li>
+<li><a href="#exact-procedure">‘Exact’ Procedure</a></li>
+</ul></li>
+<li><a href="#helpers">Helpers</a>
+<ul>
+<li><a href="#be-limits">BE limits</a>
+<ul>
+<li><a href="#ExpLim">Expanded Limits (EMA, Health Canada), widened limits (GCC)</a></li>
+<li><a href="#fda-1">FDA</a>
+<ul>
+<li><a href="#ImpLim">‘Implied’ Limits</a></li>
+<li><a href="#DesCRM">Limits of the ‘desired consumer risk model’</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#regulatory-settings">Regulatory Settings</a></li>
+</ul></li>
+<li><a href="#authors">Authors</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+</div>
+
+<!-- RSABE.rmd is generated from RSABE.Rmd.orig. Please edit that file -->
+<!-- Dont forget to run pre_compute.R if RSABE.Rmd.orig has changed    -->
+<div class="top">
+<a class="toplink" href="#nav" title="⇑ top"> </a>
+</div>
+<div id="nav">
+<ul>
+<li>
+<a href="vignette.html">Main Vignette</a>
+</li>
+<li>
+<a href="ABE.html" title="Average Bioequivalence">ABE</a>
+</li>
+<li>
+<span title="» You are here «">RSABE</span>
+</li>
+<li>
+<a href="NI.html">Non-Inferiority</a>
+</li>
+<li>
+<a href="DP.html">Dose-Proportionality</a>
+</li>
+<li>
+<a href="PA.html">Power Analysis</a>
+</li>
+</ul>
+</div>
+<h3>
+Details and examples of other methods are accessible via the menu bar on top of the page and in the <a href="https://cran.r-project.org/package=PowerTOST/PowerTOST.pdf" title="PDF">online manual</a> of all functions.
+</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PowerTOST) <span class="co"># attach the library</span></span></code></pre></div>
+<div id="defaults" class="section level1">
+<h1>Defaults</h1>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Argument</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\small{\alpha}\)</span></td>
+<td><code>alpha</code></td>
+<td>Nominal level of the test</td>
+<td><code>0.05</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\small{\pi}\)</span></td>
+<td><code>targetpower</code></td>
+<td><span title="typically 0.80 – 0.90">Minimum desired power</span></td>
+<td><code>0.80</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\small{\theta_0}\)</span></td>
+<td><code>theta0</code></td>
+<td>‘True’ or assumed T/R ratio</td>
+<td><code>0.90</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\small{\theta_1}\)</span></td>
+<td><code>theta1</code></td>
+<td>Lower BE limit and PE constraint</td>
+<td><code>0.80</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\small{\theta_2}\)</span></td>
+<td><code>theta2</code></td>
+<td>Upper BE limit and PE constraint</td>
+<td><code>1.25</code></td>
+</tr>
+<tr class="even">
+<td><em>CV</em></td>
+<td><code>CV</code></td>
+<td>CV</td>
+<td>none</td>
+</tr>
+<tr class="odd">
+<td>design</td>
+<td><code>design</code></td>
+<td>Planned replicate design</td>
+<td><span title="partial replicate"><code>&quot;2x3x3&quot;</code></span></td>
+</tr>
+<tr class="even">
+<td>regulator</td>
+<td><code>regulator</code></td>
+<td>‘target’ jurisdiction</td>
+<td><code>&quot;EMA&quot;</code></td>
+</tr>
+<tr class="odd">
+<td>nsims</td>
+<td><code>nsims</code></td>
+<td>Number of simulations</td>
+<td>see below</td>
+</tr>
+<tr class="even">
+<td>nstart</td>
+<td><code>nstart</code></td>
+<td>Start if a previous run failed</td>
+<td>none</td>
+</tr>
+<tr class="odd">
+<td>imax</td>
+<td><code>imax</code></td>
+<td>Maximum number of iterations</td>
+<td><code>100</code></td>
+</tr>
+<tr class="even">
+<td>print</td>
+<td><code>print</code></td>
+<td>Show information in the console?</td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="odd">
+<td>details</td>
+<td><code>details</code></td>
+<td>Show details of the sample size search?</td>
+<td><code>FALSE</code></td>
+</tr>
+<tr class="even">
+<td>setseed</td>
+<td><code>setseed</code></td>
+<td>Issue a fixed seed of the random number generator?</td>
+<td><code>TRUE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Arguments <code>targetpower</code>, <code>theta0</code>, <code>theta1</code>, <code>theta2</code>, and <code>CV</code> have to be given as fractions, not in percent.<br />
+The <em>CV</em> is the <em>within</em> (intra-) subject coefficient of variation. If one value is given, homoscedasticity (equal variances) is assumed and therefore, <em>CV</em><sub>wT</sub> = <em>CV</em><sub>wR</sub>. If two values are given (<em>i.e.</em>, <code>CV = c(x, y)</code>) heteroscedasticity (unequal variances) is assumed, where <code>CV[1]</code> has to be <em>CV</em><sub>wT</sub> and <code>CV[2]</code> <em>CV</em><sub>wR</sub>.</p>
+<p>If simulating for power (<code>theta0</code> within the BE limits), <code>nsims</code> defaults to 100,000. If simulating for the empiric type I error (<code>theta0</code> set to one of the BE limits), <code>nsims</code> defaults to one million.</p>
+<h2>
+Implemented Designs
+</h2>
+<pre><code>#    design                        name   df
+#   &quot;2x2x3&quot;   2x2x3 replicate crossover 2n-3
+#   &quot;2x2x4&quot;   2x2x4 replicate crossover 3n-4
+#   &quot;2x4x4&quot;   2x4x4 replicate crossover 3n-4
+#   &quot;2x3x3&quot;   partial replicate (2x3x3) 2n-3
+#   &quot;2x4x2&quot;            Balaam’s (2x4x2)  n-2
+#  &quot;2x2x2r&quot; Liu’s 2x2x2 repeated x-over 3n-2</code></pre>
+<p>The terminology of the <code>design</code> argument follows this pattern: <code>treatments x sequences x periods</code>.</p>
+<p>With <code>foo(..., details = FALSE, print = FALSE)</code> results are given as a data frame<small> </small><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> with eleven columns <code>Design</code>, <code>alpha</code>, <code>CVwT</code>, <code>CVwR</code>, <code>theta0</code>, <code>theta1</code>, <code>theta2</code>, <code>Sample size</code>, <code>Achieved power</code>, <code>Target power</code>, and <code>nlast</code>. To access <em>e.g.</em>, the sample size use either <code>foo(...)[1, 8]</code> or <code>foo(...)[[&quot;Sample size&quot;]]</code>. We suggest to use the latter in your code for clarity.</p>
+<p><span class="hl">The estimated sample size gives always the <em>total</em> number of subjects (not subject/sequence – like in some other software packages).</span></p>
+<h2>
+Conditions and Methods
+</h2>
+<!-- not in the TOC -->
+<p>Regulatory conditions and methods of evaluation are different.</p>
+<pre><code>#  regulator CVswitch   CVcap r_const      L      U pe_constr method
+#        EMA      0.3 0.50000 0.76000 0.6984 1.4319      TRUE  ANOVA
+#         HC      0.3 0.57382 0.76000 0.6667 1.5000      TRUE    ISC
+#        FDA      0.3    none 0.89257   none   none      TRUE    ISC</code></pre>
+<p><code>CVswitch</code> is the lower cap of scaling, <em>i.e.</em>, if <em>CV</em><sub>wR</sub> is below this value reference-scaling is not acceptable. The upper cap of scaling <code>CVcap</code> differes between the EMA and HC, whereas for the FDA scaling is unlimited. The regulatory constant <code>r_const</code> is used for calculating the expanded limits (EMA, HC) and ‘implied limits’ (FDA) based on <em>s</em><sub>wR</sub>: <span class="math inline">\(\small{\left [ L,U \right ]=100\cdot\exp (\mp 0.760\cdot s_{\textrm{wR}})}\)</span><br />
+Here <code>L</code> and <code>U</code> give the maximum acceptable expansion based on <span class="math inline">\(\small{s_{\textrm{wR}}^{*}=\sqrt{\log_{e}(CV_\textrm{cap}^2)+1}}\)</span>. The point estimate constraint <code>pe_constr</code> [0.80, 1.25] is applicable in all regulations. Evaluation has to be performed by ANOVA (EMA) or a mixed-effects model (HC, FDA). For the latter intra-subject contrasts are a suffiently close approximation.</p>
+</div>
+<div id="sample-size" class="section level1">
+<h1>Sample Size</h1>
+<div id="highly-variable-drugs-drug-products" class="section level2">
+<h2>Highly Variable Drugs / Drug Products</h2>
+<p>Estimate the sample size for assumed intra-subject <em>CV</em> 0.55 (<em>CV</em><sub>wT</sub> = <em>CV</em><sub>wR</sub>). Employ the defaults (<code>theta0 = 0.90</code>, <code>targetpower = 0.80</code>, <code>design = &quot;2x3x3&quot;</code>, <code>nsims = 1e5</code>).</p>
+<div id="ema" class="section level3">
+<h3>EMA</h3>
+<p>Average Bioequivalence with Expanding Limits (ABEL). Default <code>regulator = &quot;EMA&quot;</code>.<br />
+Note that this approach is recommended in other jurisdictions as well (<em>e.g.</em>, the <span title="World Health Organisation">WHO</span>; <span title="Association of Southeast Asian Nations">ASEAN</span> States, Australia, Brazil, Chile, the East African Community, Egypt, the Eurasian Economic Union, New Zealand, the Russian Federation).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> <span class="fl">0.55</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL +++++++++++</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    (simulation based on ANOVA evaluation)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x3x3 (partial replicate)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.55; CVw(R) = 0.55</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.9</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits / PE constraint = 0.8 ... 1.25 </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># EMA regulatory settings</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># - cap on scABEL if CVw(R) &gt; 0.5</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.76 </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size search</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 39   0.7807 </span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 42   0.8085</span></span></code></pre></div>
+<h2>
+Heterogenicity
+</h2>
+<p>Whilst in full replicate designs simulating via the ‘key’ statistics closely matches the ‘gold standard’ of subject simulations, this is less so for unequal variances in the partial replicate design if <em>CV</em><sub>wT</sub> &gt; <em>CV</em><sub>wR</sub>. Let us keep <em>CV</em><sub>w</sub> 0.55 and split variances by a ratio of 1.5 (<em>i.e.</em>, T has a higher variance than R).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fu">signif</span>(<span class="fu">CVp2CV</span>(<span class="at">CV =</span> <span class="fl">0.55</span>, <span class="at">ratio =</span> <span class="fl">1.5</span>), <span class="dv">4</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV, <span class="at">details =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL +++++++++++</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    (simulation based on ANOVA evaluation)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x3x3 (partial replicate)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.6109; CVw(R) = 0.4852</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.9</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits / PE constraint = 0.8 ... 1.25 </span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory settings: EMA </span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 45   0.8114</span></span></code></pre></div>
+<p>Although the runtime will be longer, we recommend the function <code>sampleN.scABEL.sdsims()</code> instead.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.scABEL.sdsims</span>(<span class="at">CV =</span> CV, <span class="at">details =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Be patient. Simulating subject data may take a while!</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL +++++++++++</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    (simulation based on ANOVA evaluation)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x3x3 (partial replicate)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.6109; CVw(R) = 0.4852</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.9</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits / PE constraint = 0.8 ... 1.25 </span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory settings: EMA </span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  n   power</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 48   0.8161</span></span></code></pre></div>
+<p>The sample size is slightly larger.</p>
+<p>Explore sample sizes for extreme heterogenicity (variance ratio 2.5) via the ‘key’ statistics and subject simulations (4- and 3-period full replicate and partial replicate designs).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>CVp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.40</span>, <span class="fl">0.70</span>, <span class="fl">0.05</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>CV  <span class="ot">&lt;-</span> <span class="fu">signif</span>(<span class="fu">CVp2CV</span>(<span class="at">CV =</span> CVp, <span class="at">ratio =</span> <span class="fl">2.5</span>), <span class="dv">4</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">CVp =</span> CVp, <span class="at">CVwT =</span> CV[, <span class="dv">1</span>], <span class="at">CVwR =</span> CV[, <span class="dv">2</span>],</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f4.key =</span> <span class="cn">NA</span>, <span class="at">f4.ss =</span> <span class="cn">NA</span>, <span class="co"># 4-period full replicate</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">f3.key =</span> <span class="cn">NA</span>, <span class="at">f3.ss =</span> <span class="cn">NA</span>, <span class="co"># 3-period full replicate</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">p3.key =</span> <span class="cn">NA</span>, <span class="at">p3.ss =</span> <span class="cn">NA</span>) <span class="co"># 3-period partial replicate</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(CVp)) {</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>f4.key[i] <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV[i, ], <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>f4.ss[i]  <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL.sdsims</span>(<span class="at">CV =</span> CV[i, ], <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">details =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">progress =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>f3.key[i] <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV[i, ], <span class="at">design =</span> <span class="st">&quot;2x2x3&quot;</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>f3.ss[i]  <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL.sdsims</span>(<span class="at">CV =</span> CV[i, ], <span class="at">design =</span> <span class="st">&quot;2x2x3&quot;</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">details =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">progress =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>p3.key[i] <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV[i, ], <span class="at">design =</span> <span class="st">&quot;2x3x3&quot;</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>p3.ss[i]  <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL.sdsims</span>(<span class="at">CV =</span> CV[i, ], <span class="at">design =</span> <span class="st">&quot;2x3x3&quot;</span>,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">details =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">progress =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co">#   CVp   CVwT   CVwR f4.key f4.ss f3.key f3.ss p3.key p3.ss</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.40 0.4860 0.2975     62    62     90    90     81    87</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.45 0.5490 0.3334     60    60     90    90     78    84</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.50 0.6127 0.3688     54    54     82    82     69    75</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.55 0.6773 0.4038     50    50     76    76     63    69</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.60 0.7427 0.4383     46    46     72    72     60    66</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.65 0.8090 0.4723     46    46     68    68     57    63</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.70 0.8762 0.5059     46    46     70    70     57    63</span></span></code></pre></div>
+<p>As shown in the previous example, subject simulations are recommended for the partial replicate design. For full replicate designs simulations via the ‘key’ statistics give identical results and are recommended for speed reasons. In this example <code>sampleN.scABEL()</code> is 60times faster than <code>sampleN.scABEL.sdsims()</code>.<br />
+However, if <em>CV</em><sub>wT</sub> ≤ <em>CV</em><sub>wR</sub> we get identical results via the ‘key’ statistics.</p>
+</div>
+<div id="health-canada" class="section level3">
+<h3>Health Canada</h3>
+<p>Average Bioequivalence with Expanding Limits (ABEL). Defaults as above but <code>regulator = &quot;HC&quot;</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> <span class="fl">0.55</span>, <span class="at">regulator =</span> <span class="st">&quot;HC&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL +++++++++++</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (simulations based on intra-subject contrasts)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design:  2x3x3 (partial replicate) </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.55; CVw(R) = 0.55</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.9</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits / PE constraint = 0.8 ... 1.25 </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># HC regulatory settings</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># - cap on scABEL if CVw(R) &gt; 0.57382</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.76 </span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size search</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 33   0.7539 </span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 36   0.7864 </span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 39   0.8142</span></span></code></pre></div>
+</div>
+<div id="gulf-cooperation-council" class="section level3">
+<h3>Gulf Cooperation Council</h3>
+<p>Special case of ABEL: Conventional limits if <em>CV</em><sub>wR</sub> ≤30% and widened limits of 0.7500–1.3333 otherwise. No upper cap of widening. Defaults as above but <code>regulator = &quot;GCC&quot;</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> <span class="fl">0.55</span>, <span class="at">regulator =</span> <span class="st">&quot;GCC&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL +++++++++++</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    (simulation based on ANOVA evaluation)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x3x3 (partial replicate)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.55; CVw(R) = 0.55</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.9</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits / PE constraint = 0.8 ... 1.25 </span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Widened limits = 0.75 ... 1.333333 </span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># GCC regulatory settings</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># - cap on scABEL if CVw(R) &gt; 0.3</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.9799758 </span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size search</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 72   0.7874 </span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 75   0.8021</span></span></code></pre></div>
+</div>
+<div id="fda" class="section level3">
+<h3>FDA</h3>
+<p>Apart from the FDA only required by China’s agency.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.RSABE</span>(<span class="at">CV =</span> <span class="fl">0.55</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++++++ Reference scaled ABE crit. +++++++++</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#            Sample size estimation</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x3x3 (partial replicate)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.55; CVw(R) = 0.55</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.9</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits / PE constraints = 0.8 ... 1.25 </span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># FDA regulatory settings</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.8925742 </span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size search</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 24   0.72002 </span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 27   0.76591 </span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 30   0.80034</span></span></code></pre></div>
+<p>Note the lower sample size compared to the other approaches (due to the different regulatory constant and unlimited scaling).</p>
+</div>
+</div>
+<div id="narrow-therapeutic-index-drugs-fda-cde" class="section level2">
+<h2>Narrow Therapeutic Index Drugs (FDA, CDE)</h2>
+<p>Required by the FDA and the Chinese authority.<br />
+Assuming heteroscedasticity (<em>CV</em><sub>w</sub> 0.125, <em>σ</em><sup>2</sup> ratio 2.5, <em>i.e.</em>, T has a substantially higher variability than R). Details of the sample size search suppressed. Assess additionally which one of the three components (scaled, ABE, <em>s</em><sub>wT</sub>/<em>s</em><sub>wR</sub> ratio) drives the sample size.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fu">signif</span>(<span class="fu">CVp2CV</span>(<span class="at">CV =</span> <span class="fl">0.125</span>, <span class="at">ratio =</span> <span class="fl">2.5</span>), <span class="dv">4</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">sampleN.NTID</span>(<span class="at">CV =</span> CV, <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ FDA method for NTIDs ++++++++++++</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#            Sample size estimation</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design:  2x2x4 (TRTR|RTRT) </span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.1497, CVw(R) = 0.09433</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio     = 0.975 </span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits     = 0.8 ... 1.25 </span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory settings: FDA </span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 38   0.816080</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">power.NTID</span>(<span class="at">CV =</span> CV, <span class="at">n =</span> n, <span class="at">details =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#        p(BE)  p(BE-sABEc)    p(BE-ABE) p(BE-sratio) </span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#      0.81608      0.93848      1.00000      0.85794</span></span></code></pre></div>
+<p>The <em>s</em><sub>wT</sub>/<em>s</em><sub>wR</sub> component shows the lowest power and hence, drives the sample size.<br />
+Compare that with homoscedasticity (<em>CV</em><sub>wT</sub> = <em>CV</em><sub>wR</sub> = 0.125):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fl">0.125</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">sampleN.NTID</span>(<span class="at">CV =</span> CV, <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ FDA method for NTIDs ++++++++++++</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#            Sample size estimation</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design:  2x2x4 (TRTR|RTRT) </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.125, CVw(R) = 0.125</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio     = 0.975 </span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits     = 0.8 ... 1.25 </span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory settings: FDA </span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 16   0.822780</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">power.NTID</span>(<span class="at">CV =</span> CV, <span class="at">n =</span> n, <span class="at">details =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">#        p(BE)  p(BE-sABEc)    p(BE-ABE) p(BE-sratio) </span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">#      0.82278      0.84869      1.00000      0.95128</span></span></code></pre></div>
+<p>Here the scaled ABE component shows the lowest power and drives the sample size, which is much lower than in the previous example.</p>
+</div>
+<div id="highly-variable-narrow-therapeutic-index-drugs-fda-cde" class="section level2">
+<h2>Highly Variable Narrow Therapeutic Index Drugs (FDA, CDE)</h2>
+<p>Almost a contradiction in itself. Required for <a href="https://www.accessdata.fda.gov/drugsatfda_docs/psg/Dabigatran%20etexilate%20mesylate_oral%20capsule_NDA%20022512_RV05-17.pdf" title="Recommended Jun 2012; Revised Sep 2015, Jul 2017">dagibatran</a>, <a href="https://www.accessdata.fda.gov/drugsatfda_docs/psg/Rivaroxaban_oral%20tablet_22406_RC09-15.pdf" title="Recommended Sep 2015">rivaroxaban</a>, and <a href="https://www.accessdata.fda.gov/drugsatfda_docs/psg/PSG_206316.pdf" title="Recommended May 2017; Revised Mar 2020">edoxaban</a>.<br />
+Assuming homoscedasticity (<em>CV</em><sub>wT</sub> = <em>CV</em><sub>wR</sub> = 0.30). Employ the defaults (<code>theta0 = 0.95</code>, <code>targetpower = 0.80</code>, <code>design = &quot;2x2x4&quot;</code>, <code>nsims = 1e5</code>). Details of the sample size search suppressed.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.HVNTID</span>(<span class="at">CV =</span> <span class="fl">0.30</span>, <span class="at">details =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++ FDA method for HV NTIDs ++++++++++++</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#            Sample size estimation</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x2x4 (TRTR|RTRT) </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.3, CVw(R) = 0.3</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.95 </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits = 0.8 ... 1.25 </span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 22   0.829700</span></span></code></pre></div>
+<p>Assuming heteroscedasticity (<em>CV</em><sub>w</sub> 0.30, <em>σ</em><sup>2</sup> ratio 2.5).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fu">signif</span>(<span class="fu">CVp2CV</span>(<span class="at">CV =</span> <span class="fl">0.125</span>, <span class="at">ratio =</span> <span class="fl">2.5</span>), <span class="dv">4</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.HVNTID</span>(<span class="at">CV =</span> CV, <span class="at">details =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++ FDA method for HV NTIDs ++++++++++++</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#            Sample size estimation</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x2x4 (TRTR|RTRT) </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 1e+05 studies for each step simulated.</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha  = 0.05, target power = 0.8</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># CVw(T) = 0.1497, CVw(R) = 0.09433</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.95 </span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># ABE limits = 0.8 ... 1.25 </span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 34   0.818800</span></span></code></pre></div>
+<p>In this case a substantially higher sample size is required since the variability of T is higher than the one of R.</p>
+</div>
+</div>
+<div id="power" class="section level1">
+<h1>Power</h1>
+<p>Power can by calculated by the counterparts of the respective sample size functions (instead the argument <code>targetpower</code> use the argument <code>n</code> and provide the observed <code>theta0</code>), <em>i.e.</em>,<br />
+<code>power.scABEL()</code>, <code>power.RSABE()</code>, <code>power.NTID()</code>, and <code>power.HVNTID()</code>.</p>
+</div>
+<div id="type-i-error" class="section level1">
+<h1>Type I Error</h1>
+<p>Contrary to average bioequivalence, where the Null-hypothesis is based on fixed limits, in reference-scaling the Null is generated in face of the data (<em>i.e</em>, the limits are random variables).</p>
+<p>Endrényi and Tóthfalusi (2009,<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> 2019<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>), Labes (2013<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>), Wonnemann <em>et al.</em> (2015<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>), Muñoz <em>et al.</em> (2016<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>), Labes and Schütz (2016<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>), Tóthfalusi and Endrényi (2016,<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> 2017<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>), Molins <em>et al.</em> (2017<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>), Deng and Zhou (2019<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>) showed that under certain conditions (EMA, Health Canada: <em>CV</em><sub>wR</sub> ~0.22–0.45, FDA: <em>CV</em><sub>wR</sub> ≤0.30) the type I error will be substantially inflated.<br />
+Below the inflation region the study will be evaluated for ABE and the type I error controlled by the TOST. Above the inflation region the type I error is controlled by the PE restriction and for the EMA and Health Canada additionally by the upper cap of scaling.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>CV      <span class="ot">&lt;-</span> <span class="fl">0.35</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>res     <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">n =</span> <span class="cn">NA</span>, <span class="at">CV =</span> CV, <span class="at">TIE =</span> <span class="cn">NA</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>n   <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>U       <span class="ot">&lt;-</span> <span class="fu">scABEL</span>(<span class="at">CV =</span> CV)[[<span class="st">&quot;upper&quot;</span>]]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>TIE <span class="ot">&lt;-</span> <span class="fu">power.scABEL</span>(<span class="at">CV =</span> CV, <span class="at">n =</span> res<span class="sc">$</span>n, <span class="at">theta0 =</span> U, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   n   CV      TIE</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  34 0.35 0.065566</span></span></code></pre></div>
+<p>With ~0.0656 the type I error is inflated (significantly larger than the nominal <span class="math inline">\(\small{\alpha}\)</span> 0.05).</p>
+<div class="figure">
+<img src="data:image/png;base64,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" width="450" alt />
+<p class="caption"><strong>Fig. 1</strong> Empiric type I error for the EMA’s ABEL, 4-period full replicate design.<br />Pink plane at nominal <span class="math inline">\(\small{\alpha}\)</span> 0.05. Contour lines enclose region of inflation.</p>
+</div>
+<p>A substantially higher inflation of the type I error was reported for the FDA’s model. However, Davit <em>et al.</em> (2012<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>) assessed the type I error not at the <a href="#ImpLim">‘implied limits’</a> but with the <a href="#DesCRM">‘desired consumer risk model’</a> if <span class="math inline">\(\small{s_{\textrm{wR}}\geq s_0}\)</span> (<em>CV</em><sub>wR</sub> ≥~25.4%) at <span class="math inline">\(\small{\exp\left ( \log_{e}(1.25)/s_0 \sqrt{\log_{e}(CV_{\textrm{wR}}^2+1)} \right )}\)</span>. Some statisticians call the latter ‘hocus-pocus’. However, even with this approach the type I error is still –although less – inflated.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">CV =</span> <span class="fu">sort</span>(<span class="fu">c</span>(<span class="fu">seq</span>(<span class="fl">0.25</span>, <span class="fl">0.32</span>, <span class="fl">0.01</span>), <span class="fu">se2CV</span>(<span class="fl">0.25</span>))),</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">impl.L =</span> <span class="cn">NA</span>, <span class="at">impl.U =</span> <span class="cn">NA</span>, <span class="at">impl.TIE =</span> <span class="cn">NA</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">des.L =</span> <span class="cn">NA</span>, <span class="at">des.U =</span> <span class="cn">NA</span>, <span class="at">des.TIE =</span> <span class="cn">NA</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(res)) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">scABEL</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[i], <span class="at">regulator =</span> <span class="st">&quot;FDA&quot;</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">CV2se</span>(res<span class="sc">$</span>CV[i]) <span class="sc">&lt;=</span> <span class="fl">0.25</span>) {</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    res[i, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">1.25</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    res[i, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(<span class="fu">log</span>(<span class="fl">1.25</span>)<span class="sc">/</span><span class="fl">0.25</span>)<span class="sc">*</span><span class="fu">CV2se</span>(res<span class="sc">$</span>CV[i]))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">power.RSABE</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[i], <span class="at">theta0 =</span> res[i, <span class="dv">3</span>],</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                           <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">n =</span> <span class="dv">32</span>, <span class="at">nsims =</span> <span class="fl">1e6</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">power.RSABE</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[i], <span class="at">theta0 =</span> res[i, <span class="dv">5</span>],</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">n =</span> <span class="dv">32</span>, <span class="at">nsims =</span> <span class="fl">1e6</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">signif</span>(res, <span class="dv">4</span>), <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     CV impl.L impl.U impl.TIE  des.L des.U des.TIE</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.250 0.8000  1.250  0.06068 0.8000 1.250 0.06036</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.254 0.8000  1.250  0.06396 0.8000 1.250 0.06357</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.260 0.8000  1.250  0.07008 0.7959 1.256 0.05692</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.270 0.8000  1.250  0.08352 0.7892 1.267 0.05047</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.280 0.8000  1.250  0.10130 0.7825 1.278 0.04770</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.290 0.8000  1.250  0.12290 0.7760 1.289 0.04644</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.300 0.8000  1.250  0.14710 0.7695 1.300 0.04562</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.310 0.7631  1.310  0.04515 0.7631 1.310 0.04466</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.320 0.7568  1.321  0.04373 0.7568 1.321 0.04325</span></span></code></pre></div>
+<div class="figure">
+<img src="data:image/png;base64,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" width="449" alt />
+<p class="caption"><strong>Fig. 2</strong> Empiric type I error for the FDA’s RSABE, 4-period full replicate design, n = 32.<br />Thick line ‘implied limits’ (max. TIE 0.147 at <em>CV</em><sub>wR</sub> 30%).<br />Thin line ‘desired consumer risk model’ (max. TIE 0.0636 at <em>CV</em><sub>wR</sub> 25.4%).</p>
+</div>
+<p>Various approaches were suggested to control the patient’s risk. The methods of Labes and Schütz (2016) and Molins <em>et al.</em> (2017) are implemented in the function <code>scABEL.ad()</code>. The method of Tóthfalusi and Endrényi (2017) is implemented in the function <code>power.RSABE2L.sds()</code>.</p>
+<div id="iteratively-adjusted-α" class="section level2">
+<h2>Iteratively adjusted α</h2>
+<p>If an inflated type I error is expected, <span class="math inline">\(\small{\alpha}\)</span> is adjusted based on the observed <em>CV</em><sub>wR</sub> and the study should be evaluated with a wider confidence interval (Labes and Schütz 2016). Implemented designs: <code>&quot;2x3x3&quot;</code> (default), <code>&quot;2x2x3&quot;</code>, <code>&quot;2x2x4&quot;</code>.<br />
+No adjustment is suggested if the study’s conditions (<em>CV</em><sub>wR</sub>, sample size, design) will not lead to an inflated type I error.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fl">0.45</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">scABEL.ad</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">n =</span> n)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL ++++++++++++</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#          iteratively adjusted alpha</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    (simulations based on ANOVA evaluation)</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x2x4 (4 period full replicate)</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1,000,000 studies in each iteration simulated.</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># CVwR 0.45, CVwT 0.45, n(i) 14|14 (N 28)</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Nominal alpha                 : 0.05 </span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio                    : 0.9000 </span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory settings           : EMA (ABEL)</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Switching CVwR                : 0.3 </span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory constant           : 0.76 </span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Expanded limits               : 0.7215 ... 1.3859</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Upper scaling cap             : CVwR &gt; 0.5 </span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co"># PE constraints                : 0.8000 ... 1.2500</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Empiric TIE for alpha 0.0500  : 0.04889</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Power for theta0 0.9000       : 0.811</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="co"># TIE = nominal alpha; no adjustment of alpha is required.</span></span></code></pre></div>
+<p>Inside the region of inflated type I errors.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fl">0.35</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">scABEL.ad</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">n =</span> n)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL ++++++++++++</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#          iteratively adjusted alpha</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    (simulations based on ANOVA evaluation)</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x2x4 (4 period full replicate)</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1,000,000 studies in each iteration simulated.</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># CVwR 0.35, CVwT 0.35, n(i) 17|17 (N 34)</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Nominal alpha                 : 0.05 </span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio                    : 0.9000 </span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory settings           : EMA (ABEL)</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Switching CVwR                : 0.3 </span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory constant           : 0.76 </span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Expanded limits               : 0.7723 ... 1.2948</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Upper scaling cap             : CVwR &gt; 0.5 </span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co"># PE constraints                : 0.8000 ... 1.2500</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Empiric TIE for alpha 0.0500  : 0.06557</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Power for theta0 0.9000       : 0.812</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Iteratively adjusted alpha    : 0.03630</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Empiric TIE for adjusted alpha: 0.05000</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Power for theta0 0.9000       : 0.773</span></span></code></pre></div>
+<p>An adjusted <span class="math inline">\(\small{\alpha}\)</span> of 0.0363 (<em>i.e.</em>, the 92.74% CI) controls the patient’s risk. However, it leads to a slightly lower power (0.773 instead of 0.812).</p>
+<p>In order to counteract this loss in power, we can adjust the sample size with the function <code>sampleN.scABEL.ad()</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fl">0.35</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.scABEL.ad</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># +++++++++++ scaled (widened) ABEL ++++++++++++</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         for iteratively adjusted alpha</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    (simulations based on ANOVA evaluation)</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x2x4 (4 period full replicate)</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 1,000,000 studies in each iteration simulated.</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Assumed CVwR 0.35, CVwT 0.35</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Nominal alpha      : 0.05 </span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio         : 0.9000 </span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Target power       : 0.8 </span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory settings: EMA (ABEL)</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Switching CVwR     : 0.3 </span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Regulatory constant: 0.76 </span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Expanded limits    : 0.7723 ... 1.2948</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Upper scaling cap  : CVwR &gt; 0.5 </span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="co"># PE constraints     : 0.8000 ... 1.2500</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="co"># n  38,   adj. alpha: 0.03610 (power 0.8100), TIE: 0.05000</span></span></code></pre></div>
+<p>We have to increase the sample size to 38 in order to maintain power. Since the type I error depends to a minor degree on the sample size as well, we have to adjust slightly more (<span class="math inline">\(\small{\alpha}\)</span> 0.0361 instead of 0.0363 with 34 subjects).</p>
+<p>Since the observed <em>CV</em><sub>wR</sub> is not the true – unknown – one, Molins <em>et al.</em> recommended to ‘assume the worst’ and adjust for <em>CV</em><sub>wR</sub> 0.30 in all cases.</p>
+<pre><code># CV = 0.35, n = 34, design = &quot;2x2x4&quot;
+#               method adj   alpha    TIE power
+#  EMA (nominal alpha)  no 0.05000 0.0656 0.812
+#     Labes and Schütz yes 0.03630 0.0500 0.773
+#        Molins et al. yes 0.02857 0.0500 0.740</code></pre>
+<p>Although Molin’s adjusted <span class="math inline">\(\small{\alpha}\)</span> controls the patient’s risk, it leads to a further loss in power.</p>
+<p>Example with a <em>CV</em><sub>wR</sub> above the region of inflated type I errors (<em>i.e.</em>, &gt;0.45).</p>
+<pre><code># CV = 0.8, n = 50, design = &quot;2x2x4&quot;
+#            method adj  alpha    TIE power
+#  Labes and Schütz  no 0.0500 0.0496 0.812
+#     Molins et al. yes 0.0282 0.0500 0.732</code></pre>
+<p>For high variability the negative impact on power is substantial.</p>
+</div>
+<div id="exact-procedure" class="section level2">
+<h2>‘Exact’ Procedure</h2>
+<p>Proposed by Tóthfalusi and Endrényi (2016). Example of the ‘ncTOST’ method by the same authors (2017). Implemented designs: <code>&quot;2x3x3&quot;</code> (default), <code>&quot;2x2x3&quot;</code>, <code>&quot;2x2x4&quot;</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>CV <span class="ot">&lt;-</span> <span class="fl">0.35</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>n  <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>U  <span class="ot">&lt;-</span> <span class="fu">scABEL</span>(<span class="at">CV =</span> CV)[[<span class="st">&quot;upper&quot;</span>]]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># subject simulations and therefore, relatively slow</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">power.RSABE2L.sds</span>(<span class="at">CV =</span> CV, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">theta0 =</span> U,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">n =</span> n, <span class="at">SABE_test =</span> <span class="st">&quot;exact&quot;</span>, <span class="at">nsims =</span> <span class="fl">1e6</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">progress =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0.048177</span></span></code></pre></div>
+<p>With ~0.0482 the patient’s risk is controlled. However, the regulatory acceptance is unclear.</p>
+</div>
+</div>
+<div id="helpers" class="section level1">
+<h1>Helpers</h1>
+<div id="be-limits" class="section level2">
+<h2>BE limits</h2>
+<div id="ExpLim" class="section level3">
+<h3>Expanded Limits (EMA, Health Canada), widened limits (GCC)</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>CV  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.30</span>, <span class="fl">0.40898</span>, <span class="fl">0.50</span>, <span class="fl">0.57382</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">CV =</span> CV, <span class="at">EMA.L =</span> <span class="cn">NA</span>, <span class="at">EMA.U =</span> <span class="cn">NA</span>, <span class="at">EMA.cap =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">HC.L =</span> <span class="cn">NA</span>, <span class="at">HC.U =</span> <span class="cn">NA</span>, <span class="at">HC.cap =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">GCC.L =</span> <span class="cn">NA</span>, <span class="at">GCC.U =</span> <span class="cn">NA</span>, <span class="at">GCC.cap =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>) <span class="co"># this line for R &lt;4.0.0</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(CV)) {</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.4f&quot;</span>, <span class="fu">scABEL</span>(CV[i], <span class="at">regulator =</span> <span class="st">&quot;EMA&quot;</span>))</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>] <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, <span class="fu">scABEL</span>(CV[i], <span class="at">regulator =</span> <span class="st">&quot;HC&quot;</span>))</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, <span class="fu">scABEL</span>(CV[i], <span class="at">regulator =</span> <span class="st">&quot;GCC&quot;</span>))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>EMA.cap[res<span class="sc">$</span>CV <span class="sc">&lt;=</span> <span class="fl">0.30</span>]   <span class="ot">&lt;-</span> res<span class="sc">$</span>HC.cap[res<span class="sc">$</span>CV <span class="sc">&lt;=</span> <span class="fl">0.30</span>] <span class="ot">&lt;-</span> <span class="st">&quot;lower&quot;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>EMA.cap[res<span class="sc">$</span>CV <span class="sc">&gt;=</span> <span class="fl">0.50</span>]   <span class="ot">&lt;-</span> <span class="st">&quot;upper&quot;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>HC.cap[res<span class="sc">$</span>CV <span class="sc">&gt;=</span> <span class="fl">0.57382</span>] <span class="ot">&lt;-</span> <span class="st">&quot;upper&quot;</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>GCC.cap[res<span class="sc">$</span>CV <span class="sc">&lt;=</span> <span class="fl">0.30</span>]   <span class="ot">&lt;-</span> res<span class="sc">$</span>GCC.cap[res<span class="sc">$</span>CV <span class="sc">&lt;=</span> <span class="fl">0.30</span>] <span class="ot">&lt;-</span> <span class="st">&quot;lower&quot;</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#       CV  EMA.L  EMA.U EMA.cap  HC.L  HC.U HC.cap GCC.L GCC.U GCC.cap</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.30000 0.8000 1.2500   lower 0.800 1.250  lower 0.800 1.250   lower</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.40898 0.7416 1.3484         0.742 1.348        0.750 1.333        </span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.50000 0.6984 1.4319   upper 0.698 1.432        0.750 1.333        </span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.57382 0.6984 1.4319   upper 0.667 1.500  upper 0.750 1.333</span></span></code></pre></div>
+<p>For all agencies the lower cap for scaling is 30%. Whereas the upper cap for the EMA is at 50% (expanded limits 69.84–143.19%), for Health Canada it is at ~57.4% (expanded limits 66.7–150.0%). The GCC has no upper cap (fixed widened limits 75.00–133.33%).</p>
+</div>
+<div id="fda-1" class="section level3">
+<h3>FDA</h3>
+<p>For the FDA there is no upper cap (scaling is unlimited).</p>
+<div id="ImpLim" class="section level4">
+<h4>‘Implied’ Limits</h4>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">CV =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fu">se2CV</span>(<span class="fl">0.25</span>), <span class="fl">0.275</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">1.0</span>),</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">impl.L =</span> <span class="cn">NA</span>, <span class="at">impl.U =</span> <span class="cn">NA</span>, <span class="at">cap =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>) <span class="co"># this line for R &lt;4.0.0</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(res)) {</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.4f&quot;</span>, <span class="fu">scABEL</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[i],</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">regulator =</span> <span class="st">&quot;FDA&quot;</span>))</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>cap[res<span class="sc">$</span>CV <span class="sc">&lt;=</span> <span class="fl">0.30</span>] <span class="ot">&lt;-</span> <span class="st">&quot;lower&quot;</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>CV <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, res<span class="sc">$</span>CV)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     CV impl.L impl.U   cap</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.250 0.8000 1.2500 lower</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.254 0.8000 1.2500 lower</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.275 0.8000 1.2500 lower</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.300 0.8000 1.2500 lower</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.500 0.6560 1.5245      </span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  1.000 0.4756 2.1025</span></span></code></pre></div>
+</div>
+<div id="DesCRM" class="section level4">
+<h4>Limits of the ‘desired consumer risk model’</h4>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">CV =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fu">se2CV</span>(<span class="fl">0.25</span>), <span class="fl">0.275</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">1.0</span>),</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">des.L =</span> <span class="cn">NA</span>, <span class="at">des.U =</span> <span class="cn">NA</span>, <span class="at">cap =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>) <span class="co"># this line for R &lt;4.0.0</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(res)) {</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">CV2se</span>(res<span class="sc">$</span>CV[i]) <span class="sc">&lt;=</span> <span class="fl">0.25</span>) {</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    res[i, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.4f&quot;</span>, <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">1.25</span>))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    res[i, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.4f&quot;</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">exp</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">+</span><span class="dv">1</span>)<span class="sc">*</span>(<span class="fu">log</span>(<span class="fl">1.25</span>)<span class="sc">/</span><span class="fl">0.25</span>)<span class="sc">*</span><span class="fu">CV2se</span>(res<span class="sc">$</span>CV[i])))</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>cap[res<span class="sc">$</span>CV <span class="sc">&lt;=</span> <span class="fl">0.30</span>] <span class="ot">&lt;-</span> <span class="st">&quot;lower&quot;</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span>CV <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">&quot;%.3f&quot;</span>, res<span class="sc">$</span>CV)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     CV  des.L  des.U   cap</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.250 0.8000 1.2500 lower</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.254 0.8000 1.2500 lower</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.275 0.7858 1.2725 lower</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.300 0.7695 1.2996 lower</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  0.500 0.6560 1.5245      </span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co">#  1.000 0.4756 2.1025</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="regulatory-settings" class="section level2">
+<h2>Regulatory Settings</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;EMA&quot;</span>, <span class="st">&quot;HC&quot;</span>, <span class="st">&quot;GCC&quot;</span>, <span class="st">&quot;FDA&quot;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">reg_const</span>(<span class="at">regulator =</span> reg[i]))</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># EMA regulatory settings</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># - cap on scABEL if CVw(R) &gt; 0.5</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.76 </span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co"># HC regulatory settings</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co"># - cap on scABEL if CVw(R) &gt; 0.57382</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.76 </span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co"># GCC regulatory settings</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="co"># - cap on scABEL if CVw(R) &gt; 0.3</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.9799758 </span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co"># FDA regulatory settings</span></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co"># - CVswitch            = 0.3 </span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="co"># - no cap on scABEL</span></span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co"># - regulatory constant = 0.8925742 </span></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="co"># - pe constraint applied</span></span></code></pre></div>
+</div>
+</div>
+<div id="authors" class="section level1">
+<h1>Authors</h1>
+<table>
+<colgroup>
+<col width="75%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>function</th>
+<th>author(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sampleN.scABEL</code>, <code>sampleN.RSABE</code>, <code>sampleN.NTID</code>, <code>sampleN.HVNTID</code>,<br /><code>power.scABEL</code>, <code>power.RSABE2L.sdsims</code>, <code>scABEL</code>, <code>reg_const</code></td>
+<td>Detlew Labes</td>
+</tr>
+<tr class="even">
+<td><code>power.scABEL.sdsims</code></td>
+<td><span style="white-space:nowrap">Detlew Labes, Benjamin Lang</span></td>
+</tr>
+<tr class="odd">
+<td><code>sampleN.scABEL.ad</code>, <code>sampleN.scABEL.sdsims</code>, <code>sampleN.RSABE2L.sdsims</code>,<br /><code>scABEL.ad</code></td>
+<td>Helmut Schütz</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="license" class="section level1">
+<h1>License</h1>
+<h4 class="author">
+<a href="https://cran.r-project.org/web/licenses/GPL-3" title="GNU General Public License, Version 3">GPL-3</a> 2022-02-19 Helmut Schütz
+</h4>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>R Documentation. <em>Data Frames.</em> 2022-02-08. <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html">R-manual</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Endrényi L, Tóthfalusi L. <em>Regulatory and study conditions for the determination of bioequivalence of highly variable drugs.</em> J Pharm Sci. 2009: 12(1); 138–49. <a href="https://journals.library.ualberta.ca/jpps/index.php/JPPS/article/download/771/5275/0">Open access</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Endrényi L, Tóthfalusi L. <em>Bioequivalence for highly variable drugs: regulatory agreements, disagreements, and harmonization.</em> J Pharmacokin Pharmacodyn. 2019: 46(2); 117–26. <a href="https://doi.org/10.1007/s10928-019-09623-w">doi:10.1007/s10928-019-09623-w</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Labes D. <em>‘alpha’ of scaled ABE?</em> BEBA Forum. Vienna, 2013. <a href="https://forum.bebac.at/mix_entry.php?id=10202#top10202">Open access</a>.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Wonnemann M, Frömke C, Koch A. <em>Inflation of the Type I Error: Investigations on Regulatory Recommendations for Bioequivalence of Highly Variable Drugs.</em> Pharm Res. 2015: 32(1); 135–43. <a href="https://doi.org/10.1007/s11095-014-1450-z">doi:10.1007/s11095-014-1450-z</a>.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Muñoz J, Alcaide D, Ocaña J. <em>Consumer’s risk in the EMA and FDA regulatory approaches for bioequivalence in highly variable drugs.</em> Stat Med. 2016: 35(12); 1933–43. <a href="https://doi.org/10.1002/sim.6834">doi:10.1002/sim.6834</a>.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Labes D, Schütz H. <em>Inflation of Type I Error in the Evaluation of Scaled Average Bioequivalence, and a Method for its Control.</em> Pharm Res. 2016: 33(11); 2805–14. <a href="https://doi.org/10.1007/s11095-016-2006-1">doi:10.1007/s11095-016-2006-1</a>.<a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Tóthfalusi L, Endrényi L. <em>An Exact Procedure for the Evaluation of Reference-Scaled Average Bioequivalence.</em> AAPS J. 2016: 18(2); 476–89. <a href="https://doi.org/10.1208/s12248-016-9873-6">doi:10.1208/s12248-016-9873-6</a>.<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Tóthfalusi L, Endrényi L. <em>Algorithms for Evaluating Reference Scaled Average Bioequivalence: Power, Bias, and Consumer Risk.</em> Stat Med. 2017: 36(27); 4378–90. <a href="https://doi.org/10.1002/sim.7440">doi:10.1002/sim.7440</a>.<a href="#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>Molins E, Cobo E, Ocaña J. <em>Two-Stage Designs Versus European Scaled Average Designs in Bioequivalence Studies for Highly Variable Drugs: Which to Choose?</em> Stat Med. 2017: 36(30); 4777–88. <a href="https://doi.org/10.1002/sim.7452">doi:10.1002/sim.7452</a>.<a href="#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Deng Y, Zhou X-H. <em>Methods to control the empirical type I error rate in average bioequivalence tests for highly variable drugs.</em> Stat Meth Med Res. 2019: 29(6). <a href="https://doi.org/10.1177/0962280219871589">doi:10.1177/0962280219871589</a>.<a href="#fnref11" class="footnote-back">↩︎</a></p></li>
+<li id="fn12"><p>Davit BM, Chen ML, Conner DP, Haidar SH, Kim S, Lee CH, Lionberger RA, Makhlouf FT, Nwakama PE, Patel DT, Schuirmann DJ, Yu LX. <em>Implementation of a Reference-Scaled Average Bioequivalence Approach for Highly Variable Generic Drug Products by the US Food and Drug Administration.</em> AAPS J. 2012: 14(4); 915–24. <a href="https://doi.org/10.1208/s12248-012-9406-x">doi:10.1208/s12248-012-9406-x</a>.<a href="#fnref12" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

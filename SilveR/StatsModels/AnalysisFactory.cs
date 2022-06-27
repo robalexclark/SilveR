@@ -32,6 +32,7 @@ namespace SilveR.StatsModels
                 "GraphicalAnalysis" => new GraphicalAnalysisModel(dataset),
                 "ComparisonOfMeansPowerAnalysisUserBasedInputs" => new ComparisonOfMeansPowerAnalysisUserBasedInputsModel(),
                 "ComparisonOfMeansPowerAnalysisDatasetBasedInputs" => new ComparisonOfMeansPowerAnalysisDatasetBasedInputsModel(dataset),
+                "EquivalenceOfMeansPowerAnalysisDatasetBasedInputs" => new EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel(dataset),
                 "OneWayANOVAPowerAnalysisUserBasedInputs" => new OneWayANOVAPowerAnalysisUserBasedInputsModel(),
                 "OneWayANOVAPowerAnalysisDatasetBasedInputs" => new OneWayANOVAPowerAnalysisDatasetBasedInputsModel(dataset),
                 "MultivariateAnalysis" => new MultivariateAnalysisModel(dataset),

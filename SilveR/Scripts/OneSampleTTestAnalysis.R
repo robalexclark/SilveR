@@ -313,6 +313,7 @@ if (showNormPlot != "N" ) {
     	graphdata <- data.frame(te$x, te$y)
     	graphdata$xvarrr_IVS <- graphdata$te.x
     	graphdata$yvarrr_IVS <- graphdata$te.y
+	graphdata$names <- c(1:length(graphdata$te.x))
 
     	#GGPLOT2 code
  	#NONCAT_SCAT("QQPLOT")

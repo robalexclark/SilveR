@@ -199,7 +199,15 @@ Roswell Park Comprehensive Cancer Center, Buffalo, NY<br>
 <li><a href="#offline-config.yaml">Offline config.yaml</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#how-it-works-details-for-advanced-trouble-shooting">How it works – details for advanced trouble-shooting</a></li>
+<li><a href="#how-it-works">How it works</a></li>
+<li><a href="#troubleshooting-1">Troubleshooting</a>
+<ul>
+<li><a href="#multiple-biocversion-installations">Multiple <code>BiocVersion</code> installations</a></li>
+<li><a href="#bioconductor-version-cannot-be-determined-no-internet-connection">Bioconductor version cannot be determined; no internet connection?</a></li>
+<li><a href="#bioconductor-version-cannot-be-validated-no-internet-connection">Bioconductor version cannot be validated; no internet connection?</a></li>
+<li><a href="#bioconductor-version-map-cannot-be-validated-is-it-misconfigured">Bioconductor version map cannot be validated; is it misconfigured?</a></li>
+<li><a href="#bioconductor-version-cannot-be-validated-is-type-input-misspecified">Bioconductor version cannot be validated; is type input misspecified?</a></li>
+</ul></li>
 <li><a href="#sessioninfo"><code>sessionInfo()</code></a></li>
 </ul>
 </div>
@@ -356,8 +364,8 @@ options(
 </div>
 </div>
 </div>
-<div id="how-it-works-details-for-advanced-trouble-shooting" class="section level1">
-<h1>How it works – details for advanced trouble-shooting</h1>
+<div id="how-it-works" class="section level1">
+<h1>How it works</h1>
 <p>BiocManager’s job is to make sure that all packages are installed from the same <em>Bioconductor</em> version, using compatible <em>R</em> and <em>CRAN</em> packages. However, <em>R</em> has an annual release cycle, whereas <em>Bioconductor</em> has a twice-yearly release cycle. Also, <em>Bioconductor</em> has a ‘devel’ branch where new packages and features are introduced, and a ‘release’ branch where bug fixes and relative stability are important; <em>CRAN</em> packages do not distinguish between devel and release branches.</p>
 <p>In the past, one would install a <em>Bioconductor</em> package by evaluating the command <code>source(&quot;https://.../biocLite.R&quot;)</code> to read a file from the web. The file contained an installation script that was smart enough to figure out what version of <em>R</em> and <em>Bioconductor</em> were in use or appropriate for the person invoking the script. Sourcing an executable script from the web is an obvious security problem.</p>
 <p>Our solution is to use a CRAN package BiocManager, so that users install from pre-configured CRAN mirrors rather than typing in a URL and sourcing from the web.</p>
@@ -391,14 +399,36 @@ trying URL &#39;https://bioconductor.org/packages/3.9/bioc/src/contrib/\
     BiocVersion_3.9.0.tar.gz&#39;
 ...</code></pre>
 <p>Answering <code>n</code> to the prompt to up- or downgrade packages leaves the installation unchanged, since this would immediately create an inconsistent installation.</p>
+</div>
+<div id="troubleshooting-1" class="section level1">
+<h1>Troubleshooting</h1>
+<div id="multiple-biocversion-installations" class="section level2">
+<h2>Multiple <code>BiocVersion</code> installations</h2>
 <p>One potential problem occurs when there are two or more <code>.libPaths()</code>, with more than one BiocVersion package installed. This might occur for instance if a ‘system administrator’ installed BiocVersion, and then a user installed their own version. In this circumstance, it seems appropriate to standardize the installation by repeatedly calling <code>remove.packages(&quot;BiocVersion&quot;)</code> until all versions are removed, and then installing the desired version.</p>
+</div>
+<div id="bioconductor-version-cannot-be-determined-no-internet-connection" class="section level2">
+<h2>Bioconductor version cannot be determined; no internet connection?</h2>
+<p>When the Bioconductor version cannot be obtained from the version map hosted at <a href="https://bioconductor.org/config.yaml" class="uri">https://bioconductor.org/config.yaml</a>, this error will occur. It may be a result of poor internet connectivity or offline use. See the <a href="#offline-config.yaml">offline config.yaml</a> section above.</p>
+</div>
+<div id="bioconductor-version-cannot-be-validated-no-internet-connection" class="section level2">
+<h2>Bioconductor version cannot be validated; no internet connection?</h2>
+<p>Usually occurs when the map is unable to be downloaded possibly due to a missing <code>BIOCONDUCTOR_CONFIG_FILE</code>. For offline use, a copy of the configuration file should be downloaded and its address set to the environment variable or option.</p>
+</div>
+<div id="bioconductor-version-map-cannot-be-validated-is-it-misconfigured" class="section level2">
+<h2>Bioconductor version map cannot be validated; is it misconfigured?</h2>
+<p>On <em>rare</em> occasion, the version map hosted at <a href="https://bioconductor.org/config.yaml" class="uri">https://bioconductor.org/config.yaml</a> may be misconfigured. The check ensures that all the version name tags, i.e., out-of-date, release, devel, and future are in the map.</p>
+</div>
+<div id="bioconductor-version-cannot-be-validated-is-type-input-misspecified" class="section level2">
+<h2>Bioconductor version cannot be validated; is type input misspecified?</h2>
+<p>The type input refers to the version name inputs, mainly release and devel. This error is chiefly due to internal logic and is not due to user error. Please open an issue on the <a href="https://github.com/Bioconductor/BiocManager/issues">GitHub issues page</a>.</p>
+</div>
 </div>
 <div id="sessioninfo" class="section level1">
 <h1><code>sessionInfo()</code></h1>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 4.2.0 beta (2022-04-14 r82178)
+<pre><code>## R Under development (unstable) (2022-05-18 r82375)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 20.10
+## Running under: Ubuntu 20.04.4 LTS
 ## 
 ## Matrix products: default
 ## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
@@ -416,11 +446,11 @@ trying URL &#39;https://bioconductor.org/packages/3.9/bioc/src/contrib/\
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.29   R6_2.5.1        jsonlite_1.8.0  magrittr_2.0.3 
-##  [5] evaluate_0.15   stringi_1.7.6   rlang_1.0.2     cli_3.2.0      
-##  [9] jquerylib_0.1.4 bslib_0.3.1     rmarkdown_2.13  tools_4.2.0    
-## [13] stringr_1.4.0   xfun_0.30       yaml_2.3.5      fastmap_1.1.0  
-## [17] compiler_4.2.0  htmltools_0.5.2 knitr_1.38      sass_0.4.1</code></pre>
+##  [1] digest_0.6.29   R6_2.5.1        fastmap_1.1.0   xfun_0.30      
+##  [5] magrittr_2.0.3  stringr_1.4.0   knitr_1.38      htmltools_0.5.2
+##  [9] rmarkdown_2.13  cli_3.2.0       sass_0.4.1      jquerylib_0.1.4
+## [13] compiler_4.3.0  tools_4.3.0     evaluate_0.15   bslib_0.3.1    
+## [17] yaml_2.3.5      rlang_1.0.2     jsonlite_1.8.0  stringi_1.7.6</code></pre>
 </div>
 
 

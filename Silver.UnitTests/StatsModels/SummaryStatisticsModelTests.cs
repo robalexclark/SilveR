@@ -152,13 +152,14 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "MedianAndQuartiles", Value = "True" });
             arguments.Add(new Argument { Name = "MinAndMax", Value = "False" });
             arguments.Add(new Argument { Name = "N", Value = "True" });
+            arguments.Add(new Argument { Name = "Sum", Value = "False" });
             arguments.Add(new Argument { Name = "NormalProbabilityPlot", Value = "False" });
             arguments.Add(new Argument { Name = "Significance", Value = "90" });
             arguments.Add(new Argument { Name = "StandardDeviation", Value = "True" });
             arguments.Add(new Argument { Name = "StandardErrorOfMean", Value = "False" });
             arguments.Add(new Argument { Name = "Variance", Value = "True" });
 
-            Assert.Equal(18, arguments.Count);
+            Assert.Equal(19, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -195,7 +196,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Respivs_sp_ivs2,Resp8 None Cat4 Cat5 Cat6 Cat456 Y Y Y N N N N N Y 95 N N", result);
+            Assert.Equal("Respivs_sp_ivs2,Resp8 None Cat4 Cat5 Cat6 Cat456 Y Y N Y N N N N N Y 95 N N", result);
         }
 
         private SummaryStatisticsModel GetModel(IDataset dataset)

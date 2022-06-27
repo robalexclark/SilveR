@@ -267,6 +267,13 @@ namespace SilveR
                     context.Scripts.Add(meansComparison);
                 }
 
+                if (!existingScripts.Any(x => x.ScriptFileName == "EquivalenceOfMeansPowerAnalysisDatasetBasedInputs"))
+                {
+                    Script meansComparison = new Script() { ScriptDisplayName = "'Equivalence of Means' Power Analysis (Dataset Based Inputs)", ScriptFileName = "EquivalenceOfMeansPowerAnalysisDatasetBasedInputs", RequiresDataset = true };
+                    context.Scripts.Add(meansComparison);
+                }
+
+
                 if (!existingScripts.Any(x => x.ScriptFileName == "OneWayANOVAPowerAnalysisDatasetBasedInputs"))
                 {
                     Script meansComparison = new Script() { ScriptDisplayName = "'One-way ANOVA' Power Analysis (Dataset Based Inputs)", ScriptFileName = "OneWayANOVAPowerAnalysisDatasetBasedInputs", RequiresDataset = true };

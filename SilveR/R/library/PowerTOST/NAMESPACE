@@ -1,0 +1,95 @@
+# Import all packages listed as Imports or Depends
+# not selective:
+#import(
+#  mvtnorm, stats, graphics, grDevices, utils
+#)
+# import selectively only the used functions (good practice)
+importFrom(mvtnorm, GenzBretz, pmvt, pmvnorm, rmvnorm)
+importFrom(graphics, abline, box, close.screen, legend, par, plot, points, 
+           screen, split.screen,  segments, text, mtext, grid)
+importFrom(grDevices, colorRampPalette)
+importFrom(stats, dnorm, pnorm, qnorm, rnorm, dt, pt, qt, dchisq, qchisq, rchisq, 
+           qf, rf, df, uniroot, integrate, optim, optimize, binom.test, coef, 
+           confint, lm.fit, .lm.fit, lm, model.matrix, reshape, rWishart, anova)
+importFrom(utils, tail, head, read.table, flush.console, setTxtProgressBar,
+           txtProgressBar)
+importFrom(cubature, hcubature)
+importFrom(TeachingDemos, shadowtext)
+
+# Export all names except those beginning with .
+# exportPattern("^[^\\.]")
+#
+# Export explicitly by name
+export(
+    bib.CL
+  , CI.BE
+  , CI.RatioF
+  , CVCL
+  , CV2se
+  , CV2mse
+  , CVfromCI
+  , CI2CV                 # alias
+  , CVwRfromU
+  , U2CVwR                # alias
+  , CVp2CV
+  , CVpooled
+  , exppower.noninf
+  , exppower.TOST
+  , expsampleN.noninf
+  , expsampleN.TOST
+  , known.designs
+  , OwensQ
+  , OwensQOwen
+  , OwensT
+  , pa.ABE
+  , pa.scABE
+  , pa.NTIDFDA
+  , pa.NTID                # alias
+  , power.2TOST
+  , type1error.2TOST
+  , power.noninf
+  , power.RatioF
+  , power.TOST
+  , power.TOST.sim
+  , power.TOST.sds
+  , power.NTIDFDA
+  , power.NTID             # alias
+  , power.HVNTID
+  , power.RSABE
+  , power.RSABE2L.sdsims
+  , power.RSABE2L.sds      # alias
+  , power.scABEL
+  , power.scABEL.sdsims
+  , power.scABEL.sds       # alias
+  , sampleN.RSABE2L.sdsims
+  , sampleN.RSABE2L.sds    # alias
+  , power.dp
+  , pvalue.TOST
+  , pvalues.TOST
+  , reg_const
+  , sampleN.noninf
+  , sampleN.RatioF
+  , sampleN.2TOST
+  , sampleN.TOST
+  , sampleN.NTIDFDA
+  , sampleN.NTID           # alias
+  , sampleN.HVNTID
+  , sampleN.RSABE
+  , sampleN.scABEL
+  , sampleN.scABEL.sdsims
+  , sampleN.scABEL.sds    # alias
+  , sampleN.scABEL.ad
+  , sampleN.dp
+  , scABEL
+  , scABEL.ad
+  , se2CV
+  , mse2CV
+)         
+
+# Define S3 methods for the pooled CV
+S3method(print, CVp)
+# S3 methods for printing/plotting power analysis
+S3method(print, pwrA)
+S3method(plot, pwrA)
+# S3 method print for the regulatory settings in ABEL
+S3method(print, regSet)

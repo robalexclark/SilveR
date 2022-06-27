@@ -337,6 +337,8 @@ if (is.numeric(graphdata$xvarrr_IVS)=="TRUE" && XAxisTransform != "none" && XAxi
 	XAxisTitle<-axis_relabel(XAxisTransform, XAxisTitle)
 }
 
+#Dataset for the printout
+Printdata <- graphdata
 #===================================================================================================================
 #Titles and description
 #===================================================================================================================
@@ -1880,6 +1882,8 @@ HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(
 #===================================================================================================================
 #Show dataset
 #===================================================================================================================
+graphdata <- Printdata
+
 graphdata2 <- data.frame(graphdata$yvarrr_IVS)
 names <- c(YAxisVars)
 colnames(graphdata2) <- names

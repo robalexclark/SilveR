@@ -2,7 +2,7 @@
 #R Libraries
 
 suppressWarnings(library(R2HTML))
-
+suppressWarnings(library(Hmisc))
 #===================================================================================================================
 # retrieve args
 Args <- commandArgs(TRUE)
@@ -352,6 +352,17 @@ if (pValueSelected=="Y")  {
 }
 
 indexn<-1
+
+
+#Create a matrix correlation table
+MatrixTableCoef <-matrix(ncol=resplength,nrow=resplength)
+for (i in 1:resplength) {
+	MatrixTableCoef[i,i] = 1
+}
+MatrixTableP <-matrix(ncol=resplength,nrow=resplength)
+MatrixTablePara <-matrix(ncol=resplength, nrow = resplength)
+
+
 id <- 1
 for (i in 1:(resplength-1)) {
 	for (j in (i+1):resplength) {
@@ -382,11 +393,16 @@ for (i in 1:(resplength-1)) {
 			correlationTable[k,4]=resplist[j]
 			correlationTable[k,5]=pairn
 
+			MatrixTablePara[(i),(j)] = pairn
+			MatrixTablePara[(j),(i)] = pairn			
+
 			l<-6
 		
 			if (estimate=="Y")  {
 				xstat<- format(round(correlation$estimate,3),nsmall=3)
 				correlationTable[k,l]=xstat
+				MatrixTableCoef[(i),(j)] = xstat
+				MatrixTableCoef[(j),(i)] = xstat
 				l=l+1
 			}
 	
@@ -408,6 +424,8 @@ for (i in 1:(resplength-1)) {
 				}
 		
 				correlationTable[k,l]=pvalue
+				MatrixTableP[(i),(j)] = pvalue
+				MatrixTableP[(j),(i)] = pvalue
 			}
 			k=k+1
 		}
@@ -466,6 +484,35 @@ if (k>1) {
 	
 	HTML.title(title, HR=3, align="left")
 	HTML(correlationTable2, classfirstline="second", align="left", row.names = "FALSE")
+
+	#Correlation Matrix for Coefficients
+	if (estimate=="Y")  {
+		Columnnames <- c(resplist)
+		Rownames<- c(" ", resplist)
+		MatrixTableCoef <- data.frame(cbind(Columnnames, MatrixTableCoef))
+		colnames(MatrixTableCoef) <- Rownames
+		HTML.title("Matrix table of correlation coefficients", HR=3, align="left")
+		HTML(MatrixTableCoef, classfirstline="second", align="left", row.names = "FALSE")
+	}
+	#Correlation Matrix for Coefficients
+	if (pValueSelected=="Y")  {
+		Columnnames <- c(resplist)
+		Rownames<- c(" ", resplist)
+		MatrixTableP <- data.frame(cbind(Columnnames, MatrixTableP))
+		colnames(MatrixTableP) <- Rownames
+		HTML.title("Matrix table of p-values", HR=3, align="left")
+		HTML(MatrixTableP, classfirstline="second", align="left", row.names = "FALSE")
+	}
+
+	#Correlation Matrix for Sampel size
+	if (pValueSelected=="Y" || estimate=="Y")  {
+		Columnnames <- c(resplist)
+		Rownames<- c(" ", resplist)
+		MatrixTablePara <- data.frame(cbind(Columnnames, MatrixTablePara))
+		colnames(MatrixTablePara) <- Rownames
+		HTML.title("Matrix table of sample sizes", HR=3, align="left")
+		HTML(MatrixTablePara, classfirstline="second", align="left", row.names = "FALSE")
+	}
 
 	CIval3 <- 100-100*CIval
 	corp<-dim(correlationTable2)[2]
@@ -748,10 +795,23 @@ if (pValueSelected=="Y")  {
 	rownams[1,l]="p-value"
 }
 
+#Create a matrix correlation table
+MatrixTableCatCoef <-matrix(ncol=resplength,nrow=length*resplength)
+j<-0
+for (p in 1:length) {
+	for (i in 1:resplength) {
+		MatrixTableCatCoef[i+j,i] = 1
+	}
+	j<-j+resplength
+}
+MatrixTableCatP <-matrix(ncol=resplength,nrow=length*resplength)
+MatrixTableCatPara <-matrix(ncol=resplength,nrow=length*resplength)
+
 index<-1
 testcomb<-1
 indexn<-1
 id<-1
+q<-0
 for ( p in 1:length) {
 	testdata<- subset(statdata, statdata$catfact== unique(levels(as.factor(statdata$catfact)))[p])
 
@@ -791,6 +851,10 @@ for ( p in 1:length) {
 				correlationTable[k,4]=" vs. "
 				correlationTable[k,5]=resplist[j]
 				correlationTable[k,6]=pairn
+
+
+				MatrixTableCatPara[i+q,j] = pairn
+				MatrixTableCatPara[j+q,i] = pairn	
 	
 				l<-7
 		
@@ -798,6 +862,8 @@ for ( p in 1:length) {
 					xstat<- format(round(correlation$estimate,3),nsmall=3)
 					correlationTable[k,l]=xstat
 					l=l+1
+					MatrixTableCatCoef[i+q,j]=xstat
+					MatrixTableCatCoef[j+q,i]=xstat
 
 					#STB Aug 2011 - removing lines with infinite slope
 					if (correlation$estimate==1000)  {
@@ -833,12 +899,16 @@ for ( p in 1:length) {
 					}
 			
 					correlationTable[k,l]=pvalue
+					MatrixTableCatP[i+q,j]=pvalue
+					MatrixTableCatP[j+q,i]=pvalue
 				}
 				k=k+1
 			}
 		}
 	}
+q<- q+resplength
 }
+
 
 #Add transformation label to the results table - not implemented for consitency with other modules
 #if (responseTransform != "none") {
@@ -892,6 +962,40 @@ if (k>2) {
 	
 	HTML.title(title, HR=3, align="left")
 	HTML(correlationTable2, classfirstline="second", align="left", row.names="FALSE")
+
+
+	#Correlation Matrix for Coefficients
+	if (estimate=="Y")  {
+		Catnames <- rep(c(tablenames), each = length(resplist))
+		Columnnames <- c(resplist)
+		Rownames<- c("Categorisation factor", " ", resplist)
+		MatrixTableCatCoef <- data.frame(cbind(Catnames, Columnnames, MatrixTableCatCoef))
+		colnames(MatrixTableCatCoef) <- Rownames
+		HTML.title("Matrix table of correlation coefficients", HR=3, align="left")
+		HTML(MatrixTableCatCoef, classfirstline="second", align="left", row.names = "FALSE")
+	}
+	#Correlation Matrix for Coefficients
+	if (pValueSelected=="Y")  {
+		Catnames <- rep(c(tablenames), each = length(resplist))
+		Columnnames <- c(resplist)
+		Rownames<- c("Categorisation factor", " ", resplist)
+		MatrixTableCatP <- data.frame(cbind(Catnames, Columnnames, MatrixTableCatP))
+		colnames(MatrixTableCatP) <- Rownames
+		HTML.title("Matrix table of p-values", HR=3, align="left")
+		HTML(MatrixTableCatP, classfirstline="second", align="left", row.names = "FALSE")
+	}
+	#Correlation Matrix for Samepl size
+	if (pValueSelected=="Y" || estimate=="Y")  {
+		Catnames <- rep(c(tablenames), each = length(resplist))
+		Columnnames <- c(resplist)
+		Rownames<- c("Categorisation factor", " ", resplist)
+		MatrixTableCatPara <- data.frame(cbind(Catnames, Columnnames, MatrixTableCatPara))
+		colnames(MatrixTableCatPara) <- Rownames
+		HTML.title("Matrix table of sample sizes", HR=3, align="left")
+		HTML(MatrixTableCatPara, classfirstline="second", align="left", row.names = "FALSE")
+	}
+
+
 	
 	CIval3 <- 100-100*CIval
 	corp<-dim(correlationTable2)[2]

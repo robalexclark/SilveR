@@ -25,6 +25,7 @@ install.packages("detectseparation")
 install.packages("ggdendro")
 install.packages("BiocManager")
 install.packages("contrast")
+install.packages("PowerTOST", repo="https://www.stats.bris.ac.uk/R/")
 BiocManager::install("mixOmics")
 
 

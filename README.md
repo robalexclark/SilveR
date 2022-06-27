@@ -1,14 +1,14 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 3.1.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 3.6.3.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 6.0.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 4.1.2.
 
 ### Branded as InVivoStat
 
-The SilveR project is currently branded as InVivoStat as it is the cross platform replacement for the winforms version of the InVivoStat system (hosted at http://invivostat.co.uk/). However, the statistical analyses in this system are applicable to non-pharmaceutical studies. The system is designed so that the branding can be easily changed.
+The SilveR project is currently branded as the pharmaceutical statistical analysis system known as InVivoStat and hosted at http://invivostat.co.uk/. However, the statistical analyses in this system are applicable to non-pharmaceutical studies. The system is designed so that the branding can be easily changed.
 
 ## Getting Started
 
-Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 3.6.3 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
+Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 4.1.2 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
 
 ### Current Build
 
@@ -20,7 +20,7 @@ SilveR is a self-hosted web app written in .net core, running in an Electron she
 
 #### [Windows](#windows)
 
-A stripped down install of R 3.6.3 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
+A stripped down install of R 4.1.2 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
 
 #### [Linux](#linux)
 
@@ -30,11 +30,11 @@ For linux (only tested on Ubuntu 19+ so far) you will need to provide an install
 
 2) Run the setup script from the terminal prompt using 'sudo ./setup-linux.sh'
 
-Note that we only support 19.x at this time. If you have a different Linux distro then as long as you can get R 3.6.x installed on your own and the subsequent R packages then you should be fine.
+Note that we only support 19.x at this time. If you have a different Linux distro then as long as you can get R 4.1.x installed on your own and the subsequent R packages then you should be fine.
 
 #### [MacOS](#macos)
 
-For Mac you will need to install R  and run a script to install the required R packages. To do this:
+For Mac you will need to install R and run a script to install the required R packages. To do this:
 
 1) Download and install R from https://cran.r-project.org/bin/macosx/base/R-4.1.3.pkg
 
@@ -94,13 +94,12 @@ Viewing of the results file entails the inline html being extracted from the loc
 ## Ongoing and Future Development 
 
 1) Finialise setup process on linux and osx
-2) Refactor validation classes and methods to standardise and remove any duplication
-3) Port to Blazor/razor components
-4) Investigate further modules for development
+2) Port to Blazor/razor components
+3) Investigate further modules for development
 
 ## Contributing or Issues
 
-If you would like to contribute or find an issue with the system then please raise an issue ticket. I'm happy to help developers write modules for the main branch of the system as long as the statistical methodology is reasonably mainstream. 
+If you would like to contribute or if you find an issue with the system then please raise an issue ticket. I'm happy to help developers write modules for the main branch of the system as long as the statistical methodology is reasonably mainstream. 
 
 ## License
 

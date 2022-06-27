@@ -22,7 +22,6 @@ data_frame	deprecated
 data_frame_	deprecated
 deframe	enframe
 deprecated	deprecated
-dim_desc	reexports
 enframe	enframe
 format.tbl	formatting
 format.tbl_df	formatting

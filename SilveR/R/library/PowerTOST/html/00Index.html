@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Power and Sample Size for (Bio)Equivalence Studies</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+<h1> Power and Sample Size for (Bio)Equivalence Studies
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;PowerTOST&rsquo; version 1.5-4</h2>
+
+<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table width="100%">
+<tr><td style="width: 25%;"><a href="bib.CL.html">bib.CL</a></td>
+<td>Design matrices of period balanced incomplete block designs</td></tr>
+<tr><td style="width: 25%;"><a href="CI.BE.html">CI.BE</a></td>
+<td>1-2*alpha confidence interval given point estimate, CV, and n</td></tr>
+<tr><td style="width: 25%;"><a href="CI.RatioF.html">CI.RatioF</a></td>
+<td>1-2*alpha Fieller CI given point estimate, CV (, CVb) and n</td></tr>
+<tr><td style="width: 25%;"><a href="CVfromCI.html">CI2CV</a></td>
+<td>CV from a given Confidence interval</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2.html">ct5.1</a></td>
+<td>Sample Size Tables for the Classical 2x2 Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2.html">ct5.2</a></td>
+<td>Sample Size Tables for the Classical 2x2 Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2.html">ct5.3</a></td>
+<td>Sample Size Tables for the Classical 2x2 Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2.html">ct5.4.1</a></td>
+<td>Sample Size Tables for the Classical 2x2 Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2x3.html">ct9.6.2</a></td>
+<td>Sample Size Tables for the 2x2x3 Replicate Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x4x4.html">ct9.6.4</a></td>
+<td>Sample Size Tables for the 2x4x4 Replicate Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2x3.html">ct9.6.6</a></td>
+<td>Sample Size Tables for the 2x2x3 Replicate Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x4x4.html">ct9.6.8</a></td>
+<td>Sample Size Tables for the 2x4x4 Replicate Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_parallel.html">ctCW.III</a></td>
+<td>Sample Size Tables for the Parallel Group Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_parallel.html">ctSJ.VIII.10</a></td>
+<td>Sample Size Tables for the Parallel Group Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_parallel.html">ctSJ.VIII.20</a></td>
+<td>Sample Size Tables for the Parallel Group Design</td></tr>
+<tr><td style="width: 25%;"><a href="CV2se.html">CV2mse</a></td>
+<td>Helper functions</td></tr>
+<tr><td style="width: 25%;"><a href="CV2se.html">CV2se</a></td>
+<td>Helper functions</td></tr>
+<tr><td style="width: 25%;"><a href="CVCL.html">CVCL</a></td>
+<td>Confidence limits of a CV for log-normal data</td></tr>
+<tr><td style="width: 25%;"><a href="CVfromCI.html">CVfromCI</a></td>
+<td>CV from a given Confidence interval</td></tr>
+<tr><td style="width: 25%;"><a href="CVp2CV.html">CVp2CV</a></td>
+<td>Decompose CV(T) and CV(R) from 'pooled' CV of T/R</td></tr>
+<tr><td style="width: 25%;"><a href="CVpooled.html">CVpooled</a></td>
+<td>Pooled CV from several studies</td></tr>
+<tr><td style="width: 25%;"><a href="CVwRfromU.html">CVwRfromU</a></td>
+<td>CVwR from the upper expanded limit (ABEL)</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2.html">data2x2</a></td>
+<td>Sample Size Tables for the Classical 2x2 Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x2x3.html">data2x2x3</a></td>
+<td>Sample Size Tables for the 2x2x3 Replicate Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_2x4x4.html">data2x4x4</a></td>
+<td>Sample Size Tables for the 2x4x4 Replicate Crossover Design</td></tr>
+<tr><td style="width: 25%;"><a href="data_parallel.html">data_parallel</a></td>
+<td>Sample Size Tables for the Parallel Group Design</td></tr>
+<tr><td style="width: 25%;"><a href="defunct.html">defunct</a></td>
+<td>Removed functions in PowerTOST</td></tr>
+<tr><td style="width: 25%;"><a href="deprecated.html">deprecated</a></td>
+<td>Deprecated functions in PowerTOST</td></tr>
+<tr><td style="width: 25%;"><a href="exppower.noninf.html">exppower.noninf</a></td>
+<td>Expected power of the non-inferiority test</td></tr>
+<tr><td style="width: 25%;"><a href="exppower.TOST.html">exppower.TOST</a></td>
+<td>Expected power of the TOST procedure</td></tr>
+<tr><td style="width: 25%;"><a href="expsampleN.noninf.html">expsampleN.noninf</a></td>
+<td>Sample size based on expected power for the non-inferiority test</td></tr>
+<tr><td style="width: 25%;"><a href="expsampleN.TOST.html">expsampleN.TOST</a></td>
+<td>Sample size based on expected power</td></tr>
+<tr><td style="width: 25%;"><a href="known.designs.html">known.designs</a></td>
+<td>Show the 'known' designs</td></tr>
+<tr><td style="width: 25%;"><a href="CV2se.html">mse2CV</a></td>
+<td>Helper functions</td></tr>
+<tr><td style="width: 25%;"><a href="OwensQ.html">OwensQ</a></td>
+<td>Owen's Q-function</td></tr>
+<tr><td style="width: 25%;"><a href="OwensQOwen.html">OwensQOwen</a></td>
+<td>Owen's Q-function via repeated integration by parts</td></tr>
+<tr><td style="width: 25%;"><a href="OwensT.html">OwensT</a></td>
+<td>Owen's T-function</td></tr>
+<tr><td style="width: 25%;"><a href="pa.ABE.html">pa.ABE</a></td>
+<td>Power analysis for average bioequivalence (ABE)</td></tr>
+<tr><td style="width: 25%;"><a href="pa.NTID.html">pa.NTID</a></td>
+<td>Power analysis for scaled ABE for NTIDs</td></tr>
+<tr><td style="width: 25%;"><a href="pa.NTID.html">pa.NTIDFDA</a></td>
+<td>Power analysis for scaled ABE for NTIDs</td></tr>
+<tr><td style="width: 25%;"><a href="pa.scABE.html">pa.scABE</a></td>
+<td>Power analysis for scaled average bioequivalence (scABE)</td></tr>
+<tr><td style="width: 25%;"><a href="pa.ABE.html">plot.pwrA</a></td>
+<td>Power analysis for average bioequivalence (ABE)</td></tr>
+<tr><td style="width: 25%;"><a href="power.2TOST.html">power.2TOST</a></td>
+<td>Power for two simultaneous TOST procedures</td></tr>
+<tr><td style="width: 25%;"><a href="power.dp.html">power.dp</a></td>
+<td>Power of dose-proportionality studies evaluated via Power model</td></tr>
+<tr><td style="width: 25%;"><a href="power.HVNTID.html">power.HVNTID</a></td>
+<td>(Empirical) Power for BE decision via FDA method for highly variable NTIDs</td></tr>
+<tr><td style="width: 25%;"><a href="power.noninf.html">power.noninf</a></td>
+<td>Power of the one-sided non-inferiority t-test</td></tr>
+<tr><td style="width: 25%;"><a href="power.NTID.html">power.NTID</a></td>
+<td>(Empirical) Power for BE decision via FDA method for NTIDs</td></tr>
+<tr><td style="width: 25%;"><a href="power.NTID.html">power.NTIDFDA</a></td>
+<td>(Empirical) Power for BE decision via FDA method for NTIDs</td></tr>
+<tr><td style="width: 25%;"><a href="power.RatioF.html">power.RatioF</a></td>
+<td>Power for equivalence of the ratio of two means with normality on original scale</td></tr>
+<tr><td style="width: 25%;"><a href="power.RSABE.html">power.RSABE</a></td>
+<td>(Empirical) Power for BE decision via linearized scaled ABE criterion</td></tr>
+<tr><td style="width: 25%;"><a href="power.RSABE2L.sdsims.html">power.RSABE2L.sds</a></td>
+<td>(Empirical) Power of BE Decision via Reference Scaled ABE</td></tr>
+<tr><td style="width: 25%;"><a href="power.RSABE2L.sdsims.html">power.RSABE2L.sdsims</a></td>
+<td>(Empirical) Power of BE Decision via Reference Scaled ABE</td></tr>
+<tr><td style="width: 25%;"><a href="power.scABEL.html">power.scABEL</a></td>
+<td>(Empirical) Power of BE decision via scaled (widened) BE acceptance limits</td></tr>
+<tr><td style="width: 25%;"><a href="power.scABEL.sdsims.html">power.scABEL.sds</a></td>
+<td>(Empirical) Power of BE decision via scaled (widened) BE acceptance limits</td></tr>
+<tr><td style="width: 25%;"><a href="power.scABEL.sdsims.html">power.scABEL.sdsims</a></td>
+<td>(Empirical) Power of BE decision via scaled (widened) BE acceptance limits</td></tr>
+<tr><td style="width: 25%;"><a href="power.TOST.html">power.TOST</a></td>
+<td>Power of the classical TOST procedure</td></tr>
+<tr><td style="width: 25%;"><a href="power.TOST.sds.html">power.TOST.sds</a></td>
+<td>Power calculation of the BE decision with models incorporating groups</td></tr>
+<tr><td style="width: 25%;"><a href="power.TOST.sim.html">power.TOST.sim</a></td>
+<td>Power of the TOST procedure obtained via simulations</td></tr>
+<tr><td style="width: 25%;"><a href="CVpooled.html">print.CVp</a></td>
+<td>Pooled CV from several studies</td></tr>
+<tr><td style="width: 25%;"><a href="pa.ABE.html">print.pwrA</a></td>
+<td>Power analysis for average bioequivalence (ABE)</td></tr>
+<tr><td style="width: 25%;"><a href="pvalue.TOST.html">pvalue.TOST</a></td>
+<td>p-value(s) of the TOST procedure</td></tr>
+<tr><td style="width: 25%;"><a href="pvalue.TOST.html">pvalues.TOST</a></td>
+<td>p-value(s) of the TOST procedure</td></tr>
+<tr><td style="width: 25%;"><a href="reg_const.html">reg_const</a></td>
+<td>Constructor of an object with class 'regSet' containing the regulatory settings for ABEL</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.2TOST.html">sampleN.2TOST</a></td>
+<td>Sample size based on power of two TOSTs</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.dp.html">sampleN.dp</a></td>
+<td>Sample size estimation of dose-proportionality studies evaluated via the power model</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.HVNTID.html">sampleN.HVNTID</a></td>
+<td>Sample size estimation for BE decision via FDA method for highly variable (HV) narrow therapeutic index drugs (NTIDs)</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.noninf.html">sampleN.noninf</a></td>
+<td>Sample size for the non-inferiority t-test</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.NTID.html">sampleN.NTID</a></td>
+<td>Sample size estimation for BE decision via the FDA's method for narrow therapeutic index drugs (NTIDs)</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.NTID.html">sampleN.NTIDFDA</a></td>
+<td>Sample size estimation for BE decision via the FDA's method for narrow therapeutic index drugs (NTIDs)</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.RatioF.html">sampleN.RatioF</a></td>
+<td>Sample size for equivalence of the ratio of two means with normality on original scale</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.RSABE.html">sampleN.RSABE</a></td>
+<td>Sample size estimation for BE decision via linearized scaled ABE criterion</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.RSABE2L.sdsims.html">sampleN.RSABE2L.sds</a></td>
+<td>Sample size estimation for BE Decision via Reference Scaled ABE</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.RSABE2L.sdsims.html">sampleN.RSABE2L.sdsims</a></td>
+<td>Sample size estimation for BE Decision via Reference Scaled ABE</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.scABEL.html">sampleN.scABEL</a></td>
+<td>Sample size estimation for BE decision via scaled (expanded) BE acceptance limits</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.scABEL.ad.html">sampleN.scABEL.ad</a></td>
+<td>Sample size estimation for ABEL and iteratively adjusted alpha</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.scABEL.sdsims.html">sampleN.scABEL.sds</a></td>
+<td>Sample size estimation for BE decision via scaled (expanded) BE acceptance limits</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.scABEL.sdsims.html">sampleN.scABEL.sdsims</a></td>
+<td>Sample size estimation for BE decision via scaled (expanded) BE acceptance limits</td></tr>
+<tr><td style="width: 25%;"><a href="sampleN.TOST.html">sampleN.TOST</a></td>
+<td>Sample size based on power of TOST</td></tr>
+<tr><td style="width: 25%;"><a href="scABEL.html">scABEL</a></td>
+<td>Scaled (widened) BE Acceptance Limits</td></tr>
+<tr><td style="width: 25%;"><a href="scABEL.ad.html">scABEL.ad</a></td>
+<td>Iteratively adjusted alpha for ABEL</td></tr>
+<tr><td style="width: 25%;"><a href="CV2se.html">se2CV</a></td>
+<td>Helper functions</td></tr>
+<tr><td style="width: 25%;"><a href="type1error.2TOST.html">type1error.2TOST</a></td>
+<td>Type I error rate for two simultaneous TOST procedures</td></tr>
+<tr><td style="width: 25%;"><a href="CVwRfromU.html">U2CVwR</a></td>
+<td>CVwR from the upper expanded limit (ABEL)</td></tr>
+</table>
+</div></body></html>

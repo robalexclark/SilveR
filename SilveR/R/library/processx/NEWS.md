@@ -1,4 +1,16 @@
 
+# processx 3.6.1
+
+* processx now closes file unneeded file descriptors when redirecting
+  the standard output and error, in the client file.
+
+* processx errors now do not have `rlang_error` and `rlang_trace` classes,
+  because they are actually not compatible with rlang errors and traces.
+
+# processx 3.6.0
+
+* processx now gives better error messages, and better stack traces.
+
 # processx 3.5.3
 
 * `run()` now sets `stderr` to `NULL` in the result (instead of an empty

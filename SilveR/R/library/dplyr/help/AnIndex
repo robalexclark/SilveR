@@ -223,6 +223,7 @@ rename_with	rename
 right_join	mutate-joins
 right_join.data.frame	mutate-joins
 rows	rows
+rows_append	rows
 rows_delete	rows
 rows_insert	rows
 rows_patch	rows

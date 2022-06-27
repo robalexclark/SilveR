@@ -2,13 +2,12 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SilveR;
 using SilveR.Models;
 using SilveR.Services;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ControlledForms.IntegrationTests
+namespace SilveR.IntegrationTests
 {
     public class SilveRTestWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {

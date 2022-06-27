@@ -161,7 +161,7 @@ namespace SilveR.Validators
             }
         }
     }
-             
+
 
     //SUMMARY STATS
     public class ValidateConfidenceLimitsAttribute : ValidationAttribute
@@ -219,6 +219,35 @@ namespace SilveR.Validators
             }
             else
             {
+                return ValidationResult.Success;
+            }
+        }
+    }
+
+
+    //EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel
+    public class CheckTrueDifferenceAttribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel model = (EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel)validationContext.ObjectInstance;
+
+            if (String.IsNullOrEmpty(model.TrueDifference))
+            {
+                return new ValidationResult("True difference has not been set");
+            }
+            else //check to ensure that values in list are all numbers and are all comma separated and >0
+            {
+                string[] pValues = model.TrueDifference.Replace(" ", "").Split(','); //split list by comma
+
+                foreach (string p in pValues)//go through list and check that is a number and is greater than 0
+                {
+                    if (!Double.TryParse(p, out double _))
+                    {
+                        return new ValidationResult("True difference contains non-numeric values detected or values are not comma separated.");
+                    }
+                }
+
                 return ValidationResult.Success;
             }
         }

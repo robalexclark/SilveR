@@ -2,6 +2,49 @@
 title: "NEWS for the emmeans package"
 ---
 
+## emmeans 1.7.5
+  * Modified the defaults for several methods for class `emm_list`,
+    and added more complete documentation. We also added hidden
+    `emm_list` support to several functions like
+    `add_grouping()`, `emmip()`, and `emmeans()` itself.
+    These changes, we hope, help in situations where users create
+    objects like `emm <- emmeans(model, pairwise ~ treatment)` but are
+    not experienced or attuned to the distinction between `emmGrid` and
+    `emm_list` objects. The mechanism for this is to provide a 
+    default of \code{I_bet(1)} for which element of the `emm_list` to
+    use. A message is shown that specifies which element was selected
+    and encourages the user to specify it explicitly in the future
+    via either `[[ ]]` or a `which` argument; for example, `plot(emm[[1]])`
+    or `plot(emm, which = 1)`.
+  * The object returned by `joint_tests()` and `test(..., joint = TRUE)` now has
+    an `"est.fcns"` attribute, which is a list of the linear functions associated
+    with the joint test(s).
+  * `joint_tests()` results now possibly include a `(confounded)` entry for
+    effects not purely explained  by a model term.f
+  * New `cross.adjust` argument in `summary.emmGrid()` allows for additional 
+    *P*-value adjustment across `by` groups.
+  * Apparently, `glm.nb` support no longer requires `data` (#355) so
+    the documentation was updated.
+    
+
+## emmeans 1.7.4
+  * Added an argument `enhance.levels` to `contrast()` that allows
+    better labeling of the levels being contrasted. For example, now
+    (by default) if a factor `treat` has numeric levels, then comparisons
+    will have levels like `treat1 - treat2` rather than `1 - 2`. We can
+    request similar behavior with non-numeric levels, but only if we 
+    specify which factors.
+  * Two new functions `comb_facs()` and `split_fac()` for manipulating
+    the factors in an `emmGrid`.
+  * Added an argument `wts` to `eff.emmc` and `del.eff.emmc`, which
+    allows for weighted versions of effect-style contrasts (#346)
+  * Made `qdrg()` more robust in accommodating various manifestations
+    of rank-deficient models.
+  * `qdrg()` now always uses `df` if provided. Previously forced `df = Inf`
+    when a link function was provided.
+  * Fix to `df.error` calculation with `gls` (#347)
+
+
 ## emmeans 1.7.3
   * **argument change** `ref_grid(..., transform = ...)` now should
     be `ref_grid(..., regrid = ...)` to avoid confusing `transform` 

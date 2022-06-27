@@ -36,6 +36,17 @@ confint(pigs.rg, by = "source")
 #  summary(.Last.value, by = percent)       ### grouped the other way
 
 ## -----------------------------------------------------------------------------
+warp.lm <- lm(breaks ~ wool * tension, data = warpbreaks)
+warp.pw <- pairs(emmeans(warp.lm, ~ tension | wool))
+warp.pw
+
+## -----------------------------------------------------------------------------
+test(warp.pw, by = NULL, adjust = "bonferroni")
+
+## -----------------------------------------------------------------------------
+test(warp.pw, adjust = "tukey", cross.adjust = "bonferroni")
+
+## -----------------------------------------------------------------------------
 pigsint.lm <- lm(log(conc) ~ source * factor(percent), data = pigs)
 pigsint.rg <- ref_grid(pigsint.lm)
 contrast(pigsint.rg, "consec", simple = "percent")

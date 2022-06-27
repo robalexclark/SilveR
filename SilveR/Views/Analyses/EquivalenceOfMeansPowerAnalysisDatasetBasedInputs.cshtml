@@ -1,0 +1,199 @@
+﻿@model SilveR.StatsModels.EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel
+
+@section Scripts {
+    <script>
+        var theModel = @Html.Raw(Json.Serialize(Model));
+    </script>
+
+    <environment names="Development">
+        <script defer src="~/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.js"></script>
+        <script defer src="~/js/openLinks.js"></script>
+    </environment>
+    <environment names="Production">
+        <script defer src="~/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.min.js"></script>
+    </environment>
+}
+
+    @{
+    ViewBag.Title = "'Equivalence of Means' Power Analysis (Dataset Based Inputs)";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class="col-md-6">
+        <a href="#" onclick="openItem('http://invivostat.co.uk/wp-content/user-guides-v4/Power_analysis-equivalence_of_means.pdf')" class="btn btn-info pull-right">Help</a>
+    </div>
+</div>
+
+<form action="/Analyses/EquivalenceOfMeansPowerAnalysisDatasetBasedInputs" class="form-horizontal mt-2" method="post">
+
+    @await Html.PartialAsync("AnalysisErrors")
+
+    <input asp-for="DatasetID" hidden />
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header">Input Options</div>
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Response</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Response" />
+                            <div><span asp-validation-for="Response"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Treatment factor</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Treatment" />
+                            <div><span asp-validation-for="Treatment"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Control group</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="ControlGroup" />
+                            <div><span asp-validation-for="ControlGroup"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Significance level</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Significance" />
+                            <div><span asp-validation-for="Significance"></span></div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">True difference</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="TrueDifference" />
+                            <div><span asp-validation-for="TrueDifference"></span></div>
+                        </div>
+                    </div>
+
+
+                    <h4>Equivalence Bounds</h4>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Absolute" checked="checked" onclick="enableDisableEquivalenceType()">Absolute change
+                        </label>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Lower bound</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="LowerBoundAbsolute" />
+                            <div><span asp-validation-for="LowerBoundAbsolute"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Upper bound</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="UpperBoundAbsolute" />
+                            <div><span asp-validation-for="UpperBoundAbsolute"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-check mt-2">
+                        <label class="form-check-label">
+                            <input asp-for="EquivalenceBoundsType" type="radio" class="form-check-input" value="Percentage" onclick="enableDisableEquivalenceType()">Percentage change
+                        </label>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">% decrease bound</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="LowerBoundPercentageChange" />
+                            <div><span asp-validation-for="LowerBoundPercentageChange"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">% increase bound</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="UpperBoundPercentageChange" />
+                            <div><span asp-validation-for="UpperBoundPercentageChange"></span></div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-header">Output Options</div>
+                <div class="card-body">
+
+                    <br />
+                    <h4>Plotting range</h4>
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="PlottingRangeType" type="radio" class="form-check-input" value="SampleSize" onclick="enableDisablePlottingRangeType()">Use Sample Size
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Sample size from</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="SampleSizeFrom" />
+                            <div><span asp-validation-for="SampleSizeFrom"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 control-label" for="SampleSizeTo">Sample size to</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="SampleSizeTo" />
+                            <div><span asp-validation-for="SampleSizeTo"></span></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="PlottingRangeType" type="radio" class="form-check-input" value="Power" onclick="enableDisablePlottingRangeType()">Use Power
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Power from</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="PowerFrom" />
+                            <div><span asp-validation-for="PowerFrom"></span></div>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Power to</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="PowerTo" />
+                            <div><span asp-validation-for="PowerTo"></span></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Graph title</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="GraphTitle" />
+                            <div><span asp-validation-for="GraphTitle"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-md-12 text-right">
+            <button class="btn btn-primary btn-lg" type="submit">Submit <i class="fa fa-caret-right"></i></button>
+        </div>
+    </div>
+</form>

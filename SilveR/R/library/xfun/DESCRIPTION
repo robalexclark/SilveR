@@ -1,7 +1,7 @@
 Package: xfun
 Type: Package
 Title: Supporting Functions for Packages Maintained by 'Yihui Xie'
-Version: 0.30
+Version: 0.31
 Authors@R: c(
   person("Yihui", "Xie", role = c("aut", "cre", "cph"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
   person("Wush", "Wu", role = "ctb"),
@@ -23,7 +23,7 @@ Encoding: UTF-8
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 NeedsCompilation: yes
-Packaged: 2022-03-02 20:44:44 UTC; yihui
+Packaged: 2022-05-10 20:06:27 UTC; yihui
 Author: Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>),
   Wush Wu [ctb],
   Daijiang Li [ctb],
@@ -32,6 +32,6 @@ Author: Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>),
   Christophe Dervieux [ctb]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2022-03-02 21:50:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-03-03 15:38:56 UTC; windows
+Date/Publication: 2022-05-10 20:30:02 UTC
+Built: R 4.1.3; x86_64-w64-mingw32; 2022-06-20 17:17:14 UTC; windows
 Archs: i386, x64

@@ -1,9 +1,9 @@
 MOats                   Oats data in multivariate form
-add_grouping            Add a grouping factor
 as.list.emmGrid         Convert to and from 'emmGrid' objects
 as.mcmc.emmGrid         Support for MCMC-based estimation
 auto.noise              Auto Pollution Filter Noise
 cld.emmGrid             Compact letter displays
+comb_facs               Manipulate factors in a reference grid
 contrast                Contrasts and linear functions of EMMs
 contrast-methods        Contrast families
 eff_size                Calculate effect sizes and confidence bounds

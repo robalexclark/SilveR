@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Dose-Proportionality</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%7Bbackground%2Dcolor%3A%23fff%3Bmargin%3A1em%20auto%3Bmax%2Dwidth%3A700px%3Boverflow%3Avisible%3Bpadding%2Dleft%3A2em%3Bpadding%2Dright%3A2em%3Bfont%2Dsize%3A14px%3Bline%2Dheight%3A1%2E35%3Bhyphens%3Aauto%3Bfont%2Dfamily%3A%22Open%20Sans%22%2C%22Helvetica%20Neue%22%2CHelvetica%2CArial%2Csans%2Dserif%7D%23header%7Btext%2Dalign%3Acenter%7D%23TOC%7Bclear%3Aboth%3Bmargin%3A0%203em%3Bpadding%3A4px%3Bwidth%3Aauto%3Bborder%3A1px%20solid%20%23ccc%3Bborder%2Dradius%3A5px%3Bbackground%2Dcolor%3A%23fbfbfb%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A1%2E2em%7D%23TOC%20%2Etoctitle%7Bfont%2Dweight%3Abold%3Bfont%2Dsize%3A15px%3Bmargin%2Dleft%3A5px%7D%23TOC%20ul%7Bpadding%2Dleft%3A40px%3Bmargin%3A5px%20auto%205px%20%2D1%2E5em%7D%23TOC%20ul%20ul%7Bmargin%2Dleft%3A%2D2em%7D%23TOC%20li%7Blist%2Dstyle%2Dtype%3Anone%3Bline%2Dheight%3A16px%7Dtable%7Bmargin%3A1em%20auto%3Bborder%2Dwidth%3A1px%3Bborder%2Dcolor%3A%23ddd%3Bborder%2Dstyle%3Aoutset%3Bborder%2Dcollapse%3Acollapse%7Dtable%20th%7Bborder%2Dwidth%3A2px%3Bpadding%3A5px%3Bborder%2Dstyle%3Ainset%7Dtable%20td%7Bborder%2Dwidth%3A1px%3Bborder%2Dstyle%3Ainset%3Bline%2Dheight%3A18px%3Bpadding%3A5px%205px%7Dtable%2Ctable%20th%2Ctable%20td%7Bborder%2Dleft%2Dstyle%3Anone%3Bborder%2Dright%2Dstyle%3Anone%7Dtable%20thead%2C%20table%20%2Eeven%7Bbackground%2Dcolor%3A%23f7f7f7%7Dp%7Bmargin%3A0%2E5em%200%7Dsup%2Csub%7Bposition%3Arelative%3Bvertical%2Dalign%3Abaseline%3Btop%3A%2D0%2E4em%7Dsub%7Btop%3A0%2E4em%7Dblockquote%7Bbackground%2Dcolor%3A%23fffff6%3Bpadding%3A0%2E25em%200%2E75em%7Dhr%7Bborder%2Dstyle%3Asolid%3Bborder%3Anone%3Bborder%2Dtop%3A1px%20solid%20%23777%3Bmargin%3A28px%200%7Ddl%7Bmargin%2Dleft%3A0%7Ddl%20dd%7Bmargin%2Dbottom%3A13px%3Bmargin%2Dleft%3A13px%7Ddl%20dt%7Bfont%2Dweight%3A700%7Dul%7Bmargin%2Dtop%3A0%7Dul%20li%7Blist%2Dstyle%3Acircle%20outside%7Dul%20ul%7Bmargin%2Dbottom%3A0%7D%2Ehl%7Bbackground%2Dcolor%3A%23FFFF99%7Dpre%2C%20code%7Bbackground%2Dcolor%3A%23f7f7f7%3Bborder%2Dradius%3A3px%3Bcolor%3A%23333%3Bwhite%2Dspace%3Apre%2Dwrap%7Dpre%7Bborder%2Dradius%3A3px%3Bmargin%3A5px%200%2010px%200%3Bpadding%3A10px%7Dpre%3Anot%28%5Bclass%5D%29%7Bbackground%2Dcolor%3A%23f7f7f7%7Dcode%7Bfont%2Dsize%3A85%25%3Bfont%2Dfamily%3AConsolas%2CMonaco%2C%27Lucida%20Console%27%2C%27Courier%20New%27%2C%27Courier%27%2Cmonospace%7Dp%20%3E%20code%2Cli%20%3E%20code%7Bpadding%3A2px%200%7Dfigure%2C%2Ecaption%7Btext%2Dalign%3Acenter%7Dimg%7Bdisplay%3Ablock%3Bmargin%3A0%20auto%200%20auto%3Bbackground%2Dcolor%3A%23FFF%3Bpadding%3A2px%3Bborder%2Dradius%3A5px%3Bborder%3A1px%20solid%20%23CCC%7Dh1%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A4px%3B%3Bline%2Dheight%3A30px%3Bletter%2Dspacing%3A%2E5px%3Bborder%2Dbottom%3A3px%20solid%20%23f7f7f7%3Bfont%2Dsize%3A175%25%3Bhyphens%3Anone%7D%2Etitle%7Bmargin%2Dtop%3A1%2E5em%7Dh2%7Bborder%2Dbottom%3A2px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A2px%3Bfont%2Dsize%3A145%25%7Dh3%7Bborder%2Dbottom%3A1px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bfont%2Dsize%3A120%25%7Dh4%7Bmargin%2Dleft%3A8px%3Bfont%2Dsize%3A110%25%7D%2Eauthor%7Bfont%2Dsize%3A91%25%3Bmargin%2Dleft%3A0%3Bmargin%2Dbottom%3A0%3Bfont%2Dstyle%3Anormal%7Dh5%2C%20h6%7Bborder%2Dbottom%3A1px%20solid%20%23ccc%3Bfont%2Dsize%3A105%25%7Da%7Bcolor%3A%230033dd%3Btext%2Ddecoration%3Anone%7Da%3Ahover%7Bcolor%3A%236666ff%7Da%3Avisited%7Bcolor%3A%23800080%7Da%3Avisited%3Ahover%7Bcolor%3A%23BB00BB%7Da%5Bhref%5E%3D%22http%3A%22%5D%7Bcolor%3A%23696969%3Bborder%2Dbottom%3A1px%20dotted%20%23000%7Da%5Bhref%5E%3D%22https%3A%22%5D%7Bborder%2Dbottom%3A1px%20dotted%20%23000%3Bcolor%3A%23696969%7Dcode%20%3E%20%2Ekw%7Bcolor%3A%23555%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Edt%7Bcolor%3A%23902000%7D%20code%20%3E%20%2Edv%7Bcolor%3A%2340a070%7D%20code%20%3E%20%2Ebn%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Efl%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Ech%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Est%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Eco%7Bcolor%3A%23888888%3Bfont%2Dstyle%3Aitalic%7D%20code%20%3E%20%2Eot%7Bcolor%3A%23007020%7D%20code%20%3E%20%2Eal%7Bcolor%3A%23f00%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Efu%7Bcolor%3A%23900%3Bfont%2Dweight%3A700%7D%20%20code%20%3E%20%2Eer%7Bcolor%3A%23a61717%3Bbackground%2Dcolor%3A%23e3d2d2%7D%20%2Etop%7Bdisplay%3Ainline%3Bposition%3Afixed%3Bbottom%3A0%3Bright%3A0%3Bpadding%3A0%3Bfont%2Dsize%3A108px%7D%2Etop%20img%7Bborder%3Anone%7Da%2Etoplink%3Alink%7Bbackground%2Dimage%3Aurl%28data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAXVBMVEUAAABcgJzu7u%2F%2B%2F%2F%2Ft7u9ri6XN1%2BG1xdKtv82nusl2k6tkhqH6%2B%2FzZ4uiGoLVvj6je4%2BeXrsCTq71ujKbAzdehtMScscGNprl7mK9fgp7k6Ork5%2BrX3uPT2%2BFoh6ODMk%2FHAAAAAXRSTlMAQObYZgAAANFJREFUKM%2BFk%2B0aQzAMRpsW1XZlmGFf93%2BZM4skxji%2F1OHp2zRRhImu8CH4wkWjfjnZFIjUnpY2K2FBmQlpcliRG7IVbFDNPodNctwX%2FpBNmWUq38p8n%2FwWmFrrCzB2zJWKpR55DHx%2BoyIthqeeuPMPUTn69KaRpAfEqQKf%2BkQzHb4slKdQEocHUeFbgqWdDxBQh1dzZXdumhS1B6QTmqpE0aCWmqK5Pe24LNWGjlxUGY2KylfSrrUVF1olREYXutsO%2B8100Ir7jXw0BsdDdDCCb%2FerCdkTmcUbAAAAAElFTkSuQmCC%29%3Bbackground%2Drepeat%3Ano%2Drepeat%3Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E6%3Bfilter%3Aalpha%28opacity%3D60%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Da%2Etoplink%3Ahover%2Ca%2Etoplink%3Aactive%7Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E4%3Bfilter%3Aalpha%28opacity%3D40%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Dcode%20span%2Eco%7Bfont%2Dstyle%3Anormal%7D%23nav%7Bposition%3Aabsolute%3Btop%3A0%3Bfloat%3Aleft%3Bbackground%2Dcolor%3A%23084262%3Bborder%3Anone%7D%23nav%20ul%7Bwidth%3A100%25%3Blist%2Dstyle%2Dtype%3Anone%3Btext%2Dalign%3Acenter%3Bcolor%3A%23fff%3Bfont%2Dsize%3A%2E75em%3Bletter%2Dspacing%3A2px%3Bfont%2Dweight%3A700%3Bmargin%3A0%3Bpadding%3A0%7D%23nav%20ul%20li%7Bdisplay%3Ainline%7D%23nav%20ul%20li%20a%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23084262%3Btext%2Ddecoration%3Anone%3Bfloat%3Aleft%3Bborder%2Dright%3A1px%20solid%20%237394B4%3Bcursor%3Apointer%3Bpadding%3A%2E5em%2011%2E5px%7D%23nav%20ul%20li%20a%3Ahover%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23257B9D%7D%40media%20print%7B%23nav%2C%23TOC%2C%23TOC%20%2Etoctitle%2C%23TOC%20ul%2C%23TOC%20ul%20ul%2C%23TOC%20li%7Bdisplay%3Anone%7D%7D" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Dose-Proportionality</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#defaults">Defaults</a></li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#cave">Cave!</a></li>
+<li><a href="#author">Author</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+</div>
+
+<div class="top">
+<a class="toplink" href="#nav" title="⇑ top"> </a>
+</div>
+<div id="nav">
+<ul>
+<li>
+<a href="vignette.html">Main Vignette</a>
+</li>
+<li>
+<a href="ABE.html" title="Average Bioequivalence">ABE</a>
+</li>
+<li>
+<a href="RSABE.html" title="Reference-scaled Average Bioequivalence">RSABE</a>
+</li>
+<li>
+<a href="NI.html">Non-Inferiority</a>
+</li>
+<li>
+<span title="» You are here «">Dose-Proportionality</span>
+</li>
+<li>
+<a href="PA.html">Power Analysis</a>
+</li>
+</ul>
+</div>
+<h3>
+Details and examples of other methods are accessible via the menu bar on top of the page and the <a href="https://cran.r-project.org/package=PowerTOST/PowerTOST.pdf" title="PDF">online manual</a> of all functions.
+</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PowerTOST) <span class="co"># attach the library</span></span></code></pre></div>
+<div id="defaults" class="section level1">
+<h1>Defaults</h1>
+<table style="width:100%;">
+<colgroup>
+<col width="13%" />
+<col width="13%" />
+<col width="56%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Argument</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\small{\alpha}\)</span></td>
+<td><code>alpha</code></td>
+<td>Nominal level of the test</td>
+<td><code>0.05</code></td>
+</tr>
+<tr class="even">
+<td><em>CV</em></td>
+<td><code>CV</code></td>
+<td>CV</td>
+<td>none</td>
+</tr>
+<tr class="odd">
+<td>doses</td>
+<td><code>doses</code></td>
+<td>Vector of doses</td>
+<td>see examples</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\small{\pi}\)</span></td>
+<td><code>targetpower</code></td>
+<td><span title="typically 0.80 – 0.90">Minimum desired power</span></td>
+<td><code>0.80</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\small{\beta_0}\)</span></td>
+<td><code>beta0</code></td>
+<td>‘True’ or assumed slope of the power model</td>
+<td>see below</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\small{\theta_1}\)</span></td>
+<td><code>theta1</code></td>
+<td>Lower limit for the ratio of dose normalized means <em>Rdmn</em></td>
+<td>see below</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\small{\theta_2}\)</span></td>
+<td><code>theta2</code></td>
+<td>Upper limit for the ratio of dose normalized means <em>Rdmn</em></td>
+<td>see below</td>
+</tr>
+<tr class="even">
+<td>design</td>
+<td><code>design</code></td>
+<td>Planned design</td>
+<td><code>&quot;crossover&quot;</code></td>
+</tr>
+<tr class="odd">
+<td>dm</td>
+<td><code>dm</code></td>
+<td>Design matrix</td>
+<td><code>NULL</code></td>
+</tr>
+<tr class="even">
+<td><em>CV</em><sub>b</sub></td>
+<td><code>CVb</code></td>
+<td>Coefficient of variation of the between-subject variability</td>
+<td>–</td>
+</tr>
+<tr class="odd">
+<td>print</td>
+<td><code>print</code></td>
+<td>Show information in the console?</td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="even">
+<td>details</td>
+<td><code>details</code></td>
+<td>Show details of the sample size search?</td>
+<td><code>FALSE</code></td>
+</tr>
+<tr class="odd">
+<td>imax</td>
+<td><code>imax</code></td>
+<td>Maximum number of iterations</td>
+<td><code>100</code></td>
+</tr>
+</tbody>
+</table>
+<p>Arguments <code>targetpower</code>, <code>theta1</code>, <code>theta2</code>, and <code>CV</code> have to be given as fractions, not in percent.<br />
+The <em>CV</em> is generally the <em>within-</em> (intra-) subject coefficient of variation. Only for <code>design = &quot;parallel&quot;</code> it is the <em>total</em> (<span title="also known as">a.k.a.</span> pooled) <em>CV</em>. The <em>between-</em> (intra-) subject coefficient of variation <em>CV</em><sub>b</sub> is only necessary if <code>design = &quot;IBD&quot;</code> (if missing, it will be set to <code>2*CV</code>).</p>
+<p>The ‘true’ or assumed slope of the power model <span class="math inline">\(\small{\beta_0}\)</span> defaults to <code>1+log(0.95)/log(rd)</code>, where <code>rd</code> is the ratio of the highest/lowest dose.</p>
+<p>Supported designs are <code>&quot;crossover&quot;</code> (default; Latin Squares), <code>&quot;parallel&quot;</code>, and <code>&quot;IBD&quot;</code> (incomplete block design). Note that when <code>&quot;crossover&quot;</code> is chosen, instead of Latin Squares any Williams’ design could be used as well (identical degrees of freedom result in the same sample size).</p>
+<p>With <code>sampleN.dp(..., details = FALSE, print = FALSE)</code> results are provided as a data frame<small> </small><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> with ten (<code>design = &quot;crossover&quot;</code>) or eleven (<code>design = &quot;parallel&quot;</code> or <code>design = &quot;IBD&quot;</code>) columns: <code>Design</code>, <code>alpha</code>, <code>CV</code>, (<code>CVb</code>,) <code>doses</code>, <code>beta0</code>, <code>theta1</code>, <code>theta2</code>, <code>Sample size</code>, <code>Achieved power</code>, and <code>Target power</code>. To access <em>e.g.</em>, the sample size use <code>sampleN.dp[[&quot;Sample size&quot;]]</code>.</p>
+<p><span class="hl">The estimated sample size gives always the <em>total</em> number of subjects (not subject/sequence in crossovers or subjects/group in a parallel design – like in some other software packages).</span></p>
+</div>
+<div id="examples" class="section level1">
+<h1>Examples</h1>
+<p>Estimate the sample size for a modified Fibonacci dose-escalation study, lowest dose 10, three levels. Assumed <em>CV</em> 0.20 and <span class="math inline">\(\small{\beta_0}\)</span> slightly higher than 1. Defaults employed.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mod.fibo <span class="ot">&lt;-</span> <span class="cf">function</span>(lowest, levels) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># modified Fibonacci dose-escalation</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  fib      <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="fl">1.5</span>, <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  doses    <span class="ot">&lt;-</span> <span class="fu">numeric</span>(levels)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  doses[<span class="dv">1</span>] <span class="ot">&lt;-</span> lowest</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  level    <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">repeat</span> {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (level <span class="sc">&lt;=</span> <span class="dv">4</span>) {</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      doses[level] <span class="ot">&lt;-</span> doses[level<span class="dv">-1</span>] <span class="sc">*</span> fib[level<span class="dv">-1</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {  <span class="co"># ratio 1.33 for all higher doses</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      doses[level] <span class="ot">&lt;-</span> doses[level<span class="dv">-1</span>] <span class="sc">*</span> fib[<span class="dv">4</span>]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    level <span class="ot">&lt;-</span> level <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (level <span class="sc">&gt;</span> levels) {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      <span class="cf">break</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">signif</span>(doses, <span class="dv">3</span>))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>lowest <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>doses  <span class="ot">&lt;-</span> <span class="fu">mod.fibo</span>(lowest, levels)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.dp</span>(<span class="at">CV =</span> <span class="fl">0.20</span>, <span class="at">doses =</span> doses, <span class="at">beta0 =</span> <span class="fl">1.02</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++ Dose proportionality study, power model ++++</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: crossover (3x3 Latin square) </span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha = 0.05, target power = 0.8</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalence margins of R(dnm) = 0.8 ... 1.25 </span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Doses = 10 20 33.3 </span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co"># True slope = 1.02, CV = 0.2</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope acceptance range = 0.81451 ... 1.1855 </span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size (total)</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 15   0.808127</span></span></code></pre></div>
+<p>As above but with an additional level.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>doses  <span class="ot">&lt;-</span> <span class="fu">mod.fibo</span>(lowest, levels)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sampleN.dp</span>(<span class="at">CV =</span> <span class="fl">0.20</span>, <span class="at">doses =</span> doses, <span class="at">beta0 =</span> <span class="fl">1.02</span>) <span class="co"># we need the data.frame later</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++ Dose proportionality study, power model ++++</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: crossover (4x4 Latin square) </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha = 0.05, target power = 0.8</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalence margins of R(dnm) = 0.8 ... 1.25 </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Doses = 10 20 33.3 50 </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># True slope = 1.02, CV = 0.2</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope acceptance range = 0.86135 ... 1.1386 </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size (total)</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 16   0.867441</span></span></code></pre></div>
+<p>Note that with the wider dose range the acceptance range narrows.</p>
+<p>Explore the impact of dropouts.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">n =</span> <span class="fu">seq</span>(x[[<span class="st">&quot;Sample size&quot;</span>]], <span class="dv">12</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="at">power =</span> <span class="cn">NA</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(res)) {</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>power[i] <span class="ot">&lt;-</span> <span class="fu">signif</span>(<span class="fu">suppressMessages</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">power.dp</span>(<span class="at">CV =</span> <span class="fl">0.20</span>, <span class="at">doses =</span> doses,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">beta0 =</span> <span class="fl">1.02</span>, <span class="at">n =</span> res<span class="sc">$</span>n[i])), <span class="dv">5</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> res[res<span class="sc">$</span>power <span class="sc">&gt;=</span> <span class="fl">0.80</span>, ]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   n   power</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#  16 0.86744</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  15 0.82914</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  14 0.81935</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  13 0.81516</span></span></code></pre></div>
+<p>As usual nothing to worry about.</p>
+<p>Rather extreme: Five levels and we desire only three periods. Hence, we opt for an incomplete block design. The design matrix of a balanced minimal repeated measurements design is obtained by the function <code>balmin.RMD()</code> of package <code>crossdes</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>doses  <span class="ot">&lt;-</span> <span class="fu">mod.fibo</span>(lowest, levels)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>per    <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>block  <span class="ot">&lt;-</span> levels<span class="sc">*</span>(levels<span class="dv">-1</span>)<span class="sc">/</span>(per<span class="dv">-1</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dm     <span class="ot">&lt;-</span> crossdes<span class="sc">::</span><span class="fu">balmin.RMD</span>(levels, block, per)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>x      <span class="ot">&lt;-</span> <span class="fu">sampleN.dp</span>(<span class="at">CV =</span> <span class="fl">0.20</span>, <span class="at">doses =</span> doses, <span class="at">beta0 =</span> <span class="fl">1.02</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">design =</span> <span class="st">&quot;IBD&quot;</span>, <span class="at">dm =</span> dm)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++ Dose proportionality study, power model ++++</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: IBD (5x10x3) </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha = 0.05, target power = 0.8</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalence margins of R(dnm) = 0.8 ... 1.25 </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Doses = 10 20 33.3 50 66.7 </span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># True slope = 1.02, CV = 0.2, CVb = 0.4</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope acceptance range = 0.88241 ... 1.1176 </span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size (total)</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 30   0.898758</span></span></code></pre></div>
+<p>The IBD comes with a price since we need at least two blocks.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">n =</span> <span class="fu">seq</span>(x[[<span class="st">&quot;Sample size&quot;</span>]], <span class="fu">nrow</span>(dm), <span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">power =</span> <span class="cn">NA</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(res)) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  res<span class="sc">$</span>power[i] <span class="ot">&lt;-</span> <span class="fu">signif</span>(<span class="fu">suppressMessages</span>(</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">power.dp</span>(<span class="at">CV =</span> <span class="fl">0.20</span>, <span class="at">doses =</span> doses,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">beta0 =</span> <span class="fl">1.02</span>, <span class="at">design =</span> <span class="st">&quot;IBD&quot;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">dm =</span> dm, <span class="at">n =</span> res<span class="sc">$</span>n[i])), <span class="dv">5</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> res[res<span class="sc">$</span>power <span class="sc">&gt;=</span> <span class="fl">0.80</span>, ]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   n   power</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  30 0.89876</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  29 0.89196</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  28 0.87939</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  27 0.87201</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  26 0.85793</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  25 0.83587</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#  24 0.82470</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#  23 0.80405</span></span></code></pre></div>
+<p>Again, we don’t have to worry about dropouts.</p>
+<p>For a wide dose range the acceptance range narrows and becomes increasingly difficult to meet.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>doses  <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">^</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dv">2</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>levels <span class="ot">&lt;-</span> <span class="fu">length</span>(doses)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.dp</span>(<span class="at">CV =</span> <span class="fl">0.30</span>, <span class="at">doses =</span> doses, <span class="at">beta0 =</span> <span class="fl">1.02</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">design =</span> <span class="st">&quot;crossover&quot;</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++ Dose proportionality study, power model ++++</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: crossover (5x5 Latin square) </span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha = 0.05, target power = 0.8</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalence margins of R(dnm) = 0.8 ... 1.25 </span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Doses = 1 4 16 64 256 </span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># True slope = 1.02, CV = 0.3</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope acceptance range = 0.95976 ... 1.0402 </span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size (total)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 70   0.809991</span></span></code></pre></div>
+<p>In an exploratory setting more liberal limits could be specified (only one has to be specified; the other is calculated as the reciprocal of it).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.dp</span>(<span class="at">CV =</span> <span class="fl">0.30</span>, <span class="at">doses =</span> doses, <span class="at">beta0 =</span> <span class="fl">1.02</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">design =</span> <span class="st">&quot;crossover&quot;</span>, <span class="at">theta1 =</span> <span class="fl">0.75</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++ Dose proportionality study, power model ++++</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: crossover (5x5 Latin square) </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha = 0.05, target power = 0.8</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Equivalence margins of R(dnm) = 0.75 ... 1.333333 </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Doses = 1 4 16 64 256 </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># True slope = 1.02, CV = 0.3</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Slope acceptance range = 0.94812 ... 1.0519 </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size (total)</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 30   0.828246</span></span></code></pre></div>
+<p>Hummel <em>et al</em>. <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> proposed even more liberal <span class="math inline">\(\small{\theta_{1},\theta_{2}}\)</span> of {0.50, 2.0}.</p>
+</div>
+<div id="cave" class="section level1">
+<h1>Cave!</h1>
+<p>There is no guarantee that a desired incomplete block design (for given dose levels and number of periods) can be constructed. If you provide your own design matrix (in the argument <code>dm</code>) it is not assessed for meaningfulness.</p>
+</div>
+<div id="author" class="section level1">
+<h1>Author</h1>
+<p>Detlew Labes</p>
+</div>
+<div id="license" class="section level1">
+<h1>License</h1>
+<h4 class="author">
+<a href="https://cran.r-project.org/web/licenses/GPL-3" title="GNU General Public License, Version 3">GPL-3</a> 2022-02-21 Helmut Schütz
+</h4>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>R Documentation. <em>Data Frames.</em> 2022-02-08. <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html">R-manual</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Hummel J, McKendrick S, Brindley C, French R. <em>Exploratory assessment of dose proportionality: review of current approaches and proposal for a practical criterion.</em> Pharm. Stat. 2009; 8(1): 38–49. <a href="https://doi.org/10.1002/pst.326">doi:10.1002/pst.326</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

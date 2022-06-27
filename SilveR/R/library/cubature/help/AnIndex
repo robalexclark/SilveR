@@ -1,0 +1,11 @@
+cubature-package	cubature-package
+adaptIntegrate	hcubature
+cubature	cubature-package
+cubintegrate	cubintegrate
+cuhre	cuhre
+default_args	default_args
+divonne	divonne
+hcubature	hcubature
+pcubature	hcubature
+suave	suave
+vegas	vegas

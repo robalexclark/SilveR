@@ -1,8 +1,10 @@
 ## ----setup, include = FALSE---------------------------------------------------
 library(tibble)
 set.seed(1014)
-
-tibble:::set_fansi_hooks()
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 
 ## ----numbers-2----------------------------------------------------------------
 library(tibble)
@@ -25,6 +27,17 @@ tibble(
   si = num(10^(-3:1) * 123, notation = "si"),
   char = char(paste(LETTERS, collapse = " "), shorten = "mid")
 )
+
+## -----------------------------------------------------------------------------
+library(dplyr, warn.conflicts = FALSE)
+
+markets <-
+  as_tibble(EuStockMarkets) %>%
+  mutate(time = time(EuStockMarkets), .before = 1)
+
+markets
+markets %>%
+  mutate(across(-time, num, digits = 3))
 
 ## ----numbers-13---------------------------------------------------------------
 num(1) + 2

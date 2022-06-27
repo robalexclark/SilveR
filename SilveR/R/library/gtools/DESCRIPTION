@@ -24,20 +24,20 @@ Description: Functions to assist in R programming, including:
   - convert characters to/from ASCII codes ('asc', 'chr'),
   - convert character vector to ASCII representation ('ASCIIfy'),
   - apply title capitalization rules to a character vector ('capwords').
-Version: 3.9.2
-Date: 2021-06-03
-Author: Gregory R. Warnes, Ben Bolker, and Thomas Lumley
-Maintainer: Gregory R. Warnes <greg@warnes.net>
+Version: 3.9.2.2
+Date: 2022-05-28
+Author: Gregory R. Warnes, Ben Bolker, Thomas Lumley and CRAN team
+Maintainer: ORPHANED
 License: GPL-2
-Depends: methods, stats, utils
+Depends: R (>= 2.10), methods, stats, utils
 URL: https://github.com/r-gregmisc/gtools
 BugReports: https://github.com/r-gregmisc/gtools/issues
 Language: en-US
 Suggests: car, gplots, knitr, rstudioapi, SGP, taxize
 RoxygenNote: 7.1.1
 NeedsCompilation: yes
-Packaged: 2021-06-03 15:27:57 UTC; warnes
+Packaged: 2022-06-13 13:08:50 UTC; ripley
 Repository: CRAN
-Date/Publication: 2021-06-06 10:00:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:16:08 UTC; windows
+Date/Publication: 2022-06-13 15:09:05
+Built: R 4.1.3; x86_64-w64-mingw32; 2022-06-20 17:17:46 UTC; windows
 Archs: i386, x64

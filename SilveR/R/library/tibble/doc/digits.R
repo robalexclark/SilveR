@@ -1,8 +1,11 @@
 ## ----setup, include = FALSE---------------------------------------------------
 library(tibble)
 set.seed(1014)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
 
-tibble:::set_fansi_hooks()
 
 ## -----------------------------------------------------------------------------
 library(tibble)

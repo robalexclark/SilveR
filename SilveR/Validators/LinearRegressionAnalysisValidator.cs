@@ -61,7 +61,10 @@ namespace SilveR.Validators
             }
 
             //need to do a check on continuous variables vs response
-            if (!ContinuousAgainstResponseVariableChecks(lrVariables.ContinuousFactors, lrVariables.Response))
+            if (lrVariables.ContinuousFactors != null && !ContinuousAgainstResponseVariableChecks(lrVariables.ContinuousFactors, lrVariables.Response))
+                return ValidationInfo;
+
+            if (lrVariables.Covariates != null && !ContinuousAgainstResponseVariableChecks(lrVariables.Covariates, lrVariables.Response))
                 return ValidationInfo;
 
 
@@ -174,8 +177,18 @@ namespace SilveR.Validators
 
         private bool ContinuousAgainstResponseVariableChecks(IEnumerable<string> continuousFactors, string response)
         {
-            foreach (string contFactor in continuousFactors) //go through each categorical factor and do the check on each
+            foreach (string contFactor in continuousFactors) //go through each continuous factor and do the check on each
             {
+                string factorType = null;
+                if (lrVariables.ContinuousFactors != null && lrVariables.ContinuousFactors.Contains(contFactor))
+                {
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.ContinuousFactors);
+                }
+                else if (lrVariables.Covariates != null && lrVariables.Covariates.Contains(contFactor))
+                {
+                    factorType = ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.Covariates);
+                }
+
                 //Now that the whole column checks have been done, ensure that the treatment and response for each row is ok
                 List<string> continuousRow = new List<string>();
                 List<string> responseRow = new List<string>();
@@ -188,12 +201,10 @@ namespace SilveR.Validators
 
                 for (int i = 0; i < DataTable.Rows.Count; i++) //use for loop cos its easier to compare the indexes of the cat and cont rows
                 {
-
                     //Check that there are no responses where the treatments are blank
                     if (String.IsNullOrEmpty(continuousRow[i]) && !String.IsNullOrEmpty(responseRow[i]))
                     {
-                        ValidationInfo.AddErrorMessage("The " + ReflectionExtensions.GetPropertyDisplayName<LinearRegressionAnalysisModel>(i => i.ContinuousFactors) + " (" + contFactor + ") contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.");
-                        return false;
+                        ValidationInfo.AddWarningMessage("The " + factorType + " (" + contFactor + ") contains missing data where there are observations present in the Response. Please check the input data and make sure the data was entered correctly.");
                     }
                 }
             }

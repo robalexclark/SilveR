@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Main Vignette</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%7Bbackground%2Dcolor%3A%23fff%3Bmargin%3A1em%20auto%3Bmax%2Dwidth%3A700px%3Boverflow%3Avisible%3Bpadding%2Dleft%3A2em%3Bpadding%2Dright%3A2em%3Bfont%2Dsize%3A14px%3Bline%2Dheight%3A1%2E35%3Bhyphens%3Aauto%3Bfont%2Dfamily%3A%22Open%20Sans%22%2C%22Helvetica%20Neue%22%2CHelvetica%2CArial%2Csans%2Dserif%7D%23header%7Btext%2Dalign%3Acenter%7D%23TOC%7Bclear%3Aboth%3Bmargin%3A0%203em%3Bpadding%3A4px%3Bwidth%3Aauto%3Bborder%3A1px%20solid%20%23ccc%3Bborder%2Dradius%3A5px%3Bbackground%2Dcolor%3A%23fbfbfb%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A1%2E2em%7D%23TOC%20%2Etoctitle%7Bfont%2Dweight%3Abold%3Bfont%2Dsize%3A15px%3Bmargin%2Dleft%3A5px%7D%23TOC%20ul%7Bpadding%2Dleft%3A40px%3Bmargin%3A5px%20auto%205px%20%2D1%2E5em%7D%23TOC%20ul%20ul%7Bmargin%2Dleft%3A%2D2em%7D%23TOC%20li%7Blist%2Dstyle%2Dtype%3Anone%3Bline%2Dheight%3A16px%7Dtable%7Bmargin%3A1em%20auto%3Bborder%2Dwidth%3A1px%3Bborder%2Dcolor%3A%23ddd%3Bborder%2Dstyle%3Aoutset%3Bborder%2Dcollapse%3Acollapse%7Dtable%20th%7Bborder%2Dwidth%3A2px%3Bpadding%3A5px%3Bborder%2Dstyle%3Ainset%7Dtable%20td%7Bborder%2Dwidth%3A1px%3Bborder%2Dstyle%3Ainset%3Bline%2Dheight%3A18px%3Bpadding%3A5px%205px%7Dtable%2Ctable%20th%2Ctable%20td%7Bborder%2Dleft%2Dstyle%3Anone%3Bborder%2Dright%2Dstyle%3Anone%7Dtable%20thead%2C%20table%20%2Eeven%7Bbackground%2Dcolor%3A%23f7f7f7%7Dp%7Bmargin%3A0%2E5em%200%7Dsup%2Csub%7Bposition%3Arelative%3Bvertical%2Dalign%3Abaseline%3Btop%3A%2D0%2E4em%7Dsub%7Btop%3A0%2E4em%7Dblockquote%7Bbackground%2Dcolor%3A%23fffff6%3Bpadding%3A0%2E25em%200%2E75em%7Dhr%7Bborder%2Dstyle%3Asolid%3Bborder%3Anone%3Bborder%2Dtop%3A1px%20solid%20%23777%3Bmargin%3A28px%200%7Ddl%7Bmargin%2Dleft%3A0%7Ddl%20dd%7Bmargin%2Dbottom%3A13px%3Bmargin%2Dleft%3A13px%7Ddl%20dt%7Bfont%2Dweight%3A700%7Dul%7Bmargin%2Dtop%3A0%7Dul%20li%7Blist%2Dstyle%3Acircle%20outside%7Dul%20ul%7Bmargin%2Dbottom%3A0%7D%2Ehl%7Bbackground%2Dcolor%3A%23FFFF99%7Dpre%2C%20code%7Bbackground%2Dcolor%3A%23f7f7f7%3Bborder%2Dradius%3A3px%3Bcolor%3A%23333%3Bwhite%2Dspace%3Apre%2Dwrap%7Dpre%7Bborder%2Dradius%3A3px%3Bmargin%3A5px%200%2010px%200%3Bpadding%3A10px%7Dpre%3Anot%28%5Bclass%5D%29%7Bbackground%2Dcolor%3A%23f7f7f7%7Dcode%7Bfont%2Dsize%3A85%25%3Bfont%2Dfamily%3AConsolas%2CMonaco%2C%27Lucida%20Console%27%2C%27Courier%20New%27%2C%27Courier%27%2Cmonospace%7Dp%20%3E%20code%2Cli%20%3E%20code%7Bpadding%3A2px%200%7Dfigure%2C%2Ecaption%7Btext%2Dalign%3Acenter%7Dimg%7Bdisplay%3Ablock%3Bmargin%3A0%20auto%200%20auto%3Bbackground%2Dcolor%3A%23FFF%3Bpadding%3A2px%3Bborder%2Dradius%3A5px%3Bborder%3A1px%20solid%20%23CCC%7Dh1%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A4px%3B%3Bline%2Dheight%3A30px%3Bletter%2Dspacing%3A%2E5px%3Bborder%2Dbottom%3A3px%20solid%20%23f7f7f7%3Bfont%2Dsize%3A175%25%3Bhyphens%3Anone%7D%2Etitle%7Bmargin%2Dtop%3A1%2E5em%7Dh2%7Bborder%2Dbottom%3A2px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A2px%3Bfont%2Dsize%3A145%25%7Dh3%7Bborder%2Dbottom%3A1px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bfont%2Dsize%3A120%25%7Dh4%7Bmargin%2Dleft%3A8px%3Bfont%2Dsize%3A110%25%7D%2Eauthor%7Bfont%2Dsize%3A91%25%3Bmargin%2Dleft%3A0%3Bmargin%2Dbottom%3A0%3Bfont%2Dstyle%3Anormal%7Dh5%2C%20h6%7Bborder%2Dbottom%3A1px%20solid%20%23ccc%3Bfont%2Dsize%3A105%25%7Da%7Bcolor%3A%230033dd%3Btext%2Ddecoration%3Anone%7Da%3Ahover%7Bcolor%3A%236666ff%7Da%3Avisited%7Bcolor%3A%23800080%7Da%3Avisited%3Ahover%7Bcolor%3A%23BB00BB%7Da%5Bhref%5E%3D%22http%3A%22%5D%7Bcolor%3A%23696969%3Bborder%2Dbottom%3A1px%20dotted%20%23000%7Da%5Bhref%5E%3D%22https%3A%22%5D%7Bborder%2Dbottom%3A1px%20dotted%20%23000%3Bcolor%3A%23696969%7Dcode%20%3E%20%2Ekw%7Bcolor%3A%23555%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Edt%7Bcolor%3A%23902000%7D%20code%20%3E%20%2Edv%7Bcolor%3A%2340a070%7D%20code%20%3E%20%2Ebn%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Efl%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Ech%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Est%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Eco%7Bcolor%3A%23888888%3Bfont%2Dstyle%3Aitalic%7D%20code%20%3E%20%2Eot%7Bcolor%3A%23007020%7D%20code%20%3E%20%2Eal%7Bcolor%3A%23f00%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Efu%7Bcolor%3A%23900%3Bfont%2Dweight%3A700%7D%20%20code%20%3E%20%2Eer%7Bcolor%3A%23a61717%3Bbackground%2Dcolor%3A%23e3d2d2%7D%20%2Etop%7Bdisplay%3Ainline%3Bposition%3Afixed%3Bbottom%3A0%3Bright%3A0%3Bpadding%3A0%3Bfont%2Dsize%3A108px%7D%2Etop%20img%7Bborder%3Anone%7Da%2Etoplink%3Alink%7Bbackground%2Dimage%3Aurl%28data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAXVBMVEUAAABcgJzu7u%2F%2B%2F%2F%2Ft7u9ri6XN1%2BG1xdKtv82nusl2k6tkhqH6%2B%2FzZ4uiGoLVvj6je4%2BeXrsCTq71ujKbAzdehtMScscGNprl7mK9fgp7k6Ork5%2BrX3uPT2%2BFoh6ODMk%2FHAAAAAXRSTlMAQObYZgAAANFJREFUKM%2BFk%2B0aQzAMRpsW1XZlmGFf93%2BZM4skxji%2F1OHp2zRRhImu8CH4wkWjfjnZFIjUnpY2K2FBmQlpcliRG7IVbFDNPodNctwX%2FpBNmWUq38p8n%2FwWmFrrCzB2zJWKpR55DHx%2BoyIthqeeuPMPUTn69KaRpAfEqQKf%2BkQzHb4slKdQEocHUeFbgqWdDxBQh1dzZXdumhS1B6QTmqpE0aCWmqK5Pe24LNWGjlxUGY2KylfSrrUVF1olREYXutsO%2B8100Ir7jXw0BsdDdDCCb%2FerCdkTmcUbAAAAAElFTkSuQmCC%29%3Bbackground%2Drepeat%3Ano%2Drepeat%3Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E6%3Bfilter%3Aalpha%28opacity%3D60%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Da%2Etoplink%3Ahover%2Ca%2Etoplink%3Aactive%7Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E4%3Bfilter%3Aalpha%28opacity%3D40%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Dcode%20span%2Eco%7Bfont%2Dstyle%3Anormal%7D%23nav%7Bposition%3Aabsolute%3Btop%3A0%3Bfloat%3Aleft%3Bbackground%2Dcolor%3A%23084262%3Bborder%3Anone%7D%23nav%20ul%7Bwidth%3A100%25%3Blist%2Dstyle%2Dtype%3Anone%3Btext%2Dalign%3Acenter%3Bcolor%3A%23fff%3Bfont%2Dsize%3A%2E75em%3Bletter%2Dspacing%3A2px%3Bfont%2Dweight%3A700%3Bmargin%3A0%3Bpadding%3A0%7D%23nav%20ul%20li%7Bdisplay%3Ainline%7D%23nav%20ul%20li%20a%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23084262%3Btext%2Ddecoration%3Anone%3Bfloat%3Aleft%3Bborder%2Dright%3A1px%20solid%20%237394B4%3Bcursor%3Apointer%3Bpadding%3A%2E5em%2011%2E5px%7D%23nav%20ul%20li%20a%3Ahover%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23257B9D%7D%40media%20print%7B%23nav%2C%23TOC%2C%23TOC%20%2Etoctitle%2C%23TOC%20ul%2C%23TOC%20ul%20ul%2C%23TOC%20li%7Bdisplay%3Anone%7D%7D" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Main Vignette</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#abbreviations-definition-of-terms-models">Abbreviations, Definition of Terms, Models</a></li>
+<li><a href="#round">A Note on Rounding</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#contributors">Contributors</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+</div>
+
+<div class="top">
+<a class="toplink" href="#nav" title="⇑ top"> </a>
+</div>
+<div id="nav">
+<ul>
+<li>
+<span title="» You are here «">Main Vignette</span>
+</li>
+<li>
+<a href="ABE.html" title="Average Bioequivalence">ABE</a>
+</li>
+<li>
+<a href="RSABE.html" title="Reference-scaled Average Bioequivalence">RSABE</a>
+</li>
+<li>
+<a href="NI.html">Non-Inferiority</a>
+</li>
+<li>
+<a href="DP.html">Dose-Proportionality</a>
+</li>
+<li>
+<a href="PA.html">Power Analysis</a>
+</li>
+</ul>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The package contains functions to calculate power and estimate sample size for various study designs used in (not only bio-) equivalence studies. Power and sample size can be obtained based on different methods, amongst them prominently the TOST procedure (Two One-Sided <em>t</em>-Tests).<br />
+Version 1.5.4 built 2022-02-21 with R 4.1.2.</p>
+<p>For an overview of supported designs, methods, and defaults together with some basic examples see</p>
+<ul>
+<li><a href="https://cran.r-project.org/package=PowerTOST/readme/README.html">README</a> of the released version on CRAN;</li>
+<li><a href="https://github.com/Detlew/PowerTOST#readme">README</a> of the development version on GitHub.<br />
+</li>
+</ul>
+<h3>
+Details and examples are accessible via the menu bar on top of the page and in the <a href="https://cran.r-project.org/package=PowerTOST/PowerTOST.pdf" title="PDF">online manual</a> of all functions.
+</h3>
+</div>
+<div id="abbreviations-definition-of-terms-models" class="section level1">
+<h1>Abbreviations, Definition of Terms, Models</h1>
+<dl>
+<dt>2×2×2</dt>
+<dd>Crossover design with 2 treatments, 2 sequences, and 2 periods. In the literature also TR|RT or AB|AB. In the functions <code>2x2x2</code> or <code>2x2</code> for short.
+</dd>
+<dt>2x2x3</dt>
+<dd>Full replicate designs with 2 treatments, 2 sequences, and 3 periods (TRT|RTR or TRR|RTT). Both T and R are administered twice to ½ of the subjects.
+</dd>
+<dt>2x2x4</dt>
+<dd>Full replicate designs with 2 treatments, 2 sequences, and 4 periods (TRTR|RTRT, TRRT|RTTR, or TTRR|RRTT). Both T and R are administered twice to ½ of the subjects.
+</dd>
+<dt>2×3×3</dt>
+<dd>Partial (or semi-) replicate design with 2 treatments, 3 sequences, and 3 periods (TRR|RTR|RRT or TRR|RTR). R is administered to all subjects twice and T once. The former is popular (though not optimal) and the latter (<span title="also known as">a.k.a.</span> extra-reference design) not optimal because it is biased in the presence of period effects.
+</dd>
+<dt>2×4×2</dt>
+<dd>Full replicate design with 2 treatments, 4 sequences, and 2 periods (TR|RT|TT|RR, Balaam’s design). Not optimal due to poor power characteristics.
+</dd>
+<dt>2×4×4</dt>
+<dd>Full replicate designs with 2 treatments, 4 sequences, and 4 periods (TRTR|RTRT|TRRT|RTTR or TRTR|RTRT|TTRR|RRTT).
+</dd>
+<dt>3×3, 3×6×3</dt>
+<dd>Higher-order crossover designs with 3 treatments, 3 or 6 sequences, and 3 periods (Latin Square ABC|BCA|CAB or the Williams’ design ABC|ACB|BAC|BCA|CAB|CBA). In the functions <code>3x3</code> and <code>3x6x3</code>. Both have the same degrees of freedom (2<em>n</em>–4) in the conventional approach and therefore, require the same number of subjects.
+</dd>
+<dt>4×4</dt>
+<dd>Higher-order crossover design with 4 treatments, 4 sequences, and 4 periods (Latin Square ABCD|BCDA|CDAB|DABC or any of the six Williams’ designs ADBC|BACD|CBDA|DCAB, ADCB|BCDA|CABD|DBAC, ACDB|BDCA|CBAD|DABC, ACBD|BADC|CDAB|DBCA, ABDC|BCAD|CDBA|DACB, ABCD|BDAC|CADB|DCBA).
+</dd>
+<dt><span id="abe">ABE</span></dt>
+<dd>Average Bioequivalence with <em>fixed</em> limits based on a clinically not relevant difference <span class="math inline">\(\small{\Delta}\)</span>. The common <span class="math inline">\(\small{\Delta}\)</span> 0.20 leads to <span class="math inline">\(\small{\theta_1=1-\Delta,\:\theta_2=1/(1-\Delta)}\)</span> or 80.00–125.00%. For <a href="#ntid">NTIDs</a> (<span title="European Medicines Agency">EMA</span> and other jurisdicions) <span class="math inline">\(\small{\Delta}\)</span> 0.10 (90.00–111.11%). For highly variable <em>C</em><sub>max</sub> (Russian Federation, South Africa) <span class="math inline">\(\small{\Delta}\)</span> 0.25 (75.00–133.33%).<span class="math display">\[H_0:\;\frac{\mu_\textrm{T}}{\mu_\textrm{R}}\ni\left\{\theta_1,\,\theta_2\right\}\;vs\;H_1:\;\theta_1&lt;\frac{\mu_\textrm{T}}{\mu_\textrm{R}}&lt;\theta_2\]</span>
+</dd>
+<dt><span id="abel">ABEL</span></dt>
+<dd>Average Bioequivalence with <em>expanding</em> limits (see also <strong><em><a href="#LU">L, U</a></em></strong>). Same model like for <a href="#abe">ABE</a> but <span class="math inline">\(\small{\theta_1,\theta_2}\)</span> are based on the <em>CV</em><sub>wR</sub> observed in the study.
+</dd>
+<dt><span class="math inline">\(\alpha\)</span></dt>
+<dd>Nominal level of the test. In tests for equivalence commonly 0.05 (except for the ratio of two means with normality on original scale based on Fieller’s (‘fiducial’) confidence interval in function <code>sampleN.RatioF()</code> and for non-inferiority/-superiority in function <code>sampleN.noninf()</code>, where it is 0.025). In the functions <code>alpha</code>.
+</dd>
+<dt><span class="math inline">\(\beta\)</span></dt>
+<dd>Probability that the Null-hypothesis of inequivalence is <em>falsely not</em> rejected. Also the type II error or producer’s risk, where <span class="math inline">\(\small{\beta=1-\pi}\)</span>.
+</dd>
+<dt><span class="math inline">\(\beta_0\)</span></dt>
+<dd>Assumed or true slope of the (linearized) power model of dose-proportionality <span class="math inline">\(\small{x=\alpha\cdot dose^{\,\beta},\:\log_{e}x=\alpha+\beta\cdot \log_{e}dose}\)</span>. Argument <code>beta0</code>.
+</dd>
+<dt><em>CV</em></dt>
+<dd><dl>
+<dt>Coefficient of variation</dt>
+<dd>Calculated from the residual error of the model of log-transformed data as <span class="math inline">\(\small{CV=\sqrt{\exp (\sigma^2)+1}}\)</span>.
+<ul>
+<li>
+In crossover designs the within- (intra-) subject CV. Argument <code>CV</code>.
+</li>
+<li>
+In parallel designs the total (pooled) CV. Argument <code>CV</code>.
+</li>
+<li>
+In replicate designs the intra-subject CV (assuming homoscedasticity, argument <code>CV</code>). If hetero­scedasticity is assumed, <code>CV</code> has to given as a vector with two elements <code>CV = c(x, y)</code>, where <code>CV[1]</code> is <a href="#CVwT">CV<sub>wT</sub></a> and <code>CV[2]</code> is <a href="#CVwR">CV<sub>wR</sub></a>.
+</li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt><em>CV</em><sub>b</sub></dt>
+<dd>Between- (inter-) subject coefficient of variation. Argument <code>CVb</code> is required in function <code>sampleN.RatioF()</code> and in function <code>sampleN.dp()</code> if <code>design = &quot;IBD&quot;</code> (incomplete block design).
+</dd>
+<dt><span id="CVcap">CV<sub>cap</sub></span></dt>
+<dd>Upper cap in <a href="#abel">ABEL</a>. If <a href="#CVwR">CV<sub>wR</sub></a> &gt; CV<sub>cap</sub>, expanding is based on CV<sub>cap</sub> (and not on <a href="#CVwR">CV<sub>wR</sub></a>). In all jurisdictions 50%, except for Health Canada, where CV<sub>cap</sub> ≈57.4%.
+</dd>
+<dt><em>CV</em><sub>switch</sub></dt>
+<dd>Switching coefficient of variation in reference-scaling. Only above this value reference-scaling is acceptable. For highly variable drugs / drug products 30% (<em>CV</em><sub>0</sub> 0.30, <em>s</em><sub>0</sub> 0.294).
+</dd>
+<dt><span id="CVwR"><em>CV</em><sub>wR</sub></span></dt>
+<dd>Within-subject coefficient of variation of R; can be estimated in any replicate design.
+</dd>
+<dt><span id="CVwT"><em>CV</em><sub>wT</sub></span></dt>
+<dd>Within-subject coefficient of variation of T; can be estimated only in full replicate designs.
+</dd>
+<dt><span id="Delta"><span class="math inline">\(\small{\Delta}\)</span></span></dt>
+<dd>Clinically not relevant difference. Commonly 0.20. For <a href="#ntid">NTIDs</a> (<span title="European Medicines Agency">EMA</span> and other jurisdictions) <span class="math inline">\(\small{\Delta}\)</span> 0.10, for <em>C</em><sub>max</sub> (Russian Federation, South Africa) <span class="math inline">\(\small{\Delta}\)</span> 0.25.
+</dd>
+<dt><span id="HVDP">HVD(P)</span></dt>
+<dd>Highly variable drug (product); commonly defined with a <a href="#CVwR">CV<sub>wR</sub></a> of ≥30%. HVDs exhibit highly variable clearances (<a href="#CVwR">CV<sub>wR</sub></a> ≥30% if administered as a solution), whereas HVDPs may additionally – or solely – show highly variable absorption. HVDP(s) generally are ones with a flat dose-response curve.
+</dd>
+<dt><span id="k"><em>k</em></span></dt>
+<dd><dl>
+<dt>Regulatory constant <span style="font-weight:normal">(also <span class="math inline">\(\small{\theta_\textrm{s}}\)</span>)</span></dt>
+<dd><p><strong><a href="#abel">ABEL</a></strong>: Based on the switching coefficient of variation <span class="math inline">\(\small{CV_0=30\%}\)</span>. <span class="math inline">\(\small{k=\log_{e}1.25/\sqrt{\log_{e}(CV_{0}^{2}+1)}\approx 0.760}\)</span>.</p>
+</dd>
+<dd><strong><a href="#rsabe">RSABE</a></strong>: Based on the switching standard deviation <span class="math inline">\(\small{s_0=0.25}\)</span>. <span class="math inline">\(\small{k=\log_{e}1.25/0.25\approx 0.8926}\)</span>.
+</dd>
+</dl>
+</dd>
+<dt><span id="LU"><em>L</em>, <em>U</em></span></dt>
+<dd><dl>
+<dt>ABEL, RSABE</dt>
+<dd><strong><a href="#abel">ABEL</a></strong>: Lower and upper expanded limits.
+<ul>
+<li>
+30% &lt; <a href="#CVwR">CV<sub>wR</sub></a> ≤ 50%: Based on <span class="math inline">\(\small{s_\textrm{wR}}\)</span>, where <span class="math inline">\(\small{\left\{ {L,\,U} \right\}= 100\cdot \exp (\mp 0.760 \cdot {s_\textrm{wR}})}\)</span>
+</li>
+<li>
+<a href="#CVwR">CV<sub>wR</sub></a> &gt; <a href="#CVcap">CV<sub>cap</sub></a>: Applying <span class="math inline">\(\small{s^*_\textrm{wR}=\sqrt{\log_{e}(CV_\textrm{cap}^{2}+1)}}\)</span> in the expansion formula: <span class="math inline">\(\small{\left\{ {L,\,U} \right\} = {69.84 - 143.19\%}}\)</span>. All jurisdictions except Health Canada, where <span class="math inline">\(\small{\left\{ {L,\,U} \right\} = {66.7 - 150.0\%}}\)</span>.
+</li>
+</ul>
+</dd>
+<dd><strong><a href="#rsabe">RSABE</a></strong>: Lower and upper ‘implied limits’.
+<ul>
+<li>
+If <span class="math inline">\(\small{s_\textrm{wR}\geq 0.294: \left\{ {L,\: U} \right\} = 100\cdot \exp (\mp 0.8926 \cdot {s_\textrm{wR}})}\)</span>
+</li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dd><dl>
+<dt>Dose-Proportionality</dt>
+<dd><p><span class="math inline">\(\small{\left\{ {L,\,U} \right\}=\left[1+\log_{e}0.80/\log_{e}rd,\:1+\log_{e}1.25/\log_{e}rd \right]}\)</span></p>
+</dd>
+</dl>
+</dd>
+<dt>margin</dt>
+<dd><dl>
+<dt>Non-inferiority/-superiority margin <span style="font-weight:normal">(example for <code>logscale = TRUE</code> where <small><span class="math inline">\(\theta_0=\mu_\textrm{T}/\mu_\textrm{R}\)</span></small>).</span></dt>
+<dd><p><strong>Non-inferiority</strong>: If margin &lt; 1, <u>higher</u> responses are are assumed to be better. <span class="math display">\[\small{H_0:\,\theta_0 \leq \log_{e}\textrm{margin}\:vs\:H_1:\,\theta_0&gt;\log_{e}\textrm{margin}}\]</span></p>
+</dd>
+<dd><strong>Non-superiority</strong>: If margin &gt; 1, <u>lower</u> responses are are assumed to be better. <span class="math display">\[\small{H_0:\,\theta_0 \geq \log_{e}\textrm{margin}\:vs\:H_1:\,\theta_0&lt;\log_{e}\textrm{margin}}\]</span>
+</dd>
+</dl>
+</dd>
+<dt><em>n</em></dt>
+<dd>(Total) number of subjects.
+</dd>
+<dt><em>n</em><sub>seq</sub></dt>
+<dd>Number of sequences.
+</dd>
+<dt><span id="ntid">NTID</span></dt>
+<dd>Narrow therapeutic index drug, <em>i.e.</em>, with a steep dose-response curve. <span title="also known as">A.k.a.</span> NRD (Narrow Range Drug).
+</dd>
+<dt><span class="math inline">\(\pi\)</span></dt>
+<dd>Target (or desired) power in study planning. Commonly set to 0.80 – 0.90. In the functions <code>targetpower</code>.
+</dd>
+<dt>R</dt>
+<dd>Reference (treatment, product).
+</dd>
+<dt><em>rd</em></dt>
+<dd>Ratio of the highest/lowest dose. In the functions <code>rd</code>.
+</dd>
+<dt><code>robust</code></dt>
+<dd>Selects degrees of freedom according to Senn’s basic estimator, where <span class="math inline">\(\small{df=n-n_\textrm{seq}}\)</span>.
+</dd>
+<dt><span id="rsabe">RSABE</span></dt>
+<dd>Reference-scaled Average Bioequivalence (U.S. <span title="Food and Drug Administration">FDA</span>, China <span title="National Medical Products Administration, Center for Drug Evaluation">NMPA-CDE</span>). Applicable if the intra-subject variability of the reference treatment <em>s</em><sub>wR</sub> ≥0.294 (<a href="#CVwR"><em>CV</em><sub>wR</sub></a> ≈ 30%). The linearized model is <span class="math display">\[\small{H_0:(\mu_\textrm{T}/\mu_\textrm{R})^2-\theta_\textrm{s}\cdot s_\textrm{wR}^{2}&gt;0\:vs\:H_1:(\mu_\textrm{T}/\mu_\textrm{R})^2-\theta_\textrm{s}\cdot s_\textrm{wR}^{2}\leq 0}\]</span> See also <a href="#abel">ABEL</a>.
+</dd>
+<dt><span class="math inline">\(\theta_0\)</span></dt>
+<dd>Assumed or true T/R-ratio (<code>logscale = TRUE</code>) or difference T – R (<code>logscale = FALSE</code>). In the functions <code>theta0</code>.
+</dd>
+<dt><span id="theta12"><span class="math inline">\(\theta_1,\theta_2\)</span></span></dt>
+<dd>Lower and upper limits of the equivalence range. In the functions <code>theta1</code> and <code>theta2</code>.
+</dd>
+<dt><span class="math inline">\(\theta_s\)</span></dt>
+<dd>Regulatory constant in reference-scaling (see also <strong><em><a href="#k">k</a></em></strong>).
+</dd>
+<dt>T</dt>
+<dd>Test (treatment, product).
+</dd>
+<dt>TIE <span style="font-weight:normal">(type I error)</span></dt>
+<dd>Probability that the Null-hypothesis of inequivalence is <em>falsely</em> rejected (<em>i.e.</em>, equivalence is concluded). Also the patient’s risk. Can be assessed with the power-functions setting <code>theta0 = theta2</code> or <code>theta0 = theta1</code>.<br />Exact, except in reference-scaling based on simulations (<code>power.scABEL()</code>, <code>power.RSABE()</code>, <code>power.NTIDFDA()</code>, <code>power.HVNTID()</code>).
+</dd>
+</dl>
+</div>
+<div id="round" class="section level1">
+<h1>A Note on Rounding</h1>
+<p>In all functions sample sizes are estimated based on equivalence margins [<a href="#theta12"><span class="math inline">\(\small{\theta_1,\theta_2}\)</span></a>] in full numeric precision. The widened margins for highly variable <em>C</em><sub>max</sub> are <span class="math inline">\(\small{\theta_1=0.75,}\)</span> <span class="math inline">\(\small{\theta_2=1/\theta_1=1.\dot{3}}\)</span> and not the rounded 75.00 – 133.33% according to the guidelines of the Russian Federation, the <span title="Eurasian Economic Union">EEU</span>, and the <span title="Gulf Cooperation Council">GCC</span>. If for a <a href="#ntid" title="Narrow Therapeutic Index Drug">NTID</a> <code>theta1 = 0.90</code> is specified, <span class="math inline">\(\small{\theta_2=1/\theta_1=1.\dot{1}}\)</span> and not the rounded 111.11% as in the guidelines. Health Canada requires rounding to only one decimal place with bioequivalence margins for <a href="#ntid" title="Narrow Therapeutic Index Drugs">NTIDs</a> of 90.0 – 112.0%.<br />
+Estimated sample sizes are generally not affected or – in <em>extremely</em> rare cases – conservative.</p>
+<p>Example for a <a href="#HVDP" title="Highly Variable Drug Product">HVDP</a> (<span class="math inline">\(\small{\theta_0}\)</span> 0.90, design 2x2x4) and a <a href="#ntid" title="Narrow Therapeutic Index Drug">NTID</a> (<span class="math inline">\(\small{\theta_0}\)</span> 0.975, design 2x2x2):</p>
+<pre><code>#     CV     agency method   L       U     n   theta1   theta2  n
+#  0.574        EMA   ABEL 69.84% 143.19% 30 0.698368 1.431910 30
+#  0.574         HC   ABEL 66.7 % 150.0 % 28 0.666667 1.500000 28
+#  0.574 RU/EEU/GGC    ABE 75.00% 133.33% 34 0.750000 1.333333 34
+#  0.100        EMA    ABE 90.00% 111.11% 22 0.900000 1.111111 22
+#  0.100         HC    ABE 90.0 % 112.0 % 22 0.900000 1.111111 22</code></pre>
+</div>
+<div id="installation" class="section level1">
+<h1>Installation</h1>
+<p>You can install the released version of PowerTOST from <a href="https://CRAN.R-project.org">CRAN</a> with …</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>package <span class="ot">&lt;-</span> <span class="st">&quot;PowerTOST&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>inst    <span class="ot">&lt;-</span> package <span class="sc">%in%</span> <span class="fu">installed.packages</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(package[<span class="sc">!</span>inst]) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="fu">install.packages</span>(package[<span class="sc">!</span>inst])</span></code></pre></div>
+<p>… and the development version from <a href="https://github.com/">GitHub</a> with</p>
+<pre><code># install.packages(&quot;remotes&quot;)
+remotes::install_github(&quot;Detlew/PowerTOST&quot;)</code></pre>
+<p>Skips installation from a github remote if the <a href="https://en.wikipedia.org/wiki/SHA-1">SHA-1</a> has not changed since last install. Use <code>force = TRUE</code> to force installation.</p>
+</div>
+<div id="contributors" class="section level1">
+<h1>Contributors</h1>
+<ul>
+<li>Detlew Labes (author, maintainer)</li>
+<li>Helmut Schütz (author)</li>
+<li>Benjamin Lang (author)</li>
+</ul>
+</div>
+<div id="license" class="section level1">
+<h1>License</h1>
+<h4 class="author">
+<a href="https://cran.r-project.org/web/licenses/GPL-3" title="GNU General Public License, Version 3">GPL-3</a> 2022-02-21 Helmut Schütz
+</h4>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

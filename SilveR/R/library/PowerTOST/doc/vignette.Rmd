@@ -1,0 +1,273 @@
+---
+title: "Main Vignette"
+lang: "en"
+output:
+  rmarkdown::html_vignette:
+    css: vignette.css
+    toc: true
+    toc_depth: 1
+vignette: >
+  %\VignetteIndexEntry{Main Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#"
+)
+```
+<div class="top"><a class="toplink" href="#nav" title="&uArr; top">&nbsp;</a></div>
+<div id="nav">
+<ul>
+<li><span title="» You are here «">Main Vignette</span></li>
+<li>[ABE](ABE.html "Average Bioequivalence")</li>
+<li>[RSABE](RSABE.html "Reference-scaled Average Bioequivalence")</li>
+<li>[Non-Inferiority](NI.html)</li>
+<li>[Dose-Proportionality](DP.html)</li>
+<li>[Power Analysis](PA.html)</li>
+</ul>
+</div>
+
+# Introduction
+The package contains functions to calculate power and estimate sample size for various study designs used in (not only bio-) equivalence studies. Power and sample size can be obtained based on different methods, amongst them prominently the TOST procedure (Two One-Sided *t*-Tests).\
+Version `r packageVersion("PowerTOST")` built `r packageDate("PowerTOST", date.fields = "Built")` with R `r getRversion()`.
+
+For an overview of supported designs, methods, and defaults together with some basic examples see
+
+  * [README](https://cran.r-project.org/package=PowerTOST/readme/README.html) of the released version on CRAN;
+  * [README](https://github.com/Detlew/PowerTOST#readme) of the development version on GitHub.\
+
+<h3>Details and examples are accessible via the menu bar on top of the page and in the <a href="https://cran.r-project.org/package=PowerTOST/PowerTOST.pdf" title="PDF">online manual</a> of all functions.</h3>
+
+# Abbreviations, Definition of Terms, Models
+2×2×2
+: Crossover design with 2 treatments, 2 sequences, and 2 periods. In the literature also TR|RT or AB|AB. In the functions `2x2x2` or `2x2` for short.
+
+2x2x3
+: Full replicate designs with 2 treatments, 2 sequences, and 3 periods (TRT|RTR or TRR|RTT). Both T and R are administered twice to ½ of the subjects.
+
+2x2x4
+: Full replicate designs with 2 treatments, 2 sequences, and 4 periods (TRTR|RTRT, TRRT|RTTR, or TTRR|RRTT). Both T and R are administered twice to ½ of the subjects.
+
+2×3×3
+: Partial (or semi-) replicate design with 2 treatments, 3 sequences, and 3 periods (TRR|RTR|RRT or TRR|RTR). R is administered to all subjects twice and T once. The former is popular (though not optimal) and the latter (<span title="also known as">a.k.a.</span> extra-reference design) not optimal because it is biased in the presence of period effects. 
+
+2×4×2
+: Full replicate design with 2 treatments, 4 sequences, and 2 periods (TR|RT|TT|RR, Balaam’s design). Not optimal due to poor power characteristics.
+
+2×4×4
+: Full replicate designs with 2 treatments, 4 sequences, and 4 periods (TRTR|RTRT|TRRT|RTTR or TRTR|RTRT|TTRR|RRTT).
+
+3×3, 3×6×3
+: Higher-order crossover designs with 3 treatments, 3 or 6 sequences, and 3 periods (Latin Square ABC|BCA|CAB or the Williams’ design ABC|ACB|BAC|BCA|CAB|CBA). In the functions `3x3` and `3x6x3`. Both have the same degrees of freedom (2*n*–4) in the conventional approach and therefore, require the same number of subjects.
+
+4×4
+: Higher-order crossover design with 4 treatments, 4 sequences, and 4 periods (Latin Square ABCD|BCDA|CDAB|DABC or any of the six Williams’ designs ADBC|BACD|CBDA|DCAB, ADCB|BCDA|CABD|DBAC, ACDB|BDCA|CBAD|DABC, ACBD|BADC|CDAB|DBCA, ABDC|BCAD|CDBA|DACB, ABCD|BDAC|CADB|DCBA).
+
+<span id="abe">ABE</span>
+: Average Bioequivalence with *fixed* limits based on a clinically not relevant difference $\small{\Delta}$. The common $\small{\Delta}$ 0.20 leads to $\small{\theta_1=1-\Delta,\:\theta_2=1/(1-\Delta)}$ or 80.00--125.00\%. For <a href="#ntid">NTIDs</a> (<span title="European Medicines Agency">EMA</span> and other jurisdicions) $\small{\Delta}$ 0.10 (90.00--111.11\%). For highly variable *C*~max~ (Russian Federation, South Africa) $\small{\Delta}$ 0.25 (75.00--133.33\%).$$H_0:\;\frac{\mu_\textrm{T}}{\mu_\textrm{R}}\ni\left\{\theta_1,\,\theta_2\right\}\;vs\;H_1:\;\theta_1<\frac{\mu_\textrm{T}}{\mu_\textrm{R}}<\theta_2$$
+
+<span id="abel">ABEL</span>
+: Average Bioequivalence with *expanding* limits (see also ***<a href="#LU">L, U</a>***). Same model like for <a href="#abe">ABE</a> but $\small{\theta_1,\theta_2}$ are based on the *CV*~wR~ observed in the study.
+
+$\alpha$
+: Nominal level of the test. In tests for equivalence commonly 0.05 (except for the ratio of two means with normality on original scale based on Fieller’s (‘fiducial’) confidence interval in function `sampleN.RatioF()` and for non-inferiority/-superiority  in function `sampleN.noninf()`, where it is 0.025). In the functions `alpha`.
+
+$\beta$
+: Probability that the Null-hypothesis of inequivalence is *falsely not* rejected. Also the type II error or producer’s risk, where $\small{\beta=1-\pi}$.
+
+$\beta_0$
+: Assumed or true slope of the (linearized) power model of dose-proportionality $\small{x=\alpha\cdot dose^{\,\beta},\:\log_{e}x=\alpha+\beta\cdot \log_{e}dose}$. Argument `beta0`.
+
+*CV*
+: Coefficient of variation
+
+    : Calculated from the residual error of the model of log-transformed data as $\small{CV=\sqrt{\exp (\sigma^2)+1}}$.
+    <ul>
+      <li>In crossover designs the within- (intra-) subject CV. Argument `CV`.</li>
+      <li>In parallel designs the total (pooled) CV. Argument `CV`.</li>
+      <li>In replicate designs the intra-subject CV (assuming homoscedasticity, argument `CV`). If hetero­scedasticity is assumed, `CV` has to given as a vector with two elements `CV = c(x, y)`, where `CV[1]` is <a href="#CVwT">CV~wT~</a> and `CV[2]` is <a href="#CVwR">CV~wR~</a>.</li>
+    </ul>
+
+*CV*~b~
+: Between- (inter-) subject coefficient of variation. Argument `CVb` is required in function `sampleN.RatioF()` and in function `sampleN.dp()` if `design = "IBD"` (incomplete block design).
+
+<span id="CVcap">CV~cap~</span>
+: Upper cap in <a href="#abel">ABEL</a>. If <a href="#CVwR">CV~wR~</a> > CV~cap~, expanding is based on CV~cap~ (and not on <a href="#CVwR">CV~wR~</a>). In all jurisdictions 50\%, except for Health Canada, where CV~cap~ ≈57.4\%.
+
+*CV*~switch~
+: Switching coefficient of variation in reference-scaling. Only above this value reference-scaling is acceptable. For highly variable drugs / drug products 30\% (*CV*~0~ 0.30, *s*~0~ 0.294).
+
+<span id="CVwR">*CV*~wR~</span>
+: Within-subject coefficient of variation of R; can be estimated in any replicate design.
+
+<span id="CVwT">*CV*~wT~</span>
+: Within-subject coefficient of variation of T; can be estimated only in full replicate designs.
+
+<span id="Delta">$\small{\Delta}$</span>
+: Clinically not relevant difference. Commonly 0.20.  For <a href="#ntid">NTIDs</a> (<span title="European Medicines Agency">EMA</span> and other jurisdictions) $\small{\Delta}$ 0.10, for *C*~max~ (Russian Federation, South Africa) $\small{\Delta}$ 0.25.
+
+<span id="HVDP">HVD(P)</span>
+: Highly variable drug (product); commonly defined with a <a href="#CVwR">CV~wR~</a> of ≥30\%. HVDs exhibit highly variable clearances (<a href="#CVwR">CV~wR~</a> ≥30\% if administered as a solution), whereas HVDPs may additionally – or solely – show highly variable absorption. HVDP(s) generally are ones with a flat dose-response curve.
+
+<span id="k">*k*</span>
+: Regulatory constant <span style="font-weight:normal">(also $\small{\theta_\textrm{s}}$)</span>
+
+    : **<a href="#abel">ABEL</a>**: Based on the switching coefficient of variation $\small{CV_0=30\%}$. $\small{k=\log_{e}1.25/\sqrt{\log_{e}(CV_{0}^{2}+1)}\approx 0.760}$.
+    : **<a href="#rsabe">RSABE</a>**: Based on the switching standard deviation $\small{s_0=0.25}$. $\small{k=\log_{e}1.25/0.25\approx 0.8926}$.
+
+<span id="LU">*L*, *U*</span>
+: ABEL, RSABE
+
+    : **<a href="#abel">ABEL</a>**: Lower and upper expanded limits.
+    <ul>
+      <li>30% < <a href="#CVwR">CV~wR~</a> ≤ 50%: Based on $\small{s_\textrm{wR}}$, where $\small{\left\{ {L,\,U} \right\}= 100\cdot \exp (\mp 0.760 \cdot {s_\textrm{wR}})}$</li>
+      <li><a href="#CVwR">CV~wR~</a> > <a href="#CVcap">CV~cap~</a>: Applying $\small{s^*_\textrm{wR}=\sqrt{\log_{e}(CV_\textrm{cap}^{2}+1)}}$ in the expansion formula: $\small{\left\{ {L,\,U} \right\} = {69.84 - 143.19\%}}$. All jurisdictions except Health Canada, where $\small{\left\{ {L,\,U} \right\} = {66.7 - 150.0\%}}$.</li>
+    </ul>
+    : **<a href="#rsabe">RSABE</a>**: Lower and upper ‘implied limits’.
+    <ul>
+      <li>If $\small{s_\textrm{wR}\geq 0.294: \left\{ {L,\: U} \right\} = 100\cdot \exp (\mp 0.8926 \cdot {s_\textrm{wR}})}$</li>
+    </ul>
+
+: Dose-Proportionality
+
+    : $\small{\left\{ {L,\,U} \right\}=\left[1+\log_{e}0.80/\log_{e}rd,\:1+\log_{e}1.25/\log_{e}rd \right]}$
+
+margin
+: Non-inferiority/-superiority margin <span style="font-weight:normal">(example for `logscale = TRUE` where <small>$\theta_0=\mu_\textrm{T}/\mu_\textrm{R}$</small>).</span>
+
+    : **Non-inferiority**: If margin < 1, <u>higher</u> responses are are assumed to be better.
+    $$\small{H_0:\,\theta_0 \leq \log_{e}\textrm{margin}\:vs\:H_1:\,\theta_0>\log_{e}\textrm{margin}}$$
+    : **Non-superiority**: If margin > 1, <u>lower</u> responses are are assumed to be better.
+    $$\small{H_0:\,\theta_0 \geq \log_{e}\textrm{margin}\:vs\:H_1:\,\theta_0<\log_{e}\textrm{margin}}$$
+
+*n*
+: (Total) number of subjects.
+
+*n*~seq~
+: Number of sequences.
+
+<span id="ntid">NTID</span>
+: Narrow therapeutic index drug, *i.e.*, with a steep dose-response curve. <span title="also known as">A.k.a.</span> NRD (Narrow Range Drug).
+
+$\pi$
+: Target (or desired) power in study planning. Commonly set to 0.80 – 0.90. In the functions `targetpower`.
+
+R
+: Reference (treatment, product).
+
+*rd*
+: Ratio of the highest/lowest dose. In the functions `rd`.
+
+`robust`
+: Selects degrees of freedom according to Senn’s basic estimator, where $\small{df=n-n_\textrm{seq}}$.
+
+<span id="rsabe">RSABE</span>
+: Reference-scaled Average Bioequivalence (U.S. <span title="Food and Drug Administration">FDA</span>, China <span title="National Medical Products Administration, Center for Drug Evaluation">NMPA-CDE</span>). Applicable if the intra-subject variability of the reference treatment *s*~wR~ ≥0.294 (<a href="#CVwR">*CV*~wR~</a> ≈ 30\%). The linearized model is $$\small{H_0:(\mu_\textrm{T}/\mu_\textrm{R})^2-\theta_\textrm{s}\cdot s_\textrm{wR}^{2}>0\:vs\:H_1:(\mu_\textrm{T}/\mu_\textrm{R})^2-\theta_\textrm{s}\cdot s_\textrm{wR}^{2}\leq 0}$$
+    See also <a href="#abel">ABEL</a>.
+
+$\theta_0$
+: Assumed or true T/R-ratio (`logscale = TRUE`) or difference T – R (`logscale = FALSE`). In the functions `theta0`.
+
+<span id="theta12">$\theta_1,\theta_2$</span>
+: Lower and upper limits of the equivalence range. In the functions `theta1` and `theta2`.
+
+$\theta_s$
+: Regulatory constant in reference-scaling (see also ***<a href="#k">k</a>***).
+
+T
+: Test (treatment, product).
+
+TIE <span style="font-weight:normal">(type I error)</span>
+: Probability that the Null-hypothesis of inequivalence is *falsely* rejected (*i.e.*, equivalence is concluded). Also the patient’s risk. Can be assessed with the power-functions setting `theta0 = theta2` or `theta0 = theta1`.<br />Exact, except in reference-scaling based on simulations (`power.scABEL()`, `power.RSABE()`, `power.NTIDFDA()`, `power.HVNTID()`).
+
+# A Note on Rounding{#round}
+In all functions sample sizes are estimated based on equivalence margins [<a href="#theta12">$\small{\theta_1,\theta_2}$</a>] in full numeric precision.
+The widened margins for highly variable *C*~max~ are $\small{\theta_1=0.75,}$ $\small{\theta_2=1/\theta_1=1.\dot{3}}$ and not the rounded 75.00 – 133.33% according to the guidelines of the Russian Federation, the <span title="Eurasian Economic Union">EEU</span>, and the <span title="Gulf Cooperation Council">GCC</span>. If for a <a href="#ntid" title="Narrow Therapeutic Index Drug">NTID</a> `theta1 = 0.90` is specified, $\small{\theta_2=1/\theta_1=1.\dot{1}}$ and not the rounded 111.11% as in the guidelines. Health Canada requires rounding to only one decimal place with bioequivalence margins for <a href="#ntid" title="Narrow Therapeutic Index Drugs">NTIDs</a> of 90.0 – 112.0%.\
+Estimated sample sizes are generally not affected or – in *extremely* rare cases – conservative.
+
+Example for a <a href="#HVDP" title="Highly Variable Drug Product">HVDP</a> ($\small{\theta_0}$ 0.90, design 2x2x4) and a <a href="#ntid" title="Narrow Therapeutic Index Drug">NTID</a> ($\small{\theta_0}$ 0.975, design 2x2x2):
+```{r rounding, echo = FALSE}
+library(PowerTOST)
+res <- data.frame(CV = c(rep(0.574, 3), rep(0.1, 2)),
+                  regulator = c("EMA", "HC", "RU/EEU/GGC", "EMA", "HC"),
+                  method = c(rep("ABEL", 2), rep("ABE", 3)),
+                  L = NA, U = NA, n.GL = NA, theta1 = NA, theta2 = NA, n = NA,
+                  stringsAsFactors = FALSE) # this line for R <4.0.0
+for (i in 1:nrow(res)) {
+  if (i <= 2) {
+    LU <- scABEL(CV = res$CV[i], regulator = res$regulator[i])
+    if (i == 1) {
+      res[i, 4:5] <- sprintf("%.2f%%", 100*LU)
+      res[i, c(6, 9)] <- sampleN.scABEL(CV = res$CV[i], regulator = res$regulator[i],
+                                        design = "2x2x4", print = FALSE,
+                                        details = FALSE)[["Sample size"]]
+      res[i, 7:8] <- sprintf("%.6f", LU)
+    } else {
+      res[i, 4:5] <- sprintf("%.1f %%", 100*LU)
+      res[i, 7:8] <- sprintf("%.6f", LU)
+      res[i, c(6, 9)] <- sampleN.scABEL(CV = res$CV[i], regulator = res$regulator[i],
+                                        design = "2x2x4", print = FALSE,
+                                        details = FALSE)[["Sample size"]]
+    }
+  }
+  if (i == 3) {
+    LU <- c(0.75, 1/0.75)
+    res[i, 4:5] <- sprintf("%.2f%%", 100*LU)
+    res[i, 6]   <- sampleN.TOST(CV = res$CV[i], theta1 = round(LU[1], 4),
+                                theta2 = round(LU[2], 4), design = "2x2x4",
+                                print = FALSE, details = FALSE)[["Sample size"]]
+    res[i, 7:8] <- sprintf("%.6f", LU)
+    res[i, 9]   <- sampleN.TOST(CV = res$CV[i], theta1 = LU[1], theta2 = LU[2],
+                                design = "2x2x4", print = FALSE,
+                                details = FALSE)[["Sample size"]]
+  }
+  if (i == 4) {
+    LU <- c(0.9, 1/0.9)
+    res[i, 4:5] <- sprintf("%.2f%%", 100*LU)
+    res[i, 6]   <- sampleN.TOST(CV = res$CV[i], theta0 = 0.975,
+                                theta1 = round(LU[1], 4), theta2 = round(LU[2], 4),
+                                print = FALSE, details = FALSE)[["Sample size"]]
+    res[i, 7:8] <- sprintf("%.6f", LU)
+    res[i, 9]   <- sampleN.TOST(CV = res$CV[i], theta0 = 0.975, theta1 = LU[1],
+                                theta2 = LU[2], print = FALSE,
+                                details = FALSE)[["Sample size"]]
+  }
+  if (i == 5) {
+    LU <- c(0.9, 1/0.9)
+    res[i, 4:5] <- sprintf("%.1f %%", c(90, 112))
+    res[i, 6]   <- sampleN.TOST(CV = res$CV[i], theta0 = 0.975,
+                                theta1 = 0.9, theta2 = 1.12,
+                                print = FALSE, details = FALSE)[["Sample size"]]
+    res[i, 7:8] <- sprintf("%.6f", LU)
+    res[i, 9]   <- sampleN.TOST(CV = res$CV[i], theta0 = 0.975, theta1 = LU[1],
+                                theta2 = LU[2], print = FALSE,
+                                details = FALSE)[["Sample size"]]
+  }
+}
+names(res)[c(2, 4:6)] <- c("agency", "L   ", "U   ", "n")
+print(res, row.names = FALSE)
+```
+
+# Installation
+You can install the released version of PowerTOST from [CRAN](https://CRAN.R-project.org) with …
+```{r inst}
+package <- "PowerTOST"
+inst    <- package %in% installed.packages()
+if (length(package[!inst]) > 0) install.packages(package[!inst])
+```
+… and the development version from [GitHub](https://github.com/) with
+```
+# install.packages("remotes")
+remotes::install_github("Detlew/PowerTOST")
+```
+Skips installation from a github remote if the [SHA-1](https://en.wikipedia.org/wiki/SHA-1) has not changed since last install. Use `force = TRUE` to force installation.
+
+# Contributors
+- Detlew Labes (author, maintainer)
+- Helmut Schütz (author)
+- Benjamin Lang (author)
+
+# License{#license}
+<h4 class="author">[GPL-3](https://cran.r-project.org/web/licenses/GPL-3 "GNU General Public License, Version 3") `r Sys.Date()` Helmut Schütz</h4>

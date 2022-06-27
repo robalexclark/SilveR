@@ -1,0 +1,91 @@
+CI.BE                   1-2*alpha confidence interval given point
+                        estimate, CV, and n
+CI.RatioF               1-2*alpha Fieller CI given point estimate, CV
+                        (, CVb) and n
+CV2se                   Helper functions
+CVCL                    Confidence limits of a CV for log-normal data
+CVfromCI                CV from a given Confidence interval
+CVp2CV                  Decompose CV(T) and CV(R) from 'pooled' CV of
+                        T/R
+CVpooled                Pooled CV from several studies
+CVwRfromU               CVwR from the upper expanded limit (ABEL)
+OwensQ                  Owen's Q-function
+OwensQOwen              Owen's Q-function via repeated integration by
+                        parts
+OwensT                  Owen's T-function
+bib.CL                  Design matrices of period balanced incomplete
+                        block designs
+data2x2                 Sample Size Tables for the Classical 2x2
+                        Crossover Design
+data2x2x3               Sample Size Tables for the 2x2x3 Replicate
+                        Crossover Design
+data2x4x4               Sample Size Tables for the 2x4x4 Replicate
+                        Crossover Design
+data_parallel           Sample Size Tables for the Parallel Group
+                        Design
+defunct                 Removed functions in PowerTOST
+deprecated              Deprecated functions in PowerTOST
+exppower.TOST           Expected power of the TOST procedure
+exppower.noninf         Expected power of the non-inferiority test
+expsampleN.TOST         Sample size based on expected power
+expsampleN.noninf       Sample size based on expected power for the
+                        non-inferiority test
+known.designs           Show the 'known' designs
+pa.ABE                  Power analysis for average bioequivalence (ABE)
+pa.NTID                 Power analysis for scaled ABE for NTIDs
+pa.scABE                Power analysis for scaled average
+                        bioequivalence (scABE)
+power.2TOST             Power for two simultaneous TOST procedures
+power.HVNTID            (Empirical) Power for BE decision via FDA
+                        method for highly variable NTIDs
+power.NTID              (Empirical) Power for BE decision via FDA
+                        method for NTIDs
+power.RSABE             (Empirical) Power for BE decision via
+                        linearized scaled ABE criterion
+power.RSABE2L.sdsims    (Empirical) Power of BE Decision via Reference
+                        Scaled ABE
+power.RatioF            Power for equivalence of the ratio of two means
+                        with normality on original scale
+power.TOST              Power of the classical TOST procedure
+power.TOST.sds          Power calculation of the BE decision with
+                        models incorporating groups
+power.TOST.sim          Power of the TOST procedure obtained via
+                        simulations
+power.dp                Power of dose-proportionality studies evaluated
+                        via Power model
+power.noninf            Power of the one-sided non-inferiority t-test
+power.scABEL            (Empirical) Power of BE decision via scaled
+                        (widened) BE acceptance limits
+power.scABEL.sds        (Empirical) Power of BE decision via scaled
+                        (widened) BE acceptance limits
+pvalue.TOST             p-value(s) of the TOST procedure
+reg_const               Constructor of an object with class 'regSet'
+                        containing the regulatory settings for ABEL
+sampleN.2TOST           Sample size based on power of two TOSTs
+sampleN.HVNTID          Sample size estimation for BE decision via FDA
+                        method for highly variable (HV) narrow
+                        therapeutic index drugs (NTIDs)
+sampleN.NTID            Sample size estimation for BE decision via the
+                        FDA's method for narrow therapeutic index drugs
+                        (NTIDs)
+sampleN.RSABE           Sample size estimation for BE decision via
+                        linearized scaled ABE criterion
+sampleN.RSABE2L.sdsims
+                        Sample size estimation for BE Decision via
+                        Reference Scaled ABE
+sampleN.RatioF          Sample size for equivalence of the ratio of two
+                        means with normality on original scale
+sampleN.TOST            Sample size based on power of TOST
+sampleN.dp              Sample size estimation of dose-proportionality
+                        studies evaluated via the power model
+sampleN.noninf          Sample size for the non-inferiority t-test
+sampleN.scABEL          Sample size estimation for BE decision via
+                        scaled (expanded) BE acceptance limits
+sampleN.scABEL.ad       Sample size estimation for ABEL and iteratively
+                        adjusted alpha
+sampleN.scABEL.sdsims   Sample size estimation for BE decision via
+                        scaled (expanded) BE acceptance limits
+scABEL                  Scaled (widened) BE Acceptance Limits
+scABEL.ad               Iteratively adjusted alpha for ABEL
+type1error.2TOST        Type I error rate for two simultaneous TOST
+                        procedures

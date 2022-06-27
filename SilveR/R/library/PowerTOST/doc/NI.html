@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Non-Inferiority</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%7Bbackground%2Dcolor%3A%23fff%3Bmargin%3A1em%20auto%3Bmax%2Dwidth%3A700px%3Boverflow%3Avisible%3Bpadding%2Dleft%3A2em%3Bpadding%2Dright%3A2em%3Bfont%2Dsize%3A14px%3Bline%2Dheight%3A1%2E35%3Bhyphens%3Aauto%3Bfont%2Dfamily%3A%22Open%20Sans%22%2C%22Helvetica%20Neue%22%2CHelvetica%2CArial%2Csans%2Dserif%7D%23header%7Btext%2Dalign%3Acenter%7D%23TOC%7Bclear%3Aboth%3Bmargin%3A0%203em%3Bpadding%3A4px%3Bwidth%3Aauto%3Bborder%3A1px%20solid%20%23ccc%3Bborder%2Dradius%3A5px%3Bbackground%2Dcolor%3A%23fbfbfb%3Bfont%2Dsize%3A13px%3Bline%2Dheight%3A1%2E2em%7D%23TOC%20%2Etoctitle%7Bfont%2Dweight%3Abold%3Bfont%2Dsize%3A15px%3Bmargin%2Dleft%3A5px%7D%23TOC%20ul%7Bpadding%2Dleft%3A40px%3Bmargin%3A5px%20auto%205px%20%2D1%2E5em%7D%23TOC%20ul%20ul%7Bmargin%2Dleft%3A%2D2em%7D%23TOC%20li%7Blist%2Dstyle%2Dtype%3Anone%3Bline%2Dheight%3A16px%7Dtable%7Bmargin%3A1em%20auto%3Bborder%2Dwidth%3A1px%3Bborder%2Dcolor%3A%23ddd%3Bborder%2Dstyle%3Aoutset%3Bborder%2Dcollapse%3Acollapse%7Dtable%20th%7Bborder%2Dwidth%3A2px%3Bpadding%3A5px%3Bborder%2Dstyle%3Ainset%7Dtable%20td%7Bborder%2Dwidth%3A1px%3Bborder%2Dstyle%3Ainset%3Bline%2Dheight%3A18px%3Bpadding%3A5px%205px%7Dtable%2Ctable%20th%2Ctable%20td%7Bborder%2Dleft%2Dstyle%3Anone%3Bborder%2Dright%2Dstyle%3Anone%7Dtable%20thead%2C%20table%20%2Eeven%7Bbackground%2Dcolor%3A%23f7f7f7%7Dp%7Bmargin%3A0%2E5em%200%7Dsup%2Csub%7Bposition%3Arelative%3Bvertical%2Dalign%3Abaseline%3Btop%3A%2D0%2E4em%7Dsub%7Btop%3A0%2E4em%7Dblockquote%7Bbackground%2Dcolor%3A%23fffff6%3Bpadding%3A0%2E25em%200%2E75em%7Dhr%7Bborder%2Dstyle%3Asolid%3Bborder%3Anone%3Bborder%2Dtop%3A1px%20solid%20%23777%3Bmargin%3A28px%200%7Ddl%7Bmargin%2Dleft%3A0%7Ddl%20dd%7Bmargin%2Dbottom%3A13px%3Bmargin%2Dleft%3A13px%7Ddl%20dt%7Bfont%2Dweight%3A700%7Dul%7Bmargin%2Dtop%3A0%7Dul%20li%7Blist%2Dstyle%3Acircle%20outside%7Dul%20ul%7Bmargin%2Dbottom%3A0%7D%2Ehl%7Bbackground%2Dcolor%3A%23FFFF99%7Dpre%2C%20code%7Bbackground%2Dcolor%3A%23f7f7f7%3Bborder%2Dradius%3A3px%3Bcolor%3A%23333%3Bwhite%2Dspace%3Apre%2Dwrap%7Dpre%7Bborder%2Dradius%3A3px%3Bmargin%3A5px%200%2010px%200%3Bpadding%3A10px%7Dpre%3Anot%28%5Bclass%5D%29%7Bbackground%2Dcolor%3A%23f7f7f7%7Dcode%7Bfont%2Dsize%3A85%25%3Bfont%2Dfamily%3AConsolas%2CMonaco%2C%27Lucida%20Console%27%2C%27Courier%20New%27%2C%27Courier%27%2Cmonospace%7Dp%20%3E%20code%2Cli%20%3E%20code%7Bpadding%3A2px%200%7Dfigure%2C%2Ecaption%7Btext%2Dalign%3Acenter%7Dimg%7Bdisplay%3Ablock%3Bmargin%3A0%20auto%200%20auto%3Bbackground%2Dcolor%3A%23FFF%3Bpadding%3A2px%3Bborder%2Dradius%3A5px%3Bborder%3A1px%20solid%20%23CCC%7Dh1%7Bmargin%2Dtop%3A0%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A4px%3B%3Bline%2Dheight%3A30px%3Bletter%2Dspacing%3A%2E5px%3Bborder%2Dbottom%3A3px%20solid%20%23f7f7f7%3Bfont%2Dsize%3A175%25%3Bhyphens%3Anone%7D%2Etitle%7Bmargin%2Dtop%3A1%2E5em%7Dh2%7Bborder%2Dbottom%3A2px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bpadding%2Dbottom%3A2px%3Bfont%2Dsize%3A145%25%7Dh3%7Bborder%2Dbottom%3A1px%20solid%20%23f7f7f7%3Bpadding%2Dtop%3A10px%3Bfont%2Dsize%3A120%25%7Dh4%7Bmargin%2Dleft%3A8px%3Bfont%2Dsize%3A110%25%7D%2Eauthor%7Bfont%2Dsize%3A91%25%3Bmargin%2Dleft%3A0%3Bmargin%2Dbottom%3A0%3Bfont%2Dstyle%3Anormal%7Dh5%2C%20h6%7Bborder%2Dbottom%3A1px%20solid%20%23ccc%3Bfont%2Dsize%3A105%25%7Da%7Bcolor%3A%230033dd%3Btext%2Ddecoration%3Anone%7Da%3Ahover%7Bcolor%3A%236666ff%7Da%3Avisited%7Bcolor%3A%23800080%7Da%3Avisited%3Ahover%7Bcolor%3A%23BB00BB%7Da%5Bhref%5E%3D%22http%3A%22%5D%7Bcolor%3A%23696969%3Bborder%2Dbottom%3A1px%20dotted%20%23000%7Da%5Bhref%5E%3D%22https%3A%22%5D%7Bborder%2Dbottom%3A1px%20dotted%20%23000%3Bcolor%3A%23696969%7Dcode%20%3E%20%2Ekw%7Bcolor%3A%23555%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Edt%7Bcolor%3A%23902000%7D%20code%20%3E%20%2Edv%7Bcolor%3A%2340a070%7D%20code%20%3E%20%2Ebn%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Efl%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Ech%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Est%7Bcolor%3A%23d14%7D%20code%20%3E%20%2Eco%7Bcolor%3A%23888888%3Bfont%2Dstyle%3Aitalic%7D%20code%20%3E%20%2Eot%7Bcolor%3A%23007020%7D%20code%20%3E%20%2Eal%7Bcolor%3A%23f00%3Bfont%2Dweight%3A700%7D%20code%20%3E%20%2Efu%7Bcolor%3A%23900%3Bfont%2Dweight%3A700%7D%20%20code%20%3E%20%2Eer%7Bcolor%3A%23a61717%3Bbackground%2Dcolor%3A%23e3d2d2%7D%20%2Etop%7Bdisplay%3Ainline%3Bposition%3Afixed%3Bbottom%3A0%3Bright%3A0%3Bpadding%3A0%3Bfont%2Dsize%3A108px%7D%2Etop%20img%7Bborder%3Anone%7Da%2Etoplink%3Alink%7Bbackground%2Dimage%3Aurl%28data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAXVBMVEUAAABcgJzu7u%2F%2B%2F%2F%2Ft7u9ri6XN1%2BG1xdKtv82nusl2k6tkhqH6%2B%2FzZ4uiGoLVvj6je4%2BeXrsCTq71ujKbAzdehtMScscGNprl7mK9fgp7k6Ork5%2BrX3uPT2%2BFoh6ODMk%2FHAAAAAXRSTlMAQObYZgAAANFJREFUKM%2BFk%2B0aQzAMRpsW1XZlmGFf93%2BZM4skxji%2F1OHp2zRRhImu8CH4wkWjfjnZFIjUnpY2K2FBmQlpcliRG7IVbFDNPodNctwX%2FpBNmWUq38p8n%2FwWmFrrCzB2zJWKpR55DHx%2BoyIthqeeuPMPUTn69KaRpAfEqQKf%2BkQzHb4slKdQEocHUeFbgqWdDxBQh1dzZXdumhS1B6QTmqpE0aCWmqK5Pe24LNWGjlxUGY2KylfSrrUVF1olREYXutsO%2B8100Ir7jXw0BsdDdDCCb%2FerCdkTmcUbAAAAAElFTkSuQmCC%29%3Bbackground%2Drepeat%3Ano%2Drepeat%3Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E6%3Bfilter%3Aalpha%28opacity%3D60%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Da%2Etoplink%3Ahover%2Ca%2Etoplink%3Aactive%7Btext%2Ddecoration%3Anone%3Bbackground%2Dcolor%3Atransparent%3Bopacity%3A%2E4%3Bfilter%3Aalpha%28opacity%3D40%29%3Bbackground%2Dposition%3Abottom%207px%20right%3Bbackground%2Dsize%3Acontain%7Dcode%20span%2Eco%7Bfont%2Dstyle%3Anormal%7D%23nav%7Bposition%3Aabsolute%3Btop%3A0%3Bfloat%3Aleft%3Bbackground%2Dcolor%3A%23084262%3Bborder%3Anone%7D%23nav%20ul%7Bwidth%3A100%25%3Blist%2Dstyle%2Dtype%3Anone%3Btext%2Dalign%3Acenter%3Bcolor%3A%23fff%3Bfont%2Dsize%3A%2E75em%3Bletter%2Dspacing%3A2px%3Bfont%2Dweight%3A700%3Bmargin%3A0%3Bpadding%3A0%7D%23nav%20ul%20li%7Bdisplay%3Ainline%7D%23nav%20ul%20li%20a%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23084262%3Btext%2Ddecoration%3Anone%3Bfloat%3Aleft%3Bborder%2Dright%3A1px%20solid%20%237394B4%3Bcursor%3Apointer%3Bpadding%3A%2E5em%2011%2E5px%7D%23nav%20ul%20li%20a%3Ahover%2C%23nav%20ul%20li%20span%7Bcolor%3A%23fff%3Bbackground%2Dcolor%3A%23257B9D%7D%40media%20print%7B%23nav%2C%23TOC%2C%23TOC%20%2Etoctitle%2C%23TOC%20ul%2C%23TOC%20ul%20ul%2C%23TOC%20li%7Bdisplay%3Anone%7D%7D" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Non-Inferiority</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#defaults">Defaults</a></li>
+<li><a href="#non-inferiority">Non-Inferiority</a></li>
+<li><a href="#non-superiority">Non-Superiority</a></li>
+<li><a href="#bracketing-approach">Bracketing Approach</a></li>
+<li><a href="#author">Author</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+</div>
+
+<div class="top">
+<a class="toplink" href="#nav" title="⇑ top"> </a>
+</div>
+<div id="nav">
+<ul>
+<li>
+<a href="vignette.html">Main Vignette</a>
+</li>
+<li>
+<a href="ABE.html" title="Average Bioequivalence">ABE</a>
+</li>
+<li>
+<a href="RSABE.html" title="Reference-scaled Average Bioequivalence">RSABE</a>
+</li>
+<li>
+<span title="» You are here «">Non-Inferiority</span>
+</li>
+<li>
+<a href="DP.html">Dose-Proportionality</a>
+</li>
+<li>
+<a href="PA.html">Power Analysis</a>
+</li>
+</ul>
+</div>
+<h3>
+Details and examples of other methods are accessible via the menu bar on top of the page and in the <a href="https://cran.r-project.org/package=PowerTOST/PowerTOST.pdf" title="PDF">online manual</a> of all functions.
+</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PowerTOST) <span class="co"># attach the library</span></span></code></pre></div>
+<div id="defaults" class="section level1">
+<h1>Defaults</h1>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Argument</th>
+<th>Purpose</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\small{\alpha}\)</span></td>
+<td><code>alpha</code></td>
+<td>Nominal level of the test</td>
+<td><code>0.025</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\small{\pi}\)</span></td>
+<td><code>targetpower</code></td>
+<td><span title="typically 0.80 – 0.90">Minimum desired power</span></td>
+<td><code>0.80</code></td>
+</tr>
+<tr class="odd">
+<td>logscale</td>
+<td><code>logscale</code></td>
+<td>Analysis on log-transformed or original scale?</td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="even">
+<td>margin</td>
+<td><code>margin</code></td>
+<td>Non-inferiority margin</td>
+<td>see below</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\small{\theta_0}\)</span></td>
+<td><code>theta0</code></td>
+<td>‘True’ or assumed T/R ratio</td>
+<td>see below</td>
+</tr>
+<tr class="even">
+<td><em>CV</em></td>
+<td><code>CV</code></td>
+<td>CV</td>
+<td>none</td>
+</tr>
+<tr class="odd">
+<td>design</td>
+<td><code>design</code></td>
+<td>Planned design</td>
+<td><code>&quot;2x2&quot;</code></td>
+</tr>
+<tr class="even">
+<td>imax</td>
+<td><code>imax</code></td>
+<td>Maximum number of iterations</td>
+<td><code>100</code></td>
+</tr>
+<tr class="odd">
+<td>print</td>
+<td><code>print</code></td>
+<td>Show information in the console?</td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="even">
+<td>details</td>
+<td><code>details</code></td>
+<td>Show details of the sample size search?</td>
+<td><code>FALSE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Note that contrary to the other functions of the package a one-sided <em>t</em>-test (instead of <span title="Two One-Sided Tests">TOST</span>) is employed. Hence, <span class="math inline">\(\small{\alpha}\)</span> defaults to 0.025.<br />
+Defaults depending on the argument <code>logscale</code>:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Argument</th>
+<th align="center"><code>logscale=TRUE</code></th>
+<th align="center"><code>logscale=FALSE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>margin</td>
+<td><code>margin</code></td>
+<td align="center"><code>0.80</code></td>
+<td align="center"><code>–0.20</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\small{\theta_0}\)</span></td>
+<td><code>theta0</code></td>
+<td align="center"><code>0.95</code></td>
+<td align="center"><code>+0.05</code></td>
+</tr>
+</tbody>
+</table>
+<p>Arguments <code>targetpower</code>, <code>margin</code>, <code>theta0</code>, and <code>CV</code> have to be given as fractions, not in percent.<br />
+The <em>CV</em> is generally the <em>within-</em> (intra-) subject coefficient of variation. Only for <code>design = &quot;parallel&quot;</code> it is the <em>total</em> (<span title="also known as">a.k.a.</span> pooled) <em>CV</em>.</p>
+<p>Designs with one (parallel), two (conventional crossover and paired), and three or four periods (replicates) are supported.</p>
+<pre><code>#      design                        name   df
+#  &quot;parallel&quot;           2 parallel groups  n-2
+#       &quot;2x2&quot;               2x2 crossover  n-2
+#     &quot;2x2x2&quot;             2x2x2 crossover  n-2
+#     &quot;2x2x3&quot;   2x2x3 replicate crossover 2n-3
+#     &quot;2x2x4&quot;   2x2x4 replicate crossover 3n-4
+#     &quot;2x4x4&quot;   2x4x4 replicate crossover 3n-4
+#     &quot;2x3x3&quot;   partial replicate (2x3x3) 2n-3
+#     &quot;2x4x2&quot;            Balaam’s (2x4x2)  n-2
+#    &quot;2x2x2r&quot; Liu’s 2x2x2 repeated x-over 3n-2
+#    &quot;paired&quot;                paired means  n-1</code></pre>
+<p>The terminology of the <code>design</code> argument follows this pattern: <code>treatments x sequences x periods</code>. The conventional TR|RT (<span title="also known as">a.k.a.</span> AB|BA) design can be abbreviated as <code>&quot;2x2&quot;</code>. Some call the <code>&quot;parallel&quot;</code> design a ‘one-sequence’ design. The design <code>&quot;paired&quot;</code> has two periods but no sequences, <em>e.g.</em>, in studying linear pharmacokinetics a single dose is followed by multiple doses. A profile in steady state (T) is compared to the one after the single dose (R). Note that the underlying model assumes no period effects.</p>
+<p>With <code>sampleN.noninf(..., details = FALSE, print = FALSE)</code> results are provided as a data frame<small> </small><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> with eight columns <code>Design</code>, <code>alpha</code>, <code>CV</code>, <code>theta0</code>, <code>Margin</code>, <code>Sample size</code>, <code>Achieved power</code>, and <code>Target power</code>. To access <em>e.g.</em>, the sample size use either <code>sampleN.noninf[1, 6]</code> or <code>sampleN.noninf[[&quot;Sample size&quot;]]</code>. We suggest to use the latter in scripts for clarity.</p>
+<p><span class="hl">The estimated sample size gives always the <em>total</em> number of subjects (not subject/sequence in crossovers or subjects/group in parallel designs – like in some other software packages).</span></p>
+</div>
+<div id="non-inferiority" class="section level1">
+<h1>Non-Inferiority</h1>
+<p>If the supplied margin is &lt; 1 (<code>logscale = TRUE</code>) or &lt; 0 (<code>logscale = FALSE</code>), then it is assumed that <em>higher</em> response values are <u>better</u>. The hypotheses are with</p>
+<ul>
+<li><p><code>logscale = TRUE</code> <span class="math display">\[\small{H_0:\theta_0 \leq \log({margin})\:vs\:H_1:\theta_0&gt;\log({margin})}\]</span> where <span class="math inline">\(\small{\theta_0=\mu_\textrm{T}/\mu_\textrm{R}}\)</span></p></li>
+<li><p><code>logscale = FALSE</code> <span class="math display">\[\small{H_0:\theta_0 \leq {margin}\:vs\:H_1:\theta_0&gt;{margin}}\]</span></p>
+<p>where <span class="math inline">\(\small{\theta_0=\mu_T-\mu_R}\)</span></p></li>
+</ul>
+<div id="example-1" class="section level2">
+<h2>Example 1</h2>
+<p>Estimate the sample size for assumed intra-subject <em>CV</em> 0.25. Defaults <code>margin</code> 0.80 and <span class="math inline">\(\small{\theta_{0}}\)</span> 0.95 employed.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.noninf</span>(<span class="at">CV =</span> <span class="fl">0.25</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++++++++++ Non-inferiority test +++++++++++++</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x2 crossover </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha = 0.025, target power = 0.8</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-inf. margin = 0.8</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 0.95,  CV = 0.25</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size (total)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 36   0.820330</span></span></code></pre></div>
+<p>To get only the sample size:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.noninf</span>(<span class="at">CV =</span> <span class="fl">0.25</span>, <span class="at">details =</span> <span class="cn">FALSE</span>, <span class="at">print =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 36</span></span></code></pre></div>
+<p>Note that the sample size is always rounded up to give balanced sequences (here a multiple of two). Since power is higher than our target, likely this was the case here. Let us assess that:<br />
+Which power will we get with a sample size of 35?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.noninf</span>(<span class="at">CV =</span> <span class="fl">0.25</span>, <span class="at">n =</span> <span class="dv">35</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Unbalanced design. n(i)=18/17 assumed.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0.8085908</span></span></code></pre></div>
+<p>Confirmed that with 35 subjects we will already reach the target power. That means also that one dropout will not compromise power.</p>
+</div>
+</div>
+<div id="non-superiority" class="section level1">
+<h1>Non-Superiority</h1>
+<p>If the supplied margin is &gt; 1 (<code>logscale = TRUE</code>) or &gt; 0 (<code>logscale = FALSE</code>), then it is assumed that <em>lower</em> response values are <u>better</u>. The hypotheses are with</p>
+<ul>
+<li><p><code>logscale = TRUE</code> <span class="math display">\[\small{H_{0}:\theta_0 \geq \log({margin})\:vs\:H_{1}:\theta_0&lt;\log({margin})}\]</span> where <span class="math inline">\(\small{\theta_0=\mu_\textrm{T}/\mu_\textrm{R}}\)</span></p></li>
+<li><p><code>logscale = FALSE</code> <span class="math display">\[\small{H_{0}:\theta_0 \geq {margin}\:vs\:H_{1}:\theta_0&lt;{margin}}\]</span></p>
+<p>where <span class="math inline">\(\small{\theta_0=\mu_T-\mu_R}\)</span></p></li>
+</ul>
+<div id="example-2" class="section level2">
+<h2>Example 2</h2>
+<p>Estimate the sample size for assumed intra-subject <em>CV</em> 0.25.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sampleN.noninf</span>(<span class="at">CV =</span> <span class="fl">0.25</span>, <span class="at">margin =</span> <span class="fl">1.25</span>, <span class="at">theta0 =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">0.95</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ++++++++++++ Non-superiority test +++++++++++++</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             Sample size estimation</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Study design: 2x2 crossover </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># log-transformed data (multiplicative model)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># alpha = 0.025, target power = 0.8</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Non-inf. margin = 1.25</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># True ratio = 1.052632,  CV = 0.25</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample size (total)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  n     power</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 36   0.820330</span></span></code></pre></div>
+<p>Same sample size like in <a href="#example-1">example 1</a> since reciprocal values of both <code>margin</code> 0.80 and <span class="math inline">\(\small{\theta_{0}}\)</span> are specified.</p>
+</div>
+</div>
+<div id="bracketing-approach" class="section level1">
+<h1>Bracketing Approach</h1>
+<p>Compare a new modified release formulation (regimen once a day) with an intermediate release formulation (twice a day).<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> <em>C</em><sub>min</sub> is the target metric for efficacy (non-inferiority) and <em>C</em><sub>max</sub> for safety (non-superiority). Margins are 0.80 for <em>C</em><sub>min</sub> and 1.25 for <em>C</em><sub>max</sub>. <em>CV</em>s are 0.35 for <em>C</em><sub>min</sub> and 0.20 for <em>C</em><sub>max</sub>; <span class="math inline">\(\small{\theta_{0}}\)</span> 0.95 for <em>C</em><sub>min</sub> and 1.05 for <em>C</em><sub>max</sub>. Full replicate design due to the high variability of <em>C</em><sub>min</sub>.<br />
+Which PK metric leads the sample size?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">metric =</span> <span class="fu">c</span>(<span class="st">&quot;Cmin&quot;</span>, <span class="st">&quot;Cmax&quot;</span>),</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">margin =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">1.25</span>), <span class="at">CV =</span> <span class="fu">c</span>(<span class="fl">0.35</span>, <span class="fl">0.20</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">theta0 =</span> <span class="fu">c</span>(<span class="fl">0.95</span>, <span class="fl">1.05</span>), <span class="at">n =</span> <span class="cn">NA</span>, <span class="at">power =</span> <span class="cn">NA</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>) <span class="co"># this line for R &lt;4.0.0)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  res[i, <span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">sampleN.noninf</span>(<span class="at">design =</span> res<span class="sc">$</span>design[i],</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">margin =</span> res<span class="sc">$</span>margin[i],</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                                <span class="at">theta0 =</span> res<span class="sc">$</span>theta0[i],</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">CV =</span> res<span class="sc">$</span>CV[i],</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                                <span class="at">details =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                                <span class="at">print =</span> <span class="cn">FALSE</span>)[<span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>]</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#  design metric margin   CV theta0  n     power</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   2x2x4   Cmin   0.80 0.35   0.95 32 0.8077926</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   2x2x4   Cmax   1.25 0.20   1.05 12 0.8406410</span></span></code></pre></div>
+<p>The sample size depends on <em>C</em><sub>min</sub>. Hence, the study is ‘overpowered’ for <em>C</em><sub>max</sub>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.noninf</span>(<span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">margin =</span> <span class="fl">1.25</span>, <span class="at">CV =</span> <span class="fl">0.20</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">theta0 =</span> <span class="fl">1.05</span>, <span class="at">n =</span> <span class="dv">32</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0.9984996</span></span></code></pre></div>
+<p>Therefore, that gives us some ‘safety margin’ for <em>C</em><sub>max</sub>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.noninf</span>(<span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">margin =</span> <span class="fl">1.25</span>, <span class="at">CV =</span> <span class="fl">0.25</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">theta0 =</span> <span class="fl">1.10</span>, <span class="at">n =</span> <span class="dv">32</span>) <span class="co"># higher CV, worse theta0</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] 0.8279726</span></span></code></pre></div>
+<p>The bracketing approach does not necessarily give lower sample sizes than tests for equivalence. In this example we could aim at reference-scaling for the highly variable <em>C</em><sub>min</sub> and at conventional ABE for <em>C</em><sub>max</sub>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">intended =</span> <span class="fu">c</span>(<span class="st">&quot;ABEL&quot;</span>, <span class="st">&quot;ABE&quot;</span>),</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">metric =</span> <span class="fu">c</span>(<span class="st">&quot;Cmin&quot;</span>, <span class="st">&quot;Cmax&quot;</span>), <span class="at">CV =</span> <span class="fu">c</span>(<span class="fl">0.35</span>, <span class="fl">0.20</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">theta0 =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">1.05</span>), <span class="at">n =</span> <span class="cn">NA</span>, <span class="at">power =</span> <span class="cn">NA</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>) <span class="co"># this line for R &lt;4.0.0</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">1</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[<span class="dv">1</span>], <span class="at">theta0 =</span> res<span class="sc">$</span>theta0[<span class="dv">1</span>],</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">design =</span> res<span class="sc">$</span>design[<span class="dv">1</span>], <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">details =</span> <span class="cn">FALSE</span>)[<span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">2</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">sampleN.TOST</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[<span class="dv">2</span>], <span class="at">theta0 =</span> res<span class="sc">$</span>theta0[<span class="dv">2</span>],</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">design =</span> res<span class="sc">$</span>design[<span class="dv">2</span>], <span class="at">print =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">details =</span> <span class="cn">FALSE</span>)[<span class="dv">7</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  design intended metric   CV theta0  n     power</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   2x2x4     ABEL   Cmin 0.35   0.90 34 0.8118400</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   2x2x4      ABE   Cmax 0.20   1.05 10 0.8517596</span></span></code></pre></div>
+<p>Which method is optimal is a case-to-case decision. Although in this example the bracketing approach seems to be the ‘winner’ (32 subjects instead of 34), we might fail if the <em>CV</em> of <em>C</em><sub>min</sub> is larger than assumed, whereas in reference-scaling we might still pass due to the expanded limits.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">sampleN.scABEL</span>(<span class="at">CV =</span> <span class="fl">0.35</span>, <span class="at">theta0 =</span> <span class="fl">0.90</span>, <span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">print =</span> <span class="cn">FALSE</span>, <span class="at">details =</span> <span class="cn">FALSE</span>)[[<span class="st">&quot;Sample size&quot;</span>]]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># CV and theta0 of both metrics worse than assumed</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">design =</span> <span class="st">&quot;2x2x4&quot;</span>, <span class="at">intended =</span> <span class="fu">c</span>(<span class="st">&quot;ABEL&quot;</span>, <span class="st">&quot;ABE&quot;</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">metric =</span> <span class="fu">c</span>(<span class="st">&quot;Cmin&quot;</span>, <span class="st">&quot;Cmax&quot;</span>), <span class="at">CV =</span> <span class="fu">c</span>(<span class="fl">0.50</span>, <span class="fl">0.25</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">theta0 =</span> <span class="fu">c</span>(<span class="fl">0.88</span>, <span class="fl">1.12</span>), <span class="at">n =</span> n, <span class="at">power =</span> <span class="cn">NA</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>) <span class="co"># this line for R &lt;4.0.0</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">1</span>, <span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">power.scABEL</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[<span class="dv">1</span>], <span class="at">theta0 =</span> res<span class="sc">$</span>theta0[<span class="dv">1</span>],</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                          <span class="at">design =</span> res<span class="sc">$</span>design[<span class="dv">1</span>], <span class="at">n =</span> n)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>res[<span class="dv">2</span>, <span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">power.TOST</span>(<span class="at">CV =</span> res<span class="sc">$</span>CV[<span class="dv">2</span>], <span class="at">theta0 =</span> res<span class="sc">$</span>theta0[<span class="dv">2</span>],</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">design =</span> res<span class="sc">$</span>design[<span class="dv">2</span>], <span class="at">n =</span> n)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(res, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  design intended metric   CV theta0  n     power</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   2x2x4     ABEL   Cmin 0.50   0.88 34 0.8183300</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#   2x2x4      ABE   Cmax 0.25   1.12 34 0.8258111</span></span></code></pre></div>
+<p>See also the vignettes <a href="RSABE.html" title="Reference-scaled Average Bioequivalence">RSABE</a>, <a href="ABE.html" title="Average Bioequivalence">ABE</a>, and <a href="PA.html" title="Power Analysis">PA</a>.</p>
+</div>
+<div id="author" class="section level1">
+<h1>Author</h1>
+<p>Detlew Labes</p>
+</div>
+<div id="license" class="section level1">
+<h1>License</h1>
+<h4 class="author">
+<a href="https://cran.r-project.org/web/licenses/GPL-3" title="GNU General Public License, Version 3">GPL-3</a> 2022-02-21 Helmut Schütz
+</h4>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>R Documentation. <em>Data Frames.</em> 2020-10-26. <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/data.frame.html">R-manual</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>European Medicines Agency, Committee for Medicinal Products for Human Use. <em>Guideline on the pharmacokinetic and clinical evaluation of modified release dosage forms.</em> London. 20 November 2014. EMA/CPMP/EWP/280/96 Corr1. <a href="https://www.ema.europa.eu/en/documents/scientific-guideline/guideline-pharmacokinetic-clinical-evaluation-modified-release-dosage-forms_en.pdf">online</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

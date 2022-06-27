@@ -15,6 +15,7 @@ Anova.mlm	Anova
 Anova.multinom	Anova
 Anova.polr	Anova
 Anova.rlm	Anova
+Anova.svycoxph	Anova
 Anova.svyglm	Anova
 as.data.frame.univaov	Anova
 av.plot	car-defunct
@@ -23,6 +24,9 @@ avp	avPlots
 avPlot	avPlots
 avPlot.glm	avPlots
 avPlot.lm	avPlots
+avPlot3d	avPlots
+avPlot3d.glm	avPlots
+avPlot3d.lm	avPlots
 avPlots	avPlots
 avPlots.default	avPlots
 basicPower	bcPower
@@ -118,6 +122,8 @@ cr.plots	car-defunct
 crp	crPlots
 crPlot	crPlots
 crPlot.lm	crPlots
+crPlot3d	crPlots
+crPlot3d.lm	crPlots
 crPlots	crPlots
 crPlots.default	crPlots
 data.ellipse	car-defunct
@@ -348,6 +354,7 @@ tukeyNonaddTest	residualPlots
 vcov.boot	hist.boot
 vif	vif
 vif.default	vif
+vif.lm	vif
 vif.merMod	vif
 vif.polr	vif
 vif.svyolr	vif

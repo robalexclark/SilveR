@@ -1,0 +1,14 @@
+cubature-package        Cubature is a package for adaptive and
+                        monte-carlo multidimensional integration over
+                        hypercubes
+cubintegrate            Unified Cubature Integration Interface
+cuhre                   Integration by a Deterministic Iterative
+                        Adaptive Algorithm
+default_args            Default arguments for each integration method
+divonne                 Integration by Stratified Sampling for Variance
+                        Reduction
+hcubature               Adaptive multivariate integration over
+                        hypercubes (hcubature and pcubature)
+suave                   Integration with SUbregion-Adaptive Vegas
+                        Algorithm
+vegas                   Integration by a Monte Carlo Algorithm

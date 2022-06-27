@@ -46,7 +46,10 @@ namespace SilveR.StatsModels
         public bool Mean { get; set; } = true;
 
         [DisplayName("N")]
-        public bool N { get; set; } = true;
+        public bool N { get; set; } = false;
+
+        [DisplayName("Sum")]
+        public bool Sum { get; set; }
 
         [DisplayName("Standard deviation")]
         public bool StandardDeviation { get; set; } = true;
@@ -160,6 +163,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(FourthCatFactor), FourthCatFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Mean), Mean));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(N), N));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Sum), Sum));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardDeviation), StandardDeviation));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Variance), Variance));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardErrorOfMean), StandardErrorOfMean));
@@ -191,6 +195,7 @@ namespace SilveR.StatsModels
             this.MedianAndQuartiles = argHelper.LoadBooleanArgument(nameof(MedianAndQuartiles));
             this.MinAndMax = argHelper.LoadBooleanArgument(nameof(MinAndMax));
             this.N = argHelper.LoadBooleanArgument(nameof(N));
+            this.Sum = argHelper.LoadBooleanArgument(nameof(Sum));
             this.NormalProbabilityPlot = argHelper.LoadBooleanArgument(nameof(NormalProbabilityPlot));
             this.Significance = argHelper.LoadIntArgument(nameof(Significance));
             this.StandardDeviation = argHelper.LoadBooleanArgument(nameof(StandardDeviation));
@@ -226,35 +231,38 @@ namespace SilveR.StatsModels
             //N
             arguments.Append(" " + argFormatter.GetFormattedArgument(N)); //11
 
+            //Sum
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Sum)); //12
+
             //St Dev
-            arguments.Append(" " + argFormatter.GetFormattedArgument(StandardDeviation)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StandardDeviation)); //13
 
             //Variances
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Variance)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Variance)); //14
 
             //St Err
-            arguments.Append(" " + argFormatter.GetFormattedArgument(StandardErrorOfMean)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StandardErrorOfMean)); //15
 
             //Min and Max
-            arguments.Append(" " + argFormatter.GetFormattedArgument(MinAndMax)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MinAndMax)); //16
 
             //Median Quartile
-            arguments.Append(" " + argFormatter.GetFormattedArgument(MedianAndQuartiles)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(MedianAndQuartiles)); //17
 
             //Coefficient Variation
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CoefficientOfVariation)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CoefficientOfVariation)); //18
 
             //Confidence Limits
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ConfidenceInterval)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ConfidenceInterval)); //19
 
             //Confidence Limits
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance.ToString(), false)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Significance.ToString(), false)); //20
 
             //Normal Probability Plots
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlot));
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlot)); //21
 
             //By Categories and Overall
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ByCategoriesAndOverall)); //22
 
             return arguments.ToString().Trim();
         }

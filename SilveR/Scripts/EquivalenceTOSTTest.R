@@ -1615,6 +1615,7 @@ if(showNormPlot=="Y") {
 	graphdata<-data.frame(te$x,te$y)
 	graphdata$xvarrr_IVS <-graphdata$te.x
 	graphdata$yvarrr_IVS <-graphdata$te.y
+	graphdata$names <- c(1:length(graphdata$te.x))
 	YAxisTitle <-"Sample Quantiles"
 	XAxisTitle <-"Theoretical Quantiles"
 	MainTitle2 <- " "

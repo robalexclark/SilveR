@@ -482,6 +482,7 @@ if (equalCase == "Y") {
 		graphdata<-data.frame(te$x,te$y)
 		graphdata$xvarrr_IVS <-graphdata$te.x
 		graphdata$yvarrr_IVS <-graphdata$te.y
+		graphdata$names <- c(1:length(graphdata$te.x))
 		YAxisTitle <-"Sample Quantiles"
 		XAxisTitle <-"Theoretical Quantiles"
 		MainTitle2 <- " "
@@ -589,7 +590,7 @@ if (unequalCase == "Y") {
 #===================================================================================================================
 	#Normality plots
 	if(showNormPlot=="Y") {
-		HTML.title("Normal probability plots", HR=3, align="left")
+		HTML.title("Normal probability plot", HR=3, align="left")
 	
 
 		normPlotx <- sub(".html", "normplotx.png", htmlFile)
@@ -606,7 +607,7 @@ if (unequalCase == "Y") {
 		h_Gr_jitscat <-  0
 		infiniteslope <- "N"
 		LinearFit <- "Y"
-	
+
 		if (bandw != "N")  {
 			Gr_line <-BW_line
 			Gr_fill <- BW_fill
@@ -622,22 +623,37 @@ if (unequalCase == "Y") {
 	
 		sub <- subset(statdata, statdata$mainEffect == unique(levels(as.factor(statdata$mainEffect)))[1])
 		te <- qqnorm(eval(parse(text = paste("sub$", xxxresponsexxx))))
+
 		graphdata<-data.frame(te$x,te$y)
 		graphdata$xvarrr_IVS <-graphdata$te.x
 		graphdata$yvarrr_IVS <-graphdata$te.y
-		MainTitle2 <- paste("Treatment =  ", unique(levels(as.factor(statdata$mainEffect)))[1], sep="")
-		p1 <- NONCAT_SCAT("QQPLOT")
+
+		temp1data <- graphdata
+		temp1data$Effect <- unique(levels(as.factor(statdata$mainEffect)))[1]
 
 		sub <- subset(statdata, statdata$mainEffect == unique(levels(as.factor(statdata$mainEffect)))[2])
 		te <- qqnorm(eval(parse(text = paste("sub$", xxxresponsexxx))))
 		graphdata<-data.frame(te$x,te$y)
 		graphdata$xvarrr_IVS <-graphdata$te.x
 		graphdata$yvarrr_IVS <-graphdata$te.y
-		MainTitle2 <- paste("Treatment =  ", unique(levels(as.factor(statdata$mainEffect)))[2], sep="")
-		p2 <- NONCAT_SCAT("QQPLOT")
 
-		multiplot(p1, p2, cols=2)
+		temp2data <- graphdata
+		temp2data$Effect <- unique(levels(as.factor(statdata$mainEffect)))[2]
+		temp3data <- statdata
+		temp3data$names <- c(1:length(statdata$mainEffect))
+		temp4data <- temp3data[order(eval(parse(text = paste("temp3data$", xxxresponsexxx)))),]
 	
+		temp5data <- rbind(temp1data, temp2data)
+		temp7data <- temp5data[order(temp5data$yvarrr_IVS),]
+		temp8data <- cbind(temp7data, temp4data)
+		temp9data <- temp8data[order(temp8data$names),]
+
+		graphdata <- temp9data
+		graphdata$catfact <- graphdata$mainEffect
+		Gr_palette<-palette_FUN("catfact")
+		MainTitle2 <- " "
+
+		CAT_QQPLOT()
 		void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", normPlotx), Align="left")
 	
 	#STB July2013
@@ -651,7 +667,7 @@ if (unequalCase == "Y") {
 			linkToPdf2 <- paste ("<a href=\"",pdfFile_2,"\">Click here to view the PDF of the normal probability plot</a>", sep = "")
 			HTML(linkToPdf2)
 		}
-		HTML("Note: The normal probability plots are generated seperately using the responses from each treatment group only.", align="left")
+		HTML("Note: The normal probability plot includes one line per group as the variances are estimated separately for each group.", align="left")
 		HTML("Tip: Check that the points lie along the dotted line. If not then the data may be non-normally distributed.", align="left")
 	}
 }	

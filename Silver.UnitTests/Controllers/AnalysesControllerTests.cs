@@ -1102,55 +1102,62 @@ namespace SilveR.UnitTests.Controllers
                     {
                         AnalysisID = 67,
                         ArgumentID = 1131,
+                        Name = "Sum",
+                        Value = "False"
+                    },
+                    new SilveR.Models.Argument
+                    {
+                        AnalysisID = 67,
+                        ArgumentID = 1132,
                         Name = "Mean",
                         Value = "True"
                     },
                     new SilveR.Models.Argument
                     {
                         AnalysisID = 67,
-                        ArgumentID = 1132,
+                        ArgumentID = 1133,
                         Name = "FourthCatFactor",
                         Value = null
                     },
                     new SilveR.Models.Argument
                     {
                         AnalysisID = 67,
-                        ArgumentID = 1133,
+                        ArgumentID = 1134,
                         Name = "ThirdCatFactor",
                         Value = null
                     },
                     new SilveR.Models.Argument
                     {
                         AnalysisID = 67,
-                        ArgumentID = 1134,
+                        ArgumentID = 1135,
                         Name = "SecondCatFactor",
                         Value = null
                     },
                     new SilveR.Models.Argument
                     {
                         AnalysisID = 67,
-                        ArgumentID = 1135,
+                        ArgumentID = 1136,
                         Name = "FirstCatFactor",
                         Value = null
                     },
                     new SilveR.Models.Argument
                     {
                         AnalysisID = 67,
-                        ArgumentID = 1136,
+                        ArgumentID = 1137,
                         Name = "Transformation",
                         Value = "None"
                     },
                     new SilveR.Models.Argument
                     {
                         AnalysisID = 67,
-                        ArgumentID = 1137,
+                        ArgumentID = 1138,
                         Name = "NormalProbabilityPlot",
                         Value = "False"
                     },
                     new SilveR.Models.Argument
                     {
                         AnalysisID = 67,
-                        ArgumentID = 1138,
+                        ArgumentID = 1139,
                         Name = "ByCategoriesAndOverall",
                         Value = "False"
                     }

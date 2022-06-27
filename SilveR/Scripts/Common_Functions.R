@@ -1,7 +1,7 @@
 ﻿#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
-IVS_version<- 4.4 
+IVS_version<- 4.6 
 
 #Software update
 UpdateIVS <- "N"
@@ -1708,16 +1708,16 @@ NONCAT_QQPLOT <- function(typez) {
 		stat_qq(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) +
 		stat_qq_line(lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
 	
-	if (scatterlabels == "Y") {
-		g2 <- g + geom_text_repel(aes(label = rownames(graphdata)), size = 3.5,force = 10, point.padding=1)
-	} else {
+#	if (scatterlabels == "Y") {
+#		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq")
+#	} else {
 		g2 <- g
-	}
+#	}
 	suppressWarnings(print(g2))
 }
 
 CAT_QQPLOT <- function() {
-	g <- ggplot(graphdata, aes(sample = yvarrr_IVS)) +
+	g <- ggplot(graphdata, aes(sample = yvarrr_IVS, color = catfact)) +
 		theme_map +
 		mytheme +
 		theme(legend.position = Gr_legend_pos) +
@@ -1729,11 +1729,13 @@ CAT_QQPLOT <- function() {
 		stat_qq(aes(fill = catfact), colour = "black", size = Point_size, shape = Point_shape) +
 		stat_qq_line(aes(colour = catfact), lty = Line_type, size = Line_size)
 
-	if (scatterlabels == "Y") {
-		g2 <- g + geom_text_repel(aes(label = rownames(graphdata), color = graphdata$l_l), size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
-	} else {
+#	if (scatterlabels == "Y") {
+#		g2 <- g + geom_text_repel(label = graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(aes(fill=catfact), label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+#		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
+#	} else {
 		g2 <- g
-	}
+#	}
 	suppressWarnings(print(g2))
 }
 
@@ -2038,6 +2040,30 @@ POWERPLOT_ABSOLUTE <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr
 		}
 	suppressWarnings(print(g1))
 }
+
+#Equivalence of Means Comparison module plots
+EQPOWERPLOT_ABSOLUTE <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr_palette_P) {
+	g <- ggplot(power2data, aes(x = sample, y = value)) +
+		theme_map +
+		mytheme +
+		theme(legend.position = Gr_legend_pos2, legend.title = element_text(colour = "black")) +
+		ylab("Statistical power (%)") +
+		xlab(XAxisTitle) +
+		ggtitle(MainTitle2) +
+		coord_cartesian(ylim = c(powerFrom, powerTo)) +
+		scale_y_continuous(breaks = pretty_breaks()) +
+		scale_colour_manual(name = "True bias: ", breaks = lin_list2, labels = expectedBias, values = Gr_palette_P) +
+		geom_line(aes(group = variable, color = variable), size = Line_size)
+
+		ranngeSS<-sampleSizeTo-sampleSizeFrom
+		if (ranngeSS<15){
+			g1<- g +scale_x_continuous(breaks = c(sampleSizeFrom:sampleSizeTo) )
+		} else {
+			g1<- g +scale_x_continuous(breaks = pretty_breaks())	
+		}
+	suppressWarnings(print(g1))
+}
+
 
 POWERPLOT_PERCENT <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr_palette_P, expectedChanges2) {
 	g <- ggplot(power2data, aes(x = sample, y = value)) +
