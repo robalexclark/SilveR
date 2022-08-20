@@ -3,7 +3,8 @@ align	align
 char	char
 colonnade	colonnade
 ctl_new_pillar	ctl_new_pillar
-ctl_new_pillar_list	ctl_new_pillar
+ctl_new_pillar_list	ctl_new_pillar_list
+ctl_new_rowid_pillar	ctl_new_pillar
 deprecated	deprecated
 dim_desc	dim_desc
 expect_known_display	deprecated

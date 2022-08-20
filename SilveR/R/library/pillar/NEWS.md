@@ -1,5 +1,60 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# pillar 1.8.1
+
+## Features
+
+- New `pillar.advice` option to turn off advice in the footer, see `?pillar_options`. Now off by default in non-interactive mode (#577).
+
+
+# pillar 1.8.0
+
+## Display
+
+- Column names that are abbreviated in the header gain a footnote and are printed in full in the footer (#483), 
+after the extra columns (#548). If a column name in the header is abbreviated, all backticks are removed (#525). The new `"pillar.superdigit_sep"` option that determines the string used to separate footnote from column name in the footer (#553).
+
+- The default value of the `pillar.min_title_width` option is changed to 5. This means that effectively the width of a pillar is decided only by the data. Use `options(pillar.min_title_width = 15)` to restore the previous default, see also `?pillar_options` for details (#531).
+
+- Offer advice in the footer on how to print all columns or rows (#567).
+
+- Avoid aligning `NA` inside quotes for very short character vectors (#562).
+
+## Features
+
+- Pick up `"pillar_focus"` attribute on printing to define focus columns (#549).
+
+- New `ctl_new_rowid_pillar()` generic and default method for customizing the appearance of row IDs (#260, #550, @nbenn).
+
+## Bug fixes
+
+- Fix printing of `Surv` and `Surv2` objects (#561).
+
+- Fix wording for corner case `max_extra_cols = 1` (#535).
+
+- Remove excess underlines for `bit64::integer64()` data of different magnitude (#517, #529).
+
+## Documentation
+
+- `ctl_new_pillar_list()` is documented on a separate help page (#516).
+
+- Remove outdated detail in `?tbl_sum` (@IndrajeetPatil, #565).
+
+## Chore
+
+- Drop crayon dependency (#559).
+
+- Import ellipsis from rlang (#554).
+
+- Skip test that requires lubridate if it's not installed (#505, @MichaelChirico).
+
+## API
+
+- Soft-deprecate `colonnade()`, `squeeze()` and `extra_cols()` (#496).
+
+- Require rlang 1.0.1 (#512).
+
+
 # pillar 1.7.0
 
 ## Breaking changes
@@ -189,6 +244,10 @@
 ## Formatting
 
 - All printing code has been moved from tibble to pillar (#179), including `glimpse()` (#234). This concentrates the printing code in one package and allows for better extensibility.
+
+- New experimental generics `tbl_format_setup()`, `tbl_format_header()`, `tbl_format_body()` and `tbl_format_footer()` (#179).
+
+- Move definition of `tbl_sum()` to this package (#179).
 
 - Improve formatting for `"Surv"` and `"Surv2"` classes from the survival package (#199).
 
@@ -384,14 +443,14 @@
 - The decimal dot is now always printed for numbers of type `numeric`. Trailing zeros are not shown anymore if all displayed numbers are whole numbers (#62).
 - Decimal values longer than 13 characters always print in scientific notation.
 
-# Bug fixes
+## Bug fixes
 
 - Numeric values with a `"class"` attribute (e.g., `Duration` from lubridate) are now formatted using `format()` if the `pillar_shaft()` method is not implemented for that class (#88).
 - Very small numbers (like `1e-310`) are now printed correctly (tidyverse/tibble#377).
 - Fix representation of right-hand side for `getOption("pillar.sigfig") >= 6` (tidyverse/tibble#380).
 - Fix computation of significant figures for numbers with absolute value >= 1 (#98).
 
-# New functions
+## New functions
 
 - New styling helper `style_subtle_num()`, formatting depends on the `pillar.subtle_num` option.
 

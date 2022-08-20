@@ -1,5 +1,19 @@
 Update history for **estimability***
 
+** NOTE: If you have v1.4 installed, please update to a newer version!
+**       (Or an older one, for that matter)
+
+1.4.1
+    Correction to version 1.4. The new svd-based methods worked 
+    correctly only for n x p matrices with n >= p. Otherwise things
+    go badly awry. And this is a big problem because I replaced
+    the default nonest.basis() method with the svd method.
+
+1.4
+    Added support for results of svd(), via 'nonest.basis.svd' function 
+    and 'default' method. The 'matrix' method now uses the SVD instead
+    of the QR decomposition.
+
 1.3
     Added 'estble.subspace' function
 

@@ -1,4 +1,6 @@
-# generics 0.1.2
+# generics 0.1.3
+
+* New `rank_results()` generic.
 
 # generics 0.1.2
 
@@ -23,5 +25,3 @@
 # `generics` 0.0.1
 
 First CRAN version
-
-

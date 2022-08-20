@@ -97,6 +97,7 @@ same_path	same_path
 sans_ext	file_ext
 session_info	session_info
 set_envvar	set_envvar
+shrink_images	shrink_images
 sort_file	process_file
 split_lines	split_lines
 split_source	split_source
@@ -106,6 +107,7 @@ strings_please	stringsAsStrings
 submit_cran	submit_cran
 system3	system3
 tinify	tinify
+tinify_dir	tinify
 tojson	tojson
 tree	tree
 try_error	try_error

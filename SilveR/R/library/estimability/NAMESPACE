@@ -24,6 +24,9 @@ S3method(epredict, glm)
 
 S3method(eupdate, lm)
 
+S3method(nonest.basis, default)
 S3method(nonest.basis, qr)
 S3method(nonest.basis, matrix)
 S3method(nonest.basis, lm)
+S3method(nonest.basis, svd)
+export(nonest.basis.svd)

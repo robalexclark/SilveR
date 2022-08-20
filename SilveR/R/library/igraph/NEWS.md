@@ -1,3 +1,51 @@
+# igraph 1.3.4
+
+Added:
+
+- `sample_asym_pref()` now returns the generated types of the vertices in the
+  vertex attributes named `outtype` and `intype`.
+
+Fixed:
+
+- `layout_nicely()` does not recurse infinitely any more if it is assigned to
+  the `layout` attribute of a graph
+
+- `layout_nicely()` now ignores edge weights when there are non-positive
+  edge weights. This is needed because igraph 1.3.3 started validating edge
+  weights in `layout_with_fr()` and `layout_with_drl()`, resulting in
+  errors when `layout_nicely()` was used on weighted graphs with negative
+  weights. Since `layout_nicely()` is the default layout algorithm for
+  `plot()`, most users were not even aware that they were using the FR or
+  DrL layouts behind the scenes. Now the policy is that `layout_nicely()`
+  attempts to get the job done without errors if possible, even if that means
+  that edge weights must be ignored. A warning is printed if this is the case.
+
+# igraph 1.3.3
+
+Added:
+
+- `reverse_edges()` reverses specific or all edges in a graph.
+
+- Single-bracket indexing of `V()` and `E()` resolves attribute names in the
+  indexing expressions by default (for instance, `E(g)[weight > x]` matches
+  edges with a weight larger than a threshold). This can be problematic if the
+  attribute masks one of the variables in the local evaluation context.
+  We now have a pronoun called `.env` (similarly to `rlang::.env`) that
+  allows you to force attribute name lookup to the calling environment. For
+  sake of completeness, we also provide `.data` (similarly to `rlang::.data`)
+  to force attribute name lookup to the vertex / edge attributes only. These
+  pronouns are automatically injected into the environment where the indexing
+  expression is evaluated.
+
+Deprecated:
+
+- Names of functions that can be used inside a `V()` or `E()` indexing start
+  with a dot since igraph 1.1.1; however, the old dotless names did not print
+  a deprecation warning so this may have gone unnoticed for years. We are
+  introducting a deprecation warning for `nei()`, `innei()`, `outnei()`,
+  `inc()`, `from()` and `to()` inside single-bracket indexing of vertex and
+  edge sequences and will remove the old variants soon.
+
 # igraph 1.3.2
 
 The C core is updated to 0.9.9, fixing a range of bugs.
@@ -695,7 +743,7 @@ for technical reasons. This version was actually never really
 released, but some R packages of this version were uploaded to
 CRAN, so we include this version in this NEW file.
 
-# New features and bug fixes
+## New features and bug fixes
 
 - Added a vertex shape API for defining new vertex shapes, and also
   a couple of new vertex shapes.
@@ -780,7 +828,7 @@ Released June 11, 2012
 See also the release notes at
 http://igraph.sf.net/relnotes-0.6.html
 
-# R: Major new features
+## R: Major new features
 
 - Vertices and edges are numbered from 1 instead of 0.
   Note that this makes most of the old R igraph code incompatible
@@ -808,7 +856,7 @@ http://igraph.sf.net/relnotes-0.6.html
   informative way. The output of summary() was also updated
   accordingly.
 
-# R: Other new features
+## R: Other new features
 
 - It is possible to mark vertex groups on plots, via
   shading. Communities and cohesive blocks are plotted using this by
@@ -823,9 +871,9 @@ http://igraph.sf.net/relnotes-0.6.html
   getIgraphOpt().
 - Igraph functions can now print status messages.
 
-# R: New or updated functions
+## R: New or updated functions
 
-## Community detection
+### Community detection
 
 - The multi-level modularity optimization community structure detection
   algorithm by Blondel et al. was added, see multilevel.community().
@@ -837,14 +885,14 @@ http://igraph.sf.net/relnotes-0.6.html
 - Added the InfoMAP community finding method, thanks to Emmanuel
   Navarro for the code. See infomap.community().
 
-## Shortest paths
+### Shortest paths
 
 - Eccentricity (eccentricity()), and radius (radius()) calculations.
 - Shortest path calculations with get.shortest.paths() can now
   return the edges along the shortest paths.
 - get.all.shortest.paths() now supports edge weights.
 
-## Centrality
+### Centrality
 
 - Centralization scores for degree, closeness, betweenness and
   eigenvector centrality. See centralization.scores().
@@ -860,13 +908,13 @@ http://igraph.sf.net/relnotes-0.6.html
 - Betweenness calculation can now use arbitrarily large integers,
   this is required for some lattice-like graphs to avoid overflow.
 
-## Input/output and file formats
+### Input/output and file formats
 
 - Support the DL file format in graph.read(). See
   http://www.analytictech.com/networks/dataentry.htm.
 - Support writing the LEDA file format in write.graph().
 
-## Plotting and layouts
+### Plotting and layouts
 
 - Star layout: layout.star().
 - Layout based on multidimensional scaling, layout.mds().
@@ -874,7 +922,7 @@ http://igraph.sf.net/relnotes-0.6.html
 - Sugiyama layout algorithm for layered directed acyclic graphs,
   layout.sugiyama().
 
-## Graph generators
+### Graph generators
 
 - New graph generators: static.fitness.game(), static.power.law.game().
 - barabasi.game() was rewritten and it supports three algorithms now,
@@ -883,7 +931,7 @@ http://igraph.sf.net/relnotes-0.6.html
 - The Watts-Strogatz graph generator, igraph_watts_strogatz() can
   now create graphs without loop edges.
 
-## Others
+### Others
 
 - Added the Spectral Coarse Graining algorithm, see scg().
 - The cohesive.blocks() function was rewritten in C, it is much faster

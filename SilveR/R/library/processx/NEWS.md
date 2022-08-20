@@ -1,4 +1,11 @@
 
+# processx 3.7.0
+
+* New functions for creating portable FIFOs and Unix socket connections.
+  See `conn_create_fifo()`, `conn_create_unix_socket()` and
+  `vignettes/internals.Rmd` for documentation. These functions are currently
+  experimental.
+
 # processx 3.6.1
 
 * processx now closes file unneeded file descriptors when redirecting

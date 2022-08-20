@@ -10,6 +10,7 @@ importFrom(utils, modifyList, head, tail, download.file)
 importFrom(RColorBrewer, brewer.pal)
 importFrom(png, readPNG)
 importFrom(jpeg, readJPEG)
+importFrom(interp, voronoi.polygons, voronoi.mosaic)
 
 
 

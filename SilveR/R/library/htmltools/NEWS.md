@@ -1,3 +1,19 @@
+# htmltools 0.5.3
+
+## Breaking changes
+
+* Closed #305: `htmlPreserve()` no longer uses _inline_ code blocks for Pandoc's raw attribute feature when used inside a _non_-inline knitr/rmarkdown code chunk, and as a result, in this case, an additional `<p>` tag is no longer wrapped around the HTML content. (#306)
+
+## Bug fixes
+
+* Closed #301: `tagQuery()` was failing to copy all `tagList()` html dependencies within nest child tag lists. `tagQuery()` will now relocate html dependencies as child objects. (#302)
+
+* Closed #290: htmltools previously did not specify which version of fastmap to use, and would fail to install with an old version of fastmap. (#291)
+
+* `copyDependencyToDir()` no longer creates empty directories for dependencies that do not have any files. (@gadenbuie, #276)
+
+* Closed #320: `copyDependencyToDir()` now works with dependencies with specified attributes. (@dmurdoch, #321)
+
 # htmltools 0.5.2
 
 ## Breaking Changes

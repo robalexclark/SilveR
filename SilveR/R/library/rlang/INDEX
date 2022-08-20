@@ -39,7 +39,7 @@ env                     Create a new environment
 env_bind                Bind symbols to objects in an environment
 env_browse              Browse environments
 env_cache               Cache a value in an environment
-env_clone               Clone an environment
+env_clone               Clone or coalesce an environment
 env_depth               Depth of an environment chain
 env_get                 Get an object in an environment
 env_has                 Does an environment have or see bindings?

@@ -28,6 +28,7 @@ is.element	setops
 learn	learn
 min_grid	min_grid
 prune	prune
+rank_results	rank_results
 refit	refit
 required_pkgs	required_pkgs
 setdiff	setops

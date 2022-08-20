@@ -359,7 +359,8 @@ encapsulates best practices for data frames:</p>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 h    </span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 i    </span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 j    </span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 16 more rows</span></span></code></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 16 more rows</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>This makes it easier to use with list-columns:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">y =</span> <span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 2</span></span>
@@ -410,13 +411,14 @@ written with an eye for performance:</p>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>timing</span></code></pre></div>
 <pre><code>#&gt; # A tibble: 2 × 14
-#&gt;   expre…¹ min         mean         median      max         `itr/sec` mem…²  n_gc
-#&gt;   &lt;chr&gt;   &lt;bench_tm&gt;  &lt;bench_tm&gt;   &lt;bench_tm&gt;  &lt;bench_tm&gt;      &lt;dbl&gt; &lt;bnc&gt; &lt;dbl&gt;
-#&gt; 1 as_tib… 0.000287696 0.0006251376 0.000327178 0.004508219 1599.648   1840     5
-#&gt; 2 as.dat… 0.000791522 0.0016640039 0.001098172 0.007652914  600.9601 34584     5
-#&gt; # … with abbreviated variable names ¹​expression, ²​mem_alloc, and 6 more
-#&gt; #   variables: n_itr &lt;int&gt;, total_time &lt;bench_tm&gt;, result &lt;list&gt;,
-#&gt; #   memory &lt;list&gt;, time &lt;list&gt;, gc &lt;list&gt;</code></pre>
+#&gt;   expression  min         mean         median      max         `itr/sec` mem_a…¹
+#&gt;   &lt;chr&gt;       &lt;bench_tm&gt;  &lt;bench_tm&gt;   &lt;bench_tm&gt;  &lt;bench_tm&gt;      &lt;dbl&gt; &lt;bnch_&gt;
+#&gt; 1 as_tibble(… 0.000287696 0.0006251376 0.000327178 0.004508219 1599.648   1840  
+#&gt; 2 as.data.fr… 0.000791522 0.0016640039 0.001098172 0.007652914  600.9601 34584  
+#&gt; # … with 7 more variables: n_gc &lt;dbl&gt;, n_itr &lt;int&gt;, total_time &lt;bench_tm&gt;,
+#&gt; #   result &lt;list&gt;, memory &lt;list&gt;, time &lt;list&gt;, gc &lt;list&gt;, and abbreviated
+#&gt; #   variable name ¹​mem_alloc
+#&gt; # ℹ Use `colnames()` to see all variable names</code></pre>
 <p>The speed of <code>as.data.frame()</code> is not usually a bottleneck
 when used interactively, but can be a problem when combining thousands
 of messy inputs into one tidy data frame.</p>
@@ -445,7 +447,8 @@ highlighting:</p>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8     2 1111.104    </span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9     3 3333.312    </span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10     4 9999.936    </span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 96 more rows</span></span></code></pre></div>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 96 more rows</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>Numbers are displayed with three significant figures by default, and
 a trailing dot that indicates the existence of a fractional
 component.</p>
@@ -555,9 +558,11 @@ sometimes important for programming:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="fu">integer</span>())</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 0 × 2</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 2 variables: a &lt;dbl&gt;, b &lt;int&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">integer</span>(), <span class="at">b =</span> <span class="dv">1</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 0 × 2</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 2 variables: a &lt;int&gt;, b &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">a =</span> <span class="fu">integer</span>(), <span class="at">b =</span> <span class="dv">1</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 0 × 2</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 2 variables: a &lt;int&gt;, b &lt;dbl&gt;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span></code></pre></div>
 </div>
 <div id="arithmetic-operations" class="section level3">
 <h3>Arithmetic operations</h3>

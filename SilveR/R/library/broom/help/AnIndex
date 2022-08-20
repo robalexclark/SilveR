@@ -86,6 +86,7 @@ geeglm_tidiers	tidy.geeglm
 geepack_tidiers	tidy.geeglm
 glance	reexports
 glance.aareg	glance.aareg
+glance.anova	glance.anova
 glance.aov	glance.aov
 glance.Arima	glance.Arima
 glance.betamfx	glance.betamfx

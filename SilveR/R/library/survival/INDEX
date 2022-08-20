@@ -32,6 +32,8 @@ coxph.control           Ancillary arguments for controlling coxph fits
 coxph.detail            Details of a Cox Model Fit
 coxph.object            Proportional Hazards Regression Object
 coxph.wtest             Compute a quadratic form
+coxphms.object          Multi-state Proportional Hazards Regression
+                        Object
 coxsurv.fit             A direct interface to the 'computational
                         engine' of survfit.coxph
 diabetic                Ddiabetic retinopathy

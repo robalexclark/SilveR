@@ -1,3 +1,120 @@
+# rlang 1.0.4
+
+* `is_installed()` no longer throws an error with irregular package
+  names.
+
+* `is_installed()` and `check_installed()` now properly detect that
+  the base package is installed on older versions of R (#1434).
+
+
+# rlang 1.0.3
+
+* Child errors may now have empty messages to enable this pattern:
+
+  ```
+  Error in `my_function()`:
+  Caused by error in `their_function()`:
+  ! Message.
+  ```
+
+* The `rlib_bytes` class now uses prettyunits to format bytes. The
+  bytes are now represented with decimal prefixes instead of binary
+  prefixes.
+
+* Supplying a frame environment to the `call` argument of `abort()`
+  now causes the corresponding function call in the backtrace to be
+  highlighted.
+
+  In addition, if you store the argument name of a failing input in
+  the `arg` error field, the argument is also highlighted in the
+  backtrace.
+
+  Instead of:
+
+  ```
+  cli::cli_abort("{.arg {arg}} must be a foobar.", call = call)
+  ```
+
+  You can now write this to benefit from arg highlighting:
+
+  ```
+  cli::cli_abort("{.arg {arg}} must be a foobar.", arg = arg, call = call)
+  ```
+
+* `abort(message = )` can now be a function. In this case, it is
+  stored in the `header` field and acts as a `cnd_header()` method
+  invoked when the message is displayed.
+
+* New `obj_type_oo()` function in `compat-obj-type.R` (#1426).
+
+* `friendly_type_of()` from `compat-obj-type.R` (formerly
+  `compat-friendly-type.R`) is now `obj_type_friendly()`.
+
+* `options(backtrace_on_error = "collapse")` and `print(trace,
+  simplify = "collapse")` are deprecated. They fall back to `"none"`
+  with a warning.
+
+* `call_match()` now better handles `...` when `dots_expand = FALSE`.
+
+* `list2(!!!x)` is now faster when `x` is a list. It is now returned
+  as is instead of being duplicated into a new list.
+
+* `abort()` gains a `.trace_bottom` argument to disambiguate from
+  other `.frame`. This allows `cli::cli_abort()` to wrap `abort()` in
+  such a way that `.internal` mentions the correct package to report
+  the error in (#1386).
+
+* The `transpose()` compat is now more consistent with purrr when
+  inner names are not congruent (#1346).
+
+* New `reset_warning_verbosity()` and `reset_message_verbosity()`
+  functions. These reset the verbosity of messages signalled with
+  `warn()` and `inform()` with the `.frequency` argument. This is
+  useful for testing verbosity in your package (#1414).
+
+* `check_dots_empty()` now allows trailing missing arguments (#1390).
+
+* Calls to local functions that are not accessible through `::` or
+  `:::` are now marked with `(local)` in backtraces (#1399).
+
+* Error messages now mention indexed calls like `foo$bar()`.
+
+* New `env_coalesce()` function to copy bindings from one environment
+  to another. Unlike approaches based on looping with `[[<-`,
+  `env_coalesce()` preserves active and lazy bindings.
+
+* Chaining errors at top-level (directly in the console instead of in
+  a function) no longer fails (#1405).
+
+* Warning style is propagated across parent errors in chained error
+  messages (#1387).
+
+* `check_installed()` now works within catch-all `tryCatch(error = )`
+  expressions (#1402, tidyverse/ggplot2#4845).
+
+* `arg_match()` and `arg_match0()` now mention the correct call in
+  case of type error (#1388).
+
+* `abort()` and `inform()` now print messages to `stdout` in RStudio
+  panes (#1393).
+
+* `is_installed()` now detects unsealed namespaces (#1378). This fixes
+  inconsistent behaviour when run within user onLoad hooks.
+
+* Source references in backtraces and `last_error()`/`last_trace()` instructions
+  are now clickable in IDEs that support links (#1396).
+
+* `compat-cli.R` now supports `style_hyperlink()`.
+
+* `abort(.homonyms = "error")` now throws the expected error (#1394).
+
+* `env_binding_are_active()` no longer accidentally triggers active bindings
+  (#1376).
+
+* Fixed bug in `quo_squash()` with nested quosures containing the
+  missing argument.
+
+
 # rlang 1.0.2
 
 * Backtraces of parent errors are now reused on rethrow. This avoids
@@ -348,11 +465,15 @@ extensive changes to the display of error messages.
 * Internal errors now include a winch backtrace if installed. The user
   is invited to install it if not installed.
 
-* Display of rlang backtraces in dynamic reports (knitted documents
-  and RStudio notebooks) is now controlled by the
-  `rlang_backtrace_on_error_report` option. By default, nothing is
-  displayed in interactive sessions. In non-interactive sessions, a
-  simplified backtrace is displayed instead of a full backtrace
+* Display of rlang backtraces for expected errors in dynamic reports
+  (chunks where `error = TRUE` in knitted documents and RStudio
+  notebooks) is now controlled by the
+  `rlang_backtrace_on_error_report` option. By default, this is set to
+  `"none"`.
+
+  The display of backtraces for _unexpected_ errors (in chunks where
+  `error` is unset or set to `FALSE`) is still controlled by
+  `rlang_backtrace_on_error`.
 
 * The `last_error()` reminder is no longer displayed in RStudio
   notebooks.
@@ -360,8 +481,8 @@ extensive changes to the display of error messages.
 * A `knitr::sew()` method is registered for `rlang_error`. This makes
   it possible to consult `last_error()` (the call must occur in a
   different chunk than the error) and to set
-  `rlang_backtrace_on_error` global options in knitr to display a
-  backtrace on error.
+  `rlang_backtrace_on_error_report` global options in knitr to display
+  a backtrace for expected errors.
 
   If you show rlang backtraces in a knitted document, also set this in
   a hidden chunk to trim the knitr context from the backtraces:
@@ -413,7 +534,7 @@ extensive changes to the display of error messages.
   supplied. It produces a more friendly error message than `force()`
   (#1118).
 
-* `check_dots_empty()`, `check_dots_unused()`, and
+* `check_dots_empty()`, `check_dots_used()`, and
   `check_dots_unnamed()` have been moved from ellipsis to rlang. The
   ellipsis package is deprecated and will eventually be archived.
 

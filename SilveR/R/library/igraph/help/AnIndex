@@ -18,6 +18,8 @@ $<-.igraph.vs	igraph-vs-attributes
 +.igraph	plus-.igraph
 -.igraph	igraph-minus
 .apply_modifiers	dot-apply_modifiers
+.data	dot-data
+.env	dot-data
 .extract_constructor_and_modifiers	dot-extract_constructor_and_modifiers
 add.edges	add_edges
 add.vertex.shape	shapes
@@ -235,6 +237,8 @@ diversity	diversity
 DL	read_graph
 dominator.tree	dominator_tree
 dominator_tree	dominator_tree
+dot-data	dot-data
+dot-env	dot-data
 dot_product	sample_dot_product
 drl_defaults	layout_with_drl
 dyad.census	dyad_census
@@ -723,6 +727,7 @@ remove.vertex.attribute	delete_vertex_attr
 rep.igraph	rep.igraph
 rev.igraph.es	rev.igraph.es
 rev.igraph.vs	rev.igraph.vs
+reverse_edges	reverse_edges
 rewire	rewire
 rglplot	rglplot
 rglplot.igraph	rglplot
@@ -825,6 +830,7 @@ subgraph_isomorphisms	subgraph_isomorphisms
 summary.cohesiveBlocks	cohesive_blocks
 summary.igraph	print.igraph
 summary.nexusDatasetInfoList	nexus
+t.igraph	reverse_edges
 tail_of	tail_of
 time_bins	sir
 time_bins.sir	sir

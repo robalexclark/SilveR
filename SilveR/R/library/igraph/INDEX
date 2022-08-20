@@ -138,6 +138,7 @@ distance_table          Shortest (directed or undirected) paths between
 diverging_pal           Diverging palette
 diversity               Graph diversity
 dominator_tree          Dominator tree
+dot-data                '.data' and '.env' pronouns
 dyad_census             Dyad census of a graph
 each_edge               Rewires the endpoints of the edges of a graph
                         to a random vertex
@@ -360,6 +361,7 @@ reciprocity             Reciprocity of graphs
 rep.igraph              Replicate a graph multiple times
 rev.igraph.es           Reverse the order in an edge sequence
 rev.igraph.vs           Reverse the order in a vertex sequence
+reverse_edges           Reverse edges in a graph
 rewire                  Rewiring edges of a graph
 rglplot                 3D plotting of graphs with OpenGL
 running_mean            Running mean of a time series

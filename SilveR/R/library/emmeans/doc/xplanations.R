@@ -40,3 +40,26 @@ plot(foo8, CIs = FALSE, comparisons = TRUE, by = "B")
 pwpp(foo6, sort = FALSE)
 pwpm(foo6)
 
+## -------------------------------------------------------------------------------------------------
+options(contrasts = c("contr.treatment", "contr.poly"))   ## ensure system default
+w <- warpbreaks[1:40, ]   ### no data for (wool = B, tension = H)
+w.lm <- lm(breaks ~ wool * tension, data = w)
+w.rg <- ref_grid(w.lm)
+(jt <- joint_tests(w.rg))
+
+## -------------------------------------------------------------------------------------------------
+(test.all <- test(contrast(w.rg, "consec"), joint = TRUE))
+
+## -------------------------------------------------------------------------------------------------
+(ef <- attr(jt, "est.fcns"))
+
+## -------------------------------------------------------------------------------------------------
+tmp <- w.rg
+tmp@linfct <- do.call(rbind, ef)      # combine EFs into a matrix
+tmp@grid <- tmp@grid[1:2, ]           # replace the @linfct and @grid slots
+(test.ef <- test(tmp, joint = TRUE))  #  -- that's enough to get the test
+
+## -------------------------------------------------------------------------------------------------
+(test.all$df1 * test.all$F.ratio  -  test.ef$df1 * test.ef$F.ratio) /
+    (test.all$df1 - test.ef$df1)
+

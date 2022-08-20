@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.7.5" />
+<meta name="author" content="emmeans package, Version 1.8.0" />
 
 
 <title>Working with messy data</title>
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 
 <h1 class="title toc-ignore">Working with messy data</h1>
-<h4 class="author">emmeans package, Version 1.7.5</h4>
+<h4 class="author">emmeans package, Version 1.8.0</h4>
 
 
 
@@ -155,8 +155,8 @@ comparing factor effects. That’s a limitation of this study that cannot
 be overcome without collecting additional data. Our choices for further
 analysis are to focus only on Black and White populations; or to focus
 only on age group 3. For example (the latter):</p>
-<pre class="r"><code>summary(emmeans(nutr.lm, pairwise ~ group | race, at = list(age = &quot;3&quot;)), 
-    by = NULL)</code></pre>
+<pre class="r"><code>emmeans(nutr.lm, pairwise ~ group | race, at = list(age = &quot;3&quot;)) |&gt;
+    summary(by = NULL)</code></pre>
 <pre><code>## Note: adjust = &quot;tukey&quot; was changed to &quot;sidak&quot;
 ## because &quot;tukey&quot; is only appropriate for one set of pairwise comparisons</code></pre>
 <pre class="ro"><code>## $emmeans
@@ -286,7 +286,7 @@ in a chi-square test for independence. Put another way, outer weighting
 is the same as proportional weighting applied one factor at a time; the
 following two would yield the same results:</p>
 <pre class="r"><code>emmeans(model, &quot;A&quot;, weights = &quot;outer&quot;) 
-emmeans(emmeans(model, c(&quot;A&quot;, &quot;B&quot;), weights = &quot;prop&quot;),  weights = &quot;prop&quot;) </code></pre>
+emmeans(model, c(&quot;A&quot;, &quot;B&quot;), weights = &quot;prop&quot;) |&gt;  emmeans(weights = &quot;prop&quot;) </code></pre>
 <p>Using <code>&quot;cells&quot;</code> weights gives each prediction the same
 weight as occurs in the model; applied to a reference grid for a model
 with all interactions, <code>&quot;cells&quot;</code>-weighted EMMs are the same
@@ -299,8 +299,8 @@ linearly dependent with factors, we may still encounter non-estimable
 cases.)</p>
 <p>Here is a comparison of predictions for <code>nutr.lm</code> defined
 <a href="#issues">above</a>, using different weighting schemes:</p>
-<pre class="r"><code>sapply(c(&quot;equal&quot;, &quot;prop&quot;, &quot;outer&quot;, &quot;cells&quot;, &quot;flat&quot;), function(w)
-    predict(emmeans(nutr.lm, ~ race, weights = w)))</code></pre>
+<pre class="r"><code>sapply(c(&quot;equal&quot;, &quot;prop&quot;, &quot;outer&quot;, &quot;cells&quot;, &quot;flat&quot;), \(w)
+    emmeans(nutr.lm, ~ race, weights = w) |&gt; predict())</code></pre>
 <pre class="ro"><code>##         equal     prop    outer     cells      flat
 ## [1,] 1.258929 1.926554 2.546674 0.3809524 0.6865079
 ## [2,]       NA       NA       NA 1.6666667 1.2500000
@@ -494,8 +494,8 @@ models (not all), an <code>emmGrid</code> may be updated with a
 For illustration, return again to the nutrition example, and consider
 the analysis of <code>group</code> and <code>race</code> as before,
 after removing interactions involving <code>age</code>:</p>
-<pre class="r"><code>summary(emmeans(nutr.lm, pairwise ~ group | race, submodel = ~ age + group*race), 
-        by = NULL)</code></pre>
+<pre class="r"><code>emmeans(nutr.lm, pairwise ~ group | race, submodel = ~ age + group*race) |&gt; 
+        summary(by = NULL)</code></pre>
 <pre><code>## Note: adjust = &quot;tukey&quot; was changed to &quot;sidak&quot;
 ## because &quot;tukey&quot; is only appropriate for one set of pairwise comparisons</code></pre>
 <pre class="ro"><code>## $emmeans
@@ -602,7 +602,8 @@ cows.rg</code></pre>
 <pre class="ro"><code>## &#39;emmGrid&#39; object with variables:
 ##     route = injection, oral
 ##     drug = Angustatin, Bovineumab, Charloisazepam, Herefordmycin, Mollycoddle
-## Nesting structure:  drug %in% route</code></pre>
+## Nesting structure:  drug %in% route
+## Some things are non-estimable (null space dim = 1)</code></pre>
 <p>When there is nesting, <code>emmeans</code> computes averages
 separately in each group</p>
 <pre class="r"><code>route.emm &lt;- emmeans(cows.rg, &quot;route&quot;)

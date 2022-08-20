@@ -1,3 +1,23 @@
+Changes in version 4.7-1 (2022-08-13}
+   * plot.describe: added bvspace argument to control spacing between categorical variables
+   * getRs: changed default put argument to 'source', changed RStudio code
+   * html.contents.data.frame: changed long space to &emsp; to render in more browser
+   * .q: new quoting function, extends Cs
+   * html.contents.data.frame, html.describe: added <title> to html
+   * plot.curveRep: added method='data' so can set up for ggplot2
+   * combplotp, dotchart3, dotchartpl, plot.describe, plotlyM, scat1d: look at options(plotlyauto=TRUE) and if set override height and width to NULL to that plotly will use auto sizing
+   * dataframeReduce: return information about dropped variables as attribute 'info'
+   * plotCorrM: added hjust=1 if xangle is not zero
+   * Merge: changed to rely on merge.data.table in addition to merge.data.frame
+   * formatCons used by summaryM and summary.formula: respect outer.size for html
+   * options(localHfiles=TRUE) makes `getRs` and `getHdata` read from local file directories instead of from github or our web server
+   * various .Rd files: got rid of \var{} to pass new CRAN checks
+   * fit.mult.impute: fixed bug when using mice.  Thanks: Michał Krassowski https://github.com/harrelfe/Hmisc/issues/152
+   * fit.mult.impute: fixed bug with deparse(substitute(fitter)) when fitter is an anonymous function.  Thanks Thanks: Michał Krassowski https://github.com/harrelfe/Hmisc/issues/157
+   * plot.summaryM: fixed bug not fetching group label from correct place.  Thanks: Thomas tkpmep@gmail.com
+   * bpplt: fixed par(mai).  Thanks: tkpmep@gmail.com
+   * plot.summaryM: similar correction
+
 Changes in version 4.7-0 (2022-04-18)
    * html.contents.data.frame: properly closed html <a>
    * simPOcuts: new function to demonstrate variation in odds ratios due to random chance
@@ -6,7 +26,7 @@ Changes in version 4.7-0 (2022-04-18)
    * print.summary.formula.response: added markdown argument
    * knitrSet: added rudimentary quarto support
    * knitrSet: sense figure labels of the form fig-... used by Quarto, and generate correct cross-reference
-
+   * na.pattern: greatly simplified, and added data.table support
 
 Changes in version 4.6-0 (2021-10-05)
    * package: improved author formatting in DESCRIPTION

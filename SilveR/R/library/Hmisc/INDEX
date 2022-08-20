@@ -86,8 +86,7 @@ histboxp                Use plotly to Draw Stratified Spike Histogram
 hoeffd                  Matrix of Hoeffding's D Statistics
 html                    Convert an S object to HTML
 impute                  Generic Functions and Methods for Imputation
-intMarkovOrd            Compute Parameters for Proportional Odds Markov
-                        Model
+intMarkovOrd            intMarkovOrd
 knitrSet                knitr Setup and plotly Service Function
 labcurve                Label Curves, Make Keys, and Interactively Draw
                         Points and Curves

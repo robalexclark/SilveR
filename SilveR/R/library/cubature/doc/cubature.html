@@ -11,7 +11,7 @@
 
 <meta name="author" content="Balasubramanian Narasimhan" />
 
-<meta name="date" content="2022-03-22" />
+<meta name="date" content="2022-08-16" />
 
 <title>Cubature Vectorization Results</title>
 
@@ -365,7 +365,7 @@ pre code {
 
 <h1 class="title toc-ignore">Cubature Vectorization Results</h1>
 <h4 class="author">Balasubramanian Narasimhan</h4>
-<h4 class="date">2022-03-22</h4>
+<h4 class="date">2022-08-16</h4>
 
 </div>
 
@@ -506,9 +506,9 @@ knitr::kable(d, digits = 3, row.names = FALSE)</code></pre>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
-<td align="right">0.001</td>
-<td align="right">0.040</td>
-<td align="right">1.15</td>
+<td align="right">0.002</td>
+<td align="right">0.042</td>
+<td align="right">1.20</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
@@ -519,7 +519,7 @@ knitr::kable(d, digits = 3, row.names = FALSE)</code></pre>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.001</td>
-<td align="right">0.036</td>
+<td align="right">0.034</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="odd">
@@ -531,8 +531,8 @@ knitr::kable(d, digits = 3, row.names = FALSE)</code></pre>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.003</td>
-<td align="right">0.130</td>
-<td align="right">3.64</td>
+<td align="right">0.128</td>
+<td align="right">3.82</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
@@ -542,9 +542,9 @@ knitr::kable(d, digits = 3, row.names = FALSE)</code></pre>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
-<td align="right">0.004</td>
-<td align="right">0.110</td>
-<td align="right">3.00</td>
+<td align="right">0.003</td>
+<td align="right">0.103</td>
+<td align="right">2.97</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
@@ -554,21 +554,21 @@ knitr::kable(d, digits = 3, row.names = FALSE)</code></pre>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
-<td align="right">0.001</td>
+<td align="right">0.003</td>
 <td align="right">0.080</td>
-<td align="right">2.27</td>
+<td align="right">2.22</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
 <td align="right">100</td>
 <td align="right">0.000</td>
-<td align="right">0.001</td>
-<td align="right">0.001</td>
+<td align="right">0.000</td>
+<td align="right">0.000</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.002</td>
-<td align="right">0.057</td>
-<td align="right">1.57</td>
+<td align="right">0.054</td>
+<td align="right">1.54</td>
 </tr>
 </tbody>
 </table>
@@ -644,14 +644,14 @@ knitr::kable(d, digits = 3)</code></pre>
 <tr class="odd">
 <td align="left">Non-vectorized Hcubature</td>
 <td align="right">10</td>
-<td align="right">0.773</td>
-<td align="right">0.836</td>
-<td align="right">0.852</td>
-<td align="right">0.877</td>
-<td align="right">0.912</td>
-<td align="right">1.048</td>
-<td align="right">8.768</td>
-<td align="right">514.0</td>
+<td align="right">0.742</td>
+<td align="right">0.770</td>
+<td align="right">0.786</td>
+<td align="right">0.786</td>
+<td align="right">0.805</td>
+<td align="right">0.830</td>
+<td align="right">7.863</td>
+<td align="right">526.00</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
@@ -662,56 +662,56 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.003</td>
-<td align="right">0.022</td>
-<td align="right">1.3</td>
+<td align="right">0.020</td>
+<td align="right">1.30</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
 <td align="right">10</td>
-<td align="right">0.337</td>
-<td align="right">0.358</td>
-<td align="right">0.368</td>
-<td align="right">0.372</td>
-<td align="right">0.385</td>
-<td align="right">0.408</td>
-<td align="right">3.724</td>
-<td align="right">222.0</td>
+<td align="right">0.320</td>
+<td align="right">0.325</td>
+<td align="right">0.339</td>
+<td align="right">0.350</td>
+<td align="right">0.370</td>
+<td align="right">0.399</td>
+<td align="right">3.501</td>
+<td align="right">227.00</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
 <td align="right">10</td>
 <td align="right">0.001</td>
+<td align="right">0.001</td>
+<td align="right">0.001</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
-<td align="right">0.002</td>
-<td align="right">0.002</td>
-<td align="right">0.017</td>
-<td align="right">1.0</td>
+<td align="right">0.015</td>
+<td align="right">1.00</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
 <td align="right">10</td>
+<td align="right">0.309</td>
+<td align="right">0.311</td>
 <td align="right">0.321</td>
-<td align="right">0.326</td>
-<td align="right">0.354</td>
-<td align="right">0.358</td>
-<td align="right">0.378</td>
-<td align="right">0.412</td>
-<td align="right">3.579</td>
-<td align="right">213.0</td>
+<td align="right">0.333</td>
+<td align="right">0.347</td>
+<td align="right">0.383</td>
+<td align="right">3.327</td>
+<td align="right">214.00</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
 <td align="right">10</td>
+<td align="right">0.003</td>
+<td align="right">0.003</td>
+<td align="right">0.003</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
-<td align="right">0.004</td>
-<td align="right">0.004</td>
-<td align="right">0.005</td>
-<td align="right">0.041</td>
-<td align="right">2.5</td>
+<td align="right">0.035</td>
+<td align="right">2.23</td>
 </tr>
 </tbody>
 </table>
@@ -772,7 +772,7 @@ knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = 
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.003</td>
-<td align="right">0.024</td>
+<td align="right">0.021</td>
 <td align="right">1.04</td>
 </tr>
 <tr class="even">
@@ -784,7 +784,7 @@ knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = 
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.003</td>
-<td align="right">0.021</td>
+<td align="right">0.022</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="odd">
@@ -796,8 +796,8 @@ knitr::kable(summary(benchr::benchmark(g1(), g2(), g3(), times = 20, progress = 
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.003</td>
-<td align="right">0.025</td>
-<td align="right">1.01</td>
+<td align="right">0.024</td>
+<td align="right">1.04</td>
 </tr>
 </tbody>
 </table>
@@ -846,8 +846,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0.000</td>
-<td align="right">0.041</td>
-<td align="right">0.096</td>
+<td align="right">0.002</td>
+<td align="right">0.059</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="even">
@@ -859,8 +859,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.002</td>
-<td align="right">0.079</td>
-<td align="right">1.31</td>
+<td align="right">0.076</td>
+<td align="right">1.30</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
@@ -870,9 +870,9 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">0.071</td>
-<td align="right">1.30</td>
+<td align="right">0.003</td>
+<td align="right">0.078</td>
+<td align="right">1.31</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
@@ -883,8 +883,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.002</td>
-<td align="right">0.133</td>
-<td align="right">2.33</td>
+<td align="right">0.132</td>
+<td align="right">2.27</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
@@ -894,9 +894,9 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0.001</td>
-<td align="right">0.002</td>
-<td align="right">0.457</td>
-<td align="right">8.15</td>
+<td align="right">0.003</td>
+<td align="right">0.476</td>
+<td align="right">8.26</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
@@ -907,8 +907,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.002</td>
-<td align="right">0.382</td>
-<td align="right">6.63</td>
+<td align="right">0.387</td>
+<td align="right">6.65</td>
 </tr>
 </tbody>
 </table>
@@ -964,24 +964,24 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">10</td>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
-<td align="right">0.003</td>
-<td align="right">0.003</td>
-<td align="right">0.003</td>
 <td align="right">0.004</td>
-<td align="right">0.034</td>
-<td align="right">29.30</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">0.037</td>
+<td align="right">29.10</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
 <td align="right">10</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
-<td align="right">0.004</td>
-<td align="right">0.004</td>
-<td align="right">0.004</td>
+<td align="right">0.005</td>
+<td align="right">0.005</td>
+<td align="right">0.005</td>
 <td align="right">0.006</td>
-<td align="right">0.044</td>
-<td align="right">38.30</td>
+<td align="right">0.046</td>
+<td align="right">37.60</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
@@ -1005,31 +1005,31 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.002</td>
-<td align="right">1.54</td>
+<td align="right">1.33</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
 <td align="right">10</td>
-<td align="right">0.014</td>
+<td align="right">0.015</td>
 <td align="right">0.015</td>
 <td align="right">0.016</td>
-<td align="right">0.016</td>
 <td align="right">0.017</td>
-<td align="right">0.018</td>
-<td align="right">0.160</td>
-<td align="right">144.00</td>
+<td align="right">0.017</td>
+<td align="right">0.020</td>
+<td align="right">0.167</td>
+<td align="right">129.00</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
 <td align="right">10</td>
 <td align="right">0.016</td>
 <td align="right">0.017</td>
-<td align="right">0.017</td>
+<td align="right">0.018</td>
 <td align="right">0.018</td>
 <td align="right">0.019</td>
-<td align="right">0.023</td>
-<td align="right">0.181</td>
-<td align="right">157.00</td>
+<td align="right">0.020</td>
+<td align="right">0.178</td>
+<td align="right">144.00</td>
 </tr>
 </tbody>
 </table>
@@ -1081,50 +1081,50 @@ knitr::kable(d, digits = 3)</code></pre>
 <tr class="odd">
 <td align="left">Non-vectorized Hcubature</td>
 <td align="right">10</td>
-<td align="right">0.047</td>
-<td align="right">0.049</td>
-<td align="right">0.052</td>
 <td align="right">0.051</td>
-<td align="right">0.053</td>
+<td align="right">0.052</td>
 <td align="right">0.057</td>
-<td align="right">0.514</td>
-<td align="right">1.16</td>
+<td align="right">0.056</td>
+<td align="right">0.061</td>
+<td align="right">0.062</td>
+<td align="right">0.564</td>
+<td align="right">1.29</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
 <td align="right">10</td>
+<td align="right">0.039</td>
 <td align="right">0.041</td>
 <td align="right">0.044</td>
 <td align="right">0.044</td>
-<td align="right">0.044</td>
-<td align="right">0.045</td>
 <td align="right">0.048</td>
-<td align="right">0.443</td>
+<td align="right">0.051</td>
+<td align="right">0.445</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
 <td align="right">10</td>
-<td align="right">0.890</td>
-<td align="right">0.918</td>
-<td align="right">0.931</td>
-<td align="right">0.930</td>
-<td align="right">0.944</td>
-<td align="right">0.960</td>
-<td align="right">9.301</td>
-<td align="right">21.00</td>
+<td align="right">0.875</td>
+<td align="right">0.900</td>
+<td align="right">0.938</td>
+<td align="right">0.927</td>
+<td align="right">0.947</td>
+<td align="right">0.964</td>
+<td align="right">9.270</td>
+<td align="right">21.40</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
 <td align="right">10</td>
-<td align="right">0.791</td>
-<td align="right">0.803</td>
-<td align="right">0.819</td>
-<td align="right">0.820</td>
-<td align="right">0.833</td>
-<td align="right">0.859</td>
-<td align="right">8.198</td>
-<td align="right">18.40</td>
+<td align="right">0.751</td>
+<td align="right">0.781</td>
+<td align="right">0.811</td>
+<td align="right">0.807</td>
+<td align="right">0.830</td>
+<td align="right">0.855</td>
+<td align="right">8.069</td>
+<td align="right">18.50</td>
 </tr>
 </tbody>
 </table>
@@ -1174,7 +1174,7 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
-<td align="right">0.004</td>
+<td align="right">0.005</td>
 <td align="right">1.16</td>
 </tr>
 <tr class="even">
@@ -1187,7 +1187,7 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.005</td>
-<td align="right">1.26</td>
+<td align="right">1.23</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
@@ -1210,8 +1210,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
-<td align="right">0.004</td>
-<td align="right">1.14</td>
+<td align="right">0.005</td>
+<td align="right">1.15</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
@@ -1221,9 +1221,9 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
-<td align="right">0.002</td>
+<td align="right">0.001</td>
 <td align="right">0.046</td>
-<td align="right">11.90</td>
+<td align="right">11.20</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
@@ -1233,9 +1233,9 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
-<td align="right">0.001</td>
-<td align="right">0.032</td>
-<td align="right">8.31</td>
+<td align="right">0.002</td>
+<td align="right">0.035</td>
+<td align="right">7.94</td>
 </tr>
 </tbody>
 </table>
@@ -1291,14 +1291,14 @@ knitr::kable(d, digits = 3)</code></pre>
 <tr class="odd">
 <td align="left">Non-vectorized Hcubature</td>
 <td align="right">20</td>
-<td align="right">0.001</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
-<td align="right">0.033</td>
-<td align="right">1.16</td>
+<td align="right">0.003</td>
+<td align="right">0.036</td>
+<td align="right">1.15</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
@@ -1306,10 +1306,10 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
-<td align="right">0.001</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
-<td align="right">0.029</td>
+<td align="right">0.003</td>
+<td align="right">0.031</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="odd">
@@ -1317,12 +1317,12 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">20</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
-<td align="right">0.002</td>
-<td align="right">0.004</td>
 <td align="right">0.003</td>
-<td align="right">0.036</td>
-<td align="right">0.083</td>
-<td align="right">1.80</td>
+<td align="right">0.003</td>
+<td align="right">0.003</td>
+<td align="right">0.005</td>
+<td align="right">0.056</td>
+<td align="right">1.94</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
@@ -1332,9 +1332,9 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
-<td align="right">0.004</td>
+<td align="right">0.003</td>
 <td align="right">0.044</td>
-<td align="right">1.52</td>
+<td align="right">1.55</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
@@ -1343,10 +1343,10 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.003</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
-<td align="right">0.004</td>
 <td align="right">0.005</td>
-<td align="right">0.075</td>
-<td align="right">2.59</td>
+<td align="right">0.007</td>
+<td align="right">0.084</td>
+<td align="right">2.64</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
@@ -1355,10 +1355,10 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
-<td align="right">0.003</td>
-<td align="right">0.005</td>
-<td align="right">0.063</td>
-<td align="right">2.20</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">0.067</td>
+<td align="right">2.37</td>
 </tr>
 </tbody>
 </table>
@@ -1419,10 +1419,10 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.004</td>
 <td align="right">0.005</td>
 <td align="right">0.005</td>
-<td align="right">0.005</td>
 <td align="right">0.006</td>
-<td align="right">0.095</td>
-<td align="right">1.72</td>
+<td align="right">0.006</td>
+<td align="right">0.098</td>
+<td align="right">1.66</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
@@ -1433,8 +1433,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
 <td align="right">0.005</td>
-<td align="right">0.078</td>
-<td align="right">1.44</td>
+<td align="right">0.083</td>
+<td align="right">1.46</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
@@ -1443,10 +1443,10 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
-<td align="right">0.003</td>
-<td align="right">0.003</td>
-<td align="right">0.058</td>
-<td align="right">1.08</td>
+<td align="right">0.004</td>
+<td align="right">0.005</td>
+<td align="right">0.069</td>
+<td align="right">1.18</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
@@ -1456,8 +1456,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
-<td align="right">0.004</td>
-<td align="right">0.056</td>
+<td align="right">0.006</td>
+<td align="right">0.060</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="odd">
@@ -1465,24 +1465,24 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">20</td>
 <td align="right">0.007</td>
 <td align="right">0.008</td>
-<td align="right">0.008</td>
-<td align="right">0.008</td>
 <td align="right">0.009</td>
-<td align="right">0.009</td>
-<td align="right">0.167</td>
-<td align="right">3.01</td>
+<td align="right">0.010</td>
+<td align="right">0.010</td>
+<td align="right">0.044</td>
+<td align="right">0.210</td>
+<td align="right">3.03</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
 <td align="right">20</td>
 <td align="right">0.006</td>
 <td align="right">0.007</td>
-<td align="right">0.007</td>
-<td align="right">0.007</td>
-<td align="right">0.007</td>
-<td align="right">0.009</td>
-<td align="right">0.145</td>
-<td align="right">2.72</td>
+<td align="right">0.008</td>
+<td align="right">0.008</td>
+<td align="right">0.008</td>
+<td align="right">0.010</td>
+<td align="right">0.151</td>
+<td align="right">2.65</td>
 </tr>
 </tbody>
 </table>
@@ -1540,8 +1540,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.003</td>
-<td align="right">0.042</td>
-<td align="right">1.14</td>
+<td align="right">0.045</td>
+<td align="right">1.13</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
@@ -1551,21 +1551,21 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
 <td align="right">0.002</td>
-<td align="right">0.002</td>
-<td align="right">0.036</td>
+<td align="right">0.004</td>
+<td align="right">0.038</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
 <td align="right">20</td>
-<td align="right">0.009</td>
 <td align="right">0.010</td>
 <td align="right">0.010</td>
 <td align="right">0.011</td>
+<td align="right">0.011</td>
 <td align="right">0.012</td>
-<td align="right">0.019</td>
-<td align="right">0.224</td>
-<td align="right">6.00</td>
+<td align="right">0.014</td>
+<td align="right">0.223</td>
+<td align="right">5.72</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
@@ -1574,10 +1574,10 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.008</td>
 <td align="right">0.009</td>
 <td align="right">0.009</td>
-<td align="right">0.009</td>
-<td align="right">0.011</td>
-<td align="right">0.179</td>
-<td align="right">5.06</td>
+<td align="right">0.010</td>
+<td align="right">0.012</td>
+<td align="right">0.182</td>
+<td align="right">4.82</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
@@ -1587,9 +1587,9 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.005</td>
 <td align="right">0.005</td>
 <td align="right">0.006</td>
-<td align="right">0.006</td>
-<td align="right">0.108</td>
-<td align="right">3.08</td>
+<td align="right">0.007</td>
+<td align="right">0.109</td>
+<td align="right">2.81</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
@@ -1598,10 +1598,10 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
-<td align="right">0.005</td>
+<td align="right">0.004</td>
 <td align="right">0.006</td>
-<td align="right">0.086</td>
-<td align="right">2.37</td>
+<td align="right">0.081</td>
+<td align="right">2.04</td>
 </tr>
 </tbody>
 </table>
@@ -1659,21 +1659,21 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
-<td align="right">0.004</td>
 <td align="right">0.005</td>
-<td align="right">0.087</td>
-<td align="right">1.18</td>
+<td align="right">0.006</td>
+<td align="right">0.090</td>
+<td align="right">1.28</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
 <td align="right">20</td>
 <td align="right">0.003</td>
 <td align="right">0.003</td>
-<td align="right">0.004</td>
+<td align="right">0.003</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
 <td align="right">0.005</td>
-<td align="right">0.073</td>
+<td align="right">0.071</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="odd">
@@ -1685,8 +1685,8 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.011</td>
 <td align="right">0.012</td>
 <td align="right">0.013</td>
-<td align="right">0.224</td>
-<td align="right">3.04</td>
+<td align="right">0.218</td>
+<td align="right">3.25</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
@@ -1694,35 +1694,35 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.007</td>
 <td align="right">0.008</td>
 <td align="right">0.008</td>
-<td align="right">0.009</td>
+<td align="right">0.008</td>
 <td align="right">0.009</td>
 <td align="right">0.010</td>
-<td align="right">0.173</td>
-<td align="right">2.36</td>
+<td align="right">0.167</td>
+<td align="right">2.47</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
 <td align="right">20</td>
 <td align="right">0.045</td>
 <td align="right">0.047</td>
-<td align="right">0.048</td>
+<td align="right">0.047</td>
 <td align="right">0.048</td>
 <td align="right">0.049</td>
-<td align="right">0.051</td>
-<td align="right">0.965</td>
-<td align="right">13.40</td>
+<td align="right">0.053</td>
+<td align="right">0.960</td>
+<td align="right">14.20</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
 <td align="right">20</td>
 <td align="right">0.034</td>
+<td align="right">0.035</td>
 <td align="right">0.036</td>
-<td align="right">0.039</td>
-<td align="right">0.039</td>
-<td align="right">0.042</td>
-<td align="right">0.045</td>
-<td align="right">0.784</td>
-<td align="right">11.00</td>
+<td align="right">0.037</td>
+<td align="right">0.038</td>
+<td align="right">0.040</td>
+<td align="right">0.731</td>
+<td align="right">10.80</td>
 </tr>
 </tbody>
 </table>
@@ -1775,35 +1775,35 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">100</td>
 <td align="right">0</td>
 <td align="right">0</td>
+<td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">0.021</td>
-<td align="right">2.38</td>
+<td align="right">0.019</td>
+<td align="right">2.49</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
 <td align="right">100</td>
 <td align="right">0</td>
 <td align="right">0</td>
+<td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">0.022</td>
-<td align="right">2.49</td>
+<td align="right">0.020</td>
+<td align="right">2.48</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
 <td align="right">100</td>
 <td align="right">0</td>
 <td align="right">0</td>
+<td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
-<td align="right">0.000</td>
-<td align="right">0.009</td>
+<td align="right">0.008</td>
 <td align="right">1.00</td>
 </tr>
 <tr class="even">
@@ -1811,36 +1811,36 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">100</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.000</td>
+<td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.002</td>
-<td align="right">0.020</td>
-<td align="right">2.17</td>
+<td align="right">0.018</td>
+<td align="right">2.10</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
 <td align="right">100</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.000</td>
+<td align="right">0</td>
 <td align="right">0.000</td>
 <td align="right">0.000</td>
 <td align="right">0.001</td>
-<td align="right">0.038</td>
-<td align="right">4.25</td>
+<td align="right">0.034</td>
+<td align="right">4.27</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
 <td align="right">100</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0.001</td>
+<td align="right">0</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.002</td>
-<td align="right">0.057</td>
-<td align="right">6.54</td>
+<td align="right">0.053</td>
+<td align="right">6.58</td>
 </tr>
 </tbody>
 </table>
@@ -1893,59 +1893,59 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.006</td>
 <td align="right">0.006</td>
 <td align="right">0.006</td>
+<td align="right">0.006</td>
 <td align="right">0.007</td>
-<td align="right">0.007</td>
-<td align="right">0.013</td>
-<td align="right">0.661</td>
-<td align="right">11.40</td>
+<td align="right">0.008</td>
+<td align="right">0.623</td>
+<td align="right">11.90</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Hcubature</td>
 <td align="right">100</td>
 <td align="right">0.004</td>
 <td align="right">0.004</td>
-<td align="right">0.005</td>
-<td align="right">0.005</td>
-<td align="right">0.005</td>
-<td align="right">0.006</td>
-<td align="right">0.466</td>
-<td align="right">8.21</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">0.004</td>
+<td align="right">0.007</td>
+<td align="right">0.442</td>
+<td align="right">8.24</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized Pcubature</td>
 <td align="right">100</td>
-<td align="right">0.000</td>
+<td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.002</td>
-<td align="right">0.061</td>
-<td align="right">1.00</td>
+<td align="right">0.062</td>
+<td align="right">1.07</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized Pcubature</td>
 <td align="right">100</td>
 <td align="right">0.000</td>
-<td align="right">0.001</td>
+<td align="right">0.000</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.002</td>
-<td align="right">0.060</td>
-<td align="right">1.02</td>
+<td align="right">0.056</td>
+<td align="right">1.00</td>
 </tr>
 <tr class="odd">
 <td align="left">Non-vectorized cubature::cuhre</td>
 <td align="right">100</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
-<td align="right">0.002</td>
-<td align="right">0.002</td>
+<td align="right">0.001</td>
+<td align="right">0.001</td>
 <td align="right">0.002</td>
 <td align="right">0.003</td>
-<td align="right">0.164</td>
-<td align="right">2.76</td>
+<td align="right">0.149</td>
+<td align="right">2.83</td>
 </tr>
 <tr class="even">
 <td align="left">Vectorized cubature::cuhre</td>
@@ -1955,9 +1955,9 @@ knitr::kable(d, digits = 3)</code></pre>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
 <td align="right">0.001</td>
-<td align="right">0.003</td>
-<td align="right">0.134</td>
-<td align="right">2.31</td>
+<td align="right">0.008</td>
+<td align="right">0.122</td>
+<td align="right">2.16</td>
 </tr>
 </tbody>
 </table>
@@ -1991,13 +1991,13 @@ package.</p></li>
 <div id="session-info" class="section level2">
 <h2>Session Info</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 4.1.3 (2022-03-10)
-## Platform: x86_64-apple-darwin21.3.0 (64-bit)
-## Running under: macOS Monterey 12.3
+<pre><code>## R version 4.2.1 (2022-06-23)
+## Platform: x86_64-apple-darwin21.5.0 (64-bit)
+## Running under: macOS Monterey 12.5
 ## 
 ## Matrix products: default
 ## BLAS:   /usr/local/Cellar/openblas/0.3.20/lib/libopenblasp-r0.3.20.dylib
-## LAPACK: /usr/local/Cellar/r/4.1.3/lib/R/lib/libRlapack.dylib
+## LAPACK: /usr/local/Cellar/r/4.2.1/lib/R/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -2006,15 +2006,15 @@ package.</p></li>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] mvtnorm_1.1-3    cubature_2.0.4.4 benchr_0.2.5    
+## [1] mvtnorm_1.1-3    cubature_2.0.4.5 benchr_0.2.5    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.8.3       digest_0.6.29      R6_2.5.1           jsonlite_1.8.0    
-##  [5] magrittr_2.0.2     evaluate_0.15      highr_0.9          stringi_1.7.6     
-##  [9] rlang_1.0.2        cli_3.2.0          jquerylib_0.1.4    bslib_0.3.1       
-## [13] rmarkdown_2.13     tools_4.1.3        stringr_1.4.0      RcppProgress_0.4.2
-## [17] xfun_0.30          yaml_2.3.5         fastmap_1.1.0      compiler_4.1.3    
-## [21] htmltools_0.5.2    knitr_1.37         sass_0.4.0</code></pre>
+##  [1] Rcpp_1.0.9         digest_0.6.29      R6_2.5.1           jsonlite_1.8.0    
+##  [5] magrittr_2.0.3     evaluate_0.15      highr_0.9          stringi_1.7.8     
+##  [9] rlang_1.0.4        cachem_1.0.6       cli_3.3.0          jquerylib_0.1.4   
+## [13] bslib_0.4.0        rmarkdown_2.14     tools_4.2.1        stringr_1.4.0     
+## [17] RcppProgress_0.4.2 xfun_0.31          yaml_2.3.5         fastmap_1.1.0     
+## [21] compiler_4.2.1     htmltools_0.5.3    knitr_1.39         sass_0.4.2</code></pre>
 </div>
 
 

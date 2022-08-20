@@ -15,8 +15,8 @@ emmeans(nutr.lm, ~ group * race, calc = c(n = ".wgt."))
 with(nutrition, table(race, age))
 
 ## -----------------------------------------------------------------------------
-summary(emmeans(nutr.lm, pairwise ~ group | race, at = list(age = "3")), 
-    by = NULL)
+emmeans(nutr.lm, pairwise ~ group | race, at = list(age = "3")) |>
+    summary(by = NULL)
 
 ## -----------------------------------------------------------------------------
 framing <- mediation::framing 
@@ -39,11 +39,11 @@ emmip(framing.glm, treat ~ educ | gender, type = "response",
 
 ## ----eval = FALSE-------------------------------------------------------------
 #  emmeans(model, "A", weights = "outer")
-#  emmeans(emmeans(model, c("A", "B"), weights = "prop"),  weights = "prop")
+#  emmeans(model, c("A", "B"), weights = "prop") |>  emmeans(weights = "prop")
 
 ## ----message = FALSE----------------------------------------------------------
-sapply(c("equal", "prop", "outer", "cells", "flat"), function(w)
-    predict(emmeans(nutr.lm, ~ race, weights = w)))
+sapply(c("equal", "prop", "outer", "cells", "flat"), \(w)
+    emmeans(nutr.lm, ~ race, weights = w) |> predict())
 
 ## -----------------------------------------------------------------------------
 mtcars.lm <- lm(mpg ~ factor(cyl)*am + disp + hp + drat + log(wt) + vs + 
@@ -73,8 +73,8 @@ emmeans(mtcars.lm, ~ gear | am, non.nuis = quote(all.vars(specs)))
 ref_grid(mtcars.lm, rg.limit = 200)
 
 ## -----------------------------------------------------------------------------
-summary(emmeans(nutr.lm, pairwise ~ group | race, submodel = ~ age + group*race), 
-        by = NULL)
+emmeans(nutr.lm, pairwise ~ group | race, submodel = ~ age + group*race) |> 
+        summary(by = NULL)
 
 ## -----------------------------------------------------------------------------
 emmeans(nutr.lm, ~ group * race, submodel = "minimal")

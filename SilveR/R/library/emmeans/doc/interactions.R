@@ -37,8 +37,8 @@ coef(IC_st)
 test(IC_st, joint = TRUE)
 
 ## -----------------------------------------------------------------------------
-contrast(emmeans(noise.lm, ~ size*type*side),
-         interaction = c("poly", "consec", "consec"))
+emmeans(noise.lm, ~ size*type*side) |>
+    contrast(interaction = c("poly", "consec", "consec"))
 
 ## -----------------------------------------------------------------------------
 joint_tests(noise.lm)

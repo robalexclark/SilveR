@@ -1,5 +1,14 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# tibble 3.1.8
+
+## Documentation
+
+- Better reporting for error calls from `vec_as_location()` (#1237).
+
+- Mention `median()` in Recovery section of `vignette("numbers")` (#1197).
+
+
 # tibble 3.1.7
 
 ## Breaking change

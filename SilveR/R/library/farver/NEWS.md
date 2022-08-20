@@ -1,3 +1,8 @@
+# farver 2.1.1
+
+* Added input checking to a range of functions to guard against segfaults with 
+  empty input (#31)
+
 # farver 2.1.0
 
 * Added support for OKLab and OKLch (polar version of OKLab) colour spaces

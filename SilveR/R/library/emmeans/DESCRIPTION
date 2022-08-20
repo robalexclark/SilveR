@@ -1,18 +1,19 @@
 Package: emmeans
 Type: Package
 Title: Estimated Marginal Means, aka Least-Squares Means
-Version: 1.7.5
-Date: 2022-06-21
+Version: 1.8.0
+Date: 2022-08-06
 Authors@R: c(person("Russell V.", "Lenth", role = c("aut", "cre", "cph"), 
     email = "russell-lenth@uiowa.edu"),
     person("Paul", "Buerkner", role = "ctb"),
     person("Maxime", "Herve", role = "ctb"),
+    person("Maarten", "Jung", role = "ctb"),
     person("Jonathon", "Love", role = "ctb"),
     person("Fernando", "Miguez", role = "ctb"),
     person("Hannes", "Riebl", role = "ctb"),
     person("Henrik", "Singmann", role = "ctb"))
-Depends: R (>= 3.5.0)
-Imports: estimability (>= 1.3), graphics, methods, numDeriv, stats,
+Depends: R (>= 4.1.0)
+Imports: estimability (>= 1.4.1), graphics, methods, numDeriv, stats,
         utils, mvtnorm, xtable (>= 1.8-2)
 Suggests: bayesplot, bayestestR, biglm, brms, car, coda (>= 0.17),
         ggplot2, lattice, logspline, mediation, mgcv, multcomp,
@@ -37,15 +38,16 @@ Encoding: UTF-8
 RoxygenNote: 7.2.0
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-06-21 23:10:27 UTC; rlenth
+Packaged: 2022-08-05 19:48:02 UTC; rlenth
 Author: Russell V. Lenth [aut, cre, cph],
   Paul Buerkner [ctb],
   Maxime Herve [ctb],
+  Maarten Jung [ctb],
   Jonathon Love [ctb],
   Fernando Miguez [ctb],
   Hannes Riebl [ctb],
   Henrik Singmann [ctb]
 Maintainer: Russell V. Lenth <russell-lenth@uiowa.edu>
 Repository: CRAN
-Date/Publication: 2022-06-22 07:40:16 UTC
-Built: R 4.1.3; ; 2022-06-24 08:06:03 UTC; windows
+Date/Publication: 2022-08-05 20:40:02 UTC
+Built: R 4.1.3; ; 2022-08-15 13:52:24 UTC; windows

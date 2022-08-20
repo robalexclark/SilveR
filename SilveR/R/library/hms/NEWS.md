@@ -1,5 +1,10 @@
 <!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
 
+# hms 1.1.2
+
+- Re-rendered documentation for compatibility with R-devel.
+
+
 # hms 1.1.1
 
 - Avoid blanket import for lifecycle package for compatibility with upcoming rlang.

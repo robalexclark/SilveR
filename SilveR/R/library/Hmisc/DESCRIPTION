@@ -1,6 +1,6 @@
 Package: Hmisc
-Version: 4.7-0
-Date: 2022-04-12
+Version: 4.7-1
+Date: 2022-08-13
 Title: Harrell Miscellaneous
 Authors@R: 
     c(person(given = "Frank E",
@@ -30,13 +30,13 @@ License: GPL (>= 2)
 LazyLoad: Yes
 URL: https://hbiostat.org/R/Hmisc/
 Encoding: UTF-8
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2022-04-18 22:07:32 UTC; harrelfe
+Packaged: 2022-08-13 16:19:03 UTC; harrelfe
 Author: Frank E Harrell Jr [aut, cre] (<https://orcid.org/0000-0002-8271-5493>),
   Charles Dupont [ctb] (contributed several functions and maintains latex
     functions)
 Repository: CRAN
-Date/Publication: 2022-04-19 01:14:27 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-04-24 12:54:55 UTC; windows
+Date/Publication: 2022-08-15 08:30:07 UTC
+Built: R 4.1.3; x86_64-w64-mingw32; 2022-08-15 10:04:48 UTC; windows
 Archs: i386, x64

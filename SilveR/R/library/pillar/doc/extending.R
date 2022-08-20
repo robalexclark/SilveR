@@ -76,6 +76,28 @@ tbl_format_footer.extra_info <- function(x, setup, ...) {
 example_tbl("extra_info")
 
 ## -----------------------------------------------------------------------------
+ctl_new_rowid_pillar.pillar_roman <- function(controller, x, width, ...) {
+  out <- NextMethod()
+  rowid <- utils::as.roman(seq_len(nrow(x)))
+  width <- max(nchar(as.character(rowid)))
+  new_pillar(
+    list(
+      title = out$title,
+      type = out$type,
+      data = pillar_component(
+        new_pillar_shaft(list(row_ids = rowid),
+          width = width,
+          class = "pillar_rif_shaft"
+        )
+      )
+    ),
+    width = width
+  )
+}
+
+example_tbl("pillar_roman")
+
+## -----------------------------------------------------------------------------
 ctl_new_pillar.pillar_rule <- function(controller, x, width, ..., title = NULL) {
   out <- NextMethod()
   new_pillar(list(
@@ -123,7 +145,7 @@ ctl_new_pillar_list.hide_df <- function(controller, x, width, ..., title = NULL)
   if (!is.data.frame(x)) {
     return(NextMethod())
   }
-  
+
   if (width < 8) {
     return(NULL)
   }

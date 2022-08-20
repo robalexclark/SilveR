@@ -1,8 +1,80 @@
+# pkgload 1.3.0
+
+* `load_all()` now calls `rlang::check_installed()` to prompt whether
+  to install missing packages.
+
+  Outdated and missing dependencies are installed using pak if
+  installed. If not, the remotes package is used if installed.
+  Otherwise `install.packages()` is used as a last resort but this
+  method does not support Remotes fields.
+
+* `load_all()` gains an `attach` argument set to `TRUE` by default (#209).
+  If set to `FALSE`, `load_all()` creates a new namespace but doesn't
+  create a package environment on the search path. In this case, it is
+  more similar to `loadNamespace()` than to `library()`.
+
+* Improved the way help pages are displayed in RStudio. This makes the
+  behaviour within and outside RStudio consistent and fixes issues
+  with Rd macros (#120).
+
+* `unregister()` is now exported. This is a gentler version of
+  `unload()` which removes the package from the search path,
+  unregisters methods, and unregisters the namespace. However it
+  doesn't try to unload the namespace or its DLL so that dangling
+  references keep working.
+
+* User `onLoad` hooks are now run after exports have been
+  populated. This allows the hook to use exported functions.
+
+* The loaded namespace is now locked just before user `onLoad` hooks
+  are run. This better reproduced the namespace sealing behaviour of
+  regular loading.
+
+  The package environment environment is now locked as well before
+  both the user and package `onAttach` hooks are run.
+
+* Added support for loading a .so or .dll file from the `inst`
+  folder via a new `library.dynam()` shim (@ethanplunkett, #48).
+
+* The `system.file()` shim now fails if you supply a path that starts
+  with `inst` to better reproduce the behaviour with installed
+  packages (#104).
+
+* `load_all()` now imports its dependencies lazily to avoid parallel
+  installation issues (#89).
+
+* Unknown Rd macros no longer trigger a warning when building the
+  package topic index (#119).
+
+* `load_all(compile = TRUE)` now forces a full recompilation (#93).
+
+* The advice about running `rm()` to remove conflicts with objects in
+  the global environment is now clickable in RStudio (#199).
+
+* New `is_loading()` predicate to detect whether `load_all()` is
+  currently running (#134).
+
+* `.dynLibs()` is no longer emptied when package with no DLL is
+  unloaded (#176).
+
+* The `?` shim no longer interprets `?"/"` as a path (#198).
+
+* rstudioapi is no longer a hard dependency of pkgload (#187).
+
+* Errors thrown in user hooks are now demoted to a warning
+  condition. Previously they were demoted using `try()`, making it
+  harder to debug them.
+
+* `load_all()` correctly re-loads modified translations, avoiding
+  the usual gettext behaviour.
+
+
 # pkgload 1.2.4
 
 * Lionel Henry is now the maintainer.
 
 * `load_all()` automatically registers package translations, if found.
+
 
 # pkgload 1.2.3
 
@@ -11,6 +83,7 @@
 * `load_all()` now restores S3 methods registered by third party packages (#163).
 
 * `load_dll()` will now preserve the DLL name when loading instead of always using the package name. This allows packages to include DLL's with different names (#162, @dfalbel).
+
 
 # pkgload 1.2.2
 
@@ -27,6 +100,7 @@
 * `load_all()` no longer does a comprehensive check on the `DESCRIPTION` file when loading, instead just checking that it exists and starts with Package (#149, @malcolmbarrett)
 
 * `unload()` no longer warns when it can't unload a namespace.
+
 
 # pkgload 1.2.0
 
@@ -63,6 +137,7 @@
 
 * If `load_all()` attaches testthat, it automatically suppresses conflicts.
 
+
 # pkgload 1.1.0
 
 * `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
@@ -72,6 +147,7 @@
 * `run_example()` arguments `run` and `test` are deprecated in favor of the (hopefully) more clear `run_dontrun` and `run_donttest` (#107).
 
 * Internal fixes for compatibility with the future 4.1.0 release.
+
 
 # pkgload 1.0.2
 
@@ -83,6 +159,7 @@
 * `load_all()` gains a `compile` argument which controls more finely whether to
   compile the code or not. The `recompile` argument is now deprecated and will
   be removed in a future version of pkgload.
+
 
 # pkgload 1.0.1
 

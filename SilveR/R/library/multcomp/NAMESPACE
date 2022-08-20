@@ -8,7 +8,7 @@ importFrom(codetools, walkCode, makeCodeWalker)
 importFrom("graphics", "abline", "axis", "box", "boxplot", "legend",
            "mosaicplot", "plot", "points", "segments", "title")
 importFrom("stats", "aggregate", "as.formula", "coef", "confint", "cov2cor",
-           "delete.response", "df.residual", "fitted",
+           "delete.response", "df.residual", "fitted", "formula",
            "get_all_vars", "model.frame", "model.matrix", "model.weights", "p.adjust",
            "p.adjust.methods", "pchisq", "pf", "pnorm", "predict",
            "printCoefmat", "pt", "terms", "vcov", "xtabs", "na.exclude")

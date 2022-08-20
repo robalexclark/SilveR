@@ -86,6 +86,7 @@ same_path               Test if two paths are the same after they are
 session_info            An alternative to sessionInfo() to print
                         session information
 set_envvar              Set environment variables
+shrink_images           Shrink images to a maximum width
 split_lines             Split a character vector by line breaks
 split_source            Split source lines into complete expressions
 strict_list             Strict lists

@@ -63,8 +63,12 @@ num(transf, sigfig = 3)
 x <- num(c(1, 2, 4), notation = "eng")
 var(x)
 
+## ----numbers-16-a, error = TRUE-----------------------------------------------
+median(x)
+
 ## ----numbers-16a--------------------------------------------------------------
 num(var(x), notation = "eng")
+num(median(as.numeric(x)), notation = "eng")
 
 ## ----numbers-16b--------------------------------------------------------------
 var_ <- function(x, ...) {

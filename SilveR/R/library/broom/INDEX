@@ -92,6 +92,7 @@ glance.Arima            Glance at a(n) Arima object
 glance.Gam              Glance at a(n) Gam object
 glance.Mclust           Glance at a(n) Mclust object
 glance.aareg            Glance at a(n) aareg object
+glance.anova            Glance at a(n) anova object
 glance.aov              Glance at a(n) lm object
 glance.betamfx          Glance at a(n) betamfx object
 glance.betareg          Glance at a(n) betareg object

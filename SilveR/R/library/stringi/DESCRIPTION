@@ -1,7 +1,7 @@
 Package: stringi
-Version: 1.7.6
-Date: 2021-11-29
-Title: Character String Processing Facilities
+Version: 1.7.8
+Date: 2022-07-11
+Title: Fast and Portable Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
     expressions or the 'Unicode' collation algorithm), random string generation,
@@ -10,7 +10,11 @@ Description: A collection of character string/text/natural language
     and many more. They are fast, consistent, convenient, and -
     thanks to 'ICU' (International Components for Unicode) -
     portable across all locales and platforms.
-URL: https://stringi.gagolewski.com/ https://icu.unicode.org/
+    Documentation about 'stringi' is provided
+    via its website at <https://stringi.gagolewski.com/> and
+    the paper by Gagolewski (2022, <doi:10.18637/jss.v103.i02>).
+URL: https://stringi.gagolewski.com/,
+        https://github.com/gagolews/stringi, https://icu.unicode.org/
 BugReports: https://github.com/gagolews/stringi/issues
 SystemRequirements: C++11, ICU4C (>= 55, optional)
 Type: Package
@@ -25,9 +29,8 @@ Maintainer: Marek Gagolewski <marek@gagolewski.com>
 RoxygenNote: 7.1.2
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2021-11-28 23:34:08 UTC; gagolews
-License_is_FOSS: yes
+Packaged: 2022-07-11 01:59:34 UTC; gagolews
 Repository: CRAN
-Date/Publication: 2021-11-29 09:00:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2021-12-03 10:34:06 UTC; windows
+Date/Publication: 2022-07-11 08:10:02 UTC
+Built: R 4.1.2; x86_64-w64-mingw32; 2022-08-20 09:39:37 UTC; windows
 Archs: i386, x64

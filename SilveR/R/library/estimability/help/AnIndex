@@ -10,6 +10,8 @@ eupdate	epredict.lm
 eupdate.lm	epredict.lm
 is.estble	nonest.basis
 nonest.basis	nonest.basis
+nonest.basis.default	nonest.basis
 nonest.basis.lm	nonest.basis
 nonest.basis.matrix	nonest.basis
 nonest.basis.qr	nonest.basis
+nonest.basis.svd	nonest.basis

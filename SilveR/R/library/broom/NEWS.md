@@ -1,3 +1,39 @@
+# broom 1.0.0
+
+broom 1.0.0 is the first "production" release of the broom package, and includes a number of notable changes to both functionality and governance.
+
+As of this release, the broom team will be following a set of guidelines that clarify the scope of further development on the package. Given the package's wide use and long history, these guidelines _prioritize backward compatibility_ over internal consistency and completeness. You can read those guidelines [here](https://broom.tidymodels.org/articles/)!
+
+We've also made notable changes to error handling in this release:
+
+* Adds minimal ellipsis checking to warn on commonly misspecified arguments passed through ellipses. Notably:
+    + `tidy()` methods will now warn when supplied an `exponentiate` argument if it will be ignored.
+    + `augment()` methods will now warn when supplied a `newdata` argument if it will be ignored.
+* The warning regarding tidiers only maintained via dispatch to `lm` and `glm`
+  is now displayed only once per session, per unique dispatch. That is, 
+  if a `class_a` object is tidied using a `(g)lm` method, broom will not
+  warn when tidying `class_a` objects for the rest of the session, but if a
+  `class_b` object is tidied using a `(g)lm` method in the same session, broom
+  will warn again (#1101).
+
+Other fixes and improvements:
+
+* Add `exponentiate` argument to `tidy.boot()` (#1039).
+* Update in `tidy.htest()` converting matrix-columns to vector-columns (#1081).
+* Address failures in `tidy.glht()` with `conf.int = TRUE` (#1103).
+* Address failures in `tidy.zoo()` when input data does not have `colnames` 
+  (#1080).
+* Transition tidiers for bivariate linear or spline-based interpolation---using
+  list tidiers to interface with objects from the akima package is now 
+  considered off-label. See the interp package for a FOSS alternative.
+* Address failures in `tidy.svyolr()` when `p.values = TRUE`. Instead of aliasing
+  `tidy.polr()` directly, `tidy.svyolr()` lightly wraps that method and
+  warns if `p.values` is supplied (#1107).
+* Adds a `term` column and introduces support for `car::lht()` output in
+  `tidy.anova()` (#1106 by `@grantmcdermott`).
+* Adds a dedicated `glance.anova` method (which previously dispatched to the    
+  deprecated `glance.data.frame()` tidier, #1106 by `@grantmcdermott`).
+
 # broom 0.8.0
 
 This update makes significant improvements to documentation, fixes a number of bugs, and brings the development flow of the package up to date with other packages in the tidymodels.
@@ -8,7 +44,7 @@ In the big picture, this release:
      - All tidiers now have example code demonstrating usage in their documentation. Tidiers for base packages as well as selected others also include sample code for visualization of results with ggplot2.
      - Code examples in the documentation largely now follow consistent style---these changes were made largely to reflect the tidyverse style guide, addressing spacing, object naming, and commenting, among other things.
      - Examples previously marked with `\dontrun` or `\donttest` have been workshopped to run reliably.
-* Clarifies errors and warnings for deprecated and un-maintained tidiers.
+* Clarifies errors and warnings for deprecated and unmaintained tidiers.
 * Ensures that tidiers are placed in files named according to the model-supplying package rather than the model object class for easier navigability of the source code.
 
 ### Bug fixes and other improvements
@@ -649,7 +685,6 @@ supportive and insightful and I look forward to working you all again!
 [@ellessenne](https://github.com/ellessenne),
 [@erleholgersen](https://github.com/erleholgersen),
 [@ethchr](https://github.com/ethchr),
-[@Hong-Revo](https://github.com/Hong-Revo),
 [@huftis](https://github.com/huftis),
 [@IndrajeetPatil](https://github.com/IndrajeetPatil),
 [@jacob-long](https://github.com/jacob-long),

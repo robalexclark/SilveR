@@ -126,6 +126,7 @@ env_browse	env_browse
 env_bury	env_bury
 env_cache	env_cache
 env_clone	env_clone
+env_coalesce	env_clone
 env_depth	env_depth
 env_get	env_get
 env_get_list	env_get
@@ -371,6 +372,7 @@ nse-inject	topic-inject
 ns_env	ns_env
 ns_env_name	ns_env
 ns_imports_env	ns_env
+ns_registry_env	ns_registry_env
 obj_address	obj_address
 on_load	on_load
 on_package_load	on_load
@@ -414,6 +416,8 @@ quo_text	quo_label
 raw_deparse_str	raw_deparse_str
 rep_along	rep_along
 rep_named	rep_along
+reset_message_verbosity	abort
+reset_warning_verbosity	abort
 return_from	return_from
 rlang	rlang-package
 rlang_backtrace_on_error	rlang_backtrace_on_error

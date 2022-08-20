@@ -1,6 +1,10 @@
+Changes in Version 0.6-30
+
+ o Replace non-free 'tripack' package functions by 'interp'.
+
 Changes in Version 0.6-18
 
- o combineLimits() fixed to work with empty panels
+ o combineLimits() fixed to work with empty panels.
 
 Changes in Version 0.6-15
 

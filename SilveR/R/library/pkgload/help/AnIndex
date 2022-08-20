@@ -1,3 +1,4 @@
+pkgload-package	pkgload-package
 ?	help
 check_dep_version	check_dep_version
 check_suggested	check_suggested
@@ -10,6 +11,7 @@ help	help
 imports_env	imports_env
 inst	inst
 is_dev_package	is_dev_package
+is_loading	load_all
 load_all	load_all
 load_code	load_code
 load_data	load_data
@@ -20,6 +22,7 @@ packages	packages
 package_file	package_file
 parse_deps	parse_deps
 parse_ns_file	parse_ns_file
+pkgload	pkgload-package
 pkgtest	pkgtest
 pkg_desc	packages
 pkg_env	pkg_env
@@ -35,3 +38,4 @@ shim_question	help
 shim_system.file	system.file
 system.file	system.file
 unload	unload
+unregister	unload

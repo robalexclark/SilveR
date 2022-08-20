@@ -23,6 +23,8 @@ interpolate             Interpolate missing values
 learn                   Estimate model parameters.
 min_grid                Determine the minimum set of model fits
 prune                   Prune or reduce an object
+rank_results            Compute relative rankings of a collection of
+                        objects
 refit                   Refitting models
 required_pkgs           Determine packages required by objects
 setops                  Set operations

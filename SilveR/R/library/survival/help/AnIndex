@@ -54,6 +54,7 @@ coxph.getdata	coxph
 coxph.object	coxph.object
 coxph.penalty	coxph
 coxph.wtest	coxph.wtest
+coxphms.object	coxphms.object
 coxsurv.fit	coxsurv.fit
 cracks	reliability
 diabetic	diabetic

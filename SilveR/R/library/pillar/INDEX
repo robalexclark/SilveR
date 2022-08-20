@@ -1,5 +1,8 @@
 align                   Alignment helper
-ctl_new_pillar          Customize your tibble subclass
+ctl_new_pillar          Customize the appearance of simple pillars in
+                        your tibble subclass
+ctl_new_pillar_list     Customize the appearance of compound pillars in
+                        your tibble subclass
 dim_desc                Format dimensions
 format_glimpse          Format a vector for horizontal printing
 format_type_sum         Format a type summary

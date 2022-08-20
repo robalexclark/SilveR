@@ -547,7 +547,7 @@ what’s really executed, further examples omit this output.</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `c(&quot;n&quot;, &quot;c&quot;)` has size 2 but
+#&gt; ✖ Subscript `c(&quot;n&quot;, &quot;c&quot;)` has size 2 but
 #&gt; must be size 1.</code></pre>
 </div>
 </td>
@@ -563,7 +563,7 @@ what’s really executed, further examples omit this output.</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `TRUE` has the wrong type
+#&gt; ✖ Subscript `TRUE` has the wrong type
 #&gt; `logical`.
 #&gt; ℹ It must be numeric or character.</code></pre>
 </div>
@@ -583,7 +583,7 @@ what’s really executed, further examples omit this output.</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `mean` has the wrong type
+#&gt; ✖ Subscript `mean` has the wrong type
 #&gt; `function`.
 #&gt; ℹ It must be numeric or character.</code></pre>
 </div>
@@ -606,7 +606,7 @@ non-integers throw an error:</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `NA` can&#39;t be `NA`.</code></pre>
+#&gt; ✖ Subscript `NA` can&#39;t be `NA`.</code></pre>
 </div>
 </td>
 </tr>
@@ -621,7 +621,7 @@ non-integers throw an error:</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `NA_character_` can&#39;t be
+#&gt; ✖ Subscript `NA_character_` can&#39;t be
 #&gt; `NA`.</code></pre>
 </div>
 </td>
@@ -637,7 +637,7 @@ non-integers throw an error:</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `NA_integer_` can&#39;t be `NA`.</code></pre>
+#&gt; ✖ Subscript `NA_integer_` can&#39;t be `NA`.</code></pre>
 </div>
 </td>
 </tr>
@@ -656,7 +656,7 @@ non-integers throw an error:</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `-1` has value -1 but must
+#&gt; ✖ Subscript `-1` has value -1 but must
 #&gt; be a positive location.</code></pre>
 </div>
 </td>
@@ -690,7 +690,7 @@ non-integers throw an error:</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `1.5` has the wrong type
+#&gt; ✖ Subscript `1.5` has the wrong type
 #&gt; `double`.
 #&gt; ℹ It must be numeric or character.</code></pre>
 </div>
@@ -707,7 +707,7 @@ non-integers throw an error:</p>
 <pre><code>#&gt; Error in `vectbl_as_col_location2()`:
 #&gt; ! Must extract column with a single
 #&gt; valid subscript.
-#&gt; x Subscript `Inf` has the wrong type
+#&gt; ✖ Subscript `Inf` has the wrong type
 #&gt; `double`.
 #&gt; ℹ It must be numeric or character.</code></pre>
 </div>
@@ -1043,7 +1043,7 @@ numbers.</p>
 <pre><code>#&gt; Error in `vectbl_as_row_location()`:
 #&gt; ! Must subset rows with a valid
 #&gt; subscript vector.
-#&gt; x Subscript `mean` has the wrong type
+#&gt; ✖ Subscript `mean` has the wrong type
 #&gt; `function`.
 #&gt; ℹ It must be logical, numeric, or
 #&gt; character.</code></pre>
@@ -1064,7 +1064,7 @@ numbers.</p>
 <pre><code>#&gt; Error in `vectbl_as_row_location()`:
 #&gt; ! Must subset rows with a valid
 #&gt; subscript vector.
-#&gt; x Subscript `list(1)` has the wrong type
+#&gt; ✖ Subscript `list(1)` has the wrong type
 #&gt; `list`.
 #&gt; ℹ It must be logical, numeric, or
 #&gt; character.</code></pre>
@@ -1150,7 +1150,7 @@ numbers.</p>
 #&gt; subscript vector.
 #&gt; ℹ Logical subscripts must match the size
 #&gt; of the indexed input.
-#&gt; x Input has size 4 but subscript
+#&gt; ✖ Input has size 4 but subscript
 #&gt; `c(TRUE, FALSE)` has size 2.</code></pre>
 </div>
 </td>
@@ -1292,7 +1292,8 @@ works for list, data frame, and matrix columns.</p>
 <span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1 e     &lt;dbl [1]&gt;     0     1</span></span>
 <span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1 e     &lt;dbl [1]&gt;     0     0</span></span>
 <span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     1 e     &lt;dbl [1]&gt;     0     0</span></span>
-<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 1 more variable: m[3:4] &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 1 more variable: m[3:4] &lt;dbl&gt;</span></span>
+<span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span></code></pre></div>
 </td>
 </tr>
 <tr style="vertical-align:top">
@@ -1313,7 +1314,8 @@ works for list, data frame, and matrix columns.</p>
 <span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    NA f     &lt;int [2]&gt;     1     0</span></span>
 <span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     3 g     &lt;int [3]&gt;     1     0</span></span>
 <span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    NA h     &lt;chr [1]&gt;     1     0</span></span>
-<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 1 more variable: m[3:4] &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 1 more variable: m[3:4] &lt;dbl&gt;</span></span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span></code></pre></div>
 </td>
 </tr>
 </tbody>
@@ -1380,7 +1382,7 @@ right hand side, with name repair if needed.</p>
 #&gt; ! Can&#39;t assign to columns beyond the end
 #&gt; with non-consecutive locations.
 #&gt; ℹ Input has size 3.
-#&gt; x Subscript `5` contains non-consecutive
+#&gt; ✖ Subscript `5` contains non-consecutive
 #&gt; location 5.</code></pre>
 </div>
 </td>
@@ -1690,7 +1692,7 @@ that order of precedence).</p>
 #&gt; ! Can&#39;t assign to columns beyond the end
 #&gt; with non-consecutive locations.
 #&gt; ℹ Input has size 3.
-#&gt; x Subscript `5` contains non-consecutive
+#&gt; ✖ Subscript `5` contains non-consecutive
 #&gt; location 5.</code></pre>
 </div>
 </td>
@@ -1756,7 +1758,7 @@ assigned.</p>
 #&gt; ! Assigned data `4` must be compatible
 #&gt; with existing data.
 #&gt; ℹ Error occurred for column `c`.
-#&gt; x Can&#39;t convert &lt;double&gt; to &lt;character&gt;.</code></pre>
+#&gt; ✖ Can&#39;t convert &lt;double&gt; to &lt;character&gt;.</code></pre>
 </div>
 </td>
 </tr>
@@ -1802,7 +1804,7 @@ error is thrown.</p>
 #&gt; ! Assigned data `matrix(6:1, ncol = 2)`
 #&gt; must be compatible with existing data.
 #&gt; ℹ Error occurred for column `c`.
-#&gt; x Can&#39;t convert &lt;integer&gt; to
+#&gt; ✖ Can&#39;t convert &lt;integer&gt; to
 #&gt; &lt;character&gt;.</code></pre>
 </div>
 </td>
@@ -2172,8 +2174,8 @@ and <code>?vec_proxy</code> for details.</p>
 <pre><code>#&gt; Error:
 #&gt; ! Assigned data `tbl[1:2, ]` must be
 #&gt; compatible with row subscript `2:4`.
-#&gt; x 3 rows must be assigned.
-#&gt; x Element 1 of assigned data has 2 rows.
+#&gt; ✖ 3 rows must be assigned.
+#&gt; ✖ Element 1 of assigned data has 2 rows.
 #&gt; ℹ Only vectors of size 1 are recycled.</code></pre>
 </div>
 </td>
@@ -2236,7 +2238,7 @@ supported, without warning.</p>
 #&gt; ! Can&#39;t assign to rows beyond the end
 #&gt; with non-consecutive locations.
 #&gt; ℹ Input has size 4.
-#&gt; x Subscript `6` contains non-consecutive
+#&gt; ✖ Subscript `6` contains non-consecutive
 #&gt; location 6.</code></pre>
 </div>
 </td>
@@ -2352,7 +2354,7 @@ of existing columns.</p>
 #&gt; ! Assigned data `tbl[1:2, 2]` must be
 #&gt; compatible with existing data.
 #&gt; ℹ Error occurred for column `n`.
-#&gt; x Can&#39;t convert &lt;character&gt; to
+#&gt; ✖ Can&#39;t convert &lt;character&gt; to
 #&gt; &lt;integer&gt;.</code></pre>
 </div>
 </td>
@@ -2379,7 +2381,7 @@ of existing columns.</p>
 #&gt; ! Assigned data `tbl[1:2, 3]` must be
 #&gt; compatible with existing data.
 #&gt; ℹ Error occurred for column `c`.
-#&gt; x Can&#39;t convert &lt;list&gt; to &lt;character&gt;.</code></pre>
+#&gt; ✖ Can&#39;t convert &lt;list&gt; to &lt;character&gt;.</code></pre>
 </div>
 </td>
 </tr>
@@ -2405,9 +2407,9 @@ of existing columns.</p>
 #&gt; ! Data frame must have names.
 #&gt; ℹ In file &#39;type-data-frame.c&#39; at line
 #&gt; 683.
-#&gt; ℹ This is an internal error in the
-#&gt; rlang package, please report it to
-#&gt; the package authors.</code></pre>
+#&gt; ℹ This is an internal error in the vctrs
+#&gt; package, please report it to the package
+#&gt; authors.</code></pre>
 </div>
 </td>
 </tr>
@@ -2432,7 +2434,7 @@ of existing columns.</p>
 #&gt; ! Assigned data `tbl2[1:2, 2]` must be
 #&gt; compatible with existing data.
 #&gt; ℹ Error occurred for column `tb`.
-#&gt; x Can&#39;t convert &lt;double[,4]&gt; to
+#&gt; ✖ Can&#39;t convert &lt;double[,4]&gt; to
 #&gt; &lt;tbl_df&gt;.</code></pre>
 </div>
 </td>
@@ -2449,7 +2451,8 @@ of existing columns.</p>
 <span id="cb226-6"><a href="#cb226-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    NA f     &lt;int [2]&gt;     1     1</span></span>
 <span id="cb226-7"><a href="#cb226-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     3 g     &lt;int [3]&gt;    NA    NA</span></span>
 <span id="cb226-8"><a href="#cb226-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4    NA h     &lt;chr [1]&gt;     0     0</span></span>
-<span id="cb226-9"><a href="#cb226-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 1 more variable: m[3:4] &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb226-9"><a href="#cb226-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 1 more variable: m[3:4] &lt;dbl&gt;</span></span>
+<span id="cb226-10"><a href="#cb226-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # ℹ Use `colnames()` to see all variable names</span></span></code></pre></div>
 </td>
 </tr>
 </tbody>
