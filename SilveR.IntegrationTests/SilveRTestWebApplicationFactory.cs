@@ -11,7 +11,7 @@ namespace SilveR.IntegrationTests
 {
     public class SilveRTestWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {
-        public Dictionary<int, string> SheetNames { get; private set; }
+        public Dictionary<int, string> SheetNames { get; }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -34,6 +34,15 @@ namespace SilveR.IntegrationTests
             DbContextOptionsBuilder<SilveRContext> optionsBuilder = new DbContextOptionsBuilder<SilveRContext>();
             optionsBuilder.UseSqlite("Data Source=SilveR.db");
             SilveRContext silverContext = new SilveRContext(optionsBuilder.Options);
+
+            if (silverContext.UserOptions.Single().GraphicsHeightJitter != 0 || silverContext.UserOptions.Single().GraphicsWidthJitter != 0)
+            {
+                silverContext.UserOptions.Single().GraphicsHeightJitter = 0;
+                silverContext.UserOptions.Single().GraphicsWidthJitter = 0;
+
+                silverContext.SaveChanges();
+            }
+
 
             SheetNames = silverContext.Datasets.Select(x => new KeyValuePair<int, string>(x.DatasetID, x.DatasetName)).ToDictionary(x => x.Key, x => x.Value);
         }

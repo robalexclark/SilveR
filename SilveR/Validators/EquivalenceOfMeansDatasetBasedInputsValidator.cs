@@ -1,7 +1,6 @@
 ﻿using SilveR.StatsModels;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace SilveR.Validators
 {
@@ -63,11 +62,39 @@ namespace SilveR.Validators
                 return ValidationInfo;
             }
 
+
+            if (mcVariables.EquivalenceBoundsType == EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel.EquivalenceBoundsOption.Percentage && String.IsNullOrEmpty(mcVariables.ControlGroup))
+            {
+                ValidationInfo.AddErrorMessage("You have selected % change from control as the acceptance bound, but as you have not defined the control group it is not possible to calculate the % change.");
+                return ValidationInfo;
+            }
+
+            if (mcVariables.LowerBoundAbsolute > mcVariables.UpperBoundAbsolute)
+            {
+                ValidationInfo.AddErrorMessage("The lower bound selected is higher than the upper bound, please check the bounds as the lower bound should be less than the upper bound.");
+            }
+
+            if (mcVariables.EquivalenceBoundsType == EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel.EquivalenceBoundsOption.Absolute && (mcVariables.LowerBoundAbsolute.HasValue == false && mcVariables.UpperBoundAbsolute.HasValue == false))
+            {
+                ValidationInfo.AddErrorMessage("Absolute selected but bounds not entered.");
+            }
+            else if (mcVariables.EquivalenceBoundsType == EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel.EquivalenceBoundsOption.Percentage && (mcVariables.LowerBoundPercentageChange.HasValue == false && mcVariables.UpperBoundPercentageChange.HasValue == false))
+            {
+                ValidationInfo.AddErrorMessage("Percentage equivelence bounds selected but no bounds entered.");
+            }
+
+
+
             if (mcVariables.PlottingRangeType == PlottingRangeTypeOption.SampleSize)
             {
                 if (!mcVariables.SampleSizeFrom.HasValue || !mcVariables.SampleSizeTo.HasValue)
                 {
                     ValidationInfo.AddErrorMessage("Sample Size From and To must be set");
+                    return ValidationInfo;
+                }
+                else if (mcVariables.SampleSizeFrom <= 1)
+                {
+                    ValidationInfo.AddErrorMessage("The sample size selected must be greater than 1.");
                     return ValidationInfo;
                 }
                 else if (mcVariables.SampleSizeFrom > mcVariables.SampleSizeTo)
