@@ -84,8 +84,8 @@ namespace SilveR.StatsModels
 
         public override ValidationInfo Validate()
         {
-            EquivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator meansComparisonValidator = new EquivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator(this);
-            return meansComparisonValidator.Validate();
+            EquivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator equivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator = new EquivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator(this);
+            return equivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator.Validate();
         }
 
         public override string[] ExportData()

@@ -225,7 +225,7 @@ namespace SilveR.Validators
     }
 
 
-    //EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel
+    //EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel and EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel
     public class CheckTrueDifferenceAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
@@ -234,15 +234,15 @@ namespace SilveR.Validators
 
             if (String.IsNullOrEmpty(model.TrueDifference))
             {
-                return new ValidationResult("True difference has not been set");
+                return new ValidationResult("True difference has not been set.");
             }
             else //check to ensure that values in list are all numbers and are all comma separated and >0
             {
-                string[] pValues = model.TrueDifference.Replace(" ", "").Split(','); //split list by comma
+                string[] values = model.TrueDifference.Split(','); //split list by comma
 
-                foreach (string p in pValues)//go through list and check that is a number and is greater than 0
+                foreach (string v in values) //go through list and check that is a number and is greater than 0
                 {
-                    if (!Double.TryParse(p, out double _))
+                    if (!Double.TryParse(v, out double _))
                     {
                         return new ValidationResult("True difference contains non-numeric values detected or values are not comma separated.");
                     }
@@ -252,4 +252,5 @@ namespace SilveR.Validators
             }
         }
     }
+
 }

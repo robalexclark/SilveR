@@ -2788,19 +2788,29 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
-            model.Response = "Resp 16";
+            model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat20" };
+            model.Treatments = new string[] { "Treat 20" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat20";
+            model.SelectedEffect = "Treat 20";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp16) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -2818,21 +2828,31 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
-            model.Response = "Resp 16";
+            model.Response = "Resp16";
             model.ResponseTransformation = "Log10";
-            model.Treatments = new string[] { "Treat20" };
+            model.Treatments = new string[] { "Treat 20" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat20";
+            model.SelectedEffect = "Treat 20";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
             model.ComparisonsBackToControl = "Dunnett";
             model.ControlGroup = "D 10";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp16) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -2850,21 +2870,31 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
-            model.Response = "Resp 16";
+            model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat20" };
+            model.Treatments = new string[] { "Treat 20" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat20";
+            model.SelectedEffect = "Treat 20";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
             model.ComparisonsBackToControl = "Holm";
             model.ControlGroup = "D3-";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp16) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -2882,21 +2912,31 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
-            model.Response = "Resp 16";
+            model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat20", "Treat21" };
+            model.Treatments = new string[] { "Treat 20", "Treat 21" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat20";
+            model.SelectedEffect = "Treat 20";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
             model.ComparisonsBackToControl = "Hochberg";
             model.ControlGroup = "D-0";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp16) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -2914,19 +2954,29 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
-            model.Response = "Resp 16";
+            model.Response = "Resp16";
             model.ResponseTransformation = "Log10";
-            model.Treatments = new string[] { "Treat20", "Treat21" };
+            model.Treatments = new string[] { "Treat 20", "Treat 21" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat20 * Treat21";
+            model.SelectedEffect = "Treat 20 * Treat 21";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp16) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert
@@ -2944,19 +2994,29 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresParametricAnalysisModel model = new SingleMeasuresParametricAnalysisModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
-            model.Response = "Resp 16";
+            model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat20", "Treat21" };
+            model.Treatments = new string[] { "Treat 20", "Treat 21" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat20 * Treat21";
+            model.SelectedEffect = "Treat 20 * Treat 21";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
 
             //Act
-            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            HttpResponseMessage response = await client.PostAsync("Analyses/SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+
+            //Assert
+            Assert.Contains("The Response (Resp16) contains missing data.", warnings);
+            Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
+
+            //Act - ignore warnings
+            var modelIgnoreWarnings = model.ToKeyValue();
+            modelIgnoreWarnings.Add("ignoreWarnings", "true");
+            StatsOutput statsOutput = await Helpers.SubmitAnalysis(client, "SingleMeasuresParametricAnalysis", new FormUrlEncodedContent(modelIgnoreWarnings));
             Helpers.SaveTestOutput("SingleMeasuresParametricAnalysis", model, testName, statsOutput);
 
             //Assert

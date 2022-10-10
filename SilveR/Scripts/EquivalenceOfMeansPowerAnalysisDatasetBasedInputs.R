@@ -319,7 +319,7 @@ if(plotSettingsType=="poweraxis") {
 		for (i in 1:length(sample))  {
 			test<-power.TOST(n=sample[i], alpha=sig,   logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = standev, design = "parallel")
 			pow<-format(round(100*test,0),nsmall=0)
-			text1<-paste("Assuming the significance level is set at ", 100*sig , "%, and the sample size is ", sample[i], ", the power of the experiment for a bias of size ", expectedBias[length(expectedBias)], " is ",pow, "%.  " , sep="")
+			text1<-paste("Assuming the significance level is set at ", 100*sig , "%, and the sample size is ", sample[i]/2, ", the power of the experiment for a bias of size ", expectedBias[length(expectedBias)], " is ",pow, "%.  " , sep="")
 			HTML(text1, align="left")
 		}
 	} else if (valueType == "datasetvalues") {
@@ -337,7 +337,7 @@ if(plotSettingsType=="poweraxis") {
 		for(i in 1:length(sample)) {
 			test<-power.TOST(n=sample[i], alpha=sig,   logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = standev, design = "parallel")
 			pow<-format(round(100*test,0),nsmall=0)
-			text1<-paste("Assuming the significance level is set at ", 100*sig, "%, and the sample size is ", sample[i], ", the power of the experiment for a bias of size ", expectedBias[length(expectedBias)]," is ", pow, "%.  ",sep="")
+			text1<-paste("Assuming the significance level is set at ", 100*sig, "%, and the sample size is ", sample[i]/2, ", the power of the experiment for a bias of size ", expectedBias[length(expectedBias)]," is ", pow, "%.  ",sep="")
 			HTML(text1, align="left")
 		}
 	}
