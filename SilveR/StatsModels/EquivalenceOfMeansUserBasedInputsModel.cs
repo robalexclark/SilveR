@@ -5,20 +5,24 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Data;
 using System.Text;
 
 namespace SilveR.StatsModels
 {
-    public class EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel : AnalysisDataModelBase, IGraphSizeOptions, ITrueDifference
+    public class EquivalenceOfMeansPowerAnalysisUserBasedInputsModel : AnalysisModelBase, IGraphSizeOptions, ITrueDifference
     {
-        [CheckUsedOnceOnly]
-        [Required]
-        [DisplayName("Response")]
-        public string Response { get; set; }
+        [DisplayName("Observed difference")]
+        public Nullable<decimal> ObservedDifference { get; set; }
 
-        [CheckUsedOnceOnly]
-        public string Treatment { get; set; }
+        public DeviationType DeviationType { get; set; } = DeviationType.StandardDeviation;
+
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Standard deviation must be > 0.")]
+        [DisplayName("Standard deviation")]
+        public Nullable<decimal> StandardDeviation { get; set; }
+
+        [Range(0.00000001, Int32.MaxValue, ErrorMessage = "Variance must be > 0.")]
+        [DisplayName("Variance")]
+        public Nullable<decimal> Variance { get; set; }
 
         [DisplayName("Significance level")]
         public string Significance { get; set; } = "0.05";
@@ -27,9 +31,6 @@ namespace SilveR.StatsModels
         {
             get { return new List<string>() { "0.1", "0.05", "0.025", "0.01", "0.001" }; }
         }
-
-        [DisplayName("Control group")]
-        public string ControlGroup { get; set; }
 
         [DisplayName("True difference")]
         [CheckTrueDifferenceAttribute]
@@ -46,11 +47,11 @@ namespace SilveR.StatsModels
         public Nullable<decimal> UpperBoundAbsolute { get; set; }
 
         [DisplayName("Lower bound percentage")]
-        [Range(0, 1000, ErrorMessage = "User cannot select a negative Percentage Change.")]
+        [Range(0, 1000, ErrorMessage = "User cannot select a negative Percentage change.")]
         public Nullable<decimal> LowerBoundPercentageChange { get; set; }
 
         [DisplayName("Upper bound percentage")]
-        [Range(0, 1000, ErrorMessage = "User cannot select a negative Percentage Change.")]
+        [Range(0, 1000, ErrorMessage = "User cannot select a negative Percentage change.")]
         public Nullable<decimal> UpperBoundPercentageChange { get; set; }
 
 
@@ -77,50 +78,23 @@ namespace SilveR.StatsModels
         public string GraphTitle { get; set; }
 
 
-        public EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel() : base("EquivalenceOfMeansPowerAnalysisDatasetBasedInputs") { }
-
-        public EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel(IDataset dataset)
-            : base(dataset, "EquivalenceOfMeansPowerAnalysisDatasetBasedInputs") { }
+        public EquivalenceOfMeansPowerAnalysisUserBasedInputsModel() : base("EquivalenceOfMeansPowerAnalysisUserBasedInputs") { }
 
         public override ValidationInfo Validate()
         {
-            EquivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator equivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator = new EquivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator(this);
+            EquivalenceOfMeansPowerAnalysisUserBasedInputsValidator equivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator = new EquivalenceOfMeansPowerAnalysisUserBasedInputsValidator(this);
             return equivalenceOfMeansPowerAnalysisDatasetBasedInputsValidator.Validate();
-        }
-
-        public override string[] ExportData()
-        {
-            DataTable dtNew = DataTable.CopyForExport();
-
-            //Get the response, treatment and covariate columns by removing all other columns from the new datatable
-            foreach (string col in this.DataTable.GetVariableNames())
-            {
-                if (Response != col && Treatment != col)
-                {
-                    dtNew.Columns.Remove(col);
-                }
-            }
-
-            //if the response is blank then remove that row
-            dtNew.RemoveBlankRow(Response);
-
-            string[] csvArray = dtNew.GetCSVArray();
-
-            //fix any columns with illegal chars here (at the end)
-            ArgumentFormatter argFormatter = new ArgumentFormatter();
-            csvArray[0] = argFormatter.ConvertIllegalCharacters(csvArray[0]);
-
-            return csvArray;
         }
 
         public override IEnumerable<Argument> GetArguments()
         {
             List<Argument> args = new List<Argument>();
 
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Response), Response));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(Treatment), Treatment));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ObservedDifference), ObservedDifference));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(DeviationType), DeviationType.ToString()));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardDeviation), StandardDeviation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(Variance), Variance));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Significance), Significance));
-            args.Add(ArgumentHelper.ArgumentFactory(nameof(ControlGroup), ControlGroup));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(TrueDifference), TrueDifference));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(EquivalenceBoundsType), EquivalenceBoundsType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(LowerBoundAbsolute), LowerBoundAbsolute));
@@ -141,10 +115,11 @@ namespace SilveR.StatsModels
         {
             ArgumentHelper argHelper = new ArgumentHelper(arguments);
 
-            this.Response = argHelper.LoadStringArgument(nameof(Response));
-            this.Treatment = argHelper.LoadStringArgument(nameof(Treatment));
+            this.ObservedDifference = argHelper.LoadNullableDecimalArgument(nameof(ObservedDifference));
+            this.DeviationType = (DeviationType)Enum.Parse(typeof(DeviationType), argHelper.LoadStringArgument(nameof(DeviationType)), true);
+            this.StandardDeviation = argHelper.LoadNullableDecimalArgument(nameof(StandardDeviation));
+            this.Variance = argHelper.LoadNullableDecimalArgument(nameof(Variance));
             this.Significance = argHelper.LoadStringArgument(nameof(Significance));
-            this.ControlGroup = argHelper.LoadStringArgument(nameof(ControlGroup));
             this.TrueDifference = argHelper.LoadStringArgument(nameof(TrueDifference));
             this.EquivalenceBoundsType = (EquivalenceBoundsOption)Enum.Parse(typeof(EquivalenceBoundsOption), argHelper.LoadStringArgument(nameof(EquivalenceBoundsType)), true);
             this.LowerBoundAbsolute = argHelper.LoadNullableDecimalArgument(nameof(LowerBoundAbsolute));
@@ -164,11 +139,21 @@ namespace SilveR.StatsModels
             ArgumentFormatter argFormatter = new ArgumentFormatter();
             StringBuilder arguments = new StringBuilder();
 
-            arguments.Append(" " + "DatasetValues"); //4
+            arguments.Append(" " + "UserValues"); //4
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Response, true)); //5
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Treatment, true)); //6
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ControlGroup, true)); //7
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ObservedDifference.ToString(), false)); //5
+
+            if (DeviationType == DeviationType.StandardDeviation)
+            {
+                arguments.Append(" " + "StandardDeviation"); //6
+                arguments.Append(" " + argFormatter.GetFormattedArgument(StandardDeviation.ToString(), false)); //7
+            }
+            else
+            {
+                arguments.Append(" " + "Variance"); //6
+                arguments.Append(" " + argFormatter.GetFormattedArgument(Variance)); //7
+            }
+
             arguments.Append(" " + argFormatter.GetFormattedArgument(Significance, false)); //8
             arguments.Append(" " + argFormatter.GetFormattedArgument(TrueDifference, false)); //9
 

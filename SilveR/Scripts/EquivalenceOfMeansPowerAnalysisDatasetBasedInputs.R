@@ -95,20 +95,25 @@ lower      <- lowerboundtest
 upper      <- upperboundtest
 
 if (EqBtype == "percentage" ) {
-	if (varianceAmntOrControl == "NULL") {
-		overallmean <- mean(eval(parse(text = paste("statdata$", response))), na.rm = TRUE)
-	}
-	if (varianceAmntOrControl != "NULL") {
-		tempdata <- statdata
-		tempdata$temp <- paste("T", eval(parse(text = paste("statdata$", varianceTypeOrTreatment))), sep="")
-		temocont<-paste("T", control, sep = "")
-		if (is.numeric(eval(parse(text = paste("statdata$", varianceTypeOrTreatment)))) == TRUE) {
-			tempdata$temp <- paste("T'", eval(parse(text = paste("statdata$", varianceTypeOrTreatment))), "'",sep="")
+	if(valueType=="datasetvalues") {
+		if (varianceAmntOrControl == "NULL") {
+			overallmean <- mean(eval(parse(text = paste("statdata$", response))), na.rm = TRUE)
 		}
-		controldata <-  subset(tempdata, tempdata$temp == temocont)
-		overallmean <- mean(eval(parse(text = paste("controldata$", response))), na.rm = TRUE)
+		if (varianceAmntOrControl != "NULL") {
+			tempdata <- statdata
+			tempdata$temp <- paste("T", eval(parse(text = paste("statdata$", varianceTypeOrTreatment))), sep="")
+			temocont<-paste("T", control, sep = "")
+			if (is.numeric(eval(parse(text = paste("statdata$", varianceTypeOrTreatment)))) == TRUE) {
+				tempdata$temp <- paste("T'", eval(parse(text = paste("statdata$", varianceTypeOrTreatment))), "'",sep="")
+			}
+			controldata <-  subset(tempdata, tempdata$temp == temocont)
+			overallmean <- mean(eval(parse(text = paste("controldata$", response))), na.rm = TRUE)
+		}
 	}
-
+	if(valueType=="uservalues") {
+		overallmean  <- groupMean
+	}
+	
 	if (AnalysisType == "two-sided") {
 		lower <-  -1*overallmean*(lowerboundtest/100)
 		upper <- overallmean*(upperboundtest/100)
@@ -149,8 +154,8 @@ if(plotSettingsType=="poweraxis") {
 	} else if(valueType=="uservalues") {
 		powerFrom <- plotSettingsFrom ;
 		powerTo <- plotSettingsTo ;
-		sampleSizeFrom <- 0.5*floor(as.numeric(sampleN.TOST(targetpower = ((powerFrom/100)), alpha=sig, logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[1], CV = standev, design = "parallel")[7]))
-		sampleSizeTo <- 0.5*ceiling(as.numeric(sampleN.TOST(targetpower = ((powerTo/100)), alpha=sig, logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = standev, design = "parallel")[7]))
+		sampleSizeFrom <- 0.5*floor(as.numeric(sampleN.TOST(targetpower = ((powerFrom/100)), alpha=sig, logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[1], CV = SD, design = "parallel")[7]))
+		sampleSizeTo <- 0.5*ceiling(as.numeric(sampleN.TOST(targetpower = ((powerTo/100)), alpha=sig, logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = SD, design = "parallel")[7]))
 	}
 } else {
 	sampleSizeFrom <- plotSettingsFrom;
@@ -317,7 +322,7 @@ if(plotSettingsType=="poweraxis") {
 		sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
 		sample <- sample*2
 		for (i in 1:length(sample))  {
-			test<-power.TOST(n=sample[i], alpha=sig,   logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = standev, design = "parallel")
+			test<-power.TOST(n=sample[i], alpha=sig,   logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = SD, design = "parallel")
 			pow<-format(round(100*test,0),nsmall=0)
 			text1<-paste("Assuming the significance level is set at ", 100*sig , "%, and the sample size is ", sample[i]/2, ", the power of the experiment for a bias of size ", expectedBias[length(expectedBias)], " is ",pow, "%.  " , sep="")
 			HTML(text1, align="left")
@@ -344,10 +349,10 @@ if(plotSettingsType=="poweraxis") {
 } else {
 	#Selected results for user defined parameters
 	if (valueType == "uservalues") {
-		sample <- sample*2
 		sample<-c(sampleSizeFrom, floor((sampleSizeFrom+sampleSizeTo)/2), sampleSizeTo)
+		sample <- sample*2
 		for(i in 1:length(sample))  {
-			test<-power.TOST(n=sample[i], alpha=sig,   logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = standev, design = "parallel")
+			test<-power.TOST(n=sample[i], alpha=sig,   logscale = FALSE, theta1 = lower, theta2 = upper, theta0 = expectedBias[length(expectedBias)], CV = SD, design = "parallel")
 			pow<-format(round(100*test,0),nsmall=0)
 			text1<-paste("Assuming the significance level is set at ", 100*sig,"%, and the sample size is ", sample[i]/2, ", the power of the experiment for a bias of size ", expectedBias[length(expectedBias)] , " is " , pow , "%.  " , sep="")
 			HTML(text1, align="left")
@@ -375,7 +380,7 @@ if(plotSettingsType=="poweraxis") {
  
 
 HTML.title("Definitions", HR=2, align="left")
-HTML("Power: The chance of detecting a statistically significant test result from running an experiment, assuming there is a real biological effect to find.", align="left")
+HTML("Power: The chance that you will conclude that the difference between the two groups is within your equivalence bounds, when this is true.", align="left")
 HTML("Significance level: The chance that the experiment will give a false-positive result.", align="left")
 HTML("True bias: The true difference between the two groups that you are trying to confirm are equivalent.", align="left")
 
@@ -453,5 +458,3 @@ if (OutputAnalysisOps == "Y") {
 	HTML(paste("Plot setting from: ", plotSettingsFrom, sep=""), align="left")
 	HTML(paste("Plot setting to: ", plotSettingsTo, sep=""), align="left")
 }
-print(lower)
-print(upper)

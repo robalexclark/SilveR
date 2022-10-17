@@ -230,7 +230,7 @@ namespace SilveR.Validators
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel model = (EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel)validationContext.ObjectInstance;
+            ITrueDifference model = (ITrueDifference)validationContext.ObjectInstance;
 
             if (String.IsNullOrEmpty(model.TrueDifference))
             {

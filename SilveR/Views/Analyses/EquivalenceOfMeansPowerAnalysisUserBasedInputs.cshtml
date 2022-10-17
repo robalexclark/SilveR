@@ -1,4 +1,4 @@
-﻿@model SilveR.StatsModels.EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel
+﻿@model SilveR.StatsModels.EquivalenceOfMeansPowerAnalysisUserBasedInputsModel
 
 @section Scripts {
     <script>
@@ -6,16 +6,16 @@
     </script>
 
     <environment names="Development">
-        <script defer src="~/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.js"></script>
+        <script defer src="~/js/stats/equivalenceOfMeansPowerAnalysisUserBasedInputs.js"></script>
         <script defer src="~/js/openLinks.js"></script>
     </environment>
     <environment names="Production">
-        <script defer src="~/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.min.js"></script>
+        <script defer src="~/js/stats/equivalenceOfMeansPowerAnalysisUserBasedInputs.min.js"></script>
     </environment>
 }
 
-    @{
-    ViewBag.Title = "'Equivalence of Means' Power Analysis (Dataset Based Inputs)";
+@{
+    ViewBag.Title = "'Equivalence of Means' Power Analysis (User Based Inputs)";
 }
 
 <div class="row">
@@ -27,11 +27,9 @@
     </div>
 </div>
 
-<form action="/Analyses/EquivalenceOfMeansPowerAnalysisDatasetBasedInputs" class="form-horizontal mt-2" method="post">
+<form action="/Analyses/EquivalenceOfMeansPowerAnalysisUserBasedInputs" class="form-horizontal mt-2" method="post">
 
     @await Html.PartialAsync("AnalysisErrors")
-
-    <input asp-for="DatasetID" hidden />
 
     <div class="row">
         <div class="col-md-6">
@@ -41,26 +39,42 @@
                 <div class="card-body">
 
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Response</label>
+                        <label class="col-md-6 col-form-label">Observed difference</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="Response" />
-                            <div><span asp-validation-for="Response"></span></div>
+                            <input class="form-control" asp-for="ObservedDifference" />
+                            <div><span asp-validation-for="ObservedDifference"></span></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="DeviationType" type="radio" class="form-check-input" value="StandardDeviation" onclick="enableDisableDeviationType()">Use Standard Deviation
+                            </label>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Treatment factor</label>
+                        <label class="col-md-6 col-form-label">Standard deviation</label>
                         <div class="col-md-6">
-                            <input class="form-control" asp-for="Treatment" />
-                            <div><span asp-validation-for="Treatment"></span></div>
+                            <input class="form-control" asp-for="StandardDeviation" />
+                            <div><span asp-validation-for="StandardDeviation"></span></div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-6 col-form-label">Control group</label>
-                        <div class="col-md-6">
-                            <input class="form-control" asp-for="ControlGroup" />
-                            <div><span asp-validation-for="ControlGroup"></span></div>
+                        <div class="form-check">
+                            <label class="col-md-12 form-check-label">
+                                <input asp-for="DeviationType" type="radio" class="form-check-input" value="Variance" onclick="enableDisableDeviationType()">Use Variance
+                            </label>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Variance</label>
+                        <div class="col-md-6">
+                            <input class="form-control" asp-for="Variance" />
+                            <div><span asp-validation-for="Variance"></span></div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Significance level</label>
                         <div class="col-md-6">
@@ -68,7 +82,6 @@
                             <div><span asp-validation-for="Significance"></span></div>
                         </div>
                     </div>
-
 
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">True difference</label>

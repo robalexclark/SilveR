@@ -236,6 +236,12 @@ namespace SilveR.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> EquivalenceOfMeansPowerAnalysisUserBasedInputs(EquivalenceOfMeansPowerAnalysisUserBasedInputsModel model, bool ignoreWarnings)
+        {
+            return await RunAnalysis(model, ignoreWarnings);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> OneWayANOVAPowerAnalysisDatasetBasedInputs(OneWayANOVAPowerAnalysisDatasetBasedInputsModel model, bool ignoreWarnings)
         {
             return await RunAnalysis(model, ignoreWarnings);

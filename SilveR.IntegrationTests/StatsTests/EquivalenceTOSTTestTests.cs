@@ -643,7 +643,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("User cannot select a negative Percentage change.", errors);
+            Assert.Contains("User cannot select a negative Percentage Change.", errors);
             Helpers.SaveOutput("EquivalenceTOSTTest", testName, errors);
         }
 
@@ -668,7 +668,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("User cannot select a negative Percentage change.", errors);
+            Assert.Contains("User cannot select a negative Percentage Change.", errors);
             Helpers.SaveOutput("EquivalenceTOSTTest", testName, errors);
         }
 

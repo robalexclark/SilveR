@@ -64,7 +64,7 @@ namespace SilveR.Validators
                 {
                     if (row[treatCol].ToString() == level && !String.IsNullOrEmpty(row[responseCol].ToString()))
                     {
-                        count = count + 1;
+                        count++;
                     }
                 }
                 responseCounts.Add(level, count);

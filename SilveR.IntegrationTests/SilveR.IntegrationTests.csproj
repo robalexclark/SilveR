@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="ExcelDataReader" Version="3.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -550,6 +550,69 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\DoseResponseAndNonLinearRegressionAnalysis\DR82.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST19.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST20.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST21.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST23.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST24.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST25.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST26.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST27.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisDatasetBasedInputs\DBTOST28.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST22.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST23.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST24.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST25.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST26.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST27.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST28.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST29.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST30.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST31.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExpectedResults\EquivalenceOfMeansPowerAnalysisUserBasedInputs\UBTOST6.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="ExpectedResults\EquivalenceTOSTTest\ETT21.html">

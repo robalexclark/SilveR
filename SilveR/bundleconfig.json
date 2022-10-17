@@ -232,6 +232,20 @@
     ]
   },
   {
+    "outputFileName": "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisDatasetBasedInputs.js",
+      "wwwroot/js/openLinks.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisUserBasedInputs.min.js",
+    "inputFiles": [
+      "wwwroot/js/stats/equivalenceOfMeansPowerAnalysisUserBasedInputs.js",
+      "wwwroot/js/openLinks.js"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/js/stats/rrunner.min.js",
     "inputFiles": [
       "wwwroot/js/stats/rrunner.js",

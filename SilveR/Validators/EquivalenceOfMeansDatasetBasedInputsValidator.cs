@@ -34,6 +34,13 @@ namespace SilveR.Validators
                 return ValidationInfo;
             }
 
+            //Check that the number of responses for each level is at least 2 
+            if (CountResponses(mcVariables.Response) < 2)
+            {
+                ValidationInfo.AddErrorMessage("The response selected (" + mcVariables.Response + ") contains only 1 value. Please select another factor.");
+                return ValidationInfo;
+            }
+
             if (mcVariables.Treatment != null && !CheckResponsesPerLevel(mcVariables.Treatment, mcVariables.Response, ReflectionExtensions.GetPropertyDisplayName<EquivalenceOfMeansPowerAnalysisDatasetBasedInputsModel>(i => i.Treatment)))
             {
                 return ValidationInfo;

@@ -73,8 +73,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.6.0'
-      title: '4.6.0'
+      tag: '4.7.0'
+      title: '4.7.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -112,12 +112,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for Win-x64
 
-  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.6.0.exe" $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.6.0.exe
+  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.7.0.exe" $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.7.0.exe
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.6.0.exe'
+      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.7.0.exe'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -127,8 +127,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.6.0'
-      title: '4.6.0'
+      tag: '4.7.0'
+      title: '4.7.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -138,7 +138,7 @@ jobs:
 - job: Linux
   dependsOn: Test
   pool:
-    vmImage: 'ubuntu-18.04'
+    vmImage: 'ubuntu-latest'
 
   steps:
 
@@ -162,19 +162,19 @@ jobs:
   - script: sudo npm install electron-builder --global
     displayName: Install electron builder
 
-  - script: sudo chown -R $(whoami) ~/.npm
-    displayName: Reset permissions
+  #- script: sudo chown -R $(whoami) ~/.npm
+  #  displayName: Reset permissions
 
   - script: electronize build /target linux
     workingDirectory: ./SilveR
     displayName: Build for Linux
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.6.0.AppImage $(Build.ArtifactStagingDirectory)'  
-    displayName: Copy InVivoStat Setup 4.6.0.AppImage
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.7.0.AppImage $(Build.ArtifactStagingDirectory)'  
+    displayName: Copy InVivoStat Setup 4.7.0.AppImage
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.6.0.AppImage'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.7.0.AppImage'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -184,8 +184,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.6.0'
-      title: '4.6.0'
+      tag: '4.7.0'
+      title: '4.7.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
@@ -223,12 +223,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for MacOS
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.6.0.dmg $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.6.0.dmg
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.7.0.dmg $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 4.7.0.dmg
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.6.0.dmg'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.7.0.dmg'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
@@ -238,8 +238,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.6.0'
-      title: '4.6.0'
+      tag: '4.7.0'
+      title: '4.7.0'
       assetUploadMode: 'replace'
       isPreRelease: true
       isDraft: false
