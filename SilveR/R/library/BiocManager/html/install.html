@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Install or update Bioconductor, CRAN, and GitHub packages</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for install {BiocManager}"><tr><td>install {BiocManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Install or update Bioconductor, CRAN, and GitHub packages</h2>
+
+<h3>Description</h3>
+
+<p>The <code>BiocManager::install()</code> function installs or
+updates <em>Bioconductor</em> and CRAN packages in a <em>Bioconductor</em>
+release. Upgrading to a new <em>Bioconductor</em> release may require
+additional steps; see <a href="https://bioconductor.org/install">https://bioconductor.org/install</a>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+install(
+  pkgs = character(),
+  ...,
+  site_repository = character(),
+  update = TRUE,
+  ask = TRUE,
+  checkBuilt = FALSE,
+  force = FALSE,
+  version = BiocManager::version()
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pkgs</code></td>
+<td>
+<p><code>character()</code> vector of package names to install or
+update.  A missing value updates installed packages according
+to <code style="white-space: pre;">update =</code> and <code style="white-space: pre;">ask =</code>. Package names containing a '/' are
+treated as GitHub repositories and installed using
+<code>remotes::install_github()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments used by <code>install.packages()</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>site_repository</code></td>
+<td>
+<p>(Optional) <code>character(1)</code> vector
+representing an additional repository in which to look for
+packages to install. This repository will be prepended to the
+default repositories (which you can see with
+<code style="white-space: pre;">BiocManager::\link{repositories}()</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>update</code></td>
+<td>
+<p><code>logical(1)</code>. When <code>FALSE</code>, <code>BiocManager::install()</code>
+does not attempt to update old packages. When <code>TRUE</code>, update
+old packages according to <code>ask</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+<p><code>logical(1)</code> indicating whether to prompt user before
+installed packages are updated.  If TRUE, user can choose
+whether to update all outdated packages without further
+prompting, to pick packages to update, or to cancel updating
+(in a non-interactive session, no packages will be updated
+unless <code>ask = FALSE</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>checkBuilt</code></td>
+<td>
+<p><code>logical(1)</code>. If <code>TRUE</code> a package built under an
+earlier major.minor version of R (e.g., 3.4) is considered to
+be old.</p>
+</td></tr>
+<tr valign="top"><td><code>force</code></td>
+<td>
+<p><code>logical(1)</code>. If <code>TRUE</code> re-download a package that is
+currently up-to-date.</p>
+</td></tr>
+<tr valign="top"><td><code>version</code></td>
+<td>
+<p><code>character(1)</code> <em>Bioconductor</em> version to install,
+e.g., <code>version = "3.8"</code>. The special symbol <code>version = "devel"</code>
+installs the current 'development' version.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Installation of <em>Bioconductor</em> and CRAN packages use R's standard
+functions for library management &ndash; <code>install.packages()</code>,
+<code>available.packages()</code>, <code>update.packages()</code>. Installation of GitHub
+packages uses the <code>remotes::install_github()</code>.
+</p>
+<p>When installing CRAN or <em>Bioconductor</em> packages, typical arguments
+include: <code>lib.loc</code>, passed to <code style="white-space: pre;">\link{old.packages}()</code> and used to
+determine the library location of installed packages to be updated;
+and <code>lib</code>, passed to <code style="white-space: pre;">\link{install.packages}()</code> to determine the
+library location where <code>pkgs</code> are to be installed.
+</p>
+<p>When installing GitHub packages, <code>...</code> is passed to the
+<span class="pkg">remotes</span> package functions <code style="white-space: pre;">\link[remotes]{install_github}()</code>
+and <code>remotes:::install()</code>. A typical use is to build vignettes, via
+<code style="white-space: pre;">dependencies=TRUE, build_vignettes=TRUE</code>.
+</p>
+<p>See <code>?repositories</code> for additional detail on customizing where
+BiocManager searches for package installation.
+</p>
+<p><span class="env">BIOCONDUCTOR_ONLINE_VERSION_DIAGNOSIS</span> is an environment
+variable or global <code>options()</code> which, when set to <code>FALSE</code>, avoids
+the R and <em>Bioconductor</em> version checks that are done by querying
+an online configuration file. Setting
+<span class="env">BIOCONDUCTOR_ONLINE_VERSION_DIAGNOSIS</span> to <code>FALSE</code> can speed
+package loading when internet access is slow or non-existent, but
+may result in out-of-date information about the current release and
+development versions of <em>Bioconductor</em>. Offline users should
+set the <span class="env">BIOCONDUCTOR_CONFIG_FILE</span> environment variable or option
+to a <code>.yaml</code> file similar to <a href="https://bioconductor.org/config.yaml">https://bioconductor.org/config.yaml</a>
+for full offline use and version validation.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>BiocManager::install()</code> returns the <code>pkgs</code> argument, invisibly.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code style="white-space: pre;">BiocManager::\link{repositories}()</code> returns the <em>Bioconductor</em> and
+CRAN repositories used by <code>install()</code>.
+</p>
+<p><code style="white-space: pre;">\link{install.packages}()</code> installs the packages themselves (used by
+<code>BiocManager::install</code> internally).
+</p>
+<p><code style="white-space: pre;">\link{update.packages}()</code> updates all installed packages (used by
+<code>BiocManager::install</code> internally).
+</p>
+<p><code style="white-space: pre;">\link{chooseBioCmirror}()</code> allows choice of a mirror from all
+public <em>Bioconductor</em> mirrors.
+</p>
+<p><code style="white-space: pre;">\link{chooseCRANmirror}()</code> allows choice of a mirror from all
+public CRAN mirrors.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## Not run: 
+## update previously installed packages
+BiocManager::install()
+
+## install Bioconductor packages, and prompt to update all
+## installed packages
+BiocManager::install(c("GenomicRanges", "edgeR"))
+
+## install a CRAN and Bioconductor packages:
+BiocManager::install(c("survival", "SummarizedExperiment"))
+
+## install a package from source:
+BiocManager::install("IRanges", type="source")
+
+## End(Not run)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocManager</em> version 1.30.19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

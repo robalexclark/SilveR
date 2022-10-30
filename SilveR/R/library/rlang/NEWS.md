@@ -1,3 +1,34 @@
+# rlang 1.0.6
+
+* `as_closure(seq.int)` now works (#1468).
+
+* rlang no longer stores errors and backtraces in a `org:r-lib`
+  environment on the search path.
+
+* The low-level function `error_call()` is now exported (#1474).
+
+* Fixed an issue that caused a failure about a missing `is_character`
+  function when rlang is installed alongside an old version of vctrs (#1482).
+
+* Fixed an issue that caused multiline calls in backtraces.
+
+* The C API function `r_lgl_which()` now propagates the names of the input
+  (#1471).
+
+* The `pkg_version_info()` function now allows `==` for package
+  version comparison (#1469, @kryekuzhinieri).
+
+
+# rlang 1.0.5
+
+* Fixed backtrace display with calls containing long lists of
+  arguments (#1456).
+
+* New `r_obj_type_friendly()` function in the C library (#1463). It
+  interfaces with `obj_type_friendly()` from `compat-obj-type.R` via a
+  C callable.
+
+
 # rlang 1.0.4
 
 * `is_installed()` no longer throws an error with irregular package

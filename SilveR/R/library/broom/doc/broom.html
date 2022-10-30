@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2022-06-30" />
+<meta name="date" content="2022-08-29" />
 
 <title>Introduction to broom</title>
 
@@ -121,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -332,7 +339,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Introduction to broom</h1>
-<h4 class="date">2022-06-30</h4>
+<h4 class="date">2022-08-29</h4>
 
 
 
@@ -458,19 +465,19 @@ regression. For this, use <code>augment</code>, which augments the
 original data with information from the model:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">augment</span>(lmfit)</span></code></pre></div>
 <pre><code>## # A tibble: 32 × 9
-##    .rownames           mpg    wt .fitted .resid   .hat .sigma .cooksd .std.resid
-##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
-##  1 Mazda RX4          21    2.62    23.3 -2.28  0.0433   3.07 1.33e-2    -0.766 
-##  2 Mazda RX4 Wag      21    2.88    21.9 -0.920 0.0352   3.09 1.72e-3    -0.307 
-##  3 Datsun 710         22.8  2.32    24.9 -2.09  0.0584   3.07 1.54e-2    -0.706 
-##  4 Hornet 4 Drive     21.4  3.22    20.1  1.30  0.0313   3.09 3.02e-3     0.433 
-##  5 Hornet Sportabout  18.7  3.44    18.9 -0.200 0.0329   3.10 7.60e-5    -0.0668
-##  6 Valiant            18.1  3.46    18.8 -0.693 0.0332   3.10 9.21e-4    -0.231 
-##  7 Duster 360         14.3  3.57    18.2 -3.91  0.0354   3.01 3.13e-2    -1.31  
-##  8 Merc 240D          24.4  3.19    20.2  4.16  0.0313   3.00 3.11e-2     1.39  
-##  9 Merc 230           22.8  3.15    20.5  2.35  0.0314   3.07 9.96e-3     0.784 
-## 10 Merc 280           19.2  3.44    18.9  0.300 0.0329   3.10 1.71e-4     0.100 
-## # … with 22 more rows</code></pre>
+##    .rownames           mpg    wt .fitted .resid   .hat .sigma   .cooksd .std.r…¹
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Mazda RX4          21    2.62    23.3 -2.28  0.0433   3.07 0.0133     -0.766 
+##  2 Mazda RX4 Wag      21    2.88    21.9 -0.920 0.0352   3.09 0.00172    -0.307 
+##  3 Datsun 710         22.8  2.32    24.9 -2.09  0.0584   3.07 0.0154     -0.706 
+##  4 Hornet 4 Drive     21.4  3.22    20.1  1.30  0.0313   3.09 0.00302     0.433 
+##  5 Hornet Sportabout  18.7  3.44    18.9 -0.200 0.0329   3.10 0.0000760  -0.0668
+##  6 Valiant            18.1  3.46    18.8 -0.693 0.0332   3.10 0.000921   -0.231 
+##  7 Duster 360         14.3  3.57    18.2 -3.91  0.0354   3.01 0.0313     -1.31  
+##  8 Merc 240D          24.4  3.19    20.2  4.16  0.0313   3.00 0.0311      1.39  
+##  9 Merc 230           22.8  3.15    20.5  2.35  0.0314   3.07 0.00996     0.784 
+## 10 Merc 280           19.2  3.44    18.9  0.300 0.0329   3.10 0.000171    0.100 
+## # … with 22 more rows, and abbreviated variable name ¹​.std.resid</code></pre>
 <p>Note that each of the new columns begins with a <code>.</code> (to
 avoid overwriting any of the original columns).</p>
 <p>Finally, several summary statistics are computed for the entire
@@ -478,10 +485,11 @@ regression, such as R^2 and the F-statistic. These can be accessed with
 the <code>glance</code> function:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(lmfit)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 12
-##   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
-##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1     0.753         0.745  3.05      91.4 1.29e-10     1  -80.0  166.  170.
-## # … with 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+##   r.squared adj.r.squa…¹ sigma stati…²  p.value    df logLik   AIC   BIC devia…³
+##       &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1     0.753        0.745  3.05    91.4 1.29e-10     1  -80.0  166.  170.    278.
+## # … with 2 more variables: df.residual &lt;int&gt;, nobs &lt;int&gt;, and abbreviated
+## #   variable names ¹​adj.r.squared, ²​statistic, ³​deviance</code></pre>
 <p>This distinction between the <code>tidy</code>, <code>augment</code>
 and <code>glance</code> functions is explored in a different context in
 the <a href="https://www.tidymodels.org/learn/statistics/k-means/">k-means
@@ -562,31 +570,35 @@ functions like <code>t.test</code>, <code>cor.test</code>, and
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tt <span class="ot">&lt;-</span> <span class="fu">t.test</span>(wt <span class="sc">~</span> am, mtcars)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(tt)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 10
-##   estimate estimate1 estimate2 statistic    p.value parameter conf.low conf.high
-##      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-## 1     1.36      3.77      2.41      5.49 0.00000627      29.2    0.853      1.86
-## # … with 2 more variables: method &lt;chr&gt;, alternative &lt;chr&gt;</code></pre>
+##   estim…¹ estim…² estim…³ stati…⁴ p.value param…⁵ conf.…⁶ conf.…⁷ method alter…⁸
+##     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  
+## 1    1.36    3.77    2.41    5.49 6.27e-6    29.2   0.853    1.86 Welch… two.si…
+## # … with abbreviated variable names ¹​estimate, ²​estimate1, ³​estimate2,
+## #   ⁴​statistic, ⁵​parameter, ⁶​conf.low, ⁷​conf.high, ⁸​alternative</code></pre>
 <p>Some cases might have fewer columns (for example, no confidence
 interval):</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>wt <span class="ot">&lt;-</span> <span class="fu">wilcox.test</span>(wt <span class="sc">~</span> am, mtcars)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(wt)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 4
-##   statistic   p.value method                                         alternative
-##       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                                          &lt;chr&gt;      
-## 1      230. 0.0000435 Wilcoxon rank sum test with continuity correc… two.sided</code></pre>
+##   statistic   p.value method                                            altern…¹
+##       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                                             &lt;chr&gt;   
+## 1      230. 0.0000435 Wilcoxon rank sum test with continuity correction two.sid…
+## # … with abbreviated variable name ¹​alternative</code></pre>
 <p>Since the <code>tidy</code> output is already only one row,
 <code>glance</code> returns the same output:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(tt)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 10
-##   estimate estimate1 estimate2 statistic    p.value parameter conf.low conf.high
-##      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-## 1     1.36      3.77      2.41      5.49 0.00000627      29.2    0.853      1.86
-## # … with 2 more variables: method &lt;chr&gt;, alternative &lt;chr&gt;</code></pre>
+##   estim…¹ estim…² estim…³ stati…⁴ p.value param…⁵ conf.…⁶ conf.…⁷ method alter…⁸
+##     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  
+## 1    1.36    3.77    2.41    5.49 6.27e-6    29.2   0.853    1.86 Welch… two.si…
+## # … with abbreviated variable names ¹​estimate, ²​estimate1, ³​estimate2,
+## #   ⁴​statistic, ⁵​parameter, ⁶​conf.low, ⁷​conf.high, ⁸​alternative</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(wt)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 4
-##   statistic   p.value method                                         alternative
-##       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                                          &lt;chr&gt;      
-## 1      230. 0.0000435 Wilcoxon rank sum test with continuity correc… two.sided</code></pre>
+##   statistic   p.value method                                            altern…¹
+##       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                                             &lt;chr&gt;   
+## 1      230. 0.0000435 Wilcoxon rank sum test with continuity correction two.sid…
+## # … with abbreviated variable name ¹​alternative</code></pre>
 <p><code>augment</code> method is defined only for chi-squared tests,
 since there is no meaningful sense, for other tests, in which a
 hypothesis test produces output about each initial data point.</p>

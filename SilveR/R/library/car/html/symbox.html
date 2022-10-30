@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Boxplots for transformations to symmetry</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for symbox {car}"><tr><td>symbox {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Boxplots for transformations to symmetry</h2>
+
+<h3>Description</h3>
+
+<p><code>symbox</code> first transforms <code>x</code> to each of a series
+of selected powers, with each transformation standardized to mean 0 and
+standard deviation 1. The results are then displayed side-by-side in boxplots, permiting
+a visual assessment of which power makes the distribution reasonably symmetric.
+For the <code>"lm"</code> method, the response variable in the model is successively 
+transformed.</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+symbox(x, ...)
+## S3 method for class 'formula'
+symbox(formula, data=NULL, subset, na.action=NULL, ylab,  ...)
+## Default S3 method:
+symbox(x, powers = c(-1, -0.5, 0, 0.5, 1), start, 
+	trans=bcPower, xlab="Powers", ylab, ...)
+## S3 method for class 'lm'
+symbox(x, powers = c(-1, -0.5, 0, 0.5, 1), start, trans=bcPower, 
+                      xlab, ylab="Studentized residuals", ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>a numeric vector.</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>a one-sided formula specifying a single numeric variable.</p>
+</td></tr>
+<tr valign="top"><td><code>data, subset, na.action</code></td>
+<td>
+<p>as for statistical modeling functions (see, e.g., <code><a href="../../stats/html/lm.html">lm</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>xlab, ylab</code></td>
+<td>
+<p>axis labels; if <code>ylab</code> is missing, a label will be supplied. For the <code>"lm"</code> method, if <code>xlab</code> is missing, a label will also be supplied.</p>
+</td></tr>
+<tr valign="top"><td><code>powers</code></td>
+<td>
+<p>a vector of selected powers to which <code>x</code> is to be raised. 
+For meaningful comparison of powers,  <code>1</code> should be included
+in the vector of powers.</p>
+</td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+<p>a constant to be added to <code>x</code>. If <code>start</code> is missing and
+<code>trans</code> is <code><a href="../../car/help/bcPower.html">bcPower</a></code> (the default) or <code><a href="../../car/help/bcnPower.html">bcnPower</a></code>, then
+a start will be automatically generated if there are zero or negative values in 
+<code>x</code>, and a warning will be printed; the auto-generated <code>start</code> is the
+absolute value of the minimum <code>x</code> plus 1 percent of the range of <code>x</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>trans</code></td>
+<td>
+<p>a transformation function whose first argument is a numeric vector and whose second
+argument is a transformation parameter, given by the <code>powers</code> argument; the default
+is <code><a href="../../car/help/bcPower.html">bcPower</a></code>, and another possibility is <code><a href="../../car/help/yjPower.html">yjPower</a></code>.
+<code><a href="../../car/help/bcnPower.html">bcnPower</a></code> may also be used, in which case the <code>gamma</code> parameter
+is set to the value of <code>start</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments to be passed down.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>as returned by <code>boxplot</code>.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Gregor Gorjanc, John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a>.</p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition. Sage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../graphics/html/boxplot.html">boxplot</a></code>, <code><a href="../../MASS/html/boxcox.html">boxcox</a></code>, <code><a href="../../car/help/bcPower.html">bcPower</a></code>, <code><a href="../../car/help/yjPower.html">yjPower</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+symbox(~ income, data=Prestige)
+symbox(lm(wages ~ education + poly(age, 2) + sex, data=SLID))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

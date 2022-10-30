@@ -1096,6 +1096,13 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 #===================================================================================================================
 		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 		HTML.title(CITitle2, HR=2, align="left")
+
+		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+		if (GeomDisplay == "geometricmeansonly") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
 	
 		if (responseTransform =="log10") {
 			LSDATA$Mean<-format(round(LSM$Mean,3),nsmall=3)
@@ -1132,13 +1139,6 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 #===================================================================================================================
 		CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 		HTML.title(CITitle, HR=2, align="left")
-
-		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
-			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
-		}
-		if (GeomDisplay == "geometricmeansonly") {
-			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
-		}
 
 		#CreatinG the final datasset to plot
 		LSDATA<-data.frame(LSM)		
@@ -1368,7 +1368,7 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 	statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
 	statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
 	statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
-	
+
 	#Re-generate analysis using new dataset without dashes or spaces
 	if(covariance=="compound symmetric") {
 		threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
@@ -1379,7 +1379,7 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 	if(covariance=="unstructured") {
 		threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
 	}
-	
+
 	if (covariance == "unstructured") {
 		#Generating the differences and SEMs for the unstructured covariance
 		mult.lsm <- emmeans(threewayfull, eval(parse(text = paste("~",selectedEffect))), data=statdata, df=dendf)
@@ -1433,8 +1433,10 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 		#Creating the table of differences and SEMs for the AR(1) and CS structure and the tabs dataset
 		mult<-glht(threewayfull, linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))),df=dendf)
 		multci<-confint(mult, level=sig, calpha = univariate_calpha())
+
 		multp<-summary(mult, test=adjusted("none"))
 		rows<-rownames(multci$confint)
+
 		pvals<-multp$test$pvalues
 		sigma<-multp$test$sigma
 		tablen<-length(unique(rownames(multci$confint)))
@@ -1490,9 +1492,9 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
 
 	tabs7 <- cbind(tabs4, tabs6)
 	colnames(tabs7) <- c("xxxTime1xxx", "xxxTime2xxx")
-
 	tabs<-cbind(tabs, tabs7)
 }
+
 #===================================================================================================================
 #All pairwise tests 
 #===================================================================================================================
@@ -1526,17 +1528,20 @@ if(pairwiseTest == "allpairwisecomparisons") {
 		tabs_final$tabs.V8<-sub("xxxcomparisonxxx"," - ", tabs_final$tabs.V8, fixed=TRUE)
 	}
 
+	#Replacing the Timezzz label from the dataset
+	for (i in 1:dim(tabs_final)[1]){
+		tabs_final$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final$tabs.V8[i], fixed=TRUE)
+		tabs_final$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final$tabs.V8[i], fixed=TRUE)
+	}
+
 	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
 	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 	colnames(tabs_final)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
-
 
 	#print table
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 		HTML(tabs_final, classfirstline="second", align="left", row.names = "FALSE")
 	}
-
-
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1551,46 +1556,53 @@ if(pairwiseTest == "allpairwisecomparisons") {
 			if (GeomDisplay == "geometricmeansonly") {
 				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
 			}
+		}
 
-			#Creating dataset for printing
-			tabs_final_log <- data.frame(tabs$V8)
+		#Creating dataset for printing
+		tabs_final_log <- data.frame(tabs$V8)
 
-			if (responseTransform =="log10") {
-				tabs_final_log$V2=format(round(10^tabs[1], 3), nsmall=3, scientific=FALSE)
-				tabs_final_log$V3=format(round(10^tabs[2], 3), nsmall=3, scientific=FALSE)
-				tabs_final_log$V4=format(round(10^tabs[3], 3), nsmall=3, scientific=FALSE)
-				tabs_final_log$V5=tabs$V5
-			}
+		if (responseTransform =="log10") {
+			tabs_final_log$V2=format(round(10^tabs[1], 3), nsmall=3, scientific=FALSE)
+			tabs_final_log$V3=format(round(10^tabs[2], 3), nsmall=3, scientific=FALSE)
+			tabs_final_log$V4=format(round(10^tabs[3], 3), nsmall=3, scientific=FALSE)
+			tabs_final_log$V5=tabs$V5
+		}
 
-			if (responseTransform =="loge") {
-				tabs_final_log$V2=format(round(exp(tabs[1]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log$V3=format(round(exp(tabs[2]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log$V4=format(round(exp(tabs[3]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_log$V5=tabs$V5
-			}
+		if (responseTransform =="loge") {
+			tabs_final_log$V2=format(round(exp(tabs[1]), 3), nsmall=3, scientific=FALSE)
+			tabs_final_log$V3=format(round(exp(tabs[2]), 3), nsmall=3, scientific=FALSE)
+			tabs_final_log$V4=format(round(exp(tabs[3]), 3), nsmall=3, scientific=FALSE)
+			tabs_final_log$V5=tabs$V5
+		}
 
-			for (i in 1:100) {
-				tabs_final_log$tabs.V8<-sub("xxxlevelgapxxx",", ", tabs_final_log$tabs.V8, fixed=TRUE)
-			}
-			for (i in 1:100) {
-				tabs_final_log$tabs.V8<-sub("xxxivsdashivsxxx","-", tabs_final_log$tabs.V8, fixed=TRUE)
-			}
-			for (i in 1:100) {
-				tabs_final_log$tabs.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_log$tabs.V8, fixed=TRUE)
-			}
-			for (i in 1:100) {
-				tabs_final_log$tabs.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_log$tabs.V8, fixed=TRUE)
-			}
+		for (i in 1:100) {
+			tabs_final_log$tabs.V8<-sub("xxxlevelgapxxx",", ", tabs_final_log$tabs.V8, fixed=TRUE)
+		}
+		for (i in 1:100) {
+			tabs_final_log$tabs.V8<-sub("xxxivsdashivsxxx","-", tabs_final_log$tabs.V8, fixed=TRUE)
+		}
+		for (i in 1:100) {
+			tabs_final_log$tabs.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_log$tabs.V8, fixed=TRUE)
+		}
+		for (i in 1:100) {
+			tabs_final_log$tabs.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_log$tabs.V8, fixed=TRUE)
+		}
 
-			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-			colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
+		#Replacing the Timezzz label from the dataset
+		for (i in 1:dim(tabs_final_log)[1]){
+			tabs_final_log$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final_log$tabs.V8[i], fixed=TRUE)
+			tabs_final_log$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final_log$tabs.V8[i], fixed=TRUE)
+		}
 
+		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+		colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
+
+		if ( GeomDisplay != "notdisplayed") {
 			#print table
 			HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
 		}
 	}
-
 #===================================================================================================================
 #Conclusion
 #===================================================================================================================
@@ -1632,16 +1644,17 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	}
 	HTML(add, align="left")
 	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
-
-
-
 }
 
 #===================================================================================================================
 #All comparisons within time factor
 #===================================================================================================================
 if(pairwiseTest == "allcomparisonswithinselected") {
-	HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
+
+	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+		HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
+	}
+
 	#Creating the subsetted version of tabs dataset
 	tabs_red<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
 
@@ -1669,6 +1682,12 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 		tabs_final_red$tabs_red.V8<-sub("xxxcomparisonxxx"," - ", tabs_final_red$tabs_red.V8, fixed=TRUE)
 	}
 
+	#Replacing the Timezzz label from the dataset
+	for (i in 1:dim(tabs_final_red)[1]){
+		tabs_final_red$tabs_red.V8[i] <- gsub("Timezzz"," ", tabs_final_red$tabs_red.V8[i], fixed=TRUE)
+		tabs_final_red$tabs_red.V8[i] <- gsub("Timezzz"," ", tabs_final_red$tabs_red.V8[i], fixed=TRUE)
+	}
+
 	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
 	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
 	colnames(tabs_final_red)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
@@ -1684,7 +1703,6 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 #===================================================================================================================
 	if(responseTransform =="log10"||responseTransform =="loge") {
 		if (GeomDisplay != "notdisplayed") {
-
 			HTML.title("Pairwise comparisons within the levels of the repeated factor, as back-transformed ratios", HR=2, align="left")
 
 			if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
@@ -1693,49 +1711,54 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 			if (GeomDisplay == "geometricmeansonly") {
 				HTML("As the response was log transformed prior to analysis the differences between the least square (predicted) means are back-transformed, where differences on the log scale become ratios when back-transformed.", align="left")
 			}
+		}
 
-			#Creating the subsetted version of tabs dataset
-			tabs_redl<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
+		#Creating the subsetted version of tabs dataset
+		tabs_redl<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
 
-			#Creating dataset for printing
-			tabs_final_redl <- data.frame(tabs_redl$V8)
-			if (responseTransform =="log10") {
-				tabs_final_redl$V2=format(round(10^tabs_redl[1], 3), nsmall=3, scientific=FALSE)
-				tabs_final_redl$V3=format(round(10^tabs_redl[2], 3), nsmall=3, scientific=FALSE)
-				tabs_final_redl$V4=format(round(10^tabs_redl[3], 3), nsmall=3, scientific=FALSE)
-				tabs_final_redl$V5=tabs_redl$V5
-			}
+		#Creating dataset for printing
+		tabs_final_redl <- data.frame(tabs_redl$V8)
+		if (responseTransform =="log10") {
+			tabs_final_redl$V2=format(round(10^tabs_redl[1], 3), nsmall=3, scientific=FALSE)
+			tabs_final_redl$V3=format(round(10^tabs_redl[2], 3), nsmall=3, scientific=FALSE)
+			tabs_final_redl$V4=format(round(10^tabs_redl[3], 3), nsmall=3, scientific=FALSE)
+			tabs_final_redl$V5=tabs_redl$V5
+		}
 
-			if (responseTransform =="loge") {
-				tabs_final_redl$V2=format(round(exp(tabs_redl[1]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_redl$V3=format(round(exp(tabs_redl[2]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_redl$V4=format(round(exp(tabs_redl[3]), 3), nsmall=3, scientific=FALSE)
-				tabs_final_redl$V5=tabs_redl$V5
-			}
+		if (responseTransform =="loge") {
+			tabs_final_redl$V2=format(round(exp(tabs_redl[1]), 3), nsmall=3, scientific=FALSE)
+			tabs_final_redl$V3=format(round(exp(tabs_redl[2]), 3), nsmall=3, scientific=FALSE)
+			tabs_final_redl$V4=format(round(exp(tabs_redl[3]), 3), nsmall=3, scientific=FALSE)
+			tabs_final_redl$V5=tabs_redl$V5
+		}
 
-			for (i in 1:100) {
-				tabs_final_redl$tabs_redl.V8<-sub("xxxlevelgapxxx",", ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-			}
+		for (i in 1:100) {
+			tabs_final_redl$tabs_redl.V8<-sub("xxxlevelgapxxx",", ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
+		}
 
-			for (i in 1:100) {
-				tabs_final_redl$tabs_redl.V8<-sub("xxxivsdashivsxxx","-", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-			}
-			for (i in 1:100) {
-				tabs_final_redl$tabs_redl.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-			}
-			for (i in 1:100) {
-				tabs_final_redl$tabs_redl.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-			}
+		for (i in 1:100) {
+			tabs_final_redl$tabs_redl.V8<-sub("xxxivsdashivsxxx","-", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
+		}
+		for (i in 1:100) {
+			tabs_final_redl$tabs_redl.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
+		}
+		for (i in 1:100) {
+			tabs_final_redl$tabs_redl.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
+		}
 
-			lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-			upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-			colnames(tabs_final_redl)<-c("Comparison", "Difference", lowerCI, upperCI, "p-value")
+		#Replacing the Timezzz label from the dataset
+		for (i in 1:dim(tabs_final_redl)[1]){
+			tabs_final_redl$tabs_redl.V8[i] <- gsub("Timezzz"," ", tabs_final_redl$tabs_redl.V8[i], fixed=TRUE)
+			tabs_final_redl$tabs_redl.V8[i] <- gsub("Timezzz"," ", tabs_final_redl$tabs_redl.V8[i], fixed=TRUE)
+		}
 
-			#print table
-			if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-				HTML(tabs_final_redl, classfirstline="second", align="left", row.names = "FALSE")
-			}
+		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+		colnames(tabs_final_redl)<-c("Comparison", "Difference", lowerCI, upperCI, "p-value")
 
+		#print table
+		if (GeomDisplay != "notdisplayed" ) {
+			HTML(tabs_final_redl, classfirstline="second", align="left", row.names = "FALSE")
 		}
 	}
 
@@ -1752,7 +1775,7 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")
 				add<-paste(add, "% level: (", inte , ") ", sep="")
-				if(responseTransform =="log10"||responseTransform =="loge") {
+				if((responseTransform =="log10"||responseTransform =="loge") && (GeomDisplay != "notdisplayed")) {
 					add<-paste(add, tabs_final_redl$Comparison[i], sep="")
 				} else {
 					add<-paste(add, tabs_final_red$Comparison[i], sep="")

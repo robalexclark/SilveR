@@ -2,7 +2,8 @@
 
  * Bugfix: When using splines, generateData threw an error due to the variable
    not being within the dataset.
-
+ * Bugfix: fixed a bug in print.contrast pointed out by Mads Jeppe Tarp-Johansen
+  
 ## version 0.23
 
  * Package reorganized to use `roxygen2`, markdown, `testthat`, code coverage, continuous testing, and other features. 

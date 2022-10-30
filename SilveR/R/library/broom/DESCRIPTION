@@ -1,7 +1,7 @@
 Type: Package
 Package: broom
 Title: Convert Statistical Objects into Tidy Tibbles
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     c(person(given = "David",
              family = "Robinson",
@@ -523,7 +523,12 @@ Authors@R:
              family = "Sjoberg",
              role = "ctb",
              email = "danield.sjoberg@gmail.com",
-             comment = c(ORCID = "0000-0003-0862-2018")))
+             comment = c(ORCID = "0000-0003-0862-2018")),
+      person(given = "Alex",
+             family = "Reinhart",
+             role = "ctb",
+             email = "areinhar@stat.cmu.edu",
+             comment = c(ORCID = "0000-0002-6658-514X")))
 Description: Summarizes key information about statistical
     objects in tidy tibbles. This makes it easy to report results, create
     plots and consistently work with large numbers of models at once.
@@ -539,25 +544,25 @@ URL: https://broom.tidymodels.org/, https://github.com/tidymodels/broom
 BugReports: https://github.com/tidymodels/broom/issues
 Depends: R (>= 3.1)
 Imports: backports, dplyr (>= 1.0.0), ellipsis, generics (>= 0.0.2),
-        glue, methods, purrr, rlang, stringr, tibble (>= 3.0.0), tidyr
-        (>= 1.0.0), ggplot2
+        glue, purrr, rlang, stringr, tibble (>= 3.0.0), tidyr (>=
+        1.0.0), ggplot2
 Suggests: AER, AUC, bbmle, betareg, biglm, binGroup, boot, btergm (>=
-        1.10.6), car, caret, cluster, cmprsk, coda, covr, drc, e1071,
-        emmeans, epiR, ergm (>= 3.10.4), fixest (>= 0.9.0), gam (>=
-        1.15), gee, geepack, glmnet, glmnetUtils, gmm, Hmisc, irlba,
-        interp, joineRML, Kendall, knitr, ks, Lahman, lavaan, leaps,
-        lfe, lm.beta, lme4, lmodel2, lmtest (>= 0.9.38), lsmeans, maps,
-        maptools, margins, MASS, Matrix, mclust, mediation, metafor,
-        mfx, mgcv, mlogit, modeldata, modeltests, muhaz, multcomp,
-        network, nnet, orcutt (>= 2.2), ordinal, plm, poLCA, psych,
-        quantreg, rgeos, rmarkdown, robust, robustbase, rsample,
+        1.10.6), car, carData, caret, cluster, cmprsk, coda, covr, drc,
+        e1071, emmeans, epiR, ergm (>= 3.10.4), fixest (>= 0.9.0), gam
+        (>= 1.15), gee, geepack, glmnet, glmnetUtils, gmm, Hmisc,
+        irlba, interp, joineRML, Kendall, knitr, ks, Lahman, lavaan,
+        leaps, lfe, lm.beta, lme4, lmodel2, lmtest (>= 0.9.38),
+        lsmeans, maps, maptools, margins, MASS, mclust, mediation,
+        metafor, mfx, mgcv, mlogit, modeldata, modeltests, muhaz,
+        multcomp, network, nnet, orcutt (>= 2.2), ordinal, plm, poLCA,
+        psych, quantreg, rgeos, rmarkdown, robust, robustbase, rsample,
         sandwich, sp, spdep (>= 1.1), spatialreg, speedglm, spelling,
         survey, survival, systemfit, testthat (>= 2.1.0), tseries,
         vars, zoo
 VignetteBuilder: knitr
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Language: en-US
 Collate: 'aaa-documentation-helper.R' 'null-and-default-tidiers.R'
         'aer-tidiers.R' 'auc-tidiers.R' 'base-tidiers.R'
@@ -577,11 +582,11 @@ Collate: 'aaa-documentation-helper.R' 'null-and-default-tidiers.R'
         'lmtest-tidiers.R' 'maps-tidiers.R' 'margins-tidiers.R'
         'mass-fitdistr-tidiers.R' 'mass-negbin-tidiers.R'
         'mass-polr-tidiers.R' 'mass-ridgelm-tidiers.R'
-        'stats-lm-tidiers.R' 'mass-rlm-tidiers.R' 'matrix-tidiers.R'
-        'mclust-tidiers.R' 'mediation-tidiers.R' 'metafor-tidiers.R'
-        'mfx-tidiers.R' 'mgcv-tidiers.R' 'mlogit-tidiers.R'
-        'muhaz-tidiers.R' 'multcomp-tidiers.R' 'nnet-tidiers.R'
-        'nobs.R' 'orcutt-tidiers.R' 'ordinal-clm-tidiers.R'
+        'stats-lm-tidiers.R' 'mass-rlm-tidiers.R' 'mclust-tidiers.R'
+        'mediation-tidiers.R' 'metafor-tidiers.R' 'mfx-tidiers.R'
+        'mgcv-tidiers.R' 'mlogit-tidiers.R' 'muhaz-tidiers.R'
+        'multcomp-tidiers.R' 'nnet-tidiers.R' 'nobs.R'
+        'orcutt-tidiers.R' 'ordinal-clm-tidiers.R'
         'ordinal-clmm-tidiers.R' 'plm-tidiers.R' 'polca-tidiers.R'
         'psych-tidiers.R' 'stats-nls-tidiers.R'
         'quantreg-nlrq-tidiers.R' 'quantreg-rq-tidiers.R'
@@ -603,7 +608,7 @@ Collate: 'aaa-documentation-helper.R' 'null-and-default-tidiers.R'
         'systemfit-tidiers.R' 'tseries-tidiers.R' 'utilities.R'
         'vars-tidiers.R' 'zoo-tidiers.R' 'zzz.R'
 NeedsCompilation: no
-Packaged: 2022-06-30 19:56:33 UTC; simoncouch
+Packaged: 2022-08-29 19:41:53 UTC; simoncouch
 Author: David Robinson [aut],
   Alex Hayes [aut] (<https://orcid.org/0000-0002-4985-5160>),
   Simon Couch [aut, cre] (<https://orcid.org/0000-0001-5676-5107>),
@@ -731,8 +736,9 @@ Author: David Robinson [aut],
   Jasme Lee [ctb],
   Taren Sanders [ctb] (<https://orcid.org/0000-0002-4504-6008>),
   Ilaria Prosdocimi [ctb] (<https://orcid.org/0000-0001-8565-094X>),
-  Daniel D. Sjoberg [ctb] (<https://orcid.org/0000-0003-0862-2018>)
+  Daniel D. Sjoberg [ctb] (<https://orcid.org/0000-0003-0862-2018>),
+  Alex Reinhart [ctb] (<https://orcid.org/0000-0002-6658-514X>)
 Maintainer: Simon Couch <simonpatrickcouch@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-07-01 09:20:02 UTC
-Built: R 4.1.3; ; 2022-08-15 19:10:25 UTC; windows
+Date/Publication: 2022-08-29 21:00:08 UTC
+Built: R 4.1.3; ; 2022-10-05 22:56:52 UTC; windows

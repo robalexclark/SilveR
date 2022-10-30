@@ -1,12 +1,15 @@
 ansi-styles             ANSI colored text
 ansi_align              Align an ANSI colored string
 ansi_columns            Format a character vector in multiple columns
+ansi_grep               Like 'base::grep()' and 'base::grepl()', but
+                        for ANSI strings
 ansi_has_any            Check if a string has some ANSI styling
 ansi_hide_cursor        Hide/show cursor in a terminal
 ansi_html               Convert ANSI styled text to HTML
 ansi_html_style         CSS styles for the output of 'ansi_html()'
 ansi_nchar              Count number of characters in an ANSI colored
                         string
+ansi_nzchar             Like 'base::nzchar()', but for ANSI strings
 ansi_regex              Perl compatible regular expression that matches
                         ANSI escape sequences
 ansi_simplify           Simplify ANSI styling tags
@@ -34,6 +37,8 @@ cli_debug_doc           Debug cli internals
 cli_div                 Generic CLI container
 cli_dl                  Definition list
 cli_end                 Close a CLI container
+cli_fmt                 Capture the output of cli functions instead of
+                        printing it
 cli_format              Format a value for printing
 cli_format_method       Create a format method for an object using cli
                         tools
@@ -88,6 +93,7 @@ is_ansi_tty             Detect if a stream support ANSI escape
 is_dynamic_tty          Detect whether a stream supports \\r (Carriage
                         return)
 is_utf8_output          Whether cli is emitting UTF-8 characters
+links                   cli hyperlinks
 list_border_styles      Draw a banner-like box in the console
 list_spinners           List all available spinners
 make_ansi_style         Create a new ANSI style
@@ -118,3 +124,4 @@ utf8_graphemes          Break an UTF-8 character vector into grapheme
 utf8_nchar              Count the number of characters in a character
                         vector
 utf8_substr             Substring of an UTF-8 string
+vt_output               Simulate (a subset of) a VT-5xx ANSI terminal

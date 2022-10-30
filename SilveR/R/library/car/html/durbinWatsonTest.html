@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Durbin-Watson Test for Autocorrelated Errors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for durbinWatsonTest {car}"><tr><td>durbinWatsonTest {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Durbin-Watson Test for Autocorrelated Errors</h2>
+
+<h3>Description</h3>
+
+<p>Computes residual autocorrelations and generalized Durbin-Watson
+statistics and their bootstrapped p-values. <code>dwt</code> is an
+abbreviation for <code>durbinWatsonTest</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+durbinWatsonTest(model, ...)
+
+dwt(...)
+
+## S3 method for class 'lm'
+durbinWatsonTest(model, max.lag=1, simulate=TRUE, reps=1000,
+    method=c("resample","normal"),
+    alternative=c("two.sided", "positive", "negative"), ...)
+
+## Default S3 method:
+durbinWatsonTest(model, max.lag=1, ...)
+
+## S3 method for class 'durbinWatsonTest'
+print(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>a linear-model object, or a vector of residuals from a linear model.</p>
+</td></tr>
+<tr valign="top"><td><code>max.lag</code></td>
+<td>
+<p>maximum lag to which to compute residual autocorrelations
+and Durbin-Watson statistics.</p>
+</td></tr>
+<tr valign="top"><td><code>simulate</code></td>
+<td>
+<p>if <code>TRUE</code> p-values will be estimated by bootstrapping.</p>
+</td></tr>
+<tr valign="top"><td><code>reps</code></td>
+<td>
+<p>number of bootstrap replications.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>bootstrap method: <code>"resample"</code> to resample from the observed
+residuals; <code>"normal"</code> to sample normally distributed errors with 0 mean
+and standard deviation equal to the standard error of the regression.</p>
+</td></tr>
+<tr valign="top"><td><code>alternative</code></td>
+<td>
+<p>sign of autocorrelation in alternative hypothesis; specify
+only if <code>max.lag = 1</code>; if <code>max.lag &gt; 1</code>, then <code>alternative</code> is
+taken to be <code>"two.sided"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments to be passed down.</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p><code>durbinWatsonTest</code> object.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns an object of type <code>"durbinWatsonTest"</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>p-values are available only from the <code>lm</code> method.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a></p>
+
+
+<h3>References</h3>
+
+ 
+<p>Fox, J. (2016)
+<em>Applied Regression Analysis and Generalized Linear Models</em>, Third Edition. Sage.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+durbinWatsonTest(lm(fconvict ~ tfr + partic + degrees + mconvict, data=Hartnagel))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

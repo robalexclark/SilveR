@@ -1,6 +1,6 @@
 Package: vctrs
 Title: Vector Helpers
-Version: 0.4.1
+Version: 0.5.0
 Authors@R: 
     c(person(given = "Hadley",
              family = "Wickham",
@@ -27,7 +27,7 @@ License: MIT + file LICENSE
 URL: https://vctrs.r-lib.org/
 BugReports: https://github.com/r-lib/vctrs/issues
 Depends: R (>= 3.3)
-Imports: cli (>= 3.2.0), glue, rlang (>= 1.0.2)
+Imports: cli (>= 3.4.0), glue, lifecycle (>= 1.0.3), rlang (>= 1.0.6)
 Suggests: bit64, covr, crayon, dplyr (>= 0.8.5), generics, knitr,
         pillar (>= 1.4.4), pkgdown (>= 2.0.1), rmarkdown, testthat (>=
         3.0.0), tibble (>= 3.1.3), withr, xml2, waldo (>= 0.2.0),
@@ -36,11 +36,11 @@ VignetteBuilder: knitr
 SystemRequirements: C++11
 Encoding: UTF-8
 Language: en-GB
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Config/testthat/edition: 3
 Config/Needs/website: tidyverse/tidytemplate
 NeedsCompilation: yes
-Packaged: 2022-04-13 08:56:33 UTC; lionel
+Packaged: 2022-10-21 19:58:32 UTC; lionel
 Author: Hadley Wickham [aut],
   Lionel Henry [aut, cre],
   Davis Vaughan [aut],
@@ -49,6 +49,7 @@ Author: Hadley Wickham [aut],
   RStudio [cph]
 Maintainer: Lionel Henry <lionel@rstudio.com>
 Repository: CRAN
-Date/Publication: 2022-04-13 10:30:02 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-04-24 05:41:56 UTC; windows
-Archs: i386, x64
+Date/Publication: 2022-10-22 00:20:02 UTC
+Built: R 4.2.1; x86_64-w64-mingw32; 2022-10-30 02:29:27 UTC; windows
+ExperimentalWindowsRuntime: ucrt
+Archs: x64

@@ -73,6 +73,15 @@ emmeans(mtcars.lm, ~ gear | am, non.nuis = quote(all.vars(specs)))
 ref_grid(mtcars.lm, rg.limit = 200)
 
 ## -----------------------------------------------------------------------------
+neuralgia.glm <- glm(Pain ~ Sex + Age + Duration + Treatment,
+                     data = neuralgia, family = binomial)
+emmeans(neuralgia.glm, "Treatment", counterfactuals = "Treatment",
+        vcov. = sandwich::vcovHC)
+
+## -----------------------------------------------------------------------------
+emmeans(neuralgia.glm, "Treatment", weights = "prop", type = "response")
+
+## -----------------------------------------------------------------------------
 emmeans(nutr.lm, pairwise ~ group | race, submodel = ~ age + group*race) |> 
         summary(by = NULL)
 

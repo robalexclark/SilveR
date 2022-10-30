@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: dfbeta and dfbetas Index Plots</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for dfbetaPlots {car}"><tr><td>dfbetaPlots {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>dfbeta and dfbetas Index Plots</h2>
+
+<h3>Description</h3>
+
+<p>These functions display index plots of dfbeta (effect on coefficients of deleting
+each observation in turn) and dfbetas (effect on coefficients of deleting each observation
+in turn, standardized by a deleted estimate of the coefficient standard error). In the
+plot of dfbeta, horizontal lines are drawn at 0 and +/- one standard error; in the plot
+of dfbetas, horizontal lines are drawn and 0 and +/- 1.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+dfbetaPlots(model, ...)
+
+dfbetasPlots(model, ...)
+
+## S3 method for class 'lm'
+dfbetaPlots(model, terms= ~ ., intercept=FALSE, layout=NULL, ask, 
+	    main, xlab, ylab, labels=rownames(dfbeta), 
+        id.method="y",  
+        id.n=if(id.method[1]=="identify") Inf else 0, id.cex=1,
+        id.col=carPalette()[1], id.location="lr", col=carPalette()[1], grid=TRUE, ...)
+
+## S3 method for class 'lm'
+dfbetasPlots(model, terms=~., intercept=FALSE, layout=NULL, ask, 
+	    main, xlab, ylab,
+        labels=rownames(dfbetas), id.method="y",
+        id.n=if(id.method[1]=="identify") Inf else 0, id.cex=1, 
+        id.col=carPalette()[1], id.location="lr", col=carPalette()[1], grid=TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>model object produced by <code>lm</code> or <code>glm</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>terms</code></td>
+<td>
+<p> A one-sided formula that specifies a subset of the terms in the model. 
+One dfbeta or dfbetas plot is drawn for each regressor.  The default
+<code>~.</code> is to plot against all terms in the model with the exception of an intercept.  For example, the
+specification <code>terms = ~.-X3</code> would plot against all terms
+except for <code>X3</code>.  If this argument is a quoted name of one of the terms, the 
+index plot is drawn for that term only.
+</p>
+</td></tr>
+<tr valign="top"><td><code>intercept</code></td>
+<td>
+<p>Include the intercept in the plots; default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>layout</code></td>
+<td>
+ 
+<p>If set to a value like <code>c(1, 1)</code> or <code>c(4, 3)</code>, the layout
+of the graph will have this many rows and columns.  If not set, the program
+will select an appropriate layout.  If the number of graphs exceed nine, you 
+must select the layout yourself, or you will get a maximum of nine per page.
+If <code>layout=NA</code>, the function does not set the layout and the user can
+use the <code>par</code> function to control the layout, for example to have 
+plots from two models in the same graphics window.
+</p>
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+<p>The title of the graph; if missing, one will be supplied.
+</p>
+</td></tr>
+<tr valign="top"><td><code>xlab</code></td>
+<td>
+<p>Horizontal axis label; defaults to <code>"Index"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>ylab</code></td>
+<td>
+<p>Vertical axis label; defaults to coefficient name.</p>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+<p>If <code>TRUE</code>, ask the user before drawing the next plot; if <code>FALSE</code>, the default, don't ask.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>optional additional arguments to be passed to <code><a href="../../graphics/html/plot.default.html">plot</a></code>, <code><a href="../../graphics/html/points.html">points</a></code>, and <code><a href="../../car/help/showLabels.html">showLabels</a></code></p>
+</td></tr></table>
+<p>. 
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>id.method, labels, id.n, id.cex, id.col, id.location</code></td>
+<td>
+<p>Arguments for the labelling of
+points.  The default is <code>id.n=0</code> for labeling no points.  See
+<code><a href="../../car/help/showLabels.html">showLabels</a></code> for details of these arguments.
+</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>color for points; defaults to the first entry in the color <code><a href="../../car/help/carPalette.html">carPalette</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>grid</code></td>
+<td>
+<p>If <code>TRUE</code>, the default, a light-gray background grid is put on the
+graph</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code>. These functions are used for their side effect: producing
+plots.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a></p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. (2016)
+<em>Applied Regression Analysis and Generalized Linear Models</em>,
+Third Edition. Sage.  
+</p>
+<p>Fox, J. and Weisberg, S. (2019) 
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../stats/html/influence.measures.html">dfbeta</a></code> ,<code><a href="../../stats/html/influence.measures.html">dfbetas</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+dfbetaPlots(lm(prestige ~ income + education + type, data=Duncan))
+
+dfbetasPlots(glm(partic != "not.work" ~ hincome + children, 
+  data=Womenlf, family=binomial))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

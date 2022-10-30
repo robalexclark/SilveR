@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert Character-String Variables in a Data Frame to Factors</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for strings2factors {car}"><tr><td>strings2factors {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Convert Character-String Variables in a Data Frame to Factors
+</h2>
+
+<h3>Description</h3>
+
+<p>Converts the character variables (or a subset of these variables) in a data frame to factors, with optional control of the order of the resulting factor levels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+strings2factors(object, which, not, exclude.unique, levels, verbose, ...)
+## S3 method for class 'data.frame'
+strings2factors(object, which, not, 
+    exclude.unique=TRUE, levels=list(), verbose=TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>a data frame or an object inheriting from the <code>"data.frame"</code> class.</p>
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+<p>an optional character vector of names or column numbers of the character variables to be converted to factors; if absent, <em>all</em> character variables will be converted, except as excluded by the <code>not</code> and <code>exclude.unique</code> arguments (see below).</p>
+</td></tr>
+<tr valign="top"><td><code>not</code></td>
+<td>
+<p>an optional character vector of names or column numbers of character variables <em>not</em> to be converted to factors.</p>
+</td></tr>
+<tr valign="top"><td><code>exclude.unique</code></td>
+<td>
+<p>if <code>TRUE</code> (the default), character variables all of whose values are unique (i.e., all different from each other) are not converted to factors. Such variables, which would have as many levels as there are cases, are typically case identifiers and not categorical variables. If <code>FALSE</code>, character variables all of whose values are unique are converted to factors with a warning.</p>
+</td></tr>
+<tr valign="top"><td><code>levels</code></td>
+<td>
+<p>an optional named list, each element of which is a character vector of levels of the corresponding factor. This argument allows you to control the order of levels of the factor; if omitted, or if a particular factor is omitted from the list, the levels will be in the default alphabetic order.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if <code>TRUE</code> (the default), the names of the character variables that were converted to factors are printed on the console.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>not used.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a data frame with (some) character variables replaced by corresponding factors.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../base/html/factor.html">factor</a></code>, <code><a href="../../base/html/data.frame.html">data.frame</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+M &lt;- Moore # from the carData package
+M$partner &lt;- as.character(Moore$partner.status)
+M$fcat &lt;- as.character(Moore$fcategory)
+M$names &lt;- rownames(M) # values are unique
+str(M)
+str(strings2factors(M))
+str(strings2factors(M,
+  levels=list(partner=c("low", "high"), fcat=c("low", "medium", "high"))))
+str(strings2factors(M, which="partner", levels=list(partner=c("low", "high"))))
+str(strings2factors(M, not="partner", exclude.unique=FALSE))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

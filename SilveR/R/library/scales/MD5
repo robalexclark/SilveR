@@ -1,4 +1,4 @@
-46908bf0a3ee27e3e59e5971fc27c53e *DESCRIPTION
+2f684c81a581f0ed81b1719243ddbe26 *DESCRIPTION
 3b6cdaee106c36976ac6e6ba1762af2c *INDEX
 5a2ffc012eac074809a07ea440f872a8 *LICENSE
 fa63157622129740be48bdf7e1fb1043 *Meta/Rd.rds
@@ -6,12 +6,12 @@ fa63157622129740be48bdf7e1fb1043 *Meta/Rd.rds
 632089ff7e8d6925e5b8514c013054e8 *Meta/hsearch.rds
 5d569fc6d02446ecf63165b1823d30d1 *Meta/links.rds
 5990ffaff5e602e32517c2e6cd98c348 *Meta/nsInfo.rds
-815e4fee29a709f211b4388092d40c43 *Meta/package.rds
+07c2045685a27a409dfb93c8f11fb5f3 *Meta/package.rds
 0b5b91b7c58f930ff86da8c523b1b57a *NAMESPACE
-ebb468d75bcee00e148021f2a153146c *NEWS.md
+40268cf95edde3996b7f220b266c30dc *NEWS.md
 d6c68f1fe41ced6e98a766a3757313da *R/scales
-32152090c1d759bab69eb7cb03ce2ef0 *R/scales.rdb
-4268fc7d4d36ceec2cb9145c35e670e3 *R/scales.rdx
+7f4a66f47710689c9a1c2fc3f590d9f9 *R/scales.rdb
+51b782d81b64845d72da8f679e2edc66 *R/scales.rdx
 2500889aed3c9128eb75768bc6d0220a *help/AnIndex
 28791f485a9f08386823c93c718e16a5 *help/aliases.rds
 4a28424b11dcaded80cbe32d0694071f *help/figures/README-labels-1.png
@@ -27,8 +27,8 @@ c3978703d8f40f2679795335715e98f4 *help/figures/lifecycle-experimental.svg
 53b3f893324260b737b3c46ed2a0e643 *help/figures/lifecycle-stable.svg
 1c1fe7a759b86dc6dbcbe7797ab8246c *help/figures/lifecycle-superseded.svg
 397924b3057559da1bf799e2ba1554ab *help/figures/logo.png
-6334d5675874a78eb476302139e09b86 *help/paths.rds
-6d7034ca218b908212d31be5695e40be *help/scales.rdb
-d171805035fe048b8dde22b2781bde14 *help/scales.rdx
-e92e9dd701df9bd7c6f3f244d4467950 *html/00Index.html
+3916c6e367fc66ae747802ec3901b6f7 *help/paths.rds
+fd66baa1866a91b9a4e78352e5082b03 *help/scales.rdb
+8bceb5b2c2860534c0a879fff66c0a69 *help/scales.rdx
+b0f7607b1e095c80d9217f9b61b366f4 *html/00Index.html
 b6763e6916890c631fdc3f2643803b1a *html/R.css

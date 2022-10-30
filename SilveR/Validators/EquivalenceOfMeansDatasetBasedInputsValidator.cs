@@ -37,7 +37,7 @@ namespace SilveR.Validators
             //Check that the number of responses for each level is at least 2 
             if (CountResponses(mcVariables.Response) < 2)
             {
-                ValidationInfo.AddErrorMessage("The response selected (" + mcVariables.Response + ") contains only 1 value. Please select another factor.");
+                ValidationInfo.AddErrorMessage("The response selected (" + mcVariables.Response + ") contains only 1 value. Please select another response.");
                 return ValidationInfo;
             }
 
@@ -65,7 +65,7 @@ namespace SilveR.Validators
             }
             else if (mcVariables.Treatment == null && mcVariables.Response != null && CountResponses(mcVariables.Response) == 1) //if only a response selected (doing absolute change) then check that more than 1 value is in the dataset!
             {
-                ValidationInfo.AddErrorMessage("The Response (" + mcVariables.Response + ") contains only 1 value. Please select another factor.");
+                ValidationInfo.AddErrorMessage("The Response (" + mcVariables.Response + ") contains only 1 value. Please select another response.");
                 return ValidationInfo;
             }
 

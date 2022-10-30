@@ -1,4 +1,5 @@
 as_factor               Convert input to a factor
+fct                     Create a factor
 fct_anon                Anonymise factor levels
 fct_c                   Concatenate factors, combining levels
 fct_collapse            Collapse factor levels into manually defined

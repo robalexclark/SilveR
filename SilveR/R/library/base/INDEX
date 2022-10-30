@@ -56,6 +56,7 @@ Rdconv                  Utilities for Processing Rd Files
 Recall                  Recursive Calling
 Reserved                Reserved Words in R
 Special                 Special Functions of Mathematics
+StackOverflows          Stack Overflow Errors
 Startup                 Initialization at Start of an R Session
 Syntax                  Operator Syntax and Precedence
 Sys.getenv              Get Environment Variables
@@ -130,8 +131,8 @@ charmatch               Partial String Matching
 chartr                  Character Translation and Casefolding
 chkDots                 Warn About Extraneous Arguments in the "..." of
                         Its Caller
-chol                    The Choleski Decomposition
-chol2inv                Inverse from Choleski (or QR) Decomposition
+chol                    The Cholesky Decomposition
+chol2inv                Inverse from Cholesky (or QR) Decomposition
 class                   Object Classes
 col                     Column Indexes
 colSums                 Form Row and Column Sums and Means
@@ -229,7 +230,7 @@ grepRaw                 Pattern Matching for Raw Vectors
 groupGeneric            S3 Group Generic Functions
 grouping                Grouping Permutation
 gzcon                   (De)compress I/O Through Connections
-hexmode                 Display Numbers in Hexadecimal
+hexmode                 Integer Numbers Displayed in Hexadecimal
 iconv                   Convert Character Vector between Encodings
 icuSetCollate           Setup Collation by ICU
 identical               Test Objects for Exact Equality
@@ -297,6 +298,7 @@ merge                   Merge Two Data Frames
 message                 Diagnostic Messages
 missing                 Does a Formal Argument have a Value?
 mode                    The (Storage) Mode of an Object
+mtfrm                   Auxiliary Function for Matching
 name                    Names and Symbols
 names                   The Names of an Object
 nargs                   The Number of Arguments to a Function
@@ -310,7 +312,7 @@ normalizePath           Express File Paths in Canonical Form
 nrow                    The Number of Rows/Columns of an Array
 numeric                 Numeric Vectors
 numeric_version         Numeric Versions
-octmode                 Display Numbers in Octal
+octmode                 Integer Numbers Displayed in Octal
 on.exit                 Function Exit Code
 options                 Options Settings
 order                   Ordering Permutation
@@ -360,7 +362,7 @@ rep                     Replicate Elements of Vectors and Lists
 replace                 Replace Values in a Vector
 rev                     Reverse Elements
 rle                     Run Length Encoding
-round.POSIXt            Round / Truncate Data-Time Objects
+round.POSIXt            Round / Truncate Date-Time Objects
 row                     Row Indexes
 row.names               Get and Set Row Names for Data Frames
 rownames                Row and Column Names
@@ -449,7 +451,7 @@ unname                  Remove 'names' or 'dimnames'
 utf8ToInt               Convert Integer Vectors to or from
                         UTF-8-encoded Character Vectors
 validUTF8               Check if a Character Vector is Validly Encoded
-vector                  Vectors
+vector                  Vectors - Creation, Coercion, etc
 warning                 Warning Messages
 warnings                Print Warning Messages
 weekdays                Extract Parts of a POSIXt or Date Object

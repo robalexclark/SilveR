@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Summarize an emmGrid from a Bayesian model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for hpd.summary {emmeans}"><tr><td>hpd.summary {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Summarize an emmGrid from a Bayesian model</h2>
+
+<h3>Description</h3>
+
+<p>This function computes point estimates and HPD intervals for each
+factor combination in <code>object@emmGrid</code>. While this function
+may be called independently, it is called automatically by the S3 method
+<code><a href="../../emmeans/help/summary.emmGrid.html">summary.emmGrid</a></code> when the object is based on a Bayesian model.
+(Note: the <code>level</code> argument, or its default, is passed as <code>prob</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+hpd.summary(object, prob, by, type, point.est = median, delta,
+  bias.adjust = get_emm_option("back.bias.adj"), sigma, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>an <code>emmGrid</code> object having a non-missing <code>post.beta</code> slot</p>
+</td></tr>
+<tr valign="top"><td><code>prob</code></td>
+<td>
+<p>numeric probability content for HPD intervals (note: when not specified,
+the current <code>level</code> option is used; see <code><a href="../../emmeans/help/emm_options.html">emm_options</a></code>)</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>factors to use as <code>by</code> variables</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>prediction type as in <code><a href="../../emmeans/help/summary.emmGrid.html">summary.emmGrid</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>point.est</code></td>
+<td>
+<p>function to use to compute the point estimates from the 
+posterior sample for each grid point</p>
+</td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+<p>Numeric equivalence threshold (on the linear predictor scale 
+regardless of <code>type</code>).
+See the section below on equivalence testing.</p>
+</td></tr>
+<tr valign="top"><td><code>bias.adjust</code></td>
+<td>
+<p>Logical value for whether to adjust for bias in
+back-transforming (<code>type = "response"</code>). This requires a value of 
+<code>sigma</code> to exist in the object or be specified.</p>
+</td></tr>
+<tr valign="top"><td><code>sigma</code></td>
+<td>
+<p>Error SD assumed for bias correction (when 
+<code>type = "response"</code>. If not specified,
+<code>object@misc$sigma</code> is used, and an error is thrown if it is not found.
+<em>Note:</em> <code>sigma</code> may be a vector, as long as it conforms to the 
+number of observations in the posterior sample.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>required but not used</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>an object of class <code>summary_emm</code>
+</p>
+
+
+<h3>Equivalence testing note</h3>
+
+<p>If <code>delta</code> is positive, two columns labeled <code>p.equiv</code> and
+<code>odds.eq</code> are appended to the summary. <code>p.equiv</code> is the fraction
+of posterior estimates having absolute values less than <code>delta</code>. The
+<code>odds.eq</code> column is just <code>p.equiv</code> converted to an odds ratio; so
+it is the posterior odds of equivalence.
+</p>
+<p>A high value of <code>p.equiv</code> is evidence
+in favor of equivalence. It can be used to obtain something equivalent
+(in spirit) to the frequentist Schuirmann (TOST) procedure, whereby we would
+conclude equivalence at significance level <i>&alpha;</i> if the <i>(1 - 2&alpha;)</i>
+confidence interval falls entirely in the interval <i>[-&delta;, &delta;]</i>.
+Similarly in the Bayesian context, an equally strong argument for
+equivalence is obtained if <code>p.equiv</code> exceeds <i>1 - 2&alpha;</i>.
+</p>
+<p>A closely related quantity is the ROPE (region of practical equivalence),
+obtainable via <code>bayestestR::rope(object, range = c(-delta, delta))</code>.
+Its value is approximately <code>100 * p.equiv / 0.95</code> if the default
+<code>ci = 0.95</code> is used.
+</p>
+<p>Finally, a Bayes factor for equivalence is obtainable by dividing 
+<code>odds.eq</code> by the prior odds of equivalence, assessed or elicited separately.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>summary.emmGrid
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if(require("coda")) 
+    emm_example("hpd.summary-coda")
+    # Use emm_example("hpd.summary-coda", list = TRUE) # to see just the code
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

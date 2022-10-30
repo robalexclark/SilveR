@@ -1,3 +1,7 @@
+# scales 1.2.1
+
+* Re-document to fix HTML issues in `.Rd`.
+
 # scales 1.2.0
 
 ## New features

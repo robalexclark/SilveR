@@ -14,7 +14,19 @@
 
 <title>In packages</title>
 
-<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -24,6 +36,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -107,13 +120,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -125,7 +145,187 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 
 
@@ -145,16 +345,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Introduction</h2>
 <p>This vignette serves two distinct, but related, purposes:</p>
 <ul>
-<li><p>It documents general best practices for using tidyr in a package, inspired by <a href="https://ggplot2.tidyverse.org/dev/articles/ggplot2-in-packages.html">using ggplot2 in packages</a>.</p></li>
-<li><p>It describes migration patterns for the transition from tidyr v0.8.3 to v1.0.0. This release includes breaking changes to <code>nest()</code> and <code>unnest()</code> in order to increase consistency within tidyr and with the rest of the tidyverse.</p></li>
+<li><p>It documents general best practices for using tidyr in a package,
+inspired by <a href="https://ggplot2.tidyverse.org/dev/articles/ggplot2-in-packages.html">using
+ggplot2 in packages</a>.</p></li>
+<li><p>It describes migration patterns for the transition from tidyr
+v0.8.3 to v1.0.0. This release includes breaking changes to
+<code>nest()</code> and <code>unnest()</code> in order to increase
+consistency within tidyr and with the rest of the tidyverse.</p></li>
 </ul>
-<p>Before we go on, we’ll attach the packages we use, expose the version of tidyr, and make a small dataset to use in examples.</p>
+<p>Before we go on, we’ll attach the packages we use, expose the version
+of tidyr, and make a small dataset to use in examples.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">&quot;tidyr&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &#39;1.2.0&#39;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &#39;1.2.1&#39;</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>mini_iris <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(iris)[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">51</span>, <span class="dv">52</span>, <span class="dv">101</span>, <span class="dv">102</span>), ]</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>mini_iris</span>
@@ -170,14 +376,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="using-tidyr-in-packages" class="section level2">
 <h2>Using tidyr in packages</h2>
-<p>Here we assume that you’re already familiar with using tidyr in functions, as described in <code>vignette(&quot;programming.Rmd)</code>. There are two important considerations when using tidyr in a package:</p>
+<p>Here we assume that you’re already familiar with using tidyr in
+functions, as described in <code>vignette(&quot;programming.Rmd)</code>.
+There are two important considerations when using tidyr in a
+package:</p>
 <ul>
-<li>How to avoid <code>R CMD CHECK</code> notes when using fixed variable names.</li>
-<li>How to alert yourself to upcoming changes in the development version of tidyr.</li>
+<li>How to avoid <code>R CMD CHECK</code> notes when using fixed
+variable names.</li>
+<li>How to alert yourself to upcoming changes in the development version
+of tidyr.</li>
 </ul>
 <div id="fixed-column-names" class="section level3">
 <h3>Fixed column names</h3>
-<p>If you know the column names, this code works in the same way regardless of whether its inside or outside of a package:</p>
+<p>If you know the column names, this code works in the same way
+regardless of whether its inside or outside of a package:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mini_iris <span class="sc">%&gt;%</span> <span class="fu">nest</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal =</span> <span class="fu">c</span>(Petal.Length, Petal.Width), </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal =</span> <span class="fu">c</span>(Sepal.Length, Sepal.Width)</span>
@@ -188,8 +400,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 setosa     &lt;tibble [2 × 2]&gt; &lt;tibble [2 × 2]&gt;</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 versicolor &lt;tibble [2 × 2]&gt; &lt;tibble [2 × 2]&gt;</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 virginica  &lt;tibble [2 × 2]&gt; &lt;tibble [2 × 2]&gt;</span></span></code></pre></div>
-<p>But <code>R CMD check</code> will warn about undefined global variables (<code>Petal.Length</code>, <code>Petal.Width</code>, <code>Sepal.Length</code>, and <code>Sepal.Width</code>), because it doesn’t know that <code>nest()</code> is looking for the variables inside of <code>mini_iris</code> (i.e. <code>Petal.Length</code> and friends are data-variables, not env-variables).</p>
-<p>The easiest way to silence this note is to use <code>all_of()</code>. <code>all_of()</code> is a tidyselect helper (like <code>starts_with()</code>, <code>ends_with()</code>, etc.) that takes column names stored as strings:</p>
+<p>But <code>R CMD check</code> will warn about undefined global
+variables (<code>Petal.Length</code>, <code>Petal.Width</code>,
+<code>Sepal.Length</code>, and <code>Sepal.Width</code>), because it
+doesn’t know that <code>nest()</code> is looking for the variables
+inside of <code>mini_iris</code> (i.e. <code>Petal.Length</code> and
+friends are data-variables, not env-variables).</p>
+<p>The easiest way to silence this note is to use <code>all_of()</code>.
+<code>all_of()</code> is a tidyselect helper (like
+<code>starts_with()</code>, <code>ends_with()</code>, etc.) that takes
+column names stored as strings:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mini_iris <span class="sc">%&gt;%</span> <span class="fu">nest</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">&quot;Petal.Length&quot;</span>, <span class="st">&quot;Petal.Width&quot;</span>)), </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal =</span> <span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">&quot;Sepal.Length&quot;</span>, <span class="st">&quot;Sepal.Width&quot;</span>))</span>
@@ -200,18 +420,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 setosa     &lt;tibble [2 × 2]&gt; &lt;tibble [2 × 2]&gt;</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 versicolor &lt;tibble [2 × 2]&gt; &lt;tibble [2 × 2]&gt;</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 virginica  &lt;tibble [2 × 2]&gt; &lt;tibble [2 × 2]&gt;</span></span></code></pre></div>
-<p>Alternatively, you may want to use <code>any_of()</code> if it is OK that some of the specified variables cannot be found in the input data.</p>
-<p>The <a href="https://tidyselect.r-lib.org">tidyselect</a> package offers an entire family of select helpers. You are probably already familiar with them from using <code>dplyr::select()</code>.</p>
+<p>Alternatively, you may want to use <code>any_of()</code> if it is OK
+that some of the specified variables cannot be found in the input
+data.</p>
+<p>The <a href="https://tidyselect.r-lib.org">tidyselect</a> package
+offers an entire family of select helpers. You are probably already
+familiar with them from using <code>dplyr::select()</code>.</p>
 </div>
 <div id="continuous-integration" class="section level3">
 <h3>Continuous integration</h3>
-<p>Hopefully you’ve already adopted continuous integration for your package, in which <code>R CMD check</code> (which includes your own tests) is run on a regular basis, e.g. every time you push changes to your package’s source on GitHub or similar. The tidyverse team currently relies most heavily on GitHub Actions, so that will be our example. <code>usethis::use_github_action()</code> can help you get started.</p>
-<p>We recommend adding a workflow that targets the devel version of tidyr. When should you do this?</p>
+<p>Hopefully you’ve already adopted continuous integration for your
+package, in which <code>R CMD check</code> (which includes your own
+tests) is run on a regular basis, e.g. every time you push changes to
+your package’s source on GitHub or similar. The tidyverse team currently
+relies most heavily on GitHub Actions, so that will be our example.
+<code>usethis::use_github_action()</code> can help you get started.</p>
+<p>We recommend adding a workflow that targets the devel version of
+tidyr. When should you do this?</p>
 <ul>
-<li><p>Always? If your package is tightly coupled to tidyr, consider leaving this in place all the time, so you know if changes in tidyr affect your package.</p></li>
-<li><p>Right before a tidyr release? For everyone else, you could add (or re-activate an existing) tidyr-devel workflow during the period preceding a major tidyr release that has the potential for breaking changes, especially if you’ve been contacted during our reverse dependency checks.</p></li>
+<li><p>Always? If your package is tightly coupled to tidyr, consider
+leaving this in place all the time, so you know if changes in tidyr
+affect your package.</p></li>
+<li><p>Right before a tidyr release? For everyone else, you could add
+(or re-activate an existing) tidyr-devel workflow during the period
+preceding a major tidyr release that has the potential for breaking
+changes, especially if you’ve been contacted during our reverse
+dependency checks.</p></li>
 </ul>
-<p>Example of a GitHub Actions workflow that tests your package against the development version of tidyr:</p>
+<p>Example of a GitHub Actions workflow that tests your package against
+the development version of tidyr:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span></span>
@@ -237,30 +474,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check</span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> rcmdcheck::rcmdcheck(args = &quot;--no-manual&quot;, error_on = &quot;error&quot;)</span></span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> Rscript {0}</span></span></code></pre></div>
-<p>GitHub Actions are an evolving landscape, so you can always mine the workflows for tidyr itself (<a href="https://github.com/tidyverse/tidyr/tree/main/.github/workflows">tidyverse/tidyr/.github/workflows</a>) or the main <a href="https://github.com/r-lib/actions">r-lib/actions</a> repo for ideas.</p>
+<p>GitHub Actions are an evolving landscape, so you can always mine the
+workflows for tidyr itself (<a href="https://github.com/tidyverse/tidyr/tree/main/.github/workflows">tidyverse/tidyr/.github/workflows</a>)
+or the main <a href="https://github.com/r-lib/actions">r-lib/actions</a>
+repo for ideas.</p>
 </div>
 </div>
 <div id="tidyr-v0.8.3---v1.0.0" class="section level2">
 <h2>tidyr v0.8.3 -&gt; v1.0.0</h2>
-<p>v1.0.0 makes considerable changes to the interface of <code>nest()</code> and <code>unnest()</code> in order to bring them in line with newer tidyverse conventions. I have tried to make the functions as backward compatible as possible and to give informative warning messages, but I could not cover 100% of use cases, so you may need to change your package code. This guide will help you do so with a minimum of pain.</p>
-<p>Ideally, you’ll tweak your package so that it works with both tidyr 0.8.3 and tidyr 1.0.0. This makes life considerably easier because it means there’s no need to coordinate CRAN submissions - you can submit your package that works with both tidyr versions, before I submit tidyr to CRAN. This section describes our recommend practices for doing so, drawing from the general principles described in <a href="https://principles.tidyverse.org/changes-multivers.html" class="uri">https://principles.tidyverse.org/changes-multivers.html</a>.</p>
-<p>If you use continuous integration already, we <strong>strongly</strong> recommend adding a build that tests with the development version of tidyr; see above for details.</p>
-<p>This section briefly describes how to run different code for different versions of tidyr, then goes through the major changes that might require workarounds:</p>
+<p>v1.0.0 makes considerable changes to the interface of
+<code>nest()</code> and <code>unnest()</code> in order to bring them in
+line with newer tidyverse conventions. I have tried to make the
+functions as backward compatible as possible and to give informative
+warning messages, but I could not cover 100% of use cases, so you may
+need to change your package code. This guide will help you do so with a
+minimum of pain.</p>
+<p>Ideally, you’ll tweak your package so that it works with both tidyr
+0.8.3 and tidyr 1.0.0. This makes life considerably easier because it
+means there’s no need to coordinate CRAN submissions - you can submit
+your package that works with both tidyr versions, before I submit tidyr
+to CRAN. This section describes our recommend practices for doing so,
+drawing from the general principles described in <a href="https://design.tidyverse.org/changes-multivers.html" class="uri">https://design.tidyverse.org/changes-multivers.html</a>.</p>
+<p>If you use continuous integration already, we
+<strong>strongly</strong> recommend adding a build that tests with the
+development version of tidyr; see above for details.</p>
+<p>This section briefly describes how to run different code for
+different versions of tidyr, then goes through the major changes that
+might require workarounds:</p>
 <ul>
-<li><code>nest()</code> and <code>unnest()</code> get new interfaces.</li>
+<li><code>nest()</code> and <code>unnest()</code> get new
+interfaces.</li>
 <li><code>nest()</code> preserves groups.</li>
 <li><code>nest_()</code> and <code>unnest_()</code> are defunct.</li>
 </ul>
-<p>If you’re struggling with a problem that’s not described here, please reach out via <a href="https://github.com/tidyverse/tidyr/issues/new">github</a> or <a href="mailto:hadley@rstudio.com">email</a> so we can help out.</p>
+<p>If you’re struggling with a problem that’s not described here, please
+reach out via <a href="https://github.com/tidyverse/tidyr/issues/new">github</a> or <a href="mailto:hadley@rstudio.com">email</a> so we can help out.</p>
 <div id="conditional-code" class="section level3">
 <h3>Conditional code</h3>
-<p>Sometimes you’ll be able to write code that works with v0.8.3 <em>and</em> v1.0.0. But this often requires code that’s not particularly natural for either version and you’d be better off to (temporarily) have separate code paths, each containing non-contrived code. You get to re-use your existing code in the “old” branch, which will eventually be phased out, and write clean, forward-looking code in the “new” branch.</p>
-<p>The basic approach looks like this. First you define a function that returns <code>TRUE</code> for new versions of tidyr:</p>
+<p>Sometimes you’ll be able to write code that works with v0.8.3
+<em>and</em> v1.0.0. But this often requires code that’s not
+particularly natural for either version and you’d be better off to
+(temporarily) have separate code paths, each containing non-contrived
+code. You get to re-use your existing code in the “old” branch, which
+will eventually be phased out, and write clean, forward-looking code in
+the “new” branch.</p>
+<p>The basic approach looks like this. First you define a function that
+returns <code>TRUE</code> for new versions of tidyr:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tidyr_new_interface <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">packageVersion</span>(<span class="st">&quot;tidyr&quot;</span>) <span class="sc">&gt;</span> <span class="st">&quot;0.8.99&quot;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>We highly recommend keeping this as a function because it provides an obvious place to jot any transition notes for your package, and it makes it easier to remove transitional code later on. Another benefit is that the tidyr version is determined at <em>run time</em>, not at <em>build time</em>, and will therefore detect your user’s current tidyr version.</p>
-<p>Then in your functions, you use an <code>if</code> statement to call different code for different versions:</p>
+<p>We highly recommend keeping this as a function because it provides an
+obvious place to jot any transition notes for your package, and it makes
+it easier to remove transitional code later on. Another benefit is that
+the tidyr version is determined at <em>run time</em>, not at <em>build
+time</em>, and will therefore detect your user’s current tidyr
+version.</p>
+<p>Then in your functions, you use an <code>if</code> statement to call
+different code for different versions:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>my_function_inside_a_package <span class="ot">&lt;-</span> <span class="cf">function</span>(...)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># my code here</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -274,20 +544,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># more code here</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
-<p>If your new code uses a function that only exists in tidyr 1.0.0, you will get a <code>NOTE</code> from <code>R CMD check</code>: this is one of the few notes that you can explain in your CRAN submission comments. Just mention that it’s for forward compatibility with tidyr 1.0.0, and CRAN will let your package through.</p>
+<p>If your new code uses a function that only exists in tidyr 1.0.0, you
+will get a <code>NOTE</code> from <code>R CMD check</code>: this is one
+of the few notes that you can explain in your CRAN submission comments.
+Just mention that it’s for forward compatibility with tidyr 1.0.0, and
+CRAN will let your package through.</p>
 </div>
 <div id="new-syntax-for-nest" class="section level3">
 <h3>New syntax for <code>nest()</code></h3>
 <p>What changed:</p>
 <ul>
-<li>The to-be-nested columns are no longer accepted as “loose parts”.</li>
-<li>The new list-column’s name is no longer provided via the <code>.key</code> argument.</li>
-<li>Now we use a construct like this: <code>new_col = &lt;something about existing cols&gt;</code>.</li>
+<li>The to-be-nested columns are no longer accepted as “loose
+parts”.</li>
+<li>The new list-column’s name is no longer provided via the
+<code>.key</code> argument.</li>
+<li>Now we use a construct like this:
+<code>new_col = &lt;something about existing cols&gt;</code>.</li>
 </ul>
 <p>Why it changed:</p>
 <ul>
-<li><p>The use of <code>...</code> for metadata is a problematic pattern we’re moving away from. <a href="https://principles.tidyverse.org/dots-data.html" class="uri">https://principles.tidyverse.org/dots-data.html</a></p></li>
-<li><p>The <code>new_col = &lt;something about existing cols&gt;</code> construct lets us create multiple nested list-columns at once (“multi-nest”).</p>
+<li><p>The use of <code>...</code> for metadata is a problematic pattern
+we’re moving away from. <a href="https://design.tidyverse.org/dots-data.html" class="uri">https://design.tidyverse.org/dots-data.html</a></p></li>
+<li><p>The <code>new_col = &lt;something about existing cols&gt;</code>
+construct lets us create multiple nested list-columns at once
+(“multi-nest”).</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mini_iris <span class="sc">%&gt;%</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">petal =</span> <span class="fu">matches</span>(<span class="st">&quot;Petal&quot;</span>), <span class="at">sepal =</span> <span class="fu">matches</span>(<span class="st">&quot;Sepal&quot;</span>)) </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
@@ -313,7 +593,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># or equivalently:</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>mini_iris <span class="sc">%&gt;%</span> </span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>(<span class="at">my_data =</span> <span class="sc">!</span><span class="fu">any_of</span>(<span class="st">&quot;Species&quot;</span>))</span></code></pre></div>
-<p>If you need a quick and dirty fix without having to think, just call <code>nest_legacy()</code> instead of <code>nest()</code>. It’s the same as <code>nest()</code> in v0.8.3:</p>
+<p>If you need a quick and dirty fix without having to think, just call
+<code>nest_legacy()</code> instead of <code>nest()</code>. It’s the same
+as <code>nest()</code> in v0.8.3:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">tidyr_new_interface</span>()) {</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">nest_legacy</span>(df, x, y, z)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
@@ -324,10 +606,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>New syntax for <code>unnest()</code></h3>
 <p>What changed:</p>
 <ul>
-<li><p>The to-be-unnested columns must now be specified explicitly, instead of defaulting to all list-columns. This also deprecates <code>.drop</code> and <code>.preserve</code>.</p></li>
-<li><p><code>.sep</code> has been deprecated and replaced with <code>names_sep</code>.</p></li>
-<li><p><code>unnest()</code> uses the <a href="https://www.tidyverse.org/blog/2019/01/tibble-2.0.1/#name-repair">emerging tidyverse standard</a> to disambiguate duplicated names. Use <code>names_repair = tidyr_legacy</code> to request the previous approach.</p></li>
-<li><p><code>.id</code> has been deprecated because it can be easily replaced by creating the column of names prior to <code>unnest()</code>, e.g. with an upstream call to <code>mutate()</code>.</p>
+<li><p>The to-be-unnested columns must now be specified explicitly,
+instead of defaulting to all list-columns. This also deprecates
+<code>.drop</code> and <code>.preserve</code>.</p></li>
+<li><p><code>.sep</code> has been deprecated and replaced with
+<code>names_sep</code>.</p></li>
+<li><p><code>unnest()</code> uses the <a href="https://www.tidyverse.org/blog/2019/01/tibble-2.0.1/#name-repair">emerging
+tidyverse standard</a> to disambiguate duplicated names. Use
+<code>names_repair = tidyr_legacy</code> to request the previous
+approach.</p></li>
+<li><p><code>.id</code> has been deprecated because it can be easily
+replaced by creating the column of names prior to <code>unnest()</code>,
+e.g. with an upstream call to <code>mutate()</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># v0.8.3</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(x, <span class="at">.id =</span> <span class="st">&quot;id&quot;</span>)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -336,8 +626,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Why it changed:</p>
 <ul>
-<li><p>The use of <code>...</code> for metadata is a problematic pattern we’re moving away from. <a href="https://principles.tidyverse.org/dots-data.html" class="uri">https://principles.tidyverse.org/dots-data.html</a></p></li>
-<li><p>The changes to details arguments relate to features rolling out across multiple packages in the tidyverse. For example, <code>ptype</code> exposes prototype support from the new <a href="https://vctrs.r-lib.org">vctrs package</a>. <code>names_repair</code> specifies what to do about duplicated or non-syntactic names, consistent with tibble and readxl.</p></li>
+<li><p>The use of <code>...</code> for metadata is a problematic pattern
+we’re moving away from. <a href="https://design.tidyverse.org/dots-data.html" class="uri">https://design.tidyverse.org/dots-data.html</a></p></li>
+<li><p>The changes to details arguments relate to features rolling out
+across multiple packages in the tidyverse. For example,
+<code>ptype</code> exposes prototype support from the new <a href="https://vctrs.r-lib.org">vctrs package</a>.
+<code>names_repair</code> specifies what to do about duplicated or
+non-syntactic names, consistent with tibble and readxl.</p></li>
 </ul>
 <p>Before and after:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nested <span class="ot">&lt;-</span> mini_iris <span class="sc">%&gt;%</span> </span>
@@ -348,7 +643,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># v1.0.0 must be told which columns to unnest</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>nested <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="fu">any_of</span>(<span class="st">&quot;my_data&quot;</span>))</span></code></pre></div>
-<p>If you need a quick and dirty fix without having to think, just call <code>unnest_legacy()</code> instead of <code>unnest()</code>. It’s the same as <code>unnest()</code> in v0.8.3:</p>
+<p>If you need a quick and dirty fix without having to think, just call
+<code>unnest_legacy()</code> instead of <code>unnest()</code>. It’s the
+same as <code>unnest()</code> in v0.8.3:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">tidyr_new_interface</span>()) {</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">unnest_legacy</span>(df)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
@@ -359,19 +656,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><code>nest()</code> preserves groups</h3>
 <p>What changed:</p>
 <ul>
-<li><code>nest()</code> now preserves the groups present in the input.</li>
+<li><code>nest()</code> now preserves the groups present in the
+input.</li>
 </ul>
 <p>Why it changed:</p>
 <ul>
-<li>To reflect the growing support for grouped data frames, especially in recent releases of dplyr. See, for example, <code>dplyr::group_modify()</code>, <code>group_map()</code>, and friends.</li>
+<li>To reflect the growing support for grouped data frames, especially
+in recent releases of dplyr. See, for example,
+<code>dplyr::group_modify()</code>, <code>group_map()</code>, and
+friends.</li>
 </ul>
-<p>If the fact that <code>nest()</code> now preserves groups is problematic downstream, you have a few choices:</p>
+<p>If the fact that <code>nest()</code> now preserves groups is
+problematic downstream, you have a few choices:</p>
 <ul>
-<li><p>Apply <code>ungroup()</code> to the result. This level of pragmatism suggests, however, you should at least consider the next two options.</p></li>
-<li><p>You should never have grouped in the first place. Eliminate the <code>group_by()</code> call and specify which columns should be nested versus not nested directly in <code>nest()</code>.</p></li>
+<li><p>Apply <code>ungroup()</code> to the result. This level of
+pragmatism suggests, however, you should at least consider the next two
+options.</p></li>
+<li><p>You should never have grouped in the first place. Eliminate the
+<code>group_by()</code> call and specify which columns should be nested
+versus not nested directly in <code>nest()</code>.</p></li>
 <li><p>Adjust the downstream code to accommodate grouping.</p></li>
 </ul>
-<p>Imagine we used <code>group_by()</code> then <code>nest()</code> on <code>mini_iris</code>, then we computed on the list-column <em>outside the data frame</em>.</p>
+<p>Imagine we used <code>group_by()</code> then <code>nest()</code> on
+<code>mini_iris</code>, then we computed on the list-column <em>outside
+the data frame</em>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(df <span class="ot">&lt;-</span> mini_iris <span class="sc">%&gt;%</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span> </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">nest</span>())</span>
@@ -387,11 +695,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>And now we try to add that back to the data <em>post hoc</em>:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_rows =</span> external_variable)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error: Problem with `mutate()` column `n_rows`.</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ `n_rows = external_variable`.</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ `n_rows` must be size 1, not 3.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `mutate()`:</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! Problem while computing `n_rows = external_variable`.</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ✖ `n_rows` must be size 1, not 3.</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ The error occurred in group 1: Species = setosa.</span></span></code></pre></div>
-<p>This fails because <code>df</code> is grouped and <code>mutate()</code> is group-aware, so it’s hard to add a completely external variable. Other than pragmatically <code>ungroup()</code>ing, what can we do? One option is to work inside the data frame, i.e. bring the <code>map()</code> inside the <code>mutate()</code>, and design the problem away:</p>
+<p>This fails because <code>df</code> is grouped and
+<code>mutate()</code> is group-aware, so it’s hard to add a completely
+external variable. Other than pragmatically <code>ungroup()</code>ing,
+what can we do? One option is to work inside the data frame, i.e. bring
+the <code>map()</code> inside the <code>mutate()</code>, and design the
+problem away:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_rows =</span> <span class="fu">map_int</span>(data, nrow))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
@@ -401,7 +714,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 setosa     &lt;tibble [2 × 4]&gt;      2</span></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 versicolor &lt;tibble [2 × 4]&gt;      2</span></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 virginica  &lt;tibble [2 × 4]&gt;      2</span></span></code></pre></div>
-<p>If, somehow, the grouping seems appropriate AND working inside the data frame is not an option, <code>tibble::add_column()</code> is group-unaware. It lets you add external data to a grouped data frame.</p>
+<p>If, somehow, the grouping seems appropriate AND working inside the
+data frame is not an option, <code>tibble::add_column()</code> is
+group-unaware. It lets you add external data to a grouped data
+frame.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">n_rows =</span> external_variable)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 3</span></span>
@@ -420,9 +736,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Why it changed:</p>
 <ul>
-<li>We are transitioning the whole tidyverse to the powerful tidy eval framework. Therefore, we are gradually removing all previous solutions:
+<li>We are transitioning the whole tidyverse to the powerful tidy eval
+framework. Therefore, we are gradually removing all previous solutions:
 <ul>
-<li>Specialized standard evaluation versions of functions, e.g., <code>foo_()</code> as a complement to <code>foo()</code>.</li>
+<li>Specialized standard evaluation versions of functions, e.g.,
+<code>foo_()</code> as a complement to <code>foo()</code>.</li>
 <li>The older lazyeval framework.</li>
 </ul></li>
 </ul>

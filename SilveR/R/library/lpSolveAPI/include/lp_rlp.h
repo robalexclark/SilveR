@@ -587,7 +587,7 @@ static lp_yyconst flex_int32_t lp_yy_rule_can_match_eol[34] =
 #define YY_RESTORE_YY_MORE_OFFSET
 /*
    made reentrant with help of
-   http://www.usualcoding.eu/post/2007/09/03/Building-a-reentrant-parser-in-C-with-Flex/Bison
+   https://www.usualcoding.eu/post/2007/09/03/Building-a-reentrant-parser-in-C-with-Flex/Bison
 */
 /*
    Note that a minimum version of flex is needed to be able to compile this.

@@ -1,3 +1,7 @@
+# stringr 1.4.1
+
+Hot patch release to resolve R CMD check failures.
+
 # stringr 1.4.0
 
 * `str_interp()` now renders lists consistently independent on the presence of
@@ -35,7 +39,7 @@
 ## New features
 
 * `str_glue()` and `str_glue_data()` provide convenient wrappers around
-  `glue` and `glue_data()` from the [glue](http://glue.tidyverse.org/) package
+  `glue` and `glue_data()` from the [glue](https://glue.tidyverse.org/) package
   (#157).
 
 * `str_flatten()` is a wrapper around `stri_flatten()` and clearly
@@ -129,7 +133,7 @@
 
 # stringr 1.0.0
 
-* stringr is now powered by [stringi](https://github.com/Rexamine/stringi) 
+* stringr is now powered by [stringi](https://github.com/gagolews/stringi) 
   instead of base R regular expressions. This improves unicode and support, and 
   makes most operations considerably faster.  If you find stringr inadequate for
   your string processing needs, I highly recommend looking at stringi in more

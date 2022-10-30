@@ -1,7 +1,7 @@
 ﻿#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
-IVS_version<- 4.6 
+IVS_version<- 4.7 
 
 #Software update
 UpdateIVS <- "N"

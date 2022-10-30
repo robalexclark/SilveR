@@ -16,46 +16,46 @@ should_run_benchmarks <- function(x) {
 }
 
 ## -----------------------------------------------------------------------------
-x <- c(1, 2, 3)
-y <- x
+#  x <- c(1, 2, 3)
+#  y <- x
 
 ## -----------------------------------------------------------------------------
-y[[3]] <- 4
-y
-
-x
-
-## -----------------------------------------------------------------------------
-x <- c(1, 2, 3)
-y <- x * 2
-y
-
-x
+#  y[[3]] <- 4
+#  y
+#  
+#  x
 
 ## -----------------------------------------------------------------------------
-z <- times_two_rcpp(x)
-z
-
-x
+#  x <- c(1, 2, 3)
+#  y <- x * 2
+#  y
+#  
+#  x
 
 ## -----------------------------------------------------------------------------
-x <- c(1, 2, 3)
+#  z <- times_two_rcpp(x)
+#  z
+#  
+#  x
 
-z <- times_two_cpp11(x)
-z
-
-x
+## -----------------------------------------------------------------------------
+#  x <- c(1, 2, 3)
+#  
+#  z <- times_two_cpp11(x)
+#  z
+#  
+#  x
 
 ## ---- R.options = list(max.print = 20)----------------------------------------
-1:1e9
+#  1:1e9
 
 ## -----------------------------------------------------------------------------
-x <- identity_rcpp(1:100000)
-lobstr::obj_size(x)
+#  x <- identity_rcpp(1:100000)
+#  lobstr::obj_size(x)
 
 ## -----------------------------------------------------------------------------
-y <- identity_cpp11(1:100000)
-lobstr::obj_size(y)
+#  y <- identity_cpp11(1:100000)
+#  lobstr::obj_size(y)
 
 ## ---- message = FALSE, results = 'asis', eval = should_run_benchmarks()-------
 #  library(cpp11test)
@@ -87,12 +87,12 @@ lobstr::obj_size(y)
 #  saveRDS(b_sum, "sum.Rds", version = 2)
 
 ## -----------------------------------------------------------------------------
-knitr::kable(readRDS("sum.Rds"))
+#  knitr::kable(readRDS("sum.Rds"))
 
 ## ---- eval = FALSE, include = FALSE-------------------------------------------
 #  # count lines for Rcpp headers (excluding comments)
 #  # brew install cloc
-#  git clone https://github.com/RcppCore/Rcpp.git
+#  git clone https://github.com/RcppCore/Rcpp
 #  cd Rcpp
 #  git checkout 1.0.4
 #  cloc inst/include
@@ -101,7 +101,7 @@ knitr::kable(readRDS("sum.Rds"))
 #  cloc --fullpath --not-match-f '.*generated.*' inst/include
 #  
 #  # count lines for cpp11 headers
-#  git clone https://github.com/r-lib/cpp11.git
+#  git clone https://github.com/r-lib/cpp11
 #  cd cpp11
 #  cloc inst/include
 #  
@@ -142,7 +142,7 @@ ggplot(b_release, aes(x = len, y = min / len, color = pkg)) +
   )
 
 ## ---- echo = FALSE------------------------------------------------------------
-knitr::kable(b_release)
+#  knitr::kable(b_release)
 
 ## ---- message = FALSE, eval = should_run_benchmarks()-------------------------
 #  grid <- expand.grid(len = 10 ^ (0:7), pkg = "cpp11", stringsAsFactors = FALSE)
@@ -176,5 +176,5 @@ ggplot(b_grow, aes(x = len, y = min, color = pkg)) +
   labs(title = "log-log plot of vector size vs construction time", x = NULL, y = NULL)
 
 ## ---- echo = FALSE------------------------------------------------------------
-knitr::kable(b_grow)
+#  knitr::kable(b_grow)
 

@@ -1,4 +1,5 @@
 callr-package	callr-package
+add_hook	add_hook
 callr	callr-package
 convert_and_check_my_args	convert_and_check_my_args
 default_repos	default_repos

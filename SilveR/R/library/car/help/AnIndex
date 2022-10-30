@@ -100,6 +100,10 @@ confidenceEllipse	Ellipses
 confidenceEllipse.default	Ellipses
 confidenceEllipse.glm	Ellipses
 confidenceEllipse.lm	Ellipses
+confidenceEllipse.mlm	Ellipses
+confidenceEllipses	Ellipses
+confidenceEllipses.default	Ellipses
+confidenceEllipses.mlm	Ellipses
 Confint	S
 Confint.boot	hist.boot
 confint.boot	hist.boot
@@ -248,6 +252,7 @@ outlierTest.glm	outlierTest
 outlierTest.lm	outlierTest
 outlierTest.lmerMod	outlierTest
 panel.car	panel.car
+pointLabel	pointLabel
 poTest	poTest
 poTest.polr	poTest
 powerTransform	powerTransform

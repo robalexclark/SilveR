@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Finding Univariate or Multivariate Power Transformations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for powerTransform {car}"><tr><td>powerTransform {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Finding Univariate or Multivariate Power Transformations</h2>
+
+<h3>Description</h3>
+
+<p><code>powerTransform</code> uses the maximum likelihood-like approach of Box and Cox (1964) to select a transformatiion of a univariate or multivariate response for normality, linearity and/or constant variance.  Available families of transformations are the default Box-Cox power family and two additioal families that are modifications of the Box-Cox family that allow for (a few) negative responses. The summary method automatically computes two or three likelihood ratio type tests concerning the transformation powers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+powerTransform(object, ...)
+
+## Default S3 method:
+powerTransform(object, family="bcPower", ...)
+
+## S3 method for class 'lm'
+powerTransform(object, family="bcPower", ...)
+
+## S3 method for class 'formula'
+powerTransform(object, data, subset, weights, na.action,
+    family="bcPower", ...)
+
+## S3 method for class 'lmerMod'
+powerTransform(object, family="bcPower", ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>This can either be an object of class <code>lm</code> or <code>lmerMod</code>, a formula, or a
+matrix or vector; see below.
+</p>
+</td></tr>
+<tr valign="top"><td><code>family</code></td>
+<td>
+<p>The quoted name of a family of transformations.  The available options are <code>"bcPower"</code>
+for the default for the Box-Cox power family; <code>"bcnPower"</code> for a two-parameter modification of
+the Box-Cox family that allows negative responses (Hawkins and Weisberg (2017)), and the
+<code>"yjPower"</code> family (Yeo and Johnson(2000)), another
+modifiation of the Box-Cox family that allows a few negative values.  All three families are documented
+at <code><a href="../../car/help/bcPower.html">bcPower</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>A data frame or environment, as in &lsquo;<a href="../../stats/html/lm.html">lm</a>&rsquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>Case indices to be used, as in &lsquo;<a href="../../stats/html/lm.html">lm</a>&rsquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>Weights as in &lsquo;<a href="../../stats/html/lm.html">lm</a>&rsquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>na.action</code></td>
+<td>
+<p>Missing value action, as in &lsquo;lm&rsquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments that used in the interative algorithm; defaults are generally adequate.  For use with the <code>bcnPower</code> family, a convergence criterion can be set with <code>conv=.0001</code> the default, and a minimum positive value of the location parameter can be set, with default <code>gamma.min=.1</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function implements the Box and Cox (1964) method of selecting a power transformation of a variable toward normality, and its generalization by Velilla (1993) to a multivariate response.  Cook and Weisberg (1999) and Weisberg (2014) suggest the usefulness of transforming a set of predictors <code>z1, z2, z3</code> for multivariate normality.  It also includes two additional families that allow for negative values.
+</p>
+<p>If the <code>object</code> argument is of class &lsquo;lm&rsquo; or &lsquo;lmerMod&rsquo;, the Box-Cox procedure is applied to the conditional distribution of the response given the predictors.  For &lsquo;lm&rsquo; objects, the respose may be multivariate, and each column will have its own transformation.  With &lsquo;lmerMod&rsquo; the response must be univariate.
+</p>
+<p>The <code>object</code> argument may also be a formula.  For example, <code>z ~ x1 + x2 + x3</code> will estimate a transformation for the response <code>z</code> from a family after fitting a linear model with the given formula.  <code>cbind(y1, y2, y3) ~ 1</code> specifies transformations
+to multivariate normality with no predictors.  A vector value for <code>object</code>, for example
+<code>powerTransform(ais$LBM)</code>, is equivalent to<code>powerTransform(LBM ~ 1, ais)</code>.  Similarly, <code>powerTransform(cbind(ais$LBM, ais$SSF))</code>, where the first argument is a matrix rather than a formula is equivalent to specification of a mulitvariate linear model <code>powerTransform(cbind(LBM, SSF) ~ 1, ais)</code>.
+</p>
+<p>Three families of power transformations are available. The default Box-Cox power family (<code>family="bcPower"</code>) of power transformations effectively replaces a vector by that vector raised to a power, generally in the range from -3 to 3.  For powers close to zero, the log-transformtion is suggested.  In practical situations, after estimating a power using the <code>powerTransform</code> function, a variable would be replaced by a simple power transformation of it, for example, if <i>lamba is about 0.5</i>, then the correspoding variable would be replaced by its square root; if <i>&lambda;</i> is close enough to zero, the the variable would be replaced by its natural logarithm.  The Box-Cox family requires the responses to be strictly positive.
+</p>
+<p>The <code>family="bcnPower"</code>, or Box-Cox with negatives, family proposed by Hawkins and Weisberg (2017)  allows for (a few) non-positive values, while allowing for the transformed data to be interpreted similarly to the interpretation of Box-Cox transformed values.  This family is the Box-Cox transformation of <i>z = .5 * (y + (y^2 + &gamma;^2)^{1/2})</i> that depends on a location parameter <i>&gamma;</i>.  The quantity <i>z</i> is positive for all values of <i>y</i>.  If <i>&gamma; = 0</i> and <i>y</i> is strictly positive, then the Box-Cox and the bcnPower transformations are identical.  When fitting the Box-Cox with negatives family, <code>lambda</code> is restricted to the range [-3, 3], and <code>gamma</code> is restricted to the range from <code>gamma.min=.1</code> to the largest positive value of the variable, since values outside these ranges are unreasonable in practice.  The value of <code>gamma.min</code> can be changed with an argument to <code>powerTransform</code>.
+</p>
+<p>The final family <code>family="yjPower"</code> uses the Yeo-Johnson transformation, which is the Box-Cox transformation of <i>U+1</i> for nonnegative values, and of <i>|U|+1</i> with parameter <i>2-lambda</i> for <i>U</i> negative and thus it provides a family for fitting when (a few) observations are negative.  Because of the unusual constraints on the powers for positive and negative data, this transformation is not used very often, as results are difficult to interpret.  In practical problems, a variable would be replaced by its Yeo-Johnson transformation computed using the <code><a href="../../car/help/yjPower.html">yjPower</a></code> function.
+</p>
+<p>The function <code><a href="../../car/help/testTransform.html">testTransform</a></code> is used to obtain likelihood ratio tests for any specified value for the transformation parameter(s).
+</p>
+<p>Computations maximize the likelihood-like functions described by Box and Cox (1964) and by Velilla (1993).  For univariate responses, the computations are very stable and problems are unlikely, although for &lsquo;lmer&rsquo; models computations may be very slow because the model is refit many times. For multivariate responses with the <code>bcnPower</code> family, the computing algorithm may fail.  In this case we recommend adding the argument <code>itmax = 1</code> to the call to <code>powerTransform</code>.  This will return the starting value estimates of the transformation parameters, fitting a d-dimensional response as if all the d responses were independent.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>powerTransform</code> or class <code>bcnPowerTransform</code> if <code>family="bcnPower"</code> that
+inherits from <code>powerTransform</code> is returned, including the components listed below.
+</p>
+<p>A <code>summary</code> method presents estimated values for the transformation power <code>lambda</code> and for the &lsquo;bcnPower&rsquo; family the location parameter <code>gamma</code> as well.  Standard errors and Wald 95% confidence intervals based on the standard errors are computed from the inverse of the sample Hessian matrix evaluted at the estimates.  The interval estimates for the <code>gamma</code> parameters will generally be very wide, reflecting little information available about the location parameter.  Likelihood ratio type tests are also provided.  For the &lsquo;bcnPower&rsquo; family these are based on the profile loglikelihood for <code>lambda</code> alone; that is, we treat <code>gamma</code> as a nusiance parameter and average over it.
+</p>
+<p>The components of the returned object includes
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+<p>Estimated transformation parameter</p>
+</td></tr>
+<tr valign="top"><td><code>roundlam</code></td>
+<td>
+<p>Convenient rounded values for the estimates.  These rounded
+values will  usually be the desired transformations.</p>
+</td></tr>
+<tr valign="top"><td><code>gamma</code></td>
+<td>
+<p>Estimated location parameters for <code>bcnPower</code>, <code>NULL</code> otherwise</p>
+</td></tr>
+<tr valign="top"><td><code>invHess</code></td>
+<td>
+<p>Estimated covariance matrix of the estimated parameters</p>
+</td></tr>
+<tr valign="top"><td><code>llik</code></td>
+<td>
+<p>Value of the log-likelihood at the estimates</p>
+</td></tr>
+</table>
+<p>The <code>summary</code> method for <code>powerTransform</code> returns an array with columns labeled &quot;Est Power&quot; for the value of <code>lambda</code> that maximizes the likelihood; &quot;Rounded Pwr&quot; for <code>roundlam</code>,  and columns &quot;Wald Lwr Bnd&quot; and &quot;Wald Ur Bnd&quot; for a 95 percent Wald normal theory confidence interval for <code>lambda</code> computed as the estimate plus or minus 1.96 times the standard error.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Sanford Weisberg, &lt;sandy@umn.edu&gt; </p>
+
+
+<h3>References</h3>
+
+<p>Box, G. E. P. and Cox, D. R. (1964) An analysis of transformations.
+<em>Journal
+of the Royal Statisistical Society, Series B</em>. 26 211-46.
+</p>
+<p>Cook, R. D. and Weisberg, S. (1999)  <em>Applied Regression Including
+Computing
+and Graphics</em>.  Wiley.
+</p>
+<p>Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+<p>Hawkins, D. and Weisberg, S. (2017)
+Combining the Box-Cox Power and Generalized Log Transformations to Accomodate Nonpositive  Responses In Linear and Mixed-Effects Linear Models <em>South African Statistics Journal</em>, 51, 317-328.
+</p>
+<p>Velilla, S. (1993)  A note on the multivariate Box-Cox transformation to
+normality.  <em>Statistics and Probability Letters</em>, 17, 259-263.
+</p>
+<p>Weisberg, S. (2014) <em>Applied Linear Regression</em>, Fourth Edition, Wiley.
+</p>
+<p>Yeo, I. and Johnson, R. (2000) A new family of
+power transformations to improve normality or symmetry.
+<em>Biometrika</em>, 87, 954-959.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../car/help/testTransform.html">testTransform</a></code>, <code><a href="../../car/help/bcPower.html">bcPower</a></code>, <code><a href="../../car/help/bcnPower.html">bcnPower</a></code>, <code><a href="../../base/html/transform.html">transform</a></code>, <code><a href="../../stats/html/optim.html">optim</a></code>, <code><a href="../../car/help/boxCox.html">boxCox</a></code>. </p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Box Cox Method, univariate
+summary(p1 &lt;- powerTransform(cycles ~ len + amp + load, Wool))
+# fit linear model with transformed response:
+coef(p1, round=TRUE)
+summary(m1 &lt;- lm(bcPower(cycles, p1$roundlam) ~ len + amp + load, Wool))
+
+# Multivariate Box Cox uses Highway1 data
+summary(powerTransform(cbind(len, adt, trks, sigs1) ~ 1, Highway1))
+
+# Multivariate transformation to normality within levels of 'htype'
+summary(a3 &lt;- powerTransform(cbind(len, adt, trks, sigs1) ~ htype, Highway1))
+
+# test lambda = (0 0 0 -1)
+testTransform(a3, c(0, 0, 0, -1))
+
+# save the rounded transformed values, plot them with a separate
+# color for each highway type
+transformedY &lt;- bcPower(with(Highway1, cbind(len, adt, trks, sigs1)),
+                        coef(a3, round=TRUE))
+## Not run:  # generates a smoother warning
+scatterplotMatrix( ~ transformedY|htype, Highway1) 
+
+## End(Not run)
+
+# With negative responses, use the bcnPower family
+m2 &lt;- lm(I1L1 ~ pool, LoBD)
+summary(p2 &lt;- powerTransform(m2, family="bcnPower"))
+testTransform(p2, .5)
+summary(powerTransform(update(m2, cbind(LoBD$I1L2, LoBD$I1L1) ~ .), family="bcnPower"))
+
+## Not run:  # takes a few seconds:
+  # multivariate bcnPower, with 8 responses
+  summary(powerTransform(update(m2, as.matrix(LoBD[, -1]) ~ .), family="bcnPower"))
+  # multivariate bcnPower, fit with one iteration using starting values as estimates
+  summary(powerTransform(update(m2, as.matrix(LoBD[, -1]) ~ .), family="bcnPower", itmax=1))
+
+## End(Not run)
+
+# mixed effects model
+## Not run:  # uses the lme4 package
+  data &lt;- reshape(LoBD[1:20, ], varying=names(LoBD)[-1], direction="long", v.names="y")
+  names(data) &lt;- c("pool", "assay", "y", "id")
+  data$assay &lt;- factor(data$assay)
+  require(lme4)
+  m2 &lt;- lmer(y ~ pool + (1|assay), data)
+  summary(l2 &lt;- powerTransform(m2, family="bcnPower", verbose=TRUE))
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

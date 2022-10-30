@@ -976,7 +976,13 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 
 		CITitle2<-paste("Table of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 		HTML.title(CITitle2, HR=2, align="left")
-
+		if (GeomDisplay == "geometricmeansandpredictedmeansonlogscale") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+		if (GeomDisplay == "geometricmeansonly") {
+			HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
+		}
+	
 		if (responseTransform =="log10") {
 			LSMx$Mean<-10^(LSMx$emmean)
 			LSMx$Lower=10^(LSMx$emmean-qt(1-(1-sig)/2,df)*LSMx$SE)
@@ -1011,7 +1017,6 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 
 		CITitle<-paste("Plot of the back-transformed geometric means with ",(sig*100),"% confidence intervals",sep="")
 		HTML.title(CITitle, HR=2, align="left")
-		HTML("As the response was log transformed prior to analysis the least square (predicted) means are presented on the log scale. These results can be back transformed onto the original scale. These are known as the back-transformed geometric means.", align="left")
 
 		meanPlotz <- sub(".html", "meanplotz.png", htmlFile)
 		png(meanPlotz,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)

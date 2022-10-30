@@ -1,4 +1,5 @@
 $.xfun_strict_list	strict_list
+alnum_id	alnum_id
 append_unique	read_utf8
 append_utf8	read_utf8
 as_strict_list	strict_list
@@ -103,7 +104,6 @@ split_lines	split_lines
 split_source	split_source
 strict_list	strict_list
 stringsAsStrings	stringsAsStrings
-strings_please	stringsAsStrings
 submit_cran	submit_cran
 system3	system3
 tinify	tinify

@@ -102,6 +102,8 @@ Rd_parse	tools-defunct
 read.00Index	read.00Index
 readNEWS	tools-defunct
 resaveRdaFiles	checkRdaFiles
+R_CRAN_SRC	CRANtools
+R_CRAN_WEB	CRANtools
 R_DISABLE_HTTPD	startDynamicHelp
 R_GSCMD	find_gs_cmd
 R_user_dir	userdir

@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Print Abbreviated Ouput</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for brief {car}"><tr><td>brief {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Print Abbreviated Ouput
+</h2>
+
+<h3>Description</h3>
+
+<p>Print data objects and statistical model summaries in abbreviated form.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+brief(object, ...)
+
+## S3 method for class 'data.frame'
+brief(object, rows = if (nr &lt;= 10) c(nr, 0) else c(3, 2),
+    cols, head=FALSE, tail=FALSE, elided = TRUE,
+    classes = inherits(object, "data.frame"), ...)
+## S3 method for class 'tbl'
+brief(object, ...)
+## S3 method for class 'matrix'
+brief(object, rows = if (nr &lt;= 10) c(nr, 0) else c(3, 2), ...)
+
+## S3 method for class 'numeric'
+brief(object, rows = c(2, 1), elided = TRUE, ...)
+## S3 method for class 'integer'
+brief(object, rows = c(2, 1), elided = TRUE, ...)
+## S3 method for class 'character'
+brief(object, rows = c(2, 1), elided = TRUE, ...)
+## S3 method for class 'factor'
+brief(object, rows=c(2, 1), elided=TRUE, ...)
+
+## S3 method for class 'list'
+brief(object, rows = c(2, 1), elided = TRUE, ...)
+
+## S3 method for class 'function'
+brief(object, rows = c(5, 3), elided = TRUE, ...)
+
+## S3 method for class 'lm'
+brief(object,  terms = ~ .,
+    intercept=missing(terms), pvalues=FALSE,
+    digits=3, horizontal=TRUE, vcov., ...)
+
+## S3 method for class 'glm'
+brief(object, terms = ~ .,
+    intercept=missing(terms), pvalues=FALSE,
+    digits=3, horizontal=TRUE, vcov., dispersion, exponentiate, ...)
+
+## S3 method for class 'multinom'
+brief(object, terms = ~ .,
+    intercept=missing(terms), pvalues=FALSE,
+    digits=3, horizontal=TRUE, exponentiate=TRUE, ...)
+
+## S3 method for class 'polr'
+brief(object, terms = ~ .,
+    intercept, pvalues=FALSE,
+    digits=3, horizontal=TRUE, exponentiate=TRUE, ...)
+
+## Default S3 method:
+brief(object, terms = ~ .,
+    intercept=missing(terms), pvalues=FALSE,
+    digits=3, horizontal=TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>a data or model object to abbreviate.</p>
+</td></tr>
+<tr valign="top"><td><code>rows</code></td>
+<td>
+<p>for a matrix or data frame, a 2-element integer vector with the number of rows to print at
+the beginning and end of the display; for a vector or factor,
+the number of lines of output to show at the beginning
+and end; for a list, the number of elements to show at the beginning and end; for a function, the number
+of lines to show at the beginning and end.</p>
+</td></tr>
+<tr valign="top"><td><code>cols</code></td>
+<td>
+<p>for a matrix or data frame, a 2-element integer vector with the number of columns to print at
+the beginning (i.e., left) and end (right) of the display.</p>
+</td></tr>
+<tr valign="top"><td><code>head, tail</code></td>
+<td>
+<p>alternatives to the <code>rows</code> argument; if <code>TRUE</code>, print the first or last 6
+rows; can also be the number of the first or last few rows to print; only one of <code>heads</code> and
+<code>tails</code> should be specified; ignored if <code>FALSE</code> (the default).</p>
+</td></tr>
+<tr valign="top"><td><code>elided</code></td>
+<td>
+<p>controls whether to report the number of elided elements, rows, or columns; default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>classes</code></td>
+<td>
+<p>show the class of each column of a data frame at the top of the column; the classes are
+shown in single-character abbreviated form&mdash;e.g., <code>[f]</code> for a factor, <code>[i]</code> for an integer
+variable, <code>[n]</code> for a numeric variable, <code>[c]</code> for a character variable.</p>
+</td></tr>
+<tr valign="top"><td><code>terms</code></td>
+<td>
+<p>a one-sided formula giving the terms to summarize; the default is <code>~ .</code>&mdash;i.e., to summarize all terms in the model.</p>
+</td></tr>
+<tr valign="top"><td><code>intercept</code></td>
+<td>
+<p>whether or not to include the intercept; the default is <code>TRUE</code> unless the <code>terms</code> argument is given, in which
+case the default is <code>FALSE</code>; ignored for <code>polr</code> models.</p>
+</td></tr>
+<tr valign="top"><td><code>pvalues</code></td>
+<td>
+<p>include the p-value for each coefficient in the table; default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>exponentiate</code></td>
+<td>
+<p>for a <code>"glm"</code> or <code>"glmerMod"</code> model using the <code>log</code> or <code>logit</code> link, or a
+<code>"polr"</code> or <code>"multinom"</code> model, show exponentiated coefficient estimates and confidence bounds.</p>
+</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+<p>significant digits for printing.</p>
+</td></tr>
+<tr valign="top"><td><code>horizontal</code></td>
+<td>
+<p>if <code>TRUE</code> (the default), orient the summary produced by <code>brief</code> horizontally, which typically saves space.</p>
+</td></tr>
+<tr valign="top"><td><code>dispersion</code></td>
+<td>
+<p>use an estimated covariance matrix computed as the dispersion times the unscaled covariance matrix; see <code><a href="../../stats/html/summary.glm.html">summary.glm</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>vcov.</code></td>
+<td>
+<p>either a matrix giving the estimated covariance matrix of the estimates, 
+or a function that
+when called with <code>object</code> as an argument returns an estimated covariance matrix of the estimates.  If not set, <code>vcov(object, complete=FALSE)</code> is called to use the
+usual estimated covariance matrix with aliased regressors removed. 
+Other choices include the functions documented at <code><a href="../../car/help/hccm.html">hccm</a></code>, and a bootstrap
+estimate <code>vcov.=vcov(Boot(object))</code>; see the documentation for <code><a href="../../car/help/Boot.html">Boot</a></code>.  
+NOTES:  (1) The <code>dispersion</code> and <code>vcov.</code> arguments may not <em>both</em> be 
+specified. (2) Setting <code>vcov.=vcov</code> returns an error if the model includes aliased 
+terms; use <code>vcov.=vcov(object, complete=FALSE)</code>. (3) The <code>hccm</code> method will 
+generally return a matrix of full rank even if the model has aliased terms.  Similarly
+<code>vcov.=vcov(Boot(object))</code> may return a full rank matrix.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments to pass down.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Invisibly returns <code>object</code> for a data object, or summary for a model object.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The method <code>brief.matrix</code> calls <code>brief.data.frame</code>, and <code>brief.tbl</code> (for tibbles) calls <code>print</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../car/help/S.html">S</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+brief(rnorm(100))
+brief(Duncan)
+brief(OBrienKaiser, elided=TRUE)
+brief(matrix(1:500, 10, 50))
+brief(lm)
+
+mod.prestige &lt;- lm(prestige ~ education + income + type, Prestige)
+brief(mod.prestige, pvalues=TRUE)
+brief(mod.prestige, ~ type)
+mod.mroz &lt;- glm(lfp ~ ., data=Mroz, family=binomial)
+brief(mod.mroz)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

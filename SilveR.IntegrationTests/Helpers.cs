@@ -95,7 +95,7 @@ namespace SilveR.IntegrationTests
             if (statsOutput.HtmlResults == null)
                 throw new Exception("No results output!");
 
-            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), Helpers.FixForUnixOSs(statsOutput.HtmlResults));
+            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), Helpers.SanitizeHtml(statsOutput.HtmlResults));
         }
 
         public static async Task<StatsOutput> SubmitAnalysis(HttpClient client, string analysisName, FormUrlEncodedContent content)
@@ -157,7 +157,7 @@ namespace SilveR.IntegrationTests
             return doc;
         }
 
-        public static string FixForUnixOSs(string html)
+        public static string SanitizeHtml(string html)
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -198,7 +198,26 @@ namespace SilveR.IntegrationTests
                 html = html.Replace("Time3Â£", "Time3£");
             }
 
-            return html;
+            //always remove references as these change all the time
+            if (html.Contains("R references"))
+            {
+                string[] textLines = html.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                StringBuilder linesToReturn = new StringBuilder();
+
+                foreach (string line in textLines)
+                {
+                    if (line.Contains("R references"))
+                        break;
+
+                    linesToReturn.AppendLine(line);
+                }
+
+                return linesToReturn.ToString();
+            }
+            else
+            {
+                return html;
+            }
         }
     }
 

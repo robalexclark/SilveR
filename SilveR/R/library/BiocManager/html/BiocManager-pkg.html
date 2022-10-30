@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Install or update Bioconductor, CRAN, or GitHub packages</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for BiocManager-pkg {BiocManager}"><tr><td>BiocManager-pkg {BiocManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Install or update Bioconductor, CRAN, or GitHub packages</h2>
+
+<h3>Description</h3>
+
+<p>This package provides tools for managing <em>Bioconductor</em> and other
+packages in a manner consistent with <em>Bioconductor</em>'s package
+versioning and release system.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Main functions are as follows; additional help is available for
+each function, e.g., <code>?BiocManager::version</code>.
+</p>
+
+<ul>
+<li> <p><code>BiocManager::install()</code>: Install or update packages from
+<em>Bioconductor</em>, CRAN, and GitHub.
+</p>
+</li>
+<li> <p><code>BiocManager::version()</code>: Report the version of <em>Bioconductor</em> in
+use.
+</p>
+</li>
+<li> <p><code>BiocManager::available()</code>: Return a <code>character()</code> vector of
+package names available (at <code>BiocManager::repositories()</code>) for
+installation.
+</p>
+</li>
+<li> <p><code>BiocManager::valid()</code>: Determine whether installed packages are
+from the same version of <em>Bioconductor</em>.
+</p>
+</li>
+<li> <p><code>BiocManager::repositories()</code>: <em>Bioconductor</em> and other
+repository URLs to discover packages for installation.
+</p>
+</li></ul>
+
+<p>The version of <em>Bioconductor</em> in use is determined by the installed
+version of a second package, BiocVersion. BiocVersion is installed
+automatically during first use of <code>BiocManager::install()</code>. If
+BiocVersion has not yet been installed, the version is determined
+by code in base R.
+</p>
+<p>Options influencing package behavior (see <code>?options</code>, <code>?getOption</code>)
+include:
+</p>
+
+<ul>
+<li> <p><code>"repos"</code>, <code>"BiocManager.check_repositories"</code>,
+<code>"BiocManager.snapshot"</code>: URLs of additional repositories for use
+by <code>BiocManger::install()</code>. See <code>?repositories</code>.
+</p>
+</li>
+<li> <p><code>"pkgType"</code>: The default type of packages to be downloaded and
+installed; see <code>?install.packages</code>.
+</p>
+</li>
+<li> <p><code>"timeout"</code>: The maximum time allowed for download of a single
+package, in seconds. <em>BiocManager</em> increases this to 300 seconds
+to accommodate download of large BSgenome and other packages.
+</p>
+</li></ul>
+
+<p>System environment variables influencing package behavior include:
+</p>
+
+<ul>
+<li> <p><span class="env">BIOCONDUCTOR_ONLINE_VERSION_DIAGNOSIS</span> advanced
+configuration to avoid <em>Bioconductor</em> version checks. See
+<code>?install</code>.
+</p>
+</li></ul>
+
+
+
+<h3>Author(s)</h3>
+
+<p><strong>Maintainer</strong>: Marcel Ramos <a href="mailto:marcel.ramos@roswellpark.org">marcel.ramos@roswellpark.org</a> (<a href="https://orcid.org/0000-0002-3242-0582">ORCID</a>) [contributor]
+</p>
+<p>Authors:
+</p>
+
+<ul>
+<li><p> Martin Morgan <a href="mailto:martin.morgan@roswellpark.org">martin.morgan@roswellpark.org</a> (<a href="https://orcid.org/0000-0002-5874-8148">ORCID</a>)
+</p>
+</li></ul>
+
+
+
+<h3>See Also</h3>
+
+<p>Useful links:
+</p>
+
+<ul>
+<li><p> Report bugs at <a href="https://github.com/Bioconductor/BiocManager/issues">https://github.com/Bioconductor/BiocManager/issues</a>
+</p>
+</li></ul>
+
+
+
+<h3>Examples</h3>
+
+<pre>
+R.version.string
+packageVersion("BiocManager")
+if (requireNamespace("BiocVersion", quietly = TRUE))
+    packageVersion("BiocVersion")
+BiocManager::version()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocManager</em> version 1.30.19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Apply a Function to a Variable Within Factor Levels</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for Tapply {car}"><tr><td>Tapply {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Apply a Function to a Variable Within Factor Levels</h2>
+
+<h3>Description</h3>
+
+<p>Applies a function, typically to compute a single statistic, like a mean, median, or standard deviation,
+within levels of a factor or within combinations of levels of two or more factors to produce a table of statistics. This function provides
+a formula interface to the standard R <code><a href="../../base/html/tapply.html">tapply</a></code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Tapply(formula, fun, data, na.action = na.pass, ..., targs = list())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p> a two-sided formula of the form <code>variable ~ factor.1 + factor.2 + ... + factor.n</code> or,
+equivalently, <code>variable ~ factor.1*factor.2* ... *factor.n</code>.
+The variables on the right-hand side
+of the formula are normally factors or are otherwise coerced to factors.</p>
+</td></tr>
+<tr valign="top"><td><code>fun</code></td>
+<td>
+<p>a function, like <code>mean</code>, <code>median</code>, or <code>sd</code>, that takes a vector first argument and typically
+returns a single number as its value.</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>an optional data frame within which to find the variable and factor(s).</p>
+</td></tr>
+<tr valign="top"><td><code>na.action</code></td>
+<td>
+<p>a function to handle missing values, as in statistical modeling functions like <code><a href="../../stats/html/lm.html">lm</a></code>;
+the default is <code><a href="../../stats/html/na.fail.html">na.pass</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments to pass to the function given in the <code>fun</code> argument, such as (commonly) 
+<code>na.rm=TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>targs</code></td>
+<td>
+<p>a list of optional arguments to pass to <code><a href="../../base/html/tapply.html">tapply</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The function given by <code>fun</code> is applied to the values of the left-hand-side variable in <code>formula</code> within
+(combination of) levels of the factor(s) given in the right-hand side of <code>formula</code>, producing a table of statistics.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The object returned by <code><a href="../../base/html/tapply.html">tapply</a></code>, typically simply printed.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a></p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition. Sage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../base/html/tapply.html">tapply</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+Tapply(conformity ~ partner.status + fcategory, mean, data=Moore)
+Tapply(conformity ~ partner.status + fcategory, mean, data=Moore, 
+    trim=0.2)
+
+Moore[1, 2] &lt;- NA
+Tapply(conformity ~ partner.status + fcategory, mean, data=Moore)
+Tapply(conformity ~ partner.status + fcategory, mean, data=Moore, 
+  na.rm=TRUE)
+Tapply(conformity ~ partner.status + fcategory, mean, data=Moore, 
+  na.action=na.omit)  # equivalent
+remove("Moore")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

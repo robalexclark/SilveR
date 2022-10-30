@@ -62,6 +62,7 @@ clipboard	clipboard
 close.socket	close.socket
 close.txtProgressBar	txtProgressBar
 close.winProgressBar	winProgressBar
+clrhash	hashtab
 combn	combn
 compareVersion	compareVersion
 COMPILE	COMPILE
@@ -96,12 +97,14 @@ fileSnapshot	changedFiles
 file_test	filetest
 Filters	choose.files
 find	apropos
+findCRANmirror	findCRANmirror
 findLineNum	findLineNum
 fix	fix
 fixInNamespace	getFromNamespace
 flush.console	flush.console
 format.bibentry	bibentry
 format.citation	bibentry
+format.hashtab	hashtab
 format.MethodsFunction	methods
 format.object_size	object.size
 format.person	person
@@ -112,6 +115,7 @@ getBioCmirrors	chooseBioCmirror
 getClipboardFormats	clipboard
 getCRANmirrors	chooseCRANmirror
 getFromNamespace	getFromNamespace
+gethash	hashtab
 getIdentification	setWindowTitle
 getParseData	getParseData
 getParseText	getParseData
@@ -127,6 +131,7 @@ getWindowTitle	setWindowTitle
 getWinProgressBar	winProgressBar
 glob2rx	glob2rx
 globalVariables	globalVariables
+hashtab	hashtab
 hasName	hasName
 head	head
 head.data.frame	head
@@ -145,9 +150,11 @@ hsearch_db_keywords	hsearch-utils
 INSTALL	INSTALL
 install.packages	install.packages
 installed.packages	installed.packages
+is.hashtab	hashtab
 is.relistable	relist
 isS3method	isS3method
 isS3stdGeneric	isS3stdGen
+length.hashtab	hashtab
 limitedLabels	recover
 LINK	LINK
 loadhistory	savehistory
@@ -159,6 +166,7 @@ maintainer	maintainer
 make.packages.html	make.packages.html
 make.socket	make.socket
 makeRweaveLatexCodeRunner	SweaveUtils
+maphash	hashtab
 memory.limit	memory.size
 memory.size	memory.size
 menu	menu
@@ -169,6 +177,7 @@ modifyList	modifyList
 new.packages	update.packages
 news	news
 nsl	nsl
+numhash	hashtab
 object.size	object.size
 old.packages	update.packages
 Ops.roman	roman
@@ -191,6 +200,7 @@ print.changedFiles	changedFiles
 print.citation	bibentry
 print.fileSnapshot	changedFiles
 print.getAnywhere	getAnywhere
+print.hashtab	hashtab
 print.hsearch	help.search
 print.Latex	toLatex
 print.ls_str	ls_str
@@ -237,6 +247,7 @@ relist.default	relist
 relist.factor	relist
 relist.list	relist
 relist.matrix	relist
+remhash	hashtab
 REMOVE	REMOVE
 remove.packages	remove.packages
 removeSource	removeSource
@@ -267,6 +278,7 @@ savehistory	savehistory
 select.list	select.list
 sessionInfo	sessionInfo
 setBreakpoint	findLineNum
+sethash	hashtab
 setInternet2	utils-defunct
 setRepositories	setRepositories
 setStatusBar	setWindowTitle
@@ -283,6 +295,7 @@ Stangle	Sweave
 str	str
 str.data.frame	str
 str.default	str
+str.hashtab	hashtab
 strcapture	strcapture
 strOptions	str
 summary.packageStatus	packageStatus
@@ -314,6 +327,7 @@ type.convert	type.convert
 type.convert.data.frame	type.convert
 type.convert.default	type.convert
 type.convert.list	type.convert
+typhash	hashtab
 undebugcall	debugcall
 unlist.relistable	relist
 unstack	stack
@@ -359,3 +373,5 @@ zip.file.extract	utils-defunct
 zip.unpack	utils-defunct
 [.getAnywhere	getAnywhere
 [.person	person
+[[.hashtab	hashtab
+[[<-.hashtab	hashtab

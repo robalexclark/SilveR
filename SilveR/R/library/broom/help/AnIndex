@@ -226,7 +226,6 @@ rq_tidiers	tidy.rq
 sem_tidiers	tidy.lavaan
 sexpfit_tidiers	tidy.survexp
 smooth.spline_tidiers	augment.smooth.spline
-sparse_tidiers	sparse_tidiers
 spatialreg_tidiers	tidy.sarlm
 speedglm_tidiers	tidy.speedglm
 speedlm_tidiers	tidy.speedlm
@@ -266,8 +265,6 @@ tidy.crr	tidy.crr
 tidy.cv.glmnet	tidy.cv.glmnet
 tidy.data.frame	data.frame_tidiers
 tidy.density	tidy.density
-tidy.dgCMatrix	sparse_tidiers
-tidy.dgTMatrix	sparse_tidiers
 tidy.dist	tidy.dist
 tidy.drc	tidy.drc
 tidy.durbinWatsonTest	durbinWatsonTest_tidiers
@@ -351,7 +348,6 @@ tidy.roc	tidy.roc
 tidy.rq	tidy.rq
 tidy.rqs	tidy.rqs
 tidy.sarlm	tidy.sarlm
-tidy.sparseMatrix	sparse_tidiers
 tidy.SpatialLinesDataFrame	sp_tidiers
 tidy.SpatialPolygons	sp_tidiers
 tidy.SpatialPolygonsDataFrame	sp_tidiers

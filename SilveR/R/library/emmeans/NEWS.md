@@ -1,6 +1,59 @@
 ---
 title: "NEWS for the emmeans package"
 ---
+## emmeans 1.8.2
+  * Extended `cld()` so it can show findings rather than non-findings,
+    in two different ways: Using `delta`, groupings are based on actual
+    tests of equivalence with threshold `delta`; or setting `signif.sets = TRUE`,
+    means that have the same letter are significantly *different*.
+    We also added a vignette on "Re-engineering CLDs".
+  * Bug fix for subtle error in `emtrends()` (#133)
+  * Improved customization of `emmip()` so that we can specify `color`,
+    `linetype`, and `symbol` are all associated with groupings; and addition of
+    an example to produce a black-and-white plot. Note: While the default appearance
+    of plots is unchanged, plots from your existing code may be altered if
+    you have used `linearg`, `dotarg`, etc.
+  * Allow `vcov.` to be coercible to a matrix, or a function that yields
+    a result coercible to a matrix (#383)
+  * Robustness improvement for `"appx-satterthwaite"` method (#384)
+  * Added `counterfactuals` argument to `ref_grid()`, setting up a reference
+    grid consisting of the stated factors and a constructed factor, `.obs.no.`.
+    We then (by default) average this grid over the covariate distribution.
+    This facilitates G-computation under the exchangeability assumption for
+    counterfactuals. 
+
+
+
+## emmeans 1.8.1
+  * Fixed new bug in `summary()` introduced in #359 and reported in #364
+  * Fixed `as.data.frame.emm_list()` so it preserves annotations like
+    in `as.data.frame.emmGrid()`
+  * Fix to `mgcv::gam` support to accommodate fancier smoothers 
+    and more accurately detect random terms (#365, #366, #369)
+  * Fix in call to `summary()` from inside a function (#367)
+  * Added a `delta` argument to `hpd.summary()`, thus allowing a way to
+    assess equivalence with Bayesian estimates (#370)
+  * Bug fix for `stanreg` estimability code when `subset` was used in model.
+  * `emmip()` and `plot.emmGrid()` now do appropriate things if `point.est` 
+    or `frequentist` appear among the `...` arguments, when we have Bayesian 
+    models (note also, `frequentist` was removed from the visible arguments for
+    `plot.emmGrid`). 
+  * With Bayesian models, `emmip()` plotted intervals regardless of `CIs`; 
+    this has been corrected
+  * Added `head()` and `tail()` methods for `emmGrid` objects
+  * In `[.summary_emm()`, we changed the default to `as.df = FALSE` so that
+    annotations are still visible by default. This also preserves annotations
+    in `head()` and `tail()` for summaries
+  * New `emm_example()` function used to tidy-up certain help-file examples
+    when they are conditional on an external package
+  * Continued efforts to prevent users from hiding annotations they need to
+    see. The functions/methods `summary()`, `confint()`, `test()`, and `as.data.frame()`
+    all produce data frames with annotations intact and visible. Additional
+    wrapping in `data.frame()`, `as.data.frame()`, etc. is completely unnecessary,
+    and if you send questions or bug reports with such code, I will regard
+    it as willful ignorance and will refuse to respond. See also the news for
+    version 1.8.0.
+
 
 ## emmeans 1.8.0
   * Fixed minor bug in `lme` support (#356)
@@ -34,7 +87,7 @@ title: "NEWS for the emmeans package"
     in later steps. But in doing so they have missed potentially useful
     annotations. Users who have used `as.data.frame` to see results with
     lots of digits should instead use `emm_options(opt.digits = FALSE)`.
-  * New R version dependency `>= 4.1.0`, allowing freedom to use the native pipe 
+  * New R version dependency `>= 4.1.0`, allowing freedom to use the forward pipe 
     operator `|>` and other features.
   * *Housecleaning:* We removed completely the `trend` argument in `emmeans()`,
     which has long since been deprecated. We removed wrappers that implement

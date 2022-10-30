@@ -1,6 +1,6 @@
 Package: maptools
-Version: 1.1-4
-Date: 2022-04-18
+Version: 1.1-5
+Date: 2022-10-05
 Title: Tools for Handling Spatial Objects
 Authors@R: c(
 	person("Roger", "Bivand", role = c("cre", "aut"), email = "Roger.Bivand@nhh.no", comment=c(ORCID="0000-0003-2392-6140")),
@@ -44,13 +44,13 @@ Suggests: rgeos (>= 0.1-8), spatstat.geom (>= 1.65-0), PBSmapping,
         maps, RColorBrewer, raster, polyclip, plotrix, spatstat.linnet
         (>= 1.65-3), spatstat.utils (>= 1.19.0), spatstat (>= 2.0-0)
 Enhances: gpclib
-Description: Please note that 'maptools' will be retired by the end of 2023, plan transition at your earliest convenience; some functionality will be moved to 'sp'. Set of tools for manipulating geographic data. It includes binary access to 'GSHHG' shoreline files. The package also provides interface wrappers for exchanging spatial objects with packages such as 'PBSmapping', 'spatstat.geom', 'maps', and others.
+Description: Please note that 'maptools' will be retired during 2023, plan transition at your earliest convenience; some functionality will be moved to 'sp'. Set of tools for manipulating geographic data. It includes binary access to 'GSHHG' shoreline files. The package also provides interface wrappers for exchanging spatial objects with packages such as 'PBSmapping', 'spatstat.geom', 'maps', and others.
 License: GPL (>= 2)
 URL: http://maptools.r-forge.r-project.org/,
         https://r-forge.r-project.org/projects/maptools/
 RoxygenNote: 6.1.1
 NeedsCompilation: yes
-Packaged: 2022-04-17 16:25:21 UTC; rsb
+Packaged: 2022-10-21 09:01:31 UTC; rsb
 Author: Roger Bivand [cre, aut] (<https://orcid.org/0000-0003-2392-6140>),
   Nicholas Lewin-Koh [aut],
   Edzer Pebesma [ctb],
@@ -86,6 +86,7 @@ Author: Roger Bivand [cre, aut] (<https://orcid.org/0000-0003-2392-6140>),
   Rolf Turner [ctb]
 Maintainer: Roger Bivand <Roger.Bivand@nhh.no>
 Repository: CRAN
-Date/Publication: 2022-04-17 19:12:32 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-04-24 05:42:04 UTC; windows
-Archs: i386, x64
+Date/Publication: 2022-10-21 12:52:36 UTC
+Built: R 4.2.1; x86_64-w64-mingw32; 2022-10-30 02:29:26 UTC; windows
+ExperimentalWindowsRuntime: ucrt
+Archs: x64
