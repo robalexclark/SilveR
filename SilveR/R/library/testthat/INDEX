@@ -33,12 +33,15 @@ expect_invisible        Does code return a visible or invisible object?
 expect_length           Does code return a vector with the specified
                         length?
 expect_named            Does code return a vector with (given) names?
+expect_no_error         Does code run without error, warning, message,
+                        or other condition?
 expect_output           Does code print output to the console?
 expect_setequal         Does code return a vector containing the
                         expected values?
 expect_silent           Does code execute silently?
 expect_snapshot         Snapshot testing
 expect_snapshot_file    Snapshot testing for whole files
+expect_snapshot_value   Snapshot testing for values
 expect_vector           Does code return a vector with the expected
                         size and/or prototype?
 fail                    Default expectations that always succeed or

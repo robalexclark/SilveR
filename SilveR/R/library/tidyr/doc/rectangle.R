@@ -93,69 +93,69 @@ geocode <- function(address, api_key = Sys.getenv("GOOGLE_MAPS_API_KEY")) {
 }
 
 ## ---- eval = has_key----------------------------------------------------------
-#  houston <- geocode("Houston TX")
-#  str(houston)
+houston <- geocode("Houston TX")
+str(houston)
 
 ## ---- eval = has_key, cache = TRUE--------------------------------------------
-#  city <- c("Houston", "LA", "New York", "Chicago", "Springfield")
-#  city_geo <- purrr::map(city, geocode)
+city <- c("Houston", "LA", "New York", "Chicago", "Springfield")
+city_geo <- purrr::map(city, geocode)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc <- tibble(city = city, json = city_geo)
-#  loc
+loc <- tibble(city = city, json = city_geo)
+loc
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    unnest_wider(json)
+loc %>%
+  unnest_wider(json)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    unnest_wider(json) %>%
-#    unnest_longer(results)
+loc %>%
+  unnest_wider(json) %>% 
+  unnest_longer(results)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    unnest_wider(json) %>%
-#    unnest_longer(results) %>%
-#    unnest_wider(results)
+loc %>%
+  unnest_wider(json) %>% 
+  unnest_longer(results) %>% 
+  unnest_wider(results)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    unnest_wider(json) %>%
-#    unnest_longer(results) %>%
-#    unnest_wider(results) %>%
-#    unnest_wider(geometry)
+loc %>%
+  unnest_wider(json) %>% 
+  unnest_longer(results) %>% 
+  unnest_wider(results) %>% 
+  unnest_wider(geometry)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    unnest_wider(json) %>%
-#    unnest_longer(results) %>%
-#    unnest_wider(results) %>%
-#    unnest_wider(geometry) %>%
-#    unnest_wider(location)
+loc %>%
+  unnest_wider(json) %>%
+  unnest_longer(results) %>%
+  unnest_wider(results) %>%
+  unnest_wider(geometry) %>%
+  unnest_wider(location)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    unnest_auto(json) %>%
-#    unnest_auto(results) %>%
-#    unnest_auto(results) %>%
-#    unnest_auto(geometry) %>%
-#    unnest_auto(location)
+loc %>%
+  unnest_auto(json) %>%
+  unnest_auto(results) %>%
+  unnest_auto(results) %>%
+  unnest_auto(geometry) %>%
+  unnest_auto(location)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    unnest_wider(json) %>%
-#    hoist(results, first_result = 1) %>%
-#    unnest_wider(first_result) %>%
-#    unnest_wider(geometry) %>%
-#    unnest_wider(location)
+loc %>%
+  unnest_wider(json) %>%
+  hoist(results, first_result = 1) %>%
+  unnest_wider(first_result) %>%
+  unnest_wider(geometry) %>%
+  unnest_wider(location)
 
 ## ---- eval = has_key----------------------------------------------------------
-#  loc %>%
-#    hoist(json,
-#      lat = list("results", 1, "geometry", "location", "lat"),
-#      lng = list("results", 1, "geometry", "location", "lng")
-#    )
+loc %>%
+  hoist(json,
+    lat = list("results", 1, "geometry", "location", "lat"),
+    lng = list("results", 1, "geometry", "location", "lng")
+  )
 
 ## -----------------------------------------------------------------------------
 discs <- tibble(disc = discog) %>% 

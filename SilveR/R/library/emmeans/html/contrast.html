@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Contrasts and linear functions of EMMs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for contrast {emmeans}"><tr><td>contrast {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Contrasts and linear functions of EMMs</h2>
+
+<h3>Description</h3>
+
+<p>These methods provide for follow-up analyses of <code>emmGrid</code> objects:
+Contrasts, pairwise comparisons, tests, and confidence intervals. They may
+also be used to compute arbitrary linear functions of predictions or EMMs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+contrast(object, ...)
+
+## S3 method for class 'emmGrid'
+contrast(object, method = "eff", interaction = FALSE, by,
+  offset = NULL, scale = NULL, name = "contrast",
+  options = get_emm_option("contrast"), type, adjust, simple,
+  combine = FALSE, ratios = TRUE, parens, enhance.levels = TRUE, ...)
+
+## S3 method for class 'emmGrid'
+pairs(x, reverse = FALSE, ...)
+
+## S3 method for class 'emmGrid'
+coef(object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code></p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments passed to other methods</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>Character value giving the root name of a contrast method (e.g.
+<code>"pairwise"</code> &ndash; see <a href="../../emmeans/help/emmc-functions.html">emmc-functions</a>). Alternatively, a function
+of the same form, or a named <code>list</code> of coefficients (for a contrast or
+linear function) that must each conform to the number of results in each
+<code>by</code> group. In a multi-factor situation, the factor levels are
+combined and treated like a single factor.</p>
+</td></tr>
+<tr valign="top"><td><code>interaction</code></td>
+<td>
+<p>Character vector, logical value, or list. If this is specified,
+<code>method</code> is ignored. See the &ldquo;Interaction contrasts&rdquo; section
+below for details.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>Character names of variable(s) to be used for &ldquo;by&rdquo; groups. The
+contrasts or joint tests will be evaluated separately for each combination
+of these variables. If <code>object</code> was created with by groups, those are
+used unless overridden. Use <code>by = NULL</code> to use no by groups at all.</p>
+</td></tr>
+<tr valign="top"><td><code>offset, scale</code></td>
+<td>
+<p>Numeric vectors of the same length as each <code>by</code> group.
+The <code>scale</code> values, if supplied, multiply their respective linear estimates, and
+any <code>offset</code> values are added. Scalar values are also allowed. 
+(These arguments are ignored when <code>interaction</code> is specified.)</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Character name to use to override the default label for contrasts
+used in table headings or subsequent contrasts of the returned object.</p>
+</td></tr>
+<tr valign="top"><td><code>options</code></td>
+<td>
+<p>If non-<code>NULL</code>, a named <code>list</code> of arguments to pass
+to <code><a href="../../emmeans/help/update.emmGrid.html">update.emmGrid</a></code>, just after the object is constructed.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>Character: prediction type (e.g., <code>"response"</code>) &ndash; added to
+<code>options</code></p>
+</td></tr>
+<tr valign="top"><td><code>adjust</code></td>
+<td>
+<p>Character: adjustment method (e.g., <code>"bonferroni"</code>) &ndash;
+added to <code>options</code></p>
+</td></tr>
+<tr valign="top"><td><code>simple</code></td>
+<td>
+<p>Character vector or list: Specify the factor(s) <em>not</em> in
+<code>by</code>, or a list thereof. See the section below on simple contrasts.</p>
+</td></tr>
+<tr valign="top"><td><code>combine</code></td>
+<td>
+<p>Logical value that determines what is returned when
+<code>simple</code> is a list. See the section on simple contrasts.</p>
+</td></tr>
+<tr valign="top"><td><code>ratios</code></td>
+<td>
+<p>Logical value determining how log and logit transforms are
+handled. These transformations are exceptional cases in that there is a
+valid way to back-transform contrasts: differences of logs are logs of
+ratios, and differences of logits are odds ratios. If <code>ratios = TRUE</code>
+and summarized with <code>type = "response"</code>, <code>contrast</code> results are
+back-transformed to ratios whenever we have true contrasts (coefficients
+sum to zero). For other transformations, there is no natural way to
+back-transform contrasts, so even when summarized with <code>type = "response"</code>,
+contrasts are computed and displayed on the linear-predictor scale. Similarly, 
+if <code>ratios = FALSE</code>, log and logit transforms are treated in the same way as
+any other transformation.</p>
+</td></tr>
+<tr valign="top"><td><code>parens</code></td>
+<td>
+<p>character or <code>NULL</code>. If a character value, the labels for levels
+being contrasted are parenthesized if they match the regular expression in 
+<code>parens[1]</code> (via <code><a href="../../base/html/grep.html">grep</a></code>). The default is <code>emm_option("parens")</code>.
+Optionally, <code>parens</code> may contain second and third elements specifying
+what to use for left and right parentheses (default <code>"("</code> and <code>")"</code>).
+Specify <code>parens = NULL</code> or <code>parens = "a^"</code> (which won't match anything)
+to disable all parenthesization.</p>
+</td></tr>
+<tr valign="top"><td><code>enhance.levels</code></td>
+<td>
+<p>character or logical. 
+If character, the levels of the named factors that are contrasted are enhanced 
+by appending the name of the factor; e.g., if a factor named <code>"trt"</code> has
+levels <code>A</code> and codeB, a <code>trt</code> comparison is labeled <code>trtA - trtB</code>.
+</p>
+<p>If <code>enhance.levels</code> is logical, then if <code>TRUE</code> (the default), 
+only factors with numeric levels are enhanced; and of
+course if <code>FALSE</code>, no levels are enhanced.
+</p>
+<p>The levels of <code>by</code> variables are not enhanced, and any 
+names of factors that don't exist are silently ignored. 
+To enhance the labels beyond what is done here, change them
+directly via <code><a href="../../emmeans/help/update.emmGrid.html">levels&lt;-</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>An <code>emmGrid</code> object</p>
+</td></tr>
+<tr valign="top"><td><code>reverse</code></td>
+<td>
+<p>Logical value - determines whether to use <code>"pairwise"</code> (if <code>TRUE</code>) or <code>"revpairwise"</code> (if <code>FALSE</code>).</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>contrast</code> and <code>pairs</code> return an object of class
+<code>emmGrid</code>. Its grid will correspond to the levels of the contrasts and
+any <code>by</code> variables. The exception is that an <code><a href="../../emmeans/help/emm_list.html">emm_list</a></code>
+object is returned if <code>simple</code> is a list and <code>complete</code> is
+<code>FALSE</code>.
+</p>
+<p><code>coef</code> returns a <code>data.frame</code> containing the object's grid, along with columns named <code>c.1, c.2, ...</code> containing the contrast coefficients. If
+</p>
+
+
+<h3>Pairs method</h3>
+
+<p>The call <code>pairs(object)</code> is equivalent to
+<code>contrast(object, method = "pairwise")</code>; and <code>pairs(object,
+  reverse = TRUE)</code> is the same as <code>contrast(object, method =
+  "revpairwise")</code>.
+</p>
+
+
+<h3>Interaction contrasts</h3>
+
+<p>When <code>interaction</code> is specified,
+interaction contrasts are computed. Specifically contrasts are generated
+for each factor separately, one at a time; and these contrasts are applied
+to the object (the first time around) or to the previous result
+(subsequently). (Any factors specified in <code>by</code> are skipped.) The final
+result comprises contrasts of contrasts, or, equivalently, products of
+contrasts for the factors involved. Any named elements of <code>interaction</code>
+are assigned to contrast methods; others are assigned in order of
+appearance in <code>object@levels</code>. The contrast factors in the resulting 
+<code>emmGrid</code> object are ordered the same as in <code>interaction</code>.
+</p>
+<p><code>interaction</code> may be a character vector or list of valid contrast
+methods (as documented for the <code>method</code> argument). If the vector or
+list is shorter than the number needed, it is recycled. Alternatively, if
+the user specifies <code>contrast = TRUE</code>, the contrast specified in
+<code>method</code> is used for all factors involved.
+</p>
+
+
+<h3>Simple contrasts</h3>
+
+<p><code>simple</code> is essentially the complement of <code>by</code>: When
+<code>simple</code> is a character vector, <code>by</code> is set to all the factors in
+the grid <em>except</em> those in <code>simple</code>. If <code>simple</code> is a list,
+each element is used in turn as <code>simple</code>, and assembled in an
+<code>"emm_list"</code>. To generate <em>all</em> simple main effects, use
+<code>simple = "each"</code> (this works unless there actually is a factor named
+<code>"each"</code>). Note that a non-missing <code>simple</code> will cause <code>by</code>
+to be ignored.
+</p>
+<p>Ordinarily, when <code>simple</code> is a list or <code>"each"</code>, the return value
+is an <code><a href="../../emmeans/help/emm_list.html">emm_list</a></code> object with each entry in correspondence with
+the entries of <code>simple</code>. However, with <code>combine = TRUE</code>, the
+elements are all combined into one family of contrasts in a single
+<code><a href="../../emmeans/help/emmGrid-class.html">emmGrid</a></code> object using
+<code><a href="../../emmeans/help/rbind.emmGrid.html">rbind.emmGrid</a></code>.. In that case, the <code>adjust</code> argument sets
+the adjustment method for the combined set of contrasts.
+</p>
+
+
+<h3>Note</h3>
+
+<p>When <code>object</code> has a nesting structure (this can be seen via
+<code>str(object)</code>), then any grouping factors involved are forced into
+service as <code>by</code> variables, and the contrasts are thus computed
+separately in each nest. This in turn may lead to an irregular grid in the
+returned <code>emmGrid</code> object, which may not be valid for subsequent
+<code>emmeans</code> calls.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+warp.lm &lt;- lm(breaks ~ wool*tension, data = warpbreaks)
+warp.emm &lt;- emmeans(warp.lm, ~ tension | wool)
+
+contrast(warp.emm, "poly")    # inherits 'by = "wool"' from warp.emm
+
+pairs(warp.emm)
+
+# Effects (dev from mean) of the 6 factor combs, with enhanced levels:
+contrast(warp.emm, "eff", by = NULL, 
+    enhance.levels = c("wool", "tension"))  
+    
+pairs(warp.emm, simple = "wool") # same as pairs(warp.emm, by = "tension")
+
+# Do all "simple" comparisons, combined into one family
+pairs(warp.emm, simple = "each", combine = TRUE)
+
+## Not run: 
+
+## Note that the following are NOT the same:
+contrast(warp.emm, simple = c("wool", "tension"))
+contrast(warp.emm, simple = list("wool", "tension"))
+## The first generates contrasts for combinations of wool and tension
+##   (same as by = NULL)
+## The second generates contrasts for wool by tension, and for 
+##   tension by wool, respectively.
+
+## End(Not run)
+
+# An interaction contrast for tension:wool
+tw.emm &lt;- contrast(warp.emm, interaction = c(tension = "poly", wool = "consec"), 
+                   by = NULL)
+tw.emm          # see the estimates
+coef(tw.emm)    # see the contrast coefficients
+
+# Use of scale and offset
+#   an unusual use of the famous stack-loss data...
+mod &lt;- lm(Water.Temp ~ poly(stack.loss, degree = 2), data = stackloss)
+(emm &lt;- emmeans(mod, "stack.loss", at = list(stack.loss = 10 * (1:4))))
+# Convert results from Celsius to Fahrenheit:
+confint(contrast(emm, "identity", scale = 9/5, offset = 32))
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

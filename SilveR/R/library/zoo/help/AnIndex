@@ -148,7 +148,11 @@ ltext.tis	xyplot.zoo
 ltext.zoo	xyplot.zoo
 make.par.list	make.par.list
 MATCH	MATCH
+MATCH.Date	MATCH
 MATCH.default	MATCH
+MATCH.POSIXct	MATCH
+MATCH.POSIXlt	MATCH
+MATCH.timeDate	MATCH
 MATCH.times	MATCH
 MATCH.yearmon	yearmon
 MATCH.yearqtr	yearqtr

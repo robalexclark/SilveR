@@ -79,14 +79,16 @@ namespace SilveR.Controllers
             }
 
             ProcessStartInfo processStartInfo = new ProcessStartInfo(rscriptPath);
-            processStartInfo.RedirectStandardError = true;
+            processStartInfo.WorkingDirectory = Path.GetDirectoryName(rscriptPath);
+            processStartInfo.RedirectStandardOutput = true;
+            //processStartInfo.RedirectStandardError = true;
             processStartInfo.Arguments = "--version";
             processStartInfo.UseShellExecute = false;
 
             try
             {
                 Process process = Process.Start(processStartInfo);
-                string processOutput = process.StandardError.ReadToEnd();
+                string processOutput = process.StandardOutput.ReadToEnd();
 
                 return processOutput.StartsWith("R");
             }

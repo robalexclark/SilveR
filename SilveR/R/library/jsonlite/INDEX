@@ -1,5 +1,6 @@
 base64                  Encode/decode base64
 flatten                 Flatten nested data frames
+gzjson                  Gzipped JSON
 prettify, minify        Prettify or minify a JSON string
 rbind_pages             Combine pages into a single data frame
 read_json               Read/write JSON

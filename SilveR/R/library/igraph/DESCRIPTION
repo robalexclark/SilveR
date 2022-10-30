@@ -1,5 +1,5 @@
 Package: igraph
-Version: 1.3.4
+Version: 1.3.5
 Title: Network Analysis and Visualization
 Author: See AUTHORS file.
 Maintainer: Tamás Nepusz <ntamas@gmail.com>
@@ -36,8 +36,8 @@ Collate: 'adjacency.R' 'auto.R' 'assortativity.R' 'attributes.R'
         'utils.R' 'uuid.R' 'versions.R' 'weakref.R' 'zzz-deprecate.R'
 RoxygenNote: 7.1.2
 NeedsCompilation: yes
-Packaged: 2022-07-19 16:30:43 UTC; tamas
+Packaged: 2022-09-09 14:41:00 UTC; tamas
 Repository: CRAN
-Date/Publication: 2022-07-19 21:30:02 UTC
-Built: R 4.1.3; i386-w64-mingw32; 2022-08-15 15:51:16 UTC; windows
+Date/Publication: 2022-09-22 07:10:02 UTC
+Built: R 4.1.3; i386-w64-mingw32; 2022-10-05 19:16:34 UTC; windows
 Archs: i386, x64

@@ -102,6 +102,7 @@ component_distribution
                         Connected components of a graph
 component_wise          Component-wise layout
 compose                 Compose two graphs as binary relations
+connect                 Neighborhood of graph vertices
 consensus_tree          Create a consensus tree from several
                         hierarchical random graph models
 console                 The igraph console
@@ -149,7 +150,6 @@ edge_attr<-             Set one or more edge attributes
 edge_attr_names         List names of edge attributes
 edge_connectivity       Edge connectivity.
 edge_density            Graph density
-ego_size                Neighborhood of graph vertices
 eigen_centrality        Find Eigenvector Centrality Scores of Network
                         Positions
 embed_adjacency_matrix
@@ -395,8 +395,8 @@ sample_islands          A graph with subgraphs that are each a random
 sample_k_regular        Create a random regular graph
 sample_last_cit         Random citation graphs
 sample_motifs           Graph motifs
-sample_pa               Generate scale-free graphs according to the
-                        Barabasi-Albert model
+sample_pa               Generate random graphs using preferential
+                        attachment
 sample_pa_age           Generate an evolving random graph with
                         preferential attachment and aging
 sample_pref             Trait-based random generation

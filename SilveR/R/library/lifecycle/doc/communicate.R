@@ -195,3 +195,15 @@ add_two <- function(x, y) {
 add_two(1, 2)
 add_two(1, 1:5)
 
+## -----------------------------------------------------------------------------
+lifecycle::deprecate_warn(
+  when = "1.0.0",
+  what = I('Setting the global option "pkg.opt" to "foo"')
+)
+
+lifecycle::deprecate_warn(
+  when = "1.0.0",
+  what = I('The global option "pkg.another_opt"'),
+  with = I('"pkg.this_opt"')
+)
+

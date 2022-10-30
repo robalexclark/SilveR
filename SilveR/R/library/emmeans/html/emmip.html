@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Interaction-style plots for estimated marginal means</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for emmip {emmeans}"><tr><td>emmip {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Interaction-style plots for estimated marginal means</h2>
+
+<h3>Description</h3>
+
+<p>Creates an interaction plot of EMMs based on a fitted model and a simple
+formula specification.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+emmip(object, formula, ...)
+
+## Default S3 method:
+emmip(object, formula, type, CIs = FALSE, PIs = FALSE,
+  style, engine = get_emm_option("graphics.engine"), plotit = TRUE,
+  nesting.order = FALSE, ...)
+
+emmip_ggplot(emms, style = "factor", dodge = 0.1, xlab = labs$xlab,
+  ylab = labs$ylab, tlab = labs$tlab, facetlab = "label_context", scale,
+  dotarg = list(shape = "circle"), linearg = list(linetype = "solid"),
+  CIarg = list(lwd = 2, alpha = 0.5), PIarg = list(lwd = 1.25, alpha =
+  0.33), col, ...)
+
+emmip_lattice(emms, style = "factor", xlab = labs$xlab, ylab = labs$ylab,
+  tlab = labs$tlab, pch = c(1, 2, 6, 7, 9, 10, 15:20), lty = 1,
+  col = NULL, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code>, or a fitted model of a class
+supported by the <span class="pkg">emmeans</span> package</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>Formula of the form 
+<code>trace.factors ~ x.factors | by.factors</code>. The EMMs are
+plotted against <code>x.factor</code> for each level of <code>trace.factors</code>.
+<code>by.factors</code> is optional, but if present, it determines separate
+panels. Each element of this formula may be a single factor in the model,
+or a combination of factors using the <code>*</code> operator.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code> (when
+<code>object</code> is not already an <code>emmGrid</code> object),
+<code>predict.emmGrid</code>, 
+<code>emmip_ggplot</code>, or <code>emmip_lattice</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>As in <code><a href="../../emmeans/help/predict.emmGrid.html">predict.emmGrid</a></code>, this determines
+whether we want to inverse-transform the predictions
+(<code>type = "response"</code>) or not (any other choice). The default is
+<code>"link"</code>, unless the <code>"predict.type"</code> option is in force; see
+<code><a href="../../emmeans/help/emm_options.html">emm_options</a></code>.
+In addition, the user may specify <code>type = "scale"</code> to create a
+transformed scale for the vertical axis based on <code>object</code>'s response 
+transformation or link function.</p>
+</td></tr>
+<tr valign="top"><td><code>CIs</code></td>
+<td>
+<p>Logical value. If <code>TRUE</code>, confidence intervals (or HPD intervals
+for Bayesian models) are added to the plot 
+(works only with <code>engine = "ggplot"</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>PIs</code></td>
+<td>
+<p>Logical value. If <code>TRUE</code>, prediction intervals are added to the plot 
+(works only with <code>engine = "ggplot"</code>). If both <code>CIs</code> and
+<code>CIs</code> are <code>TRUE</code>, the prediction intervals will be somewhat
+longer, lighter, and thinner than the confidence intervals. Additional
+parameters to <code><a href="../../emmeans/help/predict.emmGrid.html">predict.emmGrid</a></code> (e.g., <code>sigma</code>) may be passed via
+<code>...</code>. For Bayesian models, PIs require <code>frequentist = TRUE</code> and 
+a value for <code>sigma</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>style</code></td>
+<td>
+<p>Optional character value. This has an effect only when the
+horizontal variable is a single numeric variable. If <code>style</code> is
+unspecified or <code>"numeric"</code>, the horizontal scale will be numeric and
+curves are plotted using lines (and no symbols). With <code>style =
+"factor"</code>, the horizontal variable is treated as the levels of a factor
+(equally spaced along the horizontal scale), and curves are plotted using
+lines and symbols. When the horizontal variable is character or factor, or
+a combination of more than one predictor, <code>"factor"</code> style is always used.</p>
+</td></tr>
+<tr valign="top"><td><code>engine</code></td>
+<td>
+<p>Character value matching <code>"ggplot"</code> (default), 
+<code>"lattice"</code>, or <code>"none"</code>. The graphics engine to be used to produce the plot.
+These require, respectively, the <span class="pkg">ggplot2</span> or <span class="pkg">lattice</span> package to
+be installed. Specifying <code>"none"</code> is equivalent to setting <code>plotit = FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>plotit</code></td>
+<td>
+<p>Logical value. If <code>TRUE</code>, a graphical object is returned;
+if <code>FALSE</code>, a data.frame is returned containing all the values
+used to construct the plot.</p>
+</td></tr>
+<tr valign="top"><td><code>nesting.order</code></td>
+<td>
+<p>Logical value. If <code>TRUE</code>, factors that are nested
+are presented in order according to their nesting factors, even if those nesting
+factors are not present in <code>formula</code>. If <code>FALSE</code>, only the
+variables in <code>formula</code> are used to order the variables.</p>
+</td></tr>
+<tr valign="top"><td><code>emms</code></td>
+<td>
+<p>A <code>data.frame</code> created by calling <code>emmip</code> with
+<code>plotit = FALSE</code>. Certain variables and attributes are expected
+to exist in this data frame; see the section detailing the rendering functions.</p>
+</td></tr>
+<tr valign="top"><td><code>dodge</code></td>
+<td>
+<p>Numerical amount passed to <code>ggplot2::position_dodge</code> 
+by which points and intervals are offset so they do not collide.</p>
+</td></tr>
+<tr valign="top"><td><code>xlab, ylab, tlab</code></td>
+<td>
+<p>Character labels for the horizontal axis, vertical
+axis, and traces (the different curves), respectively. The <code>emmip</code>
+function generates these automatically and provides therm via the <code>labs</code> 
+attribute, but the user may override these if desired.</p>
+</td></tr>
+<tr valign="top"><td><code>facetlab</code></td>
+<td>
+<p>Labeller for facets (when by variables are in play).
+Use <code>"label_value"</code> to show just the factor levels, or <code>"label_both"</code>
+to show both the factor names and factor levels. The default of
+<code>"label_context"</code> decides which based on how many <code>by</code> factors there are.
+See the documentation for <code>ggplot2::label_context</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>scale</code></td>
+<td>
+<p>If not missing, an object of class <code>scales::trans</code> specifying
+a (usually) nonlinear scaling for the vertical axis. For example, 
+<code>scales = scales::log_trans()</code> specifies a logarithmic scale. For
+fine-tuning purposes, additional
+arguments to <code>ggplot2::scale_y_continuous</code> may be included in <code>...</code> .</p>
+</td></tr>
+<tr valign="top"><td><code>dotarg</code></td>
+<td>
+<p><code>list</code>
+of arguments passed to <code>geom_point</code> to customize appearance of points</p>
+</td></tr>
+<tr valign="top"><td><code>linearg</code></td>
+<td>
+<p><code>list</code>
+of arguments passed to <code>geom_line</code> to customize appearance of lines</p>
+</td></tr>
+<tr valign="top"><td><code>CIarg, PIarg</code></td>
+<td>
+<p><code>list</code>s
+of arguments passed to <code>geom_linerange</code> to customize appearance of intervals.
+(Note: the <code>linetype</code> aesthetic defaults to <code>"solid"</code> under the hood)</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>With <code>emmip_ggplot</code>, this adds <code>color = col</code> (not
+<code>colour</code>) to all of the <code>*arg</code> lists. This is intended for setting a
+common color for everything, such as a black-and-white plot. 
+With <code>emmip_lattice</code>, <code>col</code> specifies the colors to use
+for each group, recycled as needed. If not specified, the default trellis
+colors are used.</p>
+</td></tr>
+<tr valign="top"><td><code>pch</code></td>
+<td>
+<p>(Lattice only) The plotting characters to use for each group (i.e., levels of
+<code>trace.factors</code>). They are recycled as needed.</p>
+</td></tr>
+<tr valign="top"><td><code>lty</code></td>
+<td>
+<p>(Lattice only) The line types to use for each group. Recycled as needed.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>If <code>plotit = FALSE</code>, a <code>data.frame</code> (actually, a
+<code>summary_emm</code> object) with the table of EMMs that would be plotted.
+The variables plotted are named <code>xvar</code> and <code>yvar</code>, and the trace
+factor is named <code>tvar</code>. This data frame has an added <code>"labs"</code>
+attribute containing the labels <code>xlab</code>, <code>ylab</code>, and <code>tlab</code>
+for these respective variables. The confidence limits are also
+included, renamed <code>LCL</code> and <code>UCL</code>.
+</p>
+<p>If <code>plotit = TRUE</code>, the function
+returns an object of class <code>"ggplot"</code> or a <code>"trellis"</code>, depending
+on <code>engine</code>.
+</p>
+
+
+<h3>Details</h3>
+
+<p>If <code>object</code> is a fitted model, <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code> is called with an
+appropriate specification to obtain estimated marginal means for each
+combination of the factors present in <code>formula</code> (in addition, any 
+arguments in <code>...</code> that match <code>at</code>, <code>trend</code>, 
+<code>cov.reduce</code>, or <code>fac.reduce</code> are passed to <code>emmeans</code>). 
+Otherwise, if <code>object</code> is an <code>emmGrid</code> object, its first element is 
+used, and it must contain one estimate for each combination of the factors
+present in <code>formula</code>.
+</p>
+
+
+<h3>Rendering functions</h3>
+
+<p>The functions <code>emmip_ggplot</code> and <code>emmip_lattice</code>
+are called when <code>plotit == TRUE</code> to render the plots; 
+but they may also be called later on an object saved via <code>plotit = FALSE</code>
+(or <code>engine = "none"</code>). The functions require that <code>emms</code> contains variables
+<code>xvar</code>, <code>yvar</code>, and <code>tvar</code>, and attributes <code>"labs"</code> and <code>"vars"</code>.
+Confidence intervals are plotted if variables <code>LCL</code> and <code>UCL</code> exist;
+and prediction intervals are plotted if <code>LPL</code> and <code>UPL</code> exist.
+Finally, it must contain the variables named in <code>attr(emms, "vars")</code>.
+</p>
+<p>In <code>emmip_ggplot</code>, colors, linetypes, and shapes are all assigned to
+groups (according to <code>tvar</code>) unless overridden. So, for example, one may 
+have different symbols for each group by simply specifying <code>dotarg = list()</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Conceptually, this function is equivalent to 
+<code><a href="../../stats/html/interaction.plot.html">interaction.plot</a></code> where the summarization function is thought 
+to return the EMMs.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../emmeans/help/emmeans.html">emmeans</a></code>, <code><a href="../../stats/html/interaction.plot.html">interaction.plot</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+#--- Three-factor example
+noise.lm = lm(noise ~ size * type * side, data = auto.noise)
+
+# Separate interaction plots of size by type, for each side
+emmip(noise.lm, type ~ size | side)
+
+# One interaction plot, using combinations of size and side as the x factor
+# ... with added confidence intervals and some formatting changes
+emmip(noise.lm, type ~ side * size, CIs = TRUE,
+    CIarg = list(lwd = 1, alpha = 1, color = "cyan"),
+    dotarg = list(color = "black"))
+
+# Create a black-and-white version of above with different linetypes
+# (Let the linetypes and symbols default to the palette)
+emmip(noise.lm, type ~ side * size, CIs = TRUE, col = "black",
+      linearg = list(), dotarg = list(size = 2), CIarg = list(alpha = 1)) +
+    ggplot2::theme_bw()
+
+# One interaction plot using combinations of type and side as the trace factor
+emmip(noise.lm, type * side ~ size)
+
+# Individual traces in panels
+emmip(noise.lm, ~ size | type * side)
+
+# Example for the 'style' argument
+fib.lm = lm(strength ~ machine * sqrt(diameter), data = fiber)
+fib.rg = ref_grid(fib.lm, at = list(diameter = c(3.5, 4, 4.5, 5, 5.5, 6)^2))
+emmip(fib.rg, machine ~ diameter)   # curves (because diameter is numeric)
+emmip(fib.rg, machine ~ diameter, style = "factor")  # points and lines
+
+# For an example using extra ggplot2 code, see 'vignette("messy-data")',
+# in the section on nested models.
+
+### Options with transformations or link functions
+neuralgia.glm &lt;- glm(Pain ~ Treatment * Sex + Age, family = binomial(), 
+                     data = neuralgia) 
+
+# On link scale:
+emmip(neuralgia.glm, Treatment ~ Sex)
+
+# On response scale:
+emmip(neuralgia.glm, Treatment ~ Sex, type = "response")
+
+# With transformed axis scale and custom scale divisions
+emmip(neuralgia.glm, Treatment ~ Sex, type = "scale",
+    breaks = seq(0.10, 0.90, by = 0.10))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

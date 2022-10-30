@@ -671,7 +671,9 @@ if(showANOVA=="Y") {
 	#Generating the error message if there are co-linearities
 	#Code repeated below, incasee the user deselected the ANOVA table we need to kill the code
 	test <- try(Anova(threewayfull, type=c("III")))
-	if(class(test) == "try-error"){
+
+#STB Nov 2022 - the try command now has two entries rather than one (ANOVA and data.frame)
+	if(class(test)[1] == "try-error"){
 		HTML.title("Error", HR=4, align="left")
 		HTML("Unfortunately there are aliased parameters in the statistical model. This can be caused if a best-fit regression line cannot be fitted for one or more combinations of the categorical factor levels in the above scatterplots. In order to perform an analysis, the model may need to be simplified.", align="left")
 		quit()
@@ -780,7 +782,9 @@ if(showANOVA=="Y") {
 #Repeat of code above, incase the user deselected the ANOVA table we need to kill the code
 #Generating the error message if there are co-linearities
 test <- try(Anova(threewayfull, type=c("III")))
-if(class(test) == "try-error"){
+
+#STB Nov 2022 - the try command now has two entries rather than one (ANOVA and data.frame)
+if(class(test)[1] == "try-error"){
 	HTML.title("Error", HR=2, align="left")
 	HTML("Unfortunately there are aliased parameters in the statistical model. This can be caused if a best-fit regression line cannot be fitted for one or more combinations of the categorical factor levels in the above scatterplots. In order to perform an analysis, the model may need to be simplified.", align="left")
 	quit()
@@ -795,13 +799,19 @@ if (showCoefficients == "Y") {
 	HTML.title("Table of model coefficients", HR=2, align="left")
 
 	temp1<-coefficients(threewayfull2) # model coefficients
-	temp2<- confint(threewayfull2, level=sig) # CIs for model parameters 
+	temp1<-format(round(temp1, 3), nsmall=3, scientific=FALSE)
+
+	temp2<- format(round(confint(threewayfull2, level=sig), 3), nsmall=3, scientific=FALSE) # CIs for model parameters 
 	temp3<- cbind(temp1, temp2)
 	tablenames<-rownames(temp3)
 
 	for (i in 1:100) {
 		tablenames<- sub(":", " * ", tablenames)
 	}	
+
+
+
+
 	rownames(temp3)<-tablenames
 	colnam<-c("Estimate", "lower","upper")
 	colnam[2]<-paste("Lower ",(sig*100),"% CI",sep="")

@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Compact letter displays</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for cld.emmGrid {emmeans}"><tr><td>cld.emmGrid {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Compact letter displays</h2>
+
+<h3>Description</h3>
+
+<p>A method for <code>multcomp::cld()</code> is provided for users desiring to produce 
+compact-letter displays (CLDs). 
+This method uses the Piepho (2004) algorithm (as implemented in the
+<span class="pkg">multcompView</span> package) to generate a compact letter display of all
+pairwise comparisons of estimated marginal means. The function obtains (possibly
+adjusted) P values for all pairwise comparisons of means, using the
+<code><a href="../../emmeans/help/contrast.html">contrast</a></code> function with <code>method = "pairwise"</code>. When a P
+value exceeds <code>alpha</code>, then the two means have at least one letter in
+common.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'emmGrid'
+cld(object, details = FALSE, sort = TRUE, by,
+  alpha = 0.05, Letters = c("1234567890", LETTERS, letters),
+  reversed = FALSE, signif.sets = FALSE, delta = 0, ...)
+
+## S3 method for class 'emm_list'
+cld(object, ..., which = I_bet(1))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code></p>
+</td></tr>
+<tr valign="top"><td><code>details</code></td>
+<td>
+<p>Logical value determining whether detailed information on tests of
+pairwise comparisons is displayed</p>
+</td></tr>
+<tr valign="top"><td><code>sort</code></td>
+<td>
+<p>Logical value determining whether the EMMs are sorted before the comparisons
+are produced. When <code>TRUE</code>, the results are displayed according to
+<code>reversed</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>Character value giving the name or names of variables by which separate
+families of comparisons are tested. If NULL, all means are compared.
+If missing, the object's <code>by.vars</code> setting, if any, is used.</p>
+</td></tr>
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+<p>Numeric value giving the significance level for the comparisons</p>
+</td></tr>
+<tr valign="top"><td><code>Letters</code></td>
+<td>
+<p>Character vector of letters to use in the display. Any strings of
+length greater than 1 are expanded into individual characters</p>
+</td></tr>
+<tr valign="top"><td><code>reversed</code></td>
+<td>
+<p>Logical value (passed to <code>multcompView::multcompLetters</code>.)
+If <code>TRUE</code>, the order of use of the letters is reversed.
+In addition, if both <code>sort</code> and <code>reversed</code> are TRUE, the sort
+order of results is reversed.</p>
+</td></tr>
+<tr valign="top"><td><code>signif.sets</code></td>
+<td>
+<p>Logical value. If <code>FALSE</code> (and <code>delta = 0</code>), a 
+&lsquo;traditional&rsquo;
+compact-letter display is constructed with groupings representing sets of
+estimates that are not statistically different. If <code>TRUE</code>, the criteria
+are reversed so that two estimates sharing the same symbol test as significantly
+different. See also <code>delta</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+<p>Numeric value passed to <code><a href="../../emmeans/help/test.emmGrid.html">test.emmGrid</a></code>. If this
+is positive, it is used as an equivalence threshold in the TOST procedure for
+two-sided equivalence testing. In the resulting compact letter display,
+two estimates share the same grouping letter only if they are found to be
+statistically equivalent &ndash; that is, groupings reflect actual <em>findings</em>
+of equivalence rather than failure to find a significant difference.
+When <code>delta</code> is nonzero, <code>signif.sets</code> is ignored.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to <code><a href="../../emmeans/help/contrast.html">contrast</a></code> (for example,
+an <code>adjust</code> method)</p>
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+<p>Which element of the <code>emm_list</code> object to process
+(If length exceeds one, only the first one is used)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code><a href="../../emmeans/help/summary.emmGrid.html">summary_emm</a></code> object showing the estimated marginal means
+plus an additional column labeled <code>.group</code> (when <code>signif.sets = FALSE</code>), 
+<code>.signif.set</code> (when <code>signif.sets = TRUE</code>), or <code>.equiv.set</code> 
+(when <code>delta &gt; 0</code>).
+</p>
+
+
+<h3>Note</h3>
+
+<p>We warn that the default display encourages a poor
+practice in interpreting significance tests. Such CLDs are misleading because they
+visually group means with comparisons <em>P</em> &gt; <code>alpha</code> as though they 
+are equal, when in fact we have only failed to prove that they differ.
+A better alternative if one wants to show groupings is to specify an equivalence
+threshold <code>delta</code>; then groupings will be based on actual findings of
+equivalence. Another way to display actual findings is to set
+<code>signif.sets = TRUE</code>, so that estimates in the same group are those 
+found to be statistically <em>different</em>. Obviously, these different options
+require different interpretations of the results; the annotations and the label
+given the final column help guide how to assess the results.
+</p>
+<p>As further alternatives, consider <code><a href="../../emmeans/help/pwpp.html">pwpp</a></code> (graphical display of <em>P</em> 
+values) or <code><a href="../../emmeans/help/pwpm.html">pwpm</a></code> (matrix display).
+</p>
+
+
+<h3>References</h3>
+
+<p>Piepho, Hans-Peter (2004) An algorithm for a letter-based 
+representation of all pairwise comparisons, 
+Journal of Computational and Graphical Statistics, 
+13(2), 456-466.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if(requireNamespace("multcomp"))
+    emm_example("cld-multcomp")
+    # Use emm_example("cld-multcomp", list = TRUE) # to just list the code
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

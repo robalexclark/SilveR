@@ -26,6 +26,7 @@
     </style>
 
 
+
 <style type="text/css">
   code {
     white-space: pre;
@@ -107,13 +108,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -157,13 +165,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We’ll cover the details shortly, but here are a few sample uses:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>lifecycle<span class="sc">::</span><span class="fu">deprecate_warn</span>(<span class="st">&quot;1.0.0&quot;</span>, <span class="st">&quot;old_fun()&quot;</span>, <span class="st">&quot;new_fun()&quot;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: `old_fun()` was deprecated in lifecycle 1.0.0.</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Please use `new_fun()` instead.</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>lifecycle<span class="sc">::</span><span class="fu">deprecate_warn</span>(<span class="st">&quot;1.0.0&quot;</span>, <span class="st">&quot;fun()&quot;</span>, <span class="st">&quot;testthat::fun()&quot;</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: `fun()` was deprecated in lifecycle 1.0.0.</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Please use `testthat::fun()` instead.</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>lifecycle<span class="sc">::</span><span class="fu">deprecate_warn</span>(<span class="st">&quot;1.0.0&quot;</span>, <span class="st">&quot;fun(old_arg)&quot;</span>, <span class="st">&quot;fun(new_arg)&quot;</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `old_arg` argument of `fun()` is deprecated as of lifecycle 1.0.0.</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Please use the `new_arg` argument instead.</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Please use `new_fun()` instead.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the base package.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Please report the issue to the authors.</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>lifecycle<span class="sc">::</span><span class="fu">deprecate_warn</span>(<span class="st">&quot;1.0.0&quot;</span>, <span class="st">&quot;fun()&quot;</span>, <span class="st">&quot;testthat::fun()&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: `fun()` was deprecated in lifecycle 1.0.0.</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Please use `testthat::fun()` instead.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the base package.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Please report the issue to the authors.</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>lifecycle<span class="sc">::</span><span class="fu">deprecate_warn</span>(<span class="st">&quot;1.0.0&quot;</span>, <span class="st">&quot;fun(old_arg)&quot;</span>, <span class="st">&quot;fun(new_arg)&quot;</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `old_arg` argument of `fun()` is deprecated as of lifecycle 1.0.0.</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Please use the `new_arg` argument instead.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the base package.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Please report the issue to the authors.</span></span></code></pre></div>
 <p>(Note that the message includes the package name — this is automatically discovered from the environment of the calling function so will not work unless the function is called from the package namespace.)</p>
 <p>The following sections describe how to use lifecycle badges and functions together to handle a variety of common development tasks.</p>
 </div>
@@ -194,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: `add_two()` was deprecated in lifecycle 1.0.0.</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Please use `base::sum()` instead.</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Please use `base::sum()` instead.</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 <p><code>deprecate_warn()</code> generates user friendly messages for two common deprecation alternatives:</p>
 <ul>
@@ -213,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: `add_two()` was deprecated in lifecycle 1.0.0.</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; This function is a special case of sum(); use it instead.</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ This function is a special case of sum(); use it instead.</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 <p>It’s good practice to test that you’ve correctly implemented the deprecation, testing that the deprecated function still works and that it generates a useful warning. Using an expectation inside <code>testthat::expect_snapshot()</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> is a convenient way to do this:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;add_two is deprecated&quot;</span>, {</span>
@@ -335,7 +349,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `na.rm` argument of `add_two()` is deprecated as of lifecycle 1.0.0.</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Ability to retain missing values will be dropped in next release.</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Ability to retain missing values will be dropped in next release.</span></span>
 <span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 </div>
 <div id="deprecating-an-argument-providing-a-new-default" class="section level3">
@@ -356,11 +370,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The chief advantage of this technique is that users will get a warning regardless of what value of <code>na.rm</code> they use:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `na.rm` argument of `add_two()` is deprecated as of lifecycle 1.0.0.</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Ability to retain missing values will be dropped in next release.</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Ability to retain missing values will be dropped in next release.</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">add_two</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="at">na.rm =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `na.rm` argument of `add_two()` is deprecated as of lifecycle 1.0.0.</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Ability to retain missing values will be dropped in next release.</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Ability to retain missing values will be dropped in next release.</span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 </div>
 <div id="renaming-an-argument" class="section level3">
@@ -392,6 +406,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The `y` argument of `foo()` must be a scalar as of lifecycle 1.0.0.</span></span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 16</span></span></code></pre></div>
 </div>
+</div>
+<div id="anything-else" class="section level2">
+<h2>Anything else</h2>
+<p>You can wrap <code>what</code> and <code>with</code> in <code>I()</code> to deprecate behaviours not otherwise described above:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>lifecycle<span class="sc">::</span><span class="fu">deprecate_warn</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">when =</span> <span class="st">&quot;1.0.0&quot;</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="fu">I</span>(<span class="st">&#39;Setting the global option &quot;pkg.opt&quot; to &quot;foo&quot;&#39;</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Setting the global option &quot;pkg.opt&quot; to &quot;foo&quot; was deprecated in lifecycle 1.0.0.</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the base package.</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Please report the issue to the authors.</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>lifecycle<span class="sc">::</span><span class="fu">deprecate_warn</span>(</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">when =</span> <span class="st">&quot;1.0.0&quot;</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="fu">I</span>(<span class="st">&#39;The global option &quot;pkg.another_opt&quot;&#39;</span>),</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">with =</span> <span class="fu">I</span>(<span class="st">&#39;&quot;pkg.this_opt&quot;&#39;</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: The global option &quot;pkg.another_opt&quot; was deprecated in lifecycle 1.0.0.</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Please use &quot;pkg.this_opt&quot; instead.</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the base package.</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Please report the issue to the authors.</span></span></code></pre></div>
+<p>Note that your <code>what</code> fragment needs to make sense with “was deprecated …” added to the end, and your <code>with</code> fragment needs to make sense in the sentence “Please use <code>{with}</code> instead”.</p>
 </div>
 <div class="footnotes">
 <hr />

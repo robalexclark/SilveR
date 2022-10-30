@@ -1,3 +1,51 @@
+# testthat 3.1.5
+
+* Deprecation warnings are no longer captured by `expect_warning(code, NA)`,
+  `expect_no_warning(code)`, or `expect_silent(code)`. This ensures that they 
+  bubble up to the top level so that you can address them (#1680). If you want 
+  to assert that code does not throw a deprecation warning, use
+  `expect_no_condition(code(), class = "lifecycle_warning_deprecation")`.
+
+* New experimental `expect_no_error()`, `expect_no_warning()`, 
+  `expect_no_message()`, and `expect_no_condition()` for asserting
+  the code runs without an error, warning, message, or condition (#1679).
+
+* Fixed a warning in R >=4.2.0 on Windows that occurred when using the C++
+  testing infrastructure that testthat provides (#1672).
+
+* Fixed an issue that could prevent compilation of Catch unit tests with
+  LLVM 15. In the interim, packages needing a local workaround can set
+  `PKG_CPPFLAGS = -DCATCH_CONFIG_CPP11_NO_SHUFFLE` in their `src/Makevars`.
+  (@kevinushey, #1687)
+
+* Improve way `capture_output()` handles encoding thanks to suggestion from
+  Kurt Hornik (#1693). This means that snapshots using UTF-8 encoded text on 
+  windows work once again.
+
+* `local_reproducible_output()` will no longer attempt to set the local language
+  when `LANG='C'` is set or an R version is used that was not compiled with
+  natural language support (NLS), which would previously emit non-test-related
+  warnings during testing (@dgkf, #1662; @heavywatal, #1689).
+
+* `test_check()` now suppresses hyperlinks since they'll take you to the wrong
+  places (#1648).
+
+* New `set_max_fails()` helper to make it easier to set the maximum number of
+  failures before stopping the test suite. And the advice to set to Inf is
+  now clickable (#1628).
+
+* You can now configure the behaviour of the implicit
+  `devtools::load_all()` call performed by `devtools::test()` in your
+  package DESCRIPTION file (#1636). To disable exports of internal
+  functions and of testthat helpers, use:
+
+  ```
+  Config/testthat/load-all: list(export_all = FALSE, helpers = FALSE)
+  ```
+
+  Helpers are now attached on the search path by default after calling
+  `devtools::test()`.
+
 # testthat 3.1.4
 
 * Minor tweaks to output for latest cli (#1606).

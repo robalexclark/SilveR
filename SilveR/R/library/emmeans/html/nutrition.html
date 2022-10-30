@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Nutrition data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for nutrition {emmeans}"><tr><td>nutrition {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Nutrition data</h2>
+
+<h3>Description</h3>
+
+<p>This observational dataset involves three factors, but where several factor 
+combinations are missing. It is used as a case study in Milliken and Johnson,
+Chapter 17, p.202. (You may also find it in the second edition, p.278.)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+nutrition
+</pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 107 observations and 4 variables:
+</p>
+
+<dl>
+<dt><code>age</code></dt><dd><p>a factor with levels <code>1</code>, <code>2</code>, <code>3</code>,
+<code>4</code>. Mother's age group.</p>
+</dd>
+<dt><code>group</code></dt><dd><p>a factor with levels <code>FoodStamps</code>, <code>NoAid</code>.
+Whether or not the family receives food stamp assistance.</p>
+</dd>
+<dt><code>race</code></dt><dd><p>a factor with levels <code>Black</code>, <code>Hispanic</code>,
+<code>White</code>. Mother's race.</p>
+</dd>
+<dt><code>gain</code></dt><dd><p>a numeric vector (the response variable). Gain score
+(posttest minus pretest) on knowledge of nutrition.</p>
+</dd>
+</dl>
+
+
+
+<h3>Details</h3>
+
+<p>A survey was conducted by home economists &ldquo;to study how much
+lower-socioeconomic-level mothers knew about nutrition and to judge the
+effect of a training program designed to increase their knowledge of
+nutrition.&rdquo; This is a messy dataset with several empty cells.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Milliken, G. A. and Johnson, D. E. (1984)
+<em>Analysis of Messy Data &ndash; Volume I: Designed Experiments</em>. 
+Van Nostrand, ISBN 0-534-02713-7.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+nutr.aov &lt;- aov(gain ~ (group + age + race)^2, data = nutrition)
+
+# Summarize predictions for age group 3
+nutr.emm &lt;- emmeans(nutr.aov, ~ race * group, at = list(age="3"))
+                   
+emmip(nutr.emm, race ~ group)
+
+# Hispanics seem exceptional; but this doesn't test out due to very sparse data
+pairs(nutr.emm, by = "group")
+pairs(nutr.emm, by = "race")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

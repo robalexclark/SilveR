@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Import data from many file formats</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for Import {car}"><tr><td>Import {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Import data from many file formats
+</h2>
+
+<h3>Description</h3>
+
+<p>Uses the <code>import</code> function from the <span class="pkg">rio</span> package to read a data.frame from a variety of file types.  The <code>Import</code> function includes 2 additional arguments adding row names and for converting character and logical variables to factors for some file types.</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Import(file, format, ..., row.names=TRUE,
+       stringsAsFactors = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>file</code></td>
+<td>
+
+<p>A character string naming a file, URL, or .zip or .tar archive.  See the details below.  If the file name has an extension like <code>.xlsx</code> or <code>.csv</code> then the type of file is inferred from the extension.
+</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+
+<p>If an extension is not present in the file name or it is wrong, the file format can be set with this argument; see <code><a href="../../rio/help/import.html">import</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Additional arguments passed to <code><a href="../../rio/help/import.html">import</a></code>.  
+</p>
+</td></tr>
+<tr valign="top"><td><code>row.names</code></td>
+<td>
+
+<p>If <code>TRUE</code>, the default, the left-most character variable that has all unique elements is removed from the data frame and set to be <code>row.names</code>.  To match <code>import</code>, set <code>row.names=FALSE</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>stringsAsFactors</code></td>
+<td>
+
+<p>If <code>TRUE</code>, then character variables that do not have all unique elements are converted to factors. The default is <code>FALSE</code>. Prior to May 2020 the default was determined by <code>getOption("stringsAsFactors")</code>, which then defaulted to <code>TRUE</code>.  This option is <code>FALSE</code> in R 4.0.0 and has been deprecated.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function calls the <code><a href="../../rio/help/import.html">import</a></code> function to read a data frame from a file.  Many file types are supported.  For files of type <code>"txt", "csv", "xlsx", "xls"</code> or <code> "ods"</code> the arguments <code>row.names</code> and <code>stringsAsFactors</code> can be used to add row names and convert character variables to factors, respectively.   Many more details are given on the man page for <code>import</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame.  See <code><a href="../../rio/help/import.html">import</a></code> for more details
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sanford Weisberg <a href="mailto:sandy@umn.edu">sandy@umn.edu</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../rio/help/import.html">import</a></code>, <code><a href="../../car/help/Export.html">Export</a></code>, <code><a href="../../car/help/strings2factors.html">strings2factors</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if(require("rio")) {
+
+head(Duncan, 3) # first three rows
+Export(Duncan, "Duncan.csv", keep.row.names="occupation")
+Duncan2 &lt;- Import("Duncan.csv") # Automatically restores row.names and factors
+brief(Duncan2) 
+identical(Duncan, Duncan2) # FALSE because type is of a different class
+Duncan3 &lt;- Import("Duncan.csv", stringsAsFactors=TRUE) 
+brief(Duncan3) 
+identical(Duncan, Duncan3) # TRUE type is of same class
+# cleanup
+unlink("Duncan.csv")
+
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

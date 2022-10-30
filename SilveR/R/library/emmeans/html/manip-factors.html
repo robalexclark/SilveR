@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Manipulate factors in a reference grid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for comb_facs {emmeans}"><tr><td>comb_facs {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Manipulate factors in a reference grid</h2>
+
+<h3>Description</h3>
+
+<p>These functions manipulate the velels of factors comprising a reference
+grid by combining factor levels, splitting a factor's levels into 
+combinations of newly-defined factors, or by creating a grouping factor in which 
+factor(s) levels are nested.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+comb_facs(object, facs, newname = paste(facs, collapse = "."),
+  drop = FALSE, ...)
+
+split_fac(object, fac, newfacs, ...)
+
+add_grouping(object, newname, refname, newlevs, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code></p>
+</td></tr>
+<tr valign="top"><td><code>facs</code></td>
+<td>
+<p>Character vector. The names of the factors to combine</p>
+</td></tr>
+<tr valign="top"><td><code>newname</code></td>
+<td>
+<p>Character name of grouping factor to add (different from any
+existing factor in the grid)</p>
+</td></tr>
+<tr valign="top"><td><code>drop</code></td>
+<td>
+<p>Logical value. If <code>TRUE</code>, any levels of the new factor that 
+are dropped if all occurrences in the newly reconstructed object have 
+weight zero. If <code>FALSE</code>, all levels are retained. 
+(This argument is ignored if there is no <code>.wgt.</code> column
+in <code>object@grid</code>.)</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments passed to other methods</p>
+</td></tr>
+<tr valign="top"><td><code>fac</code></td>
+<td>
+<p>The name of a factor that is part of the grid in <code>object</code></p>
+</td></tr>
+<tr valign="top"><td><code>newfacs</code></td>
+<td>
+<p>A named list with the names of new factors
+and their levels. The names must not already exist in the object,
+and the product of the lengths of the levels must equal the number
+of levels of <code>fac</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>refname</code></td>
+<td>
+<p>Character name(s) of the reference factor(s)</p>
+</td></tr>
+<tr valign="top"><td><code>newlevs</code></td>
+<td>
+<p>Character vector or factor of the same length as that of the (combined) levels for 
+<code>refname</code>. The grouping factor <code>newname</code> will have the unique
+values of <code>newlevs</code> as its levels. The order of levels in <code>newlevs</code>
+is the same as the order of the level combinations produced by 
+<code><a href="../../base/html/expand.grid.html">expand.grid</a></code> applied to the levels of <code>refname</code> &ndash; that is, the
+first factor's levels change the fastest and the last one's vary the slowest.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A modified object of class <code>emmGrid</code>
+</p>
+
+
+<h3>The <code>comb_facs</code> function</h3>
+
+<p><code>comb_facs</code> combines the levels of factors into a single factor
+in the reference grid (similar to <code><a href="../../base/html/interaction.html">interaction</a></code>). This new factor
+replaces the factors that comprise it.
+</p>
+<p><em>Additional note:</em>
+The choice of whether to drop levels or not can make a profound difference.
+If the goal is to combine factors for use in <code>joint_tests</code>, we advise <em>against</em> 
+<code>drop = TRUE</code> because that might change the weights used in deriving marginal means.
+If combining factors in a nested structure, dropping unused cases can considerably reduce 
+the storage required.
+</p>
+
+
+<h3>The <code>split_fac</code> function</h3>
+
+<p>The levels in <code>newfacs</code> are expanded via <code><a href="../../base/html/expand.grid.html">expand.grid</a></code> into
+combinations of levels, and the factor <code>fac</code> is replaced by those 
+factor combinations. Unlike <code>add_grouping</code>, this creates a crossed, 
+rather than a nested structure. Note that the order of factor combinations
+is systematic with the levels of first factor in <code>newfacs</code> varying 
+the fastest; and those factor combinations are assigned respectively
+to the levels of <code>fac</code> as displayed in <code>str(object)</code>.
+</p>
+
+
+<h3>The <code>add_grouping</code> function</h3>
+
+<p>This function adds a grouping factor to an existing reference grid or other 
+<code>emmGrid</code> object, such that the levels of one or more existing factors (call them the
+reference factors) are mapped to a smaller number of levels of the new
+grouping factor. The reference factors are then nested in a 
+new grouping factor named <code>newname</code>, and a new nesting structure
+<code>refname %in% newname</code>.
+This facilitates obtaining marginal means of the grouping factor, and 
+contrasts thereof.
+</p>
+<p><em>Additional notes:</em> By default, the levels of <code>newname</code> will be ordered
+alphabetically. To dictate a different ordering of levels, supply 
+<code>newlevs</code> as a <code>factor</code> having its levels in the desired order.
+</p>
+<p>When <code>refname</code> specifies more than one factor, this can
+fundamentally (and permanently) change what is meant by the levels of those
+individual factors. For instance, in the <code>gwrg</code> example below, there
+are two levels of <code>wool</code> nested in each <code>prod</code>; and that implies
+that we now regard these as four different kinds of wool. Similarly, there
+are five different tensions (L, M, H in prod 1, and L, M in prod 2).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+mtcars.lm &lt;- lm(mpg ~ factor(vs)+factor(cyl)*factor(gear), data = mtcars)
+(v.c.g &lt;- ref_grid(mtcars.lm))
+(v.cg &lt;- comb_facs(v.c.g, c("cyl", "gear")))
+  
+# One use is obtaining a single test for the joint contributions of two factors:
+joint_tests(v.c.g)
+
+joint_tests(v.cg)
+
+# undo the 'comb_facs' operation:
+split_fac(v.cg, "cyl.gear", list(cyl = c(4, 6, 8), gear = 3:5))
+
+IS.glm &lt;- glm(count ~ spray, data = InsectSprays, family = poisson)
+IS.emm &lt;- emmeans(IS.glm, "spray")
+IS.new &lt;- split_fac(IS.emm, "spray", list(A = 1:2, B = c("low", "med", "hi")))
+str(IS.new)
+
+fiber.lm &lt;- lm(strength ~ diameter + machine, data = fiber)
+( frg &lt;- ref_grid(fiber.lm) )
+
+# Suppose the machines are two different brands
+brands &lt;- factor(c("FiberPro", "FiberPro", "Acme"), levels = c("FiberPro", "Acme"))
+( gfrg &lt;- add_grouping(frg, "brand", "machine", brands) )
+
+emmeans(gfrg, "machine")
+
+emmeans(gfrg, "brand")
+
+### More than one reference factor
+warp.lm &lt;- lm(breaks ~ wool * tension, data = warpbreaks)
+gwrg &lt;- add_grouping(ref_grid(warp.lm), 
+    "prod",  c("tension", "wool"),  c(2, 1, 1,  1, 2, 1))
+        # level combinations:         LA MA HA  LB MB HB
+
+emmeans(gwrg, ~ wool * tension)   # some NAs due to impossible combinations
+
+emmeans(gwrg, "prod")
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

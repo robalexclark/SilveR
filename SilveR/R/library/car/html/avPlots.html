@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Added-Variable Plots</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for avPlots {car}"><tr><td>avPlots {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Added-Variable Plots</h2>
+
+<h3>Description</h3>
+
+<p>These functions construct added-variable, also called 
+partial-regression, plots for  linear and generalized linear
+models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+avPlots(model, ...)
+
+## Default S3 method:
+avPlots(model, terms=~., intercept=FALSE, 
+  layout=NULL, ask, main, ...)
+
+avp(...)
+
+avPlot(model, ...)
+
+## S3 method for class 'lm'
+avPlot(model, variable,
+	id=TRUE, col = carPalette()[1], col.lines = carPalette()[2],
+	xlab, ylab, pch = 1, lwd = 2, cex = par("cex"), pt.wts = FALSE,
+	main=paste("Added-Variable Plot:", variable),
+	grid=TRUE,
+	ellipse=FALSE,
+  marginal.scale=FALSE, ...)
+
+## S3 method for class 'glm'
+avPlot(model, variable, 
+	id=TRUE,
+	col = carPalette()[1], col.lines = carPalette()[2],
+	xlab, ylab, pch = 1, lwd = 2, cex = par("cex"), pt.wts = FALSE,
+	type=c("Wang", "Weisberg"), 
+	main=paste("Added-Variable Plot:", variable), grid=TRUE,
+	ellipse=FALSE, ...)
+	
+avPlot3d(model, coef1, coef2, id=TRUE, ...)
+
+## S3 method for class 'lm'
+avPlot3d(model, coef1, coef2, id=TRUE, fit="linear", ...)
+
+## S3 method for class 'glm'
+avPlot3d(model, coef1, coef2, id=TRUE, type=c("Wang", "Weisberg"), 
+  fit="linear", ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>model object produced by <code>lm</code> or <code>glm</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>terms</code></td>
+<td>
+<p> A one-sided formula that specifies a subset of the predictors. 
+One added-variable plot is drawn for each term.   For example, the
+specification <code>terms = ~.-X3</code> would plot against all terms
+except for <code>X3</code>. If this argument is a quoted name of one of the terms, the 
+added-variable plot is drawn for that term only.</p>
+</td></tr>
+<tr valign="top"><td><code>coef1, coef2</code></td>
+<td>
+<p>the quoted names of the two coefficients for a 3D added variable plot.</p>
+</td></tr>
+<tr valign="top"><td><code>intercept</code></td>
+<td>
+<p>Include the intercept in the plots; default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>variable</code></td>
+<td>
+<p>A quoted string giving the name of a regressor in the model matrix for the horizontal
+axis.</p>
+</td></tr>
+<tr valign="top"><td><code>layout</code></td>
+<td>
+<p>If set to a value like <code>c(1, 1)</code> or <code>c(4, 3)</code>, the layout
+of the graph will have this many rows and columns.  If not set, the program
+will select an appropriate layout.  If the number of graphs exceed nine, you 
+must select the layout yourself, or you will get a maximum of nine per page.
+If <code>layout=NA</code>, the function does not set the layout and the user can
+use the <code>par</code> function to control the layout, for example to have 
+plots from two models in the same graphics window.</p>
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+<p>The title of the plot; if missing, one will be supplied.</p>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+<p>If <code>TRUE</code>, ask the user before drawing the next plot; if <code>FALSE</code> don't ask.</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>controls point identification; if <code>FALSE</code>, no points are identified;
+can be a list of named arguments to the <code><a href="../../car/help/showLabels.html">showLabels</a></code> function;
+<code>TRUE</code>, the default, is equivalent to 
+<code>list(method=list(abs(residuals(model, type="pearson")), "x"), n=2, cex=1, col=carPalette()[1], location="lr")</code>,
+which identifies the 2 points with the largest residuals and the 2 points with 
+the most extreme horizontal values (i.e., largest partial leverage).
+For <code>avPlot3d</code>, point identication is through <code><a href="../../car/help/Identify3d.html">Identify3d</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>color for points; the default is the <em>second</em> entry
+in the current <span class="pkg">car</span> palette (see <code><a href="../../car/help/carPalette.html">carPalette</a></code>
+and <code><a href="../../graphics/html/par.html">par</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>col.lines</code></td>
+<td>
+<p>color for the fitted line.</p>
+</td></tr>
+<tr valign="top"><td><code>pch</code></td>
+<td>
+<p>plotting character for points; default is <code>1</code> 
+(a circle, see <code><a href="../../graphics/html/par.html">par</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>lwd</code></td>
+<td>
+<p>line width; default is <code>2</code> (see <code><a href="../../graphics/html/par.html">par</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>cex</code></td>
+<td>
+<p>size of plotted points; default is taken from <code>par("cex")</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>pt.wts</code></td>
+<td>
+<p>if <code>TRUE</code> (the default is <code>FALSE</code>), for a weighted
+least squares fit or a generalized linear model, the areas of plotted points
+are made proportional to the weights, with the average size taken from the
+<code>cex</code> argument.</p>
+</td></tr>
+<tr valign="top"><td><code>xlab</code></td>
+<td>
+<p>x-axis label.  If omitted a label will be constructed.</p>
+</td></tr>
+<tr valign="top"><td><code>ylab</code></td>
+<td>
+<p>y-axis label.  If omitted a label will be constructed.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>if <code>"Wang"</code> use the method of Wang (1985);
+if <code>"Weisberg"</code> use the method in the Arc software associated with
+Cook and Weisberg (1999).</p>
+</td></tr>
+<tr valign="top"><td><code>grid</code></td>
+<td>
+<p>If <code>TRUE</code>, the default, a light-gray background grid is put on the graph.</p>
+</td></tr>
+<tr valign="top"><td><code>ellipse</code></td>
+<td>
+<p>controls plotting data-concentration ellipses. If <code>FALSE</code> (the default), no ellipses are plotted.
+Can be a list of named values giving <code>levels</code>, a vector of one or more bivariate-normal probability-contour levels at which to
+plot the ellipses; and <code>robust</code>, a logical value determing whether to use the <code><a href="../../MASS/html/cov.trob.html">cov.trob</a></code> function in the <span class="pkg">MASS</span> package
+to calculate the center and covariance matrix for the data ellipses. <code>TRUE</code> is equivalent to <code>list(levels=c(.5, .95), robust=TRUE)</code>.</p>
+</td></tr>  
+<tr valign="top"><td><code>marginal.scale</code></td>
+<td>
+<p>Consider an added-variable plot of Y versus X given Z.  If this argument is <code>FALSE</code> then the limits on the horizontal axis are determined by the range of the residuals from the regression of X on Z and the limits on the vertical axis are determined by the range of the residuals from the regressnio of Y on Z.  If the argument is <code>TRUE</code>, then the limits on the horizontal axis are determined by the range of X minus it mean, and on the vertical axis by the range of Y minus its means; adjustment is made if necessary to include outliers.  This scaling allows visualization of the correlations between Y and Z and between X and Z.  For example, if the X and Z are highly correlated, then the points will be concentrated on the middle of the plot.</p>
+</td></tr> 
+<tr valign="top"><td><code>fit</code></td>
+<td>
+<p>one or both of <code>"linear"</code> (linear least-squares, the default) and <code>"robust"</code> (robust regression) surfaces to be fit to the 3D added-variable plot; see <code><a href="../../car/help/scatter3d.html">scatter3d</a></code> for details.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p><code>avPlots</code> passes these arguments to <code>avPlot</code> and <code>avPlot</code> passes them to <code>plot</code>; for <code>avPlot3d</code>, 
+additional optional arguments to be passed to <code><a href="../../car/help/scatter3d.html">scatter3d</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The functions intended for direct use are <code>avPlots</code> (for which <code>avp</code>
+is an abbreviation) and <code>avPlot3d</code>. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>These functions are used for their side effect id producing
+plots, but also invisibly return the coordinates of the plotted points.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a>, Sanford Weisberg <a href="mailto:sandy@umn.edu">sandy@umn.edu</a></p>
+
+
+<h3>References</h3>
+
+<p>Cook, R. D. and Weisberg, S. (1999)
+<em>Applied Regression, Including Computing and Graphics.</em> Wiley.
+</p>
+<p>Fox, J. (2016)
+<em>Applied Regression Analysis and Generalized Linear Models</em>,
+Third Edition. Sage.  
+</p>
+<p>Fox, J. and Weisberg, S. (2019) 
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+<p>Wang, P C. (1985)
+Adding a variable in generalized linear models.
+<em>Technometrics</em> <b>27</b>, 273&ndash;276.
+</p>
+<p>Weisberg, S. (2014) <em>Applied Linear Regression</em>, Fourth Edition, Wiley.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../car/help/residualPlots.html">residualPlots</a></code>, <code><a href="../../car/help/crPlots.html">crPlots</a></code>, <code><a href="../../car/help/ceresPlots.html">ceresPlots</a></code>, <code>link{dataEllipse}</code>, <code><a href="../../car/help/showLabels.html">showLabels</a></code>, <code><a href="../../car/help/dataEllipse.html">dataEllipse</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+avPlots(lm(prestige ~ income + education + type, data=Duncan))
+
+avPlots(glm(partic != "not.work" ~ hincome + children, 
+  data=Womenlf, family=binomial), id=FALSE, pt.wts=TRUE)
+  
+m1 &lt;- lm(partic ~ tfr + menwage + womwage + debt + parttime, Bfox)
+par(mfrow=c(1,3))
+# marginal plot, ignoring other predictors:
+with(Bfox, dataEllipse(womwage, partic, levels=0.5)) 
+abline(lm(partic ~ womwage, Bfox), col="red", lwd=2)
+# AV plot, adjusting for others:
+avPlots(m1, ~ womwage, ellipse=list(levels=0.5)) 
+# AV plot, adjusting and scaling as in marginal plot
+avPlots(m1, ~ womwage, marginal.scale=TRUE, ellipse=list(levels=0.5)) 
+
+# 3D AV plot, requires the rgl package
+if (interactive() &amp;&amp; require("rgl")){
+avPlot3d(lm(prestige ~ income + education + type, data=Duncan), 
+  "income", "education")
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -1,3 +1,9 @@
+# broom 1.0.1
+
+* Improves performance of `tidy.lm()` and `tidy.glm()` for full-rank fits (#1112 by `@capnrefsmmat`).
+* Moves forward with deprecation of tidiers for sparse matrices outputted from the Matrix package, initially soft-deprecated in broom 0.5.0. The Matrix tidiers were light wrappers around coercion methods that will now be deprecated from Matrix itself in the upcoming 1.4-2 release. The affected methods are `tidy.sparseMatrix()`, `tidy.dgCMatrix()`, and `tidy.dgTMatrix()`. Note that `tidy.confusionMatrix()`, for relevant objects outputted from the caret package, is unaffected (#1113).
+* `tidy.anova()` works again with `anova` objects from the `lme4` package (broken by addition of the `terms` column in the previous release)
+
 # broom 1.0.0
 
 broom 1.0.0 is the first "production" release of the broom package, and includes a number of notable changes to both functionality and governance.

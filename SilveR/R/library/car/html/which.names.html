@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Position of Row Names</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for whichNames {car}"><tr><td>whichNames {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Position of Row Names</h2>
+
+<h3>Description</h3>
+
+<p>These functions return the indices of the supplied row names of a data frame
+or names of another object, such as a vector or list. <code>whichNames</code> is just an alias for <code>which.names</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+whichNames(names, object, ...)
+
+which.names(names, object, ...)
+
+## S3 method for class 'data.frame'
+whichNames(names, object, ...)
+
+## Default S3 method:
+whichNames(names, object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>names</code></td>
+<td>
+<p>a name or character vector of names.</p>
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>a data frame or an object with a names attribute.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>not used.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns the index or indices of <code>names</code> in row names of the data frame or names of an object of another class. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a></p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2019) 
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+whichNames(c('minister', 'conductor'), Duncan)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

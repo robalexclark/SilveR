@@ -24,26 +24,30 @@ hasColorConsole         Check if console supports ANSI color escapes.
 hasFun                  Exists/get for RStudio functions
 highlightUi             Highlight UI Elements within the RStudio IDE
 isAvailable             Check if RStudio is running
+isJob                   Detect RStudio Jobs
 jobAdd                  Add a Job
-jobAddOutput            Add Job Output
-jobAddProgress          Add Job Progress
-jobRemove               Remove a Job
-jobRunScript            Run R Script As Job
-jobSetProgress          Set Job Progress
-jobSetState             Set Job State
-jobSetStatus            Set Job Status
-launcher                Retrieve Launcher Information
-launcherConfig          Define a Launcher Configuration
-launcherContainer       Define a Launcher Container
-launcherControlJob      Interact with (Control) a Job
-launcherGetJob          Retrieve Job Information
-launcherHostMount       Define a Launcher Host Mount
-launcherNfsMount        Define a Launcher NFS Mount
+jobAddOutput            Add Background Job Output
+jobAddProgress          Add Background Job Progress
+jobRemove               Remove a Background Job
+jobRunScript            Run R Script As Background Job
+jobSetProgress          Set Background Job Progress
+jobSetState             Set Background Job State
+jobSetStatus            Set Background Job Status
+launcherAvailable       Check if Workbench Launcher is Available
+launcherConfig          Define a Workbench Launcher Configuration
+launcherContainer       Define a Workbench Launcher Container
+launcherControlJob      Interact with (Control) a Workbench Job
+launcherGetInfo         Retrieve Workbench Launcher Information
+launcherGetJob          Retrieve Workbench Job Information
+launcherGetJobs         Retrieve Workbench Job Information
+launcherHostMount       Define a Workbench Launcher Host Mount
+launcherNfsMount        Define a Workbench Launcher NFS Mount
 launcherPlacementConstraint
-                        Define a Launcher Placement Constraint
-launcherResourceLimit   Define a Launcher Resource Limit
-launcherSubmitJob       Submit a Launcher Job
-launcherSubmitR         Execute an R Script as a Launcher Job
+                        Define a Workbench Launcher Placement
+                        Constraint
+launcherResourceLimit   Define a Workbench Launcher Resource Limit
+launcherSubmitJob       Submit a Workbench Job
+launcherSubmitR         Execute an R Script as a Workbench Job
 navigateToFile          Navigate to file
 persistent-values       Persistent keys and values
 previewRd               Preview an Rd topic in the Help pane
@@ -52,6 +56,10 @@ primary_selection       Extract the Primary Selection
 projects                Open a project in RStudio
 readPreference          Read Preference
 readRStudioPreference   Read RStudio Preference
+registerCommandCallback
+                        Register Command Callback
+registerCommandStreamCallback
+                        Register Command Stream Callback
 removeTheme             Remove a custom theme from RStudio.
 restartSession          Restart the R Session
 rstudio-documents       Interact with Documents open in RStudio
@@ -78,6 +86,8 @@ terminalRunning         Is Terminal Running
 terminalSend            Send Text to a Terminal
 terminalVisible         Get Visible Terminal
 translateLocalUrl       Translate Local URL
+unregisterCommandCallback
+                        Unregister Command Callback
 updateDialog            Updates a Dialog Box
 userIdentity            Get User Identity
 versionInfo             RStudio version information

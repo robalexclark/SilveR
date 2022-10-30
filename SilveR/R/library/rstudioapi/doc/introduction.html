@@ -27,54 +27,17 @@ document.addEventListener('DOMContentLoaded', function(e) {
   }
 });
 </script>
+
 <style type="text/css">
-a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
-a.anchor-section::before {content: '#';}
-.hasAnchor:hover a.anchor-section {visibility: visible;}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
 </style>
-<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
-document.addEventListener('DOMContentLoaded', function() {
-  // Do nothing if AnchorJS is used
-  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
-    return;
-  }
 
-  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
 
-  // Do nothing if sections are already anchored
-  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
-    return null;
-  }
-
-  // Use section id when pandoc runs with --section-divs
-  const section_id = function(x) {
-    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
-            ? x.id : '');
-  };
-
-  // Add anchors
-  h.forEach(function(x) {
-    const id = x.id || section_id(x.parentElement);
-    if (id === '') {
-      return null;
-    }
-    let anchor = document.createElement('a');
-    anchor.href = '#' + id;
-    anchor.classList = ['anchor-section'];
-    x.classList.add('hasAnchor');
-    x.appendChild(anchor);
-  });
-});
-</script>
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
 
 
 
@@ -276,13 +239,19 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<p>The <code>rstudioapi</code> package provides an interface for interacting with the RStudio IDE with R code. Using <code>rstudioapi</code>, you can:</p>
+<p>The <code>rstudioapi</code> package provides an interface for
+interacting with the RStudio IDE with R code. Using
+<code>rstudioapi</code>, you can:</p>
 <ul>
-<li><p>Examine, manipulate, and save the contents of documents currently open in RStudio,</p></li>
+<li><p>Examine, manipulate, and save the contents of documents currently
+open in RStudio,</p></li>
 <li><p>Create, open, or re-open RStudio projects,</p></li>
-<li><p>Prompt the user with different kinds of dialogs (e.g. for selecting a file or folder, or requesting a password from the user),</p></li>
+<li><p>Prompt the user with different kinds of dialogs (e.g. for
+selecting a file or folder, or requesting a password from the
+user),</p></li>
 <li><p>Interact with RStudio terminals,</p></li>
-<li><p>Interact with the R session associated with the current RStudio instance.</p></li>
+<li><p>Interact with the R session associated with the current RStudio
+instance.</p></li>
 </ul>
 <p>Please see the other articles for more detailed information.</p>
 

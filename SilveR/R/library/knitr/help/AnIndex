@@ -6,6 +6,7 @@ asis_output	asis_output
 cache_engines	cache_engines
 clean_cache	clean_cache
 combine_words	combine_words
+convert_chunk_header	convert_chunk_header
 current_input	current_input
 dep_auto	dep_auto
 dep_prev	dep_prev

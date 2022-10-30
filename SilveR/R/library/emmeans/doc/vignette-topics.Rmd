@@ -74,12 +74,24 @@ vignette: >
 ### C {#c}
 
 
+  * [Causal inference](messy-data.html#counterfact)
   * [`cld()`](comparisons.html#CLD)
+  * CLDs
+      * [Alternative](re-engineering-clds.html#alt-CLDs)
+      * [For equivalence sets](re-engineering-clds.html#equiv-CLDs)
+      * [For significance sets](re-engineering-clds.html#signif-CLDs)
+      * [**multcompView** package](re-engineering-clds.html#CLDs)
+      * [Principles](re-engineering-clds.html#CLDs)
+      * [Re-engineered](re-engineering-clds.html#alt-CLDs)
+      * [References](re-engineering-clds.html#refs)
+      * [Relation to underlining](re-engineering-clds.html#underlining)
+      * [Simulated example](re-engineering-clds.html#CLD-example)
   * [`clm` models](models.html#O)
   * [**coda** package](sophisticated.html#bayesxtra)
   * [`coef()`](comparisons.html#contrasts)
   * [Cohen's *d*](comparisons.html#pwpm)
   * [Compact letter displays](comparisons.html#CLD)
+  * [Compact letter displays (CLDs)](re-engineering-clds.html)
   * Comparison arrows
       * [Derivation](xplanations.html#arrows)
   * Comparisons
@@ -118,6 +130,7 @@ vignette: >
       * Tests of
           * [with transformations](comparisons.html#logs)
   * [Count regression](models.html#C)
+  * [Counterfactuals](messy-data.html#counterfact)
   * [`cov.reduce`](messy-data.html#med.covred)
   * Covariates
       * [Adjusted](messy-data.html#adjcov)
@@ -188,6 +201,7 @@ vignette: >
   * `emtrends()`
       * [in *interactions: covariates*](interactions.html#covariates)
       * [in *interactions: oranges*](interactions.html#oranges)
+  * [Equivalence sets (with CLDs)](re-engineering-clds.html#equiv-CLDs)
   * [`estHook`](xtending.html#hooks)
   * [Estimability](messy-data.html#nonestex)
   * [Estimability issues](FAQs.html#NAs)
@@ -200,6 +214,7 @@ vignette: >
       * `cbpp`
           * [in *sophisticated: mcmc*](sophisticated.html#mcmc)
           * [in *transformations: cbpp*](transformations.html#cbpp)
+      * [CLDs (simulated)](re-engineering-clds.html#CLD-example)
       * [`cows`](messy-data.html#cows)
       * [`feedlot`](predictions.html#feedlot)
       * `fiber`
@@ -218,6 +233,7 @@ vignette: >
       * [Multivariate](basics.html#multiv)
       * [Nested fixed effects](messy-data.html#cows)
       * `neuralgia`
+          * [`counterfactuals`](messy-data.html#neuralgia)
           * [in *transformations: links*](transformations.html#links)
           * [in *transformations: trangraph*](transformations.html#trangraph)
       * [`nutrition`](messy-data.html#nutrex)
@@ -269,6 +285,7 @@ vignette: >
 ### G {#g}
 
 
+  * [G-Computation](messy-data.html#counterfact)
   * [`gam` models](models.html#G)
   * [`gamlss` models](models.html#H)
   * [GEE models](models.html#E)
@@ -555,6 +572,7 @@ vignette: >
 
 
   * [Sample size, displaying](confidence-intervals.html#summary)
+  * [Sandwich estimators](messy-data.html#neuralgia)
   * Satterthwaite d.f.
       * [in *models: K*](models.html#K)
       * [in *models: L*](models.html#L)
@@ -564,6 +582,7 @@ vignette: >
   * [Sidak adjustment](confidence-intervals.html#adjust)
   * Significance
       * [Assessing](basics.html#pvalues)
+  * [Significance sets (with CLDs)](re-engineering-clds.html#signif-CLDs)
   * [`simple = "each"`](confidence-intervals.html#simple)
   * Simple comparisons
       * [in *confidence-intervals: simple*](confidence-intervals.html#simple)
@@ -654,6 +673,7 @@ vignette: >
 
 
   * [Unadjusted tests](confidence-intervals.html#adjmore)
+  * [Underlining, grouping by](re-engineering-clds.html#underlining)
   * [`update()`](utilities.html#update)
       * [`tran`](transformations.html#after)
   * [Using results](utilities.html#data)
@@ -665,6 +685,7 @@ vignette: >
 
 
   * [Variables that are not predictors](basics.html#params)
+  * [`vcov.`](messy-data.html#neuralgia)
   * [`vcovHook`](xtending.html#hooks)
   * Vignettes
       * [Basics](basics.html)
@@ -677,6 +698,7 @@ vignette: >
       * [Messy data](messy-data.html)
       * [Models](models.html)
       * [Predictions](predictions.html)
+      * [Re-engineering CLDs](re-engineering-clds.html)
       * [Sophisticated models](sophisticated.html)
       * [Transformations and link functions](transformations.html)
       * [Utilities and options](utilities.html)

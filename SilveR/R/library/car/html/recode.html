@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Recode a Variable</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for recode {car}"><tr><td>recode {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Recode a Variable</h2>
+
+<h3>Description</h3>
+
+<p>Recodes a numeric vector, character vector, or factor 
+according to simple recode specifications. <code>Recode</code>
+is an alias for <code>recode</code> that avoids name clashes
+with packages, such as <span class="pkg">Hmisc</span>, that have a <code>recode</code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+recode(var, recodes, as.factor, as.numeric=TRUE, levels, 
+       to.value="=", interval=":", separator=";")
+
+Recode(...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>var</code></td>
+<td>
+<p>numeric vector, character vector, or factor.</p>
+</td></tr>
+<tr valign="top"><td><code>recodes</code></td>
+<td>
+<p>character string of recode specifications:
+see below.</p>
+</td></tr>
+<tr valign="top"><td><code>as.factor</code></td>
+<td>
+<p>return a factor; default is <code>TRUE</code> if 
+<code>var</code> is a factor, <code>FALSE</code> otherwise.</p>
+</td></tr>
+<tr valign="top"><td><code>as.numeric</code></td>
+<td>
+<p>if <code>TRUE</code> (the default), and <code>as.factor</code> is <code>FALSE</code>, 
+then the result will be coerced to numeric
+if all values in the result can represent numbers (contain only numerals,
+minus signs, etc.).</p>
+</td></tr>
+<tr valign="top"><td><code>levels</code></td>
+<td>
+<p>an optional argument specifying the order of the
+levels in the returned factor; the default is to use the sort order
+of the level names.</p>
+</td></tr>
+<tr valign="top"><td><code>to.value</code></td>
+<td>
+<p>The operator to separate old from new values, <code>"="</code>
+by default; some other possibilities: <code>"-&gt;"</code>, <code>"~"</code>, <code>"~&gt;"</code>.
+Cannot include the interval operator (by default <code>:</code>) or the separator string (by default, <code>;</code>), 
+so, e.g., by default <code>":=&gt;"</code> is not allowed. The discussion
+in Details assumes the default <code>"="</code>. Use a non-default <code>to.value</code> if
+factor levels contain <code>=</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>interval</code></td>
+<td>
+<p>the operator used to denote numeric intervals, by default <code>":"</code>. The discussion in Details assumes the default <code>":"</code>. Use a non-default <code>interval</code> if factor levels contain <code>:</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>separator</code></td>
+<td>
+<p>the character string used to separate recode specifications, by default <code>";"</code>. The discussion in Details assumes the default <code>";"</code>. Use a non-default <code>separator</code> if factor levels contain <code>;</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments to be passed to <code>recode</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Recode specifications appear in a character string, separated by default by
+semicolons (see the examples below), each of the form <code>input=output</code>
+(where <code>=</code> may be replaced by a non-default value of the
+<code>to.value</code> argument, e.g., <code>input -&gt; output</code>). Spaces may be
+used for clarity.
+If an input value satisfies more than one specification, 
+then the first (from left to right) applies.
+If no specification is satisfied, then the input value is carried
+over to the result. <code>NA</code> is allowed on input and output.
+Several recode specifications are supported:
+</p>
+
+<dl>
+<dt>single value</dt><dd><p>For example, <code>0=NA</code>.</p>
+</dd>
+<dt>vector of values</dt><dd><p>For example, <code>c(7, 8, 9) = 'high'</code>.</p>
+</dd>
+<dt>range of values</dt><dd><p>For example, <code>7:9 = 'C'</code>. The special values <code>lo</code>
+and <code>hi</code> may appear in a range. For example, <code>lo:10=1</code>. <em>Note:</em> <code>:</code> is
+<em>not</em> the R sequence operator.  In addition, you may not use <code>:</code> with the <code>c</code> function within a recode specification, so for example <code>c(1, 3, 5:7)</code> will cause an error. The <code>:</code> is the default value of the <code>recode</code> <code>interval</code> operator; a non-default value may be specified.</p>
+</dd>
+<dt><code>else</code></dt><dd><p>everything that does not fit a previous specification.
+For example, <code>else = NA</code>. Note that <code>else</code> matches <em>all</em> otherwise
+unspecified values on input, including <code>NA</code>, and if present should appear last among the recode specifications.</p>
+</dd>
+</dl>
+
+<p>Character data and factor levels on the left-hand side of a recode specification must be quoted. Thus,
+e.g., <code>c(a, b, c) = 'low'</code> is not allowed, and should be <code>c('a', 'b', 'c') = 'low'</code>. 
+Similarly, the colon is reserved for numeric data, and, e.g., <code>c('a':'c') = 'low'</code> is not allowed. 
+If the <code>var</code> argument is a character variable with (some) values that are character representations of numbers, or a factor
+with (some) levels that are numbers (e.g., <code>'12'</code> or <code>'-2'</code>), then these too must be quoted 
+and cannot be used with colons (e.g., <code>'15':'19' = '15 to 19'</code> is not allowed, and could be
+specified as <code>c('15', '16', '17', '18', '19') = '15 to 19'</code>, assuming that all values are 
+the character representation of whole numbers).
+</p>
+<p>If all of the output values are numeric, and if <code>as.factor</code> is 
+<code>FALSE</code>, then a numeric result is returned; if <code>var</code> is a factor,
+then by default so is the result.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a recoded vector of the same length as <code>var</code>.
+</p>
+
+
+<h3>Warning</h3>
+
+<p>The factor levels may not contain the character strings in <code>to.value</code> (by default <code>"="</code>), interval (by default <code>":"</code>), or <code>separator</code> (by default <code>";"</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a></p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2019) 
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../base/html/cut.html">cut</a></code>, <code><a href="../../base/html/factor.html">factor</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+x &lt;- rep(1:3, 3)
+x
+recode(x, "c(1, 2) = 'A'; 
+           else = 'B'")
+Recode(x, "1~2 -&gt; ':=1' // 3 -&gt; ';=2'", to.value="-&gt;", 
+       interval="~", separator="//")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

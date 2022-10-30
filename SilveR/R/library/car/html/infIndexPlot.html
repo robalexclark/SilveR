@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Influence Index Plot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for infIndexPlot {car}"><tr><td>infIndexPlot {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Influence Index Plot</h2>
+
+<h3>Description</h3>
+
+<p>Provides index plots of influence and related diagnostics for a regression model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+infIndexPlot(model, ...)
+
+influenceIndexPlot(model, ...)
+
+## S3 method for class 'lm'
+infIndexPlot(model, vars=c("Cook", "Studentized", "Bonf", "hat"),
+    id=TRUE, grid=TRUE, main="Diagnostic Plots", ...)
+
+## S3 method for class 'influence.merMod'
+infIndexPlot(model,
+    vars = c("dfbeta", "dfbetas", "var.cov.comps",
+    "cookd"), id = TRUE, grid = TRUE, main = "Diagnostic Plots", ...)
+## S3 method for class 'influence.lme'
+infIndexPlot(model,
+    vars = c("dfbeta", "dfbetas", "var.cov.comps",
+    "cookd"), id = TRUE, grid = TRUE, main = "Diagnostic Plots", ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>A regression object of class <code>lm</code>, <code>glm</code>, or <code>lmerMod</code>, or an influence
+object for a <code>lmer</code>, <code>glmer</code>, or <code>lme</code> object (see
+<code><a href="../../car/help/influence.mixed.models.html">influence.mixed.models</a></code>). The <code>"lmerMod"</code> method calls the <code>"lm"</code> method and can take the same arguments.</p>
+</td></tr>
+<tr valign="top"><td><code>vars</code></td>
+<td>
+
+<p>All the quantities listed in this argument are plotted.  Use <code>"Cook"</code>
+for Cook's distances, <code>"Studentized"</code> for Studentized
+residuals, <code>"Bonf"</code> for Bonferroni p-values for an outlier test, and
+and <code>"hat"</code> for hat-values (or leverages) for a linear or generalized
+linear model, or <code>"dfbeta"</code>, <code>"dfbetas"</code>, <code>"var.cov.comps"</code>, and
+<code>"cookd"</code> for an influence object derived from a mixed model.   Capitalization is optional.
+All but <code>"dfbeta"</code> and <code>"dfbetas"</code> may be abbreviated by the first one or more letters.
+</p>
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+<p>main title for graph</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>a list of named values controlling point labelling. The default, <code>TRUE</code>, is
+equivalent to <code>id=list(method="y", n=2, cex=1, col=carPalette()[1], location="lr")</code>;
+<code>FALSE</code> suppresses point labelling. See <code><a href="../../car/help/showLabels.html">showLabels</a></code> for details.</p>
+</td></tr>
+<tr valign="top"><td><code>grid</code></td>
+<td>
+<p>If TRUE, the default, a light-gray background grid is put on the graph.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to <code>plot</code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Used for its side effect of producing a graph.  Produces index plots
+of diagnostic quantities.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sanford Weisberg <a href="mailto:sandy@umn.edu">sandy@umn.edu</a> and John Fox</p>
+
+
+<h3>References</h3>
+
+<p>Cook, R. D. and Weisberg, S. (1999)
+<em>Applied Regression, Including Computing and Graphics.</em> Wiley.
+</p>
+<p>Fox, J. (2016)
+<em>Applied Regression Analysis and Generalized Linear Models</em>,
+Third Edition. Sage.
+Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+<p>Weisberg, S. (2014)
+<em>Applied Linear Regression</em>, Fourth Edition, Wiley.
+</p>
+
+
+<h3>See Also</h3>
+
+ <p><code><a href="../../stats/html/influence.measures.html">cooks.distance</a></code>, <code><a href="../../stats/html/influence.measures.html">rstudent</a></code>,
+<code><a href="../../car/help/outlierTest.html">outlierTest</a></code>, <code><a href="../../stats/html/influence.measures.html">hatvalues</a></code>, <code><a href="../../car/help/influence.mixed.models.html">influence.mixed.models</a></code>. </p>
+
+
+<h3>Examples</h3>
+
+<pre>
+influenceIndexPlot(lm(prestige ~ income + education + type, Duncan))
+
+## Not run:  # a little slow
+  if (require(lme4)){
+      print(fm1 &lt;- lmer(Reaction ~ Days + (Days | Subject),
+          sleepstudy)) # from ?lmer
+      infIndexPlot(influence(fm1, "Subject"))
+      infIndexPlot(influence(fm1))
+      }
+      
+  if (require(lme4)){
+      gm1 &lt;- glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
+          data = cbpp, family = binomial) # from ?glmer
+      infIndexPlot(influence(gm1, "herd", maxfun=100))
+      infIndexPlot(influence(gm1, maxfun=100))
+      gm1.11 &lt;- update(gm1, subset = herd != 11) # check deleting herd 11
+      compareCoefs(gm1, gm1.11)
+      }
+    
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

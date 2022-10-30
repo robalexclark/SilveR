@@ -64,6 +64,7 @@ outlierTest             Bonferroni Outlier Test
 panel.car               Panel Function for Coplots
 poTest                  Test for Proportional Odds in the
                         Proportional-Odds Logistic-Regression Model
+pointLabel              Label placement for points to avoid overlaps
 powerTransform          Finding Univariate or Multivariate Power
                         Transformations
 qqPlot                  Quantile-Comparison Plot

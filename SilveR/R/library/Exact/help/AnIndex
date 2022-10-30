@@ -19,6 +19,7 @@ fisher.2x2	Exact-package
 lowerMatVal	Exact-package
 maxPvalue	Exact-package
 maxPvalueLookup	Exact-package
+maxPvalueMultinom	Exact-package
 maxPvaluePaired	Exact-package
 maxPvaluePairedLookup	Exact-package
 mcnemar.2x2	Exact-package
@@ -28,7 +29,8 @@ moreExtreme	Exact-package
 moreExtremeCSM	Exact-package
 moreExtremePaired	Exact-package
 moreExtremePairedCSM	Exact-package
-multinomialCode	exact.test
+multinom	Exact-package
+multinomCode	exact.test
 paired.exact.test	paired.exact.test
 paired.reject.region	paired.reject.region
 pairedCode	paired.exact.test

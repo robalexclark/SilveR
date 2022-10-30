@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Run or list additional examples</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for emm_example {emmeans}"><tr><td>emm_example {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Run or list additional examples</h2>
+
+<h3>Description</h3>
+
+<p>This function exists so as to provide cleaner-looking examples in
+help files when it must be run conditionally on another package.
+Typically we want to run the code (<code>run = TRUE</code> is the default),
+or otherwise just list it on the console (<code>list = TRUE</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+emm_example(name, run = !list, list = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Character name of file to run. We look for a file with this name
+(with <code>".R"</code> appended) in the system files provided with <span class="pkg">emmeans</span>.</p>
+</td></tr>
+<tr valign="top"><td><code>run</code></td>
+<td>
+<p>Logical choosing whether or not to run the example code</p>
+</td></tr>
+<tr valign="top"><td><code>list</code></td>
+<td>
+<p>Logical choosing whether or not to list the example code</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Used only by the developer</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+# List an example
+emm_example("qdrg-biglm", list = TRUE)
+
+# Run an example
+if (require(biglm))
+    emm_example("qdrg-biglm")
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

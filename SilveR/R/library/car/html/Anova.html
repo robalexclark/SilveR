@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Anova Tables for Various Statistical Models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for Anova {car}"><tr><td>Anova {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Anova Tables for Various Statistical Models</h2>
+
+<h3>Description</h3>
+
+<p>Calculates type-II or type-III analysis-of-variance tables for
+model objects produced by <code>lm</code>, <code>glm</code>, <code>multinom</code>
+(in the <span class="pkg">nnet</span> package), <code>polr</code> (in the <span class="pkg">MASS</span>
+package), <code>coxph</code> (in the <span class="pkg">survival</span> package),
+<code>coxme</code> (in the <span class="pkg">coxme</span> pckage),
+<code>svyglm</code> and <code>svycoxph</code> (in the <span class="pkg">survey</span> package), <code>rlm</code> (in the <span class="pkg">MASS</span> package),
+<code>lmer</code> in the <span class="pkg">lme4</span> package,
+<code>lme</code> in the <span class="pkg">nlme</span> package, and (by the default method) for most
+models with a linear predictor and asymptotically normal coefficients (see details below). For linear
+models, F-tests are calculated; for generalized linear models,
+likelihood-ratio chisquare, Wald chisquare, or F-tests are calculated;
+for multinomial logit and proportional-odds logit models, likelihood-ratio
+tests are calculated.  Various test statistics are provided for multivariate
+linear models produced by <code>lm</code> or <code>manova</code>. Partial-likelihood-ratio tests
+or Wald tests are provided for Cox models. Wald chi-square tests are provided for fixed effects in
+linear and generalized linear mixed-effects models. Wald chi-square or F tests are provided
+in the default case.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+Anova(mod, ...)
+
+Manova(mod, ...)
+
+## S3 method for class 'lm'
+Anova(mod, error, type=c("II","III", 2, 3),
+	white.adjust=c(FALSE, TRUE, "hc3", "hc0", "hc1", "hc2", "hc4"),
+	vcov.=NULL, singular.ok, ...)
+
+## S3 method for class 'aov'
+Anova(mod, ...)
+
+## S3 method for class 'glm'
+Anova(mod, type=c("II","III", 2, 3),
+    test.statistic=c("LR", "Wald", "F"),
+    error, error.estimate=c("pearson", "dispersion", "deviance"),
+   vcov.=vcov(mod, complete=TRUE),  singular.ok, ...)
+
+## S3 method for class 'multinom'
+Anova(mod, type = c("II","III", 2, 3), ...)
+
+## S3 method for class 'polr'
+Anova(mod, type = c("II","III", 2, 3), ...)
+
+## S3 method for class 'mlm'
+Anova(mod, type=c("II","III", 2, 3), SSPE, error.df,
+    idata, idesign, icontrasts=c("contr.sum", "contr.poly"), imatrix,
+    test.statistic=c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),...)
+
+## S3 method for class 'manova'
+Anova(mod, ...)
+
+## S3 method for class 'mlm'
+Manova(mod, ...)
+
+## S3 method for class 'Anova.mlm'
+print(x, ...)
+
+## S3 method for class 'Anova.mlm'
+summary(object, test.statistic, univariate=object$repeated,
+    multivariate=TRUE, p.adjust.method, ...)
+
+## S3 method for class 'summary.Anova.mlm'
+print(x, digits = getOption("digits"),
+    SSP=TRUE, SSPE=SSP, ... )
+
+## S3 method for class 'univaov'
+print(x, digits = max(getOption("digits") - 2L, 3L),
+                          style=c("wide", "long"),
+                          by=c("response", "term"),
+                          ...)
+
+## S3 method for class 'univaov'
+as.data.frame(x, row.names, optional, by=c("response", "term"), ...)
+
+## S3 method for class 'coxph'
+Anova(mod, type=c("II", "III", 2, 3),
+	test.statistic=c("LR", "Wald"), ...)
+
+## S3 method for class 'coxme'
+Anova(mod, type=c("II", "III", 2, 3),
+    test.statistic=c("Wald", "LR"), ...)
+
+## S3 method for class 'lme'
+Anova(mod, type=c("II","III", 2, 3),
+		vcov.=vcov(mod, complete=FALSE), singular.ok, ...)
+
+## S3 method for class 'mer'
+Anova(mod, type=c("II", "III", 2, 3),
+	test.statistic=c("Chisq", "F"), vcov.=vcov(mod, complete=FALSE), singular.ok, ...)
+
+## S3 method for class 'merMod'
+Anova(mod, type=c("II", "III", 2, 3),
+    test.statistic=c("Chisq", "F"), vcov.=vcov(mod, complete=FALSE), singular.ok, ...)
+
+## S3 method for class 'svyglm'
+Anova(mod, ...)
+
+## S3 method for class 'svycoxph'
+Anova(mod, type=c("II", "III", 2, 3),
+  test.statistic="Wald", ...)
+
+## S3 method for class 'rlm'
+Anova(mod, ...)
+
+## Default S3 method:
+Anova(mod, type=c("II", "III", 2, 3),
+	test.statistic=c("Chisq", "F"), vcov.=vcov(mod, complete=FALSE),
+	singular.ok, error.df, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mod</code></td>
+<td>
+<p><code>lm</code>, <code>aov</code>, <code>glm</code>, <code>multinom</code>, <code>polr</code>
+<code>mlm</code>, <code>coxph</code>, <code>coxme</code>, <code>lme</code>, <code>mer</code>, <code>merMod</code>, <code>svyglm</code>, <code>svycoxph</code>,
+<code>rlm</code>, or other suitable model object.</p>
+</td></tr>
+<tr valign="top"><td><code>error</code></td>
+<td>
+<p>for a linear model, an <code>lm</code> model object from which the
+error sum of squares and degrees of freedom are to be calculated. For
+F-tests for a generalized linear model, a <code>glm</code> object from which the
+dispersion is to be estimated. If not specified, <code>mod</code> is used.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>type of test, <code>"II"</code>, <code>"III"</code>, <code>2</code>, or <code>3</code>.  Roman numerals are equivalent to
+the corresponding Arabic numerals.</p>
+</td></tr>
+<tr valign="top"><td><code>singular.ok</code></td>
+<td>
+<p>defaults to <code>TRUE</code> for type-II tests, and <code>FALSE</code>
+for type-III tests where the tests for models with aliased coefficients
+will not be straightforwardly interpretable;
+if <code>FALSE</code>, a model with aliased coefficients produces an error. This argument is available only for some <code>Anova</code> methods.</p>
+</td></tr>
+<tr valign="top"><td><code>test.statistic</code></td>
+<td>
+<p>for a generalized linear model, whether to calculate
+<code>"LR"</code> (likelihood-ratio), <code>"Wald"</code>, or <code>"F"</code> tests; for a Cox
+or Cox mixed-effects model, whether to calculate <code>"LR"</code> (partial-likelihood ratio) or
+<code>"Wald"</code> tests; in the default case or for linear mixed models fit by
+<code>lmer</code>, whether to calculate Wald <code>"Chisq"</code> or Kenward-Roger
+<code>"F"</code> tests with Satterthwaite degrees of freedom (<em>warning:</em> the KR F-tests
+can be very time-consuming).
+For a multivariate linear model, the multivariate test statistic to compute &mdash; one of
+<code>"Pillai"</code>, <code>"Wilks"</code>, <code>"Hotelling-Lawley"</code>, or <code>"Roy"</code>,
+with <code>"Pillai"</code> as the default. The <code>summary</code> method for <code>Anova.mlm</code>
+objects permits the specification of more than one multivariate
+test statistic, and the default is to report all four.</p>
+</td></tr>
+<tr valign="top"><td><code>error.estimate</code></td>
+<td>
+<p>for F-tests for a generalized linear model, base the
+dispersion estimate on the Pearson residuals (<code>"pearson"</code>, the default); use the
+dispersion estimate in the model object (<code>"dispersion"</code>); or base the dispersion estimate on
+the residual deviance (<code>"deviance"</code>). For binomial or Poisson GLMs, where the dispersion
+is fixed to 1, setting <code>error.estimate="dispersion"</code> is changed to <code>"pearson"</code>,
+with a warning.</p>
+</td></tr>
+<tr valign="top"><td><code>white.adjust</code></td>
+<td>
+<p>if not <code>FALSE</code>, the default,
+tests use a heteroscedasticity-corrected coefficient
+covariance matrix; the various values of the argument specify different corrections.
+See the documentation for <code><a href="../../car/help/hccm.html">hccm</a></code> for details. If <code>white.adjust=TRUE</code>
+then the <code>"hc3"</code> correction is selected.</p>
+</td></tr>
+<tr valign="top"><td><code>SSPE</code></td>
+<td>
+<p>For <code>Anova</code> for a multivariate linear model, the
+error sum-of-squares-and-products matrix; if missing, will be computed
+from the residuals of the model; for the <code>print</code> method for the <code>summary</code> of
+an <code>Anova</code> of a multivariate linear model,
+whether or not to print the error SSP matrix (defaults to <code>TRUE</code>).</p>
+</td></tr>
+<tr valign="top"><td><code>SSP</code></td>
+<td>
+<p>if <code>TRUE</code> (the default), print the sum-of-squares and
+cross-products matrix for the hypothesis and the response-transformation matrix.</p>
+</td></tr>
+<tr valign="top"><td><code>error.df</code></td>
+<td>
+<p>The degrees of freedom for error; if <code>error.df</code> missing for a multivariate linear model (object of class <code>"mlm"</code>), the error degrees of freedom will be taken from the model.
+</p>
+<p>For the <code>default</code> <code>Anova</code> method, if an F-test is requested and if <code>error.df</code> is missing, the error degrees of freedom will be computed by applying the <code>df.residual</code> function to the model; if <code>df.residual</code> returns <code>NULL</code> or <code>NA</code>, then a chi-square test will be substituted for the F-test (with a message to that effect.</p>
+</td></tr>
+<tr valign="top"><td><code>idata</code></td>
+<td>
+<p>an optional data frame giving a factor or factors defining the
+intra-subject model for multivariate repeated-measures data. See
+<em>Details</em> for an explanation of the intra-subject design and for
+further explanation of the other arguments relating to intra-subject factors.</p>
+</td></tr>
+<tr valign="top"><td><code>idesign</code></td>
+<td>
+<p>a one-sided model formula using the &ldquo;data&rdquo; in <code>idata</code> and
+specifying the intra-subject design.</p>
+</td></tr>
+<tr valign="top"><td><code>icontrasts</code></td>
+<td>
+<p>names of contrast-generating functions to be applied by default
+to factors and ordered factors, respectively, in the within-subject
+&ldquo;data&rdquo;; the contrasts must produce an intra-subject model
+matrix in which different terms are orthogonal. The default is
+<code>c("contr.sum", "contr.poly")</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>imatrix</code></td>
+<td>
+<p>as an alternative to specifying <code>idata</code>, <code>idesign</code>, and
+(optionally) <code>icontrasts</code>, the model matrix for the within-subject design
+can be given directly in the form of list of named elements. Each element gives
+the columns of the within-subject model matrix for a term to be tested, and must
+have as many rows as there are responses; the columns of the within-subject model
+matrix for different terms must be mutually orthogonal.</p>
+</td></tr>
+<tr valign="top"><td><code>x, object</code></td>
+<td>
+<p>object of class <code>"Anova.mlm"</code> to print or summarize.</p>
+</td></tr>
+<tr valign="top"><td><code>multivariate, univariate</code></td>
+<td>
+<p>compute and print multivariate and univariate tests for a repeated-measures
+ANOVA or multivariate linear model; the default is <code>TRUE</code> for both for repeated measures and <code>TRUE</code>
+for <code>multivariate</code> for a multivariate linear model.</p>
+</td></tr>
+<tr valign="top"><td><code>p.adjust.method</code></td>
+<td>
+<p>if given for a multivariate linear model when univariate tests are requested, the
+univariate tests are corrected for simultaneous inference by term; if specified, should be one of the methods
+recognized by <code><a href="../../stats/html/p.adjust.html">p.adjust</a></code> or <code>TRUE</code>, in which case the default (Holm) adjustment is used.</p>
+</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+<p>minimum number of significant digits to print.</p>
+</td></tr>
+<tr valign="top"><td><code>style</code></td>
+<td>
+<p>for printing univariate tests if requested for a multivariate linear model; one of <code>"wide"</code>,
+the default, or <code>"long"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>if univariate tests are printed in <code>"long"</code> <code>style</code>, they can be ordered <code>by</code>
+<code>"response"</code>, the default, or by <code>"term"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>row.names, optional</code></td>
+<td>
+<p>not used.</p>
+</td></tr>
+<tr valign="top"><td><code>vcov.</code></td>
+<td>
+<p>in the <code>default</code> method, an optional coefficient-covariance matrix or function
+to compute a covariance matrix, computed by default by applying the generic <code>vcov</code> function to the model object.
+A similar argument may be supplied to the <code>lm</code> method, and the default (<code>NULL</code>) is to ignore the argument;
+if both <code>vcov.</code> and <code>white.adjust</code> are supplied to the <code>lm</code> method, the latter is used.</p>
+</td></tr>
+</table>
+<p>In the <code>glm</code> method, <code>vcov.</code> is ignored unless <code>test="Wald"</code>; in the <code>mer</code> and <code>merMod</code> methods, <code>vcov.</code> is ignored if <code>test="F"</code>.
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>do not use.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The designations &quot;type-II&quot; and &quot;type-III&quot; are borrowed from SAS, but the
+definitions used here do not correspond precisely to those employed by SAS.
+Type-II tests are calculated according to the principle of marginality,
+testing each term after all others, except ignoring the term's higher-order relatives;
+so-called type-III tests violate marginality, testing
+each term in the model after all of the others. This definition of Type-II tests
+corresponds to the tests produced by SAS for analysis-of-variance models, where all of the predictors
+are factors, but not more generally (i.e., when there are quantitative predictors).
+Be very careful in formulating the model for type-III tests, or the hypotheses tested
+will not make sense.
+</p>
+<p>As implemented here, type-II Wald tests are a generalization of the linear hypotheses used to generate
+these tests in linear models.
+</p>
+<p>For tests for linear models, multivariate linear models, and Wald tests for generalized linear models,
+Cox models, mixed-effects models, generalized linear models fit to survey data, and in the default case,
+<code>Anova</code> finds the test statistics without refitting the model. The <code>svyglm</code> method simply
+calls the <code>default</code> method and therefore can take the same arguments.
+</p>
+<p>The standard R <code>anova</code> function calculates sequential (&quot;type-I&quot;) tests.
+These rarely test interesting hypotheses in unbalanced designs.
+</p>
+<p>A MANOVA for a multivariate linear model (i.e., an object of
+class <code>"mlm"</code> or <code>"manova"</code>) can optionally include an
+intra-subject repeated-measures design.
+If the intra-subject design is absent (the default), the multivariate
+tests concern all of  the response variables.
+To specify a repeated-measures design, a data frame is provided defining the repeated-measures factor or
+factors
+via <code>idata</code>, with default contrasts given by the <code>icontrasts</code>
+argument. An intra-subject model-matrix is generated from the formula
+specified by the <code>idesign</code> argument; columns of the model matrix
+corresponding to different terms in the intra-subject model must be orthogonal
+(as is insured by the default contrasts). Note that the contrasts given in
+<code>icontrasts</code> can be overridden by assigning specific contrasts to the
+factors in <code>idata</code>. As an alternative, the within-subjects model matrix
+can be specified directly via the <code>imatrix</code> argument.
+<code>Manova</code> is essentially a synonym for <code>Anova</code>
+for multivariate linear models.
+</p>
+<p>If univariate tests are requested for the <code>summary</code> of a multivariate linear model, the object returned
+contains a <code>univaov</code> component of <code>"univaov"</code>; <code>print</code> and <code>as.data.frame</code> methods are
+provided for the <code>"univaov"</code> class.
+</p>
+<p>For the default method to work, the model object must contain a standard
+<code>terms</code> element, and must respond to the <code>vcov</code>, <code>coef</code>, and <code>model.matrix</code> functions.
+If any of these requirements is missing, then it may be possible to supply it reasonably simply (e.g., by
+writing a missing <code>vcov</code> method for the class of the model object).
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>"anova"</code>, or <code>"Anova.mlm"</code>, which usually is printed.
+For objects of class <code>"Anova.mlm"</code>, there is also a <code>summary</code> method,
+which provides much more detail than the <code>print</code> method about the MANOVA, including
+traditional mixed-model univariate F-tests with Greenhouse-Geisser and Huynh-Feldt
+corrections.
+</p>
+
+
+<h3>Warning</h3>
+
+<p>Be careful of type-III tests: For a traditional multifactor ANOVA model with interactions, for example, these tests will normally only be sensible when using contrasts that, for different terms, are
+orthogonal in the row-basis of the model, such as those produced by <code><a href="../../stats/html/contrast.html">contr.sum</a></code>, <code><a href="../../stats/html/contrast.html">contr.poly</a></code>, or <code><a href="../../stats/html/contrast.html">contr.helmert</a></code>, but <em>not</em> by the default
+<code><a href="../../stats/html/contrast.html">contr.treatment</a></code>. In a model that contains factors, numeric covariates, and interactions, main-effect tests for factors will be for differences over the origin. In contrast (pun intended),
+type-II tests are invariant with respect to (full-rank) contrast coding. If you don't understand this issue, then you probably shouldn't use <code>Anova</code> for type-III tests.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a>; the code for the Mauchly test and Greenhouse-Geisser and Huynh-Feldt
+corrections for non-spericity in repeated-measures ANOVA are adapted from the functions
+<code>stats:::stats:::mauchly.test.SSD</code> and <code>stats:::sphericity</code> by R Core; <code>summary.Anova.mlm</code>
+and <code>print.summary.Anova.mlm</code> incorporates code contributed by Gabriel Baud-Bovy.</p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. (2016)
+<em>Applied Regression Analysis and Generalized Linear Models</em>,
+Third Edition. Sage.
+</p>
+<p>Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+<p>Hand, D. J., and Taylor, C. C. (1987)
+<em>Multivariate Analysis of Variance and Repeated Measures: A Practical
+Approach for Behavioural Scientists.</em> Chapman and Hall.
+</p>
+<p>O'Brien, R. G., and Kaiser, M. K. (1985)
+MANOVA method for analyzing repeated measures designs: An extensive primer.
+<em>Psychological Bulletin</em> <b>97</b>, 316&ndash;333.
+</p>
+
+
+<h3>See Also</h3>
+
+ <p><code><a href="../../car/help/linearHypothesis.html">linearHypothesis</a></code>, <code><a href="../../stats/html/anova.html">anova</a></code>
+<code><a href="../../stats/html/anova.lm.html">anova.lm</a></code>, <code><a href="../../stats/html/anova.glm.html">anova.glm</a></code>,
+<code><a href="../../stats/html/anova.mlm.html">anova.mlm</a></code>, <code><a href="../../survival/html/anova.coxph.html">anova.coxph</a></code>, <code><a href="../../survey/help/svyglm.html">svyglm</a></code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## Two-Way Anova
+
+mod &lt;- lm(conformity ~ fcategory*partner.status, data=Moore,
+  contrasts=list(fcategory=contr.sum, partner.status=contr.sum))
+Anova(mod)
+Anova(mod, type=3)  # note use of contr.sum in call to lm()
+
+## One-Way MANOVA
+## See ?Pottery for a description of the data set used in this example.
+
+summary(Anova(lm(cbind(Al, Fe, Mg, Ca, Na) ~ Site, data=Pottery)))
+
+## MANOVA for a randomized block design (example courtesy of Michael Friendly:
+##  See ?Soils for description of the data set)
+
+soils.mod &lt;- lm(cbind(pH,N,Dens,P,Ca,Mg,K,Na,Conduc) ~ Block + Contour*Depth,
+    data=Soils)
+Manova(soils.mod)
+summary(Anova(soils.mod), univariate=TRUE, multivariate=FALSE,
+    p.adjust.method=TRUE)
+
+## a multivariate linear model for repeated-measures data
+## See ?OBrienKaiser for a description of the data set used in this example.
+
+phase &lt;- factor(rep(c("pretest", "posttest", "followup"), c(5, 5, 5)),
+    levels=c("pretest", "posttest", "followup"))
+hour &lt;- ordered(rep(1:5, 3))
+idata &lt;- data.frame(phase, hour)
+idata
+
+mod.ok &lt;- lm(cbind(pre.1, pre.2, pre.3, pre.4, pre.5,
+                     post.1, post.2, post.3, post.4, post.5,
+                     fup.1, fup.2, fup.3, fup.4, fup.5) ~  treatment*gender,
+                data=OBrienKaiser)
+(av.ok &lt;- Anova(mod.ok, idata=idata, idesign=~phase*hour))
+
+summary(av.ok, multivariate=FALSE)
+
+## A "doubly multivariate" design with two  distinct repeated-measures variables
+## (example courtesy of Michael Friendly)
+## See ?WeightLoss for a description of the dataset.
+
+imatrix &lt;- matrix(c(
+	1,0,-1, 1, 0, 0,
+	1,0, 0,-2, 0, 0,
+	1,0, 1, 1, 0, 0,
+	0,1, 0, 0,-1, 1,
+	0,1, 0, 0, 0,-2,
+	0,1, 0, 0, 1, 1), 6, 6, byrow=TRUE)
+colnames(imatrix) &lt;- c("WL", "SE", "WL.L", "WL.Q", "SE.L", "SE.Q")
+rownames(imatrix) &lt;- colnames(WeightLoss)[-1]
+(imatrix &lt;- list(measure=imatrix[,1:2], month=imatrix[,3:6]))
+contrasts(WeightLoss$group) &lt;- matrix(c(-2,1,1, 0,-1,1), ncol=2)
+(wl.mod&lt;-lm(cbind(wl1, wl2, wl3, se1, se2, se3)~group, data=WeightLoss))
+Anova(wl.mod, imatrix=imatrix, test="Roy")
+
+## mixed-effects models examples:
+
+## Not run:  # loads nlme package
+	library(nlme)
+	example(lme)
+	Anova(fm2)
+
+## End(Not run)
+
+## Not run:  # loads lme4 package
+	library(lme4)
+	example(glmer)
+	Anova(gm1)
+
+## End(Not run)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

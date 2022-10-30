@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Influence Diagnostics for Mixed-Effects Models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for influence.mixed.models {car}"><tr><td>influence.mixed.models {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Influence Diagnostics for Mixed-Effects Models
+</h2>
+
+<h3>Description</h3>
+
+<p>These functions compute deletion influence diagnostics for linear mixed-effects models fit by <code><a href="../../nlme/html/lme.html">lme</a></code> in the <span class="pkg">nlme</span> package.
+The main function is a method for the <code><a href="../../stats/html/lm.influence.html">influence</a></code> generic function. Other functions are provided for
+computing <code><a href="../../stats/html/influence.measures.html">dfbeta</a></code>, <code><a href="../../stats/html/influence.measures.html">dfbetas</a></code>, <code><a href="../../stats/html/influence.measures.html">cooks.distance</a></code>, and influence on variance-covariance components based
+on the object computed by <code>influence.lme</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'lme'
+influence(model, groups, data, ncores=1, ...)
+
+## S3 method for class 'influence.lme'
+cooks.distance(model, ...)
+## S3 method for class 'influence.lme'
+dfbeta(model, which = c("fixed", "var.cov"), ...)
+## S3 method for class 'influence.lme'
+dfbetas(model, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>in the case <code>influence</code>, a model of class  <code>"lme"</code>;
+in the case of <code>cooks.distance</code>, <code>dfbeta</code>, or <code>dfbetas</code>, an object returned by <code>influence.lme</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>groups</code></td>
+<td>
+<p>a character vector containing the name of a grouping factor or names of grouping factors; if more than one name
+is supplied, then groups are defined by all combinations of levels of the grouping factors that appear in
+the data. If omitted, then each individual row of the data matrix is treated as a &quot;group&quot; to be deleted in turn.</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>an optional data frame with the data to which <code>model</code> was fit; 
+<code>influence.lme</code> can access the data unless <code>keep.data=FALSE</code> was specified in the call to <code>lme</code>,
+so it's usually unnecessary to supply the <code>data</code> argument.</p>
+</td></tr>
+<tr valign="top"><td><code>ncores</code></td>
+<td>
+<p>number of cores for parallel computation of diagnostics; if <code>1</code>
+(the default), the computation isn't parallelized; if <code>Inf</code>, all of the available <em>physical</em> cores 
+(not necessarily <em>logical</em> cores &mdash; see <code><a href="../../parallel/html/detectCores.html">detectCores</a></code>) on the computer will be used.</p>
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+<p>if <code>"fixed.effects"</code> (the default), return influence on the fixed effects; if <code>"var.cov"</code>, return influence on the variance-covariance components.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>ignored.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>influence.lme</code> starts with the estimated variance-covariance components from <code>model</code> and then refits
+the model omitting each group in turn.
+</p>
+<p>The other functions are methods for the <code><a href="../../stats/html/influence.measures.html">dfbeta</a></code>, <code><a href="../../stats/html/influence.measures.html">dfbetas</a></code>, and <code><a href="../../stats/html/influence.measures.html">cooks.distance</a></code> generics, to be applied to the
+<code>"influence.lme"</code> object produced by the <code>influence</code> function; the <code>dfbeta</code> methods can also return
+influence on the variance-covariance components.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>influence.lme</code> returns an object of class 
+<code>"influence.lme"</code>,
+which contains the following elements:
+</p>
+
+<dl>
+<dt><code>"fixed.effects"</code></dt><dd><p>the estimated fixed effects for the model.</p>
+</dd>
+<dt><code>"fixed.effects[-groups]"</code></dt><dd><p>a matrix with columns corresponding to the fixed-effects coefficients and rows corresponding to groups, giving the
+estimated fixed effects with each group deleted in turn; <em>groups</em> is formed from the name(s) of the grouping factor(s).</p>
+</dd>
+<dt><code>"var.cov.comps"</code></dt><dd><p>the estimated variance-covariance parameters for the model.</p>
+</dd>
+<dt><code>"var.cov.comps[-groups]"</code></dt><dd><p>a matrix with the estimated covariance parameters (in columns) with each group deleted in turn.</p>
+</dd>
+<dt><code>"vcov"</code></dt><dd><p>The estimated covariance matrix of the fixed-effects coefficients.</p>
+</dd>
+<dt><code>"vcov[-groups]"</code></dt><dd><p>a list each of whose elements is the estimated covariance matrix of the fixed-effects coefficients with one group deleted.</p>
+</dd>
+<dt><code>"groups"</code></dt><dd><p>a character vector giving the names of the grouping factors.</p>
+</dd>
+<dt><code>"deleted"</code></dt><dd><p>the possibly composite grouping factor, each of whose elements is deleted in turn.</p>
+</dd>
+</dl>
+
+<p>For plotting <code>"influence.lme"</code> objects, see <code><a href="../../car/help/infIndexPlot.html">infIndexPlot</a></code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>J. Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2019) 
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../nlme/html/lme.html">lme</a></code>, <code><a href="../../car/help/infIndexPlot.html">infIndexPlot</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+if (require(nlme)){
+    print(fm1 &lt;- lme(distance ~ age, data = Orthodont))
+    infIndexPlot(influence(fm1, "Subject"))
+    infIndexPlot(influence(fm1))
+    }
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

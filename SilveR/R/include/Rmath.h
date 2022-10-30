@@ -1,6 +1,6 @@
 /* -*- C -*-
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2020  The R Core Team
+ *  Copyright (C) 1998-2022  The R Core Team
  *  Copyright (C) 2004       The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,7 @@
    and nothing else.
 
    It is part of the API and supports 'standalone Rmath'.
+   Some entries possibly are not yet documented in 'Writing R Extensions'.
 
 */
 #ifndef RMATH_H
@@ -35,6 +36,7 @@
 #ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 # define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #endif
+
 #if defined(__cplusplus) && !defined(DO_NOT_USE_CXX_HEADERS)
 # include <cmath>
 #else
@@ -48,7 +50,7 @@
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
 
-#define R_VERSION_STRING "4.1.2"
+#define R_VERSION_STRING "4.2.1"
 
 // Legacy defines -- C99 functions which R >= 3.5.0 requires
 #ifndef HAVE_EXPM1
@@ -387,10 +389,11 @@ double	pgamma(double, double, double, int, int);
 double	qgamma(double, double, double, int, int);
 double	rgamma(double, double);
 
-double  log1pmx(double);
+double  log1pmx(double); /* Accurate log(1+x) - x, {care for small x} */
 double  log1pexp(double); // <-- ../nmath/plogis.c
 double  log1mexp(double);
-double  lgamma1p(double);
+double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
+
 double  logspace_add(double, double);
 double  logspace_sub(double, double);
 double  logspace_sum(const double *, int);
@@ -445,7 +448,7 @@ double	pbinom(double, double, double, int, int);
 double	qbinom(double, double, double, int, int);
 double	rbinom(double, double);
 
-	/* Multnomial Distribution */
+	/* Multinomial Distribution */
 
 void	rmultinom(int, double*, int, int*);
 
@@ -541,13 +544,14 @@ double dwilcox(double, double, double, int);
 double pwilcox(double, double, double, int, int);
 double qwilcox(double, double, double, int, int);
 double rwilcox(double, double);
-
+void wilcox_free(void);
 	/* Wilcoxon Signed Rank Distribution */
 
 double dsignrank(double, double, int);
 double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
 double rsignrank(double);
+void signrank_free(void);
 
 	/* Gamma and Related Functions */
 double	gammafn(double);
@@ -590,9 +594,6 @@ double	fround(double, double);
 double	fsign(double, double);
 double	ftrunc(double);
 
-double  log1pmx(double); /* Accurate log(1+x) - x, {care for small x} */
-double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
-
 /* More accurate cos(pi*x), sin(pi*x), tan(pi*x)
 
    These declarations might clash with system headers if someone had
@@ -605,6 +606,7 @@ double cospi(double);
 double sinpi(double);
 double tanpi(double);
 #endif
+double Rtanpi(double); /* our own in any case */
 
 /* Compute the log of a sum or difference from logs of terms, i.e.,
  *

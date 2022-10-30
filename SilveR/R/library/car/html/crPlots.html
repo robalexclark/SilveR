@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Component+Residual (Partial Residual) Plots</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for crPlots {car}"><tr><td>crPlots {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Component+Residual (Partial Residual) Plots</h2>
+
+<h3>Description</h3>
+
+<p>These functions construct component+residual plots, also called
+partial-residual plots, for linear and generalized linear models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+crPlots(model, ...)
+
+## Default S3 method:
+crPlots(model, terms = ~., layout = NULL, ask, main, 
+    ...)
+
+crp(...)
+
+crPlot(model, ...)
+
+## S3 method for class 'lm'
+crPlot(model, variable, id=FALSE,
+    order=1, line=TRUE, smooth=TRUE, 
+    col=carPalette()[1], col.lines=carPalette()[-1],
+    xlab, ylab, pch=1, lwd=2, grid=TRUE, ...)
+    
+crPlot3d(model, var1, var2, ...)
+
+## S3 method for class 'lm'
+crPlot3d(model, var1, var2,
+    xlab = var1,
+    ylab = paste0("C+R(", eff$response, ")"), zlab = var2,
+    axis.scales = TRUE, axis.ticks = FALSE, revolutions = 0,
+    bg.col = c("white", "black"),
+    axis.col = if (bg.col == "white") c("darkmagenta", "black", "darkcyan") 
+        else c("darkmagenta", "white", "darkcyan"),
+    surface.col = carPalette()[2:3], surface.alpha = 0.5,
+    point.col = "yellow", text.col = axis.col,
+    grid.col = if (bg.col ==  "white") "black" else "gray",
+    fogtype = c("exp2", "linear", "exp", "none"),
+    fill = TRUE, grid = TRUE, grid.lines = 26,
+    smoother = c("loess", "mgcv", "none"), df.mgcv = NULL, loess.args = NULL,
+    sphere.size = 1, radius = 1, threshold = 0.01, speed = 1, fov = 60,
+    ellipsoid = FALSE, level = 0.5, ellipsoid.alpha = 0.1,
+    id = FALSE, 
+    mouseMode=c(none="none", left="polar", right="zoom", middle="fov", 
+	               wheel="pull"),
+    ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>model object produced by <code>lm</code> or <code>glm</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>terms</code></td>
+<td>
+<p> A one-sided formula that specifies a subset of the regressors. 
+One component-plus-residual plot is drawn for each regressor.  The default
+<code>~.</code> is to plot against all numeric regressors.  For example, the
+specification <code>terms = ~ . - X3</code> would plot against all regressors
+except for <code>X3</code>, while <code>terms = ~ log(X4)</code> would give the plot for the 
+predictor X4 that is represented in the model by log(X4).  If this argument is a 
+quoted name of one of the predictors, the 
+component-plus-residual plot is drawn for that predictor only.</p>
+</td></tr>
+<tr valign="top"><td><code>var1, var2</code></td>
+<td>
+<p>The quoted names of the two predictors in the model to use for a 3D C+R plot.</p>
+</td></tr>
+<tr valign="top"><td><code>layout</code></td>
+<td>
+ 
+<p>If set to a value like <code>c(1, 1)</code> or <code>c(4, 3)</code>, the layout
+of the graph will have this many rows and columns.  If not set, the program
+will select an appropriate layout.  If the number of graphs exceed nine, you 
+must select the layout yourself, or you will get a maximum of nine per page.
+If <code>layout=NA</code>, the function does not set the layout and the user can
+use the <code>par</code> function to control the layout, for example to have 
+plots from two models in the same graphics window.</p>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+<p>If <code>TRUE</code>, ask the user before drawing the next plot; if <code>FALSE</code>, the default,  don't ask.
+This is relevant only if not all the graphs can be drawn in one window.</p>
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+<p>The title of the plot; if missing, one will be supplied.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p><code>crPlots</code> passes these arguments to <code>crPlot</code>.  
+<code>crPlot</code> passes them to <code>plot</code>. </p>
+</td></tr>
+<tr valign="top"><td><code>variable</code></td>
+<td>
+<p>A quoted string giving the name of a variable for the horizontal
+axis.</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>controls point identification; if <code>FALSE</code> (the default), no points are identified;
+can be a list of named arguments to the <code><a href="../../car/help/showLabels.html">showLabels</a></code> function;
+<code>TRUE</code> is equivalent to <code>list(method=list(abs(residuals(model, type="pearson")), "x"), n=2, 
+    cex=1, col=carPalette()[1], location="lr")</code>,
+which identifies the 2 points with the largest residuals and the 2 points with the most extreme
+horizontal (X) values. For 3D C+R plots, see <code><a href="../../car/help/Identify3d.html">Identify3d</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>order</code></td>
+<td>
+<p>order of polynomial regression performed for predictor to be plotted; default <code>1</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>line</code></td>
+<td>
+<p><code>TRUE</code> to plot least-squares line.</p>
+</td></tr>
+<tr valign="top"><td><code>smooth</code></td>
+<td>
+<p>specifies the smoother to be used along with its arguments; if <code>FALSE</code>, no smoother is shown;
+can be a list giving the smoother function and its named arguments; <code>TRUE</code>, the default, is equivalent to
+<code>list(smoother=loessLine)</code>. See <code><a href="../../car/help/ScatterplotSmoothers.html">ScatterplotSmoothers</a></code> for the smoothers supplied by the
+<span class="pkg">car</span> package and their arguments.</p>
+</td></tr>
+<tr valign="top"><td><code>smoother, df.mgcv, loess.args</code></td>
+<td>
+<p><code>smoother</code> specifies quoted name of the surface smoother to use for
+the partial residuals, either <code><a href="../../stats/html/loess.html">loess</a></code>, the default, or <code><a href="../../mgcv/help/mgcv.html">mgcv</a></code>.
+<code>df.mgcv</code> gives the degrees of freedom for the <code>mgcv</code> smoother; <code>NULL</code>, the default, causes the df to be computed by <code>mgcv</code>. <code>loess.args</code> is an optional list with named elements <code>span</code>, <code>family</code> and <code>degree</code>, with default <code>span = 2/3</code>;
+<code>family = "gaussian"</code> for a binomial or Poisson GLM and <code>family = "symmetric"</code>
+otherwise; and <code>degree = 1</code> (see <code><a href="../../stats/html/loess.html">loess</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>color for points; the default is the first entry
+in the current <span class="pkg">car</span> palette (see <code><a href="../../car/help/carPalette.html">carPalette</a></code>
+and <code><a href="../../graphics/html/par.html">par</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>col.lines</code></td>
+<td>
+<p>a list of at least two colors.  The first color is used for the
+ls line and the second color is used for the fitted lowess line.  To use
+the same color for both, use, for example, <code>col.lines=c("red", "red")</code></p>
+</td></tr>
+<tr valign="top"><td><code>xlab, ylab, zlab</code></td>
+<td>
+<p>labels for the x and y axes, and for the z axis of a 3D plot.  If not set 
+appropriate labels are created by the function. for the 3D C+R plot, the predictors are on
+the x and z axes and the response on the y (vertical) axis.</p>
+</td></tr>
+<tr valign="top"><td><code>pch</code></td>
+<td>
+<p>plotting character for points; default is <code>1</code> 
+(a circle, see <code><a href="../../graphics/html/par.html">par</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>lwd</code></td>
+<td>
+<p>line width; default is <code>2</code> (see <code><a href="../../graphics/html/par.html">par</a></code>).</p>
+</td></tr>
+<tr valign="top"><td><code>grid</code></td>
+<td>
+<p>If TRUE, the default, a light-gray background grid is put on the
+graph. For a 3D C+R plot, see the <code>grid</code> argument for <code><a href="../../car/help/scatter3d.html">scatter3d</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>grid.lines</code></td>
+<td>
+<p>number of horizontal and vertical lines to be drawn on
+regression surfaces for 2D C+R plots (26 by default); the square of <code>grid.lines</code> corresponds
+to the number of points at which the fitted partial regression surface is evaluated
+and so this argument should not be set too small.</p>
+</td></tr>
+<tr valign="top"><td><code>axis.scales, axis.ticks, revolutions, bg.col,
+axis.col, surface.col, surface.alpha,
+point.col, text.col, grid.col, fogtype, fill, 
+sphere.size, radius, threshold, speed, fov,
+ellipsoid, level, ellipsoid.alpha, mouseMode</code></td>
+<td>
+<p>see <code><a href="../../car/help/scatter3d.html">scatter3d</a>.</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The functions intended for direct use are <code>crPlots</code>, for which <code>crp</code>
+is an abbreviation, and, for 3D C+R plots, <code>crPlot3d</code>. 
+</p>
+<p>For 2D plots, the model cannot contain interactions, but can contain factors. 
+Parallel boxplots of the partial residuals are drawn for the levels
+of a factor. <code>crPlot3d</code> can handle models with two-way interactions.
+</p>
+<p>For 2D C+R plots, the fit is represented by a broken blue line and a smooth of the partial
+residuals by a solid magenta line. For 3D C+R plots, the fit is represented by a blue surface
+and a smooth of the partial residuals by a magenta surface.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code>. These functions are used for their side effect of producing
+plots.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a></p>
+
+
+<h3>References</h3>
+
+ 
+<p>Cook, R. D. and Weisberg, S. (1999)
+<em>Applied Regression, Including Computing and Graphics.</em> Wiley.
+</p>
+<p>Fox, J. (2016)
+<em>Applied Regression Analysis and Generalized Linear Models</em>,
+Third Edition. Sage.  
+</p>
+<p>Fox, J. and Weisberg, S. (2019) 
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../car/help/ceresPlots.html">ceresPlots</a></code>, <code><a href="../../car/help/avPlots.html">avPlots</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+crPlots(m&lt;-lm(prestige ~ income + education, data=Prestige)) 
+
+crPlots(m, terms=~ . - education) # get only one plot
+
+crPlots(lm(prestige ~ log2(income) + education + poly(women,2), data=Prestige))
+
+crPlots(glm(partic != "not.work" ~ hincome + children, 
+  data=Womenlf, family=binomial), smooth=list(span=0.75))
+
+# 3D C+R plot, requires the rgl, effects, and mgcv packages
+if (interactive() &amp;&amp; require(rgl) &amp;&amp; require(effects) &amp;&amp; require(mgcv)){
+crPlot3d(lm(prestige ~ income*education + women, data=Prestige), 
+    "income", "education") 
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

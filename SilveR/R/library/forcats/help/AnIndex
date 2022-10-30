@@ -5,6 +5,7 @@ as_factor.character	as_factor
 as_factor.factor	as_factor
 as_factor.logical	as_factor
 as_factor.numeric	as_factor
+fct	fct
 fct_anon	fct_anon
 fct_c	fct_c
 fct_collapse	fct_collapse

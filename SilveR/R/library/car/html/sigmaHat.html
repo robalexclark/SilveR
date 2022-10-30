@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Return the scale estimate for a regression model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for sigmaHat {car}"><tr><td>sigmaHat {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Return the scale estimate for a regression model </h2>
+
+<h3>Description</h3>
+
+<p>This function provides a consistent method to return the estimated scale
+from a linear, generalized linear, nonlinear, or other model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+sigmaHat(object)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>A regression object of type lm, glm or nls</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>For an lm or nls object, the returned quantity is the square root of the
+estimate of <i>sigma^2</i>.  For a glm object, the returned quantity is
+the square root of the estimated dispersion parameter.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A nonnegative number
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sanford Weisberg, <a href="mailto:sandy@umn.edu">sandy@umn.edu</a> </p>
+
+
+<h3>Examples</h3>
+
+<pre>
+m1 &lt;- lm(prestige ~ income + education, data=Duncan)
+sigmaHat(m1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

@@ -8,5 +8,5 @@ export(power.paired.test)
 import("rootSolve")
 
 importFrom("graphics", "plot", "points")
-importFrom("stats", "dbinom", "dhyper", "optimise", "phyper", "qbeta", "rbinom", "prop.test", "pbinom", "pnorm", "qf")
+importFrom("stats", "dbinom", "dhyper", "optimise", "phyper", "qbeta", "rbinom", "prop.test", "pbinom", "pnorm", "qf", "setNames")
 importFrom("utils", "data")
