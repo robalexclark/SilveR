@@ -1,3 +1,16 @@
+# pkgload 1.3.1
+
+* `dev_topic_find()` is now exported (#215).
+
+* `dev_help()` will remind you to run `pkgload::load_all()` if no
+  in-development packages are found (#221).
+
+* Shimmed `?` now works even if you've renamed the documentation topic (#220).
+
+* `dev_help()` now works with an RStudio daily to deliver a rendered
+  development documentation that includes working images and links (#228).
+
+
 # pkgload 1.3.0
 
 * `load_all()` now calls `rlang::check_installed()` to prompt whether

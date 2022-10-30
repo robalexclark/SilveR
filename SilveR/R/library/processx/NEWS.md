@@ -1,3 +1,12 @@
+# processx 3.8.0
+
+* processx error stacks are better now. They have ANSI hyperlinks for
+  function calls to their manual pages, and they also print operators
+  better.
+
+* processx now does not mark standard streams as close-on-exec on Unix,
+  as this causes problems when calling `system()` from an R subprocess
+  (https://github.com/r-lib/callr/issues/236).
 
 # processx 3.7.0
 

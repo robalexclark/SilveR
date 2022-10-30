@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Support for 'multcomp::glht'</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for emm {emmeans}"><tr><td>emm {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Support for <code>multcomp::glht</code></h2>
+
+<h3>Description</h3>
+
+<p>These functions and methods provide an interface between <span class="pkg">emmeans</span> and
+the <code>multcomp::glht</code> function for simultaneous inference provided
+by the <span class="pkg">multcomp</span> package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+emm(...)
+
+as.glht(object, ...)
+
+## S3 method for class 'emmGrid'
+as.glht(object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>In <code>emm</code>, the <code>specs</code>, <code>by</code>, and <code>contr</code>
+arguments you would normally supply to <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code>. Only
+<code>specs</code> is required. Otherwise, arguments are passed to other
+methods. You may also include a <code>which</code> argument; see Details.</p>
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code> or <code>emm_list</code></p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>emm</code> returns an object of an intermediate class for which
+there is a <code>multcomp::glht</code> method.
+</p>
+<p><code>as.glht</code> returns an object of class <code>glht</code> or <code>glht_list</code>
+according to whether <code>object</code> is of class <code>emmGrid</code> or <code>emm_list</code>. 
+See Details below for more on <code>glht_list</code>s.
+</p>
+
+
+<h3>Details for <code>emm</code></h3>
+
+<p><code>emm</code> is meant to be called only <em>from</em> <code>"glht"</code> as its second
+(<code>linfct</code>) argument. It works similarly to <code>multcomp::mcp</code>,
+except with <code>specs</code> (and optionally <code>by</code> and <code>contr</code>
+arguments) provided as in a call to <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code>.
+</p>
+<p>If the specifications in <code>...</code> would result in a list (i.e., an
+<code>emm_list</code> object), then by default, only the last element of that list
+is passed to <code>glht</code>. However, if <code>...</code> contains a <code>which</code>
+argument consisting of integer values, the list elements with those indexes
+are selected and combined and passed on to <code>glht</code>. No checking is done
+on whether the indexes are valid, and the keyword <code>which</code> must be spelled-out.
+</p>
+
+
+<h3>Details for <code>as.glht</code></h3>
+
+<p>When no <code>by</code> variable is in force, we obtain a <code>glht</code> object; otherwise
+it is a <code>glht_list</code>. The latter is defined in <span class="pkg">emmeans</span>, not <span class="pkg">multcomp</span>,
+and is simply a <code>list</code> of <code>glht</code> objects. 
+Appropriate convenience methods <code>coef</code>,
+<code>confint</code>, <code>plot</code>, <code>summary</code>, and <code>vcov</code> are provided,
+which simply apply the corresponding <code>glht</code> methods to each member.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The multivariate-<i>t</i> routines used by <code>glht</code> require that all
+estimates in the family have the same integer degrees of freedom. In cases
+where that is not true, a message is displayed that shows what df is used.
+The user may override this via the <code>df</code> argument.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if(require(multcomp, quietly = TRUE)) 
+    emm_example("glht-multcomp") 
+    # Use emm_example("glht-multcomp", list = TRUE) # to see just the code
+    
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

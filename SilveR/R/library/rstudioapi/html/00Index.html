@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;rstudioapi&rsquo; version 0.13</h2>
+</div><h2>Documentation for package &lsquo;rstudioapi&rsquo; version 0.14</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -104,6 +104,8 @@
 <td>Interact with Documents open in RStudio</td></tr>
 <tr><td style="width: 25%;"><a href="rstudio-documents.html">documentNew</a></td>
 <td>Interact with Documents open in RStudio</td></tr>
+<tr><td style="width: 25%;"><a href="rstudio-documents.html">documentOpen</a></td>
+<td>Interact with Documents open in RStudio</td></tr>
 <tr><td style="width: 25%;"><a href="rstudio-documents.html">documentPath</a></td>
 <td>Interact with Documents open in RStudio</td></tr>
 <tr><td style="width: 25%;"><a href="rstudio-documents.html">documentSave</a></td>
@@ -181,6 +183,8 @@
 <td>Create a Range</td></tr>
 <tr><td style="width: 25%;"><a href="isAvailable.html">isAvailable</a></td>
 <td>Check if RStudio is running</td></tr>
+<tr><td style="width: 25%;"><a href="isJob.html">isJob</a></td>
+<td>Detect RStudio Jobs</td></tr>
 </table>
 
 <h2><a name="J">-- J --</a></h2>
@@ -189,52 +193,50 @@
 <tr><td style="width: 25%;"><a href="jobAdd.html">jobAdd</a></td>
 <td>Add a Job</td></tr>
 <tr><td style="width: 25%;"><a href="jobAddOutput.html">jobAddOutput</a></td>
-<td>Add Job Output</td></tr>
+<td>Add Background Job Output</td></tr>
 <tr><td style="width: 25%;"><a href="jobAddProgress.html">jobAddProgress</a></td>
-<td>Add Job Progress</td></tr>
+<td>Add Background Job Progress</td></tr>
 <tr><td style="width: 25%;"><a href="jobRemove.html">jobRemove</a></td>
-<td>Remove a Job</td></tr>
+<td>Remove a Background Job</td></tr>
 <tr><td style="width: 25%;"><a href="jobRunScript.html">jobRunScript</a></td>
-<td>Run R Script As Job</td></tr>
+<td>Run R Script As Background Job</td></tr>
 <tr><td style="width: 25%;"><a href="jobSetProgress.html">jobSetProgress</a></td>
-<td>Set Job Progress</td></tr>
+<td>Set Background Job Progress</td></tr>
 <tr><td style="width: 25%;"><a href="jobSetState.html">jobSetState</a></td>
-<td>Set Job State</td></tr>
+<td>Set Background Job State</td></tr>
 <tr><td style="width: 25%;"><a href="jobSetStatus.html">jobSetStatus</a></td>
-<td>Set Job Status</td></tr>
+<td>Set Background Job Status</td></tr>
 </table>
 
 <h2><a name="L">-- L --</a></h2>
 
 <table width="100%">
-<tr><td style="width: 25%;"><a href="launcher.html">launcher</a></td>
-<td>Retrieve Launcher Information</td></tr>
-<tr><td style="width: 25%;"><a href="launcher.html">launcherAvailable</a></td>
-<td>Retrieve Launcher Information</td></tr>
+<tr><td style="width: 25%;"><a href="launcherAvailable.html">launcherAvailable</a></td>
+<td>Check if Workbench Launcher is Available</td></tr>
 <tr><td style="width: 25%;"><a href="launcherConfig.html">launcherConfig</a></td>
-<td>Define a Launcher Configuration</td></tr>
+<td>Define a Workbench Launcher Configuration</td></tr>
 <tr><td style="width: 25%;"><a href="launcherContainer.html">launcherContainer</a></td>
-<td>Define a Launcher Container</td></tr>
+<td>Define a Workbench Launcher Container</td></tr>
 <tr><td style="width: 25%;"><a href="launcherControlJob.html">launcherControlJob</a></td>
-<td>Interact with (Control) a Job</td></tr>
-<tr><td style="width: 25%;"><a href="launcher.html">launcherGetInfo</a></td>
-<td>Retrieve Launcher Information</td></tr>
+<td>Interact with (Control) a Workbench Job</td></tr>
+<tr><td style="width: 25%;"><a href="launcherGetInfo.html">launcherGetInfo</a></td>
+<td>Retrieve Workbench Launcher Information</td></tr>
 <tr><td style="width: 25%;"><a href="launcherGetJob.html">launcherGetJob</a></td>
-<td>Retrieve Job Information</td></tr>
-<tr><td style="width: 25%;"><a href="launcher.html">launcherGetJobs</a></td>
-<td>Retrieve Launcher Information</td></tr>
+<td>Retrieve Workbench Job Information</td></tr>
+<tr><td style="width: 25%;"><a href="launcherGetJobs.html">launcherGetJobs</a></td>
+<td>Retrieve Workbench Job Information</td></tr>
 <tr><td style="width: 25%;"><a href="launcherHostMount.html">launcherHostMount</a></td>
-<td>Define a Launcher Host Mount</td></tr>
+<td>Define a Workbench Launcher Host Mount</td></tr>
 <tr><td style="width: 25%;"><a href="launcherNfsMount.html">launcherNfsMount</a></td>
-<td>Define a Launcher NFS Mount</td></tr>
+<td>Define a Workbench Launcher NFS Mount</td></tr>
 <tr><td style="width: 25%;"><a href="launcherPlacementConstraint.html">launcherPlacementConstraint</a></td>
-<td>Define a Launcher Placement Constraint</td></tr>
+<td>Define a Workbench Launcher Placement Constraint</td></tr>
 <tr><td style="width: 25%;"><a href="launcherResourceLimit.html">launcherResourceLimit</a></td>
-<td>Define a Launcher Resource Limit</td></tr>
+<td>Define a Workbench Launcher Resource Limit</td></tr>
 <tr><td style="width: 25%;"><a href="launcherSubmitJob.html">launcherSubmitJob</a></td>
-<td>Submit a Launcher Job</td></tr>
+<td>Submit a Workbench Job</td></tr>
 <tr><td style="width: 25%;"><a href="launcherSubmitR.html">launcherSubmitR</a></td>
-<td>Execute an R Script as a Launcher Job</td></tr>
+<td>Execute an R Script as a Workbench Job</td></tr>
 </table>
 
 <h2><a name="M">-- M --</a></h2>
@@ -282,6 +284,10 @@
 <td>Read RStudio Preference</td></tr>
 <tr><td style="width: 25%;"><a href="chunk-callbacks.html">registerChunkCallback</a></td>
 <td>Register and Unregister a Chunk Callback</td></tr>
+<tr><td style="width: 25%;"><a href="registerCommandCallback.html">registerCommandCallback</a></td>
+<td>Register Command Callback</td></tr>
+<tr><td style="width: 25%;"><a href="registerCommandStreamCallback.html">registerCommandStreamCallback</a></td>
+<td>Register Command Stream Callback</td></tr>
 <tr><td style="width: 25%;"><a href="removeTheme.html">removeTheme</a></td>
 <td>Remove a custom theme from RStudio.</td></tr>
 <tr><td style="width: 25%;"><a href="restartSession.html">restartSession</a></td>
@@ -367,6 +373,8 @@
 <table width="100%">
 <tr><td style="width: 25%;"><a href="chunk-callbacks.html">unregisterChunkCallback</a></td>
 <td>Register and Unregister a Chunk Callback</td></tr>
+<tr><td style="width: 25%;"><a href="unregisterCommandCallback.html">unregisterCommandCallback</a></td>
+<td>Unregister Command Callback</td></tr>
 <tr><td style="width: 25%;"><a href="updateDialog.html">updateDialog</a></td>
 <td>Updates a Dialog Box</td></tr>
 <tr><td style="width: 25%;"><a href="dictionaries.html">userDictionariesPath</a></td>

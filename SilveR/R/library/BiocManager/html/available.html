@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Discover packages available for installation.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for available {BiocManager}"><tr><td>available {BiocManager}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Discover packages available for installation.</h2>
+
+<h3>Description</h3>
+
+<p>The function lists all packages available from <code>repositories()</code> when
+no pattern is provided. This usually includes CRAN and Bioconductor
+packages. The function can also be used to check for package name
+availability. Common use cases include annotation package lookups by
+organism short name (e.g., &quot;hsapiens&quot;).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+available(pattern = "", include_installed = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pattern</code></td>
+<td>
+<p>character(1) pattern to filter (via
+<code>grep(pattern=...)</code>) available packages; the filter is not case
+sensitive.</p>
+</td></tr>
+<tr valign="top"><td><code>include_installed</code></td>
+<td>
+<p>logical(1) When <code>TRUE</code>, include installed
+packages in list of available packages; when <code>FALSE</code>, exclude
+installed packages.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>character()</code> vector of package names available for
+installation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+if (interactive()) {
+  avail &lt;- BiocManager::available()
+  length(avail)
+
+  BiocManager::available("bs.*hsapiens")
+}
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>BiocManager</em> version 1.30.19 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

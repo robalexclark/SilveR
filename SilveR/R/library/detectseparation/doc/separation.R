@@ -17,7 +17,7 @@ summary(endo_glm)
 (inf_check <- check_infinite_estimates(endo_glm))
 plot(inf_check)
 
-## ---- eval = TRUE, echo = TRUE------------------------------------------------
+## ---- endo_sep, eval = TRUE, echo = TRUE--------------------------------------
 endo_sep <- glm(HG ~ NV + PI + EH, data = endometrial,
                 family = binomial("logit"),
                 method = "detect_separation")

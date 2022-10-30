@@ -1,38 +1,33 @@
 Package: lifecycle
 Title: Manage the Life Cycle of your Package Functions
-Version: 1.0.1
-Authors@R: 
-    c(person(given = "Lionel",
-             family = "Henry",
-             role = c("aut", "cre"),
-             email = "lionel@rstudio.com"),
-      person(given = "Hadley",
-             family = "Wickham",
-             role = "aut",
-             email = "hadley@rstudio.com",
-             comment = c(ORCID = "0000-0003-4757-117X")),
-      person(given = "RStudio",
-             role = "cph"))
-Description: Manage the life cycle of your exported functions
-    with shared conventions, documentation badges, and user-friendly
-    deprecation warnings.
+Version: 1.0.3
+Authors@R: c(
+    person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut",
+           comment = c(ORCID = "0000-0003-4757-117X")),
+    person("RStudio", role = c("cph", "fnd"))
+  )
+Description: Manage the life cycle of your exported functions with shared
+    conventions, documentation badges, and user-friendly deprecation
+    warnings.
 License: MIT + file LICENSE
 URL: https://lifecycle.r-lib.org/, https://github.com/r-lib/lifecycle
 BugReports: https://github.com/r-lib/lifecycle/issues
-Depends: R (>= 3.3)
-Imports: glue, rlang (>= 0.4.10)
-Suggests: covr, crayon, lintr, tidyverse, knitr, rmarkdown, testthat
-        (>= 3.0.1), tools, tibble, vctrs
+Depends: R (>= 3.4)
+Imports: cli (>= 3.4.0), glue, rlang (>= 1.0.6)
+Suggests: covr, crayon, knitr, lintr, rmarkdown, testthat (>= 3.0.1),
+        tibble, tidyverse, tools, vctrs, withr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2021-09-24 14:46:50 UTC; lionel
+Packaged: 2022-10-07 08:50:55 UTC; lionel
 Author: Lionel Henry [aut, cre],
   Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),
-  RStudio [cph]
+  RStudio [cph, fnd]
 Maintainer: Lionel Henry <lionel@rstudio.com>
 Repository: CRAN
-Date/Publication: 2021-09-24 15:30:02 UTC
-Built: R 4.1.2; ; 2022-02-14 21:19:16 UTC; windows
+Date/Publication: 2022-10-07 09:50:02 UTC
+Built: R 4.1.3; ; 2022-10-09 22:10:39 UTC; windows

@@ -147,6 +147,7 @@ env_print	env_print
 env_tail	env_parent
 env_unbind	env_unbind
 env_unlock	env_unlock
+error_call	format_error_call
 error_cnd	cnd
 eval_bare	eval_bare
 eval_tidy	eval_tidy

@@ -8,6 +8,7 @@ export(agnes, clara, daisy, diana, fanny, mona, pam)
 ## and the rest
 export(bannerplot, ellipsoidhull, ellipsoidPoints,
        clusGap, maxSE,
+       medoids,
        lower.to.upper.tri.inds, upper.to.lower.tri.inds,
        meanabsdev, sizeDiss, sortSilhouette)
 

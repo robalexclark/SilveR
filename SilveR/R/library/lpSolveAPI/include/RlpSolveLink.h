@@ -285,7 +285,7 @@ SEXP RlpSolve_get_Nrows(SEXP Slp);
 SEXP RlpSolve_get_orig_index(SEXP Slp, SEXP Slp_indices);
 SEXP RlpSolve_get_status(SEXP Slp);
 SEXP RlpSolve_get_statustext(SEXP Slp, SEXP Sstatuscode);
-SEXP RlpSolve_lp_solve_version();
+SEXP RlpSolve_lp_solve_version(void);
 /*set_basisvar*/
 SEXP RlpSolve_time_elapsed(SEXP Slp);
 

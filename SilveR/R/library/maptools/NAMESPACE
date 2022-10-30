@@ -10,42 +10,98 @@ importFrom(graphics, image, polygon, par, text, rect, points, lines, box, strwid
 importFrom(grDevices, hsv, col2rgb, as.graphicsAnnot, xy.coords)
 import(methods)
 
-export(leglabs, dotsInPolys, symbolsInPolys, getinfo.shape, print.shapehead) 
-        # plotpolys, shape2poly, shape2lines, 
-	# shape2points, shape2bbs, Map2poly, Map2poly1, Map2lines, Map2points, 
-	# Map2bbs, convert.pl, get.Pcent, read.shape,
-	# plot.Map, plot.polylist, subset.polylist, maptools, dotsInPolys,
-	# symbolsInPolys, write.pointShape, write.polylistShape, 
-	# write.linelistShape)
+# packages using exported maptools functions 2022-08-11 
 
-export(readShapePoints, readShapeLines, readShapePoly)
+export(
+ getinfo.shape, # SSN deprecated 2022-10-06
+ print.shapehead # deprecated 2022-10-06
+) 
+S3method(print, shapehead) # deprecated 2022-10-06
 
-export(writePointsShape, writeLinesShape, writePolyShape)
+export(
+ readShapePoints, # deprecated 2022-10-06
+ readShapeLines, # deprecated 2022-10-06
+ readShapePoly # bamlss hydroTSM MetaLandSim plotKML deprecated 2022-10-06
+)
 
-export(readShapeSpatial, writeSpatialShape)
+export(
+ writePointsShape, # biogeo plotKML deprecated 2022-10-06
+ writeLinesShape, # plotKML uavRmp deprecated 2022-10-06
+ writePolyShape # monographaR plotKML deprecated 2022-10-06
+)
 
-export(readAsciiGrid, writeAsciiGrid)
+export(
+ readShapeSpatial, # inlabru openadds deprecated 2022-10-06
+ writeSpatialShape # monographaR deprecated 2022-10-06
+)
 
-export(readGPS)
+export(
+ readAsciiGrid, # rworldmap
+ writeAsciiGrid,
+ readGPS,
+ sp2WB,
+ sp2tmap,
+ sp2Mondrian,
+ readSplus
+)
 
-export(sp2WB, sp2tmap, sp2Mondrian, readSplus)
+export(
+ gzAzimuth, # FLightR 
+ trackAzimuth # move
+)
 
-export(gzAzimuth, trackAzimuth)
+export(
+ MapGen2SL,
+ ArcObj2SLDF,
+ ContourLines2SLDF,
+ pal2SpatialPolygons
+)
 
-export(MapGen2SL, ArcObj2SLDF, ContourLines2SLDF, pal2SpatialPolygons)
+exportMethods(
+ "crepuscule", # amt incR
+ "sunriset", # amt FLightR overlap PWFSLSmoke
+ "solarnoon", # PWFSLSmoke
+ "solarpos" # EMbC shadow
+)
 
-#exportClass(ppp, im, owin, psp)
+export(
+ SpatialPolygons2PolySet, # MapGAM
+ SpatialLines2PolySet, # DRHotNet MapGAM RchivalTag
+ PolySet2SpatialPolygons, # DRHotNet RchivalTag
+ PolySet2SpatialLines,
+ map2SpatialPolygons, # ausplotsR rangemap
+ map2SpatialLines, # MapGAM
+ pruneMap
+)
 
-exportMethods("crepuscule", "sunriset", "solarnoon", "solarpos")
+export(
+ as.ppp.SpatialPoints,
+ as.ppp.SpatialPointsDataFrame,
+ as.SpatialPoints.ppp,
+ as.SpatialPointsDataFrame.ppp,
+ as.SpatialGridDataFrame.ppp
+)
 
-export(SpatialPolygons2PolySet, SpatialLines2PolySet, PolySet2SpatialPolygons, PolySet2SpatialLines, map2SpatialPolygons, map2SpatialLines, pruneMap)
+export(
+ as.owin.SpatialGridDataFrame,
+ as.owin.SpatialPixelsDataFrame,
+ as.owin.SpatialPolygons, # GmAMisc
+ as.SpatialGridDataFrame.im,
+ as.im.SpatialGridDataFrame,
+ as.im.RasterLayer
+)
 
-export(as.ppp.SpatialPoints, as.ppp.SpatialPointsDataFrame, as.SpatialPoints.ppp, as.SpatialPointsDataFrame.ppp, as.SpatialGridDataFrame.ppp)
-export(as.owin.SpatialGridDataFrame, as.owin.SpatialPixelsDataFrame, as.owin.SpatialPolygons, as.SpatialGridDataFrame.im, as.im.SpatialGridDataFrame, as.im.RasterLayer)
+export(
+ as.psp.SpatialLinesDataFrame,
+ as.psp.SpatialLines,
+ as.psp.Lines,
+ as.psp.Line,
+ as.SpatialLines.psp # DRHotNet
+)
 
-export(as.psp.SpatialLinesDataFrame, as.psp.SpatialLines, as.psp.Lines, as.psp.Line, as.SpatialLines.psp)
-
-export(as.linnet.SpatialLines)
+export(
+ as.linnet.SpatialLines # SpNetPrep
+)
 
 if(getRversion() >= "3.6.0") {
   S3method(spatstat.geom::as.im, "RasterLayer")
@@ -62,44 +118,81 @@ if(getRversion() >= "3.6.0") {
   S3method(spatstat.geom::as.psp, "SpatialLinesDataFrame")
 }
 
-export(gpclibPermit, gpclibPermitStatus, rgeosStatus)
+export(
+ gpclibPermit, # bamlss R2BayesX surveillance
+ gpclibPermitStatus,
+ rgeosStatus
+)
 
-export(unionSpatialPolygons, nowrapSpatialPolygons, nowrapRecenter, checkPolygonsHoles, nowrapSpatialLines)
+export(
+ unionSpatialPolygons, # re-implement in sp with status 2
+   # animint2 bamlss BayesX bfsMaps
+   # broom disaggregation GADMTools LabourMarketAreas micromap
+   # R2BayesX RchivalTag rmapzen stampr surveillance
+ nowrapSpatialPolygons,
+ nowrapRecenter,
+ checkPolygonsHoles, # inlmisc
+ nowrapSpatialLines,
+ thinnedSpatialPoly
+)
 
-export(Rgshhs, getRgshhsMap)
+export(
+ Rgshhs,
+ getRgshhsMap
+)
 
-export(CCmaps)
+export(
+ CCmaps
+)
 
-exportMethods(coerce, spCbind, spRbind)
+exportMethods(
+ coerce,
+ spCbind, # MapGAM
+ spRbind # APfun ecospat iSDM track2KBA uavRmp
+)
 
-exportMethods(elide)
+exportMethods(
+ elide # usmap https://github.com/pdil/usmap/issues/57
+)
 
-export(GE_SpatialGrid, kmlOverlay, Sobj_SpatialGrid)
+export(
+ GE_SpatialGrid,
+ kmlOverlay, # RgoogleMaps
+ Sobj_SpatialGrid # surveillance
+)
 
-export(kmlPolygons, kmlLines, kmlPolygon, kmlLine, getKMLcoordinates, kmlPoints)
+export(
+ kmlPolygons, # red https://github.com/r-spatial/evolution/issues/6
+ kmlLines, # https://github.com/r-spatial/evolution/issues/6
+ kmlPolygon, # red
+ kmlLine, # BPEC
+ getKMLcoordinates, # animaltracker
+ kmlPoints # BPEC
+)
 
-export(pointLabel, gcDestination)
-export(thinnedSpatialPoly)
+export(
+ pointLabel, # car rayshader rioja deprecated 2022-10-05, moved to car Rev.: 725 email 2022-10-06
+ gcDestination, # ggsn
+ panel.pointLabel, # https://github.com/oscarperpinan/rastervis/issues/93 deprecated 2022-10-10 https://github.com/oscarperpinan/label
+ lineLabel # https://github.com/oscarperpinan/rastervis/issues/93 deprecated 2022-10-10 https://github.com/oscarperpinan/label
+)
+S3method("drawDetails", "labels")  # https://github.com/oscarperpinan/rastervis/issues/93 deprecated 2022-10-10 https://github.com/oscarperpinan/label
+exportMethods(
+ sp.pointLabel, # https://github.com/oscarperpinan/rastervis/issues/93 deprecated 2022-10-10 https://github.com/oscarperpinan/label
+ sp.lineLabel, # https://github.com/oscarperpinan/rastervis/issues/93 deprecated 2022-10-10 https://github.com/oscarperpinan/label
+ label # https://github.com/oscarperpinan/rastervis/issues/93 deprecated 2022-10-10 https://github.com/oscarperpinan/label
+)
 
-export(snapPointsToLines, nearestPointOnSegment, nearestPointOnLine, SpatialLinesMidPoints)
+export(
+ leglabs, # SpatialEpi
+ dotsInPolys, 
+ symbolsInPolys,
+ snapPointsToLines,
+ nearestPointOnSegment,
+ nearestPointOnLine,
+ SpatialLinesMidPoints # gDefrag
+)
 
-export(panel.pointLabel, lineLabel)
-S3method("drawDetails", "labels")
-exportMethods(sp.pointLabel, sp.lineLabel, label)
-
-#S3method(plot, Map)
-#S3method(plot, polylist)
-#S3method(subset, polylist)
-S3method(print, shapehead)
-#S3method(as.ppp, SpatialPoints)
-#S3method(as.ppp, SpatialPointsDataFrame)
-#S3method(as.owin, SpatialGridDataFrame)
-#S3method(as.owin, SpatialPixelsDataFrame)
-#S3method(as.owin, SpatialPolygons)
-#S3method(as.SpatialPoints, ppp)
-#S3method(as.SpatialPointsDataFrame, ppp)
-#S3method(as.SpatialGridDataFrame, ppp)
-#S3method(as.SpatialGridDataFrame, im)
 
 
 

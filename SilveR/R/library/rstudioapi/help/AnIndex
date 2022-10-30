@@ -18,6 +18,7 @@ dictionariesPath	dictionaries
 documentClose	rstudio-documents
 documentId	rstudio-documents
 documentNew	rstudio-documents
+documentOpen	rstudio-documents
 documentPath	rstudio-documents
 documentSave	rstudio-documents
 documentSaveAll	rstudio-documents
@@ -44,6 +45,7 @@ insertText	rstudio-documents
 is.document_position	document_position
 is.document_range	document_range
 isAvailable	isAvailable
+isJob	isJob
 jobAdd	jobAdd
 jobAddOutput	jobAddOutput
 jobAddProgress	jobAddProgress
@@ -52,14 +54,13 @@ jobRunScript	jobRunScript
 jobSetProgress	jobSetProgress
 jobSetState	jobSetState
 jobSetStatus	jobSetStatus
-launcher	launcher
-launcherAvailable	launcher
+launcherAvailable	launcherAvailable
 launcherConfig	launcherConfig
 launcherContainer	launcherContainer
 launcherControlJob	launcherControlJob
-launcherGetInfo	launcher
+launcherGetInfo	launcherGetInfo
 launcherGetJob	launcherGetJob
-launcherGetJobs	launcher
+launcherGetJobs	launcherGetJobs
 launcherHostMount	launcherHostMount
 launcherNfsMount	launcherNfsMount
 launcherPlacementConstraint	launcherPlacementConstraint
@@ -77,6 +78,8 @@ projects	projects
 readPreference	readPreference
 readRStudioPreference	readRStudioPreference
 registerChunkCallback	chunk-callbacks
+registerCommandCallback	registerCommandCallback
+registerCommandStreamCallback	registerCommandStreamCallback
 removeTheme	removeTheme
 restartSession	restartSession
 rstudio-documents	rstudio-documents
@@ -112,6 +115,7 @@ terminalSend	terminalSend
 terminalVisible	terminalVisible
 translateLocalUrl	translateLocalUrl
 unregisterChunkCallback	chunk-callbacks
+unregisterCommandCallback	unregisterCommandCallback
 updateDialog	updateDialog
 userDictionariesPath	dictionaries
 userIdentity	userIdentity

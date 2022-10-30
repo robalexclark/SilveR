@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Florian Schwendinger" />
+
+<meta name="date" content="2022-08-26" />
+
+<title>Detecting separation and infinite estimates in log binomial regression</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Detecting separation and infinite estimates
+in log binomial regression</h1>
+<h4 class="author">Florian Schwendinger</h4>
+<h4 class="date">2022-08-26</h4>
+
+
+
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>In contrast to logistic regression in log-binomial regression,
+separation is not the only factor which decides if the maximum
+likelihood estimate (MLE) has infinite components. As we will see in the
+example below, for the log-binomial regression model (LBRM) there exist
+data configurations which are separated but the MLE still exists.</p>
+<p>The MLE of the LBRM can be obtained by solving the following
+optimization problem. <span class="math display">\[
+\begin{equation}
+    \begin{array}{rl}
+    \underset{\beta}{\textrm{maximize}} &amp;
+    \ell(\beta) = \displaystyle\sum_{i = 1}^n y_i ~ X_{i*} \beta + (1 -
+y_i) ~  \log(1 - \exp(X_{i*} \beta)) \ \ \ \
+    \textrm{s.t.} &amp;
+    X \beta \leq 0.
+    \end{array}
+\end{equation}
+\]</span></p>
+<p>From the optimization problem we can already guess that the different
+behavior with regard to the existence of the MLE is caused by the linear
+constraint <span class="math inline">\(X \beta \leq 0\)</span>.</p>
+<p>Let <span class="math inline">\(X^0\)</span> be the submatrix of
+<span class="math inline">\(X\)</span> obtained by keeping only the rows
+<span class="math inline">\(I^0 = \{i|y_i = 0\}\)</span> and <span class="math inline">\(X^1\)</span> the submatrix obtained by keeping
+only the rows <span class="math inline">\(I^1 = \{i|y_i = 1\}\)</span>.
+<span class="citation">Schwendinger, Grün, and Hornik (<a href="#ref-schwendinger+gruen+hornik:2021" role="doc-biblioref">2021</a>)</span> pointed out that the finiteness of
+the MLE can be checked by solving the following linear optimization
+problem.</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{array}{rll}
+  \underset{\beta}{\text{maximize}}~~  &amp;
+    - \sum_{i \in I^0} X_{i*} \beta \\
+  \text{subject to}~~  &amp;
+    X^0 \beta \leq 0 \\
+  &amp; X^1 \beta = 0.
+\end{array}
+\end{equation}
+\]</span> The MLE has only finite components if the solution of this
+linear program is a zero vector. If the MLE contains infinite
+components, the linear programming problem is unbounded. The function
+<code>detect_infinite_estimates()</code> from the
+<strong>detectseparation</strong> implements the LP problem described
+above and can therefore be used to detect infinite components in the MLE
+of the LBRM.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;detectseparation&quot;</span>)</span></code></pre></div>
+<hr />
+</div>
+<div id="example" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Example</h1>
+<p>To show the different effect of separation on the logistic regression
+model compared to the LBRM consider the following data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">b =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div id="detect-separation" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Detect
+separation</h2>
+<p>Clearly the data is separated, which can be verified by using the
+<code>detect_separation</code> method (a detailed explanation of the
+output can be found in <a href="#output_details">Section 3</a>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>), <span class="at">method =</span> <span class="st">&quot;detect_separation&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Implementation: ROI | Solver: lpsolve </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Separation: TRUE </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Existence of maximum likelihood estimates</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           a           b </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        -Inf        -Inf         Inf </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0: finite value, Inf: infinity, -Inf: -infinity</span></span></code></pre></div>
+<p>Since separation is a property of the data, checking for separation
+gives the same result for the logistic regression and the LBRM.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;log&quot;</span>), <span class="at">method =</span> <span class="st">&quot;detect_separation&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Data separation in log-binomial models does not necessarily result in infinite estimates</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Implementation: ROI | Solver: lpsolve </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Separation: TRUE </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Existence of maximum likelihood estimates</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           a           b </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           0           0           0 </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0: finite value, Inf: infinity, -Inf: -infinity</span></span></code></pre></div>
+</div>
+<div id="detect-infinite-estimates" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Detect infinite
+estimates</h2>
+<p>For logistic regression separation is necessary and sufficient that
+the MLE contains infinite components.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>), <span class="at">method =</span> <span class="st">&quot;detect_infinite_estimates&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Implementation: ROI | Solver: lpsolve </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infinite estimates: TRUE </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Existence of maximum likelihood estimates</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           a           b </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        -Inf        -Inf         Inf </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0: finite value, Inf: infinity, -Inf: -infinity</span></span></code></pre></div>
+<p>However, due to the linear constraint of the LBRM, there exists data
+allocations where the MLE does exist (i.e., has only finite components),
+despite the fact that the data is separated.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;log&quot;</span>), <span class="at">method =</span> <span class="st">&quot;detect_infinite_estimates&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Implementation: ROI | Solver: lpsolve </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infinite estimates: FALSE </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Existence of maximum likelihood estimates</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           a           b </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           0           0           0 </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0: finite value, Inf: infinity, -Inf: -infinity</span></span></code></pre></div>
+</div>
+<div id="fitting-the-lbrm" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Fitting the LBRM</h2>
+<p>Using <code>glm</code> to solve this problem we get the following
+error message.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;log&quot;</span>)))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error : no valid set of coefficients has been found: please supply starting values</span></span></code></pre></div>
+<p>The error message means that we should provide starting values, a
+simple but reliable approach is to use <span class="math inline">\((-1,
+0, ..., 0)\)</span> as starting value.</p>
+<p>Since in this example one of the constraints <span class="math inline">\(X_{i*} \beta \leq 0\)</span> is by design binding,
+the iteratively re-weighted least squares (IRLS) method used by the
+<code>glm</code> function has convergence problems. The <code>glm</code>
+function informs us about the convergence problems by issuing some
+warnings. The warnings</p>
+<pre><code>#&gt; Warning: step size truncated: out of bounds
+#&gt; Warning: glm.fit: algorithm stopped at boundary value</code></pre>
+<p>tell us that IRLS is not the best option for optimization problems
+with binding constraints. The warning</p>
+<pre><code>#&gt; Warning: glm.fit: algorithm did not converge</code></pre>
+<p>tell us that the algorithm did not converge. Practically in most
+cases this just means the default value for the maximum number of
+iterations should be increased.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">args</span>(glm.control)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; function (epsilon = 1e-08, maxit = 25, trace = FALSE) </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
+<p>Since the default value for the maximum number of iterations is quite
+low (<code>maxit = 25</code>). However, <code>maxit = 25</code> is
+typically high enough for unbounded optimization problems (almost all
+models supported by <code>glm</code>), but is often to low for the LBRM.
+For most data sets setting <code>maxit = 10000</code> when estimating
+LBRMs is high enough.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> y <span class="sc">~</span> a <span class="sc">+</span> b</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fu">double</span>(<span class="fu">ncol</span>(<span class="fu">model.matrix</span>(formula, <span class="at">data =</span> data)) <span class="sc">-</span> 1L))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">=</span> <span class="fu">glm.control</span>(<span class="at">epsilon =</span> <span class="fl">1e-8</span>, <span class="at">maxit =</span> <span class="dv">10000</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;log&quot;</span>), <span class="at">start =</span> start, <span class="at">control =</span> ctrl)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; glm(formula = formula, family = binomial(&quot;log&quot;), data = data, </span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     start = start, control = ctrl)</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Deviance Residuals: </span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        1         2         3         4         5         6  </span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -0.82961  -0.83830  -0.40220   1.28265   0.90697   0.00003  </span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  -1.6452     1.0333  -1.592    0.111</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; a            -0.4462     1.2580  -0.355    0.723</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; b             0.4287     0.6421   0.668    0.504</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Null deviance: 8.3178  on 5  degrees of freedom</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual deviance: 4.0205  on 3  degrees of freedom</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; AIC: 10.021</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 29</span></span></code></pre></div>
+<p>We can verify that one of the constraints <span class="math inline">\(X_{i*} \beta \leq 0\)</span> is binding (i.e.,
+<span class="math inline">\(X_{i*} \beta = 0\)</span> for at least one
+<span class="math inline">\(i\)</span>) by multiplying the coefficients
+with the model matrix.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mm <span class="ot">&lt;-</span> <span class="fu">drop</span>(<span class="fu">model.matrix</span>(formula, data) <span class="sc">%*%</span> <span class="fu">coef</span>(fit)))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             1             2             3             4             5 </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -1.233885e+00 -1.216457e+00 -2.554908e+00 -8.225899e-01 -4.112950e-01 </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             6 </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -5.010219e-10</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abs</span>(<span class="fu">drop</span>(mm)) <span class="sc">&lt;</span> <span class="fl">1e-6</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     1     2     3     4     5     6 </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; FALSE FALSE FALSE FALSE FALSE  TRUE</span></span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="output_details" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Details on the
+output</h1>
+<div id="detect-separation-1" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Detect
+separation</h2>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;logit&quot;</span>), <span class="at">method =</span> <span class="st">&quot;detect_separation&quot;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Implementation: ROI | Solver: lpsolve </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Separation: TRUE </span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Existence of maximum likelihood estimates</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           a           b </span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        -Inf        -Inf         Inf </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0: finite value, Inf: infinity, -Inf: -infinity</span></span></code></pre></div>
+<p>The output above provides much information:</p>
+<ol style="list-style-type: decimal">
+<li>The output shows, that for the verification oft the separation the
+linear optimization solver <strong>lpsolve</strong> was used.<br />
+</li>
+<li>The line <code>Separation: TRUE</code> indicates that the data is
+separated.</li>
+<li>The coefficients at <code>Inf</code> and <code>-Inf</code> indicate
+that the underlying optimization problem is unbounded and therefore the
+MLE does not exist for the logistic regression model.</li>
+</ol>
+</div>
+<div id="detect-infinite-estimates-1" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Detect infinite
+estimates</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> data, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="st">&quot;log&quot;</span>), <span class="at">method =</span> <span class="st">&quot;detect_infinite_estimates&quot;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Implementation: ROI | Solver: lpsolve </span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infinite estimates: FALSE </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Existence of maximum likelihood estimates</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           a           b </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           0           0           0 </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0: finite value, Inf: infinity, -Inf: -infinity</span></span></code></pre></div>
+<p>The output above provides much information:</p>
+<ol style="list-style-type: decimal">
+<li>The output shows, that for the verification oft the separation the
+linear optimization solver <strong>lpsolve</strong> was used.<br />
+</li>
+<li>The line <code>Infinite estimates: FALSE</code> indicates that the
+MLE has only finite components (the MLE exists).</li>
+<li>The coefficients are all <code>0</code> which again indicates that
+the MLE has only finite components and therefore underlying optimization
+problem is bounded.</li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="choosing-starting-values" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Choosing starting
+values</h1>
+<p>For the LBRM the <code>glm</code> function often requires the users
+to specify starting values. Valid starting values have to reside in the
+interior of the feasible region (<span class="math inline">\(X \beta
+&lt; 0\)</span>). There have been different methods suggested for
+finding valid starting values.</p>
+<div id="simple-approach" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Simple approach</h2>
+<p>If an intercept is present in the estimation
+<code>(-1, 0, ..., 0)</code> will always provide valid starting
+values.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>find_start_simple <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fu">double</span>(<span class="fu">ncol</span>(<span class="fu">model.matrix</span>(formula, <span class="at">data =</span> data)) <span class="sc">-</span> 1L))  </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">find_start_simple</span>(formula, data)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -1  0  0</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">model.matrix</span>(formula, <span class="at">data =</span> data) <span class="sc">%*%</span> <span class="fu">find_start_simple</span>(formula, data))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -1</span></span></code></pre></div>
+</div>
+<div id="hot-start-via-poisson-model" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Hot start via Poisson
+model</h2>
+<p><span class="citation">Andrade and Leon Andrade (<a href="#ref-andrade+andrade2018" role="doc-biblioref">2018</a>)</span>
+suggest a hot start method, by using the modified estimation result of a
+Poisson model with log link as starting values. Again this method only
+works if an intercept is used.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>find_start_poisson <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data, <span class="at">delta =</span> <span class="dv">1</span>) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  b0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">glm</span>(formula, data, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">&quot;log&quot;</span>)))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  mX <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">model.matrix</span>(formula, <span class="at">data =</span> data)[, <span class="sc">-</span>1L, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  b0[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">min</span>(mX <span class="sc">%*%</span> b0[<span class="sc">-</span><span class="dv">1</span>]) <span class="sc">-</span> delta</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  b0</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">find_start_poisson</span>(formula, data)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)           a           b </span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -3.5447461  -0.5364793   0.5863329</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">model.matrix</span>(formula, <span class="at">data =</span> data) <span class="sc">%*%</span> <span class="fu">find_start_poisson</span>(formula, data))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -1</span></span></code></pre></div>
+</div>
+<div id="recommendation" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Recommendation</h2>
+<p>One can also solve an LP to find valid start values or think of other
+strategies. However, for the benchmark examples reported in <span class="citation">Schwendinger, Grün, and Hornik (<a href="#ref-schwendinger+gruen+hornik:2021" role="doc-biblioref">2021</a>)</span> we found no conclusive evidence
+that one of these initialization methods outperforms the others.
+Therefore, my personal favorite is the simple approach
+<code>(-1, 0, ..., 0)</code>.</p>
+<hr />
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-andrade+andrade2018" class="csl-entry">
+Andrade, Bernardo Borba de, and Joanlise Marco de Leon Andrade. 2018.
+<span>“Some Results for Maximum Likelihood Estimation of Adjusted
+Relative Risks.”</span> <em>Communications in Statistics - Theory and
+Methods</em> 47 (23): 5750–69. <a href="https://doi.org/10.1080/03610926.2017.1402045">https://doi.org/10.1080/03610926.2017.1402045</a>.
+</div>
+<div id="ref-schwendinger+gruen+hornik:2021" class="csl-entry">
+Schwendinger, Florian, Bettina Grün, and Kurt Hornik. 2021. <span>“A
+Comparison of Optimization Solvers for Log Binomial Regression Including
+Conic Programming.”</span> <em>Computational Statistics</em> 36 (3):
+1721–54. <a href="https://doi.org/10.1007/s00180-021-01084-5">https://doi.org/10.1007/s00180-021-01084-5</a>.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

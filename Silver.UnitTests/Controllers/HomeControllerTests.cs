@@ -23,5 +23,40 @@ namespace SilveR.UnitTests.Controllers
             //Assert
             Assert.IsType<ViewResult>(result);
         }
+
+        //[Fact]
+        //public void Index_CheckRInstalled_ReturnsNoErrorMessage()
+        //{
+        //    //Arrange
+        //    System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+        //    var appSettingsOptions = Options.Create(new AppSettings() { CustomRScriptLocation = null });
+
+        //    HomeController sut = new HomeController(appSettingsOptions);
+
+        //    //Act
+        //    IActionResult actionResult = sut.Index();
+        //    string result = sut.ViewBag.ErrorMessage;
+
+        //    //Assert
+        //    Assert.Null(result);
+        //}
+
+        [Fact]
+        public void Index_CheckRInstalled_ReturnsErrorMessage()
+        {
+            //Arrange
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            var appSettingsOptions = Options.Create(new AppSettings() { CustomRScriptLocation = "InvalidLocation" });
+
+            HomeController sut = new HomeController(appSettingsOptions);
+
+            //Act
+            IActionResult actionResult = sut.Index();
+            string result = sut.ViewBag.ErrorMessage;
+
+            //Assert
+            Assert.NotNull(result);
+        }
+
     }
 }

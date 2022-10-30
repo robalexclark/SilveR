@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-10-09" />
 
 <title>Using .SD for Data Analysis</title>
 
@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -135,13 +136,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -346,7 +354,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Using .SD for Data Analysis</h1>
-<h4 class="date">2021-09-22</h4>
+<h4 class="date">2022-10-09</h4>
 
 
 <div id="TOC">
@@ -378,7 +386,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The simpler usage of <code>.SD</code> is for column subsetting (i.e., when <code>.SDcols</code> is specified); as this version is much more straightforward to understand, we’ll cover that first below. The interpretation of <code>.SD</code> in its second usage, grouping scenarios (i.e., when <code>by =</code> or <code>keyby =</code> is specified), is slightly different, conceptually (though at core it’s the same, since, after all, a non-grouped operation is an edge case of grouping with just one group).</p>
 <div id="loading-and-previewing-lahman-data" class="section level2" number="1.1">
 <h2 number="1.1"><span class="header-section-number">1.1</span> Loading and Previewing Lahman Data</h2>
-<p>To give this a more real-world feel, rather than making up data, let’s load some data sets about baseball from the <a href="http://www.seanlahman.com/baseball-archive/statistics/">Lahman database</a>. In typical R usage, we’d simply load these data sets from the <code>Lahman</code> R package; in this vignette, we’ve pre-downloaded them directly from the package’s GitHub page instead.</p>
+<p>To give this a more real-world feel, rather than making up data, let’s load some data sets about baseball from the <a href="https://www.seanlahman.com/baseball-archive/statistics/">Lahman database</a>. In typical R usage, we’d simply load these data sets from the <code>Lahman</code> R package; in this vignette, we’ve pre-downloaded them directly from the package’s GitHub page instead.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&#39;Teams.RData&#39;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">setDT</span>(Teams)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>Teams</span>
@@ -458,7 +466,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb1-77"><a href="#cb1-77" aria-hidden="true"></a><span class="co"># 46697:  3.98   4  1   2  0  213 23  25  0  1   11</span></span>
 <span id="cb1-78"><a href="#cb1-78" aria-hidden="true"></a><span class="co"># 46698:  3.74   2  0   0  0   92  1   9  0  1    3</span></span>
 <span id="cb1-79"><a href="#cb1-79" aria-hidden="true"></a><span class="co"># 46699:  4.52   0  1   2  0  556  0  76  2  5    4</span></span></code></pre></div>
-<p>Readers up on baseball lingo should find the tables’ contents familiar; <code>Teams</code> records some statistics for a given team in a given year, while <code>Pitching</code> records statistics for a given pitcher in a given year. Please do check out the <a href="http://www.seanlahman.com/files/database/readme2017.txt">documentation</a> and explore the data yourself a bit before proceeding to familiarize yourself with their structure.</p>
+<p>Readers up on baseball lingo should find the tables’ contents familiar; <code>Teams</code> records some statistics for a given team in a given year, while <code>Pitching</code> records statistics for a given pitcher in a given year. Please do check out the <a href="https://www.seanlahman.com/files/database/readme2017.txt">documentation</a> and explore the data yourself a bit before proceeding to familiarize yourself with their structure.</p>
 </div>
 </div>
 <div id="sd-on-ungrouped-data" class="section level1" number="2">

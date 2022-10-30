@@ -6,6 +6,8 @@ cache_engines           Cache engines of other languages
 clean_cache             Clean cache files that are probably no longer
                         needed
 combine_words           Combine multiple words into a single string
+convert_chunk_header    Convert the in-header chunk option syntax to
+                        the in-body syntax
 current_input           Query the current input filename
 dep_auto                Build automatic dependencies among chunks
 dep_prev                Make later chunks depend on previous chunks

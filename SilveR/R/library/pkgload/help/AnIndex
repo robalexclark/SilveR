@@ -5,6 +5,7 @@ check_suggested	check_suggested
 dev_example	dev_example
 dev_help	dev_help
 dev_meta	dev_meta
+dev_topic_find	dev_help
 dev_topic_index_reset	dev_help
 has_tests	has_tests
 help	help

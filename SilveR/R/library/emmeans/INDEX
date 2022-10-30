@@ -10,6 +10,7 @@ eff_size                Calculate effect sizes and confidence bounds
                         thereof
 emm                     Support for 'multcomp::glht'
 emmGrid-class           The 'emmGrid' class
+emm_example             Run or list additional examples
 emm_list                The 'emm_list' class
 emm_options             Set or change emmeans options
 emmeans                 Estimated marginal means (Least-squares means)

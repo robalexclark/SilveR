@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Modified Functions for Summarizing Linear, Generalized...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for S {car}"><tr><td>S {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Modified Functions for Summarizing Linear, Generalized Linear, and Some Other Models
+</h2>
+
+<h3>Description</h3>
+
+<p><span class="pkg">car</span> package replacements for the <code><a href="../../base/html/summary.html">summary</a></code> (<code>S</code>) and <code><a href="../../stats/html/confint.html">confint</a></code> (<code>Confint</code>) functions for <code><a href="../../stats/html/lm.html">lm</a></code>, <code><a href="../../stats/html/glm.html">glm</a></code>, <code><a href="../../mgcv/html/multinom.html">multinom</a></code>, and <code><a href="../../MASS/html/polr.html">polr</a></code> objects, with additional arguments but the same defaults as the original functions. The <code>Confint</code> method for <code>"polr"</code> objects profiles the likelihood to get confidence intervals for the regression parameters but uses Wald intervals for the thresholds.
+Default methods that call the standard R <code><a href="../../base/html/summary.html">summary</a></code> and <code><a href="../../stats/html/confint.html">confint</a></code> functions are provided for the <code>S</code> and <code>Confint</code> generics, so the <span class="pkg">car</span> functions should be safe to use in general. The default method for <code>Confint</code> also assumes that there is an appropriate <code><a href="../../stats/html/coef.html">coef</a></code> method. For briefer model summaries, see <code><a href="../../car/help/brief.html">brief</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+
+S(object, brief, ...)
+
+## S3 method for class 'lm'
+S(object, brief=FALSE,
+    correlation = FALSE, symbolic.cor = FALSE,
+    vcov. = vcov(object, complete=FALSE), header = TRUE,
+    resid.summary = FALSE, adj.r2 = FALSE,
+    ...)
+
+## S3 method for class 'glm'
+S(object, brief=FALSE,
+    exponentiate, dispersion, correlation = FALSE, symbolic.cor = FALSE,
+    vcov. = vcov(object, complete=FALSE), header = TRUE,
+    resid.summary = FALSE, ...)
+
+## S3 method for class 'multinom'
+S(object, brief=FALSE, exponentiate=FALSE, ...)
+
+## S3 method for class 'polr'
+S(object, brief=FALSE, exponentiate=FALSE, ...)
+
+## S3 method for class 'lme'
+S(object, brief=FALSE, correlation=FALSE, ...)
+
+## S3 method for class 'lmerMod'
+S(object, brief=FALSE, KR=FALSE, correlation=FALSE, ...)
+
+## S3 method for class 'glmerMod'
+S(object, brief=FALSE, correlation=FALSE, exponentiate, ...)
+
+## S3 method for class 'data.frame'
+S(object, brief=FALSE, ...)
+
+## Default S3 method:
+S(object, brief, ...)
+
+## S3 method for class 'S.lm'
+print(x, digits = max(3, getOption("digits") - 3),
+    symbolic.cor = x$symbolic.cor, signif.stars = getOption("show.signif.stars"), ...)
+
+## S3 method for class 'S.glm'
+print(x, digits = max(3L, getOption("digits") - 3L),
+    symbolic.cor = x$symbolic.cor, signif.stars = getOption("show.signif.stars"), ...)
+
+## S3 method for class 'S.multinom'
+print(x, digits = max(3, getOption("digits") - 3),
+    signif.stars = getOption("show.signif.stars"), ...)
+
+## S3 method for class 'S.polr'
+print(x, digits = max(3, getOption("digits") - 3),
+    signif.stars = getOption("show.signif.stars"), ...)
+
+## S3 method for class 'S.lme'
+print(x, digits=max(3, getOption("digits") - 3),
+    signif.stars = getOption("show.signif.stars"), ...)
+
+## S3 method for class 'S.lmerMod'
+print(x, digits=max(3, getOption("digits") - 3),
+    signif.stars = getOption("show.signif.stars"), ...)
+
+## S3 method for class 'S.glmerMod'
+print(x, digits=max(3, getOption("digits") - 3),
+    signif.stars = getOption("show.signif.stars"), ...)
+
+Confint(object, ...)
+
+## S3 method for class 'lm'
+Confint(object, estimate=TRUE,
+    parm, level=0.95, vcov.=vcov(object, complete=FALSE), ...)
+
+## S3 method for class 'glm'
+Confint(object, estimate=TRUE, exponentiate=FALSE,
+    vcov., dispersion, type=c("LR", "Wald"), ...)
+
+## S3 method for class 'polr'
+Confint(object, estimate=TRUE, exponentiate=FALSE,
+    thresholds=!exponentiate, ...)
+
+## S3 method for class 'multinom'
+Confint(object, estimate=TRUE, exponentiate=FALSE, ...)
+
+## S3 method for class 'lme'
+Confint(object, estimate=TRUE, level=0.95, ...)
+
+## S3 method for class 'lmerMod'
+Confint(object, estimate=TRUE, level=0.95, ...)
+
+## S3 method for class 'glmerMod'
+Confint(object, estimate=TRUE, level=0.95,
+    exponentiate=FALSE, ...)
+
+## Default S3 method:
+Confint(object, estimate=TRUE, level=0.95, vcov., ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+
+<p>a model or other object, e.g., of class <code>"lm"</code> as produced by a call to <code><a href="../../stats/html/lm.html">lm</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>exponentiate</code></td>
+<td>
+<p>for a <code>"glm"</code> or <code>"glmerMod"</code> model using the <code>log</code> or <code>logit</code> link, or a
+<code>"polr"</code> or <code>"multinom"</code> model, show exponentiated coefficient estimates and confidence bounds.</p>
+</td></tr>
+<tr valign="top"><td><code>correlation, symbolic.cor</code></td>
+<td>
+<p>see <code><a href="../../stats/html/summary.lm.html">summary.lm</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>x, digits, signif.stars</code></td>
+<td>
+<p>see <code><a href="../../stats/html/summary.lm.html">summary.lm</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>dispersion</code></td>
+<td>
+<p>see <code><a href="../../stats/html/summary.glm.html">summary.glm</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>vcov.</code></td>
+<td>
+<p>either a matrix giving the estimated covariance matrix of the estimates, or a function that
+when called with <code>object</code> as an argument returns an estimated covariance matrix of the estimates.
+The default of <code>vcov. = vcov</code> uses the usual estimated covariance matrix.  Other choices include
+the functions documented at <code><a href="../../car/help/hccm.html">hccm</a></code>.  See example below for using a bootstrap to estimate  the
+covariance matrix.  For the <code>glm</code> methods of <code>Confint</code> and <code>S</code>, if the <code>vcov.</code> or
+<code>dispersion</code> argument is specified, then Wald-based confidence limits are computed;
+otherwise the reported confidence limits are computed by profiling the likelihood.
+NOTE:  The <code>dispersion</code> and <code>vcov.</code> arguments may not <em>both</em> be specified.
+</p>
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+
+<p>if <code>TRUE</code>, print the header for the summary output, default is <code>TRUE</code>
+</p>
+</td></tr>
+<tr valign="top"><td><code>resid.summary</code></td>
+<td>
+
+<p>if <code>TRUE</code>, print the five-number summary of the residuals in the summary, defaults to <code>FALSE</code>
+</p>
+</td></tr>
+<tr valign="top"><td><code>adj.r2</code></td>
+<td>
+
+<p>if <code>TRUE</code>, print the adjusted r-squared in the summary, default is <code>FALSE</code>
+</p>
+</td></tr>
+<tr valign="top"><td><code>brief</code></td>
+<td>
+
+<p>if <code>TRUE</code>, set <code>header</code>, <code>resid.summary</code> and <code>adj.r.squared</code> to <code>FALSE</code>, and suppress exponeniated coefficients for GLMs with log or logit link. For a data frame, equivalent to use of <code><a href="../../car/help/brief.html">brief</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>KR</code></td>
+<td>
+<p>if <code>TRUE</code> (default is <code>FALSE</code>), compute Kenward-Roger standard errors and
+Satterthwaite degrees of freedom for t-tests. <em>Warning:</em> This computation can be very time-consuming.</p>
+</td></tr>
+<tr valign="top"><td><code>parm, level</code></td>
+<td>
+<p>see <code><a href="../../stats/html/confint.html">confint</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>estimate</code></td>
+<td>
+<p>show the estimated coefficients in the confidence-interval table; default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>thresholds</code></td>
+<td>
+<p>show confidence intervals for the estimated thresholds in the <code>"polr" model.</code></p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>if <code>"LR"</code> (the default) compute confidence intervals based on the LR statistics by profiling the likelihood; if <code>"Wald"</code> base confidence intervals on the Wald statistic using the coefficient standard error and the normal distribution.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>additional arguments to be passed down, for consistency with <code>summary</code> and <code>confint</code> methods
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>All these functions mimic functions in the <span class="pkg">stats</span> and other standard R packages for summarizing aspects of linear, generalized linear, and some other statistical models. The 
+<code>S</code> function also provides an alterntive to <code>summary</code> for data frames, treating character variables as if they were factors.
+</p>
+<p>The <code>S</code> and <code>Confint</code> functions add support for the <code>vcov.</code> argument for linear models, which allows specifying a covariance matrix for the regression coefficients other than the usual covariance matrix returned by the function <code><a href="../../stats/html/vcov.html">vcov</a></code>.  This argument may be either the name of a function, so that the call to <code>vcov.(object)</code> returns a covariance matrix, or else <code>vcov.</code> is set equal to a covariance matrix.  For example, setting <code>vcov.=hccm</code> uses 'proposal 3' described by Long and Ervin (2000) for a sandwich coefficient-variance estimator that may be robust against nonconstant variance (see <code><a href="../../car/help/hccm.html">hccm</a></code>).  Setting <code>vcov. = hccm(object, type = "hc2")</code> would use the matrix returned by the <code>hccm</code> function using proposal 2.  For use with a bootstrap, see the examples below. The overall F-test in the <code>S.lm</code> output uses the supplied covariance matrix in a call to the <code><a href="../../car/help/linearHypothesis.html">linearHypothesis</a></code> function.
+</p>
+<p>The supplied <code>print</code> method for <code>S.lm</code> (and for other <code>S</code> methods) has additional arguments to customize the standard <code>summary.lm</code> output.  Standard output is obtained by setting <code>resid.summary=TRUE, adj.r2=TRUE</code>.
+</p>
+<p>Using a heterscedasticy-corrected covariance matrix computed using <code><a href="../../car/help/hccm.html">hccm</a></code> with GLMs other than Gaussian is not justified; see the article by Freedman (2006).
+</p>
+<p>The <code>Summary.glm</code> method for models fit with the log or logit link by default prints a table of exponentiated coefficients and their confidence limits; <code>Summary.multinom</code> and <code>Summary.polr</code> optionally print tables of exponentiated coefficients.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The <code>S.lm</code> and <code>S.glm</code> functions return a list with all the elements shown at <code><a href="../../stats/html/summary.lm.html">summary.lm</a></code> and <code><a href="../../stats/html/summary.glm.html">summary.glm</a></code>. The <code>S.multinom</code> and <code>S.polr</code> functions return a list with all the elements shown at <code><a href="../../nnet/html/multinom.html">summary.multinom</a></code> and <code>summary.polr</code> plus potentially a table of exponentiated coefficients and confidence bounds.
+</p>
+<p>The <code>Confint.lm</code> function returns either the output from <code><a href="../../stats/html/confint.html">confint.lm</a></code> if
+<code>vcov. = vcov</code> or Wald-type confidence intervals using the supplied covariance matrix for any other choice of <code>vcov.</code>.
+</p>
+<p>Finally, <code>Confint</code> applied to any object that does not inherit from <code>"lm"</code>, <code>"multinom"</code>, or <code>"polr"</code> simply calls <code>confint</code>, along with, by default, using <code><a href="../../stats/html/coef.html">coef</a></code> to add a column of estimates to the confidence limits.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sanford Weisberg <a href="mailto:sandy@umn.edu">sandy@umn.edu</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Freedman, David A. (2006). On the so-called Huber sandwich estimator and robust standard errors.
+<em>The American Statistician</em>, <b>60</b>, 299-302.
+</p>
+<p>Long, J. S. and Ervin, L. H. (2000)
+Using heteroscedasity consistent standard errors in the linear regression model.
+<em>The American Statistician</em> <b>54</b>, 217&ndash;224.
+</p>
+<p>White, H. (1980)
+A heteroskedastic consistent covariance matrix estimator and a direct test of heteroskedasticity.
+<em>Econometrica</em> <b>48</b>, 817&ndash;838.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../car/help/brief.html">brief</a></code>, <code><a href="../../base/html/summary.html">summary</a></code>, <code><a href="../../stats/html/confint.html">confint</a></code>, <code><a href="../../stats/html/coef.html">coef</a></code>,
+<code><a href="../../stats/html/summary.lm.html">summary.lm</a></code>, <code><a href="../../stats/html/confint.html">confint</a></code>, <code><a href="../../stats/html/vcov.html">vcov.lm</a></code>, <code><a href="../../car/help/hccm.html">hccm</a></code>,
+<code><a href="../../car/help/Boot.html">Boot</a></code>, <code><a href="../../car/help/linearHypothesis.html">linearHypothesis</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+mod.prestige &lt;- lm(prestige ~ education + income + type, Prestige)
+S(mod.prestige, vcov.=hccm)
+S(mod.prestige, brief=TRUE)
+Confint(mod.prestige, vcov.=hccm)
+
+# A logit model
+mod.mroz &lt;- glm(lfp ~ ., data=Mroz, family=binomial)
+S(mod.mroz)
+
+# use for data frames vs. summary()
+Duncan.1 &lt;-Duncan
+Duncan.1$type &lt;- as.character(Duncan$type)
+summary(Duncan.1)
+S(Duncan.1)
+
+## Not run:  # generates an error, which can then be corrected to run example
+# Using the bootstrap for standard errors
+b1 &lt;- Boot(mod.prestige)
+S(mod.prestige, vcov.= vcov(b1))
+Confint(b1) # run with the boot object to get corrected confidence intervals
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

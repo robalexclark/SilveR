@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
-<meta name="date" content="2021-09-22" />
+<meta name="date" content="2022-10-09" />
 
 <title>Keys and fast binary search based subset</title>
 
@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -135,13 +136,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -346,7 +354,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">Keys and fast binary search based subset</h1>
-<h4 class="date">2021-09-22</h4>
+<h4 class="date">2022-10-09</h4>
 
 
 
@@ -799,7 +807,7 @@ To use slow <em>vector scan</em> key needs to be removed.</p>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a>t1 &lt;-<span class="st"> </span><span class="kw">system.time</span>(ans1 &lt;-<span class="st"> </span>DT[x <span class="op">==</span><span class="st"> &quot;g&quot;</span> <span class="op">&amp;</span><span class="st"> </span>y <span class="op">==</span><span class="st"> </span>877L])</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a>t1</span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a><span class="co">#    user  system elapsed </span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a><span class="co">#   0.756   0.053   0.156</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a><span class="co">#   0.755   0.092   0.166</span></span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a><span class="kw">head</span>(ans1)</span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true"></a><span class="co">#    x   y        val</span></span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true"></a><span class="co"># 1: g 877 0.57059767</span></span>
@@ -818,7 +826,7 @@ To use slow <em>vector scan</em> key needs to be removed.</p>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true"></a>t2 &lt;-<span class="st"> </span><span class="kw">system.time</span>(ans2 &lt;-<span class="st"> </span>DT[.(<span class="st">&quot;g&quot;</span>, 877L)])</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true"></a>t2</span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true"></a><span class="co">#    user  system elapsed </span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a><span class="co">#   0.000   0.000   0.001</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a><span class="co">#   0.001   0.000   0.000</span></span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true"></a><span class="kw">head</span>(ans2)</span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true"></a><span class="co">#    x   y        val</span></span>
 <span id="cb32-11"><a href="#cb32-11" aria-hidden="true"></a><span class="co"># 1: g 877 0.57059767</span></span>
@@ -833,7 +841,7 @@ To use slow <em>vector scan</em> key needs to be removed.</p>
 <span id="cb32-20"><a href="#cb32-20" aria-hidden="true"></a><span class="kw">identical</span>(ans1<span class="op">$</span>val, ans2<span class="op">$</span>val)</span>
 <span id="cb32-21"><a href="#cb32-21" aria-hidden="true"></a><span class="co"># [1] TRUE</span></span></code></pre></div>
 <ul>
-<li>The speed-up is <strong>~156x</strong>!</li>
+<li>The speed-up is <strong>~166x</strong>!</li>
 </ul>
 </div>
 <div id="b-why-does-keying-a-data.table-result-in-blazing-fast-subsets" class="section level3">

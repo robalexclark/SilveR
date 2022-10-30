@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Methods Functions to Support 'boot' Objects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for hist.boot {car}"><tr><td>hist.boot {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Methods Functions to Support <code>boot</code> Objects
+</h2>
+
+<h3>Description</h3>
+
+<p>The <code>Boot</code> function in the <span class="pkg">car</span> package uses the <code><a href="../../boot/html/boot.html">boot</a></code> function from the
+<span class="pkg">boot</span> package to do a straightforward case
+or residual bootstrap for many regression objects.  These are method functions for standard generics to summarize the results of the bootstrap.  Other tools for this purpose are available in the <code>boot</code> package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'boot'
+hist(x, parm, layout = NULL, ask, main = "", freq = FALSE,
+    estPoint = TRUE, point.col = carPalette()[1], point.lty = 2, point.lwd = 2,
+    estDensity = !freq, den.col = carPalette()[2], den.lty = 1, den.lwd = 2,
+    estNormal = !freq, nor.col = carPalette()[3], nor.lty = 2, nor.lwd = 2,
+    ci = c("bca", "none", "perc", "norm"), level = 0.95, 
+    legend = c("top", "none", "separate"), box = TRUE, ...)
+
+## S3 method for class 'boot'
+summary(object, parm, high.moments = FALSE, extremes = FALSE, ...)
+
+## S3 method for class 'boot'
+confint(object, parm, level = 0.95, type = c("bca", "norm",
+    "basic", "perc"), ...)
+
+## S3 method for class 'boot'
+Confint(object, parm, level = 0.95, type = c("bca", "norm",
+    "basic", "perc"), ...)
+
+## S3 method for class 'boot'
+vcov(object, use="complete.obs", ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x, object</code></td>
+<td>
+
+<p>An object created by a call to <code>boot</code> in the <code>boot</code> package, or to <code>Boot</code> in the <span class="pkg">car</span> package of class <code>"boot"</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>parm</code></td>
+<td>
+
+<p>A vector of numbers or coefficient names giving the coefficients for which a
+histogram or confidence interval is desired.  If numbers are used, 1 corresponds to the intercept,
+if any.  The default is all coefficients.
+</p>
+</td></tr>
+<tr valign="top"><td><code>layout</code></td>
+<td>
+
+<p>If set to a value like <code>c(1, 1)</code> or <code>c(4, 3)</code>, the layout
+of the graph will have this many rows and columns.  If not set, the program
+will select an appropriate layout.  If the number of graphs exceed nine, you
+must select the layout yourself, or you will get a maximum of nine per page.
+If <code>layout=NA</code>, the function does not set the layout and the user can
+use the <code>par</code> function to control the layout, for example to have
+plots from two models in the same graphics window.
+</p>
+</td></tr>
+<tr valign="top"><td><code>ask</code></td>
+<td>
+
+<p>If <code>TRUE</code>, ask the user before drawing the next plot; if <code>FALSE</code>, don't
+ask.
+</p>
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+
+<p>Main title for the graphs.  The default is <code>main=""</code> for no title.
+</p>
+</td></tr>
+<tr valign="top"><td><code>freq</code></td>
+<td>
+
+<p>The default for the generic <code>hist</code> function is <code>freq=TRUE</code> to give a frequency histogram.  The default for <code>hist.boot</code> is <code>freq=FALSE</code> to give a density histogram.  A density estimate and/or a fitted normal density can be added to the graph if <code>freq=FALSE</code> but not if <code>freq=TRUE</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>estPoint, point.col, point.lty, point.lwd</code></td>
+<td>
+
+<p>If <code>estPoint=TRUE</code>, the default, a vertical line is drawn on the histgram
+at the value of the point estimate computed from the complete data. The
+remaining three optional arguments set the color, line type and line width
+of the line that is drawn.
+</p>
+</td></tr>
+<tr valign="top"><td><code>estDensity, den.col, den.lty, den.lwd</code></td>
+<td>
+
+<p>If <code>estDensity=TRUE</code> and<code>freq=FALSE</code>, the default, a kernel density estimate is drawn
+on the plot with a call to the <code>density</code> function with no additional
+arguments. The
+remaining three optional arguments set the color, line type and line width
+of the lines that are drawn.
+</p>
+</td></tr>
+<tr valign="top"><td><code>estNormal, nor.col, nor.lty, nor.lwd</code></td>
+<td>
+
+<p>If <code>estNormal=TRUE</code> and<code>freq=FALSE</code>, the default, a normal density
+with mean and sd computed from the data is drawn on the plot. The
+remaining three optional arguments set the color, line type and line width
+of the lines that are drawn.
+</p>
+</td></tr>
+<tr valign="top"><td><code>ci</code></td>
+<td>
+
+<p>A confidence interval based on the bootstrap will be added to the histogram
+using the BCa method if <code>ci="bca"</code> the percentile method if
+<code>ci="perc"</code>, or the normal method if <code>ci="norm"</code>.  No interval is drawn if
+<code>ci="none"</code>.  The default is <code>"bca"</code>.  The interval is indicated
+by a thick horizontal line at <code>y=0</code>.  For some bootstraps the BCa method is unavailable, in which case a warning is issued and <code>ci="perc"</code> is substituted.  If you wish to see all the options at once, see <code><a href="../../boot/html/boot.ci.html">boot.ci</a></code>.  The normal method is computed as the (estimate from the original data) minus the bootstrap bias plus or minus the standard deviation of the bootstrap replicates times the appropriate quantile of the standard normal distribution.
+</p>
+</td></tr>
+<tr valign="top"><td><code>legend</code></td>
+<td>
+
+<p>A legend can be added to the (array of) histograms.  The value &ldquo;top&rdquo;
+puts at the top-left of the plots.  The value &ldquo;separate&rdquo; puts the legend in its own graph following all the histograms.  The value &ldquo;none&rdquo;
+suppresses the legend.
+</p>
+</td></tr>
+<tr valign="top"><td><code>box</code></td>
+<td>
+
+<p>Add a box around each histogram.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Additional arguments passed to <code>hist</code>; for other methods this is included for compatibility with the generic method.  For example, the argument
+<code>border=par()$bg</code> in <code>hist</code> will draw the histogram transparently, leaving only
+the density estimates.  With the <code>vcov</code> function, the additional arguments are passed to <code><a href="../../stats/html/cor.html">cov</a></code>.  See the Value section, below.
+</p>
+</td></tr>
+<tr valign="top"><td><code>high.moments</code></td>
+<td>
+
+<p>Should the skewness and kurtosis be included in the summary?  Default is FALSE.
+</p>
+</td></tr>
+<tr valign="top"><td><code>extremes</code></td>
+<td>
+
+<p>Should the minimum, maximum and range be included in the summary?  Default is FALSE.
+</p>
+</td></tr>
+<tr valign="top"><td><code>level</code></td>
+<td>
+
+<p>Confidence level, a number between 0 and 1.  In <code>confint</code>, <code>level</code> can be
+a vector; for example <code>level=c(.50, .90, .95)</code> will return the following estimated quantiles:  <code>c(.025, .05, .25, .75, .95, .975)</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+
+<p>Selects the  confidence interval type.  The types
+implemented are the <code>"percentile"</code> method, which uses the function
+<code>quantile</code> to return the appropriate quantiles for the confidence
+limit specified, the default <code>bca</code> which uses the bias-corrected and accelerated
+method presented by Efron and Tibshirani (1993, Chapter 14).  For the
+other types, see the documentation for <code><a href="../../boot/html/boot.html">boot</a></code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>use</code></td>
+<td>
+<p>The default <code>use="complete.obs"</code> for <code>vcov</code> computes a bootstrap covariance matrix by deleting bootstraps that returned NAs.  Setting <code>use</code> to anything else will result in a matrix of NAs.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>hist</code> is used for the side-effect of drawing an array of historgams of
+each column of the first argument.   <code>summary</code> returns a matrix of
+summary statistics for each of the columns in the bootstrap object.  The
+<code>confint</code> method returns confidence intervals.  <code>Confint</code> appends the estimates based on the original fitted model to the left of the confidence intervals.
+</p>
+<p>The function <code>vcov</code> returns the sample covariance of the bootstrap sample estimates, by default skipping any bootstrap samples that returned NA.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sanford Weisberg, <a href="mailto:sandy@umn.edu">sandy@umn.edu</a></p>
+
+
+<h3>References</h3>
+
+<p>Efron, B. and Tibsharini, R. (1993)
+<em>An Introduction to the Bootstrap</em>. New
+York: Chapman and Hall.
+</p>
+<p>Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition.  Thousand Oaks:  Sage.
+</p>
+<p>Fox, J. and Weisberg, S. (2018) <em>Bootstrapping Regression Models in R</em>,
+<a href="https://socialsciences.mcmaster.ca/jfox/Books/Companion/appendices/Appendix-Bootstrapping.pdf">https://socialsciences.mcmaster.ca/jfox/Books/Companion/appendices/Appendix-Bootstrapping.pdf</a>.
+</p>
+<p>Weisberg, S. (2013) <em>Applied
+Linear Regression</em>, Fourth Edition, Wiley
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See Also <code><a href="../../car/help/Boot.html">Boot</a></code>, <code><a href="../../graphics/html/hist.html">hist</a></code>,
+<code><a href="../../stats/html/density.html">density</a></code>, Fox and Weisberg (2017), cited above </p>
+
+
+<h3>Examples</h3>
+
+<pre>
+m1 &lt;- lm(Fertility ~ ., swiss)
+betahat.boot &lt;- Boot(m1, R=99) # 99 bootstrap samples--too small to be useful
+summary(betahat.boot)  # default summary
+confint(betahat.boot)
+hist(betahat.boot)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

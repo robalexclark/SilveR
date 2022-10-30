@@ -1,5 +1,5 @@
 Package: data.table
-Version: 1.14.2
+Version: 1.14.4
 Title: Extension of `data.frame`
 Authors@R: c(
   person("Matt","Dowle",           role=c("aut","cre"), email="mattjdowle@gmail.com"),
@@ -75,7 +75,7 @@ BugReports: https://github.com/Rdatatable/data.table/issues
 VignetteBuilder: knitr
 ByteCompile: TRUE
 NeedsCompilation: yes
-Packaged: 2021-09-23 03:10:37 UTC; mdowle
+Packaged: 2022-10-09 07:23:05 UTC; mdowle
 Author: Matt Dowle [aut, cre],
   Arun Srinivasan [aut],
   Jan Gorecki [ctb],
@@ -138,6 +138,7 @@ Author: Matt Dowle [aut, cre],
   Ben Schwen [ctb]
 Maintainer: Matt Dowle <mattjdowle@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-09-27 16:30:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:12:58 UTC; windows
-Archs: i386, x64
+Date/Publication: 2022-10-17 10:32:33 UTC
+Built: R 4.2.1; x86_64-w64-mingw32; 2022-10-17 23:52:23 UTC; windows
+ExperimentalWindowsRuntime: ucrt
+Archs: x64

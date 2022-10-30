@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Estimated marginal means (Least-squares means)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for emmeans {emmeans}"><tr><td>emmeans {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Estimated marginal means (Least-squares means)</h2>
+
+<h3>Description</h3>
+
+<p>Compute estimated marginal means (EMMs) for specified factors
+or factor combinations in a linear model; and optionally, comparisons or
+contrasts among them. EMMs are also known as least-squares means.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+emmeans(object, specs, by = NULL, fac.reduce = function(coefs) apply(coefs,
+  2, mean), contr, options = get_emm_option("emmeans"), weights, offset, ...,
+  tran)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>An object of class <code>emmGrid</code>; or a fitted model object
+that is supported, such as the result of a call to <code>lm</code> or
+<code>lmer</code>. Many fitted-model objects are supported; see
+<a href="../doc/models.html"><code>vignette("models", "emmeans")</code></a> for details.</p>
+</td></tr>
+<tr valign="top"><td><code>specs</code></td>
+<td>
+<p>A <code>character</code> vector specifying the names of the predictors
+over which EMMs are desired. <code>specs</code> may also be a <code>formula</code>
+or a <code>list</code> (optionally named) of valid <code>spec</code>s. Use of formulas
+is described in the Overview section below.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>A character vector specifying the names of predictors to condition on.</p>
+</td></tr>
+<tr valign="top"><td><code>fac.reduce</code></td>
+<td>
+<p>A function that combines the rows of a matrix into a single
+vector. This implements the &ldquo;marginal averaging&rdquo; aspect of EMMs. 
+The default is the mean of the rows. Typically if it is overridden,
+it would be some kind of weighted mean of the rows. If <code>fac.reduce</code> is
+nonlinear, bizarre results are likely, and EMMs will not be
+interpretable. NOTE: If the <code>weights</code> argument is non-missing,
+<code>fac.reduce</code> is ignored.</p>
+</td></tr>
+<tr valign="top"><td><code>contr</code></td>
+<td>
+<p>A character value or <code>list</code> specifying contrasts to be
+added. See <code><a href="../../emmeans/help/contrast.html">contrast</a></code>. NOTE: <code>contr</code> is ignored when
+<code>specs</code> is a formula.</p>
+</td></tr>
+<tr valign="top"><td><code>options</code></td>
+<td>
+<p>If non-<code>NULL</code>, a named <code>list</code> of arguments to pass
+to <code><a href="../../emmeans/help/update.emmGrid.html">update.emmGrid</a></code>, just after the object is constructed.
+(Options may also be included in <code>...</code>; see the &lsquo;options&rsquo;
+section below.)</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>Character value, numeric vector, or numeric matrix specifying
+weights to use in averaging predictions. See &ldquo;Weights&rdquo; section below.
+Also, if <code>object</code> is not already a reference grid, <code>weights</code>
+(if it is character) is passed to <code>ref_grid</code> as <code>wt.nuis</code> in case 
+nuisance factors are specified. We can override this by specifying 
+<code>wt.nuis</code> explicitly.
+This more-or-less makes the weighting of nuisance factors consistent with
+that of primary factors.</p>
+</td></tr>
+<tr valign="top"><td><code>offset</code></td>
+<td>
+<p>Numeric vector or scalar. If specified, this adds an offset to
+the predictions, or overrides any offset in the model or its
+reference grid. If a vector of length differing from the number of rows in 
+the result, it is subsetted or cyclically recycled.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>When <code>object</code> is not already a <code>"emmGrid"</code>
+object, these arguments are passed to <code><a href="../../emmeans/help/ref_grid.html">ref_grid</a></code>. Common
+examples are <code>at</code>, <code>cov.reduce</code>, <code>data</code>, codetype, 
+<code>regrid</code>, <code>df</code>, <code>nesting</code>, and <code>vcov.</code>.
+Model-type-specific options (see
+<a href="../doc/models.html"><code>vignette("models", "emmeans")</code></a>), commonly
+<code>mode</code>, may be used here as well. In addition, if the model formula
+contains references to variables that are not predictors, you must provide
+a <code>params</code> argument with a list of their names.
+</p>
+<p>These arguments may also be used in lieu of <code>options</code>. See the 
+&lsquo;Options&rsquo; section below.</p>
+</td></tr>
+<tr valign="top"><td><code>tran</code></td>
+<td>
+<p>Placeholder to prevent it from being included in <code>...</code>.
+If non-missing, it is added to 'options'. See the &lsquo;Options&rsquo;
+section.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Users should also consult the documentation for <code><a href="../../emmeans/help/ref_grid.html">ref_grid</a></code>, 
+because many important options for EMMs are implemented there, via the 
+<code>...</code> argument.
+</p>
+
+
+<h3>Value</h3>
+
+<p>When <code>specs</code> is a <code>character</code> vector or one-sided formula,
+an object of class <code>"emmGrid"</code>. A number of methods
+are provided for further analysis, including
+<code><a href="../../emmeans/help/summary.emmGrid.html">summary.emmGrid</a></code>, <code><a href="../../emmeans/help/confint.emmGrid.html">confint.emmGrid</a></code>,
+<code><a href="../../emmeans/help/test.emmGrid.html">test.emmGrid</a></code>, <code><a href="../../emmeans/help/contrast.emmGrid.html">contrast.emmGrid</a></code>,
+and <code><a href="../../emmeans/help/pairs.emmGrid.html">pairs.emmGrid</a></code>.
+When <code>specs</code> is a <code>list</code> or a <code>formula</code> having a left-hand
+side, the return value is an <code><a href="../../emmeans/help/emm_list.html">emm_list</a></code> object, which is simply a
+<code>list</code> of <code>emmGrid</code> objects.
+</p>
+
+
+<h3>Overview</h3>
+
+<p>Estimated marginal means or EMMs (sometimes called least-squares means) are
+predictions from a linear model over a <em>reference grid</em>; or marginal
+averages thereof. The <code><a href="../../emmeans/help/ref_grid.html">ref_grid</a></code> function identifies/creates the
+reference grid upon which <code>emmeans</code> is based.
+</p>
+<p>For those who prefer the terms &ldquo;least-squares means&rdquo; or
+&ldquo;predicted marginal means&rdquo;, functions <code>lsmeans</code> and
+<code>pmmeans</code> are provided as wrappers. See <code><a href="../../emmeans/help/wrappers.html">wrappers</a></code>.
+</p>
+<p>If <code>specs</code> is a <code>formula</code>, it should be of the form <code>~ specs</code>,
+<code>~ specs | by</code>, <code>contr ~ specs</code>, or <code>contr ~ specs | by</code>. The
+formula is parsed and the variables therein are used as the arguments
+<code>specs</code>, <code>by</code>, and <code>contr</code> as indicated. The left-hand side is
+optional, but if specified it should be the name of a contrast family (e.g.,
+<code>pairwise</code>). Operators like
+<code>*</code> or <code>:</code> are needed in the formula to delineate names, but
+otherwise are ignored.
+</p>
+<p>In the special case where the mean (or weighted mean) of all the predictions
+is desired, specify <code>specs</code> as <code>~ 1</code> or <code>"1"</code>.
+</p>
+<p>A number of standard contrast families are provided. They can be identified 
+as functions having names ending in <code>.emmc</code> &ndash; see the documentation
+for <code><a href="../../emmeans/help/emmc-functions.html">emmc-functions</a></code> for details &ndash; including how to write your
+own <code>.emmc</code> function for custom contrasts.
+</p>
+
+
+<h3>Weights</h3>
+
+<p>If <code>weights</code> is a vector, its length must equal
+the number of predictions to be averaged to obtain each EMM.
+If a matrix, each row of the matrix is used in turn, wrapping back to the
+first row as needed.  When in doubt about what is being averaged (or how
+many), first call <code>emmeans</code> with <code>weights = "show.levels"</code>.
+</p>
+<p>If <code>weights</code> is a string, it should partially match one of the following:
+</p>
+
+<dl>
+<dt><code>"equal"</code></dt><dd><p>Use an equally weighted average.</p>
+</dd>
+<dt><code>"proportional"</code></dt><dd><p>Weight in proportion to the frequencies (in the
+original data) of the factor combinations that are averaged over.</p>
+</dd>
+<dt><code>"outer"</code></dt><dd><p>Weight in proportion to each individual factor's
+marginal frequencies. Thus, the weights for a combination of factors are the
+outer product of the one-factor margins</p>
+</dd>
+<dt><code>"cells"</code></dt><dd><p>Weight according to the frequencies of the cells being
+averaged.</p>
+</dd>
+<dt><code>"flat"</code></dt><dd><p>Give equal weight to all cells with data, and ignore
+empty cells.</p>
+</dd>
+<dt><code>"show.levels"</code></dt><dd><p>This is a convenience feature for understanding
+what is being averaged over. Instead of a table of EMMs, this causes the
+function to return a table showing the levels that are averaged over, in the
+order that they appear.</p>
+</dd>
+</dl>
+
+<p>Outer weights are like the 'expected' counts in a chi-square test of
+independence, and will yield the same results as those obtained by
+proportional averaging with one factor at a time. All except <code>"cells"</code>
+uses the same set of weights for each mean. In a model where the predicted
+values are the cell means, cell weights will yield the raw averages of the
+data for the factors involved. Using <code>"flat"</code> is similar to
+<code>"cells"</code>, except nonempty cells are weighted equally and empty cells
+are ignored.
+</p>
+
+
+<h3>Offsets</h3>
+
+<p>Unlike in <code>ref_grid</code>, an offset need not be scalar. If not enough values
+are supplied, they are cyclically recycled. For a vector of offsets, it is 
+important to understand that the ordering of results goes with the first 
+name in <code>specs</code> varying fastest. If there are any <code>by</code> factors,
+those vary slower than all the primary ones, but the first <code>by</code> variable
+varies the fastest within that hierarchy. See the examples.
+</p>
+
+
+<h3>Options and <code>...</code></h3>
+
+<p>Arguments that could go in <code>options</code> may instead be included in <code>...</code>,
+typically, arguments such as <code>type</code>, <code>infer</code>, etc. that in essence
+are passed to <code><a href="../../emmeans/help/summary.emmGrid.html">summary.emmGrid</a></code>. Arguments in both places are 
+overridden by the ones in <code>...</code>.
+</p>
+<p>There is a danger that <code>...</code> arguments could partially match those used
+by both <code>ref_grid</code> and <code>update.emmGrid</code>, creating a conflict.
+If these occur, usually they can be resolved by providing complete (or at least 
+longer) argument names; or by isolating non-<code>ref_grid</code> arguments in
+<code>options</code>; or by calling <code>ref_grid</code> separately and passing the
+result as <code>object</code>. See a not-run example below.
+</p>
+<p>Also, when <code>specs</code> is a two-sided formula, or <code>contr</code> is specified,
+there is potential confusion concerning which <code>...</code> arguments
+apply to the means, and which to the contrasts. When such confusion is possible,
+we suggest doing things separately 
+(a call to <code>emmeans</code> with no contrasts, followed by a call to 
+<code><a href="../../emmeans/help/contrast.html">contrast</a></code>). We do treat
+for <code>adjust</code> as a special case: it is applied to the <code>emmeans</code> results 
+<em>only</em> if there are
+no contrasts specified, otherwise it is passed to <code>contrast</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../emmeans/help/ref_grid.html">ref_grid</a></code>, <code><a href="../../emmeans/help/contrast.html">contrast</a></code>, 
+<a href="../doc/models.html">vignette(&quot;models&quot;, &quot;emmeans&quot;)</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+warp.lm &lt;- lm(breaks ~ wool * tension, data = warpbreaks)
+emmeans (warp.lm,  ~ wool | tension)
+# or equivalently emmeans(warp.lm, "wool", by = "tension")
+
+# 'adjust' argument ignored in emmeans, passed to contrast part...
+emmeans (warp.lm, poly ~ tension | wool, adjust = "sidak")
+
+## Not run: 
+# 'adjust' argument NOT ignored ...
+emmeans (warp.lm, ~ tension | wool, adjust = "sidak")
+
+## End(Not run)
+
+## Not run: 
+  ### Offsets: Consider a silly example:
+  emmeans(warp.lm, ~ tension | wool, offset = c(17, 23, 47)) @ grid
+  # note that offsets are recycled so that each level of tension receives
+  # the same offset for each wool.
+  # But using the same offsets with ~ wool | tension will probably not
+  # be what you want because the ordering of combinations is different.
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

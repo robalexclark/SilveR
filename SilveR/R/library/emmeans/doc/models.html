@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.8.0" />
+<meta name="author" content="emmeans package, Version 1.8.2" />
 
 
 <title>Models supported by emmeans</title>
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 
 <h1 class="title toc-ignore">Models supported by emmeans</h1>
-<h4 class="author">emmeans package, Version 1.8.0</h4>
+<h4 class="author">emmeans package, Version 1.8.2</h4>
 
 
 
@@ -715,9 +715,12 @@ statistical methods.)</p>
 model, minus the number of extra random effects estimated; it generally
 over-estimates the degrees of freedom. The <code>asymptotic</code> mode
 simply sets the degrees of freedom to infinity.
-“containment”<code>mode (for</code>lme<code>models) determines the degrees of freedom for the coarsest grouping involved in the contrast or linear function involved, so it tends to under-estimate the degrees of freedom. The default is</code>mode
-= “auto”`, which uses Satterthwaite if there are estimated random
-effects and the non-Satterthwaite option otherwise.</p>
+<code>&quot;containment&quot;</code> mode (for <code>lme</code> models) determines
+the degrees of freedom for the coarsest grouping involved in the
+contrast or linear function involved, so it tends to under-estimate the
+degrees of freedom. The default is <code>mode = &quot;auto&quot;</code>, which
+uses Satterthwaite if there are estimated random effects and the
+non-Satterthwaite option otherwise.</p>
 <p>User reports indicate that models with special terms like
 <code>poly()</code> are not adequately supported by <code>gls</code> in
 that the needed basis is not recoverable from its <code>terms</code>

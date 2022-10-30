@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Graph the profile log-likelihood for Box-Cox transformations...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for boxCox {car}"><tr><td>boxCox {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Graph the profile log-likelihood for Box-Cox transformations in 1D, or in 2D with the bcnPower family.
+</h2>
+
+<h3>Description</h3>
+
+<p>Computes and optionally plots profile log-likelihoods for the parameter of the
+Box-Cox power family, the Yeo-Johnson power family, or for either of the parameters in a bcnPower family.   This is a slight generalization of the
+<code>boxcox</code> function in the <span class="pkg">MASS</span> package that allows for families of 
+transformations other than the Box-Cox power family.  the <code>boxCox2d</code> function
+produces a  contour
+plot of the two-dimensional likelihood profile for the bcnPower family.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+boxCox(object, ...)
+
+## Default S3 method:
+boxCox(object,
+        lambda = seq(-2, 2, 1/10), plotit = TRUE,
+        interp = plotit, eps = 1/50,
+        xlab=NULL, ylab=NULL, main= "Profile Log-likelihood",
+        family="bcPower",
+        param=c("lambda", "gamma"), gamma=NULL,
+        grid=TRUE, ...)
+
+## S3 method for class 'formula'
+boxCox(object, lambda = seq(-2, 2, 1/10), plotit = TRUE, family = "bcPower",
+    param = c("lambda", "gamma"), gamma = NULL, grid = TRUE,
+    ...)
+
+## S3 method for class 'lm'
+boxCox(object, lambda = seq(-2, 2, 1/10), plotit = TRUE, ...)
+
+boxCox2d(x, ksds = 4, levels = c(0.5, 0.95, 0.99, 0.999),
+                 main = "bcnPower Log-likelihood", grid=TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+
+<p>a formula or fitted model object of class <code>lm</code> or <code>aov</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+
+<p>vector of values of <i>lambda</i>, with default (-2, 2) in steps of 0.1, where the profile
+log-likelihood will be evaluated.
+</p>
+</td></tr>
+<tr valign="top"><td><code>plotit</code></td>
+<td>
+
+<p>logical which controls whether the result should be plotted; default <code>TRUE</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>interp</code></td>
+<td>
+
+<p>logical which controls whether spline interpolation is used. Default to
+<code>TRUE</code> if plotting with lambda of length less than 100.
+</p>
+</td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+
+<p>Tolerance for lambda = 0; defaults to 0.02.
+</p>
+</td></tr>
+<tr valign="top"><td><code>xlab</code></td>
+<td>
+
+<p>defaults to <code>"lambda"</code> or <code>"gamma"</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>ylab</code></td>
+<td>
+
+<p>defaults to <code>"log-Likelihood"</code> or for bcnPower family to the appropriate label.
+</p>
+</td></tr>
+<tr valign="top"><td><code>family</code></td>
+<td>
+
+<p>Defaults to <code>"bcPower"</code> for the Box-Cox power family of
+transformations.  If set to <code>"yjPower"</code> the Yeo-Johnson family, which
+permits negative responses, is used.  If set to <code>bcnPower</code> the function gives the profile
+log-likelihood for the parameter selected via <code>param</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+<p>Relevant only to <code>family="bcnPower"</code>, produces a profile log-likelihood for the parameter selected, maximizing over the remaining parameter.</p>
+</td></tr>
+<tr valign="top"><td><code>gamma</code></td>
+<td>
+
+<p>For use when the <code>family="bcnPower", param="gamma"</code>.  If this is a vector of positive values, then the profile log-likelihood for the location (or start) parameter in the  <code>bcnPower</code> family is evaluated at these values of gamma.  If gamma is <code>NULL</code>, then evaulation is done at 100 equally spaced points between <code>min(.01, gmax - 3*sd)</code> and <code>gmax + 3*sd</code>, where <code>gmax</code> is the maximimum likelihood estimate of gamma, and <code>sd</code> is the sd of the response.  See <code><a href="../../car/help/bcnPower.html">bcnPower</a></code> for the definition of <code>gamma</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>grid</code></td>
+<td>
+<p>If TRUE, the default, a light-gray background grid is put on the
+graph.
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>additional arguments passed to <code>plot</code>, or to <code>contour</code> with <code>boxCox2d</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+
+<p>An object created by a call to <code><a href="../../car/help/powerTransform.html">powerTransform</a></code> using <code>family="bcnPower"</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>ksds</code></td>
+<td>
+
+<p>Contour plotting of the log-likelihood surface will cover plus of minus <code>ksds</code> standard deviations on each axis.
+</p>
+</td></tr>
+<tr valign="top"><td><code>levels</code></td>
+<td>
+
+<p>Contours will be drawn at the values of levels.  For example, <code>levels=c(.5, .99)</code> would display two contours, at the 50% level and at the 99% level.
+</p>
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+
+<p>Title for the contour plot or the profile log-likelihood plot
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The <code>boxCox</code> function is an elaboration of the <code><a href="../../MASS/html/boxcox.html">boxcox</a></code> function in the
+<span class="pkg">MASS</span> package.  The first 7 arguments are the same as in <code>boxcox</code>, and if the argument <code>family="bcPower"</code> is used, the result is essentially identical to the function in <span class="pkg">MASS</span>.  Two additional families are the <code>yjPower</code> and <code>bcnPower</code> families that allow a few values of the response to be non-positive.
+The bcnPower family has two parameters: a power <i>lambda</i> and a start or location parameter <i>gamma</i>, and the <code>boxCox</code> function can be used to obtain a profile log-likelihood for either parameter with <i>lambda</i> as the default. Alternatively, the <code>boxCox2d</code> function can be used to get a contour plot of the profile log-likelihood.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Both functions ae designed for their side effects of drawing a graph.  The <code>boxCox</code> function returns a list of the lambda (or possibly, gamma) vector and the computed profile log-likelihood vector,
+invisibly if the result is plotted.  If <code>plotit=TRUE</code> plots log-likelihood vs
+lambda and indicates a 95% confidence interval about the maximum observed value of
+lambda. If <code>interp=TRUE</code>, spline interpolation is used to give a smoother plot.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Sanford Weisberg, &lt;sandy@umn.edu&gt; </p>
+
+
+<h3>References</h3>
+
+<p>Box, G. E. P. and Cox, D. R. (1964) An analysis of transformations.
+<em>Journal
+of the Royal Statisistical Society, Series B</em>. 26 211-46.
+</p>
+<p>Cook, R. D. and Weisberg, S. (1999)  <em>Applied Regression Including
+Computing
+and Graphics</em>.  Wiley.
+</p>
+<p>Fox, J. (2016)
+<em>Applied Regression Analysis and Generalized Linear Models</em>,
+Third Edition. Sage.
+</p>
+<p>Fox, J. and Weisberg, S. (2019)
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+<p>Hawkins, D. and Weisberg, S. (2017)
+Combining the Box-Cox Power and Generalized Log Transformations to Accomodate Nonpositive  Responses In Linear and Mixed-Effects Linear Models <em>South African Statistics Journal</em>, 51, 317-328.
+</p>
+<p>Weisberg, S. (2014) <em>Applied Linear Regression</em>, Fourth Edition, Wiley.
+</p>
+<p>Yeo, I. and Johnson, R. (2000)  A new family of
+power transformations to improve normality or symmetry.
+<em>Biometrika</em>, 87, 954-959.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../MASS/html/boxcox.html">boxcox</a></code>, <code><a href="../../car/help/yjPower.html">yjPower</a></code>, <code><a href="../../car/help/bcPower.html">bcPower</a></code>, <code><a href="../../car/help/bcnPower.html">bcnPower</a></code>,
+<code><a href="../../car/help/powerTransform.html">powerTransform</a></code>, <code><a href="../../graphics/html/contour.html">contour</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+  with(trees, boxCox(Volume ~ log(Height) + log(Girth), data = trees,
+         lambda = seq(-0.25, 0.25, length = 10)))
+
+  data("quine", package = "MASS")
+  with(quine, boxCox(Days ~ Eth*Sex*Age*Lrn, 
+         lambda = seq(-0.05, 0.45, len = 20), family="yjPower"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

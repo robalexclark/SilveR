@@ -3,12 +3,16 @@ ansi-styles	ansi-styles
 ansi_align	ansi_align
 ansi_chartr	ansi_toupper
 ansi_columns	ansi_columns
+ansi_grep	ansi_grep
+ansi_grepl	ansi_grep
 ansi_has_any	ansi_has_any
 ansi_has_hyperlink_support	style_hyperlink
 ansi_hide_cursor	ansi_hide_cursor
 ansi_html	ansi_html
 ansi_html_style	ansi_html_style
+ansi_hyperlink_types	style_hyperlink
 ansi_nchar	ansi_nchar
+ansi_nzchar	ansi_nzchar
 ansi_palettes	ansi_palettes
 ansi_palette_show	ansi_palettes
 ansi_regex	ansi_regex
@@ -65,6 +69,7 @@ cli_debug_doc	cli_debug_doc
 cli_div	cli_div
 cli_dl	cli_dl
 cli_end	cli_end
+cli_fmt	cli_fmt
 cli_format	cli_format
 cli_format.character	cli_format
 cli_format.default	cli_format
@@ -180,6 +185,7 @@ inline-markup	inline-markup
 is_ansi_tty	is_ansi_tty
 is_dynamic_tty	is_dynamic_tty
 is_utf8_output	is_utf8_output
+links	links
 list_border_styles	boxx
 list_spinners	list_spinners
 list_symbols	symbol
@@ -254,5 +260,6 @@ unicode-width-workaround	unicode-width-workaround
 utf8_graphemes	utf8_graphemes
 utf8_nchar	utf8_nchar
 utf8_substr	utf8_substr
+vt_output	vt_output
 _PACKAGE	cli-package
 __cli_update_due	cli_progress_bar

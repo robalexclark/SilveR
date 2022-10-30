@@ -2,6 +2,7 @@
 
 S3method(format,callr_status_error)
 S3method(print,callr_status_error)
+export(add_hook)
 export(default_repos)
 export(poll)
 export(process)

@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Nonparametric Density Estimates</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for densityPlot {car}"><tr><td>densityPlot {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Nonparametric Density Estimates
+</h2>
+
+<h3>Description</h3>
+
+<p><code>densityPlot</code> contructs and graphs nonparametric density estimates, possibly conditioned on a factor, using the standard <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> <code><a href="../../stats/html/density.html">density</a></code> function or by default <code>adaptiveKernel</code>, which computes an adaptive kernel density estimate.
+<code>depan</code> provides the Epanechnikov kernel and <code>dbiwt</code> provides the biweight kernel.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+densityPlot(x, ...)
+
+## Default S3 method:
+densityPlot(x, g, method=c("adaptive", "kernel"),
+    bw=if (method == "adaptive") bw.nrd0 else "SJ", adjust=1,
+    kernel, xlim, ylim,
+    normalize=FALSE, xlab=deparse(substitute(x)), ylab="Density", main="",
+    col=carPalette(), lty=seq_along(col), lwd=2, grid=TRUE,
+    legend=TRUE, show.bw=FALSE, rug=TRUE, ...)
+
+## S3 method for class 'formula'
+densityPlot(formula, data=NULL, subset,
+    na.action=NULL, xlab, ylab, main="", legend=TRUE, ...)
+
+adaptiveKernel(x, kernel=dnorm, bw=bw.nrd0, adjust=1.0, n=500,
+    from, to, cut=3, na.rm=TRUE)
+    
+depan(x)
+dbiwt(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>a numeric variable, the density of which is estimated; for 
+<code>depan</code> and <code>dbiwt</code>, the argument of the kernel function.</p>
+</td></tr>
+<tr valign="top"><td><code>g</code></td>
+<td>
+<p>an optional factor to divide the data.</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>an <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> model formula, of the form <code>~ variable</code> to estimate the unconditional
+density of <code>variable</code>, or <code>variable ~ factor</code> to estimate the density of <code>variable</code>
+within each level of <code>factor</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>an optional data frame containing the data.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>an optional vector defining a subset of the data.</p>
+</td></tr>
+<tr valign="top"><td><code>na.action</code></td>
+<td>
+<p>a function to handle missing values; defaults to the value of the <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> <code>na.action</code> option,
+initially set to <code><a href="../../stats/html/na.fail.html">na.omit</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>either <code>"adaptive"</code> (the default) for an adaptive-kernel estimate or <code>"kernel"</code> for a fixed-bandwidth kernel estimate.</p>
+</td></tr>
+<tr valign="top"><td><code>bw</code></td>
+<td>
+<p>the geometric mean bandwidth for the adaptive-kernel or bandwidth of the kernel density estimate(s). Must be a numerical value
+or a function to compute the bandwidth (default <code><a href="../../stats/html/bandwidth.html">bw.nrd0</a></code>) for the adaptive
+kernel estimate; for the kernel estimate, may either the quoted name of a rule to
+compute the bandwidth, or a numeric value. If plotting by groups, <code>bw</code>
+may be a vector of values, one for each group. See <code><a href="../../stats/html/density.html">density</a></code> and <code><a href="../../stats/html/bandwidth.html">bw.SJ</a></code> for details of the kernel estimator.</p>
+</td></tr>
+<tr valign="top"><td><code>adjust</code></td>
+<td>
+<p>a multiplicative adjustment factor for the bandwidth; the default, <code>1</code>, indicates no adjustment;
+if plotting by groups, <code>adjust</code> may be a vector of adjustment factors, one for each group. The default bandwidth-selection rule tends to give a value that's too large if
+the distribution is asymmetric or has multiple modes; try setting <code>adjust</code> &lt;  1, particularly for the adaptive-kernel estimator.</p>
+</td></tr>
+<tr valign="top"><td><code>kernel</code></td>
+<td>
+<p>for <code>densityPlot</code> this is the name of the kernel function for the kernel estimator (the default is <code>"gaussian"</code>, see <code><a href="../../stats/html/density.html">density</a></code>);
+or a kernel function for the adaptive-kernel estimator (the default is <code>dnorm</code>, producing the Gaussian kernel).
+For <code>adaptivekernel</code> this is a kernel function, defaulting to <code>dnorm</code>, which is the Gaussian kernel (standard-normal density).</p>
+</td></tr>
+<tr valign="top"><td><code>xlim, ylim</code></td>
+<td>
+<p>axis limits; if missing, determined from the range of x-values at which the densities are estimated and the estimated densities.</p>
+</td></tr>
+<tr valign="top"><td><code>normalize</code></td>
+<td>
+<p>if <code>TRUE</code> (the default is <code>FALSE</code>), the estimated densities are rescaled to integrate approximately to 1; particularly useful if the
+density is estimated over a restricted domain, as when <code>from</code> or <code>to</code> are specified.</p>
+</td></tr>
+<tr valign="top"><td><code>xlab</code></td>
+<td>
+<p>label for the horizontal-axis; defaults to the name of the variable <code>x</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>ylab</code></td>
+<td>
+<p>label for the vertical axis; defaults to <code>"Density"</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+<p>plot title; default is empty.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>vector of colors for the density estimate(s); defaults to the color <code><a href="../../car/help/carPalette.html">carPalette</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>lty</code></td>
+<td>
+<p>vector of line types for the density estimate(s); defaults to the successive integers, starting at 1.</p>
+</td></tr>
+<tr valign="top"><td><code>lwd</code></td>
+<td>
+<p>line width for the density estimate(s); defaults to 2.</p>
+</td></tr>
+<tr valign="top"><td><code>grid</code></td>
+<td>
+<p>if <code>TRUE</code> (the default), grid lines are drawn on the plot.</p>
+</td></tr>
+<tr valign="top"><td><code>legend</code></td>
+<td>
+<p>a list of up to two named elements: <code>location</code>, for the legend when densities are plotted for several groups, defaults to
+<code>"upperright"</code> (see <code><a href="../../graphics/html/legend.html">legend</a></code>); and <code>title</code> of the legend, which defaults to the name of the grouping factor. If <code>TRUE</code>,
+the default, the default values are used; if <code>FALSE</code>, the legend is suppressed.</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>number of equally spaced points at which the adaptive-kernel estimator is evaluated; the default is <code>500</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>from, to, cut</code></td>
+<td>
+<p>the range over which the density estimate is computed; the default, if missing, is <code>min(x) - cut*bw, max(x) + cut*bw</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+<p>remove missing values from <code>x</code> in computing the adaptive-kernel estimate? The default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>show.bw</code></td>
+<td>
+<p>if <code>TRUE</code>, show the bandwidth(s) in the horizontal-axis label or (for multiple groups)
+the legend; the default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>rug</code></td>
+<td>
+<p>if <code>TRUE</code> (the default), draw a rug plot (one-dimentional scatterplot) at the bottom of the density estimate.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>arguments to be passed down to graphics functions.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If you use a different kernel function than the default <code>dnorm</code> that has a
+standard deviation different from 1 along with an automatic rule
+like the default function <code>bw.nrd0</code>, you can attach an attribute to the kernel
+function named <code>"scale"</code> that gives its standard deviation. This is true for
+the two supplied kernels, <code>depan</code> and <code>dbiwt</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>densityPlot</code> invisibly returns the <code>"density"</code> object computed (or list of <code>"density"</code> objects) and draws a graph.
+<code>adaptiveKernel</code> returns an object of class <code>"density"</code>
+(see <code><a href="../../stats/html/density.html">density</a>)</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>John Fox <a href="mailto:jfox@mcmaster.ca">jfox@mcmaster.ca</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2019) 
+<em>An R Companion to Applied Regression</em>, Third Edition, Sage.
+</p>
+<p>W. N. Venables and B. D. Ripley (2002) <em>Modern Applied Statistics with S</em>. New York: Springer.
+</p>
+<p>B.W. Silverman (1986) <em>Density Estimation for Statistics and Data Analysis</em>. London: Chapman and Hall.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../stats/html/density.html">density</a></code>, <code><a href="../../stats/html/bandwidth.html">bw.SJ</a></code>, <code><a href="../../stats/html/plot.density.html">plot.density</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+densityPlot(~ income, show.bw=TRUE, method="kernel", data=Prestige)
+densityPlot(~ income, show.bw=TRUE, data=Prestige)
+densityPlot(~ income, from=0, normalize=TRUE, show.bw=TRUE, data=Prestige)
+
+densityPlot(income ~ type, data=Prestige)
+densityPlot(~ income, show.bw=TRUE, method="kernel", data=Prestige)
+densityPlot(~ income, show.bw=TRUE, data=Prestige)
+densityPlot(~ income, from=0, normalize=TRUE, show.bw=TRUE, data=Prestige)
+
+densityPlot(income ~ type, kernel=depan, data=Prestige)
+densityPlot(income ~ type, kernel=depan, legend=list(location="top"), data=Prestige)
+
+plot(adaptiveKernel(UN$infantMortality, from=0, adjust=0.75), col="magenta")
+lines(density(na.omit(UN$infantMortality), from=0, adjust=0.75), col="blue")
+rug(UN$infantMortality, col="cyan")
+legend("topright", col=c("magenta", "blue"), lty=1,
+       legend=c("adaptive kernel", "kernel"), inset=0.02)
+
+
+plot(adaptiveKernel(UN$infantMortality, from=0, adjust=0.75), col="magenta")
+lines(density(na.omit(UN$infantMortality), from=0, adjust=0.75), col="blue")
+rug(UN$infantMortality, col="cyan")
+legend("topright", col=c("magenta", "blue"), lty=1,
+       legend=c("adaptive kernel", "kernel"), inset=0.02)
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

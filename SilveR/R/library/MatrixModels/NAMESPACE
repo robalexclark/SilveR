@@ -50,6 +50,7 @@ importClassesFrom("Matrix",
 		  dgCMatrix, dgeMatrix, dMatrix,
 		  dsparseMatrix, sparseMatrix, CsparseMatrix,
 		  ddenseMatrix, denseMatrix,
+                  unpackedMatrix,
 		  generalMatrix, Matrix)
 
 importFrom("Matrix",

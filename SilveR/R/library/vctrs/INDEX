@@ -23,6 +23,7 @@ internal-faq-ptype2-identity
                         unspecified vectors
 list_drop_empty         Drop empty elements from a list
 list_of                 'list_of' S3 class for homogenous lists
+missing                 Missing values
 name_spec               Name specifications
 new_data_frame          Assemble attributes for data frame construction
 reference-faq-compatibility
@@ -40,13 +41,13 @@ vec_compare             Compare two vectors
 vec_count               Count unique values in a vector
 vec_detect_complete     Complete
 vec_duplicate           Find duplicated values
-vec_equal               Test if two vectors are equal
+vec_equal               Equality
 vec_fill_missing        Fill in missing values with the previous or
                         following value
 vec_identify_runs       Runs
 vec_init                Initialize a vector
 vec_interleave          Interleave many vectors into one vector
-vec_is_list             Is the object a list?
+vec_is_list             List checks
 vec_locate_matches      Locate observations matching specified
                         conditions
 vec_match               Find matching observations across vectors
@@ -54,6 +55,7 @@ vec_names               Get or set the names of a vector
 vec_order               Order and sort vectors
 vec_ptype               Find the prototype of a set of vectors
 vec_ptype2.logical      Find the common type for a pair of vectors
+vec_rank                Compute ranks
 vec_recycle             Vector recycling
 vec_seq_along           Useful sequences
 vec_size                Number of observations

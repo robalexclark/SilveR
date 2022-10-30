@@ -1,7 +1,27 @@
 
+# rstudioapi 0.14 (UNRELEASED)
+
+* `documentPath()` now marks the encoding of file paths as UTF-8. (#257)
+
+* `getSourceEditorContext()` gains the `id` argument, to be used to request
+  the editor context for a document with an already-known ID. (#251)
+  
+* Added `documentOpen()`, for opening a document in RStudio and optionally
+  navigating the cursor to a particular point in the file. The method is
+  synchronous and returns the document ID upon completion.
+
+* Fixed an issue where `rstudioapi::askForSecret()` would erroneously fall back
+  to using `rstudioapi::askForPassword()` during Knit.
+
+* Added `registerCommandCallback`, `registerCommandStreamCallback`, and
+  `unregisterCommandCallback`, used to execute a callback after an IDE command
+  is executed.
+  
+
 # rstudioapi 0.13
 
 * Fixed an issue where `rstudioapi::insertText()` would fail. (#208)
+
 
 # rstudioapi 0.12
 
@@ -11,7 +31,9 @@
 * Allow `navigateToFile` to accept an empty file. This file will default to the file
   currently in view in the active column.
 
-* Added `registerChunkExecCallback` and `unregisterChunkExecCallback`, used to execute a callback after a chunk is ran.
+* Added `registerChunkExecCallback` and `unregisterChunkExecCallback`, used to
+  execute a callback after a chunk is ran.
+
 
 # rstudioapi 0.11
 
@@ -36,15 +58,18 @@
 * Added `userIdentity` and `systemUsername`, used to retrieve information about
   the current user.
 
+
 # rstudioapi 0.10
 
 * Added the parameters `echo` and `focus` to `sendToConsole()`.
+
 
 # rstudioapi 0.9
 
 * Added functions for displaying jobs in RStudio's Jobs pane: `jobAdd()`, `jobRemove()`, etc.
 
 * Added `translateLocalUrl()`, for translating localhost URLs to externally addressable ones on RStudio Server.
+
 
 # rstudioapi 0.8
 
@@ -77,11 +102,13 @@
   `terminalRunning()`, `terminalKill()`, `terminalSend()`, `terminalExecute()`,
   and `terminalExitCode()`.
 
+
 # rstudioapi 0.6
 
 * Add sendToConsole function
 
 * Add APIs for setting cursor position in document
+
 
 # rstudioapi 0.5
 
@@ -89,13 +116,16 @@
 
 * Add getActiveProject function
 
+
 # rstudioapi 0.4
 
 * Add API methods for interacting with a document open in RStudio: 'insertText()', 'modifyRange()' and 'getActiveDocumentContext()'.
 
+
 # rstudioapi 0.3
 
 * Add stub and documentation for sourceMarker function
+
 
 # rstudioapi 0.2
 
@@ -103,7 +133,7 @@
 
 * Stubs and documentation for versionInfo, previewRd, and viewer functions
 
+
 # rstudioapi 0.1
 
-Initial release to CRAN
-
+* Initial release to CRAN

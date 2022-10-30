@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Quick and dirty reference grid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for qdrg {emmeans}"><tr><td>qdrg {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Quick and dirty reference grid</h2>
+
+<h3>Description</h3>
+
+<p>This function may make it possible to compute a reference grid for a model 
+object that is otherwise not supported.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+qdrg(formula, data, coef, vcov, df, mcmc, object, subset, weights, contrasts,
+  link, qr, ordinal.dim, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>Formula for the fixed effects</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>Dataset containing the variables in the model</p>
+</td></tr>
+<tr valign="top"><td><code>coef</code></td>
+<td>
+<p>Fixed-effect regression coefficients (must conform to formula)</p>
+</td></tr>
+<tr valign="top"><td><code>vcov</code></td>
+<td>
+<p>Variance-covariance matrix of the fixed effects</p>
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p>Error degrees of freedom</p>
+</td></tr>
+<tr valign="top"><td><code>mcmc</code></td>
+<td>
+<p>Posterior sample of fixed-effect coefficients</p>
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>Optional model object. <em>This rarely works!</em>; 
+but if provided, we try to set 
+other arguments based on an expectation that 'object' has a similar
+structure to 'lm' objects. See Details.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>Subset of <code>data</code> used in fitting the model</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>Weights used in fitting the model</p>
+</td></tr>
+<tr valign="top"><td><code>contrasts</code></td>
+<td>
+<p>List of contrasts specified in fitting the model</p>
+</td></tr>
+<tr valign="top"><td><code>link</code></td>
+<td>
+<p>Link function (character or list) used, if a generalized linear model.
+(Note: response transformations are auto-detected from <code>formula</code>)</p>
+</td></tr>
+<tr valign="top"><td><code>qr</code></td>
+<td>
+<p>QR decomposition of the model matrix; used only if there are <code>NA</code>s
+in <code>coef</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>ordinal.dim</code></td>
+<td>
+<p>Integer number of levels in an ordinal response. If not
+missing, the intercept terms are modified appropriate to predicting the latent
+response (see <code>vignette("models")</code>, Section O, but note that the other 
+modes, e.g., <code>mode = "prob"</code> are not provided). 
+In this case, we expect
+the first <code>ordinal.dim - 1</code> elements of <code>coef</code> to be the
+estimated threshold parameters, followed by the coefficients for the
+linear predictor.)</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Optional arguments passed to <code><a href="../../emmeans/help/ref_grid.html">ref_grid</a></code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Usually, you need to provide 
+<code>formula</code>, <code>data</code>, <code>coef</code>, and <code>vcov</code>, and perhaps other
+parameters. It is usually fairly straightforward to figure out how to get
+these from the model <code>object</code>; see the documentation for the model class that
+was fitted. Sometimes one or more of these quantities contains extra parameters,
+and if so, you may need to subset them to make everything conformable. For a given <code>formula</code> and <code>data</code>,
+you can find out what is needed via <code>colnames(model.matrix(formula, data))</code>.
+(However, for an ordinal model, we expect the first <code>ordinal.dim - 1</code> coefficients
+to replace <code>(Intercept)</code>. And for a multivariate model, we expect <code>coef</code> 
+to be a matrix with these row names, and <code>vcov</code> to have as many rows and columns as
+the total number of elements of <code>coef</code>.)
+</p>
+<p>If your model object follows fairly closely the conventions of an <code><a href="../../stats/help/lm.html">lm</a></code>
+object, you may be able to get by providing the model as <code>object</code>, plus and (probably) <code>data</code>,
+and perhaps some other parameters to override the defaults.
+When <code>object</code> is specified, it is used as detailed below to try to obtain the 
+other arguments. The user should ensure that the defaults
+shown below do indeed work. 
+</p>
+<p>The default values for the arguments are as follows:
+</p>
+
+<ul>
+<li><p><code>formula</code>: Required unless obtainable via <code>formula(object)</code>
+</p>
+</li>
+<li><p><code>data</code>: Required if variables are not in <code>parent.frame()</code> or 
+obtainable via <code>object$data</code>
+</p>
+</li>
+<li><p><code>coef</code>: <code>coef(object)</code>
+</p>
+</li>
+<li><p><code>vcov</code>: <code>vcov(object)</code>
+</p>
+</li>
+<li><p><code>df</code>: Set to <code>Inf</code> if not available in <code>object$df.residual</code>
+</p>
+</li>
+<li><p><code>mcmc</code>: <code>object$sample</code>
+</p>
+</li>
+<li><p><code>subset</code>: <code>NULL</code> (so that all observations in <code>data</code> are used)
+</p>
+</li>
+<li><p><code>contrasts</code>: <code>object$contrasts</code>
+</p>
+</li></ul>
+
+<p>The functions <code><a href="../../emmeans/help/qdrg.html">qdrg</a></code> and <code>emmobj</code> are close cousins, in that
+they both produce <code>emmGrid</code> objects. When starting with summary
+statistics for an existing grid, <code>emmobj</code> is more useful, while
+<code>qdrg</code> is more useful when starting from a fitted model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>emmGrid</code> object constructed from the arguments
+</p>
+
+
+<h3>Rank deficiencies</h3>
+
+<p>Different model-fitting packages take different approaches when the model
+matrix is singular, but <code>qdrg</code> tries to reconcile them by comparing the
+linear functions created by <code>formula</code> to <code>coefs</code> and <code>vcov</code>.
+We may then use the <span class="pkg">estimability</span> package to determine what quantities
+are estimable. For reconciling to work properly, <code>coef</code> should be named
+and <code>vcov</code> should have dimnames. To disable this name-matching
+action, remove the names from <code>coef</code>, e.g., by calling <code>unname()</code>.
+No reconciliation is attempted in multivariate-response cases. For more
+details on estimability, see the documentation in the <span class="pkg">estimability</span>
+package.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../emmeans/help/emmobj.html">emmobj</a></code> for an alternative way to construct an <code>emmGrid</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# In these examples, use emm_example(..., list = TRUE) # to see just the code
+
+if (require(biglm, quietly = TRUE)) 
+    emm_example("qdrg-biglm")
+    
+if(require(coda, quietly = TRUE) &amp;&amp; require(lme4, quietly = TRUE)) 
+    emm_example("qdrg-coda")
+    
+if(require(ordinal, quietly = TRUE)) 
+    emm_example("qdrg-ordinal")
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

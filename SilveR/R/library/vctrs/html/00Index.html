@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: Vector Helpers</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;vctrs&rsquo; version 0.4.1</h2>
+</div><h2>Documentation for package &lsquo;vctrs&rsquo; version 0.5.0</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -21,7 +21,7 @@
 <h2>Help Pages</h2>
 
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="op-empty-default.html">%0%</a></td>
 <td>Default value for empty vectors</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">as_list_of</a></td>
@@ -52,16 +52,24 @@
 <td>Internal FAQ - 'vec_ptype2()', 'NULL', and unspecified vectors</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">is_list_of</a></td>
 <td>'list_of' S3 class for homogenous lists</td></tr>
+<tr><td style="width: 25%;"><a href="vec_is_list.html">list_all_size</a></td>
+<td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="vec_is_list.html">list_all_vectors</a></td>
-<td>Is the object a list?</td></tr>
+<td>List checks</td></tr>
+<tr><td style="width: 25%;"><a href="vec_is_list.html">list_check_all_size</a></td>
+<td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="vec_is_list.html">list_check_all_vectors</a></td>
-<td>Is the object a list?</td></tr>
+<td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="list_drop_empty.html">list_drop_empty</a></td>
 <td>Drop empty elements from a list</td></tr>
 <tr><td style="width: 25%;"><a href="list_of.html">list_of</a></td>
 <td>'list_of' S3 class for homogenous lists</td></tr>
 <tr><td style="width: 25%;"><a href="vec_size.html">list_sizes</a></td>
 <td>Number of observations</td></tr>
+<tr><td style="width: 25%;"><a href="vec_chop.html">list_unchop</a></td>
+<td>Chopping</td></tr>
+<tr><td style="width: 25%;"><a href="missing.html">missing</a></td>
+<td>Missing values</td></tr>
 <tr><td style="width: 25%;"><a href="name_spec.html">name_spec</a></td>
 <td>Name specifications</td></tr>
 <tr><td style="width: 25%;"><a href="new_data_frame.html">new_data_frame</a></td>
@@ -74,10 +82,10 @@
 <td>Coercion between two data frames</td></tr>
 <tr><td style="width: 25%;"><a href="df_ptype2.html">tib_ptype2</a></td>
 <td>Coercion between two data frames</td></tr>
-<tr><td style="width: 25%;"><a href="list_of.html">validate_list_of</a></td>
-<td>'list_of' S3 class for homogenous lists</td></tr>
 <tr><td style="width: 25%;"><a href="vec-rep.html">vec-rep</a></td>
 <td>Repeat a vector</td></tr>
+<tr><td style="width: 25%;"><a href="missing.html">vec_any_missing</a></td>
+<td>Missing values</td></tr>
 <tr><td style="width: 25%;"><a href="vec_assert.html">vec_assert</a></td>
 <td>Assert an argument has known prototype and/or size</td></tr>
 <tr><td style="width: 25%;"><a href="vec_as_names.html">vec_as_names</a></td>
@@ -109,7 +117,7 @@
 <tr><td style="width: 25%;"><a href="vec_bind.html">vec_cbind</a></td>
 <td>Combine many data frames into one data frame</td></tr>
 <tr><td style="width: 25%;"><a href="vec_is_list.html">vec_check_list</a></td>
-<td>Is the object a list?</td></tr>
+<td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="vec_chop.html">vec_chop</a></td>
 <td>Chopping</td></tr>
 <tr><td style="width: 25%;"><a href="vec_compare.html">vec_compare</a></td>
@@ -118,6 +126,8 @@
 <td>Count unique values in a vector</td></tr>
 <tr><td style="width: 25%;"><a href="vec_detect_complete.html">vec_detect_complete</a></td>
 <td>Complete</td></tr>
+<tr><td style="width: 25%;"><a href="missing.html">vec_detect_missing</a></td>
+<td>Missing values</td></tr>
 <tr><td style="width: 25%;"><a href="vec_duplicate.html">vec_duplicate</a></td>
 <td>Find duplicated values</td></tr>
 <tr><td style="width: 25%;"><a href="vec_duplicate.html">vec_duplicate_any</a></td>
@@ -127,9 +137,7 @@
 <tr><td style="width: 25%;"><a href="vec_duplicate.html">vec_duplicate_id</a></td>
 <td>Find duplicated values</td></tr>
 <tr><td style="width: 25%;"><a href="vec_equal.html">vec_equal</a></td>
-<td>Test if two vectors are equal</td></tr>
-<tr><td style="width: 25%;"><a href="vec_equal.html">vec_equal_na</a></td>
-<td>Test if two vectors are equal</td></tr>
+<td>Equality</td></tr>
 <tr><td style="width: 25%;"><a href="vec_fill_missing.html">vec_fill_missing</a></td>
 <td>Fill in missing values with the previous or following value</td></tr>
 <tr><td style="width: 25%;"><a href="vec_identify_runs.html">vec_identify_runs</a></td>
@@ -147,7 +155,7 @@
 <tr><td style="width: 25%;"><a href="vec_size.html">vec_is_empty</a></td>
 <td>Number of observations</td></tr>
 <tr><td style="width: 25%;"><a href="vec_is_list.html">vec_is_list</a></td>
-<td>Is the object a list?</td></tr>
+<td>List checks</td></tr>
 <tr><td style="width: 25%;"><a href="vec_locate_matches.html">vec_locate_matches</a></td>
 <td>Locate observations matching specified conditions</td></tr>
 <tr><td style="width: 25%;"><a href="vec_match.html">vec_match</a></td>
@@ -182,6 +190,8 @@
 <td>Find the prototype of a set of vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_ptype.html">vec_ptype_show</a></td>
 <td>Find the prototype of a set of vectors</td></tr>
+<tr><td style="width: 25%;"><a href="vec_rank.html">vec_rank</a></td>
+<td>Compute ranks</td></tr>
 <tr><td style="width: 25%;"><a href="vec_bind.html">vec_rbind</a></td>
 <td>Combine many data frames into one data frame</td></tr>
 <tr><td style="width: 25%;"><a href="vec_recycle.html">vec_recycle</a></td>
@@ -204,8 +214,6 @@
 <td>Order and sort vectors</td></tr>
 <tr><td style="width: 25%;"><a href="vec_split.html">vec_split</a></td>
 <td>Split a vector into groups</td></tr>
-<tr><td style="width: 25%;"><a href="vec_chop.html">vec_unchop</a></td>
-<td>Chopping</td></tr>
 <tr><td style="width: 25%;"><a href="vec_unique.html">vec_unique</a></td>
 <td>Find and count unique values</td></tr>
 <tr><td style="width: 25%;"><a href="vec_unique.html">vec_unique_count</a></td>

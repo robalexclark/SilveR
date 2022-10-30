@@ -29,9 +29,9 @@ rename_loc <- function(data, ...) {
 }
 
 ## -----------------------------------------------------------------------------
-mtcars %>% select_loc(mpg:hp, -cyl, vs)
+mtcars %>% select_loc(mpg:hp, !cyl, vs)
 
-mtcars %>% select_loc(1:4, -2, 8)
+mtcars %>% select_loc(1:4, !2, 8)
 
 ## -----------------------------------------------------------------------------
 mtcars %>% select_loc(2:4)
@@ -60,35 +60,6 @@ mtcars %>% select_loc(c(mpg, disp:hp))
 iris %>% select_loc(starts_with("Sepal"), ends_with("Width"), Species)
 
 iris %>% select_loc(starts_with("Sepal") | ends_with("Width") | Species)
-
-iris %>% select_loc(union(union(starts_with("Sepal"), ends_with("Width")), 5L))
-
-## -----------------------------------------------------------------------------
-iris %>% select_loc(starts_with("Sepal"), -ends_with("Width"), -Sepal.Length)
-
-iris %>% select_loc(setdiff(setdiff(starts_with("Sepal"), ends_with("Width")), 1L))
-
-## -----------------------------------------------------------------------------
-iris %>% select_loc(-starts_with("Sepal"))
-
-iris %>% select_loc(everything(), -starts_with("Sepal"))
-
-iris %>% select_loc(setdiff(everything(), starts_with("Sepal")))
-
-## -----------------------------------------------------------------------------
-iris %>% select_loc(-starts_with("Sepal"))
-
-iris %>% select_loc(!starts_with("Sepal"))
-
-## -----------------------------------------------------------------------------
-iris %>% select_loc(c(starts_with("Sepal"), -Sepal.Length))
-
-iris %>% select_loc(c(starts_with("Sepal"), c(-Sepal.Length)))
-
-## -----------------------------------------------------------------------------
-iris %>% select_loc(starts_with("Sepal") & !Sepal.Length)
-
-iris %>% select_loc(starts_with("Sepal") | !Sepal.Length)
 
 ## -----------------------------------------------------------------------------
 mtcars %>% select_loc(foo = c(bar = mpg, baz = cyl))

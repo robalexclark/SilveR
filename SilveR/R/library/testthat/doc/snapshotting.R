@@ -94,3 +94,9 @@ test_that("you can't add weird thngs", {
   })
 })
 
+## -----------------------------------------------------------------------------
+test_that("can snapshot a simple list", {
+  x <- list(a = list(1, 5, 10), b = list("elephant", "banana"))
+  expect_snapshot_value(x)
+})
+

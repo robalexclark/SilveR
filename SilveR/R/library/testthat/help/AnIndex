@@ -64,7 +64,11 @@ expect_match	expect_match
 expect_message	expect_error
 expect_more_than	expect_less_than
 expect_named	expect_named
+expect_no_condition	expect_no_error
+expect_no_error	expect_no_error
 expect_no_match	expect_match
+expect_no_message	expect_no_error
+expect_no_warning	expect_no_error
 expect_null	expect_null
 expect_output	expect_output
 expect_output_file	expect_output_file
@@ -74,11 +78,11 @@ expect_s4_class	inheritance-expectations
 expect_setequal	expect_setequal
 expect_silent	expect_silent
 expect_snapshot	expect_snapshot
-expect_snapshot_error	expect_snapshot
+expect_snapshot_error	expect_snapshot_output
 expect_snapshot_file	expect_snapshot_file
-expect_snapshot_output	expect_snapshot
-expect_snapshot_value	expect_snapshot
-expect_snapshot_warning	expect_snapshot
+expect_snapshot_output	expect_snapshot_output
+expect_snapshot_value	expect_snapshot_value
+expect_snapshot_warning	expect_snapshot_output
 expect_success	expect_success
 expect_that	expect_that
 expect_true	logical-expectations
@@ -135,6 +139,7 @@ RStudioReporter	RStudioReporter
 run_cpp_tests	run_cpp_tests
 safe_digest	safe_digest
 setup	teardown
+set_max_fails	set_max_fails
 set_reporter	reporter-accessors
 shows_message	oldskool
 show_failure	expect_success

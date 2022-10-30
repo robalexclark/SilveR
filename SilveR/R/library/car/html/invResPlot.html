@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Inverse Response Plots to Transform the Response</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for invResPlot {car}"><tr><td>invResPlot {car}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Inverse Response Plots to Transform the Response</h2>
+
+<h3>Description</h3>
+
+<p>For a <code>lm</code> model, draws an inverse.response plot with the response <i>Y</i> on the
+vertical axis and the fitted values <i>Yhat</i>
+on the horizontal axis.  Uses <code>nls</code> to
+estimate  <i>lambda</i> in the function 
+<i>Yhat = b0 + b1(Y)^(lambda)</i>.
+Adds the fitted curve to the plot. 
+<code>invResPlot</code> is an alias for <code>inverseResponsePlot</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+inverseResponsePlot(model, lambda=c(-1,0,1), robust=FALSE, xlab=NULL, ...)
+
+## S3 method for class 'lm'
+inverseResponsePlot(model, lambda=c(-1, 0, 1), 
+    robust=FALSE, xlab=NULL, id=FALSE, ...)
+
+invResPlot(model, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>A <code>"lm"</code> regression object.</p>
+</td></tr>
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+<p>A vector of values for lambda.  A plot will be produced 
+with curves corresponding to these lambdas and to the nonlinear least squares 
+estimate of lambda.</p>
+</td></tr>
+<tr valign="top"><td><code>robust</code></td>
+<td>
+<p>If <code>TRUE</code>, then estimation uses Huber M-estimates with the median
+absolute deviation to estimate scale and k= 1.345.  The default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>xlab</code></td>
+<td>
+<p>The horizontal axis label.  If <code>NULL</code>, it is constructed by the function.</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>controls point identification; if <code>FALSE</code> (the default), no points are identified;
+can be a list of named arguments to the <code><a href="../../car/help/showLabels.html">showLabels</a></code> function;
+<code>TRUE</code> is equivalent to <code>list(method=list(method="x", n=2, cex=1, col=carPalette()[1], location="lr")</code>,
+which identifies the 2 points with the most extreme horizontal (X) values.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Other arguments passed to <code>invTranPlot</code> and then to <code>plot</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>As a side effect, a plot is produced with the response on the horizontal
+axis and fitted values on the vertical axis.  
+Several lines are added to be plot as
+the ols estimates of the regression of <i>Yhat</i> on
+<i>Y^(lambda)</i>,
+interpreting <i>lambda</i> = 0 to be natural logarithms.
+</p>
+<p>Numeric output is a list with elements
+</p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+<p>Estimate of transformation parameter for the response</p>
+</td></tr>
+<tr valign="top"><td><code>RSS</code></td>
+<td>
+<p>The residual sum of squares at the minimum if robust=FALSE.
+If robust = TRUE, the value of Huber objective function is returned.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Sanford Weisberg, <code>sandy@umn.edu</code></p>
+
+
+<h3>References</h3>
+
+<p>Fox, J. and Weisberg, S. (2011) 
+<em>An R Companion to Applied Regression</em>, Second Edition, Sage.
+</p>
+<p>Prendergast, L. A., &amp; Sheather, S. J. (2013)
+On sensitivity of inverse response plot estimation and the benefits of a robust estimation approach. <em>Scandinavian Journal of Statistics</em>, 40(2), 219-237.
+</p>
+<p>Weisberg, S. (2014) <em>Applied Linear Regression</em>, Fourth Edition, Wiley, Chapter 7.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../car/help/invTranPlot.html">invTranPlot</a></code>, <code><a href="../../car/help/powerTransform.html">powerTransform</a></code>, 
+<code><a href="../../car/help/showLabels.html">showLabels</a></code></p>
+
+
+<h3>Examples</h3>
+
+<pre>
+m2 &lt;- lm(rate ~ log(len) + log(adt) + slim + shld + log(sigs1), Highway1)
+invResPlot(m2)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>car</em> version 3.1-1 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

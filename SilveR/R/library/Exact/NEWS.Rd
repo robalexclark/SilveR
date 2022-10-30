@@ -1,6 +1,15 @@
 \name{NEWS}
 \title{NEWS file for the Exact package}
 
+\section{Changes in Version 3.2 (2022-09-24)}{
+  \itemize{
+
+    \item{Added more stored tables for CSM test comparing two independent proportions.  Tables with (n1+1)x(n2+1) <= 15,000 and group ratio between 1:1 and 2:1 were added to the existing stored tables.  Stored CSM ordering matrix is around 85MB, so is loaded from the ExactData R package from GitHub using the drat R package}
+
+    \item{Improved computation time for multinomial tests}
+  }
+}
+
 \section{Changes in Version 3.1 (2021-11-26)}{
   \itemize{
 

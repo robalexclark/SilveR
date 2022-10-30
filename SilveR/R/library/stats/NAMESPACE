@@ -5,7 +5,8 @@ import(graphics)
 importFrom(grDevices, as.graphicsAnnot, dev.cur, dev.flush, dev.hold,
            dev.interactive, dev.new, dev.set, devAskNewPage,
            extendrange, n2mfrow, palette, xy.coords)
-importFrom(utils, count.fields, flush.console, str, tail)
+importFrom('utils',
+           count.fields, flush.console, modifyList, str, tail)
 
 export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,
        acf, acf2AR, add.scope,
@@ -75,7 +76,7 @@ export(.checkMFClasses, .getXlevels, .MFclass, .nknots.smspl,
        tsp, "tsp<-", tsSmooth, TukeyHSD, uniroot, update, var,
        variable.names, varimax, .vcov.aliased, vcov, weighted.mean,
        weighted.residuals, weights, window, "window<-", write.ftable,
-       xtabs, pbirthday, qbirthday)
+       xtabs, pbirthday, qbirthday, psmirnov, qsmirnov, rsmirnov)
 
 ## from ctest
 export(ansari.test, bartlett.test, binom.test, chisq.test, cor.test,
@@ -259,6 +260,8 @@ S3method(kernapply, vector)
 S3method(knots, stepfun)
 S3method(kruskal.test, default)
 S3method(kruskal.test, formula)
+S3method(ks.test, default)
+S3method(ks.test, formula)
 S3method(labels, dendrogram)
 S3method(labels, dist)
 S3method(labels, lm)

@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Estimated marginal means of linear trends</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for emtrends {emmeans}"><tr><td>emtrends {emmeans}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Estimated marginal means of linear trends</h2>
+
+<h3>Description</h3>
+
+<p>The <code>emtrends</code> function is useful when a fitted model involves a
+numerical predictor <i>x</i>  interacting with another predictor <code>a</code>
+(typically a factor). Such models specify that <i>x</i> has a different trend
+depending on <i>a</i>; thus, it may be of interest to estimate and compare
+those trends. Analogous to the <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code> setting, we construct a
+reference grid of these predicted trends, and then possibly average them over
+some of the predictors in the grid.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+emtrends(object, specs, var, delta.var = 0.001 * rng, max.degree = 1, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>A supported model object (<em>not</em> a reference grid)</p>
+</td></tr>
+<tr valign="top"><td><code>specs</code></td>
+<td>
+<p>Specifications for what marginal trends are desired &ndash; as in
+<code><a href="../../emmeans/help/emmeans.html">emmeans</a></code>. If <code>specs</code> is missing or <code>NULL</code>,
+<code>emmeans</code> is not run and the reference grid for specified trends
+is returned.</p>
+</td></tr>
+<tr valign="top"><td><code>var</code></td>
+<td>
+<p>Character value giving the name of a variable with respect to 
+which a difference quotient of the linear predictors is computed. In order
+for this to be useful, <code>var</code> should be a numeric predictor that
+interacts with at least one factor in <code>specs</code>. Then instead of
+computing EMMs, we compute and compare the slopes of the <code>var</code> trend
+over levels of the specified other predictor(s). As in EMMs, marginal
+averages are computed for the predictors in <code>specs</code> and <code>by</code>.
+See also the &ldquo;Generalizations&rdquo; section below.</p>
+</td></tr>
+<tr valign="top"><td><code>delta.var</code></td>
+<td>
+<p>The value of <em>h</em> to use in forming the difference
+quotient <i>(f(x+h) - f(x))/h</i>. Changing it (especially changing its
+sign) may be necessary to avoid numerical problems such as logs of negative
+numbers. The default value is 1/1000 of the range of <code>var</code> over the
+dataset.</p>
+</td></tr>
+<tr valign="top"><td><code>max.degree</code></td>
+<td>
+<p>Integer value. The maximum degree of trends to compute (this
+is capped at 5). If greater than 1, an additional factor <code>degree</code> is
+added to the grid, with corresponding numerical derivatives of orders
+<code>1, 2, ..., max.degree</code> as the estimates.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code><a href="../../emmeans/help/ref_grid.html">ref_grid</a></code> or 
+<code><a href="../../emmeans/help/emmeans.html">emmeans</a></code> as appropriate. See Details.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The function works by constructing reference grids for <code>object</code> with 
+various values of <code>var</code>, and then calculating difference quotients of predictions
+from those reference grids. Finally, <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code> is called with
+the given <code>specs</code>, thus computing marginal averages as needed of
+the difference quotients. Any <code>...</code> arguments are passed to the
+<code>ref_grid</code> and <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code>; examples of such optional
+arguments include optional arguments (often <code>mode</code>) that apply to
+specific models; <code>ref_grid</code> options such as <code>data</code>, <code>at</code>,
+<code>cov.reduce</code>, <code>mult.names</code>, <code>nesting</code>, or <code>transform</code>;
+and <code>emmeans</code> options such as <code>weights</code> (but please avoid
+<code>trend</code> or <code>offset</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>emmGrid</code> or <code>emm_list</code> object, according to <code>specs</code>.
+See <code><a href="../../emmeans/help/emmeans.html">emmeans</a></code> for more details on when a list is returned.
+</p>
+
+
+<h3>Generalizations</h3>
+
+<p>Instead of a single predictor, the user may specify some monotone function of
+one variable, e.g., <code>var = "log(dose)"</code>. If so, the chain rule is
+applied. Note that, in this example, if <code>object</code> contains
+<code>log(dose)</code> as a predictor, we will be comparing the slopes estimated by
+that model, whereas specifying <code>var = "dose"</code> would perform a
+transformation of those slopes, making the predicted trends vary depending on
+<code>dose</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>In earlier versions of <code>emtrends</code>, the first argument was named
+<code>model</code> rather than <code>object</code>. (The name was changed because of
+potential mis-matching with a <code>mode</code> argument, which is an option for
+several types of models.) For backward compatibility, <code>model</code> still works
+<em>provided all arguments are named</em>.
+</p>
+<p>It is important to understand that trends computed by <code>emtrends</code> are
+<em>not</em> equivalent to polynomial contrasts in a parallel model where
+<code>var</code> is regarded as a factor. That is because the model <code>object</code>
+here is assumed to fit a smooth function of <code>var</code>, and the estimated
+trends reflect <em>local</em> behavior at particular value(s) of <code>var</code>;
+whereas when <code>var</code> is modeled as a factor and polynomial contrasts are
+computed, those contrasts represent the <em>global</em> pattern of changes over
+<em>all</em> levels of <code>var</code>. 
+</p>
+<p>See the <code>pigs.poly</code> and <code>pigs.fact</code> examples below for an
+illustration. The linear and quadratic trends depend on the value of 
+<code>percent</code>, but the cubic trend is constant (because that is true of
+a cubic polynomial, which is the underlying model). The cubic contrast
+in the factorial model has the same P value as for the cubic trend,
+again because the cubic trend is the same everywhere.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../emmeans/help/emmeans.html">emmeans</a></code>, <code><a href="../../emmeans/help/ref_grid.html">ref_grid</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+fiber.lm &lt;- lm(strength ~ diameter*machine, data=fiber)
+# Obtain slopes for each machine ...
+( fiber.emt &lt;- emtrends(fiber.lm, "machine", var = "diameter") )
+# ... and pairwise comparisons thereof
+pairs(fiber.emt)
+
+# Suppose we want trends relative to sqrt(diameter)...
+emtrends(fiber.lm, ~ machine | diameter, var = "sqrt(diameter)", 
+         at = list(diameter = c(20, 30)))
+
+# Obtaining a reference grid
+mtcars.lm &lt;- lm(mpg ~ poly(disp, degree = 2) * (factor(cyl) + factor(am)), data = mtcars)
+
+# Center trends at mean disp for each no. of cylinders
+mtcTrends.rg &lt;- emtrends(mtcars.lm, var = "disp", 
+                          cov.reduce = disp ~ factor(cyl))
+summary(mtcTrends.rg)  # estimated trends at grid nodes
+emmeans(mtcTrends.rg, "am", weights = "prop")
+
+
+### Higher-degree trends ...
+
+pigs.poly &lt;- lm(conc ~ poly(percent, degree = 3), data = pigs)
+emt &lt;- emtrends(pigs.poly, ~ degree | percent, "percent", max.degree = 3,
+                at = list(percent = c(9, 13.5, 18)))
+       # note: 'degree' is an extra factor created by 'emtrends'
+       
+summary(emt, infer = c(TRUE, TRUE))
+
+# Compare above results with poly contrasts when 'percent' is modeled as a factor ...
+pigs.fact &lt;- lm(conc ~ factor(percent), data = pigs)
+emm &lt;- emmeans(pigs.fact, "percent")
+
+contrast(emm, "poly")
+# Some P values are comparable, some aren't! See Note in documentation
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>emmeans</em> version 1.8.2 <a href="00Index.html">Index</a>]</div>
+</div></body></html>

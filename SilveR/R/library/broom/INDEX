@@ -162,8 +162,6 @@ list_tidiers            Tidying methods for lists / returned values
                         that are not S3 objects
 null_tidiers            Tidiers for NULL inputs
 sp_tidiers              Tidy a(n) SpatialPolygonsDataFrame object
-sparse_tidiers          Tidy a sparseMatrix object from the Matrix
-                        package
 summary_tidiers         (Deprecated) Tidy summaryDefault objects
 tidy.Arima              Tidy a(n) Arima object
 tidy.Gam                Tidy a(n) Gam object
