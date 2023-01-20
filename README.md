@@ -1,6 +1,6 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 6.0.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 4.1.2.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 6.0.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 4.2.1.
 
 ### Branded as InVivoStat
 
@@ -8,7 +8,7 @@ The SilveR project is currently branded as the pharmaceutical statistical analys
 
 ## Getting Started
 
-Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 4.1.2 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
+Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 4.2.1 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
 
 ### Current Build
 
@@ -20,7 +20,7 @@ SilveR is a self-hosted web app written in .net core, running in an Electron she
 
 #### [Windows](#windows)
 
-A stripped down install of R 4.1.2 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
+A stripped down install of R 4.2.1 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
 
 #### [Linux](#linux)
 
@@ -30,21 +30,21 @@ For linux (only tested on Ubuntu 19+ so far) you will need to provide an install
 
 2) Run the setup script from the terminal prompt using 'sudo ./setup-linux.sh'
 
-Note that we only support 19.x at this time. If you have a different Linux distro then as long as you can get R 4.1.x installed on your own and the subsequent R packages then you should be fine.
+Note that we only support 19.x at this time. If you have a different Linux distro then as long as you can get R 4.2.x installed on your own and the subsequent R packages then you should be fine.
 
 #### [MacOS](#macos)
 
 For Mac you will need to install R and run a script to install the required R packages. To do this:
 
-1) Download and install R from https://cran.r-project.org/bin/macosx/base/R-4.1.3.pkg
+1) Download and install R from https://cran.r-project.org/bin/macosx/base/R-4.2.1.pkg
 
 2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R. Open the R editor/IDE (that was installed in the previous step). Copy and paste the code (or open the RPackagesInstall.R file) into the R editor and run it. The second half of the R script checks that the libraries have been installed correctly.
 
 3) It seems that macOS Big Sur onwards has issues where a symlink to Rscript is missing or miconfigured after the R install (resulting in InVivoStat claiming that R is not installed). To resolve this run the following two lines in the terminal
 
 ```
-sudo ln -s /Library/Frameworks/R.framework/Resources/bin/Rscript /usr/local/bin/Rscript
-sudo ln -s /Library/Frameworks/R.framework/Resources/bin/R /usr/local/bin/R
+sudo ln -s /Library/Frameworks/R.framework/Versions/4.2/Resources/bin/R/usr/local/bin
+sudo ln -s /Library/Frameworks/R.framework/Versions/4.2/Resources/bin/Rscript/usr/local/bin
 ```
 
 #### Running Locally

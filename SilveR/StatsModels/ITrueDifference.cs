@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SilveR.StatsModels
+﻿namespace SilveR.StatsModels
 {
     public interface ITrueDifference
     {
