@@ -81,36 +81,22 @@ namespace SilveR.Services
                         File.WriteAllLines(csvFileName, csvData);
                     }
 
-                    //setup the r process (way of calling rscript.exe is slightly different for each OS)
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    //if there is a custom R install setup then use that 
+                    if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
                     {
-                        if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
-                        {
-                            rscriptPath = appSettings.CustomRScriptLocation;
-                        }
-                        else
+                        rscriptPath = appSettings.CustomRScriptLocation;
+                    }
+                    else //setup the r process (way of calling rscript.exe is slightly different for each OS)
+                    {
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                         {
                             rscriptPath = Path.Combine(Startup.ContentRootPath, "R", "bin", "Rscript.exe");
                         }
-                    }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                    {
-                        if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
-                        {
-                            rscriptPath = appSettings.CustomRScriptLocation;
-                        }
-                        else
+                        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                         {
                             rscriptPath = "Rscript";
                         }
-                    }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                    {
-                        if (!String.IsNullOrEmpty(appSettings.CustomRScriptLocation))
-                        {
-                            rscriptPath = appSettings.CustomRScriptLocation;
-                        }
-                        else
+                        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                         {
                             rscriptPath = "/usr/local/bin/Rscript";
                         }
