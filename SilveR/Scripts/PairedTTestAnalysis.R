@@ -1411,24 +1411,21 @@ HTML("Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref , align="left")
-HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
+HTML(reference("R2HTML"))
+HTML(reference("GGally"))
+HTML(reference("RColorBrewer"))
+HTML(reference("ggplot2"))
+HTML(reference("ggrepel"))
+HTML(reference("reshape"))
+HTML(reference("plyr"))
+HTML(reference("scales"))
+HTML(reference("proto"))
 
-HTML(paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], capture.output(print(citation("GGally"),bibtex=F))[6], capture.output(print(citation("GGally"),bibtex=F))[7], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], capture.output(print(citation("RColorBrewer"),bibtex=F))[5], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep=""),  align="left")
-HTML(paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], capture.output(print(citation("ggrepel"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], capture.output(print(citation("scales"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], capture.output(print(citation("proto"),bibtex=F))[6], sep = ""),  align="left")
-#extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
+HTML(reference("multcomp"))
+HTML(reference("nlme"))
+HTML(reference("contrast"))
+HTML(reference("emmeans"))
 
-HTML(paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = ""),  align="left")
-#HTML(paste(capture.output(print(citation("nlme"),bibtex=F))[2], capture.output(print(citation("nlme"),bibtex=F))[3], sep = ""),  align="left")
-#Hard coded version as font causes error
-HTML(paste("Pinheiro J, Bates D, DebRoy S, Sarkar D, R Core Team (2022). _nlme: Linear and Nonlinear Mixed Effects Models_. R package version 3.1-155.", sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("contrast"),bibtex=F))[4], capture.output(print(citation("contrast"),bibtex=F))[5], capture.output(print(citation("contrast"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("emmeans"),bibtex=F))[4], capture.output(print(citation("emmeans"),bibtex=F))[5], capture.output(print(citation("emmeans"),bibtex=F))[6], sep = ""),  align="left")
 
 #===================================================================================================================
 #Show dataset

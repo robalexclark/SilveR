@@ -319,8 +319,8 @@ if (Test== "hommel" ) {
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref , align="left")
-HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = ""),  align="left")
+HTML(reference("R2HTML"))
+HTML(reference("multcomp"))
 
 #===================================================================================================================
 #Show arguments

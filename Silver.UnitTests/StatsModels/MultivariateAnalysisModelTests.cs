@@ -162,6 +162,9 @@ namespace SilveR.UnitTests.StatsModels
             var analysisType = result.Single(x => x.Name == "AnalysisType");
             Assert.Equal("PrincipalComponentsAnalysis", analysisType.Value);
 
+            var standardiseVariables = result.Single(x => x.Name == "StandardiseVariables");
+            Assert.Equal("True", standardiseVariables.Value);
+
             var noOfClusters = result.Single(x => x.Name == "NoOfClusters");
             Assert.Equal("2", noOfClusters.Value);
 
@@ -195,6 +198,7 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "ResponseTransformation", Value = "None" });
             arguments.Add(new Argument { Name = "CaseID", Value = "Case ID" });
             arguments.Add(new Argument { Name = "AnalysisType", Value = "PrincipalComponentsAnalysis" });
+            arguments.Add(new Argument { Name = "StandardiseVariables", Value = "False" });
             arguments.Add(new Argument { Name = "NoOfClusters", Value = "2" });
             arguments.Add(new Argument { Name = "DistanceMethod", Value = "Euclidean" });
             arguments.Add(new Argument { Name = "AgglomerationMethod", Value = "Ward.d2" });
@@ -203,7 +207,7 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "ResponseScale", Value = "Unit variance" });
             arguments.Add(new Argument { Name = "NoOfComponents", Value = "0" });
 
-            Assert.Equal(13, arguments.Count);
+            Assert.Equal(14, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -215,6 +219,7 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("None", sut.ResponseTransformation);
             Assert.Equal("Case ID", sut.CaseID);
             Assert.Equal("PrincipalComponentsAnalysis", sut.AnalysisType.ToString());
+            Assert.False(sut.StandardiseVariables);
             Assert.Equal(2, sut.NoOfClusters);
             Assert.Equal("Euclidean", sut.DistanceMethod);
             Assert.Equal("Ward.d2", sut.AgglomerationMethod);
@@ -222,7 +227,6 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal("Centered at zero", sut.ResponseCentring);
             Assert.Equal("Unit variance", sut.ResponseScale);
         }
-
 
         [Fact]
         public void GetCommandLineArguments_ReturnsCorrectString()
@@ -236,7 +240,7 @@ namespace SilveR.UnitTests.StatsModels
 
             //Assert
 
-            Assert.Equal("Petalivs_sp_ivslength None Categorical Continuous Caseivs_sp_ivsID PrincipalComponentsAnalysis 2 Euclidean Ward.d2 \"Case ID\" 0 Centered_at_zero Unit_variance", result);
+            Assert.Equal("Petalivs_sp_ivslength None Categorical Continuous Caseivs_sp_ivsID PrincipalComponentsAnalysis 2 Y Euclidean Ward.d2 \"Case ID\" 0 Centered_at_zero Unit_variance", result);
         }
 
         private MultivariateAnalysisModel GetModel(IDataset dataset)

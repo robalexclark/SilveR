@@ -49,6 +49,9 @@ namespace SilveR.StatsModels
         [Range(2, 1000, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int NoOfClusters { get; set; } = 2;
 
+        [DisplayName("Standardise variables")]
+        public bool StandardiseVariables { get; set; } = true;
+
         [DisplayName("Distance method")]
         public string DistanceMethod { get; set; } = "Euclidean";
 
@@ -153,12 +156,13 @@ namespace SilveR.StatsModels
             arguments.Append(" " + argFormatter.GetFormattedArgument(CaseID, true)); //8
             arguments.Append(" " + argFormatter.GetFormattedArgument(AnalysisType.ToString(), false)); //9
             arguments.Append(" " + argFormatter.GetFormattedArgument(NoOfClusters)); //10
-            arguments.Append(" " + argFormatter.GetFormattedArgument(DistanceMethod, false)); //11
-            arguments.Append(" " + argFormatter.GetFormattedArgument(AgglomerationMethod, false)); //12
-            arguments.Append(" " + argFormatter.GetFormattedArgument(PlotLabel, false)); //13
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NoOfComponents)); //14
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseCentring.Replace(' ', '_'), false)); //15
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseScale.Replace(' ', '_'), false)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(StandardiseVariables)); //11
+            arguments.Append(" " + argFormatter.GetFormattedArgument(DistanceMethod, false)); //12
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AgglomerationMethod, false)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(PlotLabel, false)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NoOfComponents)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseCentring.Replace(' ', '_'), false)); //16
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResponseScale.Replace(' ', '_'), false)); //17
 
             return arguments.ToString().Trim();
         }
@@ -175,6 +179,7 @@ namespace SilveR.StatsModels
             this.CaseID = argHelper.LoadStringArgument(nameof(CaseID));
             this.AnalysisType = (AnalysisOption)Enum.Parse(typeof(AnalysisOption), argHelper.LoadStringArgument(nameof(AnalysisType)), true);
             this.NoOfClusters = argHelper.LoadIntArgument(nameof(NoOfClusters));
+            this.StandardiseVariables = argHelper.LoadBooleanArgument(nameof(StandardiseVariables));
             this.DistanceMethod = argHelper.LoadStringArgument(nameof(DistanceMethod));
             this.AgglomerationMethod = argHelper.LoadStringArgument(nameof(AgglomerationMethod));
             this.PlotLabel = argHelper.LoadStringArgument(nameof(PlotLabel));
@@ -194,6 +199,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CaseID), CaseID));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AnalysisType), AnalysisType.ToString()));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(NoOfClusters), NoOfClusters));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(StandardiseVariables), StandardiseVariables));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(DistanceMethod), DistanceMethod));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AgglomerationMethod), AgglomerationMethod));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PlotLabel), PlotLabel));

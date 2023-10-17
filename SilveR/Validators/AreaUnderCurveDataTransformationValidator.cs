@@ -43,6 +43,11 @@ namespace SilveR.Validators
                     ValidationInfo.AddErrorMessage("Responses are required.");
                     return ValidationInfo;
                 }
+                else if (aucVariables.NumericalTimePoints == null)
+                {
+                    ValidationInfo.AddErrorMessage("Numerical Timepoints are required.");
+                    return ValidationInfo;
+                }
             }
 
 

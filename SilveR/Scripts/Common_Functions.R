@@ -1,7 +1,7 @@
 ﻿#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
-IVS_version<- 4.7 
+IVS_version<- 4.9 
 
 #Software update
 UpdateIVS <- "N"
@@ -1219,7 +1219,7 @@ NONCAT_CPP <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
 		scale_fill_manual(values = Gr_palette_A) +
-		geom_point(aes(colour = Animal_IVS ), size = 3, shape = 16) +
+		geom_point(aes(colour = Animal_IVS ), size = Point_size, shape = Point_shape) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
 
 	if (ShowCaseIDsInLegend=="N") {
@@ -1278,7 +1278,7 @@ ONECATSEP_CPP <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
-		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
+		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = Point_shape) +
 		facet_wrap(~l_l) 
 
 	if (ShowCaseIDsInLegend=="N") {
@@ -1337,7 +1337,7 @@ TWOCATSEP_CPP <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
-		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
+		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = Point_shape) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 
 	if (ShowCaseIDsInLegend=="N") {
@@ -1395,7 +1395,7 @@ OVERLAID_CPP <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette) +
-		geom_point(aes(colour = l_l), size = 3, shape = 16) +
+		geom_point(aes(colour = l_l), size = Point_size, shape = Point_shape) +
 		geom_line(aes(group = Animal_IVS), size = Line_size)
 
 	if (ReferenceLine != "NULL") {
@@ -1447,7 +1447,7 @@ AUC_CPP <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
 		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
-		geom_point(aes(colour = Animal_IVS), size = 3, shape = 16) +
+		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = Point_shape) +
 		facet_wrap(~l_l) +
 		geom_area(aes(fill = Gr_fill, alpha = FillTransparency)) +
 		theme(legend.position = "none") 
@@ -1825,7 +1825,9 @@ OVERLAID_MAT <- function() {
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scales = scalexy)
 
 	if (dim(subset(graphdata, catvartest != "N"))[1] >= 1 && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), aes(colour = l_li), method = "lm", se = FALSE, lty = Line_type, size = Line_size, fullrange = FALSE)
+#		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), aes(colour = l_li), method = "lm", se = FALSE, lty = Line_type, size = Line_size, fullrange = FALSE)
+		g1 <- g
+
 	} else {
 		g1 <- g
 	}
@@ -2210,14 +2212,115 @@ PCbiplotx <- function(PC, x = "PC1", y = "PC2") {
 
 
 #Cluster dendrogram
+
+dendro_data_k <- function(hc, k) {
+  hcdata    <-  ggdendro::dendro_data(hc, type = "rectangle")
+  seg       <-  hcdata$segments
+  labclust  <-  cutree(hc, k)[hc$order]
+  segclust  <-  rep(0L, nrow(seg))
+  heights   <-  sort(hc$height, decreasing = TRUE)
+  height    <-  mean(c(heights[k], heights[k - 1L]), na.rm = TRUE)
+
+  for (i in 1:k) {
+    xi      <-  hcdata$labels$x[labclust == i]
+    idx1    <-  seg$x    >= min(xi) & seg$x    <= max(xi)
+    idx2    <-  seg$xend >= min(xi) & seg$xend <= max(xi)
+    idx3    <-  seg$yend < height
+    idx     <-  idx1 & idx2 & idx3
+
+    segclust[idx] <- i
+  }
+  idx                    <-  which(segclust == 0L)
+  segclust[idx]          <-  segclust[idx + 1L]
+  hcdata$segments$clust  <-  segclust
+  hcdata$segments$line   <-  as.integer(segclust < 1L)
+  hcdata$labels$clust    <-  labclust
+  hcdata
+}
+
+plot_ggdendro <- function(hcdata, direction = c("lr", "rl", "tb", "bt"), scale.color = NULL, branch.size = 1, label.size = 3, nudge.label = 0.01, expand.y    = 0.1) {
+  
+#Colour palette for plot
+if (bandw == "Y") {
+	colourcount <- length(levels(as.factor(segment(hcdata)$clust)))
+	BW_palette <- grey.colors(colourcount, start = gr_bw_low, end = gr_bw_high)
+	Gr_paletteDen <- BW_palette
+} else {
+	colourcount <- length(levels(as.factor(segment(hcdata)$clust)))
+	getPalette <- colorRampPalette(brewer.pal(9, Palette_set))
+	if (colourcount >= 10) {
+		Col_palette <- getPalette(colourcount)
+	} else {
+		Col_palette <- brewer.pal(colourcount, Palette_set)
+	}
+	Gr_paletteDen <- Col_palette
+}
+
+  direction <- match.arg(direction) # if fan = FALSE
+  ybreaks   <- pretty(segment(hcdata)$y, n = 5)
+  ymax      <- max(segment(hcdata)$y)
+
+#Change levels of segment so that all colours are the same
+
+segment <- segment(hcdata)
+segment$clust2 = segment$clust
+
+for (i in 1 : length(segment(hcdata)$clust)) {
+	if (segment$clust2[i]==0) {
+		segment$clust[i] = length(levels(as.factor(segment(hcdata)$clust)))+1
+	}
+}
+
+  ## branches
+  p <- ggplot() + 
+       geom_segment(data = segment, aes(x = x, y = y, xend = xend, yend = yend, linetype = factor(line), colour = factor(clust)), lineend = "round", show.legend = FALSE, size = branch.size) +
+	theme_map +
+	mytheme +
+	ylab(YAxisTitle) +
+	xlab(XAxisTitle)
+  
+  ## orientation
+    p <- p + scale_x_continuous(breaks = NULL)
+    if (direction %in% c("rl", "lr")) {
+      p <- p + coord_flip()
+    }
+    if (direction %in% c("bt", "lr")) {
+      p <- p + scale_y_reverse(breaks = ybreaks)
+    } else {
+      p <- p + scale_y_continuous(breaks = ybreaks)
+      nudge.label <- -(nudge.label)
+    }
+  
+  # labels
+  labelParams <- set_labels_params(nrow(hcdata$labels), direction, fan)
+  hcdata$labels$angle <- labelParams$angle
+
+ p <- p + geom_text(data = label(hcdata), aes(x = x, y = y, label = label, colour = factor(clust), angle = angle), vjust = labelParams$vjust, hjust = labelParams$hjust, nudge_y = ymax * nudge.label, size = 3.5, show.legend =  FALSE) +
+  	scale_color_manual(values = Gr_paletteDen)
+
+  ylim <- -round(ymax * expand.y, 1)
+  p    <- p + expand_limits(y = ylim)
+  p
+}
+
+set_labels_params <- function(nbLabels, direction = c("tb", "bt", "lr", "rl"), fan = FALSE) {
+    angle       <-  rep(0, nbLabels)
+    hjust       <-  0
+    if (direction %in% c("tb", "bt")) { angle <- angle + 45 }
+    if (direction %in% c("tb", "rl")) { hjust <- 1 }
+    list(angle = angle, hjust = hjust, vjust = 0.5)
+}
+
+
+
 ggdendro <- function() {
-	g <- ggdendrogram(h, theme_dendro = FALSE, rotate = TRUE) +
-		theme_map +
-		mytheme +
-		ylab(YAxisTitle) +
-		xlab(XAxisTitle)
+	g <- plot_ggdendro(hcdata, direction = "lr", expand.y = 0.2)
 	suppressWarnings(print(g))
 }
+
+
+
+
 
 
 #PLS CV and advCV plot
@@ -2309,7 +2412,7 @@ refxx <- c("For more information on the theoretical approaches that are implemen
 
 
 R_refs <- function() {
-	R_ref <- "R Development Core Team (2013). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL http://www.R-project.org."
+	R_ref <- "R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/."
 	BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
 	IVS_ref <- paste("When referring to InVivoStat, please cite 'InVivoStat, version ", IVS_version, "'.", sep = "")
 
@@ -2319,4 +2422,48 @@ R_refs <- function() {
 		IVS_ref = IVS_ref
              )
              return(Refs)
+}
+
+reference <- function (name) {
+	if (name == "cluster") {reference <- paste(capture.output(print(citation("cluster"),bibtex=F))[4], capture.output(print(citation("cluster"),bibtex=F))[5], capture.output(print(citation("cluster"),bibtex=F))[6], sep = "")}
+	if (name == "R2HTML") {reference <- paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = "")}
+	if (name == "GGally") {reference <- paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("GGally"),bibtex=F))[6])), sep = "")}
+	if (name == "RColorBrewer") {reference <- paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("RColorBrewer"),bibtex=F))[5])), sep = "")}
+	if (name == "ggplot2") {reference <- paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep="")}
+	if (name == "ggrepel") {reference <- paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("ggrepel"),bibtex=F))[6])), sep = "")}
+	if (name == "reshape") {reference <- paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = "")}
+	if (name == "plyr") {reference <- paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = "")}
+	if (name == "scales") {reference <- paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("scales"),bibtex=F))[6])), sep = "")}
+	if (name == "proto") {reference <- paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("proto"),bibtex=F))[6])), sep = "")}
+	if (name == "mvtnorm") {reference <- paste(capture.output(print(citation("mvtnorm"),bibtex=F))[4], capture.output(print(citation("mvtnorm"),bibtex=F))[5], capture.output(print(citation("mvtnorm"),bibtex=F))[6], capture.output(print(citation("mvtnorm"),bibtex=F))[7], sep = "")}
+	if (name == "ggdendro") {reference <- paste(capture.output(print(citation("ggdendro"),bibtex=F))[4], capture.output(print(citation("ggdendro"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("ggdendro"),bibtex=F))[6])), sep = "")}
+	if (name == "mixOmics") {reference <- paste(capture.output(print(citation("mixOmics"),bibtex=F))[4], capture.output(print(citation("mixOmics"),bibtex=F))[5], capture.output(print(citation("mixOmics"),bibtex=F))[6], sep = "")}
+
+	if (name == "Exact") {reference <- paste(capture.output(print(citation("Exact"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("Exact"),bibtex=F))[5])), sep = "")}
+	if (name == "Hmisc") {reference <- paste(capture.output(print(citation("Hmisc"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("Hmisc"),bibtex=F))[5])), sep = "")}
+
+	if (name == "PowerTOST") {reference <-paste(capture.output(print(citation("PowerTOST"),bibtex=F))[4], capture.output(print(citation("PowerTOST"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("PowerTOST"),bibtex=F))[6])), sep = "")}
+
+	if (name == "multcomp") {reference <- paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = "")}
+	if (name == "multcompView") {reference <- paste(capture.output(print(citation("multcompView"),bibtex=F))[4], capture.output(print(citation("multcompView"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("multcompView"),bibtex=F))[6])), sep = "")}
+	if (name == "car") {reference <- paste(capture.output(print(citation("car"),bibtex=F))[4], capture.output(print(citation("car"),bibtex=F))[5], capture.output(print(citation("car"),bibtex=F))[6], sep = "")}
+	if (name == "emmeans") {reference <- paste(capture.output(print(citation("emmeans"),bibtex=F))[4], capture.output(print(citation("emmeans"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("emmeans"),bibtex=F))[6])), sep = "")}
+
+	if (name == "dplyr") {reference <-paste(capture.output(print(citation("dplyr"),bibtex=F))[4], capture.output(print(citation("dplyr"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("dplyr"),bibtex=F))[6])), sep = "")}
+
+	if (name == "ROCR") {reference <-paste(capture.output(print(citation("ROCR"),bibtex=F))[4], capture.output(print(citation("ROCR"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("ROCR"),bibtex=F))[6])), sep = "")}
+	if (name == "detectseparation") {reference <-paste(capture.output(print(citation("detectseparation"),bibtex=F))[4], capture.output(print(citation("detectseparation"),bibtex=F))[5], capture.output(print(citation("detectseparation"),bibtex=F))[6], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("detectseparation"),bibtex=F))[7])), sep = "")}
+
+	if (name == "nlme") {reference <-paste(capture.output(print(citation("nlme"),bibtex=F))[4], capture.output(print(citation("nlme"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("nlme"),bibtex=F))[6])), sep = "")}
+
+	if (name == "coin") {reference <-paste(capture.output(print(citation("coin"),bibtex=F))[5], capture.output(print(citation("coin"),bibtex=F))[6], capture.output(print(citation("coin"),bibtex=F))[7], gsub(">" , "", gsub(" <" , "URL ", capture.output(print(citation("coin"),bibtex=F))[8])), sep = "")}
+
+	if (name == "contrast") {reference <-paste(capture.output(print(citation("contrast"),bibtex=F))[4], capture.output(print(citation("contrast"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("contrast"),bibtex=F))[6])), sep = "")}
+
+	if (name == "survival") {reference <-paste(capture.output(print(citation("survival"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("survival"),bibtex=F))[5])), sep = "")}
+	if (name == "gridExtra") {reference <-paste(capture.output(print(citation("gridExtra"),bibtex=F))[4], capture.output(print(citation("gridExtra"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("gridExtra"),bibtex=F))[6])), sep = "")}
+
+	reference <- gsub("_" , " ", reference)
+
+	return(reference)
 }

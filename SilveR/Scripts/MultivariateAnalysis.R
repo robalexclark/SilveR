@@ -6,7 +6,6 @@ suppressWarnings(library(R2HTML))
 suppressWarnings(library(cluster))
 suppressWarnings(library(ggdendro))
 suppressWarnings(library(mixOmics))
-#suppressWarnings(library(pls))
 
 #===================================================================================================================
 # retrieve args
@@ -24,14 +23,15 @@ caseid_IVS_ <- Args[8]
 analysisType <- tolower(Args[9])
 
 noOfClusters <- Args[10]
-distanceMethod <- tolower(Args[11])
-agglomerationMethod <- tolower(Args[12])
-plotLabels <- Args[13]
+Scale <- Args[11]
+distanceMethod <- tolower(Args[12])
+agglomerationMethod <- tolower(Args[13])
+plotLabels <- Args[14]
 
-noOfComponents <- Args[14]
+noOfComponents <- Args[15]
 
-PCA_center <- tolower(Args[15])
-PCA_scale <- tolower(Args[16])
+PCA_center <- tolower(Args[16])
+PCA_scale <- tolower(Args[17])
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
@@ -458,8 +458,14 @@ png(ncscatterplot4,width = jpegwidth, height = jpegheight, units="in", res=PlotR
 plotFilepdf4 <- sub(".html", "ncscatterplot4.pdf", htmlFile)
 dev.control("enable") 
 
-pluton_dist<-dist(Responses_IVS_, method=clus_dist)
-h <- hclust(pluton_dist , method=clus_meth)
+#Generating clusters#
+if (Scale == "Y") {
+	ScaleResp <- scale(Responses_IVS_) 
+} else {
+	ScaleResp <- Responses_IVS_ 
+}
+hc  <- hclust(dist(ScaleResp, method=clus_dist) , method=clus_meth)
+hcdata <- dendro_data_k(hc, no_clust)
 
 YAxisTitle <- "Distance"
 XAxisTitle <- "Case ID" 
@@ -481,6 +487,18 @@ if (pdfout=="Y")
 }
 
 #===================================================================================================================
+#Table of clusters
+#===================================================================================================================
+HTML.title("Table of clusters", HR=2, align="left")
+
+clust <- data.frame(hcdata$labels)
+clust <- subset(clust, select = -c(x,y))
+newclust <- clust[order(clust$label),]
+colnames(newclust) = c("Case ID", "Cluster")
+HTML(newclust, classfirstline="second", align="left" , row.names = "FALSE")
+
+
+#===================================================================================================================
 #Number of clusters plot
 #===================================================================================================================
 HTML.title("Within group sum of squares for different numbers of clusters", HR=2, align="left")
@@ -492,24 +510,23 @@ png(scatterPlot)
 plotFilepdf <- sub(".html", "scatterPlot.pdf", htmlFile)
 dev.control("enable") 
 
-#Code to generate plot to highlight number of clusters
-n <- dim(Responses_IVS_)[1]
-wss1 <- (n-1)*sum(apply(Responses_IVS_,2,var))
-wss <- numeric(8)
-for(i in 2:9) {
-  W <- sum(kmeans(Responses_IVS_,i)$withinss)
-  wss[i-1] <- W
+wssy <- function(d) {
+  sum(scale(d, scale = FALSE)^2)
 }
-wss <- c(wss1,wss)
+
+wrap <- function(i, hc, x) {
+  cl <- cutree(hc, i)
+  spl <- split(x, cl)
+  wssy <- sum(sapply(spl, wssy))
+  wssy
+}
+wss <- sapply(seq.int(1, nrow(ScaleResp)), wrap, h = hc, x = ScaleResp)
 
 YAxisTitle<-"Within groups sum of squares"
 XAxisTitle<-"Number of clusters"
 MainTitle2 <-""
 yvarrr_IVS_SEM<- wss
 xvarrr_IVS_SEM<- c(1:length(wss))
-for (i in 1:length(wss)) {
-	xvarrr_IVS_SEM[i] <- paste("", xvarrr_IVS_SEM[i], sep = "")
-}
 graphdata_SEM<- data.frame(yvarrr_IVS_SEM)
 graphdata_SEM$xvarrr_IVS_SEM <-xvarrr_IVS_SEM
 
@@ -541,8 +558,9 @@ HTML(title, align="left")
 HTML.title("Scatterplot of data, categorised by the user-defined number of clusters", HR=2, align="left")
 
 #input no. of clusters
-plut.km <- kmeans(Responses_IVS_ , no_clust, nstart=10)
-stdata <- data.frame(Responses_IVS_ , catfact=plut.km$cluster)
+Responses_IVS_ <- Responses_IVS_[order(rownames(Responses_IVS_)),]
+hcdata$labels <- hcdata$labels[order(hcdata$labels$label),]
+stdata <- data.frame(Responses_IVS_ , catfact=hcdata$labels$clust)
 
 #GGPLOT matrix plot
 scatterPlot2 <- sub(".html", "scatterPlot2.png", htmlFile)
@@ -679,8 +697,8 @@ for (d in 1:resplength) {
 
 			Gr_palette<-palette_FUN("catfact")
 
-			graphdata$xvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][d])))
-			graphdata$yvarrr_IVS = eval(parse(text = paste("statdata$",tempChanges[[1]][f])))
+			graphdata$xvarrr_IVS = eval(parse(text = paste("stdata$",tempChanges[[1]][d])))
+			graphdata$yvarrr_IVS = eval(parse(text = paste("stdata$",tempChanges[[1]][f])))
 			graphdata$l_l <- as.factor(graphdata$catfact)
 
 			MainTitle2<-""
@@ -1464,30 +1482,26 @@ HTML(Ref_list$IVS_ref, align="left")
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref ,  align="left")
-HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
 
-HTML(paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], capture.output(print(citation("GGally"),bibtex=F))[6], capture.output(print(citation("GGally"),bibtex=F))[7], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], capture.output(print(citation("RColorBrewer"),bibtex=F))[5], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep=""),  align="left")
-HTML(paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], capture.output(print(citation("ggrepel"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], capture.output(print(citation("scales"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], capture.output(print(citation("proto"),bibtex=F))[6], sep = ""),  align="left")
-#extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
-HTML(paste(capture.output(print(citation("mvtnorm"),bibtex=F))[4], capture.output(print(citation("mvtnorm"),bibtex=F))[5], capture.output(print(citation("mvtnorm"),bibtex=F))[6], capture.output(print(citation("mvtnorm"),bibtex=F))[7], sep = ""),  align="left")
+HTML(reference("R2HTML"))
+HTML(reference("GGally"))
+HTML(reference("RColorBrewer"))
+HTML(reference("ggplot2"))
+HTML(reference("ggrepel"))
+HTML(reference("reshape"))
+HTML(reference("plyr"))
+HTML(reference("scales"))
+HTML(reference("proto"))
+HTML(reference("mvtnorm"))
 
 if (analysisType == "clusteranalysis" ) {
-	HTML(paste(capture.output(print(citation("cluster"),bibtex=F))[4], capture.output(print(citation("cluster"),bibtex=F))[5], capture.output(print(citation("cluster"),bibtex=F))[6], sep = ""),  align="left")
-	HTML(paste(capture.output(print(citation("ggdendro"),bibtex=F))[4], capture.output(print(citation("ggdendro"),bibtex=F))[5], capture.output(print(citation("ggdendro"),bibtex=F))[6], sep = ""),  align="left")
+	HTML(reference("cluster"))
+	HTML(reference("ggdendro"))
 }
 	
 if (analysisType == "partialleastsquares" ) {
-	HTML(paste(capture.output(print(citation("mixOmics"),bibtex=F))[4], capture.output(print(citation("mixOmics"),bibtex=F))[5], capture.output(print(citation("mixOmics"),bibtex=F))[6], sep = ""),  align="left")
+	HTML(reference("mixOmics"))
 }
-
-
-
 
 #===================================================================================================================
 #Show dataset
@@ -1578,3 +1592,4 @@ if (OutputAnalysisOps == "Y") {
 	#	HTML(paste("Number of components: ", noOfComponents, sep=""), align="left")
 	#}
 }
+

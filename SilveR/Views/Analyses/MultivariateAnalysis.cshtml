@@ -63,14 +63,6 @@
                             <div><span asp-validation-for="CategoricalPredictor"></span></div>
                         </div>
                     </div>
-                    @*REMOVE CONTINUOUS FACTORS IF PLS NOT INCLUDED*@
-                    @*<div class="form-group row">
-                        <label class="col-md-6 col-form-label">Continuous predictors</label>
-                        <div class="col-md-6">
-                            <select class="form-control" asp-for="ContinuousPredictors"></select>
-                            <div><span asp-validation-for="ContinuousPredictors"></span></div>
-                        </div>
-                    </div>*@
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Case ID</label>
                         <div class="col-md-6">
@@ -105,11 +97,6 @@
                                     <input asp-for="AnalysisType" type="radio" class="form-check-input" value="LinearDiscriminantAnalysis" onclick="analysisTypeChanged(this);">Linear Discriminant Analysis (LDA)
                                 </label>
                             </div>
-                            @*<div class="form-check mt-2">
-                                <label class="form-check-label">
-                                    <input asp-for="AnalysisType" type="radio" class="form-check-input" value="PartialLeastSquares" onclick="analysisTypeChanged(this);">Partial Least Squares (PLS)
-                                </label>
-                            </div>*@
                         </div>
                     </div>
                     <br />
@@ -139,6 +126,13 @@
                             <div><span asp-validation-for="NoOfClusters"></span></div>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-6 col-form-label">Standardise variables</label>
+                        <div class="col-md-6">
+                            <input asp-for="StandardiseVariables" type="checkbox" class="checkbox-fix">
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label class="col-md-6 col-form-label">Distance method</label>
                         <div class="col-md-6">
@@ -160,16 +154,6 @@
                             <div><span asp-validation-for="PlotLabel"></span></div>
                         </div>
                     </div>
-                    @*<br />
-
-                    <h4>PLS Options</h4>
-                    <div class="form-group row">
-                        <label class="col-md-6 col-form-label">No. of components</label>
-                        <div class="col-md-6">
-                            <input class="form-control" asp-for="NoOfComponents" />
-                            <div><span asp-validation-for="NoOfComponents"></span></div>
-                        </div>
-                    </div>*@
                 </div>
             </div>
         </div>

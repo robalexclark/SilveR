@@ -1,5 +1,4 @@
 ﻿using ElectronNET.API;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using SilveR.Helpers;
 using SilveR.Models;

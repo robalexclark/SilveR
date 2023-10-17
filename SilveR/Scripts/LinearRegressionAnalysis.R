@@ -1213,18 +1213,16 @@ if(covariatelist != "NULL") {
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref ,  align="left")
-HTML(paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = ""),  align="left")
-
-HTML(paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], capture.output(print(citation("GGally"),bibtex=F))[6], capture.output(print(citation("GGally"),bibtex=F))[7], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], capture.output(print(citation("RColorBrewer"),bibtex=F))[5], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep=""),  align="left")
-HTML(paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], capture.output(print(citation("ggrepel"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], capture.output(print(citation("scales"),bibtex=F))[6], sep = ""),  align="left")
-HTML(paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], capture.output(print(citation("proto"),bibtex=F))[6], sep = ""),  align="left")
-#extrafont_ref  <- capture.output(print(citation("extrafont"),bibtex=F))[4]
-HTML(paste(capture.output(print(citation("car"),bibtex=F))[4], capture.output(print(citation("car"),bibtex=F))[5], capture.output(print(citation("car"),bibtex=F))[6], sep = ""),  align="left")
+HTML(reference("R2HTML"))
+HTML(reference("GGally"))
+HTML(reference("RColorBrewer"))
+HTML(reference("ggplot2"))
+HTML(reference("ggrepel"))
+HTML(reference("reshape"))
+HTML(reference("plyr"))
+HTML(reference("scales"))
+HTML(reference("proto"))
+HTML(reference("car"))
 
 #===================================================================================================================
 #Show dataset
