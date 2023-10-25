@@ -1451,5 +1451,28 @@ namespace SilveR.IntegrationTests
             string expectedHtml = File.ReadAllText(Path.Combine("ExpectedResults", "AreaUnderCurveDataTransformation", testName + ".html"));
             Assert.Equal(Helpers.SanitizeHtml(expectedHtml), Helpers.SanitizeHtml(statsOutput.HtmlResults));
         }
+
+        [Fact]
+        public async Task AUC54()
+        {
+            string testName = "AUC54";
+
+            //Arrange
+            HttpClient client = _factory.CreateClient();
+
+            AreaUnderCurveDataTransformationModel model = new AreaUnderCurveDataTransformationModel();
+            model.DatasetID = _factory.SheetNames.Single(x => x.Value == "AUC - RM data").Key;
+            model.SelectedInputFormat = AreaUnderCurveDataTransformationModel.InputFormatType.SingleMeasuresFormat;
+            model.Responses = new string[] { "Resp1", "Resp2", "Resp3", "Resp5" };
+            model.AUCOutput = AreaUnderCurveDataTransformationModel.AUCOutputType.AUCFromTime0;
+
+            //Act
+            HttpResponseMessage response = await client.PostAsync("Analyses/AreaUnderCurveDataTransformation", new FormUrlEncodedContent(model.ToKeyValue()));
+            IEnumerable<string> errors = await Helpers.ExtractErrors(response);
+
+            //Assert
+            Assert.Contains("Numerical Timepoints are required.", errors);
+            Helpers.SaveOutput("AreaUnderCurveDataTransformation", testName, errors);
+        }
     }
 }
