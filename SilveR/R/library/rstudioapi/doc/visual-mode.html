@@ -341,7 +341,7 @@ Mode</h1>
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstudioapi)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rstudioapi)</span></code></pre></div>
 <p>RStudio v1.4 includes a new <a href="https://rstudio.github.io/visual-markdown-editing/#/">visual
 editing mode</a>, which provides a <a href="https://en.wikipedia.org/wiki/WYSIWYM">WYSIWYM</a>-style editing
 interface for R Markdown documents. This vignette describes how
@@ -379,12 +379,12 @@ function in both source and visual mode, as long as only the
 <p>Using this, you can build addins that modify the user’s selected
 text. For example, a function that uses <code>rstudioapi</code> to
 reformat the user’s current selection might look like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>reformat <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  id <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">documentId</span>(<span class="at">allowConsole =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  selection <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">selectionGet</span>(<span class="at">id =</span> id)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  formatted <span class="ot">&lt;-</span> styler<span class="sc">::</span><span class="fu">style_text</span>(<span class="at">text =</span> selection<span class="sc">$</span>value)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  rstudioapi<span class="sc">::</span><span class="fu">selectionSet</span>(<span class="at">value =</span> formatted, <span class="at">id =</span> id)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>reformat <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  id <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">documentId</span>(<span class="at">allowConsole =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  selection <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">selectionGet</span>(<span class="at">id =</span> id)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  formatted <span class="ot">&lt;-</span> styler<span class="sc">::</span><span class="fu">style_text</span>(<span class="at">text =</span> selection<span class="sc">$</span>value)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  rstudioapi<span class="sc">::</span><span class="fu">selectionSet</span>(<span class="at">value =</span> formatted, <span class="at">id =</span> id)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>}</span></code></pre></div>
 
 
 

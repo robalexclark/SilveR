@@ -4,9 +4,14 @@ Function.rms            Compose an S Function to Compute X beta from a
 Glm                     rms Version of glm
 Gls                     Fit Linear Model Using Generalized Least
                         Squares
+LRupdate                LRupdate
 Predict                 Compute Predicted Values and Confidence Limits
 Rq                      rms Package Interface to quantreg Package
-anova.rms               Analysis of Variance (Wald and F Statistics)
+Surv                    Exported Functions That Were Imported From
+                        Other Packages
+Xcontrast               Xcontrast
+anova.rms               Analysis of Variance (Wald, LR, and F
+                        Statistics)
 bj                      Buckley-James Multiple Regression Model
 bootBCa                 BCa Bootstrap on Existing Bootstrap Replicates
 bootcov                 Bootstrap Covariance and Distribution for
@@ -62,7 +67,12 @@ print.Glm               print.glm
 print.cph               Print cph Results
 print.impactPO          Print Result from impactPO
 print.ols               Print ols
+prmiInfo                prmiInfo
+processMI               processMI
+processMI.fit.mult.impute
+                        processMI.fit.mult.impute
 psm                     Parametric Survival Model
+residuals.Glm           residuals.Glm
 residuals.cph           Residuals for a cph Fit
 residuals.lrm           Residuals from an 'lrm' or 'orm' Fit
 residuals.ols           Residuals for ols

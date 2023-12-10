@@ -34,6 +34,7 @@ grid.force              Force a grob into its components
 grid.frame              Create a Frame for Packing Objects
 grid.function           Draw a curve representing a function
 grid.get                Get a Grid Graphical Object
+grid.glyph              Draw Typeset Glyphs
 grid.grab               Grab the current grid output
 grid.grep               Search for Grobs and/or Viewports
 grid.grill              Draw a Grill

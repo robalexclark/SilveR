@@ -52,6 +52,8 @@ checkPOSIXct            Check that an argument is a date/time object in
                         POSIXct format
 checkPathForOutput      Check if a path is suited for creating an
                         output file
+checkPermutation        Check if the arguments are permutations of each
+                        other.
 checkR6                 Check if an argument is an R6 class
 checkRaw                Check if an argument is a raw vector
 checkScalar             Check if an argument is a single atomic value

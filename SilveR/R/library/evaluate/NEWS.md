@@ -1,3 +1,34 @@
+Version 0.22
+================================================================================
+
+- Fixed a problem in the internal function `plot_calls()` that made the examples of `recordGraphics` fail to run on its help page (thanks, Kurt Hornik).
+
+Version 0.21
+================================================================================
+
+- `evaluate()` gains `log_echo` and `log_warning` arguments. When set to `TRUE`
+  these cause code and warnings (respectively) to be immediately emitted to 
+  `stderr()`. This is useful for logging in unattended environments (#118).
+
+- Improved the error message when users accidentally called `closeAllConnections()` (thanks, @guslipkin, quarto-dev/quarto-cli#5214).
+
+Version 0.20
+================================================================================
+
+- The arguments `keep_message` and `keep_warning` of `evaluate()` can take the value `NA` now, which means `evaluate()` will not capture the messages and they will be sent to the console. This is equivalent to the `FALSE` value before v0.19 (thanks, @gadenbuie, https://github.com/yihui/yihui.org/discussions/1458).
+
+Version 0.19
+================================================================================
+
+- In `evaluate()`, `keep_message` and `keep_warning` will completely drop messages and warnings, respectively, when their values are `FALSE`. Previously messages would still be emitted (to the console) even if they take `FALSE` values.
+
+- Fixed the bug that `parse_all()` fails with line directives (thanks, @ArcadeAntics, #114).
+
+Version 0.18
+================================================================================
+
+- Fixed tests that were still using the deprecated `ggplot2::qplot()`.
+
 Version 0.17
 ================================================================================
 

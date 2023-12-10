@@ -1,3 +1,5 @@
+message("Testing BiocParallelParam")
+
 test_BiocParallelParam <-
     function()
 {
@@ -16,4 +18,10 @@ test_BiocParallelParam <-
 
     ## non-default inherited slot
     checkIdentical("WARN", bpthreshold(A(threshold = "WARN")))
+
+    ## workers (specified as character()) more than tasks
+    checkException(
+        validObject(A(workers = rep("a", 3L), tasks = 2L)),
+        silent = TRUE
+    )
 }

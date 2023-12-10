@@ -1,10 +1,13 @@
 utils-package	utils-package
 $.person	person
+.AtNames	rcompgen
+.AtNames.default	rcompgen
 .DollarNames	rcompgen
 .DollarNames.default	rcompgen
 .DollarNames.environment	rcompgen
 .DollarNames.list	rcompgen
 .romans	roman
+.RtangleCodeLabel	SweaveUtils
 .S3methods	methods
 ?	Question
 ??	help.search
@@ -17,9 +20,9 @@ arrangeWindows	arrangeWindows
 as.character.person	person
 as.person	person
 as.person.default	person
-as.personList	person
-as.personList.default	person
-as.personList.person	person
+as.personList	personList
+as.personList.default	personList
+as.personList.person	personList
 as.relistable	relist
 as.roman	roman
 asDateBuilt	packageDescription
@@ -56,8 +59,8 @@ citation	citation
 cite	cite
 citeNatbib	cite
 citEntry	citEntry
-citFooter	citEntry
-citHeader	citEntry
+citFooter	citation
+citHeader	citation
 clipboard	clipboard
 close.socket	close.socket
 close.txtProgressBar	txtProgressBar
@@ -75,9 +78,9 @@ data	data
 data.entry	dataentry
 dataentry	dataentry
 de	dataentry
-de.ncols	dataentry
-de.restore	dataentry
-de.setup	dataentry
+de.ncols	utils-internal
+de.restore	utils-internal
+de.setup	utils-internal
 debugcall	debugcall
 debugger	debugger
 demo	demo
@@ -99,6 +102,7 @@ Filters	choose.files
 find	apropos
 findCRANmirror	findCRANmirror
 findLineNum	findLineNum
+findMatches	rcompgen
 fix	fix
 fixInNamespace	getFromNamespace
 flush.console	flush.console
@@ -155,7 +159,7 @@ is.relistable	relist
 isS3method	isS3method
 isS3stdGeneric	isS3stdGen
 length.hashtab	hashtab
-limitedLabels	recover
+limitedLabels	debugger
 LINK	LINK
 loadhistory	savehistory
 loadRconsole	Rconsole
@@ -191,7 +195,7 @@ packageStatus	packageStatus
 packageVersion	packageDescription
 page	page
 person	person
-personList	person
+personList	personList
 pico	edit
 print.bibentry	bibentry
 print.Bibtex	toLatex
@@ -272,8 +276,10 @@ RweaveLatexSetup	RweaveLatex
 RweaveLatexWritedoc	SweaveUtils
 RweaveTryStop	SweaveUtils
 R_AVAILABLE_PACKAGES_CACHE_CONTROL_MAX_AGE	available.packages
+R_BIOC_VERSION	setRepositories
 R_INSTALL_STAGED	INSTALL
 R_INSTALL_TAR	INSTALL
+R_REPOSITORIES	setRepositories
 savehistory	savehistory
 select.list	select.list
 sessionInfo	sessionInfo
@@ -319,6 +325,7 @@ tail.table	head
 tar	tar
 timestamp	savehistory
 toBibtex	toLatex
+toBibtex.bibentry	bibentry
 toBibtex.person	person
 toLatex	toLatex
 toLatex.sessionInfo	sessionInfo
@@ -337,7 +344,7 @@ untar	untar
 unzip	unzip
 update.packages	update.packages
 update.packageStatus	packageStatus
-upgrade	packageStatus
+upgrade	upgrade
 upgrade.packageStatus	packageStatus
 url.show	url.show
 URLdecode	URLencode

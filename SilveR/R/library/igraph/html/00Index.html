@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: Network Analysis and Visualization</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -12,17 +12,18 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;igraph&rsquo; version 1.3.5</h2>
+</div><h2>Documentation for package &lsquo;igraph&rsquo; version 1.5.1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
 <li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
 
 
 <p style="text-align: center;">
-<a href="# "> </a>
 <a href="#A">A</a>
 <a href="#B">B</a>
 <a href="#C">C</a>
@@ -48,14 +49,10 @@
 <a href="#misc">misc</a>
 </p>
 
-<table width="100%">
-<tr><td style="width: 25%;"><a href="aaa-igraph-package.html">igraph-package</a></td>
-<td>The igraph package</td></tr>
-</table>
 
-<h2><a name="A">-- A --</a></h2>
+<h2><a id="A">-- A --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="add_edges.html">add.edges</a></td>
 <td>Add edges to a graph</td></tr>
 <tr><td style="width: 25%;"><a href="shapes.html">add.vertex.shape</a></td>
@@ -71,7 +68,7 @@
 <tr><td style="width: 25%;"><a href="add_vertices.html">add_vertices</a></td>
 <td>Add vertices to a graph</td></tr>
 <tr><td style="width: 25%;"><a href="edge_connectivity.html">adhesion</a></td>
-<td>Edge connectivity.</td></tr>
+<td>Edge connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="count_triangles.html">adjacent.triangles</a></td>
 <td>Find triangles in graphs</td></tr>
 <tr><td style="width: 25%;"><a href="adjacent_vertices.html">adjacent_vertices</a></td>
@@ -186,13 +183,13 @@
 <td>How igraph functions handle attributes when the graph changes</td></tr>
 <tr><td style="width: 25%;"><a href="graph_attr_names.html">attributes</a></td>
 <td>List names of graph attributes</td></tr>
-<tr><td style="width: 25%;"><a href="authority_score.html">authority.score</a></td>
-<td>Kleinberg's authority centrality scores.</td></tr>
-<tr><td style="width: 25%;"><a href="authority_score.html">authority_score</a></td>
-<td>Kleinberg's authority centrality scores.</td></tr>
+<tr><td style="width: 25%;"><a href="hub_score.html">authority.score</a></td>
+<td>Kleinberg's hub and authority centrality scores.</td></tr>
+<tr><td style="width: 25%;"><a href="hub_score.html">authority_score</a></td>
+<td>Kleinberg's hub and authority centrality scores.</td></tr>
 <tr><td style="width: 25%;"><a href="curve_multiple.html">autocurve.edges</a></td>
 <td>Optimal edge curvature when plotting graphs</td></tr>
-<tr><td style="width: 25%;"><a href="automorphisms.html">automorphisms</a></td>
+<tr><td style="width: 25%;"><a href="count_automorphisms.html">automorphisms</a></td>
 <td>Number of automorphisms</td></tr>
 <tr><td style="width: 25%;"><a href="automorphism_group.html">automorphism_group</a></td>
 <td>Generating set of the automorphism group of a graph</td></tr>
@@ -202,9 +199,9 @@
 <td>Efficiency of a graph</td></tr>
 </table>
 
-<h2><a name="B">-- B --</a></h2>
+<h2><a id="B">-- B --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="sample_pa.html">ba.game</a></td>
 <td>Generate random graphs using preferential attachment</td></tr>
 <tr><td style="width: 25%;"><a href="sample_pa.html">barabasi.game</a></td>
@@ -249,9 +246,9 @@
 <td>Articulation points and bridges of a graph</td></tr>
 </table>
 
-<h2><a name="C">-- C --</a></h2>
+<h2><a id="C">-- C --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="c.igraph.es.html">c.igraph.es</a></td>
 <td>Concatenate edge sequences</td></tr>
 <tr><td style="width: 25%;"><a href="c.igraph.vs.html">c.igraph.vs</a></td>
@@ -313,13 +310,13 @@
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">cit_types</a></td>
 <td>Random citation graphs</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">clique.number</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">cliques</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">clique_num</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">clique_size_counts</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="closeness.html">closeness</a></td>
 <td>Closeness centrality of vertices</td></tr>
 <tr><td style="width: 25%;"><a href="closeness.html">closeness.estimate</a></td>
@@ -357,11 +354,11 @@
 <tr><td style="width: 25%;"><a href="communities.html">code_len</a></td>
 <td>Functions to deal with the result of network community detection</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_connectivity.html">cohesion</a></td>
-<td>Vertex connectivity.</td></tr>
+<td>Vertex connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">cohesion.cohesiveBlocks</a></td>
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_connectivity.html">cohesion.igraph</a></td>
-<td>Vertex connectivity.</td></tr>
+<td>Vertex connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">cohesive.blocks</a></td>
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">cohesiveBlocks</a></td>
@@ -408,14 +405,16 @@
 <td>K-core decomposition of graphs</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">count.multiple</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="count_automorphisms.html">count_automorphisms</a></td>
+<td>Number of automorphisms</td></tr>
 <tr><td style="width: 25%;"><a href="components.html">count_components</a></td>
 <td>Connected components of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="count_isomorphisms.html">count_isomorphisms</a></td>
 <td>Count the number of isomorphic mappings between two graphs</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">count_max_cliques</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="weighted_cliques.html">count_max_weighted_cliques</a></td>
-<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
+<td>Functions to find weighted cliques, i.e. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="count_motifs.html">count_motifs</a></td>
 <td>Graph motifs</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">count_multiple</a></td>
@@ -436,9 +435,9 @@
 <td>Functions to deal with the result of network community detection</td></tr>
 </table>
 
-<h2><a name="D">-- D --</a></h2>
+<h2><a id="D">-- D --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="decompose.html">decompose</a></td>
 <td>Decompose a graph into components</td></tr>
 <tr><td style="width: 25%;"><a href="decompose.html">decompose.graph</a></td>
@@ -517,9 +516,9 @@
 <td>Dyad census of a graph</td></tr>
 </table>
 
-<h2><a name="E">-- E --</a></h2>
+<h2><a id="E">-- E --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="E.html">E</a></td>
 <td>Edges of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-es-attributes.html">E&lt;-</a></td>
@@ -543,9 +542,9 @@
 <tr><td style="width: 25%;"><a href="betweenness.html">edge.betweenness.estimate</a></td>
 <td>Vertex and edge betweenness centrality</td></tr>
 <tr><td style="width: 25%;"><a href="edge_connectivity.html">edge.connectivity</a></td>
-<td>Edge connectivity.</td></tr>
+<td>Edge connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="edge_connectivity.html">edge.disjoint.paths</a></td>
-<td>Edge connectivity.</td></tr>
+<td>Edge connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="edge.html">edges</a></td>
 <td>Helper function for adding and deleting edges</td></tr>
 <tr><td style="width: 25%;"><a href="edge_attr.html">edge_attr</a></td>
@@ -557,11 +556,11 @@
 <tr><td style="width: 25%;"><a href="betweenness.html">edge_betweenness</a></td>
 <td>Vertex and edge betweenness centrality</td></tr>
 <tr><td style="width: 25%;"><a href="edge_connectivity.html">edge_connectivity</a></td>
-<td>Edge connectivity.</td></tr>
+<td>Edge connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="edge_density.html">edge_density</a></td>
 <td>Graph density</td></tr>
 <tr><td style="width: 25%;"><a href="edge_connectivity.html">edge_disjoint_paths</a></td>
-<td>Edge connectivity.</td></tr>
+<td>Edge connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="ego.html">ego</a></td>
 <td>Neighborhood of graph vertices</td></tr>
 <tr><td style="width: 25%;"><a href="ego.html">ego_graph</a></td>
@@ -578,16 +577,8 @@
 <td>A graph with no edges</td></tr>
 <tr><td style="width: 25%;"><a href="ends.html">ends</a></td>
 <td>Incident vertices of some graph edges</td></tr>
-<tr><td style="width: 25%;"><a href="erdos.renyi.game.html">erdos.renyi.game</a></td>
-<td>Generate random graphs according to the Erdos-Renyi model</td></tr>
 <tr><td style="width: 25%;"><a href="sample_traits_callaway.html">establishment.game</a></td>
 <td>Graph generation based on different vertex types</td></tr>
-<tr><td style="width: 25%;"><a href="betweenness.html">estimate_betweenness</a></td>
-<td>Vertex and edge betweenness centrality</td></tr>
-<tr><td style="width: 25%;"><a href="closeness.html">estimate_closeness</a></td>
-<td>Closeness centrality of vertices</td></tr>
-<tr><td style="width: 25%;"><a href="betweenness.html">estimate_edge_betweenness</a></td>
-<td>Vertex and edge betweenness centrality</td></tr>
 <tr><td style="width: 25%;"><a href="has_eulerian_path.html">eulerian_cycle</a></td>
 <td>Find Eulerian paths or cycles in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="has_eulerian_path.html">eulerian_path</a></td>
@@ -600,9 +591,9 @@
 <td>Calculate Cohesive Blocks</td></tr>
 </table>
 
-<h2><a name="F">-- F --</a></h2>
+<h2><a id="F">-- F --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="diameter.html">farthest.nodes</a></td>
 <td>Diameter of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="diameter.html">farthest_vertices</a></td>
@@ -628,7 +619,7 @@
 <tr><td style="width: 25%;"><a href="graph_from_literal.html">from_literal</a></td>
 <td>Creating (small) graphs via a simple interface</td></tr>
 <tr><td style="width: 25%;"><a href="make_from_prufer.html">from_prufer</a></td>
-<td>Create an undirected tree graph from its Prufer sequence</td></tr>
+<td>Create an undirected tree graph from its Prüfer sequence</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_bipartite_graph.html">full_bipartite_graph</a></td>
 <td>Create a full bipartite graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_citation_graph.html">full_citation_graph</a></td>
@@ -637,9 +628,9 @@
 <td>Create a full graph</td></tr>
 </table>
 
-<h2><a name="G">-- G --</a></h2>
+<h2><a id="G">-- G --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="as_adjacency_matrix.html">get.adjacency</a></td>
 <td>Convert a graph to an adjacency matrix</td></tr>
 <tr><td style="width: 25%;"><a href="as_adj_list.html">get.adjedgelist</a></td>
@@ -683,15 +674,15 @@
 <tr><td style="width: 25%;"><a href="read_graph.html">GML</a></td>
 <td>Reading foreign file formats</td></tr>
 <tr><td style="width: 25%;"><a href="sample_gnm.html">gnm</a></td>
-<td>Generate random graphs according to the G(n,m) Erdos-Renyi model</td></tr>
+<td>Generate random graphs according to the G(n,m) Erdős-Rényi model</td></tr>
 <tr><td style="width: 25%;"><a href="sample_gnp.html">gnp</a></td>
-<td>Generate random graphs according to the G(n,p) Erdos-Renyi model</td></tr>
+<td>Generate random graphs according to the G(n,p) Erdős-Rényi model</td></tr>
 <tr><td style="width: 25%;"><a href="gorder.html">gorder</a></td>
 <td>Order (number of vertices) of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_graph.html">graph</a></td>
 <td>Create an igraph graph from a list of edges, or a notable graph</td></tr>
 <tr><td style="width: 25%;"><a href="edge_connectivity.html">graph.adhesion</a></td>
-<td>Edge connectivity.</td></tr>
+<td>Edge connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="graph_from_adjacency_matrix.html">graph.adjacency</a></td>
 <td>Create graphs from adjacency matrices</td></tr>
 <tr><td style="width: 25%;"><a href="graph_from_adj_list.html">graph.adjlist</a></td>
@@ -702,14 +693,14 @@
 <td>Graph attributes of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="graph_attr-set.html">graph.attributes&lt;-</a></td>
 <td>Set all or some graph attributes</td></tr>
-<tr><td style="width: 25%;"><a href="automorphisms.html">graph.automorphisms</a></td>
+<tr><td style="width: 25%;"><a href="count_automorphisms.html">graph.automorphisms</a></td>
 <td>Number of automorphisms</td></tr>
 <tr><td style="width: 25%;"><a href="bfs.html">graph.bfs</a></td>
 <td>Breadth-first search</td></tr>
 <tr><td style="width: 25%;"><a href="make_bipartite_graph.html">graph.bipartite</a></td>
 <td>Create a bipartite graph</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_connectivity.html">graph.cohesion</a></td>
-<td>Vertex connectivity.</td></tr>
+<td>Vertex connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="complementer.html">graph.complementer</a></td>
 <td>Complementer of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="compose.html">graph.compose</a></td>
@@ -880,9 +871,9 @@
 <td>The size of the graph (number of edges)</td></tr>
 </table>
 
-<h2><a name="H">-- H --</a></h2>
+<h2><a id="H">-- H --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="harmonic_centrality.html">harmonic_centrality</a></td>
 <td>Harmonic centrality of vertices</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">has.multiple</a></td>
@@ -918,18 +909,16 @@
 <tr><td style="width: 25%;"><a href="hrg_tree.html">hrg_tree</a></td>
 <td>Create an igraph graph from a hierarchical random graph model</td></tr>
 <tr><td style="width: 25%;"><a href="hub_score.html">hub.score</a></td>
-<td>Kleinberg's hub centrality scores.</td></tr>
+<td>Kleinberg's hub and authority centrality scores.</td></tr>
 <tr><td style="width: 25%;"><a href="hub_score.html">hub_score</a></td>
-<td>Kleinberg's hub centrality scores.</td></tr>
+<td>Kleinberg's hub and authority centrality scores.</td></tr>
 </table>
 
-<h2><a name="I">-- I --</a></h2>
+<h2><a id="I">-- I --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="identical_graphs.html">identical_graphs</a></td>
 <td>Decide if two graphs are identical</td></tr>
-<tr><td style="width: 25%;"><a href="aaa-igraph-package.html">igraph</a></td>
-<td>The igraph package</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-attribute-combination.html">igraph-attribute-combination</a></td>
 <td>How igraph functions handle attributes when the graph changes</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-dollar.html">igraph-dollar</a></td>
@@ -1045,9 +1034,9 @@
 <tr><td style="width: 25%;"><a href="which_multiple.html">is.loop</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">is.matching</a></td>
-<td>Graph matching</td></tr>
+<td>Matching</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">is.maximal.matching</a></td>
-<td>Graph matching</td></tr>
+<td>Matching</td></tr>
 <tr><td style="width: 25%;"><a href="is_min_separator.html">is.minimal.separator</a></td>
 <td>Minimal vertex separators</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">is.multiple</a></td>
@@ -1089,9 +1078,9 @@
 <tr><td style="width: 25%;"><a href="isomorphic.html">is_isomorphic_to</a></td>
 <td>Decide if two graphs are isomorphic</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">is_matching</a></td>
-<td>Graph matching</td></tr>
+<td>Matching</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">is_max_matching</a></td>
-<td>Graph matching</td></tr>
+<td>Matching</td></tr>
 <tr><td style="width: 25%;"><a href="is_min_separator.html">is_min_separator</a></td>
 <td>Minimal vertex separators</td></tr>
 <tr><td style="width: 25%;"><a href="is_named.html">is_named</a></td>
@@ -1114,9 +1103,9 @@
 <td>Independent vertex sets</td></tr>
 </table>
 
-<h2><a name="K">-- K --</a></h2>
+<h2><a id="K">-- K --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="sample_k_regular.html">k.regular.game</a></td>
 <td>Create a random regular graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_kautz_graph.html">kautz_graph</a></td>
@@ -1127,23 +1116,25 @@
 <td>Average nearest neighbor degree</td></tr>
 </table>
 
-<h2><a name="L">-- L --</a></h2>
+<h2><a id="L">-- L --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="cluster_label_prop.html">label.propagation.community</a></td>
 <td>Finding communities based on propagating labels</td></tr>
 <tr><td style="width: 25%;"><a href="laplacian_matrix.html">laplacian_matrix</a></td>
 <td>Graph Laplacian</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">largest.cliques</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">largest.independent.vertex.sets</a></td>
 <td>Independent vertex sets</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">largest_cliques</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
+<tr><td style="width: 25%;"><a href="components.html">largest_component</a></td>
+<td>Connected components of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">largest_ivs</a></td>
 <td>Independent vertex sets</td></tr>
 <tr><td style="width: 25%;"><a href="weighted_cliques.html">largest_weighted_cliques</a></td>
-<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
+<td>Functions to find weighted cliques, i.e. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">lastcit.game</a></td>
 <td>Random citation graphs</td></tr>
 <tr><td style="width: 25%;"><a href="sample_last_cit.html">last_cit</a></td>
@@ -1170,10 +1161,6 @@
 <td>The GEM layout algorithm</td></tr>
 <tr><td style="width: 25%;"><a href="layout_with_graphopt.html">layout.graphopt</a></td>
 <td>The graphopt layout algorithm</td></tr>
-<tr><td style="width: 25%;"><a href="layout_on_grid.html">layout.grid</a></td>
-<td>Simple grid layout</td></tr>
-<tr><td style="width: 25%;"><a href="layout_on_grid.html">layout.grid.3d</a></td>
-<td>Simple grid layout</td></tr>
 <tr><td style="width: 25%;"><a href="layout.deprecated.html">layout.kamada.kawai</a></td>
 <td>Deprecated layout functions</td></tr>
 <tr><td style="width: 25%;"><a href="layout.deprecated.html">layout.lgl</a></td>
@@ -1212,8 +1199,6 @@
 <td>Graph layout with vertices on a circle.</td></tr>
 <tr><td style="width: 25%;"><a href="layout_nicely.html">layout_nicely</a></td>
 <td>Choose an appropriate graph layout algorithm automatically</td></tr>
-<tr><td style="width: 25%;"><a href="layout_on_grid.html">layout_on_grid</a></td>
-<td>Simple grid layout</td></tr>
 <tr><td style="width: 25%;"><a href="layout_on_sphere.html">layout_on_sphere</a></td>
 <td>Graph layout with vertices on the surface of a sphere</td></tr>
 <tr><td style="width: 25%;"><a href="layout_randomly.html">layout_randomly</a></td>
@@ -1260,9 +1245,9 @@
 <td>Compute local scan statistics on graphs</td></tr>
 </table>
 
-<h2><a name="M">-- M --</a></h2>
+<h2><a id="M">-- M --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="make_.html">make_</a></td>
 <td>Make a new graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_bipartite_graph.html">make_bipartite_graph</a></td>
@@ -1280,7 +1265,7 @@
 <tr><td style="width: 25%;"><a href="make_empty_graph.html">make_empty_graph</a></td>
 <td>A graph with no edges</td></tr>
 <tr><td style="width: 25%;"><a href="make_from_prufer.html">make_from_prufer</a></td>
-<td>Create an undirected tree graph from its Prufer sequence</td></tr>
+<td>Create an undirected tree graph from its Prüfer sequence</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_bipartite_graph.html">make_full_bipartite_graph</a></td>
 <td>Create a full bipartite graph</td></tr>
 <tr><td style="width: 25%;"><a href="make_full_citation_graph.html">make_full_citation_graph</a></td>
@@ -1308,29 +1293,29 @@
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">maxcohesion</a></td>
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">maximal.cliques</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">maximal.cliques.count</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">maximal.independent.vertex.sets</a></td>
 <td>Independent vertex sets</td></tr>
 <tr><td style="width: 25%;"><a href="ivs.html">maximal_ivs</a></td>
 <td>Independent vertex sets</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">maximum.bipartite.matching</a></td>
-<td>Graph matching</td></tr>
+<td>Matching</td></tr>
 <tr><td style="width: 25%;"><a href="max_cardinality.html">maximum.cardinality.search</a></td>
 <td>Maximum cardinality search</td></tr>
 <tr><td style="width: 25%;"><a href="matching.html">max_bipartite_match</a></td>
-<td>Graph matching</td></tr>
+<td>Matching</td></tr>
 <tr><td style="width: 25%;"><a href="max_cardinality.html">max_cardinality</a></td>
 <td>Maximum cardinality search</td></tr>
 <tr><td style="width: 25%;"><a href="cliques.html">max_cliques</a></td>
-<td>Functions to find cliques, ie. complete subgraphs in a graph</td></tr>
+<td>Functions to find cliques, i.e. complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="cohesive_blocks.html">max_cohesion</a></td>
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="max_flow.html">max_flow</a></td>
 <td>Maximum flow in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="weighted_cliques.html">max_weighted_cliques</a></td>
-<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
+<td>Functions to find weighted cliques, i.e. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="distances.html">mean_distance</a></td>
 <td>Shortest (directed or undirected) paths between vertices</td></tr>
 <tr><td style="width: 25%;"><a href="sir.html">median.sir</a></td>
@@ -1371,35 +1356,15 @@
 <td>Finding community structure by multi-level optimization of modularity</td></tr>
 </table>
 
-<h2><a name="N">-- N --</a></h2>
+<h2><a id="N">-- N --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="ego.html">neighborhood</a></td>
 <td>Neighborhood of graph vertices</td></tr>
 <tr><td style="width: 25%;"><a href="ego.html">neighborhood.size</a></td>
 <td>Neighborhood of graph vertices</td></tr>
 <tr><td style="width: 25%;"><a href="neighbors.html">neighbors</a></td>
 <td>Neighboring (adjacent) vertices in a graph</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus.get</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus.info</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus.list</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus.search</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexusDatasetInfo</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus_get</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus_info</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus_list</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">nexus_search</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
 <tr><td style="width: 25%;"><a href="layout_nicely.html">nicely</a></td>
 <td>Choose an appropriate graph layout algorithm automatically</td></tr>
 <tr><td style="width: 25%;"><a href="components.html">no.clusters</a></td>
@@ -1410,20 +1375,18 @@
 <td>Normalize coordinates for plotting graphs</td></tr>
 </table>
 
-<h2><a name="O">-- O --</a></h2>
+<h2><a id="O">-- O --</a></h2>
 
-<table width="100%">
-<tr><td style="width: 25%;"><a href="layout_on_grid.html">on_grid</a></td>
-<td>Simple grid layout</td></tr>
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="layout_on_sphere.html">on_sphere</a></td>
 <td>Graph layout with vertices on the surface of a sphere</td></tr>
 <tr><td style="width: 25%;"><a href="cluster_optimal.html">optimal.community</a></td>
 <td>Optimal community structure</td></tr>
 </table>
 
-<h2><a name="P">-- P --</a></h2>
+<h2><a id="P">-- P --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="sample_pa.html">pa</a></td>
 <td>Generate random graphs using preferential attachment</td></tr>
 <tr><td style="width: 25%;"><a href="page_rank.html">page.rank</a></td>
@@ -1494,10 +1457,6 @@
 <td>Graph layouts</td></tr>
 <tr><td style="width: 25%;"><a href="layout_.html">print.igraph_layout_spec</a></td>
 <td>Graph layouts</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">print.nexusDatasetInfo</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">print.nexusDatasetInfoList</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
 <tr><td style="width: 25%;"><a href="printer_callback.html">printer_callback</a></td>
 <td>Create a printer callback function</td></tr>
 <tr><td style="width: 25%;"><a href="printr.html">printr</a></td>
@@ -1506,20 +1465,18 @@
 <td>Print graphs to the terminal</td></tr>
 </table>
 
-<h2><a name="Q">-- Q --</a></h2>
+<h2><a id="Q">-- Q --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="sir.html">quantile.sir</a></td>
 <td>SIR model on graphs</td></tr>
 </table>
 
-<h2><a name="R">-- R --</a></h2>
+<h2><a id="R">-- R --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="radius.html">radius</a></td>
 <td>Radius of a graph</td></tr>
-<tr><td style="width: 25%;"><a href="erdos.renyi.game.html">random.graph.game</a></td>
-<td>Generate random graphs according to the Erdos-Renyi model</td></tr>
 <tr><td style="width: 25%;"><a href="layout_randomly.html">randomly</a></td>
 <td>Randomly place vertices on a plane or in 3d space</td></tr>
 <tr><td style="width: 25%;"><a href="random_walk.html">random_edge_walk</a></td>
@@ -1564,9 +1521,9 @@
 <td>The default R palette</td></tr>
 </table>
 
-<h2><a name="S">-- S --</a></h2>
+<h2><a id="S">-- S --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="sample_.html">sample_</a></td>
 <td>Sample from a random graph model</td></tr>
 <tr><td style="width: 25%;"><a href="sample_pref.html">sample_asym_pref</a></td>
@@ -1594,9 +1551,9 @@
 <tr><td style="width: 25%;"><a href="sample_forestfire.html">sample_forestfire</a></td>
 <td>Forest Fire Network Model</td></tr>
 <tr><td style="width: 25%;"><a href="sample_gnm.html">sample_gnm</a></td>
-<td>Generate random graphs according to the G(n,m) Erdos-Renyi model</td></tr>
+<td>Generate random graphs according to the G(n,m) Erdős-Rényi model</td></tr>
 <tr><td style="width: 25%;"><a href="sample_gnp.html">sample_gnp</a></td>
-<td>Generate random graphs according to the G(n,p) Erdos-Renyi model</td></tr>
+<td>Generate random graphs according to the G(n,p) Erdős-Rényi model</td></tr>
 <tr><td style="width: 25%;"><a href="sample_grg.html">sample_grg</a></td>
 <td>Geometric random graphs</td></tr>
 <tr><td style="width: 25%;"><a href="sample_growing.html">sample_growing</a></td>
@@ -1715,8 +1672,6 @@
 <td>Finding communities in graphs based on statistical meachanics</td></tr>
 <tr><td style="width: 25%;"><a href="split_join_distance.html">split_join_distance</a></td>
 <td>Split-join distance of two community structures</td></tr>
-<tr><td style="width: 25%;"><a href="srand.html">srand</a></td>
-<td>Deprecated function, used to set random seed of the C library's RNG</td></tr>
 <tr><td style="width: 25%;"><a href="make_star.html">star</a></td>
 <td>Create a star graph, a tree with n vertices and n - 1 leaves</td></tr>
 <tr><td style="width: 25%;"><a href="sample_fitness.html">static.fitness.game</a></td>
@@ -1755,13 +1710,11 @@
 <td>Calculate Cohesive Blocks</td></tr>
 <tr><td style="width: 25%;"><a href="print.igraph.html">summary.igraph</a></td>
 <td>Print graphs to the terminal</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">summary.nexusDatasetInfoList</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
 </table>
 
-<h2><a name="T">-- T --</a></h2>
+<h2><a id="T">-- T --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="reverse_edges.html">t.igraph</a></td>
 <td>Reverse edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="tail_of.html">tail_of</a></td>
@@ -1819,7 +1772,7 @@
 <tr><td style="width: 25%;"><a href="topo_sort.html">topo_sort</a></td>
 <td>Topological sorting of vertices in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="to_prufer.html">to_prufer</a></td>
-<td>Convert a tree graph to its Prufer sequence</td></tr>
+<td>Convert a tree graph to its Prüfer sequence</td></tr>
 <tr><td style="width: 25%;"><a href="sample_traits_callaway.html">traits</a></td>
 <td>Graph generation based on different vertex types</td></tr>
 <tr><td style="width: 25%;"><a href="sample_traits_callaway.html">traits_callaway</a></td>
@@ -1836,9 +1789,9 @@
 <td>Find triangles in graphs</td></tr>
 </table>
 
-<h2><a name="U">-- U --</a></h2>
+<h2><a id="U">-- U --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="read_graph.html">UCINET</a></td>
 <td>Reading foreign file formats</td></tr>
 <tr><td style="width: 25%;"><a href="make_graph.html">undirected_graph</a></td>
@@ -1863,9 +1816,9 @@
 <td>igraph data structure versions</td></tr>
 </table>
 
-<h2><a name="V">-- V --</a></h2>
+<h2><a id="V">-- V --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="V.html">V</a></td>
 <td>Vertices of a graph</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-vs-attributes.html">V&lt;-</a></td>
@@ -1879,9 +1832,9 @@
 <tr><td style="width: 25%;"><a href="vertex_attr-set.html">vertex.attributes&lt;-</a></td>
 <td>Set one or more vertex attributes</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_connectivity.html">vertex.connectivity</a></td>
-<td>Vertex connectivity.</td></tr>
+<td>Vertex connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_connectivity.html">vertex.disjoint.paths</a></td>
-<td>Vertex connectivity.</td></tr>
+<td>Vertex connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="vertex.shape.pie.html">vertex.shape.pie</a></td>
 <td>Using pie charts as vertices in graph plots</td></tr>
 <tr><td style="width: 25%;"><a href="shapes.html">vertex.shapes</a></td>
@@ -1893,24 +1846,24 @@
 <tr><td style="width: 25%;"><a href="vertex_attr_names.html">vertex_attr_names</a></td>
 <td>List names of vertex attributes</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_connectivity.html">vertex_connectivity</a></td>
-<td>Vertex connectivity.</td></tr>
+<td>Vertex connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="vertex_connectivity.html">vertex_disjoint_paths</a></td>
-<td>Vertex connectivity.</td></tr>
+<td>Vertex connectivity</td></tr>
 <tr><td style="width: 25%;"><a href="vertex.html">vertices</a></td>
 <td>Helper function for adding and deleting vertices</td></tr>
 </table>
 
-<h2><a name="W">-- W --</a></h2>
+<h2><a id="W">-- W --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="cluster_walktrap.html">walktrap.community</a></td>
 <td>Community structure via short random walks</td></tr>
 <tr><td style="width: 25%;"><a href="sample_smallworld.html">watts.strogatz.game</a></td>
 <td>The Watts-Strogatz small-world model</td></tr>
 <tr><td style="width: 25%;"><a href="weighted_cliques.html">weighted_cliques</a></td>
-<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
+<td>Functions to find weighted cliques, i.e. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="weighted_cliques.html">weighted_clique_num</a></td>
-<td>Functions to find weighted cliques, ie. weighted complete subgraphs in a graph</td></tr>
+<td>Functions to find weighted cliques, i.e. weighted complete subgraphs in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">which_loop</a></td>
 <td>Find the multiple or loop edges in a graph</td></tr>
 <tr><td style="width: 25%;"><a href="which_multiple.html">which_multiple</a></td>
@@ -1955,9 +1908,9 @@
 <td>Writing the graph to a file in some format</td></tr>
 </table>
 
-<h2><a name="misc">-- misc --</a></h2>
+<h2><a id="misc">-- misc --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="igraph-dollar.html">$.igraph</a></td>
 <td>Getting and setting graph attributes, shortcut</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-es-attributes.html">$.igraph.es</a></td>
@@ -1994,22 +1947,20 @@
 <td>Add vertices, edges or another graph to a graph</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-minus.html">-.igraph</a></td>
 <td>Delete vertices or edges from a graph</td></tr>
-<tr><td style="width: 25%;"><a href="dot-apply_modifiers.html">.apply_modifiers</a></td>
-<td>Applies a set of constructor modifiers to an already constructed graph.</td></tr>
 <tr><td style="width: 25%;"><a href="dot-data.html">.data</a></td>
 <td>'.data' and '.env' pronouns</td></tr>
 <tr><td style="width: 25%;"><a href="dot-data.html">.env</a></td>
 <td>'.data' and '.env' pronouns</td></tr>
-<tr><td style="width: 25%;"><a href="dot-extract_constructor_and_modifiers.html">.extract_constructor_and_modifiers</a></td>
-<td>Takes an argument list and extracts the constructor specification and constructor modifiers from it.</td></tr>
+<tr><td style="width: 25%;"><a href="console.html">.igraph.progress</a></td>
+<td>The igraph console</td></tr>
+<tr><td style="width: 25%;"><a href="console.html">.igraph.status</a></td>
+<td>The igraph console</td></tr>
 <tr><td style="width: 25%;"><a href="sub-.igraph.html">[.igraph</a></td>
 <td>Query and manipulate a graph as it were an adjacency matrix</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-es-indexing.html">[.igraph.es</a></td>
 <td>Indexing edge sequences</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-vs-indexing.html">[.igraph.vs</a></td>
 <td>Indexing vertex sequences</td></tr>
-<tr><td style="width: 25%;"><a href="nexus.html">[.nexusDatasetInfoList</a></td>
-<td>Query and download from the Nexus network repository</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-es-attributes.html">[&lt;-.igraph.es</a></td>
 <td>Query or set attributes of the edges in an edge sequence</td></tr>
 <tr><td style="width: 25%;"><a href="igraph-vs-attributes.html">[&lt;-.igraph.vs</a></td>

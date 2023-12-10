@@ -2,7 +2,7 @@
 /* C Header */
 
 /*
-    Copyright (C) 2017-2021 Torsten Hothorn
+    Copyright (C) 2017-2023 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 
@@ -81,35 +81,35 @@ extern SEXP libcoin_R_PermutedLinearStatistic_2d(
 }
 
 extern SEXP libcoin_R_QuadraticTest(
-    SEXP LEV, SEXP pvalue, SEXP lower, SEXP give_log, SEXP PermutedStatistics
+    SEXP LECV, SEXP pvalue, SEXP lower, SEXP give_log, SEXP PermutedStatistics
 ) {
     static SEXP(*fun)(SEXP, SEXP, SEXP, SEXP, SEXP) = NULL;
     if (fun == NULL)
         fun = (SEXP(*)(SEXP, SEXP, SEXP, SEXP, SEXP))
             R_GetCCallable("libcoin", "R_QuadraticTest");
-    return fun(LEV, pvalue, lower, give_log, PermutedStatistics);
+    return fun(LECV, pvalue, lower, give_log, PermutedStatistics);
 }
 
 extern SEXP libcoin_R_MaximumTest(
-    SEXP LEV, SEXP alternative, SEXP pvalue, SEXP lower, SEXP give_log,
+    SEXP LECV, SEXP alternative, SEXP pvalue, SEXP lower, SEXP give_log,
     SEXP PermutedStatistics, SEXP maxpts, SEXP releps, SEXP abseps
 ) {
   static SEXP(*fun)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP) = NULL;
     if (fun == NULL)
         fun = (SEXP(*)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP))
             R_GetCCallable("libcoin", "R_MaximumTest");
-    return fun(LEV, alternative, pvalue, lower, give_log, PermutedStatistics, maxpts, releps,
+    return fun(LECV, alternative, pvalue, lower, give_log, PermutedStatistics, maxpts, releps,
                abseps);
 }
 
 extern SEXP libcoin_R_MaximallySelectedTest(
-    SEXP LEV, SEXP ordered, SEXP teststat, SEXP minbucket, SEXP lower, SEXP give_log
+    SEXP LECV, SEXP ordered, SEXP teststat, SEXP minbucket, SEXP lower, SEXP give_log
 ) {
     static SEXP(*fun)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP) = NULL;
     if (fun == NULL)
         fun = (SEXP(*)(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP))
             R_GetCCallable("libcoin", "R_MaximallySelectedTest");
-    return fun(LEV, ordered, teststat, minbucket, lower, give_log);
+    return fun(LECV, ordered, teststat, minbucket, lower, give_log);
 }
 
 extern SEXP libcoin_R_quadform(

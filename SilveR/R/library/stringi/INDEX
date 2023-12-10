@@ -87,7 +87,7 @@ stri_replace_all        Replace Pattern Occurrences
 stri_replace_na         Replace Missing Values in a Character Vector
 stri_replace_rstr       Convert gsub-Style Replacement Strings
 stri_reverse            Reverse Each String
-stri_sort               Sorting
+stri_sort               String Sorting
 stri_sort_key           Sort Keys
 stri_split              Split a String By Pattern Matches
 stri_split_boundaries   Split a String at Text Boundaries

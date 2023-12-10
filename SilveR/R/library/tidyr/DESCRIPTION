@@ -1,10 +1,12 @@
 Package: tidyr
 Title: Tidy Messy Data
-Version: 1.2.1
+Version: 1.3.0
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = c("aut", "cre")),
+    person("Davis", "Vaughan", , "davis@posit.co", role = "aut"),
     person("Maximilian", "Girlich", role = "aut"),
-    person("RStudio", role = "cph")
+    person("Kevin", "Ushey", , "kevin@posit.co", role = "ctb"),
+    person("Posit, PBC", role = c("cph", "fnd"))
   )
 Description: Tools to help to create tidy data, where each column is a
     variable, each row is an observation, and each cell contains a single
@@ -16,27 +18,30 @@ Description: Tools to help to create tidy data, where each column is a
 License: MIT + file LICENSE
 URL: https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr
 BugReports: https://github.com/tidyverse/tidyr/issues
-Depends: R (>= 3.1)
-Imports: dplyr (>= 1.0.0), ellipsis (>= 0.1.0), glue, lifecycle,
-        magrittr, purrr, rlang, tibble (>= 2.1.1), tidyselect (>=
-        1.1.0), utils, vctrs (>= 0.3.7)
-Suggests: covr, data.table, jsonlite, knitr, readr, repurrrsive (>=
-        1.0.0), rmarkdown, testthat (>= 3.0.0)
+Depends: R (>= 3.4.0)
+Imports: cli (>= 3.4.1), dplyr (>= 1.0.10), glue, lifecycle (>= 1.0.3),
+        magrittr, purrr (>= 1.0.1), rlang (>= 1.0.4), stringr (>=
+        1.5.0), tibble (>= 2.1.1), tidyselect (>= 1.2.0), utils, vctrs
+        (>= 0.5.2)
+Suggests: covr, data.table, knitr, readr, repurrrsive (>= 1.1.0),
+        rmarkdown, testthat (>= 3.0.0)
 LinkingTo: cpp11 (>= 0.4.0)
 VignetteBuilder: knitr
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 SystemRequirements: C++11
 NeedsCompilation: yes
-Packaged: 2022-08-31 18:49:06 UTC; hadleywickham
+Packaged: 2023-01-23 22:21:00 UTC; hadleywickham
 Author: Hadley Wickham [aut, cre],
+  Davis Vaughan [aut],
   Maximilian Girlich [aut],
-  RStudio [cph]
-Maintainer: Hadley Wickham <hadley@rstudio.com>
+  Kevin Ushey [ctb],
+  Posit, PBC [cph, fnd]
+Maintainer: Hadley Wickham <hadley@posit.co>
 Repository: CRAN
-Date/Publication: 2022-09-08 07:30:02 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-10-05 21:52:43 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-01-24 16:00:02 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 02:48:28 UTC; windows
+Archs: x64

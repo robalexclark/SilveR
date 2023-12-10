@@ -140,13 +140,14 @@ str_detect("xyz", "x(?#this is a comment)")
 
 ## -----------------------------------------------------------------------------
 phone <- regex("
-  \\(?     # optional opening parens
-  (\\d{3}) # area code
-  [)- ]?   # optional closing parens, dash, or space
-  (\\d{3}) # another three numbers
-  [ -]?    # optional space or dash
-  (\\d{3}) # three more numbers
+  \\(?       # optional opening parens
+  (\\d{3})   # area code
+  \\)?       # optional closing parens
+  (?:-|\\ )? # optional dash or space
+  (\\d{3})   # another three numbers
+  (?:-|\\ )? # optional dash or space
+  (\\d{3})   # three more numbers
   ", comments = TRUE)
 
-str_match("514-791-8141", phone)
+str_match(c("514-791-8141", "(514) 791 8141"), phone)
 

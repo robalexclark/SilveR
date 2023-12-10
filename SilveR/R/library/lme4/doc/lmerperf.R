@@ -2,7 +2,7 @@
 library("knitr")
 knitr::opts_chunk$set(
   )
-load(system.file("testdata", "lmerperf.rda", package="lme4"))
+(load(system.file("testdata", "lmerperf.rda", package="lme4")))# 'ss' 'fitlist'
 
 ## ----loadpkg,message=FALSE----------------------------------------------------
 library("lme4")

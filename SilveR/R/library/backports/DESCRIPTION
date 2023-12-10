@@ -27,5 +27,5 @@ Author: Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>),
   R Core Team [aut]
 Repository: CRAN
 Date/Publication: 2021-12-13 11:30:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2021-12-15 00:12:34 UTC; windows
-Archs: i386, x64
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-20 00:51:41 UTC; windows
+Archs: x64

@@ -1,5 +1,6 @@
 mixOmics-package	mixOmics-package
 auroc	auroc
+auroc.list	auroc
 auroc.mint.block.plsda	auroc
 auroc.mint.block.splsda	auroc
 auroc.mint.plsda	auroc
@@ -20,6 +21,8 @@ breast.tumors	breast.tumors
 cim	cim
 cimDiablo	cimDiablo
 circosPlot	circosPlot
+circosPlot.block.pls	circosPlot
+circosPlot.block.plsda	circosPlot
 circosPlot.block.spls	circosPlot
 circosPlot.block.splsda	circosPlot
 color.GreenRed	colors

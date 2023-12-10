@@ -1,10 +1,12 @@
 ## ---- echo = FALSE, results = "hide", message = FALSE---------------------------------------------
-require("emmeans") 
+require("emmeans")
+require("lme4")
 options(show.signif.stars = FALSE, width = 100) 
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro") 
 
 ## -------------------------------------------------------------------------------------------------
-Oats.lmer <- lme4::lmer(yield ~ Variety + factor(nitro) + (1|Block/Variety),
+library(lme4)
+Oats.lmer <- lmer(yield ~ Variety + factor(nitro) + (1|Block/Variety),
                         data = nlme::Oats, subset = -c(1,2,3,5,8,13,21,34,55))
 
 ## -------------------------------------------------------------------------------------------------
@@ -24,6 +26,28 @@ contrast(Oats.emm.n, "poly")
 emmeans(Oats.lmer, pairwise ~ Variety)
 
 ## -------------------------------------------------------------------------------------------------
+cw.lmer <- lmer(sqrt(weight) ~ Time*Diet + (1+Time|Chick), data = ChickWeight)
+
+## -------------------------------------------------------------------------------------------------
+cw.emm <- emmeans(cw.lmer, ~ Time|Diet, at = list(Time = c(5, 10, 15, 20)))
+
+## -------------------------------------------------------------------------------------------------
+V <- matrix(0, nrow = 3, ncol = 3, dimnames = list(c("E","C","S"), c("E","C","S")))
+V[1, 1] <- sigma(cw.lmer)^2              # Var(E)
+V[2:3, 2:3] <- VarCorr(cw.lmer)$Chick    # Cov(C, S)
+V
+
+## -------------------------------------------------------------------------------------------------
+sig <- sapply(c(5, 10, 15, 20), function(t) {
+    a <- c(1, 1, t)
+    sqrt(sum(a * V %*% a))
+})
+sig  
+
+## -------------------------------------------------------------------------------------------------
+confint(cw.emm, type = "response", bias.adj = TRUE, sigma = sig)
+
+## -------------------------------------------------------------------------------------------------
 ins <- data.frame(
     n = c(500, 1200, 100, 400, 500, 300),
     size = factor(rep(1:3,2), labels = c("S","M","L")),
@@ -36,10 +60,13 @@ ins.glm <- glm(claims ~ size + age + offset(log(n)),
 ref_grid(ins.glm)
 
 ## -------------------------------------------------------------------------------------------------
-emmeans(ins.glm, "size", type = "response")
+(EMM <- emmeans(ins.glm, "size", type = "response"))
 
 ## -------------------------------------------------------------------------------------------------
-emmeans(ins.glm, "size", type = "response", offset = 0)
+EMM@grid
+
+## -------------------------------------------------------------------------------------------------
+emmeans(ins.glm, "size", type = "response", offset = log(1))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  emmeans(ins.glm, "size", type = "response", at = list(n = 1))
@@ -119,13 +146,13 @@ totSD <- sqrt(apply(cbpp.sigma^2, 1, sum))
 cbpp.rgrd <- regrid(cbpp.rg, bias.adjust = TRUE, sigma = totSD)
 summary(cbpp.rgrd)
 
-## -------------------------------------------------------------------------------------------------
+## ---- fig.alt = "kernel denity estimates for each of the 4 periods. Their medians and spreads decrease with period, and period 1 is especially different. See the previous summary table for the numerical values of the estimated means"----
 bayesplot::mcmc_areas(as.mcmc(cbpp.rgrd))
 
 ## -------------------------------------------------------------------------------------------------
 contrast(cbpp.rgrd, "consec", reverse = TRUE)
 
-## -------------------------------------------------------------------------------------------------
+## ---- fig.alt = "Histograms of the predictive distributions for each period. The one for period 1 has bins from 0 to 15; the number of bins decreases until period 4 has only bins for 0 through 5."----
 set.seed(2019.0605)
 cbpp.preds <- as.mcmc(cbpp.rgrd, likelihood = "binomial", trials = 25)
 bayesplot::mcmc_hist(cbpp.preds, binwidth = 1)

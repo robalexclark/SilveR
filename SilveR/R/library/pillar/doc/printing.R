@@ -10,7 +10,11 @@ pillar:::set_show_source_hooks()
 library(pillar)
 
 ## ----echo = FALSE, error = TRUE-----------------------------------------------
-DiagrammeR::mermaid("format.mmd")
+text <- paste(
+  readLines("format.mmd"),
+  collapse = "\n"
+)
+DiagrammeR::mermaid(text)
 
 ## -----------------------------------------------------------------------------
 tbl <- tibble::tibble(a = 1:3, b = tibble::tibble(c = 4:6, d = 7:9), e = 10:12)
@@ -139,10 +143,10 @@ typeof(tbl_format_body(tbl, setup))
 #  tbl_format_footer.tbl <- function (x, setup, ...) 
 #  {
 #      footer <- format_footer(x, setup)
-#      footer_comment <- wrap_footer(footer, setup)
+#      footer_comment <- wrap_footer_bullet(footer, setup)
 #      footer_advice <- format_footer_advice(x, setup)
-#      footer_advice_comment <- wrap_footer(footer_advice, setup, 
-#          lines = 1, ellipsis = FALSE)
+#      footer_advice_comment <- wrap_footer_bullet(footer_advice, 
+#          setup, lines = 1, ellipsis = FALSE, bullet = symbol$info)
 #      style_subtle(c(footer_comment, footer_advice_comment))
 #  }
 

@@ -9,7 +9,7 @@ library(dplyr, warn.conflicts = FALSE)
 nest_by <- function(df, ...) {
   df %>%
     group_by(...) %>% 
-    summarise(data = list(across())) %>% 
+    summarise(data = list(pick(everything()))) %>% 
     rowwise(...)
 }
 # mtcars %>% nest_by(cyl)
@@ -55,13 +55,13 @@ rf %>%
   mutate(across(w:z, ~ . / total))
 
 ## -----------------------------------------------------------------------------
-df %>% mutate(total = rowSums(across(where(is.numeric))))
-df %>% mutate(mean = rowMeans(across(where(is.numeric))))
+df %>% mutate(total = rowSums(pick(where(is.numeric), -id)))
+df %>% mutate(mean = rowMeans(pick(where(is.numeric), -id)))
 
 ## ---- eval = FALSE, include = FALSE-------------------------------------------
 #  bench::mark(
-#    df %>% mutate(m = rowSums(across(x:z))),
-#    df %>% mutate(m = apply(across(x:z), 1, sum)),
+#    df %>% mutate(m = rowSums(pick(x:z))),
+#    df %>% mutate(m = apply(pick(x:z), 1, sum)),
 #    df %>% rowwise() %>% mutate(m = sum(pick(x:z))),
 #    check = FALSE
 #  )
@@ -133,7 +133,7 @@ mods %>% summarise(rsq = summary(mod)$r.squared)
 mods %>% summarise(broom::glance(mod))
 
 ## -----------------------------------------------------------------------------
-mods %>% summarise(broom::tidy(mod))
+mods %>% reframe(broom::tidy(mod))
 
 ## -----------------------------------------------------------------------------
 df <- tribble(
@@ -193,7 +193,7 @@ mtcars %>%
 ## -----------------------------------------------------------------------------
 mtcars %>% 
   group_by(cyl) %>% 
-  summarise(head(cur_data(), 1))
+  reframe(head(pick(everything()), 1))
 
 ## -----------------------------------------------------------------------------
 mtcars %>% 
@@ -203,5 +203,5 @@ mtcars %>%
 ## -----------------------------------------------------------------------------
 mtcars %>% 
   group_by(cyl) %>% 
-  summarise(nrows = nrow(cur_data()))
+  summarise(nrows = nrow(pick(everything())))
 

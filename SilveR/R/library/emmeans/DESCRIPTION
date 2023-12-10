@@ -1,10 +1,11 @@
 Package: emmeans
 Type: Package
 Title: Estimated Marginal Means, aka Least-Squares Means
-Version: 1.8.2
-Date: 2022-10-28
+Version: 1.8.9
+Date: 2023-10-17
 Authors@R: c(person("Russell V.", "Lenth", role = c("aut", "cre", "cph"), 
     email = "russell-lenth@uiowa.edu"),
+    person("Ben", "Bolker", role = "ctb"),
     person("Paul", "Buerkner", role = "ctb"),
     person("Iago", "Giné-Vázquez", role = "ctb"),
     person("Maxime", "Herve", role = "ctb"),
@@ -15,12 +16,13 @@ Authors@R: c(person("Russell V.", "Lenth", role = c("aut", "cre", "cph"),
     person("Henrik", "Singmann", role = "ctb"))
 Depends: R (>= 4.1.0)
 Imports: estimability (>= 1.4.1), graphics, methods, numDeriv, stats,
-        utils, mvtnorm, xtable (>= 1.8-2)
+        utils, mvtnorm
 Suggests: bayesplot, bayestestR, biglm, brms, car, coda (>= 0.17),
         ggplot2, lattice, logspline, mediation, mgcv, multcomp,
         multcompView, nlme, ordinal (>= 2014.11-12), pbkrtest (>=
         0.4-1), lme4, lmerTest (>= 2.0.32), MASS, MuMIn, rsm, knitr,
-        rmarkdown, sandwich, scales, splines, testthat
+        rmarkdown, sandwich, scales, splines, testthat, xtable (>=
+        1.8-2)
 Enhances: CARBayes, coxme, gee, geepack, MCMCglmm, MCMCpack, mice,
         nnet, pscl, rstanarm, sommer, survival
 URL: https://github.com/rvlenth/emmeans
@@ -36,11 +38,12 @@ Description: Obtain estimated marginal means (EMMs) for many linear, generalized
   Statistician 34(4), 216-221 <doi:10.1080/00031305.1980.10483031>.
 License: GPL-2 | GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2022-10-27 21:34:04 UTC; rlenth
+Packaged: 2023-10-17 22:34:39 UTC; rlenth
 Author: Russell V. Lenth [aut, cre, cph],
+  Ben Bolker [ctb],
   Paul Buerkner [ctb],
   Iago Giné-Vázquez [ctb],
   Maxime Herve [ctb],
@@ -51,5 +54,5 @@ Author: Russell V. Lenth [aut, cre, cph],
   Henrik Singmann [ctb]
 Maintainer: Russell V. Lenth <russell-lenth@uiowa.edu>
 Repository: CRAN
-Date/Publication: 2022-10-27 22:15:06 UTC
-Built: R 4.1.2; ; 2022-10-30 10:23:17 UTC; windows
+Date/Publication: 2023-10-17 23:30:06 UTC
+Built: R 4.3.1; ; 2023-10-24 00:44:37 UTC; windows

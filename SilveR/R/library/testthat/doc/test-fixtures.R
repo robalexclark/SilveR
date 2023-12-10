@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -45,7 +45,7 @@ test_that("can print one digit of pi", {
 })
 pi
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  op <- options(digits = 1)
 #  on.exit(options(op), add = TRUE, after = FALSE)
 
@@ -127,7 +127,7 @@ test_that("message2() output depends on verbose option", {
   expect_message(message2("Hi!"), NA)
 })
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  local_create_package <- function(dir = file_temp(), env = parent.frame()) {
 #    old_project <- proj_get_()
 #  
@@ -156,7 +156,7 @@ test_that("message2() output depends on verbose option", {
 #    expect_true(desc::desc_has_fields("RoxygenNote", pkg))
 #  })
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # Run before any test
 #  write.csv("mtcars.csv", mtcars)
 #  

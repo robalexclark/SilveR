@@ -48,7 +48,7 @@ d <- c("PROACT_2013_08_12_Demographics_Dictionary.csv", "PROACT_2013_08_12_SUBJE
        "PROACT_2013_08_12_RILUZOLE_Dictionary.csv", "PROACT_2013_08_12_DEATH_Dictionary.csv", 
        "PROACT_2013_08_22_LABS_Dictionary.csv")
 
-library("gdata")
+library("openxlsx")
 
 dict  <-  function(d){
   tmp <- read.table(d, sep = "|", header = TRUE, na.string = "", quote = "\"")
@@ -73,7 +73,7 @@ f <- c("PROACT_2013_08_12_Demographics_Data.xlsx", "PROACT_2013_08_12_SUBJECT_AL
 labs <- read.csv("PROACT_2013_08_27_LABS_Data.csv", check.names=FALSE)
 
 db  <-  function(f){
-  tmp <- read.xls(f, check.names=FALSE)
+  tmp <- read.xlsx(f, check.names=FALSE)
 }
 RALS <- lapply(f,db)
 

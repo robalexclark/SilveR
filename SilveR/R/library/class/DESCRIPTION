@@ -1,7 +1,7 @@
 Package: class
 Priority: recommended
-Version: 7.3-20
-Date: 2022-01-12
+Version: 7.3-22
+Date: 2023-05-02
 Depends: R (>= 3.0.0), stats, utils
 Imports: MASS
 Authors@R: c(person("Brian", "Ripley", role = c("aut", "cre", "cph"),
@@ -14,12 +14,11 @@ ByteCompile: yes
 License: GPL-2 | GPL-3
 URL: http://www.stats.ox.ac.uk/pub/MASS4/
 NeedsCompilation: yes
-Packaged: 2022-01-13 05:06:38 UTC; ripley
+Packaged: 2023-05-02 16:15:43 UTC; ripley
 Author: Brian Ripley [aut, cre, cph],
   William Venables [cph]
 Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
 Repository: CRAN
-Date/Publication: 2022-01-16 10:24:56 UTC
-Built: R 4.2.1; x86_64-w64-mingw32; 2022-06-23 09:49:44 UTC; windows
-ExperimentalWindowsRuntime: ucrt
+Date/Publication: 2023-05-03 11:01:28 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-06-16 07:55:08 UTC; windows
 Archs: x64

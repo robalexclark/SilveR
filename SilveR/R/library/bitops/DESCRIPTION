@@ -14,5 +14,5 @@ NeedsCompilation: yes
 Packaged: 2021-04-13 20:50:22 UTC; maechler
 Repository: CRAN
 Date/Publication: 2021-04-24 11:40:08 UTC
-Built: R 4.1.1; x86_64-w64-mingw32; 2021-09-10 15:53:39 UTC; windows
-Archs: i386, x64
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-20 00:52:07 UTC; windows
+Archs: x64

@@ -47,6 +47,7 @@ assertNumber	checkNumber
 assertNumeric	checkNumeric
 assertOS	checkOS
 assertPathForOutput	checkPathForOutput
+assertPermutation	checkPermutation
 assertPOSIXct	checkPOSIXct
 assertR6	checkR6
 assertRaw	checkRaw
@@ -96,6 +97,7 @@ assert_number	checkNumber
 assert_numeric	checkNumeric
 assert_os	checkOS
 assert_path_for_output	checkPathForOutput
+assert_permutation	checkPermutation
 assert_posixct	checkPOSIXct
 assert_r6	checkR6
 assert_raw	checkRaw
@@ -146,6 +148,7 @@ checkNumber	checkNumber
 checkNumeric	checkNumeric
 checkOS	checkOS
 checkPathForOutput	checkPathForOutput
+checkPermutation	checkPermutation
 checkPOSIXct	checkPOSIXct
 checkR6	checkR6
 checkRaw	checkRaw
@@ -193,6 +196,7 @@ check_number	checkNumber
 check_numeric	checkNumeric
 check_os	checkOS
 check_path_for_output	checkPathForOutput
+check_permutation	checkPermutation
 check_posixct	checkPOSIXct
 check_r6	checkR6
 check_raw	checkRaw
@@ -239,6 +243,7 @@ expect_number	checkNumber
 expect_numeric	checkNumeric
 expect_os	checkOS
 expect_path_for_output	checkPathForOutput
+expect_permutation	checkPermutation
 expect_posixct	checkPOSIXct
 expect_r6	checkR6
 expect_raw	checkRaw
@@ -302,6 +307,7 @@ testNumber	checkNumber
 testNumeric	checkNumeric
 testOS	checkOS
 testPathForOutput	checkPathForOutput
+testPermutation	checkPermutation
 testPOSIXct	checkPOSIXct
 testR6	checkR6
 testRaw	checkRaw
@@ -350,6 +356,7 @@ test_number	checkNumber
 test_numeric	checkNumeric
 test_os	checkOS
 test_path_for_output	checkPathForOutput
+test_permutation	checkPermutation
 test_posixct	checkPOSIXct
 test_r6	checkR6
 test_raw	checkRaw

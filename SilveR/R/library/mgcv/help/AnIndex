@@ -80,8 +80,10 @@ gamSim	gamSim
 gaulss	gaulss
 get.var	get.var
 gevlss	gevlss
+gfam	gfam
 ginla	ginla
 gp.smooth	smooth.construct.gp.smooth.spec
+grouped families	gfam
 gumbls	gumbls
 identifiability	identifiability
 in.out	in.out
@@ -112,6 +114,7 @@ mroot	mroot
 multinom	multinom
 mvn	mvn
 nb	negbin
+NCV	NCV
 negbin	negbin
 new.name	new.name
 notExp	notExp

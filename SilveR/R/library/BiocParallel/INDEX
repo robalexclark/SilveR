@@ -1,7 +1,10 @@
 .BiocParallelParam_prototype
                         Developer interface
-BatchJobsParam-class    Enable parallelization on batch systems
+BIOCPARALLEL_WORKER_NUMBER
+                        Environment control of worker number
 BatchtoolsParam-class   Enable parallelization on batch systems
+BiocParallel-deprecated
+                        Deprecated Functions in Package 'BiocParallel'
 BiocParallel-package    Bioconductor facilities for parallel evaluation
 BiocParallelParam-class
                         BiocParallelParam objects
@@ -19,6 +22,8 @@ bploop                  Internal Functions for SNOW-style Parallel
                         Evaluation
 bpmapply                Parallel mapply-like functionality
 bpok                    Resume computation with partial results
+bpoptions               Additional options to parallel evaluation
+bprunMPIslave           Defunct Objects in Package 'BiocParallel'
 bpschedule              Schedule back-end Params
 bptry                   Try expression evaluation, recovering from
                         bperror signals

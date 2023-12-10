@@ -21,5 +21,5 @@ par(mar=c(4,4,.1,.1))
 plot(rnorm(n), rnorm(n), pch=21, cex=5*runif(n), col='white', bg='gray')
 
 ## ----css, eval=FALSE----------------------------------------------------------
-#  options(markdown.HTML.stylesheet = 'path/to/a/custom/style.css')
+#  options(markdown.html.css = 'path/to/a/custom/style.css')
 

@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -7,11 +7,14 @@ set.seed(1014)
 
 ## ----setup--------------------------------------------------------------------
 library(vctrs)
+library(rlang)
 library(zeallot)
 
 ## -----------------------------------------------------------------------------
 new_percent <- function(x = double()) {
-  vec_assert(x, double())
+  if (!is_double(x)) {
+    abort("`x` must be a double vector.")
+  }
   new_vctr(x, class = "vctrs_percent")
 }
 
@@ -43,9 +46,9 @@ format.vctrs_percent <- function(x, ...) {
   out
 }
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 # As of R 3.5, print.vctr can not find format.percent since it's not in
-# it's lexical environment. We fix that problem by manually registering.
+# its lexical environment. We fix that problem by manually registering.
 s3_register("base::format", "vctrs_percent")
 
 ## -----------------------------------------------------------------------------
@@ -63,7 +66,7 @@ tibble::tibble(x)
 
 str(x)
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_ptype2("bogus", percent())
 vec_ptype2(percent(), NA)
 vec_ptype2(NA, percent())
@@ -92,7 +95,7 @@ vec_cast.double.vctrs_percent <- function(x, to, ...) vec_data(x)
 vec_cast(0.5, percent())
 vec_cast(percent(0.5), double())
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_c(percent(0.5), 1)
 vec_c(NA, percent(0.5))
 # but
@@ -103,7 +106,7 @@ x[1:2] <- 2:1
 x[[3]] <- 0.5
 x
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 # Correct
 c(percent(0.5), 1)
 c(percent(0.5), factor(1))
@@ -132,8 +135,13 @@ as_percent.character <- function(x) {
 
 ## -----------------------------------------------------------------------------
 new_decimal <- function(x = double(), digits = 2L) {
-  vec_assert(x, ptype = double())
-  vec_assert(digits, ptype = integer(), size = 1)
+  if (!is_double(x)) {
+    abort("`x` must be a double vector.")
+  }
+  if (!is_integer(digits)) {
+    abort("`digits` must be an integer vector.")
+  }
+  vec_check_size(digits, size = 1L)
 
   new_vctr(x, digits = digits, class = "vctrs_decimal")
 }
@@ -189,15 +197,20 @@ vec_cast.double.vctrs_decimal  <- function(x, to, ...) vec_data(x)
 vec_c(decimal(1, digits = 1), pi)
 vec_c(pi, decimal(1, digits = 1))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_cast(c(1, 2, 10), to = integer())
 
 vec_cast(c(1.5, 2, 10.5), to = integer())
 
 ## -----------------------------------------------------------------------------
 new_cached_sum <- function(x = double(), sum = 0L) {
-  vec_assert(x, ptype = double())
-  vec_assert(sum, ptype = double(), size = 1L)
+  if (!is_double(x)) {
+    abort("`x` must be a double vector.")
+  }
+  if (!is_double(sum)) {
+    abort("`sum` must be a double vector.")
+  }
+  vec_check_size(sum, size = 1L)
 
   new_vctr(x, sum = sum, class = "vctrs_cached_sum")
 }
@@ -249,8 +262,12 @@ unclass(x)[[1]] # the first component, the number of seconds
 
 ## -----------------------------------------------------------------------------
 new_rational <- function(n = integer(), d = integer()) {
-  vec_assert(n, ptype = integer())
-  vec_assert(d, ptype = integer())
+  if (!is_integer(n)) {
+    abort("`n` must be an integer vector.")
+  }
+  if (!is_integer(d)) {
+    abort("`d` must be an integer vector.")
+  }
 
   new_rcrd(list(n = n, d = d), class = "vctrs_rational")
 }
@@ -273,7 +290,7 @@ length(x)
 fields(x)
 field(x, "n")
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 x
 
 str(x)
@@ -315,9 +332,16 @@ vec_c(rational(1, 2), 1L, NA)
 
 ## -----------------------------------------------------------------------------
 new_decimal2 <- function(l, r, scale = 2L) {
-  vec_assert(l, ptype = integer())
-  vec_assert(r, ptype = integer())
-  vec_assert(scale, ptype = integer(), size = 1L)
+  if (!is_integer(l)) {
+    abort("`l` must be an integer vector.")
+  }
+  if (!is_integer(r)) {
+    abort("`r` must be an integer vector.")
+  }
+  if (!is_integer(scale)) {
+    abort("`scale` must be an integer vector.")
+  }
+  vec_check_size(scale, size = 1L)
 
   new_rcrd(list(l = l, r = r), scale = scale, class = "vctrs_decimal2")
 }
@@ -428,7 +452,7 @@ p[2]
 p[[2]]
 
 ## -----------------------------------------------------------------------------
-vec_is_list(p)
+obj_is_list(p)
 
 ## -----------------------------------------------------------------------------
 poly <- function(...) {
@@ -445,7 +469,7 @@ p <- poly(1, c(1, 0, 0, 0, 2), c(1, 0, 1))
 p
 
 ## -----------------------------------------------------------------------------
-vec_is_list(p)
+obj_is_list(p)
 
 ## -----------------------------------------------------------------------------
 p[[2]]
@@ -453,7 +477,7 @@ p[[2]]
 ## -----------------------------------------------------------------------------
 p == poly(c(1, 0, 1))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 p < p[2]
 
 ## -----------------------------------------------------------------------------
@@ -523,7 +547,7 @@ x
 sum(x)
 mean(x)
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 x + 1
 meter(10) + meter(1)
 meter(10) * 3
@@ -536,7 +560,7 @@ vec_arith.vctrs_meter.default <- function(op, x, y, ...) {
   stop_incompatible_op(op, x, y)
 }
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_arith.vctrs_meter.vctrs_meter <- function(op, x, y, ...) {
   switch(
     op,
@@ -552,7 +576,7 @@ meter(10) - meter(1)
 meter(10) / meter(1)
 meter(10) * meter(1)
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_arith.vctrs_meter.numeric <- function(op, x, y, ...) {
   switch(
     op,
@@ -597,7 +621,9 @@ vec_arith.vctrs_meter.MISSING <- function(op, x, y, ...) {
 
 ## -----------------------------------------------------------------------------
 new_percent <- function(x = double()) {
-  vec_assert(x, double())
+  if (!is_double(x)) {
+    abort("`x` must be a double vector.")
+  }
   new_vctr(x, class = "pizza_percent")
 }
 
@@ -647,7 +673,7 @@ is_percent <- function(x) {
 #    "prcnt"
 #  }
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  #' @export
 #  vec_ptype2.vctrs_percent.vctrs_percent <- function(x, y, ...) new_percent()
 #  #' @export
@@ -660,14 +686,14 @@ is_percent <- function(x) {
 #  #' @export
 #  vec_cast.double.pizza_percent <- function(x, to, ...) vec_data(x)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  #' @export
 #  #' @method vec_arith my_type
 #  vec_arith.my_type <- function(op, x, y, ...) {
 #    UseMethod("vec_arith.my_type", y)
 #  }
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  #' @export
 #  #' @method vec_arith.my_type my_type
 #  vec_arith.my_type.my_type <- function(op, x, y, ...) {
@@ -686,6 +712,6 @@ is_percent <- function(x) {
 #    # implementation here
 #  }
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  expect_error(vec_c(1, "a"), class = "vctrs_error_incompatible_type")
 

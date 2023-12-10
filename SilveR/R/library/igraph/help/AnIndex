@@ -17,10 +17,10 @@ $<-.igraph.vs	igraph-vs-attributes
 *.igraph	rep.igraph
 +.igraph	plus-.igraph
 -.igraph	igraph-minus
-.apply_modifiers	dot-apply_modifiers
 .data	dot-data
 .env	dot-data
-.extract_constructor_and_modifiers	dot-extract_constructor_and_modifiers
+.igraph.progress	console
+.igraph.status	console
 add.edges	add_edges
 add.vertex.shape	shapes
 add.vertices	add_vertices
@@ -86,10 +86,10 @@ as_tree	layout_as_tree
 atlas	graph_from_atlas
 attribute.combination	igraph-attribute-combination
 attributes	graph_attr_names
-authority.score	authority_score
-authority_score	authority_score
+authority.score	hub_score
+authority_score	hub_score
 autocurve.edges	curve_multiple
-automorphisms	automorphisms
+automorphisms	count_automorphisms
 automorphism_group	automorphism_group
 average.path.length	distances
 average_local_efficiency	global_efficiency
@@ -192,6 +192,7 @@ convex.hull	convex_hull
 convex_hull	convex_hull
 coreness	coreness
 count.multiple	which_multiple
+count_automorphisms	count_automorphisms
 count_components	components
 count_isomorphisms	count_isomorphisms
 count_max_cliques	cliques
@@ -274,9 +275,9 @@ empty_graph	make_empty_graph
 ends	ends
 erdos.renyi.game	erdos.renyi.game
 establishment.game	sample_traits_callaway
-estimate_betweenness	betweenness
-estimate_closeness	closeness
-estimate_edge_betweenness	betweenness
+estimate_betweenness	estimate_betweenness
+estimate_closeness	estimate_closeness
+estimate_edge_betweenness	estimate_edge_betweenness
 eulerian_cycle	has_eulerian_path
 eulerian_path	has_eulerian_path
 evcent	eigen_centrality
@@ -329,7 +330,7 @@ graph.adjlist	graph_from_adj_list
 graph.atlas	graph_from_atlas
 graph.attributes	graph_attr
 graph.attributes<-	graph_attr-set
-graph.automorphisms	automorphisms
+graph.automorphisms	count_automorphisms
 graph.bfs	bfs
 graph.bipartite	make_bipartite_graph
 graph.cohesion	vertex_connectivity
@@ -539,6 +540,7 @@ laplacian_matrix	laplacian_matrix
 largest.cliques	cliques
 largest.independent.vertex.sets	ivs
 largest_cliques	cliques
+largest_component	components
 largest_ivs	ivs
 largest_weighted_cliques	weighted_cliques
 lastcit.game	sample_last_cit
@@ -654,16 +656,6 @@ multilevel.community	cluster_louvain
 neighborhood	ego
 neighborhood.size	ego
 neighbors	neighbors
-nexus	nexus
-nexus.get	nexus
-nexus.info	nexus
-nexus.list	nexus
-nexus.search	nexus
-nexusDatasetInfo	nexus
-nexus_get	nexus
-nexus_info	nexus
-nexus_list	nexus
-nexus_search	nexus
 nicely	layout_nicely
 no.clusters	components
 normalize	normalize
@@ -706,8 +698,6 @@ print.igraphHRG	print.igraphHRG
 print.igraphHRGConsensus	print.igraphHRGConsensus
 print.igraph_layout_modifier	layout_
 print.igraph_layout_spec	layout_
-print.nexusDatasetInfo	nexus
-print.nexusDatasetInfoList	nexus
 printer_callback	printer_callback
 printr	printr
 print_all	print.igraph
@@ -809,7 +799,6 @@ smallworld	sample_smallworld
 spectrum	spectrum
 spinglass.community	cluster_spinglass
 split_join_distance	split_join_distance
-srand	srand
 star	make_star
 static.fitness.game	sample_fitness
 static.power.law.game	sample_fitness_pl
@@ -829,7 +818,6 @@ subgraph_isomorphic	subgraph_isomorphic
 subgraph_isomorphisms	subgraph_isomorphisms
 summary.cohesiveBlocks	cohesive_blocks
 summary.igraph	print.igraph
-summary.nexusDatasetInfoList	nexus
 t.igraph	reverse_edges
 tail_of	tail_of
 time_bins	sir
@@ -921,7 +909,6 @@ write_graph	write_graph
 [.igraph	sub-.igraph
 [.igraph.es	igraph-es-indexing
 [.igraph.vs	igraph-vs-indexing
-[.nexusDatasetInfoList	nexus
 [<-.igraph.es	igraph-es-attributes
 [<-.igraph.vs	igraph-vs-attributes
 [[.igraph	sub-sub-.igraph

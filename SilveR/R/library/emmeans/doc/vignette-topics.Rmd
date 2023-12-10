@@ -20,10 +20,13 @@ vignette: >
 
 
   * [`add_grouping()`](utilities.html#groups)
+  * [`addl.vars`](sophisticated.html#random-slopes)
   * `adjust`
       * [in *comparisons: pairwise*](comparisons.html#pairwise)
       * [in *confidence-intervals: adjust*](confidence-intervals.html#adjust)
       * [vs. `cross.adjust`](confidence-intervals.html#cross-adjust)
+  * [Adjusted means](basics.html#RG)
+  * [Adjusted R-squared](basics.html#pigs)
   * [`afex_aov` objects](models.html#V)
   * [Alias matrix](xplanations.html#submodels)
   * [Analysis of subsets of data](FAQs.html#model)
@@ -32,6 +35,9 @@ vignette: >
       * [Type III](confidence-intervals.html#joint_tests)
   * [`aovList` objects](models.html#V)
   * [`appx-satterthwaite` method](models.html#K)
+  * Arguments
+      * [`...`](basics.html#arguments)
+      * [Passed to `ref_grid()`](basics.html#arguments)
   * `as.mcmc()`
       * [in *models: S*](models.html#S)
       * [in *sophisticated: bayesxtra*](sophisticated.html#bayesxtra)
@@ -46,6 +52,8 @@ vignette: >
 ### B {#b}
 
 
+  * [Back-transforming](basics.html#transf)
+  * [Balanced allocation](basics.html#exper)
   * [Bayes factor](sophisticated.html#bayesxtra)
   * Bayesian models
       * [in *models: S*](models.html#S)
@@ -60,6 +68,7 @@ vignette: >
       * [In GLMMs and GEE models](transformations.html#cbpp)
       * [When back-transforming](transformations.html#bias-adj)
       * [When *not* to use](transformations.html#insects)
+      * [with random slopes](sophisticated.html#random-slopes)
   * [Bonferroni adjustment](confidence-intervals.html#adjmore)
   * [`boot-satterthwaite` method](models.html#K)
   * [Brackets (`[ ]` and `[[ ]]` operators)](utilities.html#brackets)
@@ -101,12 +110,14 @@ vignette: >
       * [Graphical](comparisons.html#graphical)
           * [How arrows are determined](xplanations.html#arrows)
       * [with logs](comparisons.html#logs)
+      * [Obtaining differences rather than ratios](FAQs.html#ratios)
       * [with overlapping CIs](FAQs.html#CIerror)
   * [Comparisons result in `(nothing)`](FAQs.html#nopairs)
   * [Confidence intervals](confidence-intervals.html#summary)
       * [Overlapping](FAQs.html#CIerror)
   * [`confint()`](confidence-intervals.html#summary)
   * [Confounded effects](xplanations.html#joint_tests)
+  * [Confounding](basics.html#emms)
   * [`consec` contrasts](comparisons.html#contrasts)
   * [Constrained marginal means](xplanations.html#submodels)
   * [Consultants](basics.html#recs3)
@@ -129,6 +140,7 @@ vignette: >
       * [Polynomial](comparisons.html#contrasts)
       * Tests of
           * [with transformations](comparisons.html#logs)
+  * [Controlled experiments](basics.html#exper)
   * [Count regression](models.html#C)
   * [Counterfactuals](messy-data.html#counterfact)
   * [`cov.reduce`](messy-data.html#med.covred)
@@ -177,9 +189,12 @@ vignette: >
   * [`.emmc` functions](comparisons.html#linfcns)
   * **emmeans** package
       * [Exporting extensions to](xtending.html#exporting)
-  * [`emmeans()`](basics.html#emmeans)
+      * [Quick-start guide](AQuickStart.html)
+  * [`emmeans()`](basics.html#emms)
       * [And the underlying model](FAQs.html#nowelch)
+      * [Arguments passed to `ref_grid()`](basics.html#arguments)
       * [Changing defaults](utilities.html#defaults)
+      * [Fastest way to get wrong answers](FAQs.html#fastest)
       * [Surprising results from](FAQs.html#transformations)
       * `weights`
           * [in *basics: weights*](basics.html#weights)
@@ -191,11 +206,11 @@ vignette: >
       * [Modifying](utilities.html#update)
       * [Setting defaults for](utilities.html#defaults)
   * `emmip()`
+      * [in *basics: emmip*](basics.html#emmip)
       * [in *basics: plots*](basics.html#plots)
       * [in *interactions: factors*](interactions.html#factors)
       * [nested factors](messy-data.html#cows)
-  * [EMMs](basics.html#EMMdef)
-      * [Appropriateness of](basics.html#eqwts)
+  * EMMs
       * [Projecting to a submodel](xplanations.html#submodels)
       * [What are they?](FAQs.html#what)
   * `emtrends()`
@@ -206,14 +221,19 @@ vignette: >
   * [Estimability](messy-data.html#nonestex)
   * [Estimability issues](FAQs.html#NAs)
   * [Estimable functions](xplanations.html#joint_tests)
-  * [Estimated marginal means](basics.html#EMMdef)
-      * [Defined](basics.html#emmeans)
+  * Estimated marginal means
+      * [Definition of](basics.html#refgrid)
+      * [Demonstrated](basics.html#emms)
+      * [Manually computed](basics.html#refgrid)
+      * [Reference grid](basics.html#emms)
+      * [vs. ordinary marginal means](basics.html#emms)
   * Examples
       * [`auto.noise`](interactions.html#factors)
       * [Bayesian model](sophisticated.html#mcmc)
       * `cbpp`
           * [in *sophisticated: mcmc*](sophisticated.html#mcmc)
           * [in *transformations: cbpp*](transformations.html#cbpp)
+      * [`ChickWeight`](sophisticated.html#random-slopes)
       * [CLDs (simulated)](re-engineering-clds.html#CLD-example)
       * [`cows`](messy-data.html#cows)
       * [`feedlot`](predictions.html#feedlot)
@@ -223,12 +243,13 @@ vignette: >
       * [`framing`](messy-data.html#mediators)
       * [Gamma regression](transformations.html#tranlink)
       * [`InsectSprays`](transformations.html#insects)
+      * [`Insurance`](xplanations.html#offsets)
       * [Insurance claims (SAS)](sophisticated.html#offsets)
       * [Logistic regression](transformations.html#links)
       * [`lqs` objects](xtending.html#lqs)
       * [`MOats`](basics.html#multiv)
       * `mtcars`
-          * [in *basics: altering*](basics.html#altering)
+          * [in *basics: depcovs*](basics.html#depcovs)
           * [in *messy-data: nuis.example*](messy-data.html#nuis.example)
       * [Multivariate](basics.html#multiv)
       * [Nested fixed effects](messy-data.html#cows)
@@ -245,7 +266,7 @@ vignette: >
           * [in *interactions: oranges*](interactions.html#oranges)
       * [Ordinal model](sophisticated.html#ordinal)
       * `pigs`
-          * [in *basics: motivation*](basics.html#motivation)
+          * [in *basics: pigs*](basics.html#pigs)
           * [in *confidence-intervals: summary*](confidence-intervals.html#summary)
           * [in *transformations: altscale*](transformations.html#altscale)
           * [in *transformations: overview*](transformations.html#overview)
@@ -253,13 +274,17 @@ vignette: >
       * [`rlm` objects](xtending.html#rlm)
       * [Robust regression](xtending.html#rlm)
       * [Split-plot experiment](sophisticated.html#lmer)
-      * [Unbalanced data](basics.html#motivation)
+      * [Unbalanced data](basics.html#pigs)
       * `warpbreaks`
           * [in *confidence-intervals: cross-adjust*](confidence-intervals.html#cross-adjust)
           * [in *transformations: tranlink*](transformations.html#tranlink)
           * [in *utilities: relevel*](utilities.html#relevel)
       * [Welch's *t* comparisons](utilities.html#relevel)
       * [`wine`](sophisticated.html#ordinal)
+  * Expected marginal means
+      * [Foundations of](basics.html#found)
+      * [Reliance on a model](basics.html#models)
+  * [Experimental versus observational data](basics.html#exper)
   * [Exporting output](basics.html#formatting)
   * Extending **emmeans**
       * [Exports useful to developers](xtending.html#exported)
@@ -277,6 +302,7 @@ vignette: >
   * Factors
       * [Mediating](messy-data.html#weights)
   * [Formatting results](basics.html#formatting)
+  * [Foundations of EMMs](basics.html#found)
   * [Frequently asked questions](FAQs.html)
 
 
@@ -297,6 +323,7 @@ vignette: >
   * **ggplot2** package
       * [in *basics: ggplot*](basics.html#ggplot)
       * [in *messy-data: cows*](messy-data.html#cows)
+  * [GIGO (garbage in, garbage out)](basics.html#models)
   * [`glm`*xxx* models](models.html#G)
   * [`gls` models](models.html#K)
   * [Graphical displays](basics.html#plots)
@@ -320,7 +347,9 @@ vignette: >
 ### I {#i}
 
 
+  * [Indicator variables](basics.html#RG)
   * [Infinite degrees of freedom](FAQs.html#asymp)
+  * [Interaction-style plots](basics.html#emmip)
   * Interactions
       * [Analysis](interactions.html)
       * [Contrasts](interactions.html#contrasts)
@@ -328,6 +357,7 @@ vignette: >
       * [Implied](interactions.html#oranges)
       * [Plotting](interactions.html#factors)
       * [Possible inappropriateness of marginal means](interactions.html#factors)
+  * [`inverse()`](basics.html#pigs)
 
 
 [Back to top](#topnav)
@@ -360,6 +390,7 @@ vignette: >
   * Labels
       * [Changing](utilities.html#relevel)
   * [Large models](messy-data.html#nuisance)
+  * [Latin squares](basics.html#exper)
   * [Least-squares means](FAQs.html#what)
   * Levels
       * [Changing](utilities.html#relevel)
@@ -370,8 +401,11 @@ vignette: >
       * [in *models: L*](models.html#L)
       * [in *sophisticated: lmer*](sophisticated.html#lmer)
       * [System options for](sophisticated.html#lmerOpts)
+  * Logistic-like regression
+      * [Non-logit links](transformations.html#not-logit)
   * Logistic regression
       * [Odds ratios](transformations.html#oddsrats)
+      * [Risk ratios](transformations.html#riskrats)
       * [Surprising results](FAQs.html#transformations)
   * LSD
       * [protected](basics.html#recs2)
@@ -385,14 +419,8 @@ vignette: >
   * [`make.tran()`](transformations.html#special)
   * [`mcmc` objects](models.html#S)
   * Means
-      * [Cell](basics.html#motivation)
       * [Generalized](transformations.html#bias-adj)
-      * [Marginal](basics.html#motivation)
-          * [Based on a model](basics.html#EMMdef)
-          * [of cell means](basics.html#eqwts)
-      * Weighted
-          * [in *basics: eqwts*](basics.html#eqwts)
-          * [in *basics: weights*](basics.html#weights)
+      * [Weighted](basics.html#weights)
   * [Mediating covariates](messy-data.html#mediators)
   * [Memory usage](messy-data.html#nuisance)
       * [Limiting](messy-data.html#rg.limit)
@@ -403,9 +431,15 @@ vignette: >
   * [`mmer` models](models.html#G)
   * Model
       * [Get it right first](basics.html#recs2)
-      * [Importance of](FAQs.html#fastest)
+      * Importance of
+          * [in *basics: models*](basics.html#models)
+          * [in *FAQs: fastest*](FAQs.html#fastest)
       * [Importance of getting it right](FAQs.html#nowelch)
   * [Model averaging](models.html#I)
+  * Modeling
+      * [`pigs` example](basics.html#pigs)
+      * [Response transformation](basics.html#pigs)
+  * [Modelling](basics.html#models)
   * Models
       * [Constrained](messy-data.html#submodels)
       * [Large](messy-data.html#nuisance)
@@ -449,9 +483,16 @@ vignette: >
 ### O {#o}
 
 
-  * [Observational data](messy-data.html#issues)
+  * Observational data
+      * [in *basics: weights*](basics.html#weights)
+      * [in *messy-data: issues*](messy-data.html#issues)
+  * [Observational versus experimental data](basics.html#exper)
   * [Odds ratios](transformations.html#oddsrats)
-  * [Offsets](sophisticated.html#offsets)
+      * [but I wanted differences](FAQs.html#ratios)
+  * Offsets
+      * [Models with offsets](sophisticated.html#offsets)
+      * [`offset()` term vs. `offset` argument in model](xplanations.html#offsets)
+  * [Only one mean](AQuickStart.html#covar)
   * [`opt.digits` option](utilities.html#digits)
   * [Options](utilities.html#options)
       * [Startup](utilities.html#startup)
@@ -473,18 +514,21 @@ vignette: >
       * [Adjustment is ignored](FAQs.html#noadjust)
       * [Interpreting](basics.html#pvalues)
   * [`pairs()`](comparisons.html#pairwise)
+  * `pairwise ~ factors`
+      * [Why you should avoid this](AQuickStart.html#pairwise)
   * [Pairwise comparisons](comparisons.html#pairwise)
       * [Matrix displays](comparisons.html#pwpm)
   * [`pairwise` contrasts](comparisons.html#contrasts)
   * [Pairwise *P*-value plots](comparisons.html#pwpp)
   * [`params`](basics.html#params)
   * [Percentage differences](transformations.html#altscale)
-  * `plot()`
+  * [`plot()`](basics.html#plots)
       * [nested factors](messy-data.html#cows)
   * [`plot.emmGrid()`](basics.html#plot.emmGrid)
   * Plots
       * [of confidence intervals](basics.html#plot.emmGrid)
       * [of EMMs](basics.html#plots)
+      * [Enhancing with **ggplot2** functions](basics.html#ggplot)
       * [Interaction-style](basics.html#plots)
   * [`+` operator](utilities.html#rbind)
   * Poisson regression
@@ -508,6 +552,8 @@ vignette: >
       * [Reference grid](predictions.html#ref-grid)
       * [Total SD](predictions.html#feedlot)
   * [`print.summary_emm()`](basics.html#emmobj)
+  * Probit regression
+      * [Odds or risk ratios](transformations.html#not-logit)
   * [`pwpm()`](comparisons.html#pwpm)
   * [`pwpp()`](comparisons.html#pwpp)
 
@@ -519,7 +565,7 @@ vignette: >
 
   * [`qdrg()`](FAQs.html#qdrg)
   * [Quadratic terms](basics.html#depcovs)
-  * [Quick start](FAQs.html#fastest)
+  * [Quick-start guide](AQuickStart.html)
 
 
 [Back to top](#topnav)
@@ -527,7 +573,14 @@ vignette: >
 ### R {#r}
 
 
+  * [R-squared](basics.html#pigs)
+  * Random predictors
+      * [Accessing levels](sophisticated.html#random-slopes)
+  * Random slopes
+      * [Bias adjustment](sophisticated.html#random-slopes)
   * [Rank deficiency](xplanations.html#joint_tests)
+  * Ratios
+      * [but I wanted differences](FAQs.html#ratios)
   * [`rbind()`](utilities.html#rbind)
   * [Re-labeling](utilities.html#relevel)
   * [Recommended practices](basics.html#recs1)
@@ -540,26 +593,36 @@ vignette: >
       * [for `rsm` objects](xtending.html#rdrsm)
   * `recover_data.call()`
       * [`frame` argument](xtending.html#rdargs)
-  * [`ref_grid()`](basics.html#ref_grid)
-      * [`at`](basics.html#altering)
-      * [`cov.keep`](basics.html#altering)
-      * [`cov.reduce`](basics.html#altering)
+  * [`ref_grid()`](basics.html#RG)
+      * [`at`](basics.html#RG)
+      * `cov.reduce`
+          * [in *basics: plot.emmGrid*](basics.html#plot.emmGrid)
+          * [in *basics: RG*](basics.html#RG)
       * [`mult.name`](basics.html#multiv)
       * [`nesting`](messy-data.html#nest-trap)
       * [`offset`](sophisticated.html#offsets)
-      * [`regrid` argument](transformations.html#regrid)
-  * [Reference grids](basics.html#ref_grid)
-      * [Altering](basics.html#altering)
+      * [`regrid` argument](transformations.html#regrid2)
+  * [Reference grid](basics.html#emms)
+      * [Covariates](basics.html#RG)
+      * [Defined](basics.html#RG)
+      * [Indicator variables](basics.html#RG)
+      * [Predictions on](basics.html#refgrid)
+  * Reference grids
       * [Prediction on](predictions.html#ref-grid)
   * [Region of practical equivalence](sophisticated.html#bayesxtra)
   * [Registering `recover_data` and `emm_basis` methods](xtending.html#exporting)
   * [`regrid` argument](transformations.html#stdize)
   * [`regrid()`](transformations.html#regrid)
-      * [`regrid` vs. `type`](transformations.html#regrid)
+      * [probit or other lon-logit models](transformations.html#not-logit)
+      * [`regrid` vs. `type`](transformations.html#regrid2)
+      * [to obtain risk ratios](transformations.html#riskrats)
       * [`transform = "log"`](transformations.html#logs)
+  * [Residual plots](basics.html#pigs)
   * [Response scale](confidence-intervals.html#tran)
+  * [Response transformations](basics.html#transf)
   * [`revpairwise` contrasts](comparisons.html#contrasts)
   * [`rg.limit` option](messy-data.html#rg.limit)
+  * [Risk ratios](transformations.html#riskrats)
   * [RMarkdown](basics.html#formatting)
   * [ROPE](sophisticated.html#bayesxtra)
   * [**rsm** package](xtending.html#rsm)
@@ -588,6 +651,7 @@ vignette: >
       * [in *confidence-intervals: simple*](confidence-intervals.html#simple)
       * [in *FAQs: interactions*](FAQs.html#interactions)
       * [in *interactions: simple*](interactions.html#simple)
+  * [Simpson's paradox](basics.html#emms)
   * `specs`
       * [Formula](comparisons.html#formulas)
   * [Standardized response](transformations.html#stdize)
@@ -636,7 +700,8 @@ vignette: >
       * [Noninferiority](confidence-intervals.html#equiv)
       * [Nonzero null](confidence-intervals.html#summary)
       * [One- and two-sided](confidence-intervals.html#summary)
-  * Transformations
+  * [Too few means](AQuickStart.html#covar)
+  * [Transformations](basics.html#transf)
       * [Adding after the fact](transformations.html#after)
       * [Auto-detected](transformations.html#auto)
       * [Back-transforming](confidence-intervals.html#tran)
@@ -660,6 +725,7 @@ vignette: >
   * [Tukey adjustment](confidence-intervals.html#adjust)
       * [Ignored or changed](FAQs.html#notukey)
   * [`type`](confidence-intervals.html#tran)
+  * [`type = "response"`](basics.html#transf)
   * [`type = "scale"`](transformations.html#trangraph)
   * [Type II analysis](messy-data.html#type2submodel)
   * Type III tests
@@ -688,7 +754,6 @@ vignette: >
   * [`vcov.`](messy-data.html#neuralgia)
   * [`vcovHook`](xtending.html#hooks)
   * Vignettes
-      * [Basics](basics.html)
       * [Comparisons](comparisons.html)
       * [Confidence intervals and tests](confidence-intervals.html)
       * [Explanations supplement](xplanations.html)
@@ -709,6 +774,8 @@ vignette: >
 ### W {#w}
 
 
+  * Weighting
+      * [Equal weights](basics.html#exper)
   * [`weights`](messy-data.html#weights)
   * [Welch's *t* comparisons](FAQs.html#nowelch)
       * [Example](utilities.html#relevel)

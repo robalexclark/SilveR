@@ -10,6 +10,7 @@ convert_chunk_header	convert_chunk_header
 current_input	current_input
 dep_auto	dep_auto
 dep_prev	dep_prev
+download_image	download_image
 engine_output	engine_output
 extract_raw_output	raw_output
 fig_chunk	fig_chunk

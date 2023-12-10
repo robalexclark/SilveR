@@ -1,3 +1,16 @@
+# cubature 2.1.0
+
+- Update cubature to 1.0.4 and Cuba to 4.2.2
+- Added RANLIB call to `libcubature.a` ([Issue 40](https://github.com/bnaras/cubature/issues/40)). Thanks Sergei Fedorov.
+- Simplified windows/non-windows organization, with default being windows
+
+# cubature 2.0.4.6
+
+- Fix CRAN C23 issues using system requirements USE_C17
+- Bug fix: increment correct count of number of evaluations. Thanks Jan Meis.
+- Removed all solaris and unneeded Rcpp flags
+- Copied correct includes to inst/include for linking
+
 # cubature 2.0.4.5
 
 - Fix math typesetting in documentation and use roxygen markdown tags wherever
@@ -67,7 +80,7 @@
 
 # cubature 2.0
 
-- Major update. Integrates [Cuba 4.2](http://www.feynarts.de/cuba/)
+- Major update. Integrates [Cuba 4.2](https://feynarts.de/cuba/)
   library
 - Allows for finite or infinite limits of integration (courtesy of
   Simon Gaure)

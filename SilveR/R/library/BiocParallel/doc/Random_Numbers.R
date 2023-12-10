@@ -1,22 +1,14 @@
-## ----style, eval=TRUE, echo=FALSE, results="asis"--------------------------
-BiocStyle::latex()
-
-## ----setup, echo=FALSE-----------------------------------------------------
-suppressPackageStartupMessages({
-    library(BiocParallel)
-})
-
-## ----load------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 library(BiocParallel)
 stopifnot(
     packageVersion("BiocParallel") > "1.27.5"
 )
 
-## ----basic-use-------------------------------------------------------------
+## -----------------------------------------------------------------------------
 result1 <- bplapply(1:3, runif, BPPARAM = SerialParam(RNGseed = 100))
 result1
 
-## ----same-rng--------------------------------------------------------------
+## -----------------------------------------------------------------------------
 result2 <- bplapply(1:3, runif, BPPARAM = SerialParam(RNGseed = 100))
 stopifnot(
     identical(result1, result2)
@@ -24,11 +16,12 @@ stopifnot(
 
 result3 <- bplapply(1:3, runif, BPPARAM = SerialParam(RNGseed = 200))
 result3
+
 stopifnot(
     !identical(result1, result3)
 )
 
-## ----different-param-------------------------------------------------------
+## -----------------------------------------------------------------------------
 result4 <- bplapply(1:3, runif, BPPARAM = SnowParam(RNGseed = 100))
 stopifnot(
     identical(result1, result4)
@@ -41,7 +34,7 @@ if (!identical(.Platform$OS.type, "windows")) {
     )
 }
 
-## ----different-workers-tasks-----------------------------------------------
+## -----------------------------------------------------------------------------
 result6 <- bplapply(1:3, runif, BPPARAM = SnowParam(workers = 2, RNGseed = 100))
 result7 <- bplapply(1:3, runif, BPPARAM = SnowParam(workers = 3, RNGseed = 100))
 result8 <- bplapply(
@@ -54,7 +47,7 @@ stopifnot(
     identical(result1, result8)
 )
 
-## ----bpiterate-ITER_FUN_FACTORY--------------------------------------------
+## -----------------------------------------------------------------------------
 ITER_FUN_FACTORY <- function() {
     x <- 1:3
     i <- 0L
@@ -66,14 +59,17 @@ ITER_FUN_FACTORY <- function() {
     }
 }
 
-## ----bpiterate-ITER--------------------------------------------------------
+## ---- collapse = TRUE---------------------------------------------------------
 ITER <- ITER_FUN_FACTORY()
 ITER()
-ITER()
-ITER()
+
 ITER()
 
-## ----bpiterate-------------------------------------------------------------
+ITER()
+
+ITER()
+
+## -----------------------------------------------------------------------------
 result9 <- bpiterate(
     ITER_FUN_FACTORY(), runif,
     BPPARAM = SerialParam(RNGseed = 100)
@@ -82,7 +78,7 @@ stopifnot(
     identical(result1, result9)
 )
 
-## ----bptry-----------------------------------------------------------------
+## -----------------------------------------------------------------------------
 FUN1 <- function(i) {
     if (identical(i, 2L)) {
         ## error when evaluating the second element
@@ -95,7 +91,7 @@ result10 <- bptry(bplapply(
 ))
 result10
 
-## ----bptry-REDO------------------------------------------------------------
+## -----------------------------------------------------------------------------
 FUN2 <- function(i) {
     if (identical(i, 2L)) {
         ## the random number stream should be in the same state as the
@@ -118,7 +114,7 @@ stopifnot(
     identical(result1, result11)
 )
 
-## ----RNGseed-and-set-seed--------------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(200)
 value <- runif(1)
 
@@ -129,7 +125,7 @@ stopifnot(
     identical(value, runif(1))
 )
 
-## ----not-RNGseed-and-set-seed----------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(100)
 value <- runif(1)
 
@@ -140,7 +136,7 @@ stopifnot(
     identical(value, runif(1))
 )
 
-## ----bpstart-basic---------------------------------------------------------
+## -----------------------------------------------------------------------------
 param <- bpstart(SerialParam(RNGseed = 100))
 result16 <- bplapply(1:3, runif, BPPARAM = param)
 bpstop(param)
@@ -148,7 +144,7 @@ stopifnot(
     identical(result1, result16)
 )
 
-## ----bpstart-continuation--------------------------------------------------
+## -----------------------------------------------------------------------------
 param <- bpstart(SerialParam(RNGseed = 100))
 result16 <- bplapply(1:3, runif, BPPARAM = param)
 result17 <- bplapply(1:3, runif, BPPARAM = param)
@@ -158,13 +154,13 @@ stopifnot(
     !identical(result1, result17)
 )
 
-## ----lapply----------------------------------------------------------------
+## -----------------------------------------------------------------------------
 set.seed(100)
 result20 <- lapply(1:3, runif)
 stopifnot(
     !identical(result1, result20)
 )
 
-## ----sessionInfo, echo=FALSE-----------------------------------------------
+## ---- echo = FALSE------------------------------------------------------------
 sessionInfo()
 

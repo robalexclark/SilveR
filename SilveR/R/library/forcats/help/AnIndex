@@ -23,6 +23,8 @@ fct_lump_min	fct_lump
 fct_lump_n	fct_lump
 fct_lump_prop	fct_lump
 fct_match	fct_match
+fct_na_level_to_value	fct_na_value_to_level
+fct_na_value_to_level	fct_na_value_to_level
 fct_other	fct_other
 fct_recode	fct_recode
 fct_relabel	fct_relabel

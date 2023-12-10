@@ -1,5 +1,7 @@
 HTML                    Mark Characters as HTML
 as.tags                 Convert a value to tags
+bindFillRole            Allow tags to intelligently fill their
+                        container
 browsable               Make an HTML object browsable
 builder                 Create HTML tags
 capturePlot             Capture a plot as a saved file

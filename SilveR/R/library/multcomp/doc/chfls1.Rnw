@@ -11,9 +11,9 @@
 \usepackage{wasysym}
 \usepackage[utf8x]{inputenc}
 \usepackage[left=3.5cm,right=3.5cm, bottom=3.5cm]{geometry}
-\usepackage[justification=justified,singlelinecheck=false,labe lfont={bf,small,sf},font={small,sf},
-aboveskip=0em,belowskip=0em]{caption}
-\renewcommand{\captionfont}{\small}
+%%\usepackage[justification=justified,singlelinecheck=false,labe lfont={bf,small,sf},font={small,sf},
+%%aboveskip=0em,belowskip=0em]{caption}
+%%\renewcommand{\captionfont}{\small}
 \title{Supplementary Material for \emph{A re-evaluation of the model selection 
        procedure in Pollet \& Nettle (2009)}}
 \author{Esther Herberich, Torsten Hothorn, Daniel Nettle \& Thomas Pollet}
@@ -236,7 +236,7 @@ BIC                           & \Sexpr{paste(bic, collapse = " & ")}\\
 \hline	
 \vspace*{-0.3cm} 				
 \end{tabularx}
-\caption{\label{Pollet}Summary of variable selection in \citet{Pollet2009}.}
+\caption{\label{Pollet} Summary of variable selection by Pollet and Nettle.}
 \end{table}
 Start model and step 1 are the same as in table \ref{Pollet}. In the subsequent models further variables were added one at a time starting with the 
 variable which improved model fit the most. The selected variables were the same using AIC and BIC to assess model fit except for step 4a/4b. Using BIC 
@@ -274,7 +274,7 @@ AIC(step4b, k=log(nrow(orgA))), AIC(step5, k=log(nrow(orgA)))), digits = 1, form
 
 @
 
-\rotatebox{90}{\parbox{\textheight}{%
+\begin{sidewaystable}
 \begin{center}
 \small
 \vspace*{2cm}
@@ -311,8 +311,9 @@ BIC                     & \Sexpr{paste(bic[1:4], collapse = " & ")} & & \Sexpr{b
 \end{tabular}
 \end{center}
 \vspace{-1em}
-\captionof{table}{Summary of variable selection following the strategy of \citet{Pollet2009} using the correctly calculated AIC and BIC.\newline 
-\vspace{0.7cm}\label{Pollet_korr}}}}\newpage
+\caption{Summary of variable selection following the strategy of \citet{Pollet2009} using the correctly calculated AIC and BIC.\newline 
+\vspace{0.7cm}\label{Pollet_korr}}
+\end{sidewaystable}
 
 \section{Stepwise Backward Selection \label{VarSelstepAIC}}
 

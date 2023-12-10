@@ -1,10 +1,14 @@
+message("Testing bpvectorize")
+
 test_bpvectorize_Params <- function()
 {
-    doParallel::registerDoParallel(2)
-    params <- list(serial=SerialParam(),
-                   snow=SnowParam(2),
-                   batchjobs=BatchJobsParam(2, progressbar=FALSE),
-                   dopar=DoparParam())
+    cl <- parallel::makeCluster(2)
+    doParallel::registerDoParallel(cl)
+    params <- list(
+        serial=SerialParam(),
+        snow=SnowParam(2),
+        dopar=DoparParam()
+    )
     if (.Platform$OS.type != "windows")
         params$mc <- MulticoreParam(2)
 
@@ -16,8 +20,8 @@ test_bpvectorize_Params <- function()
     }
 
     ## clean up
-    env <- foreach:::.foreachGlobals
-    rm(list=ls(name=env), pos=env)
+    foreach::registerDoSEQ()
+    parallel::stopCluster(cl)
     closeAllConnections()
     TRUE
 }

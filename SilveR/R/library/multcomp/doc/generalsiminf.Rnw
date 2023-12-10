@@ -1,8 +1,8 @@
 %%\VignetteIndexEntry{Simultaneous Inference in General Parametric Models}
 %%VignetteDepends{multcomp,TH.data,survival,robustbase,lme4,coin}
-%%\usepackage{Sweave}
 \documentclass[12pt,a4paper]{article}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{Sweave}
 \usepackage{a4wide}
 %%\usepackage[lists,heads]{endfloat}
 

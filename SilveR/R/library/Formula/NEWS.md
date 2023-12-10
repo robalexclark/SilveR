@@ -1,3 +1,9 @@
+# Formula 1.2-5
+
+* Improve `dot` handling in `model.matrix()` method when setting up the
+  terms (reported by Kevin Tappe).
+
+
 # Formula 1.2-4
 
 * `model.part()` method tries to avoid calling `has_dot()` by checking the

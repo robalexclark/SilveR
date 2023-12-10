@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.8.2" />
+<meta name="author" content="emmeans package, Version 1.8.9" />
 
 
 <title>FAQs for emmeans</title>
@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 
 <h1 class="title toc-ignore">FAQs for emmeans</h1>
-<h4 class="author">emmeans package, Version 1.8.2</h4>
+<h4 class="author">emmeans package, Version 1.8.9</h4>
 
 
 
@@ -96,6 +96,8 @@ freedom?</a></li>
 group</a></li>
 <li><a href="#anova">My ANOVA <em>F</em> is significant, but no pairwise
 comparisons are</a></li>
+<li><a href="#ratios">I wanted differences, but instead I got ratios (or
+odds ratios)</a></li>
 <li><a href="#notukey">I asked for a Tukey adjustments, but that’s not
 what I got</a></li>
 <li><a href="#noadjust"><code>emmeans()</code> completely ignores my
@@ -116,7 +118,7 @@ vignette</a>.</p>
 <div id="fastest" class="section level2">
 <h2>What is the fastest way to obtain EMMs and pairwise
 comparisons?</h2>
-<!-- @index Model!Importance of; Quick start; -->
+<!-- @index Model!Importance of; `emmeans()`!Fastest way to get wrong answers -->
 <p>There are two answers to this (i.e., be careful what you wish
 for):</p>
 <ol style="list-style-type: decimal">
@@ -328,7 +330,7 @@ emmeans(pg.lm, consec ~ percent)</code></pre>
 ## 
 ## $contrasts
 ##  contrast              estimate     SE df t.ratio p.value
-##  percent12 - percent9    0.1796 0.0561 23   3.202  0.0110
+##  percent12 - percent9    0.1796 0.0561 23   3.202  0.0114
 ##  percent15 - percent12   0.0378 0.0582 23   0.650  0.8613
 ##  percent18 - percent15   0.0825 0.0691 23   1.194  0.5201
 ## 
@@ -422,6 +424,23 @@ pairwise comparisons are adjusted using the Tukey method, and the
 adjusted <em>P</em> values can be quite a bit larger than the unadjusted
 ones. (But I definitely do <em>not</em> advocate using no adjustment to
 “repair” this problem.)</p>
+</div>
+<div id="ratios" class="section level2">
+<h2>I wanted differences, but instead I got ratios (or odds ratios)</h2>
+<!-- @index Comparisons!Obtaining differences rather than ratios;
+            Ratios!but I wanted differences; Odds ratios!but I wanted differences  -->
+<p>When a transformation or link involves logs, then, unlike other
+transformations, comparisons can be back-transformed into ratios – and
+that is the default behavior. If you really want differences and not
+ratios, you can re-grid the means first. Re-gridding starts anew with
+everything on the response scale, and no memory of the
+transformation.</p>
+<pre class="r"><code>EMM &lt;- emmeans(...)
+pairs(regrid(EMM))   # or contrast(regrid(EMM), ...)</code></pre>
+<p>PS – A side effect is that this causes the tests to be done using SEs
+obtained by the delta method on the re-gridded scale, rather than on the
+link scale. Re-gridding can be used with any transformation, not just
+logs, and it has the same side effect.</p>
 </div>
 <div id="notukey" class="section level2">
 <h2>I asked for Tukey adjustments, but that’s not what I got</h2>

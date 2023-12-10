@@ -25,6 +25,7 @@ for(v in unique(var)) {
 }
 trt <- factor(trt)
 
+library(lattice)
 xyplot(as.integer(trt) ~ x | vn, panel=panel.bpplot, ylim=c(0,3),
        scale=list(y=list(at=1:2, labels=levels(trt)),
          x=list(relation='free', limits=list(c(0,1),c(0,13)))),
@@ -60,7 +61,8 @@ bpl <- function(x, group, lab, cex.labels=.75) {
     outerText(sm[i,'N'], 4-i, cex=cex.labels)
 }
 
-spar(mfrow=c(2,1), left=-1,rt=3,bot=1.5, mgp=c(2.5,.6,0), tcl=-.3, ps=12)
+# spar(mfrow=c(2,1), left=-1,rt=3,bot=1.5, mgp=c(2.5,.6,0), tcl=-.3, ps=12)
+par(mfrow=c(2,1))
 set.seed(2)
 trt <- c(rep('T1',100), rep('T2',100))
 x1 <- runif(100)

@@ -382,7 +382,7 @@ if this is your first encounter with <code>on.exit()</code> or
 <code>withr::defer()</code>, I’d recommend starting with that blog as it
 gives a gentler introduction. This vignette moves a little faster since
 it’s designed as more of a reference doc.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(testthat)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(testthat)</span></code></pre></div>
 </div>
 <div id="foundations" class="section level2">
 <h2>Foundations</h2>
@@ -391,17 +391,17 @@ foundations to help you understand how they work. We’ll motivate the
 discussion with a <code>sloppy()</code> function that prints a number
 with a specific number of significant digits by adjusting an R
 option:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sloppy <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>pi</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sloppy</span>(pi, <span class="dv">2</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.1</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pi</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.1</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>sloppy <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>}</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>pi</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">sloppy</span>(pi, <span class="dv">2</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; [1] 3.1</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>pi</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; [1] 3.1</span></span></code></pre></div>
 <p>Notice how <code>pi</code> prints differently before and after the
 call to <code>sloppy()</code>. Calling <code>sloppy()</code> has a side
 effect: it changes the <code>digits</code> option globally, not just
@@ -417,33 +417,33 @@ mess-making function call is paired with an <code>on.exit()</code> call
 that cleans up.</p>
 <p>We can use this idea to turn <code>sloppy()</code> into
 <code>neat()</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>neat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>pi</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">neat</span>(pi, <span class="dv">2</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.1</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>pi</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>neat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>pi</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="fu">neat</span>(pi, <span class="dv">2</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; [1] 3.1</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>pi</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span></code></pre></div>
 <p>Here we make use of a useful pattern <code>options()</code>
 implements: when you call <code>options(digits = sig_digits)</code> it
 both sets the <code>digits</code> option <em>and</em> (invisibly)
 returns the previous value of digits. We can then use that value to
 restore the previous options.</p>
 <p><code>on.exit()</code> also works in tests:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;can print one digit of pi&quot;</span>, {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_output</span>(<span class="fu">print</span>(pi), <span class="st">&quot;3&quot;</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Test passed 🌈</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>pi</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;can print one digit of pi&quot;</span>, {</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">expect_output</span>(<span class="fu">print</span>(pi), <span class="st">&quot;3&quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>})</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; Test passed</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>pi</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span></code></pre></div>
 <p>There are three main drawbacks to <code>on.exit()</code>:</p>
 <ul>
 <li><p>You should always call it with <code>add = TRUE</code> and
@@ -457,8 +457,8 @@ problems down the road.</p></li>
 <li><p>It doesn’t work outside a function or test. If you run the
 following code in the global environment, you won’t get an error, but
 the cleanup code will never be run:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>This is annoying when you are running tests interactively.</p></li>
 <li><p>You can’t program with it; <code>on.exit()</code> always works
 inside the <em>current</em> function so you can’t wrap up repeated
@@ -471,23 +471,23 @@ inside the <em>current</em> function so you can’t wrap up repeated
 <p><code>withr::defer()</code> resolves the main drawbacks of
 <code>on.exit()</code>. First, it has the behaviour we want by default;
 no extra arguments needed:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>neat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">options</span>(op))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>neat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">options</span>(op))</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>}</span></code></pre></div>
 <p>Second, it works when called in the global environment. Since the
 global environment isn’t perishable, like a test environment is, you
 have to call <code>deferred_run()</code> explicitly to execute the
 deferred events. You can also clear them, without running, with
 <code>deferred_clear()</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">print</span>(<span class="st">&quot;hi&quot;</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Setting deferred event(s) on global environment.</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   * Execute (and clear) with `deferred_run()`.</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   * Clear (without executing) with `deferred_clear()`.</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">deferred_run</span>()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;hi&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">print</span>(<span class="st">&quot;hi&quot;</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; Setting deferred event(s) on global environment.</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt;   * Execute (and clear) with `deferred_run()`.</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;   * Clear (without executing) with `deferred_clear()`.</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">deferred_run</span>()</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; [1] &quot;hi&quot;</span></span></code></pre></div>
 <p>Finally, <code>withr::defer()</code> lets you pick which function to
 bind the clean up behaviour too. This makes it possible to create helper
 functions.</p>
@@ -498,18 +498,18 @@ functions.</p>
 digits option. Wouldn’t it be nice if we could write a helper function
 to automate? Unfortunately we can’t write a helper with
 <code>on.exit()</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>local_digits <span class="ot">&lt;-</span> <span class="cf">function</span>(sig_digits) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>neater <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">local_digits</span>(<span class="dv">1</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">neater</span>(pi)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>local_digits <span class="ot">&lt;-</span> <span class="cf">function</span>(sig_digits) {</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">options</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">after =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>}</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>neater <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="fu">local_digits</span>(<span class="dv">1</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>}</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="fu">neater</span>(pi)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; [1] 3.141593</span></span></code></pre></div>
 <p>This code doesn’t work because the cleanup happens too soon, when
-<code>local_digits()</code> exists, not when <code>neat()</code>
+<code>local_digits()</code> exits, not when <code>neat()</code>
 finishes.</p>
 <p>Fortunately, <code>withr::defer()</code> allows us to solve this
 problem by providing an <code>envir</code> argument that allows you to
@@ -519,26 +519,26 @@ without understanding all the details. Your helper function should
 always have an <code>env</code> argument that defaults to
 <code>parent.frame()</code>, which you pass to the second argument of
 <code>defer()</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>local_digits <span class="ot">&lt;-</span> <span class="cf">function</span>(sig_digits, <span class="at">env =</span> <span class="fu">parent.frame</span>()) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">options</span>(op), env)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">neater</span>(pi)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>local_digits <span class="ot">&lt;-</span> <span class="cf">function</span>(sig_digits, <span class="at">env =</span> <span class="fu">parent.frame</span>()) {</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">digits =</span> sig_digits)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">options</span>(op), env)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>}</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="fu">neater</span>(pi)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 <p>Just like <code>on.exit()</code> and <code>defer()</code>, our helper
 also works within tests:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;withr lets us write custom helpers for local state manipulation&quot;</span>, {</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">local_digits</span>(<span class="dv">1</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_output</span>(<span class="fu">print</span>(<span class="fu">exp</span>(<span class="dv">1</span>)), <span class="st">&quot;3&quot;</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">local_digits</span>(<span class="dv">3</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_output</span>(<span class="fu">print</span>(<span class="fu">exp</span>(<span class="dv">1</span>)), <span class="st">&quot;2.72&quot;</span>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Test passed 🎊</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">exp</span>(<span class="dv">1</span>))</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.718282</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;withr lets us write custom helpers for local state manipulation&quot;</span>, {</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">local_digits</span>(<span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">expect_output</span>(<span class="fu">print</span>(<span class="fu">exp</span>(<span class="dv">1</span>)), <span class="st">&quot;3&quot;</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  </span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">local_digits</span>(<span class="dv">3</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">expect_output</span>(<span class="fu">print</span>(<span class="fu">exp</span>(<span class="dv">1</span>)), <span class="st">&quot;2.72&quot;</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>})</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; Test passed</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">exp</span>(<span class="dv">1</span>))</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; [1] 2.718282</span></span></code></pre></div>
 <p>We always call these helper functions <code>local_</code>; “local”
 here refers to the fact that the state change persists only locally, for
 the lifetime of the associated function or test.</p>
@@ -575,12 +575,12 @@ the wide range of local functions already provided by withr:</p>
 </table>
 <p>We can use <code>withr::local_options()</code> to write yet another
 version of <code>neater()</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>neatest <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">local_options</span>(<span class="fu">list</span>(<span class="at">digits =</span> sig_digits))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">neatest</span>(pi, <span class="dv">3</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.14</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>neatest <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sig_digits) {</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">local_options</span>(<span class="fu">list</span>(<span class="at">digits =</span> sig_digits))</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>}</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">neatest</span>(pi, <span class="dv">3</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; [1] 3.14</span></span></code></pre></div>
 <p>Each <code>local_*()</code> function has a companion
 <code>with_()</code> function, which is a nod to <code>with()</code>,
 and the inspiration for withr’s name. We won’t use the
@@ -597,21 +597,21 @@ other global state. For example, take this variant on
 <code>message()</code> that only shows a message if the
 <code>verbose</code> option is <code>TRUE</code>. How would you test
 that setting the option does indeed silence the message?</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>message2 <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">&quot;verbose&quot;</span>))) {</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>()</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(...)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>message2 <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">isTRUE</span>(<span class="fu">getOption</span>(<span class="st">&quot;verbose&quot;</span>))) {</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="fu">return</span>()</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>  }</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="fu">message</span>(...)</span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>}</span></code></pre></div>
 <p>In some cases, it’s possible to make the global state an explicit
 argument to the function. For example, we could refactor
 <code>message2()</code> to make the verbosity an explicit argument:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>message3 <span class="ot">&lt;-</span> <span class="cf">function</span>(..., <span class="at">verbose =</span> <span class="fu">getOption</span>(<span class="st">&quot;verbose&quot;</span>)) {</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">isTRUE</span>(verbose)) {</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>()</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(...)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>message3 <span class="ot">&lt;-</span> <span class="cf">function</span>(..., <span class="at">verbose =</span> <span class="fu">getOption</span>(<span class="st">&quot;verbose&quot;</span>)) {</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">isTRUE</span>(verbose)) {</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="fu">return</span>()</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  }</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="fu">message</span>(...)</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>}</span></code></pre></div>
 <p>Making external state explicit is often worthwhile, because it makes
 it more clear exactly what inputs determine the outputs of your
 function. But it’s simply not possible in many cases. That’s where test
@@ -629,14 +629,15 @@ inside and test parts of your code that would otherwise be challenging.
 For example, here’s how you could use
 <code>withr::local_options()</code> as a test fixture to test
 <code>message2()</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;message2() output depends on verbose option&quot;</span>, {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">local_options</span>(<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_message</span>(<span class="fu">message2</span>(<span class="st">&quot;Hi!&quot;</span>))</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">local_options</span>(<span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_message</span>(<span class="fu">message2</span>(<span class="st">&quot;Hi!&quot;</span>), <span class="cn">NA</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Test passed 🥇</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;message2() output depends on verbose option&quot;</span>, {</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">local_options</span>(<span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">expect_message</span>(<span class="fu">message2</span>(<span class="st">&quot;Hi!&quot;</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>  </span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">local_options</span>(<span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="fu">expect_message</span>(<span class="fu">message2</span>(<span class="st">&quot;Hi!&quot;</span>), <span class="cn">NA</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>})</span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; now dyn.load(&quot;/Users/hadleywickham/Library/R/arm64/4.2/library/ellipsis/libs/ellipsis.so&quot;) ...</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; Test passed</span></span></code></pre></div>
 <div id="case-study-usethis" class="section level3">
 <h3>Case study: usethis</h3>
 <p>One place that we use test fixtures extensively is in the usethis
@@ -650,23 +651,23 @@ against it, then destroy it.</p>
 <p>To solve this problem we create a test fixture, which we place in
 <code>R/test-helpers.R</code> so that’s it’s available for both testing
 and interactive experimentation:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>local_create_package <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">dir =</span> <span class="fu">file_temp</span>(), <span class="at">env =</span> <span class="fu">parent.frame</span>()) {</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  old_project <span class="ot">&lt;-</span> <span class="fu">proj_get_</span>()</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create new folder and package</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">create_package</span>(dir, <span class="at">open =</span> <span class="cn">FALSE</span>) <span class="co"># A</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(fs<span class="sc">::</span><span class="fu">dir_delete</span>(dir), <span class="at">envir =</span> env) <span class="co"># -A</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># change working directory</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setwd</span>(dir) <span class="co"># B</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">setwd</span>(old_project), <span class="at">envir =</span> env) <span class="co"># -B</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># switch to new usethis project</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">proj_set</span>(dir) <span class="co"># C</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">proj_set</span>(old_project, <span class="at">force =</span> <span class="cn">TRUE</span>), <span class="at">envir =</span> env) <span class="co"># -C</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  dir</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>local_create_package <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">dir =</span> <span class="fu">file_temp</span>(), <span class="at">env =</span> <span class="fu">parent.frame</span>()) {</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  old_project <span class="ot">&lt;-</span> <span class="fu">proj_get_</span>()</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  </span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  <span class="co"># create new folder and package</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  <span class="fu">create_package</span>(dir, <span class="at">open =</span> <span class="cn">FALSE</span>) <span class="co"># A</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(fs<span class="sc">::</span><span class="fu">dir_delete</span>(dir), <span class="at">envir =</span> env) <span class="co"># -A</span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  </span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>  <span class="co"># change working directory</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>  <span class="fu">setwd</span>(dir) <span class="co"># B</span></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">setwd</span>(old_project), <span class="at">envir =</span> env) <span class="co"># -B</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>  </span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>  <span class="co"># switch to new usethis project</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>  <span class="fu">proj_set</span>(dir) <span class="co"># C</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">proj_set</span>(old_project, <span class="at">force =</span> <span class="cn">TRUE</span>), <span class="at">envir =</span> env) <span class="co"># -C</span></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a>  </span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>  dir</span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a>}</span></code></pre></div>
 <p>Note that the cleanup automatically unfolds in the opposite order
 from the setup. Setup is <code>A</code>, then <code>B</code>, then
 <code>C</code>; cleanup is <code>-C</code>, then <code>-B</code>, then
@@ -683,14 +684,14 @@ indirectly. So it’s very convenient that
 <code>local_create_package()</code> creates a minimal package, with a
 valid <code>DESCRIPTION</code> file, for us to test against. And when
 the test is done — poof! — the package is gone.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;use_roxygen_md() adds DESCRIPTION fields&quot;</span>, {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  pkg <span class="ot">&lt;-</span> <span class="fu">local_create_package</span>()</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">use_roxygen_md</span>()</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_true</span>(<span class="fu">uses_roxygen_md</span>())</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(desc<span class="sc">::</span><span class="fu">desc_get</span>(<span class="st">&quot;Roxygen&quot;</span>, pkg)[[<span class="dv">1</span>]], <span class="st">&quot;list(markdown = TRUE)&quot;</span>)<span class="er">)</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_true</span>(desc<span class="sc">::</span><span class="fu">desc_has_fields</span>(<span class="st">&quot;RoxygenNote&quot;</span>, pkg))</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">&quot;use_roxygen_md() adds DESCRIPTION fields&quot;</span>, {</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  pkg <span class="ot">&lt;-</span> <span class="fu">local_create_package</span>()</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="fu">use_roxygen_md</span>()</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  </span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  <span class="fu">expect_true</span>(<span class="fu">uses_roxygen_md</span>())</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>  <span class="fu">expect_equal</span>(desc<span class="sc">::</span><span class="fu">desc_get</span>(<span class="st">&quot;Roxygen&quot;</span>, pkg)[[<span class="dv">1</span>]], <span class="st">&quot;list(markdown = TRUE)&quot;</span>)<span class="er">)</span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>  <span class="fu">expect_true</span>(desc<span class="sc">::</span><span class="fu">desc_has_fields</span>(<span class="st">&quot;RoxygenNote&quot;</span>, pkg))</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>})</span></code></pre></div>
 </div>
 </div>
 <div id="scope" class="section level2">
@@ -707,8 +708,8 @@ disadvantages:</p>
 <ul>
 <li><p>If you would otherwise have called the fixture in every test,
 you’ve saved yourself a bunch of work and duplicate code.</p></li>
-<li><p>But on the downside, if you a test fails and you want to recreate
-the failure in an interactive environment so you can debug, you need to
+<li><p>On the downside, if your test fails and you want to recreate the
+failure in an interactive environment so you can debug, you need to
 remember to run all the setup code at the top of the file
 first.</p></li>
 </ul>
@@ -721,11 +722,11 @@ debugging test failures so much easier.</p>
 <p>To run code before any test is run, you can create a file called
 <code>tests/testthat/setup.R</code>. If the code in this file needs
 clean up, you can use the special <code>teardown_env()</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run before any test</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="st">&quot;mtcars.csv&quot;</span>, mtcars)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run after all tests</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">unlink</span>(<span class="st">&quot;mtcars.csv&quot;</span>), <span class="fu">teardown_env</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># Run before any test</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">write.csv</span>(<span class="st">&quot;mtcars.csv&quot;</span>, mtcars)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co"># Run after all tests</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">defer</span>(<span class="fu">unlink</span>(<span class="st">&quot;mtcars.csv&quot;</span>), <span class="fu">teardown_env</span>())</span></code></pre></div>
 <p>Setup code is typically best used to create external resources that
 are needed by many tests. It’s best kept to a minimum because you will
 have to manually run it before interactively debugging tests.</p>

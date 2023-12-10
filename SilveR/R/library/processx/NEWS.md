@@ -1,3 +1,18 @@
+# processx 3.8.2
+
+* The client library, used by callr, now ignores `SIGPIPE` when writing
+  to a file descriptor, on unix. This avoid possible freezes when a
+  `callr::r_session` subprocess is trying to report its result after the
+  main process was terminated. In particular, this happened with parallel
+  testthat: https://github.com/r-lib/testthat/issues/1819
+
+# processx 3.8.1
+
+* On Unixes, R processes created by callr now feature a `SIGTERM`
+  cleanup handler that cleans up the temporary directory before
+  shutting down. To enable it, set the `PROCESSX_R_SIGTERM_CLEANUP`
+  envvar to a non-empty value.
+
 # processx 3.8.0
 
 * processx error stacks are better now. They have ANSI hyperlinks for

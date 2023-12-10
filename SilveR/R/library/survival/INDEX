@@ -14,6 +14,7 @@ attrassign              Create new-style "assign" attribute
 basehaz                 Alias for the survfit function
 bladder                 Bladder Cancer Recurrences
 blogit                  Bounded link functions
+brier                   Compute the Brier score for a Cox model
 cch                     Fits proportional hazards regression model to
                         case-cohort data
 cgd                     Chronic Granulotamous Disease data
@@ -45,6 +46,7 @@ frailty                 Random effects terms
 gbsg                    Breast cancer data sets used in Royston and
                         Altman (2013)
 heart                   Stanford Heart Transplant data
+hoel                    Mouse cancer data
 is.ratetable            Verify that an object is of class ratetable.
 kidney                  Kidney catheter data
 levels.Surv             Return the states of a multi-state Surv object
@@ -82,7 +84,7 @@ pseudo                  Pseudo values for survival.
 pspline                 Smoothing splines using a pspline basis
 pyears                  Person Years
 quantile.survfit        Quantiles from a survfit object
-ratetable               Rate table structure
+ratetable               Allow ratetable() terms in a model
 ratetableDate           Convert date objects to ratetable form
 rats                    Rat treatment data from Mantel et al
 rats2                   Rat data from Gail et al.
@@ -108,6 +110,7 @@ summary.survexp         Summary function for a survexp object
 summary.survfit         Summary of a Survival Curve
 survSplit               Split a survival data set at specified times
 survcheck               Checks of a survival data set
+survcondense            Shorten a (time1, time2) survival dataset
 survdiff                Test Survival Curve Differences
 survexp                 Compute Expected Survival
 survexp.fit             Compute Expected Survival

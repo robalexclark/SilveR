@@ -20,11 +20,13 @@ crandalf_results	crandalf_check
 del_empty_dir	del_empty_dir
 dir_create	dir_create
 dir_exists	dir_exists
+download_cache	download_cache
 download_file	download_file
 do_once	do_once
 embed_dir	embed_file
 embed_file	embed_file
 embed_files	embed_file
+env_option	env_option
 existing_files	existing_files
 exit_call	exit_call
 file_exists	dir_exists
@@ -44,6 +46,7 @@ install_github	install_github
 in_dir	in_dir
 isFALSE	isFALSE
 is_abs_path	is_abs_path
+is_arm64	os
 is_ascii	is_ascii
 is_blank	is_blank
 is_CRAN_incoming	is_R_CMD_check
@@ -103,7 +106,7 @@ sort_file	process_file
 split_lines	split_lines
 split_source	split_source
 strict_list	strict_list
-stringsAsStrings	stringsAsStrings
+strip_html	strip_html
 submit_cran	submit_cran
 system3	system3
 tinify	tinify
@@ -119,3 +122,5 @@ url_filename	url_filename
 valid_syntax	valid_syntax
 with_ext	file_ext
 write_utf8	read_utf8
+yaml_body	yaml_body
+yaml_load	yaml_load

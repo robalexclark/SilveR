@@ -43,3 +43,19 @@ add_one(x)
 .Internal(inspect(x))
 x
 
+## ---- error=TRUE--------------------------------------------------------------
+test_destructor_ok()
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  test_destructor_bad()
+#  #> Error: oh no!
+
+## -----------------------------------------------------------------------------
+set.seed(123)
+x <- sample(letters, 1e6, replace = TRUE)
+
+bench::mark(
+  test_extract_cpp11(x), 
+  test_extract_r_api(x)
+)
+

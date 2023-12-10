@@ -1,3 +1,5 @@
+message("Testing utilities")
+
 test_splitIndicies <- function()
 {
     .splitIndices <- BiocParallel:::.splitIndices
@@ -38,97 +40,16 @@ test_splitX <- function()
     checkIdentical(as.list(X),               .splitX(X, 2, 4))
 }
 
-test_splitX_with_redo <- function(){
-    .split_X_redo <- BiocParallel:::.split_X_redo
-    .bploop_rng_iter <- BiocParallel:::.bploop_rng_iter
-
-    N <- 6
-    X <- 1:N
-
-
-    task_size <- 1L
-    redo_index <- rep(TRUE, N)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(splittedX, as.list(X))
-
-    task_size <- 4L
-    redo_index <- rep(TRUE, N)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(splittedX, list(1:4, 5:6))
-
-    task_size <- 1L
-    redo_index <- c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(
-        splittedX,
-        list(1L, .bploop_rng_iter(1L),
-             3L, 4L, 5L)
-    )
-
-    task_size <- 2L
-    redo_index <- c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(
-        splittedX,
-        list(1L, .bploop_rng_iter(1L),
-             3L:4L, 5L)
-    )
-
-    task_size <- 10L
-    redo_index <- c(TRUE, FALSE, TRUE, TRUE, TRUE, FALSE)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(
-        splittedX,
-        list(1L, .bploop_rng_iter(1L),
-             3L:5L)
-    )
-
-    task_size <- 1L
-    redo_index <- c(FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(
-        splittedX,
-        list(.bploop_rng_iter(2L),
-             3L)
-    )
-
-    task_size <- 1L
-    redo_index <- c(FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(
-        splittedX,
-        list(.bploop_rng_iter(2L),
-             3L, 4L, 5L, 6L)
-    )
-
-    task_size <- 3L
-    redo_index <- c(FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
-    n <- .split_X_redo(X[redo_index], redo_index, task_size)
-    splittedX <- .split_X_redo(X[redo_index], redo_index, task_size, n)
-    checkIdentical(
-        splittedX,
-        list(.bploop_rng_iter(2L),
-             3:5, 6L)
-    )
-}
-
 test_redo_index <- function() {
     .redo_index <- BiocParallel:::.redo_index
     err <- BiocParallel:::.error("")
-    checkIdentical(logical(), .redo_index(list(), list()))
-    checkIdentical(TRUE, .redo_index(list(1), list(err)))
-    checkIdentical(c(FALSE, TRUE), .redo_index(list(1, "2"), list(1, err)))
+    checkIdentical(integer(), .redo_index(list(), list()))
+    checkIdentical(1L, .redo_index(list(1), list(err)))
+    checkIdentical(2L, .redo_index(list(1, "2"), list(1, err)))
     ## all need recalculating
-    checkIdentical(c(TRUE, TRUE), .redo_index(list("1", "2"), list(err, err)))
+    checkIdentical(1:2, .redo_index(list("1", "2"), list(err, err)))
     ## X can be a vector
-    checkIdentical(c(FALSE, TRUE), .redo_index(1:2, list(1, err)))
+    checkIdentical(2L, .redo_index(1:2, list(1, err)))
     ## lengths differ
     checkException(.redo_index(list(1, 2), list(err)), silent=TRUE)
     ## no previous error
@@ -186,57 +107,3 @@ test_rename <- function() {
     checkIdentical(exp, .rename(exp0, X))
 }
 
-test_mrename <- function() {
-    .mrename <- BiocParallel:::.mrename
-
-    ## list() when `mapply()` invoked with no arguments, `mapply(identity)`
-    X <- list()
-    checkIdentical(X, .mrename(list(), X))
-
-    ## list(X) when `mapply()` invoked with one argument, `mapply(identity, X)`
-    XX <- list(X)
-    checkIdentical(list(), .mrename(list(), XX))
-
-    ## `mapply(identity, character())` returns a _named_ list()
-    X <- character()
-    XX <- list(X)
-    checkIdentical(setNames(list(), character()), .mrename(list(), XX))
-
-    ## named arguments to mapply() are _not_ names of return value...
-    X = list()
-    XX <- list(x = X)
-    checkIdentical(list(), .mrename(list(), XX))
-
-    ## ...except if the argument is a character()
-    X <- character()
-    XX <- list(x = X)
-    checkIdentical(setNames(list(), character()), .mrename(list(), XX))
-
-    ## with multiple arguments, names are from the first argument
-    XX = list(c(a = 1, b = 2, c = 3), c(d = 4, e = 5, f = 6))
-    checkIdentical(
-        setNames(list(1, 2, 3), letters[1:3]),
-        .mrename(list(1, 2, 3), XX)
-    )
-
-    ## ...independent of names on the arguments
-    XX = list(A = c(a = 1, b = 2, c = 3), B = c(d = 4, e = 5, f = 6))
-    checkIdentical(
-        setNames(list(1, 2, 3), letters[1:3]),
-        .mrename(list(1, 2, 3), XX)
-    )
-
-    ## when the first argument is an unnamed character vector, names are values
-    XX = list(A = letters[1:3], B = 1:3)
-    checkIdentical(
-        setNames(list(1, 2, 3), letters[1:3]),
-        .mrename(list(1, 2, 3), XX)
-    )
-
-    ## ...except if there are names on the first vector...
-    XX = list(A = setNames(letters[1:3], LETTERS[1:3]), B = 1:3)
-    checkIdentical(
-        setNames(list(1, 2, 3), LETTERS[1:3]),
-        .mrename(list(1, 2, 3), XX)
-    )
-}

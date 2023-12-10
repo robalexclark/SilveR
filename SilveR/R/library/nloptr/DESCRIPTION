@@ -68,5 +68,5 @@ Author: Jelmer Ypma [aut],
 Maintainer: Aymeric Stamm <aymeric.stamm@math.cnrs.fr>
 Repository: CRAN
 Date/Publication: 2022-05-26 15:40:02 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-06-20 23:43:13 UTC; windows
-Archs: i386, x64
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 03:37:35 UTC; windows
+Archs: x64

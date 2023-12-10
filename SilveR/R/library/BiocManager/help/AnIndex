@@ -3,7 +3,6 @@ BINARY_BASE_URL	repositories
 BiocManager	BiocManager-pkg
 BiocManager-pkg	BiocManager-pkg
 BiocManager.check_repositories	repositories
-BiocManager.snapshot	repositories
 BIOCONDUCTOR_ONLINE_VERSION_DIAGNOSIS	install
 containerRepository	repositories
 install	install

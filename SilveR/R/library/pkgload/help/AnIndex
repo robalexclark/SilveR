@@ -6,6 +6,7 @@ dev_example	dev_example
 dev_help	dev_help
 dev_meta	dev_meta
 dev_topic_find	dev_help
+dev_topic_index	dev_help
 dev_topic_index_reset	dev_help
 has_tests	has_tests
 help	help
@@ -31,6 +32,7 @@ pkg_name	packages
 pkg_ns	packages
 pkg_path	packages
 pkg_version	packages
+pkg_version_raw	packages
 run_example	dev_example
 run_pkg_hook	run_pkg_hook
 run_user_hook	run_pkg_hook

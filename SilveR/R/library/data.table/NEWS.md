@@ -1,8 +1,32 @@
 **If you are viewing this file on CRAN, please check [latest news on GitHub](https://github.com/Rdatatable/data.table/blob/master/NEWS.md) where the formatting is also better.**
 
-**Benchmarks are regularly updated: [here](https://h2oai.github.io/db-benchmark/)**
+# data.table [v1.14.8](https://github.com/Rdatatable/data.table/milestone/28?closed=1)
 
-# data.table [v1.14.4](https://github.com/Rdatatable/data.table/milestone/26?closed=1)
+## NOTES
+
+1. Test 1613.605 now passes changes to `as.data.frame()` in R-devel, [#5597](https://github.com/Rdatatable/data.table/pull/5597). Thanks to Avraham Adler for reporting.
+
+2. An out of bounds read when combining non-equi join with `by=.EACHI` has been found and fixed thanks to clang ASAN, [#5598](https://github.com/Rdatatable/data.table/issues/5598). There was no bug or consequence because the read was followed (now preceded) by a bounds test.
+
+3. `.rbind.data.table` (note the leading `.`) is no longer exported when `data.table` is installed in R>=4.0.0 (Apr 2020), [#5600](https://github.com/Rdatatable/data.table/pull/5600). It was never documented which R-devel now detects and warns about. It is only needed by `data.table` internals to support R<4.0.0; see note 1 in v1.12.6 (Oct 2019) below in this file for more details.
+
+
+# data.table [v1.14.6](https://github.com/Rdatatable/data.table/milestone/27?closed=1)  (16 Nov 2022)
+
+## BUG FIXES
+
+1. `fread()` could leak memory, [#3292](https://github.com/Rdatatable/data.table/issues/3292). Thanks to @patrickhowerter for reporting, and Jim Hester for the fix. The fix requires R 3.4.0 or later. Loading `data.table` in earlier versions now highlights this issue on startup, asks users to upgrade R, and warns that we intend to upgrade `data.table`'s dependency from 8 year old R 3.1.0 (April 2014) to 5 year old R 3.4.0 (April 2017).
+
+## NOTES
+
+1. Test 1962.098 has been modified to pass latest changes to `POSIXt` in R-devel.
+
+2. `test.data.table()` no longer creates `DT` in `.GlobalEnv`, a CRAN policy violation, [#5514](https://github.com/Rdatatable/data.table/issues/5514). No other writes occurred to `.GlobalEnv` and release procedures have been improved to prevent this happening again.
+
+3. The memory usage of the test suite has been halved, [#5507](https://github.com/Rdatatable/data.table/issues/5507).
+
+
+# data.table [v1.14.4](https://github.com/Rdatatable/data.table/milestone/26?closed=1)  (17 Oct 2022)
 
 ## NOTES
 

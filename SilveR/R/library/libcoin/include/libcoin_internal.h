@@ -2,7 +2,7 @@
 /* C Header */
 
 /*
-    Copyright (C) 2017-2021 Torsten Hothorn
+    Copyright (C) 2017-2023 Torsten Hothorn
 
     This file is part of the 'libcoin' R add-on package.
 
@@ -26,13 +26,16 @@
 
 /* R Includes */
 
+#define STRICT_R_HEADERS
+#define USE_FC_LEN_T
+#include <float.h>        /* for DBL_MIN */
 #include <R.h>
 #include <Rinternals.h>
-#include <Rmath.h>
-#include <Rdefines.h>
-#include <R_ext/stats_package.h> /* for S_rcont2 */
-#include <Rversion.h>           // for R_VERSION
+#include <Rversion.h>     /* for R_VERSION */
 #include <R_ext/Lapack.h> /* for dspev */
+#ifndef FCONE
+# define FCONE
+#endif
 
 /* C Macros */
 

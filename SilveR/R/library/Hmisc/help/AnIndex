@@ -1,6 +1,7 @@
 %nin%	nin
 .q	Cs
 abs.error.pred	abs.error.pred
+addggLayers	addggLayers
 addMarginal	addMarginal
 all.digits	sedit
 all.is.numeric	all.is.numeric
@@ -52,10 +53,11 @@ cnvrt.coords	cnvrt.coords
 code.levels	sas.get
 colorFacet	ggMisc
 combine	Hmisc-internal
-combine.levels	varclus
+combine.levels	combine.levels
 combine<-	Hmisc-internal
 combineLabels	label
 combplotp	combplotp
+completer	completer
 confbar	Misc
 consolidate	consolidate
 consolidate.default	consolidate
@@ -103,11 +105,13 @@ dvigv.latex	latex
 dvips	latex
 dvips.dvi	latex
 dvips.latex	latex
+ebpcomp	ebpcomp
 Ecdf	Ecdf
 Ecdf.data.frame	Ecdf
 Ecdf.default	Ecdf
 Ecdf.formula	Ecdf
 ecdfpM	scat1d
+ecdfSteps	ecdfSteps
 equalBins	equalBins
 errbar	errbar
 escapeBS	escapeRegex
@@ -118,7 +122,9 @@ event.chart	event.chart
 event.convert	event.convert
 event.history	event.history
 expr.tree	Hmisc-internal
+extractlabs	extractlabs
 fillin	Hmisc-internal
+fImport	fImport
 find.matches	find.matches
 first.word	first.word
 fit.mult.impute	transcan
@@ -158,6 +164,7 @@ gbayesMixPowerNP	gbayes
 gbayesMixPredNoData	gbayes
 gbayesSeqSim	gbayesSeqSim
 get2rowHeads	Hmisc-internal
+getabd	getabd
 getHdata	getHdata
 getLatestSource	Misc
 GetModelFrame	Hmisc-internal
@@ -165,12 +172,14 @@ getRs	getRs
 getZip	getZip
 ggfreqScatter	ggfreqScatter
 ggplot.summaryP	summaryP
+ggplot.transace	transace
 ggplot.transcan	transcan
 ggplotlyr	ggplotlyr
 GiniMd	GiniMd
 Gompertz2	spower
 groupn	Hmisc-internal
 grType	Misc
+hashCheck	hashCheck
 hdquantile	hdquantile
 hidingTOC	hidingTOC
 hist.data.frame	hist.data.frame
@@ -179,6 +188,8 @@ histboxp	histboxp
 histboxpM	histboxp
 histSpike	scat1d
 histSpikeg	scat1d
+hlab	hlab
+hlabs	hlabs
 Hmisc.Overview	Overview
 HmiscOverview	Overview
 hoeffd	hoeffd
@@ -194,6 +205,7 @@ htmlGreek	Hmisc-internal
 htmlSN	latex
 htmlSpecial	Hmisc-internal
 htmlSpecialType	Misc
+htmltabv	htmltabv
 htmlTranslate	latex
 htmlVerbatim	html
 importConvertDateTime	Hmisc-internal
@@ -202,6 +214,7 @@ impute	impute
 impute.default	impute
 impute.transcan	transcan
 inmChoice	mChoice
+inmChoicelike	mChoice
 intMarkovOrd	intMarkovOrd
 inverseFunction	Misc
 invertTabulated	transcan
@@ -234,6 +247,7 @@ labelLatex	label
 labelPlotmath	label
 Lag	Lag
 largest.empty	labcurve
+latestFile	latestFile
 latex	latex
 latex.bystats	bystats
 latex.bystats2	bystats
@@ -286,6 +300,7 @@ Mean	transace
 Mean.areg.boot	transace
 medvPanel	summaryS
 medvpl	summaryS
+meltData	meltData
 Merge	Merge
 mgp.axis	mgp.axis
 mgp.axis.labels	mgp.axis
@@ -293,6 +308,7 @@ mhgr	epi
 minor.tick	minor.tick
 monotone	transace
 monthDays	yearDays
+movStats	movStats
 mtitle	mtitle
 multEventChart	popower
 multLines	multLines
@@ -311,7 +327,9 @@ naprint.delete	Hmisc-internal
 naprint.keep	Hmisc-internal
 naresid.delete	Hmisc-internal
 naresid.keep	Hmisc-internal
+nCoincident	nCoincident
 nFm	tabulr
+nmChoice	mChoice
 nobsY	nobsY
 nomiss	Misc
 nstr	nstr
@@ -346,6 +364,7 @@ plot.curveRep	curveRep
 plot.describe	describe
 plot.drawPlot	labcurve
 plot.gbayes	gbayes
+plot.princmp	plot.princmp
 plot.Quantile2	spower
 plot.rm.boot	rm.boot
 plot.summary.formula.response	summary.formula
@@ -377,6 +396,7 @@ predict.transcan	transcan
 prepanel.Dotplot	xYplot
 prepanel.Ecdf	Ecdf
 prepanel.xYplot	xYplot
+princmp	princmp
 print.abs.error.pred	abs.error.pred
 print.areg	areg
 print.areg.boot	transace
@@ -406,6 +426,7 @@ print.mhgr	epi
 print.popower	popower
 print.posamsize	popower
 print.predict.dataRep	dataRep
+print.princmp	print.princmp
 print.Quantile2	spower
 print.rcorr	rcorr
 print.redun	redun
@@ -421,8 +442,10 @@ print.summary.mChoice	mChoice
 print.summaryM	summaryM
 print.t.test.cluster	t.test.cluster
 print.timePOSIXt	Hmisc-internal
+print.transace	transace
 print.transcan	transcan
 print.varclus	varclus
+printsummaryM	summaryM
 prList	label
 prn	prnz
 propsPO	popower
@@ -434,6 +457,7 @@ putHcap	label
 putHfig	label
 putKey	labcurve
 putKeyEmpty	labcurve
+qcrypt	qcrypt
 Quantile	transace
 Quantile.areg.boot	transace
 Quantile2	spower
@@ -453,6 +477,7 @@ redun	redun
 reformM	aregImpute
 reLabelled	label
 relevel.labelled	label
+rendHTML	Misc
 replace.substring.wild	sedit
 reShape	reShape
 responseSummary	Hmisc-internal
@@ -464,6 +489,8 @@ rMultinom	rMultinom
 roundN	dataRep
 roundPOSIXt	trunc.POSIXt
 rowsumFast	Hmisc-internal
+runifChanged	runifChanged
+runParallel	runParallel
 samplesize.bin	samplesize.bin
 sas.codes	sas.get
 sas.get	sas.get
@@ -475,6 +502,7 @@ scat1d	scat1d
 score.binary	score.binary
 sedit	sedit
 sepUnitsTrans	Misc
+seqFreq	seqFreq
 setParNro	Hmisc-internal
 setTrellis	xYplot
 show.col	show.pch
@@ -502,6 +530,7 @@ spearman.test	biVar
 spearman2	biVar
 spearman2.default	biVar
 spearman2.formula	biVar
+spikecomp	spikecomp
 spower	spower
 spss.get	spss.get
 src	src
@@ -546,6 +575,7 @@ table_pc	tabulr
 table_trio	tabulr
 tabulr	tabulr
 termsDrop	Hmisc-internal
+testCharDateTime	testCharDateTime
 testDateTime	Hmisc-internal
 tex	tex
 tobase64image	Misc
@@ -575,6 +605,7 @@ var.inner	Hmisc-internal
 varclus	varclus
 vcov.default	transcan
 vcov.fit.mult.impute	transcan
+vlab	vlab
 Weibull2	spower
 whichClosek	Misc
 whichClosePW	Misc

@@ -1,5 +1,5 @@
 Package: ggrepel
-Version: 0.9.1
+Version: 0.9.4
 Authors@R: c(
     person("Kamil", "Slowikowski", email = "kslowikowski@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2843-6370")),
     person("Alicia", "Schep", role = "ctb", comment = c(ORCID = "0000-0002-3915-0618")),
@@ -17,7 +17,8 @@ Authors@R: c(
     person("Robrecht", "Cannoodt", role = "ctb", comment = c(ORCID = "0000-0003-3641-729X")),
     person("Michał", "Krassowski", role = "ctb", comment = c(ORCID = "0000-0002-9638-7785")),
     person("Michael", "Chirico", role = "ctb", comment = c(ORCID = "0000-0003-0787-087X")),
-    person("Pedro", "Aphalo", role = "ctb", comment = c(ORCID = "0000-0003-3385-972X"))
+    person("Pedro", "Aphalo", role = "ctb", comment = c(ORCID = "0000-0003-3385-972X")),
+    person("Francis", "Barton", role = "ctb")
     )
 Title: Automatically Position Non-Overlapping Text Labels with
         'ggplot2'
@@ -25,18 +26,20 @@ Description: Provides text and label geoms for 'ggplot2' that help to avoid
     overlapping text labels. Labels repel away from each other and away from the
     data points.
 Depends: R (>= 3.0.0), ggplot2 (>= 2.2.0)
-Imports: grid, Rcpp, rlang (>= 0.3.0), scales (>= 0.5.0)
-Suggests: knitr, rmarkdown, testthat, gridExtra, devtools, prettydoc,
-        ggbeeswarm, dplyr, magrittr, readr, stringr
+Imports: grid, Rcpp, rlang (>= 0.3.0), scales (>= 0.5.0), withr (>=
+        2.5.0)
+Suggests: knitr, rmarkdown, testthat, svglite, vdiffr, gridExtra,
+        devtools, prettydoc, ggbeeswarm, dplyr, magrittr, readr,
+        stringr
 VignetteBuilder: knitr
 License: GPL-3 | file LICENSE
 URL: https://github.com/slowkow/ggrepel
 BugReports: https://github.com/slowkow/ggrepel/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 LinkingTo: Rcpp
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2021-01-15 21:11:36 UTC; kamil
+Packaged: 2023-10-12 20:31:14 UTC; ks38
 Author: Kamil Slowikowski [aut, cre] (<https://orcid.org/0000-0002-2843-6370>),
   Alicia Schep [ctb] (<https://orcid.org/0000-0002-3915-0618>),
   Sean Hughes [ctb] (<https://orcid.org/0000-0002-9409-9405>),
@@ -53,9 +56,10 @@ Author: Kamil Slowikowski [aut, cre] (<https://orcid.org/0000-0002-2843-6370>),
   Robrecht Cannoodt [ctb] (<https://orcid.org/0000-0003-3641-729X>),
   Michał Krassowski [ctb] (<https://orcid.org/0000-0002-9638-7785>),
   Michael Chirico [ctb] (<https://orcid.org/0000-0003-0787-087X>),
-  Pedro Aphalo [ctb] (<https://orcid.org/0000-0003-3385-972X>)
+  Pedro Aphalo [ctb] (<https://orcid.org/0000-0003-3385-972X>),
+  Francis Barton [ctb]
 Maintainer: Kamil Slowikowski <kslowikowski@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-01-15 22:00:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-15 03:33:06 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-10-13 00:20:02 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 02:48:40 UTC; windows
+Archs: x64

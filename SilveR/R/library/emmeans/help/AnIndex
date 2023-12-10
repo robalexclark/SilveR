@@ -1,8 +1,21 @@
 emmeans-package	emmeans-package
 +.emmGrid	rbind.emmGrid
+.all.vars	extending-emmeans
+.aovlist.dffun	extending-emmeans
+.cmpMM	extending-emmeans
+.combine.terms	extending-emmeans
+.diag	extending-emmeans
 .emm_basis	extending-emmeans
 .emm_register	extending-emmeans
+.emm_vignette	extending-emmeans
+.get.excl	extending-emmeans
+.get.offset	extending-emmeans
+.hurdle.support	extending-emmeans
+.my.vcov	extending-emmeans
+.num.key	extending-emmeans
 .recover_data	extending-emmeans
+.std.link.labels	extending-emmeans
+.zi.support	extending-emmeans
 add_grouping	manip-factors
 as.data.frame.emmGrid	summary.emmGrid
 as.data.frame.emm_list	emm_list-object
@@ -59,7 +72,7 @@ glht.emmlf	glht-support
 head.emmGrid	rbind.emmGrid
 hpd.summary	hpd.summary
 identity.emmc	emmc-functions
-I_bet	emm_list-object
+inverse	make.tran
 joint_tests	joint_tests
 levels<-.emmGrid	update.emmGrid
 lsm	wrappers
@@ -68,6 +81,8 @@ lsmeans	wrappers
 lsmip	wrappers
 lsmobj	wrappers
 lstrends	wrappers
+make.meanint	joint_tests
+make.symmint	joint_tests
 make.tran	make.tran
 mcmc-support	mcmc-support
 meanint	joint_tests
@@ -82,6 +97,7 @@ oranges	oranges
 pairs.emmGrid	contrast
 pairs.emm_list	emm_list-object
 pairwise.emmc	emmc-functions
+permute_levels	manip-factors
 pigs	pigs
 plot.emmGrid	plot
 plot.emm_list	emm_list-object

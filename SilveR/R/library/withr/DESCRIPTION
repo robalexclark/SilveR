@@ -1,6 +1,6 @@
 Package: withr
 Title: Run Code 'With' Temporarily Modified Global State
-Version: 2.5.0
+Version: 2.5.1
 Authors@R: 
     c(person(given = "Jim",
              family = "Hester",
@@ -8,7 +8,7 @@ Authors@R:
       person(given = "Lionel",
              family = "Henry",
              role = c("aut", "cre"),
-             email = "lionel@rstudio.com"),
+             email = "lionel@posit.co"),
       person(given = "Kirill",
              family = "Müller",
              role = "aut",
@@ -30,7 +30,7 @@ Authors@R:
       person(given = "Richard",
              family = "Cotton",
              role = "ctb"),
-      person(given = "RStudio",
+      person(given = "Posit Software, PBC",
              role = c("cph", "fnd")))
 Description: A set of functions to run code 'with' safely and
     temporarily modified global state. Many of these functions were
@@ -56,7 +56,7 @@ Collate: 'aaa.R' 'collate.R' 'compat-defer.R' 'connection.R' 'db.R'
 Config/testthat/edition: 3
 Config/Needs/website: tidyverse/tidytemplate
 NeedsCompilation: no
-Packaged: 2022-03-03 21:13:01 UTC; lionel
+Packaged: 2023-09-26 08:28:27 UTC; lionel
 Author: Jim Hester [aut],
   Lionel Henry [aut, cre],
   Kirill Müller [aut],
@@ -65,8 +65,8 @@ Author: Jim Hester [aut],
   Winston Chang [aut],
   Jennifer Bryan [ctb],
   Richard Cotton [ctb],
-  RStudio [cph, fnd]
-Maintainer: Lionel Henry <lionel@rstudio.com>
+  Posit Software, PBC [cph, fnd]
+Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2022-03-03 21:50:02 UTC
-Built: R 4.1.2; ; 2022-03-05 14:10:40 UTC; windows
+Date/Publication: 2023-09-26 12:20:02 UTC
+Built: R 4.3.1; ; 2023-10-05 00:56:29 UTC; windows

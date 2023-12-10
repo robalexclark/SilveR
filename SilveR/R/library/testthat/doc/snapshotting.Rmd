@@ -204,7 +204,7 @@ test_that("you can't add a number and a letter", {
 When the code gets longer, I like to put `error = TRUE` up front so it's a little more obvious:
 
 ```{r}
-test_that("you can't add weird thngs", {
+test_that("you can't add weird things", {
   expect_snapshot(error = TRUE, {
     1 + "a"
     mtcars + iris
@@ -228,7 +228,7 @@ test_that("can snapshot a simple list", {
 
 ## Whole file snapshotting
 
-`expect_snapshot()`, `expect_snapshot_output()`, `expect_snapshot_error()`, and `expect_snapshot_value()` all store their snapshots in a single file per test.
+`expect_snapshot()`, `expect_snapshot_output()`, `expect_snapshot_error()`, and `expect_snapshot_value()` use one snapshot file per test file.
 But that doesn't work for all file types --- for example, what happens if you want to snapshot an image?
 `expect_snapshot_file()` provides an alternative workflow that generates one snapshot per expectation, rather than one file per test.
 Assuming you're in `test-burger.R` then the snapshot created by `expect_snapshot_file(code_that_returns_path_to_file(), "toppings.png")` would be saved in `tests/testthat/_snaps/burger/toppings.png`.
@@ -238,7 +238,23 @@ Unlike `expect_snapshot()` and friends, `expect_snapshot_file()` can't provide a
 Instead you'll need to call `snapshot_review()`.
 This launches a Shiny app that allows you to visually review each change and approve it if it's deliberate:
 
-![](review-image.png) ![](review-text.png)
+```{r}
+#| echo: false
+#| fig-alt: Screenshot of the Shiny app for reviewing snapshot
+#|     changes to images. It shows the changes to a png file of 
+#|     a plot created in a snapshot test. There is a button 
+#|     to accept the changed snapshot, or to skip it.
+knitr::include_graphics("review-image.png")
+```
+
+```{r}
+#| echo: false
+#| fig-alt: Screenshot of the Shiny app for reviewing snapshot
+#|     changes to text files. It shows the changes to a .R file 
+#|     created in a snapshot test, where a line has been removed. 
+#|     There is a button to accept the changed snapshot, or to skip it.
+knitr::include_graphics("review-text.png")
+```
 
 The display varies based on the file type (currently text files, common image files, and csv files are supported).
 
@@ -257,7 +273,7 @@ This section describes some of the previous attempts and why we believe the new 
 -   `verify_output()` has three main drawbacks:
 
     -   You have to supply a path where the output will be saved.
-        This seems like a small issue, but thinking of a good name, and managing the difference between interactive and test-time paths introduces a suprising amount of friction.
+        This seems like a small issue, but thinking of a good name, and managing the difference between interactive and test-time paths introduces a surprising amount of friction.
 
     -   It always overwrites the previous result; automatically assuming that the changes are correct.
         That means you have to use it with git and it's easy to accidentally accept unwanted changes.

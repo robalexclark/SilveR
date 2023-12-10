@@ -1,7 +1,7 @@
 Type: Package
 Package: broom
 Title: Convert Statistical Objects into Tidy Tibbles
-Version: 1.0.1
+Version: 1.0.5
 Authors@R: 
     c(person(given = "David",
              family = "Robinson",
@@ -15,9 +15,9 @@ Authors@R:
       person(given = "Simon",
              family = "Couch",
              role = c("aut", "cre"),
-             email = "simonpatrickcouch@gmail.com",
+             email = "simon.couch@posit.co",
              comment = c(ORCID = "0000-0001-5676-5107")),
-      person("RStudio", role = c("cph", "fnd")),
+      person(given = "Posit Software, PBC", role = c("cph", "fnd")),
       person(given = "Indrajeet",
              family = "Patil",
              role = "ctb",
@@ -82,7 +82,7 @@ Authors@R:
       person(given = "Hadley",
              family = "Wickham",
              role = "ctb",
-             email = "hadley@rstudio.com"),
+             email = "hadley@posit.co"),
       person(given = "Matthew",
              family = "Lincoln",
              role = "ctb",
@@ -314,7 +314,7 @@ Authors@R:
       person(given = "Max",
              family = "Kuhn",
              role = "ctb",
-             email = "max@rstudio.com"),
+             email = "max@posit.co"),
       person(given = "Michal",
              family = "Bojanowski",
              role = "ctb",
@@ -337,11 +337,7 @@ Authors@R:
       person(given = "Jim",
              family = "Hester",
              role = "ctb",
-             email = "jim.hester@rstudio.com"),
-      person(given = "Cory",
-             family = "Brunson",
-             role = "ctb",
-             email = "cornelioid@gmail.com"),
+             email = "jim.hester@posit.co"),
       person(given = "Ben",
              family = "Schneider",
              role = "ctb",
@@ -354,7 +350,7 @@ Authors@R:
       person(given = "Mara",
              family = "Averick",
              role = "ctb",
-             email = "mara@rstudio.com"),
+             email = "mara@posit.co"),
       person(given = "Aaron",
              family = "Jacobs",
              role = "ctb",
@@ -444,7 +440,7 @@ Authors@R:
       person(given = "Jenny",
              family = "Bryan",
              role = "ctb",
-             email = "jenny@rstudio.com"),
+             email = "jenny@posit.co"),
       person(given = "Chris",
              family = "Jarvis",
              role = "ctb",
@@ -542,27 +538,26 @@ Description: Summarizes key information about statistical
 License: MIT + file LICENSE
 URL: https://broom.tidymodels.org/, https://github.com/tidymodels/broom
 BugReports: https://github.com/tidymodels/broom/issues
-Depends: R (>= 3.1)
+Depends: R (>= 3.5)
 Imports: backports, dplyr (>= 1.0.0), ellipsis, generics (>= 0.0.2),
-        glue, purrr, rlang, stringr, tibble (>= 3.0.0), tidyr (>=
-        1.0.0), ggplot2
+        glue, lifecycle, purrr, rlang, stringr, tibble (>= 3.0.0),
+        tidyr (>= 1.0.0)
 Suggests: AER, AUC, bbmle, betareg, biglm, binGroup, boot, btergm (>=
         1.10.6), car, carData, caret, cluster, cmprsk, coda, covr, drc,
         e1071, emmeans, epiR, ergm (>= 3.10.4), fixest (>= 0.9.0), gam
-        (>= 1.15), gee, geepack, glmnet, glmnetUtils, gmm, Hmisc,
-        irlba, interp, joineRML, Kendall, knitr, ks, Lahman, lavaan,
-        leaps, lfe, lm.beta, lme4, lmodel2, lmtest (>= 0.9.38),
-        lsmeans, maps, maptools, margins, MASS, mclust, mediation,
-        metafor, mfx, mgcv, mlogit, modeldata, modeltests, muhaz,
-        multcomp, network, nnet, orcutt (>= 2.2), ordinal, plm, poLCA,
-        psych, quantreg, rgeos, rmarkdown, robust, robustbase, rsample,
-        sandwich, sp, spdep (>= 1.1), spatialreg, speedglm, spelling,
-        survey, survival, systemfit, testthat (>= 2.1.0), tseries,
-        vars, zoo
+        (>= 1.15), gee, geepack, ggplot2, glmnet, glmnetUtils, gmm,
+        Hmisc, irlba, interp, joineRML, Kendall, knitr, ks, Lahman,
+        lavaan, leaps, lfe, lm.beta, lme4, lmodel2, lmtest (>= 0.9.38),
+        lsmeans, maps, margins, MASS, mclust, mediation, metafor, mfx,
+        mgcv, mlogit, modeldata, modeltests, muhaz, multcomp, network,
+        nnet, orcutt (>= 2.2), ordinal, plm, poLCA, psych, quantreg,
+        rmarkdown, robust, robustbase, rsample, sandwich, sp, spdep (>=
+        1.1), spatialreg, speedglm, spelling, survey, survival,
+        systemfit, testthat (>= 2.1.0), tseries, vars, zoo
 VignetteBuilder: knitr
 Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Language: en-US
 Collate: 'aaa-documentation-helper.R' 'null-and-default-tidiers.R'
         'aer-tidiers.R' 'auc-tidiers.R' 'base-tidiers.R'
@@ -608,11 +603,11 @@ Collate: 'aaa-documentation-helper.R' 'null-and-default-tidiers.R'
         'systemfit-tidiers.R' 'tseries-tidiers.R' 'utilities.R'
         'vars-tidiers.R' 'zoo-tidiers.R' 'zzz.R'
 NeedsCompilation: no
-Packaged: 2022-08-29 19:41:53 UTC; simoncouch
+Packaged: 2023-06-09 21:21:49 UTC; simoncouch
 Author: David Robinson [aut],
   Alex Hayes [aut] (<https://orcid.org/0000-0002-4985-5160>),
   Simon Couch [aut, cre] (<https://orcid.org/0000-0001-5676-5107>),
-  RStudio [cph, fnd],
+  Posit Software, PBC [cph, fnd],
   Indrajeet Patil [ctb] (<https://orcid.org/0000-0003-1995-6531>),
   Derek Chiu [ctb],
   Matthieu Gomez [ctb],
@@ -691,7 +686,6 @@ Author: David Robinson [aut],
   Sergio Oller [ctb],
   Luke Sonnet [ctb],
   Jim Hester [ctb],
-  Cory Brunson [ctb],
   Ben Schneider [ctb],
   Bernie Gray [ctb] (<https://orcid.org/0000-0001-9190-6032>),
   Mara Averick [ctb],
@@ -738,7 +732,7 @@ Author: David Robinson [aut],
   Ilaria Prosdocimi [ctb] (<https://orcid.org/0000-0001-8565-094X>),
   Daniel D. Sjoberg [ctb] (<https://orcid.org/0000-0003-0862-2018>),
   Alex Reinhart [ctb] (<https://orcid.org/0000-0002-6658-514X>)
-Maintainer: Simon Couch <simonpatrickcouch@gmail.com>
+Maintainer: Simon Couch <simon.couch@posit.co>
 Repository: CRAN
-Date/Publication: 2022-08-29 21:00:08 UTC
-Built: R 4.1.3; ; 2022-10-05 22:56:52 UTC; windows
+Date/Publication: 2023-06-09 22:50:02 UTC
+Built: R 4.3.1; ; 2023-10-24 03:15:19 UTC; windows

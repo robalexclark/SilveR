@@ -8,7 +8,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 ```{r, echo = FALSE, results = "hide", message = FALSE} 
-require("emmeans") 
+require("emmeans")
+require("lme4")
 options(show.signif.stars = FALSE, width = 100) 
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro") 
 ```
@@ -24,6 +25,7 @@ all supported models is provided in the ["models" vignette](models.html).
 
  1. [Linear mixed models (lmer)](#lmer)
     a. [System options for lmerMod models](#lmerOpts)
+    b. [Bias adjustment with random slopes](#random-slopes)
  2. [Models with offsets](#offsets)
  3. [Ordinal models](#ordinal)
  4. [Models fitted using MCMC methods](#mcmc)
@@ -46,7 +48,8 @@ within each plot. We will consider a linear mixed model for these data,
 excluding interaction (which is justified in this case). For sake of 
 illustration, we will exclude a few observations.
 ```{r}
-Oats.lmer <- lme4::lmer(yield ~ Variety + factor(nitro) + (1|Block/Variety),
+library(lme4)
+Oats.lmer <- lmer(yield ~ Variety + factor(nitro) + (1|Block/Variety),
                         data = nlme::Oats, subset = -c(1,2,3,5,8,13,21,34,55))
 ```
 Let's look at the EMMs for `nitro`:
@@ -112,11 +115,84 @@ be set to numeric values, enable the given package conditionally on whether the
 number of data rows does not exceed the given limit. The factory default is 3000
 for both limits.
 
+
+### Bias adjustment with random slopes {#random-slopes}
+<!-- @index Bias adjustment!with random slopes; Random slopes!Bias adjustment;
+    Examples!`ChickWeight` -->
+In the [`cbpp` example](transformations.html#cbpp), we saw an example
+where we applied a bias adjustment to the inverse transformation. To do that 
+adjustment, we required an estimate of the total SD of the response.
+That computation was (relatively) simple because the model had only random 
+intercepts. But what if we have random slopes as well? The short answer is 
+"it gets more complicated;" but here is an example of how we can muddle through it.
+
+Our illustration is a model fitted to the `ChickWeight` data in the R **datasets** package. The data comprise weight determinations, over time (in days since birth), of chicks who are
+randomized to different diets. Our model fits a trend in the square root of weight 
+for each diet, with random intercepts and slopes for each chick (this is likely not the best model, but it's not totally stupid and it serves an an illustration).
+```{r}
+cw.lmer <- lmer(sqrt(weight) ~ Time*Diet + (1+Time|Chick), data = ChickWeight)
+```
+Our goal is to use this model to estimate the mean `weight` at times 5, 10, 15, and 20,
+for each diet. Accordingly, let's get the estimates needed:
+```{r}
+cw.emm <- emmeans(cw.lmer, ~ Time|Diet, at = list(Time = c(5, 10, 15, 20)))
+```
+If we just summarize this with `type = "response", we will under-estimate the
+mean weights. We need to apply a bias adjustment; but that involves providing an
+estimate of the SD of each transformed response. The problem is that since
+random slopes are involved, that SD depends on time. In particular, 
+the model states that at time $t$,
+$$ \sqrt Y_t = \mu_t + E + C + S\times t $$
+where $\mu_t$ is the mean at time $t$, $E$ is the residual error, $C$ is the random intercept for chicks, and $S$ is the random slope for chicks. For purposes of bias correction, we need an estimate of $SD(E + C + S\times t)$ for each $t$.
+
+The first step is to obtain an estimated covariance matrix for $(E, C, S)$:
+```{r}
+V <- matrix(0, nrow = 3, ncol = 3, dimnames = list(c("E","C","S"), c("E","C","S")))
+V[1, 1] <- sigma(cw.lmer)^2              # Var(E)
+V[2:3, 2:3] <- VarCorr(cw.lmer)$Chick    # Cov(C, S)
+V
+```
+Now, using the matrix expression $Var(a'X) = a'Va$ for $X=c(E,C,S)$ and a given vector $a$, we can obtain the needed SDs:
+```{r}
+sig <- sapply(c(5, 10, 15, 20), function(t) {
+    a <- c(1, 1, t)
+    sqrt(sum(a * V %*% a))
+})
+sig  
+```
+As expected, these values increase with $t$.
+Finally, we obtain the bias-adjusted estimated weights. We can use `sigma = sig`
+as-is since the values follow the same ordering as `cw.emm@grid`.
+```{r}
+confint(cw.emm, type = "response", bias.adj = TRUE, sigma = sig)
+```
+This example illustrates that it is possible to deal with random slopes in
+bias corrections. However it does require some fairly careful attention to
+technical details and familiarity with matrix calculations; so if you don't have
+a comfort level with those, it is best to get outside help.
+
+#### Adding variables not in fixed model {addl.vars}
+<!-- @index `addl.vars`; Random predictors!Accessing levels -->
+Consider a model like
+```
+mod <- lmer(log(response) ~ treatment + (1 + x | subject), data = mydata)
+```
+Ordinarily, the reference grid will not include the variable `x` because it
+is not part of the fixed-effects formula. However, you can include it via the
+`addl.vars` argument:
+```
+EMM <- emmeans(mod, ~ x|treatment, addl.vars = "x", at = list(x = -1:1))
+```
+We will then obtain EMMs for combinations of `treatment` and `x`. 
+(For a given `treatment`, all those means will be equal for every `x`.)
+But the bias adjustments *will* depend on `x`.
+
+
 [Back to Contents](#contents)
 
 
 ## Models with offsets {#offsets}
-<!-- @index Offsets; Examples!Insurance claims (SAS); `ref_grid()`!`offset` -->
+<!-- @index Offsets!Models with offsets; Examples!Insurance claims (SAS); `ref_grid()`!`offset` -->
 If a model is fitted and its formula includes an `offset()` term, then by
 default, the offset is computed and included in the reference grid. To
 illustrate, consider a hypothetical dataset on insurance claims (used as an
@@ -139,32 +215,43 @@ First, let's look at the reference grid obtained by default:
 ```{r}
 ref_grid(ins.glm)
 ```
-Note that `n` is included in the reference grid and that its average value of
-500 is used for all predictions. Thus, if we obtain EMMs for, say, `age`, these
-are results are based on a pool of 500 cars:
+Note that `n` is included in the reference grid and that its average value of 500
+is displayed. But let's look at the EMMs:
 ```{r}
-emmeans(ins.glm, "size", type = "response")
+(EMM <- emmeans(ins.glm, "size", type = "response"))
 ```
-However, many users would like to ignore the offset for this kind of model,
-because then the estimates we obtain are rates per unit value of the (logged)
-offset. This may be accomplished by specifying an `offset` parameter in the
+We can see more explicitly what is happening by examining the internal structure of `EMM`:
+```{r}
+EMM@grid
+```
+and note that $\log(500) \approx 6.215$ is used as the offset value in calculating these estimates.
+
+All this said, many users would like to ignore that average offset for this kind of model,
+and instead use one corresponding to `n = 1`, because then the estimates we obtain are estimated rates per unit `n`. This may be accomplished by specifying an `offset` parameter in the
 call:
 ```{r}
-emmeans(ins.glm, "size", type = "response", offset = 0)
+emmeans(ins.glm, "size", type = "response", offset = log(1))
 ```
-You may verify that the above estimates are 1/500th of the previous ones.
-You may also verify that the above results are identical to those obtained
-by setting `n` equal to 1:
+An alternative way to achieve the same results is to set `n` equal to 1 in the reference grid itself (output not shown, because it is identical):
 ```{r eval = FALSE}
 emmeans(ins.glm, "size", type = "response", at = list(n = 1))
 ```
-However, those who use these types of models will be more comfortable directly
-setting the offset to zero.
 
 By the way, you may set some other reference value for the rates. For example, if you want estimates of claims per 100 cars, simply use (results not shown):
 ```{r eval = FALSE}
 emmeans(ins.glm, "size", type = "response", offset = log(100))
 ```
+For more details on how offsets are handled, and how and why an `offset()` *model term*
+is treated differently than an `offset` *argument* in model fitting, see
+[the "xplanations" vignette](xplanations.html#offsets).
+
+An additional complication may come up in models zero-inflated or hurdle models.
+In those cases, it is somewhat ambiguous what one might mean by a "rate", but one interpretation
+would be to just go with the above techniques with estimates for just the Poisson
+component of the model. Another approach would be to estimate the response mean with
+the zero-inflation included, and divide by the appropriate offset. This can be done,
+but it is messy. An example is given on the 
+[Cross-Validated site](https://stats.stackexchange.com/questions/620842/help-interpreting-zeroinfl-results-from-emmeans/621108?noredirect=1#comment1155903_621108).
 
 [Back to Contents](#contents)
 
@@ -360,7 +447,7 @@ summary(cbpp.rgrd)
 ```
 Here is a plot of
 the posterior incidence probabilities, back-transformed:
-```{r}
+```{r, fig.alt = "kernel denity estimates for each of the 4 periods. Their medians and spreads decrease with period, and period 1 is especially different. See the previous summary table for the numerical values of the estimated means"}
 bayesplot::mcmc_areas(as.mcmc(cbpp.rgrd))
 ```
 
@@ -378,7 +465,7 @@ To predict from an MCMC model, just specify the
 simulate data from the posterior predictive distribution. 
 For example, if we want to predict the CBPP incidence in future herds of 
 25 cattle, we can do:
-```{r}
+```{r, fig.alt = "Histograms of the predictive distributions for each period. The one for period 1 has bins from 0 to 15; the number of bins decreases until period 4 has only bins for 0 through 5."}
 set.seed(2019.0605)
 cbpp.preds <- as.mcmc(cbpp.rgrd, likelihood = "binomial", trials = 25)
 bayesplot::mcmc_hist(cbpp.preds, binwidth = 1)

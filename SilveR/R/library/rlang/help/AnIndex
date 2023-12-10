@@ -12,6 +12,7 @@ rlang-package	rlang-package
 abort	abort
 add_backtrace	rlang_backtrace_on_error
 are_na	are_na
+args_data_masking	args_data_masking
 args_dots_empty	args_dots_empty
 args_dots_used	args_dots_used
 args_error_context	args_error_context
@@ -66,7 +67,7 @@ check_dots_used	check_dots_used
 check_exclusive	check_exclusive
 check_installed	is_installed
 check_required	check_required
-child_env	env
+child_env	child_env
 chr	vector-construction
 chr_unserialise_unicode	chr_unserialise_unicode
 cnd	cnd
@@ -97,7 +98,7 @@ done	done
 dot-data	dot-data
 dots_list	list2
 dots_n	dots_n
-dots_splice	splice
+dots_splice	dots_splice
 dots_values	dots_values
 duplicate	duplicate
 dyn-dots	dyn-dots
@@ -134,6 +135,7 @@ env_has	env_has
 env_inherits	env_inherits
 env_is_browsed	env_browse
 env_is_locked	env_lock
+env_is_user_facing	env_is_user_facing
 env_label	env_name
 env_length	env_names
 env_lock	env_lock
@@ -163,6 +165,9 @@ expr_name	expr_label
 expr_print	expr_print
 expr_text	expr_label
 faq-options	faq-options
+ffi_standalone_check_number_1.0.7	ffi_standalone_types_check
+ffi_standalone_is_bool_1.0.7	ffi_standalone_types_check
+ffi_standalone_types_check	ffi_standalone_types_check
 flatten	flatten
 flatten_chr	flatten
 flatten_cpl	flatten
@@ -215,7 +220,6 @@ inject	inject
 injection-operator	injection-operator
 int	vector-construction
 interrupt	interrupt
-int_along	vector-old-ctors
 invoke	invoke
 is_atomic	type-predicates
 is_attached	search_envs
@@ -314,7 +318,6 @@ last_messages	last_warnings
 last_trace	last_error
 last_warnings	last_warnings
 lgl	vector-construction
-lgl_along	vector-old-ctors
 list2	list2
 ll	list2
 locally	with_env
@@ -422,6 +425,8 @@ reset_warning_verbosity	abort
 return_from	return_from
 rlang	rlang-package
 rlang_backtrace_on_error	rlang_backtrace_on_error
+rlang_backtrace_on_error_report	rlang_backtrace_on_error
+rlang_backtrace_on_warning_report	rlang_backtrace_on_error
 rlang_error	rlang_error
 rlib_trace_spec	rlib_trace_spec
 run_on_load	on_load
@@ -484,7 +489,6 @@ UQ	UQ
 UQS	UQ
 vector-coercion	vector-coercion
 vector-construction	vector-construction
-vector-old-ctors	vector-old-ctors
 vec_poke_n	vec_poke_n
 vec_poke_range	vec_poke_n
 warn	abort

@@ -2,8 +2,7 @@
 knitr::opts_chunk$set(echo = TRUE, eval = interactive())
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  chooseCRANmirror()
-#  install.packages("BiocManager")
+#  install.packages("BiocManager", repos = "https://cloud.r-project.org")
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  BiocManager::install(c("GenomicRanges", "Organism.dplyr"))
@@ -21,12 +20,6 @@ knitr::opts_chunk$set(echo = TRUE, eval = interactive())
 #  avail <- BiocManager::available()
 #  length(avail)                               # all CRAN & Bioconductor packages
 #  BiocManager::available("BSgenome.Hsapiens") # BSgenome.Hsapiens.* packages
-
-## ---- eval = FALSE------------------------------------------------------------
-#  BiocManager::install()
-
-## ---- eval = FALSE------------------------------------------------------------
-#  BiocManager::valid()
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  BiocManager::install(version="3.7")
@@ -52,6 +45,18 @@ knitr::opts_chunk$set(echo = TRUE, eval = interactive())
 #  options(
 #      BIOCONDUCTOR_CONFIG_FILE = "file:///path/to/config.yaml"
 #  )
+
+## ----out.width = '100%', echo = FALSE, eval = TRUE----------------------------
+knitr::include_graphics("img/badges.png")
+
+## ----out.width = '100%', echo = FALSE, eval = TRUE----------------------------
+knitr::include_graphics("img/archives.png")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  BiocManager::install()
+
+## ---- eval = FALSE------------------------------------------------------------
+#  BiocManager::valid()
 
 ## ---- eval = TRUE-------------------------------------------------------------
 sessionInfo()

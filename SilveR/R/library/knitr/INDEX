@@ -11,6 +11,8 @@ convert_chunk_header    Convert the in-header chunk option syntax to
 current_input           Query the current input filename
 dep_auto                Build automatic dependencies among chunks
 dep_prev                Make later chunks depend on previous chunks
+download_image          Download an image from the web and include it
+                        in a document
 engine_output           An output wrapper for language engine output
 extract_raw_output      Mark character strings as raw output that
                         should not be converted
@@ -32,7 +34,7 @@ kable                   Create tables in LaTeX, HTML, Markdown and
                         reStructuredText
 knit                    Knit a document
 knit2html               Convert markdown to HTML using knit() and
-                        markdownToHTML()
+                        mark_html()
 knit2pandoc             Convert various input files to various output
                         files using 'knit()' and Pandoc
 knit2pdf                Convert Rnw or Rrst files to PDF

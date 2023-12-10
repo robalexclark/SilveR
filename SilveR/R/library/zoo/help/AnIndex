@@ -123,6 +123,7 @@ index.zoo	index
 index2char	zoo
 index2char.default	zoo
 index2char.numeric	zoo
+index2char.POSIXt	zoo
 index<-	index
 index<-.zoo	index
 index<-.zooreg	zooreg

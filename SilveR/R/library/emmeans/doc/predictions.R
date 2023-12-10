@@ -24,7 +24,7 @@ feedlot.rg <- update(feedlot.rg, sigma = sqrt(77.087^2 + 57.832^2))
 ## -------------------------------------------------------------------------------------------------
 predict(feedlot.rg, interval = "prediction")
 
-## ---- fig.height = 2------------------------------------------------------------------------------
+## ---- fig.height = 2, fig.alt = "Side-by-side CIs and PIs. The PIs are much wider, and have the endpoints found in the preceding predit() call"----
 plot(feedlot.rg, PIs = TRUE)
 
 ## -------------------------------------------------------------------------------------------------

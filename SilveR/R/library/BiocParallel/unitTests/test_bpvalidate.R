@@ -1,3 +1,5 @@
+message("Testing bpvalidate")
+
 BPValidate <- BiocParallel:::BPValidate
 
 test_bpvalidate_basic_ok <- function()
@@ -36,12 +38,12 @@ test_bpvalidate_basic_fail <- function()
 
 test_bpvalidate_search_path <- function()
 {
-    target <- BPValidate(symbol = "x", environment = ".test_env")
+    target <- BPValidate(symbol = "x", environment = "package:.test_env")
 
     .test_env <- new.env(parent=emptyenv())
     .test_env$x <- NULL
-    attach(.test_env)
-    on.exit(detach(.test_env))
+    attach(.test_env, name = "package:.test_env")
+    on.exit(detach("package:.test_env"))
 
     checkIdentical(target, bpvalidate(function() x            ))
     checkIdentical(target, bpvalidate(function(...) x         ))
@@ -68,8 +70,10 @@ test_bpvalidate_library <- function()
 {
     target <- BPValidate()
 
-    checkException(bpvalidate(function() library("__UNKNOWN__")), silent=TRUE)
-    checkException(bpvalidate(function() require("__UNKNOWN__")), silent=TRUE)
+    checkException(bpvalidate(function() library("__UNKNOWN__"), signal = "error"),
+                   silent=TRUE)
+    checkException(bpvalidate(function() require("__UNKNOWN__"), signal = "error"),
+                   silent=TRUE)
     checkIdentical(target, bpvalidate(function() library(BiocParallel)))
 
     ## FIXME: bpvalidate expects unquoted arg to library() / require()

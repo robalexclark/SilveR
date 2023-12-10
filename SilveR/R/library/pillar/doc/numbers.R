@@ -1,24 +1,31 @@
 ## 
+
 ## ## Integrating with other classes
 
 ## 
+
 ## ### gt
 
 ## 
+
 ## - Consumption via new `fmt_auto()`?
 
 ## 
+
 ## FIXME
 
 ## 
+
 ## ### units
 
 ## 
+
 ## xxx{r numbers-17}
 
 ## library(units)
 
 ## 
+
 ## set_units.pillar_num <- function(x, ...) {
 
 ##   unclassed <- x
@@ -30,11 +37,13 @@
 ## }
 
 ## 
+
 ## m <- set_units(1:3, m)
 
 ## km <- set_units(1:3, km)
 
 ## 
+
 ## tibble(
 
 ##   sci_int = set_num_opts(m + km, notation = "sci"),
@@ -46,6 +55,7 @@
 ## )
 
 ## 
+
 ## tibble(
 
 ##   sci_int = set_num_opts(m, notation = "sci") + km,
@@ -59,14 +69,17 @@
 ## xxx
 
 ## 
+
 ## ### formattable
 
 ## 
+
 ## xxx{r numbers-18, error = TRUE}
 
 ## library(formattable)
 
 ## 
+
 ## pillar_shaft.formattable <- function(x, ...) {
 
 ##   pillar::new_pillar_shaft_simple(format(x), align = "right")
@@ -74,26 +87,31 @@
 ## }
 
 ## 
+
 ## pillar_shaft.formattable_currency <- function(x, ...) {
 
 ##   formattable <- attr(x, "formattable", exact = TRUE)
 
 ## 
+
 ##   pillar_shaft(num(unclass(x), digits = formattable$digits))
 
 ## }
 
 ## 
+
 ## pillar_shaft.formattable_percent <- function(x, ...) {
 
 ##   formattable <- attr(x, "formattable", exact = TRUE)
 
 ## 
+
 ##   pillar_shaft(num(unclass(x), digits = formattable$digits, label = "%", scale = 100))
 
 ## }
 
 ## 
+
 ## pillar_shaft.formattable_scientific <- function(x, ...) {
 
 ##   pillar_shaft(num(unclass(x), notation = "sci"))
@@ -101,11 +119,13 @@
 ## }
 
 ## 
+
 ## type_sum.formattable <- function(x) {
 
 ##   formattable <- attr(x, "formattable", exact = TRUE)
 
 ## 
+
 ##   if (inherits(x, "formattable_currency")) {
 
 ##     I(sub("^formattable_", "", class(x)[[1]]))
@@ -123,6 +143,7 @@
 ## }
 
 ## 
+
 ## num_currency(1:3 * 100 + 0.1)
 
 ## num_percent(1:3 * 0.1 + 0.001)
@@ -130,6 +151,7 @@
 ## num_scientific(1:3 * 0.1 + 0.001)
 
 ## 
+
 ## tibble(
 
 ##   currency = num_currency(1:3 * 100 + 0.1),
@@ -143,38 +165,47 @@
 ## xxx
 
 ## 
+
 ## ### scales
 
 ## 
+
 ## xxx{r numbers-scales, error = TRUE}
 
 ## library(scales)
 
 ## 
+
 ## x <- num(1:10 / 100, label = "%", scale = 100)
 
 ## 
+
 ## scales::squish(x)
 
 ## 
+
 ## x < 0
 
 ## x < 0L
 
 ## 
+
 ## scales::cscale(x, scales::rescale_pal())
 
 ## xxx
 
 ## 
+
 ## ### ggplot2
 
 ## 
+
 ## xxx{r numbers-19}
 
 ## library(ggplot2)
 
 ## 
+
 ## scale_type.pillar_num <- function(x, ...) {
 
 ##   "continuous"
@@ -182,6 +213,7 @@
 ## }
 
 ## 
+
 ## data.frame(x = x, y = 1:10) %>%
 
 ##   ggplot(aes(x = x, y = y)) %>%
@@ -191,16 +223,21 @@
 ## xxx
 
 ## 
+
 ## ## Rule-based decoration
 
 ## 
+
 ## 
+
 ## 
+
 ## xxx{r}
 
 ## library(dplyr)
 
 ## 
+
 ## data_units <-
 
 ##   palmerpenguins::penguins %>%
@@ -210,6 +247,7 @@
 ##   mutate(across(ends_with("_g"), set_units, "g"))
 
 ## 
+
 ## data_units %>%
 
 ##   mutate(bill_area = bill_length_mm * bill_depth_mm, .after = island)
@@ -217,6 +255,7 @@
 ## xxx
 
 ## 
+
 ## xxx{r eval = FALSE}
 
 ## data_decor <-
@@ -230,6 +269,7 @@
 ## xxx
 
 ## 
+
 ## xxx{r eval = FALSE}
 
 ## data_decor %>%
@@ -239,6 +279,7 @@
 ## xxx
 
 ## 
+
 ## xxx{r echo = FALSE}
 
 ## data_units %>%
@@ -252,3 +293,4 @@
 ## xxx
 
 ## 
+

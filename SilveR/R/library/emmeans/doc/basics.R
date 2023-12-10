@@ -1,95 +1,79 @@
 ## ---- echo = FALSE, results = "hide", message = FALSE-------------------------
 require("emmeans")
+require("ggplot2")
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
 
-## ---- echo = FALSE------------------------------------------------------------
-par(mar = .1 + c(4, 4, 1, 1))   # reduce head space
-
+## -----------------------------------------------------------------------------
+mod1 <- lm(conc ~ source * factor(percent), data = pigs)
+mod2 <- update(mod1, . ~ source + factor(percent))   # no interaction
 
 ## -----------------------------------------------------------------------------
-with(pigs, interaction.plot(percent, source, conc))
+mod3 <- update(mod1, inverse(conc) ~ .)
+mod4 <- update(mod2, inverse(conc) ~ .)     # no interaction
+mod5 <- update(mod4, . ~ source + percent)  # linear term for percent
 
 ## -----------------------------------------------------------------------------
-with(pigs, tapply(conc, percent, mean))
+(EMM.source <- emmeans(mod4, "source"))
+(EMM.percent <- emmeans(mod4, "percent"))
 
 ## -----------------------------------------------------------------------------
-cell.means <- matrix(with(pigs, 
-    tapply(conc, interaction(source, percent), mean)), 
-    nrow = 3)
-cell.means
+with(pigs, tapply(inverse(conc), source, mean))
+with(pigs, tapply(inverse(conc), percent, mean))
 
 ## -----------------------------------------------------------------------------
-apply(cell.means, 2, mean)
+(RG <- expand.grid(source = levels(pigs$source), percent = unique(pigs$percent)))
+
+## -----------------------------------------------------------------------------
+(preds <- matrix(predict(mod4, newdata = RG), nrow = 3))
+
+## -----------------------------------------------------------------------------
+apply(preds, 1, mean)   # row means -- for source
+apply(preds, 2, mean)   # column means -- for percent
 
 ## -----------------------------------------------------------------------------
 with(pigs, table(source, percent))
 
 ## -----------------------------------------------------------------------------
-sum(c(3, 1, 1) * cell.means[, 4]) / 5
+(RG4 <- ref_grid(mod4))
+ref_grid(mod5)
 
 ## -----------------------------------------------------------------------------
-pigs.lm1 <- lm(log(conc) ~ source + factor(percent), data = pigs)
+(RG5 <- ref_grid(mod5, at = list(percent = c(9, 12, 15, 18))))
+
+## ----eval = FALSE-------------------------------------------------------------
+#  (RG5 <- ref_grid(mod5, cov.reduce = FALSE)
+
+## ----fig.alt = "interaction-style plots of 'RG4' and 'RG5'. These show parallel trends along 'percent' for each 'source'. The one for 'RG5' consists of parallel straigt lines. The values plotted here can be obtained via 'summary(RG4)' and 'summary(RG5)'"----
+emmip(RG4, source ~ percent, style = "factor")
+emmip(RG5, source ~ percent, style = "factor")
 
 ## -----------------------------------------------------------------------------
-ref_grid(pigs.lm1)
+emmeans(RG5, "source")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  emmeans(mod5, "source", at = list(percent = c(9, 12, 15, 18)))
+#  ## (same results as above)
+
+## ----fig.alt = "interaction-style plots for 'RG4' after back-transforming. Compared to the plots of 'RG4' without back-transforming, these trends increase rather than decrease (due to the inverse transformation) and they fan-out somewhat as 'percent' increases. The values plotted here are obtainable via 'summary(RG4, type = \"response\")'"----
+emmeans(RG4, "source", type = "response")
+emmip(RG4, source ~ percent, type = "response")
 
 ## -----------------------------------------------------------------------------
-ref_grid(pigs.lm1) @ grid
-
-## -----------------------------------------------------------------------------
-pigs.lm2 <- lm(log(conc) ~ source + percent, data = pigs)
-ref_grid(pigs.lm2)
-
-## -----------------------------------------------------------------------------
-ref_grid(pigs.lm2) @ grid
-
-## -----------------------------------------------------------------------------
-pigs.pred1 <- matrix(predict(ref_grid(pigs.lm1)), nrow = 3)
-pigs.pred1
-
-## -----------------------------------------------------------------------------
-apply(pigs.pred1, 1, mean) ### EMMs for source
-
-apply(pigs.pred1, 2, mean) ### EMMs for percent
-
-## -----------------------------------------------------------------------------
-predict(ref_grid(pigs.lm2))
-
-## -----------------------------------------------------------------------------
-emmeans(pigs.lm1, "percent")
-
-## -----------------------------------------------------------------------------
-ref_grid(pigs.lm2, cov.keep = "percent")
-
-## -----------------------------------------------------------------------------
-ref_grid(pigs.lm2, cov.reduce = range)
-
-## -----------------------------------------------------------------------------
-mtcars.lm <- lm(mpg ~ disp * cyl, data = mtcars)
-ref_grid(mtcars.lm)
-
-## -----------------------------------------------------------------------------
-mtcars.rg <- ref_grid(mtcars.lm, cov.keep = 3,
-                      at = list(disp = c(100, 200, 300)))
-mtcars.rg
-
-## -----------------------------------------------------------------------------
-mtcars.1 <- lm(mpg ~ factor(cyl) + disp + I(disp^2), data = mtcars)
-emmeans(mtcars.1, "cyl")
-
-## -----------------------------------------------------------------------------
+mcmod1 <- lm(mpg ~ factor(cyl) + disp + I(disp^2), data = mtcars)
 mtcars <- transform(mtcars, 
-                    Cyl = factor(cyl),
                     dispsq = disp^2)
-mtcars.2 <- lm(mpg ~ Cyl + disp + dispsq, data = mtcars)
-emmeans(mtcars.2, "Cyl")
+mcmod2 <- lm(mpg ~ factor(cyl) + disp + dispsq, data = mtcars)
 
 ## -----------------------------------------------------------------------------
-ref_grid(mtcars.1)
-ref_grid(mtcars.2)
+emmeans(mcmod1, "cyl")
+emmeans(mcmod2, "cyl")
 
 ## -----------------------------------------------------------------------------
-emmeans(mtcars.2, "Cyl", at = list(dispsq = 230.72^2))
+ref_grid(mcmod1)
+ref_grid(mcmod2)
+
+## -----------------------------------------------------------------------------
+emmeans(mcmod2, "cyl", at = list(disp = 230.72, dispsq = 230.72^2))
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  deg <- 2
@@ -99,27 +83,28 @@ emmeans(mtcars.2, "Cyl", at = list(dispsq = 230.72^2))
 #  emmeans(mod, ~ treat | x, at = list(x = 1:3), params = "deg")
 
 ## -----------------------------------------------------------------------------
-emmip(pigs.lm1, source ~ percent)
-emmip(ref_grid(pigs.lm2, cov.reduce = FALSE), source ~ percent)
+mcmod3 <- lm(mpg ~ disp * cyl, data = mtcars)
+
+## ----fig.alt = "Plot of side-by-side confidence intervals for 'cyl' means, in 3 panels corresponding to 'disp' values of 100, 200, and 300. The values plotted here are those in 'summary(EMM3)'"----
+EMM3 <- emmeans(mcmod3, ~ cyl | disp, 
+                at = list(cyl = c(4,6,8), disp = c(100,200,300)))
+plot(EMM3)
 
 ## -----------------------------------------------------------------------------
-plot(mtcars.rg, by = "disp")
+mcrg <- ref_grid(mcmod3, at = list(cyl = c(4,6,8)),
+                         cov.reduce = disp ~ cyl)
+mcrg @ grid
 
-## -----------------------------------------------------------------------------
-mtcars.rg_d.c <- ref_grid(mtcars.lm, at = list(cyl = c(4,6,8)),
-                          cov.reduce = disp ~ cyl)
-mtcars.rg_d.c @ grid
+## ----fig.height = 1.5, fig.alt = "Side-by-side CIs for cyl marginal means. The values plotted are obtainable via 'summary(mcrg)'"----
+plot(mcrg)
 
-## ----fig.height = 1.5---------------------------------------------------------
-plot(mtcars.rg_d.c)
-
-## -----------------------------------------------------------------------------
+## ----fig.alt = "Enhanced interaction plot with CIs and observed data added; we have separate panels for the 3 diets, and the 4 percent conentrations in each panel"----
 require("ggplot2")
-emmip(pigs.lm1, ~ percent | source, CIs = TRUE) +
-    geom_point(aes(x = percent, y = log(conc)), data = pigs, pch = 2, color = "blue")
+emmip(mod4, ~ percent | source, CIs = TRUE, type = "response") +
+    geom_point(aes(x = percent, y = conc), data = pigs, pch = 2, color = "blue")
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  ci <- confint(mtcars.rg_d.c, level = 0.90, adjust = "scheffe")
+#  ci <- confint(mcrg, level = 0.90, adjust = "scheffe")
 #  xport <- print(ci, export = TRUE)
 #  cat("<font color = 'blue'>\n")
 #  knitr::kable(xport$summary, align = "r")
@@ -127,7 +112,7 @@ emmip(pigs.lm1, ~ percent | source, CIs = TRUE) +
 #  cat("</font>\n")
 
 ## ---- results = "asis", echo = FALSE------------------------------------------
-ci <- confint(mtcars.rg_d.c, level = 0.90, adjust = "scheffe")
+ci <- confint(mcrg, level = 0.90, adjust = "scheffe")
 xport <- print(ci, export = TRUE)
 cat("<font color = 'blue'>\n")
 knitr::kable(xport$summary, align = "r")
@@ -135,35 +120,32 @@ for (a in xport$annotations) cat(paste(a, "<br>"))
 cat("</font>\n")
 
 ## -----------------------------------------------------------------------------
-emmeans(pigs.lm1, "percent", weights = "cells")
+emmeans(mod4, "percent", weights = "cells")
 
 ## -----------------------------------------------------------------------------
-pigs.lm3 <- lm(log(conc) ~ factor(percent), data = pigs)
-emmeans(pigs.lm3, "percent")
+mod6 <- lm(inverse(conc) ~ factor(percent), data = pigs)
+emmeans(mod6, "percent")
 
 ## -----------------------------------------------------------------------------
 MOats.lm <- lm (yield ~ Block + Variety, data = MOats)
 ref_grid (MOats.lm, mult.name = "nitro")
 
 ## -----------------------------------------------------------------------------
-pigs.rg <- ref_grid(pigs.lm1)
-class(pigs.rg)
-
-pigs.emm.s <- emmeans(pigs.rg, "source")
-class(pigs.emm.s)
+class(RG4)
+class(EMM.source)
 
 ## -----------------------------------------------------------------------------
-pigs.rg
+RG4
 
-pigs.emm.s
-
-## -----------------------------------------------------------------------------
-str(pigs.emm.s)
+EMM.source
 
 ## -----------------------------------------------------------------------------
-# equivalent to summary(emmeans(pigs.lm1, "percent"), level = 0.90, infer = TRUE))
-emmeans(pigs.lm1, "percent", level = 0.90, infer = TRUE)
+str(EMM.source)
 
 ## -----------------------------------------------------------------------------
-class(summary(pigs.emm.s))
+# equivalent to summary(emmeans(mod4, "percent"), level = 0.90, infer = TRUE))
+emmeans(mod4, "percent", level = 0.90, infer = TRUE)
+
+## -----------------------------------------------------------------------------
+class(summary(EMM.source))
 

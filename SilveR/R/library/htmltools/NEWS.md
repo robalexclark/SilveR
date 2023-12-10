@@ -1,3 +1,44 @@
+# htmltools 0.5.6.1
+
+## Improvements
+
+* `tagQuery()` no longer throws an error when attempting to traverse a NULL value with r-devel. (#407)
+
+# htmltools 0.5.6
+
+## Possibly breaking changes
+
+* Closed #386: Fillable containers no longer set `overflow: auto` by default. Instead, they set `min-width` and `min-height` to `0` to ensure that fill items a constrained in the fillable container without clipping their direct children. (#387)
+
+* Closed #370: Non-fill items in fillable containers no longer grow or shrink and instead respect their intrinsic size. Use `height` to control the height of non-fill items in fillable containers and `min-height` and `max-height` on fill items to limit how much they are allowed to grow or shrink within a fillable container. (#391)
+
+## Minor improvements
+
+* Closed #375: calling `htmlDependency()` or a function that returns an `htmlDependency()` object (e.g., `fontawesome::fa_html_dependency()`) in an R chunk in an R Markdown or knitr-powered Quarto document will now include the dependency rather than printing the object structure. If you want to print the object structure, you can use `print()` or `str()`. (#376)
+
+* Closed #124: `includeHTML()` will now issue a warning if it detects that the file passed to it contains a complete HTML document. `includeHTML()` is designed to include HTML fragments where the contents of the file can be written directly into the current app or document, but subtle errors can occur when the file contains a complete HTML document. In most cases, you should instead use `tags$iframe()` to embed external documents. (#382)
+
+# htmltools 0.5.5
+
+## Bug fixes
+
+* Closed #355: `tagQuery()` was failing to select elements with tag names that contained hyphens. (@slodge, #302)
+
+* Closed #366: `tagQuery()`'s `find()` method no longer errors out when tags contain language objects. (#366)
+
+# htmltools 0.5.4
+
+## New Features
+
+* Added a new `bindFillRole()` function for modifying `tag()` object(s) into tags that are allowed to grow and shrink when their parent is opinionated about their height. See `help(bindFillRole, "htmltools")` for documentation and examples. Note the primary motivation for adding these functions is to power `{bslib}`'s new `card()` API (in particular, [responsive sizing](https://rstudio.github.io/bslib/articles/cards.html#responsive-sizing)) as well as the new `fill` arguments in `shiny::plotOutput()`, `shiny::imageOutput()`, `shiny::uiOutput()`, `htmlwidgets::sizingPolicy()`, and `htmlwidgets::shinyWidgetOutput()`. (#343)
+
+## Bug fixes
+
+* Closed #331: `copyDependencyToDir()` creates `outputDir` recursively, which happens in Quarto or when `lib_dir` points to a nested directory. (@gadenbuie, #332)
+
+* Closed #346: `tagQuery()`'s `$remove()`, `$after()`, `$before()`, `$replaceWith()` had a bug that prevented expected behavior when sibling children values where not tag elements. (#348)
+
+
 # htmltools 0.5.3
 
 ## Breaking changes
@@ -13,6 +54,7 @@
 * `copyDependencyToDir()` no longer creates empty directories for dependencies that do not have any files. (@gadenbuie, #276)
 
 * Closed #320: `copyDependencyToDir()` now works with dependencies with specified attributes. (@dmurdoch, #321)
+
 
 # htmltools 0.5.2
 
@@ -81,7 +123,7 @@
   documented in [MDN Web Docs](https://developer.mozilla.org).  This feature
   only appends to the existing set of `tags` (#159)
 
-* Removed the Rcpp depedency and the compiled code now uses C rather than C++ (#158)
+* Removed the Rcpp dependency and the compiled code now uses C rather than C++ (#158)
 
 * BREAKING CHANGE: Fixed #57, #153: `htmlTemplate` output no longer inserts
   extra whitespace around {{...}} replacement values. (#154)
@@ -96,7 +138,7 @@
   written to the .html file. (Note that `save_html(tags$html(...))` is not
   supported at this time.) (#145)
 
-* Trailing commas now permited in `...` arguments to `css()`, `tagList()`, and
+* Trailing commas now permitted in `...` arguments to `css()`, `tagList()`, and
   the var-arg mutation functions: `tagAppendAttributes()`, `tagSetChildren()`,
   and `tagAppendChildren()`. (#145)
 

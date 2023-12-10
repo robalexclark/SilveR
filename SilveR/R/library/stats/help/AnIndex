@@ -656,6 +656,7 @@ setNames	setNames
 shapiro.test	shapiro.test
 sigma	sigma
 sigma.default	sigma
+sigma.glm	sigma
 sigma.mlm	sigma
 SignRank	SignRank
 simulate	simulate
@@ -719,6 +720,7 @@ terms.object	terms.object
 time	time
 time.default	time
 toeplitz	toeplitz
+toeplitz2	toeplitz
 ts	ts
 ts.intersect	ts.union
 ts.plot	ts.plot

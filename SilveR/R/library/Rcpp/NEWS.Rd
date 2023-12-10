@@ -3,7 +3,73 @@
 \newcommand{\ghpr}{\href{https://github.com/RcppCore/Rcpp/pull/#1}{##1}}
 \newcommand{\ghit}{\href{https://github.com/RcppCore/Rcpp/issues/#1}{##1}}
 
-\section{Changes in Rcpp hotfix release version 1.0.9 (2022-07-02)}{
+\section{Changes in Rcpp rc version 1.0.11 (2023-07-03)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item \code{Rcpp:::CxxFlags()} now quotes only non-standard include path
+      on linux (Lukasz in \ghpr{1243} closing \ghit{1242}).
+      \item Two unit tests no longer accidentally bark on stdout (Dirk and
+      Iñaki in \ghpr{1245}).
+      \item Compilation under C++ using \pkg{clang++} and its standard
+      library is enabled (Dirk in \ghpr{1248} closing \ghit{1244}).
+      \item Use backticks in a generated \code{.Call()} statement in
+      `RcppExports.R` (Dirk \ghpr{1256} closing \ghit{1255}).
+      \item Switch to \code{system2()} to capture standard error messages in
+      error cases (Iñaki in \ghpr{1259} and \ghpr{1261} fixing \ghit{1257}).
+    }
+    \item Changes in Rcpp Documentation:
+    \itemize{
+      \item The CITATION file format has been updated (Dirk in \ghpr{1250}
+      fixing \ghit{1249}).
+    }
+    \item Changes in Rcpp Deployment:
+    \itemize{
+      \item A test for \code{qnorm} now uses the more accurate value from R
+      4.3.0 (Dirk in \ghpr{1252} and \ghpr{1260} fixing \ghit{1251}).
+      \item Skip tests with path issues on Windows (Iñaki in \ghpr{1258}).
+      \item Container deployment in continuous integrations was
+      improved. (Iñaki and Dirk in \ghpr{1264}, Dirk in \ghpr{1269}).
+      \item Several files receives minor edits to please \code{R CMD check}
+      from r-devel (Dirk in \ghpr{1267}).
+    }
+  }
+}
+
+\section{Changes in Rcpp release version 1.0.10 (2023-01-12)}{
+  \itemize{
+    \item Changes in Rcpp API:
+    \itemize{
+      \item Unwind protection is enabled by default (Iñaki in \ghpr{1225}).
+      It can be disabled by defining \code{RCPP_NO_UNWIND_PROTECT} before
+      including \code{Rcpp.h}. \code{RCPP_USE_UNWIND_PROTECT} is not checked
+      anymore and has no effect. The associated plugin \code{unwindProtect}
+      is therefore deprecated and will be removed in a future release.
+      \item The 'finalize' method for Rcpp Modules is now eagerly materialized,
+      fixing an issue where errors can occur when Module finalizers are run
+      (Kevin in \ghpr{1231} closing \ghit{1230}).
+      \item Zero-row \code{data.frame} objects can receive \code{push_back}
+      or \code{push_front} (Dirk in \ghpr{1233} fixing \ghit{1232}).
+      \item One remaining \code{sprintf} has been replaced by
+      \code{snprintf} (Dirk and Kevin in \ghpr{1236} and \ghpr{1237}).
+      \item Several conversion warnings found by \code{clang++} have been
+      addressed (Dirk in \ghpr{1240} and \ghpr{1241}).
+    }
+    \item Changes in Rcpp Attributes:
+    \itemize{
+      \item The C++20, C++2b (experimental) and C++23 standards now have
+      plugin support like the other C++ standards (Dirk in \ghpr{1228}).
+      \item The source path for attributes received one more protection
+      from spaces (Dirk in \ghpr{1235} addressing \ghit{1234}).
+    }
+    \item Changes in Rcpp Deployment:
+    \itemize{
+      \item Several GitHub Actions have been updated.
+    }
+  }
+}
+
+\section{Changes in Rcpp release version 1.0.9 (2022-07-02)}{
   \itemize{
     \item Changes in Rcpp API:
     \itemize{

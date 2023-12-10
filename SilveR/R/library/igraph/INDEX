@@ -1,11 +1,5 @@
 %>%                     Magrittr's pipes
 +.igraph                Add vertices, edges or another graph to a graph
-.apply_modifiers        Applies a set of constructor modifiers to an
-                        already constructed graph.
-.extract_constructor_and_modifiers
-                        Takes an argument list and extracts the
-                        constructor specification and constructor
-                        modifiers from it.
 E                       Edges of a graph
 V                       Vertices of a graph
 [.igraph                Query and manipulate a graph as it were an
@@ -40,10 +34,9 @@ as_incidence_matrix     Incidence matrix of a bipartite graph
 as_long_data_frame      Convert a graph to a long data frame
 as_membership           Declare a numeric vector as a membership vector
 assortativity           Assortativity coefficient
-authority_score         Kleinberg's authority centrality scores.
 automorphism_group      Generating set of the automorphism group of a
                         graph
-automorphisms           Number of automorphisms
+betweenness             Vertex and edge betweenness centrality
 bfs                     Breadth-first search
 biconnected_components
                         Biconnected components
@@ -69,7 +62,7 @@ centr_eigen             Centralize a graph according to the eigenvector
 centr_eigen_tmax        Theoretical maximum for betweenness
                         centralization
 centralize              Centralization of a graph
-cliques                 Functions to find cliques, ie. complete
+cliques                 Functions to find cliques, i.e. complete
                         subgraphs in a graph
 closeness               Closeness centrality of vertices
 cluster_edge_betweenness
@@ -110,13 +103,13 @@ constraint              Burt's constraint
 contract                Contract several vertices into a single one
 convex_hull             Convex hull of a set of vertices
 coreness                K-core decomposition of graphs
+count_automorphisms     Number of automorphisms
 count_isomorphisms      Count the number of isomorphic mappings between
                         two graphs
 count_motifs            Graph motifs
 count_subgraph_isomorphisms
                         Count the isomorphic mappings between a graph
                         and the subgraphs of another graph
-count_triangles         Find triangles in graphs
 curve_multiple          Optimal edge curvature when plotting graphs
 decompose               Decompose a graph into components
 degree                  Degree and degree distribution of the vertices
@@ -148,7 +141,7 @@ edge                    Helper function for adding and deleting edges
 edge_attr               Query edge attributes of a graph
 edge_attr<-             Set one or more edge attributes
 edge_attr_names         List names of edge attributes
-edge_connectivity       Edge connectivity.
+edge_connectivity       Edge connectivity
 edge_density            Graph density
 eigen_centrality        Find Eigenvector Centrality Scores of Network
                         Positions
@@ -157,9 +150,6 @@ embed_adjacency_matrix
 embed_laplacian_matrix
                         Spectral Embedding of the Laplacian of a Graph
 ends                    Incident vertices of some graph edges
-erdos.renyi.game        Generate random graphs according to the
-                        Erdos-Renyi model
-estimate_betweenness    Vertex and edge betweenness centrality
 feedback_arc_set        Finding a feedback arc set in a graph
 fit_hrg                 Fit a hierarchical random graph model
 fit_power_law           Fitting a power-law distribution function to
@@ -204,7 +194,8 @@ hrg                     Create a hierarchical random graph from an
 hrg-methods             Hierarchical random graphs
 hrg_tree                Create an igraph graph from a hierarchical
                         random graph model
-hub_score               Kleinberg's hub centrality scores.
+hub_score               Kleinberg's hub and authority centrality
+                        scores.
 identical_graphs        Decide if two graphs are identical
 igraph-attribute-combination
                         How igraph functions handle attributes when the
@@ -215,7 +206,6 @@ igraph-es-attributes    Query or set attributes of the edges in an edge
 igraph-es-indexing      Indexing edge sequences
 igraph-es-indexing2     Select edges and show their metadata
 igraph-minus            Delete vertices or edges from a graph
-igraph-package          The igraph package
 igraph-vs-attributes    Query or set attributes of the vertices in a
                         vertex sequence
 igraph-vs-indexing      Indexing vertex sequences
@@ -242,7 +232,7 @@ is_degseq               Check if a degree sequence is valid for a
 is_directed             Check whether a graph is directed
 is_graphical            Is a degree sequence graphical?
 is_igraph               Is this object an igraph graph?
-is_matching             Graph matching
+is_matching             Matching
 is_min_separator        Minimal vertex separators
 is_named                Named graphs
 is_printer_callback     Is this a printer callback?
@@ -273,7 +263,6 @@ layout_as_tree          The Reingold-Tilford graph layout algorithm
 layout_in_circle        Graph layout with vertices on a circle.
 layout_nicely           Choose an appropriate graph layout algorithm
                         automatically
-layout_on_grid          Simple grid layout
 layout_on_sphere        Graph layout with vertices on the surface of a
                         sphere
 layout_randomly         Randomly place vertices on a plane or in 3d
@@ -293,7 +282,7 @@ make_chordal_ring       Create an extended chordal ring graph
 make_clusters           Creates a communities object.
 make_de_bruijn_graph    De Bruijn graphs
 make_empty_graph        A graph with no edges
-make_from_prufer        Create an undirected tree graph from its Prufer
+make_from_prufer        Create an undirected tree graph from its Prüfer
                         sequence
 make_full_bipartite_graph
                         Create a full bipartite graph
@@ -346,9 +335,6 @@ print.igraphHRG         Print a hierarchical random graph model to the
 print.igraphHRGConsensus
                         Print a hierarchical random graph consensus
                         tree to the screen
-print.nexusDatasetInfo
-                        Query and download from the Nexus network
-                        repository
 printer_callback        Create a printer callback function
 printr                  Better printing of R packages
 r_pal                   The default R palette
@@ -382,9 +368,9 @@ sample_fitness_pl       Scale-free random graphs, from vertex fitness
                         scores
 sample_forestfire       Forest Fire Network Model
 sample_gnm              Generate random graphs according to the G(n,m)
-                        Erdos-Renyi model
+                        Erdős-Rényi model
 sample_gnp              Generate random graphs according to the G(n,p)
-                        Erdos-Renyi model
+                        Erdős-Rényi model
 sample_grg              Geometric random graphs
 sample_growing          Growing random graph generation
 sample_hierarchical_sbm
@@ -434,8 +420,6 @@ simplify                Simple graphs
 spectrum                Eigenvalues and eigenvectors of the adjacency
                         matrix of a graph
 split_join_distance     Split-join distance of two community structures
-srand                   Deprecated function, used to set random seed of
-                        the C library's RNG
 st_cuts                 List all (s,t)-cuts of a graph
 st_min_cuts             List all minimum (s,t)-cuts of a graph
 stochastic_matrix       Stochastic matrix of a graph
@@ -452,10 +436,11 @@ tail_of                 Tails of the edge(s) in a graph
 time_bins.sir           SIR model on graphs
 tkigraph                Experimental basic igraph GUI
 tkplot                  Interactive plotting of graphs
-to_prufer               Convert a tree graph to its Prufer sequence
+to_prufer               Convert a tree graph to its Prüfer sequence
 topo_sort               Topological sorting of vertices in a graph
 transitivity            Transitivity of a graph
 triad_census            Triad census, subgraphs with three vertices
+triangles               Find triangles in graphs
 unfold_tree             Convert a general graph into a forest
 union                   Union of two or more sets
 union.igraph            Union of graphs
@@ -471,8 +456,8 @@ vertex.shape.pie        Using pie charts as vertices in graph plots
 vertex_attr             Query vertex attributes of a graph
 vertex_attr<-           Set one or more vertex attributes
 vertex_attr_names       List names of vertex attributes
-vertex_connectivity     Vertex connectivity.
-weighted_cliques        Functions to find weighted cliques, ie.
+vertex_connectivity     Vertex connectivity
+weighted_cliques        Functions to find weighted cliques, i.e.
                         weighted complete subgraphs in a graph
 which_multiple          Find the multiple or loop edges in a graph
 which_mutual            Find mutual edges in a directed graph

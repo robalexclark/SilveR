@@ -1,6 +1,8 @@
+htmltools-package	htmltools-package
 a	builder
 as.tags	as.tags
 attachDependencies	htmlDependencies
+bindFillRole	bindFillRole
 br	builder
 browsable	browsable
 builder	builder
@@ -28,6 +30,7 @@ htmlDependency	htmlDependency
 htmlEscape	htmlEscape
 htmlPreserve	htmlPreserve
 htmlTemplate	htmlTemplate
+htmltools	htmltools-package
 html_print	html_print
 img	builder
 include	include
@@ -40,6 +43,7 @@ is.browsable	browsable
 is.singleton	singleton
 knitr_methods	knitr_methods
 knit_print.html	knitr_methods
+knit_print.html_dependency	knitr_methods
 knit_print.shiny.tag	knitr_methods
 knit_print.shiny.tag.list	knitr_methods
 makeDependencyRelative	makeDependencyRelative

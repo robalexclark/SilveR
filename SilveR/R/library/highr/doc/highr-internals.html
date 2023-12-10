@@ -147,12 +147,11 @@ hljs.LANGUAGES.r=function(a){var b="([a-zA-Z]|\\.[a-zA-Z.])[a-zA-Z0-9._]*";retur
 %\VignetteEngine{knitr::docco_classic}
 %\VignetteIndexEntry{Internals of the highr package}
 -->
-
 <h1>Internals of the <code>highr</code> package</h1>
-
-</td><td class="code"></td></tr><tr id="row2"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row2">&para;</a></div><p>The <strong>highr</strong> package is based on the function <code>getParseData()</code>, which was
+<p>The <strong>highr</strong> package is based on the function <code>getParseData()</code>, which was
 introduced in R 3.0.0. This function gives detailed information of the
-symbols in a code fragment. A simple example:</p></td><td class="code"><pre><code class="r">p = parse(text = &quot;   xx = 1 + 1  # a comment&quot;, keep.source = TRUE)
+symbols in a code fragment. A simple example:</p>
+</td><td class="code"><pre><code class="language-r">p = parse(text = &quot;   xx = 1 + 1  # a comment&quot;, keep.source = TRUE)
 (d = getParseData(p))
 </code></pre>
 <pre><code>##    line1 col1 line2 col2 id parent                  token terminal        text
@@ -163,26 +162,26 @@ symbols in a code fragment. A simple example:</p></td><td class="code"><pre><cod
 ## 12     1    9     1   13 12     14                   expr    FALSE            
 ## 5      1    9     1    9  5      6              NUM_CONST     TRUE           1
 ## 6      1    9     1    9  6     12                   expr    FALSE            
-## 7      1   11     1   11  7     12                    &#39;+&#39;     TRUE           +
+## 7      1   11     1   11  7     12                    '+'     TRUE           +
 ## 8      1   13     1   13  8      9              NUM_CONST     TRUE           1
 ## 9      1   13     1   13  9     12                   expr    FALSE            
 ## 10     1   16     1   26 10    -14                COMMENT     TRUE # a comment
-</code></pre></td></tr><tr id="row3"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row3">&para;</a></div>
-
-<p>The first step is to filter out the rows that we do not need:</p></td><td class="code"><pre><code class="r">(d = d[d$terminal, ])
+</code></pre></td></tr><tr id="row2"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row2">&para;</a></div>
+<p>The first step is to filter out the rows that we do not need:</p>
+</td><td class="code"><pre><code class="language-r">(d = d[d$terminal, ])
 </code></pre>
 <pre><code>##    line1 col1 line2 col2 id parent     token terminal        text
 ## 1      1    4     1    5  1      3    SYMBOL     TRUE          xx
 ## 2      1    7     1    7  2     14 EQ_ASSIGN     TRUE           =
 ## 5      1    9     1    9  5      6 NUM_CONST     TRUE           1
-## 7      1   11     1   11  7     12       &#39;+&#39;     TRUE           +
+## 7      1   11     1   11  7     12       '+'     TRUE           +
 ## 8      1   13     1   13  8      9 NUM_CONST     TRUE           1
 ## 10     1   16     1   26 10    -14   COMMENT     TRUE # a comment
-</code></pre></td></tr><tr id="row4"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row4">&para;</a></div>
-
+</code></pre></td></tr><tr id="row3"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row3">&para;</a></div>
 <p>There is a column <code>token</code> in the data frame, and we will wrap this column
 with markup commands, e.g. <code>\hlnum{1}</code> for the numeric constant <code>1</code>. We
-defined the markup commands in <code>cmd_latex</code> and <code>cmd_html</code>:</p></td><td class="code"><pre><code class="r">head(highr:::cmd_latex)
+defined the markup commands in <code>cmd_latex</code> and <code>cmd_html</code>:</p>
+</td><td class="code"><pre><code class="language-r">head(highr:::cmd_latex)
 </code></pre>
 <pre><code>##              cmd1 cmd2
 ## COMMENT  \\hlcom{    }
@@ -192,7 +191,7 @@ defined the markup commands in <code>cmd_latex</code> and <code>cmd_html</code>:
 ## WHILE    \\hlkwa{    }
 ## FOR      \\hlkwa{    }
 </code></pre>
-<pre><code class="r">tail(highr:::cmd_html)
+<pre><code class="language-r">tail(highr:::cmd_html)
 </code></pre>
 <pre><code>##                             cmd1    cmd2
 ## OR         &lt;span class=&quot;hl opt&quot;&gt; &lt;/span&gt;
@@ -201,14 +200,14 @@ defined the markup commands in <code>cmd_latex</code> and <code>cmd_html</code>:
 ## NS_GET_INT &lt;span class=&quot;hl opt&quot;&gt; &lt;/span&gt;
 ## STANDARD   &lt;span class=&quot;hl std&quot;&gt; &lt;/span&gt;
 ## STR_CONST  &lt;span class=&quot;hl str&quot;&gt; &lt;/span&gt;
-</code></pre></td></tr><tr id="row5"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row5">&para;</a></div>
-
+</code></pre></td></tr><tr id="row4"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row4">&para;</a></div>
 <p>These command data frames are connected to the tokens in the R code via
-their row names:</p></td><td class="code"><pre><code class="r">d$token
+their row names:</p>
+</td><td class="code"><pre><code class="language-r">d$token
 </code></pre>
-<pre><code>## [1] &quot;SYMBOL&quot;    &quot;EQ_ASSIGN&quot; &quot;NUM_CONST&quot; &quot;&#39;+&#39;&quot;       &quot;NUM_CONST&quot; &quot;COMMENT&quot;
+<pre><code>## [1] &quot;SYMBOL&quot;    &quot;EQ_ASSIGN&quot; &quot;NUM_CONST&quot; &quot;'+'&quot;       &quot;NUM_CONST&quot; &quot;COMMENT&quot;
 </code></pre>
-<pre><code class="r">rownames(highr:::cmd_latex)
+<pre><code class="language-r">rownames(highr:::cmd_latex)
 </code></pre>
 <pre><code>##  [1] &quot;COMMENT&quot;              &quot;FUNCTION&quot;             &quot;IF&quot;                  
 ##  [4] &quot;ELSE&quot;                 &quot;WHILE&quot;                &quot;FOR&quot;                 
@@ -216,17 +215,16 @@ their row names:</p></td><td class="code"><pre><code class="r">d$token
 ## [10] &quot;NEXT&quot;                 &quot;NULL_CONST&quot;           &quot;LEFT_ASSIGN&quot;         
 ## [13] &quot;EQ_ASSIGN&quot;            &quot;RIGHT_ASSIGN&quot;         &quot;SYMBOL_FORMALS&quot;      
 ## [16] &quot;SYMBOL_SUB&quot;           &quot;SLOT&quot;                 &quot;SYMBOL_FUNCTION_CALL&quot;
-## [19] &quot;NUM_CONST&quot;            &quot;&#39;+&#39;&quot;                  &quot;&#39;-&#39;&quot;                 
-## [22] &quot;&#39;*&#39;&quot;                  &quot;&#39;/&#39;&quot;                  &quot;&#39;^&#39;&quot;                 
-## [25] &quot;&#39;$&#39;&quot;                  &quot;&#39;@&#39;&quot;                  &quot;&#39;:&#39;&quot;                 
-## [28] &quot;&#39;?&#39;&quot;                  &quot;&#39;~&#39;&quot;                  &quot;&#39;!&#39;&quot;                 
+## [19] &quot;NUM_CONST&quot;            &quot;'+'&quot;                  &quot;'-'&quot;                 
+## [22] &quot;'*'&quot;                  &quot;'/'&quot;                  &quot;'^'&quot;                 
+## [25] &quot;'$'&quot;                  &quot;'@'&quot;                  &quot;':'&quot;                 
+## [28] &quot;'?'&quot;                  &quot;'~'&quot;                  &quot;'!'&quot;                 
 ## [31] &quot;SPECIAL&quot;              &quot;GT&quot;                   &quot;GE&quot;                  
 ## [34] &quot;LT&quot;                   &quot;LE&quot;                   &quot;EQ&quot;                  
 ## [37] &quot;NE&quot;                   &quot;AND&quot;                  &quot;AND2&quot;                
 ## [40] &quot;OR&quot;                   &quot;OR2&quot;                  &quot;NS_GET&quot;              
 ## [43] &quot;NS_GET_INT&quot;           &quot;STANDARD&quot;             &quot;STR_CONST&quot;
-</code></pre></td></tr><tr id="row6"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row6">&para;</a></div>
-
+</code></pre></td></tr><tr id="row5"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row5">&para;</a></div>
 <p>Now we know how to wrap up the R tokens. The next big question is how to
 restore the white spaces in the source code, since they were not directly
 available in the parsed data, but the parsed data contains column numbers,
@@ -234,8 +232,8 @@ and we can derive the positions of white spaces from them. For example,
 <code>col2 = 5</code> for the first row, and <code>col1 = 7</code> for the next row, and that
 indicates there must be one space after the token in the first row, otherwise
 the next row will start at the position <code>6</code> instead of <code>7</code>.</p>
-
-</td><td class="code"></td></tr><tr id="row7"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row7">&para;</a></div><p>A small trick is used to fill in the gaps of white spaces:</p></td><td class="code"><pre><code class="r">(z = d[, c(&#39;col1&#39;, &#39;col2&#39;)])  # take out the column positions
+<p>A small trick is used to fill in the gaps of white spaces:</p>
+</td><td class="code"><pre><code class="language-r">(z = d[, c('col1', 'col2')])  # take out the column positions
 </code></pre>
 <pre><code>##    col1 col2
 ## 1     4    5
@@ -245,21 +243,21 @@ the next row will start at the position <code>6</code> instead of <code>7</code>
 ## 8    13   13
 ## 10   16   26
 </code></pre>
-<pre><code class="r">(z = t(z)) # transpose the matrix
+<pre><code class="language-r">(z = t(z)) # transpose the matrix
 </code></pre>
 <pre><code>##      1 2 5  7  8 10
 ## col1 4 7 9 11 13 16
 ## col2 5 7 9 11 13 26
 </code></pre>
-<pre><code class="r">(z = c(z)) # turn it into a vector
+<pre><code class="language-r">(z = c(z)) # turn it into a vector
 </code></pre>
 <pre><code>##  [1]  4  5  7  7  9  9 11 11 13 13 16 26
 </code></pre>
-<pre><code class="r">(z = c(0, head(z, -1))) # append 0 in the beginning, and remove the last element
+<pre><code class="language-r">(z = c(0, head(z, -1))) # append 0 in the beginning, and remove the last element
 </code></pre>
 <pre><code>##  [1]  0  4  5  7  7  9  9 11 11 13 13 16
 </code></pre>
-<pre><code class="r">(z = matrix(z, ncol = 2, byrow = TRUE))
+<pre><code class="language-r">(z = matrix(z, ncol = 2, byrow = TRUE))
 </code></pre>
 <pre><code>##      [,1] [,2]
 ## [1,]    0    4
@@ -268,44 +266,44 @@ the next row will start at the position <code>6</code> instead of <code>7</code>
 ## [4,]    9   11
 ## [5,]   11   13
 ## [6,]   13   16
-</code></pre></td></tr><tr id="row8"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row8">&para;</a></div>
-
+</code></pre></td></tr><tr id="row6"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row6">&para;</a></div>
 <p>Now the two columns indicate the starting and ending positions of spaces,
-and we can easily figure out how many white spaces are needed for each row:</p></td><td class="code"><pre><code class="r">(s = z[, 2] - z[, 1] - 1)
+and we can easily figure out how many white spaces are needed for each row:</p>
+</td><td class="code"><pre><code class="language-r">(s = z[, 2] - z[, 1] - 1)
 </code></pre>
 <pre><code>## [1] 3 1 1 1 1 2
 </code></pre>
-<pre><code class="r">(s = mapply(highr:::spaces, s))
+<pre><code class="language-r">(s = strrep(' ', s))
 </code></pre>
 <pre><code>## [1] &quot;   &quot; &quot; &quot;   &quot; &quot;   &quot; &quot;   &quot; &quot;   &quot;  &quot;
 </code></pre>
-<pre><code class="r">paste(s, d$text, sep = &#39;&#39;)
+<pre><code class="language-r">paste(s, d$text, sep = '')
 </code></pre>
 <pre><code>## [1] &quot;   xx&quot;         &quot; =&quot;            &quot; 1&quot;            &quot; +&quot;           
 ## [5] &quot; 1&quot;            &quot;  # a comment&quot;
-</code></pre></td></tr><tr id="row9"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row9">&para;</a></div>
-
-<p>So we have successfully restored the white spaces in the source code. Let&#39;s
-paste all pieces together (suppose we highlight for LaTeX):</p></td><td class="code"><pre><code class="r">m = highr:::cmd_latex[d$token, ]
+</code></pre></td></tr><tr id="row7"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row7">&para;</a></div>
+<p>So we have successfully restored the white spaces in the source code. Let’s
+paste all pieces together (suppose we highlight for LaTeX):</p>
+</td><td class="code"><pre><code class="language-r">m = highr:::cmd_latex[d$token, ]
 cbind(d, m)
 </code></pre>
 <pre><code>##    line1 col1 line2 col2 id parent     token terminal        text     cmd1 cmd2
 ## 1      1    4     1    5  1      3    SYMBOL     TRUE          xx     &lt;NA&gt; &lt;NA&gt;
 ## 2      1    7     1    7  2     14 EQ_ASSIGN     TRUE           = \\hlkwb{    }
 ## 5      1    9     1    9  5      6 NUM_CONST     TRUE           1 \\hlnum{    }
-## 7      1   11     1   11  7     12       &#39;+&#39;     TRUE           + \\hlopt{    }
+## 7      1   11     1   11  7     12       '+'     TRUE           + \\hlopt{    }
 ## 8      1   13     1   13  8      9 NUM_CONST     TRUE           1 \\hlnum{    }
 ## 10     1   16     1   26 10    -14   COMMENT     TRUE # a comment \\hlcom{    }
 </code></pre>
-<pre><code class="r"># use standard markup if tokens do not exist in the table
-m[is.na(m[, 1]), ] = highr:::cmd_latex[&#39;STANDARD&#39;, ]
-paste(s, m[, 1], d$text, m[, 2], sep = &#39;&#39;, collapse = &#39;&#39;)
+<pre><code class="language-r"># use standard markup if tokens do not exist in the table
+m[is.na(m[, 1]), ] = highr:::cmd_latex['STANDARD', ]
+paste(s, m[, 1], d$text, m[, 2], sep = '', collapse = '')
 </code></pre>
 <pre><code>## [1] &quot;   \\hlstd{xx} \\hlkwb{=} \\hlnum{1} \\hlopt{+} \\hlnum{1}  \\hlcom{# a comment}&quot;
-</code></pre></td></tr><tr id="row10"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row10">&para;</a></div>
-
+</code></pre></td></tr><tr id="row8"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row8">&para;</a></div>
 <p>So far so simple. That is one line of code, after all. A next challenge
-comes when there are multiple lines, and a token spans across multiple lines:</p></td><td class="code"><pre><code class="r">d = getParseData(parse(text = &quot;x = \&quot;a character\nstring\&quot; #hi&quot;, keep.source = TRUE))
+comes when there are multiple lines, and a token spans across multiple lines:</p>
+</td><td class="code"><pre><code class="language-r">d = getParseData(parse(text = &quot;x = \&quot;a character\nstring\&quot; #hi&quot;, keep.source = TRUE))
 (d = d[d$terminal, ])
 </code></pre>
 <pre><code>##   line1 col1 line2 col2 id parent     token terminal                  text
@@ -313,12 +311,12 @@ comes when there are multiple lines, and a token spans across multiple lines:</p
 ## 2     1    3     1    3  2     10 EQ_ASSIGN     TRUE                     =
 ## 5     1    5     2    7  5      8 STR_CONST     TRUE &quot;a character\nstring&quot;
 ## 6     2    9     2   11  6    -10   COMMENT     TRUE                   #hi
-</code></pre></td></tr><tr id="row11"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row11">&para;</a></div>
-
+</code></pre></td></tr><tr id="row9"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row9">&para;</a></div>
 <p>Take a look at the third row. It says that the character string starts from
 line 1, and ends on line 2. In this case, we just pretend as if everything
 on line 1 were on line 2. Then for each line, we append the missing spaces
-and apply markup commands to text symbols.</p></td><td class="code"><pre><code class="r">d$line1[d$line1 == 1] = 2
+and apply markup commands to text symbols.</p>
+</td><td class="code"><pre><code class="language-r">d$line1[d$line1 == 1] = 2
 d
 </code></pre>
 <pre><code>##   line1 col1 line2 col2 id parent     token terminal                  text
@@ -326,11 +324,9 @@ d
 ## 2     2    3     1    3  2     10 EQ_ASSIGN     TRUE                     =
 ## 5     2    5     2    7  5      8 STR_CONST     TRUE &quot;a character\nstring&quot;
 ## 6     2    9     2   11  6    -10   COMMENT     TRUE                   #hi
-</code></pre></td></tr><tr id="row12"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row12">&para;</a></div>
-
+</code></pre></td></tr><tr id="row10"><td class="docs"><div class="pilwrap"><a class="pilcrow" href="#row10">&para;</a></div>
 <p>Do not worry about the column <code>line2</code>. It does not matter. Only <code>line1</code> is
 needed to indicate the line number here.</p>
-
 <p>Why do we need to highlight line by line instead of applying highlighting
 commands to all text symbols (a.k.a vectorization)? Well, the margin of this
 paper is too small to write down the answer.</p>

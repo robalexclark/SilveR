@@ -10,7 +10,7 @@ anova(noise.lm)
 ## -----------------------------------------------------------------------------
 emmeans(noise.lm, pairwise ~ size)
 
-## -----------------------------------------------------------------------------
+## ----fig.alt = "emmip plot of type and size, with separate panels for each side. To see the same numerical information, do emmeans(noise.lm, ~ type:size|side)"----
 emmip(noise.lm, type ~ size | side)
 
 ## -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ fiber.lm <- lm(strength ~ diameter*machine, data = fiber)
 ## -----------------------------------------------------------------------------
 emtrends(fiber.lm, pairwise ~ machine, var = "diameter")
 
-## ----fig.height = 2-----------------------------------------------------------
+## ----fig.height = 2, fig.alt = "Plot with three increasing lines. The one for B is highest, the one for C is lower and more-or-less parallel to it, and the one for A is steeper and crosses the other two lines near their ends"----
 emmip(fiber.lm, machine ~ diameter, cov.reduce = range)
 
 ## -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ org.quad <- lm(cbind(sales1, sales2) ~ poly(price1, price2, degree = 2)
 org.int <- lm(cbind(sales1, sales2) ~ price1 * price2 + day + store, data = oranges)
 org.add <- lm(cbind(sales1, sales2) ~ price1 + price2 + day + store, data = oranges)
 
-## -----------------------------------------------------------------------------
+## ----fig.alt = "Two panels with sets of curves associated with values of price2. The panel for sales1 shows a tight bundle of curves that decrease with price1. The panel for sales2 shows a looser bundle of curves that diverge as price1 increases"----
 emmip(org.quad, price2 ~ price1 | variety, mult.name = "variety", cov.reduce = FALSE)
 
 ## -----------------------------------------------------------------------------

@@ -286,7 +286,7 @@ rUnitTri <- function(n, upper = TRUE, ...)
 ##' @param n matrix dimension \eqn{n \times n}{n x n}
 ##' @param density ratio of number of non-zero entries to total number
 ##' @param d0 The sqrt of the diagonal entries of D default \code{10}, to be
-##' \dQuote{different} from \code{L} entries.
+##' \dQuote{different} from \code{L} entries.  More generally these can be negative
 ##' @param rcond logical indicating if \code{\link{rcond}(A, useInv=TRUE)}
 ##' should be returned which requires non-singular A and D.
 ##' @param condest logical indicating if \code{\link{condest}(A)$est}
@@ -302,12 +302,13 @@ mkLDL <- function(n, density = 1/3,
     stopifnot(n == round(n), density <= 1)
     n <- as.integer(n)
     stopifnot(n >= 1, is.numeric(d.half),
-              length(d.half) == n, d.half >= 0)
+              length(d.half) == n)# no longer (2023-05-24): d.half >= 0
     L <- Matrix(0, n,n)
     nnz <- round(density * n*n)
     L[sample(n*n, nnz)] <- seq_len(nnz)
     L <- tril(L, -1L)
     diag(L) <- 1
+### FIXME: allow  *negative* d.half[] entries!
     dh2 <- d.half^2
     non.sing <- sum(dh2 > 0) == n
     D <- Diagonal(x = dh2)
@@ -355,7 +356,7 @@ allCholesky <- function(A, verbose = FALSE, silentTry = FALSE)
     ##' @return an is(perm,LDL,super) matrix with interesting and *named* rownames
     CHM_to_pLs <- function(r) {
         is.perm <- function(.)
-            if(inherits(., "try-error")) NA else !all(.@perm == 0:(.@Dim[1]-1))
+            if(inherits(., "try-error")) NA else .@type[1L] != 0L
         is.LDL <- function(.)if(inherits(., "try-error")) NA else isLDL(.)
 	r.st <-
 	    cbind(perm	= sapply(r, is.perm),
@@ -455,15 +456,18 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 
     clNam <- class(m)
     cld <- getClassDef(clNam) ## extends(cld, FOO) is faster than is(m, FOO)
-    isCor    <- extends(cld, "corMatrix")
-    isSym    <- extends(cld, "symmetricMatrix")
+    isGen <- extends(cld, "generalMatrix")
+    isSym <- extends(cld, "symmetricMatrix")
+    isTri <- extends(cld, "triangularMatrix")
+    isCor <- isSym && (extends(cld, "corMatrix") || extends(cld, "pcorMatrix"))
     if(isSparse <- extends(cld, "sparseMatrix")) { # also true for these
+        isCsp  <- extends(cld, "CsparseMatrix")
 	isRsp  <- extends(cld, "RsparseMatrix")
+        isTsp  <- extends(cld, "TsparseMatrix")
 	isDiag <- extends(cld, "diagonalMatrix")
 	isInd  <- extends(cld, "indMatrix")
 	isPerm <- extends(cld, "pMatrix")
-    } else isRsp <- isDiag <- isInd <- isPerm <- FALSE
-    isTri <- !isSym && !isDiag && !isInd && extends(cld, "triangularMatrix")
+    } else isCsp <- isRsp <- isTsp <- isDiag <- isInd <- isPerm <- FALSE
     is.n     <- extends(cld, "nMatrix")
     nonMatr  <- clNam != (Mcl <- MatrixClass(clNam, cld))
 
@@ -483,6 +487,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
     ina <- is.na(m)
     if(do.matrix) {
 	stopifnot(all(ina == is.na(m.m)),
+                  all(is.nan(m) == is.nan(m.m)),
 		  all(is.finite(m) == is.finite(m.m)),
 		  all(is.infinite(m) == is.infinite(m.m)),
 		  all(m == m | ina), ## check all() , "==" [Compare], "|" [Logic]
@@ -503,8 +508,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 	ttm <- t(tm)
         ## notInd: "pMatrix" ok, but others inheriting from "indMatrix" are not
         notInd <- (!isInd || isPerm)
-	if(notInd && (extends(cld, "CsparseMatrix") ||
-	   extends(cld, "generalMatrix") || isDiag))
+	if(notInd && (isCsp || isGen || isDiag))
             stopifnot(Qidentical(m, ttm, strictClass = !nonMatr))
 	else if(do.matrix) {
 	    if(notInd) stopifnot(nonMatr || class(ttm) == clNam)
@@ -595,21 +599,28 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
     if(isSparse) {
 	n0m <- drop0(m) #==> n0m is Csparse
 	has0 <- !Qidentical(n0m, as(m,"CsparseMatrix"))
-	if(!isInd && !isRsp &&
-           !(extends(cld, "TsparseMatrix") && anyDuplicatedT(m, di = d))) {
-            stopifnot(Qidentical(m, m.d)) # e.g., @factors may differ
-        }
-    } else if(!.MJ.Qidentical(m, m.d, strictClass=FALSE,
-                              skipSlots =
-                                  if (isTri && .hasSlot(m.d, "diag") &&
-                                      m@diag == "U" && m.d@diag == "N" &&
-                                      all(m == m.d))
-                                      c("x", "diag"))) {
-        ## Above allows coercion to more general class,
-        ## e.g., is(`diag<-`(x=<dppMatrix>, value=-1), "dspMatrix")
-        ## and `diag<-`(x=<unit triangularMatrix>, value=.)@diag == "N"
-        stop("diag(m) <- diag(m) has changed 'm' too much")
     }
+
+    if(isDiag)
+        stopifnot(exprs = {
+            .MJ.Qidentical(m, m.d, strictClass = FALSE,
+                           skipSlots = if(m@diag != "N") c("diag", "x"))
+            m@diag == "N" || (m.d@diag == "N" &&
+                              identical(m.d@x, diag(m, names = FALSE)))
+        })
+    else if(isTri && m@diag != "N")
+        stopifnot(exprs = {
+            is(m.d, "triangularMatrix") && m.d@diag == "N"
+            .MJ.Qidentical(m, m.d, strictClass = FALSE,
+                           skipSlots = c("diag", "p", "i", "j", "x"))
+            isSparse || all(m == m.d)
+        })
+    else if(!isInd)
+        stopifnot(.MJ.Qidentical(m, m.d, strictClass = FALSE,
+                                 skipSlots =
+                                     if(((isCsp || isRsp) && has0) || isTsp)
+                                         c("p", "i", "j", "x")))
+
     ## use non-square matrix when "allowed":
 
     ## m12: sparse and may have 0s even if this is not: if(isSparse && has0)
@@ -631,7 +642,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
                   ## only testing [CR]sparseMatrix and indMatrix here ...
                   ## sum(<n.T>) excludes duplicated (i,j) pairs whereas
                   ## length(diagU2N(<[^n].T>)) includes them ...
-                  isDiag || extends(cld, "TsparseMatrix") ||
+                  isDiag || isTsp ||
                   (if(isSym) length(if(.hasSlot(n1, "i")) n1@i else n1@j)
                    else sum(n1)) == length(if(isInd) m@perm else diagU2N(m)@x))
         Cat("ok\n")
@@ -675,7 +686,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 		CatF("ok;  determinant(): ")
 		if(!doDet)
 		    Cat(" skipped (!doDet): ")
-		else if(any(is.na(m.m)) && extends(cld, "triangularMatrix"))
+		else if(any(is.na(m.m)) && isTri)
 		    Cat(" skipped: is triang. and has NA: ")
 		else
 		    stopifnot(eqDeterminant(m, m.m, NA.Inf.ok=TRUE))
@@ -700,7 +711,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 	}
 	else if(extends(cld, "lMatrix")) { ## should fulfill even with NA:
 	    stopifnot(all(m | !m | ina), !any(!m & m & !ina))
-	    if(extends(cld, "TsparseMatrix")) # allow modify, since at end here
+	    if(isTsp) # allow modify, since at end here
 		m <- uniqTsparse(m, clNam)
 	    stopifnot(identical(m, m & TRUE),
 		      identical(m, FALSE | m))
@@ -727,7 +738,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 	}
 
         maybeDense <- if(isSparse) identity else function(.) as(., "denseMatrix")
-	if(extends(cld, "triangularMatrix")) {
+	if(isTri) {
 	    mm. <- m
 	    i0 <- if(m@uplo == "L")
 		upper.tri(mm.) else lower.tri(mm.)
@@ -775,12 +786,9 @@ chk.qr.D.S <- function(d., s., y, Y = Matrix(y), force = FALSE, tol = 1e-10) {
     ## when system is rank deficient, have differing cases, not always just NA <-> 0 coef
     ## FIXME though:  resid & fitted should be well determined
     if(force || !rank.def) stopifnot(
-### FIXME: temporary:
-###	is.all.equal3(	    cc	     , drop(qr.coef  (s.,y)), drop(qr.coef  (s.,Y)), tol=tol),
-	is.all.equal3(	unname( cc ) , drop(qr.coef  (s.,y)), drop(qr.coef  (s.,Y)), tol=tol),
-### END{FIXME}
-	is.all.equal3(qr.resid (d.,y), drop(qr.resid (s.,y)), drop(qr.resid (s.,Y)), tol=tol),
-	is.all.equal3(qr.fitted(d.,y), drop(qr.fitted(s.,y)), drop(qr.fitted(s.,Y)), tol=tol)
+	is.all.equal3(	    cc	     , qr.coef  (s.,y), drop(qr.coef  (s.,Y)), tol=tol),
+	is.all.equal3(qr.resid (d.,y), qr.resid (s.,y), drop(qr.resid (s.,Y)), tol=tol),
+	is.all.equal3(qr.fitted(d.,y), qr.fitted(s.,y), drop(qr.fitted(s.,Y)), tol=tol)
 	)
 }
 

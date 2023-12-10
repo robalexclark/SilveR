@@ -1,3 +1,257 @@
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# igraph 1.5.1
+
+## Breaking changes
+
+- Breaking change: start deprecation of `estimate_betweenness()`, `estimate_edge_betweenness()`, `estimate_closeness()` (#852).
+
+## Bug fixes
+
+- `identical_graphs()` now correctly detects identical graphs without node or edge attributes (#757).
+
+## Internal
+
+- Change ownership rules of attribute objects (#870).
+
+- `R_SEXP_to_igraph()` and `R_SEXP_to_igraph_copy()` get `igraph_t` object from external pointer (#865).
+
+- Remove `ETIME()` call from Fortran code, already in CRAN version 1.5.0.1 (#858).
+
+- Ensure that `_GNU_SOURCE` is always defined (#877).
+
+- Fix `make clean` (#860).
+
+- Fix generation of code for functions with `VERTEX_COLOR` out-arguments (#850).
+
+- Use `-lquadmath` in `Makevars.win`, for compatibility with alternative R distributions such as Microsoft R Open (#855).
+
+- `getRversion()` uses strings.
+
+## Documentation
+
+- Add cffr file and a GHA workflow that updates it automatically (#873).
+
+- Undeprecate `neighborhood()` (#851).
+
+- Remove redundant reference to AUTHORS from DESCRIPTION.
+
+## Refactoring
+
+- Breaking change: start deprecation of `estimate_betweenness()`, `estimate_edge_betweenness()`, `estimate_closeness()` (#852).
+
+
+# igraph 1.5.0
+
+## Breaking changes
+
+The internal format of graph objects has changed in a mostly backward-compatible way, to prepare for upgrading the C core to 0.10. Details are described at <https://github.com/igraph/rigraph/wiki/The-igraph-object-format>. Accessing graph objects that have been created with an older igraph version give a clean error message with instructions (#832). The new format cannot be read by igraph 1.4.3 or older, the following error is raised when trying to do so:
+
+```
+This graph was created by an old(er) igraph version.
+  Call upgrade_graph() on it to use with the current igraph version
+  For now we convert it on the fly...
+Error in is_directed(object) : 
+  REAL() can only be applied to a 'numeric', not a 'NULL'
+```
+
+The only supported remedy is to upgrade the igraph package to version 1.5.0 or later.
+
+`graph_version()` now returns an integer scalar (#832, #847), `4` as of igraph 1.5.0 (#835).
+
+## Features
+
+- Vertex and edge sequences are converted to numeric vectors when used in attributes (#808).
+
+- New `largest_component()` returns the largest connected component (#786, @ngmaclaren).
+
+## Bug fixes
+
+  - Fix error message in `make_graph()` when `simplify = ...` is used with a non-formula (#834).
+
+## Testing
+
+- Add more tests for `graph_from_literal()` (#826).
+
+- Reenable serialization test and tests for `dyad_census()`, stabilize tests (#809, #822, #823).
+
+## Documentation
+
+- The documentation for the R package is now hosted at <https://r.igraph.org/> (#780).
+
+- Update `vignette("installation-troubleshooting")`.
+
+- Fix use of deprecated functions in examples, e.g., replace `gsize()` by `ecount()` (#827).
+
+- Fix typos in `?eigen_centrality` docs (@JJ).
+
+- Update CONTRIBUTING.md and ORCID information (#791, #774).
+
+- Add DOI to CITATION (#773).
+
+## Internal
+
+- Add data for old igraph versions as constructed objects, and tests (#838).
+
+- Ensure we're always using named indexes to access the internal data structure (#784).
+
+- Prepare migration to igraph/C 0.10 (#781).
+
+- Update generated interface (#765).
+
+
+# igraph 1.4.3
+
+## Internal
+
+  - Fix tests for dev waldo (#779, @hadley).
+
+  - Fix linking on Windows: gfortran needs quadmath. (#778).
+
+## Documentation
+
+  - Mention limitation of Pajek reader (#776).
+
+
+# igraph 1.4.2
+
+## Breaking changes
+
+- Remove `igraph.eigen.default()` and `eigen_defaults`, introduce internal `eigen_defaults()` as a function (#741).
+
+- Remove broken `nexus*()` functions (#705), and `srand()` (#701).
+
+
+## C core
+
+- Update C core.
+
+- ARPACK-based calculations are now interruptible.
+
+- `shortest_paths()` and `all_shortest_paths()` no longer crash when an invalid `from` vertex is passed and weights are being used.
+
+See [diff](https://github.com/igraph/igraph/compare/87c70998344a39b44218f7af903bf62b8bbf3e71...98304787bc811bf709be5aeddea7b570c370988e) for details.
+
+
+## Printing
+
+- Use true vertex names for printing vertex sets. If a vertex set captures a relationship between vertices (e.g., the `father` component of `bfs()`), the vertex set is printed as a named vector (#754).
+
+- Suggest restarting R session after fatal error (#745).
+
+
+## Bug fixes
+
+- `as_long_data_frame()` now correctly processes vertex attributes and works with graphs without vertex attributes (#748).
+
+- `as.hclust(hrg.fit(g))` works again (#721).
+
+
+## Documentation
+
+- The documentation is now available at <https://igraph.org/> (#743).
+
+- Reorganize function reference (#662).
+
+- Replace `graph()` with `make_graph()` in examples (#738).
+
+- Add docs for `as.hclust.igraphHRG()` (#733).
+
+- Merged man page of `hub_score()` and `authority_score()` (#698).
+
+- Refactor contributors listing (#647).
+
+- Improve "family" titles (#679).
+
+- Improve docs of ego/neighborhood functions.
+
+- Improve `transitivity()` docs.
+
+
+## Internal
+
+- Introduce cpp11 package to improve error handling in the long run (#720).
+
+- Avoid longjmp for error handling and interrupts (#751).
+
+- `as.hclust.igraphHRG` uses `.Call()` interface (#727).
+
+
+# igraph 1.4.1
+
+## Bug fixes
+
+- `console()` now works again and provides a Tcl/Tk based UI where igraph can post status messages and progress info (#664).
+
+- Fix errors when printing long vertex names (#677, @ahmohamed).
+
+- Fix regression that broke builds on some systems (e.g., GCC version 5 or earlier), introduced in igraph 1.4.0 (#670, #671).
+
+- `fit_hrg()` does not crash any more when called with a graph that has less than three vertices.
+
+## Documentation
+
+- Various improvements (#663, @maelle; #667).
+
+## Internal
+
+- Fix warning about `yyget_leng()` returning wrong type when using LTO (#676).
+
+- Don't mention C++11 or C++17 for best compatibility with both newest R and older compilers, while still requesting a C++ compiler for linking.
+
+- Don't ignore `build/` when building the package because the vignette index is built there.
+
+- Skip plot test entirely on R-devel.
+
+- Avoid submodules for building igraph (#674).
+
+- Makevars cleanup (#671).
+
+- Add Zenodo configuration file.
+
+
+# igraph 1.4.0
+
+## Breaking changes
+
+ - Breaking change: Allow change of attribute type when setting attribute for all vertices or edges; only attributes of length 1 or the length of the target set allowed (#633).
+
+
+## Added
+
+ - `tkplot()` gained a `palette` argument and it is now using the same palette as `plot()` by default, for sake of consistency.
+ - `plot.igraph()` gained a `loop.size` argument that can be used to scale the common radius of the loop edges.
+
+## Fixed
+
+ - The default maximum number of iterations for ARPACK has been increased to 3000 to match that of the igraph C core.
+ - Rare convergence problems have been corrected in `cluster_leading_eigen()`.
+ - All ARPACK-based functions now respect random seeds set in R when generating a random starting vector.
+ - `igraph_version()` returned an invalid value in 1.3.4, this is now corrected.
+ - The value of `par(xpd=...)` is now restored after plotting a graph.
+ - Fixed a bug in `as.dendrogram.communities()` for large dendrograms, thanks
+   to @pkharchenko (see PR #292).
+ - Fixed two bugs in `graph_from_incidence_matrix()` that prevented the creation of directed graphs with `mode="all"` from dense or sparse matrices.
+ - `dfs()` accidentally returned zero-based root vertex indices in the result object; this is now fixed and the indices are now 1-based.
+ - `as_graphnel()` does not duplicate loop edges any more.
+ - `as_graphnel()` now checks that the input graph has no multi-edges. Multi-edges are not supported by the graphNEL class.
+ - `convex_hull()` now returns the vertices of the convex hull with 1-based indexing.
+ - Some `rgl.*()` function calls in the codebase were replaced with equivalent `*3d()` function calls in preparation for upcoming deprecations in `rgl` (see PR #619)
+ - `plot.igraph()` does not use the `frame=...` partial argument any more when calling `plot.default()`. The default `NULL` value of `frame.plot` is now also handled correctly.
+ - `hub_score()` and `authority_score()` considered self-loops only once on the diagonal of the adjacency matrix of undirected graphs, thus the result was not identical to that obtained by `eigen_centrality()` on loopy undirected graphs. This is now corrected.
+ - `distances()` no longer ignores the `mode` parameter when `algorithm='johnson'`.
+
+## Deprecated
+
+ - `automorphisms()` was renamed to `count_automorphisms()`; the old name is still available, but it is deprecated.
+
+## Other
+
+ - Documentation improvements.
+ - The Github repository was now moved to a single-branch setup where the package can be built from the `main` branch directly.
+ - Added igraph extended tutorial as an R vignette (#587).
+ - igraph now has a homepage based on `pkgdown` thanks to @maelle (see #645). This will eventually become the official homepage.
+
 # igraph 1.3.5
 
 Added:
@@ -1451,5 +1705,3 @@ After about a year of development this is the first "official" release
 of the igraph library. This release should be considered as beta
 software, but it should be useful in general. Please send your
 questions and comments.
-
-

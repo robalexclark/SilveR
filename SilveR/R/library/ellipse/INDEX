@@ -12,6 +12,5 @@ ellipse.nls             Outline an approximate pairwise confidence
 ellipse.profile         Pairwise profile sketch
 ellipse.profile.glm     Pairwise profile sketch for GLM profiles
 ellipse.profile.nls     Pairwise profile sketch
-pairs                   Scatterplot Matrix
-pairs.profile           Profile pairs
+pairs_profile           Profile pairs
 plotcorr                Plot correlation matrix ellipses

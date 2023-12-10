@@ -50,14 +50,16 @@ inheritance-expectations
                         Does code return an object inheriting from the
                         expected base type, S3 class, or S4 class?
 is_testing              Determine testing status
+local_mocked_bindings   Mocking tools
 local_test_context      Locally set options for maximal test
                         reproducibility
 logical-expectations    Does code return 'TRUE' or 'FALSE'?
+set_state_inspector     State inspected
 skip                    Skip a test
 snapshot_accept         Snapshot management
 teardown_env            Run code after all test files
-test_file               Run all tests in a single file
+test_file               Run tests in a single file
 test_package            Run all tests in a package
-test_path               Locate file in testing directory.
+test_path               Locate a file in the testing directory
 test_that               Run a test
 use_catch               Use Catch for C++ Unit Testing

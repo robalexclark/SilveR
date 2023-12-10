@@ -37,7 +37,7 @@ importMethodsFrom("Matrix", as.matrix, as.vector, coerce,
                   ## Group Methods
                   "Arith", "Compare", "Logic", "Math", "Math2", "Ops", "Summary",
                   t, "%*%", crossprod, tcrossprod,
-                  Cholesky, chol, chol2inv,
+                  Cholesky, # chol, chol2inv,
                   solve,
                   summary, print,
 		  update # notably the "CHMfactor" one
@@ -55,7 +55,7 @@ importClassesFrom("Matrix",
 
 importFrom("Matrix",
 	   .solve.dgC.chol, .solve.dgC.qr,
-	   Diagonal, isLDL, sparse.model.matrix)
+	   Diagonal, invertPerm, isLDL, sparse.model.matrix)
 
 
 ## Generics and functions defined in this package -------------------------

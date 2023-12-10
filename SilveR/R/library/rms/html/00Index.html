@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: Regression Modeling Strategies</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;rms&rsquo; version 6.3-0</h2>
+</div><h2>Documentation for package &lsquo;rms&rsquo; version 6.7-1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
@@ -43,24 +43,25 @@
 <a href="#U">U</a>
 <a href="#V">V</a>
 <a href="#W">W</a>
+<a href="#X">X</a>
 <a href="#misc">misc</a>
 </p>
 
 
-<h2><a name="A">-- A --</a></h2>
+<h2><a id="A">-- A --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="rmsMisc.html">AIC.rms</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="anova.rms.html">anova.rms</a></td>
-<td>Analysis of Variance (Wald and F Statistics)</td></tr>
+<td>Analysis of Variance (Wald, LR, and F Statistics)</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">asis</a></td>
 <td>rms Special Transformation Functions</td></tr>
 </table>
 
-<h2><a name="B">-- B --</a></h2>
+<h2><a id="B">-- B --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="bj.html">bj</a></td>
 <td>Buckley-James Multiple Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="bj.html">bj.fit</a></td>
@@ -79,9 +80,9 @@
 <td>3-D Plots Showing Effects of Two Continuous Predictors in a Regression Model Fit</td></tr>
 </table>
 
-<h2><a name="C">-- C --</a></h2>
+<h2><a id="C">-- C --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="calibrate.html">calibrate</a></td>
 <td>Resampling Model Calibration</td></tr>
 <tr><td style="width: 25%;"><a href="calibrate.html">calibrate.cph</a></td>
@@ -110,9 +111,9 @@
 <td>Continuation Ratio Ordinal Logistic Setup</td></tr>
 </table>
 
-<h2><a name="D">-- D --</a></h2>
+<h2><a id="D">-- D --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="datadist.html">datadist</a></td>
 <td>Distribution Summaries for Predictor Variables</td></tr>
 <tr><td style="width: 25%;"><a href="rms.html">Design</a></td>
@@ -123,9 +124,9 @@
 <td>Validation of a Fitted Cox or Parametric Survival Model's Indexes of Fit</td></tr>
 </table>
 
-<h2><a name="E">-- E --</a></h2>
+<h2><a id="E">-- E --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="pentrace.html">effective.df</a></td>
 <td>Trace AIC and BIC vs. Penalty</td></tr>
 <tr><td style="width: 25%;"><a href="ExProb.html">ExProb</a></td>
@@ -134,9 +135,9 @@
 <td>Function Generator For Exceedance Probabilities</td></tr>
 </table>
 
-<h2><a name="F">-- F --</a></h2>
+<h2><a id="F">-- F --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="fastbw.html">fastbw</a></td>
 <td>Fast Backward Variable Selection</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">formatNP</a></td>
@@ -147,15 +148,17 @@
 <td>Compose an S Function to Compute X beta from a Fit</td></tr>
 </table>
 
-<h2><a name="G">-- G --</a></h2>
+<h2><a id="G">-- G --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="gendata.html">gendata</a></td>
 <td>Generate Data Frame with Predictor Combinations</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">Getlim</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">Getlimi</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
+<tr><td style="width: 25%;"><a href="importexport.html">ggplot</a></td>
+<td>Exported Functions That Were Imported From Other Packages</td></tr>
 <tr><td style="width: 25%;"><a href="ggplot.Predict.html">ggplot.Predict</a></td>
 <td>Plot Effects of Variables Estimated by a Regression Model Fit Using ggplot2</td></tr>
 <tr><td style="width: 25%;"><a href="gIndex.html">gIndex</a></td>
@@ -170,9 +173,9 @@
 <td>rms Special Transformation Functions</td></tr>
 </table>
 
-<h2><a name="H">-- H --</a></h2>
+<h2><a id="H">-- H --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="psm.html">Hazard</a></td>
 <td>Parametric Survival Model</td></tr>
 <tr><td style="width: 25%;"><a href="psm.html">Hazard.psm</a></td>
@@ -182,7 +185,7 @@
 <tr><td style="width: 25%;"><a href="bootcov.html">histdensity</a></td>
 <td>Bootstrap Covariance and Distribution for Regression Coefficients</td></tr>
 <tr><td style="width: 25%;"><a href="anova.rms.html">html.anova.rms</a></td>
-<td>Analysis of Variance (Wald and F Statistics)</td></tr>
+<td>Analysis of Variance (Wald, LR, and F Statistics)</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">html.naprint.delete</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="summary.rms.html">html.summary.rms</a></td>
@@ -191,9 +194,9 @@
 <td>Resampling Validation of a Fitted Model's Indexes of Fit</td></tr>
 </table>
 
-<h2><a name="I">-- I --</a></h2>
+<h2><a id="I">-- I --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="ie.setup.html">ie.setup</a></td>
 <td>Intervening Event Setup</td></tr>
 <tr><td style="width: 25%;"><a href="impactPO.html">impactPO</a></td>
@@ -202,11 +205,11 @@
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 </table>
 
-<h2><a name="L">-- L --</a></h2>
+<h2><a id="L">-- L --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="anova.rms.html">latex.anova.rms</a></td>
-<td>Analysis of Variance (Wald and F Statistics)</td></tr>
+<td>Analysis of Variance (Wald, LR, and F Statistics)</td></tr>
 <tr><td style="width: 25%;"><a href="latexrms.html">latex.bj</a></td>
 <td>LaTeX Representation of a Fitted Model</td></tr>
 <tr><td style="width: 25%;"><a href="latex.cph.html">latex.cph</a></td>
@@ -253,13 +256,17 @@
 <td>lrm.fit.bare</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">lrtest</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
+<tr><td style="width: 25%;"><a href="LRupdate.html">LRupdate</a></td>
+<td>LRupdate</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">lsp</a></td>
 <td>rms Special Transformation Functions</td></tr>
 </table>
 
-<h2><a name="M">-- M --</a></h2>
+<h2><a id="M">-- M --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="rms.trans.html">makepredictcall.rms</a></td>
+<td>rms Special Transformation Functions</td></tr>
 <tr><td style="width: 25%;"><a href="matinv.html">matinv</a></td>
 <td>Total and Partial Matrix Inversion using Gauss-Jordan Sweep Operator</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">matrx</a></td>
@@ -276,9 +283,9 @@
 <td>rms Methods and Generic Functions</td></tr>
 </table>
 
-<h2><a name="N">-- N --</a></h2>
+<h2><a id="N">-- N --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="rmsMisc.html">Newlabels</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">Newlabels.rms</a></td>
@@ -295,9 +302,9 @@
 <td>Nonparametric Survival Estimates for Censored Data</td></tr>
 </table>
 
-<h2><a name="O">-- O --</a></h2>
+<h2><a id="O">-- O --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="ols.html">ols</a></td>
 <td>Linear Model Estimation Using Ordinary Least Squares</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">oos.loglik</a></td>
@@ -318,9 +325,9 @@
 <td>Ordinal Regression Model Fitter</td></tr>
 </table>
 
-<h2><a name="P">-- P --</a></h2>
+<h2><a id="P">-- P --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="plot.Predict.html">pantext</a></td>
 <td>Plot Effects of Variables Estimated by a Regression Model Fit</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">param.order</a></td>
@@ -336,7 +343,7 @@
 <tr><td style="width: 25%;"><a href="Function.html">perlcode</a></td>
 <td>Compose an S Function to Compute X beta from a Fit</td></tr>
 <tr><td style="width: 25%;"><a href="anova.rms.html">plot.anova.rms</a></td>
-<td>Analysis of Variance (Wald and F Statistics)</td></tr>
+<td>Analysis of Variance (Wald, LR, and F Statistics)</td></tr>
 <tr><td style="width: 25%;"><a href="calibrate.html">plot.calibrate</a></td>
 <td>Resampling Model Calibration</td></tr>
 <tr><td style="width: 25%;"><a href="calibrate.html">plot.calibrate.default</a></td>
@@ -404,7 +411,7 @@
 <tr><td style="width: 25%;"><a href="predictrms.html">predictrms</a></td>
 <td>Predicted Values from Model Fit</td></tr>
 <tr><td style="width: 25%;"><a href="anova.rms.html">print.anova.rms</a></td>
-<td>Analysis of Variance (Wald and F Statistics)</td></tr>
+<td>Analysis of Variance (Wald, LR, and F Statistics)</td></tr>
 <tr><td style="width: 25%;"><a href="bj.html">print.bj</a></td>
 <td>Buckley-James Multiple Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="calibrate.html">print.calibrate</a></td>
@@ -463,17 +470,23 @@
 <td>Resampling Validation of a Fitted Model's Indexes of Fit</td></tr>
 <tr><td style="width: 25%;"><a href="validate.rpart.html">print.validate.rpart</a></td>
 <td>Dxy and Mean Squared Error by Cross-validating a Tree Sequence</td></tr>
+<tr><td style="width: 25%;"><a href="prmiInfo.html">prmiInfo</a></td>
+<td>prmiInfo</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">prModFit</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
+<tr><td style="width: 25%;"><a href="processMI.html">processMI</a></td>
+<td>processMI</td></tr>
+<tr><td style="width: 25%;"><a href="processMI.fit.mult.impute.html">processMI.fit.mult.impute</a></td>
+<td>processMI.fit.mult.impute</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">prStats</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="psm.html">psm</a></td>
 <td>Parametric Survival Model</td></tr>
 </table>
 
-<h2><a name="Q">-- Q --</a></h2>
+<h2><a id="Q">-- Q --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="cph.html">Quantile.cph</a></td>
 <td>Cox Proportional Hazards Model and Extensions</td></tr>
 <tr><td style="width: 25%;"><a href="orm.html">Quantile.orm</a></td>
@@ -482,9 +495,9 @@
 <td>Parametric Survival Model</td></tr>
 </table>
 
-<h2><a name="R">-- R --</a></h2>
+<h2><a id="R">-- R --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="Predict.html">rbind.Predict</a></td>
 <td>Compute Predicted Values and Confidence Limits</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">rcs</a></td>
@@ -499,6 +512,8 @@
 <td>Buckley-James Multiple Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="residuals.cph.html">residuals.cph</a></td>
 <td>Residuals for a cph Fit</td></tr>
+<tr><td style="width: 25%;"><a href="residuals.Glm.html">residuals.Glm</a></td>
+<td>residuals.Glm</td></tr>
 <tr><td style="width: 25%;"><a href="residuals.lrm.html">residuals.lrm</a></td>
 <td>Residuals from an 'lrm' or 'orm' Fit</td></tr>
 <tr><td style="width: 25%;"><a href="residuals.ols.html">residuals.ols</a></td>
@@ -527,9 +542,9 @@
 <td>rms Package Interface to quantreg Package</td></tr>
 </table>
 
-<h2><a name="S">-- S --</a></h2>
+<h2><a id="S">-- S --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="Function.html">sascode</a></td>
 <td>Compose an S Function to Compute X beta from a Fit</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">scored</a></td>
@@ -548,6 +563,8 @@
 <td>rms Special Transformation Functions</td></tr>
 <tr><td style="width: 25%;"><a href="summary.rms.html">summary.rms</a></td>
 <td>Summary of Effects in Model</td></tr>
+<tr><td style="width: 25%;"><a href="importexport.html">Surv</a></td>
+<td>Exported Functions That Were Imported From Other Packages</td></tr>
 <tr><td style="width: 25%;"><a href="survplot.html">survdiffplot</a></td>
 <td>Plot Survival Curves and Hazard Functions</td></tr>
 <tr><td style="width: 25%;"><a href="survest.cph.html">survest</a></td>
@@ -580,16 +597,16 @@
 <td>Plot Survival Curves and Hazard Functions</td></tr>
 </table>
 
-<h2><a name="U">-- U --</a></h2>
+<h2><a id="U">-- U --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="rmsMisc.html">univarLR</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 </table>
 
-<h2><a name="V">-- V --</a></h2>
+<h2><a id="V">-- V --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="val.prob.html">val.prob</a></td>
 <td>Validate Predicted Probabilities</td></tr>
 <tr><td style="width: 25%;"><a href="val.surv.html">val.surv</a></td>
@@ -634,16 +651,23 @@
 <td>Variance Inflation Factors</td></tr>
 </table>
 
-<h2><a name="W">-- W --</a></h2>
+<h2><a id="W">-- W --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="which.influence.html">which.influence</a></td>
 <td>Which Observations are Influential</td></tr>
 </table>
 
-<h2><a name="misc">-- misc --</a></h2>
+<h2><a id="X">-- X --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="Xcontrast.html">Xcontrast</a></td>
+<td>Xcontrast</td></tr>
+</table>
+
+<h2><a id="misc">-- misc --</a></h2>
+
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="rms.trans.html">%ia%</a></td>
 <td>rms Special Transformation Functions</td></tr>
 </table>

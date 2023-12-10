@@ -47,6 +47,7 @@ ROI_registered_solver_control
 ROI_registered_solvers
                         Solver Tools
 ROI_registered_writer   Write Optimization Problems
+ROI_require_solver      Require Solver
 ROI_solve               Solve an Optimization Problem
 ROI_solver_signature    Obtain Solver Signature
 ROI_write               Write Optimization Problems

@@ -24,5 +24,5 @@ Author: Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>),
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Repository: CRAN
 Date/Publication: 2021-11-30 13:10:02 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:13:58 UTC; windows
-Archs: i386, x64
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:43:24 UTC; windows
+Archs: x64

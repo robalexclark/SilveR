@@ -42,8 +42,9 @@ glance(tt)
 glance(wt)
 
 ## -----------------------------------------------------------------------------
-chit <- chisq.test(xtabs(Freq ~ Sex + Class, 
-                         data = as.data.frame(Titanic)))
+chit <- chisq.test(xtabs(Freq ~ Sex + Class,
+  data = as.data.frame(Titanic)
+))
 tidy(chit)
 augment(chit)
 

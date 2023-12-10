@@ -249,7 +249,7 @@ GeomSimplePolygon <- ggproto("GeomPolygon", Geom,
   required_aes = c("x", "y"),
   
   default_aes = aes(
-    colour = NA, fill = "grey20", size = 0.5,
+    colour = NA, fill = "grey20", linewidth = 0.5,
     linetype = 1, alpha = 1
   ),
 
@@ -269,7 +269,7 @@ GeomSimplePolygon <- ggproto("GeomPolygon", Geom,
       gp = grid::gpar(
         col = first_row$colour,
         fill = scales::alpha(first_row$fill, first_row$alpha),
-        lwd = first_row$size * .pt,
+        lwd = first_row$linewidth * .pt,
         lty = first_row$linetype
       )
     )
@@ -291,7 +291,7 @@ ggplot(mpg, aes(displ, hwy)) +
 
 ## -----------------------------------------------------------------------------
 GeomPolygonHollow <- ggproto("GeomPolygonHollow", GeomPolygon,
-  default_aes = aes(colour = "black", fill = NA, size = 0.5, linetype = 1,
+  default_aes = aes(colour = "black", fill = NA, linewidth = 0.5, linetype = 1,
     alpha = NA)
   )
 geom_chull <- function(mapping = NULL, data = NULL, 

@@ -1,7 +1,6 @@
 +.gg                    Add components to a plot
 CoordSf                 Visualise sf objects
 aes                     Construct aesthetic mappings
-aes_                    Define aesthetic mappings programmatically
 aes_colour_fill_alpha   Colour related aesthetics: colour, fill, and
                         alpha
 aes_eval                Control aesthetic evaluation
@@ -103,7 +102,7 @@ position_jitterdodge    Simultaneously dodge and jitter
 position_nudge          Nudge points a fixed distance
 position_stack          Stack overlapping objects on top of each
                         another
-presidential            Terms of 11 presidents from Eisenhower to Obama
+presidential            Terms of 12 presidents from Eisenhower to Trump
 print.ggplot            Explicitly draw plot
 print.ggproto           Format or print a ggproto object
 qplot                   Quick plot
@@ -123,6 +122,7 @@ scale_colour_steps      Binned gradient colour scales
 scale_colour_viridis_d
                         Viridis colour scales from viridisLite
 scale_linetype          Scale for line patterns
+scale_linewidth         Scales for line width
 scale_shape             Scales for shapes, aka glyphs
 scale_size              Scales for area or radius
 scale_x_binned          Positional scales for binning continuous data

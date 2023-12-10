@@ -1,3 +1,5 @@
+message("Testing bpiterate")
+
 quiet <- suppressWarnings
 
 .lazyCount <- function(count) {
@@ -42,17 +44,17 @@ test_bpiterate_Params <- function()
         checkIdentical(expected, res)
     }
 
-    doParallel::registerDoParallel(2)
-    params <- list(dopar=DoparParam(),
-                   batchjobs=BatchJobsParam(2, progressbar=FALSE))
+    cl <- parallel::makeCluster(2)
+    doParallel::registerDoParallel(cl)
+    params <- list(dopar=DoparParam())
     for (p in params) {
         ITER <- .lazyCount(length(x))
         checkException(bpiterate(ITER, FUN, BPPARAM=p), silent=TRUE)
     }
 
     ## clean up
-    env <- foreach:::.foreachGlobals
-    rm(list=ls(name=env), pos=env)
+    foreach::registerDoSEQ()
+    parallel::stopCluster(cl)
     closeAllConnections()
     TRUE
 }
@@ -118,7 +120,10 @@ test_bpiterate_REDUCE_SerialParam <- function() {
 
     ## REDUCE missing, concatenate
     ITER <- .lazyCount(0)
-    res <- bpiterate(ITER, FUN, BPPARAM=p)
+    res <- suppressWarnings({
+        ## warning: first invocation of 'ITER()' returned NULL
+        bpiterate(ITER, FUN, BPPARAM=p)
+    })
     checkIdentical(list(), res)
 
     ITER <- .lazyCount(1)
@@ -131,8 +136,11 @@ test_bpiterate_REDUCE_SerialParam <- function() {
 
     ## REDUCE == `+`
     ITER <- .lazyCount(0)
-    res <- bpiterate(ITER, FUN, BPPARAM=p, REDUCE=`+`)
-    checkIdentical(list(), res)
+    res <- suppressWarnings({
+        ## warning: first invocation of 'ITER()' returned NULL
+        res <- bpiterate(ITER, FUN, BPPARAM=p, REDUCE=`+`)
+    })
+    checkIdentical(NULL, res)
 
     ITER <- .lazyCount(1)
     res <- bpiterate(ITER, FUN, BPPARAM=p, REDUCE=`+`)

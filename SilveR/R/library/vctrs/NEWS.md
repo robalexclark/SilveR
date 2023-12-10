@@ -1,3 +1,115 @@
+# vctrs 0.6.4
+
+* Fixed a performance issue with `vec_c()` and ALTREP vectors (in particular,
+  the new ALTREP list vectors in R-devel) (#1884).
+
+* Fixed an issue with complex vector tests related to changes in R-devel
+  (#1883).
+
+* Added a class to the `vec_locate_matches()` error that is thrown when an
+  overflow would otherwise occur (#1845).
+
+* Fixed an issue with `vec_rank()` and 0-column data frames (#1863).
+
+# vctrs 0.6.3
+
+* Fixed an issue where certain ALTREP row names were being materialized when
+  passed to `new_data_frame()`. We've fixed this by removing a safeguard in
+  `new_data_frame()` that performed a compatibility check when both `n` and
+  `row.names` were provided. Because this is a low level function designed for
+  performance, it is up to the caller to ensure these inputs are compatible
+  (tidyverse/dplyr#6596).
+
+* Fixed an issue where `vec_set_*()` used with data frames could accidentally
+  return an object with the type of the proxy rather than the type of the
+  original inputs (#1837).
+
+* Fixed a rare `vec_locate_matches()` bug that could occur when using a max/min
+  `filter` (tidyverse/dplyr#6835).
+
+# vctrs 0.6.2
+
+* Fixed conditional S3 registration to avoid a CRAN check NOTE that appears in
+  R >=4.3.0 (#1832).
+
+* Fixed tests to maintain compatibility with the next version of waldo (#1829).
+
+# vctrs 0.6.1
+
+* Fixed a test related to `c.sfc()` changes in sf 1.0-10 (#1817).
+
+# vctrs 0.6.0
+
+* New `vec_run_sizes()` for computing the size of each run within a vector. It
+  is identical to the `times` column from `vec_unrep()`, but is faster if you
+  don't need the run key (#1210).
+
+* New `sizes` argument to `vec_chop()` which allows you to partition a vector
+  using an integer vector describing the size of each expected slice. It is
+  particularly useful in combination with `vec_run_sizes()` and `list_sizes()`
+  (#1210, #1598).
+
+* New `obj_is_vector()`, `obj_check_vector()`, and `vec_check_size()` validation
+  helpers. We believe these are a better approach to vector validation than
+  `vec_assert()` and `vec_is()`, which have been marked as questioning because
+  the semantics of their `ptype` arguments are hard to define and can often be
+  replaced by `vec_cast()` or a type predicate function like
+  `rlang::is_logical()` (#1784).
+
+* `vec_is_list()` and `vec_check_list()` have been renamed to `obj_is_list()`
+  and `obj_check_list()`, in line with the new `obj_is_vector()` helper. The
+  old functions have been silently deprecated, but an official deprecation
+  process will start in the next vctrs release (#1803).
+
+* `vec_locate_matches()` gains a new `relationship` argument that holistically
+  handles multiple matches between `needles` and `haystack`. In particular,
+  `relationship = "many-to-one"` replaces `multiple = "error"` and
+  `multiple = "warning"`, which have been removed from the documentation and
+  silently soft-deprecated. Official deprecation for those options will start in
+  a future release (#1791).
+
+* `vec_locate_matches()` has changed its default `needles_arg` and
+  `haystack_arg` values from `""` to `"needles"` and `"haystack"`, respectively.
+  This generally generates more informative error messages (#1792).
+
+* `vec_chop()` has gained empty `...` between `x` and the optional `indices`
+  argument. For backwards compatibility, supplying `vec_chop(x, indices)`
+  without naming `indices` still silently works, but will be deprecated in a
+  future release (#1813).
+
+* `vec_slice()` has gained an `error_call` argument (#1785).
+
+* The `numeric_version` type from base R is now better supported in equality,
+  comparison, and order based operations (tidyverse/dplyr#6680).
+
+* R >=3.5.0 is now explicitly required. This is in line with the tidyverse
+  policy of supporting the [5 most recent versions of
+  R](https://www.tidyverse.org/blog/2019/04/r-version-support/).
+
+# vctrs 0.5.2
+
+* New `vec_expand_grid()`, which is a lower level helper that is similar to
+  `tidyr::expand_grid()` (#1325).
+
+* New `vec_set_intersect()`, `vec_set_difference()`, `vec_set_union()`, and
+  `vec_set_symmetric_difference()` which compute set operations like
+  `intersect()`, `setdiff()`, and `union()`, but the vctrs variants don't strip
+  attributes and work with data frames (#1755, #1765).
+
+* `vec_identify_runs()` is now faster when used with data frames (#1684).
+
+* The maximum load factor of the internal dictionary was reduced from 77% to
+  50%, which improves performance of functions like `vec_match()`,
+  `vec_set_intersect()`, and `vec_unique()` in some cases (#1760).
+
+* Fixed a bug with the internal `vec_order_radix()` function related to matrix
+  columns (#1753).
+
+# vctrs 0.5.1
+
+* Fix for CRAN checks.
+
+
 # vctrs 0.5.0
 
 * vctrs is now compliant with `-Wstrict-prototypes` as requested by CRAN
@@ -45,7 +157,7 @@
   like specifying `repair = "unique", quiet = TRUE`. When the `"*_quiet"`
   options are used, any setting of `quiet` is silently overridden (@jennybc,
   #1629).
-  
+
   `"unique_quiet"` and `"universal_quiet"` are also newly accepted for the name
   repair argument of several other functions that do not expose a `quiet`
   argument: `data_frame()`, `df_list()`, `vec_c()`, `list_unchop()`,
@@ -363,11 +475,11 @@
   to implement, but if your class has a static prototype, you might consider
   implementing a custom `vec_ptype()` method that returns a constant to
   improve performance in some cases (such as common type imputation).
-  
+
 * New `vec_detect_complete()`, inspired by `stats::complete.cases()`. For most
   vectors, this is identical to `!vec_equal_na()`. For data frames and
   matrices, this detects rows that only contain non-missing values.
-  
+
 * `vec_order()` can now order complex vectors (#1330).
 
 * Removed dependency on digest in favor of `rlang::hash()`.
@@ -376,7 +488,7 @@
   when used as a data frame column (#1318).
 
 * `register_s3()` is now licensed with the "unlicense" which makes it very
-  clear that it's fine to copy and paste into your own package 
+  clear that it's fine to copy and paste into your own package
   (@maxheld83, #1254).
 
 # vctrs 0.3.6

@@ -15,6 +15,8 @@ executeCommand          Execute Command
 file-dialogs            Select a file / folder
 filesPaneNavigate       Navigate to a Directory in the Files Pane
 getActiveProject        Retrieve path to active RStudio project
+getDelegatedAzureToken
+                        OAuth2 Tokens for Delegated Azure Resources
 getRStudioPackageDependencies
                         Get RStudio Package Dependencies
 getThemeInfo            Retrieve Themes

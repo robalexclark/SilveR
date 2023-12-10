@@ -1,6 +1,6 @@
 
 ##  Copyright (C) 2009 - 2020  Dirk Eddelbuettel and Romain Francois
-##  Copyright (C) 2021         Dirk Eddelbuettel, Romain Francois and Iñaki Ucar
+##  Copyright (C) 2021 - 2023  Dirk Eddelbuettel, Romain Francois and Iñaki Ucar
 ##
 ##  This file is part of Rcpp.
 ##
@@ -19,6 +19,9 @@
 
 if (Sys.getenv("RunAllRcppTests") != "yes") exit_file("Set 'RunAllRcppTests' to 'yes' to run.")
 
+## used below
+.onWindows <- .Platform$OS.type == "windows"
+
 Rcpp::sourceCpp("cpp/XPtr.cpp")
 
 #    test.XPtr <- function(){
@@ -36,6 +39,8 @@ expect_true(xptr_release(xp), info = "check release of external pointer")
 expect_true(xptr_access_released(xp), info = "check access of released external pointer")
 
 expect_error(xptr_use_released(xp), info = "check exception on use of released external pointer")
+
+if (.onWindows) exit_file("Skipping remainder of file on Windows")
 
 # test finalizeOnExit default depending on RCPP_USE_FINALIZE_ON_EXIT
 file_path <- tempfile(fileext=".cpp")
@@ -60,9 +65,9 @@ void test() {
 '
 
 writeLines(code, file_path)
-expect_silent(system(cmd), info="check that finalizer is NOT called on exit")
+expect_equal(system(cmd, intern=TRUE), character(0))
 
 if (packageVersion("tinytest") < "1.2.0") exit_file("Skip remainder on older test platform")
 
 writeLines(c("#define RCPP_USE_FINALIZE_ON_EXIT", code), file_path)
-expect_stdout(system(cmd), info="check that finalizer is called on exit")
+expect_equal(system(cmd, intern=TRUE), "custom_finalizer was called")

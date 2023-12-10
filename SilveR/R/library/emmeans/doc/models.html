@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.8.2" />
+<meta name="author" content="emmeans package, Version 1.8.9" />
 
 
 <title>Models supported by emmeans</title>
@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 
 <h1 class="title toc-ignore">Models supported by emmeans</h1>
-<h4 class="author">emmeans package, Version 1.8.2</h4>
+<h4 class="author">emmeans package, Version 1.8.9</h4>
 
 
 
@@ -119,7 +119,8 @@ links to those groups for more information.</p>
 <td align="left">averaging</td>
 <td align="left">MuMIn</td>
 <td align="center"><a href="#I">I</a></td>
-<td align="left"></td>
+<td align="left"><code>formula</code>, <code>subset</code> (see
+details)</td>
 </tr>
 <tr class="even">
 <td align="left">betareg</td>
@@ -266,8 +267,7 @@ matrix</td>
 <td align="left">glmmTMB</td>
 <td align="left">glmmTMB</td>
 <td align="center"><a href="#P">P</a></td>
-<td align="left">Supported in <strong>glmmTMB</strong> package (dev.
-version only?)</td>
+<td align="left">Supported in <strong>glmmTMB</strong> package</td>
 </tr>
 <tr class="even">
 <td align="left">gls</td>
@@ -339,37 +339,49 @@ supported</td>
 <td align="left"><code>emm_options(lmer.df =, pbkrtest.limit =, disable.pbkrtest =)</code></td>
 </tr>
 <tr class="odd">
+<td align="left">logistf</td>
+<td align="left">glmmTMB</td>
+<td align="center"><a href="#P">P</a></td>
+<td align="left">Supported in <strong>logistf</strong> package</td>
+</tr>
+<tr class="even">
 <td align="left">lqm,lqmm</td>
 <td align="left">lqmm</td>
 <td align="center"><a href="#Q">Q</a></td>
 <td align="left"><code>tau = &quot;0.5&quot;</code> (must match an entry in
 <code>object$tau</code>)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Optional: <code>method</code>, <code>R</code>,
 <code>seed</code>, <code>startQR</code> (must be fully spelled-out)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">manova</td>
 <td align="left">stats</td>
 <td align="center"><a href="#M">M</a></td>
 <td align="left"><code>mult.name</code>, <code>mult.levs</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">maov</td>
 <td align="left">stats</td>
 <td align="center"><a href="#M">M</a></td>
 <td align="left"><code>mult.name</code>, <code>mult.levs</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mblogit</td>
 <td align="left">mclogit</td>
-<td align="center"><a href="#P">P</a></td>
-<td align="left">Supported in <strong>mclogit</strong> (overrides
-previous minimal support here)</td>
+<td align="center"><a href="#N">N</a></td>
+<td align="left"><code>mode = c(&quot;prob&quot;, &quot;latent&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left">Always include response in specs for
+<code>emmeans()</code></td>
 </tr>
 <tr class="even">
 <td align="left">mcmc</td>
@@ -418,119 +430,125 @@ elements</td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
+<td align="left">mmrm</td>
+<td align="left">mmrm</td>
+<td align="center"><a href="#P">P</a></td>
+<td align="left">Supported in the <strong>mmrm</strong> package</td>
+</tr>
+<tr class="even">
 <td align="left">multinom</td>
 <td align="left">nnet</td>
 <td align="center"><a href="#N">N</a></td>
 <td align="left"><code>mode = c(&quot;prob&quot;, &quot;latent&quot;)</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Always include response in specs for
 <code>emmeans()</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">nauf</td>
 <td align="left">nauf.<em>xxx</em></td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>nauf</strong> package</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">nlme</td>
 <td align="left">nlme</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left">Supports fixed part. Requires
 <code>param = &quot;&lt;name&gt;&quot;</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">polr</td>
 <td align="left">MASS</td>
 <td align="center"><a href="#O">O</a></td>
 <td align="left"><code>mode = c(&quot;latent&quot;, &quot;linear.predictor&quot;, &quot;cum.prob&quot;,</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>&quot;exc.prob&quot;, &quot;prob&quot;, &quot;mean.class&quot;)</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rlm</td>
 <td align="left">MASS</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left">inherits <code>lm</code> support</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rms</td>
 <td align="left">rms</td>
 <td align="center"><a href="#O">O</a></td>
 <td align="left"><code>mode = (&quot;middle&quot;, &quot;latent&quot;, &quot;linear.predictor&quot;,</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>&quot;cum.prob&quot;, &quot;exc.prob&quot;, &quot;prob&quot;, &quot;mean.class&quot;)</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rq,rqs</td>
 <td align="left">quantreg</td>
 <td align="center"><a href="#Q">Q</a></td>
 <td align="left"><code>tau = &quot;0.5&quot;</code> (must match an entry in
 <code>object$tau</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Optional: <code>se</code>, <code>R</code>,
 <code>bsmethod</code>, etc.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rlmerMod</td>
 <td align="left">robustlmm</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>robustlmm</strong> package</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rsm</td>
 <td align="left">rsm</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>rsm</strong> package</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">stanreg</td>
 <td align="left">rstanarm</td>
 <td align="center"><a href="#S">S</a></td>
 <td align="left">Args for <code>stanreg_</code><em>xxx</em> similar to
 those for <em>xxx</em></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">survreg</td>
 <td align="left">survival</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">svyglm</td>
 <td align="left">survey</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">svyolr</td>
 <td align="left">survey</td>
 <td align="center"><a href="#O">O</a></td>
 <td align="left">Piggybacks on <code>polr</code> support</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">zeroinfl</td>
 <td align="left">pscl</td>
 <td align="center"><a href="#C">C</a></td>
 <td align="left"><code>mode = c(&quot;response&quot;, &quot;count&quot;, &quot;zero&quot;, &quot;prob0&quot;)</code>,</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
@@ -665,7 +683,10 @@ contains a smoothing method like <code>pb()</code>.</p>
 different predictor subsets or imputed values. The <code>bhat</code> and
 <code>V</code> slots are obtained via averaging and, in the case of
 multiple imputation, adding a multiple of the between-imputation
-covariance per Rubin’s rules.</p>
+covariance per Rubin’s rules. In the case of <code>mira</code> models
+with model classes not supported by <strong>emmeans</strong>, <a href="https://github.com/rvlenth/emmeans/issues/446">GitHub issue
+#446</a> includes a function <code>pool_estimates_for_qdrg()</code> that
+may be useful for obtaining results via <code>qdrg()</code>.</p>
 <p>Support for <code>MuMIn::averaging</code> objects may be somewhat
 dodgy, as it is not clear that all supported model classes will work.
 The object <em>must</em> have a <code>&quot;modelList&quot;</code> attribute
@@ -678,6 +699,37 @@ averaging is supported; conditional averaging can result in
 non-positive-definite covariance matrices, and so cannot be considered.
 No estimability checking is done at present (not clear what we even mean
 by it).</p>
+<p>Also, be aware that support for <code>averaging</code> objects does
+<em>not</em> pay attention to the class of the models being averaged
+(nor any <code>emmeans</code> options associated with that class, such
+as alternative modes or d.f. methods), and that you can only obtain
+direct results of linear predictions or back-transformations thereof
+(<code>type = &quot;response&quot;</code>). It does <em>not</em> take apart
+multivariate models, nor multiple-intercept models (e.g. ordinal ones).
+(But keep reading…)</p>
+<p>Finally, note that special care is needed with models having multiple
+components (e.g. hurdle models), where there is essentially more than
+one set of coefficients. We can handle only one at a time. A
+<code>subset</code> argument must be provided to specify which
+coefficients to use; that can be a <em>named</em> vector of integers
+(where the names are the names of the actual model terms), or the
+special character values <code>&quot;prefix:pfx&quot;</code>, <code>&quot;pfx&quot;</code>,
+or <code>wrap:wrp</code> which picks out all coefficients whose names
+are prefixed by <code>pfx</code> (e.g., <code>pfxtrtB</code>) or wrapped
+by <code>wrp</code> (e.g., <code>wrp(trtB)</code>). A
+<code>formula</code> option is also available for specifying an
+appropriate formula other than <code>object$formula</code> when that is
+not suitable.</p>
+<p>In many cases (especially with multivariate or ordinal models), you
+are better off making a copy of one of the averaged models that has all
+required terms, and hacking that object by replacing the coefficients by
+<code>coef(object, full = TRUE)</code> and the covariance matrix by
+<code>vcov(object, full = TRUE)</code>. You need to be careful to match
+the names of the coefficients correctly, and to use the same indexes to
+permute the rows and columns of the covariance matrix. You then use the
+<code>emmeans</code> support, including any options available, for the
+class of the model object, rather than for class <code>averaging</code>.
+An example is given towards the end of <a href="https://github.com/rvlenth/emmeans/issues/442">Issue 442</a>.</p>
 </div>
 <div id="K" class="section level2">
 <h2>Group K – <code>gls</code> and <code>lme</code> models</h2>
@@ -788,15 +840,22 @@ factor levels via the function <code>base::expand.grid</code>.</p>
 <h2>N - Multinomial responses</h2>
 <!-- @index `mlm` models; Multinomial models -->
 <p>The reference grid includes a pseudo-factor with the same name and
-levels as the multinomial response. There is an optional
-<code>mode</code> argument which should match <code>&quot;prob&quot;</code> or
-<code>&quot;latent&quot;</code>. With <code>mode = &quot;prob&quot;</code>, the
-reference-grid predictions consist of the estimated multinomial
-probabilities. The <code>&quot;latent&quot;</code> mode returns the linear
-predictor, recentered so that it averages to zero over the levels of the
-response variable (similar to sum-to-zero contrasts). Thus each latent
-variable can be regarded as the log probability at that level minus the
-average log probability over all levels.</p>
+levels as the multinomial response. (If the response is an expression,
+the name of that pseudo-factor will be the first name in the expression;
+e.g., if the model formula is <code>cbind(col1, col2) ~ trt</code>, the
+grid factors will be <code>cbind</code> and <code>trt</code> and the
+levels of <code>cbind</code> will be <code>1</code> and <code>2</code>.)
+(You can change the assigned name for the multinomial response via the
+<code>mult.resp</code> argument.)</p>
+<p>There is an optional <code>mode</code> argument which should match
+<code>&quot;prob&quot;</code> or <code>&quot;latent&quot;</code>. With
+<code>mode = &quot;prob&quot;</code>, the reference-grid predictions consist of
+the estimated multinomial probabilities. The <code>&quot;latent&quot;</code> mode
+returns the linear predictor, recentered so that it averages to zero
+over the levels of the response variable (similar to sum-to-zero
+contrasts). Thus each latent variable can be regarded as the log
+probability at that level minus the average log probability over all
+levels.</p>
 <p>There are two optional arguments: <code>mode</code> and
 <code>rescale</code> (which defaults to <code>c(0, 1)</code>).</p>
 <p>Please note that, because the probabilities sum to 1 (and the latent

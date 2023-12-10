@@ -18,13 +18,13 @@ Description: Functions to assist in R programming, including:
   - calculate probabilities and generate random numbers from Dirichlet distributions
     ('rdirichlet', 'ddirichlet'),
   - apply a function over adjacent subsets of a vector ('running'),
-  - modify the TCP\_NODELAY ('de-Nagle') flag for socket objects,
+  - modify the TCP_NODELAY ('de-Nagle') flag for socket objects,
   - efficient 'rbind' of data frames, even if the column names don't match ('smartbind'),
   - generate significance stars from p-values ('stars.pval'),
   - convert characters to/from ASCII codes ('asc', 'chr'),
   - convert character vector to ASCII representation ('ASCIIfy'),
   - apply title capitalization rules to a character vector ('capwords').
-Version: 3.9.3
+Version: 3.9.4
 Authors@R: c(person("Ben","Bolker", role=c("aut", "cre"),
                      email = "bolker@mcmaster.ca",
 				    comment=c(ORCID="0000-0002-2127-0443")),
@@ -36,15 +36,15 @@ URL: https://github.com/r-gregmisc/gtools
 BugReports: https://github.com/r-gregmisc/gtools/issues
 Language: en-US
 Suggests: car, gplots, knitr, rstudioapi, SGP, taxize
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.2
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2022-07-08 23:06:49 UTC; bolker
+Packaged: 2022-11-25 18:52:42 UTC; bolker
 Author: Ben Bolker [aut, cre] (<https://orcid.org/0000-0002-2127-0443>),
   Gregory R. Warnes [aut],
   Thomas Lumley [aut]
 Maintainer: Ben Bolker <bolker@mcmaster.ca>
 Repository: CRAN
-Date/Publication: 2022-07-11 18:30:02 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-08-15 13:49:44 UTC; windows
-Archs: i386, x64
+Date/Publication: 2022-11-27 22:00:02 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:43:05 UTC; windows
+Archs: x64

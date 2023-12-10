@@ -45,6 +45,7 @@ env_get                 Get an object in an environment
 env_has                 Does an environment have or see bindings?
 env_inherits            Does environment inherit from another
                         environment?
+env_is_user_facing      Is frame environment user facing?
 env_name                Label of an environment
 env_names               Names and numbers of symbols bound in an
                         environment
@@ -92,7 +93,7 @@ is_symbol               Is object a symbol?
 is_true                 Is object identical to TRUE or FALSE?
 is_weakref              Is object a weak reference?
 last_error              Last 'abort()' error
-last_warnings           Display last warnings
+last_warnings           Display last messages and warnings
 list2                   Collect dynamic dots in a list
 local_bindings          Temporarily change bindings of an environment
 local_error_call        Set local error call in an execution
@@ -122,6 +123,7 @@ scalar-type-predicates
                         Scalar type predicates
 seq2                    Increasing sequence of integers in an interval
 set_names               Set names of a vector
+splice                  Splice values at dots collection time
 splice-operator         Splice operator !!!
 stack                   Get properties of the current or caller frame
 sym                     Create a symbol or list of symbols

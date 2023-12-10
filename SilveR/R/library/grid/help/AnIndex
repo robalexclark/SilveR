@@ -68,6 +68,7 @@ get.gpar	gpar
 getGrob	grid.get
 getNames	getNames
 gList	grid.grob
+glyphGrob	grid.glyph
 gpar	gpar
 gPath	gPath
 Grid	Grid
@@ -104,6 +105,7 @@ grid.function	grid.function
 grid.gedit	grid.edit
 grid.get	grid.get
 grid.gget	grid.get
+grid.glyph	grid.glyph
 grid.grab	grid.grab
 grid.grabExpr	grid.grab
 grid.gremove	grid.remove
@@ -175,7 +177,8 @@ groupTranslate	viewportTransform
 gTree	grid.grob
 heightDetails	widthDetails
 is.grob	grid.grob
-is.unit	grid-internal
+is.unit	unit
+isClosed	grobCoords
 isEmptyCoords	gridCoords
 layout.heights	grid-internal
 layout.torture	grid-internal

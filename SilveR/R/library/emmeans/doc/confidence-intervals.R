@@ -3,37 +3,37 @@ require("emmeans")
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
 
 ## -----------------------------------------------------------------------------
-pigs.lm1 <- lm(log(conc) ~ source + factor(percent), data = pigs)
-pigs.rg <- ref_grid(pigs.lm1)
-pigs.emm.s <- emmeans(pigs.rg, "source")
+mod4 <- lm(inverse(conc) ~ source + factor(percent), data = pigs)
+RG <- ref_grid(mod4)
+EMM.source <- emmeans(RG, "source")
 
 ## -----------------------------------------------------------------------------
-test(pigs.emm.s)
+test(EMM.source)
 
 ## -----------------------------------------------------------------------------
-test(pigs.emm.s, null = log(40), side = ">")
+test(EMM.source, null = inverse(40), side = "<")
 
 ## -----------------------------------------------------------------------------
-confint(pigs.emm.s, calc = c(n = ~.wgt.))
+confint(EMM.source, calc = c(n = ~.wgt.))
 
 ## -----------------------------------------------------------------------------
-test(pigs.emm.s, null = log(40), side = ">", type = "response")
+test(EMM.source, null = inverse(40), side = "<", type = "response")
 
 ## -----------------------------------------------------------------------------
-confint(pigs.emm.s, side = ">", level = .90, type = "response")
+confint(EMM.source, side = "<", level = .90, type = "response")
 
 ## -----------------------------------------------------------------------------
-confint(pigs.emm.s, adjust = "tukey")
+confint(EMM.source, adjust = "tukey")
 
 ## -----------------------------------------------------------------------------
-test(pigs.emm.s, null = log(40), side = ">", adjust = "bonferroni")
+test(EMM.source, null = inverse(40), side = "<", adjust = "bonferroni")
 
 ## -----------------------------------------------------------------------------
-confint(pigs.rg, by = "source")
+confint(RG, by = "source")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  emmeans(pigs.lm, ~ percent | source)     ### same results as above
-#  summary(.Last.value, by = percent)       ### grouped the other way
+#  emmeans(mod4, ~ percent | source)     ### same results as above
+#  summary(.Last.value, by = "percent")       ### grouped the other way
 
 ## -----------------------------------------------------------------------------
 warp.lm <- lm(breaks ~ wool * tension, data = warpbreaks)
@@ -47,23 +47,23 @@ test(warp.pw, by = NULL, adjust = "bonferroni")
 test(warp.pw, adjust = "tukey", cross.adjust = "bonferroni")
 
 ## -----------------------------------------------------------------------------
-pigsint.lm <- lm(log(conc) ~ source * factor(percent), data = pigs)
-pigsint.rg <- ref_grid(pigsint.lm)
-contrast(pigsint.rg, "consec", simple = "percent")
+mod5 <- lm(inverse(conc) ~ source * factor(percent), data = pigs)
+RG5 <- ref_grid(mod5)
+contrast(RG5, "consec", simple = "percent")
 
 ## -----------------------------------------------------------------------------
-pigs.prs.s <- pairs(pigs.emm.s)
-pigs.prs.s
+PRS.source <- pairs(EMM.source)
+PRS.source
 
 ## -----------------------------------------------------------------------------
-test(pigs.prs.s, joint = TRUE)
+test(PRS.source, joint = TRUE)
 
 ## -----------------------------------------------------------------------------
-joint_tests(pigsint.rg)
+joint_tests(RG5)
 
 ## -----------------------------------------------------------------------------
-joint_tests(pigsint.rg, by = "source")
+joint_tests(RG5, by = "source")
 
 ## -----------------------------------------------------------------------------
-test(pigs.prs.s, delta = log(1.25), adjust = "none")
+test(PRS.source, delta = 0.005, adjust = "none")
 

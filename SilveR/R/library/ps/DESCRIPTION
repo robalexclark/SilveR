@@ -1,6 +1,6 @@
 Package: ps
 Title: List, Query, Manipulate System Processes
-Version: 1.7.2
+Version: 1.7.5
 Authors@R: c(
     person("Jay", "Loden", role = "aut"),
     person("Dave", "Daeschler", role = "aut"),
@@ -16,14 +16,14 @@ BugReports: https://github.com/r-lib/ps/issues
 Depends: R (>= 3.4)
 Imports: utils
 Suggests: callr, covr, curl, pillar, pingr, processx (>= 3.1.0), R6,
-        rlang, testthat (>= 3.0.0),
+        rlang, testthat (>= 3.0.0), webfakes
 Biarch: true
 Encoding: UTF-8
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
 Config/Needs/website: tidyverse/tidytemplate
 NeedsCompilation: yes
-Packaged: 2022-10-26 17:03:09 UTC; gaborcsardi
+Packaged: 2023-04-18 14:27:32 UTC; gaborcsardi
 Author: Jay Loden [aut],
   Dave Daeschler [aut],
   Giampaolo Rodola' [aut],
@@ -31,7 +31,6 @@ Author: Jay Loden [aut],
   RStudio [cph, fnd]
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-10-26 17:32:36 UTC
-Built: R 4.2.1; x86_64-w64-mingw32; 2022-10-30 01:09:59 UTC; windows
-ExperimentalWindowsRuntime: ucrt
+Date/Publication: 2023-04-18 19:30:02 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:43:35 UTC; windows
 Archs: x64

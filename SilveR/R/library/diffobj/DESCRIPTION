@@ -34,5 +34,5 @@ Author: Brodie Gaslam [aut, cre],
 Maintainer: Brodie Gaslam <brodie.gaslam@yahoo.com>
 Repository: CRAN
 Date/Publication: 2021-10-05 07:10:17 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-14 18:14:01 UTC; windows
-Archs: i386, x64
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:43:12 UTC; windows
+Archs: x64

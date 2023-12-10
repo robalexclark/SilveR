@@ -1,11 +1,11 @@
 useDynLib(coin, .registration = TRUE)
 
 importFrom("survival", is.Surv)
-importFrom("methods", callGeneric, callNextMethod, getSlots, new, validObject)
+importFrom("methods", callGeneric, callNextMethod, slotNames, new, validObject)
 importMethodsFrom("methods", initialize, show)
 importFrom("parallel", clusterApply, clusterSetRNGStream, getDefaultCluster,
                        makePSOCKcluster, mclapply, nextRNGStream, stopCluster)
-importFrom("stats", complete.cases, cov2cor, dchisq, dnorm, median,
+importFrom("stats", ave, complete.cases, cov2cor, dchisq, dnorm, median,
                     model.frame, model.matrix, na.pass, pbinom, pchisq, pnorm,
                     qbeta, qchisq, qnorm, quantile, runif, setNames, uniroot)
 importMethodsFrom("stats4", confint)

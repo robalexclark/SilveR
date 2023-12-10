@@ -35,31 +35,31 @@ ggplot(linetypes, aes(0, y)) +
 df <- data.frame(x = 1:3, y = c(4, 1, 9))
 base <- ggplot(df, aes(x, y)) + xlim(0.5, 3.5) + ylim(0, 10)
 base + 
-  geom_path(size = 10) + 
-  geom_path(size = 1, colour = "red")
+  geom_path(linewidth = 10) + 
+  geom_path(linewidth = 1, colour = "red")
 
 base + 
-  geom_path(size = 10, lineend = "round") + 
-  geom_path(size = 1, colour = "red")
+  geom_path(linewidth = 10, lineend = "round") + 
+  geom_path(linewidth = 1, colour = "red")
 
 base + 
-  geom_path(size = 10, lineend = "square") + 
-  geom_path(size = 1, colour = "red")
+  geom_path(linewidth = 10, lineend = "square") + 
+  geom_path(linewidth = 1, colour = "red")
 
 ## ---- out.width = "30%", fig.show = "hold"------------------------------------
 df <- data.frame(x = 1:3, y = c(9, 1, 9))
 base <- ggplot(df, aes(x, y)) + ylim(0, 10)
 base + 
-  geom_path(size = 10) + 
-  geom_path(size = 1, colour = "red")
+  geom_path(linewidth = 10) + 
+  geom_path(linewidth = 1, colour = "red")
 
 base + 
-  geom_path(size = 10, linejoin = "mitre") + 
-  geom_path(size = 1, colour = "red")
+  geom_path(linewidth = 10, linejoin = "mitre") + 
+  geom_path(linewidth = 1, colour = "red")
 
 base + 
-  geom_path(size = 10, linejoin = "bevel") + 
-  geom_path(size = 1, colour = "red")
+  geom_path(linewidth = 10, linejoin = "bevel") + 
+  geom_path(linewidth = 1, colour = "red")
 
 ## -----------------------------------------------------------------------------
 shapes <- data.frame(
@@ -99,7 +99,7 @@ ggplot(shapes, aes(x, y)) +
 ## -----------------------------------------------------------------------------
 sizes <- expand.grid(size = (0:3) * 2, stroke = (0:3) * 2)
 ggplot(sizes, aes(size, stroke, size = size, stroke = stroke)) + 
-  geom_abline(slope = -1, intercept = 6, colour = "white", size = 6) + 
+  geom_abline(slope = -1, intercept = 6, colour = "white", linewidth = 6) + 
   geom_point(shape = 21, fill = "red") +
   scale_size_identity()
 

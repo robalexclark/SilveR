@@ -1,29 +1,30 @@
 Package: ROI
-Version: 1.0-0
+Version: 1.0-1
 Title: R Optimization Infrastructure
-Authors@R: c( person("Kurt", "Hornik", role = "aut"),
+Authors@R: c( person("Kurt", "Hornik", role = "aut", email = "Kurt.Hornik@R-project.org", comment = c(ORCID = "0000-0003-4198-9911")),
               person("David", "Meyer", role = "aut"),
-              person("Florian", "Schwendinger", role = "aut"),
-              person("Stefan", "Theussl", role = c("aut", "cre"), email = "Stefan.Theussl@R-Project.org"),
+              person("Florian", "Schwendinger", role = "aut", email = "FlorianSchwendinger@gmx.at", comment = c(ORCID = "0000-0002-3983-9773")),
+              person("Stefan", "Theussl", role = c("aut", "cre"), email = "Stefan.Theussl@R-Project.org", comment = c(ORCID = "0000-0002-6523-4620")),
               person("Diethelm", "Wuertz", role = "ctb") )
 Description: The R Optimization Infrastructure ('ROI') <doi:10.18637/jss.v094.i15>
 	is a sophisticated framework for handling optimization problems in R.
-	Additional information can be found on the 'ROI' homepage <http://roi.r-forge.r-project.org/>.
+	Additional information can be found on the 'ROI' homepage <https://roi.r-forge.r-project.org/>.
 Depends: R (>= 2.10)
-Imports: methods, registry (>= 0.5), slam, utils
+Imports: methods, registry (>= 0.5), slam, utils, checkmate
 Suggests: numDeriv
 License: GPL-3
-URL: http://roi.r-forge.r-project.org/,
+Encoding: UTF-8
+URL: https://roi.r-forge.r-project.org/,
         https://r-forge.r-project.org/projects/roi/
-RoxygenNote: 7.0.2
+RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2020-08-29 14:12:44 UTC; f
-Author: Kurt Hornik [aut],
+Packaged: 2023-04-20 19:04:30 UTC; f
+Author: Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),
   David Meyer [aut],
-  Florian Schwendinger [aut],
-  Stefan Theussl [aut, cre],
+  Florian Schwendinger [aut] (<https://orcid.org/0000-0002-3983-9773>),
+  Stefan Theussl [aut, cre] (<https://orcid.org/0000-0002-6523-4620>),
   Diethelm Wuertz [ctb]
 Maintainer: Stefan Theussl <Stefan.Theussl@R-Project.org>
 Repository: CRAN
-Date/Publication: 2020-08-31 08:00:02 UTC
-Built: R 4.1.2; ; 2022-01-10 20:36:13 UTC; windows
+Date/Publication: 2023-04-20 19:42:30 UTC
+Built: R 4.3.1; ; 2023-10-24 00:43:41 UTC; windows

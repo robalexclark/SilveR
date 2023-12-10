@@ -24,10 +24,10 @@ levels(framing$educ) <- c("NA","Ref","< HS", "HS", "> HS","Coll +")
 framing.glm <- glm(cong_mesg ~ age + income + educ + emo + gender * factor(treat), 
     family = binomial, data = framing)
 
-## -----------------------------------------------------------------------------
+## ----fig.alt = "Two panels, each showing a decreasing trend with educ except they increase again with educ=Coll+. In the male panel, the curve for treat 1 is higher than that for treat 2, while the reverse is true in the female panel"----
 emmip(framing.glm, treat ~ educ | gender, type = "response") 
 
-## -----------------------------------------------------------------------------
+## ----fig.alt = "Similar to previous figure but now the curves flatten out with >HS about the same as Coll+. For the maile panel, we still have the trace for treat 1 higher than for treat 0; but in the female panel, they are about the same as each other, and a bit lower than treat 0 for males. To see these results in numerical form, call emmeans() with the same arguments *except* replace the second argument with ~treat*educ|gender"----
 emmip(framing.glm, treat ~ educ | gender, type = "response", 
     cov.reduce = emo ~ treat*gender + age + educ + income)
 
@@ -117,14 +117,14 @@ pairs(route.emm, reverse = TRUE)
 
 pairs(drug.emm, by = "route", reverse = TRUE)
 
-## ---- fig.width = 5.5---------------------------------------------------------
+## ---- fig.width = 5.5, fig.alt = "A panel for each route. This interaction plot has a lot of empty space because all 5 drugs are represented in each panel, and the x axis labels all overlap"----
 emmip(cows.rg, ~ drug | route)
 
-## ---- fig.width = 5.5---------------------------------------------------------
+## ---- fig.width = 5.5, fig.alt = "This plot shows the same means as the previous one, but each panel shows only the drugs that are nested in each route"----
 require(ggplot2)
 emmip(cows.rg, ~ drug) + facet_wrap(~ route, scales = "free_x")
 
-## ---- fig.height = 2.5, fig.width = 5.5---------------------------------------
+## ---- fig.height = 2.5, fig.width = 5.5, fig.alt = "side-by-side CIs and PIs for drugs in each route. Again, with free_y scaling, each panel contains only the drugs involved"----
 plot(drug.emm, PIs = TRUE) + 
     facet_wrap(~ route, nrow = 2, scales = "free_y")
 

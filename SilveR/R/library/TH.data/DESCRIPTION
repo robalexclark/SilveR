@@ -1,21 +1,21 @@
 Package: TH.data
 Title: TH's Data Archive
-Date: 2022-05-24
-Version: 1.1-1
+Date: 2023-04-17
+Version: 1.1-2
 Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"),
                     email = "Torsten.Hothorn@R-project.org"))
 Description: Contains data sets used in other packages Torsten Hothorn
   maintains.
 Depends: R (>= 3.5.0), survival, MASS
-Suggests: dplyr, gdata, plyr, trtf, tram, rms, coin, ATR, multcomp,
-        gridExtra, vcd, colorspace, lattice, knitr
+Suggests: trtf, tram, rms, coin, ATR, multcomp, gridExtra, vcd,
+        colorspace, lattice, knitr
 LazyData: yes
 VignetteBuilder: knitr
 License: GPL-3
 NeedsCompilation: no
-Packaged: 2022-04-25 10:09:01 UTC; hothorn
+Packaged: 2023-04-17 18:54:39 UTC; hothorn
 Author: Torsten Hothorn [aut, cre]
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Repository: CRAN
-Date/Publication: 2022-04-26 04:52:16 UTC
-Built: R 4.1.2; ; 2022-04-28 18:11:46 UTC; windows
+Date/Publication: 2023-04-17 22:10:03 UTC
+Built: R 4.3.1; ; 2023-10-24 02:05:13 UTC; windows

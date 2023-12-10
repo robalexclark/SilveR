@@ -40,6 +40,7 @@ evaluate_promise	evaluate_promise
 expect	expect
 expectation	expectation
 expect_condition	expect_error
+expect_contains	expect_setequal
 expect_cpp_tests_pass	run_cpp_tests
 expect_equal	equality-expectations
 expect_equal_to_reference	expect_known_output
@@ -50,6 +51,7 @@ expect_false	logical-expectations
 expect_gt	comparison-expectations
 expect_gte	comparison-expectations
 expect_identical	equality-expectations
+expect_in	expect_setequal
 expect_invisible	expect_invisible
 expect_is	expect_is
 expect_known_hash	expect_known_output
@@ -101,6 +103,7 @@ has_names	oldskool
 inheritance-expectations	inheritance-expectations
 is.expectation	expectation
 is_a	oldskool
+is_checking	is_testing
 is_equivalent_to	oldskool
 is_false	oldskool
 is_identical_to	oldskool
@@ -109,12 +112,15 @@ is_less_than	oldskool
 is_more_than	oldskool
 is_null	oldskool
 is_parallel	is_testing
+is_snapshot	is_testing
 is_testing	is_testing
 is_true	oldskool
+it	describe
 JunitReporter	JunitReporter
 ListReporter	ListReporter
 local_edition	local_edition
 local_mock	with_mock
+local_mocked_bindings	local_mocked_bindings
 local_reproducible_output	local_test_context
 local_snapshotter	local_snapshotter
 local_test_context	local_test_context
@@ -137,10 +143,10 @@ Reporter	Reporter
 reporter-accessors	reporter-accessors
 RStudioReporter	RStudioReporter
 run_cpp_tests	run_cpp_tests
-safe_digest	safe_digest
 setup	teardown
 set_max_fails	set_max_fails
 set_reporter	reporter-accessors
+set_state_inspector	set_state_inspector
 shows_message	oldskool
 show_failure	expect_success
 SilentReporter	SilentReporter
@@ -150,13 +156,13 @@ skip_if_not	skip
 skip_if_not_installed	skip
 skip_if_offline	skip
 skip_if_translated	skip
-skip_on_appveyor	skip
+skip_on_appveyor	skip_on_travis
 skip_on_bioc	skip
 skip_on_ci	skip
 skip_on_covr	skip
 skip_on_cran	skip
 skip_on_os	skip
-skip_on_travis	skip
+skip_on_travis	skip_on_travis
 snapshot_accept	snapshot_accept
 snapshot_review	snapshot_accept
 source_dir	source_file
@@ -178,7 +184,7 @@ testthat_example	testthat_examples
 testthat_examples	testthat_examples
 testthat_print	capture_output
 testthat_results	testthat_results
-testthat_tolerance	compare
+testthat_tolerance	testthat_tolerance
 test_check	test_package
 test_dir	test_dir
 test_env	test_env
@@ -196,4 +202,5 @@ use_catch	use_catch
 verify_output	verify_output
 watch	watch
 with_mock	with_mock
+with_mocked_bindings	local_mocked_bindings
 with_reporter	reporter-accessors

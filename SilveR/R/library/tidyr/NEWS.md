@@ -1,8 +1,177 @@
+# tidyr 1.3.0
+
+## New features
+
+* New family of consistent string separating functions:
+  `separate_wider_delim()`, `separate_wider_position()`,
+  `separate_wider_regex()`, `separate_longer_delim()`, and
+  `separate_longer_position()`. These functions are thorough refreshes of
+  `separate()` and `extract()`, featuring improved performance, greater
+  consistency, a polished API, and a new approach for handling problems. They
+  use stringr and supersede `extract()`, `separate()`, and `separate_rows()`
+  (#1304).
+
+* `nest()` gains a `.by` argument which allows you to specify the columns to
+  nest by (rather than the columns to nest, i.e. through `...`). Additionally,
+  the `.key` argument is no longer deprecated, and is used whenever `...` isn't
+  specified (#1458).
+
+* `unnest_longer()` gains a `keep_empty` argument like `unnest()` (#1339).
+
+* `pivot_longer()` gains a `cols_vary` argument for controlling the ordering of
+  the output rows relative to their original row number (#1312).
+
+* New datasets `who2`, `household`, `cms_patient_experience`, and 
+  `cms_patient_care` to demonstrate various tidying challenges (#1333).
+
+## Breaking changes
+
+* The `...` argument of both `pivot_longer()` and `pivot_wider()` has been
+  moved to the front of the function signature, after the required arguments
+  but before the optional ones. Additionally, `pivot_longer_spec()`,
+  `pivot_wider_spec()`, `build_longer_spec()`, and `build_wider_spec()` have
+  all gained `...` arguments in a similar location. This change allows us to
+  more easily add new features to the pivoting functions without breaking
+  existing CRAN packages and user scripts.
+  
+  `pivot_wider()` provides temporary backwards compatible support for the case
+  of a single unnamed argument that previously was being positionally matched to
+  `id_cols`. This one special case still works, but will throw a warning
+  encouraging you to explicitly name the `id_cols` argument.
+  
+  To read more about this pattern, see
+  [Data, dots, details](https://design.tidyverse.org/dots-position.html) in the
+  tidyverse design guide (#1350).
+
+## Lifecycle changes
+
+* All functions deprecated in tidyr 1.0 and 1.2 (the old lazyeval functions 
+  ending in `_` and various arguments to `unnest()`) now warn on every use.
+  They will be made defunct in 2024 (#1406).
+
+## Rectangling
+  
+* `unnest_longer()` now consistently drops rows with either `NULL` or empty
+  vectors (like `integer()`) by default. Set the new `keep_empty` argument to
+  `TRUE` to retain them. Previously, `keep_empty = TRUE` was implicitly being
+  used for `NULL`, while `keep_empty = FALSE` was being used for empty vectors,
+  which was inconsistent with all other tidyr verbs with this argument (#1363).
+
+* `unnest_longer()` now uses `""` in the index column for fully unnamed
+  vectors. It also now consistently uses `NA` in the index column for empty
+  vectors that are "kept" by `keep_empty = TRUE` (#1442).
+
+* `unnest_wider()` now errors if any values being unnested are unnamed and
+  `names_sep` is not provided (#1367).
+
+* `unnest_wider()` now generates automatic names for _partially_ unnamed
+  vectors. Previously it only generated them for fully unnamed vectors,
+  resulting in a strange mix of automatic names and name-repaired names (#1367).
+
+## Bug fixes and minor improvements
+
+### General
+
+* Most tidyr functions now consistently disallow renaming during tidy-selection.
+  Renaming was never meaningful in these functions, and previously either had no
+  effect or caused problems (#1449, #1104).
+
+* tidyr errors (including input validation) have been thoroughly reviewed
+  and should generally be more likely to point you in the right direction 
+  (#1313, #1400).
+
+* `uncount()` is now generic so implementations can be provided for objects
+  other than data frames (@mgirlich, #1358).
+
+* `uncount()` gains a `...` argument. It comes between the required and the
+  optional arguments (@mgirlich, #1358).
+
+* `nest()`, `complete()`, `expand()`, and `fill()` now document their support
+  for grouped data frames created by `dplyr::group_by()` (#952).
+
+* All built in datasets are now standard tibbles (#1459).
+
+* R >=3.4.0 is now required, in line with the tidyverse standard of supporting
+  the previous 5 minor releases of R.
+
+* rlang >=1.0.4 and vctrs >=0.5.2 are now required (#1344, #1470).
+
+* Removed dependency on ellipsis in favor of equivalent functions in rlang
+  (#1314).
+
+### Nesting, packing, and chopping
+
+* `unnest()`, `unchop()`, `unnest_longer()`, and `unnest_wider()` better handle
+  lists with additional classes (#1327).
+
+* `pack()`, `unpack()`, `chop()`, and `unchop()` all gain an `error_call`
+  argument, which in turn improves some of the error calls shown in `nest()`
+  and various `unnest()` adjacent functions (#1446).
+
+* `chop()`, `unpack()`, and `unchop()` all gain `...`, which must be empty
+  (#1447).
+
+* `unpack()` does a better job of reporting column name duplication issues and
+  gives better advice about how to resolve them using `names_sep`. This also
+  improves errors from functions that use `unpack()`, like `unnest()` and
+  `unnest_wider()` (#1425, #1367).
+
+### Pivoting
+
+* `pivot_longer()` no longer supports interpreting `values_ptypes = list()`
+  and `names_ptypes = list()` as `NULL`. An empty `list()` is now interpreted as
+  a `<list>` prototype to apply to all columns, which is consistent with how any
+  other 0-length value is interpreted (#1296).
+
+* `pivot_longer(values_drop_na = TRUE)` is faster when there aren't any missing
+  values to drop (#1392, @mgirlich).
+
+* `pivot_longer()` is now more memory efficient due to the usage of
+  `vctrs::vec_interleave()` (#1310, @mgirlich).
+
+* `pivot_longer()` now throws a slightly better error message when
+  `values_ptypes` or `names_ptypes` is provided and the coercion can't be made
+  (#1364).
+
+* `pivot_wider()` now throws a better error message when a column selected by
+  `names_from` or `values_from` is also selected by `id_cols` (#1318).
+
+* `pivot_wider()` is now faster when `names_sep` is provided (@mgirlich, #1426).
+
+* `pivot_longer_spec()`, `pivot_wider_spec()`, `build_longer_spec()`, and
+  `build_wider_spec()` all gain an `error_call` argument, resulting in better
+  error reporting in `pivot_longer()` and `pivot_wider()` (#1408).
+
+### Missing values
+
+* `fill()` now works correctly when there is a column named `.direction` in
+  `data` (#1319, @tjmahr).
+
+* `replace_na()` is faster when there aren't any missing values to replace
+  (#1392, @mgirlich).
+
+* The documentation of the `replace` argument of `replace_na()` now mentions
+  that `replace` is always cast to the type of `data` (#1317).
+
 # tidyr 1.2.1
 
 * Hot patch release to resolve R CMD check failures.
 
 # tidyr 1.2.0
+
+## Breaking changes
+
+* `complete()` and `expand()` no longer allow you to complete or expand on a
+  grouping column. This was never well-defined since completion/expansion on a
+  grouped data frame happens "within" each group and otherwise has the
+  potential to produce erroneous results (#1299).
+
+* `replace_na()` no longer allows the type of `data` to change when the
+  replacement is applied. `replace` will now always be cast to the type of
+  `data` before the replacement is made. For example, this means that using a
+  replacement value of `1.5` on an integer column is no longer allowed.
+  Similarly, replacing missing values in a list-column must now be done with
+  `list("foo")` rather than just `"foo"`.
 
 ## Pivoting
 
@@ -71,11 +240,6 @@
 
 * `complete()` gains a grouped data frame method. This generates a more correct
   completed data frame when groups are involved (#396, #966).
-  
-* `complete()` and `expand()` no longer allow you to complete or expand on a
-  grouping column. This was never well-defined since completion/expansion on a
-  grouped data frame happens "within" each group and otherwise has the
-  potential to produce erroneous results (#1299).
 
 ## Missing values
 
@@ -83,13 +247,6 @@
   This means that you can use these functions on a wider variety of column
   types, including lubridate's Period types (#1094), data frame columns, and
   the [rcrd](https://vctrs.r-lib.org/reference/new_rcrd.html) type from vctrs.
-
-* `replace_na()` no longer allows the type of `data` to change when the
-  replacement is applied. `replace` will now always be cast to the type of
-  `data` before the replacement is made. For example, this means that using a
-  replacement value of `1.5` on an integer column is no longer allowed.
-  Similarly, replacing missing values in a list-column must now be done with
-  `list("foo")` rather than just `"foo"`.
 
 * `replace_na()` no longer replaces empty atomic elements in list-columns
   (like `integer(0)`). The only value that is replaced in a list-column is
@@ -308,7 +465,7 @@
     ```
     
 * `pivot_wider()` gains a `names_sort` argument which allows you to sort
-  column names in order. The default, `FALSE`, orders columms by their 
+  column names in order. The default, `FALSE`, orders columns by their 
   first appearance (#839). In a future version, I'll consider changing the
   default to `TRUE`.
 
@@ -427,7 +584,7 @@ See `vignette("in-packages")` for a detailed transition guide.
   warnings. I think one clean break should be less work for everyone.
   
     All other lazyeval functions have been formally deprecated, and will be
-    made defunct in the next major release. (See [lifecycle vignette](https://lifecycle.r-lib.org/) for 
+    made defunct in the next major release. (See [lifecycle vignette](https://lifecycle.r-lib.org/articles/stages.html) for 
     details on deprecation stages).
 
 * `crossing()` and `nesting()` now return 0-row outputs if any input is a 
@@ -746,7 +903,7 @@ backend.
 
 - Following the switch to tidy evaluation, you might see warnings
   about the "variable context not set". This is most likely caused by
-  supplyng helpers like `everything()` to underscored versions of
+  supplying helpers like `everything()` to underscored versions of
   tidyr verbs. Helpers should be always be evaluated lazily. To fix
   this, just quote the helper with a formula: `drop_na(df,
   ~everything())`.
@@ -928,7 +1085,7 @@ following changes:
 
 * Made compatible with both dplyr 0.4 and 0.5.
 
-* tidyr functions that create new columns are more aggresive about re-encoding
+* tidyr functions that create new columns are more aggressive about re-encoding
   the column names as UTF-8. 
 
 # tidyr 0.4.1
@@ -1069,7 +1226,7 @@ following changes:
 * `extract_numeric()` preserves negative signs (#20).
 
 * `gather()` has better defaults if `key` and `value` are not supplied.
-  If `...` is ommitted, `gather()` selects all columns (#28). Performance
+  If `...` is omitted, `gather()` selects all columns (#28). Performance
   is now comparable to `reshape2::melt()` (#18).
 
 * `separate()` gains `extra` argument which lets you control what happens

@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: Helpers for Developing Command Line Interfaces</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -12,9 +12,10 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;cli&rsquo; version 3.4.1</h2>
+</div><h2>Documentation for package &lsquo;cli&rsquo; version 3.6.1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -29,6 +30,7 @@
 <a href="#G">G</a>
 <a href="#H">H</a>
 <a href="#I">I</a>
+<a href="#K">K</a>
 <a href="#L">L</a>
 <a href="#M">M</a>
 <a href="#N">N</a>
@@ -43,15 +45,17 @@
 </p>
 
 
-<h2><a name="A">-- A --</a></h2>
+<h2><a id="A">-- A --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="ansi-styles.html">ansi-styles</a></td>
 <td>ANSI colored text</td></tr>
 <tr><td style="width: 25%;"><a href="ansi_align.html">ansi_align</a></td>
 <td>Align an ANSI colored string</td></tr>
 <tr><td style="width: 25%;"><a href="ansi_toupper.html">ansi_chartr</a></td>
 <td>ANSI character translation and case folding</td></tr>
+<tr><td style="width: 25%;"><a href="ansi_collapse.html">ansi_collapse</a></td>
+<td>Collapse a vector into a string scalar</td></tr>
 <tr><td style="width: 25%;"><a href="ansi_columns.html">ansi_columns</a></td>
 <td>Format a character vector in multiple columns</td></tr>
 <tr><td style="width: 25%;"><a href="ansi_grep.html">ansi_grep</a></td>
@@ -106,9 +110,9 @@
 <td>Hide/show cursor in a terminal</td></tr>
 </table>
 
-<h2><a name="B">-- B --</a></h2>
+<h2><a id="B">-- B --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="ansi-styles.html">bg_black</a></td>
 <td>ANSI colored text</td></tr>
 <tr><td style="width: 25%;"><a href="ansi-styles.html">bg_blue</a></td>
@@ -149,9 +153,9 @@
 <td>The built-in CLI theme</td></tr>
 </table>
 
-<h2><a name="C">-- C --</a></h2>
+<h2><a id="C">-- C --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="cat_line.html">cat_boxx</a></td>
 <td>'cat()' helpers</td></tr>
 <tr><td style="width: 25%;"><a href="cat_line.html">cat_bullet</a></td>
@@ -372,9 +376,9 @@
 <td>About cli containers</td></tr>
 </table>
 
-<h2><a name="D">-- D --</a></h2>
+<h2><a id="D">-- D --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="start_app.html">default_app</a></td>
 <td>Start, stop, query the default cli application</td></tr>
 <tr><td style="width: 25%;"><a href="demo_spinners.html">demo_spinners</a></td>
@@ -387,9 +391,9 @@
 <td>Compare two character strings, character by character</td></tr>
 </table>
 
-<h2><a name="F">-- F --</a></h2>
+<h2><a id="F">-- F --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="faq.html">faq</a></td>
 <td>Frequently Asked Questions</td></tr>
 <tr><td style="width: 25%;"><a href="cli_bullets_raw.html">format_bullets_raw</a></td>
@@ -404,20 +408,24 @@
 <td>Format an error, warning or diagnostic message</td></tr>
 </table>
 
-<h2><a name="G">-- G --</a></h2>
+<h2><a id="G">-- G --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="get_spinner.html">get_spinner</a></td>
 <td>Character vector to put a spinner on the screen</td></tr>
 </table>
 
-<h2><a name="H">-- H --</a></h2>
+<h2><a id="H">-- H --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="hash_animal.html">hash_animal</a></td>
 <td>Adjective-animal hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_emoji.html">hash_emoji</a></td>
 <td>Emoji hash</td></tr>
+<tr><td style="width: 25%;"><a href="hash_md5.html">hash_file_md5</a></td>
+<td>MD5 hash</td></tr>
+<tr><td style="width: 25%;"><a href="hash_sha1.html">hash_file_sha1</a></td>
+<td>SHA-1 hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_sha256.html">hash_file_sha256</a></td>
 <td>SHA-256 hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_md5.html">hash_md5</a></td>
@@ -428,6 +436,8 @@
 <td>Emoji hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_md5.html">hash_obj_md5</a></td>
 <td>MD5 hash</td></tr>
+<tr><td style="width: 25%;"><a href="hash_sha1.html">hash_obj_sha1</a></td>
+<td>SHA-1 hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_sha256.html">hash_obj_sha256</a></td>
 <td>SHA-256 hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_animal.html">hash_raw_animal</a></td>
@@ -436,15 +446,21 @@
 <td>Emoji hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_md5.html">hash_raw_md5</a></td>
 <td>MD5 hash</td></tr>
+<tr><td style="width: 25%;"><a href="hash_sha1.html">hash_raw_sha1</a></td>
+<td>SHA-1 hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_sha256.html">hash_raw_sha256</a></td>
 <td>SHA-256 hash</td></tr>
+<tr><td style="width: 25%;"><a href="hash_sha1.html">hash_sha1</a></td>
+<td>SHA-1 hash</td></tr>
 <tr><td style="width: 25%;"><a href="hash_sha256.html">hash_sha256</a></td>
 <td>SHA-256 hash</td></tr>
+<tr><td style="width: 25%;"><a href="has_keypress_support.html">has_keypress_support</a></td>
+<td>Check if the current platform/terminal supports reading single keys.</td></tr>
 </table>
 
-<h2><a name="I">-- I --</a></h2>
+<h2><a id="I">-- I --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="inline-markup.html">inline-markup</a></td>
 <td>About inline markup in the semantic cli</td></tr>
 <tr><td style="width: 25%;"><a href="is_ansi_tty.html">is_ansi_tty</a></td>
@@ -455,9 +471,16 @@
 <td>Whether cli is emitting UTF-8 characters</td></tr>
 </table>
 
-<h2><a name="L">-- L --</a></h2>
+<h2><a id="K">-- K --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="keypress.html">keypress</a></td>
+<td>Read a single keypress at the terminal</td></tr>
+</table>
+
+<h2><a id="L">-- L --</a></h2>
+
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="links.html">links</a></td>
 <td>cli hyperlinks</td></tr>
 <tr><td style="width: 25%;"><a href="boxx.html">list_border_styles</a></td>
@@ -468,27 +491,27 @@
 <td>Various handy symbols to use in a command line UI</td></tr>
 </table>
 
-<h2><a name="M">-- M --</a></h2>
+<h2><a id="M">-- M --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="make_ansi_style.html">make_ansi_style</a></td>
 <td>Create a new ANSI style</td></tr>
 <tr><td style="width: 25%;"><a href="make_spinner.html">make_spinner</a></td>
 <td>Create a spinner</td></tr>
 </table>
 
-<h2><a name="N">-- N --</a></h2>
+<h2><a id="N">-- N --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="pluralization-helpers.html">no</a></td>
 <td>Pluralization helper functions</td></tr>
 <tr><td style="width: 25%;"><a href="num_ansi_colors.html">num_ansi_colors</a></td>
 <td>Detect the number of ANSI colors to use</td></tr>
 </table>
 
-<h2><a name="P">-- P --</a></h2>
+<h2><a id="P">-- P --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="progress-variables.html">pb_bar</a></td>
 <td>Progress bar variables</td></tr>
 <tr><td style="width: 25%;"><a href="progress-variables.html">pb_current</a></td>
@@ -537,31 +560,33 @@
 <td>About cli pluralization</td></tr>
 <tr><td style="width: 25%;"><a href="pluralize.html">pluralize</a></td>
 <td>String templating with pluralization</td></tr>
+<tr><td style="width: 25%;"><a href="pretty_print_code.html">pretty_print_code</a></td>
+<td>Turn on pretty-printing functions at the R console</td></tr>
 <tr><td style="width: 25%;"><a href="progress-c.html">progress-c</a></td>
 <td>The cli progress C API</td></tr>
 <tr><td style="width: 25%;"><a href="progress-variables.html">progress-variables</a></td>
 <td>Progress bar variables</td></tr>
 </table>
 
-<h2><a name="Q">-- Q --</a></h2>
+<h2><a id="Q">-- Q --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="pluralization-helpers.html">qty</a></td>
 <td>Pluralization helper functions</td></tr>
 </table>
 
-<h2><a name="R">-- R --</a></h2>
+<h2><a id="R">-- R --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="rule.html">rule</a></td>
 <td>Make a rule with one or two text labels</td></tr>
 <tr><td style="width: 25%;"><a href="ruler.html">ruler</a></td>
 <td>Print the helpful ruler to the screen</td></tr>
 </table>
 
-<h2><a name="S">-- S --</a></h2>
+<h2><a id="S">-- S --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="simple_theme.html">simple_theme</a></td>
 <td>A simple CLI theme</td></tr>
 <tr><td style="width: 25%;"><a href="spark_bar.html">spark_bar</a></td>
@@ -616,9 +641,9 @@
 <td>Various handy symbols to use in a command line UI</td></tr>
 </table>
 
-<h2><a name="T">-- T --</a></h2>
+<h2><a id="T">-- T --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="test_that_cli.html">test_that_cli</a></td>
 <td>Test cli output with testthat</td></tr>
 <tr><td style="width: 25%;"><a href="themes.html">themes</a></td>
@@ -631,9 +656,9 @@
 <td>ANSI colors palettes</td></tr>
 </table>
 
-<h2><a name="U">-- U --</a></h2>
+<h2><a id="U">-- U --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="utf8_graphemes.html">utf8_graphemes</a></td>
 <td>Break an UTF-8 character vector into grapheme clusters</td></tr>
 <tr><td style="width: 25%;"><a href="utf8_nchar.html">utf8_nchar</a></td>
@@ -642,16 +667,16 @@
 <td>Substring of an UTF-8 string</td></tr>
 </table>
 
-<h2><a name="V">-- V --</a></h2>
+<h2><a id="V">-- V --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="vt_output.html">vt_output</a></td>
 <td>Simulate (a subset of) a VT-5xx ANSI terminal</td></tr>
 </table>
 
-<h2><a name="misc">-- misc --</a></h2>
+<h2><a id="misc">-- misc --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="cli_progress_bar.html">__cli_update_due</a></td>
 <td>cli progress bars</td></tr>
 </table>

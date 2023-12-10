@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.8.2" />
+<meta name="author" content="emmeans package, Version 1.8.9" />
 
 
 <title>Index of vignette topics</title>
@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 
 <h1 class="title toc-ignore">Index of vignette topics</h1>
-<h4 class="author">emmeans package, Version 1.8.2</h4>
+<h4 class="author">emmeans package, Version 1.8.9</h4>
 
 
 
@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 <h3>A</h3>
 <ul>
 <li><a href="utilities.html#groups"><code>add_grouping()</code></a></li>
+<li><a href="sophisticated.html#random-slopes"><code>addl.vars</code></a></li>
 <li><code>adjust</code>
 <ul>
 <li><a href="comparisons.html#pairwise">in <em>comparisons:
@@ -83,6 +84,8 @@ pairwise</em></a></li>
 <em>confidence-intervals: adjust</em></a></li>
 <li><a href="confidence-intervals.html#cross-adjust">vs. <code>cross.adjust</code></a></li>
 </ul></li>
+<li><a href="basics.html#RG">Adjusted means</a></li>
+<li><a href="basics.html#pigs">Adjusted R-squared</a></li>
 <li><a href="models.html#V"><code>afex_aov</code> objects</a></li>
 <li><a href="xplanations.html#submodels">Alias matrix</a></li>
 <li><a href="FAQs.html#model">Analysis of subsets of data</a></li>
@@ -95,6 +98,12 @@ comparisons</a></li>
 <li><a href="models.html#V"><code>aovList</code> objects</a></li>
 <li><a href="models.html#K"><code>appx-satterthwaite</code>
 method</a></li>
+<li>Arguments
+<ul>
+<li><a href="basics.html#arguments"><code>...</code></a></li>
+<li><a href="basics.html#arguments">Passed to
+<code>ref_grid()</code></a></li>
+</ul></li>
 <li><code>as.mcmc()</code>
 <ul>
 <li><a href="models.html#S">in <em>models: S</em></a></li>
@@ -112,6 +121,8 @@ values</a></li>
 <div id="b" class="section level3">
 <h3>B</h3>
 <ul>
+<li><a href="basics.html#transf">Back-transforming</a></li>
+<li><a href="basics.html#exper">Balanced allocation</a></li>
 <li><a href="sophisticated.html#bayesxtra">Bayes factor</a></li>
 <li>Bayesian models
 <ul>
@@ -136,6 +147,8 @@ models</a></li>
 back-transforming</a></li>
 <li><a href="transformations.html#insects">When <em>not</em> to
 use</a></li>
+<li><a href="sophisticated.html#random-slopes">with random
+slopes</a></li>
 </ul></li>
 <li><a href="confidence-intervals.html#adjmore">Bonferroni
 adjustment</a></li>
@@ -199,6 +212,8 @@ values</a></li>
 <li><a href="xplanations.html#arrows">How arrows are determined</a></li>
 </ul></li>
 <li><a href="comparisons.html#logs">with logs</a></li>
+<li><a href="FAQs.html#ratios">Obtaining differences rather than
+ratios</a></li>
 <li><a href="FAQs.html#CIerror">with overlapping CIs</a></li>
 </ul></li>
 <li><a href="FAQs.html#nopairs">Comparisons result in
@@ -209,6 +224,7 @@ values</a></li>
 </ul></li>
 <li><a href="confidence-intervals.html#summary"><code>confint()</code></a></li>
 <li><a href="xplanations.html#joint_tests">Confounded effects</a></li>
+<li><a href="basics.html#emms">Confounding</a></li>
 <li><a href="comparisons.html#contrasts"><code>consec</code>
 contrasts</a></li>
 <li><a href="xplanations.html#submodels">Constrained marginal
@@ -243,6 +259,7 @@ simple</em></a></li>
 <li><a href="comparisons.html#logs">with transformations</a></li>
 </ul></li>
 </ul></li>
+<li><a href="basics.html#exper">Controlled experiments</a></li>
 <li><a href="models.html#C">Count regression</a></li>
 <li><a href="messy-data.html#counterfact">Counterfactuals</a></li>
 <li><a href="messy-data.html#med.covred"><code>cov.reduce</code></a></li>
@@ -304,11 +321,16 @@ functions</a></li>
 <li><strong>emmeans</strong> package
 <ul>
 <li><a href="xtending.html#exporting">Exporting extensions to</a></li>
+<li><a href="AQuickStart.html">Quick-start guide</a></li>
 </ul></li>
-<li><a href="basics.html#emmeans"><code>emmeans()</code></a>
+<li><a href="basics.html#emms"><code>emmeans()</code></a>
 <ul>
 <li><a href="FAQs.html#nowelch">And the underlying model</a></li>
+<li><a href="basics.html#arguments">Arguments passed to
+<code>ref_grid()</code></a></li>
 <li><a href="utilities.html#defaults">Changing defaults</a></li>
+<li><a href="FAQs.html#fastest">Fastest way to get wrong
+answers</a></li>
 <li><a href="FAQs.html#transformations">Surprising results from</a></li>
 <li><code>weights</code>
 <ul>
@@ -327,14 +349,14 @@ weights</em></a></li>
 </ul></li>
 <li><code>emmip()</code>
 <ul>
+<li><a href="basics.html#emmip">in <em>basics: emmip</em></a></li>
 <li><a href="basics.html#plots">in <em>basics: plots</em></a></li>
 <li><a href="interactions.html#factors">in <em>interactions:
 factors</em></a></li>
 <li><a href="messy-data.html#cows">nested factors</a></li>
 </ul></li>
-<li><a href="basics.html#EMMdef">EMMs</a>
+<li>EMMs
 <ul>
-<li><a href="basics.html#eqwts">Appropriateness of</a></li>
 <li><a href="xplanations.html#submodels">Projecting to a
 submodel</a></li>
 <li><a href="FAQs.html#what">What are they?</a></li>
@@ -352,9 +374,13 @@ CLDs)</a></li>
 <li><a href="messy-data.html#nonestex">Estimability</a></li>
 <li><a href="FAQs.html#NAs">Estimability issues</a></li>
 <li><a href="xplanations.html#joint_tests">Estimable functions</a></li>
-<li><a href="basics.html#EMMdef">Estimated marginal means</a>
+<li>Estimated marginal means
 <ul>
-<li><a href="basics.html#emmeans">Defined</a></li>
+<li><a href="basics.html#refgrid">Definition of</a></li>
+<li><a href="basics.html#emms">Demonstrated</a></li>
+<li><a href="basics.html#refgrid">Manually computed</a></li>
+<li><a href="basics.html#emms">Reference grid</a></li>
+<li><a href="basics.html#emms">vs. ordinary marginal means</a></li>
 </ul></li>
 <li>Examples
 <ul>
@@ -367,6 +393,7 @@ mcmc</em></a></li>
 <li><a href="transformations.html#cbpp">in <em>transformations:
 cbpp</em></a></li>
 </ul></li>
+<li><a href="sophisticated.html#random-slopes"><code>ChickWeight</code></a></li>
 <li><a href="re-engineering-clds.html#CLD-example">CLDs
 (simulated)</a></li>
 <li><a href="messy-data.html#cows"><code>cows</code></a></li>
@@ -381,13 +408,14 @@ stdize</em></a></li>
 <li><a href="messy-data.html#mediators"><code>framing</code></a></li>
 <li><a href="transformations.html#tranlink">Gamma regression</a></li>
 <li><a href="transformations.html#insects"><code>InsectSprays</code></a></li>
+<li><a href="xplanations.html#offsets"><code>Insurance</code></a></li>
 <li><a href="sophisticated.html#offsets">Insurance claims (SAS)</a></li>
 <li><a href="transformations.html#links">Logistic regression</a></li>
 <li><a href="xtending.html#lqs"><code>lqs</code> objects</a></li>
 <li><a href="basics.html#multiv"><code>MOats</code></a></li>
 <li><code>mtcars</code>
 <ul>
-<li><a href="basics.html#altering">in <em>basics: altering</em></a></li>
+<li><a href="basics.html#depcovs">in <em>basics: depcovs</em></a></li>
 <li><a href="messy-data.html#nuis.example">in <em>messy-data:
 nuis.example</em></a></li>
 </ul></li>
@@ -417,8 +445,7 @@ oranges</em></a></li>
 <li><a href="sophisticated.html#ordinal">Ordinal model</a></li>
 <li><code>pigs</code>
 <ul>
-<li><a href="basics.html#motivation">in <em>basics:
-motivation</em></a></li>
+<li><a href="basics.html#pigs">in <em>basics: pigs</em></a></li>
 <li><a href="confidence-intervals.html#summary">in
 <em>confidence-intervals: summary</em></a></li>
 <li><a href="transformations.html#altscale">in <em>transformations:
@@ -431,7 +458,7 @@ pigs-biasadj</em></a></li>
 <li><a href="xtending.html#rlm"><code>rlm</code> objects</a></li>
 <li><a href="xtending.html#rlm">Robust regression</a></li>
 <li><a href="sophisticated.html#lmer">Split-plot experiment</a></li>
-<li><a href="basics.html#motivation">Unbalanced data</a></li>
+<li><a href="basics.html#pigs">Unbalanced data</a></li>
 <li><code>warpbreaks</code>
 <ul>
 <li><a href="confidence-intervals.html#cross-adjust">in
@@ -445,6 +472,13 @@ relevel</em></a></li>
 comparisons</a></li>
 <li><a href="sophisticated.html#ordinal"><code>wine</code></a></li>
 </ul></li>
+<li>Expected marginal means
+<ul>
+<li><a href="basics.html#found">Foundations of</a></li>
+<li><a href="basics.html#models">Reliance on a model</a></li>
+</ul></li>
+<li><a href="basics.html#exper">Experimental versus observational
+data</a></li>
 <li><a href="basics.html#formatting">Exporting output</a></li>
 <li>Extending <strong>emmeans</strong>
 <ul>
@@ -468,6 +502,7 @@ developers</a></li>
 <li><a href="messy-data.html#weights">Mediating</a></li>
 </ul></li>
 <li><a href="basics.html#formatting">Formatting results</a></li>
+<li><a href="basics.html#found">Foundations of EMMs</a></li>
 <li><a href="FAQs.html">Frequently asked questions</a></li>
 </ul>
 <p><a href="#topnav">Back to top</a></p>
@@ -489,6 +524,7 @@ developers</a></li>
 <li><a href="basics.html#ggplot">in <em>basics: ggplot</em></a></li>
 <li><a href="messy-data.html#cows">in <em>messy-data: cows</em></a></li>
 </ul></li>
+<li><a href="basics.html#models">GIGO (garbage in, garbage out)</a></li>
 <li><a href="models.html#G"><code>glm</code><em>xxx</em> models</a></li>
 <li><a href="models.html#K"><code>gls</code> models</a></li>
 <li><a href="basics.html#plots">Graphical displays</a></li>
@@ -511,7 +547,9 @@ sets</a></li>
 <div id="i" class="section level3">
 <h3>I</h3>
 <ul>
+<li><a href="basics.html#RG">Indicator variables</a></li>
 <li><a href="FAQs.html#asymp">Infinite degrees of freedom</a></li>
+<li><a href="basics.html#emmip">Interaction-style plots</a></li>
 <li>Interactions
 <ul>
 <li><a href="interactions.html">Analysis</a></li>
@@ -523,6 +561,7 @@ factors</a></li>
 <li><a href="interactions.html#factors">Possible inappropriateness of
 marginal means</a></li>
 </ul></li>
+<li><a href="basics.html#pigs"><code>inverse()</code></a></li>
 </ul>
 <p><a href="#topnav">Back to top</a></p>
 </div>
@@ -559,6 +598,7 @@ contrasts</em></a></li>
 <li><a href="utilities.html#relevel">Changing</a></li>
 </ul></li>
 <li><a href="messy-data.html#nuisance">Large models</a></li>
+<li><a href="basics.html#exper">Latin squares</a></li>
 <li><a href="FAQs.html#what">Least-squares means</a></li>
 <li>Levels
 <ul>
@@ -574,9 +614,14 @@ contrasts</em></a></li>
 lmer</em></a></li>
 <li><a href="sophisticated.html#lmerOpts">System options for</a></li>
 </ul></li>
+<li>Logistic-like regression
+<ul>
+<li><a href="transformations.html#not-logit">Non-logit links</a></li>
+</ul></li>
 <li>Logistic regression
 <ul>
 <li><a href="transformations.html#oddsrats">Odds ratios</a></li>
+<li><a href="transformations.html#riskrats">Risk ratios</a></li>
 <li><a href="FAQs.html#transformations">Surprising results</a></li>
 </ul></li>
 <li>LSD
@@ -593,18 +638,8 @@ lmer</em></a></li>
 <li><a href="models.html#S"><code>mcmc</code> objects</a></li>
 <li>Means
 <ul>
-<li><a href="basics.html#motivation">Cell</a></li>
 <li><a href="transformations.html#bias-adj">Generalized</a></li>
-<li><a href="basics.html#motivation">Marginal</a>
-<ul>
-<li><a href="basics.html#EMMdef">Based on a model</a></li>
-<li><a href="basics.html#eqwts">of cell means</a></li>
-</ul></li>
-<li>Weighted
-<ul>
-<li><a href="basics.html#eqwts">in <em>basics: eqwts</em></a></li>
-<li><a href="basics.html#weights">in <em>basics: weights</em></a></li>
-</ul></li>
+<li><a href="basics.html#weights">Weighted</a></li>
 </ul></li>
 <li><a href="messy-data.html#mediators">Mediating covariates</a></li>
 <li><a href="messy-data.html#nuisance">Memory usage</a>
@@ -620,10 +655,20 @@ argument</a></li>
 <li>Model
 <ul>
 <li><a href="basics.html#recs2">Get it right first</a></li>
-<li><a href="FAQs.html#fastest">Importance of</a></li>
+<li>Importance of
+<ul>
+<li><a href="basics.html#models">in <em>basics: models</em></a></li>
+<li><a href="FAQs.html#fastest">in <em>FAQs: fastest</em></a></li>
+</ul></li>
 <li><a href="FAQs.html#nowelch">Importance of getting it right</a></li>
 </ul></li>
 <li><a href="models.html#I">Model averaging</a></li>
+<li>Modeling
+<ul>
+<li><a href="basics.html#pigs"><code>pigs</code> example</a></li>
+<li><a href="basics.html#pigs">Response transformation</a></li>
+</ul></li>
+<li><a href="basics.html#models">Modelling</a></li>
 <li>Models
 <ul>
 <li><a href="messy-data.html#submodels">Constrained</a></li>
@@ -679,9 +724,25 @@ output</a></li>
 <div id="o" class="section level3">
 <h3>O</h3>
 <ul>
-<li><a href="messy-data.html#issues">Observational data</a></li>
-<li><a href="transformations.html#oddsrats">Odds ratios</a></li>
-<li><a href="sophisticated.html#offsets">Offsets</a></li>
+<li>Observational data
+<ul>
+<li><a href="basics.html#weights">in <em>basics: weights</em></a></li>
+<li><a href="messy-data.html#issues">in <em>messy-data:
+issues</em></a></li>
+</ul></li>
+<li><a href="basics.html#exper">Observational versus experimental
+data</a></li>
+<li><a href="transformations.html#oddsrats">Odds ratios</a>
+<ul>
+<li><a href="FAQs.html#ratios">but I wanted differences</a></li>
+</ul></li>
+<li>Offsets
+<ul>
+<li><a href="sophisticated.html#offsets">Models with offsets</a></li>
+<li><a href="xplanations.html#offsets"><code>offset()</code> term
+vs. <code>offset</code> argument in model</a></li>
+</ul></li>
+<li><a href="AQuickStart.html#covar">Only one mean</a></li>
 <li><a href="utilities.html#digits"><code>opt.digits</code>
 option</a></li>
 <li><a href="utilities.html#options">Options</a>
@@ -711,6 +772,11 @@ ordinal</em></a></li>
 <li><a href="basics.html#pvalues">Interpreting</a></li>
 </ul></li>
 <li><a href="comparisons.html#pairwise"><code>pairs()</code></a></li>
+<li><code>pairwise ~ factors</code>
+<ul>
+<li><a href="AQuickStart.html#pairwise">Why you should avoid
+this</a></li>
+</ul></li>
 <li><a href="comparisons.html#pairwise">Pairwise comparisons</a>
 <ul>
 <li><a href="comparisons.html#pwpm">Matrix displays</a></li>
@@ -722,7 +788,7 @@ plots</a></li>
 <li><a href="basics.html#params"><code>params</code></a></li>
 <li><a href="transformations.html#altscale">Percentage
 differences</a></li>
-<li><code>plot()</code>
+<li><a href="basics.html#plots"><code>plot()</code></a>
 <ul>
 <li><a href="messy-data.html#cows">nested factors</a></li>
 </ul></li>
@@ -731,6 +797,8 @@ differences</a></li>
 <ul>
 <li><a href="basics.html#plot.emmGrid">of confidence intervals</a></li>
 <li><a href="basics.html#plots">of EMMs</a></li>
+<li><a href="basics.html#ggplot">Enhancing with <strong>ggplot2</strong>
+functions</a></li>
 <li><a href="basics.html#plots">Interaction-style</a></li>
 </ul></li>
 <li><a href="utilities.html#rbind"><code>+</code> operator</a></li>
@@ -769,6 +837,11 @@ distribution</a></li>
 <li><a href="predictions.html#feedlot">Total SD</a></li>
 </ul></li>
 <li><a href="basics.html#emmobj"><code>print.summary_emm()</code></a></li>
+<li>Probit regression
+<ul>
+<li><a href="transformations.html#not-logit">Odds or risk
+ratios</a></li>
+</ul></li>
 <li><a href="comparisons.html#pwpm"><code>pwpm()</code></a></li>
 <li><a href="comparisons.html#pwpp"><code>pwpp()</code></a></li>
 </ul>
@@ -779,14 +852,27 @@ distribution</a></li>
 <ul>
 <li><a href="FAQs.html#qdrg"><code>qdrg()</code></a></li>
 <li><a href="basics.html#depcovs">Quadratic terms</a></li>
-<li><a href="FAQs.html#fastest">Quick start</a></li>
+<li><a href="AQuickStart.html">Quick-start guide</a></li>
 </ul>
 <p><a href="#topnav">Back to top</a></p>
 </div>
 <div id="r" class="section level3">
 <h3>R</h3>
 <ul>
+<li><a href="basics.html#pigs">R-squared</a></li>
+<li>Random predictors
+<ul>
+<li><a href="sophisticated.html#random-slopes">Accessing levels</a></li>
+</ul></li>
+<li>Random slopes
+<ul>
+<li><a href="sophisticated.html#random-slopes">Bias adjustment</a></li>
+</ul></li>
 <li><a href="xplanations.html#joint_tests">Rank deficiency</a></li>
+<li>Ratios
+<ul>
+<li><a href="FAQs.html#ratios">but I wanted differences</a></li>
+</ul></li>
 <li><a href="utilities.html#rbind"><code>rbind()</code></a></li>
 <li><a href="utilities.html#relevel">Re-labeling</a></li>
 <li><a href="basics.html#recs1">Recommended practices</a></li>
@@ -805,20 +891,30 @@ distribution</a></li>
 <ul>
 <li><a href="xtending.html#rdargs"><code>frame</code> argument</a></li>
 </ul></li>
-<li><a href="basics.html#ref_grid"><code>ref_grid()</code></a>
+<li><a href="basics.html#RG"><code>ref_grid()</code></a>
 <ul>
-<li><a href="basics.html#altering"><code>at</code></a></li>
-<li><a href="basics.html#altering"><code>cov.keep</code></a></li>
-<li><a href="basics.html#altering"><code>cov.reduce</code></a></li>
+<li><a href="basics.html#RG"><code>at</code></a></li>
+<li><code>cov.reduce</code>
+<ul>
+<li><a href="basics.html#plot.emmGrid">in <em>basics:
+plot.emmGrid</em></a></li>
+<li><a href="basics.html#RG">in <em>basics: RG</em></a></li>
+</ul></li>
 <li><a href="basics.html#multiv"><code>mult.name</code></a></li>
 <li><a href="messy-data.html#nest-trap"><code>nesting</code></a></li>
 <li><a href="sophisticated.html#offsets"><code>offset</code></a></li>
-<li><a href="transformations.html#regrid"><code>regrid</code>
+<li><a href="transformations.html#regrid2"><code>regrid</code>
 argument</a></li>
 </ul></li>
-<li><a href="basics.html#ref_grid">Reference grids</a>
+<li><a href="basics.html#emms">Reference grid</a>
 <ul>
-<li><a href="basics.html#altering">Altering</a></li>
+<li><a href="basics.html#RG">Covariates</a></li>
+<li><a href="basics.html#RG">Defined</a></li>
+<li><a href="basics.html#RG">Indicator variables</a></li>
+<li><a href="basics.html#refgrid">Predictions on</a></li>
+</ul></li>
+<li>Reference grids
+<ul>
 <li><a href="predictions.html#ref-grid">Prediction on</a></li>
 </ul></li>
 <li><a href="sophisticated.html#bayesxtra">Region of practical
@@ -829,15 +925,22 @@ equivalence</a></li>
 argument</a></li>
 <li><a href="transformations.html#regrid"><code>regrid()</code></a>
 <ul>
-<li><a href="transformations.html#regrid"><code>regrid</code>
+<li><a href="transformations.html#not-logit">probit or other lon-logit
+models</a></li>
+<li><a href="transformations.html#regrid2"><code>regrid</code>
 vs. <code>type</code></a></li>
+<li><a href="transformations.html#riskrats">to obtain risk
+ratios</a></li>
 <li><a href="transformations.html#logs"><code>transform = &quot;log&quot;</code></a></li>
 </ul></li>
+<li><a href="basics.html#pigs">Residual plots</a></li>
 <li><a href="confidence-intervals.html#tran">Response scale</a></li>
+<li><a href="basics.html#transf">Response transformations</a></li>
 <li><a href="comparisons.html#contrasts"><code>revpairwise</code>
 contrasts</a></li>
 <li><a href="messy-data.html#rg.limit"><code>rg.limit</code>
 option</a></li>
+<li><a href="transformations.html#riskrats">Risk ratios</a></li>
 <li><a href="basics.html#formatting">RMarkdown</a></li>
 <li><a href="sophisticated.html#bayesxtra">ROPE</a></li>
 <li><a href="xtending.html#rsm"><strong>rsm</strong> package</a></li>
@@ -877,6 +980,7 @@ interactions</em></a></li>
 <li><a href="interactions.html#simple">in <em>interactions:
 simple</em></a></li>
 </ul></li>
+<li><a href="basics.html#emms">Simpson’s paradox</a></li>
 <li><code>specs</code>
 <ul>
 <li><a href="comparisons.html#formulas">Formula</a></li>
@@ -952,7 +1056,8 @@ tests</a></li>
 <li><a href="confidence-intervals.html#summary">One- and
 two-sided</a></li>
 </ul></li>
-<li>Transformations
+<li><a href="AQuickStart.html#covar">Too few means</a></li>
+<li><a href="basics.html#transf">Transformations</a>
 <ul>
 <li><a href="transformations.html#after">Adding after the fact</a></li>
 <li><a href="transformations.html#auto">Auto-detected</a></li>
@@ -986,6 +1091,7 @@ contrasts</a></li>
 <li><a href="FAQs.html#notukey">Ignored or changed</a></li>
 </ul></li>
 <li><a href="confidence-intervals.html#tran"><code>type</code></a></li>
+<li><a href="basics.html#transf"><code>type = &quot;response&quot;</code></a></li>
 <li><a href="transformations.html#trangraph"><code>type = &quot;scale&quot;</code></a></li>
 <li><a href="messy-data.html#type2submodel">Type II analysis</a></li>
 <li>Type III tests
@@ -1022,7 +1128,6 @@ predictors</a></li>
 <li><a href="xtending.html#hooks"><code>vcovHook</code></a></li>
 <li>Vignettes
 <ul>
-<li><a href="basics.html">Basics</a></li>
 <li><a href="comparisons.html">Comparisons</a></li>
 <li><a href="confidence-intervals.html">Confidence intervals and
 tests</a></li>
@@ -1045,6 +1150,10 @@ functions</a></li>
 <div id="w" class="section level3">
 <h3>W</h3>
 <ul>
+<li>Weighting
+<ul>
+<li><a href="basics.html#exper">Equal weights</a></li>
+</ul></li>
 <li><a href="messy-data.html#weights"><code>weights</code></a></li>
 <li><a href="FAQs.html#nowelch">Welch’s <em>t</em> comparisons</a>
 <ul>

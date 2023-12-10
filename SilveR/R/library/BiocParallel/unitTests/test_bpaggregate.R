@@ -1,3 +1,5 @@
+message("Testing bpaggregate")
+
 test_bpaggregate <- 
     function() 
 {
@@ -30,9 +32,9 @@ test_bpaggregate_formula <-
         as.character(iris1$Species) 
     x1 <- aggregate(f, data=iris1, FUN=sum)
     x2 <- bpaggregate(f, data = iris1, FUN = sum)
-    checkIdentical(x1, x2)
+    checkEquals(x1, x2)
 
     iris1 <- iris1[sample(nrow(iris1)),]
     x3 <- bpaggregate(f, data = iris1, FUN = sum)
-    checkIdentical(x2, x3)
+    checkEquals(x2, x3)
 }

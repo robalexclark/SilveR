@@ -40,10 +40,10 @@ Scroll down or follow the links to those groups for more information.
 |:------------|:--------|:-------:|:------------------------------------------------------------|
 |aov          |stats    |[A](#A)  |                                                             |
 |aovList      |stats    |[V](#V)  |Best with balanced designs, orthogonal coding                |
-|averaging    |MuMIn    |[I](#I)  |                                                             |
+|averaging    |MuMIn    |[I](#I)  |`formula`, `subset` (see details)                            |
 |betareg      |betareg  |[B](#B)  |`mode = c("link", "precision", "phi.link",`                  |
 |             |         |         |`  "variance", "quantile")`                                  |
-|brmsfit      |brms     |[P](#P)  |Supported in **brms** package                                          |
+|brmsfit      |brms     |[P](#P)  |Supported in **brms** package                                |
 |carbayes     |CARBayes |[S](#S)  |`data` is required                                           |
 |clm          |ordinal  |[O](#O)  |`mode = c("latent", "linear.predictor", "cum.prob",`         |
 |             |         |         |`  "exc.prob", "prob", "mean.class", "scale")`               |
@@ -60,11 +60,11 @@ Scroll down or follow the links to those groups for more information.
 |             |         |         |`"vbeta.fij", "robust", "naive")` or a matrix                |
 |geese        |geepack  |[E](#E)  |Like `geeglm`                                                |
 |glm          |stats    |[G](#G)  |                                                             |
-|glm.nb       |MASS     |[G](#G)  |                                     |
+|glm.nb       |MASS     |[G](#G)  |                                                             |
 |glmerMod     |lme4     |[G](#G)  |                                                             |
 |glmmadmb     |glmmADMB |         |No longer supported                                          |
 |glmmPQL      |MASS     |[G](#G)  |inherits `lm` support                                        |
-|glmmTMB      |glmmTMB  |[P](#P)  |Supported in **glmmTMB** package (dev. version only?)        |
+|glmmTMB      |glmmTMB  |[P](#P)  |Supported in **glmmTMB** package                             |
 |gls          |nlme     |[K](#K)  |`mode = c("auto", "df.error", "satterthwaite", "asymptotic")`|
 |gnls         |nlme     |[A](#A)  |Supports `params` part. Requires `param = "<name>"`          |
 |hurdle       |pscl     |[C](#C)  |`mode = c("response", "count", "zero", "prob0"),`            |
@@ -76,18 +76,21 @@ Scroll down or follow the links to those groups for more information.
 |lmerMod      |lme4     |[L](#L)  |`lmer.df = c("kenward-roger", "satterthwaite", "asymptotic")`, |
 |             |         |         |`pbkrtest.limit = 3000`,  `disable.pbkrtest = FALSE`.        |
 |             |         |         |`emm_options(lmer.df =, pbkrtest.limit =, disable.pbkrtest =)` |
+|logistf      |glmmTMB  |[P](#P)  |Supported in **logistf** package                             |
 |lqm,lqmm     |lqmm     |[Q](#Q)  |`tau = "0.5"` (must match an entry in `object$tau`)          |
 |             |         |         |Optional: `method`, `R`, `seed`, `startQR` (must be fully spelled-out) |
 |manova       |stats    |[M](#M)  |`mult.name`, `mult.levs`                                     |
 |maov         |stats    |[M](#M)  |`mult.name`, `mult.levs`                                     |
-|mblogit      |mclogit  |[P](#P)  |Supported in **mclogit** (overrides previous minimal support here)  |
+|mblogit      |mclogit  |[N](#N)  |`mode = c("prob", "latent")`                                 |
+|             |         |         |Always include response in specs for `emmeans()`
 |mcmc         |mcmc     |[S](#S)  |May require `formula`, `data`                                |
-|MCMCglmm     |MCMCglmm |[S](#S)  |(see also [M](#M#))  `mult.name`, `mult.levs`, `trait`,              |
+|MCMCglmm     |MCMCglmm |[S](#S)  |(see also [M](#M#))  `mult.name`, `mult.levs`, `trait`,      |
 |             |         |         |`mode = c("default", "multinomial")`; `data` is required     |
 |mira         |mice     |[I](#I)  |Optional arguments per class of `$analyses` elements         |
 |mixed        |afex     |[P](#P)  |Supported in **afex** package                                |
 |mlm          |stats    |[M](#M)  |`mult.name`, `mult.levs`                                     |
 |mmer         |sommer   |[G](#G)  |                                                             |
+|mmrm         |mmrm     |[P](#P)  |Supported in the **mmrm** package                            |
 |multinom     |nnet     |[N](#N)  |`mode = c("prob", "latent")`                                 |
 |             |         |         |Always include response in specs for `emmeans()`             |
 |nauf         |nauf.*xxx* |[P](#P)  |Supported in **nauf** package                              |
@@ -104,7 +107,7 @@ Scroll down or follow the links to those groups for more information.
 |stanreg      |rstanarm |[S](#S)  |Args for `stanreg_`*xxx* similar to those for *xxx*          |
 |survreg      |survival |[A](#A)  |                                                             |
 |svyglm       |survey   |[A](#A)  |                                                             |
-|svyolr       |survey   |[O](#O)  |Piggybacks on `polr` support         |
+|svyolr       |survey   |[O](#O)  |Piggybacks on `polr` support                                 |
 |zeroinfl     |pscl     |[C](#C)  |`mode = c("response", "count", "zero", "prob0")`,            |
 |             |         |         |`lin.pred = c(FALSE, TRUE)`                                  |
 
@@ -228,7 +231,10 @@ a smoothing method like `pb()`.
 These objects are the results of fitting several models with different predictor
 subsets or imputed values. The `bhat` and `V` slots are obtained via averaging
 and, in the case of multiple imputation, adding a multiple of the between-imputation 
-covariance per Rubin's rules. 
+covariance per Rubin's rules. In the case of `mira` models with model classes not
+supported by **emmeans**, [GitHub issue #446](https://github.com/rvlenth/emmeans/issues/446) 
+includes a function `pool_estimates_for_qdrg()` that may be useful for obtaining
+results via `qdrg()`.
 
 Support for `MuMIn::averaging` objects may be somewhat dodgy, as it is not clear
 that all supported model classes will work. The object *must* have a
@@ -239,6 +245,12 @@ argument in the call to `emmeans()` or `ref_grid()`. Only ``full'' averaging is
 supported; conditional averaging can result in non-positive-definite covariance
 matrices, and so cannot be considered. No estimability checking is done at
 present (not clear what we even mean by it).
+
+Also, be aware that support for `averaging` objects does *not* pay attention to the class of the models being averaged (nor any `emmeans` options associated with that class, such as alternative modes or d.f. methods), and that you can only obtain direct results of linear predictions or back-transformations thereof (`type = "response"`). It does *not* take apart multivariate models, nor multiple-intercept models (e.g. ordinal ones). (But keep reading...)
+
+Finally, note that special care is needed with models having multiple components (e.g. hurdle models), where there is essentially more than one set of coefficients. We can handle only one at a time. A `subset` argument must be provided to specify which coefficients to use; that can be a *named* vector of integers (where the names are the names of the actual model terms), or the special character values `"prefix:pfx"`, `"pfx"`, or `wrap:wrp` which picks out all coefficients whose names are prefixed by `pfx` (e.g., `pfxtrtB`) or wrapped by `wrp` (e.g., `wrp(trtB)`). A `formula` option is also available for specifying an appropriate formula other than `object$formula` when that is not suitable.
+
+In many cases (especially with multivariate or ordinal models), you are better off making a copy of one of the averaged models that has all required terms, and hacking that object by replacing the coefficients by `coef(object, full = TRUE)` and the covariance matrix by `vcov(object, full = TRUE)`. You need to be careful to match the names of the coefficients correctly, and to use the same indexes to permute the rows and columns of the covariance matrix. You then use the `emmeans` support, including any options available, for the class of the model object, rather than for class `averaging`. An example is given towards the end of [Issue 442](https://github.com/rvlenth/emmeans/issues/442).
 
 
 ## Group K -- `gls` and `lme` models {#K}
@@ -340,7 +352,13 @@ expressed as combinations of the named factor levels via the function
 ## N - Multinomial responses {#N}
 <!-- @index `mlm` models; Multinomial models -->
 The reference grid includes a pseudo-factor with the same name and levels as
-the multinomial response. There is an optional `mode` argument which
+the multinomial response. (If the response is an expression, the name of that pseudo-factor
+will be the first name in the expression; e.g., if the model formula is 
+`cbind(col1, col2) ~ trt`, the grid factors will be `cbind` and `trt` and the
+levels of `cbind` will be `1` and `2`.) (You can change the assigned name for the
+multinomial response via the `mult.resp` argument.)
+
+There is an optional `mode` argument which
 should match `"prob"` or `"latent"`. With `mode = "prob"`, the
 reference-grid predictions consist of the estimated multinomial
 probabilities. The `"latent"` mode returns the linear predictor,

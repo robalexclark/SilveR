@@ -40,6 +40,7 @@ Function.rms	Function
 gendata	gendata
 Getlim	rmsMisc
 Getlimi	rmsMisc
+ggplot	importexport
 ggplot.Predict	ggplot.Predict
 gIndex	gIndex
 Glm	Glm
@@ -82,7 +83,9 @@ lrm	lrm
 lrm.fit	lrm.fit
 lrm.fit.bare	lrm.fit.bare
 lrtest	rmsMisc
+LRupdate	LRupdate
 lsp	rms.trans
+makepredictcall.rms	rms.trans
 matinv	matinv
 matrx	rms.trans
 Mean.cph	cph
@@ -179,8 +182,11 @@ print.val.prob	val.prob
 print.val.survh	val.surv
 print.validate	validate
 print.validate.rpart	validate.rpart
+prmiInfo	prmiInfo
 prModFit	rmsMisc
 probabilityFamilies	rms-internal
+processMI	processMI
+processMI.fit.mult.impute	processMI.fit.mult.impute
 prStats	rmsMisc
 prType	rms-internal
 psm	psm
@@ -194,6 +200,7 @@ reListclean	rmsMisc
 removeFormulaTerms	rmsMisc
 residuals.bj	bj
 residuals.cph	residuals.cph
+residuals.Glm	residuals.Glm
 residuals.lrm	residuals.lrm
 residuals.ols	residuals.ols
 residuals.orm	residuals.lrm
@@ -216,6 +223,7 @@ specs	specs.rms
 specs.rms	specs.rms
 strat	rms.trans
 summary.rms	summary.rms
+Surv	importexport
 survdiffplot	survplot
 survest	survest.cph
 survest.cph	survest.cph
@@ -256,3 +264,4 @@ vcov.psm	rmsMisc
 vcov.rms	rmsMisc
 vif	vif
 which.influence	which.influence
+Xcontrast	Xcontrast

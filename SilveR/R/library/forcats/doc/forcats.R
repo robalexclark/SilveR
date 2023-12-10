@@ -10,14 +10,27 @@ library(ggplot2)
 library(forcats)
 
 ## ----initial-plot-------------------------------------------------------------
-ggplot(starwars, aes(x = hair_color)) + 
-  geom_bar() + 
-  coord_flip()
+ggplot(starwars, aes(y = hair_color)) + 
+  geom_bar()
 
 ## ----fct-infreq-hair----------------------------------------------------------
-ggplot(starwars, aes(x = fct_infreq(hair_color))) + 
+ggplot(starwars, aes(y = fct_infreq(hair_color))) + 
+  geom_bar()
+
+## -----------------------------------------------------------------------------
+f <- factor(c("x", "y", NA))
+levels(f)
+is.na(f)
+
+## -----------------------------------------------------------------------------
+f <- factor(c("x", "y", NA), exclude = NULL)
+levels(f)
+is.na(f)
+
+## -----------------------------------------------------------------------------
+ggplot(starwars, aes(y = fct_infreq(fct_na_value_to_level(hair_color)))) + 
   geom_bar() + 
-  coord_flip()
+  labs(y = "Hair color")
 
 ## -----------------------------------------------------------------------------
 starwars %>%

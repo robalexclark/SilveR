@@ -1,4 +1,15 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# hms 1.1.3
+
+## Bug fixes
+
+- Fix method consistency, checked by R-devel.
+
+## Internal
+
+- Use rlang instead of ellipsis (#106).
+
 
 # hms 1.1.2
 

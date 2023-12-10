@@ -6,27 +6,27 @@ knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
 pigs.lm <- lm(log(conc) ~ source + factor(percent), data = pigs)
 
 ## -------------------------------------------------------------------------------------------------
-pigs.emm.s <- emmeans(pigs.lm, "source")
-str(pigs.emm.s)
+emm.src <- emmeans(pigs.lm, "source")
+str(emm.src)
 
 ## -------------------------------------------------------------------------------------------------
-summary(pigs.emm.s, infer = TRUE, null = log(35))
+summary(emm.src, infer = TRUE, null = log(35))
 
 ## -------------------------------------------------------------------------------------------------
-summary(pigs.emm.s, infer = TRUE, null = log(35), type = "response")
+summary(emm.src, infer = TRUE, null = log(35), type = "response")
 
 ## -------------------------------------------------------------------------------------------------
-str(regrid(pigs.emm.s))
+str(regrid(emm.src))
 
-summary(regrid(pigs.emm.s), infer = TRUE, null = 35)
+summary(regrid(emm.src), infer = TRUE, null = 35)
 
 ## -------------------------------------------------------------------------------------------------
 pigs.rg <- ref_grid(pigs.lm)
-pigs.remm.s <- emmeans(regrid(pigs.rg), "source")
-summary(pigs.remm.s, infer = TRUE, null = 35)
+remm.src <- emmeans(regrid(pigs.rg), "source")
+summary(remm.src, infer = TRUE, null = 35)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  pigs.remm.s <- emmeans(pigs.lm, "source", regrid = "response")
+#  remm.src <- emmeans(pigs.lm, "source", regrid = "response")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  emmeans(pigs.lm, "source", type = "response")
@@ -39,22 +39,22 @@ neuralgia.emm
 ## -------------------------------------------------------------------------------------------------
 pairs(neuralgia.emm, reverse = TRUE)
 
-## -------------------------------------------------------------------------------------------------
+## ----fig.alt = "Interaction-plot display of the results of emmeans(neuralgia.glm, ~ Treatment | Sex)"----
 emmip(neuralgia.glm, Sex ~ Treatment)
 
-## ---- fig.height = 1.5----------------------------------------------------------------------------
+## ---- fig.height = 1.5, fig.alt = c("Plot A: Display of the results of confint(neur.Trt.emm)", 'Plot B: Display of the results of confint(neur.Trt.emm, type = "response"). These intervals are markedly skewed right|left for low|high estimated probabilities')----
 neur.Trt.emm <- suppressMessages(emmeans(neuralgia.glm, "Treatment"))
 plot(neur.Trt.emm)   # Link scale by default
 plot(neur.Trt.emm, type = "response")
 
-## ---- fig.height = 1.5----------------------------------------------------------------------------
+## ---- fig.height = 1.5, fig.alt = "Plot C: On the inside, this plot looks exactly like Plot A above, but the scale is transformed to show the values in Plot B. However, there are not enough tick marks."----
 plot(neur.Trt.emm, type = "scale")
 
-## ---- fig.height = 1.5----------------------------------------------------------------------------
+## ---- fig.height = 1.5, fig.alt = "Plot D: Same as Plot C except there are more tick marks so we can discern the values better"----
 plot(neur.Trt.emm, type = "scale", breaks = seq(0.10, 0.90, by = 0.10),
      minor_breaks = seq(0.05, 0.95, by = 0.05))
 
-## ---- fig.height = 1.5----------------------------------------------------------------------------
+## ---- fig.height = 1.5, fig.alt = "Plot E: An alternative to Plot D using an arcsin scaling. This scale is less nonlinear than in plot D so the intervals are somewhat skewed, but less so than plot B"----
 plot(neur.Trt.emm, type = "response") +
   ggplot2::scale_x_continuous(trans = scales::asn_trans(),
                               breaks = seq(0.10, 0.90, by = 0.10))
@@ -86,12 +86,24 @@ emmeans(warp.glm, ~ tension | wool, type = "unlink")
 
 ## -------------------------------------------------------------------------------------------------
 pigroot.lm <- lm(sqrt(conc) ~ source + factor(percent), data = pigs)
-piglog.emm.s <- regrid(emmeans(pigroot.lm, "source"), transform = "log")
-confint(piglog.emm.s, type = "response")
-pairs(piglog.emm.s, type = "response")
+logemm.src <- regrid(emmeans(pigroot.lm, "source"), transform = "log")
+confint(logemm.src, type = "response")
+pairs(logemm.src, type = "response")
 
 ## ---- eval = FALSE--------------------------------------------------------------------------------
 #  regrid(emm, transform = "probit")
+
+## -------------------------------------------------------------------------------------------------
+log.emm <- regrid(neuralgia.emm, "log")
+
+## -------------------------------------------------------------------------------------------------
+pairs(log.emm, reverse = TRUE, type = "response")
+
+## -------------------------------------------------------------------------------------------------
+neuralgia.prb <- glm(Pain ~ Treatment * Sex + Age, family = binomial(link = "probit"), 
+                     data = neuralgia)
+prb.emm <- suppressMessages(emmeans(neuralgia.prb, "Treatment"))
+pairs(regrid(prb.emm, "logit"), type = "response", reverse = TRUE)
 
 ## -------------------------------------------------------------------------------------------------
 pct.diff.tran <- list(
@@ -101,8 +113,13 @@ pct.diff.tran <- list(
     name = "log(pct.diff)"
 )
 
-update(pairs(piglog.emm.s, type = "response"), 
-       tran = pct.diff.tran, inv.lbl = "pct.diff")
+update(pairs(logemm.src, type = "response"), 
+       tran = pct.diff.tran, inv.lbl = "pct.diff", adjust = "none",
+       infer = c(TRUE, TRUE))
+
+## -------------------------------------------------------------------------------------------------
+contrast(regrid(pairs(logemm.src)), "identity", scale = 100, offset = -100,
+         infer = c(TRUE, TRUE))
 
 ## ---- message = FALSE-----------------------------------------------------------------------------
 fiber.lm <- lm(scale(strength) ~ machine * scale(diameter), data = fiber)
@@ -146,12 +163,14 @@ emmeans(fib.lm, "machine", regrid = tran)
 sigma(pigs.lm)
 
 ## -------------------------------------------------------------------------------------------------
-summary(pigs.emm.s, type = "response", bias.adj = TRUE)
+summary(emm.src, type = "response", bias.adj = TRUE)
 
 ## -------------------------------------------------------------------------------------------------
 ismod <- glm(count ~ spray, data = InsectSprays, family = poisson())
-emmeans(ismod, "spray", type = "response", bias.adj = FALSE)
-emmeans(ismod, "spray", type = "response", bias.adj = TRUE)
+emmeans(ismod, "spray", type = "response")
+
+## ----eval = FALSE---------------------------------------------------------------------------------
+#  emmeans(ismod, "spray", type = "response", bias.adj = TRUE)
 
 ## -------------------------------------------------------------------------------------------------
 with(InsectSprays, tapply(count, spray, mean))

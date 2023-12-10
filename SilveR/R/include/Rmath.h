@@ -50,7 +50,7 @@
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
 
-#define R_VERSION_STRING "4.2.1"
+#define R_VERSION_STRING "4.3.1"
 
 // Legacy defines -- C99 functions which R >= 3.5.0 requires
 #ifndef HAVE_EXPM1
@@ -426,14 +426,14 @@ double	pnchisq(double, double, double, int, int);
 double	qnchisq(double, double, double, int, int);
 double	rnchisq(double, double);
 
-	/* F Distibution */
+	/* F Distribution */
 
 double	df(double, double, double, int);
 double	pf(double, double, double, int, int);
 double	qf(double, double, double, int, int);
 double	rf(double, double);
 
-	/* Student t Distibution */
+	/* Student t Distribution */
 
 double	dt(double, double, int);
 double	pt(double, double, int, int);
@@ -473,7 +473,7 @@ double	pgeom(double, double, int, int);
 double	qgeom(double, double, int, int);
 double	rgeom(double);
 
-	/* Hypergeometric Distibution */
+	/* Hypergeometric Distribution */
 
 double	dhyper(double, double, double, double, int);
 double	phyper(double, double, double, double, int, int);

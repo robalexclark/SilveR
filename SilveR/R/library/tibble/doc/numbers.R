@@ -37,7 +37,7 @@ markets <-
 
 markets
 markets %>%
-  mutate(across(-time, num, digits = 3))
+  mutate(across(-time, ~ num(.x, digits = 3)))
 
 ## ----numbers-13---------------------------------------------------------------
 num(1) + 2
@@ -55,7 +55,7 @@ sin(num(1:3, label = "%", scale = 100))
 
 ## ----numbers-15---------------------------------------------------------------
 num(1:3 + 0.125, digits = 4)
-transf <- 10 ^ num(1:3 + 0.125, digits = 4)
+transf <- 10^num(1:3 + 0.125, digits = 4)
 transf
 num(transf, sigfig = 3)
 

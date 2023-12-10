@@ -1,7 +1,7 @@
 Package: spatial
 Priority: recommended
-Version: 7.3-15
-Date: 2022-01-12
+Version: 7.3-17
+Date: 2023-07-20
 Depends: R (>= 3.0.0), graphics, stats, utils
 Suggests: MASS
 Authors@R: c(person("Brian", "Ripley", role = c("aut", "cre", "cph"),
@@ -15,13 +15,12 @@ ByteCompile: yes
 License: GPL-2 | GPL-3
 URL: http://www.stats.ox.ac.uk/pub/MASS4/
 NeedsCompilation: yes
-Packaged: 2022-01-13 05:06:39 UTC; ripley
+Packaged: 2023-07-20 14:41:40 UTC; ripley
 Author: Brian Ripley [aut, cre, cph],
   Roger Bivand [ctb],
   William Venables [cph]
 Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
 Repository: CRAN
-Date/Publication: 2022-01-16 10:25:16 UTC
-Built: R 4.2.1; x86_64-w64-mingw32; 2022-06-23 09:49:57 UTC; windows
-ExperimentalWindowsRuntime: ucrt
+Date/Publication: 2023-07-20 15:08:46 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:46:03 UTC; windows
 Archs: x64

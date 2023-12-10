@@ -1,5 +1,9 @@
+# rstudioapi 0.15.0
 
-# rstudioapi 0.14 (UNRELEASED)
+* Added `getDelegatedAzureToken` for Posit Workbench users needing to expose 
+  OAuth2 tokens for Azure services that have already had permissions configured
+
+# rstudioapi 0.14
 
 * `documentPath()` now marks the encoding of file paths as UTF-8. (#257)
 

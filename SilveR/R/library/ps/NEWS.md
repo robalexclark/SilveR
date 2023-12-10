@@ -1,3 +1,16 @@
+# ps 1.7.5
+
+# ps 1.7.4
+
+* `ps::ps_get_cpu_affinity()` now works for other processes on Linux, not only
+  the calling process.
+
+# ps 1.7.3
+
+* The output of `ps_disk_usage()`, `ps_disk_partitions()` and
+  `ps_shared_lib_users()` now do not include a spurious `stringsAsFactors`
+  column.
+
 # ps 1.7.2
 
 * `ps_system_memory()$percent` now returns a number scaled between 0 and 100

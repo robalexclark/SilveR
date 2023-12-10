@@ -141,14 +141,3 @@ by_species %>%
   filter(!is.na(height)) %>% 
   slice_min(height, n = 2)
 
-## ----cur_data-----------------------------------------------------------------
-by_species %>%
-  filter(n() > 1) %>% 
-  mutate(mod = list(lm(mass ~ height, data = cur_data())))
-
-## ----cur_group_id-------------------------------------------------------------
-by_species %>%
-  arrange(species) %>% 
-  select(name, species, homeworld) %>% 
-  mutate(id = cur_group_id())
-

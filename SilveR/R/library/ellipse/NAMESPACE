@@ -1,4 +1,4 @@
-export(ellipse,plotcorr,pairs)
+export(ellipse,plotcorr,pairs_profile, pairs)
   
 importFrom("graphics", "axis", "box", "lines", "mtext", "par", "plot",
              "plot.new", "polygon", "strwidth", "text")

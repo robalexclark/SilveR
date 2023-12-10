@@ -98,7 +98,7 @@ plot.discrete_distr <- function(x, ...) {
 theme_custom <- function(...) {
   theme_grey(...) %+replace% 
     theme(
-      panel.border = element_rect(size = 1, fill = NA),
+      panel.border = element_rect(linewidth = 1, fill = NA),
       panel.background = element_blank(),
       panel.grid = element_line(colour = "grey80")
     )

@@ -344,27 +344,27 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2>Detecting RStudio</h2>
 <p>R code may need to determine whether it’s being run within an RStudio
 session, versus a plain R session or something similar.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check that RStudio is available via rstudioapi -- note that this must</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># be checked prior to calling any other rstudioapi APIs!</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (rstudioapi<span class="sc">::</span><span class="fu">isAvailable</span>()) {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># determine more information via </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  info <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">versionInfo</span>()</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># check for desktop mode</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  info<span class="sc">$</span>mode <span class="sc">==</span> <span class="st">&quot;desktop&quot;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># check for server mode</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  info<span class="sc">$</span>mode <span class="sc">==</span> <span class="st">&quot;server&quot;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># check the version of RStudio in use</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  info<span class="sc">$</span>version <span class="sc">&gt;=</span> <span class="st">&quot;1.4&quot;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># check whether RStudio is running without relying on rstudioapi</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>.Platform<span class="sc">$</span>GUI <span class="sc">==</span> <span class="st">&quot;RStudio&quot;</span>  <span class="co"># </span><span class="al">NOTE</span><span class="co">: may be unreliable in .Rprofile</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">commandArgs</span>()[[<span class="dv">1</span>]] <span class="sc">==</span> <span class="st">&quot;RStudio&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># check that RStudio is available via rstudioapi -- note that this must</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># be checked prior to calling any other rstudioapi APIs!</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="cf">if</span> (rstudioapi<span class="sc">::</span><span class="fu">isAvailable</span>()) {</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="co"># determine more information via </span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  info <span class="ot">&lt;-</span> rstudioapi<span class="sc">::</span><span class="fu">versionInfo</span>()</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  </span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="co"># check for desktop mode</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  info<span class="sc">$</span>mode <span class="sc">==</span> <span class="st">&quot;desktop&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  </span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="co"># check for server mode</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  info<span class="sc">$</span>mode <span class="sc">==</span> <span class="st">&quot;server&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  </span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="co"># check the version of RStudio in use</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  info<span class="sc">$</span>version <span class="sc">&gt;=</span> <span class="st">&quot;1.4&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  </span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>}</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co"># check whether RStudio is running without relying on rstudioapi</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>.Platform<span class="sc">$</span>GUI <span class="sc">==</span> <span class="st">&quot;RStudio&quot;</span>  <span class="co"># </span><span class="al">NOTE</span><span class="co">: may be unreliable in .Rprofile</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="fu">commandArgs</span>()[[<span class="dv">1</span>]] <span class="sc">==</span> <span class="st">&quot;RStudio&quot;</span></span></code></pre></div>
 <p>A note: the <code>RSTUDIO</code> environment variable will be set
 both within the main RStudio session, but also within child processes
 launched by RStudio. If you need to specifically detect if your code is
@@ -376,11 +376,11 @@ mechanism.</p>
 <p>The <code>rstudioapi</code> package allows you to interact with the
 running R session in a couple useful ways: you can send code to the R
 console, or restart the R session.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># restart R, then run some code after</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">restartSession</span>(<span class="at">command =</span> <span class="st">&quot;print(&#39;Welcome back!&#39;)&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># send some code to the console and execute it immediately</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">sendToConsole</span>(<span class="st">&quot;1 + 1&quot;</span>, <span class="at">execute =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># restart R, then run some code after</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">restartSession</span>(<span class="at">command =</span> <span class="st">&quot;print(&#39;Welcome back!&#39;)&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># send some code to the console and execute it immediately</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>rstudioapi<span class="sc">::</span><span class="fu">sendToConsole</span>(<span class="st">&quot;1 + 1&quot;</span>, <span class="at">execute =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="running-at-startup" class="section level2">
 <h2>Running at Startup</h2>
@@ -393,10 +393,10 @@ are not available until RStudio has fully started up, so most
 <p>If you want to invoke <code>rstudioapi</code> methods on session
 startup, use the <code>rstudio.sessionInit</code> hook. For example, to
 print the RStudio version to the R console when the session begins:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setHook</span>(<span class="st">&quot;rstudio.sessionInit&quot;</span>, <span class="cf">function</span>(newSession) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (newSession)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;Welcome to RStudio &quot;</span>, rstudioapi<span class="sc">::</span><span class="fu">getVersion</span>())</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>}, <span class="at">action =</span> <span class="st">&quot;append&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">setHook</span>(<span class="st">&quot;rstudio.sessionInit&quot;</span>, <span class="cf">function</span>(newSession) {</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="cf">if</span> (newSession)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;Welcome to RStudio &quot;</span>, rstudioapi<span class="sc">::</span><span class="fu">getVersion</span>())</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>}, <span class="at">action =</span> <span class="st">&quot;append&quot;</span>)</span></code></pre></div>
 </div>
 
 

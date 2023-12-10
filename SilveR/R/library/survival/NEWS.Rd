@@ -1,5 +1,115 @@
 \name{NEWS}
 \title{NEWS file for the survival package}
+\section{Changes in version 3.5-7}{
+  \itemize{
+    \item Improve the algorithm for score residuals from O(ndp) to
+    O((n+d)p), where n= number of observations, d= number of events, p =
+    number of covariates.  For large data sets this can have a substantial
+    impact.  (Score residuals are used for robust variance.)
+    \item Add short vignette on how we compute mulitstate Cox model
+    curves.
+    \item 13Aug23, check dependent packages (10605 this time) and submit
+    to CRAN
+}}
+\section{Changes in version 3.5-6}{
+  \itemize{
+    \item Fix error in a (time1, time2) coxph model with both strata and
+    tt() terms; pointed out by Pierre Joly.  Add a new test case for
+    this to the tests directory.
+    \item Small update to coxph prompted by a user query: for a model
+    with an offset, the mean offset is no longer subtracted from the
+    linear.predictor component.  This make it agree with predict.coxph.
+    \item Add the brier function, along with tests and a new vignette.
+    Update rttright and strengthen the tests.
+    \item Update coxph.detail; the roder argument now applies to the x,
+    y, and riskmat components.  
+}}
+\section{Changes in version 3.5-5}{
+  \itemize{
+    \item Add the hoel data set, cancer in irradiated male mice, found
+    in Kalbfleisch and Prentice.  It is useful for illustrating
+    competing risks.
+    \item Update some S3 methods in NAMESPACE, and rename the
+    internal terms.inner function to innerterms.  Both were generating
+    warnings with the latest CRAN check suite.
+    \item Submit to CRAN
+}}
+\section{Changes in version 3.5-4}{
+  \itemize{
+    \item Update the help file for the finegray command.  It was
+    incorrect with respect to time-dependent covariates.
+    \item Add model= as an option to survfit, and add a
+    model.frame.survfit method.  These are needed to call the
+    survfit/pseudo pair inside another function.
+    \item Small bug in survfit: if start.time was present, the 'type' element
+    could be missing from the output object.
+    \item Enhance the concordance command: one can now put multiple
+    predictions on the right hand side of the equation; this will give
+    the set of concordances and their variance-covariance matrix. 
+   \item Add a couple of overlooked S3 methods to the NAMESPACE
+}}
+\section{Changes in version 3.5-3}{
+  \itemize{
+    \item Fix final compiler warnings that affect CRAN
+    \item Restore backwards compatability for ratetable() calls in a
+    formula. The feature is used by the relsurv package.
+    \item Add information on trust regions to the fail directory.
+}}
+\section{Changes in version 3.5-2}{
+  \itemize{
+    \item New release for CRAN; chase down some challenging (for me)
+    C-code memory issues
+    \item Clean up test case for drop.special
+}}
+\section{Changes in version 3.5-1}{
+  \itemize{
+    \item Minor edits to survreg (fit$coef to fit$coefficients) and
+    summary.coxph (a model with only an offset)
+    \item Fix error in fastkm.c (new routine, edge case, no one had
+    found it yet.)
+    \item Fix a few niggles in .c code, found by the new compiler chain
+    \item Remove backwards compatability for ratetable() calls in a
+    formula;  this was changed in the main code many years ago.
+}}
+\section{Changes in version 3.5-0}{
+  \itemize{
+    \item Final check and updates for CRAN submission
+}}
+\section{Changes in version 3.4-2}{
+  \itemize{
+    \item For a multi-state coxph model, the default is now
+    ties='breslow'. When there is a tied transition of the same type, A:B
+    and A:B say, the Efron approx is justified and was correctly computed.
+    However, ties of different types such as an A:B and A:C (competing risks)
+    transition at the same time or A:B and C:D are effectively ignored
+    by the code; and this would be very hard to change. Using Breslow
+    rather than a partial Efron was felt to be more defensible.
+    \item Add the survcondense function.
+    \item Improve tmerge handling of a wide data set and add a test case
+    for it.  Add a caution to the vignette wrt using wide data sets.
+    \item Improve the speed of concordance (request of Frank H).  Update
+    the vignette and add more tests.
+    \item Fix bug in cox.zph: if there was any NA coefficient in the
+    coxph fit, the residuals used for the plot would also be NA.
+    \item Run all tests and submit to CRAN (2023-01-06)
+}}
+\section{Changes in version 3.4-1}{
+  \itemize{
+    \item Add newdata argument to basehaz, along with more documentation
+    \item survfit.coxph would fail for the combination of newdata and a
+    model with only an offset term, fixed
+    \item Add a check to pseudo. The algorithm was not designed for a
+    survfit curve from interval censored data, but still produced a
+    result (assuredly an incorrect one).  Interval censored curves now
+    have type='interval' to help support this.
+    \item Predict.coxph with reference='zero' and missing newdata
+    incorrectly assumed it could simply return fit$residuals.  Pointed
+    out by David Collett.
+    \item Change the prototype in a few .c routines, per a request from
+    CRAN. (chinv.c for instance was using the old K&R style declaration,
+    which shows how long ago it was written.)
+    \item Check and submit to CRAN
+}}
 \section{Changes in version 3.4-0}{
   \itemize{
     \item Replace .[terms call in predict.coxph with drop.term();
@@ -17,11 +127,10 @@
     \item Fix error in terms.inner; it failed for a function with no
     arguments. Pointed out by Daniel Sjberg and Duncan Murdoch.
     \item Remove Sint from C code.
-    \item The package sometimes used P(>Chi) and somtimes Pr(>Chi) as a
-    printout label; the base packages all use "Pr".  Changed this to be
-    consistent.
-    }}
-
+    \item anova.coxph sometimes used P(>Chi) and somtimes Pr(>Chi) as a
+    printout label, depending on the argument; the base packages all use
+    "Pr".  Changed this to be consistent.
+}}
 \section{Changes in version 3.3-1}{
   \itemize{
     \item Update the saved tests/Examples/survival-Ex.Rout.save file so

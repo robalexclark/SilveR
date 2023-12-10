@@ -340,18 +340,26 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<p>To take advantage of parallel tests, add the following line to the
-<code>DESCRIPTION</code>:</p>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>To enable parallel testing, you must first be using the 3rd edition<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Then add
+the following line to the <code>DESCRIPTION</code>:</p>
 <pre><code>Config/testthat/parallel: true</code></pre>
-<p>You’ll also need to be using the 3rd edition:</p>
-<pre><code>Config/testthat/edition: 3</code></pre>
+<p>By default, testthat will use <code>getOption(&quot;Ncpus&quot;, 2)</code>
+cores. To increase that value for your development machine we recommend
+setting <code>TESTTHAT_CPUS</code> in your <code>.Renviron</code>. The
+easiest way to do that is call <code>usethis::edit_r_environ()</code>
+and then add something like the following:</p>
+<pre><code>TESTTHAT_CPUS=4</code></pre>
+<p>Tests are run in alphabetical order by default, but you can often
+improve performance by starting the slowest tests first. Specify these
+tests by supplying a comma separated list of glob patterns<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> to the
+<code>Config/testthat/start-first</code> field in your
+<code>DESCRIPTION</code>, e.g.:</p>
+<pre><code>Config/testthat/start-first: watcher, parallel*</code></pre>
+</div>
 <div id="basic-operation" class="section level2">
 <h2>Basic operation</h2>
-<p>Starting a new R process is relatively expensive, so testthat begins
-by creating a pool of workers. The size of the pool will be determined
-by <code>getOption(&quot;Ncpus&quot;)</code>, then the <code>TESTTHAT_CPUS</code>
-envvar. If neither are set, then two processes are started. In any case,
-testthat will never start more subprocesses than test files.</p>
 <p>Each worker begins by loading testthat and the package being tested.
 It then runs any setup files (so if you have existing setup files you’ll
 need to make sure they work when executed in parallel).</p>
@@ -363,10 +371,6 @@ is persisted across test files: options are <em>not</em> reset, loaded
 packages are <em>not</em> unloaded, the global environment is
 <em>not</em> cleared, etc. You are responsible for making sure each file
 leaves the world as it finds it.</p>
-<p>Because files are run in alphabetical order, you may want to rename
-your slowest test files so that they start first,
-e.g. <code>test-1-slowest.R</code>, <code>test-2-next-slowest.R</code>,
-etc.</p>
 </div>
 <div id="common-problems" class="section level2">
 <h2>Common problems</h2>
@@ -375,7 +379,8 @@ etc.</p>
 sometimes fail) you may have accidentally introduced a dependency
 between your test files. This sort of dependency is hard to track down
 due to the random nature, and you’ll need to check all tests to make
-sure that they’re not accidentally changing global state.</p></li>
+sure that they’re not accidentally changing global state.
+<code>set_state_inspector()</code> will make this easier.</p></li>
 <li><p>If you use <a href="https://testthat.r-lib.org/articles/test-fixtures.html#package">packaged
 scope test fixtures</a>, you’ll need to review them to make sure that
 they work in parallel. For example, if you were previously creating a
@@ -403,20 +408,6 @@ non-parallel reporter.</p></li>
 take a short amount of time, you’re unlikely to see a huge benefit by
 using parallel tests. For example, testthat itself takes about 10s to
 run tests in serial, and 8s to run the tests in parallel.</p>
-<div id="changing-the-order-of-the-test-files" class="section level3">
-<h3>Changing the order of the test files</h3>
-<p>By default testthat starts the test files in alphabetical order. If
-you have a few number of test files that take longer than the rest, then
-this might not be the best order. Ideally the slow files would start
-first, as the whole test suite will take at least as much time as its
-slowest test file. You can change the order with the
-<code>Config/testthat/start-first</code> option in
-<code>DESCRIPTION</code>. For example testthat currently has:</p>
-<pre><code>Config/testthat/start-first: watcher, parallel*</code></pre>
-<p>The format is a comma separated list of glob patterns, see
-<code>?utils::glob2rx</code>. The matching test files will start first.
-(The <code>test-</code> prefix is ignored.)</p>
-</div>
 </div>
 <div id="reporters" class="section level2">
 <h2>Reporters</h2>
@@ -469,7 +460,7 @@ cases, then the best is to temporarily run tests sequentially, by
 changing the <code>Config</code> entry in <code>DESCRIPTION</code> or
 selecting a non-parallel reporter, e.g. the
 <code>CheckReporter</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>(<span class="at">filter =</span> <span class="st">&quot;badtest&quot;</span>, <span class="at">reporter =</span> <span class="st">&quot;check&quot;</span>)</span></code></pre></div></li>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>(<span class="at">filter =</span> <span class="st">&quot;badtest&quot;</span>, <span class="at">reporter =</span> <span class="st">&quot;check&quot;</span>)</span></code></pre></div></li>
 </ul>
 </div>
 <div id="writing-parallel-reporters" class="section level3">
@@ -483,13 +474,13 @@ running in parallel, testthat does not provide location information
 <p>To support parallel tests, a reporter must set
 <code>self$capabilities$parallel_support</code> to <code>TRUE</code> in
 its <code>initialize()</code> method:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>initialize <span class="ot">=</span> <span class="cf">function</span>(...) {</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  super<span class="sc">$</span><span class="fu">initialize</span>(...)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  self<span class="sc">$</span>capabilities<span class="sc">$</span>parallel_support <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>...</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>initialize <span class="ot">=</span> <span class="cf">function</span>(...) {</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  super<span class="sc">$</span><span class="fu">initialize</span>(...)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  self<span class="sc">$</span>capabilities<span class="sc">$</span>parallel_support <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  ...</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>}</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>...</span></code></pre></div>
 <p>When running in parallel, testthat runs the reporter in the main
 process, and relays information between the reporter and the test code
 transparently. (Currently the reporter does not even know that the tests
@@ -513,14 +504,14 @@ handle multiple test files concurrently.</p>
 <p>A reporter declares parallel update support by setting
 <code>self$capabilities$parallel_updates</code> to
 <code>TRUE</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>...</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>initialize <span class="ot">=</span> <span class="cf">function</span>(...) {</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  super<span class="sc">$</span><span class="fu">initialize</span>(...)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  self<span class="sc">$</span>capabilities<span class="sc">$</span>parallel_support <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  self<span class="sc">$</span>capabilities<span class="sc">$</span>parallel_updates <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>...</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>initialize <span class="ot">=</span> <span class="cf">function</span>(...) {</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  super<span class="sc">$</span><span class="fu">initialize</span>(...)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  self<span class="sc">$</span>capabilities<span class="sc">$</span>parallel_support <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  self<span class="sc">$</span>capabilities<span class="sc">$</span>parallel_updates <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  ...</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>}</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>...</span></code></pre></div>
 <p>For these reporters, testthat does not cache the messages from the
 subprocesses. Instead, when a message comes in:</p>
 <ul>
@@ -538,6 +529,14 @@ subprocess. (Currently aims to do this every 100ms, but there are no
 guarantees.) The <code>$update()</code> method may implement a spinner
 to let the user know that the tests are running.</p>
 </div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>See <code>vignette(&quot;third-edition&quot;)</code> for
+details.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>See <code>?utils::glob2rx</code> for details<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
 
 

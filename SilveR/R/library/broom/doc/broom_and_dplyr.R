@@ -1,6 +1,16 @@
 ## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 
+if (rlang::is_installed("ggplot2")) {
+  run <- TRUE
+} else {
+  run <- FALSE
+}
+
+knitr::opts_chunk$set(
+  eval = run
+)
+
 ## -----------------------------------------------------------------------------
 library(broom)
 library(tibble)
@@ -24,7 +34,7 @@ ggplot(Orange, aes(age, circumference, color = Tree)) +
   geom_line()
 
 ## ---- message = FALSE, warning = FALSE----------------------------------------
-Orange %>% 
+Orange %>%
   group_by(Tree) %>%
   summarize(correlation = cor(age, circumference))
 
@@ -36,27 +46,27 @@ ct
 tidy(ct)
 
 ## -----------------------------------------------------------------------------
-nested <- Orange %>% 
+nested <- Orange %>%
   nest(data = -Tree)
 
 ## -----------------------------------------------------------------------------
-nested %>% 
+nested %>%
   mutate(test = map(data, ~ cor.test(.x$age, .x$circumference)))
 
 ## -----------------------------------------------------------------------------
-nested %>% 
+nested %>%
   mutate(
     test = map(data, ~ cor.test(.x$age, .x$circumference)), # S3 list-col
     tidied = map(test, tidy)
-  ) 
+  )
 
 ## -----------------------------------------------------------------------------
-Orange %>% 
-  nest(data = -Tree) %>% 
+Orange %>%
+  nest(data = -Tree) %>%
   mutate(
     test = map(data, ~ cor.test(.x$age, .x$circumference)), # S3 list-col
     tidied = map(test, tidy)
-  ) %>% 
+  ) %>%
   unnest(tidied)
 
 ## -----------------------------------------------------------------------------
@@ -68,29 +78,29 @@ tidy(lm_fit)
 
 ## -----------------------------------------------------------------------------
 Orange %>%
-  nest(data = -Tree) %>% 
+  nest(data = -Tree) %>%
   mutate(
     fit = map(data, ~ lm(age ~ circumference, data = .x)),
     tidied = map(fit, tidy)
-  ) %>% 
+  ) %>%
   unnest(tidied)
 
 ## -----------------------------------------------------------------------------
 data(mtcars)
-mtcars <- as_tibble(mtcars)  # to play nicely with list-cols
+mtcars <- as_tibble(mtcars) # to play nicely with list-cols
 mtcars
 
 mtcars %>%
-  nest(data = -am) %>% 
+  nest(data = -am) %>%
   mutate(
-    fit = map(data, ~ lm(wt ~ mpg + qsec + gear, data = .x)),  # S3 list-col
+    fit = map(data, ~ lm(wt ~ mpg + qsec + gear, data = .x)), # S3 list-col
     tidied = map(fit, tidy)
-  ) %>% 
+  ) %>%
   unnest(tidied)
 
 ## -----------------------------------------------------------------------------
 regressions <- mtcars %>%
-  nest(data = -am) %>% 
+  nest(data = -am) %>%
   mutate(
     fit = map(data, ~ lm(wt ~ mpg + qsec + gear, data = .x)),
     tidied = map(fit, tidy),
@@ -98,12 +108,12 @@ regressions <- mtcars %>%
     augmented = map(fit, augment)
   )
 
-regressions %>% 
+regressions %>%
   unnest(tidied)
 
-regressions %>% 
+regressions %>%
   unnest(glanced)
 
-regressions %>% 
+regressions %>%
   unnest(augmented)
 

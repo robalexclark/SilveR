@@ -65,6 +65,7 @@ coord_trans	coord_trans
 cut_interval	cut_interval
 cut_number	cut_interval
 cut_width	cut_interval
+datetime_scale	datetime_scale
 derive	sec_axis
 diamonds	diamonds
 discrete_scale	discrete_scale
@@ -75,6 +76,7 @@ draw_key_boxplot	draw_key
 draw_key_crossbar	draw_key
 draw_key_dotplot	draw_key
 draw_key_label	draw_key
+draw_key_linerange	draw_key
 draw_key_path	draw_key
 draw_key_point	draw_key
 draw_key_pointrange	draw_key
@@ -439,6 +441,15 @@ scale_linetype_continuous	scale_linetype
 scale_linetype_discrete	scale_linetype
 scale_linetype_identity	scale_identity
 scale_linetype_manual	scale_manual
+scale_linewidth	scale_linewidth
+scale_linewidth_binned	scale_linewidth
+scale_linewidth_continuous	scale_linewidth
+scale_linewidth_date	scale_linewidth
+scale_linewidth_datetime	scale_linewidth
+scale_linewidth_discrete	scale_linewidth
+scale_linewidth_identity	scale_identity
+scale_linewidth_manual	scale_manual
+scale_linewidth_ordinal	scale_linewidth
 scale_radius	scale_size
 scale_shape	scale_shape
 scale_shape_binned	scale_shape
@@ -488,6 +499,7 @@ stage	aes_eval
 standardise_aes_names	standardise_aes_names
 Stat	ggplot2-ggproto
 stat	aes_eval
+StatAlign	ggplot2-ggproto
 StatBin	ggplot2-ggproto
 StatBin2d	ggplot2-ggproto
 StatBindot	ggplot2-ggproto
@@ -516,6 +528,7 @@ StatSummaryBin	ggplot2-ggproto
 StatSummaryHex	ggplot2-ggproto
 StatUnique	ggplot2-ggproto
 StatYdensity	ggplot2-ggproto
+stat_align	geom_ribbon
 stat_bin	geom_histogram
 stat_bin2d	geom_bin_2d
 stat_binhex	geom_hex
@@ -573,8 +586,6 @@ theme_update	theme_get
 theme_void	ggtheme
 tidyeval	tidyeval
 transform_position	transform_position
-translate_qplot_ggplot	translate_qplot_ggplot
-translate_qplot_lattice	translate_qplot_lattice
 txhousing	txhousing
 unit	reexports
 update_geom_defaults	update_defaults

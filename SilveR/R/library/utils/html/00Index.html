@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;utils&rsquo; version 4.2.1</h2>
+</div><h2>Documentation for package &lsquo;utils&rsquo; version 4.3.1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -73,8 +73,8 @@
 <td>Persons</td></tr>
 <tr><td style="width: 25%;"><a href="person.html">as.person</a></td>
 <td>Persons</td></tr>
-<tr><td style="width: 25%;"><a href="person.html">as.personList</a></td>
-<td>Persons</td></tr>
+<tr><td style="width: 25%;"><a href="personList.html">as.personList</a></td>
+<td>Collections of Persons (Older Interface)</td></tr>
 <tr><td style="width: 25%;"><a href="relist.html">as.relistable</a></td>
 <td>Allow Re-Listing an unlist()ed Object</td></tr>
 <tr><td style="width: 25%;"><a href="roman.html">as.roman</a></td>
@@ -157,10 +157,10 @@
 <td>Cite a Bibliography Entry</td></tr>
 <tr><td style="width: 25%;"><a href="citEntry.html">citEntry</a></td>
 <td>Bibliography Entries (Older Interface)</td></tr>
-<tr><td style="width: 25%;"><a href="citEntry.html">citFooter</a></td>
-<td>Bibliography Entries (Older Interface)</td></tr>
-<tr><td style="width: 25%;"><a href="citEntry.html">citHeader</a></td>
-<td>Bibliography Entries (Older Interface)</td></tr>
+<tr><td style="width: 25%;"><a href="citation.html">citFooter</a></td>
+<td>Citing R and R Packages in Publications</td></tr>
+<tr><td style="width: 25%;"><a href="citation.html">citHeader</a></td>
+<td>Citing R and R Packages in Publications</td></tr>
 <tr><td style="width: 25%;"><a href="clipboard.html">clipboard</a></td>
 <td>Read/Write to/from the Clipboard in MS Windows</td></tr>
 <tr><td style="width: 25%;"><a href="close.socket.html">close.socket</a></td>
@@ -246,6 +246,8 @@
 <td>Find CRAN Mirror Preference</td></tr>
 <tr><td style="width: 25%;"><a href="findLineNum.html">findLineNum</a></td>
 <td>Find the Location of a Line of Source Code, or Set a Breakpoint There</td></tr>
+<tr><td style="width: 25%;"><a href="rcompgen.html">findMatches</a></td>
+<td>A Completion Generator for R</td></tr>
 <tr><td style="width: 25%;"><a href="fix.html">fix</a></td>
 <td>Fix an Object</td></tr>
 <tr><td style="width: 25%;"><a href="getFromNamespace.html">fixInNamespace</a></td>
@@ -368,8 +370,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="hashtab.html">length.hashtab</a></td>
 <td>Hash Tables (Experimental)</td></tr>
-<tr><td style="width: 25%;"><a href="recover.html">limitedLabels</a></td>
-<td>Browsing after an Error</td></tr>
+<tr><td style="width: 25%;"><a href="debugger.html">limitedLabels</a></td>
+<td>Post-Mortem Debugging</td></tr>
 <tr><td style="width: 25%;"><a href="LINK.html">LINK</a></td>
 <td>Create Executable Programs on Unix-alikes</td></tr>
 <tr><td style="width: 25%;"><a href="savehistory.html">loadhistory</a></td>
@@ -452,8 +454,8 @@
 <td>Invoke a Pager on an R Object</td></tr>
 <tr><td style="width: 25%;"><a href="person.html">person</a></td>
 <td>Persons</td></tr>
-<tr><td style="width: 25%;"><a href="person.html">personList</a></td>
-<td>Persons</td></tr>
+<tr><td style="width: 25%;"><a href="personList.html">personList</a></td>
+<td>Collections of Persons (Older Interface)</td></tr>
 <tr><td style="width: 25%;"><a href="edit.html">pico</a></td>
 <td>Invoke a Text Editor</td></tr>
 <tr><td style="width: 25%;"><a href="bibentry.html">print.bibentry</a></td>
@@ -578,10 +580,14 @@
 <td>R/LaTeX Driver for Sweave</td></tr>
 <tr><td style="width: 25%;"><a href="available.packages.html">R_AVAILABLE_PACKAGES_CACHE_CONTROL_MAX_AGE</a></td>
 <td>List Available Packages at CRAN-like Repositories</td></tr>
+<tr><td style="width: 25%;"><a href="setRepositories.html">R_BIOC_VERSION</a></td>
+<td>Select Package Repositories</td></tr>
 <tr><td style="width: 25%;"><a href="INSTALL.html">R_INSTALL_STAGED</a></td>
 <td>Install Add-on Packages</td></tr>
 <tr><td style="width: 25%;"><a href="INSTALL.html">R_INSTALL_TAR</a></td>
 <td>Install Add-on Packages</td></tr>
+<tr><td style="width: 25%;"><a href="setRepositories.html">R_REPOSITORIES</a></td>
+<td>Select Package Repositories</td></tr>
 </table>
 
 <h2><a id="S">-- S --</a></h2>
@@ -654,6 +660,8 @@
 <td>Load or Save or Display the Commands History</td></tr>
 <tr><td style="width: 25%;"><a href="toLatex.html">toBibtex</a></td>
 <td>Converting R Objects to BibTeX or LaTeX</td></tr>
+<tr><td style="width: 25%;"><a href="bibentry.html">toBibtex.bibentry</a></td>
+<td>Bibliography Entries</td></tr>
 <tr><td style="width: 25%;"><a href="person.html">toBibtex.person</a></td>
 <td>Persons</td></tr>
 <tr><td style="width: 25%;"><a href="toLatex.html">toLatex</a></td>
@@ -687,6 +695,8 @@
 <td>Compare Installed Packages with CRAN-like Repositories</td></tr>
 <tr><td style="width: 25%;"><a href="packageStatus.html">update.packageStatus</a></td>
 <td>Package Management Tools</td></tr>
+<tr><td style="width: 25%;"><a href="upgrade.html">upgrade</a></td>
+<td>Upgrade</td></tr>
 <tr><td style="width: 25%;"><a href="packageStatus.html">upgrade.packageStatus</a></td>
 <td>Package Management Tools</td></tr>
 <tr><td style="width: 25%;"><a href="url.show.html">url.show</a></td>
@@ -770,6 +780,8 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="person.html">$.person</a></td>
 <td>Persons</td></tr>
+<tr><td style="width: 25%;"><a href="rcompgen.html">.AtNames</a></td>
+<td>A Completion Generator for R</td></tr>
 <tr><td style="width: 25%;"><a href="rcompgen.html">.DollarNames</a></td>
 <td>A Completion Generator for R</td></tr>
 <tr><td style="width: 25%;"><a href="roman.html">.romans</a></td>

@@ -1,3 +1,9 @@
+gtools 3.9.4
+-------------------------
+
+- correct `stars.pval` code/doc mismatch (GH #13)
+- remove spurious `browser()` call in `lastAdd`
+
 gtools 3.9.3 - 2022-07-08
 -------------------------
 

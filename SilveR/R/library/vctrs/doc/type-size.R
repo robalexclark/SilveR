@@ -39,7 +39,7 @@ df <- data.frame(x = FALSE)
 df$y <- data.frame(a = 1L, b = 2.5)
 vec_ptype_show(df)
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_ptype_show(logical(), integer(), double())
 
 vec_ptype_show(logical(), character())
@@ -57,7 +57,7 @@ vec_ptype_show(
   array(1, c(0, 3, 4, 5))
 )
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_ptype_show(
   array(1, c(0, 2)), 
   array(1, c(0, 3))
@@ -113,14 +113,14 @@ str(vec_cast_common(
   data.frame(y = 1:2)
 ))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 # Cast succeeds
 vec_cast(c(1, 2), integer())
 
 # Cast fails
 vec_cast(c(1.5, 2.5), factor("a"))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 vec_cast(c(1.5, 2), integer())
 
 ## -----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ vec_size_common(1:3, 1:3, 1:3)
 vec_size_common(1:10, 1)
 vec_size_common(integer(), 1)
 
-## ---- echo = FALSE, fig.cap="Summary of vctrs recycling rules. X indicates n error"----
+## ----echo = FALSE, fig.cap="Summary of vctrs recycling rules. X indicates an error"----
 knitr::include_graphics("../man/figures/sizes-recycling.png", dpi = 300)
 
 ## -----------------------------------------------------------------------------
@@ -173,10 +173,10 @@ length(atan2(1:3, 1:2))
 length(paste(1:3, 1:2))
 length(ifelse(1:3, 1:2, 1:2))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 data.frame(1:2, 1:3)
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 # length-0 output
 1:2 + integer()
 atan2(1:2, integer())

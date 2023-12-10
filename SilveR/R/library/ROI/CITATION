@@ -1,3 +1,5 @@
+citation(auto = meta)
+
 bibentry(bibtype = "Article",
   title        = "{ROI}: An Extensible {R} Optimization Infrastructure",
   author       = c(person(given = "Stefan",
@@ -5,17 +7,17 @@ bibentry(bibtype = "Article",
                           email = "Stefan.Theussl@R-project.org"),
                    person(given = "Florian",
                           family = "Schwendinger",
-                          email = "FlorianSchwendinger@gmx.at"),
+                          email = "FlorianSchwendinger@gmx.at",
+                          comment = c(ORCID = "0000-0002-3983-9773")),
                    person(given = "Kurt",
                           family = "Hornik",
-                          email = "Kurt.Hornik@R-project.org")),
+                          email = "Kurt.Hornik@R-project.org",
+                          comment = c(ORCID = "0000-0003-4198-9911"))),
   journal      = "Journal of Statistical Software",
   year         = "2020",
   volume       = "94",
   number       = "15",
   pages        = "1--64",
   doi          = "10.18637/jss.v094.i15",
-
-  header       = "To cite ROI in publications use:"
+  textVersion  = "Theußl, S., Schwendinger, F., & Hornik, K. (2020). ROI: An Extensible R Optimization Infrastructure. Journal of Statistical Software, 94(15), 1–64. https://doi.org/10.18637/jss.v094.i15"
 )
-

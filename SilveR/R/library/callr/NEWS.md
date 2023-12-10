@@ -1,3 +1,10 @@
+# callr 3.7.3
+
+* Errors from callr now include the standard output (in `$stdout`) and
+  standard error (in `stderr`) again. The standard output and error are also
+  printed on error in non-interactive sessions, and a note is printed about
+  them in interactive sessions.
+
 # callr 3.7.2
 
 * New function `add_hook()` to hook into the callr process startup and

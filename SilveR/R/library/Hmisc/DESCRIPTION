@@ -1,6 +1,6 @@
 Package: Hmisc
-Version: 4.7-1
-Date: 2022-08-13
+Version: 5.1-1
+Date: 2023-09-11
 Title: Harrell Miscellaneous
 Authors@R: 
     c(person(given = "Frank E",
@@ -14,29 +14,31 @@ Authors@R:
 						 email = "charles.dupont@vumc.org",
 						 comment = "contributed several functions and maintains latex functions"))
 Maintainer: Frank E Harrell Jr <fh@fharrell.com>
-Depends: lattice, survival (>= 3.1-6), Formula, ggplot2 (>= 2.2)
-Imports: methods, latticeExtra, cluster, rpart, nnet, foreign, gtable,
-        grid, gridExtra, data.table, htmlTable (>= 1.11.0), viridis,
-        htmltools, base64enc
-Suggests: acepack, chron, rms, mice, tables, knitr, plotly (>= 4.5.6),
-        rlang, plyr, VGAM
+Imports: methods, ggplot2, cluster, rpart, nnet, foreign, gtable, grid,
+        gridExtra, data.table, htmlTable (>= 1.11.0), viridis,
+        htmltools, base64enc, colorspace, rmarkdown, knitr, Formula
+Suggests: survival, qreport, acepack, chron, rms, mice, rstudioapi,
+        tables, plotly (>= 4.5.6), rlang, plyr, VGAM, leaps, pcaPP,
+        digest, parallel, polspline, abind, kableExtra, rio, lattice,
+        latticeExtra, gt, sparkline, jsonlite, htmlwidgets, qs,
+        getPass, keyring, safer
 Description: Contains many functions useful for data
 	analysis, high-level graphics, utility operations, functions for
 	computing sample size and power, simulation, importing and annotating datasets,
 	imputing missing values, advanced table making, variable clustering,
 	character string manipulation, conversion of R objects to LaTeX and html code,
-	and recoding variables.
+	recoding variables, caching, simplified parallel computing, encrypting and decrypting data using a safe workflow, general moving window statistical estimation, and assistance in interpreting principal component analysis.
 License: GPL (>= 2)
 LazyLoad: Yes
 URL: https://hbiostat.org/R/Hmisc/
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2022-08-13 16:19:03 UTC; harrelfe
+Packaged: 2023-09-11 23:35:26 UTC; harrelfe
 Author: Frank E Harrell Jr [aut, cre] (<https://orcid.org/0000-0002-8271-5493>),
   Charles Dupont [ctb] (contributed several functions and maintains latex
     functions)
 Repository: CRAN
-Date/Publication: 2022-08-15 08:30:07 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-08-15 10:04:48 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-09-12 12:52:37 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 03:37:34 UTC; windows
+Archs: x64

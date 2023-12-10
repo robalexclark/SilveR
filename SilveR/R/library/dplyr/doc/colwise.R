@@ -102,10 +102,10 @@ df <- tibble(x = 1:4, y = rnorm(4))
 df %>% mutate(across(where(is.numeric), rescale01))
 
 ## -----------------------------------------------------------------------------
-starwars %>% distinct(across(contains("color")))
+starwars %>% distinct(pick(contains("color")))
 
 ## -----------------------------------------------------------------------------
-starwars %>% count(across(contains("color")), sort = TRUE)
+starwars %>% count(pick(contains("color")), sort = TRUE)
 
 ## -----------------------------------------------------------------------------
 starwars %>% 
@@ -114,9 +114,6 @@ starwars %>%
 ## -----------------------------------------------------------------------------
 starwars %>% 
   filter(if_all(everything(), ~ !is.na(.x)))
-
-## -----------------------------------------------------------------------------
-starwars %>% filter(across(everything(), ~ !is.na(.x)))
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  df %>%
@@ -128,13 +125,13 @@ starwars %>% filter(across(everything(), ~ !is.na(.x)))
 #    )
 
 ## ---- results = FALSE---------------------------------------------------------
-df %>% mutate_if(is.numeric, mean, na.rm = TRUE)
+df %>% mutate_if(is.numeric, ~mean(.x, na.rm = TRUE))
 # ->
-df %>% mutate(across(where(is.numeric), mean, na.rm = TRUE))
+df %>% mutate(across(where(is.numeric), ~mean(.x, na.rm = TRUE)))
 
 df %>% mutate_at(vars(c(x, starts_with("y"))), mean)
 # ->
-df %>% mutate(across(c(x, starts_with("y")), mean, na.rm = TRUE))
+df %>% mutate(across(c(x, starts_with("y")), mean))
 
 df %>% mutate_all(mean)
 # ->

@@ -4,9 +4,11 @@ import(methods)
 
 importFrom(stats, setNames, terms, runif)
 
-importFrom(utils, capture.output, find, head, relist,
+importFrom(utils, capture.output, find, head, tail, relist,
            setTxtProgressBar, txtProgressBar)
 importFrom(parallel, nextRNGStream, nextRNGSubStream)
+
+importFrom(codetools, findGlobals)
 
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ### Export S4 classes
@@ -18,7 +20,6 @@ exportClass(
     SnowParam,
     DoparParam,
     SerialParam,
-    BatchJobsParam,
     BatchtoolsParam,
     BPValidate
 )
@@ -28,7 +29,7 @@ exportClass(
 ###
 
 export(
-    MulticoreParam, SnowParam, DoparParam, SerialParam, BatchJobsParam,
+    MulticoreParam, SnowParam, DoparParam, SerialParam,
     BatchtoolsParam,
 
     ## register
@@ -40,18 +41,25 @@ export(
     ## error handlers
     bptry,
 
+    ## accessor for the errors
+    bpresult,
+
     ## helpers
     bploop,                             # worker, manager loops
     multicoreWorkers, snowWorkers,
     batchtoolsWorkers, batchtoolsCluster, batchtoolsRegistryargs,
     batchtoolsTemplate,
     bpvalidate, bpok, bperrorTypes,
-    bprunMPIslave,
     bprunMPIworker,
+
+    ## iteration
+    bpiterateAlong,
 
     ## ipcmutex
     ipcid, ipcremove, ipclock, ipctrylock, ipcunlock, ipclocked,
-    ipcyield, ipcvalue, ipcreset
+    ipcyield, ipcvalue, ipcreset,
+
+    bpoptions, .registerOption
 )
 
 ### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -68,7 +76,9 @@ export(
     bpstopOnError, "bpstopOnError<-",
     bpprogressbar, "bpprogressbar<-", bpRNGseed, "bpRNGseed<-",
     bptimeout, "bptimeout<-", bpexportglobals, "bpexportglobals<-",
+    bpexportvariables, "bpexportvariables<-",
     bpforceGC, "bpforceGC<-",
+    bpfallback, "bpfallback<-",
     bplog, "bplog<-", bplogdir, "bplogdir<-",
     bpthreshold, "bpthreshold<-", bpresultdir, "bpresultdir<-",
 
@@ -120,5 +130,10 @@ export(
     .send_to, .recv_any, .send, .recv, .close, .send_all, .recv_all,
     .bpstart_impl, .bpstop_impl, .bpworker_impl,
     .bplapply_impl, .bpiterate_impl,
-    .error_worker_comm
+    .error_worker_comm,
+    .manager, .manager_send, .manager_recv,
+    .manager_send_all, .manager_recv_all,
+    .manager_capacity,
+    .manager_flush, .manager_cleanup,
+    .task_const, .task_dynamic, .task_remake
 )

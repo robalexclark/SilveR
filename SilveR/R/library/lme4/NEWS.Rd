@@ -4,7 +4,86 @@
 \title{lme4 News}
 \encoding{UTF-8}
 
-\section{CHANGES IN VERSION 1.1-30}{
+\section{CHANGES IN VERSION 1.1-34}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{summary(<merMod>)} now records if \code{correlation} was
+      specified explicitly and to what; and its \code{print()} method takes it
+      into account; notably  summary(<merMod>, correlation=TRUE) will by
+      default print the correlation (matrix of the fixed effects) fixing GH #725
+    }
+  } % bug fixes
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{refit} gains a \code{newweights} argument
+    }
+  } % new features
+} % 1.1-34
+
+\section{CHANGES IN VERSION 1.1-33 (2023-04-25)}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item a boundary check could fail occasionally when large data
+      produced an NA value in a computed gradient; now warns instead
+      (GH #719, Mathias Ambuehl)
+
+      \item \code{allFit} now works better when \code{optimx} and
+      \code{dfoptim} packages are not installed (GH #724)
+
+      \item \code{refit} reset internal degrees of freedom component
+      incorrectly for REML fits (resulted in incorrect reported REML criteria,
+      but otherwise harmless: side effect of GH #678)
+
+
+    }
+  } % bug fixes
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item \code{dotplot} and \code{qqmath} methods gain a \code{level}
+      argument to set the width of confidence intervals
+      \item \code{dotplot} method is now more flexible, using ".v"
+      options (\code{lty.v}, \code{col.line.v}, \code{lwd.v}) to set
+      appearance of vertical lines (Iago Giné Vázquez)
+      \item \code{refit} gains a \code{newweights} argument (GH #678)
+    }
+  } % new features
+} % 1.1-33
+
+\section{CHANGES IN VERSION 1.1-32 (2023-03-14)}{
+  \subsection{USER-VISIBLE CHANGES}{
+    \itemize{
+      \item \code{formatVC()} gets a new
+      optional argument \code{corr} indicating if correlations or
+      covariances should be used for vector random effects;
+      this corresponds to \code{print(<merMod>, ranef.corr = ...)} .
+      By default, it is FALSE for \code{comp = "Variance"}, fixing (GH #707).
+      \item \code{qqmath.merMod} adds a (useless) \code{data} argument
+      for S3 compatibility. Going forward, the \code{id} and
+      \code{idLabels} arguments should always be specified by name.
+      We have added code to try to detect/warn when this is not done.
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{nobars} now retains the environment of its formula
+  argument (GH #713, Mikael Jagan)
+    }
+  }
+} % 1.1-32
+
+\section{CHANGES IN VERSION 1.1-31 (2022-11-01)}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{confint(fm, <single string>)} now works (after years of
+      being broken) again.
+      \item simulating from binomial model with a factor response, when
+      the simulated response contains only a single factor level, now works
+      (Daniel Kennedy)
+    }
+  } % bug fixes
+} % version 1.1-31
+
+\section{CHANGES IN VERSION 1.1-30 (2022-07-08)}{
   \subsection{USER-VISIBLE CHANGES}{
     \itemize{
       \item \code{nl} (term names) component added to output list of
@@ -13,9 +92,9 @@
       \code{etastart}) (GH #686: not actually "user-visible" unless
       \code{getOption("warnPartialMatchDollar")} is \code{TRUE})
       \item \code{summary} method doesn't break for GLMMs other than
-  binomial/Poisson when \code{merDeriv}'s \code{vcov.glmerMod} method is
-  attached (GH #688)
-}
+      binomial/Poisson when \code{merDeriv}'s \code{vcov.glmerMod} method is
+      attached (GH #688)
+    }
   } % user-visible changes
   \subsection{BUG FIXES}{
     \itemize{

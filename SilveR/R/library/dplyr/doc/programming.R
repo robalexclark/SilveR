@@ -30,6 +30,17 @@ for (var in names(mtcars)) {
   mtcars %>% count(.data[[var]]) %>% print()
 }
 
+## -----------------------------------------------------------------------------
+name <- "susan"
+tibble("{name}" := 2)
+
+## -----------------------------------------------------------------------------
+my_df <- function(x) {
+  tibble("{{x}}_2" := x * 2)
+}
+my_var <- 10
+my_df(my_var)
+
 ## ---- results = FALSE---------------------------------------------------------
 summarise_mean <- function(data, vars) {
   data %>% summarise(n = n(), across({{ vars }}, mean))
@@ -46,23 +57,6 @@ mtcars %>% select(!all_of(vars))
 ## -----------------------------------------------------------------------------
 mutate_y <- function(data) {
   mutate(data, y = a + x)
-}
-
-## -----------------------------------------------------------------------------
-my_summary_function <- function(data) {
-  data %>% 
-    filter(x > 0) %>% 
-    group_by(grp) %>% 
-    summarise(y = mean(y), n = n())
-}
-
-## -----------------------------------------------------------------------------
-#' @importFrom rlang .data
-my_summary_function <- function(data) {
-  data %>% 
-    filter(.data$x > 0) %>% 
-    group_by(.data$grp) %>% 
-    summarise(y = mean(.data$y), n = n())
 }
 
 ## -----------------------------------------------------------------------------
@@ -114,6 +108,37 @@ starwars %>% my_summarise(homeworld)
 starwars %>% my_summarise(sex, gender)
 
 ## -----------------------------------------------------------------------------
+quantile_df <- function(x, probs = c(0.25, 0.5, 0.75)) {
+  tibble(
+    val = quantile(x, probs),
+    quant = probs
+  )
+}
+
+x <- 1:5
+quantile_df(x)
+
+## -----------------------------------------------------------------------------
+df <- tibble(
+  grp = rep(1:3, each = 10),
+  x = runif(30),
+  y = rnorm(30)
+)
+
+df %>%
+  group_by(grp) %>%
+  summarise(quantile_df(x, probs = .5))
+
+df %>%
+  group_by(grp) %>%
+  summarise(across(x:y, ~ quantile_df(.x, probs = .5), .unpack = TRUE))
+
+## -----------------------------------------------------------------------------
+df %>%
+  group_by(grp) %>%
+  reframe(across(x:y, quantile_df, .unpack = TRUE))
+
+## -----------------------------------------------------------------------------
 my_summarise <- function(data, summary_vars) {
   data %>%
     summarise(across({{ summary_vars }}, ~ mean(., na.rm = TRUE)))
@@ -125,14 +150,14 @@ starwars %>%
 ## -----------------------------------------------------------------------------
 my_summarise <- function(data, group_var, summarise_var) {
   data %>%
-    group_by(across({{ group_var }})) %>% 
+    group_by(pick({{ group_var }})) %>% 
     summarise(across({{ summarise_var }}, mean))
 }
 
 ## -----------------------------------------------------------------------------
 my_summarise <- function(data, group_var, summarise_var) {
   data %>%
-    group_by(across({{ group_var }})) %>% 
+    group_by(pick({{ group_var }})) %>% 
     summarise(across({{ summarise_var }}, mean, .names = "mean_{.col}"))
 }
 

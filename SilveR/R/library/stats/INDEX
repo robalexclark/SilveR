@@ -325,7 +325,7 @@ terms                   Model Terms
 terms.formula           Construct a terms Object from a Formula
 terms.object            Description of Terms Objects
 time                    Sampling Times of Time Series
-toeplitz                Form Symmetric Toeplitz Matrix
+toeplitz                Create Symmetric and Asymmetric Toeplitz Matrix
 ts                      Time-Series Objects
 ts.plot                 Plot Multiple Time Series
 ts.union                Bind Two or More Time Series

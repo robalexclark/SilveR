@@ -15,7 +15,7 @@ TCL_DLL_FILE="tcl86.dll"
 TCL_VERSION='8.6'
 TCL_MAJOR_VERSION='8'
 TCL_MINOR_VERSION='6'
-TCL_PATCH_LEVEL='.12'
+TCL_PATCH_LEVEL='.13'
 
 # C compiler to use for compilation.
 TCL_CC='x86_64-w64-mingw32.static.posix-gcc'
@@ -68,7 +68,7 @@ TCL_SHLIB_CFLAGS=''
 TCL_CFLAGS_WARNING='-Wall -Wpointer-arith -Wdeclaration-after-statement'
 
 # Extra flags to pass to cc:
-TCL_EXTRA_CFLAGS='-pipe'
+TCL_EXTRA_CFLAGS='-pipe -DHAVE_CPUID=1'
 
 # Base command to use for combining object files into a shared library:
 TCL_SHLIB_LD='${CC} -shared'
@@ -111,7 +111,7 @@ TCL_LIB_FLAG=''
 
 # String to pass to linker to pick up the Tcl library from its
 # build directory.
-TCL_BUILD_LIB_SPEC='-L/root/64bit/tcl8.6.12/win -ltcl86'
+TCL_BUILD_LIB_SPEC='-L/root/64bit/tcl8.6.13/win -ltcl86'
 
 # String to pass to linker to pick up the Tcl library from its
 # installed directory.
@@ -146,7 +146,7 @@ TCL_UNSHARED_LIB_SUFFIX='${NODOT_VERSION}.a'
 # different place than the directory containing the source files, this
 # points to the location of the sources, not the location where Tcl was
 # compiled.
-TCL_SRC_DIR='/root/64bit/tcl8.6.12'
+TCL_SRC_DIR='/root/64bit/tcl8.6.13'
 
 # List of standard directories in which to look for packages during
 # "package require" commands.  Contains the "prefix" directory plus also
@@ -164,14 +164,14 @@ TCL_STUB_LIB_FLAG='-ltclstub86'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # build directory.
-TCL_BUILD_STUB_LIB_SPEC='-L/root/64bit/tcl8.6.12/win -ltclstub86'
+TCL_BUILD_STUB_LIB_SPEC='-L/root/64bit/tcl8.6.13/win -ltclstub86'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # installed directory.
 TCL_STUB_LIB_SPEC='-L/root/Tcl/lib -ltclstub86'
 
 # Path to the Tcl stub library in the build directory.
-TCL_BUILD_STUB_LIB_PATH='/root/64bit/tcl8.6.12/win/libtclstub86.a'
+TCL_BUILD_STUB_LIB_PATH='/root/64bit/tcl8.6.13/win/libtclstub86.a'
 
 # Path to the Tcl stub library in the install directory.
 TCL_STUB_LIB_PATH='/root/Tcl/lib/libtclstub86.a'

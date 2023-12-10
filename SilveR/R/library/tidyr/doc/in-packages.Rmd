@@ -43,7 +43,7 @@ mini_iris
 
 ## Using tidyr in packages
 
-Here we assume that you're already familiar with using tidyr in functions, as described in `vignette("programming.Rmd)`. There are two important considerations when using tidyr in a package:
+Here we assume that you're already familiar with using tidyr in functions, as described in `vignette("programming.Rmd")`. There are two important considerations when using tidyr in a package:
 
 * How to avoid `R CMD CHECK` notes when using fixed variable names.
 * How to alert yourself to upcoming changes in the development version of tidyr.
@@ -133,7 +133,7 @@ This section briefly describes how to run different code for different versions 
 * `nest()` preserves groups.
 * `nest_()` and `unnest_()` are defunct.
 
-If you're struggling with a problem that's not described here, please reach out via [github](https://github.com/tidyverse/tidyr/issues/new) or [email](mailto:hadley@rstudio.com) so we can help out.
+If you're struggling with a problem that's not described here, please reach out via [github](https://github.com/tidyverse/tidyr/issues/new) or [email](mailto:hadley@posit.co) so we can help out.
 
 ### Conditional code
 

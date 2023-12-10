@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: Fast and Versatile Argument Checks</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -12,10 +12,11 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;checkmate&rsquo; version 2.1.0</h2>
+</div><h2>Documentation for package &lsquo;checkmate&rsquo; version 2.2.0</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -35,14 +36,14 @@
 <a href="#misc">misc</a>
 </p>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="checkmate-package.html">checkmate-package</a></td>
 <td>checkmate: Fast and Versatile Argument Checks</td></tr>
 </table>
 
-<h2><a name="A">-- A --</a></h2>
+<h2><a id="A">-- A --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="anyMissing.html">allMissing</a></td>
 <td>Check if an object contains missing values</td></tr>
 <tr><td style="width: 25%;"><a href="anyInfinite.html">anyInfinite</a></td>
@@ -137,6 +138,8 @@
 <td>Check the operating system</td></tr>
 <tr><td style="width: 25%;"><a href="checkPathForOutput.html">assertPathForOutput</a></td>
 <td>Check if a path is suited for creating an output file</td></tr>
+<tr><td style="width: 25%;"><a href="checkPermutation.html">assertPermutation</a></td>
+<td>Check if the arguments are permutations of each other.</td></tr>
 <tr><td style="width: 25%;"><a href="checkPOSIXct.html">assertPOSIXct</a></td>
 <td>Check that an argument is a date/time object in POSIXct format</td></tr>
 <tr><td style="width: 25%;"><a href="checkR6.html">assertR6</a></td>
@@ -235,6 +238,8 @@
 <td>Check the operating system</td></tr>
 <tr><td style="width: 25%;"><a href="checkPathForOutput.html">assert_path_for_output</a></td>
 <td>Check if a path is suited for creating an output file</td></tr>
+<tr><td style="width: 25%;"><a href="checkPermutation.html">assert_permutation</a></td>
+<td>Check if the arguments are permutations of each other.</td></tr>
 <tr><td style="width: 25%;"><a href="checkPOSIXct.html">assert_posixct</a></td>
 <td>Check that an argument is a date/time object in POSIXct format</td></tr>
 <tr><td style="width: 25%;"><a href="checkR6.html">assert_r6</a></td>
@@ -259,9 +264,9 @@
 <td>Check if an argument is a vector</td></tr>
 </table>
 
-<h2><a name="C">-- C --</a></h2>
+<h2><a id="C">-- C --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="checkAccess.html">checkAccess</a></td>
 <td>Check file system access rights</td></tr>
 <tr><td style="width: 25%;"><a href="checkArray.html">checkArray</a></td>
@@ -340,6 +345,8 @@
 <td>Check the operating system</td></tr>
 <tr><td style="width: 25%;"><a href="checkPathForOutput.html">checkPathForOutput</a></td>
 <td>Check if a path is suited for creating an output file</td></tr>
+<tr><td style="width: 25%;"><a href="checkPermutation.html">checkPermutation</a></td>
+<td>Check if the arguments are permutations of each other.</td></tr>
 <tr><td style="width: 25%;"><a href="checkPOSIXct.html">checkPOSIXct</a></td>
 <td>Check that an argument is a date/time object in POSIXct format</td></tr>
 <tr><td style="width: 25%;"><a href="checkR6.html">checkR6</a></td>
@@ -434,6 +441,8 @@
 <td>Check the operating system</td></tr>
 <tr><td style="width: 25%;"><a href="checkPathForOutput.html">check_path_for_output</a></td>
 <td>Check if a path is suited for creating an output file</td></tr>
+<tr><td style="width: 25%;"><a href="checkPermutation.html">check_permutation</a></td>
+<td>Check if the arguments are permutations of each other.</td></tr>
 <tr><td style="width: 25%;"><a href="checkPOSIXct.html">check_posixct</a></td>
 <td>Check that an argument is a date/time object in POSIXct format</td></tr>
 <tr><td style="width: 25%;"><a href="checkR6.html">check_r6</a></td>
@@ -458,9 +467,9 @@
 <td>Check if an argument is a vector</td></tr>
 </table>
 
-<h2><a name="E">-- E --</a></h2>
+<h2><a id="E">-- E --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="checkAccess.html">expect_access</a></td>
 <td>Check file system access rights</td></tr>
 <tr><td style="width: 25%;"><a href="checkArray.html">expect_array</a></td>
@@ -531,6 +540,8 @@
 <td>Check the operating system</td></tr>
 <tr><td style="width: 25%;"><a href="checkPathForOutput.html">expect_path_for_output</a></td>
 <td>Check if a path is suited for creating an output file</td></tr>
+<tr><td style="width: 25%;"><a href="checkPermutation.html">expect_permutation</a></td>
+<td>Check if the arguments are permutations of each other.</td></tr>
 <tr><td style="width: 25%;"><a href="checkPOSIXct.html">expect_posixct</a></td>
 <td>Check that an argument is a date/time object in POSIXct format</td></tr>
 <tr><td style="width: 25%;"><a href="checkR6.html">expect_r6</a></td>
@@ -551,9 +562,9 @@
 <td>Check if an argument is a tibble</td></tr>
 </table>
 
-<h2><a name="M">-- M --</a></h2>
+<h2><a id="M">-- M --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="AssertCollection.html">makeAssertCollection</a></td>
 <td>Collect multiple assertions</td></tr>
 <tr><td style="width: 25%;"><a href="makeAssertion.html">makeAssertion</a></td>
@@ -572,9 +583,9 @@
 <td>Partial Argument Matching</td></tr>
 </table>
 
-<h2><a name="Q">-- Q --</a></h2>
+<h2><a id="Q">-- Q --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="qassert.html">qassert</a></td>
 <td>Quick argument checks on (builtin) R types</td></tr>
 <tr><td style="width: 25%;"><a href="qassertr.html">qassertr</a></td>
@@ -589,18 +600,18 @@
 <td>Quick recursive arguments checks on lists and data frames</td></tr>
 </table>
 
-<h2><a name="R">-- R --</a></h2>
+<h2><a id="R">-- R --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="register_test_backend.html">register_test_backend</a></td>
 <td>Select Backend for Unit Tests</td></tr>
 <tr><td style="width: 25%;"><a href="AssertCollection.html">reportAssertions</a></td>
 <td>Collect multiple assertions</td></tr>
 </table>
 
-<h2><a name="T">-- T --</a></h2>
+<h2><a id="T">-- T --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="checkAccess.html">testAccess</a></td>
 <td>Check file system access rights</td></tr>
 <tr><td style="width: 25%;"><a href="checkArray.html">testArray</a></td>
@@ -677,6 +688,8 @@
 <td>Check the operating system</td></tr>
 <tr><td style="width: 25%;"><a href="checkPathForOutput.html">testPathForOutput</a></td>
 <td>Check if a path is suited for creating an output file</td></tr>
+<tr><td style="width: 25%;"><a href="checkPermutation.html">testPermutation</a></td>
+<td>Check if the arguments are permutations of each other.</td></tr>
 <tr><td style="width: 25%;"><a href="checkPOSIXct.html">testPOSIXct</a></td>
 <td>Check that an argument is a date/time object in POSIXct format</td></tr>
 <tr><td style="width: 25%;"><a href="checkR6.html">testR6</a></td>
@@ -773,6 +786,8 @@
 <td>Check the operating system</td></tr>
 <tr><td style="width: 25%;"><a href="checkPathForOutput.html">test_path_for_output</a></td>
 <td>Check if a path is suited for creating an output file</td></tr>
+<tr><td style="width: 25%;"><a href="checkPermutation.html">test_permutation</a></td>
+<td>Check if the arguments are permutations of each other.</td></tr>
 <tr><td style="width: 25%;"><a href="checkPOSIXct.html">test_posixct</a></td>
 <td>Check that an argument is a date/time object in POSIXct format</td></tr>
 <tr><td style="width: 25%;"><a href="checkR6.html">test_r6</a></td>
@@ -797,25 +812,25 @@
 <td>Check if an argument is a vector</td></tr>
 </table>
 
-<h2><a name="V">-- V --</a></h2>
+<h2><a id="V">-- V --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="vname.html">vname</a></td>
 <td>Lookup a variable name</td></tr>
 </table>
 
-<h2><a name="W">-- W --</a></h2>
+<h2><a id="W">-- W --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="wf.html">wf</a></td>
 <td>Get the index of the first/last TRUE</td></tr>
 <tr><td style="width: 25%;"><a href="wf.html">wl</a></td>
 <td>Get the index of the first/last TRUE</td></tr>
 </table>
 
-<h2><a name="misc">-- misc --</a></h2>
+<h2><a id="misc">-- misc --</a></h2>
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="coalesce.html">%??%</a></td>
 <td>Coalesce operator</td></tr>
 </table>

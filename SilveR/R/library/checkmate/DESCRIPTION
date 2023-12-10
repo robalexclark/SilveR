@@ -4,7 +4,7 @@ Title: Fast and Versatile Argument Checks
 Description: Tests and assertions to perform frequent argument checks. A
     substantial part of the package was written in C to minimize any worries
     about execution time overhead.
-Version: 2.1.0
+Version: 2.2.0
 Authors@R: c(
     person("Michel", "Lang", NULL, "michellang@gmail.com",
       role = c("cre", "aut"), comment = c(ORCID = "0000-0001-9754-0393")),
@@ -26,7 +26,7 @@ Suggests: R6, fastmatch, data.table (>= 1.9.8), devtools, ggplot2,
         3.0.4), tinytest (>= 1.1.0), tibble
 License: BSD_3_clause + file LICENSE
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Collate: 'AssertCollection.R' 'allMissing.R' 'anyInfinite.R'
         'anyMissing.R' 'anyNaN.R' 'asInteger.R' 'assert.R' 'helper.R'
         'makeExpectation.R' 'makeTest.R' 'makeAssertion.R'
@@ -41,18 +41,18 @@ Collate: 'AssertCollection.R' 'allMissing.R' 'anyInfinite.R'
         'checkIntegerish.R' 'checkList.R' 'checkLogical.R'
         'checkMatrix.R' 'checkMultiClass.R' 'checkNamed.R'
         'checkNames.R' 'checkNull.R' 'checkNumber.R' 'checkNumeric.R'
-        'checkOS.R' 'checkPOSIXct.R' 'checkPathForOutput.R' 'checkR6.R'
-        'checkRaw.R' 'checkScalar.R' 'checkScalarNA.R'
-        'checkSetEqual.R' 'checkString.R' 'checkSubset.R' 'checkTRUE.R'
-        'checkTibble.R' 'checkVector.R' 'coalesce.R' 'isIntegerish.R'
-        'matchArg.R' 'qassert.R' 'qassertr.R' 'vname.R' 'wfwl.R'
-        'zzz.R'
-Packaged: 2022-04-20 07:14:04 UTC; michel
+        'checkOS.R' 'checkPOSIXct.R' 'checkPathForOutput.R'
+        'checkPermutation.R' 'checkR6.R' 'checkRaw.R' 'checkScalar.R'
+        'checkScalarNA.R' 'checkSetEqual.R' 'checkString.R'
+        'checkSubset.R' 'checkTRUE.R' 'checkTibble.R' 'checkVector.R'
+        'coalesce.R' 'isIntegerish.R' 'matchArg.R' 'qassert.R'
+        'qassertr.R' 'vname.R' 'wfwl.R' 'zzz.R'
+Packaged: 2023-04-26 11:39:50 UTC; michel
 Author: Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>),
   Bernd Bischl [ctb],
   Dénes Tóth [ctb] (<https://orcid.org/0000-0003-4262-3217>)
 Maintainer: Michel Lang <michellang@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-04-21 07:30:05 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-04-24 04:05:06 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-04-27 09:22:31 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:43:09 UTC; windows
+Archs: x64

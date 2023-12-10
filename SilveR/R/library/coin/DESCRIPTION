@@ -1,6 +1,6 @@
 Package: coin
-Version: 1.4-2
-Date: 2021-10-07
+Version: 1.4-3
+Date: 2023-09-26
 Title: Conditional Inference Procedures in a Permutation Test Framework
 Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"),
                     email = "Torsten.Hothorn@R-project.org",
@@ -26,9 +26,10 @@ LinkingTo: libcoin (>= 1.0-9)
 LazyData: yes
 NeedsCompilation: yes
 ByteCompile: yes
+Encoding: UTF-8
 License: GPL-2
 URL: http://coin.r-forge.r-project.org
-Packaged: 2021-10-07 13:52:08 UTC; hothorn
+Packaged: 2023-09-27 09:53:17 UTC; hothorn
 Author: Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),
   Henric Winell [aut] (<https://orcid.org/0000-0001-7995-3047>),
   Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),
@@ -36,6 +37,6 @@ Author: Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),
   Achim Zeileis [aut] (<https://orcid.org/0000-0003-0918-3766>)
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Repository: CRAN
-Date/Publication: 2021-10-08 08:40:15 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-18 06:16:57 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-09-27 16:10:02 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 02:25:40 UTC; windows
+Archs: x64

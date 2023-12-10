@@ -1,3 +1,15 @@
+# gtable 0.3.4
+
+* Fix package doc links
+
+# gtable 0.3.3
+
+* Specify minimum rlang version
+
+# gtable 0.3.2
+
+* General upkeep
+
 # gtable 0.3.1
 
 * Re-documented to fix HTML issues in `.Rd`.

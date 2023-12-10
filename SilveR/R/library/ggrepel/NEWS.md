@@ -1,4 +1,61 @@
 
+ggrepel 0.9.4
+========================
+
+## Changes
+
+* Add `min.segment.length` to the options table in the examples page, thanks to
+  @jwhendy for [mentioning this][issue 213].
+
+* Add example for how to use ggrepel with sf objects, i.e.
+  `geom_text_repel(..., stat = "sf_coordinates")`, thanks to @francisbarton for [pull request 236].
+
+* Use `expect_equal(x, y)` instead of `expect_true(identical(x, y))`, see [issue 242] for details.
+
+[issue 213]: https://github.com/slowkow/ggrepel/issues/213
+[pull request 193]: https://github.com/slowkow/ggrepel/pull/236
+[issue 242]: https://github.com/slowkow/ggrepel/issues/242
+
+
+ggrepel 0.9.3
+========================
+
+## Bug fixes
+
+* When we set the seed in `ggrepel::geom_text_repel(seed = 1)`, this will
+  no longer override the seed for other unrelated code. Thanks to
+  @kassambara for reporting this in [issue 228].
+
+[issue 228]: https://github.com/slowkow/ggrepel/issues/228
+
+
+ggrepel 0.9.2
+========================
+
+## Bug fixes
+
+* Fix compiler errors for C++ expressions like `v[i] = {0,0}` that arise
+  for some versions of the clang compiler. Thanks to @Krascal and @vrognas
+  for reporting this in [issue 184].
+
+[issue 184]: https://github.com/slowkow/ggrepel/issues/184
+
+* Fix warning from CRAN `warning: use of bitwise '&' with boolean operands`
+
+## Changes
+
+* Change internal column names, so that `ggrepel::position_nudge_repel()` can now be used
+  with `ggplot2::geom_text()`. This should also allow us to use new nudge functions
+  from the [ggpp] package by @aphalo. Thanks to @aphalo for [pull request 193].
+  
+* Improve handling of justification for `angle` different from zero in
+  `ggrepel::geom_text_repel()` [pull request 196].
+  
+[ggpp]: https://github.com/aphalo/ggpp
+[pull request 193]: https://github.com/slowkow/ggrepel/pull/193
+[pull request 196]: https://github.com/slowkow/ggrepel/pull/196
+
+
 ggrepel 0.9.1 2021-01-09
 ========================
 

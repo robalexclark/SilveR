@@ -2,7 +2,7 @@ Package: evaluate
 Type: Package
 Title: Parsing and Evaluation Tools that Provide More Details than the
         Default
-Version: 0.17
+Version: 0.22
 Authors@R: c(
     person("Hadley", "Wickham", role = "aut"),
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -13,7 +13,8 @@ Authors@R: c(
     person("Adam", "Ryczkowski", role = "ctb"),
     person("Hiroaki", "Yutani", role = "ctb"),
     person("Michel", "Lang", role = "ctb"),
-    person("Karolis", "Koncevičius", role = "ctb")
+    person("Karolis", "Koncevičius", role = "ctb"),
+    person(given = "Posit Software, PBC", role = c("cph", "fnd"))
     )
 Description: Parsing and evaluation tools that make it easy to recreate the
     command line behaviour of R.
@@ -22,11 +23,12 @@ URL: https://github.com/r-lib/evaluate
 BugReports: https://github.com/r-lib/evaluate/issues
 Depends: R (>= 3.0.2)
 Imports: methods
-Suggests: covr, ggplot2, lattice, testthat
-RoxygenNote: 7.2.1
+Suggests: covr, ggplot2, lattice, rlang, testthat (>= 3.0.0), withr
+RoxygenNote: 7.2.3
 Encoding: UTF-8
+Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2022-10-07 14:28:18 UTC; yihui
+Packaged: 2023-09-29 02:32:03 UTC; yihui
 Author: Hadley Wickham [aut],
   Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Michael Lawrence [ctb],
@@ -36,8 +38,9 @@ Author: Hadley Wickham [aut],
   Adam Ryczkowski [ctb],
   Hiroaki Yutani [ctb],
   Michel Lang [ctb],
-  Karolis Koncevičius [ctb]
+  Karolis Koncevičius [ctb],
+  Posit Software, PBC [cph, fnd]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2022-10-07 15:00:07 UTC
-Built: R 4.1.3; ; 2022-10-09 22:10:20 UTC; windows
+Date/Publication: 2023-09-29 04:30:05 UTC
+Built: R 4.3.1; ; 2023-10-24 00:42:50 UTC; windows

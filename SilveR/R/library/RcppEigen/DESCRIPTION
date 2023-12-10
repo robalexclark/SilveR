@@ -2,8 +2,8 @@ Package: RcppEigen
 Type: Package
 Title: 'Rcpp' Integration for the 'Eigen' Templated Linear Algebra
         Library
-Version: 0.3.3.9.2
-Date: 2022-04-05
+Version: 0.3.3.9.3
+Date: 2022-11-04
 Author: Douglas Bates, Dirk Eddelbuettel, Romain Francois, and Yixuan Qiu;
  the authors of Eigen for the included version of Eigen
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
@@ -23,6 +23,7 @@ Description: R and 'Eigen' integration using 'Rcpp'.
  the GNU GPL version 2 or later, as is the rest of 'Rcpp'.
 License: GPL (>= 2) | file LICENSE
 LazyLoad: yes
+Depends: R (>= 3.6.0)
 LinkingTo: Rcpp
 Imports: Matrix (>= 1.1-0), Rcpp (>= 0.11.0), stats, utils
 Suggests: inline, tinytest, pkgKitten, microbenchmark
@@ -30,8 +31,8 @@ URL: https://github.com/RcppCore/RcppEigen,
         https://dirk.eddelbuettel.com/code/rcpp.eigen.html
 BugReports: https://github.com/RcppCore/RcppEigen/issues
 NeedsCompilation: yes
-Packaged: 2022-04-05 11:51:15 UTC; edd
+Packaged: 2022-11-04 17:14:31 UTC; edd
 Repository: CRAN
-Date/Publication: 2022-04-08 12:02:37 UTC
-Built: R 4.1.3; x86_64-w64-mingw32; 2022-04-24 07:29:31 UTC; windows
-Archs: i386, x64
+Date/Publication: 2022-11-05 21:50:02 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 01:42:07 UTC; windows
+Archs: x64

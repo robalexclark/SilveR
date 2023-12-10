@@ -1,3 +1,34 @@
+# broom 1.0.5
+
+* `tidy.coxph()` will now pass its ellipses `...` to `summary()` internally (#1151 by `@ste-tuf`).
+
+* Transitioned the deprecation of the `region` argument to `tidy.SpatialPolygonsDataFrame` from a warn- to a hard-deprecation (#1142). 
+
+* Removed maptools and rgeos as Suggested packages ahead of their retirement. sp tidiers will be removed from a future release of the package (#1142).
+
+* Addressed bug in mlogit tidiers where `augment.mlogit()` would fail if supplied a model fitted with a non-default `dfidx()` (#1156 by `@gregmacfarlane`). 
+
+* Addressed bug in ANOVA tidiers where `tidy.anova()` would fail if passed a model with many predictors (#1159 by `@jwilliman`). 
+
+* Addressed warnings in ANOVA tidiers for unrecognized column names `Resid..Df`, `Resid..Dev`, and `Deviance`; those columns will be renamed `df.residual`, `residual.deviance`, and `deviance`, respectively (#1159 by `@jwilliman`).
+
+# broom 1.0.4
+
+* Added an `intercept` argument to `tidy.aov()`, a logical indicating whether to include information on the intercept as the first row of results (#1144 by `@victor-vscn`).
+* Moved forward with soft-deprecation of tidiers for objects from the sp package ahead of the retirement of the rgeos and maptools packages later this year. sp tidiers will be removed from a future release of the package (#1142). 
+* Fixed bug in `augment.glm()` where the `.std.resid` column always contained standardized deviance residuals regardless of the value passed to the `type.residuals` argument (#1147).
+
+# broom 1.0.3
+
+* Addressed test failures on R-devel.
+* Fixed bug in `tidy.multinom()` where the `conf.level` argument would be ignored.
+
+# broom 1.0.2
+
+* The default `data` argument for `augment.coxph()` and `augment.survreg()` has been transitioned from `NULL` to `model.frame(x)` (#1126 by `@capnrefsmmat`).
+* Migrated 'ggplot2' from strong to weak dependency, i.e. moved from `Imports` to `Suggests`.
+* Fixed a bug where `augment()` results would not include residuals when the response term included a function call (#1121, #946, #937, #124).
+
 # broom 1.0.1
 
 * Improves performance of `tidy.lm()` and `tidy.glm()` for full-rank fits (#1112 by `@capnrefsmmat`).

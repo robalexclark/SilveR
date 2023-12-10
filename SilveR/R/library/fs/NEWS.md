@@ -1,3 +1,21 @@
+# fs 1.6.3
+
+* No user visible changes.
+
+# fs 1.6.2
+
+* `path_ext_set()` can now handle extensions that contain a `.`, e.g. `csv.gz` (@mgirlich, #415).
+
+# fs 1.6.1
+
+No user visible changes.
+
+# fs 1.6.0
+
+* inputs to `path_real()` and `path_join()` are coerced to character for consistency with other functions (@raymondben, #370)
+
+* fs uses libuv 1.44.2 now.
+
 # fs 1.5.2
 
 * `file_create()` and `dir_create()` now return the correct path when `...` arguments are used (@davidchall, #333).

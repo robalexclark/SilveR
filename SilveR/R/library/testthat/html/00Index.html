@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head><title>R: Unit Testing for R</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -12,16 +12,17 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;testthat&rsquo; version 3.1.5</h2>
+</div><h2>Documentation for package &lsquo;testthat&rsquo; version 3.2.0</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
+<li><a href="../NEWS">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
 
 
-<table width="100%">
+<table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="expect_snapshot_file.html">announce_snapshot_file</a></td>
 <td>Snapshot testing for whole files</td></tr>
 <tr><td style="width: 25%;"><a href="auto_test.html">auto_test</a></td>
@@ -48,6 +49,8 @@
 <td>The building block of all 'expect_' functions</td></tr>
 <tr><td style="width: 25%;"><a href="expect_error.html">expect_condition</a></td>
 <td>Does code throw an error, warning, message, or other condition?</td></tr>
+<tr><td style="width: 25%;"><a href="expect_setequal.html">expect_contains</a></td>
+<td>Does code return a vector containing the expected values?</td></tr>
 <tr><td style="width: 25%;"><a href="equality-expectations.html">expect_equal</a></td>
 <td>Does code return the expected value?</td></tr>
 <tr><td style="width: 25%;"><a href="expect_error.html">expect_error</a></td>
@@ -60,6 +63,8 @@
 <td>Does code return a number greater/less than the expected value?</td></tr>
 <tr><td style="width: 25%;"><a href="equality-expectations.html">expect_identical</a></td>
 <td>Does code return the expected value?</td></tr>
+<tr><td style="width: 25%;"><a href="expect_setequal.html">expect_in</a></td>
+<td>Does code return a vector containing the expected values?</td></tr>
 <tr><td style="width: 25%;"><a href="expect_invisible.html">expect_invisible</a></td>
 <td>Does code return a visible or invisible object?</td></tr>
 <tr><td style="width: 25%;"><a href="expect_length.html">expect_length</a></td>
@@ -114,14 +119,22 @@
 <td>Test reporter: fail at end.</td></tr>
 <tr><td style="width: 25%;"><a href="inheritance-expectations.html">inheritance-expectations</a></td>
 <td>Does code return an object inheriting from the expected base type, S3 class, or S4 class?</td></tr>
+<tr><td style="width: 25%;"><a href="is_testing.html">is_checking</a></td>
+<td>Determine testing status</td></tr>
 <tr><td style="width: 25%;"><a href="is_testing.html">is_parallel</a></td>
+<td>Determine testing status</td></tr>
+<tr><td style="width: 25%;"><a href="is_testing.html">is_snapshot</a></td>
 <td>Determine testing status</td></tr>
 <tr><td style="width: 25%;"><a href="is_testing.html">is_testing</a></td>
 <td>Determine testing status</td></tr>
+<tr><td style="width: 25%;"><a href="describe.html">it</a></td>
+<td>describe: a BDD testing language</td></tr>
 <tr><td style="width: 25%;"><a href="JunitReporter.html">JunitReporter</a></td>
 <td>Test reporter: summary of errors in jUnit XML format.</td></tr>
 <tr><td style="width: 25%;"><a href="ListReporter.html">ListReporter</a></td>
 <td>List reporter: gather all test results along with elapsed time and file information.</td></tr>
+<tr><td style="width: 25%;"><a href="local_mocked_bindings.html">local_mocked_bindings</a></td>
+<td>Mocking tools</td></tr>
 <tr><td style="width: 25%;"><a href="local_test_context.html">local_reproducible_output</a></td>
 <td>Locally set options for maximal test reproducibility</td></tr>
 <tr><td style="width: 25%;"><a href="local_test_context.html">local_test_context</a></td>
@@ -140,6 +153,8 @@
 <td>Test reporter: interactive progress bar of errors.</td></tr>
 <tr><td style="width: 25%;"><a href="RStudioReporter.html">RStudioReporter</a></td>
 <td>Test reporter: RStudio</td></tr>
+<tr><td style="width: 25%;"><a href="set_state_inspector.html">set_state_inspector</a></td>
+<td>State inspected</td></tr>
 <tr><td style="width: 25%;"><a href="SilentReporter.html">SilentReporter</a></td>
 <td>Test reporter: gather all errors silently.</td></tr>
 <tr><td style="width: 25%;"><a href="skip.html">skip</a></td>
@@ -154,8 +169,6 @@
 <td>Skip a test</td></tr>
 <tr><td style="width: 25%;"><a href="skip.html">skip_if_translated</a></td>
 <td>Skip a test</td></tr>
-<tr><td style="width: 25%;"><a href="skip.html">skip_on_appveyor</a></td>
-<td>Skip a test</td></tr>
 <tr><td style="width: 25%;"><a href="skip.html">skip_on_bioc</a></td>
 <td>Skip a test</td></tr>
 <tr><td style="width: 25%;"><a href="skip.html">skip_on_ci</a></td>
@@ -165,8 +178,6 @@
 <tr><td style="width: 25%;"><a href="skip.html">skip_on_cran</a></td>
 <td>Skip a test</td></tr>
 <tr><td style="width: 25%;"><a href="skip.html">skip_on_os</a></td>
-<td>Skip a test</td></tr>
-<tr><td style="width: 25%;"><a href="skip.html">skip_on_travis</a></td>
 <td>Skip a test</td></tr>
 <tr><td style="width: 25%;"><a href="snapshot_accept.html">snapshot_accept</a></td>
 <td>Snapshot management</td></tr>
@@ -189,16 +200,18 @@
 <tr><td style="width: 25%;"><a href="test_package.html">test_check</a></td>
 <td>Run all tests in a package</td></tr>
 <tr><td style="width: 25%;"><a href="test_file.html">test_file</a></td>
-<td>Run all tests in a single file</td></tr>
+<td>Run tests in a single file</td></tr>
 <tr><td style="width: 25%;"><a href="test_package.html">test_local</a></td>
 <td>Run all tests in a package</td></tr>
 <tr><td style="width: 25%;"><a href="test_package.html">test_package</a></td>
 <td>Run all tests in a package</td></tr>
 <tr><td style="width: 25%;"><a href="test_path.html">test_path</a></td>
-<td>Locate file in testing directory.</td></tr>
+<td>Locate a file in the testing directory</td></tr>
 <tr><td style="width: 25%;"><a href="test_that.html">test_that</a></td>
 <td>Run a test</td></tr>
 <tr><td style="width: 25%;"><a href="use_catch.html">use_catch</a></td>
 <td>Use Catch for C++ Unit Testing</td></tr>
+<tr><td style="width: 25%;"><a href="local_mocked_bindings.html">with_mocked_bindings</a></td>
+<td>Mocking tools</td></tr>
 </table>
 </div></body></html>

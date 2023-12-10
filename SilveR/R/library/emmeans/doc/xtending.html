@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.8.2" />
+<meta name="author" content="emmeans package, Version 1.8.9" />
 
 
 <title>For developers: Extending emmeans</title>
@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 
 <h1 class="title toc-ignore">For developers: Extending
 <strong>emmeans</strong></h1>
-<h4 class="author">emmeans package, Version 1.8.2</h4>
+<h4 class="author">emmeans package, Version 1.8.9</h4>
 
 
 
@@ -180,9 +180,9 @@ method. Look at the one for <code>lm</code> objects:</p>
 ## {
 ##     fcall = object$call
 ##     recover_data(fcall, delete.response(terms(object)), object$na.action, 
-##         frame = frame, ...)
+##         frame = frame, pwts = weights(object), ...)
 ## }
-## &lt;bytecode: 0x000001fe5ad68e18&gt;
+## &lt;bytecode: 0x0000024f64555878&gt;
 ## &lt;environment: namespace:emmeans&gt;</code></pre>
 <p>Note that all it does is obtain the <code>call</code> component and
 call the method for class <code>call</code>, with additional arguments
@@ -291,10 +291,10 @@ Following this advice, let’s take a look at it:</p>
 ##     m &lt;- model.frame(Terms, newdata, na.action = na.action, xlev = object$xlevels)
 ##     if (!is.null(cl &lt;- attr(Terms, &quot;dataClasses&quot;))) 
 ##         .checkMFClasses(cl, m)
-##     X &lt;- model.matrix(Terms, m, contrasts = object$contrasts)
+##     X &lt;- model.matrix(Terms, m, contrasts.arg = object$contrasts)
 ##     drop(X %*% object$coefficients)
 ## }
-## &lt;bytecode: 0x000001fe5a9a2950&gt;
+## &lt;bytecode: 0x0000024f6d756f28&gt;
 ## &lt;environment: namespace:MASS&gt;</code></pre>
 <div id="eblqs" class="section level6">
 <h6></h6>
@@ -568,7 +568,8 @@ make <code>recover_data</code> a lot fancier! Here it is:</p>
     fcall = object$call
     if(is.null(data))                                                 # 5
         data = emmeans::recover_data(fcall, 
-                   delete.response(terms(object)), object$na.action, ...)
+                   delete.response(terms(object)), object$na.action, 
+                   weights = weights(object), ...)
     if (!is.null(cod) &amp;&amp; (mode == &quot;decoded&quot;)) {
         pred = cpred = attr(data, &quot;predictors&quot;)
         trms = attr(data, &quot;terms&quot;)                                    #10

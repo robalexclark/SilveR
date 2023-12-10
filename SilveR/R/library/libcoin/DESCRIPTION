@@ -1,9 +1,12 @@
 Package: libcoin
 Title: Linear Test Statistics for Permutation Inference
-Date: 2021-09-27
-Version: 1.0-9
-Authors@R: person("Torsten", "Hothorn", role = c("aut", "cre"),
-                  email = "Torsten.Hothorn@R-project.org")
+Date: 2023-09-26
+Version: 1.0-10
+Authors@R: c(person("Torsten", "Hothorn", role = c("aut", "cre"),
+                    email = "Torsten.Hothorn@R-project.org",
+                    comment = c(ORCID = "0000-0001-8301-0471")),
+             person("Henric", "Winell", role = "aut",
+                    comment = c(ORCID = "0000-0001-7995-3047")))
 Description: Basic infrastructure for linear test statistics and permutation
   inference in the framework of Strasser and Weber (1999) <https://epub.wu.ac.at/102/>.
   This package must not be used by end-users. CRAN package 'coin' implements all
@@ -14,10 +17,11 @@ Imports: stats, mvtnorm
 LinkingTo: mvtnorm
 NeedsCompilation: yes
 License: GPL-2
-Packaged: 2021-09-27 09:19:55 UTC; hothorn
-Author: Torsten Hothorn [aut, cre]
+Packaged: 2023-09-27 09:57:53 UTC; hothorn
+Author: Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),
+  Henric Winell [aut] (<https://orcid.org/0000-0001-7995-3047>)
 Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Repository: CRAN
-Date/Publication: 2021-09-27 09:50:07 UTC
-Built: R 4.1.2; x86_64-w64-mingw32; 2022-02-17 23:22:54 UTC; windows
-Archs: i386, x64
+Date/Publication: 2023-09-27 10:30:07 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:43:47 UTC; windows
+Archs: x64
