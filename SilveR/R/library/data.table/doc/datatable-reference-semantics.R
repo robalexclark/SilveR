@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+## ----echo = FALSE, message = FALSE----------------------------------------------------------------
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
      tidy = FALSE,
     cache = FALSE,
  collapse = TRUE)
+.old.th = setDTthreads(1)
 
 ## ----echo = FALSE---------------------------------------------------------------------------------
 options(width = 100L)
@@ -124,4 +125,7 @@ DT[, w := 4L]
 
 ## DT_n doesn't get updated
 DT_n
+
+## ----echo=FALSE-----------------------------------------------------------------------------------
+setDTthreads(.old.th)
 

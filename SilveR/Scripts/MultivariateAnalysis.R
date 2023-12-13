@@ -1001,6 +1001,7 @@ if (dim(ttwo)[2] >2 ) {
 	graphdata$xvarrr_IVS<-graphdata$LD1
 	graphdata$yvarrr_IVS<-graphdata$LD2
 	graphdata$l_l<-graphdata$Treatments_IVS_
+	graphdata$catvartest <- "Y"
 
 	YAxisTitle<-"Second linear discriminant function"
 	XAxisTitle<-"First linear discriminant function"

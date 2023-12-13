@@ -34,8 +34,8 @@ USCounties              Contiguity Matrix of U.S. Counties
 abIndex-class           Class "abIndex" of Abstract Index Vectors
 abIseq                  Sequence Generation of "abIndex", Abstract
                         Index Vectors
-all-methods             "Matrix" Methods for Functions all() and any()
 all.equal-methods       Matrix Package Methods for Function all.equal()
+asUniqueT               Standardize a Sparse Matrix in Triplet Format
 atomicVector-class      Virtual Class "atomicVector" of Atomic Vectors
 band-methods            Extract bands of a matrix
 bandSparse              Construct Sparse Banded Matrix from
@@ -169,7 +169,6 @@ symmpart-methods        Symmetric Part and Skew(symmetric) Part of a
 triangularMatrix-class
                         Virtual Class of Triangular Matrices in Package
                         Matrix
-uniqTsparse             Unique (Sorted) TsparseMatrix Representations
 unpackedMatrix-class    Virtual Class '"unpackedMatrix"' of Unpacked
                         Dense Matrices
 updown-methods          Updating and Downdating Sparse Cholesky

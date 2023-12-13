@@ -1,3 +1,7 @@
+# brio 1.1.4
+
+* `printf()`-like format strings are now safer.
+
 # brio 1.1.3
 
 * Gábor Csárdi is now the maintainer.

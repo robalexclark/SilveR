@@ -6,13 +6,14 @@ add_ref_lines           Add reference lines for each cell of the
                         glyphmap.
 australia_PISA2012      Programme for International Student Assessment
                         (PISA) 2012 Data for Australia
+baseball                Yearly batting records for all major league
+                        baseball players
 brew_colors             RColorBrewer Set1 colors
 broomify                Broomify a model
 eval_data_col           Evaluate data column
 flea                    Historical data used for classification
                         examples.
 fn_switch               Function switch
-geom_stripped_rows      Alternating Background Colour
 getPlot                 Subset a 'ggmatrix' object
 ggally_autopoint        Scatterplot for continuous and categorical
                         variables
@@ -56,7 +57,6 @@ ggally_trends           Trends line plot
 ggbivariate             Display an outcome using several potential
                         explanatory variables
 ggcoef                  Model coefficients with 'broom' and 'ggplot2'
-ggcoef_model            Plot model coefficients
 ggcorr                  Correlation matrix
 ggduo                   'ggplot2' generalized pairs plot for two
                         columns sets of data
@@ -103,14 +103,10 @@ rescale01               Rescaling functions
 scag_order              Find order of variables
 scatmat                 Plots the lowertriangle and density plots of
                         the scatter plot matrix.
-signif_stars            Significance Stars
 singleClassOrder        Order axis variables
 skewness                Sample skewness
-stat_cross              Compute cross-tabulation statistics
-stat_prop               Compute proportions according to custom
-                        denominator
-stat_weighted_mean      Compute weighted y mean
 str.ggmatrix            'ggmatrix' structure
+tips                    Tipping data
 twitter_spambots        Twitter spambots
 uppertriangle           Rearrange dataset as the preparation of
                         'ggscatmat' function

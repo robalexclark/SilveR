@@ -40,7 +40,7 @@ writeLines(c("hello", "world"), f)
 gsub_file(f, "world", "woRld", fixed = TRUE)
 file_string(f)
 
-## ---- comment=''--------------------------------------------------------------
+## ----comment=''---------------------------------------------------------------
 process_file(f, function(x) {
   rep(x, 3)  # repeat the content 3 times
 })
@@ -85,7 +85,7 @@ n2w(1e+11 + 12345678)
 n2w(-987654321)
 n2w(1e+15 - 1)
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  res = xfun::cache_rds({
 #    # pretend the computing here is a time-consuming
 #    Sys.sleep(2)

@@ -1,0 +1,41 @@
+Package: labelled
+Type: Package
+Title: Manipulating Labelled Data
+Version: 2.12.0
+Maintainer: Joseph Larmarange <joseph@larmarange.net>
+Authors@R: c(
+  person("Joseph", "Larmarange", email = "joseph@larmarange.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7097-700X")),
+  person("Daniel", "Ludecke", role = "ctb"),
+  person("Hadley", "Wickham", role = "ctb"),
+  person("Michal", "Bojanowski", role = "ctb"),
+  person("François", "Briatte", role = "ctb")
+  )
+Description: Work with labelled data imported from 'SPSS'
+    or 'Stata' with 'haven' or 'foreign'. This package
+    provides useful functions to deal with "haven_labelled" and
+    "haven_labelled_spss" classes introduced by 'haven' package.
+License: GPL (>= 3)
+Encoding: UTF-8
+Depends: R (>= 3.0)
+Imports: haven (>= 2.4.1), dplyr (>= 1.0.0), lifecycle, rlang, vctrs,
+        stringr, tidyr
+Suggests: testthat, knitr, rmarkdown, questionr, snakecase, utf8, covr,
+        spelling
+Enhances: memisc
+URL: https://larmarange.github.io/labelled/
+BugReports: https://github.com/larmarange/labelled/issues
+VignetteBuilder: knitr
+LazyData: true
+RoxygenNote: 7.2.3
+RdMacros: lifecycle
+Language: en-US
+NeedsCompilation: no
+Packaged: 2023-06-21 13:32:27 UTC; josep
+Author: Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>),
+  Daniel Ludecke [ctb],
+  Hadley Wickham [ctb],
+  Michal Bojanowski [ctb],
+  François Briatte [ctb]
+Repository: CRAN
+Date/Publication: 2023-06-21 14:20:02 UTC
+Built: R 4.3.2; ; 2024-01-18 04:40:22 UTC; windows

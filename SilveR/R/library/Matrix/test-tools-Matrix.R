@@ -447,7 +447,10 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
                         doSummary = TRUE, doCoerce = TRUE,
 			doCoerce2 = doCoerce && !isRsp, doDet = do.matrix,
 			do.prod = do.t && do.matrix && !isRsp,
-			verbose = TRUE, catFUN = cat)
+			verbose = TRUE, catFUN = cat,
+                        MSG = if(interactive() || capabilities("long.double") ||
+                                 isTRUE(get0("doExtras"))) message else function(...) {}
+                        )
 {
     ## is also called from  dotestMat()  in ../tests/Class+Meth.R
 
@@ -519,8 +522,8 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 
 	## crossprod()	%*%  etc
 	if(do.prod) {
-	    c.m <-  crossprod(m)
-	    tcm <- tcrossprod(m)
+	    c.m <-  crossprod(m, boolArith = FALSE)
+	    tcm <- tcrossprod(m, boolArith = FALSE)
             tolQ <- if(isSparse) NA else eps16
 	    stopifnot(dim(c.m) == rep.int(ncol(m), 2),
 		      dim(tcm) == rep.int(nrow(m), 2),
@@ -550,12 +553,12 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 	CatF(" Summary: ")
 	for(f in summList) {
 	    ## suppressWarnings():  e.g. any(<double>)	would warn here:
-	    r <- suppressWarnings(if(isCor) all.equal(f(m), f(m.m)) else
-				  identical(f(m), f(m.m)))
-	    if(!isTRUE(r)) {
+	    r <- suppressWarnings(identical(f(m), f(m.m)))
+	    if(!isTRUE(r)) { ## typically for prod()
 		f.nam <- sub("..$", '', sub("^\\.Primitive..", '', format(f)))
-		## prod() is delicate: NA or NaN can both happen
-		(if(f.nam == "prod") message else stop)(
+		## sum() and prod() are sensitive to order of f. p. operations
+		## particularly on systems where sizeof(long double) == sizeof(double)
+		(if(any(f.nam == c("sum", "prod"))) MSG else stop)(
 		    sprintf("%s(m) [= %g] differs from %s(m.m) [= %g]",
 			    f.nam, f(m), f.nam, f(m.m)))
 	    }
@@ -633,7 +636,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 	    stopifnot(Qidentical(as(m11, "generalMatrix"),
 				 as(m12, "generalMatrix")))
     }
-    if(isSparse && !is.n) {
+    if(isSparse && !isDiag && !is.n) {
 	## ensure that as(., "nMatrix") gives nz-pattern
 	CatF("as(., \"nMatrix\") giving full nonzero-pattern: ")
 	n1 <- as(m, "nMatrix")
@@ -642,7 +645,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
                   ## only testing [CR]sparseMatrix and indMatrix here ...
                   ## sum(<n.T>) excludes duplicated (i,j) pairs whereas
                   ## length(diagU2N(<[^n].T>)) includes them ...
-                  isDiag || isTsp ||
+                  isTsp ||
                   (if(isSym) length(if(.hasSlot(n1, "i")) n1@i else n1@j)
                    else sum(n1)) == length(if(isInd) m@perm else diagU2N(m)@x))
         Cat("ok\n")
@@ -712,7 +715,7 @@ checkMatrix <- function(m, m.m = if(do.matrix) as(m, "matrix"),
 	else if(extends(cld, "lMatrix")) { ## should fulfill even with NA:
 	    stopifnot(all(m | !m | ina), !any(!m & m & !ina))
 	    if(isTsp) # allow modify, since at end here
-		m <- uniqTsparse(m, clNam)
+		m <- asUniqueT(m, isT = TRUE)
 	    stopifnot(identical(m, m & TRUE),
 		      identical(m, FALSE | m))
 	    ## also check the  coercions to [dln]Matrix
@@ -817,3 +820,18 @@ checkQR.DS.both <- function(A, Qinv.chk, QtQ.chk=NA,
     invisible(list(qA=qA, qa=qa))
 }
 
+non0.ij <- function(M) Matrix:::non0.i(as(M, "sparseMatrix"))
+
+triuChk <- function(x, k) {
+    ans <- triu(x, k)
+    ij <- non0.ij(ans)
+    stopifnot(identical(dim(x), dim(ans)), (ij %*% c(-1,1)) >= k)
+    ans
+}
+
+trilChk <- function(x, k) {
+    ans <- tril(x, k)
+    ij <- non0.ij(ans)
+    stopifnot(identical(dim(x), dim(ans)), (ij %*% c(-1,1)) <= k)
+    ans
+}

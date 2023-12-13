@@ -1,4 +1,4 @@
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  df <- tibble::data_frame(x = 1)
 #  #> Warning message:
 #  #> `data_frame()` is deprecated as of tibble 1.1.0.

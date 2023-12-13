@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+## ----echo = FALSE, message = FALSE----------------------------------------------------------------
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
      tidy = FALSE,
     cache = FALSE,
  collapse = TRUE)
+.old.th = setDTthreads(1)
 
 ## ----echo = FALSE---------------------------------------------------------------------------------
 options(width = 100L)
@@ -167,4 +168,7 @@ identical(ans1$val, ans2$val)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  1, 5, 10, 19, 22, 23, 30
+
+## ----echo=FALSE-----------------------------------------------------------------------------------
+setDTthreads(.old.th)
 

@@ -4,6 +4,7 @@ deferred_clear	defer
 deferred_run	defer
 defer_parent	defer
 devices	devices
+global_defer	global_defer
 local_	with_
 local_bmp	devices
 local_cairo_pdf	devices

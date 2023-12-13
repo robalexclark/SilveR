@@ -3,8 +3,44 @@
 \name{NEWS}
 \title{News for \R Package \pkg{cluster}}% MM: look into ../svn-log-from.all
 \encoding{UTF-8}
-\newcommand{\CRANpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
+
 %% NB: The date (yyyy-mm-dd) is the "Packaged:" date in ../DESCRIPTION
+
+\section{Changes in version 2.1.6 (2023-11-30, svn r8311)}{
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item \code{clara(*, metric="gower")} is too buggy, and hence
+      \bold{removed} for now, see below (2.1.5).
+    }
+  }
+  \subsection{Misc}{
+    \itemize{
+      \item tweak \file{tests/fanny-ex.\{R,Rout.save\}} for less "diffs".
+    }
+  }
+}
+
+\section{Changes in version 2.1.5 (2023-11-27, svn r8301)}{
+  \subsection{New Features}{
+    \itemize{
+      \item \code{pam()} and \code{clara()} also accept a
+      \code{\link{logical}} matrix as input.
+      \item \code{clara()} gets new \code{metric = "gower"} donated by
+      Kasper Fischer-Rasmussen.
+      --- was removed in 2.1.6 because of valgrind-detected memory leaks
+      (and problems/bugs found earlier in R experiments).
+    }
+  }
+  \subsection{Misc}{
+    \itemize{
+      \item renamed internal function \code{silhouette.default.R} to \code{silhouetteR}.
+      \item \file{CITATION} switched from old \code{citEntry()} to \code{bibentry()}.
+      \item \code{clara(*, trace = <pos>)} prints slightly better info.
+      \item \file{DESCRIPTION} gets \kbd{Enhances: } for packages
+      cross-referenced in \file{man/*.Rd}.
+    }
+  }
+}
 
 \section{Changes in version 2.1.4 (2022-08-19, svn r8119)}{
   \subsection{New Features}{
@@ -82,7 +118,7 @@
   }
 }
 
-\section{Changes in version 2.1.0 (2019-06-07, svn r7674)}{
+\section{Changes in version 2.1.0 (2019-06-14, svn r7675)}{
   \subsection{Bug Fixes}{
     \itemize{
       \item \code{volume(obj)} is now correct also for ellipsoids of
@@ -336,48 +372,42 @@
 %%        ~~~~~~~~~~~~~~~~
 %% and ../../cluster_Archive.lst  {~= CRAN  src/contrib/Archive/cluster/ :
 %%
-\section{Changes in version 1.14.4 (2013-03-26, svn r....)}{
-  \subsection{New Features}{
+\section{Changes in version 1.14.4 (2013-03-26, svn r6469)}{
+  \subsection{Tweaks}{
     \itemize{
-      \item -
-    }
-  }
-  \subsection{Bug Fixes}{
-    \itemize{
-      \item -
+      \item 2 de translations; update \file{mona.Rout.save}
     }
   }
 }
 
-\section{Changes in version 1.14.3 (2012-10-14, svn r....)}{
+\section{Changes in version 1.14.3 (2012-10-14, svn r6318)}{
   \subsection{New Features}{
     \itemize{
       \item Polnish translations from Lukasz Daniel.
     }
   }
-  \subsection{Bug Fixes}{
+  \subsection{Misc}{
     \itemize{
-      \item -
+      \item Tweaks for translations.
+      \item Improve \code{clusGap()} examples.
     }
   }
 }
 
 
-\section{Changes in version 1.14.2 (2012-02-06, svn r....)}{
+\section{Changes in version 1.14.2 (2012-02-06, svn r6069)}{
   \subsection{New Features}{
     \itemize{
       \item New \code{clusGap()} to compute the \dQuote{cluster Gap}
       goodness-of-fit statistic.
-    }
-  }
-  \subsection{Bug Fixes}{
-    \itemize{
-      \item -
+      \item Export \code{coefHier()}
+      \item \code{as.dendrogram()} now for \code{"twins"}, not just
+      \code{"agnes"}.
     }
   }
 }
 
-\section{Changes in version 1.14.1 (2011-10-16, svn r....)}{
+\section{Changes in version 1.14.1 (2011-10-16, svn r5928)}{
   \subsection{New Features}{
     \itemize{
       \item First translations (into German, thanks to Detlef Steuer).
@@ -392,7 +422,21 @@
   }
 }
 
-\section{Changes in version 1.14.0 (2011-06-07, svn r....)}{
+\section{Changes in version 1.14.0 (2011-06-07, svn r5842)}{
+  \subsection{New Features}{
+    \itemize{
+      \item Make \code{clara()} more \code{pam()}-like;
+      provide \code{pamLike = *} option.
+      \item \code{clusplot.default()} re-factored; use new
+      \code{mkCheckX()}; new args \code{add = FALSE}, \code{cex},
+      \code{cex.txt}.
+    }
+  }
+  \subsection{Bug Fixes}{
+    \itemize{
+      \item \code{agnes( <n=1> )}: correct error now.
+    }
+  }
 }
 %% -> /sfs/w/ftp/CRAN/src/contrib/Archive/cluster/
 
@@ -461,8 +505,8 @@
 
 
 
-\section{Version 1.2-1}{
-  \subsection{Versions 1.2-1, ...  1.13-3}{
+\section{Version 1.2-1 -- 1.13-3}{
+  \subsection{Many historical releases}{
     \itemize{
       \item 60 more CRAN releases of the package \pkg{cluster}
       from Dec 1999 to Feb 2011, see also the \file{ChangeLog} file and

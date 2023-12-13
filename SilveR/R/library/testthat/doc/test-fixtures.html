@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -636,8 +636,7 @@ For example, here’s how you could use
 <span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  withr<span class="sc">::</span><span class="fu">local_options</span>(<span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="fu">expect_message</span>(<span class="fu">message2</span>(<span class="st">&quot;Hi!&quot;</span>), <span class="cn">NA</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>})</span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; now dyn.load(&quot;/Users/hadleywickham/Library/R/arm64/4.2/library/ellipsis/libs/ellipsis.so&quot;) ...</span></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; Test passed</span></span></code></pre></div>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt; Test passed</span></span></code></pre></div>
 <div id="case-study-usethis" class="section level3">
 <h3>Case study: usethis</h3>
 <p>One place that we use test fixtures extensively is in the usethis

@@ -1,3 +1,25 @@
+# rlang 1.1.3
+
+* Fix for CRAN checks.
+
+* `%||%` is now reexported from base on newer R versions. This avoids
+  conflict messages when attaching or importing rlang.
+
+
+# rlang 1.1.2
+
+* Fixed an off-by-one typo in the traceback source column location (#1633).
+
+* `abort()` now respects the base R global option,
+  `options(show.error.messages = FALSE)` (#1630).
+
+* `obj_type_friendly()` now only displays the first class of S3 objects (#1622).
+
+* `expr_label()` now has back-compatility with respect to changes made by R version 4.4 and `is.atomic(NULL)` (#1655)
+
+* Performance improvement in `.rlang_cli_compat()` (#1657).
+
+
 # rlang 1.1.1
 
 * `englue()` now allows omitting `{{`. This is to make it easier to

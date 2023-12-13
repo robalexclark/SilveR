@@ -1,4 +1,20 @@
-<!-- NEWS.md is maintained by https://cynkra.github.io/fledge, do not edit -->
+<!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
+
+# rprojroot 2.0.4 (2023-11-05)
+
+## Features
+
+- Add `is_renv_project` criterion looking for an `renv.lock` file (@gadenbuie, #86).
+- Add `is_quarto_project` criterion looking for a Quarto project (@olivroy, #91, #92).
+
+## Chore
+
+- Update maintainer e-mail address.
+
+## Testing
+
+- Wrap `::` to skip if not installed in tests (#94).
+
 
 # rprojroot 2.0.3 (2022-03-25)
 

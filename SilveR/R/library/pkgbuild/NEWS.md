@@ -1,3 +1,8 @@
+# pkgbuild 1.4.3
+
+* pkgbuild now does not need the crayon, rprojroot and prettyunits
+  packages.
+
 # pkgbuild 1.4.2
 
 * Running `bootstrap.R` now works with `pkgbuild_process`, so it also works

@@ -561,7 +561,7 @@ palette_FUN <- function(categorisation) {
 		Gr_palette <- BW_palette
 	} else {
 		colourcount <- length(unique(eval(parse(text = paste("graphdata$", categorisation)))))
-		getPalette <- colorRampPalette(brewer.pal(9, Palette_set))
+		getPalette <- colorRampPalette(brewer.pal(8, Palette_set))
 		if (colourcount >= 10) {
 			Col_palette <- getPalette(colourcount)
 		} else {
@@ -575,7 +575,8 @@ palette_FUN <- function(categorisation) {
 #Colour range for individual animals on case profiles plot and power curves
 IVS_F_cpplot_colour <- function(subject) {
 	colourcount_A = length(unique(eval(parse(text = paste("graphdata$", subject)))))
-	getPalette_A = colorRampPalette(brewer.pal(9, Palette_set))
+	getPalette_A = colorRampPalette(brewer.pal(8, Palette_set))
+
 	if (colourcount_A >= 10) {
 		Col_palette_A <- getPalette_A(colourcount_A)
 	} else {
@@ -644,17 +645,17 @@ NONCAT_SCAT <- function(typez) {
 	}
 
 	if (infiniteslope == "N" && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g2 <- g1 + geom_smooth(method = lm, se = FALSE, lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = TRUE)
+		g2 <- g1 + geom_smooth(method = lm, se = FALSE, lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = TRUE)
 	} else {
 		g2 <- g1
 	}
 
 	if (typez == "RESIDPLOT") {
-		g3 <- g2 + geom_hline(yintercept = 0, lty = 1, size = Line_size, colour = Gr_line) +
-			geom_hline(yintercept = -2, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
-			geom_hline(yintercept = -3, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
-			geom_hline(yintercept = 2, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
-			geom_hline(yintercept = 3, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
+		g3 <- g2 + geom_hline(yintercept = 0, lty = 1, linewidth = Line_size, colour = Gr_line) +
+			geom_hline(yintercept = -2, lty = Gr_line_type, linewidth = Line_size, colour = Gr_line) +
+			geom_hline(yintercept = -3, lty = Gr_line_type, linewidth = Line_size, colour = Gr_line) +
+			geom_hline(yintercept = 2, lty = Gr_line_type, linewidth = Line_size, colour = Gr_line) +
+			geom_hline(yintercept = 3, lty = Gr_line_type, linewidth = Line_size, colour = Gr_line) +
 			scale_y_continuous(breaks = -20:20) +
 			scale_x_continuous(breaks = pretty_breaks()) +
 			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
@@ -663,7 +664,7 @@ NONCAT_SCAT <- function(typez) {
 	}
 
 	if (typez == "COOK") {
-		g4 <- g3 + geom_hline(yintercept = cutoff, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
+		g4 <- g3 + geom_hline(yintercept = cutoff, lty = Gr_line_type, linewidth = Line_size, colour = Gr_line) +
 			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g4 <- g3
@@ -691,14 +692,14 @@ NONCAT_SCAT <- function(typez) {
 		g8 <- g7
 	}
 	if (typez == "PAIRED") {
-		g9 <- g8 + geom_abline(slope=1, intercept=0, lty = Gr_line_type, size = Line_size, colour = Gr_line) +
+		g9 <- g8 + geom_abline(slope=1, intercept=0, lty = Gr_line_type, linewidth = Line_size, colour = Gr_line) +
 			theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0))
 	} else {
 		g9 <- g8
 	}
 
 	if (ReferenceLine != "NULL") {
-		g10 <- g9 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g10 <- g9 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g10 <- g9
 	}
@@ -751,7 +752,7 @@ ONECATSEP_SCAT <- function() {
 		facet_wrap(~l_l)
 
 	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = TRUE)
+		g1 <- g + geom_smooth(data = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = TRUE)
 	} else {
 		g1 <- g
 	}
@@ -763,7 +764,7 @@ ONECATSEP_SCAT <- function() {
 	}
 
 	if (ReferenceLine != "NULL") {
-		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -815,7 +816,7 @@ TWOCATSEP_SCAT <- function() {
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scale = scalexy)
 
 	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = TRUE)
+		g1 <- g + geom_smooth(data = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = TRUE)
 	} else {
 		g1 <- g
 	}
@@ -826,7 +827,7 @@ TWOCATSEP_SCAT <- function() {
 		g2 <- g1
 	}
 	if (ReferenceLine != "NULL") {
-		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -875,10 +876,10 @@ OVERLAID_SCAT <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_point(graphdata = subset(graphdata, catvartest != "N"), aes(fill = l_l), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat))
+		geom_point(aes(fill = l_l), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat))
 
 	if (dim(subset(graphdata, catvartest != "N"))[1] >= 1 && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), aes(colour = l_l), method = "lm", se = FALSE, lty = Line_type, size = Line_size, fullrange = TRUE)
+		g1 <- g + geom_smooth(data = subset(graphdata, catvartest != "N"), aes(colour = l_l), method = "lm", se = FALSE, lty = Line_type, linewidth = Line_size, fullrange = TRUE)
 	} else {
 		g1 <- g
 	}
@@ -895,7 +896,7 @@ OVERLAID_SCAT <- function() {
 		g3 <- g2
 	}
 	if (ReferenceLine != "NULL") {
-		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g4 <- g3 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g4 <- g3
 	}
@@ -987,7 +988,7 @@ NONCAT_SEM <- function() {
 		g4 <- g3
 	}
 	if (ReferenceLine != "NULL") {
-		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g5 <- g4
 	}
@@ -1053,7 +1054,7 @@ ONECATSEP_SEM <- function() {
 		g4 <- g3
 	}
 	if (ReferenceLine != "NULL") {
-		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g5 <- g4
 	}
@@ -1119,7 +1120,7 @@ TWOCATSEP_SEM <- function() {
 		g4 <- g3
 	}
 	if (ReferenceLine != "NULL") {
-		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g5 <- g4
 	}
@@ -1193,7 +1194,7 @@ OVERLAID_SEM <- function() {
 		g4 <- g3
 	}
 	if (ReferenceLine != "NULL") {
-		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g5 <- g4 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g5 <- g4
 	}
@@ -1219,8 +1220,9 @@ NONCAT_CPP <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
 		scale_fill_manual(values = Gr_palette_A) +
-		geom_point(aes(colour = Animal_IVS ), size = Point_size, shape = Point_shape) +
-		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size)
+		geom_point(aes(colour = Animal_IVS, fill = Animal_IVS ), size = Point_size, shape = 20) +
+#		geom_point(aes(colour = Animal_IVS, fill = Animal_IVS ), size = Point_size, shape = Point_shape) +
+		geom_line(aes(group = Animal_IVS, color = Animal_IVS), linewidth = Line_size)
 
 	if (ShowCaseIDsInLegend=="N") {
 		g1<- g + theme(legend.position = "none") 
@@ -1229,7 +1231,7 @@ NONCAT_CPP <- function() {
 	}
 
 	if (ReferenceLine != "NULL") {
-		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g2 <- g1
 	}
@@ -1277,8 +1279,9 @@ ONECATSEP_CPP <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
-		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
-		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = Point_shape) +
+		geom_line(aes(group = Animal_IVS, color = Animal_IVS), linewidth = Line_size) +
+#		geom_point(aes(group = Animal_IVS, colour = Animal_IVS, fill = Animal_IVS), size = Point_size, shape = Point_shape) +
+		geom_point(aes(group = Animal_IVS, colour = Animal_IVS, fill = Animal_IVS), size = Point_size, shape = 20) +
 		facet_wrap(~l_l) 
 
 	if (ShowCaseIDsInLegend=="N") {
@@ -1288,7 +1291,7 @@ ONECATSEP_CPP <- function() {
 	}
 
 	if (ReferenceLine != "NULL") {
-		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g2 <- g1 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g2 <- g1
 	}
@@ -1336,8 +1339,9 @@ TWOCATSEP_CPP <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
-		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
-		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = Point_shape) +
+		geom_line(aes(group = Animal_IVS, color = Animal_IVS), linewidth = Line_size) +
+		geom_point(aes(colour = Animal_IVS,  fill = Animal_IVS), size = Point_size, shape = 20) +
+#		geom_point(aes(colour = Animal_IVS,  fill = Animal_IVS), size = Point_size, shape = Point_shape) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS)
 
 	if (ShowCaseIDsInLegend=="N") {
@@ -1347,7 +1351,7 @@ TWOCATSEP_CPP <- function() {
 	}
 
 	if (ReferenceLine != "NULL") {
-		g2 <- g1+ geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g2 <- g1+ geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g2 <- g1
 	}
@@ -1395,11 +1399,12 @@ OVERLAID_CPP <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette) +
-		geom_point(aes(colour = l_l), size = Point_size, shape = Point_shape) +
-		geom_line(aes(group = Animal_IVS), size = Line_size)
+		geom_point(aes(fill = l_l), size = Point_size, shape = 20) +
+#		geom_point(aes(fill = l_l), size = Point_size, shape = Point_shape) +
+		geom_line(aes(group = Animal_IVS), linewidth = Line_size)
 
 	if (ReferenceLine != "NULL") {
-		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g1 <- g + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g1 <- g
 	}
@@ -1446,8 +1451,9 @@ AUC_CPP <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette_A) +
-		geom_line(aes(group = Animal_IVS, color = Animal_IVS), size = Line_size) +
-		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = Point_shape) +
+		geom_line(aes(group = Animal_IVS, color = Animal_IVS), linewidth = Line_size) +
+		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = 20) +
+#		geom_point(aes(colour = Animal_IVS), size = Point_size, shape = Point_shape) +
 		facet_wrap(~l_l) +
 		geom_area(aes(fill = Gr_fill, alpha = FillTransparency)) +
 		theme(legend.position = "none") 
@@ -1481,7 +1487,7 @@ NONCAT_BOX <- function() {
 		g2 <- g1
 	}
 	if (ReferenceLine != "NULL") {
-		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -1525,7 +1531,7 @@ ONECATSEP_BOX <- function() {
 		g2 <- g1
 	}
 	if (ReferenceLine != "NULL") {
-		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -1570,7 +1576,7 @@ TWOCATSEP_BOX <- function() {
 		g2 <- g1
 	}
 	if (ReferenceLine != "NULL") {
-		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -1613,7 +1619,7 @@ OVERLAID_BOX <- function() {
 		g2 <- g1
 	}
 	if (ReferenceLine != "NULL") {
-		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g3 <- g2 + geom_hline(yintercept = Gr_intercept, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -1638,7 +1644,7 @@ NONCAT_HIS <- function() {
 		xlab(YAxisTitle) +
 		ggtitle(MainTitle2) +
 		geom_histogram(aes(y = ..density..), colour = "black", fill = Gr_fill, center=(binrange/2), binwidth = (binrange), alpha = FillTransparency) +
-		stat_function(fun = dnorm, args = list(mean = mean(graphdata$yvarrr_IVS), sd = sd(graphdata$yvarrr_IVS)), alpha = Gr_alpha, color = Gr_line, size = Line_size)
+		stat_function(fun = dnorm, args = list(mean = mean(graphdata$yvarrr_IVS), sd = sd(graphdata$yvarrr_IVS)), alpha = Gr_alpha, color = Gr_line, linewidth = Line_size)
 	suppressWarnings(print(g))
 }
 
@@ -1706,7 +1712,7 @@ NONCAT_QQPLOT <- function(typez) {
 		scale_y_continuous(breaks = pretty_breaks()) +
 		theme(axis.text.x = element_text(hjust = 0.5, angle = 0), axis.text.y = element_text(hjust = 0.5, angle = 0)) +
 		stat_qq(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) +
-		stat_qq_line(lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
+		stat_qq_line(lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha))
 	
 #	if (scatterlabels == "Y") {
 #		g2 <- g + geom_text_repel(label=graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq")
@@ -1727,7 +1733,7 @@ CAT_QQPLOT <- function() {
 		scale_color_manual(values = Gr_palette) +
 		scale_fill_manual(values = Gr_palette) +
 		stat_qq(aes(fill = catfact), colour = "black", size = Point_size, shape = Point_shape) +
-		stat_qq_line(aes(colour = catfact), lty = Line_type, size = Line_size)
+		stat_qq_line(aes(colour = catfact), lty = Line_type, linewidth = Line_size)
 
 #	if (scatterlabels == "Y") {
 #		g2 <- g + geom_text_repel(label = graphdata$name[order(graphdata$yvarrr_IVS)], stat="qq" ,  size = 3.5,force = 10, point.padding=1, show.legend = FALSE)
@@ -1751,7 +1757,7 @@ LogisticplotNonCat <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
-		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, size = Line_size) +
+		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, linewidth = Line_size) +
 		scale_y_continuous(breaks = c(0,1), labels = labelsz ) +
 		scale_x_continuous(breaks = pretty_breaks()) 
 	suppressWarnings(print(g))
@@ -1767,7 +1773,7 @@ LogisticplotOneCat <- function() {
 		ggtitle(MainTitle2) +
 		facet_wrap(~l_l) +
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
-		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, size = Line_size) +
+		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, linewidth = Line_size) +
 		scale_y_continuous(breaks = c(0,1), labels = labelsz ) +
 		scale_x_continuous(breaks = pretty_breaks()) 
 	suppressWarnings(print(g))
@@ -1783,7 +1789,7 @@ LogisticplotTwoCat <- function() {
 		ggtitle(MainTitle2) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS) +
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
-		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, size = Line_size) +
+		geom_line(data = newdataPreds, colour = Gr_line, lty = Line_type, linewidth = Line_size) +
 		scale_y_continuous(breaks = c(0,1), labels = labelsz ) +
 		scale_x_continuous(breaks = pretty_breaks()) 
 	suppressWarnings(print(g))
@@ -1802,8 +1808,8 @@ NONCAT_MAT <- function() {
 		geom_point(size = Point_size, colour = "black", shape = Point_shape, fill = Gr_fill, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scales = scalexy)
 
-	if (is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = FALSE)
+	if (dim(subset(graphdata, catvartest != "N"))[1] >= 1 && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
+		g1 <- g + geom_smooth(data = subset(graphdata, catvartest != "N"), method = "lm", se = FALSE, lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha), fullrange = FALSE)
 	} else {
 		g1 <- g
 	}
@@ -1821,13 +1827,11 @@ OVERLAID_MAT <- function() {
 		ggtitle(MainTitle2) +
 		scale_color_manual(values = Gr_palette) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_point(graphdata = subset(graphdata, catvartest != "N"), aes(fill = l_li), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
+		geom_point(aes(fill = l_li), colour = "black", size = Point_size, shape = Point_shape, position = position_jitter(w = w_Gr_jitscat, h = h_Gr_jitscat)) +
 		facet_grid(firstcatvarrr_IVS ~ secondcatvarrr_IVS, scales = scalexy)
 
 	if (dim(subset(graphdata, catvartest != "N"))[1] >= 1 && is.numeric(graphdata$xvarrr_IVS) == "TRUE" && is.numeric(graphdata$yvarrr_IVS) == "TRUE" && LinearFit == "Y") {
-#		g1 <- g + geom_smooth(graphdata = subset(graphdata, catvartest != "N"), aes(colour = l_li), method = "lm", se = FALSE, lty = Line_type, size = Line_size, fullrange = FALSE)
-		g1 <- g
-
+		g1 <- g + geom_smooth(data = subset(graphdata, catvartest != "N"), aes(colour = l_li), method = "lm", se = FALSE, lty = Line_type, linewidth = Line_size, fullrange = FALSE)
 	} else {
 		g1 <- g
 	}
@@ -1846,7 +1850,7 @@ Dose_Resp_ExQC <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_line(data = finaldata[finaldata$Type == "Prediction curve",], colour = "black", lty = Line_type, size = Line_size) +
+		geom_line(data = finaldata[finaldata$Type == "Prediction curve",], colour = "black", lty = Line_type, linewidth = Line_size) +
 		geom_point(data = finaldata[finaldata$Type != "Prediction curve",], aes(col = Type), size = Point_size, colour = "black", shape = Point_shape)
 	suppressWarnings(print(g))
 }
@@ -1860,7 +1864,7 @@ Dose_Resp_IncQC <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_fill_manual(values = Gr_palette, breaks = c(' Assay standards', ' Quality controls', 'Prediction curve'), labels = c('Assay standards', 'Quality controls', ' ')) +
-		geom_line(data = finaldata[finaldata$Type == "Prediction curve",], colour = "black", lty = Line_type, size = Line_size) +
+		geom_line(data = finaldata[finaldata$Type == "Prediction curve",], colour = "black", lty = Line_type, linewidth = Line_size) +
 		geom_point(data = finaldata[finaldata$Type != "Prediction curve",], aes(col = Type), size = Point_size, colour = "black", shape = Point_shape)
 	suppressWarnings(print(g))
 }
@@ -1876,11 +1880,11 @@ LSMPLOT_1 <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_y_continuous(breaks = pretty_breaks()) +
-		geom_errorbar(aes(ymax = Upper, ymin = Lower), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+		geom_errorbar(aes(ymax = Upper, ymin = Lower), linewidth = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) 
 
 	if (DisplayLSMeanslines == "Y") {
-		g1 <- g + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), size = Line_size, colour = Gr_fill, lty = Line_type_solid) 
+		g1 <- g + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), linewidth = Line_size, colour = Gr_fill, lty = Line_type_solid) 
 	} else {
 		g1 <- g
 	}
@@ -1899,11 +1903,11 @@ LSMPLOT_2 <- function(number) {
 		scale_color_manual(values = Gr_palette) +
 		scale_fill_manual(values = Gr_palette) +
 		scale_y_continuous(breaks = pretty_breaks()) +
-		geom_errorbar(aes(group = jj_2, ymax = Upper, ymin = Lower, colour = jj_2), size = Line_size, pos = position_dodge(w = 0.2), width = ErrorBarWidth) +
+		geom_errorbar(aes(group = jj_2, ymax = Upper, ymin = Lower, colour = jj_2), linewidth = Line_size, pos = position_dodge(w = 0.2), width = ErrorBarWidth) +
 		geom_point(aes(fill = jj_2), colour = "black", size = Point_size, shape = Point_shape, pos = position_dodge(w = 0.2))
 
 	if (DisplayLSMeanslines == "Y") {
-		g1 <- g + stat_summary(fun.y = mean, geom = 'line', aes(group = jj_2, colour = jj_2), size = Line_size, pos = position_dodge(w = 0.2), lty = Line_type_solid) 
+		g1 <- g + stat_summary(fun.y = mean, geom = 'line', aes(group = jj_2, colour = jj_2), linewidth = Line_size, pos = position_dodge(w = 0.2), lty = Line_type_solid) 
 	} else {
 		g1 <- g
 	}
@@ -1927,9 +1931,9 @@ LSMPLOT_diff <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 		scale_y_continuous(breaks = pretty_breaks()) +
-		geom_errorbar(aes(ymax = Upper, ymin = Lower), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+		geom_errorbar(aes(ymax = Upper, ymin = Lower), linewidth = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) +
-		geom_hline(yintercept = Gr_intercept, lty = Gr_line_type, size = Line_size, colour = Gr_line)
+		geom_hline(yintercept = Gr_intercept, lty = Gr_line_type, linewidth = Line_size, colour = Gr_line)
 	suppressWarnings(print(g))
 }
 
@@ -1947,9 +1951,9 @@ EQPLOT2S <- function() {
 		scale_x_continuous(breaks = pretty_breaks()) +
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill)
 
-		g1 <- g + geom_errorbar(aes(xmax = X4, xmin = X5), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
-		geom_vline(xintercept = gr_lowerEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line) +
-		geom_vline(xintercept = gr_upperEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+		g1 <- g + geom_errorbar(aes(xmax = X4, xmin = X5), linewidth = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+		geom_vline(xintercept = gr_lowerEqB, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line) +
+		geom_vline(xintercept = gr_upperEqB, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 	suppressWarnings(print(g1))
 }
 
@@ -1964,13 +1968,13 @@ EQPLOT1S <- function(AnalysisType) {
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill)
 
 		if (AnalysisType =="upper-sided") {
-			g1 <- g + geom_errorbar(aes(xmax = X3, xmin = X4), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
-			geom_vline(xintercept = gr_upperEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line)
+			g1 <- g + geom_errorbar(aes(xmax = X3, xmin = X4), linewidth = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+			geom_vline(xintercept = gr_upperEqB, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line)
 		}
 
 		if (AnalysisType =="lower-sided") {
-			g1 <- g + geom_errorbar(aes(xmax = X3, xmin = X4), size = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
-			geom_vline(xintercept = gr_lowerEqB, lty = Gr_line_typeint, size = Line_size, colour = Gr_line) 
+			g1 <- g + geom_errorbar(aes(xmax = X3, xmin = X4), linewidth = Line_size, colour = Gr_fill, width = ErrorBarWidth) +
+			geom_vline(xintercept = gr_lowerEqB, lty = Gr_line_typeint, linewidth = Line_size, colour = Gr_line) 
 		}
 	suppressWarnings(print(g1))
 }
@@ -1991,7 +1995,7 @@ POWERPLOT_ORIGINAL <- function() {
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_x_continuous(breaks = pretty_breaks()) +
-		geom_line(aes(group = variable), lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
+		geom_line(aes(group = variable), lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha))
 	suppressWarnings(print(g))
 }
 
@@ -2008,7 +2012,7 @@ POWERPLOT_NEW <- function(titlez, legpos) {
 		scale_x_continuous(breaks = pretty_breaks()) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_colour_manual(name = namez, breaks = lin_list2, labels = userlistgr, values = Gr_palette_A) +
-		geom_line(aes(group = variable, color = variable), size = Line_size)
+		geom_line(aes(group = variable, color = variable), linewidth = Line_size)
 
 		if (legpos == "right") {
 			g1 <- g + theme(legend.position = "right", legend.title = element_text(colour = "black")) 
@@ -2032,7 +2036,7 @@ POWERPLOT_ABSOLUTE <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_colour_manual(name = "Absolute change: ", breaks = lin_list2, labels = expectedChanges, values = Gr_palette_P) +
-		geom_line(aes(group = variable, color = variable), size = Line_size)
+		geom_line(aes(group = variable, color = variable), linewidth = Line_size)
 
 		ranngeSS<-sampleSizeTo-sampleSizeFrom
 		if (ranngeSS<15){
@@ -2055,7 +2059,7 @@ EQPOWERPLOT_ABSOLUTE <- function(power2data, XAxisTitle, MainTitle2, lin_list2, 
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_colour_manual(name = "True bias: ", breaks = lin_list2, labels = expectedBias, values = Gr_palette_P) +
-		geom_line(aes(group = variable, color = variable), size = Line_size)
+		geom_line(aes(group = variable, color = variable), linewidth = Line_size)
 
 		ranngeSS<-sampleSizeTo-sampleSizeFrom
 		if (ranngeSS<15){
@@ -2078,8 +2082,8 @@ POWERPLOT_PERCENT <- function(power2data, XAxisTitle, MainTitle2, lin_list2, Gr_
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_colour_manual(name = "Percent change: ", breaks = lin_list2, labels = expectedChanges2, values = Gr_palette_P) +
-		geom_line(aes(group = variable, color = variable), size = Line_size)
-#		 g1 <- g + geom_line(aes(group = variable, color = variable), size = Line_size)
+		geom_line(aes(group = variable, color = variable), linewidth = Line_size)
+#		 g1 <- g + geom_line(aes(group = variable, color = variable), linewidth = Line_size)
 
 		ranngeSS<-sampleSizeTo-sampleSizeFrom
 		if (ranngeSS<15){
@@ -2101,7 +2105,7 @@ POWERPLOT_ANOVA <- function(XAxisTitle, MainTitle2) {
 		ggtitle(MainTitle2) +
 		coord_cartesian(ylim = c(powerFrom, powerTo)) +
 		scale_y_continuous(breaks = pretty_breaks()) +
-		geom_line(aes(group = variable), lty = Line_type, size = Line_size, color = alpha(Gr_line, Gr_alpha))
+		geom_line(aes(group = variable), lty = Line_type, linewidth = Line_size, color = alpha(Gr_line, Gr_alpha))
 
 		ranngeSS<-as.numeric(sampleSizeTo)-as.numeric(sampleSizeFrom)
 		if (ranngeSS<15){
@@ -2129,7 +2133,7 @@ SURVIVALPLOT <- function() {
 		scale_y_continuous(breaks = pretty_breaks()) +
 		scale_color_manual(values = Gr_palette) +
 		scale_fill_manual(values = Gr_palette) +
-		geom_step(aes(colour = V3), lty = Line_type, size = Line_size)
+		geom_step(aes(colour = V3), lty = Line_type, linewidth = Line_size)
 		grdatax = subset(grdata2, grdata2$n.event == 0)
 
 	if (dim(grdatax)[1] > 0) {
@@ -2153,8 +2157,8 @@ ROCPLOT <- function() {
 		scale_x_continuous(breaks = pretty_breaks()) +
 		scale_y_continuous(breaks = pretty_breaks()) +
 #    		annotate("text", label = result, x = 0.875, y = 0.05, size = 5, colour = "red") +
-		geom_line(aes(x=c(0,1),y=c(0,1)), color="grey26", lty = Line_type_dashed, size = Line_size) +
-    		geom_line(data=pf,aes(x=FPR,y=TPR),colour = Gr_line , lty = Line_type_solid, size = Line_size) 
+		geom_line(aes(x=c(0,1),y=c(0,1)), color="grey26", lty = Line_type_dashed, linewidth = Line_size) +
+    		geom_line(data=pf,aes(x=FPR,y=TPR),colour = Gr_line , lty = Line_type_solid, linewidth = Line_size) 
 
 		suppressWarnings(print(g))
 }
@@ -2334,7 +2338,7 @@ PLSCVplot <- function(grlegend) {
 		ggtitle(" ") +
 		scale_color_manual(values = Gr_palette_A) +
 		geom_point(aes(colour = type), size = 3, shape = 16) +
-		geom_line(aes(group = type, color = type), size = Line_size) +
+		geom_line(aes(group = type, color = type), linewidth = Line_size) +
 		facet_wrap(~variable, scales = "free_y")
 	suppressWarnings(print(g))
 }
@@ -2351,7 +2355,7 @@ PLSloadingsplot <- function() {
 		scale_color_manual(values = Gr_palette_A) +
 		scale_fill_manual(values = Gr_palette_A) +
 		geom_point(aes(colour = X2), size = 3, shape = 16) +
-		geom_line(aes(group = X2, color = X2), size = Line_size) +
+		geom_line(aes(group = X2, color = X2), linewidth = Line_size) +
 		geom_hline(yintercept = 0, lty = 3, size = 0.8, colour = "black")
 	suppressWarnings(print(g))
 }
@@ -2425,45 +2429,33 @@ R_refs <- function() {
 }
 
 reference <- function (name) {
-	if (name == "cluster") {reference <- paste(capture.output(print(citation("cluster"),bibtex=F))[4], capture.output(print(citation("cluster"),bibtex=F))[5], capture.output(print(citation("cluster"),bibtex=F))[6], sep = "")}
-	if (name == "R2HTML") {reference <- paste(capture.output(print(citation("R2HTML"),bibtex=F))[4], capture.output(print(citation("R2HTML"),bibtex=F))[5], sep = "")}
-	if (name == "GGally") {reference <- paste(capture.output(print(citation("GGally"),bibtex=F))[4], capture.output(print(citation("GGally"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("GGally"),bibtex=F))[6])), sep = "")}
-	if (name == "RColorBrewer") {reference <- paste(capture.output(print(citation("RColorBrewer"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("RColorBrewer"),bibtex=F))[5])), sep = "")}
-	if (name == "ggplot2") {reference <- paste(capture.output(print(citation("ggplot2"),bibtex=F))[4], capture.output(print(citation("ggplot2"),bibtex=F))[5], sep="")}
-	if (name == "ggrepel") {reference <- paste(capture.output(print(citation("ggrepel"),bibtex=F))[4], capture.output(print(citation("ggrepel"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("ggrepel"),bibtex=F))[6])), sep = "")}
-	if (name == "reshape") {reference <- paste(capture.output(print(citation("reshape"),bibtex=F))[4], capture.output(print(citation("reshape"),bibtex=F))[5], sep = "")}
-	if (name == "plyr") {reference <- paste(capture.output(print(citation("plyr"),bibtex=F))[4], capture.output(print(citation("plyr"),bibtex=F))[5], capture.output(print(citation("plyr"),bibtex=F))[6], sep = "")}
-	if (name == "scales") {reference <- paste(capture.output(print(citation("scales"),bibtex=F))[4], capture.output(print(citation("scales"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("scales"),bibtex=F))[6])), sep = "")}
-	if (name == "proto") {reference <- paste(capture.output(print(citation("proto"),bibtex=F))[4], capture.output(print(citation("proto"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("proto"),bibtex=F))[6])), sep = "")}
-	if (name == "mvtnorm") {reference <- paste(capture.output(print(citation("mvtnorm"),bibtex=F))[4], capture.output(print(citation("mvtnorm"),bibtex=F))[5], capture.output(print(citation("mvtnorm"),bibtex=F))[6], capture.output(print(citation("mvtnorm"),bibtex=F))[7], sep = "")}
-	if (name == "ggdendro") {reference <- paste(capture.output(print(citation("ggdendro"),bibtex=F))[4], capture.output(print(citation("ggdendro"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("ggdendro"),bibtex=F))[6])), sep = "")}
-	if (name == "mixOmics") {reference <- paste(capture.output(print(citation("mixOmics"),bibtex=F))[4], capture.output(print(citation("mixOmics"),bibtex=F))[5], capture.output(print(citation("mixOmics"),bibtex=F))[6], sep = "")}
-
-	if (name == "Exact") {reference <- paste(capture.output(print(citation("Exact"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("Exact"),bibtex=F))[5])), sep = "")}
-	if (name == "Hmisc") {reference <- paste(capture.output(print(citation("Hmisc"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("Hmisc"),bibtex=F))[5])), sep = "")}
-
-	if (name == "PowerTOST") {reference <-paste(capture.output(print(citation("PowerTOST"),bibtex=F))[4], capture.output(print(citation("PowerTOST"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("PowerTOST"),bibtex=F))[6])), sep = "")}
-
-	if (name == "multcomp") {reference <- paste(capture.output(print(citation("multcomp"),bibtex=F))[4], capture.output(print(citation("multcomp"),bibtex=F))[5], capture.output(print(citation("multcomp"),bibtex=F))[6], sep = "")}
-	if (name == "multcompView") {reference <- paste(capture.output(print(citation("multcompView"),bibtex=F))[4], capture.output(print(citation("multcompView"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("multcompView"),bibtex=F))[6])), sep = "")}
-	if (name == "car") {reference <- paste(capture.output(print(citation("car"),bibtex=F))[4], capture.output(print(citation("car"),bibtex=F))[5], capture.output(print(citation("car"),bibtex=F))[6], sep = "")}
-	if (name == "emmeans") {reference <- paste(capture.output(print(citation("emmeans"),bibtex=F))[4], capture.output(print(citation("emmeans"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("emmeans"),bibtex=F))[6])), sep = "")}
-
-	if (name == "dplyr") {reference <-paste(capture.output(print(citation("dplyr"),bibtex=F))[4], capture.output(print(citation("dplyr"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("dplyr"),bibtex=F))[6])), sep = "")}
-
-	if (name == "ROCR") {reference <-paste(capture.output(print(citation("ROCR"),bibtex=F))[4], capture.output(print(citation("ROCR"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("ROCR"),bibtex=F))[6])), sep = "")}
-	if (name == "detectseparation") {reference <-paste(capture.output(print(citation("detectseparation"),bibtex=F))[4], capture.output(print(citation("detectseparation"),bibtex=F))[5], capture.output(print(citation("detectseparation"),bibtex=F))[6], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("detectseparation"),bibtex=F))[7])), sep = "")}
-
-	if (name == "nlme") {reference <-paste(capture.output(print(citation("nlme"),bibtex=F))[4], capture.output(print(citation("nlme"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("nlme"),bibtex=F))[6])), sep = "")}
-
-	if (name == "coin") {reference <-paste(capture.output(print(citation("coin"),bibtex=F))[5], capture.output(print(citation("coin"),bibtex=F))[6], capture.output(print(citation("coin"),bibtex=F))[7], gsub(">" , "", gsub(" <" , "URL ", capture.output(print(citation("coin"),bibtex=F))[8])), sep = "")}
-
-	if (name == "contrast") {reference <-paste(capture.output(print(citation("contrast"),bibtex=F))[4], capture.output(print(citation("contrast"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("contrast"),bibtex=F))[6])), sep = "")}
-
-	if (name == "survival") {reference <-paste(capture.output(print(citation("survival"),bibtex=F))[4], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("survival"),bibtex=F))[5])), sep = "")}
-	if (name == "gridExtra") {reference <-paste(capture.output(print(citation("gridExtra"),bibtex=F))[4], capture.output(print(citation("gridExtra"),bibtex=F))[5], gsub(">" , "", gsub("<" , "URL ", capture.output(print(citation("gridExtra"),bibtex=F))[6])), sep = "")}
-
-	reference <- gsub("_" , " ", reference)
-
-	return(reference)
+  if (name == "cluster") 	  {reference <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2022).  cluster: Cluster Analysis Basics and Extensions. R package version 2.1.4."}
+  if (name == "R2HTML") 	  {reference <- "Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria."}
+  if (name == "GGally")  	  {reference <- "Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E, Elberg A, Crowley J (2023). GGally: Extension to ggplot2. R  package version 2.2.0, https://CRAN.R-project.org/package=GGally."}
+  if (name == "RColorBrewer") 	  {reference <- "Neuwirth E (2022). RColorBrewer: ColorBrewer Palettes. R package version 1.1-3, https://CRAN.R-project.org/package=RColorBrewer."}
+  if (name == "ggplot2") 	  {reference <- "H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016."}
+  if (name == "ggrepel") 	  {reference <- "Slowikowski K (2024). ggrepel: Automatically Position Non-Overlapping Text Labels with ggplot2. R package version 0.9.5, https://CRAN.R-project.org/package=ggrepel."}
+  if (name == "reshape") 	  {reference <- "H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007."}
+  if (name == "plyr") 		  {reference <- "Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL https://www.jstatsoft.org/v40/i01/."}
+  if (name == "scales") 	  {reference <- "Wickham H, Pedersen T, Seidel D (2023). scales: Scale Functions for Visualization. R package version 1.3.0, https://CRAN.R-project.org/package=scales."}
+  if (name == "proto") 		  {reference <- "Grothendieck G, Kates L, Petzoldt T (2016). proto: Prototype Object-Based Programming. R package version 1.0.0, https://CRAN.R-project.org/package=proto."}
+  if (name == "mvtnorm") 	  {reference <- "Genz A, Bretz F (2009). Computation of Multivariate Normal and t Probabilities, series Lecture Notes in Statistics. Springer-Verlag, Heidelberg. ISBN 978-3-642-01688-2."}
+  if (name == "ggdendro") 	  {reference <- "de Vries A, Ripley BD (2022). ggdendro: Create Dendrograms and Tree Diagrams Using ggplot2. R package version 0.1.23, https://CRAN.R-project.org/package=ggdendro."}
+  if (name == "mixOmics") 	  {reference <- "Rohart F, Gautier B, Singh A, and Le Cao K-A (2017) mixOmics: An R package for 'omics feature selection and multiple data integration. PLoS computational biology 13(11):e1005752"}
+  if (name == "Exact") 		  {reference <- "Calhoun P (2022). Exact: Unconditional Exact Test. R package version 3.2, https://CRAN.R-project.org/package=Exact."}
+  if (name == "Hmisc") 		  {reference <- "Harrell Jr F (2023). Hmisc: Harrell Miscellaneous. R package version 5.1-1, https://CRAN.R-project.org/package=Hmisc."}
+  if (name == "PowerTOST") 	  {reference <-"Labes D, Schütz H, Lang B (2022). PowerTOST: Power and Sample Size for (Bio)Equivalence Studies. R package version 1.5-4, https://CRAN.R-project.org/package=PowerTOST."}
+  if (name == "multcomp") 	  {reference <- "Hothorn T, Bretz F, Westfall P (2008). Simultaneous Inference in General Parametric Models. Biometrical Journal, *50*(3), 346-363."}
+  if (name == "multcompView") 	  {reference <- "Graves S, Piepho H, Dorai-Raj LSwhfS (2023). multcompView: Visualizations of Paired Comparisons. R package version 0.1-9, https://CRAN.R-project.org/package=multcompView."}
+  if (name == "car") 		  {reference <- "Fox J, Weisberg S (2019). An R Companion to Applied Regression, Third edition. Sage, Thousand Oaks CA. https://socialsciences.mcmaster.ca/jfox/Books/Companion/."}
+  if (name == "emmeans") 	  {reference <- "Lenth R (2024). emmeans: Estimated Marginal Means, aka Least-Squares Means. R package version 1.10.0, https://CRAN.R-project.org/package=emmeans."}
+  if (name == "dplyr") 		  {reference <-"Wickham H, François R, Henry L, Müller K, Vaughan D (2023). dplyr: A Grammar of Data Manipulation. R package version 1.1.4, <https://CRAN.R-project.org/package=dplyr>."}
+  if (name == "ROCR") 		  {reference <-"Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). ROCR: visualizing classifier performance in R. Bioinformatics, *21*(20), 7881. <http://rocr.bioinf.mpi-sb.mpg.de>."}
+  if (name == "detectseparation") {reference <-"Kosmidis I, Schumacher D, Schwendinger F (2022). detectseparation: Detect and Check for Separation and Infinite Maximum Likelihood Estimates. R package version 0.3, <https://CRAN.R-project.org/package=detectseparation>."}
+  if (name == "nlme") 		  {reference <-"Pinheiro J, Bates D, R Core Team (2023). nlme: Linear and Nonlinear Mixed Effects Models. R package version 3.1-164, <https://CRAN.R-project.org/package=nlme>."}
+  if (name == "coin") 		  {reference <-"Hothorn T, Hornik K, van de Wiel MA, Zeileis A (2008). Implementing a class of permutation tests: The coin package. Journal of Statistical Software, *28*(8), 1-23. doi:10.18637/jss.v028.i08 <https://doi.org/10.18637/jss.v028.i08>."}
+  if (name == "contrast") 	  {reference <-"Kuhn M, Weston S, Wing J, Forester J, Thaler T (2022). contrast: A Collection of Contrast Methods. R package version 0.24.2, <https://CRAN.R-project.org/package=contrast>."}
+  if (name == "survival") 	  {reference <-"Therneau T (2023). A Package for Survival Analysis in R. R package version 3.5-7, <https://CRAN.R-project.org/package=survival>."}
+  if (name == "gridExtra") 	  {reference <-"Auguie B (2017). gridExtra: Miscellaneous Functions for \"Grid\" Graphics. R package version 2.3, <https://CRAN.R-project.org/package=gridExtra>."}
+  return(reference)
 }

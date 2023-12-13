@@ -12,7 +12,7 @@
 
 <meta name="author" content="Max Gordon" />
 
-<meta name="date" content="2022-07-07" />
+<meta name="date" content="2023-10-29" />
 
 <title>How-to use htmlTable</title>
 
@@ -31,23 +31,23 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -65,55 +65,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -122,13 +121,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -314,27 +320,32 @@ code > span.er { color: #a61717; background-color: #e3d2d2; } </style>
 
 <h1 class="title toc-ignore">How-to use htmlTable</h1>
 <h4 class="author">Max Gordon</h4>
-<h4 class="date">2022-07-07</h4>
+<h4 class="date">2023-10-29</h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#basics">Basics</a>
+<li><a href="#basics" id="toc-basics">Basics</a>
 <ul>
-<li><a href="#table-caption">Table caption</a></li>
-<li><a href="#cell-alignment">Cell alignment</a></li>
+<li><a href="#table-caption" id="toc-table-caption">Table
+caption</a></li>
+<li><a href="#cell-alignment" id="toc-cell-alignment">Cell
+alignment</a></li>
 </ul></li>
-<li><a href="#advanced">Advanced</a>
+<li><a href="#advanced" id="toc-advanced">Advanced</a>
 <ul>
-<li><a href="#row-groups">Row groups</a></li>
-<li><a href="#column-spanners">Column spanners</a></li>
-<li><a href="#table-spanners">Table spanners</a></li>
-<li><a href="#total-row">Total row</a></li>
-<li><a href="#table-numbering">Table numbering</a></li>
-<li><a href="#table-footer">Table footer</a></li>
-<li><a href="#zebra-coloring-or-banded-colors">Zebra coloring (or banded
+<li><a href="#row-groups" id="toc-row-groups">Row groups</a></li>
+<li><a href="#column-spanners" id="toc-column-spanners">Column
+spanners</a></li>
+<li><a href="#table-spanners" id="toc-table-spanners">Table
+spanners</a></li>
+<li><a href="#total-row" id="toc-total-row">Total row</a></li>
+<li><a href="#table-numbering" id="toc-table-numbering">Table
+numbering</a></li>
+<li><a href="#table-footer" id="toc-table-footer">Table footer</a></li>
+<li><a href="#zebra-coloring-or-banded-colors" id="toc-zebra-coloring-or-banded-colors">Zebra coloring (or banded
 colors)</a></li>
-<li><a href="#putting-it-all-together">Putting it all together</a></li>
+<li><a href="#putting-it-all-together" id="toc-putting-it-all-together">Putting it all together</a></li>
 </ul></li>
 </ul>
 </div>
@@ -347,14 +358,14 @@ formatting. This format is compatible with <a href="https://rmarkdown.rstudio.co
 HTML-output. The most basic table can easily be created by just passing
 a <code>matrix</code> or a <code>data.frame</code> to the
 <code>htmlTable</code>-function:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(htmlTable)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple output</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">ncol =</span> <span class="dv">2</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Row 1&quot;</span>, <span class="st">&quot;Row 2&quot;</span>),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  htmlTable</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(htmlTable)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># A simple output</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>       <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>       <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Row 1&quot;</span>, <span class="st">&quot;Row 2&quot;</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>                       <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  htmlTable</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -394,12 +405,12 @@ Row 2
 </tbody>
 </table>
 <p>The function is also aware of the dimnames:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A simple output</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">ncol =</span> <span class="dv">2</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">rows =</span> <span class="fu">c</span>(<span class="st">&quot;Row 1&quot;</span>, <span class="st">&quot;Row 2&quot;</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  htmlTable</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># A simple output</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>       <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>       <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="at">rows =</span> <span class="fu">c</span>(<span class="st">&quot;Row 1&quot;</span>, <span class="st">&quot;Row 2&quot;</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>                       <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  htmlTable</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -452,11 +463,11 @@ rows
 </table>
 <p>This can be convenient when working with the <code>base::table</code>
 function:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mtcars&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(mtcars,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">table</span>(cyl, gear)) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  addmargins <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  htmlTable</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;mtcars&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">with</span>(mtcars,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>     <span class="fu">table</span>(cyl, gear)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  addmargins <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  htmlTable</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -597,13 +608,13 @@ and other parameters that make <code>htmlTable</code> so useful.</p>
 <h2>Table caption</h2>
 <p>The table caption is simply the table description and can be either
 located above or below:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ncol =</span> <span class="dv">2</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Row 1&quot;</span>, <span class="st">&quot;Row 2&quot;</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>)))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(output,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">ctable =</span> <span class="fu">c</span>(<span class="st">&quot;solid&quot;</span>, <span class="st">&quot;double&quot;</span>),</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;A table caption above and ctable borders&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>                 <span class="at">ncol =</span> <span class="dv">2</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>                 <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Row 1&quot;</span>, <span class="st">&quot;Row 2&quot;</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>                                 <span class="fu">c</span>(<span class="st">&quot;Column 1&quot;</span>, <span class="st">&quot;Column 2&quot;</span>)))</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">htmlTable</span>(output,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>          <span class="at">ctable =</span> <span class="fu">c</span>(<span class="st">&quot;solid&quot;</span>, <span class="st">&quot;double&quot;</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;A table caption above and ctable borders&quot;</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -650,9 +661,9 @@ A table caption above and ctable borders
 <p>The caption defaults to above but by setting the
 <code>pos.caption</code> argument to “bottom” it appears below the
 table.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>output <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">pos.caption =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">caption =</span> <span class="st">&quot;A table caption below&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>output <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">pos.caption =</span> <span class="st">&quot;bottom&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">caption =</span> <span class="st">&quot;A table caption below&quot;</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -704,11 +715,11 @@ A table caption below
 aligning the cell values just use <code>align</code>. The argument can
 accept either a vector or a string, although supplying it with a string
 is the simplest option as in the example below:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">align =</span> <span class="st">&quot;lcr&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rnames =</span> <span class="st">&quot;Row 1&quot;</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">header =</span> <span class="fu">c</span>(<span class="st">&quot;&#39;l&#39; = left&quot;</span>, <span class="st">&quot;&#39;c&#39; = center&quot;</span>, <span class="st">&quot;&#39;r&#39; = right&quot;</span>),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">&quot;The alignment is set through the align options. Available alternatives are l, r, c as designated by the below table.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">align =</span> <span class="st">&quot;lcr&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rnames =</span> <span class="st">&quot;Row 1&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>            <span class="at">header =</span> <span class="fu">c</span>(<span class="st">&quot;&#39;l&#39; = left&quot;</span>, <span class="st">&quot;&#39;c&#39; = center&quot;</span>, <span class="st">&quot;&#39;r&#39; = right&quot;</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">&quot;The alignment is set through the align options. Available alternatives are l, r, c as designated by the below table.&quot;</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -754,12 +765,12 @@ want all remaining columns to keep the alignment of the last column. To
 align the row name you can just add another letter to the string while
 the header is aligned through the <code>align.header</code>
 argument:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">align =</span> <span class="st">&quot;clcr&quot;</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">align.header =</span> <span class="st">&quot;lcr&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rnames =</span> <span class="st">&quot;Row 1&quot;</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">header =</span> <span class="fu">c</span>(<span class="st">&quot;&#39;l&#39; = left&quot;</span>, <span class="st">&quot;&#39;c&#39; = center&quot;</span>, <span class="st">&quot;&#39;r&#39; = right&quot;</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">&quot;The alignment is set through the align options. Available alternatives are l, r, c as designated by the below table.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">align =</span> <span class="st">&quot;clcr&quot;</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                    <span class="at">align.header =</span> <span class="st">&quot;lcr&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rnames =</span> <span class="st">&quot;Row 1&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>            <span class="at">header =</span> <span class="fu">c</span>(<span class="st">&quot;&#39;l&#39; = left&quot;</span>, <span class="st">&quot;&#39;c&#39; = center&quot;</span>, <span class="st">&quot;&#39;r&#39; = right&quot;</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">&quot;The alignment is set through the align options. Available alternatives are l, r, c as designated by the below table.&quot;</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -823,30 +834,30 @@ processor, i.e. that the table also looks nice in the final document not
 only in the browser. The <code>htmlTable</code>-function is written for
 all these purposes.</p>
 <p>For demonstration purposes we will setup a basic matrix:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">8</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mx) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">c</span>(<span class="st">&quot;1st&quot;</span>, <span class="st">&quot;2nd&quot;</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;3rd&quot;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">paste0</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>, <span class="st">&quot;th&quot;</span>)),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;row&quot;</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mx) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">c</span>(<span class="st">&quot;1st&quot;</span>, <span class="st">&quot;2nd&quot;</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;3rd&quot;</span>, </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">paste0</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="st">&quot;th&quot;</span>)),</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;hdr&quot;</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (nr <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mx)) {</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (nc <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(mx)) {</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    mx[nr, nc] <span class="ot">&lt;-</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(nr, <span class="st">&quot;:&quot;</span>, nc)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>mx <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">6</span>, <span class="at">nrow =</span> <span class="dv">8</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">rownames</span>(mx) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">c</span>(<span class="st">&quot;1st&quot;</span>, <span class="st">&quot;2nd&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                        <span class="st">&quot;3rd&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                        <span class="fu">paste0</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>, <span class="st">&quot;th&quot;</span>)),</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>                      <span class="st">&quot;row&quot;</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="fu">colnames</span>(mx) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">c</span>(<span class="st">&quot;1st&quot;</span>, <span class="st">&quot;2nd&quot;</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>                        <span class="st">&quot;3rd&quot;</span>, </span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>                        <span class="fu">paste0</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="st">&quot;th&quot;</span>)),</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>                      <span class="st">&quot;hdr&quot;</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="cf">for</span> (nr <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mx)) {</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  <span class="cf">for</span> (nc <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(mx)) {</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>    mx[nr, nc] <span class="ot">&lt;-</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>      <span class="fu">paste0</span>(nr, <span class="st">&quot;:&quot;</span>, nc)</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>  }</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>}</span></code></pre></div>
 <div id="row-groups" class="section level2">
 <h2>Row groups</h2>
 <p>The purpose of the row groups is to group variables that belong to
 the same group, e.g. a factored variable with more than two levels often
 benefit from grouping variables together.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">rgroup =</span> <span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>          <span class="at">rgroup =</span> <span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>          <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -1076,9 +1087,9 @@ Group C
 </table>
 <p>We can easily mix row groups with regular variables by having an
 empty row group name <code>&quot;&quot;</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">rgroup =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>          <span class="at">rgroup =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>          <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -1303,10 +1314,10 @@ Group B
 </table>
 <p>When mixing row groups with variables without row groups we may want
 to omit the bold formatting of the row group label:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">css.rgroup =</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rgroup =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>),</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">css.rgroup =</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rgroup =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>            <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -1533,11 +1544,11 @@ Group B
 additional cells but sometimes you may want to have a p-value or similar
 at the end of the row. This can be achieved by setting the ‘add’
 attribute to the <code>rgroup</code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rgroup <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(rgroup, <span class="st">&quot;add&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;More&quot;</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">rgroup =</span> rgroup,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>rgroup <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">attr</span>(rgroup, <span class="st">&quot;add&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;More&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>          <span class="at">rgroup =</span> rgroup,</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>          <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -1767,9 +1778,9 @@ More
 <div id="column-spanners" class="section level2">
 <h2>Column spanners</h2>
 <p>A column spanner spans 2 or more columns:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx,</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">cgroup =</span> <span class="fu">c</span>(<span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&quot;</span>),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.cgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx,</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>          <span class="at">cgroup =</span> <span class="fu">c</span>(<span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&quot;</span>),</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>          <span class="at">n.cgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -2034,11 +2045,11 @@ Cgroup 2
 </table>
 <p>It can sometimes be convenient to have column spanners in multiple
 levels:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">cgroup =</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Column spanners&quot;</span>, <span class="cn">NA</span>),</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&quot;</span>)),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.cgroup =</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="cn">NA</span>),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx,</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>          <span class="at">cgroup =</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Column spanners&quot;</span>, <span class="cn">NA</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>                         <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&quot;</span>)),</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>          <span class="at">n.cgroup =</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="cn">NA</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>                           <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -2360,13 +2371,13 @@ Cgroup 2
 cgroups (see n.cgroup), this is not required by the function and you can
 also provide a <code>list</code> with elements that allows you to skip
 the <code>NA</code> at the end of the matrix:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Super column spanner&quot;</span>, <span class="st">&quot;&quot;</span>),</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Another cgroup&quot;</span>),</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&quot;</span>)),</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>),</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx,</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>          <span class="at">cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;Super column spanner&quot;</span>, <span class="st">&quot;&quot;</span>),</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Another cgroup&quot;</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&quot;</span>)),</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>          <span class="at">n.cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">1</span>),</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -2738,9 +2749,9 @@ Cgroup 2
 <h2>Table spanners</h2>
 <p>A table spanner is similar to rgroup but has the primary purpose of
 combining 2 or more tables with the same columns into one:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>          <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>          <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -2970,9 +2981,9 @@ Spanner C
 </table>
 <p>Note that you actually don’t need the last <code>n.tspanner</code>,
 i.e. you can simplify the above to:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx, </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>          <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>          <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -3208,7 +3219,7 @@ with underlying rgroups.</p>
 <h2>Total row</h2>
 <p>Many financial tables use the concept of a total row at the end that
 sums the above elements:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,], <span class="at">total =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,], <span class="at">total =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -3307,13 +3318,13 @@ sums the above elements:</p>
 </tbody>
 </table>
 <p>This can also be combined with table spanners:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">css.total =</span> <span class="fu">c</span>(<span class="st">&quot;border-top: 1px dashed grey;&quot;</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;border-top: 1px dashed grey;&quot;</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;border-top: 1px solid grey; font-weight: 900&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">total =</span> <span class="st">&quot;tspanner&quot;</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">css.total =</span> <span class="fu">c</span>(<span class="st">&quot;border-top: 1px dashed grey;&quot;</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>                                  <span class="st">&quot;border-top: 1px dashed grey;&quot;</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>                                  <span class="st">&quot;border-top: 1px solid grey; font-weight: 900&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">total =</span> <span class="st">&quot;tspanner&quot;</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>            <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]),</span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a>            <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">6</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -3545,9 +3556,9 @@ Spanner C
 <div id="table-numbering" class="section level2">
 <h2>Table numbering</h2>
 <p>The htmlTable has built-in numbering, initialized by:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">table_counter =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;A table caption with a numbering&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">table_counter =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;A table caption with a numbering&quot;</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;" id="table_1">
 <thead>
 <tr>
@@ -3593,12 +3604,12 @@ Table 1: A table caption with a numbering
 </table>
 <p>As we often want to reference the table number in the text there are
 two associated functions:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tblNoLast</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">tblNoLast</span>()</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tblNoNext</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">tblNoNext</span>()</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Another table with numbering&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;Another table with numbering&quot;</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;" id="table_2">
 <thead>
 <tr>
@@ -3646,14 +3657,14 @@ Table 2: Another table with numbering
 table_counter to <code>TRUE</code> set it to 1. Note that you need to
 set the value to one less as each time the table is called the counter
 is incremented by one. You can also turn off the feature by:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">table_counter =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">table_counter =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 <div id="table-footer" class="section level2">
 <h2>Table footer</h2>
 <p>The footer usually contains specifics regarding variables and is
 always located at the foot of the table:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">tfoot =</span> <span class="st">&quot;A table footer&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">htmlTable</span>(mx[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>          <span class="at">tfoot =</span> <span class="st">&quot;A table footer&quot;</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -3704,9 +3715,9 @@ A table footer
 <h2>Zebra coloring (or banded colors)</h2>
 <p>Zebra coloring is also know as an alternating color pattern or row
 shading. It is most commonly applied to rows:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  htmlTable</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  htmlTable</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -3923,10 +3934,10 @@ shading. It is most commonly applied to rows:</p>
 follows the rgroups. The zebra striping is centered around the rgroup
 although rows with no set rgroup, i.e. “” will have alternating colors
 event though they programatically are within the same group:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rgroup =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>),</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rgroup =</span> <span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]), <span class="st">&quot;&quot;</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>            <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="fu">nrow</span>(mx) <span class="sc">-</span> <span class="dv">4</span>))</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -4150,9 +4161,9 @@ Group B
 </tbody>
 </table>
 <p>We can also color the columns:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.columns =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  htmlTable</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.columns =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  htmlTable</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -4366,10 +4377,10 @@ Group B
 </tbody>
 </table>
 <p>Or do both (note that the colors blend at the intersections):</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F9FAF0&quot;</span>),</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col.columns =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F1F0FA&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  htmlTable</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F9FAF0&quot;</span>),</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>                    <span class="at">col.columns =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F1F0FA&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>  htmlTable</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>
@@ -4587,29 +4598,29 @@ Group B
 <h2>Putting it all together</h2>
 <p>Now if we want to do everything in one table it may look like
 this:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>rgroup <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(rgroup, <span class="st">&quot;add&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Group p-value &lt; 0.001&quot;</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">align =</span> <span class="st">&quot;rr|r&quot;</span>,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">align.header =</span> <span class="st">&quot;cc|c&quot;</span>,</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">spacer.celltype =</span> <span class="st">&quot;double_cell&quot;</span>,</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col.columns =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;none&quot;</span>, <span class="dv">2</span>),</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">rep</span>(<span class="st">&quot;#F5FBFF&quot;</span>, <span class="dv">4</span>)),</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>),</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">css.cell =</span> <span class="st">&quot;padding-left: .5em; padding-right: .2em;&quot;</span>,</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">css.header =</span> <span class="st">&quot;font-weight: normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rgroup =</span> rgroup,</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>),</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]),</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">1</span>),</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Column spanners&quot;</span>),</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&amp;dagger;&quot;</span>)),</span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">n.cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>),</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)),</span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">&quot;A table with column spanners, row groups, and zebra striping&quot;</span>,</span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">tfoot =</span> <span class="st">&quot;&amp;dagger; A table footer commment&quot;</span>,</span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">cspan.rgroup =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>rgroup <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">&quot;Group&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="fu">attr</span>(rgroup, <span class="st">&quot;add&quot;</span>) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">`</span><span class="at">3</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Group p-value &lt; 0.001&quot;</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>mx <span class="sc">%&gt;%</span> </span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>  <span class="fu">addHtmlTableStyle</span>(<span class="at">align =</span> <span class="st">&quot;rr|r&quot;</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>                    <span class="at">align.header =</span> <span class="st">&quot;cc|c&quot;</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a>                    <span class="at">spacer.celltype =</span> <span class="st">&quot;double_cell&quot;</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>                    <span class="at">col.columns =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;none&quot;</span>, <span class="dv">2</span>),</span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>                                    <span class="fu">rep</span>(<span class="st">&quot;#F5FBFF&quot;</span>, <span class="dv">4</span>)),</span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>                    <span class="at">col.rgroup =</span> <span class="fu">c</span>(<span class="st">&quot;none&quot;</span>, <span class="st">&quot;#F7F7F7&quot;</span>),</span>
+<span id="cb33-11"><a href="#cb33-11" tabindex="-1"></a>                    <span class="at">css.cell =</span> <span class="st">&quot;padding-left: .5em; padding-right: .2em;&quot;</span>,</span>
+<span id="cb33-12"><a href="#cb33-12" tabindex="-1"></a>                    <span class="at">css.header =</span> <span class="st">&quot;font-weight: normal&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-13"><a href="#cb33-13" tabindex="-1"></a>  <span class="fu">htmlTable</span>(<span class="at">rgroup =</span> rgroup,</span>
+<span id="cb33-14"><a href="#cb33-14" tabindex="-1"></a>            <span class="at">n.rgroup =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>),</span>
+<span id="cb33-15"><a href="#cb33-15" tabindex="-1"></a>            <span class="at">tspanner =</span> <span class="fu">paste</span>(<span class="st">&quot;Spanner&quot;</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]),</span>
+<span id="cb33-16"><a href="#cb33-16" tabindex="-1"></a>            <span class="at">n.tspanner =</span> <span class="fu">c</span>(<span class="dv">1</span>),</span>
+<span id="cb33-17"><a href="#cb33-17" tabindex="-1"></a>            <span class="at">cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Column spanners&quot;</span>),</span>
+<span id="cb33-18"><a href="#cb33-18" tabindex="-1"></a>                          <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;Cgroup 1&quot;</span>, <span class="st">&quot;Cgroup 2&amp;dagger;&quot;</span>)),</span>
+<span id="cb33-19"><a href="#cb33-19" tabindex="-1"></a>            <span class="at">n.cgroup =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>),</span>
+<span id="cb33-20"><a href="#cb33-20" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)),</span>
+<span id="cb33-21"><a href="#cb33-21" tabindex="-1"></a>            <span class="at">caption =</span> <span class="st">&quot;A table with column spanners, row groups, and zebra striping&quot;</span>,</span>
+<span id="cb33-22"><a href="#cb33-22" tabindex="-1"></a>            <span class="at">tfoot =</span> <span class="st">&quot;&amp;dagger; A table footer commment&quot;</span>,</span>
+<span id="cb33-23"><a href="#cb33-23" tabindex="-1"></a>            <span class="at">cspan.rgroup =</span> <span class="dv">2</span>)</span></code></pre></div>
 <table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
 <thead>
 <tr>

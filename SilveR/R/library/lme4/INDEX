@@ -80,6 +80,7 @@ mkRespMod               Create an lmerResp, glmResp or nlsResp instance
 mkVarCorr               Make Variance and Correlation Matrices from
                         'theta'
 modular                 Modular Functions for Mixed Model Fits
+namedList               Self-naming list function
 ngrps                   Number of Levels of a Factor or a "merMod"
                         Model
 nlformula               Manipulate a Nonlinear Model Formula

@@ -1,3 +1,7 @@
+# sass 0.4.8
+
+- Closed #132: Fix R CMD check warning re error() format strings (for r-devel). (#133)
+
 # sass 0.4.7
 
 - Closed #129: Fixed a compilation warning on latest Apple Clang (15). (#130)

@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+## ----echo = FALSE, message = FALSE----------------------------------------------------------------
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
      tidy = FALSE,
     cache = FALSE,
  collapse = TRUE)
+.old.th = setDTthreads(1)
 
 ## ----echo = FALSE---------------------------------------------------------------------------------
 options(width = 100L)
@@ -75,4 +76,7 @@ DT.m2
 ## new 'cast' functionality - multiple value.vars
 DT.c2 = dcast(DT.m2, family_id + age_mother ~ variable, value.var = c("dob", "gender"))
 DT.c2
+
+## ----echo=FALSE-----------------------------------------------------------------------------------
+setDTthreads(.old.th)
 

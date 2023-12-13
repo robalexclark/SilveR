@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -429,7 +429,7 @@ R:</p>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>add</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; function (x, y, z) </span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; {</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;     .Call(&quot;_code_4b3136e975da_add&quot;, x, y, z, PACKAGE = &quot;code_4b3136e975da&quot;)</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;     .Call(&quot;_code_d91faa120ea_add&quot;, x, y, z, PACKAGE = &quot;code_d91faa120ea&quot;)</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; }</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">add</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span></code></pre></div>
@@ -579,9 +579,9 @@ while <code>sum_r()</code> is several orders of magnitude slower.</p>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 1 sum(x)       1.52µs   1.72µs   547073.        0B        0</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 2 sum_cpp(x)   1.39µs   1.56µs   571050.        0B        0</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 3 sum_r(x)    12.79µs  12.91µs    74068.    19.2KB        0</span></span></code></pre></div>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 1 sum(x)       1.39µs   1.52µs   631896.        0B     0   </span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 2 sum_cpp(x)   1.39µs   1.52µs   589727.        0B     0   </span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 3 sum_r(x)    12.79µs  12.91µs    74003.    19.2KB     7.40</span></span></code></pre></div>
 </div>
 <div id="vector-input-vector-output" class="section level3">
 <h3>Vector input, vector output</h3>
@@ -625,8 +625,8 @@ going to be fast.</p>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;   expression             min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt;        &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; 1 pdist_r(0.5, y)     1.99ms   2.07ms      479.    7.63MB     92.5</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; 2 pdist_cpp(0.5, y)  880.8µs  966.7µs      996.    7.63MB    168.</span></span></code></pre></div>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; 1 pdist_r(0.5, y)     1.97ms   2.05ms      477.    7.63MB     205.</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; 2 pdist_cpp(0.5, y) 885.64µs 929.43µs     1042.    7.63MB     260.</span></span></code></pre></div>
 <p>On my computer, it takes around 5 ms with a 1 million element
 <code>y</code> vector. The C++ function is about 2.5 times faster, ~2
 ms, but assuming it took you 10 minutes to write the C++ function, you’d
@@ -1366,8 +1366,8 @@ running the loops in C++:</p>
 <span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a><span class="co">#&gt;   expression   min median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co">#&gt; 1 r           23.4   24.5       1       1242.      Inf</span></span>
-<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="co">#&gt; 2 cpp          1      1        24.5        1       NaN</span></span></code></pre></div>
+<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co">#&gt; 1 r           22.7   25.3       1       1242.      Inf</span></span>
+<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="co">#&gt; 2 cpp          1      1        25.1        1       NaN</span></span></code></pre></div>
 </div>
 <div id="r-vectorisation-versus-c-vectorisation" class="section level3">
 <h3>R vectorisation versus C++ vectorisation</h3>
@@ -1460,9 +1460,9 @@ Finally, we can benchmark our three approaches:</p>
 <span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a><span class="co">#&gt; 1 vacc1      806.55µs 847.41µs     1160.    7.86KB     30.8</span></span>
-<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a><span class="co">#&gt; 2 vacc2       24.48µs   28.5µs    34845.  148.84KB     52.3</span></span>
-<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a><span class="co">#&gt; 3 vacc3        4.51µs   4.67µs   196206.   14.03KB     19.6</span></span></code></pre></div>
+<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a><span class="co">#&gt; 1 vacc1       798.8µs  820.8µs     1204.    7.86KB     76.3</span></span>
+<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a><span class="co">#&gt; 2 vacc2       24.07µs   28.8µs    34077.  148.84KB     47.8</span></span>
+<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a><span class="co">#&gt; 3 vacc3        4.47µs    4.8µs   199715.   14.03KB     20.0</span></span></code></pre></div>
 <p>Not surprisingly, our original approach with loops is very slow.
 Vectorising in R gives a huge speedup, and we can eke out even more
 performance (about ten times) with the C++ loop. I was a little
@@ -1485,32 +1485,26 @@ automatically by the R package build system.</p></li>
 documentation, and consistency.</p></li>
 </ol>
 <p>To add <code>cpp11</code> to an existing package first put your C++
-files in the <code>src/</code> directory of your package. Then add the
-following to your <code>DESCRIPTION</code> file:</p>
-<pre><code>```
-LinkingTo: cpp11
-```</code></pre>
-<p>and add the following <a href="https://roxygen2.r-lib.org/">roxygen</a> directive somewhere in
+files in the <code>src/</code> directory of your package.</p>
+<p>Then the easiest way to configure everything is to call
+<code>usethis::use_cpp11()</code>. Alternatively:</p>
+<ul>
+<li><p>Add this to your <code>DESCRIPTION</code> file:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">LinkingTo</span><span class="kw">:</span><span class="at"> cpp11</span></span></code></pre></div></li>
+<li><p>And add the following <a href="https://roxygen2.r-lib.org/">roxygen</a> directive somewhere in
 your package’s R files. (A common location is
 <code>R/pkgname-package.R</code>)</p>
-<pre><code>```
-#&#39; @useDynLib pkgname, .registration = TRUE
-```</code></pre>
-<p>You’ll then need to run <a href="https://devtools.r-lib.org/reference/document.html"><code>devtools::document()</code></a>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="co">#&#39; @useDynLib pkgname, .registration = TRUE</span></span></code></pre></div></li>
+<li><p>You’ll then need to run <a href="https://devtools.r-lib.org/reference/document.html"><code>devtools::document()</code></a>
 to update your <code>NAMESPACE</code> file to include the
-<code>useDynLib</code> statement.</p>
-<p>The easiest way to set this up is to call
-<code>usethis::use_cpp11()</code>, which will do the above steps for
-your automatically.</p>
-<p>Before building the package, you’ll need to run
-<code>cpp11::cpp_register()</code>. This function scans the C++ files
-for <code>[[cpp11::register]]</code> attributes and generates the
-binding code required to make the functions available in R. Re-run
-<code>cpp11::cpp_register()</code> whenever functions are added,
-removed, or have their signatures changed. If you are using
-<code>devtools</code> to develop your package this is done automatically
-by the pkgbuild package when your package has
-<code>LinkingTo: cpp11</code> in its DESCRIPTION file.</p>
+<code>useDynLib</code> statement.</p></li>
+</ul>
+<p>If you don’t use <code>devtools::load_all()</code>, you’ll also need
+to run <code>cpp11::cpp_register()</code> before building the package.
+This function scans the C++ files for <code>[[cpp11::register]]</code>
+attributes and generates the binding code required to make the functions
+available in R. Re-run <code>cpp11::cpp_register()</code> whenever
+functions are added, removed, or have their signatures changed.</p>
 </div>
 <div id="more" class="section level2">
 <h2>Learning more</h2>

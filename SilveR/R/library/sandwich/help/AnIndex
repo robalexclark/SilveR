@@ -55,6 +55,8 @@ vcovHAC.default	vcovHAC
 vcovHC	vcovHC
 vcovHC.default	vcovHC
 vcovHC.mlm	vcovHC
+vcovJK	vcovJK
+vcovJK.default	vcovJK
 vcovOPG	vcovOPG
 vcovPC	vcovPC
 vcovPL	vcovPL

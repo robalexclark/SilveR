@@ -50,7 +50,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -393,11 +393,11 @@ with John MacFarlane <code>pandoc</code>, made it easy to automatically
 incorporate R code and output in HTML documents.</p>
 <p>Unfortunately ANSI CSI SGR sequences are not recognized by web
 browsers and end up rendering weirdly<a href="#f1"><sup>1</sub></a>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sgr.string <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="sc">\033</span><span class="st">[43;34mday &gt; night</span><span class="sc">\033</span><span class="st">[0m&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;</span><span class="sc">\033</span><span class="st">[44;33mdawn &lt; dusk</span><span class="sc">\033</span><span class="st">[0m&quot;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(sgr.string)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>sgr.string <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="st">&quot;</span><span class="sc">\033</span><span class="st">[43;34mday &gt; night</span><span class="sc">\033</span><span class="st">[0m&quot;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="st">&quot;</span><span class="sc">\033</span><span class="st">[44;33mdawn &lt; dusk</span><span class="sc">\033</span><span class="st">[0m&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">writeLines</span>(sgr.string)</span></code></pre></div>
 <pre><code>## �[43;34mday &gt; night�[0m
 ## �[44;33mdawn &lt; dusk�[0m</code></pre>
 </div>
@@ -426,7 +426,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </STYLE>
 <p>We run this function for its side effects, which cause the output to
 be displayed as intended:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(sgr.string)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">writeLines</span>(sgr.string)</span></code></pre></div>
 <PRE class="fansi fansi-output"><CODE>## <span style="color: #0000BB; background-color: #BBBB00;">day &gt; night</span>
 ## <span style="color: #BBBB00; background-color: #0000BB;">dawn &lt; dusk</span>
 </CODE></PRE>
@@ -464,23 +464,23 @@ PRE.fansi-error {background-color: #DDAAAA;}
 PRE.fansi-warning {background-color: #DDDDAA;}
 PRE.fansi-message {background-color: #AAAADD;}
 </STYLE>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">paste0</span>(sgr.string, <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">message</span>(<span class="fu">paste0</span>(sgr.string, <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span></code></pre></div>
 <PRE class="fansi fansi-message"><CODE>## <span style="color: #0000BB; background-color: #BBBB00;">day &gt; night</span>
 ## <span style="color: #BBBB00; background-color: #0000BB;">dawn &lt; dusk</span>
 </CODE></PRE>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">warning</span>(<span class="fu">paste0</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, sgr.string), <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">warning</span>(<span class="fu">paste0</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, sgr.string), <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span></code></pre></div>
 <PRE class="fansi fansi-warning"><CODE>## Warning: 
 ## <span style="color: #0000BB; background-color: #BBBB00;">day &gt; night</span>
 ## <span style="color: #BBBB00; background-color: #0000BB;">dawn &lt; dusk</span>
 </CODE></PRE>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, sgr.string), <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="fu">c</span>(<span class="st">&quot;&quot;</span>, sgr.string), <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>))</span></code></pre></div>
 <PRE class="fansi fansi-error"><CODE>## Error in eval(expr, envir, enclos): 
 ## <span style="color: #0000BB; background-color: #BBBB00;">day &gt; night</span>
 ## <span style="color: #BBBB00; background-color: #0000BB;">dawn &lt; dusk</span>
 </CODE></PRE>
 <p>You can restore the old hooks at any time in your document with:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(knitr<span class="sc">::</span>knit_hooks<span class="sc">$</span>set, old.hooks)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(sgr.string)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">do.call</span>(knitr<span class="sc">::</span>knit_hooks<span class="sc">$</span>set, old.hooks)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">writeLines</span>(sgr.string)</span></code></pre></div>
 <pre><code>## �[43;34mday &gt; night�[0m
 ## �[44;33mdawn &lt; dusk�[0m</code></pre>
 <p>See <code>?fansi::set_knit_hooks</code> for details.</p>

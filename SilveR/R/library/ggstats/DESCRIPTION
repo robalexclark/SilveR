@@ -1,0 +1,33 @@
+Package: ggstats
+Type: Package
+Title: Extension to 'ggplot2' for Plotting Stats
+Version: 0.5.1
+Authors@R: c(
+    person("Joseph", "Larmarange", , "joseph@larmarange.net", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7097-700X"))
+  )
+Description: Provides new statistics, new geometries and new positions for 
+    'ggplot2' and a suite of functions to facilitate the creation of 
+    statistical plots.
+License: GPL (>= 3)
+URL: https://larmarange.github.io/ggstats/,
+        https://github.com/larmarange/ggstats
+BugReports: https://github.com/larmarange/ggstats/issues
+Imports: broom.helpers (>= 1.14.0), cli, dplyr, forcats, ggplot2 (>=
+        3.4.0), lifecycle, magrittr, patchwork, purrr, rlang, scales,
+        stats, stringr, tidyr
+Suggests: betareg, broom, emmeans, glue, knitr, labelled (>= 2.11.0),
+        reshape, rmarkdown, nnet, parameters, pscl, testthat (>=
+        3.0.0), spelling, survey, survival, vdiffr
+Encoding: UTF-8
+RoxygenNote: 7.2.3
+Config/testthat/edition: 3
+Language: en-US
+VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2023-11-21 07:02:14 UTC; josep
+Author: Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>)
+Maintainer: Joseph Larmarange <joseph@larmarange.net>
+Repository: CRAN
+Date/Publication: 2023-11-21 08:10:02 UTC
+Built: R 4.3.2; ; 2024-01-18 04:58:59 UTC; windows

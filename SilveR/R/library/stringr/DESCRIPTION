@@ -1,13 +1,10 @@
 Package: stringr
 Title: Simple, Consistent Wrappers for Common String Operations
-Version: 1.5.0
-Authors@R: 
-    c(person(given = "Hadley",
-             family = "Wickham",
-             role = c("aut", "cre", "cph"),
-             email = "hadley@rstudio.com"),
-      person(given = "RStudio",
-             role = c("cph", "fnd")))
+Version: 1.5.1
+Authors@R: c(
+    person("Hadley", "Wickham", , "hadley@posit.co", role = c("aut", "cre", "cph")),
+    person("Posit Software, PBC", role = c("cph", "fnd"))
+  )
 Description: A consistent, simple and easy to use set of wrappers around
     the fantastic 'stringi' package. All function and argument names (and
     positions) are consistent, all functions deal with "NA"'s and zero
@@ -17,22 +14,22 @@ License: MIT + file LICENSE
 URL: https://stringr.tidyverse.org,
         https://github.com/tidyverse/stringr
 BugReports: https://github.com/tidyverse/stringr/issues
-Depends: R (>= 3.3)
+Depends: R (>= 3.6)
 Imports: cli, glue (>= 1.6.1), lifecycle (>= 1.0.3), magrittr, rlang
-        (>= 1.0.0), stringi (>= 1.5.3), vctrs
-Suggests: covr, htmltools, htmlwidgets, knitr, rmarkdown, testthat (>=
-        3.0.0)
+        (>= 1.0.0), stringi (>= 1.5.3), vctrs (>= 0.4.0)
+Suggests: covr, dplyr, gt, htmltools, htmlwidgets, knitr, rmarkdown,
+        testthat (>= 3.0.0), tibble
 VignetteBuilder: knitr
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2022-12-01 20:53:42 UTC; hadleywickham
+Packaged: 2023-11-14 15:03:52 UTC; hadleywickham
 Author: Hadley Wickham [aut, cre, cph],
-  RStudio [cph, fnd]
-Maintainer: Hadley Wickham <hadley@rstudio.com>
+  Posit Software, PBC [cph, fnd]
+Maintainer: Hadley Wickham <hadley@posit.co>
 Repository: CRAN
-Date/Publication: 2022-12-02 10:20:02 UTC
-Built: R 4.3.1; ; 2023-10-24 02:04:57 UTC; windows
+Date/Publication: 2023-11-14 23:10:02 UTC
+Built: R 4.3.2; ; 2024-01-18 03:13:01 UTC; windows

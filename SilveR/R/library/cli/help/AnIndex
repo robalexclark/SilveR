@@ -19,6 +19,7 @@ ansi_palette_show	ansi_palettes
 ansi_regex	ansi_regex
 ansi_show_cursor	ansi_hide_cursor
 ansi_simplify	ansi_simplify
+ansi_string	ansi_string
 ansi_strip	ansi_strip
 ansi_strsplit	ansi_strsplit
 ansi_strtrim	ansi_strtrim
@@ -270,5 +271,4 @@ utf8_graphemes	utf8_graphemes
 utf8_nchar	utf8_nchar
 utf8_substr	utf8_substr
 vt_output	vt_output
-_PACKAGE	cli-package
 __cli_update_due	cli_progress_bar

@@ -18,7 +18,6 @@ dirichlet               Functions for the Dirichlet Distribution
 foldchange              Compute fold-change or convert between
                         log-ratio and fold-change.
 getDependencies         Get package dependencies
-gtools                  gtools: Various R Programming Tools
 gtools-deprecated       Deprecated Functions in the gtools package
 invalid                 Test if a value is missing, empty, contains
                         only NA or NULL values, or is a try-error.

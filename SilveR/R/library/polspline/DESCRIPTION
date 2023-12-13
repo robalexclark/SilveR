@@ -1,6 +1,6 @@
 Package: polspline
-Version: 1.1.23
-Date: 2023-06-27
+Version: 1.1.24
+Date: 2023-10-26
 Maintainer: Charles Kooperberg <clk@fredhutch.org>
 Title: Polynomial Spline Routines
 Authors@R: c(person("Charles", "Kooperberg", role = c("aut", "cre"),
@@ -19,7 +19,7 @@ Author: Charles Kooperberg [aut, cre],
   Cleve Moler [ctb] (LINPACK routines in src),
   Jack Dongarra [ctb] (LINPACK routines in src)
 Repository: CRAN
-Packaged: 2023-06-27 19:12:41 UTC; clk
-Date/Publication: 2023-06-29 19:30:02 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-20 00:53:57 UTC; windows
+Packaged: 2023-10-26 19:12:32 UTC; clk
+Date/Publication: 2023-10-26 19:50:05 UTC
+Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-28 23:51:40 UTC; windows
 Archs: x64

@@ -1,0 +1,15 @@
+augment_chisq_add_phi   Augment a chi-squared test and compute phi
+                        coefficients
+geom_stripped_rows      Alternating Background Color
+ggcoef_model            Plot model coefficients
+gglikert                Plotting Likert-type items
+ggsurvey                Easy ggplot2 with survey objects
+label_number_abs        Label absolute values
+position_likert         Stack objects on top of each another and center
+                        them around 0
+signif_stars            Significance Stars
+stat_cross              Compute cross-tabulation statistics
+stat_prop               Compute proportions according to custom
+                        denominator
+stat_weighted_mean      Compute weighted y mean
+weighted.median         Weighted Median and Quantiles

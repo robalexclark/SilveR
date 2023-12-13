@@ -1,4 +1,9 @@
-gtools 3.9.4
+gtools  3.9.5 - 2023-11-20
+--------------------------
+
+- make `checkRVersion()` robust to internet failure/CRAN outages
+
+gtools 3.9.4 - 2022-11-27
 -------------------------
 
 - correct `stars.pval` code/doc mismatch (GH #13)
@@ -21,7 +26,7 @@ Behind the scenes:
 
 - Fixed more spelling/typographical errors, mostly in `NEWS.md`.
 
-- Speed up `checkRversion` by removing checks for versions 2.x and 3.x.
+- Speed up `checkRVersion` by removing checks for versions 2.x and 3.x.
 
 gtools 3.9.1 - 2021-06-01
 -------------------------

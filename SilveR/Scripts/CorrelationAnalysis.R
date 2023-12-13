@@ -632,7 +632,6 @@ if (scatterplotSelected != "N") {
 
 				#GGPLOT2 code
 				OVERLAID_SCAT()
-
 				void<-HTMLInsertGraph(GraphFileName=sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", ncscatterplot3), Align="centre")
 
 				#reorder levels for categorised plot
@@ -1081,6 +1080,8 @@ HTML(reference("plyr"))
 HTML(reference("scales"))
 HTML(reference("proto"))
 HTML(reference("Hmisc"))
+
+
 
 #===================================================================================================================
 #Show dataset

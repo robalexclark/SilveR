@@ -1,5 +1,5 @@
 Package: htmlTable
-Version: 2.4.1
+Version: 2.4.2
 Title: Advanced Tables for Markdown/HTML
 Authors@R: c(
   person("Max", "Gordon", email = "max@gforge.se",
@@ -10,25 +10,26 @@ Maintainer: Max Gordon <max@gforge.se>
 Description: Tables with state-of-the-art layout elements such as row spanners,
     column spanners, table spanners, zebra striping, and more. While allowing
     advanced layout, the underlying css-structure is simple in order to maximize
-    compatibility with common word processors.  The package also contains a few 
+    compatibility with common word processors. The package also contains a few
     text formatting functions that help outputting text compatible with HTML/LaTeX.
 License: GPL (>= 3)
 URL: https://gforge.se/packages/
 BugReports: https://github.com/gforge/htmlTable/issues
 Biarch: yes
+Depends: R (>= 4.1)
 Imports: stringr, knitr (>= 1.6), magrittr (>= 1.5), methods,
         checkmate, htmlwidgets, htmltools, rstudioapi (>= 0.6)
-Suggests: testthat, XML, xml2, Hmisc, reshape, rmarkdown, chron,
-        lubridate, tibble, purrr, tidyselect, glue, rlang, tidyr (>=
-        0.7.2), dplyr (>= 0.7.4)
+Suggests: testthat, XML, xml2, Hmisc, rmarkdown, chron, lubridate,
+        tibble, purrr, tidyselect, glue, rlang, tidyr (>= 0.7.2), dplyr
+        (>= 0.7.4)
 Encoding: UTF-8
 NeedsCompilation: no
 VignetteBuilder: knitr
-RoxygenNote: 7.2.0
-Packaged: 2022-07-07 21:17:26 UTC; max
+RoxygenNote: 7.2.2
+Packaged: 2023-10-29 14:13:52 UTC; max
 Author: Max Gordon [aut, cre],
   Stephen Gragg [aut],
   Peter Konings [aut]
 Repository: CRAN
-Date/Publication: 2022-07-07 21:40:03 UTC
-Built: R 4.3.1; ; 2023-10-24 03:15:13 UTC; windows
+Date/Publication: 2023-10-29 21:00:02 UTC
+Built: R 4.3.2; ; 2024-01-18 04:18:08 UTC; windows

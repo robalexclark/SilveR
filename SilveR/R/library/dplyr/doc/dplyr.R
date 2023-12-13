@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE-------------------------------------------
+## ----echo = FALSE, message = FALSE--------------------------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 library(dplyr)
@@ -11,7 +11,7 @@ starwars
 ## -----------------------------------------------------------------------------
 starwars %>% filter(skin_color == "light", eye_color == "brown")
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  starwars[starwars$skin_color == "light" & starwars$eye_color == "brown", ]
 
 ## -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ starwars %>% relocate(sex:homeworld, .before = height)
 ## -----------------------------------------------------------------------------
 starwars %>% summarise(height = mean(height, na.rm = TRUE))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  a1 <- group_by(starwars, species, sex)
 #  a2 <- select(a1, height, mass)
 #  a3 <- summarise(a2,
@@ -99,7 +99,7 @@ summarise(
   mass = mean(mass, na.rm = TRUE)
 )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  starwars %>%
 #    group_by(species, sex) %>%
 #    select(height, mass) %>%

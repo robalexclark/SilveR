@@ -1,8 +1,9 @@
 Package: data.table
-Version: 1.14.8
+Version: 1.14.10
 Title: Extension of `data.frame`
 Authors@R: c(
-  person("Matt","Dowle",           role=c("aut","cre"), email="mattjdowle@gmail.com"),
+  person("Tyson", "Barrett",       role=c("aut","cre"), email="t.barrett88@gmail.com"),
+  person("Matt","Dowle",           role=c("aut"),       email="mattjdowle@gmail.com"),
   person("Arun","Srinivasan",      role="aut",          email="asrini@pm.me"),
   person("Jan","Gorecki",          role="ctb"),
   person("Michael","Chirico",      role="ctb"),
@@ -50,7 +51,6 @@ Authors@R: c(
   person("Davis","Vaughan",        role="ctb"),
   person("Toby","Hocking",         role="ctb"),
   person("Leonardo","Silvestri",   role="ctb"),
-  person("Tyson","Barrett",        role="ctb"),
   person("Jim","Hester",           role="ctb"),
   person("Anthony","Damico",       role="ctb"),
   person("Sebastian","Freundt",    role="ctb"),
@@ -75,8 +75,9 @@ BugReports: https://github.com/Rdatatable/data.table/issues
 VignetteBuilder: knitr
 ByteCompile: TRUE
 NeedsCompilation: yes
-Packaged: 2023-02-16 16:37:18 UTC; mdowle
-Author: Matt Dowle [aut, cre],
+Packaged: 2023-12-07 20:49:55 UTC; tysonbarrett
+Author: Tyson Barrett [aut, cre],
+  Matt Dowle [aut],
   Arun Srinivasan [aut],
   Jan Gorecki [ctb],
   Michael Chirico [ctb],
@@ -124,7 +125,6 @@ Author: Matt Dowle [aut, cre],
   Davis Vaughan [ctb],
   Toby Hocking [ctb],
   Leonardo Silvestri [ctb],
-  Tyson Barrett [ctb],
   Jim Hester [ctb],
   Anthony Damico [ctb],
   Sebastian Freundt [ctb],
@@ -136,8 +136,8 @@ Author: Matt Dowle [aut, cre],
   Kevin Ushey [ctb],
   Dirk Eddelbuettel [ctb],
   Ben Schwen [ctb]
-Maintainer: Matt Dowle <mattjdowle@gmail.com>
+Maintainer: Tyson Barrett <t.barrett88@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-02-17 12:20:12 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:42:54 UTC; windows
+Date/Publication: 2023-12-08 11:20:12 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 01:55:37 UTC; windows
 Archs: x64

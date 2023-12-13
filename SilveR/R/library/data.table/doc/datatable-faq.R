@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE-------------------------------------------
+## ----echo = FALSE, message = FALSE--------------------------------------------
 library(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
      tidy = FALSE,
     cache = FALSE,
  collapse = TRUE)
+.old.th = setDTthreads(1)
 
 ## -----------------------------------------------------------------------------
 X = data.table(grp = c("a", "a", "b",
@@ -88,7 +89,7 @@ A[B]
 B = data.frame(c("a", "c"), c("B", "C"))
 cat(try(A[B], silent = TRUE))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  DT[where, select|update, group by][order by][...] ... [...]
 
 ## -----------------------------------------------------------------------------
@@ -124,4 +125,7 @@ class(6)              # numeric not integer
 DT[2, b := 7L]        # works (faster) without warning
 class(7L)             # L makes it an integer
 DT[ , b := rnorm(5)]  # 'replace' integer column with a numeric column
+
+## ----echo=FALSE---------------------------------------------------------------
+setDTthreads(.old.th)
 

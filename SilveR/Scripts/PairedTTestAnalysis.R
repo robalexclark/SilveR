@@ -528,7 +528,8 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 		}
 
 		if (min(tempx[2], na.rm=TRUE) == 0) {
-			HTML("The covariate interactions have not been calculated as there are zero residual degrees of freedom when all terms are included in the statistical model.", align="left")
+			HTML.title("Table of overall tests of model effects, for assessing covariate interactions", HR=2, align="left")
+			HTML("When covariate interactions are included in the statistical model there are zero denominator degrees of freedom, hence no results are presented.", align="left")
 			
 		}
 	}

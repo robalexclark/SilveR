@@ -125,6 +125,7 @@ mlist2vec	vcconv
 model.frame.merMod	merMod-class
 model.matrix.merMod	merMod-class
 modular	modular
+namedList	namedList
 negative.binomial	glmer.nb
 NelderMead	NelderMead-class
 NelderMead-class	NelderMead-class

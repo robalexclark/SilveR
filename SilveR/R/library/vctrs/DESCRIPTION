@@ -1,6 +1,6 @@
 Package: vctrs
 Title: Vector Helpers
-Version: 0.6.4
+Version: 0.6.5
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
     person("Lionel", "Henry", , "lionel@posit.co", role = "aut"),
@@ -29,7 +29,7 @@ Encoding: UTF-8
 Language: en-GB
 RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2023-10-12 15:19:07 UTC; davis
+Packaged: 2023-12-01 16:27:12 UTC; davis
 Author: Hadley Wickham [aut],
   Lionel Henry [aut],
   Davis Vaughan [aut, cre],
@@ -38,6 +38,6 @@ Author: Hadley Wickham [aut],
   Posit Software, PBC [cph, fnd]
 Maintainer: Davis Vaughan <davis@posit.co>
 Repository: CRAN
-Date/Publication: 2023-10-12 22:20:02 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 01:42:00 UTC; windows
+Date/Publication: 2023-12-01 23:50:02 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 02:52:32 UTC; windows
 Archs: x64

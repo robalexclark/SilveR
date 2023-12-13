@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+## ----echo = FALSE, message = FALSE----------------------------------------------------------------
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -9,6 +9,7 @@ knitr::opts_chunk$set(
   out.width = '100%',
   dpi = 144
 )
+.old.th = setDTthreads(1)
 
 ## ----download_lahman------------------------------------------------------------------------------
 load('Teams.RData')
@@ -121,4 +122,7 @@ Pitching[ , if (.N > 20L) .(w_coef = coef(lm(ERA ~ W))['W']), by = teamID
                     ylab = 'Number of Teams', col = 'darkgreen',
                     main = 'Team-Level Distribution\nWin Coefficients on ERA')]
 abline(v = overall_coef, lty = 2L, col = 'red')
+
+## ----echo=FALSE-----------------------------------------------------------------------------------
+setDTthreads(.old.th)
 

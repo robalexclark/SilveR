@@ -22,7 +22,9 @@ is_drake_project	criteria
 is_git_root	criteria
 is_pkgdown_project	criteria
 is_projectile_project	criteria
+is_quarto_project	criteria
 is_remake_project	criteria
+is_renv_project	criteria
 is_root_criterion	root_criterion
 is_rstudio_project	criteria
 is_r_package	criteria

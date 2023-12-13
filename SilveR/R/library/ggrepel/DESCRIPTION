@@ -1,5 +1,5 @@
 Package: ggrepel
-Version: 0.9.4
+Version: 0.9.5
 Authors@R: c(
     person("Kamil", "Slowikowski", email = "kslowikowski@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2843-6370")),
     person("Alicia", "Schep", role = "ctb", comment = c(ORCID = "0000-0002-3915-0618")),
@@ -28,18 +28,18 @@ Description: Provides text and label geoms for 'ggplot2' that help to avoid
 Depends: R (>= 3.0.0), ggplot2 (>= 2.2.0)
 Imports: grid, Rcpp, rlang (>= 0.3.0), scales (>= 0.5.0), withr (>=
         2.5.0)
-Suggests: knitr, rmarkdown, testthat, svglite, vdiffr, gridExtra,
-        devtools, prettydoc, ggbeeswarm, dplyr, magrittr, readr,
-        stringr
+Suggests: knitr, rmarkdown, testthat, svglite, vdiffr, gridExtra, ggpp,
+        patchwork, devtools, prettydoc, ggbeeswarm, dplyr, magrittr,
+        readr, stringr
 VignetteBuilder: knitr
 License: GPL-3 | file LICENSE
-URL: https://github.com/slowkow/ggrepel
+URL: https://ggrepel.slowkow.com/, https://github.com/slowkow/ggrepel
 BugReports: https://github.com/slowkow/ggrepel/issues
 RoxygenNote: 7.2.3
 LinkingTo: Rcpp
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2023-10-12 20:31:14 UTC; ks38
+Packaged: 2024-01-10 16:39:29 UTC; ks38
 Author: Kamil Slowikowski [aut, cre] (<https://orcid.org/0000-0002-2843-6370>),
   Alicia Schep [ctb] (<https://orcid.org/0000-0002-3915-0618>),
   Sean Hughes [ctb] (<https://orcid.org/0000-0002-9409-9405>),
@@ -60,6 +60,6 @@ Author: Kamil Slowikowski [aut, cre] (<https://orcid.org/0000-0002-2843-6370>),
   Francis Barton [ctb]
 Maintainer: Kamil Slowikowski <kslowikowski@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-10-13 00:20:02 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 02:48:40 UTC; windows
+Date/Publication: 2024-01-10 21:03:02 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 03:53:22 UTC; windows
 Archs: x64

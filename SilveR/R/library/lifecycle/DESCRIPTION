@@ -1,11 +1,11 @@
 Package: lifecycle
 Title: Manage the Life Cycle of your Package Functions
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(
-    person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut",
+    person("Lionel", "Henry", , "lionel@posit.co", role = c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = "aut",
            comment = c(ORCID = "0000-0003-4757-117X")),
-    person("RStudio", role = c("cph", "fnd"))
+    person("Posit Software, PBC", role = c("cph", "fnd"))
   )
 Description: Manage the life cycle of your exported functions with shared
     conventions, documentation badges, and user-friendly deprecation
@@ -13,21 +13,21 @@ Description: Manage the life cycle of your exported functions with shared
 License: MIT + file LICENSE
 URL: https://lifecycle.r-lib.org/, https://github.com/r-lib/lifecycle
 BugReports: https://github.com/r-lib/lifecycle/issues
-Depends: R (>= 3.4)
-Imports: cli (>= 3.4.0), glue, rlang (>= 1.0.6)
+Depends: R (>= 3.6)
+Imports: cli (>= 3.4.0), glue, rlang (>= 1.1.0)
 Suggests: covr, crayon, knitr, lintr, rmarkdown, testthat (>= 3.0.1),
         tibble, tidyverse, tools, vctrs, withr
 VignetteBuilder: knitr
+Config/Needs/website: tidyverse/tidytemplate, usethis
 Config/testthat/edition: 3
-Config/Needs/website: tidyverse/tidytemplate
 Encoding: UTF-8
 RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2022-10-07 08:50:55 UTC; lionel
+Packaged: 2023-11-06 16:07:36 UTC; lionel
 Author: Lionel Henry [aut, cre],
   Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),
-  RStudio [cph, fnd]
-Maintainer: Lionel Henry <lionel@rstudio.com>
+  Posit Software, PBC [cph, fnd]
+Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2022-10-07 09:50:02 UTC
-Built: R 4.3.1; ; 2023-10-24 01:23:39 UTC; windows
+Date/Publication: 2023-11-07 10:10:10 UTC
+Built: R 4.3.2; ; 2024-01-18 02:28:28 UTC; windows

@@ -120,7 +120,7 @@ table, .body h2 { border-bottom: 1px solid #666; }
 .body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
 .footnote-ref a::before { content: "["; }
 .footnote-ref a::after { content: "]"; }
-.footnotes::before {
+section.footnotes::before {
   content: "";
   display: block;
   max-width: 20em;
@@ -180,7 +180,7 @@ browseVignettes('YourPackage')
 10:1
 ##  [1] 10  9  8  7  6  5  4  3  2  1
 rnorm(5)^2
-## [1] 0.2112 0.6532 0.2287 0.3346 0.4961
+## [1] 0.19000 0.42829 0.05588 1.10295 0.37744
 strsplit('hello, markdown vignettes', '')
 ## [[1]]
 ##  [1] &quot;h&quot; &quot;e&quot; &quot;l&quot; &quot;l&quot; &quot;o&quot; &quot;,&quot; &quot; &quot; &quot;m&quot; &quot;a&quot; &quot;r&quot; &quot;k&quot; &quot;d&quot; &quot;o&quot; &quot;w&quot; &quot;n&quot; &quot; &quot; &quot;v&quot; &quot;i&quot; &quot;g&quot;

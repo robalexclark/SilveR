@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -95,7 +95,7 @@ bench::mark(
   pdist_cpp(0.5, y)
 )[1:6]
 
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 # 5e-3 * x == 2e-3 * x + 10 * 60
 600 / (5e-3 - 2e-3)
 
@@ -129,7 +129,7 @@ cpp_eval("NAN * 1")
 ## -----------------------------------------------------------------------------
 str(missing_sampler())
 
-## ---- include = FALSE, error = FALSE------------------------------------------
+## ----include = FALSE, error = FALSE-------------------------------------------
 # Verify that our sum implementations work
 local({
   x <- c(.5, .1, .3, .7, 12.)
@@ -138,7 +138,7 @@ local({
   stopifnot(identical(sum(x), sum4(x)))
 })
 
-## ---- include = FALSE, error = FALSE------------------------------------------
+## ----include = FALSE, error = FALSE-------------------------------------------
 # Verify that our findInterval2 implementation works
 local({
   n <- 1e3

@@ -152,11 +152,11 @@ print(testSquareMatrix)
 expect_square_matrix = makeExpectationFunction(checkSquareMatrix)
 print(expect_square_matrix)
 
-## ---- eval = FALSE, hilang = "c"----------------------------------------------
+## ----eval = FALSE, hilang = "c"-----------------------------------------------
 #  SEXP qassert(SEXP x, const char *rule, const char *name);
 #  Rboolean qtest(SEXP x, const char *rule);
 
-## ---- eval = FALSE, hilang = "c"----------------------------------------------
+## ----eval = FALSE, hilang = "c"-----------------------------------------------
 #  #include <checkmate.h>
 #  #include <checkmate_stub.c>
 

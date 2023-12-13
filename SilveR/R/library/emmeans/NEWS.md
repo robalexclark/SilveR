@@ -2,6 +2,19 @@
 title: "NEWS for the emmeans package"
 ---
 
+## emmeans 1.9.0
+  * Warning message about prior weights was sometimes unnecessary.
+    We now suppress it when all the prior weights are equal.
+  * Fix to `MuMIn` support with `subset` argument (#455)
+  * Repair to coding error for nested models (#457)
+  * Added `glmtoolbox::glmgee` support (#454)
+  * `qdrg()` modified such that we often don't need to specify `data` when
+    `object` is specified.
+  * Support for for `rq`, `rqs` now incorporates all `tau` values in the model 
+    as a pseudofactor (#458). The `tau` argument itself is deprecated and ignored
+    if specified.
+    
+
 ## emmeans 1.8.9
   * Added functions `make.meanint()` and `make.symmint()` that return functions
     that compute symmetric intervals. The old `meanint()` and `symmint()` functions

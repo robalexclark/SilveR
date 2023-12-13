@@ -1,5 +1,5 @@
 Package: igraph
-Version: 1.5.1
+Version: 1.6.0
 Title: Network Analysis and Visualization
 Authors@R: c(
     person("Gábor", "Csárdi", , "csardi.gabor@gmail.com", role = "aut",
@@ -32,7 +32,7 @@ Imports: cli, graphics, grDevices, lifecycle, magrittr, Matrix,
 Suggests: ape (>= 5.7-0.1), callr, decor, digest, graph, igraphdata,
         knitr, rgl, rmarkdown, scales, stats4, tcltk, testthat, vdiffr,
         withr
-LinkingTo: cpp11 (>= 0.2.0)
+LinkingTo: cpp11 (>= 0.4.7)
 VignetteBuilder: knitr
 Config/Needs/build: roxygen2, devtools, irlba, pkgconfig
 Config/Needs/coverage: covr
@@ -45,7 +45,7 @@ RoxygenNote: 7.2.3
 SystemRequirements: gmp (optional), libxml2 (optional), glpk (>= 4.57,
         optional)
 NeedsCompilation: yes
-Packaged: 2023-08-09 04:30:08 UTC; kirill
+Packaged: 2023-12-09 11:51:46 UTC; kirill
 Author: Gábor Csárdi [aut] (<https://orcid.org/0000-0001-7098-9676>),
   Tamás Nepusz [aut] (<https://orcid.org/0000-0002-1451-338X>),
   Vincent Traag [aut] (<https://orcid.org/0000-0003-3170-3879>),
@@ -57,6 +57,6 @@ Author: Gábor Csárdi [aut] (<https://orcid.org/0000-0001-7098-9676>),
   Chan Zuckerberg Initiative [fnd]
 Maintainer: Kirill Müller <kirill@cynkra.com>
 Repository: CRAN
-Date/Publication: 2023-08-10 09:00:05 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 01:42:26 UTC; windows
+Date/Publication: 2023-12-11 07:50:02 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 02:52:54 UTC; windows
 Archs: x64

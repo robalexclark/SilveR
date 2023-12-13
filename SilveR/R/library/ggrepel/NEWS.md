@@ -1,3 +1,17 @@
+ggrepel 0.9.5
+========================
+
+## Changes
+
+- Change `expect_equal()` to include a tolerance, to satisfy CRAN testing.
+
+- Delete note about old (before 2.2.1) versions of ggplot2, thanks to @olivroy for [pull request 246].
+
+- Add website link to `DESCRIPTION`, thanks to @olivroy for [pull request 241].
+
+[pull request 241]: https://github.com/slowkow/ggrepel/pull/241
+[pull request 246]: https://github.com/slowkow/ggrepel/pull/246
+
 
 ggrepel 0.9.4
 ========================
@@ -13,7 +27,7 @@ ggrepel 0.9.4
 * Use `expect_equal(x, y)` instead of `expect_true(identical(x, y))`, see [issue 242] for details.
 
 [issue 213]: https://github.com/slowkow/ggrepel/issues/213
-[pull request 193]: https://github.com/slowkow/ggrepel/pull/236
+[pull request 236]: https://github.com/slowkow/ggrepel/pull/236
 [issue 242]: https://github.com/slowkow/ggrepel/issues/242
 
 

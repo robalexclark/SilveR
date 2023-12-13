@@ -2,6 +2,14 @@
 \name{NEWS}
 \title{NEWS file for the \pkg{mvtnorm} package}
 
+\section{Changes in Version 1.2-4 (2023-11-27)}{
+  \subsection{Bugfixes}{
+    \itemize{
+      \item Remove empty print statement from \code{miwa.c}
+    }
+  }
+}
+
 \section{Changes in Version 1.2-3 (2023-08-17)}{
   \subsection{Features}{
     \itemize{

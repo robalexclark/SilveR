@@ -1,11 +1,46 @@
-## ---- include = FALSE---------------------------------------------------------
+## -----------------------------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ----setup--------------------------------------------------------------------
 library(stringr)
+library(magrittr)
+
+## -----------------------------------------------------------------------------
+data_stringr_base_diff <- tibble::tribble(
+  ~stringr,                                        ~base_r,
+  "str_detect(string, pattern)",                   "grepl(pattern, x)",
+  "str_dup(string, times)",                        "strrep(x, times)",
+  "str_extract(string, pattern)",                  "regmatches(x, m = regexpr(pattern, text))",
+  "str_extract_all(string, pattern)",              "regmatches(x, m = gregexpr(pattern, text))",
+  "str_length(string)",                            "nchar(x)",
+  "str_locate(string, pattern)",                   "regexpr(pattern, text)",
+  "str_locate_all(string, pattern)",               "gregexpr(pattern, text)",
+  "str_match(string, pattern)",                    "regmatches(x, m = regexec(pattern, text))",
+  "str_order(string)",                             "order(...)",
+  "str_replace(string, pattern, replacement)",     "sub(pattern, replacement, x)",
+  "str_replace_all(string, pattern, replacement)", "gsub(pattern, replacement, x)",
+  "str_sort(string)",                              "sort(x)",
+  "str_split(string, pattern)",                    "strsplit(x, split)",
+  "str_sub(string, start, end)",                   "substr(x, start, stop)",
+  "str_subset(string, pattern)",                   "grep(pattern, x, value = TRUE)",
+  "str_to_lower(string)",                          "tolower(x)",
+  "str_to_title(string)",                          "tools::toTitleCase(text)",
+  "str_to_upper(string)",                          "toupper(x)",
+  "str_trim(string)",                              "trimws(x)",
+  "str_which(string, pattern)",                    "grep(pattern, x)",
+  "str_wrap(string)",                              "strwrap(x)"
+)
+
+# create MD table, arranged alphabetically by stringr fn name
+data_stringr_base_diff %>%
+  dplyr::mutate(dplyr::across(.fns = ~ paste0("`", .x, "`"))) %>%
+  dplyr::arrange(stringr) %>%
+  dplyr::rename(`base R` = base_r) %>%
+  gt::gt() %>%
+  gt::fmt_markdown(columns = everything()) %>%
+  gt::tab_options(column_labels.font.weight = "bold")
 
 ## -----------------------------------------------------------------------------
 fruit <- c("apple", "banana", "pear", "pineapple")
@@ -125,7 +160,7 @@ nchar(letters)
 # stringr
 str_length(letters)
 
-## ---- error = TRUE------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # base
 nchar(factor("abc")) 
 
@@ -222,7 +257,7 @@ paste0(letters, collapse = "-")
 # stringr
 str_flatten(letters, collapse = "-")
 
-## ---- eval = (getRversion() >=  "3.3.0")--------------------------------------
+## -----------------------------------------------------------------------------
 fruit <- c("apple", "pear", "banana")
 
 # base

@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE-------------------------------------------
+## ----echo = FALSE, message = FALSE--------------------------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 set.seed(1014)
@@ -6,17 +6,17 @@ set.seed(1014)
 ## ----setup, message = FALSE---------------------------------------------------
 library(dplyr)
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 starwars[starwars$homeworld == "Naboo" & starwars$species == "Human", ,]
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 starwars %>% filter(homeworld == "Naboo", species == "Human")
 
 ## -----------------------------------------------------------------------------
 df <- data.frame(x = runif(3), y = runif(3))
 df$x
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 var_summary <- function(data, var) {
   data %>%
     summarise(n = n(), min = min({{ var }}), max = max({{ var }}))
@@ -25,7 +25,7 @@ mtcars %>%
   group_by(cyl) %>% 
   var_summary(mpg)
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 for (var in names(mtcars)) {
   mtcars %>% count(.data[[var]]) %>% print()
 }
@@ -41,7 +41,7 @@ my_df <- function(x) {
 my_var <- 10
 my_df(my_var)
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 summarise_mean <- function(data, vars) {
   data %>% summarise(n = n(), across({{ vars }}, mean))
 }
@@ -49,7 +49,7 @@ mtcars %>%
   group_by(cyl) %>% 
   summarise_mean(where(is.numeric))
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 vars <- c("mpg", "vs")
 mtcars %>% select(all_of(vars))
 mtcars %>% select(!all_of(vars))
@@ -161,17 +161,17 @@ my_summarise <- function(data, group_var, summarise_var) {
     summarise(across({{ summarise_var }}, mean, .names = "mean_{.col}"))
 }
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 for (var in names(mtcars)) {
   mtcars %>% count(.data[[var]]) %>% print()
 }
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 mtcars %>% 
   names() %>% 
   purrr::map(~ count(mtcars, .data[[.x]]))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  library(shiny)
 #  ui <- fluidPage(
 #    selectInput("var", "Variable", choices = names(diamonds)),

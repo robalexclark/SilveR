@@ -306,7 +306,15 @@ for (i in 1: length(ContinuousList)) {
 		XAxisTitle<-axis_relabel(contFactorTransform, XAxisTitle)
 	}
 
-	graphdata$xvarrr_IVS <-eval(parse(text = paste("statdata$",ContinuousList[i])))
+	graphdata$xvarrr_IVS <-eval(parse(text = paste("graphdata$",ContinuousList[i])))
+
+
+	#Testing for with infinite slopes on scatterplot and re-ordering dataset if necessary
+#	ScatterPlot <- "Y"
+#	graphdata$catfact <- graphdata$l_l
+#	inf_slope<-IVS_F_infinite_slope()
+#	infiniteslope <- inf_slope$infiniteslope
+#	graphdata<-inf_slope$graphdata
 
 	scatterPlot <- sub(".html", paste(i,"scatterPlot.png",sep=""), htmlFile)
 	png(scatterPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
@@ -317,6 +325,7 @@ for (i in 1: length(ContinuousList)) {
 
 	#GGPLOT2 code
 	if (treatFactors !="NULL") {
+
 		ONECATSEP_SCAT()
 	} else {
 		NONCAT_SCAT("none")

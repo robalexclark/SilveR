@@ -18,6 +18,8 @@ vcovHAC                 Heteroscedasticity and Autocorrelation
                         Consistent (HAC) Covariance Matrix Estimation
 vcovHC                  Heteroscedasticity-Consistent Covariance Matrix
                         Estimation
+vcovJK                  (Clustered) Jackknife Covariance Matrix
+                        Estimation
 vcovOPG                 Outer-Product-of-Gradients Covariance Matrix
                         Estimation
 vcovPC                  Panel-Corrected Covariance Matrix Estimation

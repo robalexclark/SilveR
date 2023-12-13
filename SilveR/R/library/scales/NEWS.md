@@ -1,3 +1,56 @@
+# scales 1.3.0
+
+## Better type support
+* `rescale(I(x), ...)` and `rescale_mid(I(x), ...)` return `I(x)` unaltered 
+  (@teunbrand, #403).
+* Add a rescale method for `difftime` objects (#382)
+* Add better support for `difftime` objects. `label_timespan()` adds 
+  functionality for adding correct unit suffix to timespan data, 
+  `breaks_timespan()` adds functionality for finding pleasant breakpoints across
+  the various bases in time units, while `transform_timespan()` wraps it all 
+  together and provides an alternative to `transform_hms()` (#212)
+
+## Ranges
+* `train_continuous()` coerces `new` to numeric before calculating range 
+  (@teunbrand, #369).
+* Training on factor data no longer sorts the range after multiple training 
+  passes if the new `fct` argument of `train_discrete()` is used (#383)
+* The `DiscreteRange` class now keeps track on whether it has been trained on
+  factor data.
+* Attempt to make the sort behavior of the range consistent for character 
+  vectors during training. Mixing of character and factor data will make the 
+  factor level order take precedence no matter if the training starts with a 
+  charactor vector
+
+## Transformations
+* Transformation function have been renamed to `transform_*`-prefixed names 
+  instead of `*_trans`-suffixed names. This allows for a better tab-completion
+  search of transformations. The S3 class of transformations has been
+  renamed from `"trans"` to `"transform"`. `new_transform()` replaces 
+  `trans_new()` and `trim_to_domain()` replaces `trans_range()`. All old 
+  functions are kept for posterity.
+* `transform_sqrt()` no longer returns an inverse for values outside of its 
+  domain (#214)
+* Add an inverse (area) hyperbolic sine transformation `transform_asinh()`, 
+  which provides a logarithm-like transformation of a space, but which 
+  accommodates negative values (#297)
+* Correct the domain calculation for `transform_compose()` (@mjskay, #408).
+* Transformation objects can optionally include the derivatives of the transform
+  and the inverse transform (@mjskay, #322).
+  
+## Misc
+* The `scale_cut` argument in `number()` now works as advertised for values 
+  below the lowest cut value (#346)
+* `scale_cut` will now choose a more appropriate cut in the case of the first
+  cut creating an irrational-ish number.
+* Added a new option to the `style_positive` argument in `label_*()` functions.
+  Setting this to `"space"` will add a figure space in front of the number to 
+  make it easier to align positive and negative values as figure space takes up
+  the same amount of space as `-` (#366)
+* `label_dollar()` has been superseeded by `label_currency()` for clarity (#344)
+* Palette functions now have the `pal_`-prefix. The old `_pal`-suffixed versions
+  are kept for backward compatibility.
+  
 # scales 1.2.1
 
 * Re-document to fix HTML issues in `.Rd`.

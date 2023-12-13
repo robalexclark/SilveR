@@ -59,6 +59,7 @@ renderTags	renderTags
 resolveDependencies	resolveDependencies
 restorePreserveChunks	htmlPreserve
 save_html	save_html
+save_html.default	save_html
 singleton	singleton
 singleton_tools	singleton_tools
 span	builder

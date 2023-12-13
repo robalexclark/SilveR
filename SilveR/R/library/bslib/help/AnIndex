@@ -65,6 +65,7 @@ font_collection	font_face
 font_face	font_face
 font_google	font_face
 font_link	font_face
+input_dark_mode	input_dark_mode
 input_switch	input_switch
 is.card_item	card_body
 is_bs_theme	bs_theme
@@ -80,10 +81,12 @@ navset	navset
 navset_bar	navset
 navset_card_pill	navset
 navset_card_tab	navset
+navset_card_underline	navset
 navset_hidden	navset
 navset_pill	navset
 navset_pill_list	navset
 navset_tab	navset
+navset_underline	navset
 navs_bar	deprecated
 navs_hidden	deprecated
 navs_pill	deprecated
@@ -106,10 +109,10 @@ nav_show	nav_select
 nav_spacer	nav-items
 page	page
 page_fill	deprecated
-page_fillable	page
+page_fillable	page_fillable
 page_fixed	page
 page_fluid	page
-page_navbar	page
+page_navbar	page_navbar
 page_sidebar	page_sidebar
 popover	popover
 precompiled_css_path	precompiled_css_path
@@ -117,12 +120,16 @@ print.bslib_fragment	html-browse
 print.bslib_page	html-browse
 remove_all_fill	as_fill_carrier
 run_with_themer	run_with_themer
+save_html.bslib_fragment	save-html
+save_html.bslib_page	save-html
+showcase_bottom	value_box
 showcase_left_center	value_box
 showcase_top_right	value_box
 sidebar	sidebar
 sidebar_toggle	sidebar
 theme_bootswatch	theme_bootswatch
 theme_version	theme_version
+toggle_dark_mode	input_dark_mode
 toggle_popover	popover
 toggle_sidebar	sidebar
 toggle_switch	input_switch
@@ -132,5 +139,6 @@ update_popover	popover
 update_switch	input_switch
 update_tooltip	tooltip
 value_box	value_box
+value_box_theme	value_box
 versions	versions
 version_default	versions

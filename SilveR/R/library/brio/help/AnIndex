@@ -1,3 +1,5 @@
+brio-package	brio-package
+brio	brio-package
 file_line_endings	file_line_endings
 readLines	readLines
 read_file	read_file

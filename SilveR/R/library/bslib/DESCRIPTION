@@ -1,22 +1,24 @@
 Package: bslib
 Title: Custom 'Bootstrap' 'Sass' Themes for 'shiny' and 'rmarkdown'
-Version: 0.5.1
+Version: 0.6.1
 Authors@R: c(
-    person("Carson", "Sievert", role = c("aut", "cre"), email = "carson@posit.co", comment = c(ORCID = "0000-0002-4958-2844")),
-    person("Joe", "Cheng", role = "aut", email = "joe@posit.co"),
-    person("Garrick", "Aden-Buie", role = "aut", email = "garrick@posit.co", comment = c(ORCID = "0000-0002-7111-0077")),
+    person("Carson", "Sievert", , "carson@posit.co", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-4958-2844")),
+    person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
+    person("Garrick", "Aden-Buie", , "garrick@posit.co", role = "aut",
+           comment = c(ORCID = "0000-0002-7111-0077")),
     person("Posit Software, PBC", role = c("cph", "fnd")),
-    person(family = "Bootstrap contributors", role = "ctb",
-    comment = "Bootstrap library"),
-    person(family = "Twitter, Inc", role = "cph",
-    comment = "Bootstrap library"),
+    person(, "Bootstrap contributors", role = "ctb",
+           comment = "Bootstrap library"),
+    person(, "Twitter, Inc", role = "cph",
+           comment = "Bootstrap library"),
     person("Javi", "Aguilar", role = c("ctb", "cph"),
-    comment = "Bootstrap colorpicker library"),
+           comment = "Bootstrap colorpicker library"),
     person("Thomas", "Park", role = c("ctb", "cph"),
-    comment = "Bootswatch library"),
-    person(family = "PayPal", role = c("ctb", "cph"),
-    comment = "Bootstrap accessibility plugin")
-    )
+           comment = "Bootswatch library"),
+    person(, "PayPal", role = c("ctb", "cph"),
+           comment = "Bootstrap accessibility plugin")
+  )
 Description: Simplifies custom 'CSS' styling of both 'shiny' and
     'rmarkdown' via 'Bootstrap' 'Sass'. Supports 'Bootstrap' 3, 4 and 5 as
     well as their various 'Bootswatch' themes. An interactive widget is
@@ -25,12 +27,26 @@ License: MIT + file LICENSE
 URL: https://rstudio.github.io/bslib/, https://github.com/rstudio/bslib
 BugReports: https://github.com/rstudio/bslib/issues
 Depends: R (>= 2.10)
-Imports: base64enc, cachem, grDevices, htmltools (>= 0.5.4), jquerylib
-        (>= 0.1.3), jsonlite, memoise (>= 2.0.1), mime, rlang, sass (>=
-        0.4.0)
+Imports: base64enc, cachem, grDevices, htmltools (>= 0.5.7), jquerylib
+        (>= 0.1.3), jsonlite, lifecycle, memoise (>= 2.0.1), mime,
+        rlang, sass (>= 0.4.0)
 Suggests: bsicons, curl, fontawesome, ggplot2, knitr, magrittr,
-        rappdirs, rmarkdown (>= 2.7), shiny (>= 1.6.0), testthat,
+        rappdirs, rmarkdown (>= 2.7), shiny (>= 1.8.0), testthat,
         thematic, withr
+Config/Needs/deploy: BH, chiflights22, colourpicker, commonmark, cpp11,
+        cpsievert/chiflights22, cpsievert/histoslider, dplyr, DT,
+        ggplot2, ggridges, gt, hexbin, histoslider, htmlwidgets,
+        lattice, leaflet, lubridate, modelr, plotly, reactable,
+        reshape2, rprojroot, rsconnect, rstudio/shiny, scales, styler,
+        tibble
+Config/Needs/routine: chromote, desc, renv
+Config/Needs/website: brio, crosstalk, dplyr, DT, ggplot2, glue,
+        htmlwidgets, leaflet, lorem, palmerpenguins, plotly, purrr,
+        rprojroot, rstudio/htmltools, scales, stringr, tidyr, webshot2
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/testthat/start-first: zzzz-bs-sass, fonts, zzz-precompile,
+        theme-*, rmd-*
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 Collate: 'accordion.R' 'breakpoints.R' 'bs-current-theme.R'
@@ -39,23 +55,14 @@ Collate: 'accordion.R' 'breakpoints.R' 'bs-current-theme.R'
         'bs-theme-preset-builtin.R' 'bs-theme-preset.R' 'utils.R'
         'bs-theme-preview.R' 'bs-theme-update.R' 'bs-theme.R'
         'bslib-package.R' 'card.R' 'deprecated.R' 'files.R' 'fill.R'
-        'imports.R' 'input-switch.R' 'layout.R' 'nav-items.R'
-        'nav-update.R' 'navs-legacy.R' 'navs.R' 'onLoad.R' 'page.R'
-        'popover.R' 'precompiled.R' 'print.R' 'shiny-devmode.R'
-        'sidebar.R' 'staticimports.R' 'tooltip.R' 'utils-deps.R'
-        'utils-shiny.R' 'utils-tags.R' 'value-box.R'
+        'imports.R' 'input-dark-mode.R' 'input-switch.R' 'layout.R'
+        'nav-items.R' 'nav-update.R' 'navs-legacy.R' 'navs.R'
+        'onLoad.R' 'page.R' 'popover.R' 'precompiled.R' 'print.R'
+        'shiny-devmode.R' 'sidebar.R' 'staticimports.R' 'tooltip.R'
+        'utils-deps.R' 'utils-shiny.R' 'utils-tags.R' 'value-box.R'
         'version-default.R' 'versions.R'
-Config/testthat/edition: 3
-Config/Needs/routine: chromote, desc, renv
-Config/Needs/website: brio, crosstalk, dplyr, DT, ggplot2, glue,
-        htmlwidgets, leaflet, lorem, palmerpenguins, plotly, purrr,
-        rprojroot, rstudio/htmltools, scales, stringr, tidyr, webshot2
-Config/Needs/deploy: BH, cpp11, dplyr, DT, ggplot2, ggridges, gt,
-        hexbin, histoslider, lattice, leaflet, lubridate, modelr,
-        nycflights13, plotly, reactable, reshape2, rprojroot,
-        rsconnect, scales
 NeedsCompilation: no
-Packaged: 2023-08-11 15:31:21 UTC; cpsievert
+Packaged: 2023-11-28 17:50:21 UTC; cpsievert
 Author: Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),
   Joe Cheng [aut],
   Garrick Aden-Buie [aut] (<https://orcid.org/0000-0002-7111-0077>),
@@ -67,5 +74,5 @@ Author: Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),
   PayPal [ctb, cph] (Bootstrap accessibility plugin)
 Maintainer: Carson Sievert <carson@posit.co>
 Repository: CRAN
-Date/Publication: 2023-08-11 16:53:52 UTC
-Built: R 4.3.1; ; 2023-10-24 02:18:28 UTC; windows
+Date/Publication: 2023-11-28 23:10:05 UTC
+Built: R 4.3.2; ; 2024-01-18 03:26:22 UTC; windows

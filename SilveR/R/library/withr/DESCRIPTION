@@ -1,6 +1,6 @@
 Package: withr
 Title: Run Code 'With' Temporarily Modified Global State
-Version: 2.5.1
+Version: 3.0.0
 Authors@R: 
     c(person(given = "Jim",
              family = "Hester",
@@ -20,7 +20,7 @@ Authors@R:
       person(given = "Hadley",
              family = "Wickham",
              role = "aut",
-             email = "hadley@rstudio.com"),
+             email = "hadley@posit.co"),
       person(given = "Winston",
              family = "Chang",
              role = "aut"),
@@ -40,23 +40,23 @@ Description: A set of functions to run code 'with' safely and
 License: MIT + file LICENSE
 URL: https://withr.r-lib.org, https://github.com/r-lib/withr#readme
 BugReports: https://github.com/r-lib/withr/issues
-Depends: R (>= 3.2.0)
-Imports: graphics, grDevices, stats
+Depends: R (>= 3.5.0)
+Imports: graphics, grDevices,
 Suggests: callr, covr, DBI, knitr, lattice, methods, rlang, rmarkdown
         (>= 2.12), RSQLite, testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.1.2
-Collate: 'aaa.R' 'collate.R' 'compat-defer.R' 'connection.R' 'db.R'
-        'defer.R' 'wrap.R' 'local_.R' 'with_.R' 'devices.R' 'dir.R'
-        'env.R' 'file.R' 'language.R' 'libpaths.R' 'locale.R'
-        'makevars.R' 'namespace.R' 'options.R' 'par.R' 'path.R' 'rng.R'
-        'seed.R' 'sink.R' 'tempfile.R' 'timezone.R' 'torture.R'
-        'utils.R' 'with.R'
+RoxygenNote: 7.3.0.9000
+Collate: 'aaa.R' 'collate.R' 'connection.R' 'db.R' 'defer-exit.R'
+        'standalone-defer.R' 'defer.R' 'wrap.R' 'local_.R' 'with_.R'
+        'devices.R' 'dir.R' 'env.R' 'file.R' 'language.R' 'libpaths.R'
+        'locale.R' 'makevars.R' 'namespace.R' 'options.R' 'par.R'
+        'path.R' 'rng.R' 'seed.R' 'sink.R' 'tempfile.R' 'timezone.R'
+        'torture.R' 'utils.R' 'with.R'
 Config/testthat/edition: 3
 Config/Needs/website: tidyverse/tidytemplate
 NeedsCompilation: no
-Packaged: 2023-09-26 08:28:27 UTC; lionel
+Packaged: 2024-01-16 10:22:29 UTC; lionel
 Author: Jim Hester [aut],
   Lionel Henry [aut, cre],
   Kirill Müller [aut],
@@ -68,5 +68,5 @@ Author: Jim Hester [aut],
   Posit Software, PBC [cph, fnd]
 Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2023-09-26 12:20:02 UTC
-Built: R 4.3.1; ; 2023-10-05 00:56:29 UTC; windows
+Date/Publication: 2024-01-16 14:20:02 UTC
+Built: R 4.3.2; ; 2024-01-18 00:50:51 UTC; windows

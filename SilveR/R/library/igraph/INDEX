@@ -23,6 +23,7 @@ as.matrix.igraph        Convert igraph objects to adjacency or edge
                         list matrices
 as_adj_list             Adjacency lists
 as_adjacency_matrix     Convert a graph to an adjacency matrix
+as_biadjacency_matrix   Bipartite adjacency matrix of a bipartite graph
 as_data_frame           Creating igraph graphs from data frames or
                         vice-versa
 as_edgelist             Convert a graph to an edge list
@@ -30,7 +31,6 @@ as_graphnel             Convert igraph graphs to graphNEL objects from
                         the graph package
 as_ids                  Convert a vertex or edge sequence to an
                         ordinary vector
-as_incidence_matrix     Incidence matrix of a bipartite graph
 as_long_data_frame      Convert a graph to a long data frame
 as_membership           Declare a numeric vector as a membership vector
 assortativity           Assortativity coefficient
@@ -167,13 +167,13 @@ graph_from_adj_list     Create graphs from adjacency lists
 graph_from_adjacency_matrix
                         Create graphs from adjacency matrices
 graph_from_atlas        Create a graph from the Graph Atlas
+graph_from_biadjacency_matrix
+                        Create graphs from a bipartite adjacency matrix
 graph_from_edgelist     Create a graph from an edge list matrix
 graph_from_graphdb      Load a graph from the graph database for
                         testing graph isomorphism.
 graph_from_graphnel     Convert graphNEL objects from the graph package
                         to igraph
-graph_from_incidence_matrix
-                        Create graphs from an incidence matrix
 graph_from_isomorphism_class
                         Create a graph from an isomorphism class
 graph_from_lcf          Creating a graph from LCF notation
@@ -400,13 +400,7 @@ sample_traits_callaway
                         types
 sample_tree             Sample trees randomly and uniformly
 scan_stat               Scan statistics on a time series of graphs
-scg                     All-in-one Function for the SCG of Matrices and
-                        Graphs
 scg-method              Spectral Coarse Graining
-scg_eps                 Error of the spectral coarse graining (SCG)
-                        approximation
-scg_group               SCG Problem Solver
-scg_semi_proj           Semi-Projectors
 sequential_pal          Sequential palette
 set_edge_attr           Set edge attributes
 set_graph_attr          Set a graph attribute
@@ -433,7 +427,7 @@ subgraph_isomorphic     Decide if a graph is subgraph isomorphic to
 subgraph_isomorphisms   All isomorphic mappings between a graph and
                         subgraphs of another graph
 tail_of                 Tails of the edge(s) in a graph
-time_bins.sir           SIR model on graphs
+time_bins               SIR model on graphs
 tkigraph                Experimental basic igraph GUI
 tkplot                  Interactive plotting of graphs
 to_prufer               Convert a tree graph to its Prüfer sequence
@@ -458,7 +452,7 @@ vertex_attr<-           Set one or more vertex attributes
 vertex_attr_names       List names of vertex attributes
 vertex_connectivity     Vertex connectivity
 weighted_cliques        Functions to find weighted cliques, i.e.
-                        weighted complete subgraphs in a graph
+                        vertex-weighted complete subgraphs in a graph
 which_multiple          Find the multiple or loop edges in a graph
 which_mutual            Find mutual edges in a directed graph
 with_edge_              Constructor modifier to add edge attributes

@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.8.9" />
+<meta name="author" content="emmeans package, Version 1.9.0" />
 
 
 <title>Models supported by emmeans</title>
@@ -57,7 +57,7 @@ ul.task-list{list-style: none;}
 
 
 <h1 class="title toc-ignore">Models supported by emmeans</h1>
-<h4 class="author">emmeans package, Version 1.8.9</h4>
+<h4 class="author">emmeans package, Version 1.9.0</h4>
 
 
 
@@ -250,6 +250,18 @@ matrix</td>
 <td align="left">lme4</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">glmgee</td>
+<td align="left">glmtoolbox</td>
+<td align="center"><a href="#E">E</a></td>
+<td align="left"><code>vcov.method = c(&quot;robust&quot;, &quot;df-adjusted&quot;, &quot;model&quot;,</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="center"></td>
+<td align="left"><code>&quot;bias-corrected&quot;, &quot;jackknife&quot;)</code></td>
 </tr>
 <tr class="odd">
 <td align="left">glmmadmb</td>
@@ -495,8 +507,8 @@ elements</td>
 <td align="left">rq,rqs</td>
 <td align="left">quantreg</td>
 <td align="center"><a href="#Q">Q</a></td>
-<td align="left"><code>tau = &quot;0.5&quot;</code> (must match an entry in
-<code>object$tau</code>)</td>
+<td align="left">Creates pseudo-factor <code>tau</code> with levels
+<code>object$tau</code></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
@@ -935,15 +947,21 @@ package’s support overrides it.</p>
 </div>
 <div id="Q" class="section level2">
 <h2>Q – Quantile regression</h2>
-<p>The argument <code>tau</code> should match (within a very small
-margin) one of the quantiles actually specified in fitting the model;
-otherwise an error results. In these models, the covariance matrix is
-obtained via the model’s <code>summary()</code> method with
-<code>covariance = TRUE</code>. The user may specify one or more of the
-other arguments for <code>summary</code> or to be passed to, say, a
-bootstrap routine. If so, those optional arguments must be spelled-out
-completely (e.g., <code>start</code> will <em>not</em> be matched to
-<code>startQR</code>).</p>
+<p>The elements of <code>object$tau</code> are included in the reference
+grid as a pseudo-factor named <code>tau</code>. In these models, the
+covariance matrix is obtained via the model’s <code>summary()</code>
+method with <code>covariance = TRUE</code>. The user may specify one or
+more of the other arguments for <code>summary</code> (e.g.,
+<code>se = &quot;boot&quot;</code>) or to be passed to the <code>...</code>
+argument.</p>
+<p>A caveat is that when there is more than one <code>tau</code> value,
+we do not have estimates of the covariances between regression
+coefficients associated with different <code>tau</code>s. Thus, a
+contrast involving different <code>tau</code>s can be estimated but its
+SE will be <code>NA</code>. Also, due to <code>NA</code>s in the
+covariance matrix, the <code>&quot;mvt&quot;</code> adjustment is unavailable.</p>
+<p><em>Note:</em> Older versions of
+<code>this</code>rq<code>and</code>rqs<code>support required an argument</code>tau<code>which is now deprecated and ignored if specified. If you want a particular subset of the</code>tau<code>values, use the</code>at<code>argument to</code>ref_grid`.</p>
 </div>
 <div id="S" class="section level2">
 <h2>S – Sampling (MCMC) methods</h2>

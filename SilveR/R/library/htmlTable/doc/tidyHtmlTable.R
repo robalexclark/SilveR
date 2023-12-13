@@ -1,4 +1,4 @@
-## ---- message=FALSE-----------------------------------------------------------
+## ----message=FALSE------------------------------------------------------------
 library(magrittr)
 library(tidyr)
 library(dplyr)
@@ -24,7 +24,7 @@ tidy_summary <- td %>%
   mutate(gear = paste(gear, "Gears"),
          cyl = paste(cyl, "Cylinders"))
 
-## ---- warning=FALSE-----------------------------------------------------------
+## ----warning=FALSE------------------------------------------------------------
 tidy_summary  %>% 
   arrange(per_metric, summary_stat) %>% 
   addHtmlTableStyle(align = "r") %>% 
@@ -33,7 +33,7 @@ tidy_summary  %>%
                 rnames = summary_stat,
                 rgroup = per_metric)
 
-## ---- warning=FALSE-----------------------------------------------------------
+## ----warning=FALSE------------------------------------------------------------
 tidy_summary  %>% 
   arrange(cyl, gear) %>% 
   addHtmlTableStyle(align = "r") %>% 

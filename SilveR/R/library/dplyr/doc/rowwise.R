@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 
@@ -58,7 +58,7 @@ rf %>%
 df %>% mutate(total = rowSums(pick(where(is.numeric), -id)))
 df %>% mutate(mean = rowMeans(pick(where(is.numeric), -id)))
 
-## ---- eval = FALSE, include = FALSE-------------------------------------------
+## ----eval = FALSE, include = FALSE--------------------------------------------
 #  bench::mark(
 #    df %>% mutate(m = rowSums(pick(x:z))),
 #    df %>% mutate(m = apply(pick(x:z), 1, sum)),
@@ -110,7 +110,7 @@ for (i in 1:2) {
 }
 out2
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 gf %>% mutate(y2 = y)
 rf %>% mutate(y2 = y)
 rf %>% mutate(y2 = list(y))
@@ -148,7 +148,7 @@ df %>%
   rowwise() %>% 
   mutate(data = list(runif(n, min, max)))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 df %>% 
   rowwise() %>% 
   mutate(data = runif(n, min, max))
@@ -172,7 +172,7 @@ df <- tribble(
 df %>% 
   mutate(data = list(do.call(rng, params)))
 
-## ---- include = FALSE, eval = FALSE-------------------------------------------
+## ----include = FALSE, eval = FALSE--------------------------------------------
 #  df <- rowwise(tribble(
 #     ~rng,     ~params,
 #     "runif",  list(min = -1, max = 1),

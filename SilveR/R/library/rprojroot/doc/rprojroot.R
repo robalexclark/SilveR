@@ -37,12 +37,12 @@ library(rprojroot)
 dir(find_root(has_file("DESCRIPTION")))
 
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  rel_path_from_vignettes <- "../R/rrmake.R"
 #  rel_path_from_vignettes <- file.path("..", "R", "rrmake.R") ##identical
 #  
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  rel_path_from_root <- "R/rrmake.R"
 #  rel_path_from_root <- file.path("R", "rrmake.R") ##identical
 
@@ -53,7 +53,7 @@ has_file("DESCRIPTION")
 # Specify a path/to/file relative to the root
 rel_path_from_root <- find_root_file("R", "rrmake.R", criterion = has_file("DESCRIPTION"))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  rel_path_from_testthat <- "../../R/rrmake.R"
 
 ## -----------------------------------------------------------------------------
@@ -125,7 +125,7 @@ is_testthat
 ## -----------------------------------------------------------------------------
 dir(is_testthat$find_file("hierarchy", path = is_r_package$find_file()))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  my_fun_run <- do.call(my_fun, my_args)
 #  
 #  testthat::test_that(
@@ -136,7 +136,7 @@ dir(is_testthat$find_file("hierarchy", path = is_r_package$find_file()))
 #    )
 #  )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  ## saved to tests/testthat/helper.R
 #  get_my_path <- function(file_name) {
 #    rprojroot::find_testthat_root_file(
@@ -144,7 +144,7 @@ dir(is_testthat$find_file("hierarchy", path = is_r_package$find_file()))
 #    )
 #  }
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  ## Find the correct path with your custom rprojroot helper function
 #  path_to_my_args_file <- get_my_path("my_args.Rdata")
 #  

@@ -4,7 +4,7 @@ Title: Fast and Versatile Argument Checks
 Description: Tests and assertions to perform frequent argument checks. A
     substantial part of the package was written in C to minimize any worries
     about execution time overhead.
-Version: 2.2.0
+Version: 2.3.1
 Authors@R: c(
     person("Michel", "Lang", NULL, "michellang@gmail.com",
       role = c("cre", "aut"), comment = c(ORCID = "0000-0001-9754-0393")),
@@ -47,12 +47,12 @@ Collate: 'AssertCollection.R' 'allMissing.R' 'anyInfinite.R'
         'checkSubset.R' 'checkTRUE.R' 'checkTibble.R' 'checkVector.R'
         'coalesce.R' 'isIntegerish.R' 'matchArg.R' 'qassert.R'
         'qassertr.R' 'vname.R' 'wfwl.R' 'zzz.R'
-Packaged: 2023-04-26 11:39:50 UTC; michel
+Packaged: 2023-12-04 09:19:04 UTC; michel
 Author: Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>),
   Bernd Bischl [ctb],
   Dénes Tóth [ctb] (<https://orcid.org/0000-0003-4262-3217>)
 Maintainer: Michel Lang <michellang@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-04-27 09:22:31 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:43:09 UTC; windows
+Date/Publication: 2023-12-04 10:20:02 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 01:55:34 UTC; windows
 Archs: x64

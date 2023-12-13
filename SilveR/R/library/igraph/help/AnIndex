@@ -56,8 +56,6 @@ as.igraph	as.igraph
 as.igraph.igraphHRG	as.igraph
 as.matrix.igraph	as.matrix.igraph
 as.undirected	as.directed
-asPhylo	communities
-asPhylo.communities	communities
 assortativity	assortativity
 assortativity.degree	assortativity
 assortativity.nominal	assortativity
@@ -69,6 +67,7 @@ as_adj	as_adjacency_matrix
 as_adjacency_matrix	as_adjacency_matrix
 as_adj_edge_list	as_adj_list
 as_adj_list	as_adj_list
+as_biadjacency_matrix	as_biadjacency_matrix
 as_bipartite	layout_as_bipartite
 as_data_frame	graph_from_data_frame
 as_edgelist	as_edgelist
@@ -79,8 +78,7 @@ as_ids.igraph.vs	as_ids
 as_incidence_matrix	as_incidence_matrix
 as_long_data_frame	as_long_data_frame
 as_membership	as_membership
-as_phylo	communities
-as_phylo.communities	communities
+as_phylo	as_phylo
 as_star	layout_as_star
 as_tree	layout_as_tree
 atlas	graph_from_atlas
@@ -196,7 +194,6 @@ count_automorphisms	count_automorphisms
 count_components	components
 count_isomorphisms	count_isomorphisms
 count_max_cliques	cliques
-count_max_weighted_cliques	weighted_cliques
 count_motifs	count_motifs
 count_multiple	which_multiple
 count_subgraph_isomorphisms	count_subgraph_isomorphisms
@@ -293,7 +290,7 @@ forest.fire.game	sample_forestfire
 from_adjacency	graph_from_adjacency_matrix
 from_data_frame	graph_from_data_frame
 from_edgelist	graph_from_edgelist
-from_incidence_matrix	graph_from_incidence_matrix
+from_incidence_matrix	from_incidence_matrix
 from_literal	graph_from_literal
 from_prufer	make_from_prufer
 full_bipartite_graph	make_full_bipartite_graph
@@ -311,7 +308,7 @@ get.edge.ids	get.edge.ids
 get.edgelist	as_edgelist
 get.edges	ends
 get.graph.attribute	graph_attr
-get.incidence	as_incidence_matrix
+get.incidence	as_biadjacency_matrix
 get.shortest.paths	distances
 get.stochastic	stochastic_matrix
 get.vertex.attribute	vertex_attr
@@ -358,7 +355,7 @@ graph.full.citation	make_full_citation_graph
 graph.get.isomorphisms.vf2	isomorphisms
 graph.get.subisomorphisms.vf2	subgraph_isomorphisms
 graph.graphdb	graph_from_graphdb
-graph.incidence	graph_from_incidence_matrix
+graph.incidence	graph_from_biadjacency_matrix
 graph.intersection	intersection.igraph
 graph.isoclass	isomorphism_class
 graph.isoclass.subgraph	isomorphism_class
@@ -399,6 +396,7 @@ graph_attr_names	graph_attr_names
 graph_from_adjacency_matrix	graph_from_adjacency_matrix
 graph_from_adj_list	graph_from_adj_list
 graph_from_atlas	graph_from_atlas
+graph_from_biadjacency_matrix	graph_from_biadjacency_matrix
 graph_from_data_frame	graph_from_data_frame
 graph_from_edgelist	graph_from_edgelist
 graph_from_graphdb	graph_from_graphdb
@@ -449,7 +447,6 @@ igraph-minus	igraph-minus
 igraph-vs-attributes	igraph-vs-attributes
 igraph-vs-indexing	igraph-vs-indexing
 igraph-vs-indexing2	igraph-vs-indexing2
-igraph.arpack.default	arpack
 igraph.console	console
 igraph.drl.coarsen	layout_with_drl
 igraph.drl.coarsest	layout_with_drl
@@ -509,12 +506,14 @@ is.weighted	is_weighted
 isomorphic	isomorphic
 isomorphisms	isomorphisms
 isomorphism_class	isomorphism_class
+is_acyclic	is_acyclic
 is_bipartite	make_bipartite_graph
 is_chordal	is_chordal
 is_connected	components
 is_dag	is_dag
 is_degseq	is_degseq
 is_directed	is_directed
+is_forest	is_forest
 is_graphical	is_graphical
 is_hierarchical	communities
 is_igraph	is_igraph
@@ -542,7 +541,7 @@ largest.independent.vertex.sets	ivs
 largest_cliques	cliques
 largest_component	components
 largest_ivs	ivs
-largest_weighted_cliques	weighted_cliques
+largest_weighted_cliques	cliques
 lastcit.game	sample_last_cit
 last_cit	sample_last_cit
 lattice	make_lattice
@@ -616,6 +615,7 @@ make_graph	make_graph
 make_kautz_graph	make_kautz_graph
 make_lattice	make_lattice
 make_line_graph	make_line_graph
+make_neighborhood_graph	ego
 make_ring	make_ring
 make_star	make_star
 make_tree	make_tree
@@ -633,7 +633,6 @@ max_cardinality	max_cardinality
 max_cliques	cliques
 max_cohesion	cohesive_blocks
 max_flow	max_flow
-max_weighted_cliques	weighted_cliques
 mean_distance	distances
 median.sir	sir
 membership	communities
@@ -655,6 +654,7 @@ mst	mst
 multilevel.community	cluster_louvain
 neighborhood	ego
 neighborhood.size	ego
+neighborhood_size	ego
 neighbors	neighbors
 nicely	layout_nicely
 no.clusters	components
@@ -763,14 +763,7 @@ sample_tree	sample_tree
 sbm	sample_sbm
 sbm.game	sample_sbm
 scan_stat	scan_stat
-scg	scg
 scg-method	scg-method
-scgGrouping	scg_group
-scgNormEps	scg_eps
-scgSemiProjectors	scg_semi_proj
-scg_eps	scg_eps
-scg_group	scg_group
-scg_semi_proj	scg_semi_proj
 seeded.graph.match	match_vertices
 sequential_pal	sequential_pal
 set.edge.attribute	set_edge_attr
@@ -884,7 +877,7 @@ vertices	vertex
 walktrap.community	cluster_walktrap
 watts.strogatz.game	sample_smallworld
 weighted_cliques	weighted_cliques
-weighted_clique_num	weighted_cliques
+weighted_clique_num	cliques
 which_loop	which_multiple
 which_multiple	which_multiple
 which_mutual	which_mutual

@@ -1,9 +1,7 @@
 ## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  # Since after is not available prior to 3.5
-  eval = getRversion() >= "3.5"
+  comment = "#>"
 )
 
 ## -----------------------------------------------------------------------------

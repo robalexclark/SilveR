@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE-------------------------------------------
+## ----echo = FALSE, message = FALSE--------------------------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4, tibble.print_max = 4)
 
@@ -16,7 +16,7 @@ mtcars %>% arrange(desc(cyl), desc(disp))
 ## -----------------------------------------------------------------------------
 mtcars[order(mtcars$cyl, mtcars$disp), , drop = FALSE]
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 mtcars[order(mtcars$cyl, mtcars$disp, decreasing = TRUE), , drop = FALSE]
 mtcars[order(-mtcars$cyl, -mtcars$disp), , drop = FALSE]
 

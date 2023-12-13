@@ -1,4 +1,4 @@
-## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+## ----echo = FALSE, message = FALSE----------------------------------------------------------------
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -6,6 +6,7 @@ knitr::opts_chunk$set(
      tidy = FALSE,
     cache = FALSE,
  collapse = TRUE)
+.old.th = setDTthreads(1)
 
 ## ----echo = FALSE---------------------------------------------------------------------------------
 options(width = 100L)
@@ -31,12 +32,12 @@ indices(flights)
 setindex(flights, origin, dest)
 indices(flights)
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  ## not run
 #  setkey(flights, origin)
 #  flights["JFK"] # or flights[.("JFK")]
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  ## not run
 #  setkey(flights, dest)
 #  flights["LAX"]
@@ -109,4 +110,7 @@ indices(dt)
 ## successive subsets
 (t2 <- system.time(dt[x == 989L]))
 system.time(dt[x %in% 1989:2012])
+
+## ----echo=FALSE-----------------------------------------------------------------------------------
+setDTthreads(.old.th)
 

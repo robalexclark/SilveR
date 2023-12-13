@@ -5,7 +5,7 @@ knitr::opts_chunk$set(
 )
 library(stringr)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # The regular call:
 #  str_extract(fruit, "nana")
 #  # Is shorthand for

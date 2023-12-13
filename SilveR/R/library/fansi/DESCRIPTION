@@ -2,7 +2,7 @@ Package: fansi
 Title: ANSI Control Sequence Aware String Functions
 Description: Counterparts to R string manipulation functions that account for
    the effects of ANSI text formatting control sequences.
-Version: 1.0.5
+Version: 1.0.6
 Authors@R: c(
     person("Brodie", "Gaslam", email="brodie.gaslam@yahoo.com",
     role=c("aut", "cre")),
@@ -24,12 +24,12 @@ Collate: 'constants.R' 'fansi-package.R' 'internal.R' 'load.R' 'misc.R'
         'nchar.R' 'strwrap.R' 'strtrim.R' 'strsplit.R' 'substr2.R'
         'trimws.R' 'tohtml.R' 'unhandled.R' 'normalize.R' 'sgr.R'
 NeedsCompilation: yes
-Packaged: 2023-10-07 16:15:12 UTC; bg
+Packaged: 2023-12-06 00:59:41 UTC; bg
 Author: Brodie Gaslam [aut, cre],
   Elliott Sales De Andrade [ctb],
   R Core Team [cph] (UTF8 byte length calcs from src/util.c)
 Maintainer: Brodie Gaslam <brodie.gaslam@yahoo.com>
 Repository: CRAN
-Date/Publication: 2023-10-08 19:30:05 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 00:42:50 UTC; windows
+Date/Publication: 2023-12-08 03:30:02 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 01:55:35 UTC; windows
 Archs: x64

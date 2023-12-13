@@ -1,6 +1,6 @@
 Package: stringi
-Version: 1.7.12
-Date: 2023-01-09
+Version: 1.8.3
+Date: 2023-12-10
 Title: Fast and Portable Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
@@ -15,9 +15,9 @@ Description: A collection of character string/text/natural language
 URL: https://stringi.gagolewski.com/,
         https://github.com/gagolews/stringi, https://icu.unicode.org/
 BugReports: https://github.com/gagolews/stringi/issues
-SystemRequirements: C++11, ICU4C (>= 55, optional)
+SystemRequirements: ICU4C (>= 61, optional)
 Type: Package
-Depends: R (>= 3.1)
+Depends: R (>= 3.4)
 Imports: tools, utils, stats
 Biarch: TRUE
 License: file LICENSE
@@ -25,12 +25,12 @@ Author: Marek Gagolewski [aut, cre, cph] (<https://orcid.org/0000-0003-0637-6028
     Bartek Tartanus [ctb], and others (stringi source code);
     Unicode, Inc. and others (ICU4C source code, Unicode Character Database)
 Maintainer: Marek Gagolewski <marek@gagolewski.com>
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2023-01-09 07:28:38 UTC; gagolews
+Packaged: 2023-12-10 07:26:05 UTC; gagolews
 License_is_FOSS: yes
 Repository: CRAN
-Date/Publication: 2023-01-11 10:10:02 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-20 00:51:24 UTC; windows
+Date/Publication: 2023-12-11 22:50:03 UTC
+Built: R 4.3.2; x86_64-w64-mingw32; 2023-12-12 00:51:28 UTC; windows
 Archs: x64

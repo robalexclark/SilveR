@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -11,7 +11,7 @@ options(
   "lifecycle_verbosity" = "warning"
 )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  #' `r lifecycle::badge("experimental")`
 #  #' `r lifecycle::badge("deprecated")`
 #  #' `r lifecycle::badge("superseded")`
@@ -59,7 +59,7 @@ add_two <- function(x, y) {
 
 add_two(1, 2)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  test_that("add_two is deprecated", {
 #    expect_snapshot({
 #      x <- add_two(1, 1)
@@ -67,13 +67,13 @@ add_two(1, 2)
 #    })
 #  })
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  test_that("add_two returns the sum of its inputs", {
 #    withr::local_options(lifecycle_verbosity = "quiet")
 #    expect_equal(add_two(1, 1), 2)
 #  })
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  test_that("add_two is deprecated", {
 #    expect_snapshot(add_two(1, 1))
 #  })
@@ -180,8 +180,10 @@ add_two <- function(x, y, na_rm = TRUE, na.rm = deprecated()) {
     na_rm <- na.rm
   }
   
-  add_two(x, y, na.rm = na_rm)
+  sum(x, y, na.rm = na_rm)
 }
+
+add_two(1, NA, na.rm = TRUE)
 
 ## -----------------------------------------------------------------------------
 add_two <- function(x, y) {

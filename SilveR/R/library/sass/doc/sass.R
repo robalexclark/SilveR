@@ -9,15 +9,15 @@ knitr::opts_chunk$set(
   comment = ""
 )
 
-## ---- eval=FALSE, ref.label='bs_sass'-----------------------------------------
+## ----eval=FALSE, ref.label='bs_sass'------------------------------------------
 #  NA
 
-## ---- echo = FALSE, out.width='50%'-------------------------------------------
+## ----echo = FALSE, out.width='50%'--------------------------------------------
 knitr::include_graphics('my-style.png')
 
-## ---- echo = FALSE, out.width='30%'-------------------------------------------
+## ----echo = FALSE, out.width='30%'--------------------------------------------
 knitr::include_graphics('hello-pacifico.png')
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 knitr::include_graphics("https://i.imgur.com/5cUEifg.gif")
 

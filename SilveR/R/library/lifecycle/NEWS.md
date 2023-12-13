@@ -1,3 +1,12 @@
+# lifecycle 1.0.4
+
+* Repeated calls to `deprecate_soft()` and `deprecate_warn()` are faster thanks
+  to some internal refactoring (#177).
+
+* Switch from `expr_deparse()` to `deparse()`. This improves performance
+  considerably and the cost of making some unusual function calls mildly 
+  less appealing (#167).
+
 # lifecycle 1.0.3
 
 * The `with` line is now an info bullet. The `details` lines are info

@@ -1,14 +1,14 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 options(tibble.print_min = 4L, tibble.print_max = 4L)
 set.seed(1014)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  df %>%
 #    group_by(g1, g2) %>%
 #    summarise(a = mean(a), b = mean(b), c = mean(c), d = mean(d))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  df %>%
 #    group_by(g1, g2) %>%
 #    summarise(across(a:d, mean))
@@ -115,7 +115,7 @@ starwars %>%
 starwars %>% 
   filter(if_all(everything(), ~ !is.na(.x)))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  df %>%
 #    group_by(g1, g2) %>%
 #    summarise(
@@ -124,7 +124,7 @@ starwars %>%
 #      n = n(),
 #    )
 
-## ---- results = FALSE---------------------------------------------------------
+## ----results = FALSE----------------------------------------------------------
 df %>% mutate_if(is.numeric, ~mean(.x, na.rm = TRUE))
 # ->
 df %>% mutate(across(where(is.numeric), ~mean(.x, na.rm = TRUE)))

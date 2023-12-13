@@ -14,19 +14,22 @@ bs_global_theme         Global theming
 bs_remove               Remove or retrieve Sass code from a theme
 bs_theme                Create a Bootstrap theme
 bs_theme_dependencies   Compile Bootstrap Sass with (optional) theming
-bs_theme_preview        Preview the currently set theme
+bs_theme_preview        Preview a Bootstrap theme
 builtin_themes          Obtain a list of all available built-in 'bslib'
                         themes.
 card                    A Bootstrap card component
 card_body               Card items
 font_face               Helpers for importing web fonts
+input_dark_mode         Dark mode input control
 input_switch            Switch input control
-layout_column_wrap      A grid-like, column-first, layout
-layout_columns          Responsive column-based grid layouts
+layout_column_wrap      Column-first uniform grid layouts
+layout_columns          Responsive 12-column grid layouts
 nav-items               Navigation items
 nav_select              Dynamically update nav containers
 navset                  Navigation containers
-page                    Create a Bootstrap page
+page                    Modern Bootstrap page layouts
+page_fillable           A screen-filling page layout
+page_navbar             Multi-page app with a top navigation bar
 page_sidebar            A sidebar page (i.e., dashboard)
 popover                 Add a popover to a UI element
 run_with_themer         Theme customization UI
