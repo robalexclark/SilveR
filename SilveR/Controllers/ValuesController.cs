@@ -17,7 +17,7 @@ namespace SilveR.Controllers
 
         public ValuesController(ISilveRRepository repository)
         {
-             this.repository = repository;
+            this.repository = repository;
         }
 
         [HttpGet]
@@ -52,6 +52,8 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null)
             {
+                selectedTreatments.Sort();
+
                 List<string> interactions = SingleMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
             }
@@ -66,6 +68,8 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null)
             {
+                selectedTreatments.Sort();
+
                 List<string> selectedEffectsList = SingleMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments);
                 return Json(selectedEffectsList);
             }
@@ -81,6 +85,8 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null)
             {
+                selectedTreatments.Sort();
+
                 List<string> interactions = RepeatedMeasuresParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
             }
@@ -95,6 +101,8 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null && repeatedFactor != null)
             {
+                selectedTreatments.Sort();
+
                 List<string> selectedEffectsList = RepeatedMeasuresParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments, repeatedFactor);
                 return Json(selectedEffectsList);
             }
@@ -110,6 +118,8 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null)
             {
+                selectedTreatments.Sort();
+
                 List<string> interactions = IncompleteFactorialParametricAnalysisModel.DetermineInteractions(selectedTreatments);
                 return Json(interactions);
             }
@@ -124,6 +134,8 @@ namespace SilveR.Controllers
         {
             if (selectedTreatments != null)
             {
+                selectedTreatments.Sort();
+
                 List<string> selectedEffectsList = IncompleteFactorialParametricAnalysisModel.DetermineSelectedEffectsList(selectedTreatments);
                 return Json(selectedEffectsList);
             }
@@ -139,7 +151,7 @@ namespace SilveR.Controllers
         {
             //if (url.StartsWith("http"))
             //{
-                Electron.Shell.OpenExternalAsync(url);
+            Electron.Shell.OpenExternalAsync(url);
             //}
             //else
             //{
