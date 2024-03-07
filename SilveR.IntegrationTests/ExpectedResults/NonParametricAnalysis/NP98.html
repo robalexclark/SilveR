@@ -162,7 +162,7 @@ Individual observations that lie outside the outlier range are included on the p
 
  <h2> References</h2>
 
-<p class='character'>When referring to InVivoStat, please cite 'InVivoStat, version 4.9'.</p>
+<p class='character'>When referring to InVivoStat, please cite 'InVivoStat, version 4.1'.</p>
 
 <p class='character'>Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
 
@@ -170,3 +170,840 @@ Individual observations that lie outside the outlier range are included on the p
 
 <p class='character'>Hollander, M. and Wolfe, D.A. (1973). Nonparametric Statistical Methods. New York: John Wiley & Sons.</p>
 
+ <h4> R references</h4>
+
+<p class='character'>R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.</p>
+
+<p class='character'>Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria.</p>
+
+<p class='character'>Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E, Elberg A, Crowley J (2023). GGally: Extension to ggplot2. R  package version 2.2.0, https://CRAN.R-project.org/package=GGally.</p>
+
+<p class='character'>Neuwirth E (2022). RColorBrewer: ColorBrewer Palettes. R package version 1.1-3, https://CRAN.R-project.org/package=RColorBrewer.</p>
+
+<p class='character'>H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.</p>
+
+<p class='character'>Slowikowski K (2024). ggrepel: Automatically Position Non-Overlapping Text Labels with ggplot2. R package version 0.9.5, https://CRAN.R-project.org/package=ggrepel.</p>
+
+<p class='character'>H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007.</p>
+
+<p class='character'>Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL https://www.jstatsoft.org/v40/i01/.</p>
+
+<p class='character'>Wickham H, Pedersen T, Seidel D (2023). scales: Scale Functions for Visualization. R package version 1.3.0, https://CRAN.R-project.org/package=scales.</p>
+
+<p class='character'>Grothendieck G, Kates L, Petzoldt T (2016). proto: Prototype Object-Based Programming. R package version 1.0.0, https://CRAN.R-project.org/package=proto.</p>
+
+<p class='character'>Hothorn T, Hornik K, van de Wiel MA, Zeileis A (2008). Implementing a class of permutation tests: The coin package. Journal of Statistical Software, *28*(8), 1-23. doi:10.18637/jss.v028.i08 <https: doi.org="" 10.18637="" jss.v028.i08="">.</https:></p>
+
+<p class='character'>Genz A, Bretz F (2009). Computation of Multivariate Normal and t Probabilities, series Lecture Notes in Statistics. Springer-Verlag, Heidelberg. ISBN 978-3-642-01688-2.</p>
+
+ <h2> Analysis dataset</h2>
+
+
+<p align="left">
+<table cellspacing="0" border="1">
+<caption align="bottom" class="captiondataframe"></caption>
+<tr><td>
+	<table border="0" class="dataframe">
+	<tbody> 
+	<tr class="second"> 
+		<th>Observation  </th>
+		<th>Resp19  </th>
+		<th>Treat22  </th>
+		<th>Block12</th> 
+	</tr> 
+<tr> 
+<td class="cellinside"> 1
+</td>
+<td class="cellinside"> 0.400
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 2
+</td>
+<td class="cellinside"> 0.800
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 3
+</td>
+<td class="cellinside"> 0.638
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 3
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 4
+</td>
+<td class="cellinside"> 0.194
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 4
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 5
+</td>
+<td class="cellinside"> 0.104
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 5
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 6
+</td>
+<td class="cellinside"> 0.587
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 6
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 7
+</td>
+<td class="cellinside"> 0.035
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 7
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 8
+</td>
+<td class="cellinside"> 0.959
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 8
+</td></tr>
+ 
+<tr> 
+<td class="cellinside"> 9
+</td>
+<td class="cellinside"> 0.894
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside"> 9
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">10
+</td>
+<td class="cellinside"> 0.429
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">10
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">11
+</td>
+<td class="cellinside"> 0.331
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">11
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">12
+</td>
+<td class="cellinside"> 0.323
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">12
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">13
+</td>
+<td class="cellinside"> 0.967
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">13
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">14
+</td>
+<td class="cellinside"> 1.200
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">14
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">15
+</td>
+<td class="cellinside"> 2.000
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">15
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">16
+</td>
+<td class="cellinside"> 7.411
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">16
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">17
+</td>
+<td class="cellinside"> 2.846
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">17
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">18
+</td>
+<td class="cellinside"> 0.218
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">18
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">19
+</td>
+<td class="cellinside"> 1.873
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">19
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">20
+</td>
+<td class="cellinside"> 2.949
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">20
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">21
+</td>
+<td class="cellinside"> 7.954
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">21
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">22
+</td>
+<td class="cellinside"> 7.626
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">22
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">23
+</td>
+<td class="cellinside"> 2.616
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">23
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">24
+</td>
+<td class="cellinside"> 0.344
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">24
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">25
+</td>
+<td class="cellinside"> 7.253
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">25
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">26
+</td>
+<td class="cellinside"> 5.379
+</td>
+<td class="cellinside">1
+</td>
+<td class="cellinside">26
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">27
+</td>
+<td class="cellinside"> 4.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">28
+</td>
+<td class="cellinside"> 8.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">29
+</td>
+<td class="cellinside"> 6.380
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 3
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">30
+</td>
+<td class="cellinside"> 1.939
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 4
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">31
+</td>
+<td class="cellinside"> 1.037
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 5
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">32
+</td>
+<td class="cellinside"> 5.868
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 6
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">33
+</td>
+<td class="cellinside"> 0.353
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 7
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">34
+</td>
+<td class="cellinside"> 9.586
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 8
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">35
+</td>
+<td class="cellinside"> 8.937
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside"> 9
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">36
+</td>
+<td class="cellinside"> 4.295
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">10
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">37
+</td>
+<td class="cellinside"> 3.305
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">11
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">38
+</td>
+<td class="cellinside"> 3.230
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">12
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">39
+</td>
+<td class="cellinside"> 9.673
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">13
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">40
+</td>
+<td class="cellinside">12.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">14
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">41
+</td>
+<td class="cellinside">20.000
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">15
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">42
+</td>
+<td class="cellinside">74.106
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">16
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">43
+</td>
+<td class="cellinside">28.461
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">17
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">44
+</td>
+<td class="cellinside"> 2.184
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">18
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">45
+</td>
+<td class="cellinside">18.729
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">19
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">46
+</td>
+<td class="cellinside">29.495
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">20
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">47
+</td>
+<td class="cellinside">79.541
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">21
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">48
+</td>
+<td class="cellinside">76.255
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">22
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">49
+</td>
+<td class="cellinside">26.158
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">23
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">50
+</td>
+<td class="cellinside"> 3.438
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">24
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">51
+</td>
+<td class="cellinside">72.534
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">25
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">52
+</td>
+<td class="cellinside">53.786
+</td>
+<td class="cellinside">2
+</td>
+<td class="cellinside">26
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">53
+</td>
+<td class="cellinside"> 1.873
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 1
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">54
+</td>
+<td class="cellinside"> 2.949
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 2
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">55
+</td>
+<td class="cellinside"> 7.954
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 3
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">56
+</td>
+<td class="cellinside"> 7.626
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 4
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">57
+</td>
+<td class="cellinside"> 2.616
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 5
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">58
+</td>
+<td class="cellinside"> 0.344
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 6
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">59
+</td>
+<td class="cellinside"> 7.253
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 7
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">60
+</td>
+<td class="cellinside"> 5.379
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 8
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">61
+</td>
+<td class="cellinside"> 4.000
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside"> 9
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">62
+</td>
+<td class="cellinside"> 8.000
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">10
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">63
+</td>
+<td class="cellinside"> 6.380
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">11
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">64
+</td>
+<td class="cellinside"> 1.939
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">12
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">65
+</td>
+<td class="cellinside"> 1.037
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">13
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">66
+</td>
+<td class="cellinside"> 5.868
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">14
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">67
+</td>
+<td class="cellinside"> 0.353
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">15
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">68
+</td>
+<td class="cellinside"> 9.586
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">16
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">69
+</td>
+<td class="cellinside"> 8.937
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">17
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">70
+</td>
+<td class="cellinside"> 4.295
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">18
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">71
+</td>
+<td class="cellinside"> 3.305
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">19
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">72
+</td>
+<td class="cellinside"> 3.230
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">20
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">73
+</td>
+<td class="cellinside"> 9.673
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">21
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">74
+</td>
+<td class="cellinside">12.000
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">22
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">75
+</td>
+<td class="cellinside">20.000
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">23
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">76
+</td>
+<td class="cellinside">74.106
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">24
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">77
+</td>
+<td class="cellinside">42.000
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">25
+</td></tr>
+ 
+<tr> 
+<td class="cellinside">78
+</td>
+<td class="cellinside">56.000
+</td>
+<td class="cellinside">3
+</td>
+<td class="cellinside">26
+</td></tr>
+ 
+	</tbody>
+</table>
+ </td></tr></table>
+ <br>
+
+ <h2> Analysis options</h2>
+
+<p class='character'>Response variable: Resp19</p>
+
+<p class='character'>Treatment factor: Treat22</p>
+
+<p class='character'>Other design (block) factor: Block12</p>
+
+<p class='character'>Analysis type: All treatment comparisons</p>
+
+<p class='character'>Significance level: 0.05</p>
