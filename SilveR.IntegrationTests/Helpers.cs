@@ -199,25 +199,25 @@ namespace SilveR.IntegrationTests
             }
 
             //always remove references as these change all the time
-            if (html.Contains("R references"))
-            {
-                string[] textLines = html.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-                StringBuilder linesToReturn = new StringBuilder();
+            //if (html.Contains("R references"))
+            //{
+            //    string[] textLines = html.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            //    StringBuilder linesToReturn = new StringBuilder();
 
-                foreach (string line in textLines)
-                {
-                    if (line.Contains("R references"))
-                        break;
+            //    foreach (string line in textLines)
+            //    {
+            //        if (line.Contains("R references"))
+            //            break;
 
-                    linesToReturn.AppendLine(line);
-                }
+            //        linesToReturn.AppendLine(line);
+            //    }
 
-                return linesToReturn.ToString();
-            }
-            else
-            {
+            //    return linesToReturn.ToString();
+            //}
+            //else
+            //{
                 return html;
-            }
+            //}
         }
     }
 

@@ -387,7 +387,8 @@ namespace SilveR.StatsModels
             List<string> effects = new List<string>();
             effects.AddRange(selectedTreatments);
 
-            List<string> interactions = DetermineInteractions(selectedTreatments);
+
+            List<string> interactions = DetermineInteractions(effects);
 
             effects.AddRange(interactions);
 
