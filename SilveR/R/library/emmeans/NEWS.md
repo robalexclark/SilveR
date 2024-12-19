@@ -2,7 +2,17 @@
 title: "NEWS for the emmeans package"
 ---
 
-## emmeans 1.10.4.90xxxx
+## emmeans 1.10.6
+  * Added new `add_submodels()` function that allows for comparison od estimates
+    from different submodels (when supported)
+  * Additional notes for `eff_size()`. Also, a questionable example was deleted.
+    It is so easy to misuse this function, and I don't even buy into the idea
+    of standardized effect sizes except in the simplest of cases. So I am
+    considering deprecating `eff_size()` and letting some other package
+    be to blame for unsuitable or misleading results.
+    
+ 
+## emmeans 1.10.5
   * Fix for long-standing `weights` bug in `lme()` (#356)
   * Fix for inconsistent contrasts in case of missing levels (#508, #509)
   * Fix for using nuisance variables with proportional weights (#510)

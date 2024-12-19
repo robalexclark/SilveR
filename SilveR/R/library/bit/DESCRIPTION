@@ -1,7 +1,7 @@
 Package: bit
 Type: Package
 Title: Classes and Methods for Fast Memory-Efficient Boolean Selections
-Version: 4.5.0
+Version: 4.5.0.1
 Date: 2024-09-17
 Authors@R: c(person(given = "Jens",
                       family = "Oehlschlägel",
@@ -28,8 +28,8 @@ URL: https://github.com/truecluster/bit
 VignetteBuilder: knitr, rmarkdown
 RoxygenNote: 7.3.2
 NeedsCompilation: yes
-Packaged: 2024-09-18 22:15:00 UTC; jo
+Packaged: 2024-11-27 08:15:13 UTC; ripley
 Repository: CRAN
-Date/Publication: 2024-09-20 15:20:09 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-24 01:24:21 UTC; windows
+Date/Publication: 2024-12-03 13:45:44 UTC
+Built: R 4.3.3; x86_64-w64-mingw32; 2024-12-16 01:30:16 UTC; windows
 Archs: x64

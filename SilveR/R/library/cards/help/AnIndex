@@ -59,6 +59,7 @@ ard_hierarchical_count	ard_hierarchical
 ard_hierarchical_count.data.frame	ard_hierarchical
 ard_missing	ard_missing
 ard_missing.data.frame	ard_missing
+ard_pairwise	ard_pairwise
 ard_stack	ard_stack
 ard_stack_hierarchical	ard_stack_hierarchical
 ard_stack_hierarchical_count	ard_stack_hierarchical
@@ -66,6 +67,7 @@ ard_strata	ard_strata
 ard_total_n	ard_total_n
 ard_total_n.data.frame	ard_total_n
 as_card	as_card
+as_cards_fn	as_cards_fn
 as_nested_list	as_nested_list
 bind_ard	bind_ard
 captured_condition_as_error	eval_capture_conditions
@@ -74,7 +76,6 @@ cards	cards-package
 cards_select	process_selectors
 check_ard_structure	check_ard_structure
 check_list_elements	process_selectors
-check_pkg_installed	check_pkg_installed
 compute_formula_selector	process_selectors
 contains	reexports
 continuous_summary_fns	summary_functions
@@ -85,9 +86,8 @@ everything	reexports
 fill_formula_selectors	process_selectors
 fill_formula_selectors.data.frame	process_selectors
 get_ard_statistics	get_ard_statistics
-get_min_version_required	check_pkg_installed
-get_pkg_dependencies	check_pkg_installed
-is_pkg_installed	check_pkg_installed
+get_cards_fn_stat_names	as_cards_fn
+is_cards_fn	as_cards_fn
 label_cards	label_cards
 last_col	reexports
 matches	reexports

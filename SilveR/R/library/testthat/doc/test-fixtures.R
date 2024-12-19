@@ -44,8 +44,8 @@ test_that("can print one digit of pi", {
 pi
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  op <- options(digits = 1)
-#  on.exit(options(op), add = TRUE, after = FALSE)
+# op <- options(digits = 1)
+# on.exit(options(op), add = TRUE, after = FALSE)
 
 ## -----------------------------------------------------------------------------
 neat <- function(x, sig_digits) {
@@ -54,14 +54,14 @@ neat <- function(x, sig_digits) {
   print(x)
 }
 
-## -----------------------------------------------------------------------------
-withr::defer(print("hi"))
-#> Setting deferred event(s) on global environment.
-#>   * Execute (and clear) with `deferred_run()`.
-#>   * Clear (without executing) with `deferred_clear()`.
-
-withr::deferred_run()
-#> [1] "hi"
+## ----eval = FALSE-------------------------------------------------------------
+# withr::defer(print("hi"))
+# #> Setting deferred event(s) on global environment.
+# #>   * Execute (and clear) with `deferred_run()`.
+# #>   * Clear (without executing) with `deferred_clear()`.
+# 
+# withr::deferred_run()
+# #> [1] "hi"
 
 ## -----------------------------------------------------------------------------
 local_digits <- function(sig_digits) {
@@ -126,38 +126,38 @@ test_that("message2() output depends on verbose option", {
 })
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  local_create_package <- function(dir = file_temp(), env = parent.frame()) {
-#    old_project <- proj_get_()
-#  
-#    # create new folder and package
-#    create_package(dir, open = FALSE) # A
-#    withr::defer(fs::dir_delete(dir), envir = env) # -A
-#  
-#    # change working directory
-#    setwd(dir) # B
-#    withr::defer(setwd(old_project), envir = env) # -B
-#  
-#    # switch to new usethis project
-#    proj_set(dir) # C
-#    withr::defer(proj_set(old_project, force = TRUE), envir = env) # -C
-#  
-#    dir
-#  }
+# local_create_package <- function(dir = file_temp(), env = parent.frame()) {
+#   old_project <- proj_get_()
+# 
+#   # create new folder and package
+#   create_package(dir, open = FALSE) # A
+#   withr::defer(fs::dir_delete(dir), envir = env) # -A
+# 
+#   # change working directory
+#   setwd(dir) # B
+#   withr::defer(setwd(old_project), envir = env) # -B
+# 
+#   # switch to new usethis project
+#   proj_set(dir) # C
+#   withr::defer(proj_set(old_project, force = TRUE), envir = env) # -C
+# 
+#   dir
+# }
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  test_that("use_roxygen_md() adds DESCRIPTION fields", {
-#    pkg <- local_create_package()
-#    use_roxygen_md()
-#  
-#    expect_true(uses_roxygen_md())
-#    expect_equal(desc::desc_get("Roxygen", pkg)[[1]], "list(markdown = TRUE)"))
-#    expect_true(desc::desc_has_fields("RoxygenNote", pkg))
-#  })
+# test_that("use_roxygen_md() adds DESCRIPTION fields", {
+#   pkg <- local_create_package()
+#   use_roxygen_md()
+# 
+#   expect_true(uses_roxygen_md())
+#   expect_equal(desc::desc_get("Roxygen", pkg)[[1]], "list(markdown = TRUE)"))
+#   expect_true(desc::desc_has_fields("RoxygenNote", pkg))
+# })
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # Run before any test
-#  write.csv("mtcars.csv", mtcars)
-#  
-#  # Run after all tests
-#  withr::defer(unlink("mtcars.csv"), teardown_env())
+# # Run before any test
+# write.csv("mtcars.csv", mtcars)
+# 
+# # Run after all tests
+# withr::defer(unlink("mtcars.csv"), teardown_env())
 

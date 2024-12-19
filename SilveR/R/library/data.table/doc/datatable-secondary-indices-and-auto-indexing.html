@@ -142,7 +142,7 @@ section.footnotes::before {
 <div class="frontmatter">
 <div class="title"><h1>Secondary indices and auto indexing</h1></div>
 <div class="author"><h2></h2></div>
-<div class="date"><h3>2024-10-09</h3></div>
+<div class="date"><h3>2024-12-04</h3></div>
 </div>
 <div class="body">
 <p>This vignette assumes that the reader is familiar with data.table’s <code>[i, j, by]</code> syntax, and how to perform fast key based subsets. If you’re not familiar with these concepts, please read the <em>“Introduction to data.table”</em>,  <em>“Reference semantics”</em> and <em>“Keys and fast binary search based subset”</em> vignettes first.</p>
@@ -463,7 +463,7 @@ names(attributes(dt))
 ## run thefirst time
 (t1 &lt;- system.time(ans &lt;- dt[x == 989L]))
 #    user  system elapsed 
-#   0.262   0.008   0.270
+#   0.254   0.007   0.262
 head(ans)
 #        x         y
 #    &lt;int&gt;     &lt;num&gt;
@@ -489,11 +489,11 @@ indices(dt)
 #   0.013   0.001   0.014
 system.time(dt[x %in% 1989:2012])
 #    user  system elapsed 
-#   0.013   0.002   0.014
+#   0.013   0.001   0.015
 </code></pre>
 <ul>
 <li>
-<p>Running the first time took 0.270 seconds where as the second time took 0.014 seconds.</p>
+<p>Running the first time took 0.262 seconds where as the second time took 0.014 seconds.</p>
 </li>
 <li>
 <p>Auto indexing can be disabled by setting the global argument <code>options(datatable.auto.index = FALSE)</code>.</p>

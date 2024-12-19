@@ -32,9 +32,11 @@ expect_error            Does code throw an error, warning, message, or
 expect_invisible        Does code return a visible or invisible object?
 expect_length           Does code return a vector with the specified
                         length?
+expect_match            Does a string match a regular expression?
 expect_named            Does code return a vector with (given) names?
 expect_no_error         Does code run without error, warning, message,
                         or other condition?
+expect_null             Does code return 'NULL'?
 expect_output           Does code print output to the console?
 expect_setequal         Does code return a vector containing the
                         expected values?
@@ -42,14 +44,17 @@ expect_silent           Does code execute silently?
 expect_snapshot         Snapshot testing
 expect_snapshot_file    Snapshot testing for whole files
 expect_snapshot_value   Snapshot testing for values
+expect_success          Tools for testing expectations
 expect_vector           Does code return a vector with the expected
                         size and/or prototype?
+expectation             Construct an expectation object
 fail                    Default expectations that always succeed or
                         fail.
 inheritance-expectations
                         Does code return an object inheriting from the
                         expected base type, S3 class, or S4 class?
 is_testing              Determine testing status
+local_edition           Temporarily change the active testthat edition
 local_mocked_bindings   Mocking tools
 local_test_context      Locally set options for maximal test
                         reproducibility
@@ -58,6 +63,7 @@ set_state_inspector     State inspected
 skip                    Skip a test
 snapshot_accept         Snapshot management
 teardown_env            Run code after all test files
+test_dir                Run all tests in a directory
 test_file               Run tests in a single file
 test_package            Run all tests in a package
 test_path               Locate a file in the testing directory

@@ -51,6 +51,7 @@ snapper$end_file()
 snapper$start_file("snapshotting.Rmd", "test")
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 bullets <- function(text, id = NULL) {
   paste0(
     "<ul", if (!is.null(id)) paste0(" id=\"", id, "\""), ">\n", 
@@ -61,6 +62,7 @@ bullets <- function(text, id = NULL) {
 test_that("bullets", {
   expect_snapshot(cat(bullets("a")))
   expect_snapshot(cat(bullets("a", "b")))
+})
 })
 
 ## -----------------------------------------------------------------------------
@@ -76,8 +78,10 @@ test_that("f() makes lots of noise", {
 })
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 test_that("you can't add a number and a letter", {
   expect_snapshot(1 + "a")
+})
 })
 
 ## -----------------------------------------------------------------------------

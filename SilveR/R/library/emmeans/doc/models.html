@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.10.5" />
+<meta name="author" content="emmeans package, Version 1.10.6" />
 
 
 <title>Models supported by emmeans</title>
@@ -57,7 +57,7 @@ ul.task-list{list-style: none;}
 
 
 <h1 class="title toc-ignore">Models supported by emmeans</h1>
-<h4 class="author">emmeans package, Version 1.10.5</h4>
+<h4 class="author">emmeans package, Version 1.10.6</h4>
 
 
 
@@ -312,266 +312,273 @@ matrix</td>
 <td align="left"><code>lin.pred = c(FALSE~, TRUE)</code></td>
 </tr>
 <tr class="even">
+<td align="left">lavaan</td>
+<td align="left">lavaan</td>
+<td align="center"><a href="#P">P</a></td>
+<td align="left">Supported by the <strong>semTools</strong> package (see
+<code>? lavaan2emmeans</code>)</td>
+</tr>
+<tr class="odd">
 <td align="left">lm</td>
 <td align="left">stats</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left">Several other classes inherit from this and may be
 supported</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">lme</td>
 <td align="left">nlme</td>
 <td align="center"><a href="#K">K</a></td>
 <td align="left"><code>sigmaAdjust = c(TRUE, FALSE),</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>mode = c(&quot;auto&quot;, containment&quot;, &quot;satterthwaite&quot;, &quot;asymptotic&quot;),</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>extra.iter = 0</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">lmerMod</td>
 <td align="left">lme4</td>
 <td align="center"><a href="#L">L</a></td>
 <td align="left"><code>lmer.df = c(&quot;kenward-roger&quot;, &quot;satterthwaite&quot;, &quot;asymptotic&quot;)</code>,</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>pbkrtest.limit = 3000</code>,
 <code>disable.pbkrtest = FALSE</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>emm_options(lmer.df =, pbkrtest.limit =, disable.pbkrtest =)</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">logistf</td>
 <td align="left">glmmTMB</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>logistf</strong> package</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">lqm,lqmm</td>
 <td align="left">lqmm</td>
 <td align="center"><a href="#Q">Q</a></td>
 <td align="left"><code>tau = &quot;0.5&quot;</code> (must match an entry in
 <code>object$tau</code>)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Optional: <code>method</code>, <code>R</code>,
 <code>seed</code>, <code>startQR</code> (must be fully spelled-out)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">manova</td>
 <td align="left">stats</td>
 <td align="center"><a href="#M">M</a></td>
 <td align="left"><code>mult.name</code>, <code>mult.levs</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">maov</td>
 <td align="left">stats</td>
 <td align="center"><a href="#M">M</a></td>
 <td align="left"><code>mult.name</code>, <code>mult.levs</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mblogit</td>
 <td align="left">mclogit</td>
 <td align="center"><a href="#N">N</a></td>
 <td align="left"><code>mode = c(&quot;prob&quot;~, &quot;latent&quot;)</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Always include response in specs for
 <code>emmeans()</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mcmc</td>
 <td align="left">mcmc</td>
 <td align="center"><a href="#S">S</a></td>
 <td align="left">May require <code>formula</code>,
 <code>data</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MCMCglmm</td>
 <td align="left">MCMCglmm</td>
 <td align="center"><a href="#S">S</a></td>
 <td align="left">(see also <a href="#M#">M</a>) <code>mult.name</code>,
 <code>mult.levs</code>, <code>trait</code>,</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>mode = c(&quot;default&quot;, &quot;multinomial&quot;)</code>;
 <code>data</code> is required</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mira</td>
 <td align="left">mice</td>
 <td align="center"><a href="#I">I</a></td>
 <td align="left">Optional arguments per class of <code>$analyses</code>
 elements</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mixed</td>
 <td align="left">afex</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>afex</strong> package</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mlm</td>
 <td align="left">stats</td>
 <td align="center"><a href="#M">M</a></td>
 <td align="left"><code>mult.name</code>, <code>mult.levs</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mmer</td>
 <td align="left">sommer</td>
 <td align="center"><a href="#G">G</a></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mmrm</td>
 <td align="left">mmrm</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in the <strong>mmrm</strong> package</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">multinom</td>
 <td align="left">nnet</td>
 <td align="center"><a href="#N">N</a></td>
 <td align="left"><code>mode = c(&quot;prob&quot;~, &quot;latent&quot;)</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Always include response in specs for
 <code>emmeans()</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">nauf</td>
 <td align="left">nauf.<em>xxx</em></td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>nauf</strong> package</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">nlme</td>
 <td align="left">nlme</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left">Supports fixed part. Requires
 <code>param = &quot;&lt;name&gt;&quot;</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">polr</td>
 <td align="left">MASS</td>
 <td align="center"><a href="#O">O</a></td>
 <td align="left"><code>mode = c(&quot;latent&quot;~, &quot;linear.predictor&quot;, &quot;cum.prob&quot;~,</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>&quot;exc.prob&quot;~, &quot;prob&quot;~, &quot;mean.class&quot;~)</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rlm</td>
 <td align="left">MASS</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left">inherits <code>lm</code> support</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rms</td>
 <td align="left">rms</td>
 <td align="center"><a href="#O">O</a></td>
 <td align="left"><code>mode = (&quot;middle&quot;~, &quot;latent&quot;~, &quot;linear.predictor&quot;,</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left"><code>&quot;cum.prob&quot;~, &quot;exc.prob&quot;~, &quot;prob&quot;~, &quot;mean.class&quot;~)</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rq,rqs</td>
 <td align="left">quantreg</td>
 <td align="center"><a href="#Q">Q</a></td>
 <td align="left"><code>tau = object$tau</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Creates a pseudo-factor <code>tau</code> with levels
 <code>tau</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
 <td align="left">Optional: <code>se</code>, <code>R</code>,
 <code>bsmethod</code>, etc.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rlmerMod</td>
 <td align="left">robustlmm</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>robustlmm</strong> package</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rsm</td>
 <td align="left">rsm</td>
 <td align="center"><a href="#P">P</a></td>
 <td align="left">Supported in <strong>rsm</strong> package</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">stanreg</td>
 <td align="left">rstanarm</td>
 <td align="center"><a href="#S">S</a></td>
 <td align="left">Args for <code>stanreg_</code><em>xxx</em> similar to
 those for <em>xxx</em></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">survreg</td>
 <td align="left">survival</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">svyglm</td>
 <td align="left">survey</td>
 <td align="center"><a href="#A">A</a></td>
 <td align="left"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">svyolr</td>
 <td align="left">survey</td>
 <td align="center"><a href="#O">O</a></td>
 <td align="left">Piggybacks on <code>polr</code> support</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">zeroinfl</td>
 <td align="left">pscl</td>
 <td align="center"><a href="#C">C</a></td>
 <td align="left"><code>mode = c(&quot;response&quot;, &quot;count&quot;, &quot;zero&quot;, &quot;prob0&quot;)</code>,</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"></td>
 <td align="left"></td>
 <td align="center"></td>
@@ -971,11 +978,12 @@ intercepts are averaged together.</p>
 <div id="P" class="section level2">
 <h2>Group P – Other packages</h2>
 <p>Models in this group have their <strong>emmeans</strong> support
-provided by the package that implements the model-fitting procedure.
-Users should refer to the package documentation for details on
-<strong>emmeans</strong> support. In some cases, a package’s models may
-have been supported here in <strong>emmeans</strong>; if so, the other
-package’s support overrides it.</p>
+provided by another package (usually the one that implements the
+model-fitting procedure). Users should refer to the package
+documentation for details on <strong>emmeans</strong> support. In some
+cases, a package’s models may have been supported here in
+<strong>emmeans</strong>; if so, the other package’s support overrides
+it.</p>
 </div>
 <div id="Q" class="section level2">
 <h2>Group Q – Quantile regression</h2>

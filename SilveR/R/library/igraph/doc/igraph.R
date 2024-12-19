@@ -1,5 +1,5 @@
 ## ----echo = TRUE, eval = FALSE------------------------------------------------
-#  install.packages("igraph")
+# install.packages("igraph")
 
 ## ----echo = FALSE-------------------------------------------------------------
 knitr::opts_chunk$set(fig.width = 6, fig.height = 6)
@@ -35,10 +35,12 @@ g <- add_vertices(g, 3)
 g <- add_edges(g, edges = c(1, 35, 1, 36, 34, 37))
 
 ## ----echo = TRUE, eval=FALSE--------------------------------------------------
-#  g <- g + edges(c(1, 35, 1, 36, 34, 37))
+# g <- g + edges(c(1, 35, 1, 36, 34, 37))
 
 ## ----echo = TRUE, error = TRUE------------------------------------------------
+try({
 g <- add_edges(g, edges = c(38, 37))
+})
 
 ## ----echo = TRUE--------------------------------------------------------------
 g <- g %>%
@@ -117,14 +119,14 @@ E(g)$is_formal <- c(FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE)
 summary(g)
 
 ## ----echo = TRUE, eval=FALSE--------------------------------------------------
-#  g <- make_graph(
-#    ~ Alice - Boris:Himari:Moshe, Himari - Alice:Nang:Moshe:Samira,
-#    Ibrahim - Nang:Moshe, Nang - Samira
-#  ) %>%
-#    set_vertex_attr("age", value = c(25, 31, 18, 23, 47, 22, 50)) %>%
-#    set_vertex_attr("gender", value = c("f", "m", "f", "m", "m", "f", "m")) %>%
-#    set_edge_attr("is_formal", value = c(FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE))
-#  summary(g)
+# g <- make_graph(
+#   ~ Alice - Boris:Himari:Moshe, Himari - Alice:Nang:Moshe:Samira,
+#   Ibrahim - Nang:Moshe, Nang - Samira
+# ) %>%
+#   set_vertex_attr("age", value = c(25, 31, 18, 23, 47, 22, 50)) %>%
+#   set_vertex_attr("gender", value = c("f", "m", "f", "m", "m", "f", "m")) %>%
+#   set_edge_attr("is_formal", value = c(FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE))
+# summary(g)
 
 ## ----echo = TRUE--------------------------------------------------------------
 E(g)$is_formal
@@ -185,8 +187,8 @@ seq <- seq[1, 3] # filtering an existing vertex set
 seq
 
 ## ----echo = TRUE, eval = FALSE------------------------------------------------
-#  seq <- V(graph)[2, 3, 7, "foo", 3.5]
-#  ## Error in simple_vs_index(x, ii, na_ok) : Unknown vertex selected
+# seq <- V(graph)[2, 3, 7, "foo", 3.5]
+# ## Error in simple_vs_index(x, ii, na_ok) : Unknown vertex selected
 
 ## ----echo = TRUE--------------------------------------------------------------
 V(g)[age < 30]$name

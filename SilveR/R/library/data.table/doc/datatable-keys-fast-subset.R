@@ -31,9 +31,9 @@ rownames(DF)
 DF["C", ]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  rownames(DF) = sample(LETTERS[1:5], 10, TRUE)
-#  # Warning: non-unique values when setting 'row.names': 'C', 'D'
-#  # Error in `.rowNamesDF<-`(x, value = value): duplicate 'row.names' are not allowed
+# rownames(DF) = sample(LETTERS[1:5], 10, TRUE)
+# # Warning: non-unique values when setting 'row.names': 'C', 'D'
+# # Error in `.rowNamesDF<-`(x, value = value): duplicate 'row.names' are not allowed
 
 ## -------------------------------------------------------------------------------------------------
 DT = as.data.table(DF)
@@ -56,10 +56,10 @@ flights[.("JFK")]
 # flights[list("JFK")]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  flights["JFK"]              ## same as flights[.("JFK")]
+# flights["JFK"]              ## same as flights[.("JFK")]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  flights[c("JFK", "LGA")]    ## same as flights[.(c("JFK", "LGA"))]
+# flights[c("JFK", "LGA")]    ## same as flights[.(c("JFK", "LGA"))]
 
 ## -------------------------------------------------------------------------------------------------
 key(flights)
@@ -89,7 +89,7 @@ key(flights)
 flights[.("LGA", "TPA"), .(arr_delay)]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  flights[.("LGA", "TPA"), "arr_delay", with = FALSE]
+# flights[.("LGA", "TPA"), "arr_delay", with = FALSE]
 
 ## -------------------------------------------------------------------------------------------------
 flights[.("LGA", "TPA"), .(arr_delay)][order(-arr_delay)]
@@ -129,15 +129,15 @@ flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last"]
 flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last", nomatch = NULL]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  # key by origin,dest columns
-#  flights[.("JFK", "MIA")]
+# # key by origin,dest columns
+# flights[.("JFK", "MIA")]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  flights[origin == "JFK" & dest == "MIA"]
+# flights[origin == "JFK" & dest == "MIA"]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  setkey(flights, NULL)
-#  flights[origin == "JFK" & dest == "MIA"]
+# setkey(flights, NULL)
+# flights[origin == "JFK" & dest == "MIA"]
 
 ## -------------------------------------------------------------------------------------------------
 set.seed(2L)

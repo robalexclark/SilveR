@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.10.5" />
+<meta name="author" content="emmeans package, Version 1.10.6" />
 
 
 <title>For developers: Extending emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">For developers: Extending
 <strong>emmeans</strong></h1>
-<h4 class="author">emmeans package, Version 1.10.5</h4>
+<h4 class="author">emmeans package, Version 1.10.6</h4>
 
 
 
@@ -183,7 +183,7 @@ method. Look at the one for <code>lm</code> objects:</p>
 ##     recover_data(fcall, delete.response(terms(object)), object$na.action, 
 ##         frame = frame, pwts = weights(object), ...)
 ## }
-## &lt;bytecode: 0x000001716382bae0&gt;
+## &lt;bytecode: 0x0000029ba3c61b58&gt;
 ## &lt;environment: namespace:emmeans&gt;</code></pre>
 <p>Note that all it does is obtain the <code>call</code> component and
 call the method for class <code>call</code>, with additional arguments
@@ -295,7 +295,7 @@ Following this advice, let’s take a look at it:</p>
 ##     X &lt;- model.matrix(Terms, m, contrasts.arg = object$contrasts)
 ##     drop(X %*% object$coefficients)
 ## }
-## &lt;bytecode: 0x000001716b53d3f8&gt;
+## &lt;bytecode: 0x0000029bae26b420&gt;
 ## &lt;environment: namespace:MASS&gt;</code></pre>
 <div id="eblqs" class="section level6">
 <h6></h6>

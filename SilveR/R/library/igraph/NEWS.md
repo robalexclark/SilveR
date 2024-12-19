@@ -1,5 +1,30 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# igraph 2.1.2
+
+## Bug fixes
+
+- `adjacent_vertices()` and `incident_edges()` are now correct if the `"return.vs.es"` option is `FALSE` (@stibu81, #1605, #1606).
+
+- Fix protection errors reported by rchk (#1592).
+
+- Fix the incorrect handling of the `sample` parameter in `sample_motifs()` and ensure that the default `sample.size` is integer (#1568).
+
+## Documentation
+
+- Clarify what type of graph each community detection function supports.
+
+- Improve `?read_graph` and `?write_graph` documentation.
+
+- Improve `all_simple_paths()` documentation.
+
+- `cluster_optimal()` does support directed graphs.
+
+## Testing
+
+- Test handling of `"return.vs.es"` in several functions (@stibu81, #1610).
+
+
 # igraph 2.1.1
 
 See <https://github.com/igraph/rigraph/blob/9828d7b11be330f994f07ae93a071b356eced903/src/vendor/cigraph/CHANGELOG.md> for a complete changelog, in particular the section "Breaking changes".

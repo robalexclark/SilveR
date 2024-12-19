@@ -158,6 +158,7 @@ prn                     Print and Object with its Name
 prselect                Selectively Print Lines of a Text Vector
 pstamp                  Date/Time/Directory Stamp the Current Plot
 qcrypt                  qcrypt
+qrxcenter               qrxcenter
 r2describe              r2describe
 rMultinom               Generate Multinomial Random Variables with
                         Varying Probabilities

@@ -461,6 +461,7 @@ putHfig	label
 putKey	labcurve
 putKeyEmpty	labcurve
 qcrypt	qcrypt
+qrxcenter	qrxcenter
 Quantile	transace
 Quantile.areg.boot	transace
 Quantile2	spower

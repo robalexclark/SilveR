@@ -1,6 +1,6 @@
 ba01ac7a9482cc481afa2bcfd8126e99 *CITATION
 3e8ebae349953a3b7a665eecce562802 *COPYRIGHTS
-0d1cac35313653eed49107104c2fb946 *DESCRIPTION
+b63a8b3ccdf6873cf86f75feb0f2daff *DESCRIPTION
 4ef77b4fa9cc7fc9c02f69b698e4c0d2 *INDEX
 d6742013533aad2a3dc1773ff8a83c93 *Meta/Rd.rds
 98da29f834f842a6d344d4e888b4e48a *Meta/data.rds
@@ -8,7 +8,7 @@ f4c021eb699b03d5c65ae4ebc6fa3c2d *Meta/features.rds
 49d4c04df3d580c7f556c000cf32ab71 *Meta/hsearch.rds
 62e06d3131f3577ae32332336721987b *Meta/links.rds
 4eeae7b7277943c4bc65531f7d813e43 *Meta/nsInfo.rds
-5fb48b93cb70078db1498b75372d20de *Meta/package.rds
+b92ab7c97c0e84df502307538c789887 *Meta/package.rds
 7d99cc12cd8470272a0d4daadab5383a *Meta/vignette.rds
 4a598cdc5eff74b1862ae5216387817e *NAMESPACE
 8d491fe30fac48bd4bc2dea1e364c6f5 *NEWS.Rd
@@ -65,10 +65,10 @@ e786486fd295208ebdc6a15d3fe56e5b *doc/tiedtimes.Rnw
 6c50ae575bad8a8a2b3bf793de43a915 *help/AnIndex
 b33662d9b34a9667428bf55cc6d1546e *help/aliases.rds
 b6fc42c75c3239383dc632004f6522e1 *help/figures/logo.png
-7e26bbee82fa0f81b3d8ed151b25a95e *help/paths.rds
-37bfa9677eb6fb17429ab1686ce5eaf5 *help/survival.rdb
-5cedeb12d194d85e416df3d0f7ac62e2 *help/survival.rdx
+b6e0d89b29a67e0192c1c8cfc9ffaec0 *help/paths.rds
+b1748fb8e06c911e0db91307fe376fd4 *help/survival.rdb
+4b33f26aa3b621433f31eaef1eec8103 *help/survival.rdx
 0eae299b3c8fa7c93ca39528048b2386 *html/00Index.html
 8b9362669af13540a86a3ac6cf22f99d *html/R.css
-af9b50158e402184713da3c939c99305 *libs/x64/survival.dll
+e26e9a70f9d037d4eb0c5895e1434bbc *libs/x64/survival.dll
 7618dd0123ca023dc0abeae205845661 *libs/x64/symbols.rds

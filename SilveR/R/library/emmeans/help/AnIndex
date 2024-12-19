@@ -17,6 +17,7 @@ emmeans-package	emmeans-package
 .std.link.labels	extending-emmeans
 .zi.support	extending-emmeans
 add_grouping	manip-factors
+add_submodels	manip-factors
 as.data.frame.emmGrid	summary.emmGrid
 as.data.frame.emm_list	emm_list-object
 as.data.frame.summary_eml	emm_list-object

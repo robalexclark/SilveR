@@ -9,12 +9,14 @@ ard_continuous          Continuous ARD Statistics
 ard_dichotomous         Dichotomous ARD Statistics
 ard_hierarchical        Hierarchical ARD Statistics
 ard_missing             Missing ARD Statistics
+ard_pairwise            Pairwise ARD
 ard_stack               Stack ARDs
 ard_stack_hierarchical
                         Stacked Hierarchical ARD Statistics
 ard_strata              Stratified ARD
 ard_total_n             ARD Total N
 as_card                 Data Frame as ARD
+as_cards_fn             As card function
 as_nested_list          ARD as Nested List
 bind_ard                Bind ARDs
 check_ard_structure     Check ARD Structure

@@ -68,8 +68,10 @@ expect_more_than	expect_less_than
 expect_named	expect_named
 expect_no_condition	expect_no_error
 expect_no_error	expect_no_error
+expect_no_failure	expect_success
 expect_no_match	expect_match
 expect_no_message	expect_no_error
+expect_no_success	expect_success
 expect_no_warning	expect_no_error
 expect_null	expect_null
 expect_output	expect_output
@@ -77,10 +79,12 @@ expect_output_file	expect_output_file
 expect_reference	expect_reference
 expect_s3_class	inheritance-expectations
 expect_s4_class	inheritance-expectations
+expect_s7_class	inheritance-expectations
 expect_setequal	expect_setequal
 expect_silent	expect_silent
 expect_snapshot	expect_snapshot
 expect_snapshot_error	expect_snapshot_output
+expect_snapshot_failure	expect_success
 expect_snapshot_file	expect_snapshot_file
 expect_snapshot_output	expect_snapshot_output
 expect_snapshot_value	expect_snapshot_value

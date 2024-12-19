@@ -33,10 +33,10 @@ DT
 class(DT$ID)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  DT[i, j, by]
-#  
-#  ##   R:                 i                 j        by
-#  ## SQL:  where | order by   select | update  group by
+# DT[i, j, by]
+# 
+# ##   R:                 i                 j        by
+# ## SQL:  where | order by   select | update  group by
 
 ## -------------------------------------------------------------------------------------------------
 ans <- flights[origin == "JFK" & month == 6L]
@@ -107,23 +107,23 @@ DF[DF$x > 1, ] # data.frame needs that ',' as well
 DF[with(DF, x > 1), ]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  ## not run
-#  
-#  # returns all columns except arr_delay and dep_delay
-#  ans <- flights[, !c("arr_delay", "dep_delay")]
-#  # or
-#  ans <- flights[, -c("arr_delay", "dep_delay")]
+# ## not run
+# 
+# # returns all columns except arr_delay and dep_delay
+# ans <- flights[, !c("arr_delay", "dep_delay")]
+# # or
+# ans <- flights[, -c("arr_delay", "dep_delay")]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  ## not run
-#  
-#  # returns year,month and day
-#  ans <- flights[, year:day]
-#  # returns day, month and year
-#  ans <- flights[, day:year]
-#  # returns all columns except year, month and day
-#  ans <- flights[, -(year:day)]
-#  ans <- flights[, !(year:day)]
+# ## not run
+# 
+# # returns year,month and day
+# ans <- flights[, year:day]
+# # returns day, month and year
+# ans <- flights[, day:year]
+# # returns all columns except year, month and day
+# ans <- flights[, -(year:day)]
+# ans <- flights[, !(year:day)]
 
 ## -------------------------------------------------------------------------------------------------
 ans <- flights[, .(.N), by = .(origin)]
@@ -171,10 +171,10 @@ ans <- flights[carrier == "AA", .N, by = .(origin, dest)][order(origin, -dest)]
 head(ans, 10)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  DT[ ...
-#     ][ ...
-#       ][ ...
-#         ]
+# DT[ ...
+#    ][ ...
+#      ][ ...
+#        ]
 
 ## -------------------------------------------------------------------------------------------------
 ans <- flights[, .N, .(dep_delay>0, arr_delay>0)]
@@ -212,7 +212,7 @@ DT[, print(c(a,b)), by = ID] # (1)
 DT[, print(list(c(a,b))), by = ID] # (2)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  DT[i, j, by]
+# DT[i, j, by]
 
 ## ----echo=FALSE-----------------------------------------------------------------------------------
 setDTthreads(.old.th)

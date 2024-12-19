@@ -33,14 +33,14 @@ setindex(flights, origin, dest)
 indices(flights)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  ## not run
-#  setkey(flights, origin)
-#  flights["JFK"] # or flights[.("JFK")]
+# ## not run
+# setkey(flights, origin)
+# flights["JFK"] # or flights[.("JFK")]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  ## not run
-#  setkey(flights, dest)
-#  flights["LAX"]
+# ## not run
+# setkey(flights, dest)
+# flights["LAX"]
 
 ## -------------------------------------------------------------------------------------------------
 flights["JFK", on = "origin"]

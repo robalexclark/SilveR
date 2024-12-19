@@ -6,6 +6,41 @@
 
 %% NB: The date (yyyy-mm-dd) is the "Packaged:" date in ../DESCRIPTION
 
+%% NB 2: do not release within 1 year before we have bug fix or new feature.
+
+\section{Changes in version 2.1.8 (2024-12-10, svn r8468)}{
+  \subsection{Bug Fixes}{
+     \itemize{
+       \item C codes underlying \code{agnes()} and \code{daisy()} under
+       \command{UBSAN} and \command{LTO} no longer show pointer expression
+       overflow (of a length 0 vector \code{a} with \code{a--} call).
+     }
+  }
+}
+
+\section{Changes in version 2.1.7 (2024-12-06, svn r8466)}{
+  \subsection{Misc}{
+    \itemize{
+      \item \file{man/pam.Rd} \code{set.seed()} for \emph{data}, hence
+      reproducible example.
+
+      \item \file{src/daisy.c} and \file{src/dysta.c} produced from their
+      Fortran *.f versions by \command{f2c}, my perl script
+      \command{f2c-clean} and manual pretty editing.
+
+      C function \code{dysta()} now returns the \code{jhalt} "flag"; it is
+      no longer callable from \R, nor is \code{dysta3()} which is 'static'
+      now, in \file{src/fanny.c}.
+
+      \bold{Goal}: Use \code{.Call()} instead of \code{.C()} and hence allow long
+      vectors for the length \eqn{n(n-1)/2} distance vectors.
+
+      \item \file{fanny-ex.R} tests: use IGNORE_RDIFF_BEGIN .. and some
+      explicit cheks to become less platform dependent.
+    }
+  }
+}
+
 \section{Changes in version 2.1.6 (2023-11-30, svn r8311)}{
   \subsection{Bug Fixes}{
     \itemize{

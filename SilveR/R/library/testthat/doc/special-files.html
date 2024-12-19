@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -364,7 +364,7 @@ time.</p>
 </div>
 <div id="helper-files" class="section level2">
 <h2>Helper files</h2>
-<p>Helper files live in <code>tests/testtthat/</code>, start with
+<p>Helper files live in <code>tests/testthat/</code>, start with
 <code>helper</code>, and end with <code>.r</code> or <code>.R</code>.
 They are sourced by <code>devtools::load_all()</code> (so they’re
 available interactively when developing your packages) and by
@@ -373,7 +373,7 @@ matter how your tests are executed).</p>
 <p>Helper files are a useful place for functions that you’ve extracted
 from repeated code in your tests, whether that be test fixtures
 (<code>vignette(&quot;test-fixtures&quot;)</code>), custom expectations
-(<code>vignette(&quot;custom-expectations&quot;)</code>), or skip helpers
+(<code>vignette(&quot;custom-expectation&quot;)</code>), or skip helpers
 (<code>vignette(&quot;skipping&quot;)</code>).</p>
 </div>
 <div id="setup-files" class="section level2">
