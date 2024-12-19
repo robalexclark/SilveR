@@ -1,5 +1,5 @@
 Package: pbkrtest
-Version: 0.5.2
+Version: 0.5.3
 Title: Parametric Bootstrap, Kenward-Roger and Satterthwaite Based
         Methods for Test in Mixed Models
 Authors@R: c(
@@ -18,20 +18,19 @@ Description: Computes p-values based on (a) Satterthwaite or
     Højsgaard, (2012, <doi:10.18637/jss.v059.i09>).  Please see
     'citation("pbkrtest")' for citation details.
 URL: https://people.math.aau.dk/~sorenh/software/pbkrtest/
-Depends: R (>= 4.1.0), lme4 (>= 1.1.31)
-Imports: broom, dplyr, MASS, Matrix (>= 1.2.3), methods, numDeriv,
-        parallel
-Suggests: knitr
+Depends: R (>= 4.2.0), lme4 (>= 1.1.31)
+Imports: broom, dplyr, MASS, methods, numDeriv, Matrix (>= 1.2.3), doBy
+Suggests: markdown, knitr
 Encoding: UTF-8
 VignetteBuilder: knitr
 License: GPL (>= 2)
 ByteCompile: Yes
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 LazyData: true
 NeedsCompilation: no
-Packaged: 2023-01-19 07:09:26 UTC; sorenh
+Packaged: 2024-06-26 21:35:10 UTC; sorenh
 Author: Ulrich Halekoh [aut, cph],
   Søren Højsgaard [aut, cre, cph]
 Repository: CRAN
-Date/Publication: 2023-01-19 18:00:10 UTC
-Built: R 4.3.1; ; 2023-10-24 03:57:46 UTC; windows
+Date/Publication: 2024-06-26 22:20:02 UTC
+Built: R 4.3.3; ; 2024-11-24 04:52:35 UTC; windows

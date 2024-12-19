@@ -4,16 +4,18 @@ useDynLib(mvtnorm, .registration = TRUE, .fixes = "mvtnorm_")
 importFrom("stats",
 	   pnorm, qnorm, rnorm, dnorm, runif,
 	   pt, qt,
-	   rchisq, uniroot,
+	   rchisq, uniroot, simulate,
 	   cov2cor, optim, coef, glm, pcauchy, qcauchy, predict, quasi)
 
 export(rmvnorm, dmvnorm, pmvnorm, pmvt, rmvt, qmvnorm, qmvt, dmvt,
-       GenzBretz, Miwa, TVPACK, ltMatrices, Tcrossprod, Crossprod, diagonals, 
+       GenzBretz, Miwa, TVPACK, ltMatrices, syMatrices, as.syMatrices, Tcrossprod, Crossprod, diagonals, 
+       is.ltMatrices, is.syMatrices, as.ltMatrices, is.chol, is.invchol, as.chol, as.invchol,
        chol2cov, invchol2chol, chol2invchol, invchol2cov, 
        invchol2pre, chol2pre, Dchol, invcholD, chol2cor, invchol2cor,
-       invchol2pc, chol2pc, "diagonals<-", vectrick, Lower_tri,
+       invchol2pc, chol2pc, "diagonals<-", vectrick, Lower_tri, logdet,
        marg_mvnorm, cond_mvnorm, Mult, lpmvnorm, slpmvnorm,
-       ldmvnorm, sldmvnorm, ldpmvnorm, sldpmvnorm, standardize, destandardize)
+       ldmvnorm, sldmvnorm, ldpmvnorm, sldpmvnorm, standardize, destandardize, deperma,
+       mvnorm, margDist, condDist, lLgrad, lpRR, slpRR)
 
 S3method("as.array", "ltMatrices")
 S3method("as.array", "syMatrices")
@@ -35,7 +37,23 @@ S3method("diagonals", "integer")
 S3method("diagonals<-", "ltMatrices")
 S3method("diagonals<-", "syMatrices")
 S3method("chol", "syMatrices")
+S3method("aperm", "chol")
+S3method("aperm", "invchol")
 S3method("aperm", "ltMatrices")
+S3method("aperm", "syMatrices")
+S3method("aperm", "mvnorm")
+S3method("names", "mvnorm")
+S3method("margDist", "mvnorm")
+S3method("condDist", "mvnorm")
+S3method("logLik", "mvnorm")
+S3method("lLgrad", "mvnorm")
+S3method("simulate", "mvnorm")
+S3method("Mult", "ltMatrices")
+S3method("Mult", "syMatrices")
+S3method("Mult", "default")
+S3method("as.ltMatrices", "default")
+S3method("as.ltMatrices", "ltMatrices")
+S3method("as.ltMatrices", "syMatrices")
 ### internal methods
 S3method("probval", "GenzBretz")
 S3method("probval", "Miwa")

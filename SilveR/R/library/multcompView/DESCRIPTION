@@ -1,8 +1,8 @@
 Package: multcompView
 Type: Package
 Title: Visualizations of Paired Comparisons
-Version: 0.1-9
-Date: 2023-04-09
+Version: 0.1-10
+Date: 2024-04-04
 Author: Spencer Graves, Hans-Peter Piepho and Luciano Selzer with
     help from Sundar Dorai-Raj
 Maintainer: Luciano Selzer <luciano.selzer@gmail.com>
@@ -17,9 +17,9 @@ Description: Convert a logical vector or a vector of
 License: GPL
 Imports: grid
 Suggests: multcomp, pgirmess, MASS
-Packaged: 2023-04-09 13:31:25 UTC; Luciano
+Packaged: 2024-03-08 01:50:36 UTC; Luciano
 RoxygenNote: 7.2.3
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2023-04-09 15:00:02 UTC
-Built: R 4.3.1; ; 2023-10-24 00:44:59 UTC; windows
+Date/Publication: 2024-03-08 05:00:02 UTC
+Built: R 4.3.3; ; 2024-11-24 01:25:10 UTC; windows

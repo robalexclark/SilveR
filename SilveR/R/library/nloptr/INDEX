@@ -21,7 +21,6 @@ newuoa                  New Unconstrained Optimization with quadratic
 nl.grad                 Numerical Gradients and Jacobians
 nl.opts                 Setting NL Options
 nloptr                  R interface to NLopt
-nloptr-package          R interface to NLopt
 nloptr.get.default.options
                         Return a data.frame with all the options that
                         can be supplied to nloptr.

@@ -13,7 +13,6 @@ ggdendro	ggdendro-package
 ggdendrogram	ggdendrogram
 is.dendro	is.dendro
 label	segment
-labels.rpart	labels.rpart
 leaf_label	segment
 rpartco	rpartco
 rpart_labels	rpart_labels

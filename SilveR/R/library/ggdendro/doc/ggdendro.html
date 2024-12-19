@@ -12,7 +12,7 @@
 
 
 
-<title>Introduction to ggdendro</title>
+<title>Using ‘ggdendro’ to plot dendrograms</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -29,26 +29,27 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -62,55 +63,54 @@ pre > code.sourceCode { white-space: pre-wrap; }
 pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -119,13 +119,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -329,12 +336,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Introduction to ggdendro</h1>
+<h1 class="title toc-ignore">Using ‘ggdendro’ to plot dendrograms</h1>
 
 
 
-<div id="using-the-ggdendro-package-to-plot-dendrograms" class="section level1">
-<h1>Using the <code>ggdendro</code> package to plot dendrograms</h1>
 <p>The <code>ggdendro</code> package makes it easy to extract dendrogram
 and tree diagrams into a list of data frames. You can then use this list
 to recreate these types of plots using the <code>ggplot2</code>
@@ -363,11 +368,11 @@ blank canvas, i.e. no axes, axis labels or tick marks.</li>
 </ul>
 <p>The <code>ggplot2</code> package doesn’t get loaded automatically, so
 remember to load it first:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span></code></pre></div>
 </div>
 <div id="using-the-ggdendrogram-wrapper" class="section level2">
-<h2>Using the <code>ggdendrogram()</code> wrapper</h2>
+<h2>Using the ‘ggdendrogram()’ wrapper</h2>
 <p>The <code>ggdendro</code> package extracts the plot data from
 dendrogram objects. Sometimes it is useful to have fine-grained control
 over the plot. Other times it might be more convenient to have a simple
@@ -377,30 +382,29 @@ small amount of code.</p>
 produce a plot with a single line of code. It provides a few options for
 controlling the display of line segments, labels and plot rotation
 (rotated by 90 degrees or not).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(USArrests), <span class="st">&quot;ave&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdendrogram</span>(hc, <span class="at">rotate =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(USArrests), <span class="st">&quot;ave&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">ggdendrogram</span>(hc, <span class="at">rotate =</span> <span class="cn">FALSE</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>The next section shows how to take full control over the data
 extraction and subsequent plotting.</p>
 </div>
 <div id="extracting-the-dendrogram-plot-data-using-dendro_data" class="section level2">
-<h2>Extracting the dendrogram plot data using
-<code>dendro_data()</code></h2>
+<h2>Extracting the dendrogram plot data using ‘dendro_data()’</h2>
 <p>The <code>hclust()</code> and <code>dendrogram()</code> functions in
 R makes it easy to plot the results of hierarchical cluster analysis and
 other dendrograms in R. However, it is hard to extract the data from
 this analysis to customize these plots, since the <code>plot()</code>
 functions for both these classes prints directly without the option of
 returning the plot data.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(USArrests), <span class="st">&quot;ave&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dhc <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(model)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Rectangular lines</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ddata <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(dhc, <span class="at">type =</span> <span class="st">&quot;rectangle&quot;</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">segment</span>(ddata)) <span class="sc">+</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">0</span>))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(USArrests), <span class="st">&quot;ave&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>dhc <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(model)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># Rectangular lines</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>ddata <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(dhc, <span class="at">type =</span> <span class="st">&quot;rectangle&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">segment</span>(ddata)) <span class="sc">+</span> </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span> </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">0</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>p</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>Of course, using <code>ggplot2</code> to create the dendrogram means
 one has full control over the appearance of the plot. For example, here
@@ -409,19 +413,20 @@ background. In <code>ggplot2</code> this means passing a number of
 options to <code>theme</code>. The <code>ggdendro</code> packages
 exports a function, <code>theme_dendro()</code> that wraps these options
 into a convenient function.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dendro</span>()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>p <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">theme_dendro</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; replace the existing one.</span></span></code></pre></div>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAFYElEQVR4nO2Z7XbbIBAF1fd/6Z6Tuvmy0AX2LkIw86NxEu1lPXXWAh9/4JLj7gZmB0ECBAkQJECQAEECBAkQJECQAEECBAkQJECQAEECBAkQJECQYDdBx9H4jLcTlF7wcBB0yvFFc2lGP9NxnDxqLl2Zb4IY0p8cgT+sbym+hmbjOH0YSFkNBAkQdMb54Dn659Fygk4fegKXAEECBAlKg4cZ9ML+fJYRFL9nLuS6A+/i+PHFnvt8ECQoCmJI/6MsyJL7fP4Lir6tF3KfT/GJIOgfCBKUBW09pG2jprxCUu4gAh9XNK/wSBAkqBa07Qw6eSQu7F7hkdQJiszwPQTxCkLQB1cbLSVoiyF9tVUvnUBHbyKXEdRWF1lzYhAk6Ba0y2bVflzYtebEIEiAIAGCBBWf6VQQXXNi7mgWQROu2Q2CBAgShLYMDOmc2vUFBY88NhAUqA3U3UJIEDPIWWQrN5C3S3jlB9uLlRto6KCj2diBdN+aZpIF8QpSJd+LHjmkhwrqCbibdEGxKb++IGvAHSDI10FLs6d/VAzpt2vDzw9BxjVzQJCvg5Cgx+7mhwlqKO5cMwcE+TroERQ7K1lfUF9xvMzIMEEM6e5rR+QM6QBB6tLs8+tYe0kkdYCgntjVh3Q4dvXzoL7YjY5c+2KPsx925NzFUEHMoJPY2AKrCwrfES0viFfQdSyCROzxvkHpyrmRLEGmLdmyglzpCLIHNJ05DDyXKHQ7PsD9hJIFRf9DVhcUBkECBAlWF8QMyk5HkD1gfkHWu6wlBTnTlxfEkP6R5d+8LCbInoigusjcinF5CKrKsh6vrCjICoLskbMIGnQ6+WBBtVm7zqB6QZ0L9FYjyF6RkycEuQbTuoLCC/RWP08QQ/rrZ/53/LUEGWLjOQiyV+TkIShWx24+9+OiwDIIslfk5CHIVvf0GdTLmI7vF9QLggRXfYT+qOqXcVXkcCmo+srQMq6KHBoEPXtI91Low7qVLy9jrcihJOjid8ZlrBU5IEiAIMGlIMsN5tUy1oocrgTlL2OtyAFBAgQJGgUxg65/PPDYCUH2ihwa3sUju4/nCipQ+kQaQS+KgrYb0gXe2gtu7jcQFGsZQa15CRVDQZDgR3uvobznbr7A8fubYL8IaslLqhgKggTvgnY9USwQkXGaN6DiPhAkQJAAQYKtP/YZBIIECBIgSLCqoPJH8wzpD2xdLibIucl4JQ6oGMjx9sCWmFgxkC9BzKAXoWdfkz+gIpXj4jt/fk5FKggSIEjwS1AFkfycilSy20GQPR9B9opUECSQ7TCkoxe4yx8jyLP7eLAg9fyPH1+6VxlQkcTx7d/y7zeeQZWCLKvkViSBIMG5IPfZ0HqCTh7FV8mtSKJVEEP61/fl37SvkluRhBQUe39/y8urSEIJOr++b5XciiQQJGgWtOmQtkwatUpuRRLnjSDoEwQJagRt/bFPlaCkVbwVSSBIoAU53tPWFrTgK+hsqpaQ7R0LDumG9IIg803jcoI6w4wZCBqwqiUdQeFLG2a7o6HuiqT0MfcbCLKvgiB7RVJ63aXMIF+gqR5BySva0msujW83VhfEK0hdc8OQziXWetBG5Sp3EhXUH9ewyp0gSIAgQYugihEWm3KNDQ0h2I//6SBoeGIMBAmigqx3WoaG7MzWz3QNzdbPdA3N1s90Dc3Wz3QNDdg8ZzeUy2zHL/MJaie5odz4ASBIsNkMmg4ECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQQIECRAkQJAAQYK/58c6raZcA0gAAAAASUVORK5CYII=" /><!-- --></p>
 <p>You can also draw dendrograms with triangular line segments (instead
 of rectangular segments). For example:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ddata <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(dhc, <span class="at">type =</span> <span class="st">&quot;triangle&quot;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">segment</span>(ddata)) <span class="sc">+</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dendro</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>ddata <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(dhc, <span class="at">type =</span> <span class="st">&quot;triangle&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">segment</span>(ddata)) <span class="sc">+</span> </span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span> </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="fu">theme_dendro</span>()</span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="regression-tree-diagrams" class="section level2">
@@ -430,22 +435,27 @@ of rectangular segments). For example:</p>
 tree diagrams. To extract the plot data for these diagrams using
 <code>ggdendro</code>, you use the the same idiom as for plotting
 dendrograms:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(tree)){</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data</span>(cpus, <span class="at">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">tree</span>(<span class="fu">log10</span>(perf) <span class="sc">~</span> syct <span class="sc">+</span> mmin <span class="sc">+</span> mmax <span class="sc">+</span> cach <span class="sc">+</span> chmin <span class="sc">+</span> chmax, </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> cpus)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  tree_data <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(model)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">segment</span>(tree_data)) <span class="sc">+</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend, <span class="at">size =</span> n), </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size</span>(<span class="st">&quot;n&quot;</span>) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">label</span>(tree_data), </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">leaf_label</span>(tree_data), </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_dendro</span>()</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: tree</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(tree)){</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">data</span>(cpus, <span class="at">package =</span> <span class="st">&quot;MASS&quot;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">tree</span>(<span class="fu">log10</span>(perf) <span class="sc">~</span> syct <span class="sc">+</span> mmin <span class="sc">+</span> mmax <span class="sc">+</span> cach <span class="sc">+</span> chmin <span class="sc">+</span> chmax, </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>                <span class="at">data =</span> cpus)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  tree_data <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(model)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">segment</span>(tree_data)) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend, <span class="at">size =</span> n), </span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>    <span class="fu">scale_size</span>(<span class="st">&quot;n&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">label</span>(tree_data), </span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> <span class="fu">leaf_label</span>(tree_data), </span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>    <span class="fu">theme_dendro</span>()</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>}</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; Loading required package: tree</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co">#&gt; ℹ Please use `linewidth` instead.</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co">#&gt; generated.</span></span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="classification-tree-diagrams" class="section level2">
@@ -454,36 +464,36 @@ dendrograms:</p>
 creates classification diagrams. To extract the plot data for these
 diagrams using <code>ggdendro</code> follows the same basic pattern as
 dendrograms:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(rpart)){</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Kyphosis <span class="sc">~</span> Age <span class="sc">+</span> Number <span class="sc">+</span> Start, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;class&quot;</span>, <span class="at">data =</span> kyphosis)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  ddata <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(model)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> ddata<span class="sc">$</span>segments, </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span> </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> ddata<span class="sc">$</span>labels, </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> ddata<span class="sc">$</span>leaf_labels, </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">vjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_dendro</span>()</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: rpart</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(rpart)){</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Kyphosis <span class="sc">~</span> Age <span class="sc">+</span> Number <span class="sc">+</span> Start, </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;class&quot;</span>, <span class="at">data =</span> kyphosis)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  ddata <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(model)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> ddata<span class="sc">$</span>segments, </span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span> </span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> ddata<span class="sc">$</span>labels, </span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">data =</span> ddata<span class="sc">$</span>leaf_labels, </span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">vjust =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    <span class="fu">theme_dendro</span>()</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>}</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; Loading required package: rpart</span></span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="twins-diagrams-agnes-and-diana" class="section level2">
-<h2>Twins diagrams: agnes and diana</h2>
+<h2>Twins diagrams: ‘agnes’ and ‘diana’</h2>
 <p>The <code>cluster</code> package allows you to draw
 <code>agnes</code> and <code>diana</code> diagrams.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(cluster)){</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">agnes</span>(votes.repub, <span class="at">metric =</span> <span class="st">&quot;manhattan&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dg <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(model)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggdendrogram</span>(dg)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">diana</span>(votes.repub, <span class="at">metric =</span> <span class="st">&quot;manhattan&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  dg <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(model)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggdendrogram</span>(dg)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: cluster</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(cluster)){</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">agnes</span>(votes.repub, <span class="at">metric =</span> <span class="st">&quot;manhattan&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  dg <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(model)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">ggdendrogram</span>(dg)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  </span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">diana</span>(votes.repub, <span class="at">metric =</span> <span class="st">&quot;manhattan&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  dg <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(model)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="fu">ggdendrogram</span>(dg)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>}</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; Loading required package: cluster</span></span></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="summary" class="section level2">
@@ -491,7 +501,6 @@ dendrograms:</p>
 <p>The <code>ggdendro</code> package makes it easy to extract the line
 segment and label data from <code>hclust</code>, <code>dendrogram</code>
 and <code>tree</code> objects.</p>
-</div>
 </div>
 
 

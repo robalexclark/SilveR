@@ -26,7 +26,7 @@ df <-
     q4 = sample(likert_levels, 150, replace = TRUE, prob = 1:5),
     q5 = sample(c(likert_levels, NA), 150, replace = TRUE),
     q6 = sample(likert_levels, 150, replace = TRUE, prob = c(1, 0, 1, 1, 0))
-  ) %>%
+  ) |>
   mutate(across(everything(), ~ factor(.x, levels = likert_levels)))
 
 likert_levels_dk <- c(
@@ -48,7 +48,7 @@ df_dk <-
       likert_levels_dk, 150,
       replace = TRUE, prob = c(1, 0, 1, 1, 0, 1)
     )
-  ) %>%
+  ) |>
   mutate(across(everything(), ~ factor(.x, levels = likert_levels_dk)))
 
 ## -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ gglikert(df, add_totals = FALSE)
 
 ## -----------------------------------------------------------------------------
 if (require(labelled)) {
-  df <- df %>%
+  df <- df |>
     set_variable_labels(
       q1 = "first question",
       q2 = "second question",
@@ -128,15 +128,29 @@ gglikert(df, y_label_wrap = 20)
 gglikert(df, y_label_wrap = 200)
 
 ## -----------------------------------------------------------------------------
+gglikert(df, cutoff = 0)
+gglikert(df, cutoff = 1)
+gglikert(df, cutoff = 1.25)
+gglikert(df, cutoff = 1.75)
+gglikert(df, cutoff = 2)
+gglikert(df, cutoff = NULL)
+gglikert(df, cutoff = 4)
+gglikert(df, cutoff = 5)
+
+## -----------------------------------------------------------------------------
+gglikert(df, cutoff = 1)
+gglikert(df, cutoff = 1, symmetric = TRUE)
+
+## -----------------------------------------------------------------------------
 gglikert(df_dk)
 
 ## -----------------------------------------------------------------------------
-df_dk %>%
-  mutate(across(everything(), ~ factor(.x, levels = likert_levels))) %>%
+df_dk |>
+  mutate(across(everything(), ~ factor(.x, levels = likert_levels))) |>
   gglikert()
 
 ## -----------------------------------------------------------------------------
-df_dk %>% gglikert(exclude_fill_values = "Don't know")
+df_dk |> gglikert(exclude_fill_values = "Don't know")
 
 ## ----message=FALSE------------------------------------------------------------
 df_group <- df
@@ -194,7 +208,7 @@ gglikert_stacked(
   )
 
 ## -----------------------------------------------------------------------------
-gglikert_data(df) %>%
+gglikert_data(df) |>
   head()
 
 ## -----------------------------------------------------------------------------

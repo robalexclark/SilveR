@@ -5,6 +5,7 @@ errno	errno
 format.ps_handle	ps_handle
 print.ps_handle	ps_handle
 ps	ps
+ps_apps	ps_apps
 ps_boot_time	ps_boot_time
 ps_children	ps_children
 ps_cmdline	ps_cmdline
@@ -14,12 +15,16 @@ ps_cpu_times	ps_cpu_times
 ps_create_time	ps_create_time
 ps_cwd	ps_cwd
 ps_descent	ps_descent
+ps_disk_io_counters	ps_disk_io_counters
 ps_disk_partitions	ps_disk_partitions
 ps_disk_usage	ps_disk_usage
 ps_environ	ps_environ
 ps_environ_raw	ps_environ
 ps_exe	ps_exe
 ps_find_tree	ps_kill_tree
+ps_fs_info	ps_fs_info
+ps_fs_mount_point	ps_fs_mount_point
+ps_fs_stat	ps_fs_stat
 ps_get_cpu_affinity	ps_get_cpu_affinity
 ps_get_nice	ps_get_nice
 ps_gids	ps_uids
@@ -59,7 +64,7 @@ ps_tty_size	ps_tty_size
 ps_uids	ps_uids
 ps_username	ps_username
 ps_users	ps_users
+ps_wait	ps_wait
 ps_windows_nice_values	ps_get_nice
 signals	signals
 with_process_cleanup	ps_kill_tree
-_PACKAGE	ps-package

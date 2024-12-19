@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE---------------------------------------------
+## ----echo = FALSE, results = "hide", message = FALSE----------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 require(emmeans)
 require(multcomp, quietly = TRUE)

@@ -2,6 +2,77 @@
 \name{NEWS}
 \title{NEWS file for the \pkg{mvtnorm} package}
 
+\section{Changes in Version 1.3-2 (2024-11-04)}{
+  \subsection{Features}{
+    \itemize{
+      \item Explain and illustrate that omitting data dimensions produces marginal
+            log-likelihoods in Chapter 7.
+      \item Add low-level functionality for reduced rank covariances in new
+            Chapter 8.
+    }
+  }
+  \subsection{Bugfixes}{
+    \itemize{
+      \item \code{invcholD} and \code{Dchol} avoided very small diagonals;
+            now they also avoid very large diagonals (such that inverting the result
+            doesn't give too small diagonals).
+      \item Fix partial argument matches, reported by KH.
+    }
+  }
+}
+
+\section{Changes in Version 1.3-1 (2024-09-02)}{
+  \subsection{Bugfixes}{
+    \itemize{
+      \item Challenging numeric test of score function at ML estimate
+            failed on Mac M1.
+    }
+  }
+}
+
+
+\section{Changes in Version 1.2-6 (2024-08-17)}{
+  \subsection{Features}{
+    \itemize{
+      \item Add \code{logdet()} function for computing log-determinants from
+            lower triangular matrices.
+      \item Speed up \code{solve(<ltMatrices>, ...)}.
+    }
+  }
+  \subsection{Bugfixes}{
+    \itemize{
+      \item Avoid unnecessary copying of large data objects.
+      \item -1/2 -> -1 for det(C) in lmvnorm_src vignette; spotted by Kurt Hornik
+      \item Use \code{M\_PI}.
+    }
+  }
+}
+
+\section{Changes in Version 1.2-5 (2024-05-18)}{
+  \subsection{Features}{
+    \itemize{
+      \item Update the \code{Using mvtnorm} package vignette and references therein.
+      \item Speed up \code{Mult(<ltMatrices>, transpose = TRUE)}.
+      \item Speed up \code{ldmvnorm()}.
+      \item Add constructor \code{syMatrices()} for multiple symmetric
+            matrices and \code{as.syMatrices()} for coercion from \code{ltMatrices}.}
+  }
+  \subsection{Bugfixes}{
+    \itemize{
+      \item Fix segmentation fault or unnecessary error or warning + approximation for
+      \code{algorithm = Miwa()} or \code{TVPACK()}, in case dimension
+      reduction to one-dimensional is possible, e.g., for \preformatted{
+  pmvnorm(lower = rep(-Inf,3), upper = c(-1, Inf, Inf),
+          sigma = diag(3), algorithm = Miwa())
+     # or
+  pmvnorm(lower = c(-Inf,-Inf),
+          upper = c(- 1,  Inf), sigma=diag(2), algorithm = TVPACK())
+        }
+    }
+  }
+}
+
+
 \section{Changes in Version 1.2-4 (2023-11-27)}{
   \subsection{Bugfixes}{
     \itemize{
@@ -19,7 +90,7 @@
   }
   \subsection{Bugfixes}{
     \itemize{
-      \item Fix variable declarations in \code{tvpack.f} as reported by Intel 
+      \item Fix variable declarations in \code{tvpack.f} as reported by Intel
             compilers icx/ipcx/ifx from oneAPI 2023.2.0 and oneMKL 2023.2.0, thanks to BDR
     }
   }
@@ -54,15 +125,16 @@
 
 \section{Changes in Version 1.2-0 (2023-06-02)}{
   \itemize{
-    \item New \code{lpmvnorm} function for computing multivariate normal log-likelihoods for interval-censored observations.
-    \item New \code{slpmvnorm} function for computing the corresponding score function for interval-censored observations.
-    \item New \code{ldmvnorm} function for computing multivariate normal log-likelihoods for exact observations.
-    \item New \code{sldmvnorm} function for computing the corresponding score function for exact observations.
-    \item New \code{ldpmvnorm} function for computing multivariate normal log-likelihoods for a mix of exact and interval-censored observations.
-    \item New \code{sldpmvnorm} function for computing the corresponding score function for a mix of exact and interval-censored observations.
+    \item New \code{lpmvnorm()} function for computing multivariate normal log-likelihoods for interval-censored observations.
+    \item New \code{slpmvnorm()} function for computing the corresponding score function for interval-censored observations.
+    \item New \code{ldmvnorm()} function for computing multivariate normal log-likelihoods for exact observations.
+    \item New \code{sldmvnorm()} function for computing the corresponding score function for exact observations.
+    \item New \code{ldpmvnorm()} function for computing multivariate normal log-likelihoods for a mix of exact and interval-censored observations.
+    \item New \code{sldpmvnorm()} function for computing the corresponding score function for a mix of exact and interval-censored observations.
     \item New class \code{ltMatrices} representing multiple lower triangular matrices, with some useful methods.
     \item New package vignette \code{lmvnorm_src} describing these new features.
-    \item \code{pmvnorm}, \code{qmvnorm}, \code{pmvt}, and \code{qmvt} gain a \code{seed} argument.
+    \item \code{pmvnorm()}, \code{qmvnorm()}, \code{pmvt()}, and
+          \code{qmvt()} gain a \code{seed} argument.
     \item Regression tests were improved.
     \item Internal standardization is described better in the docs, suggested by Chris Wymant.
     \item New \code{NEWS} file, the old file containing information up to version 1.1-3 is available as \code{NEWS.old}.

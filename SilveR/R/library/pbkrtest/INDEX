@@ -7,15 +7,15 @@ get_modcomp             Extract (or "get") components from a
                         'KRmodcomp' object.
 internal                Internal functions for the pbkrtest package
 internal-pbkrtest       pbkrtest internal
-kr-modcomp              F-test and degrees of freedom based on
-                        Kenward-Roger approximation
 kr-vcovAdj              Adjusted covariance matrix for linear mixed
                         models according to Kenward and Roger
+kr_modcomp              F-test and degrees of freedom based on
+                        Kenward-Roger approximation
 model-coerce            Conversion between a model object and a
                         restriction matrix
-pb-modcomp              Model comparison using parametric bootstrap
-                        methods.
 pb-refdist              Calculate reference distribution using
                         parametric bootstrap
-sat-modcomp             F-test and degrees of freedom based on
+pb_modcomp              Model comparison using parametric bootstrap
+                        methods.
+sat_modcomp             F-test and degrees of freedom based on
                         Satterthwaite approximation

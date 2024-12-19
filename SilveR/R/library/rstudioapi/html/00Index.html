@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;rstudioapi&rsquo; version 0.15.0</h2>
+</div><h2>Documentation for package &lsquo;rstudioapi&rsquo; version 0.17.1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -148,6 +148,8 @@
 <td>Retrieve Information about an RStudio Editor</td></tr>
 <tr><td style="width: 25%;"><a href="getDelegatedAzureToken.html">getDelegatedAzureToken</a></td>
 <td>OAuth2 Tokens for Delegated Azure Resources</td></tr>
+<tr><td style="width: 25%;"><a href="getMode.html">getMode</a></td>
+<td>Report whether RStudio Desktop or RStudio Server is in use</td></tr>
 <tr><td style="width: 25%;"><a href="persistent-values.html">getPersistentValue</a></td>
 <td>Persistent keys and values</td></tr>
 <tr><td style="width: 25%;"><a href="getRStudioPackageDependencies.html">getRStudioPackageDependencies</a></td>
@@ -159,7 +161,7 @@
 <tr><td style="width: 25%;"><a href="getThemes.html">getThemes</a></td>
 <td>Get Theme List</td></tr>
 <tr><td style="width: 25%;"><a href="getVersion.html">getVersion</a></td>
-<td>Return the current version of the RStudio API</td></tr>
+<td>Determine the version of RStudio</td></tr>
 </table>
 
 <h2><a id="H">-- H --</a></h2>
@@ -186,7 +188,11 @@
 <td>Create a Range</td></tr>
 <tr><td style="width: 25%;"><a href="isAvailable.html">isAvailable</a></td>
 <td>Check if RStudio is running</td></tr>
+<tr><td style="width: 25%;"><a href="isJob.html">isBackgroundJob</a></td>
+<td>Detect RStudio Jobs</td></tr>
 <tr><td style="width: 25%;"><a href="isJob.html">isJob</a></td>
+<td>Detect RStudio Jobs</td></tr>
+<tr><td style="width: 25%;"><a href="isJob.html">isWorkbenchJob</a></td>
 <td>Detect RStudio Jobs</td></tr>
 </table>
 
@@ -199,6 +205,10 @@
 <td>Add Background Job Output</td></tr>
 <tr><td style="width: 25%;"><a href="jobAddProgress.html">jobAddProgress</a></td>
 <td>Add Background Job Progress</td></tr>
+<tr><td style="width: 25%;"><a href="jobGetState.html">jobGetState</a></td>
+<td>Get Background Job State</td></tr>
+<tr><td style="width: 25%;"><a href="jobList.html">jobList</a></td>
+<td>List Background Jobs</td></tr>
 <tr><td style="width: 25%;"><a href="jobRemove.html">jobRemove</a></td>
 <td>Remove a Background Job</td></tr>
 <tr><td style="width: 25%;"><a href="jobRunScript.html">jobRunScript</a></td>
@@ -322,6 +332,8 @@
 <td>Interact with Documents open in RStudio</td></tr>
 <tr><td style="width: 25%;"><a href="rstudio-documents.html">setDocumentContents</a></td>
 <td>Interact with Documents open in RStudio</td></tr>
+<tr><td style="width: 25%;"><a href="setGhostText.html">setGhostText</a></td>
+<td>Set ghost text</td></tr>
 <tr><td style="width: 25%;"><a href="persistent-values.html">setPersistentValue</a></td>
 <td>Persistent keys and values</td></tr>
 <tr><td style="width: 25%;"><a href="rstudio-documents.html">setSelectionRanges</a></td>

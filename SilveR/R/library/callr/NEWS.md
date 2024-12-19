@@ -1,3 +1,23 @@
+# callr 3.7.6
+
+* If the `CALLR_NO_TEMP_DLLS=true` env var is set then callr does not
+  copy the dll the client DLL files from, in the subprocess. By
+  default callr copies the DLL file that drives the callr subprocess into
+  a temporary directory and loads it from there (#273).
+
+# callr 3.7.5
+
+* No changes.
+
+# callr 3.7.4
+
+* The `r_session$get_running_time()` method now returns the correct
+  values, as documented (#241, @djnavarro).
+
+* callr now uses fully qualified function calls in the subprocess to
+  avoid interference with functions defined in the global environment.
+  I.e. `base::stderr()` instead of `stderr()`. Closes #246.
+
 # callr 3.7.3
 
 * Errors from callr now include the standard output (in `$stdout`) and

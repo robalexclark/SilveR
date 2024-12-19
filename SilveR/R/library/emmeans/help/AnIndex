@@ -19,6 +19,7 @@ emmeans-package	emmeans-package
 add_grouping	manip-factors
 as.data.frame.emmGrid	summary.emmGrid
 as.data.frame.emm_list	emm_list-object
+as.data.frame.summary_eml	emm_list-object
 as.emmGrid	as.emmGrid
 as.emm_list	as.emmGrid
 as.glht	glht-support
@@ -91,6 +92,7 @@ MOats	MOats
 modelparm.emmwrap	glht-support
 models	models
 mvcontrast	mvcontrast
+mvregrid	mvregrid
 neuralgia	neuralgia
 nutrition	nutrition
 oranges	oranges
@@ -112,6 +114,7 @@ pwpp	pwpp
 qdrg	qdrg
 rbind.emmGrid	rbind.emmGrid
 rbind.emm_list	rbind.emmGrid
+rbind.summary_emm	rbind.emmGrid
 recover_data	extending-emmeans
 recover_data.call	extending-emmeans
 ref_grid	ref_grid
@@ -133,10 +136,14 @@ trt.vs.ctrl1.emmc	emmc-functions
 trt.vs.ctrlk.emmc	emmc-functions
 tukey.emmc	emmc-functions
 ubds	ubds
+untidy	untidy
 update.emmGrid	update.emmGrid
 update.summary_emm	update.emmGrid
 vcov.emmGrid	emmGrid-methods
+weights.emmGrid	contrast
+with_emm_options	emm_options
 wrappers	wrappers
+wtcon.emmc	emmc-functions
 xtable.emmGrid	xtable.emmGrid
 xtable.summary_emm	xtable.emmGrid
 [.emmGrid	rbind.emmGrid

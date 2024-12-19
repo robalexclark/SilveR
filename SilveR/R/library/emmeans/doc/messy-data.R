@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE-------------------------
+## ----echo = FALSE, results = "hide", message = FALSE--------------------------
 require("emmeans")
 require("ggplot2")
 options(show.signif.stars = FALSE) 
@@ -69,7 +69,7 @@ predict(emmeans(mtcars.lm, ~ cyl * am, weights = "outer"))
 ## -----------------------------------------------------------------------------
 emmeans(mtcars.lm, ~ gear | am, non.nuis = quote(all.vars(specs)))
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 ref_grid(mtcars.lm, rg.limit = 200)
 
 ## -----------------------------------------------------------------------------
@@ -117,14 +117,14 @@ pairs(route.emm, reverse = TRUE)
 
 pairs(drug.emm, by = "route", reverse = TRUE)
 
-## ---- fig.width = 5.5, fig.alt = "A panel for each route. This interaction plot has a lot of empty space because all 5 drugs are represented in each panel, and the x axis labels all overlap"----
+## ----fig.width = 5.5, fig.alt = "A panel for each route. This interaction plot has a lot of empty space because all 5 drugs are represented in each panel, and the x axis labels all overlap"----
 emmip(cows.rg, ~ drug | route)
 
-## ---- fig.width = 5.5, fig.alt = "This plot shows the same means as the previous one, but each panel shows only the drugs that are nested in each route"----
+## ----fig.width = 5.5, fig.alt = "This plot shows the same means as the previous one, but each panel shows only the drugs that are nested in each route"----
 require(ggplot2)
 emmip(cows.rg, ~ drug) + facet_wrap(~ route, scales = "free_x")
 
-## ---- fig.height = 2.5, fig.width = 5.5, fig.alt = "side-by-side CIs and PIs for drugs in each route. Again, with free_y scaling, each panel contains only the drugs involved"----
+## ----fig.height = 2.5, fig.width = 5.5, fig.alt = "side-by-side CIs and PIs for drugs in each route. Again, with free_y scaling, each panel contains only the drugs involved"----
 plot(drug.emm, PIs = TRUE) + 
     facet_wrap(~ route, nrow = 2, scales = "free_y")
 

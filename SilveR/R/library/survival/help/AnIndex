@@ -11,10 +11,8 @@ anova.survreglist	survreg
 anyDuplicated.Surv	Survmethods
 as.character.Surv	Survmethods
 as.data.frame.Surv	Survmethods
-as.integer.Surv	Survmethods
 as.matrix.ratetable	survival-internal
 as.matrix.Surv	Survmethods
-as.numeric.Surv	Survmethods
 attrassign	attrassign
 attrassign.default	attrassign
 attrassign.lm	attrassign
@@ -37,6 +35,7 @@ cgd0	cgd0
 cipoisson	cipoisson
 clogit	clogit
 cluster	cluster
+coef.survfit	survival-internal
 colon	colon
 concordance	concordance
 concordance.coxph	concordance
@@ -44,6 +43,7 @@ concordance.formula	concordance
 concordance.lm	concordance
 concordance.survreg	concordance
 concordancefit	concordancefit
+confint.survfit	survival-internal
 cox.zph	cox.zph
 coxpenal.df	survival-internal
 coxpenal.fit	survival-internal
@@ -189,6 +189,7 @@ summary.pyears	summary.pyears
 Summary.Surv	Survmethods
 summary.survexp	summary.survexp
 summary.survfit	summary.survfit
+summary.survfitms	summary.survfit
 summary.survreg	survreg.object
 Surv	Surv
 Surv2	Surv2
@@ -244,6 +245,7 @@ untangle.specials	untangle.specials
 uspop2	uspop2
 valveSeat	reliability
 vcov.coxph	vcov.coxph
+vcov.survfit	survival-internal
 vcov.survreg	vcov.coxph
 veteran	veteran
 xtfrm.Surv	xtfrm.Surv

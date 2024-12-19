@@ -23,7 +23,6 @@ hook_movecode           Some potentially useful document hooks
 hook_pdfcrop            Built-in chunk hooks to extend knitr
 hook_plot_html          Default plot hooks for different output formats
 image_uri               Encode an image file to a data URI
-imgur_upload            Upload an image to imgur.com
 include_graphics        Embed external images in 'knitr' documents
 include_url             Embed a URL as an HTML iframe or a screenshot
                         in 'knitr' documents
@@ -47,8 +46,7 @@ knit_exit               Exit knitting early
 knit_expand             A simple macro preprocessor for templating
                         purposes
 knit_filter             Spell check filter for source documents
-knit_global             The global environment in which code chunks are
-                        evaluated
+knit_global             The global environment for evaluating code
 knit_hooks              Hooks for R code chunks, inline R code and
                         output
 knit_meta               Metadata about objects to be printed
@@ -70,8 +68,6 @@ opts_knit               Options for the knitr package
 opts_template           Template for creating reusable chunk options
 pandoc                  A Pandoc wrapper to convert documents to other
                         formats
-partition_chunk         Partition chunk options from the code chunk
-                        body
 pat_rnw                 Set regular expressions to read input documents
 plot_crop               Crop a plot (remove the edges) using PDFCrop or
                         ImageMagick

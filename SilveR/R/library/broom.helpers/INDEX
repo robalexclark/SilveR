@@ -1,10 +1,6 @@
 .clean_backticks        Remove backticks around variable names
 .escape_regex           Escapes any characters that would have special
                         meaning in a regular expression
-.formula_list_to_named_list
-                        Convert formula selector to a named list
-.generic_selector       Generate a custom selector function
-.select_to_varnames     Variable selector
 assert_package          Check a package installation status or minimum
                         required version
 model_compute_terms_contributions
@@ -40,6 +36,7 @@ model_list_higher_order_variables
 model_list_terms_levels
                         List levels of categorical terms
 model_list_variables    List all the variables used in a model
+scope_tidy              Scoping a tidy tibble allowing to tidy select
 select_helpers          Select helper functions
 seq_range               Sequence generation between min and max
 supported_models        Listing of Supported Models

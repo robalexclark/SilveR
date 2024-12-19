@@ -1,5 +1,5 @@
 Package: ggdendro
-Version: 0.1.23
+Version: 0.2.0
 Title: Create Dendrograms and Tree Diagrams Using 'ggplot2'
 Description: This is a set of tools for dendrograms and
     tree plots using 'ggplot2'.  The 'ggplot2' philosophy is to
@@ -16,21 +16,22 @@ Authors@R: c(person("Andrie", "de Vries", role=c("aut", "cre"),
 License: GPL-2 | GPL-3
 LazyLoad: true
 ByteCompile: true
-URL: https://github.com/andrie/ggdendro
+URL: https://andrie.github.io/ggdendro/
 BugReports: https://github.com/andrie/ggdendro/issues
+Depends: R(>= 3.5)
 Imports: MASS, ggplot2(>= 0.9.2)
 Suggests: rpart (>= 4.0-0), tree, testthat, knitr, cluster, scales,
         spelling, rmarkdown, covr
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 Language: en-US
 Encoding: UTF-8
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2022-02-16 12:02:03 UTC; apdev
+Packaged: 2024-02-18 21:50:45 UTC; apdev
 Author: Andrie de Vries [aut, cre],
   Brian D. Ripley [aut] (author of package tree)
 Maintainer: Andrie de Vries <apdevries@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-02-16 13:20:02 UTC
-Built: R 4.3.1; ; 2023-10-24 02:26:46 UTC; windows
+Date/Publication: 2024-02-23 12:40:02 UTC
+Built: R 4.3.3; ; 2024-11-24 03:15:44 UTC; windows

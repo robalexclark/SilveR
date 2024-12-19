@@ -1,3 +1,8 @@
+# munsell 0.5.1
+
+* Fix documentation NOTEs
+
+
 Version 0.5.0
 ==============================================================================
 * Passing `...` to `complement()` deprecated

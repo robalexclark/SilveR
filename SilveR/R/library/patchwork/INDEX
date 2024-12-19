@@ -1,5 +1,5 @@
 area                    Specify a plotting area in a layout
-free                    Free a plot from alignment
+free                    Free a plot from various alignments
 guide_area              Add an area to hold collected guides
 inset_element           Create an inset to be added on top of the
                         previous plot
@@ -13,3 +13,4 @@ wrap_elements           Wrap arbitrary graphics in a
 wrap_ggplot_grob        Make a gtable created from a ggplot object
                         patchwork compliant
 wrap_plots              Wrap plots into a patchwork
+wrap_table              Wrap a table in a patchwork compliant patch

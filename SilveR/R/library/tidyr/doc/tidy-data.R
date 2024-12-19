@@ -1,4 +1,4 @@
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 set.seed(1014)
 options(dplyr.print_max = 10)
@@ -132,7 +132,7 @@ rank <- billboard3 %>%
   select(song_id, date, week, rank)
 rank
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  library(purrr)
 #  paths <- dir("data", pattern = "\\.csv$", full.names = TRUE)
 #  names(paths) <- basename(paths)

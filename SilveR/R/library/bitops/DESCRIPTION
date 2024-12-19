@@ -1,18 +1,24 @@
 Package: bitops
-Version: 1.0-7
-Date: 2021-04-13
-Author: S original by Steve Dutky <sdutky@terpalum.umd.edu> initial R
-        port and extensions by Martin Maechler; revised and modified
-        by Steve Dutky
-Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
+Version: 1.0-9
+Date: 2024-10-03
+Authors@R: c(
+   person("Steve", "Dutky", role = "aut", email = "sdutky@terpalum.umd.edu",
+    	     comment = "S original; then (after MM's port) revised and modified"),
+   person("Martin", "Maechler", role = c("cre", "aut"), email = "maechler@stat.math.ethz.ch",
+	     comment = c("Initial R port; tweaks", ORCID = "0000-0002-8685-9910")))
 Title: Bitwise Operations
 Description: Functions for bitwise operations on integer vectors.
 License: GPL (>= 2)
 URL: https://github.com/mmaechler/R-bitops
 BugReports: https://github.com/mmaechler/R-bitops/issues
 NeedsCompilation: yes
-Packaged: 2021-04-13 20:50:22 UTC; maechler
+Packaged: 2024-10-03 09:17:35 UTC; maechler
+Author: Steve Dutky [aut] (S original; then (after MM's port) revised and
+    modified),
+  Martin Maechler [cre, aut] (Initial R port; tweaks,
+    <https://orcid.org/0000-0002-8685-9910>)
+Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
 Repository: CRAN
-Date/Publication: 2021-04-24 11:40:08 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-20 00:52:07 UTC; windows
+Date/Publication: 2024-10-03 23:00:54 UTC
+Built: R 4.3.3; x86_64-w64-mingw32; 2024-10-03 23:50:57 UTC; windows
 Archs: x64

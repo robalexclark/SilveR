@@ -8,9 +8,13 @@ accordion_panel_remove	accordion_panel_set
 accordion_panel_set	accordion_panel_set
 accordion_panel_update	accordion_panel_set
 as.card_item	card_body
+as.tags.bslib_sidebar	as.tags.bslib_sidebar
 as_fillable_container	as_fill_carrier
 as_fill_carrier	as_fill_carrier
 as_fill_item	as_fill_carrier
+bind_task_button	bind_task_button
+bind_task_button.default	bind_task_button
+bind_task_button.ExtendedTask	bind_task_button
 bootstrap	deprecated
 bootstrap_sass	deprecated
 bootswatch_themes	bootswatch_themes
@@ -60,6 +64,7 @@ card_footer	card_body
 card_header	card_body
 card_image	card_body
 card_title	card_body
+css	reexports
 deprecated	deprecated
 font_collection	font_face
 font_face	font_face
@@ -67,6 +72,7 @@ font_google	font_face
 font_link	font_face
 input_dark_mode	input_dark_mode
 input_switch	input_switch
+input_task_button	input_task_button
 is.card_item	card_body
 is_bs_theme	bs_theme
 is_fillable_container	as_fill_carrier
@@ -118,6 +124,7 @@ popover	popover
 precompiled_css_path	precompiled_css_path
 print.bslib_fragment	html-browse
 print.bslib_page	html-browse
+reexports	reexports
 remove_all_fill	as_fill_carrier
 run_with_themer	run_with_themer
 save_html.bslib_fragment	save-html
@@ -137,6 +144,7 @@ toggle_tooltip	tooltip
 tooltip	tooltip
 update_popover	popover
 update_switch	input_switch
+update_task_button	input_task_button
 update_tooltip	tooltip
 value_box	value_box
 value_box_theme	value_box

@@ -15,6 +15,7 @@ export(all.estble)
 export(epredict)
 export(eupdate)
 export(is.estble)
+export(legacy.nonest.basis)
 export(nonest.basis)
 export(estble.subspace)
 

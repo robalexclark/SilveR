@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -384,7 +384,7 @@ command line with
 lives in <a href="https://github.com/r-lib/cpp11/tree/main/inst/include">inst/include</a>.
 R code used to register functions and for
 <code>cpp11::cpp_source()</code> is in <a href="https://github.com/r-lib/cpp11/tree/main/R">R/</a>. Tests for
-<em>only</em> the code in <code>R/</code> is in <a href="https://github.com/r-lib/cpp11/tree/main/tests/testthat">tests/testthat/</a>
+<em>only</em> the code in <code>R/</code> is in <a href="https://github.com/r-lib/cpp11/tree/main/tests/testthat">tests/testthat/</a>.
 The rest of the code is in a separate <a href="https://github.com/r-lib/cpp11/tree/main/cpp11test">cpp11test/</a>
 package included in the source tree. Inside <a href="https://github.com/r-lib/cpp11/tree/main/cpp11test/src">cpp11test/src</a>
 the files that start with <code>test-</code> are C++ tests using the <a href="https://testthat.r-lib.org/reference/use_catch.html">Catch</a>
@@ -408,11 +408,11 @@ support in testthat. In addition there are some regular R tests in <a href="http
 <div id="vector-classes" class="section level2">
 <h2>Vector classes</h2>
 <p>All of the basic r_vector classes are class templates, the base
-template is defined in <a href="https://github.com/r-lib/cpp11/blob/main/inst/include/cpp11/r_vector.hpp">cpp11/r_vector.hpp</a>
+template is defined in <a href="https://github.com/r-lib/cpp11/blob/main/inst/include/cpp11/r_vector.hpp">cpp11/r_vector.hpp</a>.
 The template parameter is the type of <strong>value</strong> the
 particular R vector stores, e.g. <code>double</code> for
 <code>cpp11::doubles</code>. This differs from Rcpp, whose first
-template parameter is the R vector type, e.g. <code>REALSXP</code>.</p>
+template parameter is the R vector type, e.g. <code>REALSXP</code>.</p>
 <p>The file first has the class declarations, then function definitions
 further down in the file. Specializations for the various types are in
 separate files, e.g. <a href="https://github.com/r-lib/cpp11/blob/main/inst/include/cpp11/doubles.hpp">cpp11/doubles.hpp</a>,
@@ -453,21 +453,22 @@ to the previous node, and the <code>CDR</code> part to point to the next
 node. The <code>TAG</code> is used to point to the object being
 protected. The head and tail of the list have <code>R_NilValue</code> as
 their <code>CAR</code> and <code>CDR</code> pointers respectively.</p>
-<p>Calling <code>preserved.insert()</code> with a regular R object will
-add a new node to the list and return a protect token corresponding to
-the node added. Calling <code>preserved.release()</code> on this
-returned token will release the protection by unlinking the node from
-the linked list.</p>
+<p>Calling <code>cpp11::detail::store::insert()</code> with a regular R
+object will add a new node to the list and return a protect token
+corresponding to the node added. Calling
+<code>cpp11::detail::store::release()</code> on this returned token will
+release the protection by unlinking the node from the linked list. These
+two functions are considered internal to cpp11, so do not use them in
+your packages.</p>
 <p>This scheme scales in O(1) time to release or insert an object vs
 O(N) or worse time with <code>R_PreserveObject()</code> /
 <code>R_ReleaseObject()</code>.</p>
-<p>Each compilation unit has its own unique protection list, which
-avoids the need to manage a “global” protection list shared across
-compilation units within the same package and across packages. A
-previous version of cpp11 used a global protection list, but this caused
-<a href="https://github.com/r-lib/cpp11/issues/330">multiple
+<p>Each package has its own unique protection list, which avoids the
+need to manage a “global” protection list shared across packages. A
+previous version of cpp11 used a global protection list stored in an R
+global option, but this caused <a href="https://github.com/r-lib/cpp11/issues/330">multiple
 issues</a>.</p>
-<p>These functions are defined in <a href="https://github.com/r-lib/cpp11/blob/main/inst/include/cpp11/protect.hpp">protect.hpp</a></p>
+<p>These functions are defined in <a href="https://github.com/r-lib/cpp11/blob/main/inst/include/cpp11/protect.hpp">protect.hpp</a>.</p>
 </div>
 <div id="unwind-protect" class="section level3">
 <h3>Unwind Protect</h3>

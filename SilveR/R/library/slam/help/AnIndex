@@ -28,6 +28,8 @@ row_means.simple_triplet_matrix	sums
 row_norms	norms
 row_sums	sums
 row_sums.simple_triplet_matrix	sums
+simple sparse array	array
+simple triplet matrix	matrix
 simple_sparse_array	array
 simple_sparse_zero_array	array
 simple_triplet_diag_matrix	matrix

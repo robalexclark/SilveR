@@ -577,7 +577,7 @@ getOption("SweaveHooks")[["fig"]]()
 zp1 <- cox.zph(cfit1)
 zp1
 plot(zp1[2], resid=FALSE)
-abline(coef(fit1)[2] ,0, lty=3)
+abline(coef(cfit1)[2] ,0, lty=3)
 
 
 ###################################################
@@ -962,6 +962,7 @@ par(oldpar)
 ###################################################
 ### code chunk number 69: profile1
 ###################################################
+getOption("SweaveHooks")[["fig"]]()
 fit1 <- coxph(Surv(futime, fustat) ~ rx + age + resid.ds, ovarian)
 fit1
 
@@ -973,7 +974,7 @@ profile <- matrix(0, 100, 2)
 for (i in 1:100) {
     icoef <- c(fit1$coef[1], acoef[i], fit1$coef[3])
     tfit <- coxph(Surv(futime, fustat) ~ rx + age + resid.ds, ovarian,
-                  init= icoef, iter=0)
+                  init= icoef, iter.max=0)
     profile[i,1] <- tfit$loglik[2]
     delta <- c(0, acoef[i]- fit1$coef[2], 0)
     profile[i,2] <- fit1$loglik[2] - delta%*% imat %*% delta/2
@@ -992,7 +993,7 @@ myfun <- function(beta) {
     icoef <- coef(fit1)
     icoef[2] <- beta
     tfit <- coxph(Surv(futime, fustat) ~ rx + age + resid.ds, ovarian,
-                  init = icoef, iter=0)
+                  init = icoef, iter.max=0)
     (fit1$loglik - tfit$loglik)[2] - qchisq(.95, 1)/2 
 }
 uniroot(myfun, c (0, .2))$root  # lower

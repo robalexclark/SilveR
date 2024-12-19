@@ -2,6 +2,91 @@
 title: "NEWS for the emmeans package"
 ---
 
+## emmeans 1.10.4.90xxxx
+  * Fix for long-standing `weights` bug in `lme()` (#356)
+  * Fix for inconsistent contrasts in case of missing levels (#508, #509)
+  * Fix for using nuisance variables with proportional weights (#510)
+  * New function `with_emm_options()` to run code with options temporarily set
+  * Tweak to optimal-digits output that shows `SE` to 3 significant digits
+  
+  
+
+## emmeans 1.10.4
+  * Refinements in tracking static offsets
+  * Made d.f. consistent for `geeglm` and `glmgee` (#496)
+  * Fixed suggestion for installing from GitHub (#497)
+  * Change that allows factors to have `NA` levels (#500). This
+    was previously not allowed, and we added an `"allow.na.levs"` option
+    (defaults to `TRUE`) just in case we broke anything that used to work.
+  * Better default contrasts in `qdrg()` (#501)
+  * Bug fix for nuisance factors when we have a multivariate response (#503)
+  * Improved auto-detection of response transformation (#504)
+  * Bug fix for detecting cases where we can't use `nuisance` (#503)
+  * New `mvregrid()` function for multivariate response transformations
+    such as a compositional response.
+
+
+## emmeans 1.10.3
+  * Updated `mice::mira` support to use Barnard-Rubin adjusted d.f. (#494)
+  * Fix to MuMIn support so a response transformation is auto-detected
+  * Bug fix in `gls` support code (#495)
+  * I am trying to be clearer that some model-support
+    modes cause implied re-gridding, making the link function no longer operable. 
+    A new subsection discussing this was added to the "Transformations" vignette, 
+    and I also added indications of this to the "models" vignette.
+  * Don't think too hard about which recent updates (since 1.8.9) are more 
+    major than others. I'll try to be more rational about this going forward.
+ 
+
+## emmeans 1.10.2
+This update is focused mostly on trying to clear up confusion with some users
+on the distinction between `emmGrid` objects and their summaries, since they
+display identically; and on encouraging users not to bypass important
+annotations.
+
+  * Added a startup message and `help(untidy)`
+  * Added `rbind` method for `summary_emm` objects (#480). 
+    Note that `summary_emm` objects already have estimates, P-values, etc.
+    computed, so `rbind`ing them preserves those results. On the other hand,
+    `rbind`ing `emmGrid` or `emm_list` objects produce new `emmGrid` objects
+    which have *not* yet been summarized and any `adjust` methods are applied 
+    to the whole result.
+  * Created [**pkgdown** site](https://rvlenth.github.io/emmeans/)
+  
+
+## emmeans 1.10.1
+  * With `gls` or `lme` models, `mode = "satterthwaite"`
+    and `mode =  "appx-satterthwaite"` failed when model was fitted with no
+    explicit `data` argument (#465)
+  * We decided to export the `.emmc` functions, just to make it easier to
+    see and use them
+  * Added a new contrast function `wtcon.emmc(levs, wts, cmtype, ...)` which
+    generates contrasts via `multcomp::contrMat(wts, type = cmtype, ...)`
+  * `contrast()` gains a new argument `wts` which can be passed to some
+    `.emmc` functions including `eff.emmc`, `del.eff.emmc`, and `wtcon.emmc`.
+    If `wts` is left missing, we pass equal weights of `. If we specify
+    `wts = NA`, we retrieve weights from the object (potentially different in
+    each `by` group). Otherwise, the same fixed `wts` are used in each group.
+  * Added a `weights()` method for `emmGrid` objects
+  * Modification to `pwpp()` to play along if `contrast()` changes the
+    `by` variable via `options` (#472)
+  * After some wiggling around, we now allow `strata()` factors to be included in
+    the reference grid for **survival** models. It is up to the user to decide
+    what is sensible. (#429, #473)
+
+
+## emmeans 1.10.0
+  * Restored `tau` argument (now optional) for rq models (#458)
+  * Fixed issue where a multivariate factor having numeric levels may
+    mismatch a level in `at` even when apparently valid (#458)
+  * Added `cross.adjust` to legal arguments that can be passed via `misc` slot
+  * Robustified code for `cross.adjust`
+  * Fixed masking of `vcov.` in `glmgee` support (#460)
+  * Fixed an error in `xtable()` method for `summary_emm` objects
+  * Added `inner` argument to `make.tran()` to allow for compound transform;
+    e.g., `make.tran("inverse", inner = "sqrt")` is reciprocal sqrt (#462)
+  
+
 ## emmeans 1.9.0
   * Warning message about prior weights was sometimes unnecessary.
     We now suppress it when all the prior weights are equal.

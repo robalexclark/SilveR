@@ -1041,7 +1041,7 @@ numeric or character vector by applying
 <span id="cb139-7"><a href="#cb139-7" tabindex="-1"></a>    <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">2</span>),</span>
 <span id="cb139-8"><a href="#cb139-8" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">No =</span> <span class="dv">1</span>, <span class="at">Yes =</span> <span class="dv">2</span>),</span>
 <span id="cb139-9"><a href="#cb139-9" tabindex="-1"></a>    <span class="at">na_values =</span> <span class="dv">9</span></span>
-<span id="cb139-10"><a href="#cb139-10" tabindex="-1"></a>    )</span>
+<span id="cb139-10"><a href="#cb139-10" tabindex="-1"></a>  )</span>
 <span id="cb139-11"><a href="#cb139-11" tabindex="-1"></a>)</span>
 <span id="cb139-12"><a href="#cb139-12" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">look_for</span>()</span></code></pre></div>
 <pre><code>##  pos variable label col_type missing values 
@@ -1126,26 +1126,26 @@ by <code>read.dta</code> and could not be retrieved by
 variable metadata and store them in specific object of class
 <code>data.set</code>. The <code>to_labelled</code> method can convert a
 data.set into a labelled data frame.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" tabindex="-1"></a>  <span class="co"># from foreign</span></span>
-<span id="cb147-2"><a href="#cb147-2" tabindex="-1"></a>  <span class="fu">library</span>(foreign)</span>
-<span id="cb147-3"><a href="#cb147-3" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(<span class="fu">read.spss</span>(</span>
-<span id="cb147-4"><a href="#cb147-4" tabindex="-1"></a>    <span class="st">&quot;file.sav&quot;</span>,</span>
-<span id="cb147-5"><a href="#cb147-5" tabindex="-1"></a>    <span class="at">to.data.frame =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb147-6"><a href="#cb147-6" tabindex="-1"></a>    <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb147-7"><a href="#cb147-7" tabindex="-1"></a>    <span class="at">use.missings =</span> <span class="cn">FALSE</span></span>
-<span id="cb147-8"><a href="#cb147-8" tabindex="-1"></a> ))</span>
-<span id="cb147-9"><a href="#cb147-9" tabindex="-1"></a> df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(<span class="fu">read.dta</span>(</span>
-<span id="cb147-10"><a href="#cb147-10" tabindex="-1"></a>   <span class="st">&quot;file.dta&quot;</span>,</span>
-<span id="cb147-11"><a href="#cb147-11" tabindex="-1"></a>   <span class="at">convert.factors =</span> <span class="cn">FALSE</span></span>
-<span id="cb147-12"><a href="#cb147-12" tabindex="-1"></a> ))</span>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" tabindex="-1"></a><span class="co"># from foreign</span></span>
+<span id="cb147-2"><a href="#cb147-2" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb147-3"><a href="#cb147-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(<span class="fu">read.spss</span>(</span>
+<span id="cb147-4"><a href="#cb147-4" tabindex="-1"></a>  <span class="st">&quot;file.sav&quot;</span>,</span>
+<span id="cb147-5"><a href="#cb147-5" tabindex="-1"></a>  <span class="at">to.data.frame =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb147-6"><a href="#cb147-6" tabindex="-1"></a>  <span class="at">use.value.labels =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb147-7"><a href="#cb147-7" tabindex="-1"></a>  <span class="at">use.missings =</span> <span class="cn">FALSE</span></span>
+<span id="cb147-8"><a href="#cb147-8" tabindex="-1"></a>))</span>
+<span id="cb147-9"><a href="#cb147-9" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(<span class="fu">read.dta</span>(</span>
+<span id="cb147-10"><a href="#cb147-10" tabindex="-1"></a>  <span class="st">&quot;file.dta&quot;</span>,</span>
+<span id="cb147-11"><a href="#cb147-11" tabindex="-1"></a>  <span class="at">convert.factors =</span> <span class="cn">FALSE</span></span>
+<span id="cb147-12"><a href="#cb147-12" tabindex="-1"></a>))</span>
 <span id="cb147-13"><a href="#cb147-13" tabindex="-1"></a></span>
-<span id="cb147-14"><a href="#cb147-14" tabindex="-1"></a> <span class="co"># from memisc</span></span>
-<span id="cb147-15"><a href="#cb147-15" tabindex="-1"></a> <span class="fu">library</span>(memisc)</span>
-<span id="cb147-16"><a href="#cb147-16" tabindex="-1"></a> nes1948.por <span class="ot">&lt;-</span> <span class="fu">UnZip</span>(<span class="st">&quot;anes/NES1948.ZIP&quot;</span>, <span class="st">&quot;NES1948.POR&quot;</span>, <span class="at">package =</span> <span class="st">&quot;memisc&quot;</span>)</span>
-<span id="cb147-17"><a href="#cb147-17" tabindex="-1"></a> nes1948 <span class="ot">&lt;-</span> <span class="fu">spss.portable.file</span>(nes1948.por)</span>
-<span id="cb147-18"><a href="#cb147-18" tabindex="-1"></a> df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(nes1948)</span>
-<span id="cb147-19"><a href="#cb147-19" tabindex="-1"></a> ds <span class="ot">&lt;-</span> <span class="fu">as.data.set</span>(nes19480)</span>
-<span id="cb147-20"><a href="#cb147-20" tabindex="-1"></a> df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(ds)</span></code></pre></div>
+<span id="cb147-14"><a href="#cb147-14" tabindex="-1"></a><span class="co"># from memisc</span></span>
+<span id="cb147-15"><a href="#cb147-15" tabindex="-1"></a><span class="fu">library</span>(memisc)</span>
+<span id="cb147-16"><a href="#cb147-16" tabindex="-1"></a>nes1948.por <span class="ot">&lt;-</span> <span class="fu">UnZip</span>(<span class="st">&quot;anes/NES1948.ZIP&quot;</span>, <span class="st">&quot;NES1948.POR&quot;</span>, <span class="at">package =</span> <span class="st">&quot;memisc&quot;</span>)</span>
+<span id="cb147-17"><a href="#cb147-17" tabindex="-1"></a>nes1948 <span class="ot">&lt;-</span> <span class="fu">spss.portable.file</span>(nes1948.por)</span>
+<span id="cb147-18"><a href="#cb147-18" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(nes1948)</span>
+<span id="cb147-19"><a href="#cb147-19" tabindex="-1"></a>ds <span class="ot">&lt;-</span> <span class="fu">as.data.set</span>(nes19480)</span>
+<span id="cb147-20"><a href="#cb147-20" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">to_labelled</span>(ds)</span></code></pre></div>
 </div>
 <div id="using-labelled-with-dplyrmagrittr" class="section level2">
 <h2>Using labelled with dplyr/magrittr</h2>

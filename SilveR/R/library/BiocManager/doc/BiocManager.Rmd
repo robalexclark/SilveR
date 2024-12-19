@@ -6,7 +6,7 @@ author:
 - name: Martin Morgan
   affiliation: Roswell Park Comprehensive Cancer Center, Buffalo, NY
 output:
-  html_document:
+  BiocStyle::html_document:
       toc: true
 vignette: |
   %\VignetteIndexEntry{Installing and Managing Bioconductor Packages}
@@ -65,10 +65,10 @@ BiocManager::install()
 To install CRAN package versions consistent with previous releases of
 Bioconductor, use the [BiocArchive][BiocArchive] package. BiocArchive enables
 contemporary installations of CRAN packages with out-of-date _Bioconductor_
-releases using [Posit Package Manager][RSPM].
+releases using [Posit Public Package Manager][P3M].
 
 [BiocArchive]: https://github.com/Bioconductor/BiocArchive
-[RSPM]: https://packagemanager.posit.co/client/#/repos/2/overview
+[P3M]: https://packagemanager.posit.co/
 
 ## Version and validity of installations
 
@@ -123,6 +123,101 @@ BiocManager::available("BSgenome.Hsapiens") # BSgenome.Hsapiens.* packages
 Questions about installing and managing _Bioconductor_ packages should
 be addressed to the [_Bioconductor_ support site][3].
 
+## Updating old packages
+
+The user can often get an update packages prompt similar to:
+
+```
+> BiocManager::install("AnVIL")
+Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.1 (2023-06-16)
+Old packages: 'AnnotationDbi', 'arrow', 'basilisk.utils', 'beachmat',
+  'BiocParallel', 'BiocSingular', 'biocthis', 'Biostrings', 'bluster',
+  'DelayedArray', 'downlit', 'edgeR', 'GenomeInfoDb', 'GenomicFeatures',
+  'IRanges', 'limma', 'pkgbuild', 'pkgload', 'processx', 'RcppSpdlog', 'rhdf5',
+  'rstudioapi', 'SingleR', 'testthat', 'usethis', 'xml2', 'KernSmooth',
+  'Matrix', 'mgcv'
+Update all/some/none? [a/s/n]:
+```
+
+A decision should be made regarding updating packages. In the following section
+we will detail the rationale, pros, and cons of updating packages.
+
+(An initial draft of this section was produced by ChatGPT on 28 August 2023)
+
+### Rationale
+
+Package updates often include bug fixes, improvements in functionality, and
+optimizations. By updating, the user can ensure that they are benefiting from
+the latest enhancements and fixes in the packages they use.
+
+### Pros of updating
+
+* **Bug Fixes**: Updating packages can resolve known issues and bugs present in
+older versions. This can lead to more accurate and reliable analyses.
+* **Performance**: Package updates might come with performance optimizations
+that can lead to faster execution of code and analyses.
+* **New Features**: Updated packages might introduce new features, functions,
+and capabilities that can enhance your workflow and analysis options.
+* **Compatibility**: Newer packages are often developed with compatibility in
+mind. Using outdated packages might lead to compatibility issues with other
+packages or R itself.
+* **Security**: In some cases, package updates address security
+vulnerabilities. Keeping packages up to date can help maintain the security of
+the computational environment.
+* **Documentation**: Newer versions of packages might come with updated
+documentation that reflects recent changes and improvements in package
+functionality.
+
+### Cons of updating
+
+* **Code Breakage**: Updates can introduce changes in package behavior,
+function signatures, or syntax. This can potentially break existing code if it
+relies on the previous behavior.
+* **Version Conflicts**: Updates to one package might trigger dependencies on
+updated versions of other packages. This can lead to conflicts if those updated
+versions are not compatible with other parts of your workflow.
+* **Workflow Disruption**: When you update packages, you might need to retest
+and validate your analyses to ensure that the changes in package behavior don't
+affect your results.
+* **Learning Curve**: New features and changes introduced in updated packages
+might require you to invest time in understanding how to use them effectively.
+* **Temporary Instability**: Right after a major update, the new version might
+not be as stable as the previous one, leading to unexpected behavior.
+
+### Balancing the Decision
+
+* Consider how critical the package is to your analysis. If a package is central
+to your workflow, updating might be more important.
+* Read the release notes of the package to understand what changes are
+introduced in the update.
+* Consider using a separate environment (e.g., Docker container) for testing
+updates before applying them to the main analysis environment.
+* Make sure to backup code and data before performing updates.
+* Check if there are any compatibility issues with other packages you are using.
+
+## Archived CRAN packages
+
+In the event that a package is no longer available on CRAN, it may be
+desirable to install an archived package, especially if it is assumed that the
+package will return to an unarchived state at a later date. Users who wish to
+protect their systems from the consequences of these state changes can
+install archived packages by using the [CRANhaven][] repository. This repository
+contains archived versions of CRAN packages for up to five weeks or until
+they are unarchived on CRAN. To enable archived CRAN package installations, the
+user can run the following command:
+
+```{r,eval=FALSE}
+options(
+    repos = c(
+        getOption("repos"),
+        CRANhaven = "https://cranhaven.r-universe.dev"
+    )
+)
+BiocManager::install('archivedPackage')
+```
+
+[CRANhaven]: https://www.cranhaven.org/
+
 # Advanced use
 
 ## Changing version
@@ -148,6 +243,33 @@ Error: Bioconductor version '3.9' requires R version '3.6'; see
 
 A special version, `version="devel"`, allows use of _Bioconductor_
 packages that are under development.
+
+## Unsupported *R* / *Bioconductor* versions
+
+The main purpose of BiocManager is to ensure that users install the
+version of *Bioconductor* appropriate for their version of *R*. Use
+the environment variable `R_BIOC_VERSION` to install any version of
+*Bioconductor* on any version of *R*. Thus *R* version 4.3.0 and
+*Bioconductor* version 3.19 are not compatible...
+
+```
+> BiocManager::install(version = "3.19")
+Error: Bioconductor version '3.19' requires R version '4.4'; use
+  `version = '3.18'` with R version 4.3; see
+  https://bioconductor.org/install
+```
+
+...but the version can be forced with
+
+```
+> Sys.setenv(R_BIOC_VERSION="3.19")
+> BiocManager::install(version = "3.19")
+...
+Bioconductor version 3.19 (BiocManager 1.30.23), R 4.3.0 (2023-04-21)
+```
+
+**Note**. Compatibility of Bioconductor with a mismatched version of R
+is not guaranteed and support is not provided for such installations.
 
 ## Managing multiple versions {#multiple-versions}
 

@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -431,8 +431,7 @@ example)</p>
 <p>Let’s note that in this example we use <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/break-after"><code>break-after</code></a>
 property instead of <code>page-break-after</code> as it is recommended
 now to use the former which is the replacement. The latter is kept
-around for <a href="https://caniuse.com/#search=page-break">compatibility reason with
-browsers</a>.</p>
+around for compatibility reason with browsers.</p>
 </div>
 <div id="word" class="section level3">
 <h3>Using with Word documents</h3>
@@ -580,7 +579,8 @@ add it as a pandoc option if the output format.</p>
 <span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>}</span>
 <span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="fu">basename</span>(<span class="fu">custom_format</span>()<span class="sc">$</span>pandoc<span class="sc">$</span>lua_filters)</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;new.lua&quot;       &quot;pagebreak.lua&quot; &quot;latex-div.lua&quot;</span></span></code></pre></div>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;new.lua&quot;           &quot;pagebreak.lua&quot;     &quot;latex-div.lua&quot;    </span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; [4] &quot;table-classes.lua&quot;</span></span></code></pre></div>
 <p>Or by creating a new format :</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>custom_format <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">toc =</span> <span class="cn">TRUE</span>, ...) {</span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  rmarkdown<span class="sc">::</span><span class="fu">output_format</span>(</span>
@@ -592,7 +592,8 @@ add it as a pandoc option if the output format.</p>
 <span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a>}</span>
 <span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a></span>
 <span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="fu">basename</span>(<span class="fu">custom_format</span>()<span class="sc">$</span>pandoc<span class="sc">$</span>lua_filters)</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;pagebreak.lua&quot; &quot;latex-div.lua&quot; &quot;new.lua&quot;</span></span></code></pre></div>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; [1] &quot;pagebreak.lua&quot;     &quot;latex-div.lua&quot;     &quot;table-classes.lua&quot;</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt; [4] &quot;new.lua&quot;</span></span></code></pre></div>
 <p>As this is an advanced feature, if you want to go further, we
 encourage you to look at the examples of formats in packages such as
 <strong>rmarkdown</strong>, <strong>bookdown</strong> or

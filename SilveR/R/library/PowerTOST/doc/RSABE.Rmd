@@ -59,10 +59,7 @@ If simulating for power (`theta0` within the BE limits), `nsims` defaults to 100
 #    design                        name   df
 #   "2x2x3"   2x2x3 replicate crossover 2n-3
 #   "2x2x4"   2x2x4 replicate crossover 3n-4
-#   "2x4x4"   2x4x4 replicate crossover 3n-4
 #   "2x3x3"   partial replicate (2x3x3) 2n-3
-#   "2x4x2"            Balaam’s (2x4x2)  n-2
-#  "2x2x2r" Liu’s 2x2x2 repeated x-over 3n-2
 ```
 The terminology of the `design` argument follows this pattern: `treatments x sequences x periods`.
 
@@ -81,7 +78,7 @@ Regulatory conditions and methods of evaluation are different.
 #        FDA      0.3    none 0.89257   none   none      TRUE    ISC
 ```
 `CVswitch` is the lower cap of scaling, *i.e.*, if *CV*~wR~ is below this value reference-scaling is not acceptable. The upper cap of scaling `CVcap` differes between the EMA and HC, whereas for the FDA scaling is unlimited. The regulatory constant `r_const` is used for calculating the expanded limits (EMA, HC) and ‘implied limits’ (FDA) based on *s*~wR~: $\small{\left [ L,U \right ]=100\cdot\exp (\mp 0.760\cdot s_{\textrm{wR}})}$\
-Here `L` and `U` give the maximum acceptable expansion based on $\small{s_{\textrm{wR}}^{*}=\sqrt{\log_{e}(CV_\textrm{cap}^2)+1}}$. The point estimate constraint `pe_constr` [0.80, 1.25] is applicable in all regulations. Evaluation has to be performed by ANOVA (EMA) or a mixed-effects model (HC, FDA). For the latter intra-subject contrasts are a suffiently close approximation.
+Here `L` and `U` give the maximum acceptable expansion based on $\small{s_{\textrm{wR}}^{*}=\sqrt{\log_{e}(CV_\textrm{cap}^2)+1}}$. The point estimate constraint `pe_constr` [0.80, 1.25] is applicable in all regulations. Evaluation has to be performed by ANOVA (EMA) or a mixed-effects model (HC, FDA). For the latter intra-subject contrasts are a sufficiently close approximation.
  
 # Sample Size
 ## Highly Variable Drugs / Drug Products
@@ -246,7 +243,9 @@ sampleN.scABEL(CV = 0.55, regulator = "HC")
 # 39   0.8142
 ```
 ### Gulf Cooperation Council
-Special case of ABEL: Conventional limits if *CV*~wR~ ≤30\% and widened limits of 0.7500--1.3333 otherwise. No upper cap of widening. Defaults as above but `regulator = "GCC"`.
+Special case of ABEL: Conventional limits if *CV*~wR~ ≤30\% and widened limits of 0.7500--1.3333 otherwise. 
+No upper cap of widening. Defaults as above but `regulator = "GCC"`.
+Only to compare with previous studies because since in Version 3.1 of 10 August 2022 the GCC implemented the EMA’s method.
 
 ```r
 sampleN.scABEL(CV = 0.55, regulator = "GCC")
@@ -500,7 +499,7 @@ scABEL.ad(CV = CV, design = "2x2x4", n = n)
 # PE constraints                : 0.8000 ... 1.2500
 # Empiric TIE for alpha 0.0500  : 0.04889
 # Power for theta0 0.9000       : 0.811
-# TIE = nominal alpha; no adjustment of alpha is required.
+# TIE ≤ nominal alpha; no adjustment of alpha is required.
 ```
 Inside the region of inflated type I errors.
 
@@ -626,8 +625,9 @@ print(res, row.names = FALSE)
 #  0.50000 0.6984 1.4319   upper 0.698 1.432        0.750 1.333        
 #  0.57382 0.6984 1.4319   upper 0.667 1.500  upper 0.750 1.333
 ```
-For all agencies the lower cap for scaling is 30\%. Whereas the upper cap for the EMA is at 50\% (expanded limits 69.84--143.19\%), for Health Canada it is at ~57.4\% (expanded limits 66.7--150.0\%). The GCC has no upper cap (fixed widened limits 75.00--133.33\%).
-
+For all agencies the lower cap for scaling is 30\%. Whereas the upper cap for the EMA is at 50\% (expanded limits 69.84--143.19\%), for Health Canada it is at ~57.4\% (expanded limits 66.7--150.0\%). 
+The GCC had no upper cap (fixed widened limits 75.00--133.33\%); since August 2022 
+the GCC uses the EMA’s method.
 ### FDA
 For the FDA there is no upper cap (scaling is unlimited).
 
@@ -719,4 +719,4 @@ for (i in 1:4) {
 |`sampleN.scABEL.ad`, `sampleN.scABEL.sdsims`, `sampleN.RSABE2L.sdsims`,<br />`scABEL.ad`|Helmut Schütz|
 
 # License{#license}
-<h4 class="author">[GPL-3](https://cran.r-project.org/web/licenses/GPL-3 "GNU General Public License, Version 3") 2022-02-19 Helmut Schütz</h4>
+<h4 class="author">[GPL-3](https://cran.r-project.org/web/licenses/GPL-3 "GNU General Public License, Version 3") 2024-02-29 Helmut Schütz</h4>

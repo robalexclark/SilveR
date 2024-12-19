@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 library(ggplot2)
 knitr::opts_chunk$set(fig.dpi = 96, collapse = TRUE, comment = "#>")
 
@@ -31,7 +31,7 @@ ggplot(linetypes, aes(0, y)) +
   scale_x_continuous(NULL, breaks = NULL) + 
   scale_y_reverse(NULL, breaks = NULL)
 
-## ---- out.width = "30%", fig.show = "hold"------------------------------------
+## ----out.width = "30%", fig.show = "hold"-------------------------------------
 df <- data.frame(x = 1:3, y = c(4, 1, 9))
 base <- ggplot(df, aes(x, y)) + xlim(0.5, 3.5) + ylim(0, 10)
 base + 
@@ -46,7 +46,7 @@ base +
   geom_path(linewidth = 10, lineend = "square") + 
   geom_path(linewidth = 1, colour = "red")
 
-## ---- out.width = "30%", fig.show = "hold"------------------------------------
+## ----out.width = "30%", fig.show = "hold"-------------------------------------
 df <- data.frame(x = 1:3, y = c(9, 1, 9))
 base <- ggplot(df, aes(x, y)) + ylim(0, 10)
 base + 

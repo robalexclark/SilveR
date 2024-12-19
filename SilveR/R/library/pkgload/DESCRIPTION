@@ -1,6 +1,6 @@
 Package: pkgload
 Title: Simulate Package Installation and Attach
-Version: 1.3.4
+Version: 1.4.0
 Authors@R: c(
     person("Hadley", "Wickham", role = "aut"),
     person("Winston", "Chang", role = "aut"),
@@ -17,18 +17,18 @@ License: GPL-3
 URL: https://github.com/r-lib/pkgload, https://pkgload.r-lib.org
 BugReports: https://github.com/r-lib/pkgload/issues
 Depends: R (>= 3.4.0)
-Imports: cli (>= 3.3.0), crayon, desc, fs, glue, methods, pkgbuild,
-        rlang (>= 1.1.1), rprojroot, utils, withr (>= 2.4.3)
-Suggests: bitops, covr, mathjaxr, mockr, pak, Rcpp, remotes,
-        rstudioapi, testthat (>= 3.1.0)
+Imports: cli (>= 3.3.0), desc, fs, glue, lifecycle, methods, pkgbuild,
+        processx, rlang (>= 1.1.1), rprojroot, utils, withr (>= 2.4.3)
+Suggests: bitops, jsonlite, mathjaxr, pak, Rcpp, remotes, rstudioapi,
+        testthat (>= 3.2.1.1), usethis
 Config/Needs/website: tidyverse/tidytemplate, ggplot2
 Config/testthat/edition: 3
 Config/testthat/parallel: TRUE
 Config/testthat/start-first: dll
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 NeedsCompilation: no
-Packaged: 2024-01-16 10:14:57 UTC; lionel
+Packaged: 2024-06-28 10:36:56 UTC; lionel
 Author: Hadley Wickham [aut],
   Winston Chang [aut],
   Jim Hester [aut],
@@ -38,5 +38,5 @@ Author: Hadley Wickham [aut],
     R)
 Maintainer: Lionel Henry <lionel@posit.co>
 Repository: CRAN
-Date/Publication: 2024-01-16 12:20:04 UTC
-Built: R 4.3.2; ; 2024-01-18 00:50:58 UTC; windows
+Date/Publication: 2024-06-28 11:30:02 UTC
+Built: R 4.3.3; ; 2024-11-24 02:50:14 UTC; windows

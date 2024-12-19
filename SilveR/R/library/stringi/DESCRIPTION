@@ -1,6 +1,6 @@
 Package: stringi
-Version: 1.8.3
-Date: 2023-12-10
+Version: 1.8.4
+Date: 2024-05-06
 Title: Fast and Portable Character String Processing Facilities
 Description: A collection of character string/text/natural language
     processing tools for pattern searching (e.g., with 'Java'-like regular
@@ -28,9 +28,9 @@ Maintainer: Marek Gagolewski <marek@gagolewski.com>
 RoxygenNote: 7.2.3
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2023-12-10 07:26:05 UTC; gagolews
+Packaged: 2024-05-06 12:50:25 UTC; gagolews
 License_is_FOSS: yes
 Repository: CRAN
-Date/Publication: 2023-12-11 22:50:03 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2023-12-12 00:51:28 UTC; windows
+Date/Publication: 2024-05-06 15:00:02 UTC
+Built: R 4.3.3; x86_64-w64-mingw32; 2024-05-07 23:50:59 UTC; windows
 Archs: x64

@@ -39,6 +39,7 @@ as.integer64.integer	as.integer64.character
 as.integer64.integer64	as.integer64.character
 as.integer64.logical	as.integer64.character
 as.integer64.NULL	as.integer64.character
+as.list.integer64	as.character.integer64
 as.logical.integer64	as.character.integer64
 as.ordered.integer64	as.character.integer64
 benchmark64	benchmark64

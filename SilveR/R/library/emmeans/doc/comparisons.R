@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE-------------------------
+## ----echo = FALSE, results = "hide", message = FALSE--------------------------
 require("emmeans")
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
 
@@ -21,7 +21,7 @@ eff_size(pigs.emm.s, sigma = sigma(pigs.lm), edf = 23)
 ## -----------------------------------------------------------------------------
 eff_size(pigs.emm.s, sigma = sigma(pigs.lm), edf = Inf)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  eff_size(pairs(pigs.emm.s), sigma = sigma(pigs.lm), edf = 23, method = "identity")
 
 ## ----fig.height = 1.5, fig.alt = "side-by-side CIs with comparison arrows added"----
@@ -30,12 +30,12 @@ plot(pigs.emm.s, comparisons = TRUE)
 ## ----fig.alt = "Pairwise P-value plot that shows, for each pair of means, a vertical line segment whose horizontal position is the Tukey-adjusted P-value for that comparison. The endpoints of the line segments align with the vertical scale showing the soy levels and their means. This particular plot shows that skim-fish and soy-fish are highyly significant, while skim-soy has a P-value just over 0.05"----
 pwpp(pigs.emm.s)
 
-## ---- fig.width = 9, fig.alt = "pwpp for all 78 pairwise comparisons of cell means. It is pretty hard to digest due to its complexity. To see all this information in text form, call pwpm(pigs.cells)"----
+## ----fig.width = 9, fig.alt = "pwpp for all 78 pairwise comparisons of cell means. It is pretty hard to digest due to its complexity. To see all this information in text form, call pwpm(pigs.cells)"----
 pigs.lmint <- lm(log(conc) ~ source * factor(percent), data = pigs)
 pigs.cells <- emmeans(pigs.lmint, ~ source * percent)
 pwpp(pigs.cells, type = "response")
 
-## ---- fig.width = 6, fig.alt = "pwpp presented in separate panels for each source. Each panel has just 6 P-value bars, making it much less cluttered than the previous figure"----
+## ----fig.width = 6, fig.alt = "pwpp presented in separate panels for each source. Each panel has just 6 P-value bars, making it much less cluttered than the previous figure"----
 pwpp(pigs.cells, by = "source", type = "response")
 
 ## -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ org.emml <- emmeans(org.aov, consec ~ day)
 org.emml
 
 ## -----------------------------------------------------------------------------
-skip_comp.emmc <- function(levels, skip = 1, reverse = FALSE) {
+skip_comp.emmc <- function(levels, skip = 1, reverse = FALSE, ...) {
     if((k <- length(levels)) < skip + 1)
         stop("Need at least ", skip + 1, " levels")
     coef <- data.frame()

@@ -136,6 +136,7 @@ nobsY                   Compute Number of Observations for Left Hand
                         Side of Formula
 nstr                    Creates a string of arbitry length
 num.intercepts          Extract number of intercepts
+pMedian                 pMedian
 pairUpDiff              pairUpDiff
 panel.bpplot            Box-Percentile Panel Function for Trellis
 partition               Patitions an object into different sets
@@ -152,10 +153,12 @@ print.char.list         prints a list of lists in a visually readable
                         format.
 print.char.matrix       Function to print a matrix with stacked cells
 print.princmp           print.princmp
+printL                  printL
 prn                     Print and Object with its Name
 prselect                Selectively Print Lines of a Text Vector
 pstamp                  Date/Time/Directory Stamp the Current Plot
 qcrypt                  qcrypt
+r2describe              r2describe
 rMultinom               Generate Multinomial Random Variables with
                         Varying Probabilities
 rcorr                   Matrix of Correlations and P-values

@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 7, fig.align = "center")
 library(ggplot2)
 
@@ -172,7 +172,7 @@ ggplot(mpg, aes(displ, colour = drv)) +
 ## -----------------------------------------------------------------------------
 StatDensityCommon <- ggproto("StatDensity2", Stat, 
   required_aes = "x",
-  default_aes = aes(y = stat(density)),
+  default_aes = aes(y = after_stat(density)),
 
   compute_group = function(data, scales, bandwidth = 1) {
     d <- density(data$x, bw = bandwidth)
@@ -180,7 +180,7 @@ StatDensityCommon <- ggproto("StatDensity2", Stat,
   }  
 )
 
-ggplot(mpg, aes(displ, drv, colour = stat(density))) + 
+ggplot(mpg, aes(displ, drv, colour = after_stat(density))) + 
   stat_density_common(bandwidth = 1, geom = "point")
 
 ## -----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ ggplot(mpg, aes(displ, fill = drv)) +
 ## -----------------------------------------------------------------------------
 StatDensityCommon <- ggproto("StatDensityCommon", Stat, 
   required_aes = "x",
-  default_aes = aes(y = stat(density)),
+  default_aes = aes(y = after_stat(density)),
 
   setup_params = function(data, params) {
     min <- min(data$x) - 3 * params$bandwidth
@@ -212,7 +212,7 @@ StatDensityCommon <- ggproto("StatDensityCommon", Stat,
 
 ggplot(mpg, aes(displ, fill = drv)) + 
   stat_density_common(bandwidth = 1, geom = "area", position = "stack")
-ggplot(mpg, aes(displ, drv, fill = stat(density))) + 
+ggplot(mpg, aes(displ, drv, fill = after_stat(density))) + 
   stat_density_common(bandwidth = 1, geom = "raster")
 
 ## ----GeomSimplePoint----------------------------------------------------------
@@ -460,7 +460,7 @@ facet_trans <- function(trans, horizontal = TRUE, shrink = TRUE) {
   ggproto(NULL, FacetTrans,
     shrink = shrink,
     params = list(
-      trans = scales::as.trans(trans),
+      trans = scales::as.transform(trans),
       horizontal = horizontal
     )
   )
@@ -692,4 +692,98 @@ FacetBootstrap <- ggproto("FacetBootstrap", FacetWrap,
 ggplot(diamonds, aes(carat, price)) + 
   geom_point(alpha = 0.1) + 
   facet_bootstrap(n = 9, prop = 0.05)
+
+## -----------------------------------------------------------------------------
+p <- ggplot(mpg, aes(displ, hwy, colour = drv)) +
+  geom_point() +
+  scale_colour_discrete(
+    labels = c("4-wheel drive", "front wheel drive", "rear wheel drive")
+  )
+
+get_guide_data(p, "colour")
+
+## -----------------------------------------------------------------------------
+GuideKey <- ggproto(
+  "Guide", GuideAxis,
+  
+  # Some parameters are required, so it is easiest to copy the base Guide's
+  # parameters into our new parameters.
+  # We add a new 'key' parameter for our own guide.
+  params = c(GuideAxis$params, list(key = NULL)),
+  
+  # It is important for guides to have a mapped aesthetic with the correct name
+  extract_key = function(scale, aesthetic, key, ...) {
+    key$aesthetic <- scale$map(key$aesthetic)
+    names(key)[names(key) == "aesthetic"] <- aesthetic
+    key
+  }
+)
+
+## -----------------------------------------------------------------------------
+guide_key <- function(
+  aesthetic, value = aesthetic, label = as.character(aesthetic),
+  ...,
+  # Standard guide arguments
+  theme = NULL, title = waiver(), order = 0, position = waiver()
+) {
+  
+  key <- data.frame(aesthetic, .value = value, .label = label, ...)
+  
+  new_guide(
+    # Arguments passed on to the GuideKey$params field
+    key = key, theme = theme, title = title, order = order, position = position,
+    # Declare which aesthetics are supported
+    available_aes = c("x", "y"),
+    # Set the guide class
+    super = GuideKey
+  )
+}
+
+## ----key_example--------------------------------------------------------------
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  scale_x_continuous(
+    guide = guide_key(aesthetic = 2:6 + 0.5)
+  )
+
+## ----key_ggproto_edit---------------------------------------------------------
+# Same as before
+GuideKey <- ggproto(
+  "Guide", GuideAxis,
+  params = c(GuideAxis$params, list(key = NULL)),
+  extract_key = function(scale, aesthetic, key, ...) {
+    key$aesthetic <- scale$map(key$aesthetic)
+    names(key)[names(key) == "aesthetic"] <- aesthetic
+    key
+  },
+  
+  # New method to draw labels
+  build_labels = function(key, elements, params) {
+    position <- params$position
+    # Downstream code expects a list of labels
+    list(element_grob(
+      elements$text,
+      label = key$.label,
+      x = switch(position, left = 1, right = 0, key$x),
+      y = switch(position, top = 0, bottom = 1, key$y),
+      margin_x = position %in% c("left", "right"),
+      margin_y = position %in% c("top", "bottom"),
+      colour = key$colour
+    ))
+  }
+)
+
+## ----key_example_2------------------------------------------------------------
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  guides(
+    x = guide_key(
+      aesthetic = 2:6 + 0.5,
+      colour = c("red", "grey", "red", "grey", "red")
+    ),
+    x.sec = guide_key(
+      aesthetic = c(2, 4, 6), 
+      colour = c("tomato", "limegreen", "dodgerblue")
+    )
+  )
 

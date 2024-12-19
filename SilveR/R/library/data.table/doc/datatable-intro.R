@@ -205,11 +205,11 @@ DT[, .(val = c(a,b)), by = ID]
 DT[, .(val = list(c(a,b))), by = ID]
 
 ## -------------------------------------------------------------------------------------------------
-## (1) look at the difference between
-DT[, print(c(a,b)), by = ID]
+## look at the difference between
+DT[, print(c(a,b)), by = ID] # (1)
 
-## (2) and
-DT[, print(list(c(a,b))), by = ID]
+## and
+DT[, print(list(c(a,b))), by = ID] # (2)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  DT[i, j, by]

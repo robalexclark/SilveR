@@ -7,6 +7,13 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 library(ggstats)
 
+## ----include=FALSE------------------------------------------------------------
+if (
+  !broom.helpers::.assert_package("emmeans", boolean = TRUE)
+) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 ## ----ggcoef-reg---------------------------------------------------------------
 data(tips, package = "reshape")
 mod_simple <- lm(tip ~ day + time + total_bill, data = tips)
@@ -25,7 +32,7 @@ ggcoef_model(mod_titanic, exponentiate = TRUE)
 
 ## -----------------------------------------------------------------------------
 library(labelled)
-tips_labelled <- tips %>%
+tips_labelled <- tips |>
   set_variable_labels(
     day = "Day of the week",
     time = "Lunch or Dinner",
@@ -214,6 +221,6 @@ ggcoef_compare(models)
 ggcoef_compare(models, type = "faceted")
 
 ## ----echo=FALSE---------------------------------------------------------------
-broom.helpers::supported_models %>%
+broom.helpers::supported_models |>
   knitr::kable()
 

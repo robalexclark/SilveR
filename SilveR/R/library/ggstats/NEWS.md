@@ -1,3 +1,42 @@
+# ggstats 0.7.0
+
+**Minor breaking change**
+
+* `position_likert_count()` has been renamed as `position_diverging()` (#69)
+* R minimum version 4.2.0 is now required.
+
+**Improvements**
+
+* new experimental plot: `ggcascade()` for "cascade" plots (#71)
+* new scale `scale_fill_likert()` (#64)
+* new geometries: `geom_prop_bar()` and `geom_prop_text()` (#69)
+* new geometries: `geom_diverging()`, `geom_likert()`,
+  `geom_pyramid()` and `geom_diverging_text()`, `geom_likert_text()`,
+  `geom_pyramid_text()` (#69)
+
+* new helper `symmetric_limits()` to make a scale symmetric (#66)
+* new helper `pal_extender()` and corresponding `scale_fill_extender()` and
+  `scale_colour_extender()`
+* new helper `weighted.sum()` for weighted sums (#71)
+  
+* new sorting option `"prop_lower"` for `gglikert()` (#62)
+* new argument `symmetric` for `gglikert()` (#66)
+* new arguments `default_by`, `height`, `labels` and `labeller` for
+  `stat_prop()` (#69)
+* new returned statistics for `stat_prop()`: `after_stat(denominator)`,
+  `after_stat(height)` and `after_stat(labels)`
+
+# ggstats 0.6.0
+
+**Improvements**
+
+* new function `hex_bw()` to identify a suitable font color given a background
+  color (#57)
+* new default value `"auto"` for `labels_color` argument in `gglikert()` and
+  `gglikert_stacked()` (using `hex_bw()`) (#57)
+* new argument `data_fun` for `gglikert()`, `gglikert_data()` and
+  `gglikert_stacked()` (#60)
+
 # ggstats 0.5.1
 
 **Bug fixes**
@@ -9,7 +48,7 @@
 
 **Improvements**
 
-* New options `labels_color` and `totals_color` in `gglikert()` and
+* new options `labels_color` and `totals_color` in `gglikert()` and
   `gglikert_stacked()` (#43)
 
 **Bug fixes**

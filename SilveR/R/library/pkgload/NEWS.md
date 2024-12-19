@@ -1,3 +1,36 @@
+# pkgload 1.4.0
+
+* The `reset` argment of `load_all()` is no longer supported because preserving
+  the namespace requires unlocking its environment, which is no longer possible
+  in recent versions of R. It should no longer be necessary as the performance
+  issues caused by resetting the namespace were resolved a while ago.
+ 
+* New experimental feature for generating a `compile_commands.json` file after
+  each `load_all()`. This file is used by LSP servers such as clangd to provide
+  intellisense features in your native files. To enable it, add this directive
+  to your `DESCRIPTION` file:
+
+  ```
+  Config/build/compilation-database: true
+  ```
+
+  You'll also want to add `compile_commands.json` and `.cache` to your gitignore
+  and Rbuildignore files.
+
+  To accomplish all these steps, feel free to use the unexported function
+  `pkgload:::use_compilation_db()`. It will eventually be exported from the
+  usethis package.
+
+* `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
+  
+* User onload hooks are now passed a library path.
+
+* Fixed an error when updating packages on load (@olivroy, #261).
+
+* Fixed a bug in `shim_help()` where a complex `package = ` argument
+  evaluating to `NULL` would cause an error (#266).
+
+
 # pkgload 1.3.4
 
 * On load, pkgload now sets `PKGLOAD_PARENT_TEMPDIR` to the temporary

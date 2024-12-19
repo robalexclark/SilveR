@@ -29,7 +29,7 @@ paste(s, d$text, sep = '')
 m = highr:::cmd_latex[d$token, ]
 cbind(d, m)
 # use standard markup if tokens do not exist in the table
-m[is.na(m[, 1]), ] = highr:::cmd_latex['STANDARD', ]
+m[is.na(m[, 1]), ] = highr:::cmd_latex['DEFAULT', ]
 paste(s, m[, 1], d$text, m[, 2], sep = '', collapse = '')
 
 ## -----------------------------------------------------------------------------

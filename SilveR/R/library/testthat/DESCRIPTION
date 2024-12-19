@@ -1,6 +1,6 @@
 Package: testthat
 Title: Unit Testing for R
-Version: 3.2.1
+Version: 3.2.1.1
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@posit.co", role = c("aut", "cre")),
     person("Posit Software, PBC", role = c("cph", "fnd")),
@@ -31,12 +31,12 @@ Config/testthat/start-first: watcher, parallel*
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2023-11-30 22:07:21 UTC; hadleywickham
+Packaged: 2024-04-14 03:24:27 UTC; ripley
 Author: Hadley Wickham [aut, cre],
   Posit Software, PBC [cph, fnd],
   R Core team [ctb] (Implementation of utils::recover())
 Maintainer: Hadley Wickham <hadley@posit.co>
 Repository: CRAN
-Date/Publication: 2023-12-02 11:50:05 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 04:18:03 UTC; windows
+Date/Publication: 2024-04-14 05:24:52
+Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-24 03:00:35 UTC; windows
 Archs: x64

@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE---------------------------------------------
+## ----echo = FALSE, results = "hide", message = FALSE----------------------------------------------
 require("emmeans")
 emm_options(opt.digits = TRUE)
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro") 
@@ -74,7 +74,7 @@ str(pigs.emm.ss)
 ## -------------------------------------------------------------------------------------------------
 emmeans(pigs.emm.ss, pairwise ~ type)
 
-## ---- message = FALSE-----------------------------------------------------------------------------
+## ----message = FALSE------------------------------------------------------------------------------
 warp <- transform(warpbreaks, treat = interaction(wool, tension))
 library(nlme)
 warp.gls <- gls(breaks ~ treat, weights = varIdent(form = ~ 1|treat), data = warp)

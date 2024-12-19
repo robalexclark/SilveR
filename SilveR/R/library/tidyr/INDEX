@@ -45,4 +45,4 @@ unnest_longer           Unnest a list-column into rows
 unnest_wider            Unnest a list-column into columns
 us_rent_income          US rent and income data
 who                     World Health Organization TB data
-world_bank_pop          Population data from the world bank
+world_bank_pop          Population data from the World Bank

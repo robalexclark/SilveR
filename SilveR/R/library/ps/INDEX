@@ -2,6 +2,7 @@ CleanupReporter         testthat reporter that checks if child
                         processes are cleaned up in tests
 errno                   List of 'errno' error codes
 ps                      Process table
+ps_apps                 List currently running applications
 ps_boot_time            Boot time of the system
 ps_children             List of child processes (process objects) of
                         the process. Note that this typically requires
@@ -15,15 +16,19 @@ ps_create_time          Start time of a process
 ps_cwd                  Process current working directory as an
                         absolute path.
 ps_descent              Query the ancestry of a process
+ps_disk_io_counters     System-wide disk I/O counters
 ps_disk_partitions      List all mounted partitions
 ps_disk_usage           Disk usage statistics, per partition
 ps_environ              Environment variables of a process
 ps_exe                  Full path of the executable of a process
+ps_fs_info              File system information for files
+ps_fs_mount_point       Find the mount point of a file or directory
+ps_fs_stat              File status
 ps_get_cpu_affinity     Query or set CPU affinity
 ps_handle               Create a process handle
 ps_interrupt            Interrupt a process
 ps_is_running           Checks whether a process is running
-ps_kill                 Kill a process
+ps_kill                 Kill one or more processes
 ps_loadavg              Return the average system load over the last 1,
                         5 and 15 minutes as a tuple.
 ps_mark_tree            Mark a process and its (future) child tree
@@ -52,6 +57,8 @@ ps_tty_size             Query the size of the current terminal
 ps_uids                 User ids and group ids of the process
 ps_username             Owner of the process
 ps_users                List users connected to the system
+ps_wait                 Wait for one or more processes to terminate,
+                        with a timeout
 ps_windows_nice_values
                         Get or set the priority of a process
 signals                 List of all supported signals

@@ -2,11 +2,18 @@ Package: RcppEigen
 Type: Package
 Title: 'Rcpp' Integration for the 'Eigen' Templated Linear Algebra
         Library
-Version: 0.3.3.9.4
-Date: 2023-11-01
-Author: Douglas Bates, Dirk Eddelbuettel, Romain Francois, and Yixuan Qiu;
- the authors of Eigen for the included version of Eigen
-Maintainer: Dirk Eddelbuettel <edd@debian.org>
+Version: 0.3.4.0.2
+Date: 2024-08-23
+Authors@R: c(person("Doug", "Bates", role = "aut",
+                    comment = c(ORCID = "0000-0001-8316-9503")),
+             person("Dirk", "Eddelbuettel", role = c("aut", "cre"), email = "edd@debian.org",
+                    comment = c(ORCID = "0000-0001-6419-907X")),
+             person("Romain", "Francois", role = "aut",
+                    comment = c(ORCID = "0000-0002-2444-4226")),
+             person("Yixuan", "Qiu", role = "aut",
+                    comment = c(ORCID = "0000-0003-0109-6692")),
+             person("Authors of", "Eigen", role = "cph",
+                    comment = "Authorship and copyright in included Eigen library as detailed in inst/COPYRIGHTS"))
 Copyright: See the file COPYRIGHTS for various Eigen copyright details
 Description: R and 'Eigen' integration using 'Rcpp'.
  'Eigen' is a C++ template library for linear algebra: matrices, vectors,
@@ -31,8 +38,15 @@ URL: https://github.com/RcppCore/RcppEigen,
         https://dirk.eddelbuettel.com/code/rcpp.eigen.html
 BugReports: https://github.com/RcppCore/RcppEigen/issues
 NeedsCompilation: yes
-Packaged: 2023-11-01 21:13:31 UTC; edd
+Packaged: 2024-08-23 18:11:22 UTC; edd
+Author: Doug Bates [aut] (<https://orcid.org/0000-0001-8316-9503>),
+  Dirk Eddelbuettel [aut, cre] (<https://orcid.org/0000-0001-6419-907X>),
+  Romain Francois [aut] (<https://orcid.org/0000-0002-2444-4226>),
+  Yixuan Qiu [aut] (<https://orcid.org/0000-0003-0109-6692>),
+  Authors of Eigen [cph] (Authorship and copyright in included Eigen
+    library as detailed in inst/COPYRIGHTS)
+Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Repository: CRAN
-Date/Publication: 2023-11-02 22:30:09 UTC
-Built: R 4.3.2; x86_64-w64-mingw32; 2024-01-18 02:28:32 UTC; windows
+Date/Publication: 2024-08-24 06:30:02 UTC
+Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-24 02:06:25 UTC; windows
 Archs: x64

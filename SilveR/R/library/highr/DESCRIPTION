@@ -1,7 +1,7 @@
 Package: highr
 Type: Package
 Title: Syntax Highlighting for R Source Code
-Version: 0.10
+Version: 0.11
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("Yixuan", "Qiu", role = "aut"),
@@ -10,7 +10,7 @@ Authors@R: c(
     )
 Description: Provides syntax highlighting for R source code. Currently it
     supports LaTeX and HTML output. Source code of other languages is supported
-    via Andre Simon's highlight package (<http://www.andre-simon.de>).
+    via Andre Simon's highlight package (<https://gitlab.com/saalen/highlight>).
 Depends: R (>= 3.3.0)
 Imports: xfun (>= 0.18)
 Suggests: knitr, markdown, testit
@@ -19,14 +19,14 @@ URL: https://github.com/yihui/highr
 BugReports: https://github.com/yihui/highr/issues
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 NeedsCompilation: no
-Packaged: 2022-12-22 06:43:07 UTC; yihui
+Packaged: 2024-05-26 19:27:21 UTC; yihui
 Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Yixuan Qiu [aut],
   Christopher Gandrud [ctb],
   Qiang Li [ctb]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2022-12-22 07:00:02 UTC
-Built: R 4.3.1; ; 2023-10-24 01:23:37 UTC; windows
+Date/Publication: 2024-05-26 20:00:03 UTC
+Built: R 4.3.3; ; 2024-11-24 02:06:23 UTC; windows

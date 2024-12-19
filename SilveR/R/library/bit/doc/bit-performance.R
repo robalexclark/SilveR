@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE-------------------------
+## ----echo = FALSE, results = "hide", message = FALSE--------------------------
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 require(bit)
 require(microbenchmark)
@@ -20,7 +20,7 @@ pagebreak <- function() {
 }
 
 
-## ---- echo=TRUE, results='asis'-----------------------------------------------
+## ----echo=TRUE, results='asis'------------------------------------------------
 a <- 1L
 b <- 1e7L
 i <- sample(a:b,1e3)
@@ -31,12 +31,12 @@ x <- c(
 )
 knitr::kable(as.data.frame(as.list(x/x["R"]*100)), caption="% of time relative to R", digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(
   data.frame(coin="random 50%", often="random 99%", rare="random 1%", chunk="contiguous chunk of 5%")
   , caption="selection characteristic")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 B <- booltypes[c("logical","bit","bitwhich","which","ri")]
 M <- c("size", "[]", "[which]", "[which]<-TRUE", "[]<-logical", "!", "&", "|", "==", "!=", "summary")
 G <- list(
@@ -91,54 +91,54 @@ for(b in rev(names(B)))  # logical was in first position, so we do this last!
 }
 #rm(X)
 
-## ---- echo=FALSE, fig.cap = "% size and execution time for bit (b) and bitwhich (w) relative to logical (R) in the 'rare' scenario"----
+## ----echo=FALSE, fig.cap = "% size and execution time for bit (b) and bitwhich (w) relative to logical (R) in the 'rare' scenario"----
 x <- tim[1:3,,"rare"]
 m <- rep("", ncol(x))
 m <- as.vector(rbind(m, colnames(x), m))
 dotchart(x, xlim=c(0,max(100, max(x))), labels=m, pch=c("R","b","w"), col=c("black","blue","red"), main="% size and timings in 'rare' scenario", sub="l='logical'  b='bit'  w='bitwhich'           % of max(R) in all scenarios")
 
-## ---- echo=FALSE, fig.cap = "% size and execution time for bit (b) and bitwhich (w) relative to logical (R) in the 'often' scenario"----
+## ----echo=FALSE, fig.cap = "% size and execution time for bit (b) and bitwhich (w) relative to logical (R) in the 'often' scenario"----
 x <- tim[1:3,,"often"]
 dotchart(x, xlim=c(0,max(100, max(x))), labels=m, pch=c("R","b","w"), col=c("black","blue","red"), main="% size and timings in 'often' scenario", sub="l='logical'  b='bit'  w='bitwhich'           % of max(R) in all scenarios")
 
-## ---- echo=FALSE, fig.cap = "% size and execution time for bit (b) and bitwhich (w) relative to logical (R) in the 'coin' scenario"----
+## ----echo=FALSE, fig.cap = "% size and execution time for bit (b) and bitwhich (w) relative to logical (R) in the 'coin' scenario"----
 x <- tim[1:3,,"coin"]
 dotchart(x, xlim=c(0,max(100, max(x))), labels=m, pch=c("R","b","w"), col=c("black","blue","red"), main="% size and timings in 'coin' scenario", sub="l='logical'  b='bit'  w='bitwhich'           % of max(R) in all scenarios")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"size",], 1), caption="% bytes of logical")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"[]",], 1), caption="% time of logical")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"[]<-logical",], 1), caption="% time of logical")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"[which]",], 1), caption="% time of logical")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"[which]<-TRUE",], 1), caption="% time of logical")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"!",], 1), caption="% time for Boolean NOT")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"&",], 1), caption="% time for Boolean &")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"|",], 1), caption="% time for Boolean |")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"==",], 1), caption="% time for Boolean ==")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"!=",], 1), caption="% time for Boolean !=")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 knitr::kable(round(tim[,"summary",][1:2,1:2], 1), caption="% time for Boolean summary")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 binaryDomain <- list(
     smallsmall = rep(Domain["small"], 2)
   , smallbig=Domain
@@ -296,7 +296,7 @@ for(n in names(binaryDomain)){
   }
 }
 
-## ---- echo=FALSE, fig.cap = "Execution time for R (R) and bit (b)"------------
+## ----echo=FALSE, fig.cap = "Execution time for R (R) and bit (b)"-------------
 y <- timsort[,,,"big"]
 y <- 100 * y / max(y["R",,], na.rm=TRUE)
 oldpar <- par(mfrow=c(2,1), mar=c(5,8,2,1))
@@ -306,13 +306,13 @@ x <- y[,,"sorted"]
 dotchart(x, xlim=c(0, max(100, max(y))), labels="", pch=c("R","b"), xlab="execution time", main="sorted", col=c("red","blue"))
 par(oldpar)
 
-## ---- echo=FALSE, results='hide'----------------------------------------------
+## ----echo=FALSE, results='hide'-----------------------------------------------
 tim2 <- tim
 for (n in names(binaryDomain))
   for (d in D)
     tim2[,,n,d] <- 100*tim[,,n,d]/max(tim["R",,n,d], na.rm=TRUE)
 
-## ---- echo=FALSE, fig.cap = "Execution time for R, bit and merge relative to most expensive R in 'unsorted bigbig' scenario"----
+## ----echo=FALSE, fig.cap = "Execution time for R, bit and merge relative to most expensive R in 'unsorted bigbig' scenario"----
 y <- tim2[,,"bigbig",]
 y <- 100 * y / max(y["R",,], na.rm=TRUE)
 x <- y[,,"unsorted"]
@@ -320,20 +320,20 @@ m <- rep("", ncol(x))
 m <- as.vector(rbind(m, colnames(x), m))
 dotchart(x, xlim=c(0, max(100,max(y, na.rm=TRUE))), labels=m, pch=c("R","b","m"), col=c("red","blue","black"), main="Timings in 'unsorted bigbig' scenario", sub="R='hash'   b='bit'   m='merge'")
 
-## ---- echo=FALSE, fig.cap = "Execution time for R, bit and merge in 'sorted bigbig' scenario"----
+## ----echo=FALSE, fig.cap = "Execution time for R, bit and merge in 'sorted bigbig' scenario"----
 x <- y[,,"sorted"]
 dotchart(x, xlim=c(0, max(y, na.rm=TRUE)), labels=m, pch=c("R","b","m"), col=c("red","blue","black"), main="Timings in 'sorted bigbig' scenario", sub="R='hash'   b='bit'   m='merge'")
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- 100*timsort["bit",,,]/timsort["R",,,]
 s <- "sorted"
 knitr::kable(x[,s,], caption=paste(s,"data relative to R's sort"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,s,], caption=paste(s,"data relative to R's sort"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 f <- function(u){
   n <- c("smallsmall","bigbig")
   x <- tim[c("bit","merge","merge"),u,n,]
@@ -349,38 +349,38 @@ x <- f("unique")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("duplicated")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("anyDuplicated")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("sumDuplicated")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 f <- function(u){
   x <- tim[c("bit","merge","merge"),u,,]
   dimnames(x)$M[3] <- "sort"
@@ -395,79 +395,79 @@ x <- f("match")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("in")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("notin")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("union")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("intersect")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("setdiff")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("symdiff")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("setequal")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 x <- f("setearly")
 s <- "sorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 
-## ---- echo=FALSE, results='asis'----------------------------------------------
+## ----echo=FALSE, results='asis'-----------------------------------------------
 s <- "unsorted"
 knitr::kable(x[,,s], caption=paste(s,"data relative to R"), digits=1)
 

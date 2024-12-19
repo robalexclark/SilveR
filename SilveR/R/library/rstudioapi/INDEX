@@ -17,11 +17,13 @@ filesPaneNavigate       Navigate to a Directory in the Files Pane
 getActiveProject        Retrieve path to active RStudio project
 getDelegatedAzureToken
                         OAuth2 Tokens for Delegated Azure Resources
+getMode                 Report whether RStudio Desktop or RStudio
+                        Server is in use
 getRStudioPackageDependencies
                         Get RStudio Package Dependencies
 getThemeInfo            Retrieve Themes
 getThemes               Get Theme List
-getVersion              Return the current version of the RStudio API
+getVersion              Determine the version of RStudio
 hasColorConsole         Check if console supports ANSI color escapes.
 hasFun                  Exists/get for RStudio functions
 highlightUi             Highlight UI Elements within the RStudio IDE
@@ -30,6 +32,8 @@ isJob                   Detect RStudio Jobs
 jobAdd                  Add a Job
 jobAddOutput            Add Background Job Output
 jobAddProgress          Add Background Job Progress
+jobGetState             Get Background Job State
+jobList                 List Background Jobs
 jobRemove               Remove a Background Job
 jobRunScript            Run R Script As Background Job
 jobSetProgress          Set Background Job Progress
@@ -69,6 +73,7 @@ rstudio-editors         Retrieve Information about an RStudio Editor
 savePlotAsImage         Save active RStudio plot image
 selections              Manipulate User Selections in the RStudio IDE
 sendToConsole           Send code to the R console
+setGhostText            Set ghost text
 showDialog              Show Dialog Box
 showPrompt              Show Prompt Dialog Box
 showQuestion            Show Question Dialog Box

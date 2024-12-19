@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE---------------------------------------------
+## ----echo = FALSE, results = "hide", message = FALSE----------------------------------------------
 require("emmeans") 
 options(show.signif.stars = FALSE, width = 100) 
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro") 
@@ -7,7 +7,7 @@ knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
 #  rg <- ref_grid(model)
 #  rg@misc$sigma
 
-## ---- message = FALSE-----------------------------------------------------------------------------
+## ----message = FALSE------------------------------------------------------------------------------
 feedlot = transform(feedlot, adj.ewt = ewt - predict(lm(ewt ~ herd)))
 require(lme4)
 feedlot.lmer <- lmer(swt ~ adj.ewt + diet + (1|herd), data = feedlot)
@@ -24,7 +24,7 @@ feedlot.rg <- update(feedlot.rg, sigma = sqrt(77.087^2 + 57.832^2))
 ## -------------------------------------------------------------------------------------------------
 predict(feedlot.rg, interval = "prediction")
 
-## ---- fig.height = 2, fig.alt = "Side-by-side CIs and PIs. The PIs are much wider, and have the endpoints found in the preceding predit() call"----
+## ----fig.height = 2, fig.alt = "Side-by-side CIs and PIs. The PIs are much wider, and have the endpoints found in the preceding predit() call"----
 plot(feedlot.rg, PIs = TRUE)
 
 ## -------------------------------------------------------------------------------------------------

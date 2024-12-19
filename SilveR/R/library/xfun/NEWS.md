@@ -1,3 +1,113 @@
+# CHANGES IN xfun VERSION 0.49
+
+- Added an argument `use_block = FALSE` to `protect_math()`. When `use_block = TRUE`, a `$$ $$` expression that spans across multiple lines will be protected in a code block.
+
+- `protect_math()` will ignore `$ $` if there are backticks after the opening `$` or before the closing `$`, e.g., ``$`this is not math`$``.
+
+- `protect_math()` allows for parentheses `()` around math expressions now, e.g., `($x$)` was previously not recognized but is recognized now (thanks, @AlbertLei, yihui/litedown#34).
+
+- `record()` works with `quote()` now (thanks, @ben-schwen, yihui/litedown#38).
+
+- `html_escape()` will not escape double quotes (i.e., convert `"`" to `&quot;`) by default, and the conversion will be done only for `html_escape(attr = TRUE)`.
+
+- The arguments `before` and `after` of `read_all()` can take functions of two arguments now, with the second argument being the content of each file.
+
+- Added an argument `start` to `make_fence()`.
+
+# CHANGES IN xfun VERSION 0.48
+
+- Added utilities for HTML tags: `html_tag()`, `html_escape()`, `html_escape()`, and `html_view()`. Removed the soft dependency on the **htmltools** package accordingly.
+
+- `base_pkgs()` is faster now: it calls `tools::standard_package_names()` if the function exists (R >= 4.4.0), otherwise it just returns a constant vector of base package names (thanks, @arnaudgallou, #91).
+
+- Added a function `mime_type()` to obtain the MIME types of files via `mime::guess_type()` if **mime** is installed, otherwise it will call `tools:::mime_type()`, and fall back to using a system command (e.g., `file --mime-type`) to obtain the types.
+
+- Added a function `file_rename()` to deal with `file.rename()` failures by calling `file.copy()` (thanks, @Giqles @katrinabrock, rstudio/bookdown#804).
+
+- `new_app()` will use `utils::browseURL()` to open the app if `options('viewer')` is not configured (thanks, @AlbertLei, yihui/litedown#29).
+
+- Added a method `record_print.record_asis()` to return the object as is.
+
+# CHANGES IN xfun VERSION 0.47
+
+- Added functions `lazy_save()` and `lazy_load()` to save objects to files and lazy-load them.
+
+- Fixed a bug in `record(dev = svglite::svglite)` that misplaced plots when low-level plot functions are used (thanks, @liao961120, yihui/litedown#17).
+
+- Specified the lowest R version required (v3.2.0) for this package.
+
+# CHANGES IN xfun VERSION 0.46
+
+- `md_table()` should add a vertical ellipsis to row names when rows are truncated by the `limit` argument.
+
+- `session_info()` recognizes Positron now (thanks, @chuxinyuan, #89).
+
+# CHANGES IN xfun VERSION 0.45
+
+- For `record()` with `verbose = 1` or `2`, invisible `NULL` is no longer printed.
+
+- `Rscript_call()` will show the actual error message (if an error occurred) during calling the function in a new R session.
+
+# CHANGES IN xfun VERSION 0.44
+
+- Added a function `cache_exec()` to cache the execution of an expression either in memory or on disk. It is much more general and flexible than `cache_rds()`. For example, it supports custom reading/writing methods for cache files, and can load locally created variables in the expression while loading cache.
+
+- Added an argument `cache` to `record()` to make it possible to enable caching.
+
+- Added arguments `message` and `warning` to `record()` to decide whether messages and warnings should be recorded.
+
+- Changed the default value of the argument `error` of `record()` from `FALSE` to `NA`. Now `FALSE` means to suppress error messages, and `NA` means to throw errors normally. This is for consistency with the `message` and `warning` arguments.
+
+- Added an S3 generic function `record_print()`, which is similar to `knitr::knit_print()` but for the purpose of printing visible values in `record()`.
+
+- The `record()` function gained new arguments `print` and `print.args` to support custom printing functions and arguments.
+
+- Added a function `md_table()`, which is a minimal Markdown table generator.
+
+- Exported the internal function `md5()` to calculate the MD5 checksums of R objects. The function is essentially a workaround for `tools::md5sum()` (see HenrikBengtsson/Wishlist-for-R#21).
+
+- For `fenced_block()`, a space is added between the backticks and the language name, e.g., ```` ```r ```` has become ```` ``` r ```` now. This will affect snapshot tests based on Markdown ([an example](https://github.com/yihui/knitr-examples/commit/931e0a2)).
+
+- Added a shorthand `fenced_div()` for `fenced_block(char = ':')`.
+
+- `write_utf8()` returns the `con` argument (typically a file path) now. Previously, it returns `NULL`.
+
+- Added an experimental function `new_app()` to create a local web application.
+
+- The returned value of `yaml_body()` contains a new element `lines` in the list indicating the line numbers of YAML metadata if exists.
+
+- Removed the `skip` argument from `split_source()`.
+
+- For `split_source(line_number = TRUE)`, the attribute name for line numbers in the returned value was changed from `line_start` (a single starting line number) to `lines` (both the starting and ending numbers).
+
+- Fixed an edge case in `prose_index()`, in which inline code was incorrectly recognized as a code block fence.
+
+# CHANGES IN xfun VERSION 0.43
+
+- Added a function `upload_imgur()`, which was adapted from `knitr::imgur_upload()`. The latter will call the former in the future. `xfun::upload_imgur()` allows users to choose whether to use the system command `curl` or the R package **curl** to upload the image. It also has a new argument `include_xml` to specify whether the XML response needs to be included in the returned value.
+
+- Added a function `fenced_block()` to create a fenced block in Markdown (thanks, @cderv, yihui/knitr#2331). The block can be either a code block or a fenced Div.
+
+- Fixed a bug in `xfun::record()` when the argument `verbose = 1` or `2`.
+
+# CHANGES IN xfun VERSION 0.42
+
+- `isFALSE()` has been fully deprecated for R >= 3.5.0, and will be completely removed from this package in the future (<https://yihui.org/en/2023/02/xfun-isfalse/>).
+
+- Added a function `record()` to run R code and record the results, which is similar to `evaluate::evaluate()` but less sophisticated and technically simpler. One major difference is that `xfun::record()` records plots directly to files instead of saving them as display lists.
+
+- `yaml_load()` gained an `envir` argument, which can be used to specify the environment to evaluate R expressions in YAML (i.e., expressions written after `!expr` or `!r`). This is not straightforward in the upstream **yaml** package (thanks, @viking, vubiostat/r-yaml#54).
+
+- `yaml_body()` gained the `...` argument to pass more arguments to `yaml_load()`.
+
+- `split_source()` gained a `merge_comments` argument to merge consecutive lines of comments into the next code block, a `line_number` argument to store the line number of each expression in the returned value, and a `skip` argument to skip the rest of the code when the skip token is found.
+
+- `check_old_package()` has been vectorized, i.e., the arguments `name` and `version` can take vectors now.
+
+- Factored out the code for parsing chunk options and dividing a chunk into chunk options and chunk body from **knitr** to this package as functions `csv_options()` and `divide_chunk()`, respectively. They will be used by **knitr** and other packages in future.
+
+- Added a function `decimal_dot()` to evaluate an expression after forcing `options(OutDec = '.')` and `Sys.setlocale(LC_NUMERIC = 'C')` (for rstudio/rmarkdown#2525).
+
 # CHANGES IN xfun VERSION 0.41
 
 - `process_file()` will write to the file only if the processed text is different with the input text. This is to avoid writing files unnecessarily.

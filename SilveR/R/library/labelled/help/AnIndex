@@ -79,6 +79,8 @@ update_labelled.data.frame	update_labelled
 update_labelled.haven_labelled	update_labelled
 update_labelled.haven_labelled_spss	update_labelled
 update_labelled.labelled	update_labelled
+update_value_labels_with	update_variable_labels_with
+update_variable_labels_with	update_variable_labels_with
 user_na_to_na	na_values
 user_na_to_regular_na	na_values
 user_na_to_tagged_na	na_values

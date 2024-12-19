@@ -16,7 +16,7 @@ var_label(iris)
 ## -----------------------------------------------------------------------------
 var_label(iris$Sepal.Length) <- NULL
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------
 #  View(iris)
 
 ## -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ v
 val_label(v, 1) <- "yes"
 v
 
-## ---- error = TRUE------------------------------------------------------------
+## ----error = TRUE-------------------------------------------------------------
 f <- factor(1:3)
 f
 val_labels(f) <- c(yes = 1, no = 3)
@@ -212,34 +212,34 @@ df <- data.frame(
     c(1, 9, 1, 2),
     labels = c(No = 1, Yes = 2),
     na_values = 9
-    )
+  )
 )
 df %>% look_for()
 unlabelled(df) %>% look_for()
 unlabelled(df, user_na_to_na = TRUE) %>% look_for()
 unlabelled(df, drop_unused_labels = TRUE) %>% look_for()
 
-## ---- eval=FALSE--------------------------------------------------------------
-#    # from foreign
-#    library(foreign)
-#    df <- to_labelled(read.spss(
-#      "file.sav",
-#      to.data.frame = FALSE,
-#      use.value.labels = FALSE,
-#      use.missings = FALSE
-#   ))
-#   df <- to_labelled(read.dta(
-#     "file.dta",
-#     convert.factors = FALSE
-#   ))
+## ----eval=FALSE---------------------------------------------------------------
+#  # from foreign
+#  library(foreign)
+#  df <- to_labelled(read.spss(
+#    "file.sav",
+#    to.data.frame = FALSE,
+#    use.value.labels = FALSE,
+#    use.missings = FALSE
+#  ))
+#  df <- to_labelled(read.dta(
+#    "file.dta",
+#    convert.factors = FALSE
+#  ))
 #  
-#   # from memisc
-#   library(memisc)
-#   nes1948.por <- UnZip("anes/NES1948.ZIP", "NES1948.POR", package = "memisc")
-#   nes1948 <- spss.portable.file(nes1948.por)
-#   df <- to_labelled(nes1948)
-#   ds <- as.data.set(nes19480)
-#   df <- to_labelled(ds)
+#  # from memisc
+#  library(memisc)
+#  nes1948.por <- UnZip("anes/NES1948.ZIP", "NES1948.POR", package = "memisc")
+#  nes1948 <- spss.portable.file(nes1948.por)
+#  df <- to_labelled(nes1948)
+#  ds <- as.data.set(nes19480)
+#  df <- to_labelled(ds)
 
 ## -----------------------------------------------------------------------------
 library(dplyr)

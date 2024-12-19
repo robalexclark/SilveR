@@ -1,3 +1,4 @@
+adjust_hsv              Adjust Color in HSV Space
 angleAxis               Add a Axis to a Plot with Rotated Labels
 balloonplot             Plot a graphical matrix where each cell
                         contains a dot whose size reflects the relative
@@ -8,6 +9,8 @@ barplot2                Enhanced Bar Plots
 boxplot.n               Defunct functions
 boxplot2                Produce a Boxplot Annotated with the Number of
                         Observations
+bubbleplot              Bubble Plot
+catch.d                 Catch at Age and Residuals
 ci2d                    Create 2-dimensional empirical confidence
                         regions
 col2hex                 Convert color names to hex RGB strings

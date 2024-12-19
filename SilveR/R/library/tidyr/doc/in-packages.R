@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -31,7 +31,7 @@ tidyr_new_interface <- function() {
   packageVersion("tidyr") > "0.8.99"
 }
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  my_function_inside_a_package <- function(...)
 #    # my code here
 #  
@@ -67,21 +67,21 @@ mini_iris %>%
 #  mini_iris %>%
 #    nest(my_data = !any_of("Species"))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  if (tidyr_new_interface()) {
 #    out <- tidyr::nest_legacy(df, x, y, z)
 #  } else {
 #    out <- tidyr::nest(df, x, y, z)
 #  }
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # v0.8.3
 #  df %>% unnest(x, .id = "id")
 #  
 #  # v1.0.0
 #  df %>% mutate(id = names(x)) %>% unnest(x))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  nested <- mini_iris %>%
 #    nest(my_data = c(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width))
 #  
@@ -91,7 +91,7 @@ mini_iris %>%
 #  # v1.0.0 must be told which columns to unnest
 #  nested %>% unnest(any_of("my_data"))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  if (tidyr_new_interface()) {
 #    out <- tidyr::unnest_legacy(df)
 #  } else {

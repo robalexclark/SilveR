@@ -1,4 +1,4 @@
-## ---- echo=FALSE--------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------
 require( pbkrtest )
 prettyVersion <- packageDescription("pbkrtest")$Version
 prettyDate <- format(Sys.Date())

@@ -17,6 +17,7 @@ annotation_map          Annotation: a map
 annotation_raster       Annotation: high-performance rectangular tiling
 autolayer               Create a ggplot layer appropriate to a
                         particular data type
+automatic_plotting      Tailoring plots to particular data types
 autoplot                Create a complete ggplot appropriate to a
                         particular data type
 borders                 Create a layer of map borders
@@ -30,6 +31,7 @@ cut_interval            Discretise numeric data into categorical
 diamonds                Prices of over 50,000 round cut diamonds
 draw_key                Key glyphs for legends
 economics               US economic time series
+element_blank           Theme elements
 expand_limits           Expand the plot limits, using data
 expansion               Generate expansion vector for scales
 facet_grid              Lay out panels in a grid
@@ -75,9 +77,13 @@ ggproto                 Create a new ggproto object
 ggsave                  Save a ggplot (or other grid object) with
                         sensible defaults
 guide_axis              Axis guide
+guide_axis_logticks     Axis with logarithmic tick marks
+guide_axis_stack        Stacked axis guides
+guide_axis_theta        Angle axis guide
 guide_bins              A binned version of guide_legend
 guide_colourbar         Continuous colour bar guide
 guide_coloursteps       Discretized colourbar guide
+guide_custom            Custom guides
 guide_legend            Legend guide
 guide_none              Empty guide
 guides                  Set guides for each scale
@@ -86,9 +92,11 @@ label_bquote            Label with mathematical expressions
 labeller                Construct labelling specification
 labellers               Useful labeller functions
 labs                    Modify axis, legend, and plot labels
+layer_geoms             Layer geometry display
+layer_positions         Layer position adjustments
+layer_stats             Layer statistical transformations
 lims                    Set scale limits
 luv_colours             'colors()' in Luv space
-margin                  Theme elements
 mean_se                 Calculate mean and standard error of the mean
 midwest                 Midwest demographics
 mpg                     Fuel economy data from 1999 to 2008 for 38

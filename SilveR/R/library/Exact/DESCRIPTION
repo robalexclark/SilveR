@@ -1,7 +1,7 @@
 Package: Exact
 Type: Package
 Title: Unconditional Exact Test
-Version: 3.2
+Version: 3.3
 Authors@R: person("Peter", "Calhoun", email="calhoun.peter@gmail.com", role=c("aut", "cre"))
 Author: Peter Calhoun [aut, cre]
 Maintainer: Peter Calhoun <calhoun.peter@gmail.com>
@@ -24,7 +24,7 @@ Imports: graphics, stats, utils, rootSolve
 Suggests: ExactData
 Additional_repositories: https://pcalhoun1.github.io/drat
 NeedsCompilation: no
-Packaged: 2022-09-25 22:23:12 UTC; pcalh
+Packaged: 2024-07-21 00:26:38 UTC; pcalh
 Repository: CRAN
-Date/Publication: 2022-09-25 23:40:02 UTC
-Built: R 4.3.1; ; 2023-10-20 01:43:22 UTC; windows
+Date/Publication: 2024-07-21 06:50:01 UTC
+Built: R 4.3.3; ; 2024-07-21 23:50:32 UTC; windows

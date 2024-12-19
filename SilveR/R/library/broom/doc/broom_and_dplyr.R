@@ -33,7 +33,7 @@ cor(Orange$age, Orange$circumference)
 ggplot(Orange, aes(age, circumference, color = Tree)) +
   geom_line()
 
-## ---- message = FALSE, warning = FALSE----------------------------------------
+## ----message = FALSE, warning = FALSE-----------------------------------------
 Orange %>%
   group_by(Tree) %>%
   summarize(correlation = cor(age, circumference))

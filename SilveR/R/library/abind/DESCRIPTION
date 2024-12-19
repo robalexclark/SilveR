@@ -1,19 +1,21 @@
 Package: abind
-Version: 1.4-5
-Date: 2016-06-19
+Version: 1.4-8
+Date: 2024-09-08
 Title: Combine Multidimensional Arrays
-Author: Tony Plate <tplate@acm.org> and Richard Heiberger
+Authors@R: c(person("Tony", "Plate", email = "tplate@acm.org", role = c("aut", "cre")), person("Richard", "Heiberger", role = c("aut")))
 Maintainer: Tony Plate <tplate@acm.org>
 Description: Combine multidimensional arrays into a single array.
   This is a generalization of 'cbind' and 'rbind'.  Works with
-  vectors, matrices, and higher-dimensional arrays.  Also
-  provides functions 'adrop', 'asub', and 'afill' for manipulating,
-  extracting and replacing data in arrays.
+  vectors, matrices, and higher-dimensional arrays (aka tensors).
+  Also provides functions 'adrop', 'asub', and 'afill' for
+  manipulating, extracting and replacing data in arrays.
 Depends: R (>= 1.5.0)
 Imports: methods, utils
-License: LGPL (>= 2)
+License: MIT + file LICENSE
 NeedsCompilation: no
-Packaged: 2016-07-19 15:24:25 UTC; tap
+Packaged: 2024-09-11 21:58:20 UTC; tap
+Author: Tony Plate [aut, cre],
+  Richard Heiberger [aut]
 Repository: CRAN
-Date/Publication: 2016-07-21 19:18:05
-Built: R 4.3.1; ; 2023-10-20 00:51:40 UTC; windows
+Date/Publication: 2024-09-12 17:40:54 UTC
+Built: R 4.3.3; ; 2024-09-12 23:51:06 UTC; windows

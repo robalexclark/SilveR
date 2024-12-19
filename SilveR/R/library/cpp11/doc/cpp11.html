@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -429,7 +429,7 @@ R:</p>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>add</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; function (x, y, z) </span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; {</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;     .Call(&quot;_code_d91faa120ea_add&quot;, x, y, z, PACKAGE = &quot;code_d91faa120ea&quot;)</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;     .Call(&quot;_code_f0433b9ad9e2_add&quot;, x, y, z, PACKAGE = &quot;code_f0433b9ad9e2&quot;)</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; }</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">add</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span></code></pre></div>
@@ -579,9 +579,9 @@ while <code>sum_r()</code> is several orders of magnitude slower.</p>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 1 sum(x)       1.39µs   1.52µs   631896.        0B     0   </span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 2 sum_cpp(x)   1.39µs   1.52µs   589727.        0B     0   </span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 3 sum_r(x)    12.79µs  12.91µs    74003.    19.2KB     7.40</span></span></code></pre></div>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 1 sum(x)        1.6µs   1.89µs   489955.        0B        0</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 2 sum_cpp(x)   1.44µs   1.64µs   530629.        0B        0</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 3 sum_r(x)     17.3µs  17.51µs    55578.    19.2KB        0</span></span></code></pre></div>
 </div>
 <div id="vector-input-vector-output" class="section level3">
 <h3>Vector input, vector output</h3>
@@ -625,8 +625,8 @@ going to be fast.</p>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;   expression             min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt;        &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; 1 pdist_r(0.5, y)     1.97ms   2.05ms      477.    7.63MB     205.</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; 2 pdist_cpp(0.5, y) 885.64µs 929.43µs     1042.    7.63MB     260.</span></span></code></pre></div>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; 1 pdist_r(0.5, y)     1.94ms   2.06ms      475.    7.63MB     295.</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; 2 pdist_cpp(0.5, y) 900.77µs 928.24µs     1060.    7.63MB     267.</span></span></code></pre></div>
 <p>On my computer, it takes around 5 ms with a 1 million element
 <code>y</code> vector. The C++ function is about 2.5 times faster, ~2
 ms, but assuming it took you 10 minutes to write the C++ function, you’d
@@ -1255,7 +1255,7 @@ Since maps have a value and a key, you need to specify both types when initialis
 The following example shows how you could use a `map` to implement `table()` for numeric vectors:
 
 
-```cpp
+``` cpp
 #include <map>
 #include "cpp11.hpp"
 using namespace cpp11;
@@ -1366,8 +1366,8 @@ running the loops in C++:</p>
 <span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a><span class="co">#&gt;   expression   min median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co">#&gt; 1 r           22.7   25.3       1       1242.      Inf</span></span>
-<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="co">#&gt; 2 cpp          1      1        25.1        1       NaN</span></span></code></pre></div>
+<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co">#&gt; 1 r           15.1   14.9       1        32.9      Inf</span></span>
+<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="co">#&gt; 2 cpp          1      1        15.1       1        NaN</span></span></code></pre></div>
 </div>
 <div id="r-vectorisation-versus-c-vectorisation" class="section level3">
 <h3>R vectorisation versus C++ vectorisation</h3>
@@ -1460,9 +1460,9 @@ Finally, we can benchmark our three approaches:</p>
 <span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a><span class="co">#&gt; 1 vacc1       798.8µs  820.8µs     1204.    7.86KB     76.3</span></span>
-<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a><span class="co">#&gt; 2 vacc2       24.07µs   28.8µs    34077.  148.84KB     47.8</span></span>
-<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a><span class="co">#&gt; 3 vacc3        4.47µs    4.8µs   199715.   14.03KB     20.0</span></span></code></pre></div>
+<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a><span class="co">#&gt; 1 vacc1      710.04µs 737.28µs     1325.    7.86KB     67.4</span></span>
+<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a><span class="co">#&gt; 2 vacc2       24.56µs  29.56µs    33199.  148.56KB     46.5</span></span>
+<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a><span class="co">#&gt; 3 vacc3        4.39µs   4.67µs   202113.   14.02KB     20.2</span></span></code></pre></div>
 <p>Not surprisingly, our original approach with loops is very slow.
 Vectorising in R gives a huge speedup, and we can eke out even more
 performance (about ten times) with the C++ loop. I was a little

@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.9.0" />
+<meta name="author" content="emmeans package, Version 1.10.5" />
 
 
 <title>Quick start guide for emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">Quick start guide for
 <strong>emmeans</strong></h1>
-<h4 class="author">emmeans package, Version 1.9.0</h4>
+<h4 class="author">emmeans package, Version 1.10.5</h4>
 
 
 
@@ -72,6 +72,7 @@ ul.task-list{list-style: none;}
 <li><a href="#interactions">Two interacting factors</a></li>
 <li><a href="#multi-factor">Three or more factors</a></li>
 <li><a href="#options">Additional options</a></li>
+<li><a href="#objects">What you see versus what you get</a></li>
 <li><a href="#problems">Common things that can go wrong</a></li>
 <li><a href="#more">Further reading</a></li>
 </ol>
@@ -195,6 +196,32 @@ include examples and discussions for different kinds of situations.
 There is also an <a href="vignette-topics.html">index of vignette
 topics</a>.</li>
 </ol>
+</div>
+<div id="objects" class="section level2">
+<h2>What you see versus what you get</h2>
+<p>Most non-graphical functions in the <strong>emmeans</strong> package
+produce one of two classes of objects. The functions
+<code>emmeans()</code>, <code>emtrends()</code>,
+<code>ref_grid()</code>, <code>contrast()</code>, and
+<code>pairs()</code> return <code>emmGrid</code> objects (or lists
+thereof, class <code>emm_list</code>). For example</p>
+<pre><code>EMM &lt;- emmeans(mod, &quot;Treatment&quot;)</code></pre>
+<p>The functions <code>summary()</code>, <code>confint()</code>,
+<code>test()</code>, <code>joint_tests()</code>, and others return
+<code>summary_emm</code> objects (or lists thereof, class
+<code>summary_eml</code>):</p>
+<pre><code>SEMM &lt;- summary(EMM)</code></pre>
+<p>If you display <code>EMM</code> and <code>SEMM</code>, they
+<em>look</em> identical; that’s because <code>emmGrid</code> objects are
+displayed using <code>summary()</code>. But they are not identical.
+<code>EMM</code> has all the ingredients needed to do further analysis,
+e.g. <code>contrast(EMM, &quot;consec&quot;)</code> will estimate comparisons
+between consecutive <code>Treatment</code> means. But <code>SEMM</code>
+is just an annotated data frame and we can do no further analysis with
+it. Similarly, we can change how <code>EMM</code> is displayed via
+arguments to <code>summary()</code> or relatives, whil;e in
+<code>SEMM</code>, everything has been computed and those results are
+locked-in.</p>
 </div>
 <div id="problems" class="section level2">
 <h2>Common things that can go wrong</h2>

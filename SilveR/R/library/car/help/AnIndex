@@ -2,6 +2,8 @@
 adaptiveKernel	densityPlot
 Anova	Anova
 Anova.aov	Anova
+Anova.clm	Anova
+Anova.clmm	Anova
 Anova.coxme	Anova
 Anova.coxph	Anova
 Anova.default	Anova
@@ -132,6 +134,8 @@ crPlots	crPlots
 crPlots.default	crPlots
 data.ellipse	car-defunct
 dataEllipse	Ellipses
+dataEllipse.default	Ellipses
+dataEllipse.formula	Ellipses
 dbiwt	densityPlot
 deltaMethod	deltaMethod
 deltaMethod.coxph	deltaMethod

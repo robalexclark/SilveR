@@ -3,6 +3,20 @@ Update history for **estimability***
 ** NOTE: If you have v1.4 installed, please update to a newer version!
 **       (Or an older one, for that matter)
 
+1.5.1
+    Added pkgdown site
+    We rolled back the required version of R to 4.1.0, same as 'emmeans' package,
+    so as to not require >=4.3.0 in packages that depend on this one.
+
+1.5
+    We now require R >= 4.3.0.
+    Plays along with the changes in 'predict.lm' that came with R 4.3.0.
+    We re-coded the 'nonest.basis.qr' to something much simpler, and the
+    old version is kept available as 'legacy.nonest.basis'.
+    And a vignette was added to help developers add estimability
+    checking to their package.
+    
+
 1.4.1
     Correction to version 1.4. The new svd-based methods worked 
     correctly only for n x p matrices with n >= p. Otherwise things

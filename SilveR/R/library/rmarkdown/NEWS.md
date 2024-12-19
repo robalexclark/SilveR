@@ -1,3 +1,59 @@
+rmarkdown 2.29
+================================================================================
+
+- `find_external_resources()` now correctly detects knitr child document provided with option like `child = c("child.Rmd")` (thanks, @rempsyc, #2574).
+
+- `knit_params_ask()` uses a `select` input for parameters which allow multiple selected values. Previously, a `radio` input was incorrectly used when the parameter had a small number of choices.
+
+    ```yaml
+    params:
+        primaries:
+            choices: ["red", "yellow", "blue"]
+            multiple: true
+    ```
+    
+    When `multiple` is not enabled, parameter configuration still uses `radio` when there are fewer than five choices.
+
+    The `input` parameter field can still be used to force the configuration control.
+    
+    ```yaml
+    params:
+        grade:
+            input: radio
+            choices: ["A", "B", "C", "D", "F"]
+    ```
+
+
+rmarkdown 2.28
+================================================================================
+
+- Add classes `odd`, `even`, and `header` back to table rows for Pandoc >= 3.2.1, so tables can be styled properly (thanks, @therealgenna, #2567).
+
+- `beamer_presentation` support handling latex dependencies via the new `extra_dependencies` argument and declarations within chunks (e.g., `knitr::asis_output("", meta = list(rmarkdown::latex_dependency("longtable")))`) (thanks, @cderv, @atusy, #2478).
+
+
+rmarkdown 2.27
+================================================================================
+
+- Provide a global option `rmarkdown.files.suffix` to configure the suffix of the directory for auxiliary files (thanks, @certara-tzweers, #2550). By default, this suffix is `_files`, which can cause HTML output files to be deleted automatically on Microsoft OneDrive or Google Drive. If that is the case for you, you may set a different suffix in your `.Rprofile`, e.g., `options(rmarkdown.files.suffix = "_rmdfiles")`.
+
+- Fix a regression in 2.26 regarding image paths post-processing in `html_document_base()`. Now absolute paths to image in the output directory (`output_dir`) are correctly made relative to the output directory again.
+
+
+rmarkdown 2.26
+================================================================================
+
+- **rmarkdown** now requires **knitr** >= 1.43.
+
+- Get rid of the superfluous warning in `find_pandoc()` (thanks, @jszhao, #2527).
+
+- Removed the **stringr** dependency since it is used only once in the package and the equivalent base R code is simple enough (thanks, @etiennebacher, #2530).
+
+- For the output format option `fig_crop: auto`, it will now use the same logic as in **knitr** to decide if cropping is possible (yihui/knitr#2246).
+
+- Avoid corrupting input files by accident (thanks, @J-Moravec, #2534).
+
+
 rmarkdown 2.25
 ================================================================================
 

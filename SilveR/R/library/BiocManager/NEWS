@@ -1,3 +1,33 @@
+CHANGES IN VERSION 1.30.25
+-------------------------
+
+MINOR CHANGES
+
+    o Maintainer email change.
+
+CHANGES IN VERSION 1.30.24
+-------------------------
+
+NEW FEATURES
+
+    o Force BiocManager to use unsupported version of R with `R_BIOC_VERSION`
+    environment variable (@mtmorgan, #193)
+
+CHANGES IN VERSION 1.30.23
+-------------------------
+
+NEW FEATURES
+
+    o Ensure compatibility with `package_version` changes in R 4.4.0
+    (@kurthornik)
+    
+MINOR CHANGES
+
+    o Added "Updating old packages" and "Archived CRAN packages" sections in
+    the vignette
+    o Use `BiocStyle` formatting in the vignette
+    o Update Posit links in the vignette
+
 CHANGES IN VERSION 1.30.22
 -------------------------
 

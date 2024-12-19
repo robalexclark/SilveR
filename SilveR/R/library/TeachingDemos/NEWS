@@ -1,3 +1,12 @@
+TeachingDemos version 2.13
+
+* Updated rgl.Map to use new packages
+
+* Updated examples that used old maptools package to use 
+  spData instead
+  
+* Removed outdated version information from help files
+
 TeachingDemos version 2.12
 
 * Made factors explicit in examples using data.frame since 

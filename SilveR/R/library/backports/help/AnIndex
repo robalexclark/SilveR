@@ -1,9 +1,14 @@
 backports-package	backports-package
+%||%	null_coalesce_operator
 ...elt	dotsElt
 ...length	dotsLength
 ...names	dotsNames
+.libPaths	libPaths
 .valid.factor	valid.factor
 anyNA	anyNA
+as.character.Rconcordance	as.character.Rconcordance
+as.Rconcordance	as.Rconcordance
+as.Rconcordance.default	as.Rconcordance.default
 asplit	asplit
 backports	backports-package
 capture.output	capture.output
@@ -24,8 +29,11 @@ isNamespaceLoaded	isNamespaceLoaded
 isTRUE	isTRUE
 lengths	lengths
 list2DF	list2DF
+matchConcordance	matchConcordance
+null_coalesce_operator	null_coalesce_operator
 paste	paste
 paste0	paste0
+print.Rconcordance	print.Rconcordance
 removeSource	removeSource
 R_user_dir	R_user_dir
 sQuote	dQuote

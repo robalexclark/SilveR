@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{NEWS file for the Exact package}
 
+\section{Changes in Version 3.3 (2024-07-24)}{
+  \itemize{
+
+    \item{Fixed an error where the p-value was sometimes incorrect for imbalanced designs.  Only occurred when the p-value would be large, but exact test gave a much higher p-value.  Thanks to Andrea Smith for pointing out the issue}
+  }
+}
+
 \section{Changes in Version 3.2 (2022-09-24)}{
   \itemize{
 

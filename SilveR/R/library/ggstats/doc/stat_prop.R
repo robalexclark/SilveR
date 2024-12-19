@@ -56,9 +56,9 @@ ggplot(d) +
   )
 
 ## -----------------------------------------------------------------------------
-d <- diamonds %>%
-  dplyr::filter(!(cut == "Ideal" & clarity == "I1")) %>%
-  dplyr::filter(!(cut == "Very Good" & clarity == "VS2")) %>%
+d <- diamonds |>
+  dplyr::filter(!(cut == "Ideal" & clarity == "I1")) |>
+  dplyr::filter(!(cut == "Very Good" & clarity == "VS2")) |>
   dplyr::filter(!(cut == "Premium" & clarity == "IF"))
 p <- ggplot(d) +
   aes(x = clarity, fill = cut, by = clarity) +
@@ -75,5 +75,32 @@ p +
     stat = "prop",
     position = position_fill(.5),
     complete = "fill"
+  )
+
+## -----------------------------------------------------------------------------
+ggplot(diamonds) +
+  aes(y = clarity, fill = cut) +
+  geom_prop_bar() +
+  geom_prop_text()
+
+## -----------------------------------------------------------------------------
+d <- as.data.frame(Titanic)
+ggplot(d) +
+  aes(x = Class, fill = Sex, weight = Freq, by = Sex) +
+  geom_prop_bar(position = "dodge") +
+  geom_prop_text(
+    position = position_dodge(width = .9),
+    vjust = - 0.5
+  ) +
+  scale_y_continuous(labels = scales::percent)
+
+## -----------------------------------------------------------------------------
+ggplot(diamonds) +
+  aes(x = clarity, fill = cut) +
+  geom_prop_bar(height = "count") +
+  geom_prop_text(
+    height = "count",
+    labels = "count",
+    labeller = scales::number
   )
 

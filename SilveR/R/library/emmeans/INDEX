@@ -29,6 +29,7 @@ lsmeans                 Wrappers for alternative naming of EMMs
 make.tran               Response-transformation extensions
 models                  Models supported in 'emmeans'
 mvcontrast              Multivariate contrasts
+mvregrid                Multivariate regridding
 neuralgia               Neuralgia data
 nutrition               Nutrition data
 oranges                 Sales of oranges
@@ -46,5 +47,6 @@ str.emmGrid             Miscellaneous methods for 'emmGrid' objects
 summary.emmGrid         Summaries, predictions, intervals, and tests
                         for 'emmGrid' objects
 ubds                    Unbalanced dataset
+untidy                  Dare to be un-"tidy"!
 update.emmGrid          Update an 'emmGrid' object
 xtable.emmGrid          Using 'xtable' for EMMs

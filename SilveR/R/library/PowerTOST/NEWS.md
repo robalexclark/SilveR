@@ -1,3 +1,31 @@
+# PowerTOST 1.5-6
+
+On CRAN submitted 2024-03-18.
+
+## Bug fixes
+  * Bug fixed in `CI.BE()` regarding cases with only `Ntotal` given.
+  
+## Minor changes
+  * Function `shadowtext()` lifted from package `TeachingDemos` and recoded since
+    `TeachingDemos`was orphaned (request of Brian Ripley). Orphaned status later 
+    on abandoned but nevertheless the recoded function used furthermore. 
+  * Updated the RSABE-vignette and the Man page of `sampleN.scABEL()` to reflect 
+    the GCC guidelines (Version 3.1 of 10 August 2022).
+  * Example results in man pages of functions `power.2TOST()` and 
+    `SampleN.2TOST()` corrected.
+
+## Major changes
+  * Argument `p.level` in function `power.TOST.sds()` introduced to make the significance level
+    of the group-by-treatment interaction test variable. Was former hard coded to 0.1.
+  * The name of functions dealing with the FDA methods for NTID are now without the acronym FDA
+    in their names since the evaluation methods requested by the FDA are also required by China CDE. 
+    These functions are `power.NTID()`, `sampleN.NTID()`, and `pa.NTID()`.  
+    See NEWS under `PowerTOST 1.5-4`.
+
+# PowerTOST 1.5-5
+
+Never on CRAN, only a development version.
+
 # PowerTOST 1.5-4
 
 On CRAN 2022-02-21.
@@ -6,17 +34,17 @@ On CRAN 2022-02-21.
   * Incomplete HTML-entities in 3 man pages corrected (request of Kurt Hornik).
   * Fix in `power.TOST()` w.r.t vectorization of `CV` or `theta0`.
 
+## Major changes
+  * Functions dealing with the FDA method for NTID have now aliases without FDA in their names since the evaluation methods requested by the FDA are also required by China CDE.
+    The aliases are `power.NTID()`, `sampleN.NTID()`, and `pa.NTID()`.
+    The functions `power.NTIDFDA()`, `sampleN.NTIDFDA()`, and `pa.NTIDFDA()` are deprecated and will be removed in the next release.
+    
 ## Minor changes
   * Example with vectorized `sampleN.TOST()` added to vignette ABE; vignette PA adapted to `pa.NTID()`. 
   * URLs in README and man pages updated.
   * Coefficients with more decimals (15) for the 10-point Gauss quadrature in function `tfn()`. Thanks to PharmCat for contributing them.
   * Clarification of the calculations with `gmodel = 1` in the man page section Details of function `power.TOST.sds()`.
 
-## Major changes
-  * Functions dealing with the FDA method for NTID have now aliases without FDA in their names since the evaluation methods requested by the FDA are also required by China CDE.
-    The aliases are `power.NTID()`, `sampleN.NTID()`, and `pa.NTID()`.
-    The functions `power.NTIDFDA()`, `sampleN.NTIDFDA()`, and `pa.NTIDFDA()` are deprecated and will be removed in the next release.
-    
 # PowerTOST 1.5-3
 
 On CRAN 2021-01-18

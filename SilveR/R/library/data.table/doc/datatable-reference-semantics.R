@@ -87,6 +87,14 @@ flights[, c("speed", "max_speed", "max_dep_delay", "max_arr_delay") := NULL]
 head(flights)
 
 ## -------------------------------------------------------------------------------------------------
+flights[, names(.SD) := lapply(.SD, as.factor), .SDcols = is.character]
+
+## -------------------------------------------------------------------------------------------------
+factor_cols <- sapply(flights, is.factor)
+flights[, names(.SD) := lapply(.SD, as.character), .SDcols = factor_cols]
+str(flights[, ..factor_cols])
+
+## -------------------------------------------------------------------------------------------------
 foo <- function(DT) {
   DT[, speed := distance / (air_time/60)]
   DT[, .(max_speed = max(speed)), by = month]

@@ -32,6 +32,7 @@ getActiveDocumentContext	rstudio-editors
 getActiveProject	getActiveProject
 getConsoleEditorContext	rstudio-editors
 getDelegatedAzureToken	getDelegatedAzureToken
+getMode	getMode
 getPersistentValue	persistent-values
 getRStudioPackageDependencies	getRStudioPackageDependencies
 getSourceEditorContext	rstudio-editors
@@ -46,10 +47,14 @@ insertText	rstudio-documents
 is.document_position	document_position
 is.document_range	document_range
 isAvailable	isAvailable
+isBackgroundJob	isJob
 isJob	isJob
+isWorkbenchJob	isJob
 jobAdd	jobAdd
 jobAddOutput	jobAddOutput
 jobAddProgress	jobAddProgress
+jobGetState	jobGetState
+jobList	jobList
 jobRemove	jobRemove
 jobRunScript	jobRunScript
 jobSetProgress	jobSetProgress
@@ -94,6 +99,7 @@ selectionSet	selections
 sendToConsole	sendToConsole
 setCursorPosition	rstudio-documents
 setDocumentContents	rstudio-documents
+setGhostText	setGhostText
 setPersistentValue	persistent-values
 setSelectionRanges	rstudio-documents
 showDialog	showDialog

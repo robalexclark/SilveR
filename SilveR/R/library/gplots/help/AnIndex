@@ -1,3 +1,4 @@
+adjust_hsv	adjust_hsv
 angleAxis	angleAxis
 balloonplot	balloonplot
 balloonplot.default	balloonplot
@@ -10,6 +11,11 @@ barplot2.default	barplot2
 bluered	colorpanel
 boxplot.n	gplots-defunct
 boxplot2	boxplot2
+bubbleplot	bubbleplot
+bubbleplot.default	bubbleplot
+bubbleplot.formula	bubbleplot
+catch.d	catch.d
+catch.r	catch.d
 ci2d	ci2d
 col2hex	col2hex
 colorpanel	colorpanel

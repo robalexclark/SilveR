@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.9.0" />
+<meta name="author" content="emmeans package, Version 1.10.5" />
 
 
 <title>Confidence intervals and tests in emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">Confidence intervals and tests in
 emmeans</h1>
-<h4 class="author">emmeans package, Version 1.9.0</h4>
+<h4 class="author">emmeans package, Version 1.10.5</h4>
 
 
 
@@ -176,8 +176,8 @@ preceding <code>test()</code> call again:</p>
 <pre class="r"><code>test(EMM.source, null = inverse(40), side = &quot;&lt;&quot;, type = &quot;response&quot;)</code></pre>
 <pre class="ro"><code>##  source response    SE df null t.ratio p.value
 ##  fish       29.7 0.816 23   40   9.383  1.0000
-##  soy        39.0 1.436 23   40   0.697  0.7535
-##  skim       43.8 1.903 23   40  -2.156  0.0209
+##  soy        39.0 1.440 23   40   0.697  0.7535
+##  skim       43.8 1.900 23   40  -2.156  0.0209
 ## 
 ## Results are averaged over the levels of: percent 
 ## P values are left-tailed 
@@ -196,8 +196,8 @@ scale:</p>
 <pre class="r"><code>confint(EMM.source, side = &quot;&lt;&quot;, level = .90, type = &quot;response&quot;)</code></pre>
 <pre class="ro"><code>##  source response    SE df lower.CL upper.CL
 ##  fish       29.7 0.816 23     28.6      Inf
-##  soy        39.0 1.436 23     37.2      Inf
-##  skim       43.8 1.903 23     41.4      Inf
+##  soy        39.0 1.440 23     37.2      Inf
+##  skim       43.8 1.900 23     41.4      Inf
 ## 
 ## Results are averaged over the levels of: percent 
 ## Confidence level used: 0.9 
@@ -398,23 +398,24 @@ RG5 &lt;- ref_grid(mod5)
 contrast(RG5, &quot;consec&quot;, simple = &quot;percent&quot;)</code></pre>
 <pre class="ro"><code>## source = fish:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -6.64e-03 0.00285 17  -2.328  0.0833
+##  percent12 - percent9  -6.64e-03 0.00285 17  -2.328  0.0840
 ##  percent15 - percent12 -6.68e-05 0.00285 17  -0.023  1.0000
-##  percent18 - percent15 -1.40e-03 0.00285 17  -0.489  0.9283
+##  percent18 - percent15 -1.40e-03 0.00285 17  -0.489  0.9282
 ## 
 ## source = soy:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -4.01e-03 0.00255 17  -1.572  0.3169
+##  percent12 - percent9  -4.01e-03 0.00255 17  -1.572  0.3170
 ##  percent15 - percent12  2.61e-04 0.00255 17   0.102  0.9993
 ##  percent18 - percent15 -2.18e-03 0.00361 17  -0.605  0.8872
 ## 
 ## source = skim:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -5.26e-03 0.00255 17  -2.061  0.1396
+##  percent12 - percent9  -5.26e-03 0.00255 17  -2.061  0.1399
 ##  percent15 - percent12 -2.86e-03 0.00285 17  -1.001  0.6526
-##  percent18 - percent15 -3.76e-03 0.00383 17  -0.982  0.6651
+##  percent18 - percent15 -3.76e-03 0.00383 17  -0.982  0.6650
 ## 
-## Note: contrasts are still on the inverse scale 
+## Note: contrasts are still on the inverse scale. Consider using
+##       regrid() if you want contrasts of back-transformed estimates. 
 ## P value adjustment: mvt method for 3 tests</code></pre>
 <p>In fact, we may do <em>all</em> one-factor comparisons by specifying
 <code>simple = &quot;each&quot;</code>. This typically produces a lot of output,
@@ -436,7 +437,8 @@ PRS.source</code></pre>
 ##  soy - skim   0.00280 0.00134 23   2.092  0.1136
 ## 
 ## Results are averaged over the levels of: percent 
-## Note: contrasts are still on the inverse scale 
+## Note: contrasts are still on the inverse scale. Consider using
+##       regrid() if you want contrasts of back-transformed estimates. 
 ## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
 <p>But suppose we want an <em>omnibus</em> test that all these
 comparisons are zero. Easy enough, using the <code>joint</code> argument
@@ -513,7 +515,8 @@ are within 0.005 of each other. We can test this as follows:</p>
 ##  soy - skim   0.00280 0.00134 23  -1.641  0.0572
 ## 
 ## Results are averaged over the levels of: percent 
-## Note: contrasts are still on the inverse scale 
+## Note: contrasts are still on the inverse scale. Consider using
+##       regrid() if you want contrasts of back-transformed estimates. 
 ## Statistics are tests of equivalence with a threshold of 0.005 
 ## P values are left-tailed</code></pre>
 <p>Using the 0.005 threshold, the <em>P</em> value is quite small for

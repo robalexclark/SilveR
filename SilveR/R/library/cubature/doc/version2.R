@@ -34,7 +34,7 @@ cubintegrate(f = my_dmvnorm, lower = rep(-0.5, 3), upper = c(1, 4, 2), method = 
              flags = list(verbose = 2))
 
 ## -----------------------------------------------------------------------------
-default_args()
+str(default_args())
 
 ## -----------------------------------------------------------------------------
 my_dmvnorm_v <- function (x, mean, sigma, logdet) {

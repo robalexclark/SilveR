@@ -11,7 +11,7 @@
 
 <meta name="author" content="Balasubramanian Narasimhan" />
 
-<meta name="date" content="2023-06-11" />
+<meta name="date" content="2024-07-11" />
 
 <title>Version 2.0 Notes</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Version 2.0 Notes</h1>
 <h4 class="author">Balasubramanian Narasimhan</h4>
-<h4 class="date">2023-06-11</h4>
+<h4 class="date">2024-07-11</h4>
 
 </div>
 
@@ -371,10 +371,9 @@ Hahn.</li>
 allows one to call all methods in a uniform fashion, as I explain
 below.</p>
 <p><strong>N.B.</strong> One has to be aware that there are cases where
-one library will integrate a function while the other won’t. Where
-possible, I have brought such <a href="https://github.com/stevengj/cubature/issues/7">problems</a> to the
-notice of the authors underlying C library and I encourage you to do the
-same, by providing reproducible examples.</p>
+one library will integrate a function while the other won’t, and in some
+cases, provide somewhat different answers. That still makes sense and
+depends on the underlying methodology used.</p>
 </div>
 <div id="unified-interface" class="section level2">
 <h2>Unified Interface</h2>
@@ -451,190 +450,73 @@ the help on <code>cuhre</code>. Such arguments can be directly passed to
 ## [1] 0</code></pre>
 <p>As there are many such method-specific arguments, you may find the
 function <code>default_args()</code> useful.</p>
-<pre class="r"><code>default_args()</code></pre>
-<pre><code>## $hcubature
-## $hcubature$norm
-## [1] &quot;INDIVIDUAL&quot; &quot;PAIRED&quot;     &quot;L2&quot;         &quot;L1&quot;         &quot;LINF&quot;      
-## 
-## 
-## $pcubature
-## $pcubature$norm
-## [1] &quot;INDIVIDUAL&quot; &quot;PAIRED&quot;     &quot;L2&quot;         &quot;L1&quot;         &quot;LINF&quot;      
-## 
-## 
-## $cuhre
-## $cuhre$minEval
-## [1] 0
-## 
-## $cuhre$stateFile
-## NULL
-## 
-## $cuhre$flags
-## $cuhre$flags$verbose
-## [1] 0
-## 
-## $cuhre$flags$final
-## [1] 1
-## 
-## $cuhre$flags$smooth
-## [1] 0
-## 
-## $cuhre$flags$keep_state
-## [1] 0
-## 
-## $cuhre$flags$load_state
-## [1] 0
-## 
-## $cuhre$flags$level
-## [1] 0
-## 
-## 
-## $cuhre$key
-## [1] 0
-## 
-## 
-## $divonne
-## $divonne$minEval
-## [1] 0
-## 
-## $divonne$stateFile
-## NULL
-## 
-## $divonne$flags
-## $divonne$flags$verbose
-## [1] 0
-## 
-## $divonne$flags$final
-## [1] 1
-## 
-## $divonne$flags$smooth
-## [1] 0
-## 
-## $divonne$flags$keep_state
-## [1] 0
-## 
-## $divonne$flags$load_state
-## [1] 0
-## 
-## $divonne$flags$level
-## [1] 0
-## 
-## 
-## $divonne$rngSeed
-## [1] 0
-## 
-## $divonne$key1
-## [1] 47
-## 
-## $divonne$key2
-## [1] 1
-## 
-## $divonne$key3
-## [1] 1
-## 
-## $divonne$maxPass
-## [1] 5
-## 
-## $divonne$border
-## [1] 0
-## 
-## $divonne$maxChisq
-## [1] 10
-## 
-## $divonne$minDeviation
-## [1] 0.25
-## 
-## $divonne$xGiven
-## NULL
-## 
-## $divonne$nExtra
-## [1] 0
-## 
-## $divonne$peakFinder
-## NULL
-## 
-## 
-## $sauve
-## $sauve$minEval
-## [1] 0
-## 
-## $sauve$stateFile
-## NULL
-## 
-## $sauve$flags
-## $sauve$flags$verbose
-## [1] 0
-## 
-## $sauve$flags$final
-## [1] 1
-## 
-## $sauve$flags$smooth
-## [1] 0
-## 
-## $sauve$flags$keep_state
-## [1] 0
-## 
-## $sauve$flags$load_state
-## [1] 0
-## 
-## $sauve$flags$level
-## [1] 0
-## 
-## 
-## $sauve$rngSeed
-## [1] 0
-## 
-## $sauve$nNew
-## [1] 1000
-## 
-## $sauve$nMin
-## [1] 50
-## 
-## $sauve$flatness
-## [1] 50
-## 
-## 
-## $vegas
-## $vegas$minEval
-## [1] 0
-## 
-## $vegas$stateFile
-## NULL
-## 
-## $vegas$flags
-## $vegas$flags$verbose
-## [1] 0
-## 
-## $vegas$flags$final
-## [1] 1
-## 
-## $vegas$flags$smooth
-## [1] 0
-## 
-## $vegas$flags$keep_state
-## [1] 0
-## 
-## $vegas$flags$load_state
-## [1] 0
-## 
-## $vegas$flags$level
-## [1] 0
-## 
-## 
-## $vegas$rngSeed
-## [1] 0
-## 
-## $vegas$nStart
-## [1] 1000
-## 
-## $vegas$nIncrease
-## [1] 500
-## 
-## $vegas$nBatch
-## [1] 1000
-## 
-## $vegas$gridNo
-## [1] 0</code></pre>
+<pre class="r"><code>str(default_args())</code></pre>
+<pre><code>## List of 6
+##  $ hcubature:List of 1
+##   ..$ norm: chr [1:5] &quot;INDIVIDUAL&quot; &quot;PAIRED&quot; &quot;L2&quot; &quot;L1&quot; ...
+##  $ pcubature:List of 1
+##   ..$ norm: chr [1:5] &quot;INDIVIDUAL&quot; &quot;PAIRED&quot; &quot;L2&quot; &quot;L1&quot; ...
+##  $ cuhre    :List of 4
+##   ..$ minEval  : int 0
+##   ..$ stateFile: NULL
+##   ..$ flags    :List of 6
+##   .. ..$ verbose   : int 0
+##   .. ..$ final     : int 1
+##   .. ..$ smooth    : int 0
+##   .. ..$ keep_state: int 0
+##   .. ..$ load_state: int 0
+##   .. ..$ level     : int 0
+##   ..$ key      : int 0
+##  $ divonne  :List of 14
+##   ..$ minEval     : int 0
+##   ..$ stateFile   : NULL
+##   ..$ flags       :List of 6
+##   .. ..$ verbose   : int 0
+##   .. ..$ final     : int 1
+##   .. ..$ smooth    : int 0
+##   .. ..$ keep_state: int 0
+##   .. ..$ load_state: int 0
+##   .. ..$ level     : int 0
+##   ..$ rngSeed     : int 0
+##   ..$ key1        : int 47
+##   ..$ key2        : int 1
+##   ..$ key3        : int 1
+##   ..$ maxPass     : int 5
+##   ..$ border      : num 0
+##   ..$ maxChisq    : num 10
+##   ..$ minDeviation: num 0.25
+##   ..$ xGiven      : NULL
+##   ..$ nExtra      : int 0
+##   ..$ peakFinder  : NULL
+##  $ sauve    :List of 7
+##   ..$ minEval  : int 0
+##   ..$ stateFile: NULL
+##   ..$ flags    :List of 6
+##   .. ..$ verbose   : int 0
+##   .. ..$ final     : int 1
+##   .. ..$ smooth    : int 0
+##   .. ..$ keep_state: int 0
+##   .. ..$ load_state: int 0
+##   .. ..$ level     : int 0
+##   ..$ rngSeed  : int 0
+##   ..$ nNew     : int 1000
+##   ..$ nMin     : int 50
+##   ..$ flatness : num 50
+##  $ vegas    :List of 8
+##   ..$ minEval  : int 0
+##   ..$ stateFile: NULL
+##   ..$ flags    :List of 6
+##   .. ..$ verbose   : int 0
+##   .. ..$ final     : int 1
+##   .. ..$ smooth    : int 0
+##   .. ..$ keep_state: int 0
+##   .. ..$ load_state: int 0
+##   .. ..$ level     : int 0
+##   ..$ rngSeed  : int 0
+##   ..$ nStart   : int 1000
+##   ..$ nIncrease: int 500
+##   ..$ nBatch   : int 1000
+##   ..$ gridNo   : int 0</code></pre>
 </div>
 <div id="vectorization" class="section level2">
 <h2>Vectorization</h2>
@@ -690,13 +572,13 @@ The Cuba C library on the other hand, will use the actual value of
 <div id="session-info" class="section level2">
 <h2>Session Info</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 4.3.0 (2023-04-21)
-## Platform: x86_64-apple-darwin22.4.0 (64-bit)
-## Running under: macOS Ventura 13.4
+<pre><code>## R version 4.4.1 (2024-06-14)
+## Platform: x86_64-apple-darwin20
+## Running under: macOS Sonoma 14.5
 ## 
 ## Matrix products: default
-## BLAS:   /usr/local/Cellar/openblas/0.3.23/lib/libopenblasp-r0.3.23.dylib 
-## LAPACK: /usr/local/Cellar/r/4.3.0_1/lib/R/lib/libRlapack.dylib;  LAPACK version 3.11.0
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -708,14 +590,15 @@ The Cuba C library on the other hand, will use the actual value of
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] mvtnorm_1.1-3  cubature_2.1.0 benchr_0.2.5  
+## [1] mvtnorm_1.2-5  cubature_2.1.1 benchr_0.2.5  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.31      R6_2.5.1           fastmap_1.1.1      xfun_0.39         
-##  [5] cachem_1.0.8       knitr_1.43         htmltools_0.5.5    rmarkdown_2.22    
-##  [9] cli_3.6.1          RcppProgress_0.4.2 sass_0.4.6         jquerylib_0.1.4   
-## [13] compiler_4.3.0     tools_4.3.0        evaluate_0.21      bslib_0.5.0       
-## [17] Rcpp_1.0.10        yaml_2.3.7         rlang_1.1.1        jsonlite_1.8.5</code></pre>
+##  [1] digest_0.6.36      R6_2.5.1           fastmap_1.2.0      xfun_0.45         
+##  [5] cachem_1.1.0       knitr_1.48         htmltools_0.5.8.1  rmarkdown_2.27    
+##  [9] lifecycle_1.0.4    cli_3.6.3          RcppProgress_0.4.2 sass_0.4.9        
+## [13] jquerylib_0.1.4    compiler_4.4.1     tools_4.4.1        evaluate_0.24.0   
+## [17] bslib_0.7.0        Rcpp_1.0.12        yaml_2.3.9         rlang_1.1.4       
+## [21] jsonlite_1.8.8</code></pre>
 </div>
 
 

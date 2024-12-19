@@ -1,6 +1,6 @@
 Package: cpp11
 Title: A C++11 Interface for R's C Interface
-Version: 0.4.7
+Version: 0.5.0
 Authors@R: 
     c(
       person("Davis", "Vaughan", email = "davis@posit.co", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4777-038X")),
@@ -17,7 +17,7 @@ Description: Provides a header only, C++11 interface to R's C
 License: MIT + file LICENSE
 URL: https://cpp11.r-lib.org, https://github.com/r-lib/cpp11
 BugReports: https://github.com/r-lib/cpp11/issues
-Depends: R (>= 3.5.0)
+Depends: R (>= 3.6.0)
 Suggests: bench, brio, callr, cli, covr, decor, desc, ggplot2, glue,
         knitr, lobstr, mockery, progress, rmarkdown, scales, Rcpp,
         testthat (>= 3.2.0), tibble, utils, vctrs, withr
@@ -29,7 +29,7 @@ Config/Needs/cpp11/cpp_register: brio, cli, decor, desc, glue, tibble,
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-12-01 19:16:04 UTC; davis
+Packaged: 2024-08-26 21:19:28 UTC; davis
 Author: Davis Vaughan [aut, cre] (<https://orcid.org/0000-0003-4777-038X>),
   Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>),
   Romain François [aut] (<https://orcid.org/0000-0002-2444-4226>),
@@ -37,5 +37,5 @@ Author: Davis Vaughan [aut, cre] (<https://orcid.org/0000-0003-4777-038X>),
   Posit Software, PBC [cph, fnd]
 Maintainer: Davis Vaughan <davis@posit.co>
 Repository: CRAN
-Date/Publication: 2023-12-02 13:20:02 UTC
-Built: R 4.3.2; ; 2024-01-18 01:55:35 UTC; windows
+Date/Publication: 2024-08-27 04:30:17 UTC
+Built: R 4.3.3; ; 2024-11-24 01:24:21 UTC; windows

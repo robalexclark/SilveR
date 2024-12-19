@@ -1,4 +1,4 @@
-BiocManager-pkg         Install or update Bioconductor, CRAN, or GitHub
+BiocManager-package     Install or update Bioconductor, CRAN, or GitHub
                         packages
 available               Discover packages available for installation.
 install                 Install or update Bioconductor, CRAN, and

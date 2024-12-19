@@ -459,90 +459,48 @@ values corresponding to:</p>
 ##                                                    versicolor
 ##                                                    virginica</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">look_for</span>(women)</span></code></pre></div>
-<pre><code>##  pos variable          label                     col_type missing
-##  1   id_woman          Woman Id                  dbl      0      
-##  2   id_household      Household Id              dbl      0      
-##  3   weight            Sample weight             dbl      0      
-##  4   interview_date    Interview date            date     0      
-##  5   date_of_birth     Date of birth             date     0      
-##  6   age               Age at last anniversary ~ dbl      0      
-##  7   residency         Urban / rural residency   dbl+lbl  0      
-##                                                                  
-##  8   region            Region                    dbl+lbl  0      
-##                                                                  
-##                                                                  
-##                                                                  
-##  9   instruction       Level of instruction      dbl+lbl  0      
-##                                                                  
-##                                                                  
-##                                                                  
-##  10  employed          Employed?                 dbl+lbl  7      
-##                                                                  
-##                                                                  
-##  11  matri             Matrimonial status        dbl+lbl  0      
-##                                                                  
-##                                                                  
-##                                                                  
-##                                                                  
-##                                                                  
-##  12  religion          Religion                  dbl+lbl  4      
-##                                                                  
-##                                                                  
-##                                                                  
-##                                                                  
-##  13  newspaper         Read newspaper?           dbl+lbl  0      
-##                                                                  
-##  14  radio             Listen to radio?          dbl+lbl  0      
-##                                                                  
-##  15  tv                Watch TV?                 dbl+lbl  0      
-##                                                                  
-##  16  ideal_nb_children Ideal number of children  dbl+lbl  0      
-##                                                                  
-##  17  test              Ever tested for HIV?      dbl+lbl  29     
-##                                                                  
-##                                                                  
-##  values             
-##                     
-##                     
-##                     
-##                     
-##                     
-##                     
-##  [1] urban          
-##  [2] rural          
-##  [1] North          
-##  [2] East           
-##  [3] South          
-##  [4] West           
-##  [0] none           
-##  [1] primary        
-##  [2] secondary      
-##  [3] higher         
-##  [0] no             
-##  [1] yes            
-##  [9] missing        
-##  [0] single         
-##  [1] married        
-##  [2] living together
-##  [3] windowed       
-##  [4] divorced       
-##  [5] separated      
-##  [1] Muslim         
-##  [2] Christian      
-##  [3] Protestant     
-##  [4] no religion    
-##  [5] other          
-##  [0] no             
-##  [1] yes            
-##  [0] no             
-##  [1] yes            
-##  [0] no             
-##  [1] yes            
-##  [96] don&#39;t know    
-##  [99] missing       
-##  [0] no             
-##  [1] yes            
-##  [9] missing</code></pre>
+<pre><code>##  pos variable          label              col_type missing values            
+##  1   id_woman          Woman Id           dbl      0                         
+##  2   id_household      Household Id       dbl      0                         
+##  3   weight            Sample weight      dbl      0                         
+##  4   interview_date    Interview date     date     0                         
+##  5   date_of_birth     Date of birth      date     0                         
+##  6   age               Age at last anniv~ dbl      0                         
+##  7   residency         Urban / rural res~ dbl+lbl  0       [1] urban         
+##                                                            [2] rural         
+##  8   region            Region             dbl+lbl  0       [1] North         
+##                                                            [2] East          
+##                                                            [3] South         
+##                                                            [4] West          
+##  9   instruction       Level of instruct~ dbl+lbl  0       [0] none          
+##                                                            [1] primary       
+##                                                            [2] secondary     
+##                                                            [3] higher        
+##  10  employed          Employed?          dbl+lbl  7       [0] no            
+##                                                            [1] yes           
+##                                                            [9] missing       
+##  11  matri             Matrimonial status dbl+lbl  0       [0] single        
+##                                                            [1] married       
+##                                                            [2] living togeth~
+##                                                            [3] windowed      
+##                                                            [4] divorced      
+##                                                            [5] separated     
+##  12  religion          Religion           dbl+lbl  4       [1] Muslim        
+##                                                            [2] Christian     
+##                                                            [3] Protestant    
+##                                                            [4] no religion   
+##                                                            [5] other         
+##  13  newspaper         Read newspaper?    dbl+lbl  0       [0] no            
+##                                                            [1] yes           
+##  14  radio             Listen to radio?   dbl+lbl  0       [0] no            
+##                                                            [1] yes           
+##  15  tv                Watch TV?          dbl+lbl  0       [0] no            
+##                                                            [1] yes           
+##  16  ideal_nb_children Ideal number of c~ dbl+lbl  0       [96] don&#39;t know   
+##                                                            [99] missing      
+##  17  test              Ever tested for H~ dbl+lbl  29      [0] no            
+##                                                            [1] yes           
+##                                                            [9] missing</code></pre>
 <p>Note that <code>lookfor()</code> and
 <code>generate_dictionary()</code> are synonyms of
 <code>look_for()</code> and works exactly in the same way.</p>
@@ -632,89 +590,89 @@ without computing the details of each variable, simply indicate
 frames), indicate <code>details = &quot;full&quot;</code> or
 <code>details = TRUE</code>.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">look_for</span>(women, <span class="at">details =</span> <span class="st">&quot;full&quot;</span>)</span></code></pre></div>
-<pre><code>##  pos variable          label                  col_type missing unique_values
-##  1   id_woman          Woman Id               dbl      0       2000         
-##  2   id_household      Household Id           dbl      0       1814         
-##  3   weight            Sample weight          dbl      0       351          
-##  4   interview_date    Interview date         date     0       165          
-##  5   date_of_birth     Date of birth          date     0       1740         
-##  6   age               Age at last anniversa~ dbl      0       36           
-##  7   residency         Urban / rural residen~ dbl+lbl  0       2            
-##                                                                             
-##  8   region            Region                 dbl+lbl  0       4            
-##                                                                             
-##                                                                             
-##                                                                             
-##  9   instruction       Level of instruction   dbl+lbl  0       4            
-##                                                                             
-##                                                                             
-##                                                                             
-##  10  employed          Employed?              dbl+lbl  7       3            
-##                                                                             
-##                                                                             
-##  11  matri             Matrimonial status     dbl+lbl  0       6            
-##                                                                             
-##                                                                             
-##                                                                             
-##                                                                             
-##                                                                             
-##  12  religion          Religion               dbl+lbl  4       6            
-##                                                                             
-##                                                                             
-##                                                                             
-##                                                                             
-##  13  newspaper         Read newspaper?        dbl+lbl  0       2            
-##                                                                             
-##  14  radio             Listen to radio?       dbl+lbl  0       2            
-##                                                                             
-##  15  tv                Watch TV?              dbl+lbl  0       2            
-##                                                                             
-##  16  ideal_nb_children Ideal number of child~ dbl+lbl  0       18           
-##                                                                             
-##  17  test              Ever tested for HIV?   dbl+lbl  29      3            
-##                                                                             
-##                                                                             
-##  values                 na_values na_range
-##  range: 1 - 2000                          
-##  range: 1 - 1814                          
-##  range: 0.044629 - 4.3~                   
-##  range: 2011-12-01 - 2~                   
-##  range: 1962-02-07 - 1~                   
-##  range: 14 - 49                           
-##  [1] urban                                
-##  [2] rural                                
-##  [1] North                                
-##  [2] East                                 
-##  [3] South                                
-##  [4] West                                 
-##  [0] none                                 
-##  [1] primary                              
-##  [2] secondary                            
-##  [3] higher                               
-##  [0] no                 9                 
-##  [1] yes                                  
-##  [9] missing                              
-##  [0] single                               
-##  [1] married                              
-##  [2] living together                      
-##  [3] windowed                             
-##  [4] divorced                             
-##  [5] separated                            
-##  [1] Muslim                               
-##  [2] Christian                            
-##  [3] Protestant                           
-##  [4] no religion                          
-##  [5] other                                
-##  [0] no                                   
-##  [1] yes                                  
-##  [0] no                                   
-##  [1] yes                                  
-##  [0] no                                   
-##  [1] yes                                  
-##  [96] don&#39;t know                          
-##  [99] missing                             
-##  [0] no                 9                 
-##  [1] yes                                  
+<pre><code>##  pos variable          label              col_type missing unique_values
+##  1   id_woman          Woman Id           dbl      0       2000         
+##  2   id_household      Household Id       dbl      0       1814         
+##  3   weight            Sample weight      dbl      0       351          
+##  4   interview_date    Interview date     date     0       165          
+##  5   date_of_birth     Date of birth      date     0       1740         
+##  6   age               Age at last anniv~ dbl      0       36           
+##  7   residency         Urban / rural res~ dbl+lbl  0       2            
+##                                                                         
+##  8   region            Region             dbl+lbl  0       4            
+##                                                                         
+##                                                                         
+##                                                                         
+##  9   instruction       Level of instruct~ dbl+lbl  0       4            
+##                                                                         
+##                                                                         
+##                                                                         
+##  10  employed          Employed?          dbl+lbl  7       3            
+##                                                                         
+##                                                                         
+##  11  matri             Matrimonial status dbl+lbl  0       6            
+##                                                                         
+##                                                                         
+##                                                                         
+##                                                                         
+##                                                                         
+##  12  religion          Religion           dbl+lbl  4       6            
+##                                                                         
+##                                                                         
+##                                                                         
+##                                                                         
+##  13  newspaper         Read newspaper?    dbl+lbl  0       2            
+##                                                                         
+##  14  radio             Listen to radio?   dbl+lbl  0       2            
+##                                                                         
+##  15  tv                Watch TV?          dbl+lbl  0       2            
+##                                                                         
+##  16  ideal_nb_children Ideal number of c~ dbl+lbl  0       18           
+##                                                                         
+##  17  test              Ever tested for H~ dbl+lbl  29      3            
+##                                                                         
+##                                                                         
+##  values             na_values na_range
+##  range: 1 - 2000                      
+##  range: 1 - 1814                      
+##  range: 0.044629 -~                   
+##  range: 2011-12-01~                   
+##  range: 1962-02-07~                   
+##  range: 14 - 49                       
+##  [1] urban                            
+##  [2] rural                            
+##  [1] North                            
+##  [2] East                             
+##  [3] South                            
+##  [4] West                             
+##  [0] none                             
+##  [1] primary                          
+##  [2] secondary                        
+##  [3] higher                           
+##  [0] no             9                 
+##  [1] yes                              
+##  [9] missing                          
+##  [0] single                           
+##  [1] married                          
+##  [2] living togeth~                   
+##  [3] windowed                         
+##  [4] divorced                         
+##  [5] separated                        
+##  [1] Muslim                           
+##  [2] Christian                        
+##  [3] Protestant                       
+##  [4] no religion                      
+##  [5] other                            
+##  [0] no                               
+##  [1] yes                              
+##  [0] no                               
+##  [1] yes                              
+##  [0] no                               
+##  [1] yes                              
+##  [96] don&#39;t know                      
+##  [99] missing                         
+##  [0] no             9                 
+##  [1] yes                              
 ##  [9] missing</code></pre>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">look_for</span>(women, <span class="at">details =</span> <span class="st">&quot;full&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div>

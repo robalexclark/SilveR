@@ -23,6 +23,8 @@ to_labelled             Convert to labelled data
 unique_tagged_na        Unique elements, duplicated, ordering and
                         sorting with tagged NAs
 update_labelled         Update labelled data to last version
+update_variable_labels_with
+                        Update variable/value labels with a function
 val_labels              Get / Set value labels
 val_labels_to_na        Recode value labels to NA
 var_label               Get / Set a variable label

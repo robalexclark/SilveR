@@ -2,7 +2,7 @@ Package: tinytex
 Type: Package
 Title: Helper Functions to Install and Maintain TeX Live, and Compile
         LaTeX Documents
-Version: 0.49
+Version: 0.54
 Authors@R: c(
   person("Yihui", "Xie", role = c("aut", "cre", "cph"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
   person(given = "Posit Software, PBC", role = c("cph", "fnd")),
@@ -17,15 +17,15 @@ Description: Helper functions to install and maintain the 'LaTeX' distribution
   portable, and easy-to-maintain version of 'TeX Live'. This package also
   contains helper functions to compile 'LaTeX' documents, and install missing
   'LaTeX' packages automatically.
-Imports: xfun (>= 0.29)
+Imports: xfun (>= 0.48)
 Suggests: testit, rstudioapi
 License: MIT + file LICENSE
 URL: https://github.com/rstudio/tinytex
 BugReports: https://github.com/rstudio/tinytex/issues
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2023-11-22 21:25:20 UTC; yihui
+Packaged: 2024-11-01 14:22:24 UTC; yihui
 Author: Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>),
   Posit Software, PBC [cph, fnd],
   Christophe Dervieux [ctb] (<https://orcid.org/0000-0003-4474-2498>),
@@ -34,5 +34,5 @@ Author: Yihui Xie [aut, cre, cph] (<https://orcid.org/0000-0003-0645-5666>),
   Fernando Cagua [ctb]
 Maintainer: Yihui Xie <xie@yihui.name>
 Repository: CRAN
-Date/Publication: 2023-11-22 22:00:02 UTC
-Built: R 4.3.2; ; 2024-01-18 02:28:30 UTC; windows
+Date/Publication: 2024-11-01 15:10:02 UTC
+Built: R 4.3.3; ; 2024-11-24 02:06:22 UTC; windows

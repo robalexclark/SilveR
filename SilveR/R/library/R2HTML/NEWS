@@ -1,3 +1,6 @@
+# 2024-06-16 - Version 2.3.4
+- Fix R CMD check NOTEs.
+
 # 2022-05-22 - Version 2.3.3
 - Fix HTML.ftable failing when there are no column variables
 - Fix returning results, invisibly

@@ -12,7 +12,7 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;data.table&rsquo; version 1.14.10</h2>
+</div><h2>Documentation for package &lsquo;data.table&rsquo; version 1.16.2</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../doc/index.html">User guides, package vignettes and other documentation.</a></li>
@@ -197,6 +197,10 @@
 <td>Fast dcast for data.table</td></tr>
 <tr><td style="width: 25%;"><a href="dcast.data.table.html">dcast.data.table</a></td>
 <td>Fast dcast for data.table</td></tr>
+<tr><td style="width: 25%;"><a href="fdroplevels.html">droplevels</a></td>
+<td>Fast droplevels</td></tr>
+<tr><td style="width: 25%;"><a href="fdroplevels.html">droplevels.data.table</a></td>
+<td>Fast droplevels</td></tr>
 <tr><td style="width: 25%;"><a href="duplicated.html">duplicated</a></td>
 <td>Determine Duplicate Rows</td></tr>
 <tr><td style="width: 25%;"><a href="duplicated.html">duplicated.data.table</a></td>
@@ -219,6 +223,8 @@
 <td>fcase</td></tr>
 <tr><td style="width: 25%;"><a href="coalesce.html">fcoalesce</a></td>
 <td>Coalescing missing values</td></tr>
+<tr><td style="width: 25%;"><a href="fdroplevels.html">fdroplevels</a></td>
+<td>Fast droplevels</td></tr>
 <tr><td style="width: 25%;"><a href="setops.html">fexcept</a></td>
 <td>Set operations for data tables</td></tr>
 <tr><td style="width: 25%;"><a href="fifelse.html">fifelse</a></td>
@@ -235,6 +241,18 @@
 <td>Fast row reordering of a data.table by reference</td></tr>
 <tr><td style="width: 25%;"><a href="IDateTime.html">format.ITime</a></td>
 <td>Integer based date class</td></tr>
+<tr><td style="width: 25%;"><a href="print.data.table.html">format_col</a></td>
+<td>data.table Printing Options</td></tr>
+<tr><td style="width: 25%;"><a href="print.data.table.html">format_col.default</a></td>
+<td>data.table Printing Options</td></tr>
+<tr><td style="width: 25%;"><a href="print.data.table.html">format_col.expression</a></td>
+<td>data.table Printing Options</td></tr>
+<tr><td style="width: 25%;"><a href="print.data.table.html">format_col.POSIXct</a></td>
+<td>data.table Printing Options</td></tr>
+<tr><td style="width: 25%;"><a href="print.data.table.html">format_list_item</a></td>
+<td>data.table Printing Options</td></tr>
+<tr><td style="width: 25%;"><a href="print.data.table.html">format_list_item.default</a></td>
+<td>data.table Printing Options</td></tr>
 <tr><td style="width: 25%;"><a href="foverlaps.html">foverlaps</a></td>
 <td>Fast overlap joins</td></tr>
 <tr><td style="width: 25%;"><a href="frank.html">frank</a></td>
@@ -292,6 +310,8 @@
 <h2><a id="I">-- I --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="substitute2.html">I</a></td>
+<td>Substitute expression</td></tr>
 <tr><td style="width: 25%;"><a href="IDateTime.html">IDate</a></td>
 <td>Integer based date class</td></tr>
 <tr><td style="width: 25%;"><a href="IDateTime.html">IDate-class</a></td>
@@ -345,6 +365,8 @@
 <td>Number of rows affected by last update</td></tr>
 <tr><td style="width: 25%;"><a href="shift.html">lead</a></td>
 <td>Fast lead/lag for vectors and lists</td></tr>
+<tr><td style="width: 25%;"><a href="assign.html">let</a></td>
+<td>Assignment by reference</td></tr>
 <tr><td style="width: 25%;"><a href="like.html">like</a></td>
 <td>Convenience function for calling grep.</td></tr>
 <tr><td style="width: 25%;"><a href="nafill.html">locf</a></td>
@@ -360,6 +382,10 @@
 <td>Integer based date class</td></tr>
 <tr><td style="width: 25%;"><a href="IDateTime.html">mean.ITime</a></td>
 <td>Integer based date class</td></tr>
+<tr><td style="width: 25%;"><a href="measure.html">measure</a></td>
+<td>Specify measure.vars via regex or separator</td></tr>
+<tr><td style="width: 25%;"><a href="measure.html">measurev</a></td>
+<td>Specify measure.vars via regex or separator</td></tr>
 <tr><td style="width: 25%;"><a href="melt.data.table.html">melt</a></td>
 <td>Fast melt for data.table</td></tr>
 <tr><td style="width: 25%;"><a href="melt.data.table.html">melt.data.table</a></td>
@@ -490,6 +516,8 @@
 <td>Coerce a data.table to data.frame by reference</td></tr>
 <tr><td style="width: 25%;"><a href="setops.html">setdiff</a></td>
 <td>Set operations for data tables</td></tr>
+<tr><td style="width: 25%;"><a href="fdroplevels.html">setdroplevels</a></td>
+<td>Fast droplevels</td></tr>
 <tr><td style="width: 25%;"><a href="setDT.html">setDT</a></td>
 <td>Coerce lists and data.frames to data.table by reference</td></tr>
 <tr><td style="width: 25%;"><a href="openmp-utils.html">setDTthreads</a></td>
@@ -536,6 +564,10 @@
 <td>Subsetting data.tables</td></tr>
 <tr><td style="width: 25%;"><a href="subset.data.table.html">subset.data.table</a></td>
 <td>Subsetting data.tables</td></tr>
+<tr><td style="width: 25%;"><a href="substitute2.html">substitute</a></td>
+<td>Substitute expression</td></tr>
+<tr><td style="width: 25%;"><a href="substitute2.html">substitute2</a></td>
+<td>Substitute expression</td></tr>
 </table>
 
 <h2><a id="T">-- T --</a></h2>
@@ -590,6 +622,10 @@
 <td>Integer based date class</td></tr>
 <tr><td style="width: 25%;"><a href="IDateTime.html">year</a></td>
 <td>Integer based date class</td></tr>
+<tr><td style="width: 25%;"><a href="IDateTime.html">yearmon</a></td>
+<td>Integer based date class</td></tr>
+<tr><td style="width: 25%;"><a href="IDateTime.html">yearqtr</a></td>
+<td>Integer based date class</td></tr>
 </table>
 
 <h2><a id="misc">-- misc --</a></h2>
@@ -607,6 +643,18 @@
 <td>Convenience functions for range subsets.</td></tr>
 <tr><td style="width: 25%;"><a href="like.html">%like%</a></td>
 <td>Convenience function for calling grep.</td></tr>
+<tr><td style="width: 25%;"><a href="notin.html">%notin%</a></td>
+<td>Convenience operator for checking if an example is not in a set of elements</td></tr>
+<tr><td style="width: 25%;"><a href="like.html">%plike%</a></td>
+<td>Convenience function for calling grep.</td></tr>
+<tr><td style="width: 25%;"><a href="data.table.html">.</a></td>
+<td>Enhanced data.frame</td></tr>
+<tr><td style="width: 25%;"><a href="data.table.html">.(</a></td>
+<td>Enhanced data.frame</td></tr>
+<tr><td style="width: 25%;"><a href="data.table.html">.()</a></td>
+<td>Enhanced data.frame</td></tr>
+<tr><td style="width: 25%;"><a href="data.table.html">..</a></td>
+<td>Enhanced data.frame</td></tr>
 <tr><td style="width: 25%;"><a href="special-symbols.html">.BY</a></td>
 <td>Special symbols</td></tr>
 <tr><td style="width: 25%;"><a href="special-symbols.html">.EACHI</a></td>
@@ -618,6 +666,8 @@
 <tr><td style="width: 25%;"><a href="last.updated.html">.Last.updated</a></td>
 <td>Number of rows affected by last update</td></tr>
 <tr><td style="width: 25%;"><a href="special-symbols.html">.N</a></td>
+<td>Special symbols</td></tr>
+<tr><td style="width: 25%;"><a href="special-symbols.html">.NATURAL</a></td>
 <td>Special symbols</td></tr>
 <tr><td style="width: 25%;"><a href="special-symbols.html">.NGRP</a></td>
 <td>Special symbols</td></tr>

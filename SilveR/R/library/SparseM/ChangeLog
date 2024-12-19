@@ -1,5 +1,5 @@
 This directory contains the development version of the sparse matrix
-package SparseM.  This is an informal revision history.
+`package SparseM.  This is an informal revision history.
 
 The initial version 0.01 was sent to David Meyer in Vienna June 10, 2002.
 
@@ -445,12 +445,12 @@ The version 0.90
 	o  Conditionally removed assigninNamespace()  in onLoad as suggested
 	by BDR see mail from Oct 28 2011.
 The version 0.96
-	1.  Removed the LICENSE file that had described some uncertainties with respect 
+	1.  Removed the LICENSE file that had described some uncertainties with respect
 	to the license status of the code in src/cholesky.f.  These uncertainties have
 	now been resolved by the original authors, Esmond Ng and Barry Peyton,
 	declaring their code to be open source, and thus the quantreg package can now
 	be considered fully  GPL.  See the README file for further details.
-	
+
 	2.  fixed some vestigial calls to fprintf IOHBTerminate etc that
 	contained un-R-like printing or exit calls.
 
@@ -472,7 +472,7 @@ The version 0.97
 	of R 3.0 beta.
 
 The version 0.98
-	1.  Fixed various dimension problems identified by the new R CMD check 
+	1.  Fixed various dimension problems identified by the new R CMD check
 	protocol.
 
 The Version 1.00
@@ -487,7 +487,7 @@ The version 1.01
 
 The version 1.03
 	1.  Moved SparseM.Rnw to a new vignettes directory at the suggestion
-	of Brian Ripley and removed the Makefile  for the vignette at the 
+	of Brian Ripley and removed the Makefile  for the vignette at the
 	suggestion of Uwe Ligges.
 
 The version 1.05
@@ -525,7 +525,7 @@ The version 1.76
 1.  Used package_native_routine_registration_skeleton  to remove
     PACKAGE = SparseM  [per Kurt's email of 3/2/17]
 
-The version 1.77 
+The version 1.77
 
 1.  Changed setMethod for diag (matrix.csr) in accordance with MM's suggestion
 
@@ -540,3 +540,60 @@ The version 1.79
 
 1.  Removed a "f_" from the .Fortran call in chol2csr following bug report
 by Alex Ballantynea (Melbourne U)
+
+The version 1.82
+
+1.  Modernized the cholesky.f to remove arithmetic ifs, suggested by BDR.
+2.  Repaired some syntax errors in lsq.Rd.
+3.  Commented out S3Method lines at the end of NAMESPACE file, at suggestion
+of Ivan Krylov, see mail of May 27, 2024.
+4.  This version was accepted by Uwe for CRAN, despite generating an error
+with balanceTest() in the RItools package.
+5.  After some chaos involving namespace issues that were due to extraneous
+conditions, the package passed R CMD check after adding a setGeneric(image)
+command in SparseM.R.  (This allowed me to restore the vignette in its Rnw
+form.
+6.  This left things in the status quo ante with the problem in RItools, which
+I'm hoping Jake Bowers and his collaborators can help debug.
+7.  Meanwhile there is a broken 1.82 on CRAN that I've asked Uwe to remove.
+8.  The problem with the RItools example turned out to be that chol was being
+applied to a singular matrix. I've added a warning in the documentation that
+is no pre-checking for PD matrices.
+9.  I also found that determinant wasn't acknowledged to be generic, so this
+has been repaired, however there is still a problem with accessing the
+documentation of this.
+
+The version 1.84
+		 (much by Martin Maechler who also adds himself to the Authors 'ctb')
+
+1.  chol(<matrix.csr)     gets new argument `warn.only = FALSE` in order to
+	still return in case of errors (as this has happened in older
+	versions, at least coincidentally).  Further new arguments for
+	previously hardwired "tuning" constants are
+	'tiny = 1e-30',
+	'Large = 1e128',
+	'cacheKb = 1024L',
+	'level = 8L'.
+	Note that `cacheKb` was hardwired to 64, clearly too small a
+	default for today's hardware.
+	Further, the chol() method is well documented ( ../man/SparseM.solve.Rd ).
+	An example has been added where _decreasing_ `tiny` was beneficial.
+
+2.  determinant(<matrix.csr>) allows to pass optional arguments for chol().
+3.  det() now works, automagically calling _our_ determinant().
+4.  Fix backsolve() and forwardsolve() methods documentation, adding an
+    `drop=TRUE` argument in one case.
+4b. These tweaks have also eliminated the unpleasant message when SparseM is attached:
+
+	The following object is masked from ‘package:base’:  \cr   backsolve
+
+5.  A nice simple show() method now (auto-)prints our sparse matrices with
+    structural zeros shown as  " . "
+6.  norm(<matrix.csr>, "I") now gives an error (instead of invisible(NULL)).
+7.  demo(LeastSquares)  and  demo(Solve)  work now.
+
+The version 1.84-1
+
+- src/SparseM.h : use 'int_least32_t' instead of 'int'  for Fortran 'logical', in two cases (fixing 'LTO').
+- src/csr.f (etc): drop first *unused* argument 'ra' from nzero().
+- src/cholesky.f:  replace computed goto's in code by  select case(.) case() ...

@@ -1,8 +1,15 @@
 
+Changes in 1.4-26 (2024-07-18)
+
+    o    Rd link problem
+
 Changes in 1.4-25 (2023-06-20)
 
-    o    texlive (pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023)) on fedora
-         still had problems, removing usepackage{caption}  solved the problem.
+    o    pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023) installed as described on
+
+	        https://www.tug.org/texlive/quickinstall.html
+
+         on fedora still had problems, removing \usepackage{caption} solved the problem.
 
 Changes in 1.4-24 (2023-06-13)
 

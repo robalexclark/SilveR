@@ -42,6 +42,16 @@ S3method("split", "simple_triplet_matrix")
 S3method("t", "simple_triplet_matrix")
 S3method("unique", "simple_triplet_matrix")
 
+S3method(".is_sparse_mat_coercible_to_stm", "simple_triplet_matrix")
+S3method(".is_sparse_mat_coercible_to_stm", "default")
+S3method(".is_sparse_mat_coercible_to_stm", "dgTMatrix")
+S3method(".is_sparse_mat_coercible_to_stm", "dgCMatrix")
+S3method(".is_sparse_mat_coercible_to_stm", "dgRMatrix")
+S3method(".is_sparse_mat_coercible_to_stm", "matrix.coo")
+S3method(".is_sparse_mat_coercible_to_stm", "matrix.csr")
+S3method(".is_sparse_mat_coercible_to_stm", "matrix.csc")
+S3method(".is_sparse_mat_coercible_to_stm", "spam")
+
 ## enhanced stuff
 useDynLib("slam", .registration = TRUE)
 
@@ -78,6 +88,11 @@ export("row_norms",
 export("tcrossprod_simple_triplet_matrix",
        "crossprod_simple_triplet_matrix",
        "matprod_simple_triplet_matrix")
+
+if(getRversion() >= "4.3.0") {
+    S3method("matrixOps", "simple_triplet_matrix")
+    S3method("chooseOpsMethod", "simple_triplet_matrix")
+}
 
 export("rowapply_simple_triplet_matrix",
        "colapply_simple_triplet_matrix",

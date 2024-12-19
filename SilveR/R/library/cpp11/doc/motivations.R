@@ -154,7 +154,8 @@ knitr::kable(b_release)
 #    {
 #      fun = match.fun(sprintf("%sgrow_", ifelse(pkg == "cpp11", "", paste0(pkg, "_"))))
 #      bench::mark(
-#        fun(len)
+#        fun(len),
+#        min_iterations = 100
 #      )
 #    }
 #  )[c("len", "pkg", "min", "mem_alloc", "n_itr", "n_gc")]

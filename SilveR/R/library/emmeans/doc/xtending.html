@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.9.0" />
+<meta name="author" content="emmeans package, Version 1.10.5" />
 
 
 <title>For developers: Extending emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">For developers: Extending
 <strong>emmeans</strong></h1>
-<h4 class="author">emmeans package, Version 1.9.0</h4>
+<h4 class="author">emmeans package, Version 1.10.5</h4>
 
 
 
@@ -77,6 +77,7 @@ function.</p>
 <li><a href="#lqs">Supporting <code>lqs</code> objects</a></li>
 <li><a href="#communic">Communication between methods</a></li>
 <li><a href="#hooks">Hook functions</a></li>
+<li><a href="#regridded">Re-gridded basis</a></li>
 <li><a href="#exported">Exported methods from
 <strong>emmeans</strong></a></li>
 <li><a href="#rsm">Existing support for <code>rsm</code>
@@ -182,7 +183,7 @@ method. Look at the one for <code>lm</code> objects:</p>
 ##     recover_data(fcall, delete.response(terms(object)), object$na.action, 
 ##         frame = frame, pwts = weights(object), ...)
 ## }
-## &lt;bytecode: 0x00000117333ab290&gt;
+## &lt;bytecode: 0x000001716382bae0&gt;
 ## &lt;environment: namespace:emmeans&gt;</code></pre>
 <p>Note that all it does is obtain the <code>call</code> component and
 call the method for class <code>call</code>, with additional arguments
@@ -294,7 +295,7 @@ Following this advice, let’s take a look at it:</p>
 ##     X &lt;- model.matrix(Terms, m, contrasts.arg = object$contrasts)
 ##     drop(X %*% object$coefficients)
 ## }
-## &lt;bytecode: 0x0000011749c794b8&gt;
+## &lt;bytecode: 0x000001716b53d3f8&gt;
 ## &lt;environment: namespace:MASS&gt;</code></pre>
 <div id="eblqs" class="section level6">
 <h6></h6>
@@ -441,6 +442,24 @@ calls for post-processing. The <code>&quot;cum.prob&quot;</code> mode uses the
 cumulative-probability scale. And the <code>&quot;prob&quot;</code> mode performs
 this, as well as applying the contrasts necessary to convert the
 cumulative probabilities into the class probabilities.</p>
+</div>
+<div id="regridded" class="section level2">
+<h2>Re-gridded basis</h2>
+<!-- @index `emm_basis()`!Re-gridded; `misc$regrid.flag`; `regrid.flag` -->
+<p>Sometimes your <code>emm_basis</code> method may essentially create a
+re-gridded basis, where <code>X</code> and <code>bhat</code> are not
+actually a model matrix and regression coefficients, but instead,
+<code>X</code> is the identity, <code>bhat</code> comprises the
+predictions at each grid point, and <code>V</code> is the covariance
+matrix of those predictions. In those cases, we recommend also setting
+<code>misc$regrid.flag = TRUE</code>. Currently, this flag is used only
+for checking whether the <code>nuisance</code> argument can be used in
+<code>ref_grid()</code>, and it is not absolutely necessary because we
+also check to see if <code>X</code> is the identity. But it provides a
+more efficient and reliable check. The code for nuisamce factors relies
+on the structure of model matrices where columns are associated with
+model terms. So it is not possible to process nuisance factors with a
+re-gridded basis.</p>
 <p><a href="#contents">Back to Contents</a></p>
 </div>
 <div id="exported" class="section level2">

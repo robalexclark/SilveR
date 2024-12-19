@@ -1,4 +1,4 @@
-/*! bslib 0.6.1 | (c) 2012-2023 RStudio, PBC. | License: MIT + file LICENSE */
+/*! bslib 0.8.0 | (c) 2012-2024 RStudio, PBC. | License: MIT + file LICENSE */
 "use strict";
 (() => {
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -7,6 +7,23 @@
   };
   var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __accessCheck = (obj, member, msg) => {
+    if (!member.has(obj))
+      throw TypeError("Cannot " + msg);
+  };
+  var __privateGet = (obj, member, getter) => {
+    __accessCheck(obj, member, "read from private field");
+    return getter ? getter.call(obj) : member.get(obj);
+  };
+  var __privateAdd = (obj, member, value) => {
+    if (member.has(obj))
+      throw TypeError("Cannot add the same private member more than once");
+    member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+  };
+  var __privateMethod = (obj, member, method) => {
+    __accessCheck(obj, member, "access private method");
+    return method;
   };
   var __async = (__this, __arguments, generator) => {
     return new Promise((resolve, reject) => {
@@ -31,8 +48,18 @@
 
   // srcts/src/components/_utils.ts
   function registerBinding(inputBindingClass, name) {
-    if (window.Shiny) {
+    if (Shiny) {
       Shiny.inputBindings.register(new inputBindingClass(), "bslib." + name);
+    }
+  }
+  function registerBslibGlobal(name, value) {
+    window.bslib = window.bslib || {};
+    if (!window.bslib[name]) {
+      window.bslib[name] = value;
+    } else {
+      console.error(
+        `[bslib] Global window.bslib.${name} was already defined, using previous definition.`
+      );
     }
   }
   function hasDefinedProperty(obj, prop) {
@@ -60,7 +87,7 @@
   }
   function shinyRenderContent(...args) {
     return __async(this, null, function* () {
-      if (!window.Shiny) {
+      if (!Shiny) {
         throw new Error("This function must be called in a Shiny app.");
       }
       if (Shiny.renderContentAsync) {
@@ -70,11 +97,12 @@
       }
     });
   }
-  var InputBinding;
+  var Shiny, InputBinding;
   var init_utils = __esm({
     "srcts/src/components/_utils.ts"() {
       "use strict";
-      InputBinding = window.Shiny ? Shiny.InputBinding : class {
+      Shiny = window.Shiny;
+      InputBinding = Shiny ? Shiny.InputBinding : class {
       };
     }
   });
@@ -172,10 +200,11 @@
           });
         }
         _removeItem(el, data) {
+          var _a;
           const targetItems = this._getItemInfo(el).filter(
             (x) => data.target.indexOf(x.value) > -1
           );
-          const unbindAll = Shiny == null ? void 0 : Shiny.unbindAll;
+          const unbindAll = (_a = window.Shiny) == null ? void 0 : _a.unbindAll;
           targetItems.forEach((x) => {
             if (unbindAll)
               unbindAll(x.item);
@@ -363,6 +392,115 @@
     }
   });
 
+  // srcts/src/components/_shinyRemovedObserver.ts
+  var ShinyRemovedObserver;
+  var init_shinyRemovedObserver = __esm({
+    "srcts/src/components/_shinyRemovedObserver.ts"() {
+      "use strict";
+      ShinyRemovedObserver = class {
+        /**
+         * Creates a new instance of the `ShinyRemovedObserver` class to watch for the
+         * removal of specific elements from part of the DOM.
+         *
+         * @param selector A CSS selector to identify elements to watch for removal.
+         * @param callback The function to be called on a matching element when it
+         * is removed.
+         */
+        constructor(selector, callback) {
+          this.watching = /* @__PURE__ */ new Set();
+          this.observer = new MutationObserver((mutations) => {
+            const found = /* @__PURE__ */ new Set();
+            for (const { type, removedNodes } of mutations) {
+              if (type !== "childList")
+                continue;
+              if (removedNodes.length === 0)
+                continue;
+              for (const node of removedNodes) {
+                if (!(node instanceof HTMLElement))
+                  continue;
+                if (node.matches(selector)) {
+                  found.add(node);
+                }
+                if (node.querySelector(selector)) {
+                  node.querySelectorAll(selector).forEach((el) => found.add(el));
+                }
+              }
+            }
+            if (found.size === 0)
+              return;
+            for (const el of found) {
+              try {
+                callback(el);
+              } catch (e) {
+                console.error(e);
+              }
+            }
+          });
+        }
+        /**
+         * Starts observing the specified element for removal of its children. If the
+         * element is already being observed, no change is made to the mutation
+         * observer.
+         * @param el The element to observe.
+         */
+        observe(el) {
+          const changed = this._flush();
+          if (this.watching.has(el)) {
+            if (!changed)
+              return;
+          } else {
+            this.watching.add(el);
+          }
+          if (changed) {
+            this._restartObserver();
+          } else {
+            this.observer.observe(el, { childList: true, subtree: true });
+          }
+        }
+        /**
+         * Stops observing the specified element for removal.
+         * @param el The element to unobserve.
+         */
+        unobserve(el) {
+          if (!this.watching.has(el))
+            return;
+          this.watching.delete(el);
+          this._flush();
+          this._restartObserver();
+        }
+        /**
+         * Restarts the mutation observer, observing all elements in the `watching`
+         * and implicitly unobserving any elements that are no longer in the
+         * watchlist.
+         * @private
+         */
+        _restartObserver() {
+          this.observer.disconnect();
+          for (const el of this.watching) {
+            this.observer.observe(el, { childList: true, subtree: true });
+          }
+        }
+        /**
+         * Flushes the set of watched elements, removing any elements that are no
+         * longer in the DOM, but it does not modify the mutation observer.
+         * @private
+         * @returns A boolean indicating whether the watched elements have changed.
+         */
+        _flush() {
+          let watchedChanged = false;
+          const watched = Array.from(this.watching);
+          for (const el of watched) {
+            if (document.body.contains(el))
+              continue;
+            this.watching.delete(el);
+            watchedChanged = true;
+          }
+          return watchedChanged;
+        }
+      };
+    }
+  });
+
   // srcts/src/components/card.ts
   var _Card, Card;
   var init_card = __esm({
@@ -370,6 +508,7 @@
       "use strict";
       init_utils();
       init_shinyResizeObserver();
+      init_shinyRemovedObserver();
       _Card = class {
         /**
          * Creates an instance of a bslib Card component.
@@ -384,8 +523,10 @@
           this.card = card;
           _Card.instanceMap.set(card, this);
           _Card.shinyResizeObserver.observe(this.card);
+          _Card.cardRemovedObserver.observe(document.body);
           this._addEventListeners();
           this.overlay = this._createOverlay();
+          this._setShinyInput();
           this._exitFullScreenOnEscape = this._exitFullScreenOnEscape.bind(this);
           this._trapFocusExit = this._trapFocusExit.bind(this);
         }
@@ -402,6 +543,9 @@
           var _a;
           if (event)
             event.preventDefault();
+          if (this.card.id) {
+            this.overlay.anchor.setAttribute("aria-controls", this.card.id);
+          }
           document.addEventListener("keydown", this._exitFullScreenOnEscape, false);
           document.addEventListener("keydown", this._trapFocusExit, true);
           this.card.setAttribute(_Card.attr.ATTR_FULL_SCREEN, "true");
@@ -413,6 +557,8 @@
             this.card.setAttribute("tabindex", "-1");
             this.card.focus();
           }
+          this._emitFullScreenEvent(true);
+          this._setShinyInput();
         }
         /**
          * Exit full screen mode. This removes the full screen overlay element,
@@ -430,6 +576,32 @@
           this.card.setAttribute(_Card.attr.ATTR_FULL_SCREEN, "false");
           this.card.removeAttribute("tabindex");
           document.body.classList.remove(_Card.attr.CLASS_HAS_FULL_SCREEN);
+          this._emitFullScreenEvent(false);
+          this._setShinyInput();
+        }
+        _setShinyInput() {
+          if (!this.card.classList.contains(_Card.attr.CLASS_SHINY_INPUT))
+            return;
+          if (!Shiny)
+            return;
+          if (!Shiny.setInputValue) {
+            setTimeout(() => this._setShinyInput(), 0);
+            return;
+          }
+          const fsAttr = this.card.getAttribute(_Card.attr.ATTR_FULL_SCREEN);
+          Shiny.setInputValue(this.card.id + "_full_screen", fsAttr === "true");
+        }
+        /**
+         * Emits a custom event to communicate the card's full screen state change.
+         * @private
+         * @param {boolean} fullScreen
+         */
+        _emitFullScreenEvent(fullScreen) {
+          const event = new CustomEvent("bslib.card", {
+            bubbles: true,
+            detail: { fullScreen }
+          });
+          this.card.dispatchEvent(event);
         }
         /**
          * Adds general card-specific event listeners.
@@ -537,13 +709,19 @@
         /**
          * Creates the anchor element used to exit the full screen mode.
          * @private
-         * @returns {HTMLAnchorElement}
+         * @returns {CardFullScreenOverlay["anchor"]}
          */
         _createOverlayCloseAnchor() {
           const anchor = document.createElement("a");
           anchor.classList.add(_Card.attr.CLASS_FULL_SCREEN_EXIT);
           anchor.tabIndex = 0;
-          anchor.onclick = () => this.exitFullScreen();
+          anchor.setAttribute("aria-expanded", "true");
+          anchor.setAttribute("aria-label", "Close card");
+          anchor.setAttribute("role", "button");
+          anchor.onclick = (ev) => {
+            this.exitFullScreen();
+            ev.stopPropagation();
+          };
           anchor.onkeydown = (ev) => {
             if (ev.key === "Enter" || ev.key === " ") {
               this.exitFullScreen();
@@ -603,7 +781,6 @@
        * Key bslib-specific classes and attributes used by the card component.
        * @private
        * @static
-       * @type {{ ATTR_INIT: string; CLASS_CARD: string; CLASS_FULL_SCREEN: string; CLASS_HAS_FULL_SCREEN: string; CLASS_FULL_SCREEN_ENTER: string; CLASS_FULL_SCREEN_EXIT: string; ID_FULL_SCREEN_OVERLAY: string; }}
        */
       Card.attr = {
         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -619,7 +796,9 @@
         // eslint-disable-next-line @typescript-eslint/naming-convention
         CLASS_FULL_SCREEN_EXIT: "bslib-full-screen-exit",
         // eslint-disable-next-line @typescript-eslint/naming-convention
-        ID_FULL_SCREEN_OVERLAY: "bslib-full-screen-overlay"
+        ID_FULL_SCREEN_OVERLAY: "bslib-full-screen-overlay",
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        CLASS_SHINY_INPUT: "bslib-card-input"
       };
       /**
        * A Shiny-specific resize observer that ensures Shiny outputs in within the
@@ -629,6 +808,25 @@
        * @static
        */
       Card.shinyResizeObserver = new ShinyResizeObserver();
+      /**
+       * Watch card parent containers for removal and exit full screen mode if a
+       * full screen card is removed from the DOM.
+       *
+       * @private
+       * @type {ShinyRemovedObserver}
+       * @static
+       */
+      Card.cardRemovedObserver = new ShinyRemovedObserver(
+        `.${_Card.attr.CLASS_CARD}`,
+        (el) => {
+          const card = _Card.getInstance(el);
+          if (!card)
+            return;
+          if (card.card.getAttribute(_Card.attr.ATTR_FULL_SCREEN) === "true") {
+            card.exitFullScreen();
+          }
+        }
+      );
       /**
        * The registry of card instances and their associated DOM elements.
        * @private
@@ -644,8 +842,7 @@
        * @type {boolean}
        */
       Card.onReadyScheduled = false;
-      window.bslib = window.bslib || {};
-      window.bslib.Card = Card;
+      registerBslibGlobal("Card", Card);
     }
   });
 
@@ -663,6 +860,12 @@
          * @param {HTMLElement} container
          */
         constructor(container) {
+          /**
+           * The current window size, either `"desktop"` or `"mobile"`.
+           * @private
+           * @type {SidebarWindowSize | ""}
+           */
+          this.windowSize = "";
           var _a;
           _Sidebar.instanceMap.set(container, this);
           this.layout = {
@@ -680,10 +883,10 @@
             (_a = sideAccordion == null ? void 0 : sideAccordion.parentElement) == null ? void 0 : _a.classList.add("has-accordion");
             sideAccordion.classList.add("accordion-flush");
           }
-          if (this.layout.toggle) {
+          this._initSidebarCounters();
+          this._initSidebarState();
+          if (this._isCollapsible("desktop") || this._isCollapsible("mobile")) {
             this._initEventListeners();
-            this._initSidebarCounters();
-            this._initDesktop();
           }
           _Sidebar.shinyResizeObserver.observe(this.layout.main);
           container.removeAttribute("data-bslib-sidebar-init");
@@ -702,11 +905,10 @@
          * The sidebar state works as follows, starting from the open state. When the
          * sidebar is closed:
          * 1. We add both the `COLLAPSE` and `TRANSITIONING` classes to the sidebar.
-         * 2. The sidebar collapse begins to animate. On desktop devices, and where it
-         *    is supported, we transition the `grid-template-columns` property of the
-         *    sidebar layout. On mobile, the sidebar is hidden immediately. In both
-         *    cases, the collapse icon rotates and we use this rotation to determine
-         *    when the transition is complete.
+         * 2. The sidebar collapse begins to animate. In general,  where it is
+         *    supported, we transition the `grid-template-columns` property of the
+         *    sidebar layout. We also rotate the collapse icon and we use this
+         *    rotation to determine when the transition is complete.
          * 3. If another sidebar state toggle is requested while closing the sidebar,
          *    we remove the `COLLAPSE` class and the animation immediately starts to
          *    reverse.
@@ -726,6 +928,21 @@
          */
         static getInstance(el) {
           return _Sidebar.instanceMap.get(el);
+        }
+        /**
+         * Determine whether the sidebar is collapsible at a given screen size.
+         * @private
+         * @param {SidebarWindowSize} [size="desktop"]
+         * @returns {boolean}
+         */
+        _isCollapsible(size = "desktop") {
+          const { container } = this.layout;
+          const attr = size === "desktop" ? "collapsibleDesktop" : "collapsibleMobile";
+          const isCollapsible = container.dataset[attr];
+          if (isCollapsible === void 0) {
+            return true;
+          }
+          return isCollapsible.trim().toLowerCase() !== "false";
         }
         /**
          * Initialize all collapsible sidebars on the page.
@@ -767,6 +984,10 @@
             this.toggle("toggle");
           });
           (_a = toggle.querySelector(".collapse-icon")) == null ? void 0 : _a.addEventListener("transitionend", () => this._finalizeState());
+          if (this._isCollapsible("desktop") && this._isCollapsible("mobile")) {
+            return;
+          }
+          window.addEventListener("resize", () => this._handleWindowResizeEvent());
         }
         /**
          * Initialize nested sidebar counters.
@@ -814,18 +1035,57 @@
           });
         }
         /**
+         * Retrieves the current window size by reading a CSS variable whose value is
+         * toggled via media queries.
+         * @returns The window size as `"desktop"` or `"mobile"`, or `""` if not
+         * available.
+         */
+        _getWindowSize() {
+          const { container } = this.layout;
+          return window.getComputedStyle(container).getPropertyValue("--bslib-sidebar-js-window-size").trim();
+        }
+        /**
+         * Determine the initial toggle state of the sidebar at a current screen size.
+         * It always returns whether we should `"open"` or `"close"` the sidebar.
+         *
+         * @private
+         * @returns {("close" | "open")}
+         */
+        _initialToggleState() {
+          var _a, _b;
+          const { container } = this.layout;
+          const attr = this.windowSize === "desktop" ? "openDesktop" : "openMobile";
+          const initState = (_b = (_a = container.dataset[attr]) == null ? void 0 : _a.trim()) == null ? void 0 : _b.toLowerCase();
+          if (initState === void 0) {
+            return "open";
+          }
+          if (["open", "always"].includes(initState)) {
+            return "open";
+          }
+          if (["close", "closed"].includes(initState)) {
+            return "close";
+          }
+          return "open";
+        }
+        /**
          * Initialize the sidebar's initial state when `open = "desktop"`.
          * @private
          */
-        _initDesktop() {
-          var _a;
-          const { container } = this.layout;
-          if (((_a = container.dataset.bslibSidebarOpen) == null ? void 0 : _a.trim()) !== "desktop") {
+        _initSidebarState() {
+          this.windowSize = this._getWindowSize();
+          const initState = this._initialToggleState();
+          this.toggle(initState, true);
+        }
+        /**
+         * Updates the sidebar state when the window is resized across the mobile-
+         * desktop boundary.
+         */
+        _handleWindowResizeEvent() {
+          const newSize = this._getWindowSize();
+          if (!newSize || newSize == this.windowSize) {
             return;
           }
-          const initCollapsed = window.getComputedStyle(container).getPropertyValue("--bslib-sidebar-js-init-collapsed");
-          const initState = initCollapsed.trim() === "true" ? "close" : "open";
-          this.toggle(initState, true);
+          this._initSidebarState();
         }
         /**
          * Toggle the sidebar's open/closed state.
@@ -840,6 +1100,8 @@
         toggle(method, immediate = false) {
           if (typeof method === "undefined") {
             method = "toggle";
+          } else if (method === "closed") {
+            method = "close";
           }
           const { container, sidebar } = this.layout;
           const isClosed = this.isClosed;
@@ -953,8 +1215,77 @@
         }
       };
       registerBinding(SidebarInputBinding, "sidebar");
-      window.bslib = window.bslib || {};
-      window.bslib.Sidebar = Sidebar;
+      registerBslibGlobal("Sidebar", Sidebar);
+    }
+  });
+
+  // srcts/src/components/taskButton.ts
+  var _clickCount, _clickListeners, _setState, setState_fn, BslibTaskButtonInputBinding;
+  var init_taskButton = __esm({
+    "srcts/src/components/taskButton.ts"() {
+      "use strict";
+      init_utils();
+      BslibTaskButtonInputBinding = class extends InputBinding {
+        constructor() {
+          super(...arguments);
+          /**
+           * Reach into the child <bslib-switch-inline> and to switch to the state case.
+           */
+          __privateAdd(this, _setState);
+          __privateAdd(this, _clickCount, /* @__PURE__ */ new WeakMap());
+          __privateAdd(this, _clickListeners, /* @__PURE__ */ new WeakMap());
+        }
+        find(scope) {
+          return $(scope).find(".bslib-task-button");
+        }
+        getValue(el) {
+          var _a;
+          return {
+            value: (_a = __privateGet(this, _clickCount).get(el)) != null ? _a : 0,
+            autoReset: el.hasAttribute("data-auto-reset")
+          };
+        }
+        getType() {
+          return "bslib.taskbutton";
+        }
+        subscribe(el, callback) {
+          if (__privateGet(this, _clickListeners).has(el)) {
+            this.unsubscribe(el);
+          }
+          const eventListener = () => {
+            var _a;
+            __privateGet(this, _clickCount).set(el, ((_a = __privateGet(this, _clickCount).get(el)) != null ? _a : 0) + 1);
+            callback(true);
+            __privateMethod(this, _setState, setState_fn).call(this, el, "busy");
+          };
+          __privateGet(this, _clickListeners).set(el, eventListener);
+          el.addEventListener("click", eventListener);
+        }
+        unsubscribe(el) {
+          const listener = __privateGet(this, _clickListeners).get(el);
+          if (listener) {
+            el.removeEventListener("click", listener);
+          }
+        }
+        receiveMessage(_0, _1) {
+          return __async(this, arguments, function* (el, { state }) {
+            __privateMethod(this, _setState, setState_fn).call(this, el, state);
+          });
+        }
+      };
+      _clickCount = new WeakMap();
+      _clickListeners = new WeakMap();
+      _setState = new WeakSet();
+      setState_fn = function(el, state) {
+        el.disabled = state === "busy";
+        const tbc = el.querySelector(
+          "bslib-switch-inline"
+        );
+        if (tbc) {
+          tbc.case = state;
+        }
+      };
+      registerBinding(BslibTaskButtonInputBinding, "task-button");
     }
   });
 
@@ -964,7 +1295,7 @@
       return;
     }
     for (const [name, handler] of Object.entries(handlers)) {
-      Shiny.addCustomMessageHandler(name, handler);
+      window.Shiny.addCustomMessageHandler(name, handler);
     }
   }
   var init_shinyAddCustomMessageHandlers = __esm({
@@ -979,6 +1310,7 @@
       init_accordion();
       init_card();
       init_sidebar();
+      init_taskButton();
       init_utils();
       init_shinyAddCustomMessageHandlers();
       var bslibMessageHandlers = {

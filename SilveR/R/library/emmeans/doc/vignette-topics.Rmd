@@ -85,22 +85,11 @@ vignette: >
 
   * [Causal inference](messy-data.html#counterfact)
   * [`cld()`](comparisons.html#CLD)
-  * CLDs
-      * [Alternative](re-engineering-clds.html#alt-CLDs)
-      * [For equivalence sets](re-engineering-clds.html#equiv-CLDs)
-      * [For significance sets](re-engineering-clds.html#signif-CLDs)
-      * [**multcompView** package](re-engineering-clds.html#CLDs)
-      * [Principles](re-engineering-clds.html#CLDs)
-      * [Re-engineered](re-engineering-clds.html#alt-CLDs)
-      * [References](re-engineering-clds.html#refs)
-      * [Relation to underlining](re-engineering-clds.html#underlining)
-      * [Simulated example](re-engineering-clds.html#CLD-example)
   * [`clm` models](models.html#O)
   * [**coda** package](sophisticated.html#bayesxtra)
   * [`coef()`](comparisons.html#contrasts)
   * [Cohen's *d*](comparisons.html#pwpm)
   * [Compact letter displays](comparisons.html#CLD)
-  * [Compact letter displays (CLDs)](re-engineering-clds.html)
   * Comparison arrows
       * [Derivation](xplanations.html#arrows)
   * Comparisons
@@ -183,6 +172,7 @@ vignette: >
       * [Dispatching](xtending.html#dispatch)
       * [Hook functions](xtending.html#hooks)
       * [for `lqs` objects](xtending.html#eblqs)
+      * [Re-gridded](xtending.html#regridded)
       * [for `rsm` objects](xtending.html#ebrsm)
   * [`emm_list` object](comparisons.html#formulas)
   * [`emm_options()`](utilities.html#defaults)
@@ -216,7 +206,6 @@ vignette: >
   * `emtrends()`
       * [in *interactions: covariates*](interactions.html#covariates)
       * [in *interactions: oranges*](interactions.html#oranges)
-  * [Equivalence sets (with CLDs)](re-engineering-clds.html#equiv-CLDs)
   * [`estHook`](xtending.html#hooks)
   * [Estimability](messy-data.html#nonestex)
   * [Estimability issues](FAQs.html#NAs)
@@ -234,7 +223,6 @@ vignette: >
           * [in *sophisticated: mcmc*](sophisticated.html#mcmc)
           * [in *transformations: cbpp*](transformations.html#cbpp)
       * [`ChickWeight`](sophisticated.html#random-slopes)
-      * [CLDs (simulated)](re-engineering-clds.html#CLD-example)
       * [`cows`](messy-data.html#cows)
       * [`feedlot`](predictions.html#feedlot)
       * `fiber`
@@ -426,9 +414,12 @@ vignette: >
       * [Limiting](messy-data.html#rg.limit)
   * [`mira` models](models.html#I)
   * [`misc` attribute and argument](xtending.html#communic)
+  * [`misc$regrid.flag`](xtending.html#regridded)
   * [Missing cells](xplanations.html#joint_tests)
   * [`mlm` models](models.html#N)
   * [`mmer` models](models.html#G)
+  * `mode` argument
+      * [implied re-gridding](transformations.html#regrid3)
   * Model
       * [Get it right first](basics.html#recs2)
       * Importance of
@@ -582,6 +573,8 @@ vignette: >
   * Ratios
       * [but I wanted differences](FAQs.html#ratios)
   * [`rbind()`](utilities.html#rbind)
+  * Re-gridding
+      * [Implied](transformations.html#regrid3)
   * [Re-labeling](utilities.html#relevel)
   * [Recommended practices](basics.html#recs1)
   * [`recover_data()`](xtending.html#intro)
@@ -617,6 +610,7 @@ vignette: >
       * [`regrid` vs. `type`](transformations.html#regrid2)
       * [to obtain risk ratios](transformations.html#riskrats)
       * [`transform = "log"`](transformations.html#logs)
+  * [`regrid.flag`](xtending.html#regridded)
   * [Residual plots](basics.html#pigs)
   * [Response scale](confidence-intervals.html#tran)
   * [Response transformations](basics.html#transf)
@@ -645,7 +639,6 @@ vignette: >
   * [Sidak adjustment](confidence-intervals.html#adjust)
   * Significance
       * [Assessing](basics.html#pvalues)
-  * [Significance sets (with CLDs)](re-engineering-clds.html#signif-CLDs)
   * [`simple = "each"`](confidence-intervals.html#simple)
   * Simple comparisons
       * [in *confidence-intervals: simple*](confidence-intervals.html#simple)
@@ -719,6 +712,8 @@ vignette: >
       * [`scale()`](transformations.html#stdize)
       * [Standardizing](transformations.html#stdize)
       * [Timing is everything](transformations.html#timing)
+  * [Transformations|Implied re-gridding](transformations.html#regrid3)
+  * [Transformations|Special modes](transformations.html#regrid3)
   * Trends
       * [Estimating and comparing](interactions.html#oranges)
   * [`trt.vs.ctrl` contrasts](comparisons.html#contrasts)
@@ -739,7 +734,6 @@ vignette: >
 
 
   * [Unadjusted tests](confidence-intervals.html#adjmore)
-  * [Underlining, grouping by](re-engineering-clds.html#underlining)
   * [`update()`](utilities.html#update)
       * [`tran`](transformations.html#after)
   * [Using results](utilities.html#data)
@@ -761,9 +755,7 @@ vignette: >
       * [FAQS](FAQs.html)
       * [Interactions](interactions.html)
       * [Messy data](messy-data.html)
-      * [Models](models.html)
       * [Predictions](predictions.html)
-      * [Re-engineering CLDs](re-engineering-clds.html)
       * [Sophisticated models](sophisticated.html)
       * [Transformations and link functions](transformations.html)
       * [Utilities and options](utilities.html)

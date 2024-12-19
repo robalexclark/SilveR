@@ -2,17 +2,23 @@
 title: An Introduction to xfun
 subtitle: A Collection of Miscellaneous Functions
 author: "Yihui Xie"
-date: "`r Sys.Date()`"
+date: "`{r} Sys.Date()`"
 slug: xfun
-githubEditURL: https://github.com/yihui/xfun/edit/master/vignettes/xfun.Rmd
+githubEditURL: https://github.com/yihui/xfun/edit/main/vignettes/xfun.Rmd
 output:
-  knitr:::html_vignette:
-    toc: yes
-vignette: >
-  %\VignetteIndexEntry{An Introduction to xfun}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  litedown::html_format:
+    meta:
+      css: ["@default", "@article"]
+      js: ["@sidenotes"]
+    options:
+      toc: true
+      number_sections: true
 ---
+
+<!--
+%\VignetteIndexEntry{An Introduction to xfun}
+%\VignetteEngine{litedown::vignette}
+-->
 
 ```{r setup, include=FALSE}
 library(xfun)
@@ -20,7 +26,7 @@ library(xfun)
 
 After writing about 20 R packages, I found I had accumulated several utility functions that I used across different packages, so I decided to extract them into a separate package. Previously I had been using the evil triple-colon `:::` to access these internal utility functions. Now with **xfun**, these functions have been exported, and more importantly, documented. It should be better to use them under the sun instead of in the dark.
 
-This page shows examples of a subset of functions in this package. For a full list of functions, see the help page `help(package = 'xfun')`. The source package is available on Github: https://github.com/yihui/xfun.
+This page shows examples of a subset of functions in this package. For a full list of functions, see the help page `help(package = 'xfun')`. The source package is available on GitHub: https://github.com/yihui/xfun.
 
 ## No more partial matching for lists!
 
@@ -280,6 +286,6 @@ Since I have never been fully satisfied by the output of `sessionInfo()`, I twea
 You can choose to print out the versions of only the packages you specify, e.g.,
 
 ```{r}
-xfun::session_info(c('xfun', 'rmarkdown', 'knitr', 'tinytex'), dependencies = FALSE)
+xfun::session_info(c('xfun', 'litedown', 'tinytex'), dependencies = FALSE)
 ```
 

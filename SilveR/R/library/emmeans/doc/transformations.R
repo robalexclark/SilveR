@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE---------------------------------------------
+## ----echo = FALSE, results = "hide", message = FALSE----------------------------------------------
 require("emmeans")
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
 
@@ -42,19 +42,19 @@ pairs(neuralgia.emm, reverse = TRUE)
 ## ----fig.alt = "Interaction-plot display of the results of emmeans(neuralgia.glm, ~ Treatment | Sex)"----
 emmip(neuralgia.glm, Sex ~ Treatment)
 
-## ---- fig.height = 1.5, fig.alt = c("Plot A: Display of the results of confint(neur.Trt.emm)", 'Plot B: Display of the results of confint(neur.Trt.emm, type = "response"). These intervals are markedly skewed right|left for low|high estimated probabilities')----
+## ----fig.height = 1.5, fig.alt = c("Plot A: Display of the results of confint(neur.Trt.emm)", 'Plot B: Display of the results of confint(neur.Trt.emm, type = "response"). These intervals are markedly skewed right|left for low|high estimated probabilities')----
 neur.Trt.emm <- suppressMessages(emmeans(neuralgia.glm, "Treatment"))
 plot(neur.Trt.emm)   # Link scale by default
 plot(neur.Trt.emm, type = "response")
 
-## ---- fig.height = 1.5, fig.alt = "Plot C: On the inside, this plot looks exactly like Plot A above, but the scale is transformed to show the values in Plot B. However, there are not enough tick marks."----
+## ----fig.height = 1.5, fig.alt = "Plot C: On the inside, this plot looks exactly like Plot A above, but the scale is transformed to show the values in Plot B. However, there are not enough tick marks."----
 plot(neur.Trt.emm, type = "scale")
 
-## ---- fig.height = 1.5, fig.alt = "Plot D: Same as Plot C except there are more tick marks so we can discern the values better"----
+## ----fig.height = 1.5, fig.alt = "Plot D: Same as Plot C except there are more tick marks so we can discern the values better"----
 plot(neur.Trt.emm, type = "scale", breaks = seq(0.10, 0.90, by = 0.10),
      minor_breaks = seq(0.05, 0.95, by = 0.05))
 
-## ---- fig.height = 1.5, fig.alt = "Plot E: An alternative to Plot D using an arcsin scaling. This scale is less nonlinear than in plot D so the intervals are somewhat skewed, but less so than plot B"----
+## ----fig.height = 1.5, fig.alt = "Plot E: An alternative to Plot D using an arcsin scaling. This scale is less nonlinear than in plot D so the intervals are somewhat skewed, but less so than plot B"----
 plot(neur.Trt.emm, type = "response") +
   ggplot2::scale_x_continuous(trans = scales::asn_trans(),
                               breaks = seq(0.10, 0.90, by = 0.10))
@@ -90,7 +90,7 @@ logemm.src <- regrid(emmeans(pigroot.lm, "source"), transform = "log")
 confint(logemm.src, type = "response")
 pairs(logemm.src, type = "response")
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  regrid(emm, transform = "probit")
 
 ## -------------------------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ update(pairs(logemm.src, type = "response"),
 contrast(regrid(pairs(logemm.src)), "identity", scale = 100, offset = -100,
          infer = c(TRUE, TRUE))
 
-## ---- message = FALSE-----------------------------------------------------------------------------
+## ----message = FALSE------------------------------------------------------------------------------
 fiber.lm <- lm(scale(strength) ~ machine * scale(diameter), data = fiber)
 emmeans(fiber.lm, "machine")   # on the standardized scale
 emmeans(fiber.lm, "machine", type = "response")   # strength scale
@@ -139,17 +139,17 @@ emtrends(fiber.lm, "machine", var = "scale(diameter, 24.133, 4.324)")
 ## -------------------------------------------------------------------------------------------------
 coef(fiber.lm)[4:6]
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  mod <- some.fcn(scale(RT) ~ group + (1|subject), data = mydata)
 #  emmeans(mod, "group", type = "response",
 #          tran = make.tran("scale", y = mydata$RT))
 
-## ---- eval = FALSE--------------------------------------------------------------------------------
+## ----eval = FALSE---------------------------------------------------------------------------------
 #  mod <- with(make.tran("scale", y = mydata$RT),
 #              some.fcn(linkfun(RT) ~ group + (1|subject), data = mydata))
 #  emmeans(mod, "group", type = "response")
 
-## ---- message = FALSE-----------------------------------------------------------------------------
+## ----message = FALSE------------------------------------------------------------------------------
 fib.lm <- lm(strength ~ machine * diameter, data = fiber)
 
 # On raw scale:
@@ -175,7 +175,7 @@ emmeans(ismod, "spray", type = "response")
 ## -------------------------------------------------------------------------------------------------
 with(InsectSprays, tapply(count, spray, mean))
 
-## ---- message = FALSE-----------------------------------------------------------------------------
+## ----message = FALSE------------------------------------------------------------------------------
 require(lme4)
 cbpp <- transform(cbpp, unit = 1:nrow(cbpp))
 cbpp.glmer <- glmer(cbind(incidence, size - incidence) ~ period + 

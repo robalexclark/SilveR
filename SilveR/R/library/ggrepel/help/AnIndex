@@ -1,4 +1,3 @@
-ggrepel-package	ggrepel
 GeomLabelRepel	ggrepel
 GeomTextRepel	ggrepel
 geom_label_repel	geom_text_repel

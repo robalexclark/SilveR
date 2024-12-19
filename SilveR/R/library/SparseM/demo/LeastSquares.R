@@ -1,5 +1,6 @@
 # lsq.rra is real rectangular matrix stored in compressed sparse column for mat
-read.matrix.hb(system.file("HBdata","lsq.rra",package = "SparseM"))-> hb.o
+lsqFile <- system.file("extdata", "lsq.rra", package = "SparseM", mustWork = TRUE)
+read.matrix.hb(lsqFile) -> hb.o
 X <- model.matrix(hb.o) #extract the design matrix
 y <- model.response(hb.o) # extract the rhs
 X1 <- as.matrix(X)

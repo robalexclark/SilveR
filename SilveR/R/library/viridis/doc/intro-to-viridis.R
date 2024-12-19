@@ -10,7 +10,7 @@ filled.contour(cos(r^2)*exp(-r/(2*pi)),
                color.palette=viridis,
                asp=1)
 
-## ---- tldr_ggplot, message=FALSE----------------------------------------------
+## ----tldr_ggplot, message=FALSE-----------------------------------------------
 library(ggplot2)
 ggplot(data.frame(x = rnorm(10000), y = rnorm(10000)), aes(x = x, y = y)) +
   geom_hex() + coord_fixed() +
@@ -102,7 +102,7 @@ us <- rast("us.tmax_nohads_ll_20150219_float.tif")
 us <- project(us, y="+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs")
 image(us, col=inferno(256), asp=1, axes=FALSE, xaxs="i", xaxt='n', yaxt='n', ann=FALSE)
 
-## ---- ggplot2-----------------------------------------------------------------
+## ----ggplot2------------------------------------------------------------------
 library(maps)
 library(mapproj)
 

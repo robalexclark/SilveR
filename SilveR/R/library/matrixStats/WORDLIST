@@ -145,7 +145,6 @@ cummax
 cummin
 cumprod
 cumsum
-deprecatated
 dest
 df
 env
@@ -276,3 +275,7 @@ md
 CentOS
 RHEL
 getOption
+rchk
+UNPROTECT
+UndefinedBehaviorSanitizer
+UBSan

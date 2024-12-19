@@ -4,14 +4,76 @@
 \title{lme4 News}
 \encoding{UTF-8}
 
-\section{CHANGES IN VERSION 1.1-35.1}{
+\section{CHANGES IN VERSION 1.1-35.5}{
+    \subsection{USER-VISIBLE CHANGES}{
+      \itemize{
+	\item in \code{predict}, the synonyms \code{ReForm}, \code{REForm}, and
+	\code{REform} of \code{re.form} are now hard-deprecated,
+	giving an error (after 10 years of soft deprecation)
+      } % itemize
+    } % user-visible changes
+    \subsection{OTHER CHANGES}{
+      \itemize{
+	\item minor adjustments in test tolerances
+	\item correct Matrix dependency to >= 1.2-3
+      } % itemize
+    } % other changes
+  } % 1.1-35.5
+
+\section{CHANGES IN VERSION 1.1-35.4 (2024-06-19)}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{predict(., re.form=...)} works in a wider range of
+      cases (GH #691)
+      \item Gamma simulation now uses correct shape parameter (GH #782)
+      \item Avoid triggering RcppEigen UBSAN bug(?) in the case of
+      profiling fixed effects in  a \code{merMod} object with
+      a single fixed effect parameter (GH #794: lots of help from
+      Dirk Eddelbuettel and Mikael Jagan)
+      \item fix bug in plot methods (cbind'ing zero-length objects)
+    }
+  } % bug fixes
+} % 1.1-35.4
+
+\section{CHANGES IN VERSION 1.1-35.3 (2024-04-16)}{
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item bug-fix for ASAN/memory access problem in CholmodDecomposition
+      (Mikael Jagan)
+    }
+  } % bug fixes
+} % 1.1-35.3
+    
+
+\section{CHANGES IN VERSION 1.1-35.2 (2024-03-28)}{
+  \itemize{
+    \item This is primarily a 'bump' release to ensure that package
+    repositories rebuild binaries with the latest version of the
+    \code{Matrix} package.
+  } % general
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item \code{simulate} works (again) with \code{re.form=NULL} when
+      \code{NA} values are present in the data (GH #737, @frousseu)
+    } % itemize
+  } % bug fixes
+  \subsection{USER-VISIBLE CHANGES}{
+    \itemize{
+      \item{updated tests of upstream \code{Matrix} version; should
+	now warn only on ABI incompatibility, not on package version
+	mismatch alone}
+    } % itemize
+  } % user-visible changes
+} % 1.1-35.2
+
+\section{CHANGES IN VERSION 1.1-35.1 (2023-11-05)}{
   \subsection{USER-VISIBLE CHANGES}{
     \itemize{
       \item \code{lFormula} and \code{glFormula} once again \emph{do}
       allow matrix-valued responses (for use in downstream packages like \code{galamm})
-    }
-  }
-}
+    } % itemize
+  } % user-visible changes
+} % 1.1-35.1
 
 \section{CHANGES IN VERSION 1.1-35 (2023-11-03)}{
   \subsection{NEW FEATURES}{

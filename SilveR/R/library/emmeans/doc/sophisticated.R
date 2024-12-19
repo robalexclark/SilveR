@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE---------------------------------------------
+## ----echo = FALSE, results = "hide", message = FALSE----------------------------------------------
 require("emmeans")
 require("lme4")
 options(show.signif.stars = FALSE, width = 100) 
@@ -146,13 +146,13 @@ totSD <- sqrt(apply(cbpp.sigma^2, 1, sum))
 cbpp.rgrd <- regrid(cbpp.rg, bias.adjust = TRUE, sigma = totSD)
 summary(cbpp.rgrd)
 
-## ---- fig.alt = "kernel denity estimates for each of the 4 periods. Their medians and spreads decrease with period, and period 1 is especially different. See the previous summary table for the numerical values of the estimated means"----
+## ----fig.alt = "kernel denity estimates for each of the 4 periods. Their medians and spreads decrease with period, and period 1 is especially different. See the previous summary table for the numerical values of the estimated means"----
 bayesplot::mcmc_areas(as.mcmc(cbpp.rgrd))
 
 ## -------------------------------------------------------------------------------------------------
 contrast(cbpp.rgrd, "consec", reverse = TRUE)
 
-## ---- fig.alt = "Histograms of the predictive distributions for each period. The one for period 1 has bins from 0 to 15; the number of bins decreases until period 4 has only bins for 0 through 5."----
+## ----fig.alt = "Histograms of the predictive distributions for each period. The one for period 1 has bins from 0 to 15; the number of bins decreases until period 4 has only bins for 0 through 5."----
 set.seed(2019.0605)
 cbpp.preds <- as.mcmc(cbpp.rgrd, likelihood = "binomial", trials = 25)
 bayesplot::mcmc_hist(cbpp.preds, binwidth = 1)

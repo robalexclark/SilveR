@@ -377,4 +377,3 @@ tidy_xyz	tidy_xyz
 vars_tidiers	tidy.varest
 xyz_tidiers	tidy_xyz
 zoo_tidiers	tidy.zoo
-_PACKAGE	broom

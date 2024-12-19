@@ -23,4 +23,5 @@ set_dim	multipage_align
 wrap_elements	wrap_elements
 wrap_ggplot_grob	wrap_ggplot_grob
 wrap_plots	wrap_plots
+wrap_table	wrap_table
 |.ggplot	plot_arithmetic

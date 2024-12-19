@@ -1,6 +1,7 @@
 accordion               Create a vertically collapsing accordion
 accordion_panel_set     Dynamically update accordions
 as_fill_carrier         Test and/or coerce fill behavior
+bind_task_button        Bind 'input_task_button' to 'ExtendedTask'
 bootswatch_themes       Obtain a list of all available bootswatch
                         themes.
 breakpoints             Define breakpoint values
@@ -22,6 +23,7 @@ card_body               Card items
 font_face               Helpers for importing web fonts
 input_dark_mode         Dark mode input control
 input_switch            Switch input control
+input_task_button       Button for launching longer-running operations
 layout_column_wrap      Column-first uniform grid layouts
 layout_columns          Responsive 12-column grid layouts
 nav-items               Navigation items

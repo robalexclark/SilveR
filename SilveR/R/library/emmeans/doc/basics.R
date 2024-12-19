@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE-------------------------
+## ----echo = FALSE, results = "hide", message = FALSE--------------------------
 require("emmeans")
 require("ggplot2")
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
@@ -50,7 +50,7 @@ emmip(RG5, source ~ percent, style = "factor")
 ## -----------------------------------------------------------------------------
 emmeans(RG5, "source")
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  emmeans(mod5, "source", at = list(percent = c(9, 12, 15, 18)))
 #  ## (same results as above)
 
@@ -75,11 +75,11 @@ ref_grid(mcmod2)
 ## -----------------------------------------------------------------------------
 emmeans(mcmod2, "cyl", at = list(disp = 230.72, dispsq = 230.72^2))
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  deg <- 2
 #  mod <- lm(y ~ treat * poly(x, degree = deg), data = mydata)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  emmeans(mod, ~ treat | x, at = list(x = 1:3), params = "deg")
 
 ## -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ require("ggplot2")
 emmip(mod4, ~ percent | source, CIs = TRUE, type = "response") +
     geom_point(aes(x = percent, y = conc), data = pigs, pch = 2, color = "blue")
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  ci <- confint(mcrg, level = 0.90, adjust = "scheffe")
 #  xport <- print(ci, export = TRUE)
 #  cat("<font color = 'blue'>\n")
@@ -111,7 +111,7 @@ emmip(mod4, ~ percent | source, CIs = TRUE, type = "response") +
 #  for (a in xport$annotations) cat(paste(a, "<br>"))
 #  cat("</font>\n")
 
-## ---- results = "asis", echo = FALSE------------------------------------------
+## ----results = "asis", echo = FALSE-------------------------------------------
 ci <- confint(mcrg, level = 0.90, adjust = "scheffe")
 xport <- print(ci, export = TRUE)
 cat("<font color = 'blue'>\n")

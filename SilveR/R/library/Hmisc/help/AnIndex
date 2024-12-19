@@ -149,6 +149,7 @@ F_cidxcn	Hmisc-internal
 F_cidxcp	Hmisc-internal
 F_do_mchoice_match	Hmisc-internal
 F_do_nstr	Hmisc-internal
+F_hlqest	Hmisc-internal
 F_hoeffd	Hmisc-internal
 F_jacklins	Hmisc-internal
 F_largrec	Hmisc-internal
@@ -385,6 +386,7 @@ plotp	Misc
 plotp.summaryS	summaryS
 plotpsummaryM	Hmisc-internal
 plsmo	plsmo
+pMedian	pMedian
 pngNeedle	latexTherm
 pomodm	popower
 popower	popower
@@ -445,6 +447,7 @@ print.timePOSIXt	Hmisc-internal
 print.transace	transace
 print.transcan	transcan
 print.varclus	varclus
+printL	printL
 printsummaryM	summaryM
 prList	label
 prn	prnz
@@ -461,6 +464,7 @@ qcrypt	qcrypt
 Quantile	transace
 Quantile.areg.boot	transace
 Quantile2	spower
+r2describe	r2describe
 R2Measures	R2Measures
 rcorr	rcorr
 rcorr.cens	rcorr.cens

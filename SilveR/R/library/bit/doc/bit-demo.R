@@ -1,4 +1,4 @@
-## ---- echo = FALSE, results = "hide", message = FALSE-------------------------
+## ----echo = FALSE, results = "hide", message = FALSE--------------------------
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 require(bit)
 .ff.version <- try(packageVersion("ff"), silent = TRUE)
@@ -52,13 +52,13 @@ as.which(b1, range=c(1, 1000))
 ## -----------------------------------------------------------------------------
 lapply(chunk(from=1, to=n, length=10), function(i)as.which(b1, range=i))
 
-## ---- eval=.ff.is.available---------------------------------------------------
+## ----eval=.ff.is.available----------------------------------------------------
 options(ffbatchbytes=1024^3)
 x <- ff(vmode="single", length=n)
 x[1:1000] <- runif(1000)
 lapply(chunk(x, length.out = 10), function(i)sum(x[as.hi(b1, range=i)]))
 
-## ---- eval=.ff.is.available---------------------------------------------------
+## ----eval=.ff.is.available----------------------------------------------------
 delete(x)
 rm(x, b1, b2, w1, w2, n)
 
