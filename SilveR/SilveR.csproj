@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyVersion>4.10.0</AssemblyVersion>
     <FileVersion>4.10.0.0</FileVersion>
     <Nullable>disable</Nullable>
@@ -26,9 +26,9 @@
     <PackageReference Include="ElectronNET.API" Version="23.6.2" />
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.71" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.23" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.23" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.23">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

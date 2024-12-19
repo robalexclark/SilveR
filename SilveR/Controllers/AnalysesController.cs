@@ -404,7 +404,7 @@ namespace SilveR.Controllers
 
                 byte[] bytes = Encoding.UTF8.GetBytes(htmlSource);
 
-                Response.Headers.Add("Content-Disposition", "inline; filename=" + analysisGuid + ".html");
+                Response.Headers["Content-Disposition"] = "inline; filename=" + analysisGuid + ".html";
                 return File(bytes, "application/html", analysisGuid + ".html");
             }
         }
