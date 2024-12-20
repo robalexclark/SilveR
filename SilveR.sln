@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SilveR", "SilveR\SilveR.csproj", "{2F535B5C-AB52-406F-B550-A871F2BB7A6F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silver.UnitTests", "Silver.UnitTests\Silver.UnitTests.csproj", "{56B5C497-8244-42F2-B0A2-203AD2D88BA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SilveR.UnitTests", "SilveR.UnitTests\SilveR.UnitTests.csproj", "{56B5C497-8244-42F2-B0A2-203AD2D88BA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SilveR.IntegrationTests", "SilveR.IntegrationTests\SilveR.IntegrationTests.csproj", "{E407B00D-52F3-409F-8AFD-57043CD01047}"
 EndProject
