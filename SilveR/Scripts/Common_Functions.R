@@ -1,4 +1,4 @@
-﻿#Software branding
+#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
 IVS_version <- "4.10"

@@ -1,4 +1,4 @@
-﻿#===================================================================================================================
+#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(mvtnorm))
@@ -653,9 +653,9 @@ if (block == "NULL" && (statstest == "mannwhitney" || (statstest == "allcomparis
         for (i in 1:(length(pvalue))) {
             if (kruskalOut$p.value[i] < 0.0001) {
                 #STB March 2011 - formatting pvalue p<0.001
-                # pvalue[i]<-0.0001
-                pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                pvalue[i] <- paste("<", pvalue[i])
+                pvalue[i]<-0.0001
+                #pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                #pvalue[i] <- paste("<", pvalue[i])
             }
         }
 
@@ -687,8 +687,8 @@ if (block == "NULL" && (statstest == "mannwhitney" || (statstest == "allcomparis
             if (wilcoxOut$p.value[i] < 0.0001) {
                 #STB March 2011 formatting p-value p<0.0001
                 pvalue[i] <- 0.0001
-                pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                pvalue[i] <- paste("<", pvalue[i])
+                #pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                #pvalue[i] <- paste("<", pvalue[i])
             }
         }
 
@@ -734,9 +734,9 @@ if (block != "NULL" && statstest == "mannwhitney") {
         for (i in 1:(length(pvalue))) {
             if (FriedOut$p.value[i] < 0.0001) {
                 #STB March 2011 - formatting pvalue p<0.001
-                # pvalue[i]<-0.0001
-                pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                pvalue[i] <- paste("<", pvalue[i])
+                pvalue[i]<-0.0001
+                #pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                #pvalue[i] <- paste("<", pvalue[i])
             }
         }
 
@@ -814,8 +814,9 @@ if (block == "NULL" && (statstest == "allcomparisons" && leng >= 3)) {
     for (i in 1:(dim(temp5)[1])) {
         if (as.numeric(temp5zzz[i, 5]) < 0.0001) {
             #STB March 2011 - formatting p-value p<0.0001
-            temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
-            temp5[i, 5] <- paste("<", temp5[i, 5])
+	    temp5[i, 5] = 0.0001
+            #temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
+            #temp5[i, 5] <- paste("<", temp5[i, 5])
         }
     }
 
@@ -877,11 +878,11 @@ if (block == "NULL" && (statstest == "allcomparisons" && leng >= 3)) {
             for (i in 1:(length(pv))) {
                 if (pvzzz[i] < 0.0001) {
                     #STB March 2011 - formatting p-values p<0.0001
-                    #pv[i]<-0.0001
-                    pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                    pv[i] <- paste("<", pv[i])
+                    pv[i]<-0.0001
+                    #pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                    #pv[i] <- paste("<", pv[i])
                 } else {
-                    pv[i] <- paste(" ", pv[i])
+                    #pv[i] <- paste(" ", pv[i])
                 }
             }
 
@@ -973,11 +974,11 @@ if (block != "NULL" && statstest == "allcomparisons") {
                 for (i in 1:(length(pv))) {
                     if (pvzzz[i] < 0.0001) {
                         #STB March 2011 - formatting p-values p<0.0001
-                        #pv[i]<-0.0001
-                        pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                        pv[i] <- paste("<", pv[i])
+                        pv[i]<-0.0001
+                        #pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                        #pv[i] <- paste("<", pv[i])
                     } else {
-                        pv[i] <- paste(" ", pv[i])
+                        #pv[i] <- paste(" ", pv[i])
                     }
                 }
 
@@ -1045,9 +1046,9 @@ if (block == "NULL" && (statstest == "comparetocontrol" && leng >= 3)) {
     for (i in 1:(dim(temp5)[1])) {
         if (as.numeric(temp5zzz[i, 5]) < 0.0001) {
             #STB March 2011 formatting p-values <0.0001
-            #temp5[i,5]<-0.0001
-            temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
-            temp5[i, 5] <- paste("<", temp5[i, 5])
+            temp5[i,5]<-0.0001
+            #temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
+            #temp5[i, 5] <- paste("<", temp5[i, 5])
         }
     }
 

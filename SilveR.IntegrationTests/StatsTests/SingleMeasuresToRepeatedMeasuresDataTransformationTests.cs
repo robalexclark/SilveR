@@ -82,7 +82,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!" };
             model.SubjectFactor = null;
             model.IncludeAllVariables = false;
             model.SelectedVariables = null;
@@ -136,7 +136,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!" };
             model.SubjectFactor = "Individual";
             model.IncludeAllVariables = false;
             model.SelectedVariables = null;
@@ -190,7 +190,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!" };
             model.SubjectFactor = null;
             model.IncludeAllVariables = true;
             model.SelectedVariables = null;
@@ -244,7 +244,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!" };
             model.SubjectFactor = null;
             model.IncludeAllVariables = true;
             model.SelectedVariables = null;
@@ -298,7 +298,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!" };
             model.SubjectFactor = "Individual";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2", "Time miss" };
@@ -353,7 +353,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!" };
             model.SubjectFactor = "Individual";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2", "Time miss" };
@@ -407,7 +407,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!", "Time miss" };
             model.SubjectFactor = null;
             model.IncludeAllVariables = false;
             model.SelectedVariables = null;
@@ -461,7 +461,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!", "Time miss" };
             model.SubjectFactor = "Individual";
             model.IncludeAllVariables = false;
             model.SelectedVariables = null;
@@ -515,7 +515,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = null;
             model.IncludeAllVariables = true;
             model.SelectedVariables = null;
@@ -569,7 +569,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual";
             model.IncludeAllVariables = true;
             model.SelectedVariables = null;
@@ -623,7 +623,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" }; ;
@@ -677,7 +677,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" };
@@ -731,7 +731,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!", "Time miss" };
             model.SubjectFactor = "Individual2";
             model.IncludeAllVariables = false;
             model.SelectedVariables = null;
@@ -785,7 +785,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual2";
             model.IncludeAllVariables = true;
             model.SelectedVariables = null;
@@ -839,7 +839,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual2";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" };
@@ -893,7 +893,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual2";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" };
@@ -947,7 +947,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!", "Time miss" };
             model.SubjectFactor = "Individual3";
             model.IncludeAllVariables = false;
             model.SelectedVariables = null;
@@ -1001,7 +1001,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual3";
             model.IncludeAllVariables = true;
             model.SelectedVariables = null;
@@ -1055,7 +1055,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual3";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" };
@@ -1109,7 +1109,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual3";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" };
@@ -1163,7 +1163,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time4!", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time4!", "Time miss" };
             model.SubjectFactor = "Individual4";
             model.IncludeAllVariables = false;
             model.SelectedVariables = null;
@@ -1217,7 +1217,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual4";
             model.IncludeAllVariables = true;
             model.SelectedVariables = null;
@@ -1271,7 +1271,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual4";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" };
@@ -1324,7 +1324,7 @@ namespace SilveR.IntegrationTests
 
             SingleMeasuresToRepeatedMeasuresDataTransformationModel model = new SingleMeasuresToRepeatedMeasuresDataTransformationModel();
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "RM short fat").Key;
-            model.Responses = new string[] { "Time1", "Time2", "Time3£", "Time miss" };
+            model.Responses = new string[] { "Time1", "Time2", "Time3Â£", "Time miss" };
             model.SubjectFactor = "Individual4";
             model.IncludeAllVariables = false;
             model.SelectedVariables = new string[] { "Treatment", "Treatment2" };

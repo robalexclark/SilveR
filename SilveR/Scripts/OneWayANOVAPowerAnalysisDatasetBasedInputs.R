@@ -1,4 +1,4 @@
-﻿#Select dataset type
+#Select dataset type
 #AnalysisType <- "UserValues"
 AnalysisType <- "DatasetValues"
 
