@@ -1,4 +1,3 @@
-[.integer64             Extract or Replace Parts of an integer64 vector
 all.equal.integer64     Test if two integer64 vectors are all.equal
 as.character.integer64
                         Coerce from integer64
@@ -10,7 +9,6 @@ benchmark64             Function for measuring algorithmic performance
                         of high-level and low-level integer64 functions
 benchmark64.data        Results of performance measurement on a Core i7
                         Lenovo T410 8 GB RAM under Windows 7 64bit
-bit64-package           A S3 class for vectors of 64bit integers
 bit64S3                 Turning base R functions into S3 generics for
                         bit64
 c.integer64             Concatenating integer64 vectors
@@ -18,6 +16,8 @@ cache                   Atomic Caching
 cumsum.integer64        Cumulative Sums, Products, Extremes and lagged
                         differences
 duplicated.integer64    Determine Duplicate Elements of integer64
+extract.replace.integer64
+                        Extract or Replace Parts of an integer64 vector
 format.integer64        Unary operators and functions for integer64
                         vectors
 hashcache               Big caching of hashing, sorting, ordering
@@ -26,6 +26,7 @@ identical.integer64     Identity function for class 'integer64'
 is.sorted.integer64     Small cache access methods
 keypos                  Extract Positions in redundant dimension table
 match.integer64         64-bit integer matching
+matrix64                Working with integer64 arrays and matrices
 optimizer64.data        Results of performance measurement on a Core i7
                         Lenovo T410 8 GB RAM under Windows 7 64bit
 prank                   (P)ercent (Rank)s

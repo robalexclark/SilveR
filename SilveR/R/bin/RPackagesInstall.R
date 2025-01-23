@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------------------------------------------------------------------------
-# Instructions to complete the installation – you will only need to do this once!
+# Instructions to complete the installation â€“ you will only need to do this once!
 # Open R (that you have just installed) 
 # Cut and paste the "install.packages" R code below - one line at a time - into the R console window (next to the > symbol)
 # You may find that R asks you a question during the installation of each R package (this will not happen for many packages)

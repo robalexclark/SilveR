@@ -8,8 +8,8 @@ knitr::opts_chunk$set(
 library("lme4")
 
 ## ----noderivs, eval = FALSE---------------------------------------------------
-#  m0 <- lmer(y ~ service * dept + (1|s) + (1|d), InstEval,
-#       control = lmerControl(calc.derivs = FALSE))
+# m0 <- lmer(y ~ service * dept + (1|s) + (1|d), InstEval,
+#      control = lmerControl(calc.derivs = FALSE))
 
 ## ----calcs, echo = FALSE------------------------------------------------------
 ## based on loaded lmerperf file

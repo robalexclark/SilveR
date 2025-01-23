@@ -501,7 +501,7 @@ plotting.  Also added a plot.rqs function
 2.  Changed predict.rqs and predict.rq.process so that the stepfun version
 is an option and the default is still returning a matrix.
 
-4.10 September 12, 2007
+4.11 September 12, 2007
 
 1.  Modified rearrange according to suggestions by Ivan Fernandez-Val and 
 Victor Chernozhukov to acommodate right and left continuous stepfuns.

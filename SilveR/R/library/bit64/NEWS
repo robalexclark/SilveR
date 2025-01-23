@@ -1,300 +1,69 @@
-    CHANGES IN bit64 VERSION 4.5.2
+# bit64 4.6.0-1
 
-BUG FIXES
+## NOTICE OF PLANNED BREAKING CHANGES
 
-    o "[.integer64"(x,i) can now cope with i longer than x
+1. {bit64} exports many S3 methods directly. Calling S3 methods directly is generally bad form; we should rely on the S3 dispatch system for this. Needing to export an S3 method is usually indicative of some deep issue that's otherwise hard to work around.
 
+  I plan to un-export most if not all S3 methods in future versions. In this release, there will be no change in behavior besides this notice in the NEWS. Going forward, I see two types of S3 exports: (1) exports that have no discoverable direct usage (that is, a global GitHub search, which includes the CRAN mirror, turned up _no_ R code calling them directly, except perhaps in `:::` form, which would be unaffected by un-export); and (2) exports that _are_ observed to be called directly by some number of downstreams. With the former, I am more comfortable un-exporting more aggressively; with the latter, I will take a more gradual approach.
 
+  Here are the S3 methods that are currently exported, for which I found no record of them being called directly:
 
-    CHANGES IN bit64 VERSION 4.5.1
+  `-.integer64`, `:.default`, `:.integer64`, `!.integer64`, `!=.integer64`, `[.integer64`, `[[.integer64`, `[[<-.integer64`, `*.integer64`, `/.integer64`, `&.integer64`, `%/%.integer64`, `%%.integer64`, `%in%.default`, `%in%.integer64`, `^.integer64`, `+.integer64`, `<.integer64`, `<=.integer64`, `==.integer64`, `>.integer64`, `>=.integer64`, `|.integer64`, `all.equal.integer64`, `as.bitstring.integer64`, `as.integer64.factor`, `as.integer64.integer64`, `as.integer64.NULL`, `as.list.integer64`, `as.logical.integer64`, `cbind.integer64`, `ceiling.integer64`, `cummax.integer64`, `cummin.integer64`, `cumprod.integer64`, `cumsum.integer64`, `diff.integer64`, `duplicated.integer64`, `floor.integer64`, `hashdup.cache_integer64`, `hashfin.cache_integer64`, `hashfun.integer64`, `hashmap.integer64`, `hashmaptab.integer64`, `hashmapuni.integer64`, `hashmapupo.integer64`, `hashpos.cache_integer64`, `hashrev.cache_integer64`, `hashrin.cache_integer64`, `hashtab.cache_integer64`, `hashuni.cache_integer64`, `hashupo.cache_integer64`, `is.double.default`, `is.double.integer64`, `is.finite.integer64`, `is.infinite.integer64`, `is.nan.integer64`, `is.sorted.integer64`, `is.vector.integer64`, `keypos.integer64`, `length<-.integer64`, `log10.integer64`, `log2.integer64`, `match.default`, `match.integer64`, `mean.integer64`, `median.integer64`, `mergeorder.integer64`, `mergesort.integer64`, `mergesortorder.integer64`, `na.count.integer64`, `nties.integer64`, `nunique.integer64`, `nvalid.integer64`, `order.default`, `order.integer64`, `orderdup.integer64`, `orderfin.integer64`, `orderkey.integer64`, `ordernut.integer64`, `orderpos.integer64`, `orderqtl.integer64`, `orderrnk.integer64`, `ordertab.integer64`, `ordertie.integer64`, `orderuni.integer64`, `orderupo.integer64`, `prank.integer64`, `print.bitstring`, `prod.integer64`, `qtile.integer64`, `quantile.integer64`, `quickorder.integer64`, `quicksort.integer64`, `quicksortorder.integer64`, `radixorder.integer64`, `radixsort.integer64`, `radixsortorder.integer64`, `ramorder.integer64`, `ramsort.integer64`, `ramsortorder.integer64`, `range.integer64`, `rank.default`, `rbind.integer64`, `round.integer64`, `scale.integer64`, `shellorder.integer64`, `shellsort.integer64`, `shellsortorder.integer64`, `sign.integer64`, `signif.integer64`, `sort.integer64`, `sortfin.integer64`, `sortnut.integer64`, `sortorderdup.integer64`, `sortorderkey.integer64`, `sortorderpos.integer64`, `sortorderrnk.integer64`, `sortordertab.integer64`, `sortordertie.integer64`, `sortorderuni.integer64`, `sortorderupo.integer64`, `sortql.integer64`, `sorttab.integer64`, `sortuni.integer64`, `sqrt.integer64`, `summary.integer64`, `table.integer64`, `tiepos.integer64`, `trunc.integer64`, `unipos.integer64`
 
-USER VISIBLE CHANGES
+  Here are the S3 methods that are currently exported for which I _do_ find record of them being called directly:
 
-    o generics 'is.integer64', 'as.integer64', 'as.bitstring'
-      are no longer registered as S4 methods of 'is' and 'as' 
+  `abs.integer64`, `as.character.integer64`, `as.data.frame.integer64`, `as.double.integer64`, `as.integer.integer64`, `as.integer64.bitstring`, `as.integer64.character`, `as.integer64.double`, `as.integer64.integer`, `as.integer64.logical`, `c.integer64`, `format.integer64`, `identical.integer64`, `is.na.integer64`, `lim.integer64`, `max.integer64`, `min.integer64`, `print.integer64`, `rank.integer64`, `seq.integer64`, `str.integer64`, `sum.integer64`, `unique.integer64`
 
+  In the next release (provisionally, 4.7.0), I will add a `warning()` to any S3 method in the former classification, while nothing will change for the latter classification. I may reach out to authors observed to call the methods directly.
 
+  In the subsequent release (provisionally, 4.8.0), I will un-export any S3 method in the former classification, and add a `warning()` to any S3 method in the latter classification.
 
-    CHANGES IN bit64 VERSION 4.5.0
+  In the sub-subsequent release (provisionally, 4.9.0), I will un-export any S3 method in the latter classification.
 
-NEW FEATURES
+  Please reach out (e.g., the GitHub log for #76) if you have any concerns about this plan.
 
-    o new method as.list.integer64
-    o setting options(integer64_semantics="new")
-      gives the better semantics suggested by Ofek Shilon.
-      Downstream package authors: please test and adjust to the new semantics,
-      we plan to make that the default and deprecate integer64_semantics="new".
+1. {bit64} lists {bit} as `Depends:`. IMO this form of dependency should be deprecated by R now that `Imports:` is widely available and well-supported for many years.
 
+  In the next release (provisionally, 4.7.0), I will move bit to Imports. The practical implication is that currently, `library(bit64)` will make {bit} objects like `is.bit()` available for use without namespace-qualification. This practice makes code harder to read and maintain.
+  
+  Users relying on this in scripts can (1) write `library(bit)` to attach {bit} explicitly or (2) namespace-qualify all {bit} calls with `bit::`.
+  
+  Package authors relying on this can (1) add `import(bit)` to make the full {bit} namespace available or (2) namespace-qualify all {bit} calls with `bit::`; adding {bit} to `Imports:` or `Suggests:` will also be necessary.
+  
+  I will reach out to CRAN authors with any required changes. Depending on the impact size, I might make this transition more gradual (e.g. starting by re-exporting some or all {bit} functions from {bit64}, with warning, before un-exporting them in a subsequent release).
 
-USER VISIBLE CHANGES
+## NEW FEATURES
 
-    o min.integer64 and max.integer64 emit better warnings 
-      when extreme values are returned (suggested by Pepijn de Vries)
+1. Implemented S3 methods for `rowSums()` and `colSums()`. Importantly they handle `NA` values correctly, #38. Thanks @vlulla for the request. Note that these are implemented as wrappers to `apply()` calls, so they may not be as efficient. PRs welcome for implementing the efficient equivalents.
 
+  Note that by necessity, this grows the set of base exports overwritten to include `rowSums()` and `colSums()`, which are exported as S3 generics dispatching to `base::rowSums()` and `base::colSums()` by default.
 
-BUG FIXES
+1. Partially powering this is a new `aperm()` method for integer64 which allows `apply()` to work as intended. Using `apply()` directly may still strip the integer64 class; that may be supported later (see #87).
 
-    o seq.integer64 now properly handles sequences of length 1
-      (found by Christopher Swingley)
+1. `is.na()` is supported for long vector input (more than `2^31` elements), #30. Thanks @ilia-kats for the request. Long vector support will be added on an as-needed basis as I don't have a great machine for testing these features -- PRs welcome!
 
+## BUG FIXES
 
+1. `all.equal.integer64()` gets the same fix for vector `scale=` to work as intended that `all.equal.numeric()` got in R 4.1.3, #23.
 
-    CHANGES IN bit64 VERSION 4.0.5
+1. Made edits to `match()` to handle `is.integer64(table)` better for older versions of R, including a new `mtfrm()` method for integer64 objects in R>=4.2.0, #85 and #111.
 
-BUG FIXES
+## NOTES
 
-    o PKG_LIBS=-lm added to Makevars
-      (fixes https://bugzilla.redhat.com/show_bug.cgi?id=1763127
-      thanks to Elliott Sales de Andrade)
+1. After creating, developing, and maintaining {bit64} for about 13 years, Jens Oehlschlägel has decided to step down as maintainer of the package. Michael Chirico will take over in this duty. Thank you Jens for creating such a wonderful & important part of the R ecosystem!
 
+  I don't have any major plans for new features, and mostly hope to keep the package running and up to date. Contributors most welcome! I am also trying to freshen up the code base to make contribution easier.
 
+1. The R version dependency has increased from 3.0.1 (May 2013) to 3.4.0 (April 2017). We plan to keep roughly the same R dependency as {data.table}, i.e., as old as possibly for as long as possible, with some bias towards gradually bringing in new R features to reduce the maintenance overhead of a growing nest of workarounds to keep the package "fresh" for users of the latest R versions.
 
-    CHANGES IN bit64 VERSION 4.0.4
+  Required package {bit} already requires R 3.4.0, so the old 3.0.1 requirement was effectively impossible anyway.
 
-BUG FIXES
+1. Default packages {methods}, {stats}, and {utils} are now `Imports:`, not `Depends:`, dependencies. `Depends:` is an out-dated mode of dependency in R. This will only affect the small audience of users that run R with `R_DEFAULT_PACKAGES=NULL` (or some other subset excluding some of these three), _and_ who are relying (perhaps implicitly) on {bit64} being responsible for attaching those packages.
 
-    o runif64() no longer long long overflows
-      for the maximum integer64 range
-    o UBSAN false alarms removed with 
-      __attribute__((no_sanitize("signed-integer-overflow")))
-    o added temporary flags to Makefile 
-      for UBSAN checks
+  It is my intention to move {bit} from `Depends:` to `Imports:` as well, but this migration will be done more gingerly -- it is more conceivable that this will constitute a breaking change for some use cases, therefore it will be done in phases. Nothing is done in this release, but here is your earliest warning that from the next release, it will be a warning to rely on {bit64} to attach {bit} functions for you.
 
+1. Package documentation is now managed with {roxygen2}, #61. I tried to retain everything in the original documentation, but the diff required to do so was quite unmanageable (5,000+ lines), so please alert me if anything looks amiss. Most importantly, I ensured the NAMESPACE remains unchanged.
 
+1. The signature of `identical.integer64()` loses `extptr.as.ref=`, which is unavailable for R<4.2.0, but gains `...` to allow this argument in newer versions, #37. This retains the transparency of having all arguments named in the signature (and thus in `?identical.integer64` as well as available for tab-completion) while also retaining the old R version dependency R 3.3.0.
 
-    CHANGES IN bit64 VERSION 4.0.3
-
-BUG FIXES
-
-    o added Makefile with temporary -flto 
-      and removed LTO error regarding runif_integer64
-
-
-
-    CHANGES IN bit64 VERSION 4.0.2
-
-BUG FIXES
-
-    o now DESCRIPTION URL points to github
-
-
-
-    CHANGES IN bit64 VERSION 4.0.1
-
-BUG FIXES
-
-    o removed pragma because no longer needed with recent compilers
-    o removed a clang warning
-
-
-
-    CHANGES IN bit64 VERSION 4.0.0
-
-
-NEW FEATURES
-
-    o new method all.equal.integer64
-      (contributed by Leonardo Silvestri)
-
-
-USER VISIBLE CHANGES
-
-    o license has been extendend from GPL-2 to GPL-2 | GPL-3
-    o still.identical is now exported from package bit
-
-
-BUG FIXES
-
-    o removed unused SEXP ret_ from r_ram_integer64_sortnut and 
-      r_ram_integer64_ordernut (LTO problems reported by Brian Ripley)
-    o min, max and range now give correct results for multiple arguments
-      (reported by Colin Umanski)
-    o r_ram_integer64_ordertab_asc and r_ram_integer64_sortordertab_asc 
-      now properly PROTECT their shortened return vector before R_Busy(0)
-      (Thanks to Tomas Kalibera)
-    o operations on zero length integer64 now return 
-      zero length integer64 instead of throwing an error 
-      (reported by Xianying Tan)
-    o match.integer64 (and %in%) now coerce the second argument to integer64
-      instead of throwing an error (reported by Xianying Tan)
-    o zero-length integer64() no longer prints as `character(0)` 
-      (reported by Xianying Tan)
-
-
-      
-    CHANGES IN bit64 VERSION 0.9-8
-
-
-NEW FEATURES
-
-    o New function runif64 which can sample from finite 
-      and infinite populations (wish of Dan Reznik)
-
-    o New methods as.integer64.bitstring
-      and print.bitstring (wish of Dan Reznik)
-
-
-USER VISIBLE CHANGES
-
-    o [.integer64 now returns NA where the subscripts require this
-      (contributed by Leonardo Silvestri)
-    o binary operators now handle attributes more like R 
-      (new binattr() code contributed by Leonardo Silvestri)
-    o as.bitstring.integer64 now returns its string vector
-      with class 'bitstring'
-    o round.integer64 with a negative digits argument now rounds 
-      like round(integer) would do (wish of Ian Lyttle)
-    o range.integer64 now has an argument finite=FALSE for compatibility 
-      with range.default (wish of Sergio Oller)
-      
-
-BUG FIXES
-
-    o calculating hashbits in hashfun, hashmap, hashmaptab and hashmapuni 
-      now gives 0 instead of stopping (bug reported by Jakob Schelbert) 
-
-
-
-    CHANGES IN bit64 VERSION 0.9-7
-
-BUG FIXES
-
-    o All .Call routines are now registered
-
-
-
-    CHANGES IN bit64 VERSION 0.9-6
-
-NEW FEATURES
-
-    o New method str.integer64 shows the integer64 
-      and no longer the underlying double
-      (wish of Matt Dowle)
-    o New integer64 methods is.nan, is.finite, is.infinite
-      (wish of Florent Angly)
-
-
-USER VISIBLE CHANGES
-
-    o as.integer64.double and as.double.integer64
-      now have an argument keep.names=FALSE
-      (wish of Dirk Edelbüttel and Leonardo Silvestri)
-
-	
-BUG FIXES
-
-    o We now protect our SEXP return-vector before calling R_Busy
-      (reported by Thomas Kalibera)
-    o median.integer64 now gets a ... argument if the generic has it
-      (wish of Kurt Hornik)
-    o we migrated all files to UTF-8
-
-    
-
-    CHANGES IN bit64 VERSION 0.9-5
-
-USER VISIBLE CHANGES
-
-    o The following functions are converted to S3 generics and mask package:base
-      :, is.double, match, %in%, rank, order
-    o NA_integer64_ is now available and exported
-
-	
-BUG FIXES
-
-    o ramsort.integer64 no longer complains about misssing return 
-      value when stable || optimize == "time" (reported by Dan Southern)
-    o removed a harmless warning on request of CRAN maintainers
-      gcc had complained about using %lli format which is not 
-      supported under the windows MCPP compiler, under which
-      %lli and thus as.character.integer64 will fail.
-    o now uses R's RNG instead of the system RNG
-
-    
-
-    CHANGES IN bit64 VERSION 0.9-4
-
-BUG FIXES
-
-    o The packages now uses clone(x) instead of x[]
-    o log(x) tests no longer fail under valgrind
-      (Thanks to Heisenberg it only failed under Valgrind)
-    o UBSAN should no longer complain about left shift
-
-    
-
-    CHANGES IN bit64 VERSION 0.9-3
-
-USER VISIBLE CHANGES
-
-    o The following functions are converted to S3 generics and mask package:base
-      :, is.double, match, %in%, rank, order
-    o table.integer64 now automatically converts non-integer64 arguments to integer64
-      rather than stopping on error (but gives a warning for each column) 
-    o table.integer64 called with return="table" returns empty cells now with 
-      0 rather than NA
-    o %in%.integer64 no longer has arguments 'nunique' and 'method' in order
-      to match the generic with only two arguments 'x', 'table' and ...
-
-
-BUG FIXES
-
-    o c(x,x,x) failed with integer64 type because R no longer copies the 
-      arguments in list(...) as from R-3.0.2 . Presumably now the ugly 
-      workaround in table.integer64 is no longer needed but that has NOT 
-      been fixed yet
-    o round.integer64 no longer removes the "integer64" class attribute
-      (reported by Dan Southern)
-
-    
-
-    CHANGES IN bit64 VERSION 0.9-2
-
-BUG FIXES
-
-    o match.integer64 (and %in%.integer64) now call correctly with 
-      method="hashpos" and method="hashrev"
-    o removed platform specific timing code that was not needed 
-      and prevented compiling under MacOS
-
-
-    
-
-    CHANGES IN bit64 VERSION 0.9-1
-
-    
-NEW FEATURES
-
-    o new methods for 'match', '%in%', 'duplicated', 'unique', 'table'
-      , 'sort', 'order', 'rank', 'quantile', 'median' and 'summary'
-    o new generics and methods for data management: 
-        'unipos' (positions of the unique values)
-      , 'tiepos' (positions of ties)
-      , 'keypos' (positions of values in a sorted unique table) 
-      and derived methods 'as.factor' and 'as.ordered'
-    o new generic caching scheme, see ?cache and ?hashcache
-    o new low level functions for fast sorting, ordering and hashing,
-    see ?sortnut and ?hashmap
-
-    
-    
-USER VISIBLE CHANGES
-
-    o the package is back on CRAN. Method 'as.vector.integer64' has been removed 
-      at request of the CRAN maintainer. The starting point for this request was: 
-      'matrix(integer64())' does not work. The result of removing 
-      'as.vector.integer64' is a deterioration: 'array(integer64())' does not work 
-      anymore. You can restore 'as.vector.integer64' if you prefer.
-    o package 'bit64' now shares generics for low-level sorting with package 'ff' 
-      and depends on package 'bit' for those generics
-      
-
-
-      
-    CHANGES IN bit64 VERSION 0.8-3
-
-
-FIXES
-
-    o removed chonst char warning (thanks to Murray Stokely)
-    o reduced R dependency down to version 2.12.1 (wish of Murray Stokely)
+# bit64 NEWS for versions 0.8-3 through 4.5.2 are now in [NEWS.0](https://github.com/r-lib/bit64/blob/master/NEWS.0)

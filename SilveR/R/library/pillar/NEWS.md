@@ -1,5 +1,43 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# pillar 1.10.1
+
+## Documentation
+
+- Define `type_sum.accel()` only in help page to avoid silent errors when loading (#720, #721).
+
+
+# pillar 1.10.0
+
+## Features
+
+- `tbl_format_setup()` gains a `setup` argument that supports printing the header before the data for the body is available, e.g., for remote backends such as databases (#686).
+
+- New `tbl_nrow()` generic to support lazy data frames (#679).
+
+- Show missing values in red in `glimpse()` (@ryanzomorrodi, #662).
+
+- Math operations on `num()` objects now pass additional arguments to the mathematical function (@gvelasq, #659, #660).
+
+## Breaking changes
+
+- Breaking change: Hard-deprecate ellipsis for printing and formatting (#585, #637).
+
+## Bug fixes
+
+- Fix printing of infinite times (#645, #710).
+
+- Fix tibble tests (#665, #709).
+
+## Documentation
+
+- Describe `getOption("width")` (#671, #708).
+
+- Update `_pkgdown.yml` to bring back search bar (@olivroy, #667).
+
+- Avoid displaying deprecated argument in `@inheritDotParams` (@olivroy, #657).
+
+
 # pillar 1.9.0
 
 ## Features

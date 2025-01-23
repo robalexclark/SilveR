@@ -33,23 +33,23 @@ xyplot(Reaction ~ Days | Subject, sleepstudy, aspect = "xy",
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
 ## ----modularExampleFormula, tidy=FALSE, eval=FALSE------------------
-#  parsedFormula <- lFormula(formula = Reaction ~ Days + (Days | Subject),
-#                               data = sleepstudy)
+# parsedFormula <- lFormula(formula = Reaction ~ Days + (Days | Subject),
+#                              data = sleepstudy)
 
 ## ----modularExampleObjective, tidy=FALSE, eval=FALSE----------------
-#  devianceFunction <- do.call(mkLmerDevfun, parsedFormula)
+# devianceFunction <- do.call(mkLmerDevfun, parsedFormula)
 
 ## ----modularExampleOptimization, tidy=FALSE, eval=FALSE-------------
-#  optimizerOutput <- optimizeLmer(devianceFunction)
+# optimizerOutput <- optimizeLmer(devianceFunction)
 
 ## ----modularExampleOutput, tidy=FALSE, eval=FALSE-------------------
-#  mkMerMod(   rho = environment(devianceFunction),
-#              opt = optimizerOutput,
-#           reTrms = parsedFormula$reTrms,
-#               fr = parsedFormula$fr)
+# mkMerMod(   rho = environment(devianceFunction),
+#             opt = optimizerOutput,
+#          reTrms = parsedFormula$reTrms,
+#              fr = parsedFormula$fr)
 
 ## ----MMformula, eval=FALSE------------------------------------------
-#  resp ~ FEexpr + (REexpr1 | factor1) + (REexpr2 | factor2) + ...
+# resp ~ FEexpr + (REexpr1 | factor1) + (REexpr2 | factor2) + ...
 
 ## ----uncorrelatedModel,results="hide"-------------------------------
 fm2 <- lmer(Reaction ~ Days + (Days || Subject), sleepstudy)
@@ -109,7 +109,7 @@ thetanew <- round(runif(length(theta)), 1)
 Lambdati@x <- thetanew[Lind]
 
 ## ----PLSupdateTheta, eval = FALSE-----------------------------------
-#  Lambdat@x[] <- mapping(theta)
+# Lambdat@x[] <- mapping(theta)
 
 ## ----PLSupdateThetaWithLind-----------------------------------------
 mapping <- function(theta) theta[Lind]
@@ -122,30 +122,30 @@ Lambdati@x[] <- mapping(thetanew)
 Lambdati
 
 ## ----updateL, eval=FALSE--------------------------------------------
-#  L <- update(L, Lambdat %*% ZtW, mult = 1)
+# L <- update(L, Lambdat %*% ZtW, mult = 1)
 
 ## ----PLSsolve, eval = FALSE-----------------------------------------
-#  cu[] <- as.vector(solve(L, solve(L, Lambdat %*% ZtWy,
+# cu[] <- as.vector(solve(L, solve(L, Lambdat %*% ZtWy,
+#                                  system = "P"), system = "L"))
+# RZX[] <- as.vector(solve(L, solve(L, Lambdat %*% ZtWX,
 #                                   system = "P"), system = "L"))
-#  RZX[] <- as.vector(solve(L, solve(L, Lambdat %*% ZtWX,
-#                                    system = "P"), system = "L"))
-#  RXtRX <- as(XtWX - crossprod(RZX), "dpoMatrix")
-#  beta[] <- as.vector(solve(RXtRX, XtWy - crossprod(RZX, cu)))
-#  u[] <- as.vector(solve(L, solve(L, cu - RZX %*% beta,
-#                                  system = "Lt"), system = "Pt"))
+# RXtRX <- as(XtWX - crossprod(RZX), "dpoMatrix")
+# beta[] <- as.vector(solve(RXtRX, XtWy - crossprod(RZX, cu)))
+# u[] <- as.vector(solve(L, solve(L, cu - RZX %*% beta,
+#                                 system = "Lt"), system = "Pt"))
 
 ## ----PLSupdateResp, eval = FALSE------------------------------------
-#  b[] <- as.vector(crossprod(Lambdat, u))
-#  mu[] <- as.vector(crossprod(Zt, b) + X %*% beta + offset)
-#  wtres <- sqrtW * (y - mu)
+# b[] <- as.vector(crossprod(Lambdat, u))
+# mu[] <- as.vector(crossprod(Zt, b) + X %*% beta + offset)
+# wtres <- sqrtW * (y - mu)
 
 ## ----PLScalculateObjective, eval = FALSE----------------------------
-#  pwrss <- sum(wtres^2) + sum(u^2)
-#  logDet <- 2*determinant(L, logarithm = TRUE)$modulus
-#  if (REML) logDet <- logDet + determinant(RXtRX,
-#                                           logarithm = TRUE)$modulus
-#  attributes(logDet) <- NULL
-#  profDev <- logDet + degFree * (1 + log(2 * pi * pwrss) - log(degFree))
+# pwrss <- sum(wtres^2) + sum(u^2)
+# logDet <- 2*determinant(L, logarithm = TRUE)$modulus
+# if (REML) logDet <- logDet + determinant(RXtRX,
+#                                          logarithm = TRUE)$modulus
+# attributes(logDet) <- NULL
+# profDev <- logDet + degFree * (1 + log(2 * pi * pwrss) - log(degFree))
 
 ## ----vcovByHand-----------------------------------------------------
 RX <- getME(fm1, "RX")
@@ -153,20 +153,20 @@ sigma2 <- sigma(fm1)^2
 sigma2 * chol2inv(RX)
 
 ## ----condVarExample, echo=FALSE, eval=FALSE-------------------------
-#  s2 <- sigma(fm1)^2
-#  Lambdat <- getME(fm1, "Lambdat")
-#  Lambda <- getME(fm1, "Lambda")
-#  Zt <- getME(fm1, "Zt")
-#  Z <- getME(fm1, "Z")
-#  y <- getME(fm1, "y")
-#  X <- getME(fm1, "X")
-#  beta <- getME(fm1, "beta")
-#  L <- getME(fm1, "L")
-#  (V <- crossprod(solve(L, system = "L")))[1:2, 1:2]
-#  (s2 * Lambda %*% V %*% Lambdat)[1:2, 1:2]
-#  attr(ranef(fm1, condVar = TRUE)$Subject, "postVar")[ , , 1] # should be same as Lam %*% V %*% Lamt
-#  (U <- as.vector((V %*% Lambdat %*% Zt %*%  (y - X %*% beta))))
-#  getME(fm1, "u")
+# s2 <- sigma(fm1)^2
+# Lambdat <- getME(fm1, "Lambdat")
+# Lambda <- getME(fm1, "Lambda")
+# Zt <- getME(fm1, "Zt")
+# Z <- getME(fm1, "Z")
+# y <- getME(fm1, "y")
+# X <- getME(fm1, "X")
+# beta <- getME(fm1, "beta")
+# L <- getME(fm1, "L")
+# (V <- crossprod(solve(L, system = "L")))[1:2, 1:2]
+# (s2 * Lambda %*% V %*% Lambdat)[1:2, 1:2]
+# attr(ranef(fm1, condVar = TRUE)$Subject, "postVar")[ , , 1] # should be same as Lam %*% V %*% Lamt
+# (U <- as.vector((V %*% Lambdat %*% Zt %*%  (y - X %*% beta))))
+# getME(fm1, "u")
 
 ## ----updateModel----------------------------------------------------
 fm3 <- update(fm1, . ~ . - (Days | Subject) + (1 | Subject))
@@ -179,19 +179,19 @@ reRow <- grep("^Random effects", cc)
 cat(cc[1:(reRow - 2)], sep = "\n")
 
 ## ----summary1reproduced, eval=FALSE---------------------------------
-#  formula(fm1)
-#  REMLcrit(fm1)
-#  quantile(residuals(fm1, "pearson", scaled = TRUE))
+# formula(fm1)
+# REMLcrit(fm1)
+# quantile(residuals(fm1, "pearson", scaled = TRUE))
 
 ## ----summary2, echo=FALSE-------------------------------------------
 feRow <- grep("^Fixed effects", cc)
 cat(cc[reRow:(feRow - 2)], sep = "\n")
 
 ## ----summary2reproduced, eval=FALSE---------------------------------
-#  print(vc <- VarCorr(fm1), comp = c("Variance", "Std.Dev."))
-#  nobs(fm1)
-#  ngrps(fm1)
-#  sigma(fm1)
+# print(vc <- VarCorr(fm1), comp = c("Variance", "Std.Dev."))
+# nobs(fm1)
+# ngrps(fm1)
+# sigma(fm1)
 
 ## ----VarCorr--------------------------------------------------------
 as.data.frame(VarCorr(fm1))
@@ -239,7 +239,7 @@ dp <- pchisq(ddiff, 1, lower.tail = FALSE)
 ddiff2 <- deviance(fm2ML) - deviance(fm1ML)
 
 ## ----pvaluesHelp, eval=FALSE----------------------------------------
-#  help("pvalues")
+# help("pvalues")
 
 ## ----compareCI,echo=FALSE,cache=TRUE,message=FALSE,warning=FALSE----
 ccw <- confint(fm1, method = "Wald")
@@ -255,19 +255,19 @@ pw <- apply(ccp, 1, diff)
 mdiffpct <- round(100 * max(rtol(bw, pw)))
 
 ## ----CIplot,echo=FALSE,eval=FALSE-----------------------------------
-#  ## obsolete
-#  ## ,fig.cap="Comparison of confidence intervals",fig.scap="CI comparison"
-#  tf <- function(x, method) data.frame(method = method,
-#                 par = rownames(x),
-#                 setNames(as.data.frame(x), c("lwr", "upr")))
-#  cc.all <- do.call(rbind, mapply(tf, list(ccw, ccp, ccb),
-#                                 c("Wald", "profile", "boot"),
-#                       SIMPLIFY = FALSE))
-#  ggplot(cc.all, aes(x = 1, ymin = lwr, ymax = upr, colour = method)) +
-#      geom_linerange(position = position_dodge(width = 0.5)) +
-#      facet_wrap( ~ par, scale = "free") +
-#      theme(axis.text.x = element_blank()) +
-#      labs(x = "")
+# ## obsolete
+# ## ,fig.cap="Comparison of confidence intervals",fig.scap="CI comparison"
+# tf <- function(x, method) data.frame(method = method,
+#                par = rownames(x),
+#                setNames(as.data.frame(x), c("lwr", "upr")))
+# cc.all <- do.call(rbind, mapply(tf, list(ccw, ccp, ccb),
+#                                c("Wald", "profile", "boot"),
+#                      SIMPLIFY = FALSE))
+# ggplot(cc.all, aes(x = 1, ymin = lwr, ymax = upr, colour = method)) +
+#     geom_linerange(position = position_dodge(width = 0.5)) +
+#     facet_wrap( ~ par, scale = "free") +
+#     theme(axis.text.x = element_blank()) +
+#     labs(x = "")
 
 ## ----profile_calc,echo=FALSE,cache=TRUE-----------------------------
 pf <- profile(fm1)

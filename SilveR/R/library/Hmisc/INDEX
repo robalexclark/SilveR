@@ -136,6 +136,9 @@ nobsY                   Compute Number of Observations for Left Hand
                         Side of Formula
 nstr                    Creates a string of arbitry length
 num.intercepts          Extract number of intercepts
+ordGroupBoot            Minimally Group an Ordinal Variable So
+                        Bootstrap Samples Will Contain All Distinct
+                        Values
 pMedian                 pMedian
 pairUpDiff              pairUpDiff
 panel.bpplot            Box-Percentile Panel Function for Trellis

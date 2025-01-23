@@ -161,41 +161,30 @@ namespace SilveR.IntegrationTests
         {
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                try
+                HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+                document.LoadHtml(html);
+
+                //strip images on *nix
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
+
+                if (nodes != null)
                 {
-                    HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
-                    document.LoadHtml(html);
-
-                    //strip images on *nix
-                    HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
-
-                    if (nodes != null)
+                    foreach (var node in nodes)
                     {
-                        foreach (var node in nodes)
-                        {
-                            node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
-                        }
+                        node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
                     }
-
-                    html = document.DocumentNode.OuterHtml;
-
-                    //fix the carrige return codes
-                    html = html.Replace("\r\n", Environment.NewLine);
-
-                    //fix the quotes
-                    html = html.Replace("“", "\"");
-                    html = html.Replace("”", "\"");
-
-                    return html;
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-            else if (html.Contains("Time3Â£") && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                html = html.Replace("Time3Â£", "Time3£");
+
+                html = document.DocumentNode.OuterHtml;
+
+                //fix the carrige return codes
+                html = html.Replace("\r\n", Environment.NewLine);
+
+                //fix the quotes
+                html = html.Replace("“", "\"");
+                html = html.Replace("”", "\"");
+
+                return html;
             }
 
             //always remove references as these change all the time
@@ -216,7 +205,7 @@ namespace SilveR.IntegrationTests
             //}
             //else
             //{
-                return html;
+            return html;
             //}
         }
     }

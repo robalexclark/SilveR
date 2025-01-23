@@ -36,6 +36,7 @@ file_ext                Manipulate filename extensions
 file_rename             Rename files and directories
 file_string             Read a text file and concatenate the lines by
                         "\n"
+find_globals            Find global/local variables in R code
 format_bytes            Format numbers of bytes using a specified unit
 from_root               Get the relative path of a path in a project
                         relative to the current working directory
@@ -56,6 +57,7 @@ is_blank                Test if a character vector consists of blank
 is_sub_path             Test if a path is a subpath of a dir
 is_web_path             Test if a path is a web path
 is_windows              Test for types of operating systems
+join_words              Join multiple words into a single string
 lazy_save               Save objects to files and lazy-load them
 magic_path              Find a file or directory under a root directory
 mark_dirs               Mark some paths as directories
@@ -73,6 +75,8 @@ optipng                 Run OptiPNG on all PNG files under a directory
 parse_only              Parse R code and do not keep the source
 pkg_attach              Attach or load packages, and automatically
                         install missing packages if requested
+pkg_bib                 Generate BibTeX bibliography databases for R
+                        packages
 proc_kill               Kill a process and (optionally) all its child
                         processes
 process_file            Read a text file, process the text with a
@@ -108,11 +112,15 @@ set_envvar              Set environment variables
 shrink_images           Shrink images to a maximum width
 split_lines             Split a character vector by line breaks
 split_source            Split source lines into complete expressions
+str_wrap                Wrap character vectors
 strict_list             Strict lists
 strip_html              Strip HTML tags
 submit_cran             Submit a source package to CRAN
 system3                 Run 'system2()' and mark its character output
                         as UTF-8 if appropriate
+tabset                  Represent a (recursive) list with (nested)
+                        tabsets
+taml_load               A simple YAML reader and writer
 tinify                  Use the Tinify API to compress PNG and JPEG
                         images
 tojson                  A simple JSON serializer

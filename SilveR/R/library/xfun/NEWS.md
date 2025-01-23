@@ -1,3 +1,45 @@
+# CHANGES IN xfun VERSION 0.50
+
+- The function `isFALSE()` has been removed from this package. The deprecation notice was given two years ago: https://yihui.org/en/2023/02/xfun-isfalse/
+
+- Added a new function `tabset()` to represent a list with a tabset. The representation is similar to `str()`, but uses a visual form.
+
+- Factored out the function `taml_load()` and exported it (TAML is a tiny subset of YAML). Also added a new function `taml_save()` to convert simple lists to YAML.
+
+- The `print` argument of `record()` can accept non-function values now, in which case `print()` (or `show()` for S4 objects) will be used as the print function.
+
+- The `record()` results can also be formatted to Markdown via `format(record(), to = 'markdown')`.
+
+- Moved `knitr::combine_words()` into this package as `xfun::join_words()`. The former has become a simple wrapper of the latter.
+
+- Similarly, moved `knitr::write_bib()` into this package as `xfun::pkg_bib()`.
+
+- Moved the internal function `str_wrap()` from **knitr** and exported it as `xfun::str_wrap()`.
+
+- Exported the internal `find_globals()` and `find_locals()` functions.
+
+- `md_table()` escapes `|` in the table to `\|` instead of `&#124;` now.
+
+- `yaml_load(use_yaml = FALSE)` allows for indenting sub-fields by any number of spaces now (thanks, @J-Moravec, #95). Previously, one level of indentation must use exactly 2 spaces.
+
+- `divide_chunk()` no longer requires every line of chunk options to be commented out when the engine uses a pair of comment delimiters (such as `/*` and `*/` for CSS) instead of a single comment character. It suffices to use the opening delimiter at the beginning and closing delimiter at the end, e.g.,
+
+  ````md
+  ```{css}
+  /*| echo=FALSE,
+      label='foo' */
+  ```
+  ````
+  
+  Previously, every line must be commented out like:
+  
+  ````md
+  ```{css}
+  /*| echo=FALSE, */
+  /*| label='foo' */
+  ```
+  ````
+
 # CHANGES IN xfun VERSION 0.49
 
 - Added an argument `use_block = FALSE` to `protect_math()`. When `use_block = TRUE`, a `$$ $$` expression that spans across multiple lines will be protected in a code block.

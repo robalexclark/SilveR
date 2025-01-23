@@ -7,9 +7,18 @@
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/bh/issues/#1}{##1}}
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/bh/pull/#1}{##1}}
 
+\section{Changes in version 1.87.0-1 (2024-12-17)}{
+  \itemize{
+    \item Upgrade to \boost 1.87.0, patched as usual to comment-out
+    diagnostic suppression messages per the request of CRAN
+    \item Switched to Authors@R
+  }
+}
+
 \section{Changes in version 1.84.0-0 (2024-01-09)}{
   \itemize{
-    \item Upgrade to \boost 1.81.0 (\ghpr{87})
+    \item Upgrade to \boost 1.84.0 
+    \item Added \boostPkg{qvm} (requested in \ghit{97})
   }
 }
 

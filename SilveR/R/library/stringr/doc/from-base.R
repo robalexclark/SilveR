@@ -314,7 +314,7 @@ str_order(letters)
 str_sort(letters)
 
 ## -----------------------------------------------------------------------------
-x <- c("å", "a", "z")
+x <- c("Ã¥", "a", "z")
 str_sort(x)
 str_sort(x, locale = "no")
 

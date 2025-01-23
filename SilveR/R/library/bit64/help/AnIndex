@@ -23,12 +23,12 @@ abs.integer64	format.integer64
 all.equal.integer64	all.equal.integer64
 all.integer64	sum.integer64
 any.integer64	sum.integer64
+aperm.integer64	matrix64
 as.bitstring	as.character.integer64
 as.bitstring.integer64	as.character.integer64
 as.character.integer64	as.character.integer64
 as.data.frame.integer64	as.data.frame.integer64
 as.double.integer64	as.character.integer64
-as.factor.integer64	as.character.integer64
 as.integer.integer64	as.character.integer64
 as.integer64	as.integer64.character
 as.integer64.bitstring	as.integer64.character
@@ -41,7 +41,6 @@ as.integer64.logical	as.integer64.character
 as.integer64.NULL	as.integer64.character
 as.list.integer64	as.character.integer64
 as.logical.integer64	as.character.integer64
-as.ordered.integer64	as.character.integer64
 benchmark64	benchmark64
 benchmark64.data	benchmark64.data
 binattr	xor.integer64
@@ -51,12 +50,16 @@ c.integer64	c.integer64
 cache	cache
 cbind.integer64	c.integer64
 ceiling.integer64	format.integer64
+colSums	matrix64
+colSums.default	matrix64
+colSums.integer64	matrix64
 cummax.integer64	cumsum.integer64
 cummin.integer64	cumsum.integer64
 cumprod.integer64	cumsum.integer64
 cumsum.integer64	cumsum.integer64
 diff.integer64	cumsum.integer64
 duplicated.integer64	duplicated.integer64
+extract.replace.integer64	extract.replace.integer64
 floor.integer64	format.integer64
 format.integer64	format.integer64
 getcache	cache
@@ -111,6 +114,7 @@ log2.integer64	format.integer64
 match	bit64S3
 match.default	bit64S3
 match.integer64	match.integer64
+matrix64	matrix64
 max.integer64	sum.integer64
 mean.integer64	qtile
 median.integer64	qtile
@@ -119,6 +123,7 @@ mergesort.integer64	ramsort.integer64
 mergesortorder.integer64	ramsort.integer64
 min.integer64	sum.integer64
 minusclass	plusclass
+mtfrm.integer64	bit64S3
 na.count.integer64	is.sorted.integer64
 NA_integer64_	as.integer64.character
 newcache	cache
@@ -180,6 +185,9 @@ rbind.integer64	c.integer64
 remcache	cache
 rep.integer64	rep.integer64
 round.integer64	format.integer64
+rowSums	matrix64
+rowSums.default	matrix64
+rowSums.integer64	matrix64
 runif64	runif64
 scale.integer64	format.integer64
 seq.integer64	seq.integer64

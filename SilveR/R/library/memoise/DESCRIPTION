@@ -31,7 +31,7 @@ Description: Cache the results of a function so that when you
 License: MIT + file LICENSE
 URL: https://memoise.r-lib.org, https://github.com/r-lib/memoise
 BugReports: https://github.com/r-lib/memoise/issues
-Imports: rlang (>= 0.4.10), cachem
+Imports: rlang (>= 0.4.11), cachem
 Suggests: digest, aws.s3, covr, googleAuthR, googleCloudStorageR, httr,
         testthat
 Encoding: UTF-8

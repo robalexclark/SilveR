@@ -1,4 +1,4 @@
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(mvtnorm))
@@ -653,9 +653,8 @@ if (block == "NULL" && (statstest == "mannwhitney" || (statstest == "allcomparis
         for (i in 1:(length(pvalue))) {
             if (kruskalOut$p.value[i] < 0.0001) {
                 #STB March 2011 - formatting pvalue p<0.001
-                pvalue[i]<-0.0001
-                #pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                #pvalue[i] <- paste("<", pvalue[i])
+                pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                pvalue[i] <- paste("<", pvalue[i])
             }
         }
 
@@ -687,8 +686,8 @@ if (block == "NULL" && (statstest == "mannwhitney" || (statstest == "allcomparis
             if (wilcoxOut$p.value[i] < 0.0001) {
                 #STB March 2011 formatting p-value p<0.0001
                 pvalue[i] <- 0.0001
-                #pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                #pvalue[i] <- paste("<", pvalue[i])
+                pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                pvalue[i] <- paste("<", pvalue[i])
             }
         }
 
@@ -734,9 +733,9 @@ if (block != "NULL" && statstest == "mannwhitney") {
         for (i in 1:(length(pvalue))) {
             if (FriedOut$p.value[i] < 0.0001) {
                 #STB March 2011 - formatting pvalue p<0.001
-                pvalue[i]<-0.0001
-                #pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                #pvalue[i] <- paste("<", pvalue[i])
+                # pvalue[i]<-0.0001
+                pvalue[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                pvalue[i] <- paste("<", pvalue[i])
             }
         }
 
@@ -814,9 +813,8 @@ if (block == "NULL" && (statstest == "allcomparisons" && leng >= 3)) {
     for (i in 1:(dim(temp5)[1])) {
         if (as.numeric(temp5zzz[i, 5]) < 0.0001) {
             #STB March 2011 - formatting p-value p<0.0001
-	    temp5[i, 5] = 0.0001
-            #temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
-            #temp5[i, 5] <- paste("<", temp5[i, 5])
+            temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
+            temp5[i, 5] <- paste("<", temp5[i, 5])
         }
     }
 
@@ -878,11 +876,11 @@ if (block == "NULL" && (statstest == "allcomparisons" && leng >= 3)) {
             for (i in 1:(length(pv))) {
                 if (pvzzz[i] < 0.0001) {
                     #STB March 2011 - formatting p-values p<0.0001
-                    pv[i]<-0.0001
-                    #pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                    #pv[i] <- paste("<", pv[i])
+                    #pv[i]<-0.0001
+                    pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                    pv[i] <- paste("<", pv[i])
                 } else {
-                    #pv[i] <- paste(" ", pv[i])
+                    pv[i] <- paste(" ", pv[i])
                 }
             }
 
@@ -974,11 +972,11 @@ if (block != "NULL" && statstest == "allcomparisons") {
                 for (i in 1:(length(pv))) {
                     if (pvzzz[i] < 0.0001) {
                         #STB March 2011 - formatting p-values p<0.0001
-                        pv[i]<-0.0001
-                        #pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
-                        #pv[i] <- paste("<", pv[i])
+                        #pv[i]<-0.0001
+                        pv[i] = format(round(0.0001, 4), nsmall = 4, scientific = FALSE)
+                        pv[i] <- paste("<", pv[i])
                     } else {
-                        #pv[i] <- paste(" ", pv[i])
+                        pv[i] <- paste(" ", pv[i])
                     }
                 }
 
@@ -1046,9 +1044,9 @@ if (block == "NULL" && (statstest == "comparetocontrol" && leng >= 3)) {
     for (i in 1:(dim(temp5)[1])) {
         if (as.numeric(temp5zzz[i, 5]) < 0.0001) {
             #STB March 2011 formatting p-values <0.0001
-            temp5[i,5]<-0.0001
-            #temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
-            #temp5[i, 5] <- paste("<", temp5[i, 5])
+            #temp5[i,5]<-0.0001
+            temp5[i, 5] = format(round(0.0001, 5), nsmall = 4, scientific = FALSE)
+            temp5[i, 5] <- paste("<", temp5[i, 5])
         }
     }
 
@@ -1078,14 +1076,14 @@ if (RunFried == "Y") {
         dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
         if (dim > 2) {
-            if (temptab[1, 4] <= (1 - sig)) {
+            if (kruskalOut$p.value <= (1 - sig)) {
                 add <- paste(c("There is a statistically significant overall difference between the treatment factor levels at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is less than ", sep = "")
                 add <- paste(add, 1 - sig, sep = "")
                 add <- paste(add, " (Kruskal-Wallis test).", sep = "")
                 HTML(add, align = "left")
-            } else if (temptab[1, 4] > (1 - sig)) {
+            } else if (kruskalOut$p.value > (1 - sig)) {
                 add <- paste(c("The overall difference between the treatment factor levels is not statistically significant at the "), sep = "")
                 add <- paste(add, 100 * (1 - sig), sep = "")
                 add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")
@@ -1144,14 +1142,14 @@ if (RunFried == "Y") {
        HTML.title("Analysis conclusions", HR = 2, align = "left")
        dim <- length(unique(eval(parse(text = paste("statdata$", treatment)))))
 
-        if (temptab[1, 4] <= (1 - sig)) {
+        if (FriedOut$p.value <= (1 - sig)) {
             add <- paste(c("There is a statistically significant overall difference between the treatment factor levels at the "), sep = "")
             add <- paste(add, 100 * (1 - sig), sep = "")
             add <- paste(add, "% level of significance as the p-value is less than ", sep = "")
             add <- paste(add, 1 - sig, sep = "")
             add <- paste(add, " (Friedman test).", sep = "")
             HTML(add, align = "left")
-        } else if (temptab[1, 4] > (1 - sig)) {
+        } else if (FriedOut$p.value > (1 - sig)) {
             add <- paste(c("The overall difference between the treatment factor levels is not statistically significant at the "), sep = "")
             add <- paste(add, 100 * (1 - sig), sep = "")
             add <- paste(add, "% level of significance as the p-value is greater than ", sep = "")

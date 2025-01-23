@@ -61,7 +61,7 @@ model.matrix.coxph      Model.matrix method for coxph models
 myeloid                 Acute myeloid leukemia
 myeloma                 Survival times of patients with multiple
                         myeloma
-nafld1                  Non-alcoholic fatty liver disease
+nafld                   Non-alcoholic fatty liver disease
 neardate                Find the index of the closest value in data set
                         2, for each entry in data set one.
 nsk                     Natural splines with knot heights as the basis.
@@ -135,6 +135,7 @@ survreg.distributions   Parametric Survival Distributions
 survreg.object          Parametric Survival Model Object
 survregDtest            Verify a survreg distribution
 tcut                    Factors for person-year calculations
+timeline                Convert to/from a timeline data set format
 tmerge                  Time based merge for survival data
 tobin                   Tobin's Tobit data
 transplant              Liver transplant waiting list

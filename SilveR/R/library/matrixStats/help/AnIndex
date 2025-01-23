@@ -57,7 +57,6 @@ matrixStats.envs.min.version	matrixStats.options
 matrixStats.options	matrixStats.options
 matrixStats.ties.method.freq	matrixStats.options
 matrixStats.ties.method.missing	matrixStats.options
-matrixStats.useNames.NA	matrixStats.options
 matrixStats.vars.center.onUse	matrixStats.options
 matrixStats.vars.formula.freq	matrixStats.options
 matrixStats.vars.formula.onMistake	matrixStats.options
@@ -104,7 +103,6 @@ R_MATRIXSTATS_CENTER_ONSCALAR	matrixStats.options
 R_MATRIXSTATS_ENVS_MIN_VERSION	matrixStats.options
 R_MATRIXSTATS_TIES_METHOD_FREQ	matrixStats.options
 R_MATRIXSTATS_TIES_METHOD_MISSING	matrixStats.options
-R_MATRIXSTATS_USENAMES_NA	matrixStats.options
 R_MATRIXSTATS_VARS_CENTER_ONUSE	matrixStats.options
 R_MATRIXSTATS_VARS_FORMULA_FREQ	matrixStats.options
 R_MATRIXSTATS_VARS_FORMULA_ONMISTAKE	matrixStats.options

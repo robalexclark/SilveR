@@ -39,6 +39,8 @@ file_exists	dir_exists
 file_ext	file_ext
 file_rename	file_rename
 file_string	file_string
+find_globals	find_globals
+find_locals	find_globals
 format.xfun_record_results	record
 format_bytes	format_bytes
 from_root	from_root
@@ -56,7 +58,6 @@ html_view	html_tag
 install_dir	install_dir
 install_github	install_github
 in_dir	in_dir
-isFALSE	isFALSE
 is_abs_path	is_abs_path
 is_arm64	os
 is_ascii	is_ascii
@@ -70,6 +71,7 @@ is_sub_path	is_sub_path
 is_unix	os
 is_web_path	is_web_path
 is_windows	os
+join_words	join_words
 json_vector	tojson
 lazy_load	lazy_save
 lazy_save	lazy_save
@@ -93,6 +95,7 @@ parse_only	parse_only
 pkg_attach	pkg_attach
 pkg_attach2	pkg_attach
 pkg_available	pkg_attach
+pkg_bib	pkg_bib
 pkg_load	pkg_attach
 pkg_load2	pkg_attach
 print.xfun_raw_string	raw_string
@@ -132,8 +135,13 @@ split_lines	split_lines
 split_source	split_source
 strict_list	strict_list
 strip_html	strip_html
+str_wrap	str_wrap
 submit_cran	submit_cran
 system3	system3
+tabset	tabset
+taml_file	taml_load
+taml_load	taml_load
+taml_save	taml_load
 tinify	tinify
 tinify_dir	tinify
 tojson	tojson

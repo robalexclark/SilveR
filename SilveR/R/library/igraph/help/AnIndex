@@ -687,6 +687,7 @@ permute	permute
 permute.vertices	permute.vertices
 piecewise.layout	piecewise.layout
 plot.cohesiveBlocks	cohesive_blocks
+plot.common	plot.common
 plot.communities	communities
 plot.graph	plot.igraph
 plot.igraph	plot.igraph

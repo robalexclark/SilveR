@@ -4,7 +4,34 @@
 \title{lme4 News}
 \encoding{UTF-8}
 
-\section{CHANGES IN VERSION 1.1-35.5}{
+\section{CHANGES IN VERSION 1.1-36}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+      \item The full (joint) conditional covariance matrix of fixed
+      effects and conditional modes is now available via
+      \code{vcov(fitted_model, full = TRUE)}
+      \item Random effects formulas are now processed by code from
+      the \code{reformulas} package, meaning that some
+      extended random effects formulas (such as \code{(1|f*g)} for
+      crossed random effects) will now work
+    }
+  }  % new features
+  \subsection{USER-VISIBLE CHANGES}{
+    \itemize{
+      \item \code{simulate} with \code{newparams} no longer prints
+      a message if the individual parameter vectors are unnamed
+    }
+  } % user-visible changes
+  \subsection{BUG FIXES}{
+    \itemize{
+      \item floating-point errors leading to slightly negative deviances
+      could lead to NaN deviance residuals (Wolfgang Viechtbauer, GH #812)
+    }
+  } % bug fixes
+
+} % version 1.1-35.6
+
+\section{CHANGES IN VERSION 1.1-35.5 (2024-07-03)}{
     \subsection{USER-VISIBLE CHANGES}{
       \itemize{
 	\item in \code{predict}, the synonyms \code{ReForm}, \code{REForm}, and

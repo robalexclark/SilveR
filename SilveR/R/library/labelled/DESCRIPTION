@@ -1,7 +1,7 @@
 Package: labelled
 Type: Package
 Title: Manipulating Labelled Data
-Version: 2.13.0
+Version: 2.14.0
 Maintainer: Joseph Larmarange <joseph@larmarange.net>
 Authors@R: c(
   person("Joseph", "Larmarange", email = "joseph@larmarange.net", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7097-700X")),
@@ -16,10 +16,10 @@ Description: Work with labelled data imported from 'SPSS'
     "haven_labelled_spss" classes introduced by 'haven' package.
 License: GPL (>= 3)
 Encoding: UTF-8
-Depends: R (>= 3.0)
-Imports: haven (>= 2.4.1), dplyr (>= 1.0.0), lifecycle, rlang, vctrs,
-        stringr, tidyr, tidyselect
-Suggests: testthat, knitr, rmarkdown, questionr, snakecase, utf8, covr,
+Depends: R (>= 3.2)
+Imports: haven (>= 2.4.1), cli, dplyr (>= 1.1.0), lifecycle, rlang (>=
+        1.1.0), vctrs, stringr, tidyr, tidyselect
+Suggests: testthat (>= 3.2.0), knitr, rmarkdown, questionr, snakecase,
         spelling
 Enhances: memisc
 URL: https://larmarange.github.io/labelled/,
@@ -27,16 +27,17 @@ URL: https://larmarange.github.io/labelled/,
 BugReports: https://github.com/larmarange/labelled/issues
 VignetteBuilder: knitr
 LazyData: true
-RoxygenNote: 7.3.1
-RdMacros: lifecycle
+RoxygenNote: 7.3.2
 Language: en-US
+Config/testthat/edition: 3
+Config/Needs/check: memisc
 NeedsCompilation: no
-Packaged: 2024-04-23 14:02:39 UTC; josep
+Packaged: 2025-01-08 08:12:06 UTC; josep
 Author: Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>),
   Daniel Ludecke [ctb],
   Hadley Wickham [ctb],
   Michal Bojanowski [ctb],
   François Briatte [ctb]
 Repository: CRAN
-Date/Publication: 2024-04-23 14:40:02 UTC
-Built: R 4.3.3; ; 2024-11-24 04:24:51 UTC; windows
+Date/Publication: 2025-01-08 08:50:02 UTC
+Built: R 4.3.3; ; 2025-01-18 04:46:12 UTC; windows

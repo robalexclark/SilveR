@@ -1,4 +1,4 @@
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(R2HTML))
@@ -60,9 +60,8 @@ fullnames<- colnames(statdata)
 fullnames<-setdiff(fullnames, resplist)
 
 #Sort out subject factor
-statdata$Subject.factor<- c(1:dim(statdata)[1])
-if (subjectFactor != "NULL") {
-  statdata$Subject.factor<- eval(parse(text = paste("statdata$",subjectFactor)))
+if (subjectFactor == "NULL") {
+  statdata$Subject.factor<- c(1:dim(statdata)[1])
 }
 
 #Repeated factor name
@@ -103,22 +102,28 @@ if (Betawarn == "Y") {
 #===================================================================================================================
 #Generate a list of variables when all variables included
 fullnames<-colnames(statdata)
+
+#Remove Responses from dataset
 for (i in 1:noresps) {
 	fullnames<- fullnames[fullnames != resplist[i]]
 }
-fullnames<- fullnames[fullnames != "Subject.factor"]
 
-#Generate variable when only subject factor selected
-if (includeAllVariables !="Y" && subjectFactor != "NULL") {
-  fullnames <- c(subjectFactor)
-}
-if (includeAllVariables !="Y" && subjectFactor == "NULL") {
-  fullnames <- c("Subject.factor")
-}
+#If No variable selected
+if (includeAllVariables !="Y") {
 
-if (selectedVariables !="NULL") {
-	for (i in 1:novars) {
-		fullnames<-cbind(fullnames, varslist[i])
+	#Generate variable when only subject factor selected
+	if (subjectFactor != "NULL") {
+ 		 fullnames <- c(subjectFactor)
+	}
+	#Generate variable when only subject factor selected
+	if (subjectFactor == "NULL") {
+		  fullnames <- c("Subject.factor")
+	}
+
+	if (selectedVariables !="NULL") {
+		for (i in 1:novars) {
+			fullnames<-cbind(fullnames, varslist[i])
+		}
 	}
 }
 
@@ -137,7 +142,8 @@ RMlong$Response <- RMlong$value
 RMlong$value <-NULL
 
 #Replace any dodgy characters 
-Repeated.factor<-namereplaceGSUB(RMlong$Repeated.factor)
+#Repeated.factor<-namereplaceGSUB(RMlong$Repeated.factor)
+Repeated.factor<-RMlong$Repeated.factor
 RMlong$Repeated.factor<-NULL
 RMlong<-cbind(RMlong, Repeated.factor)
 
@@ -148,7 +154,11 @@ if (responseNameID != "NULL") {
 if (repeatedFactorNameID != "NULL") {
 	colnames(RMlong)[colnames(RMlong) == "Repeated.factor"] <- repeatedFactorNameID
 }
-if (subjectFactorNameID != "NULL") {
+if (subjectFactorNameID != "NULL" && subjectFactor == "NULL") {
+	colnames(RMlong)[colnames(RMlong) == "Subject.factor"] <- subjectFactorNameID
+}
+
+if (subjectFactorNameID != "NULL" && subjectFactor != "NULL") {
 	colnames(RMlong)[colnames(RMlong) == subjectFactor] <- subjectFactorNameID
 }
 
@@ -191,6 +201,7 @@ HTML(Desc, align="left")
 RMlong2<-RMlong
 tempnames2<-colnames(RMlong2)
 tempnames2<-namereplaceGSUB(tempnames2)
+
 ID2<- c(1:dim(RMlong2)[1])
 RMlong2<-cbind(ID2, RMlong2)
 colnames(RMlong2)<-c("Observation No.", tempnames2)

@@ -1,4 +1,4 @@
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(multcomp))
@@ -1611,7 +1611,8 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	inte<-1
 
 	for(i in 1:(dim(tabs)[1])) {
-		if (tabs$V6[i] <= (1-sig)) {
+#		if (tabs$V6[i] <= (1-sig)) {
+		if (pvals[i] <= (1-sig)) {
 			if (inte==1) {
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")
@@ -1654,6 +1655,12 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
 		HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
 	}
+
+#STB2025
+	#Adding in the numerical pvalues
+	tabs <- cbind(tabs, pvals)
+	tabs_temp<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
+	pvalsred<-tabs_temp$pvals
 
 	#Creating the subsetted version of tabs dataset
 	tabs_red<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
@@ -1770,7 +1777,8 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 	inte<-1
 
 	for(i in 1:(dim(tabs_red)[1])) {
-		if (tabs_red$V6[i] <= (1-sig)) {
+#		if (tabs_red$V6[i] <= (1-sig)) {
+		if (pvalsred[i] <= (1-sig)) {
 			if (inte==1) {
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")

@@ -1,4 +1,4 @@
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(R2HTML))
@@ -326,6 +326,7 @@ if (pValueSelected=="Y") {
 #if (confidenceLimitsSelected=="Y" && method == "pearson") {colsno = colsno+2}
 tablelen<-resplength*(resplength-1)/2
 correlationTable <-matrix(ncol=colsno,nrow=tablelen)
+correlationTablep <-matrix(ncol=1,nrow=tablelen)
 
 k<-1
 
@@ -424,6 +425,7 @@ for (i in 1:(resplength-1)) {
 				}
 		
 				correlationTable[k,l]=pvalue
+				correlationTablep[k,1]=correlation$p.value
 				MatrixTableP[(i),(j)] = pvalue
 				MatrixTableP[(j),(i)] = pvalue
 			}
@@ -516,11 +518,13 @@ if (k>1) {
 
 	CIval3 <- 100-100*CIval
 	corp<-dim(correlationTable2)[2]
+	corp2<-dim(correlationTablep)[2]
 
 	add<-paste(c("Conclusion"))
 	inte<-1
 	for(i in 1:(dim(correlationTable2)[1])) {
-		if (correlationTable2[i,corp] <= (1-CIval)|| correlationTable2[i,corp] == "< 0.0001" ) {
+#		if (correlationTable2[i,corp] <= (1-CIval)|| correlationTable2[i,corp] == "< 0.0001" ) {
+		if (correlationTablep[i,corp2] <= (1-CIval) ) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": The following pairwise correlations are statistically significantly at the  ", sep="")
@@ -769,6 +773,8 @@ if (pValueSelected=="Y") {
 
 tablelen<-(resplength*(resplength-1)/2)*length
 correlationTable <-matrix(ncol=colsno,nrow=tablelen)
+correlationTablep <-matrix(ncol=1,nrow=tablelen)
+
 k<-1
 
 #Table column names
@@ -898,6 +904,8 @@ for ( p in 1:length) {
 					}
 			
 					correlationTable[k,l]=pvalue
+					correlationTablep[k,1]=correlation$p.value
+
 					MatrixTableCatP[i+q,j]=pvalue
 					MatrixTableCatP[j+q,i]=pvalue
 				}
@@ -998,10 +1006,12 @@ if (k>2) {
 	
 	CIval3 <- 100-100*CIval
 	corp<-dim(correlationTable2)[2]
+	corp2<-dim(correlationTablep)[2]
+
 	add<-paste(c("Conclusion"))
 	inte<-1
 	for(i in 1:(dim(correlationTable2)[1])) {
-		if (correlationTable2[i,corp] <= (1-CIval) || correlationTable2[i,corp] == "< 0.0001" ) {
+		if (correlationTablep[i,corp2] <= (1-CIval) ) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": The following pairwise correlations are statistically significantly at the  ", CIval3, "% level: ", correlationTable2[i,3], " vs. ", correlationTable2[i,5], " (categorisation factor(s) level ", correlationTable2[i,2], ")",sep="")

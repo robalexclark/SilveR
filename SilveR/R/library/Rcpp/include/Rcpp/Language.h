@@ -102,7 +102,7 @@ namespace Rcpp{
          * 0.0 is wrapped as a numeric vector using wrap( const& double )
          * ...
          */
-        #if defined(HAS_VARIADIC_TEMPLATES) || defined(RCPP_USING_CXX11)
+        #if defined(HAS_VARIADIC_TEMPLATES)
             template <typename... T>
             Language_Impl(const std::string& symbol, const T&... t) {
                 Storage::set__(pairlist(Rf_install(symbol.c_str()), t...) );
@@ -162,8 +162,10 @@ namespace Rcpp{
             return internal::Rcpp_eval_impl( Storage::get__(), env);
         }
 
-        void update( SEXP x){
-            SET_TYPEOF( x, LANGSXP );
+        void update(SEXP x) {
+            if (TYPEOF(x) != LANGSXP) {
+                Storage::set__(r_cast<LANGSXP>(x));
+            }
             SET_TAG( x, R_NilValue );
         }
 

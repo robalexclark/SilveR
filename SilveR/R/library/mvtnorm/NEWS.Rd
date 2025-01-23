@@ -2,6 +2,19 @@
 \name{NEWS}
 \title{NEWS file for the \pkg{mvtnorm} package}
 
+\section{Changes in Version 1.3-3 (2025-01-09)}{
+  \subsection{Bugfixes}{
+    \itemize{
+      \item \code{Miwa(steps = 4097)} are allowed in R, the
+            C code assumed \code{steps <= 4096}, now 
+            \code{steps == 4097} is possible. Triggered by
+            BDR's gcc-UBSAN check on package 
+            OptimalGoldstandardDesign.
+    }
+  }
+}
+
+
 \section{Changes in Version 1.3-2 (2024-11-04)}{
   \subsection{Features}{
     \itemize{

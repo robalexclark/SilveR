@@ -1,5 +1,30 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# igraph 2.1.3
+
+## Features
+
+- Use `_pv` destroy functions to satisfy ASAN checks (#1630).
+
+- Use safe accessor to vector elements (#1633).
+
+## Chore
+
+- Replace `graph.isomorphic()` with `isomorphic()` (#1583, #1623).
+
+## Documentation
+
+- Convert `plot.common.Rd` to roxygen2 (#1424, #1636).
+
+- Remove broken example from `graph_from_graphdb()` manual page (#1622, #1637).
+
+- Document argument for NCOL format in `read_graph()` (#1621).
+
+- Make documentation of `disjoint_union()` consistent with behavior (#1587, #1641).
+
+- Add central note about experimental functions (#1624).
+
+
 # igraph 2.1.2
 
 ## Bug fixes

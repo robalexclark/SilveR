@@ -1,7 +1,7 @@
-#Software branding
+﻿#Software branding
 #branding <- "InVivoStat (beta version)"
 branding <- "InVivoStat"
-IVS_version <- "4.10"
+IVS_version <- "4.11"
 
 #Software update
 UpdateIVS <- "N"
@@ -2449,13 +2449,13 @@ reference <- function (name) {
   if (name == "multcompView") 	  {reference <- "Graves S, Piepho H, Dorai-Raj LSwhfS (2023). multcompView: Visualizations of Paired Comparisons. R package version 0.1-9, https://CRAN.R-project.org/package=multcompView."}
   if (name == "car") 		  {reference <- "Fox J, Weisberg S (2019). An R Companion to Applied Regression, Third edition. Sage, Thousand Oaks CA. https://socialsciences.mcmaster.ca/jfox/Books/Companion/."}
   if (name == "emmeans") 	  {reference <- "Lenth R (2024). emmeans: Estimated Marginal Means, aka Least-Squares Means. R package version 1.10.0, https://CRAN.R-project.org/package=emmeans."}
-  if (name == "dplyr") 		  {reference <-"Wickham H, Francois R, Henry L, Muller K, Vaughan D (2023). dplyr: A Grammar of Data Manipulation. R package version 1.1.4, <https://CRAN.R-project.org/package=dplyr>."}
-  if (name == "ROCR") 		  {reference <-"Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). ROCR: visualizing classifier performance in R. Bioinformatics, *21*(20), 7881. <http://rocr.bioinf.mpi-sb.mpg.de>."}
-  if (name == "detectseparation") {reference <-"Kosmidis I, Schumacher D, Schwendinger F (2022). detectseparation: Detect and Check for Separation and Infinite Maximum Likelihood Estimates. R package version 0.3, <https://CRAN.R-project.org/package=detectseparation>."}
-  if (name == "nlme") 		  {reference <-"Pinheiro J, Bates D, R Core Team (2023). nlme: Linear and Nonlinear Mixed Effects Models. R package version 3.1-164, <https://CRAN.R-project.org/package=nlme>."}
-  if (name == "coin") 		  {reference <-"Hothorn T, Hornik K, van de Wiel MA, Zeileis A (2008). Implementing a class of permutation tests: The coin package. Journal of Statistical Software, *28*(8), 1-23. doi:10.18637/jss.v028.i08 <https://doi.org/10.18637/jss.v028.i08>."}
-  if (name == "contrast") 	  {reference <-"Kuhn M, Weston S, Wing J, Forester J, Thaler T (2022). contrast: A Collection of Contrast Methods. R package version 0.24.2, <https://CRAN.R-project.org/package=contrast>."}
-  if (name == "survival") 	  {reference <-"Therneau T (2023). A Package for Survival Analysis in R. R package version 3.5-7, <https://CRAN.R-project.org/package=survival>."}
-  if (name == "gridExtra") 	  {reference <-"Auguie B (2017). gridExtra: Miscellaneous Functions for \"Grid\" Graphics. R package version 2.3, <https://CRAN.R-project.org/package=gridExtra>."}
+  if (name == "dplyr") 		  {reference <-"Wickham H, Francois R, Henry L, Muller K, Vaughan D (2023). dplyr: A Grammar of Data Manipulation. R package version 1.1.4, https://CRAN.R-project.org/package=dplyr."}
+  if (name == "ROCR") 		  {reference <-"Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). ROCR: visualizing classifier performance in R. Bioinformatics, *21*(20), 7881. http://rocr.bioinf.mpi-sb.mpg.de."}
+  if (name == "detectseparation") {reference <-"Kosmidis I, Schumacher D, Schwendinger F (2022). detectseparation: Detect and Check for Separation and Infinite Maximum Likelihood Estimates. R package version 0.3, https://CRAN.R-project.org/package=detectseparation."}
+  if (name == "nlme") 		  {reference <-"Pinheiro J, Bates D, R Core Team (2023). nlme: Linear and Nonlinear Mixed Effects Models. R package version 3.1-164, https://CRAN.R-project.org/package=nlme."}
+  if (name == "coin") 		  {reference <-"Hothorn T, Hornik K, van de Wiel MA, Zeileis A (2008). Implementing a class of permutation tests: The coin package. Journal of Statistical Software, *28*(8), 1-23. doi:10.18637/jss.v028.i08 https://doi.org/10.18637/jss.v028.i08."}
+  if (name == "contrast") 	  {reference <-"Kuhn M, Weston S, Wing J, Forester J, Thaler T (2022). contrast: A Collection of Contrast Methods. R package version 0.24.2, https://CRAN.R-project.org/package=contrast."}
+  if (name == "survival") 	  {reference <-"Therneau T (2023). A Package for Survival Analysis in R. R package version 3.5-7, https://CRAN.R-project.org/package=survival."}
+  if (name == "gridExtra") 	  {reference <-"Auguie B (2017). gridExtra: Miscellaneous Functions for \"Grid\" Graphics. R package version 2.3, https://CRAN.R-project.org/package=gridExtra."}
   return(reference)
 }

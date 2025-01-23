@@ -74,6 +74,7 @@ cumcategory	summary.formula
 curveRep	curveRep
 curveSmooth	curveRep
 cut2	cut2
+cutGn	cut2
 data.frame.create.modify.check	data.frame.create.modify.check
 data.frame.labelled	label
 datadensity	scat1d
@@ -342,6 +343,7 @@ oPar	Hmisc-internal
 Ops.mChoice	mChoice
 optionsCmds	Hmisc-internal
 ordGridFun	Hmisc-internal
+ordGroupBoot	ordGroupBoot
 ordTestpo	summary.formula
 outerText	Misc
 pairUpDiff	pairUpDiff

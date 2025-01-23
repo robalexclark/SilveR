@@ -42,7 +42,7 @@ namespace Rcpp{
         Pairlist_Impl(SEXP x){
             Storage::set__(r_cast<LISTSXP>(x)) ;
         }
-        #if defined(HAS_VARIADIC_TEMPLATES) || defined(RCPP_USING_CXX11)
+        #if defined(HAS_VARIADIC_TEMPLATES)
             template <typename... T>
             Pairlist_Impl(const T&... args ){
                 Storage::set__(pairlist(args... )) ;
@@ -50,8 +50,10 @@ namespace Rcpp{
         #else
             #include <Rcpp/generated/Pairlist__ctors.h>
         #endif
-        void update(SEXP x){
-            SET_TYPEOF( x, LISTSXP ) ;
+        void update(SEXP x) {
+            if (TYPEOF(x) != LISTSXP) {
+                Storage::set__(r_cast<LISTSXP>(x));
+            }
         }
     } ;
 

@@ -65,6 +65,7 @@ model_get_model_frame.default	model_get_model_frame
 model_get_model_frame.fixest	model_get_model_frame
 model_get_model_frame.model_fit	model_get_model_frame
 model_get_model_frame.survreg	model_get_model_frame
+model_get_model_frame.svycoxph	model_get_model_frame
 model_get_model_matrix	model_get_model_matrix
 model_get_model_matrix.betareg	model_get_model_matrix
 model_get_model_matrix.biglm	model_get_model_matrix
@@ -103,8 +104,9 @@ model_get_response_variable.default	model_get_response_variable
 model_get_terms	model_get_terms
 model_get_terms.betareg	model_get_terms
 model_get_terms.brmsfit	model_get_terms
-model_get_terms.cch	model_get_model_matrix
+model_get_terms.cch	model_get_terms
 model_get_terms.default	model_get_terms
+model_get_terms.fixest	model_get_terms
 model_get_terms.glmmTMB	model_get_terms
 model_get_terms.model_fit	model_get_terms
 model_get_weights	model_get_weights

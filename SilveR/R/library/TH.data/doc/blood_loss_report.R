@@ -102,10 +102,10 @@ pvar <- function(x)
 
 
 ## ----vignette, eval = FALSE---------------------------------------------------
-#  library("knitr")
-#  knit("blood_loss_report.Rnw")
-#  library("tools")
-#  texi2pdf("blood_loss_report.tex")
+# library("knitr")
+# knit("blood_loss_report.Rnw")
+# library("tools")
+# texi2pdf("blood_loss_report.tex")
 
 ## ----preproc, echo = FALSE----------------------------------------------------
 x <- c("GA", "AGE", "MULTIPAR", "BMI", "TWIN", "FET.GEW", "IOL", "AIS")
@@ -199,13 +199,13 @@ legend("bottomright", lwd = 2, col = cols, legend = levels(blood$mode), bty = "n
 }
 
 ## ----MBL-plot-check, eval = FALSE, echo = FALSE, fig.width = 6, fig.height = 5, warning = FALSE, dev = c("tiff", "pdf", "png"), dpi = 300----
-#  plot(survfit(MBLsurv ~ mode, data = blood), col = cols, xlim = c(0, 2700),
-#       lty = 2, xlab = vlab("MBL"), ylab = "1 - Probability", ylim = c(-.05, 1.05))
-#  plot(m, newdata= nd, type = "survivor", add = TRUE, col = cols, lty = 1)
-#  rug(blood$MBL[blood$mode == "Vaginal delivery"], lwd = 2, col = cols[1])
-#  rug(blood$MBL[blood$mode == "Planned Cesarean"], side = 3, lwd = 2, col = cols[2])
-#  rug(blood$MBL[blood$mode == "Unplanned Cesarean"], side = 3, lwd = 2, col = cols[3])
-#  legend("topright", lwd = 2, col = cols, legend = levels(blood$mode), bty = "n")
+# plot(survfit(MBLsurv ~ mode, data = blood), col = cols, xlim = c(0, 2700),
+#      lty = 2, xlab = vlab("MBL"), ylab = "1 - Probability", ylim = c(-.05, 1.05))
+# plot(m, newdata= nd, type = "survivor", add = TRUE, col = cols, lty = 1)
+# rug(blood$MBL[blood$mode == "Vaginal delivery"], lwd = 2, col = cols[1])
+# rug(blood$MBL[blood$mode == "Planned Cesarean"], side = 3, lwd = 2, col = cols[2])
+# rug(blood$MBL[blood$mode == "Unplanned Cesarean"], side = 3, lwd = 2, col = cols[3])
+# legend("topright", lwd = 2, col = cols, legend = levels(blood$mode), bty = "n")
 
 ## ----MBL-Colr, echo = TRUE, cache = TRUE--------------------------------------
 mvars <- c("Hb.prae", "F1.prae", "F2.prae", "F13.Akt.prae")

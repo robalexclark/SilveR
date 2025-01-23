@@ -194,8 +194,8 @@ VarCorr	VarCorr
 VarCorr.merMod	VarCorr
 varianceProf	profile-methods
 vcconv	vcconv
-vcov.merMod	merMod-class
-vcov.summary.merMod	merMod-class
+vcov.merMod	vcov.merMod
+vcov.summary.merMod	vcov.merMod
 vec2mlist	vcconv
 vec2STlist	vcconv
 VerbAgg	VerbAgg

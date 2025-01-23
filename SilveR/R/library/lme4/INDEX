@@ -110,5 +110,6 @@ subbars                 "Sub[stitute] Bars"
 troubleshooting         Troubleshooting
 vcconv                  Convert between representations of
                         (co-)variance structures
+vcov.merMod             Covariance matrix of estimated parameters
 xyplot.thpr             Mixed-Effects Profile Plots (Regular / Density
                         / Pairs)
