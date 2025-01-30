@@ -159,8 +159,8 @@ namespace SilveR.IntegrationTests
 
         public static string SanitizeHtml(string html)
         {
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
+            //if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            //{
                 HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
                 document.LoadHtml(html);
 
@@ -185,7 +185,7 @@ namespace SilveR.IntegrationTests
                 html = html.Replace("”", "\"");
 
                 return html;
-            }
+            //}
 
             //always remove references as these change all the time
             //if (html.Contains("R references"))

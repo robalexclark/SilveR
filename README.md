@@ -1,6 +1,6 @@
 # SilveR
 
-SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 6.0.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 4.2.1.
+SilveR is a cross platform (Windows, Linux & macOS) statistical analysis system with the UI written in .net core (currently 8.0.x), hosted in an Electron shell using Electron.net, local data storage in SQLLite and the statistical analysis performed in R 4.4.1.
 
 ### Branded as InVivoStat
 
@@ -8,7 +8,7 @@ The SilveR project is currently branded as the pharmaceutical statistical analys
 
 ## Getting Started
 
-Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 4.2.1 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
+Clone the project, open in Visual Studio, optionally run the tests, and then debug or publish. The repo contains a stripped down version of R 4.4.1 for windows so that it should produce analyses straight away (linux and mac need to install their own). You can always point the system at your own R setup (YMMV!)
 
 ### Current Build
 
@@ -20,7 +20,7 @@ SilveR is a self-hosted web app written in .net core, running in an Electron she
 
 #### [Windows](#windows)
 
-A stripped down install of R 4.2.1 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
+A stripped down install of R 4.4.1 for windows with the correct packages is included in the repository. It should run out of the box in visual studio. However if you are publishing for redistribution you will need to xcopy the R folder to the root of the publish output folder.
 
 #### [Linux](#linux)
 
@@ -36,15 +36,15 @@ Note that we only support 19.x at this time. If you have a different Linux distr
 
 For Mac you will need to install R and run a script to install the required R packages. To do this:
 
-1) Download and install R from https://cran.r-project.org/bin/macosx/base/R-4.2.1.pkg
+1) Download and install R from https://cran.r-project.org/bin/macosx/base/R-4.4.1.pkg
 
 2) Download the R package install script from https://raw.githubusercontent.com/robalexclark/SilveR/master/SilveR/setup/RPackagesInstall.R. Open the R editor/IDE (that was installed in the previous step). Copy and paste the code (or open the RPackagesInstall.R file) into the R editor and run it. The second half of the R script checks that the libraries have been installed correctly.
 
 3) It seems that macOS Big Sur onwards has issues where a symlink to Rscript is missing or miconfigured after the R install (resulting in InVivoStat claiming that R is not installed). To resolve this run the following two lines in the terminal
 
 ```
-sudo ln -s /Library/Frameworks/R.framework/Versions/4.2/Resources/bin/R/usr/local/bin
-sudo ln -s /Library/Frameworks/R.framework/Versions/4.2/Resources/bin/Rscript/usr/local/bin
+sudo ln -s /Library/Frameworks/R.framework/Versions/4.4/Resources/bin/R/usr/local/bin
+sudo ln -s /Library/Frameworks/R.framework/Versions/4.4/Resources/bin/Rscript/usr/local/bin
 ```
 
 #### Running Locally
@@ -62,6 +62,29 @@ You can open the Analysis tab to see your previous results, reanalyse to see the
 
 #### Running in Electron shell
 For details on how to build with the electron.net wrapper see https://github.com/ElectronNET/Electron.NET
+
+### Running with Docker
+
+SilveR is also available as a Docker container, providing a convenient way to deploy and run the application without manual setup. Follow the instructions below to pull and run the Docker image.
+
+#### **Prerequisites**
+
+- **Docker** must be installed on your system. You can download it from [Docker's official website](https://www.docker.com/get-started).
+
+#### **Pull the Docker Image**
+
+Pull the latest Docker image from Docker Hub:
+
+docker pull robalexclark/silver:latest
+
+Run the Docker Container
+Once the image is pulled, run the container using the following command (or use the Docker Desktop gui):
+
+docker run -d -p 32777:5000 --name silver-container robalexclark/silver:latest
+
+You can of course run the container with a different unused external port if you wish.
+
+Then you can open a browser window and navigate to http://localhost:32777/ to run the system
 
 
 ### Architecture
