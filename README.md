@@ -65,22 +65,22 @@ For details on how to build with the electron.net wrapper see https://github.com
 
 ### Running with Docker
 
-SilveR is also available as a Docker container, providing a convenient way to deploy and run the application without manual setup. Follow the instructions below to pull and run the Docker image.
+SilveR is also available as a Docker container, under the invivostat brand, providing a convenient way to deploy and run the application without manual setup. Follow the instructions below to pull and run the Docker image.
 
 #### **Prerequisites**
 
-- **Docker** must be installed on your system. You can download it from [Docker's official website](https://www.docker.com/get-started).
+**Docker** must be installed on your system. You can download it from [Docker's official website](https://www.docker.com/get-started).
 
-#### **Pull the Docker Image**
+#### **Pull the Invivostat Docker Image**
 
 Pull the latest Docker image from Docker Hub:
 
-docker pull robalexclark/silver:latest
+```bash docker pull robalexclark/invivostat:latest ```
 
 Run the Docker Container
 Once the image is pulled, run the container using the following command (or use the Docker Desktop gui):
 
-docker run -d -p 32777:5000 --name silver-container robalexclark/silver:latest
+```bash docker run -d -p 32777:5000 --name invivostat-container robalexclark/invivostat:latest ```
 
 You can of course run the container with a different unused external port if you wish.
 
