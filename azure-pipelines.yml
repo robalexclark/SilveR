@@ -117,7 +117,7 @@ jobs:
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.10.0.exe'
+      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.11.0.exe'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@0
