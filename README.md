@@ -75,16 +75,20 @@ SilveR is also available as a Docker container, under the invivostat brand, prov
 
 Pull the latest Docker image from Docker Hub:
 
-```bash docker pull robalexclark/invivostat:latest ```
+```
+docker pull robalexclark/invivostat:latest
+```
 
 Run the Docker Container
 Once the image is pulled, run the container using the following command (or use the Docker Desktop gui):
 
-```bash docker run -d -p 32777:5000 --name invivostat-container robalexclark/invivostat:latest ```
+```
+docker run -d -p 32777:5000 --name invivostat-container robalexclark/invivostat:latest
+```
 
-You can of course run the container with a different unused external port if you wish.
+This will run the container locally and allow it to be accessible via port 32777. You can of course run the container with a different unused port if you wish.
 
-Then you can open a browser window and navigate to http://localhost:32777/ to run the system
+Then you can open a browser window and navigate to http://localhost:32777/ to run the system.
 
 
 ### Architecture

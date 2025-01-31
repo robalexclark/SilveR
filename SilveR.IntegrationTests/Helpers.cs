@@ -161,30 +161,33 @@ namespace SilveR.IntegrationTests
         {
             //if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             //{
-                HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
-                document.LoadHtml(html);
+            HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+            document.LoadHtml(html);
 
-                //strip images on *nix
-                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
+            //strip images on *nix
+            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
 
-                if (nodes != null)
+            if (nodes != null)
+            {
+                foreach (var node in nodes)
                 {
-                    foreach (var node in nodes)
-                    {
-                        node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
-                    }
+                    node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
                 }
+            }
 
-                html = document.DocumentNode.OuterHtml;
+            html = document.DocumentNode.OuterHtml;
 
-                //fix the carrige return codes
-                html = html.Replace("\r\n", Environment.NewLine);
+            //fix the carrige return codes
+            html = html.Replace("\r\n", Environment.NewLine);
 
-                //fix the quotes
-                html = html.Replace("“", "\"");
-                html = html.Replace("”", "\"");
+            //fix the quotes
+            html = html.Replace("“", "\"");
+            html = html.Replace("”", "\"");
 
-                return html;
+            // Fix the pound signs
+            html = html.Replace("Â£", "£");
+
+            return html;
             //}
 
             //always remove references as these change all the time
