@@ -1,1 +1,0 @@
-Responses requires at least two entries.

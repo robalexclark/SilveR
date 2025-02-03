@@ -95,7 +95,7 @@ namespace SilveR.IntegrationTests
             if (statsOutput.HtmlResults == null)
                 throw new Exception("No results output!");
 
-            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), Helpers.SanitizeHtml(statsOutput.HtmlResults));
+            File.WriteAllText(Path.Combine("ActualResults", moduleName, testName + ".html"), Helpers.SanitizeHtml(statsOutput.HtmlResults, false));
         }
 
         public static async Task<StatsOutput> SubmitAnalysis(HttpClient client, string analysisName, FormUrlEncodedContent content)
@@ -157,21 +157,23 @@ namespace SilveR.IntegrationTests
             return doc;
         }
 
-        public static string SanitizeHtml(string html)
+        public static string SanitizeHtml(string html, bool stripImages = true)
         {
             //if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             //{
             HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(html);
 
-            //strip images on *nix
-            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
-
-            if (nodes != null)
+            if (stripImages)
             {
-                foreach (var node in nodes)
+                HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//img");
+
+                if (nodes != null)
                 {
-                    node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
+                    foreach (var node in nodes)
+                    {
+                        node.Attributes.Remove("src"); //This only removes the src Attribute from <img> tag
+                    }
                 }
             }
 
@@ -208,7 +210,7 @@ namespace SilveR.IntegrationTests
             //}
             //else
             //{
-            return html;
+            //return html;
             //}
         }
     }
