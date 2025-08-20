@@ -1,4 +1,4 @@
-install.packages("R2HTML", dependencies = TRUE, ask = FALSE)
+﻿install.packages("R2HTML", dependencies = TRUE, ask = FALSE)
 install.packages("https://cran.r-project.org/src/contrib/Archive/Matrix/Matrix_1.6-0.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
 install.packages("https://cran.r-project.org/src/contrib/Archive/MASS/MASS_7.3-59.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
 install.packages("ggplot2", dependencies = TRUE, ask = FALSE) 
@@ -23,6 +23,8 @@ install.packages("kableExtra", dependencies = TRUE, ask = FALSE)
 install.packages("https://cran.r-project.org/src/contrib/Archive/rms/rms_6.6-0.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
 install.packages("contrast", dependencies = TRUE, ask = FALSE)
 install.packages("PowerTOST", dependencies = TRUE, ask = FALSE)
+install.packages("mmrm", dependencies = TRUE, ask = FALSE)
+
 BiocManager::install("mixOmics", dependencies = TRUE, ask = FALSE)
 
 
@@ -31,7 +33,7 @@ packages <- c(
   "R2HTML", "Matrix", "MASS", "ggplot2", "ggrepel", "plyr", "reshape", 
   "GGally", "proto", "coin", "ROCR", "Exact", "dplyr", "multcompView", 
   "car", "emmeans", "detectseparation", "ggdendro", "BiocManager", 
-  "Hmisc", "polspline", "kableExtra", "rms", "contrast", "PowerTOST"
+  "Hmisc", "polspline", "kableExtra", "rms", "contrast", "PowerTOST", "mmrm"
 )
 
 # Function to check installation

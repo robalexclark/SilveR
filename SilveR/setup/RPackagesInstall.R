@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------------------------------------------------------------------------
+﻿#------------------------------------------------------------------------------------------------------------------------------------------------
 # Instructions to complete the installation â€“ you will only need to do this once!
 # Open R (that you have just installed) 
 # Cut and paste the "install.packages" R code below - one line at a time - into the R console window (next to the > symbol)
@@ -26,6 +26,8 @@ install.packages("ggdendro")
 install.packages("BiocManager")
 install.packages("contrast")
 install.packages("PowerTOST")
+install.packages("mmrm")
+
 BiocManager::install("mixOmics")
 
 
@@ -54,3 +56,4 @@ library(ggdendro)
 library(BiocManager)
 library(contrast)
 library(mixOmics)
+library(mmrm)
