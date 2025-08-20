@@ -35,6 +35,14 @@ jobs:
     inputs:
       command: 'test'
       projects: '**/*[Tt]ests/*.csproj'
+      arguments: '--logger trx'
+
+  - task: PowerShell@2
+    displayName: Summarize test failures
+    inputs:
+      targetType: 'filePath'
+      filePath: 'build/summarize-trx.ps1'
+      arguments: '-SearchRoot $(Agent.TempDirectory) -OutPath $(Build.ArtifactStagingDirectory)/test-failures-summary.txt'
 
   - task: ArchiveFiles@2
     inputs:

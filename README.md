@@ -131,3 +131,13 @@ If you would like to contribute or if you find an issue with the system then ple
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)
+
+## Test Failure Summary
+
+After running tests (for example via `dotnet test`), you can generate a concise text summary of any failed tests by running:
+
+```
+pwsh build/summarize-trx.ps1 -SearchRoot . -OutPath test-failures-summary.txt
+```
+
+The Azure Pipeline is configured to emit `.trx` results and executes this script automatically, publishing `test-failures-summary.txt` with the build artifacts.
