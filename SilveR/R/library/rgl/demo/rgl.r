@@ -1,0 +1,10 @@
+# all rgl interactive demos
+demo(flag)
+demo(mouseCallbacks)
+demo(shapes3d)
+demo(shinyDemo)
+demo(shinyMouse)
+demo(shinyTabs)
+demo(shinyToggle)
+demo(simpleShinyRgl)
+demo(stereo)

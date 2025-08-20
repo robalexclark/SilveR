@@ -48,6 +48,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -788,7 +789,7 @@ the output type (so is relatively verbose), but will always return a
 numeric vector. <code>sapply()</code> is concise, but if you supply an
 empty list you’ll get a list instead of a numeric vector.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># type stable</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>medians <span class="ot">&lt;-</span> <span class="fu">vapply</span>(samples, median, <span class="at">FUN.VALUE =</span> <span class="fu">numeric</span>(1L))</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>medians <span class="ot">&lt;-</span> <span class="fu">vapply</span>(samples, median, <span class="at">FUN.VALUE =</span> <span class="fu">numeric</span>(<span class="dv">1</span><span class="dt">L</span>))</span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>medians</span>
 <span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] 0.6017626 3.4411470 5.2946304 4.4694671</span></span>
 <span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a></span>
@@ -820,33 +821,24 @@ output, but not the returned values?</p>
 </div>
 <div id="pipes" class="section level3">
 <h3>Pipes</h3>
-<p>You can join multiple steps together either using the magrittr
-pipe:</p>
+<p>You can join multiple steps together with the pipe:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2020</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>means <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">map</span>(rnorm, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>means <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">map</span>(rnorm, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  <span class="fu">map_dbl</span>(median)</span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; [1] -0.09802317  2.72057350  2.87673977  4.05830349</span></span></code></pre></div>
-<p>Or the base pipe R:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2020</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>means <span class="sc">|&gt;</span> </span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">lapply</span>(rnorm, <span class="at">n =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  <span class="fu">sapply</span>(median)</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt; [1] -0.09802317  2.72057350  2.87673977  4.05830349</span></span></code></pre></div>
-<p>(And of course you can mix and match the piping style with either
-base R or purrr.)</p>
 <p>The pipe is particularly compelling when working with longer
 transformations. For example, the following code splits
 <code>mtcars</code> up by <code>cyl</code>, fits a linear model,
 extracts the coefficients, and extracts the first one (the
 intercept).</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">split</span>(mtcars<span class="sc">$</span>cyl) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> df)) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="fu">map</span>(coef) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="dv">1</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt;        4        6        8 </span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; 39.57120 28.40884 23.86803</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">split</span>(mtcars<span class="sc">$</span>cyl) <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">map</span>(\(df) <span class="fu">lm</span>(mpg <span class="sc">~</span> wt, <span class="at">data =</span> df))<span class="sc">|&gt;</span> </span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  <span class="fu">map</span>(coef) <span class="sc">|&gt;</span> </span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="dv">1</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co">#&gt;        4        6        8 </span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a><span class="co">#&gt; 39.57120 28.40884 23.86803</span></span></code></pre></div>
 </div>
 </div>
 </div>

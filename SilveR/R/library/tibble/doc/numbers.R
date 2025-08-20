@@ -28,7 +28,7 @@ tibble(
   char = char(paste(LETTERS, collapse = " "), shorten = "mid")
 )
 
-## -----------------------------------------------------------------------------
+## ----eval = rlang::is_installed("dplyr")--------------------------------------
 library(dplyr, warn.conflicts = FALSE)
 
 markets <-
@@ -64,7 +64,9 @@ x <- num(c(1, 2, 4), notation = "eng")
 var(x)
 
 ## ----numbers-16-a, error = TRUE-----------------------------------------------
+try({
 median(x)
+})
 
 ## ----numbers-16a--------------------------------------------------------------
 num(var(x), notation = "eng")

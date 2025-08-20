@@ -1,9 +1,20 @@
 Package: modeltools
 Title: Tools and Classes for Statistical Models
-Date: 2020-03-05
-Version: 0.2-23
-Author: Torsten Hothorn, Friedrich Leisch, Achim Zeileis 
-Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
+Date: 2025-05-02
+Version: 0.2-24
+Authors@R: c(person(given = "Torsten",
+                        family = "Hothorn",
+                        role = c("aut", "cre"),
+                        email = "Torsten.Hothorn@R-project.org", 
+                        comment = c(ORCID = "0000-0001-8301-0471")),
+                 person(given = "Friedrich",
+                        family = "Leisch",
+                        role = "aut",
+                        comment = c(ORCID = "0000-0001-7278-1983")),
+                 person(given = "Achim",
+                        family = "Zeileis",
+                        role = "aut",
+                        comment = c(ORCID = "0000-0003-0918-3766")))
 Description: A collection of tools to deal with statistical models. 
   The functionality is experimental and the user interface is likely to
   change in the future. The documentation is rather terse, but packages `coin'
@@ -15,7 +26,12 @@ Imports: methods
 LazyLoad: yes
 License: GPL-2
 NeedsCompilation: no
-Packaged: 2020-03-05 10:45:24 UTC; hothorn
+Packaged: 2025-05-02 09:58:16 UTC; hothorn
+Author: Torsten Hothorn [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-8301-0471>),
+  Friedrich Leisch [aut] (ORCID: <https://orcid.org/0000-0001-7278-1983>),
+  Achim Zeileis [aut] (ORCID: <https://orcid.org/0000-0003-0918-3766>)
+Maintainer: Torsten Hothorn <Torsten.Hothorn@R-project.org>
 Repository: CRAN
-Date/Publication: 2020-03-05 11:50:06 UTC
-Built: R 4.3.1; ; 2023-10-20 00:53:17 UTC; windows
+Date/Publication: 2025-05-02 14:30:07 UTC
+Built: R 4.5.0; ; 2025-05-02 23:50:36 UTC; windows

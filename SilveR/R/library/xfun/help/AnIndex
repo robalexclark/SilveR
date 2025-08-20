@@ -3,7 +3,8 @@ alnum_id	alnum_id
 append_unique	read_utf8
 append_utf8	read_utf8
 as_strict_list	strict_list
-attr	attr
+attr	attr2
+attr2	attr2
 base64_decode	base64_encode
 base64_encode	base64_encode
 base64_uri	base64_uri
@@ -106,6 +107,7 @@ proc_kill	proc_kill
 proj_root	proj_root
 prose_index	prose_index
 protect_math	protect_math
+rand_unit	rand_unit
 raw_string	raw_string
 Rcmd	Rscript
 read_all	read_all
@@ -152,6 +154,7 @@ upload_ftp	upload_ftp
 upload_imgur	upload_imgur
 upload_win_builder	upload_ftp
 url_accessible	url_accessible
+url_destination	url_destination
 url_filename	url_filename
 valid_syntax	valid_syntax
 with_ext	file_ext

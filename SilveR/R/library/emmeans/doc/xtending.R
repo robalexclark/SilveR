@@ -4,7 +4,7 @@ knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro")
 set.seed(271828)
 
 ## ----eval=FALSE-----------------------------------------------------------------------------------
-#  help("extending-emmeans", package="emmeans")
+# help("extending-emmeans", package="emmeans")
 
 ## -------------------------------------------------------------------------------------------------
 fake = expand.grid(rep = 1:5, A = c("a1","a2"), B = c("b1","b2","b3"))

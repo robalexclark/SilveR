@@ -22,8 +22,8 @@ func_score <- function(fit){
   u <- matrix(0, nrow = n, ncol=p)
   
   # functions
-  f   <- fit$trans$cumprob
-  fp  <- fit$trans$deriv
+  f   <- eval(fit$famfunctions[1])
+  fp  <- eval(fit$famfunctions[3])
   
   
   xb <- fit$x %*% coef[-(1L : kint)]
@@ -84,7 +84,7 @@ func_robcov <- function(fit, cluster){
   
   # dyn.load("robcovf.so")
   W <- matrix(.Fortran("robcovf", n, p, nc, clus.start, clus.size, X, 
-                       double(p), double(p * p), w=double(p * p))$w, nrow=p)
+                       double(p), w=double(p * p))$w, nrow=p)
   
   ##The following has a small bug but comes close to reproducing what robcovf does
   # W <- tapply(X,list(cluster[row(X)],col(X)),sum)

@@ -1,5 +1,5 @@
 ---
-title: "Introduction to *BiocParallel*"
+title: "1. Introduction to *BiocParallel*"
 author:
 - name: "Valerie Obenchain"
 - name: "Vincent Carey"
@@ -11,7 +11,7 @@ author:
 date: "Edited: October, 2022; Compiled: `r format(Sys.time(), '%B %d, %Y')`"
 package: BiocParallel
 vignette: >
-  %\VignetteIndexEntry{Introduction to BiocParallel}
+  %\VignetteIndexEntry{1. Introduction to BiocParallel}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 output:
@@ -599,7 +599,6 @@ Execute FUN 6 times across the workers.
 > FUN <- function(i) system("hostname", intern=TRUE)
 > bplapply(1:6, FUN, BPPARAM = param)
 bplapply(1:6, FUN, BPPARAM = param)
-        6 slaves are spawned successfully. 0 failed.
 [[1]]
 [1] "rhino01"
 
@@ -697,7 +696,6 @@ salloc: Granted job allocation 6762292
 > param <- SnowParam(mpi.universe.size() - 1, "MPI")
 > register(param)
 > xx <- bplapply(1:100, FUN)
-4 slaves are spawned successfully. 0 failed.
 > table(unlist(xx))
 gizmof13 gizmof71 gizmof86 gizmof88
 25 25 25 25

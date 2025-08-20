@@ -1,0 +1,153 @@
+%>%                     Imported from magrittr
+.check3d                Check for an open RGL window.
+Buffer                  R6 Class for binary buffers in glTF files.
+GramSchmidt             The Gram-Schmidt algorithm
+abclines3d              Lines intersecting the bounding box
+addNormals              Add normal vectors to objects so they render
+                        more smoothly
+ageControl              Set attributes of vertices based on their age
+all.equal.mesh3d        Compare mesh3d objects in a meaningful way.
+arc3d                   Draw arcs
+arrow3d                 Draw an arrow
+as.mesh3d               Convert object to mesh object
+as.mesh3d.ashape3d      Convert alpha-shape surface of a cloud of
+                        points to RGL mesh object
+as.mesh3d.rglId         Convert object in plot to RGL mesh object
+as.rglscene             Convert an object to an 'rglscene' object.
+as.tmesh3d              Convert object to a triangular mesh
+as.triangles3d          Convert an object to triangles
+asRow                   Convenience functions for RGL HTML layouts
+aspect3d                Set the aspect ratios of the current plot
+axes3d                  Draw boxes, axes and other text outside the
+                        data
+bbox3d                  Set up bounding box decoration
+bg3d                    Set up background
+bgplot3d                Use base graphics for RGL background
+checkDeldir             Check for a compatible version of 'deldir'
+clear3d                 Scene management
+clipMesh3d              Clip mesh or RGL object to general region
+clipplaneControl        Sets attributes of a clipping plane
+contourLines3d          Draw contours on a surface
+cube3d                  Sample 3D mesh objects
+cylinder3d              Create cylindrical or "tube" plots
+decorate3d              Add decorations to a 3D plot
+drape3d                 Drape lines over a scene.
+elementId2Prefix        Use widget with old-style controls
+ellipse3d               Make an ellipsoid
+expect_known_scene      Helper for 'testthat' testing.
+extrude3d               Generate extrusion mesh
+facing3d                Subset an object to parts facing in a
+                        particular direction
+figWidth                Get R Markdown figure dimensions in pixels
+getBoundary3d           Extract the boundary of a mesh
+gltfTypes               Names of glTF types.
+grid3d                  Add a grid to a 3D plot
+hover3d                 Display hover info in plot.
+identify3d              Identify points in plot
+in_pkgdown_example      Are we running in 'pkgdown' or a 'pkgdown'
+                        example?
+light3d                 Add light source
+lowlevel                RGL id values
+makeDependency          Process Javascript for HTML dependency
+material3d              Get or set material properties
+matrices                Work with homogeneous coordinates
+merge.mesh3d            Merge RGL mesh objects
+mergeVertices           Merge duplicate vertices in mesh object
+mesh3d                  Construct 3D mesh objects
+mfrow3d                 Set up multiple figure layouts
+observer3d              Set the observer location
+open3d                  Work with RGL windows
+par3d                   Set or query RGL parameters
+par3dinterp             Interpolator for par3d parameters
+par3dinterpControl      Control RGL widget like par3dinterp()
+pch3d                   Plot symbols similar to base graphics
+persp3d                 Surface plots
+persp3d.deldir          Plot a Delaunay triangulation
+persp3d.function        Plot a function of two variables
+persp3d.triSht          Plot an interp or tripack Delaunay
+                        triangulation
+planes3d                Add planes
+play3d                  Play animation of RGL scene
+playwidget              Add a widget to play animations
+plot3d                  3D scatterplot
+plot3d.formula          Methods for formulas
+plot3d.lm               Method for plotting simple linear fit
+plotmath3d              Draw text using base graphics math plotting
+polygon3d               Draw a polygon in three dimensions
+primitives              Add primitive shape
+propertyControl         Controls to use with playwidget()
+r3d                     Generic 3D interface
+readSTL                 Read and write STL (stereolithography) format
+                        files
+rgl-package             3D visualization device system
+rgl.Sweave              Integrating RGL with Sweave
+rgl.attrib              Get information about shapes
+rgl.attrib.info         Get information about attributes of objects
+rgl.bringtotop          Assign focus to an RGL window
+rgl.getAxisCallback     Get user-defined axis labelling callbacks.
+rgl.incrementID         Increment ID
+rgl.init                Initializing RGL
+rgl.pixels              Extract pixel information from window
+rgl.postscript          Export vector graphics
+rgl.select              Switch to select mode, and return the mouse
+                        position selected
+rgl.setMouseCallbacks   User callbacks on mouse events
+rgl.useNULL             Report default use of null device
+rgl.user2window         Convert between RGL user and window coordinates
+rglExtrafonts           Register extra fonts
+rglFonts                Specify FreeType fonts
+rglMouse                Generate HTML code to select mouse mode
+rglShared               Create shared data from an RGL object
+rglToLattice            Convert RGL userMatrix to lattice or base
+                        angles
+rglwidget               An htmlwidget to hold an RGL scene
+rglwidgetOutput         Functions for integration of RGL widgets into
+                        Shiny app
+safe.dev.off            Close graphics device in a safe way.
+scene3d                 Saves the current scene to a variable, and
+                        displays such variables
+sceneChange             Make large change to a scene from Shiny
+select3d                Select a rectangle in an RGL scene
+selectpoints3d          Select points from a scene
+setAxisCallbacks        User-defined axis labelling callbacks.
+setGraphicsDelay        Set a one-time slowdown on opening standard
+                        graphics
+setUserCallbacks        Set mouse callbacks in R or Javascript code
+setUserShaders          Set user-defined shaders for RGL objects, or
+                        get shaders.
+setupKnitr              Displaying RGL scenes in 'knitr' documents
+shade3d                 Draw 3D mesh objects
+shadow3d                Project shadows of mesh onto object.
+shapelist3d             Create and plot a list of shapes
+shinyGetPar3d           Communicate RGL parameters between R and
+                        Javascript in Shiny
+show2d                  Draw a 2D plot on a rectangle in a 3D scene
+snapshot3d              Export screenshot
+spheres3d               Add spheres
+spin3d                  Create a function to spin a scene at a fixed
+                        rate
+sprites3d               Add sprites
+subdivision3d           Subdivide a mesh
+subscene3d              Create, select or modify a subscene
+subsceneInfo            Get information on subscenes
+surface3d               Add surface
+tagged3d                Find tags on rgl objects.
+text3d                  Add text to plot
+textureSource           Retrieve source code used to produce texture
+                        file.
+thigmophobe3d           Find the direction away from the closest point
+                        in a 3d projection
+tkpar3dsave             Modal dialog for saving par3d settings
+tkrgl                   The former tkrgl package
+tkspin3d                Create TCL/TK controller for RGL window
+tkspinControl           Create a spin control in a TCL/TK window
+toggleWidget            An HTML widget to toggle display of elements of
+                        a scene
+triangulate             Triangulate a two-dimensional polygon
+turn3d                  Create a solid of rotation from a
+                        two-dimensional curve
+vertexControl           Set attributes of vertices
+view3d                  Set up viewpoint
+writeASY                Write Asymptote code for an RGL scene
+writeOBJ                Read and write Wavefront OBJ format files
+writePLY                Write Stanford PLY format files

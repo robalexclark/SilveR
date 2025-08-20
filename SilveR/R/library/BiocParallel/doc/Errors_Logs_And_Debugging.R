@@ -1,45 +1,43 @@
-## ----style, eval=TRUE, echo=FALSE, results="asis"--------------------------
-BiocStyle::latex()
+## ----BiocManager, eval=FALSE--------------------------------------------------
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+# 
+# BiocManager::install("BiocParallel")
 
-## ----BiocManager, eval=FALSE-----------------------------------------------
-#  if (!requireNamespace("BiocManager", quietly = TRUE))
-#      install.packages("BiocManager")
-#  BiocManager::install("BiocParallel")
-
-## ----load------------------------------------------------------------------
+## ----load,include=TRUE,results="hide",message=FALSE,warning=FALSE-------------
 library(BiocParallel)
 
-## ----messages, eval = FALSE------------------------------------------------
-#  res <- bplapply(1:2, function(i) { message(i); Sys.sleep(3) })
+## ----messages, eval = FALSE---------------------------------------------------
+# res <- bplapply(1:2, function(i) { message(i); Sys.sleep(3) })
 
-## ----messages-immediate, eval = FALSE--------------------------------------
-#  res <- bplapply(1:2, function(i) {
-#      sink(NULL, type = "message")
-#      message(i)
-#      Sys.sleep(3)
-#  })
+## ----messages-immediate, eval = FALSE-----------------------------------------
+# res <- bplapply(1:2, function(i) {
+#     sink(NULL, type = "message")
+#     message(i)
+#     Sys.sleep(3)
+# })
 
-## ----errors_constructor----------------------------------------------------
+## ----errors_constructor-------------------------------------------------------
 param <- SnowParam()
 param
 
-## ----errors_stopOnError----------------------------------------------------
+## ----errors_stopOnError-------------------------------------------------------
 param <- SnowParam(2, stop.on.error = TRUE)
 param
 bpstopOnError(param) <- FALSE
 
-## ----errors_6tasksA_stopOnError--------------------------------------------
+## ----errors_6tasksA_stopOnError-----------------------------------------------
 X <- list(1, "2", 3, 4, 5, 6)
 param <- SnowParam(3, tasks = length(X), stop.on.error = TRUE)
 
-## ----errors_6tasksA_stopOnError_output-------------------------------------
+## ----errors_6tasksA_stopOnError_output----------------------------------------
 result <- tryCatch({
     bplapply(X, sqrt, BPPARAM = param)
 }, error=identity)
 result
 bpresult(result)
 
-## ----errors_6tasks_nonstopOnError------------------------------------------
+## ----errors_6tasks_nonstopOnError---------------------------------------------
 X <- list("1", 2, 3, 4, 5, 6)
 param <- SnowParam(3, tasks = length(X), stop.on.error = FALSE)
 result <- tryCatch({
@@ -48,55 +46,55 @@ result <- tryCatch({
 result
 bpresult(result)
 
-## ----error_bptry-----------------------------------------------------------
+## ----error_bptry--------------------------------------------------------------
 bptry({
     bplapply(X, sqrt, BPPARAM=param)
 })
 
-## ----errors_3tasksA_stopOnError--------------------------------------------
+## ----errors_3tasksA_stopOnError-----------------------------------------------
 X <- list(1, 2, "3", 4, 5, 6)
 param <- SnowParam(3, stop.on.error = TRUE)
 
-## ----errors_3tasksA_stopOnError_output-------------------------------------
+## ----errors_3tasksA_stopOnError_output----------------------------------------
 bptry(bplapply(X, sqrt, BPPARAM = param))
 
-## ----errors_bpok_bplapply--------------------------------------------------
+## ----errors_bpok_bplapply-----------------------------------------------------
 param <- SnowParam(2, stop.on.error=FALSE)
 result <- bptry(bplapply(list(1, "2", 3), sqrt, BPPARAM=param))
 
-## ----errors_bpok-----------------------------------------------------------
+## ----errors_bpok--------------------------------------------------------------
 bpok(result)
 
-## ----errors_traceback------------------------------------------------------
+## ----errors_traceback---------------------------------------------------------
 attr(result[[which(!bpok(result))]], "traceback")
 
-## ----redo_error------------------------------------------------------------
+## ----redo_error---------------------------------------------------------------
 X <- list(1, "2", 3)
 param <- SnowParam(2, stop.on.error=FALSE)
 result <- bptry(bplapply(X, sqrt, BPPARAM=param))
 result
 
-## ----errors_BPREDO_input---------------------------------------------------
+## ----errors_BPREDO_input------------------------------------------------------
 X.redo <- list(1, 2, 3)
 
-## ----redo_run--------------------------------------------------------------
+## ----redo_run-----------------------------------------------------------------
 bplapply(X.redo, sqrt, BPREDO=result, BPPARAM=param)
 
-## ----logs_constructor------------------------------------------------------
+## ----logs_constructor---------------------------------------------------------
 param <- SnowParam(stop.on.error=FALSE)
 param
 
-## ----logs_accessors--------------------------------------------------------
+## ----logs_accessors-----------------------------------------------------------
 bplog(param) <- TRUE
 bpthreshold(param) <- "TRACE"
 param
 
-## ----logs_bplapply---------------------------------------------------------
+## ----logs_bplapply------------------------------------------------------------
 tryCatch({
     bplapply(list(1, "2", 3), sqrt, BPPARAM = param)
 }, error=function(e) invisible(e))
 
-## ----logs_FUN--------------------------------------------------------------
+## ----logs_FUN-----------------------------------------------------------------
 FUN <- function(i) {
   futile.logger::flog.debug(paste("value of 'i':", i))
 
@@ -111,21 +109,21 @@ FUN <- function(i) {
   }
 }
 
-## ----logs_FUN_WARN---------------------------------------------------------
+## ----logs_FUN_WARN------------------------------------------------------------
 param <- SnowParam(2, log = TRUE, threshold = "WARN", stop.on.error=FALSE)
 result <- bplapply(list(1, "2", integer()), FUN, BPPARAM = param)
 simplify2array(result)
 
-## ----logs_FUN_DEBUG--------------------------------------------------------
+## ----logs_FUN_DEBUG-----------------------------------------------------------
 param <- SnowParam(2, log = TRUE, threshold = "DEBUG", stop.on.error=FALSE)
 result <- bplapply(list(1, "2", integer()), FUN, BPPARAM = param)
 simplify2array(result)
 
-## ----timeout_constructor---------------------------------------------------
+## ----timeout_constructor------------------------------------------------------
 param <- SnowParam(timeout = 20, stop.on.error=FALSE)
 param
 
-## ----timeout_setter--------------------------------------------------------
+## ----timeout_setter-----------------------------------------------------------
 param <- SnowParam(timeout = 2, stop.on.error=FALSE)
 fun <- function(i) {
   Sys.sleep(i)
@@ -133,13 +131,13 @@ fun <- function(i) {
 }
 bptry(bplapply(1:3, fun, BPPARAM = param))
 
-## ----debug_sqrtabs---------------------------------------------------------
+## ----debug_sqrtabs------------------------------------------------------------
 fun1 <- function(x) {
     v <- abs(x)
     sapply(1:length(v), function(i) sqrt(v[i]))
 }
 
-## ----debug_fun1_debug------------------------------------------------------
+## ----debug_fun1_debug---------------------------------------------------------
 fun2 <- function(x) {
     v <- abs(x)
     futile.logger::flog.debug(
@@ -151,23 +149,23 @@ fun2 <- function(x) {
     })
 }
 
-## ----debug_param_debug-----------------------------------------------------
+## ----debug_param_debug--------------------------------------------------------
 param <- SnowParam(3, log = TRUE, threshold = "DEBUG")
 
-## ----debug_DEBUG-----------------------------------------------------------
+## ----debug_DEBUG--------------------------------------------------------------
 res <- bplapply(list(c(1,3), numeric(), 6), fun2, BPPARAM = param)
 res
 
-## ----debug_sqrt------------------------------------------------------------
+## ----debug_sqrt---------------------------------------------------------------
 res <- bptry({
     bplapply(list(1, "2", 3), sqrt,
              BPPARAM = SnowParam(3, stop.on.error=FALSE))
 })
 result
 
-## ----debug_sqrt_wrap-------------------------------------------------------
+## ----debug_sqrt_wrap----------------------------------------------------------
 fun3 <- function(i) sqrt(i)
 
-## ----sessionInfo, results="asis"-------------------------------------------
-toLatex(sessionInfo())
+## ----sessionInfo--------------------------------------------------------------
+sessionInfo()
 

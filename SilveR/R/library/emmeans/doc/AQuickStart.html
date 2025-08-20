@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.10.6" />
+<meta name="author" content="emmeans package, Version 1.11.2" />
 
 
 <title>Quick start guide for emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">Quick start guide for
 <strong>emmeans</strong></h1>
-<h4 class="author">emmeans package, Version 1.10.6</h4>
+<h4 class="author">emmeans package, Version 1.11.2</h4>
 
 
 
@@ -108,7 +108,7 @@ you do in step 2 depends on how many factors you have, and how they
 relate.</p>
 <div id="one-factor" class="section level3">
 <h3>One-factor model</h3>
-<p>If one-factor model fits well and the factor is named
+<p>If a one-factor model fits well and the factor is named
 <code>treatment</code>, do</p>
 <pre class="r"><code>EMM &lt;- emmeans(model, &quot;treatment&quot;)   # or emmeans(model, ~ treatment)
 EMM    # display the means
@@ -219,7 +219,7 @@ e.g. <code>contrast(EMM, &quot;consec&quot;)</code> will estimate comparisons
 between consecutive <code>Treatment</code> means. But <code>SEMM</code>
 is just an annotated data frame and we can do no further analysis with
 it. Similarly, we can change how <code>EMM</code> is displayed via
-arguments to <code>summary()</code> or relatives, whil;e in
+arguments to <code>summary()</code> or relatives, while in
 <code>SEMM</code>, everything has been computed and those results are
 locked-in.</p>
 </div>
@@ -271,9 +271,9 @@ results you don’t want.</p>
 </div>
 <div id="more" class="section level2">
 <h2>Further reading</h2>
-<p>There are several of these vignettes that offser more details and
-more advanced topics. <a href="vignette-topics.html">An index of all
-these vignette topics is available here</a>.</p>
+<p>There are several of these vignettes that offer more details and more
+advanced topics. <a href="vignette-topics.html">An index of all these
+vignette topics is available here</a>.</p>
 <p>The strings linked below are the names of the vignettes; i.e., they
 can also be accessed via
 <code>vignette(&quot;</code><em>name</em><code>&quot;, &quot;emmeans&quot;)</code></p>

@@ -1,3 +1,105 @@
+Changes in version 8.0-0 (2025-04-04)
+   * orm, orm.fit: implemented left, right, and interval censoring; added Dxy to orm.fit
+   * Ocens: changed to use -Inf, Inf as limits for left or right censored observations, converted to using Turnbull intervals computed by the icenReg package, and added two interval consolidation procedures using icenReg to prevent zero probabilities in likelihood calculations with `orm.fit`
+   * contrast.rms: fixed bug regarding vcov for simultaneous intervals (thanks: Antonio Eleuteri)
+   * ordESS: new function to describe the effective sample size contributed by censored Y for orm fits
+   * DESCRIPTION: added icenReg to SUGGESTS; needed by orm for interval censoring 
+   * residuals.lrm, predict.lrm: changed to use famfunctions function expressions for cumprob and deriv
+   * orm.fit: new argument mscore to store score matrix with fit; Fortran code ormll.f90 extended to compute its elements
+   * Survival.orm: new function; streamlined a lot of the code in Exprob.orm and returns a data.frame in non-simple cases
+   * survest.orm: new function for easy estimation of survival probabilities and confidence limits
+   * survplot.rms: enhanced to plot survival curves estimated by orm
+   * survplot.orm: put this in a separate function, and to use ggplot2R
+   * survplot.rms: added argument ggplot; if TRUE calls survplot.orm; intended for psm fits
+   * ggplot.npsurv: new function; uses ggplot2 and gives prettier output than survplot.rms for npsurv objects, but does not handle n.risk
+   * ordParallel: new function for checking parallelism assumption for orm mo
+   * addded scales package to IMPORTS
+   * val.surv: changed two of the plots to use ggplot2; removed NAs in group for plotting to keep group in parallel with other variables that may have NAs
+   * residuals.lrm, orm: recognize mscore in fit for score residuals for censored Y; for type='fitted.ind' get levels from object$yunique, use ggplot2 instead of box plots for score.binary, generalized score.binary to account for censoring
+   * orm.fit: allowed -2LL to get worse by eps/10 and still not do step-halving
+   * survfit.cph: added censor argument
+   * cph with surv=TRUE: passed censor=FALSE to survfit.cph to keep censoring times and associated surv estimates out of result when surv=TRUE
+   * predab.resample: allow for Ocens objects for y
+   * Olinks: new function to compute deviance statistics for links other than the one used in the given model
+   * intCalibration: new function for checking internal calibration of model fits
+   * Punits: new internal function for easy preparation of units of measurement strings for plotting
+   * Gls: removed &&FALSE by apVar; thanks to Arianna Cascone; see https://github.com/harrelfe/rms/issues/157
+
+Changes in version 7.0-0 (2025-01-15)
+   * orm.fit: complete re-write making use of ultra-compact sparse represention of pure intercept part of Hessian, and splitting returned information matrix into 3 submatrices
+   * this involved writing a new Fortran subroutine ormll; all the link-related calculations were moved into ormll
+   * orm: removed support for user-supplied link functions; stayed with 5 hard-coded cumulative probability distributions and these must now be regular character string values
+   * add Matrix to imports
+   * orm, orm.fit: added weights and penalties
+   * lrm, lrmll.f90: changed to use Matrix package sparse representation of Hessian/information matrix.  This allows lrm to have as many intercepts as orm.
+   * lrm, orm: removed $var in fit object; use vcov() to extract the variance-covariance matrix.
+   * Added intercepts argument to print.lrm and by default intercepts are not printed if there are more than 10
+   * infoMxop: new function to take either an ordinary information matrix or a list containing information submatrices (one of them being a symmetric band diagonal sparse representation), and either returns the assembled sparse matrix, its inverse, or selected rows/columns of the inverse.  Used by functions such as orm, anova.rms, Mean.lrm, Quantile.orm, ExProb.orm to do efficient calculations on the variance-covariance matrix.
+   * vcov.orm: changed to use infoMxop, and improved logic for handling fit$var
+   * vcov.lrm: changed to just use vcov.orm
+   * Changed rms service routines to deal with lrm, orm fits not containing $var but allowing for old fit objects that do
+   * Mean.lrm, Quantile.orm, ExProb.orm: more efficient matrix operations using infoMxop
+   * anova.rms: change default tol from 1e-13 to 1e-14
+   * lm.pfit: change default tol from 1e-7 to 1e-14
+   * contrast.rms: added profile likelihood confidence intervals and likelihood ratio chi-square tests for contrasts
+   * bootcov: removed rms fitter construction and replaced with quickRefit
+   * bootcov: changed arguments to fitting functions to be passed via ...; for lrm.fit and orm.fit added compstats=FALSE, compvar=FALSE for speed
+   * bootcov: removed logic to fill in intercepts for non-sampled Y values and instead used linear interpolation/extrapolation to estimate missing intercepts from sampled Y values; also added ytarget argument to just keep one intercept per bootstrap fit.  Results will be different from the "flat carry forward" method that was used before version 7.0.
+   * plotIntercepts: new function to plot step function representing the intercepts in lrm or orm
+   * lrm: fixed bug in Dxy calculation
+   * lrm.fit, orm.fit: added Levenberg-Marquardt optimization, changed gradient comvergence criterion for this and Newton-Raphson to be gradtol * n / 1000, which is also used in the new orm.fit
+   * groupkm, val.prob: use the new Hmisc cutGn function in place of cut2 for m=
+   * LRchunktest: removed; anova.rms now uses quickRefit
+   * Re-factored quick rms fitters to function quickRefit, modified LRchunktest to use it
+   * getDeviance: new internal function for rms fits; converts loglik to deviance for some models
+   * survreg.fit2: passed offset argument
+   * Glm and other code using glm.fit: glm.fit was storing a weight variable that is not the original given by the user when fitting the model; this hurt quickRefit and perhaps other routines.  Change all glm.fit calls to store the original weights as fit object component oweights
+   * contrast.rms: use middle intercept for lrm
+   * Ocens: moved from rmsb to rms
+   * Various: changed default tol for solve() to .Machine$double.eps
+   * validate.lrm: curtail x to [-40,40] in L01 calculation; fixes infinite value problem for U and Q
+   * removeFormulaTerms: dispensed with R warning by pasting together multiple line formulas
+   * require Hmisc 5.2-2 or later
+   * start conceptualizing a road map for future developments for lrm and orm:
+     + orm will be the place for extending the model (censoring and constrained partial PO model), and lrm will handle multiple optimization methods
+     + orm will be the one supporting multiple link functions
+     + orm will ultimately support left, right, and interval-censoring but with the Hessian less sparse when any obs. are interval-censored
+     + orm with the log-log link will provide a full-likelihood Cox PH model; will need to write survplot and other routines to support it
+
+Changes in version 6.9-0 (2024-12-11)
+   * replaced Ratfor code for robcovf and ormuv with Fortran 2018 with lots of nice vectorization for ormuv thanks to ChatGPT
+   * added new test robcovf.r for robcov by comparing with sandwich package
+   * wrote Fortran 2018 lrmll routine to efficiently compute log-likelihood, score vector, and Hessian matrix for binary and proportional odds penalized or unpenalized logistic models
+   * completely re-wrote lrm.fit: optionally orthogonalized X matrix using qr decomposition, used lrmll with an array of optimization options in the R stats package, removed code to compute rank correlation indexes with binning, instead doing exact calculations using the survival package's concordance.fit function.  Extensive details are at https://fharrell.com/post/mle/.
+   * modified lrm to use the new lrm.fit
+   * removed lrm.fit.bare function since the new lrm.fit handles this
+   * removed lrm.fit.strat, stratification no longer supported for lrm (strata.penalty argument dropped, and strata.coefs in print.lrm)
+   * remove score statistics from lrm
+   * pentrace: added ... argument passed to fitter, changed default tol from 1e-7 to 1e-13 and maxit from 12 to 20
+   * bootcov, validate.lrm, anova.rms: passed extra arguments to lrm.fit
+   * predab.resample: stop() instead of return() in case original fit failed
+   * validate.lrm: changed calibration intercept and slope to NA if a model has no predictors; deprecated Dxy.method
+   * validate.lrm, validate.orm: removed maxit= internally, use default value in lrm.fit, orm.fit
+   * orm.fit: changed defaults for eps, maxit and tol
+   * inst/tests/lrm3.r: new test related to reverse dependency check problem
+   * recode2integer: new function from Cole Beck, took out corresponding code from orm.fit
+   * added call to recode2integer in lrm.fit (and orm.fit) so the y values will only be considered unique to within a default of 7 decimal places to the right
+
+Changes in version 6.8-2 (2024-08-22)
+   * added dependency on the latest version of R at the time
+   * fixed use of concordancefit to return to negative Dxy for Cox models (Thanks Svetlana Eden)
+
+Changes in version 6.8-1 (2024-05-25)
+   * anova(test='LR'): passed tol to LRchunktest for lrm, orm
+   * replaced uses of survival::survConcordance with concordancefit
+   * removeFormulaTerms for some reason quit removing offset() terms when called by Predict/predictrms; wrote new version of removeFormulaTerms
+
+Changes in version 6.8-0 (2024-03-11)
+   * rexVar: new function for general measures of relative explained variation for each predictor in an rms or rmsb model fit
+   * poma: added minfreq argument thanks to Yonghao Pua
+   * orm.fit:  Non-downward-compatible change but one that makes results more likely to be identical across different hardware platforms by rounding numeric Y-values that are not integers after multiplying by 10^7 (the 7 can be modified by the new y.precision argument).  Thanks to Cole Beck, Cathy Jenkins, and Shawn Garbett.  See https://github.com/harrelfe/rms/pull/133 and https://hbiostat.org/R/rms/unique-float.html
+   * Xcontrast: added Zmatrix argument to suppress non-prop.odds Z matrix
+
 Changes in version 6.7-1 (2023-09-09)
    * rcs, pol: use getOption for default nknots, issue message if default is used
    * prModfit: fixed rowlabel problem with htmlTable, changed html output to include <p> in text when not centering, added quote=FALSE to type='print' output
@@ -78,7 +180,7 @@ Changes in version 6.2-0 (2021-03-17)
    * validate.cph: surrounded survival::survConcordance with suppressWarnings
    * fixed how matrx predictors were being handled
    * contrast.rms: added better ggplot2 examples for odds ratios
-	 
+
 Changes in version 6.1-1 (2021-02-06)
    * Design, Getlim: allowed datadist option to actually contain the datadist (used by Hmisc::estSeqMarkovOrd)
 
@@ -110,7 +212,7 @@ Changes in version 6.0-1 (2020-07-15)
    * Dropped Mean and Quantile since it is already in Hmisc
    * Fixed bug in modelData when formula2 was not the same as formula
    * Predict: added calling environment argument to eval() to allow calling Predict from within a function
-	 
+
 Changes in version 6.0-0 (2020-06-04)
    * orm.fit: changed to result in a fail=TRUE fit if NA, NaN element of variance matrix (Thanks: Thomas Dupont)
    * prModFit: changed default in catl function to center=FALSE
@@ -153,7 +255,7 @@ Changes in version 5.1-4 (2019-11-16)
    * psm: stored original Y if y=TRUE
    * residuals.psm: implemented type='score' (used by robcov)
    * depend on survival >= 3.1-6 and use survival's new coding of reference (censoring) event for competing risk models
-   
+
 Changes in version 5.1-3 (2019-01-27)
    * lrm: when lrm.fit fails, don't stop altogether but print warning and return fit with fail=TRUE
    * summary.orm: stopped negating linear predictor before computing hazard ratio for orm fit with log-log family (confidence limits never attempted to do this).  See https://github.com/harrelfe/rms/issues/56
@@ -249,7 +351,7 @@ Changes in version 5.0-0 (2016-10-31)
 	 * ggplot.Predict: quit ignoring xlim; suppress confidence bands if two group bariables because ggplot2 geom_ribbon doesn't support multiple aesthetics
 	 * predictrms: set contrasts for ordered factors to contr.treatment instead of contr.poly
 	 * val.prob: changed line of identity to use wide grayscale line instead of dashed line
-	 
+
 Changes in version 4.5-1 (2016-06-01)
    * ggplot.Predict: fixed bug related to .predictor. vs. .Predictor. which resulted in double plotting of some anova annotations
    * tests/ggplot3: new tests related to above
@@ -502,7 +604,7 @@ Changes in version 3.6-3 (2013-01-11)
    * Remove glm null fit usage as this is no longer in R
 
 Changes in version 3.6-2 (2012-12-09)
-   * bootcov, predab.resample: captured errors in all fits (to ignore bootstrap rep) using tryCatch.  Thanks: Max Gordoin <max@gforge.se>
+   * bootcov, predab.resample: captured errors in all fits (to ignore bootstrap rep) using tryCatch.  Thanks: Max Gordon <max@gforge.se>
    * predab.resample: made as.matrix(y) conditional to handle change in the survival package whereby the "type" attribute did not exist for a matrix
    * anova.rms: added new parameter vnames to allow use of variable labels instead of names in anova table; added vinfo attribute
    * residuals.lrm: removed intercept from partial residuals for binary models
@@ -527,7 +629,7 @@ Changes in version 3.6-0 (2012-10-26)
    * Added type= to plot.Predict to allow user to specify a different default line/point type (especially useful when x is categorical)
    * Corrected bug in offset in psm - made default offset the length of X
    * Corrected bug in calibrate.psm (fixed -> parms)
-   * predab.resample, calibrate.cph, calibrate.default, calibrate.psm: stopped putting results from overall initial fit into .Global and instead had predab.resample put them in attribute keepinfo, obtained from measure() 
+   * predab.resample, calibrate.cph, calibrate.default, calibrate.psm: stopped putting results from overall initial fit into .Global and instead had predab.resample put them in attribute keepinfo, obtained from measure()
 
 Changes in version 3.5-0 (2012-03-24)
    * contrast.rms: saved conf.type and conf.int in returned object, added to print method
@@ -610,7 +712,7 @@ Changes in version 3.3-0 (2011-02-28)
    * Fixed val.surv by pulling surv object from survest result
    * Clarified in predict.lrm help file that doesn't always use the first intercept
    * lrm.fit, lrm: linear predictor stored in fit object now uses first intercept and not middle one (NOT DOWNWARD COMPATIBLE but makes predict work when using stored linear.predictors)
-   * Fixed argument consistency with validate methods   
+   * Fixed argument consistency with validate methods
 
 Changes in version 3.2-0 (2011-02-14)
    * Changed to be compatible with survival 2.36-3 which is now required

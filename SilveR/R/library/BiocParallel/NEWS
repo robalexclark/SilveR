@@ -1,3 +1,16 @@
+CHANGES IN VERSION 1.42
+-----------------------
+
+BUG FIXES
+
+    o (1.41.3) Patch a compiler error under Apple clang 17.0.0; see
+    <https://github.com/Bioconductor/BiocParallel/issues/271>
+
+    o (1.41.2) Set options (via `do.call()`) in package namespace,
+    rather than base environment / search path. Thanks Charlotte
+    Soneson!
+    <https://github.com/Bioconductor/BiocParallel/issues/266>
+
 CHANGES IN VERSION 1.34
 -----------------------
 

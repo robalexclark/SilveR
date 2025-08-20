@@ -76,7 +76,6 @@ rand_seed               An unevaluated expression to return
 raw_block               Mark character strings as raw blocks in R
                         Markdown
 read_chunk              Read chunks from an external script
-read_rforge             Read source code from R-Forge
 render_html             Set or get output hooks for different output
                         formats
 rnw2pdf                 Convert an 'Rnw' document to PDF

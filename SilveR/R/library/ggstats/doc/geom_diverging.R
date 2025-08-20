@@ -109,7 +109,13 @@ ggplot(diamonds) +
 ggplot(diamonds) +
   aes(y = clarity, fill = cut) +
   geom_diverging() +
-  geom_diverging_text(hide_below = 800) +
+  geom_diverging_text(
+    aes(
+      label =
+        label_number_abs(hide_below = 800)
+        (after_stat(count))
+    )
+  ) +
   scale_fill_likert() +
   scale_x_continuous(
     labels = label_number_abs(),
@@ -120,7 +126,7 @@ ggplot(diamonds) +
 ggplot(diamonds) +
   aes(y = clarity, fill = cut) +
   geom_likert() +
-  geom_likert_text(hide_below = 0.10) +
+  geom_likert_text() +
   scale_fill_likert() +
   scale_x_continuous(
     labels = label_percent_abs()

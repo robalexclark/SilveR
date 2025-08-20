@@ -1,9 +1,9 @@
-+.gg                    Modify a 'ggmatrix' object by adding an
-                        'ggplot2' object to all plots
 add_ref_boxes           Add reference boxes around each cell of the
                         glyphmap.
 add_ref_lines           Add reference lines for each cell of the
                         glyphmap.
+add_to_ggmatrix         Modify a 'ggmatrix' object by adding an
+                        'ggplot2' object to all plots
 australia_PISA2012      Programme for International Student Assessment
                         (PISA) 2012 Data for Australia
 baseball                Yearly batting records for all major league
@@ -22,7 +22,6 @@ ggally_blank            Blank plot
 ggally_box              Box plot
 ggally_colbar           Column and row bar plots
 ggally_cor              Correlation value plot
-ggally_cor_v1_5         Correlation value plot
 ggally_count            Display counts of observations
 ggally_cross            Plots the number of observations
 ggally_crosstable       Display a cross-tabulated table
@@ -66,7 +65,6 @@ ggmatrix                'ggplot2' plot matrix
 ggmatrix_gtable         'ggmatrix' 'gtable' object
 ggmatrix_location       'ggmatrix' plot locations
 ggmatrix_progress       'ggmatrix' default progress bar
-ggnet                   Network plot
 ggnet2                  Network plot
 ggnetworkmap            Network plot map overlay
 ggnostic                Plot matrix of statistical model diagnostics
@@ -82,6 +80,7 @@ glyphs                  Create 'glyphplot' data
 grab_legend             Grab the legend and print it as a plot
 happy                   Data related to happiness from the General
                         Social Survey, 1972-2006.
+is_ggmatrix             Check if an object is a ggmatrix
 is_horizontal           Check if plot is horizontal
 lowertriangle           lowertriangle - rearrange dataset as the
                         preparation of 'ggscatmat' function
@@ -110,8 +109,6 @@ tips                    Tipping data
 twitter_spambots        Twitter spambots
 uppertriangle           Rearrange dataset as the preparation of
                         'ggscatmat' function
-v1_ggmatrix_theme       Modify a 'ggmatrix' object by adding an
-                        'ggplot2' object to all
 vig_ggally              View GGally vignettes
 wrap_fn_with_param_arg
                         Wrap a function with different parameter values

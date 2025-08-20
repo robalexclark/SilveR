@@ -32,8 +32,8 @@ test(EMM.source, null = inverse(40), side = "<", adjust = "bonferroni")
 confint(RG, by = "source")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  emmeans(mod4, ~ percent | source)     ### same results as above
-#  summary(.Last.value, by = "percent")       ### grouped the other way
+# emmeans(mod4, ~ percent | source)     ### same results as above
+# summary(.Last.value, by = "percent")       ### grouped the other way
 
 ## -----------------------------------------------------------------------------
 warp.lm <- lm(breaks ~ wool * tension, data = warpbreaks)

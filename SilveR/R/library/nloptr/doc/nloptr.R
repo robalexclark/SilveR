@@ -8,18 +8,18 @@ options(width = 60)
 options(SweaveHooks = list(fig = function() par(mar = c(5.1, 4.1, 1.1, 2.1))))
 
 ## ----installNLopt, eval=FALSE-----------------------------
-#  install.packages("nloptr")
+# install.packages("nloptr")
 
 ## ----installNLoptSource, eval=FALSE-----------------------
-#  install.packages("nloptr", type = "source")
+# install.packages("nloptr", type = "source")
 
 ## ----testNLoptInstallation, eval=FALSE--------------------
-#  library("nloptr")
-#  ?nloptr
+# library("nloptr")
+# ?nloptr
 
 ## ----installNLoptGithub, eval=FALSE-----------------------
-#  # install.packages("remotes")
-#  remotes::install_github("astamm/nloptr")
+# # install.packages("remotes")
+# remotes::install_github("astamm/nloptr")
 
 ## ----loadLibrary------------------------------------------
 library(nloptr)

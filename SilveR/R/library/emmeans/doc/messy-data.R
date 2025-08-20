@@ -32,14 +32,14 @@ emmip(framing.glm, treat ~ educ | gender, type = "response",
     cov.reduce = emo ~ treat*gender + age + educ + income)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  emo.adj <- resid(lm(emo ~ treat*gender + age + educ + income, data = framing))
+# emo.adj <- resid(lm(emo ~ treat*gender + age + educ + income, data = framing))
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  emmeans(..., cov.reduce = list(x1 ~ trt, x2 ~ trt + x1, x3 ~ trt + x1 + x2))
+# emmeans(..., cov.reduce = list(x1 ~ trt, x2 ~ trt + x1, x3 ~ trt + x1 + x2))
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  emmeans(model, "A", weights = "outer")
-#  emmeans(model, c("A", "B"), weights = "prop") |>  emmeans(weights = "prop")
+# emmeans(model, "A", weights = "outer")
+# emmeans(model, c("A", "B"), weights = "prop") |>  emmeans(weights = "prop")
 
 ## ----message = FALSE----------------------------------------------------------
 sapply(c("equal", "prop", "outer", "cells", "flat"), \(w)
@@ -52,10 +52,10 @@ mtcars.lm <- lm(mpg ~ factor(cyl)*am + disp + hp + drat + log(wt) + vs +
 ## -----------------------------------------------------------------------------
 rg.usual <- ref_grid(mtcars.lm)
 rg.usual
-nrow(rg.usual@linfct)
+nrow(linfct(rg.usual))
 rg.nuis = ref_grid(mtcars.lm, non.nuisance = "cyl")
 rg.nuis
-nrow(rg.nuis@linfct)
+nrow(linfct(rg.nuis))
 
 ## -----------------------------------------------------------------------------
 emmeans(rg.usual, ~ cyl * am)
@@ -70,7 +70,9 @@ predict(emmeans(mtcars.lm, ~ cyl * am, weights = "outer"))
 emmeans(mtcars.lm, ~ gear | am, non.nuis = quote(all.vars(specs)))
 
 ## ----error = TRUE-------------------------------------------------------------
+try({
 ref_grid(mtcars.lm, rg.limit = 200)
+})
 
 ## -----------------------------------------------------------------------------
 neuralgia.glm <- glm(Pain ~ Sex + Age + Duration + Treatment,

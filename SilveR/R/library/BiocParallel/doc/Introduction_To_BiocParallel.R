@@ -8,10 +8,10 @@ FUN <- function(x) { round(sqrt(x), 4) }
 registered()
 
 ## ----configure_registry, eval=FALSE-------------------------------------------
-#  options(MulticoreParam=MulticoreParam(workers=4))
+# options(MulticoreParam=MulticoreParam(workers=4))
 
 ## ----quickstart_bplapply_default, eval=FALSE----------------------------------
-#  bplapply(1:4, FUN)
+# bplapply(1:4, FUN)
 
 ## ----quickstart_snow----------------------------------------------------------
 param <- SnowParam(workers = 2, type = "SOCK")
@@ -44,7 +44,7 @@ for (param in rev(default))
     register(param)
 
 ## ----error-vignette, eval=FALSE-----------------------------------------------
-#  browseVignettes("BiocParallel")
+# browseVignettes("BiocParallel")
 
 ## ----use_cases_data-----------------------------------------------------------
 library(RNAseqData.HNRNPC.bam.chr14)
@@ -67,13 +67,13 @@ FUN <- function(fl, param) {
 MulticoreParam()
 
 ## ----db_problems, eval = FALSE------------------------------------------------
-#  library(org.Hs.eg.db)
-#  FUN <- function(x, ...) {
-#  ...
-#  mapIds(org.Hs.eg.db, ...)
-#  ...
-#  }
-#  bplapply(X, FUN, ..., BPPARAM = MulticoreParam())
+# library(org.Hs.eg.db)
+# FUN <- function(x, ...) {
+# ...
+# mapIds(org.Hs.eg.db, ...)
+# ...
+# }
+# bplapply(X, FUN, ..., BPPARAM = MulticoreParam())
 
 ## ----cluster_FUN--------------------------------------------------------------
 FUN <- function(fl, param, gr) {
@@ -91,52 +91,52 @@ snow <- SnowParam(workers = 2, type = "SOCK")
 bplapply(fls[1:3], FUN, BPPARAM = snow, param = param, gr = gr)
 
 ## ----db_solution_2, eval = FALSE----------------------------------------------
-#  register(SnowParam()) # default evaluation
-#  bpstart() # start the cluster
-#  ...
-#  bplapply(X, FUN1, ...)
-#  ...
-#  bplapply(X, FUN2, ...) # re-use workers
-#  ...
-#  bpstop()
+# register(SnowParam()) # default evaluation
+# bpstart() # start the cluster
+# ...
+# bplapply(X, FUN1, ...)
+# ...
+# bplapply(X, FUN2, ...) # re-use workers
+# ...
+# bpstop()
 
 ## ----cluster-MPI-work, eval=FALSE---------------------------------------------
-#  library(BiocParallel)
-#  library(Rmpi)
-#  FUN <- function(i) system("hostname", intern=TRUE)
+# library(BiocParallel)
+# library(Rmpi)
+# FUN <- function(i) system("hostname", intern=TRUE)
 
 ## ----cluster-MPI, eval=FALSE--------------------------------------------------
-#  param <- SnowParam(mpi.universe.size() - 1, "MPI")
-#  register(param)
+# param <- SnowParam(mpi.universe.size() - 1, "MPI")
+# register(param)
 
 ## ----cluster-MPI-do, eval=FALSE-----------------------------------------------
-#  xx <- bplapply(1:100, FUN)
-#  table(unlist(xx))
-#  mpi.quit()
+# xx <- bplapply(1:100, FUN)
+# table(unlist(xx))
+# mpi.quit()
 
 ## ----cluster-MPI-bpstart, eval=FALSE------------------------------------------
-#  param <- bpstart(SnowParam(mpi.universe.size() - 1, "MPI"))
-#  register(param)
-#  xx <- bplapply(1:100, FUN)
-#  bpstop(param)
-#  mpi.quit()
+# param <- bpstart(SnowParam(mpi.universe.size() - 1, "MPI"))
+# register(param)
+# xx <- bplapply(1:100, FUN)
+# bpstop(param)
+# mpi.quit()
 
 ## ----slurm--------------------------------------------------------------------
 tmpl <- system.file(package="batchtools", "templates", "slurm-simple.tmpl")
 noquote(readLines(tmpl))
 
 ## ----cluster-batchtools, eval=FALSE-------------------------------------------
-#  ## define work to be done
-#  FUN <- function(i) system("hostname", intern=TRUE)
-#  library(BiocParallel)
-#  
-#  ## register SLURM cluster instructions from the template file
-#  param <- BatchtoolsParam(workers=5, cluster="slurm", template=tmpl)
-#  register(param)
-#  
-#  ## do work
-#  xx <- bplapply(1:100, FUN)
-#  table(unlist(xx))
+# ## define work to be done
+# FUN <- function(i) system("hostname", intern=TRUE)
+# library(BiocParallel)
+# 
+# ## register SLURM cluster instructions from the template file
+# param <- BatchtoolsParam(workers=5, cluster="slurm", template=tmpl)
+# register(param)
+# 
+# ## do work
+# xx <- bplapply(1:100, FUN)
+# table(unlist(xx))
 
 ## ----devel-bplapply-----------------------------------------------------------
 system.time(x <- bplapply(1:3, function(i) { Sys.sleep(i); i }))

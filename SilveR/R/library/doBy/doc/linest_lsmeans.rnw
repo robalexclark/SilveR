@@ -85,6 +85,14 @@ library(ggplot2)
 
 
 \begin{document}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
+@
+
 % \SweaveOpts{concordance=TRUE}
 
 \maketitle
@@ -509,7 +517,7 @@ LSmeans(fm.gee, effect=~Treatment)
 
 For illustration we treat \verb|Plant| as a random effect:
 
-<< >>= 
+<< >>=
 library(lme4)
 fm.mix <- lmer(uptake ~ conc + Treatment + Type + (1|Plant), data=CO2.ubal)
 LSmeans(fm.mix, effect=~Treatment)
@@ -530,14 +538,14 @@ matrix $L$ can be generated automatically using \cc{glht()} from the
 \pkg{multcomp} package. For example, pairwise comparisons of all
 levels of \code{dose} can be obtained with
 
-<< >>= 
+<< >>=
 library("multcomp")
 g1 <- glht(fm2.ubal, mcp(Treatment="Tukey"))
 tidy(g1)
 @
 
 The L matrix is 
-<< >>= 
+<< >>=
 L <- g1$linfct
 L
 linest(fm2.ubal, L=L)

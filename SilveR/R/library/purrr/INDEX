@@ -16,6 +16,7 @@ has_element             Does a list contain an object?
 head_while              Find head/tail that all satisfies a predicate.
 imap                    Apply a function to each element of a vector,
                         and its index
+in_parallel             Parallelization in purrr
 insistently             Transform a function to wait then retry after
                         an error
 keep                    Keep/discard elements based on their values

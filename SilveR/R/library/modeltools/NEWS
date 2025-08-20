@@ -1,4 +1,8 @@
 
+CHANGES IN `modeltools' VERSION 0.2-24
+
+  o  Authors@R
+
 CHANGES IN `modeltools' VERSION 0.2-23
 
   o  /bin/sh is portable

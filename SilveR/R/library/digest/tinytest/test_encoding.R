@@ -6,7 +6,7 @@ d <- tempfile()
 dir.create(d)
 
 # A file path not representable in latin-1
-f <- file.path(d, "tricky-Å‘")
+f <- file.path(d, "tricky-ő")
 
 # We need to use a binary mode connection so the newlines
 # are consistent across platforms

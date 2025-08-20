@@ -2,7 +2,7 @@ Type: Package
 Package: evaluate
 Title: Parsing and Evaluation Tools that Provide More Details than the
         Default
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@posit.co", role = c("aut", "cre")),
     person("Yihui", "Xie", role = "aut",
@@ -24,15 +24,16 @@ URL: https://evaluate.r-lib.org/, https://github.com/r-lib/evaluate
 BugReports: https://github.com/r-lib/evaluate/issues
 Depends: R (>= 3.6.0)
 Suggests: callr, covr, ggplot2 (>= 3.3.6), lattice, methods, pkgload,
-        rlang, knitr, testthat (>= 3.0.0), withr
+        ragg (>= 1.4.0), rlang (>= 1.1.5), knitr, testthat (>= 3.0.0),
+        withr
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2025-01-10 22:27:28 UTC; hadleywickham
+Packaged: 2025-06-17 18:21:29 UTC; hadleywickham
 Author: Hadley Wickham [aut, cre],
-  Yihui Xie [aut] (<https://orcid.org/0000-0003-0645-5666>),
+  Yihui Xie [aut] (ORCID: <https://orcid.org/0000-0003-0645-5666>),
   Michael Lawrence [ctb],
   Thomas Kluyver [ctb],
   Jeroen Ooms [ctb],
@@ -44,5 +45,5 @@ Author: Hadley Wickham [aut, cre],
   Posit Software, PBC [cph, fnd]
 Maintainer: Hadley Wickham <hadley@posit.co>
 Repository: CRAN
-Date/Publication: 2025-01-10 23:00:02 UTC
-Built: R 4.3.3; ; 2025-01-18 01:39:27 UTC; windows
+Date/Publication: 2025-06-18 04:40:16 UTC
+Built: R 4.5.1; ; 2025-08-02 00:33:19 UTC; windows

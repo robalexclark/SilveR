@@ -4,8 +4,8 @@ options(show.signif.stars = FALSE, width = 100)
 knitr::opts_chunk$set(fig.width = 4.5, class.output = "ro") 
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  rg <- ref_grid(model)
-#  rg@misc$sigma
+# rg <- ref_grid(model)
+# rg@misc$sigma
 
 ## ----message = FALSE------------------------------------------------------------------------------
 feedlot = transform(feedlot, adj.ewt = ewt - predict(lm(ewt ~ herd)))

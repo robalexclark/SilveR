@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Package Structure</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Package Structure</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#package-structures" id="toc-package-structures">Package
+Structures</a>
+<ul>
+<li><a href="#data" id="toc-data"><code>data</code></a></li>
+<li><a href="#data-raw" id="toc-data-raw"><code>data-raw</code></a></li>
+<li><a href="#design" id="toc-design"><code>design</code></a>
+<ul>
+<li><a href="#sas" id="toc-sas"><code>SAS</code></a></li>
+<li><a href="#tmb" id="toc-tmb"><code>TMB</code></a></li>
+</ul></li>
+<li><a href="#inst" id="toc-inst"><code>inst</code></a></li>
+<li><a href="#man" id="toc-man"><code>man</code></a></li>
+<li><a href="#namespace" id="toc-namespace"><code>NAMESPACE</code></a></li>
+<li><a href="#news.md" id="toc-news.md"><code>NEWS.md</code></a></li>
+<li><a href="#r" id="toc-r"><code>R</code></a></li>
+<li><a href="#readme" id="toc-readme"><code>README</code></a></li>
+<li><a href="#simulations" id="toc-simulations"><code>simulations</code></a></li>
+<li><a href="#src" id="toc-src"><code>src</code></a>
+<ul>
+<li><a href="#chol_cache.h" id="toc-chol_cache.h"><code>chol_cache.h</code></a></li>
+<li><a href="#covariance.h" id="toc-covariance.h"><code>covariance.h</code></a></li>
+<li><a href="#derivatives.h" id="toc-derivatives.h"><code>derivatives.h</code></a></li>
+<li><a href="#empirical.cpp" id="toc-empirical.cpp"><code>empirical.cpp</code></a></li>
+<li><a href="#exports.cpp" id="toc-exports.cpp"><code>exports.cpp</code></a></li>
+<li><a href="#jacobian.cpp" id="toc-jacobian.cpp"><code>jacobian.cpp</code></a></li>
+<li><a href="#kr_comp.cpp" id="toc-kr_comp.cpp"><code>kr_comp.cpp</code></a></li>
+<li><a href="#makevars" id="toc-makevars"><code>Makevars</code></a></li>
+<li><a href="#mmrm.cpp" id="toc-mmrm.cpp"><code>mmrm.cpp</code></a></li>
+<li><a href="#predict.cpp" id="toc-predict.cpp"><code>predict.cpp</code></a></li>
+<li><a href="#test-files" id="toc-test-files">test files</a></li>
+<li><a href="#tmb.cpp-and-tmb_includes.h" id="toc-tmb.cpp-and-tmb_includes.h"><code>tmb.cpp</code> and
+<code>tmb_includes.h</code></a></li>
+<li><a href="#utils.h" id="toc-utils.h"><code>utils.h</code></a></li>
+</ul></li>
+<li><a href="#tests" id="toc-tests"><code>tests</code></a></li>
+<li><a href="#vignettes" id="toc-vignettes"><code>vignettes</code></a></li>
+<li><a href="#other-files" id="toc-other-files">Other files</a>
+<ul>
+<li><a href="#pkgdown.yml" id="toc-pkgdown.yml"><code>_pkgdown.yml</code></a></li>
+<li><a href="#gitignore" id="toc-gitignore"><code>.gitignore</code></a></li>
+<li><a href="#lintr" id="toc-lintr"><code>.lintr</code></a></li>
+<li><a href="#pre-commit-config.yaml" id="toc-pre-commit-config.yaml"><code>.pre-commit-config.yaml</code></a></li>
+<li><a href="#rbuildignore" id="toc-rbuildignore"><code>.Rbuildignore</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>As <code>mmrm</code> package is built on <code>TMB</code> with
+complex structure, it might be hard for new developers to onboard. To
+make it easier for new developers to join, this documentation is
+created.</p>
+</div>
+<div id="package-structures" class="section level1">
+<h1>Package Structures</h1>
+<p><code>mmrm</code> is an R package, and the following sections
+describe all files/folders that are contained in this package as well as
+the repository.</p>
+<div id="data" class="section level2">
+<h2><code>data</code></h2>
+<p>The <code>data/</code> folder is where <code>mmrm</code> example data
+sets is stored. See the documentation for <a href="https://openpharma.github.io/mmrm/main/reference/fev_data.html"><code>fev_data</code></a>
+and <a href="https://openpharma.github.io/mmrm/main/reference/bcva_data.html"><code>bcva_data</code></a>
+for details.</p>
+</div>
+<div id="data-raw" class="section level2">
+<h2><code>data-raw</code></h2>
+<p>The <code>data-raw/</code> folder contains source code to produce
+simulated example data sets. Currently it contains
+<code>bcva_data.R</code> (and its associated helper file) producing the
+<code>bcva_data</code> data set, and the cached results for comparing
+mmrm and other implementations.</p>
+</div>
+<div id="design" class="section level2">
+<h2><code>design</code></h2>
+<p>The <code>design/</code> folder is where design documents, prototype
+scripts and SAS code for comparisons are stored. When we have a new idea
+for a specific implementations, we can add our design doc including
+prototype implementations in an <code>Rmd</code> file in this
+folder.</p>
+<p>Note that this folder is not part of the actual R package but only
+part of the git repository. Different folders contain R scripts and
+<code>Rmd</code> files for different topics, for example:</p>
+<div id="sas" class="section level3">
+<h3><code>SAS</code></h3>
+<p>The <code>design/SAS/</code> folder contains programs to run MMRM
+models in SAS and the corresponding SAS outputs. The results will be
+used for integration tests (see <a href="../CONTRIBUTING.html#add-integration-tests">integration
+tests</a>).</p>
+</div>
+<div id="tmb" class="section level3">
+<h3><code>TMB</code></h3>
+<p>The <code>design/TMB/</code> folder is where prototypes of the first
+<code>mmrm</code> implementations with <code>TMB</code> are stored.</p>
+</div>
+</div>
+<div id="inst" class="section level2">
+<h2><code>inst</code></h2>
+<p>Files in the <code>inst/</code> folder will be kept after
+installation of the R package.</p>
+<ul>
+<li><code>jss.csl</code> is specifying the Journal of Statistical
+Software citation style used by <code>Rdpack</code> references.</li>
+<li><code>REFERENCES.bib</code> keeps a list of all referenced
+literature.</li>
+<li><code>WORDLIST</code> is kept up-to-date for all non-English words,
+allowing the package to pass a spell-checker.</li>
+</ul>
+</div>
+<div id="man" class="section level2">
+<h2><code>man</code></h2>
+<p>The <code>man/</code> folder contains all function documentation
+generated by <code>roxygen2</code>. Please do not edit any file in this
+folder, otherwise you may run into problems.</p>
+</div>
+<div id="namespace" class="section level2">
+<h2><code>NAMESPACE</code></h2>
+<p>Since we use <code>roxygen2</code> also the <code>NAMESPACE</code>
+file is automatically generated and usually does not need to be edited
+manually.</p>
+<p>Note that there can be exceptions, e.g. when removing a previously
+exported function from the package, in which case a manual deletion of
+the corresponding entry might be necessary to unblock
+<code>roxygen2</code>.</p>
+</div>
+<div id="news.md" class="section level2">
+<h2><code>NEWS.md</code></h2>
+<p>This file lists the user facing changes (new features, bug fixes,
+etc.) and should be updated during the development and cleaned before
+each release. It is important for the user experience to understand the
+changes between the releases.</p>
+</div>
+<div id="r" class="section level2">
+<h2><code>R</code></h2>
+<p>This folder contains all the source code written in R, just like
+every other R packages. Please refer to the <a href="https://openpharma.github.io/mmrm/main/reference/">documentation
+page</a> for details of the user facing API.</p>
+</div>
+<div id="readme" class="section level2">
+<h2><code>README</code></h2>
+<p>We use the <code>Rmd</code> file <code>README.Rmd</code> and knit
+this to the corresponding <code>md</code> file. This file specifies the
+landing page on the <code>pkgdown</code> website and the GitHub
+repository and should hence be nice, succinct and clean.</p>
+</div>
+<div id="simulations" class="section level2">
+<h2><code>simulations</code></h2>
+<p>This folder contains simulation scripts and results to compare
+<code>mmrm</code> with other software or modifications in
+<code>mmrm</code>. Please refer to the <code>README</code> files in the
+subfolders for details.</p>
+</div>
+<div id="src" class="section level2">
+<h2><code>src</code></h2>
+<p>This folder includes all the source code written in <code>C++</code>,
+either using <code>Rcpp</code> or <code>TMB</code> frameworks.</p>
+<div id="chol_cache.h" class="section level3">
+<h3><code>chol_cache.h</code></h3>
+<p>This file contains classes for caching the Cholesky factorizations
+efficiently.</p>
+</div>
+<div id="covariance.h" class="section level3">
+<h3><code>covariance.h</code></h3>
+<p>This file includes the implementations of covariance structures with
+suitable parameterization, and the calculation of lower triangular part
+of Cholesky factorization of the covariance matrix.</p>
+<p>For more about the implementations and why Cholesky factorization is
+needed, see the <a href="algorithm.html#covariance-matrix-model">model
+fitting algorithm</a> vignette.</p>
+<p>For more about covariance structures, see the <a href="covariance.html">covariance structures</a> vignette.</p>
+</div>
+<div id="derivatives.h" class="section level3">
+<h3><code>derivatives.h</code></h3>
+<p>This file contains classes to enable automatic differentiation
+calculation which are important for the coefficient covariance matrix
+calculations and Kenward-Roger and Satterthwaite degrees of freedom
+calculations.</p>
+</div>
+<div id="empirical.cpp" class="section level3">
+<h3><code>empirical.cpp</code></h3>
+<p>This file implements the coefficient covariance matrix
+calculations.</p>
+</div>
+<div id="exports.cpp" class="section level3">
+<h3><code>exports.cpp</code></h3>
+<p>This file contains the <code>Rcpp</code> interfaces to the
+coefficient covariance matrix, Kenward-Roger, Jacobian and prediction
+calculations.</p>
+</div>
+<div id="jacobian.cpp" class="section level3">
+<h3><code>jacobian.cpp</code></h3>
+<p>This file implements the Jacobian calculations which are needed for
+the Satterthwaite degrees of freedom.</p>
+</div>
+<div id="kr_comp.cpp" class="section level3">
+<h3><code>kr_comp.cpp</code></h3>
+<p>This file implements the <code>P</code>, <code>Q</code> and
+<code>R</code> matrix calculations which are needed for the
+Kenward-Roger degrees of freedom.</p>
+</div>
+<div id="makevars" class="section level3">
+<h3><code>Makevars</code></h3>
+<p>This file specifies additional flags used in the source code
+compilation. We ask <code>TMB</code> to use the <code>TMB</code>
+automatic differentiation framework (instead of the default
+<code>CppAD</code> framework) to be more efficient, and disable useless
+warnings from the <code>Eigen</code> library compilation.</p>
+<p>Note that additional flags such as
+<code>-Wno-ignored-attributes</code> cannot be included here because
+they are compiler specific. These can instead be specified in local
+<code>~/.R/Makevars</code> files.</p>
+</div>
+<div id="mmrm.cpp" class="section level3">
+<h3><code>mmrm.cpp</code></h3>
+<p>This file is the core part where the likelihood is calculated. The
+objective function reads input from R and performs the calculations
+inside.</p>
+</div>
+<div id="predict.cpp" class="section level3">
+<h3><code>predict.cpp</code></h3>
+<p>This file implements the prediction calculations.</p>
+</div>
+<div id="test-files" class="section level3">
+<h3>test files</h3>
+<p>Files starting with <code>test-</code> are tests or helper files to
+run tests. (It is important to also aim for high unit test coverage of
+the source code.)</p>
+</div>
+<div id="tmb.cpp-and-tmb_includes.h" class="section level3">
+<h3><code>tmb.cpp</code> and <code>tmb_includes.h</code></h3>
+<p>These two files includes the TMB module.</p>
+</div>
+<div id="utils.h" class="section level3">
+<h3><code>utils.h</code></h3>
+<p>This files includes utilities that used internally.</p>
+</div>
+</div>
+<div id="tests" class="section level2">
+<h2><code>tests</code></h2>
+<p>The <code>tests/</code> folder includes all the unit tests for the R
+functions, using the <code>testthat</code> package.</p>
+</div>
+<div id="vignettes" class="section level2">
+<h2><code>vignettes</code></h2>
+<p>The <code>vignettes/</code> folder includes <code>Rmd</code>
+documentation files to helps the user understand more about the usage,
+detail, etc. These vignettes are rendered into <code>.html</code> files
+which are deployed on the package website.</p>
+</div>
+<div id="other-files" class="section level2">
+<h2>Other files</h2>
+<p>There are other files that can be helpful in package development and
+are used in <code>mmrm</code>.</p>
+<div id="pkgdown.yml" class="section level3">
+<h3><code>_pkgdown.yml</code></h3>
+<p>This file is the configuration file for our
+<code>pkgdown</code>-based website. <code>pkgdown</code> is used to
+covert our package documentation (<code>man/</code>,
+<code>vignettes/</code>) into our package website.</p>
+<p>For more, visit <a href="https://pkgdown.r-lib.org/">pkgdown
+documentation</a>.</p>
+</div>
+<div id="gitignore" class="section level3">
+<h3><code>.gitignore</code></h3>
+<p>This file will specify untracked files/file patterns that git should
+ignore.</p>
+</div>
+<div id="lintr" class="section level3">
+<h3><code>.lintr</code></h3>
+<p>This file serves as configuration for <code>lintr</code> to do the
+static code analysis. Please install <code>lintr</code> package in your
+developing system to enable the analysis. It will provide you
+information about errors, style issues, etc.</p>
+<p>For more, visit <a href="https://lintr.r-lib.org/">lintr
+documentation</a>.</p>
+</div>
+<div id="pre-commit-config.yaml" class="section level3">
+<h3><code>.pre-commit-config.yaml</code></h3>
+<p>This file includes the configurations that we use for
+<code>pre-commit</code>. <code>pre-commit</code> is a tool that help us
+identify simple issues before we submit our code. For more, visit <a href="https://pre-commit.com/">pre-commit documentation</a>.</p>
+</div>
+<div id="rbuildignore" class="section level3">
+<h3><code>.Rbuildignore</code></h3>
+<p>This file specifies which files and folders in the repository should
+not be included when building the R package.</p>
+<p>Please note that it is important to know that these are regular
+expressions. Hence, when we want to specify an exact file name we need
+to use e.g. the <code>^cache$</code> format, just using
+<code>cache</code> instead could match additional files or folders with
+<code>cache</code> being part of the name. This can lead to
+problems.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

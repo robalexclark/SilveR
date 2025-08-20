@@ -1,3 +1,6 @@
+## -----------------------------------------------------------------------------
+library(BiocParallel)
+
 ## ----00-options, include=FALSE, eval=TRUE-------------------------------------
 library(knitr)
 # global options - probably better to put out.width='60%' for pdf output
@@ -36,23 +39,22 @@ colorize <- function(color, x) {
 }
 
 # The libraries to load
-#install.packages(kableExtra)
-#library(kableExtra)
+library(kableExtra)
 
 ## ----00-header-generation, echo=FALSE, eval=FALSE-----------------------------
-#  ## run this only to re-make the logo in header.html
-#  ## Create the external file
-#  img <- htmltools::img(src = knitr::image_uri("InputFigures/logo-mixomics.jpg"),
-#                 alt = 'logo',
-#                 style = 'position:absolute; top:25px; right:1%; padding:10px;z-index:200;')
-#  
-#  htmlhead <- paste0('
-#  <script>
-#  document.write(\'<div class="logos">',img,'</div>\')
-#  </script>
-#  ')
-#  
-#  readr::write_lines(htmlhead, path = "header.html")
+# ## run this only to re-make the logo in header.html
+# ## Create the external file
+# img <- htmltools::img(src = knitr::image_uri("InputFigures/logo-mixomics.jpg"),
+#                alt = 'logo',
+#                style = 'position:absolute; top:25px; right:1%; padding:10px;z-index:200;')
+# 
+# htmlhead <- paste0('
+# <script>
+# document.write(\'<div class="logos">',img,'</div>\')
+# </script>
+# ')
+# 
+# readr::write_lines(htmlhead, path = "header.html")
 
 ## ----00-analyses-diagram, eval=TRUE, echo=FALSE,fig.cap='**Different types of analyses with mixOmics** [@mixomics].The biological questions, the number of data sets to integrate, and the type of response variable, whether qualitative (classification), quantitative (regression), one (PLS1) or several (PLS) responses, all drive the choice of analytical method. All methods featured in this diagram include variable selection except rCCA. In N-integration, rCCA and PLS enable the integration of two quantitative data sets, whilst the block PLS methods (that derive from the methods from @Ten11) can integrate more than two data sets. In P-integration, our method MINT is based on multi-group PLS [@Esl14b].The following activities cover some of these methods.'----
 
@@ -71,22 +73,22 @@ knitr::include_graphics("InputFigures/cheatsheet.png")
 knitr::opts_chunk$set(fig.path= 'Figures/Getting-Started')
 
 ## ----02-install-bioc, eval = FALSE--------------------------------------------
-#  if (!requireNamespace("BiocManager", quietly = TRUE))
-#      install.packages("BiocManager")
-#   BiocManager::install("mixOmics")
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#     install.packages("BiocManager")
+#  BiocManager::install("mixOmics")
 
 ## ----02-install-github, eval = FALSE------------------------------------------
-#  BiocManager::install("mixOmicsTeam/mixOmics")
+# BiocManager::install("mixOmicsTeam/mixOmics")
 
 ## ----02-load, message=FALSE---------------------------------------------------
 library(mixOmics)
 
 ## ----02-read-data, eval = FALSE-----------------------------------------------
-#  # from csv file
-#  data <- read.csv("your_data.csv", row.names = 1, header = TRUE)
-#  
-#  # from txt file
-#  data <- read.table("your_data.txt", header = TRUE)
+# # from csv file
+# data <- read.csv("your_data.csv", row.names = 1, header = TRUE)
+# 
+# # from txt file
+# data <- read.table("your_data.txt", header = TRUE)
 
 ## ----02-load-nutrimouse-------------------------------------------------------
 data(nutrimouse)
@@ -141,18 +143,18 @@ plotIndiv(final.pca.multi,
           title = 'ABC transporters, PCA comp 1 - 2',
           legend = TRUE, legend.title = 'Cell line')
 
-## ---- eval = FALSE------------------------------------------------------------
-#  # Interactive 3D plot will load the rgl library.
-#  plotIndiv(final.pca.multi, style = '3d',
-#             group = multidrug$cell.line$Class,
-#            title = 'ABC transporters, PCA comp 1 - 3')
+## ----eval = FALSE-------------------------------------------------------------
+# # Interactive 3D plot will load the rgl library.
+# plotIndiv(final.pca.multi, style = '3d',
+#            group = multidrug$cell.line$Class,
+#           title = 'ABC transporters, PCA comp 1 - 3')
 
-## ---- eval = FALSE------------------------------------------------------------
-#  plotVar(final.pca.multi, comp = c(1, 2),
-#          var.names = TRUE,
-#          cex = 3,         # To change the font size
-#          # cutoff = 0.5,  # For further cutoff
-#          title = 'Multidrug transporter, PCA comp 1 - 2')
+## ----eval = FALSE-------------------------------------------------------------
+# plotVar(final.pca.multi, comp = c(1, 2),
+#         var.names = TRUE,
+#         cex = 3,         # To change the font size
+#         # cutoff = 0.5,  # For further cutoff
+#         title = 'Multidrug transporter, PCA comp 1 - 2')
 
 ## ----03-pca-variable-plot, echo = FALSE, fig.cap='(ref:03-pca-variable-plot)'----
 col.var <- c(rep(color.mixo(1), ncol(X)))
@@ -216,10 +218,10 @@ plotIndiv(final.spca.multi,
 biplot(final.spca.multi, group = multidrug$cell.line$Class, 
        legend =FALSE)
 
-## ---- eval = FALSE------------------------------------------------------------
-#  plotVar(final.spca.multi, comp = c(1, 2), var.names = TRUE,
-#          cex = 3, # To change the font size
-#          title = 'Multidrug transporter, sPCA comp 1 - 2')
+## ----eval = FALSE-------------------------------------------------------------
+# plotVar(final.spca.multi, comp = c(1, 2), var.names = TRUE,
+#         cex = 3, # To change the font size
+#         title = 'Multidrug transporter, sPCA comp 1 - 2')
 
 ## ----03-spca-variable-plot, fig.cap='(ref:03-spca-variable-plot)', echo = FALSE----
 col.var <- c(rep(color.mixo(1), ncol(X)))
@@ -247,10 +249,10 @@ X <- liver.toxicity$gene
 Y <- liver.toxicity$clinic
 
 ## ----04-load-data, eval = FALSE-----------------------------------------------
-#  library(mixOmics)
-#  data(liver.toxicity)
-#  X <- liver.toxicity$gene
-#  Y <- liver.toxicity$clinic
+# library(mixOmics)
+# data(liver.toxicity)
+# X <- liver.toxicity$gene
+# Y <- liver.toxicity$clinic
 
 ## -----------------------------------------------------------------------------
 head(data.frame(rownames(X), rownames(Y)))
@@ -293,8 +295,8 @@ choice.keepX
 spls1.liver <- spls(X, y, ncomp = choice.ncomp, keepX = choice.keepX, 
                     mode = "regression")
 
-## ---- eval = FALSE------------------------------------------------------------
-#  selectVar(spls1.liver, comp = 1)$X$name
+## ----eval = FALSE-------------------------------------------------------------
+# selectVar(spls1.liver, comp = 1)$X$name
 
 ## -----------------------------------------------------------------------------
 spls1.liver$prop_expl_var$X
@@ -370,7 +372,7 @@ tune.spls.liver <- tune.spls(X, Y, test.keepX = list.keepX,
                              measure = 'cor', 
                             #   the following uses two CPUs for faster computation
                             # it can be commented out
-                            BPPARAM = BiocParallel::SnowParam(workers = 14)
+                            BPPARAM = BiocParallel::SnowParam(workers = 2)
                             )
 
 plot(tune.spls.liver)
@@ -389,8 +391,8 @@ spls2.liver <- spls(X, Y, ncomp = choice.ncomp,
 ## -----------------------------------------------------------------------------
 spls2.liver$prop_expl_var
 
-## ---- eval = FALSE------------------------------------------------------------
-#  selectVar(spls2.liver, comp = 1)$X$value
+## ----eval = FALSE-------------------------------------------------------------
+# selectVar(spls2.liver, comp = 1)$X$value
 
 ## ----04-spls2-vip-------------------------------------------------------------
 vip.spls2.liver <- vip(spls2.liver)
@@ -511,8 +513,8 @@ perf.plsda.srbct <- perf(plsda.srbct, validation = 'Mfold', folds = 3,
 
 plot(perf.plsda.srbct, sd = TRUE, legend.position = 'horizontal')
 
-## ---- eval = FALSE------------------------------------------------------------
-#  perf.plsda.srbct
+## ----eval = FALSE-------------------------------------------------------------
+# perf.plsda.srbct
 
 ## ----05-plsda-final-----------------------------------------------------------
 final.plsda.srbct <- plsda(X,Y, ncomp = 3)
@@ -772,21 +774,21 @@ perf.diablo.tcga$choice.ncomp$WeightedVote
 ncomp <- perf.diablo.tcga$choice.ncomp$WeightedVote["Overall.BER", "centroids.dist"]
 
 ## ----06-tuning, eval = FALSE, warning=FALSE-----------------------------------
-#  # chunk takes about 2 min to run
-#  set.seed(123) # for reproducibility
-#  test.keepX <- list(mRNA = c(5:9, seq(10, 25, 5)),
-#                     miRNA = c(5:9, seq(10, 20, 2)),
-#                     proteomics = c(seq(5, 25, 5)))
-#  
-#  tune.diablo.tcga <- tune.block.splsda(X, Y, ncomp = 2,
-#                                test.keepX = test.keepX, design = design,
-#                                validation = 'Mfold', folds = 10, nrepeat = 1,
-#                                BPPARAM = BiocParallel::SnowParam(workers = 2),
-#                                dist = "centroids.dist")
-#  
-#  list.keepX <- tune.diablo.tcga$choice.keepX
+# # chunk takes about 2 min to run
+# set.seed(123) # for reproducibility
+# test.keepX <- list(mRNA = c(5:9, seq(10, 25, 5)),
+#                    miRNA = c(5:9, seq(10, 20, 2)),
+#                    proteomics = c(seq(5, 25, 5)))
+# 
+# tune.diablo.tcga <- tune.block.splsda(X, Y, ncomp = 2,
+#                               test.keepX = test.keepX, design = design,
+#                               validation = 'Mfold', folds = 10, nrepeat = 1,
+#                               BPPARAM = BiocParallel::SnowParam(workers = 2),
+#                               dist = "centroids.dist")
+# 
+# list.keepX <- tune.diablo.tcga$choice.keepX
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 test.keepX <- list(mRNA = c(5:9, seq(10, 25, 5)),
                    miRNA = c(5:9, seq(10, 20, 2)),
                    proteomics = c(seq(5, 25, 5)))
@@ -795,8 +797,8 @@ list.keepX <- list( mRNA = c(8, 25), miRNA = c(14,5), protein = c(10, 5))
 ## -----------------------------------------------------------------------------
 list.keepX
 
-## ---- eval = FALSE------------------------------------------------------------
-#  list.keepX <- list( mRNA = c(8, 25), miRNA = c(14,5), protein = c(10, 5))
+## ----eval = FALSE-------------------------------------------------------------
+# list.keepX <- list( mRNA = c(8, 25), miRNA = c(14,5), protein = c(10, 5))
 
 ## ----06-final, message = TRUE-------------------------------------------------
 diablo.tcga <- block.splsda(X, Y, ncomp = ncomp, 
@@ -806,9 +808,9 @@ diablo.tcga <- block.splsda(X, Y, ncomp = ncomp,
 ## -----------------------------------------------------------------------------
 diablo.tcga$design
 
-## ---- eval = FALSE------------------------------------------------------------
-#  # mRNA variables selected on component 1
-#  selectVar(diablo.tcga, block = 'mRNA', comp = 1)
+## ----eval = FALSE-------------------------------------------------------------
+# # mRNA variables selected on component 1
+# selectVar(diablo.tcga, block = 'mRNA', comp = 1)
 
 ## ----06-diablo-plot, message=FALSE, fig.cap='(ref:06-diablo-plot)'------------
 plotDiablo(diablo.tcga, ncomp = 1)
@@ -842,10 +844,10 @@ network(diablo.tcga, blocks = c(1,2,3),
         )
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  # Not run
-#  library(igraph)
-#  myNetwork <- network(diablo.tcga, blocks = c(1,2,3), cutoff = 0.4)
-#  write.graph(myNetwork$gR, file = "myNetwork.gml", format = "gml")
+# # Not run
+# library(igraph)
+# myNetwork <- network(diablo.tcga, blocks = c(1,2,3), cutoff = 0.4)
+# write.graph(myNetwork$gR, file = "myNetwork.gml", format = "gml")
 
 ## ----06-loading-plot, message=FALSE, fig.cap='(ref:06-loading-plot)'----------
 plotLoadings(diablo.tcga, comp = 1, contrib = 'max', method = 'median')
@@ -925,7 +927,7 @@ perf.mint.plsda.stem <- perf(mint.plsda.stem)
 
 plot(perf.mint.plsda.stem)
 
-## ---- results = 'hold'--------------------------------------------------------
+## ----results = 'hold'---------------------------------------------------------
 perf.mint.plsda.stem$global.error$BER
 # Type also:
 # perf.mint.plsda.stem$global.error

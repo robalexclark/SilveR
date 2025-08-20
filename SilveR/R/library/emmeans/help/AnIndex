@@ -72,11 +72,15 @@ glht-support	glht-support
 glht.emmGrid	glht-support
 glht.emmlf	glht-support
 head.emmGrid	rbind.emmGrid
+helmert.emmc	emmc-functions
 hpd.summary	hpd.summary
 identity.emmc	emmc-functions
 inverse	make.tran
 joint_tests	joint_tests
 levels<-.emmGrid	update.emmGrid
+linfct	emmGrid-methods
+linfct.default	emmGrid-methods
+linfct.emm_list	emm_list-object
 lsm	wrappers
 lsm.options	wrappers
 lsmeans	wrappers
@@ -95,7 +99,9 @@ models	models
 mvcontrast	mvcontrast
 mvregrid	mvregrid
 neuralgia	neuralgia
+nrmlz.emmc	emmc-functions
 nutrition	nutrition
+opoly.emmc	emmc-functions
 oranges	oranges
 pairs.emmGrid	contrast
 pairs.emm_list	emm_list-object

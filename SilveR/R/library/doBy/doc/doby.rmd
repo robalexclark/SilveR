@@ -312,7 +312,8 @@ lines(run ~ tvar, data=tse, col="red")
 ``` 
 
 
-We may now find times for which time since an event is at most 1 as
+We may now f
+ind times for which time since an event is at most 1 as
 ```{r}
 tse$tvar[tse$abs <= 1]
 ``` 

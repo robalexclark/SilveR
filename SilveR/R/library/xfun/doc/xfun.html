@@ -3,18 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="generator" content="litedown 0.4">
+<meta name="generator" content="litedown 0.6">
 <title>An Introduction to xfun</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.13.61/css/prism-xcode.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.13.61/css/default.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.13.61/css/article.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/css/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/css/article.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/css/prism-xcode.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/js/sidenotes.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
 </head>
 <body>
 <div class="frontmatter">
 <div class="title"><h1>An Introduction to xfun</h1></div>
 <div class="subtitle"><h2>A Collection of Miscellaneous Functions</h2></div>
 <div class="author"><h2>Yihui Xie</h2></div>
-<div class="date"><h3>2025-01-07</h3></div>
+<div class="date"><h3>2025-04-02</h3></div>
 </div>
 <div class="body">
 <div id="TOC">
@@ -31,7 +34,7 @@
 <li><a href="#sec:loading-and-attaching-packages"><span class="section-number main-number">10</span> Loading and attaching packages</a></li>
 <li><a href="#sec:read-write-files-in-utf-8"><span class="section-number main-number">11</span> Read/write files in UTF-8</a></li>
 <li><a href="#sec:convert-numbers-to-english-words"><span class="section-number main-number">12</span> Convert numbers to English words</a></li>
-<li><a href="#sec:cache-an-r-expression-to-an-rds-file"><span class="section-number main-number">13</span> Cache an R expression to an RDS file</a></li>
+<li><a href="#sec:cache-an-r-expression-to-disk-or-in-memory"><span class="section-number main-number">13</span> Cache an R expression to disk or in memory</a></li>
 <li><a href="#sec:check-reverse-dependencies-of-a-package"><span class="section-number main-number">14</span> Check reverse dependencies of a package</a></li>
 <li><a href="#sec:input-a-character-vector-into-the-rstudio-source-editor"><span class="section-number main-number">15</span> Input a character vector into the RStudio source editor</a></li>
 <li><a href="#sec:print-session-information"><span class="section-number main-number">16</span> Print session information</a></li>
@@ -79,7 +82,7 @@ z3$a  # NULL (strict matching) again!
 </code></pre>
 <pre><code>#&gt; NULL
 </code></pre>
-<p>Similarly, the default partial matching in <code>attr()</code> can be annoying, too. The function <code>xfun::attr()</code> is simply a shorthand of <code>attr(..., exact = TRUE)</code>.</p>
+<p>Similarly, the default partial matching in <code>attr()</code> can be annoying, too. The function <code>xfun::attr2()</code> is simply a shorthand of <code>attr(..., exact = TRUE)</code>.</p>
 <p>I want it, or I do not want. There is no “I probably want”.</p>
 <h2 id="sec:output-character-vectors-for-human-eyes"><span class="section-number main-number">2</span> Output character vectors for human eyes</h2>
 <p>When R prints a character vector, your eyes may be distracted by the indices like <code>[1]</code>, double quotes, and escape sequences. To see a character vector in its “raw” form, you can use <code>cat(..., sep = '\n')</code>. The function <code>raw_string()</code> marks a character vector as “raw”, and the corresponding printing function will call <code>cat(sep = '\n')</code> to print the character vector to the console.</p>
@@ -107,19 +110,19 @@ hello	world!
 <pre><code class="language-r">f = system.file(&quot;LICENSE&quot;, package = &quot;xfun&quot;)
 xfun::file_string(f)
 </code></pre>
-<pre><code>YEAR: 2018-2024
+<pre><code>YEAR: 2018-2025
 COPYRIGHT HOLDER: Yihui Xie
 </code></pre>
 <pre><code class="language-r">as.character(xfun::file_string(f))  # essentially a character string
 </code></pre>
-<pre><code>[1] &quot;YEAR: 2018-2024\nCOPYRIGHT HOLDER: Yihui Xie&quot;
+<pre><code>[1] &quot;YEAR: 2018-2025\nCOPYRIGHT HOLDER: Yihui Xie&quot;
 </code></pre>
 <h2 id="sec:get-the-data-uri-of-a-file"><span class="section-number main-number">4</span> Get the data URI of a file</h2>
 <p>Files can be encoded into base64 strings via <code>base64_uri()</code>. This is a common technique to embed arbitrary files in HTML documents (which is <a href="https://bookdown.org/yihui/rmarkdown-cookbook/embed-file.html">what <code>xfun::embed_file()</code> does</a> and it is based on <code>base64_uri()</code>).</p>
 <pre><code class="language-r">f = system.file(&quot;LICENSE&quot;, package = &quot;xfun&quot;)
 xfun::base64_uri(f)
 </code></pre>
-<pre><code>#&gt; [1] &quot;data:text/plain;base64,WUVBUjogMjAxOC0yMDI0CkNPUFlSSUdIVCBIT0xERVI6IFlpaHVpIFhpZQo=&quot;
+<pre><code>#&gt; [1] &quot;data:text/plain;base64,WUVBUjogMjAxOC0yMDI1CkNPUFlSSUdIVCBIT0xERVI6IFlpaHVpIFhpZQo=&quot;
 </code></pre>
 <h2 id="sec:match-strings-and-do-substitutions"><span class="section-number main-number">5</span> Match strings and do substitutions</h2>
 <p>After typing the code <code>x = grep(pattern, x, value = TRUE); gsub(pattern, '\\1', x)</code> many times, I combined them into a single function <code>xfun::grep_sub()</code>.</p>
@@ -259,55 +262,8 @@ library(tinytex)
 </code></pre>
 <pre><code>#&gt; [1] &quot;nine hundred ninety-nine trillion, nine hundred ninety-nine billion, nine hundred ninety-nine million, nine hundred ninety-nine thousand, nine hundred ninety-nine&quot;
 </code></pre>
-<h2 id="sec:cache-an-r-expression-to-an-rds-file"><span class="section-number main-number">13</span> Cache an R expression to an RDS file</h2>
-<p>The function <code>cache_rds()</code> provides a simple caching mechanism: the first time an expression is passed to it, it saves the result to an RDS file; the next time it will read the RDS file and return the value instead of evaluating the expression again. If you want to invalidate the cache, you can use the argument <code>rerun = TRUE</code>.</p>
-<pre><code class="language-r">res = xfun::cache_rds({
-  # pretend the computing here is a time-consuming
-  Sys.sleep(2)
-  1:10
-})
-</code></pre>
-<p>When the function is used in a code chunk in a <strong>knitr</strong> document, the RDS cache file is saved to a path determined by the chunk label (the base filename) and the chunk option <code>cache.path</code> (the cache directory), so you do not have to provide the <code>file</code> and <code>dir</code> arguments of <code>cache_rds()</code>.</p>
-<p>This caching mechanism is much simpler than <strong>knitr</strong>’s caching. Cache invalidation is often tricky (see <a href="https://yihui.org/en/2018/06/cache-invalidation/">this post</a>), so this function may be helpful if you want more transparency and control over when to invalidate the cache (for <code>cache_rds()</code>, the cache is invalidated when the cache file is deleted, which can be achieved via the argument <code>rerun = TRUE</code>).</p>
-<p>As documented on the help page of <code>cache_rds()</code>, there are two common cases in which you may want to invalidate the cache:</p>
-<ol>
-<li>
-<p>The code in the expression has changed, e.g., if you changed the code from <code>cache_rds({x + 1})</code> to <code>cache_rds({x + 2})</code>, the cache will be automatically invalidated and the expression will be re-evaluated. However, please note that changes in white spaces or comments do not matter. Or generally speaking, as long as the change does not affect the parsed expression, the cache will not be invalidated, e.g., the two expressions below are essentially identical (hence if you have executed <code>cache_rds()</code> on the first expression, the second expression will be able to take advantage of the cache):</p>
-<pre><code class="language-r">res = xfun::cache_rds({
-  Sys.sleep(3  );
-  x=1:10;  # semi-colons won't matter
-  x+1;
-})
-
-res = xfun::cache_rds({
-  Sys.sleep(3)
-  x = 1:10  # a comment
-  x +
-    1  # feel free to make any changes in white spaces
-})
-</code></pre>
-</li>
-<li>
-<p>The value of a global variable in the expression has changed, e.g., if <code>y</code> has changed, you are most likely to want to invalidate the cache and rerun the expression below:</p>
-<pre><code class="language-r">res = xfun::cache_rds({
-  x = 1:10
-  x + y
-})
-</code></pre>
-<p>This is because <code>x</code> is a local variable in the expression, and <code>y</code> is an external global variable (not created locally like <code>x</code>). To invalidate the cache when <code>y</code> has changed, you may let <code>cache_rds()</code> know through the <code>hash</code> argument that <code>y</code> needs to be considered when deciding if the cache should be invalidated:</p>
-<pre><code class="language-r">res = xfun::cache_rds({
-  x = 1:10
-  x + y
-}, hash = list(y))
-</code></pre>
-<p>If you do not want to provide this list of value(s) to the <code>hash</code> argument, you may try <code>hash = &quot;auto&quot;</code> instead, which asks <code>cache_rds()</code> to try to figure out all global variables automatically and use a list of their values as the value for the <code>hash</code> argument.</p>
-<pre><code class="language-r">res = xfun::cache_rds({
-  x = 1:10
-  x + y
-}, hash = &quot;auto&quot;)
-</code></pre>
-</li>
-</ol>
+<h2 id="sec:cache-an-r-expression-to-disk-or-in-memory"><span class="section-number main-number">13</span> Cache an R expression to disk or in memory</h2>
+<p>Since <strong>xfun</strong> v0.44, you are recommended to use the function <a href="https://git.yihui.org/xfun/manual.html#sec:man-cache_exec"><code>cache_exec()</code></a>, which provides a simple yet flexible caching mechanism. See <a href="https://yihui.org/litedown/#sec:option-cache">https://yihui.org/litedown/#sec:option-cache</a> for how it works. Previously, <code>cache_rds()</code> was mentioned here but it is no longer recommended (see <a href="https://github.com/yihui/xfun/issues/100">#100</a>).</p>
 <h2 id="sec:check-reverse-dependencies-of-a-package"><span class="section-number main-number">14</span> Check reverse dependencies of a package</h2>
 <p>Running <code>R CMD check</code> on the reverse dependencies of <strong>knitr</strong> and <strong>rmarkdown</strong> is my least favorite thing in developing R packages, because the numbers of their reverse dependencies are huge. The function <code>rev_check()</code> reflects some of my past experience in this process. I think I have automated it as much as possible, and made it as easy as possible to discover possible new problems introduced by the current version of the package (compared to the CRAN version). Finally I can just sit back and let it run.</p>
 <h2 id="sec:input-a-character-vector-into-the-rstudio-source-editor"><span class="section-number main-number">15</span> Input a character vector into the RStudio source editor</h2>
@@ -317,19 +273,16 @@ res = xfun::cache_rds({
 <p>You can choose to print out the versions of only the packages you specify, e.g.,</p>
 <pre><code class="language-r">xfun::session_info(c('xfun', 'litedown', 'tinytex'), dependencies = FALSE)
 </code></pre>
-<pre><code>#&gt; R Under development (unstable) (2025-01-03 r87521)
-#&gt; Platform: aarch64-apple-darwin20
-#&gt; Running under: macOS Sonoma 14.7.2
-#&gt; 
-#&gt; Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
-#&gt; 
-#&gt; Package version:
-#&gt;   litedown_0.4 tinytex_0.54 xfun_0.50   
-#&gt; 
+<pre><code>R Under development (unstable) (2025-04-02 r88097)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.7.4
+
+Locale: en_US.UTF-8 / en_US.UTF-8 / en_US.UTF-8 / C / en_US.UTF-8 / en_US.UTF-8
+
+Package version:
+  litedown_0.6 tinytex_0.56 xfun_0.52   
+
 </code></pre>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/@xiee/utils@1.13.61/js/sidenotes.min.js" defer></script>
 </body>
 </html>

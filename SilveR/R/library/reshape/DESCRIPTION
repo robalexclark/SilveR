@@ -1,5 +1,5 @@
 Package: reshape
-Version: 0.8.9
+Version: 0.8.10
 Title: Flexibly Reshape Data
 Description: Flexibly restructure and aggregate data using 
   just two functions: melt and cast.
@@ -10,10 +10,10 @@ Depends: R (>= 2.6.1)
 Imports: plyr
 License: MIT + file LICENSE
 LazyData: true
-NeedsCompilation: yes
-Packaged: 2022-04-12 14:33:18 UTC; hadleywickham
+NeedsCompilation: no
+Packaged: 2025-06-19 14:50:44 UTC; hadleywickham
 Author: Hadley Wickham [aut, cre]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
-Date/Publication: 2022-04-12 15:00:02 UTC
-Built: R 4.3.3; ; 2024-11-24 01:25:18 UTC; windows
+Date/Publication: 2025-06-19 15:40:06 UTC
+Built: R 4.5.1; ; 2025-08-04 01:20:54 UTC; windows

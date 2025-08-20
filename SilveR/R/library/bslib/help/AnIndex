@@ -83,6 +83,7 @@ layout_column_wrap	layout_column_wrap
 layout_sidebar	sidebar
 nav	deprecated
 nav-items	nav-items
+navbar_options	navbar_options
 navset	navset
 navset_bar	navset
 navset_card_pill	navset

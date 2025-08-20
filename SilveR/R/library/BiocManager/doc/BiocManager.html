@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2024-08-27" />
+<meta name="date" content="2025-06-05" />
 
 <title>Installing and Managing Bioconductor Packages</title>
 
@@ -703,7 +703,7 @@ function toggle_visibility(id1) {
 <h1 class="title toc-ignore">Installing and Managing <em>Bioconductor</em> Packages</h1>
 <p class="author-name">Marcel Ramos<span class="affil-mark">1</span> and Martin Morgan<span class="affil-mark">1</span></p>
 <p class="author-affiliation"><span class="affil-mark">1</span>Roswell Park Comprehensive Cancer Center, Buffalo, NY</p>
-<h4 class="date">27 August 2024</h4>
+<h4 class="date">5 June 2025</h4>
 
 </div>
 
@@ -732,7 +732,10 @@ function toggle_visibility(id1) {
 <ul>
 <li><a href="#changing-version" id="toc-changing-version"><span class="toc-section-number">3.1</span> Changing version</a></li>
 <li><a href="#unsupported-r-bioconductor-versions" id="toc-unsupported-r-bioconductor-versions"><span class="toc-section-number">3.2</span> Unsupported <em>R</em> / <em>Bioconductor</em> versions</a></li>
-<li><a href="#multiple-versions" id="toc-multiple-versions"><span class="toc-section-number">3.3</span> Managing multiple versions</a></li>
+<li><a href="#multiple-versions" id="toc-multiple-versions"><span class="toc-section-number">3.3</span> Managing multiple versions</a>
+<ul>
+<li><a href="#same-r-version" id="toc-same-r-version"><span class="toc-section-number">3.3.1</span> Using the same R version</a></li>
+</ul></li>
 <li><a href="#offline-use" id="toc-offline-use"><span class="toc-section-number">3.4</span> Offline use</a>
 <ul>
 <li><a href="#offline-config.yaml" id="toc-offline-config.yaml"><span class="toc-section-number">3.4.1</span> Offline config.yaml</a></li>
@@ -771,7 +774,7 @@ instructions</a> for installing <em>R</em>.</p>
 <div id="installing-biocmanager" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Installing <em>BiocManager</em></h2>
 <p>Use standard <em>R</em> installation procedures to install the
-<a href="https://cran.r-project.org/package=BiocManager">BiocManager</a> package. This command is requried only once per <em>R</em>
+<a href="https://cran.r-project.org/package=BiocManager">BiocManager</a> package. This command is required only once per <em>R</em>
 installation.</p>
 <pre class="r"><code>install.packages(&quot;BiocManager&quot;, repos = &quot;https://cloud.r-project.org&quot;)</code></pre>
 </div>
@@ -991,6 +994,39 @@ that is in your PATH. Then right-click and choose New-&gt;Shortcut.
 In the “type the location of the item” box, put:</p>
 <pre><code>cmd /C &quot;set R_LIBS_USER=C:\Users\USER_NAME\Documents\R\3.5-Bioc-3.7 &amp;&amp; R&quot;</code></pre>
 <p>Click “Next”. In the “Type a name for this shortcut” box, type <code>Bioc-3.7</code>.</p>
+<div id="same-r-version" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Using the same R version</h3>
+<p>Note that managing multiple versions of R and Bioconductor is important even
+when the Bioconductor versions use the same R version. The Bioconductor
+libraries should be kept in <em>separate</em> directories to avoid conflicts between
+packages. For example, Bioconductor versions 3.7 and 3.8 both use R version 3.5.
+To manage packages from these versions, create <em>two</em> separate library
+directories. Using the same setup as shown above, the second library directory
+would be:</p>
+<ul>
+<li>Linux: <code>~/R/3.5-Bioc-3.8</code></li>
+<li>macOS: <code>~/Library/R/3.5-Bioc-3.8/library</code></li>
+<li>Windows: <code>C:\Users\USER_NAME\Documents\R\3.5-Bioc-3.8</code></li>
+</ul>
+<p>It is also convenient to set a separate alias or shortcut for this version:</p>
+<ul>
+<li>Linux: <code>alias Bioc3.8=&#39;R_LIBS_USER=~/R/3.5-Bioc-3.8 R&#39;</code></li>
+<li>macOS: <code>alias Bioc3.8=&#39;R_LIBS_USER=~/Library/R/3.5-Bioc-3.8/library R&#39;</code></li>
+</ul>
+<p>On Windows, create a shortcut. Go to My Computer and navigate to a directory
+that is in your PATH. Then right-click and choose New-&gt;Shortcut.
+In the “type the location of the item” box, put:</p>
+<ul>
+<li>Windows: <code>cmd /C &quot;set R_LIBS_USER=C:\Users\USER_NAME\Documents\R\3.5-Bioc-3.8 &amp;&amp; R&quot;</code></li>
+</ul>
+<p>Now there are two sets of aliases or shortcuts, one for each version of
+Bioconductor. This strategy can be extended to any number of versions of
+Bioconductor as long as the corresponding R version is installed on the
+system. When working with separate R versions, the path to the <code>R</code> executable
+must be specified in the alias or shortcut.</p>
+<p>Keep in mind that mixing packages from different versions of Bioconductor
+can lead to unexpected behavior and errors.</p>
+</div>
 </div>
 <div id="offline-use" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Offline use</h2>
@@ -1047,7 +1083,8 @@ the command <code>source(&quot;https://.../biocLite.R&quot;)</code> to read a fi
 web. The file contained an installation script that was smart enough
 to figure out what version of <em>R</em> and <em>Bioconductor</em> were in use or
 appropriate for the person invoking the script. Sourcing an executable
-script from the web is an obvious security problem.</p>
+script from the web is an obvious security problem. In 2024, the script
+was removed and is no longer in use.</p>
 <p>Our solution is to use a CRAN package BiocManager, so that users
 install from pre-configured CRAN mirrors rather than typing in a URL
 and sourcing from the web.</p>
@@ -1306,13 +1343,12 @@ issue</a>.</p></li>
 <div id="session-information" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Session information</h1>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R Under development (unstable) (2024-08-21 r87038)
+<pre><code>## R Under development (unstable) (2025-04-16 r88148)
 ## Platform: x86_64-pc-linux-gnu
-## Running under: Ubuntu 22.04.4 LTS
+## Running under: Ubuntu 24.04.2 LTS
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0 
-## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -1332,14 +1368,14 @@ issue</a>.</p></li>
 ## [1] BiocStyle_2.32.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.35       R6_2.5.1            bookdown_0.39      
-##  [4] fastmap_1.1.1       xfun_0.43           cachem_1.0.8       
-##  [7] knitr_1.46          htmltools_0.5.8.1   rmarkdown_2.26     
-## [10] lifecycle_1.0.4     cli_3.6.2           sass_0.4.9         
-## [13] jquerylib_0.1.4     compiler_4.5.0      highr_0.10         
-## [16] tools_4.5.0         evaluate_0.23       bslib_0.7.0        
-## [19] yaml_2.3.8          BiocManager_1.30.25 jsonlite_1.8.8     
-## [22] rlang_1.1.3</code></pre>
+##  [1] digest_0.6.33       R6_2.5.1            bookdown_0.37      
+##  [4] fastmap_1.1.1       xfun_0.41           cachem_1.0.8       
+##  [7] knitr_1.45          htmltools_0.5.7     rmarkdown_2.25     
+## [10] lifecycle_1.0.4     cli_3.6.2           sass_0.4.8         
+## [13] jquerylib_0.1.4     compiler_4.6.0      highr_0.10         
+## [16] tools_4.6.0         evaluate_0.23       bslib_0.6.1        
+## [19] yaml_2.3.7          BiocManager_1.30.26 jsonlite_1.8.8     
+## [22] rlang_1.1.2</code></pre>
 </div>
 
 

@@ -1,0 +1,64 @@
+---
+title: "Package Introduction"
+package: mmrm
+output:
+  rmarkdown::html_vignette:
+          toc: true
+vignette: |
+  %\VignetteIndexEntry{Package Introduction}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(mmrm)
+```
+
+# Common usage
+
+A minimal call of `mmrm()`, consisting of only formula and data arguments will produce an object of class `mmrm`, `mmrm_fit`, and `mmrm_tmb`.
+
+Here we fit a mmrm model with `us` (unstructured) covariance structure specified, as well as the defaults of `reml = TRUE` and `control = mmrm_control()`.
+
+```{r, child='subsections/_intro-getting_started.Rmd'}
+```
+
+# Common customizations
+
+```{r, child='subsections/_intro-customizations.Rmd'}
+```
+
+# Extraction of model features
+
+```{r, child='subsections/_intro-model_features.Rmd'}
+```
+
+# Lower level functions
+
+```{r, child='subsections/_intro-lower_level.Rmd'}
+```
+
+# Hypothesis testing
+
+```{r, child='subsections/_intro-hypothesis_testing.Rmd'}
+```
+
+# Tidymodels
+
+```{r, child='subsections/_intro-tidymodels.Rmd'}
+```
+
+
+# Acknowledgments
+
+```{r, child='subsections/_intro-acknowledgments.Rmd'}
+```
+
+
+# References

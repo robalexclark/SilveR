@@ -44,5 +44,5 @@ Author: Joe Cheng [aut],
 Maintainer: Carson Sievert <carson@posit.co>
 Repository: CRAN
 Date/Publication: 2024-04-04 05:03:00 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-24 02:06:22 UTC; windows
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 01:05:24 UTC; windows
 Archs: x64

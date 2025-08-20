@@ -1,10 +1,9 @@
 GGally-package	GGally-package
 %>%	pipe
-+.gg	gg-add
 add_and_overwrite_aes	add_and_overwrite_aes
 add_ref_boxes	add_ref_boxes
 add_ref_lines	add_ref_lines
-add_to_ggmatrix	gg-add
+add_to_ggmatrix	add_to_ggmatrix
 australia_PISA2012	australia_PISA2012
 baseball	baseball
 brew_colors	brew_colors
@@ -98,6 +97,7 @@ is.glyphplot	glyphplot
 is_blank_plot	is_blank_plot
 is_character_column	is_horizontal
 is_date	is_date
+is_ggmatrix	is_ggmatrix
 is_horizontal	is_horizontal
 lowertriangle	lowertriangle
 mapping_color_to_fill	mapping_color_to_fill
@@ -122,7 +122,6 @@ putPlot	putPlot
 range01	rescale01
 reexports	reexports
 remove_color_unless_equal	remove_color_unless_equal
-require_namespaces	require_namespaces
 rescale01	rescale01
 rescale11	rescale01
 scag_order	scag_order

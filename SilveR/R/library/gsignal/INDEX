@@ -1,0 +1,182 @@
+Arma                    Autoregressive moving average (ARMA) model
+FilterSpecs             Filter specifications
+Ma                      Moving average (MA) model
+Sos                     Second-order sections
+Zpg                     Zero pole gain model
+ar_psd                  Power spectrum of AR model
+arburg                  Autoregressive model coefficients - Burg's
+                        method
+aryule                  Autoregressive model coefficients - Yule-Walker
+                        method
+barthannwin             Modified Bartlett-Hann window
+bartlett                Bartlett window
+besselap                Bessel analog low-pass filter prototype
+besself                 Bessel analog filter design
+bilinear                Bilinear transformation
+bitrevorder             Permute input to bit-reversed order
+blackman                Blackman window
+blackmanharris          Blackman-Harris window
+blackmannuttall         Blackman-Nuttall window
+bohmanwin               Bohman window
+boxcar                  Rectangular window
+buffer                  Buffer signal vector into matrix of data
+                        segments
+buttap                  Butterworth filter prototype
+butter                  Butterworth filter design
+buttord                 Butterworth filter order and cutoff frequency
+cceps                   Complex cepstral analysis
+cconv                   Circular convolution
+cheb                    Chebyshev polynomials
+cheb1ap                 Chebyshev Type I filter prototype
+cheb1ord                Chebyshev Type I filter order
+cheb2ap                 Chebyshev Type II filter prototype
+cheb2ord                Chebyshev Type II filter order
+chebwin                 Chebyshev window
+cheby1                  Chebyshev Type I filter design
+cheby2                  Chebyshev Type II filter design
+chirp                   Chirp signal
+cl2bp                   Constrained L2 bandpass FIR filter design
+clustersegment          Cluster Segments
+cmorwavf                Complex Morlet Wavelet
+conv                    Convolution and polynomial multiplication
+conv2                   2-D convolution
+convmtx                 Convolution matrix
+cplxpair                Complex conjugate pairs
+cplxreal                Sort complex conjugate pairs and real
+cpsd                    Cross power spectral density
+czt                     Chirp Z-transform
+dct                     Discrete Cosine Transform
+dct2                    2-D Discrete Cosine Transform
+dctmtx                  Discrete Cosine Transform Matrix
+decimate                Decrease sample rate
+detrend                 Remove Polynomial Trend
+dftmtx                  Discrete Fourier Transform Matrix
+digitrevorder           Permute input to digit-reversed order
+diric                   Dirichlet function
+downsample              Decrease sample rate
+dst                     Discrete Sine Transform
+dwt                     1-D Discrete Wavelet Transform
+ellip                   Elliptic filter design
+ellipap                 Low-pass analog elliptic filter
+ellipord                Elliptic Filter Order
+fftconv                 FFT-based convolution
+fftfilt                 FFT-based FIR filtering
+fftshift                Zero-frequency shift
+fht                     Fast Hartley Transform
+filter                  Filter a signal
+filter.sgolayFilter     Savitzky-Golay filtering
+filter2                 2-D digital filter
+filter_zi               Filter initial conditions
+filtfilt                Zero-phase digital filtering
+filtic                  Filter Initial Conditions
+findpeaks               Find local extrema
+fir1                    Window-based FIR filter design
+fir2                    Frequency sampling-based FIR filter design
+firls                   Least-squares linear-phase FIR filter design
+flattopwin              Flat top window
+fracshift               Fractional shift
+freqs                   Frequency response of analog filters
+freqz                   Frequency response of digital filter
+fwhm                    Full width at half maximum
+gauspuls                Gaussian-modulated sinusoidal RF pulse
+gaussian                Gaussian convolution window
+gausswin                Gaussian window
+gmonopuls               Gaussian monopulse
+grpdelay                Group delay
+hamming                 Hamming window
+hann                    Hann window
+hilbert                 Hilbert transform
+idct                    Inverse Discrete Cosine Transform
+idct2                   Inverse 2-D Discrete Cosine Transform
+idst                    Inverse Discrete Sine Transform
+ifft                    Inverse Fast Fourier Transform
+ifftshift               Inverse zero-frequency shift
+ifwht                   Fast Walsh-Hadamard Transform
+iirlp2mb                IIR lowpass filter to IIR multiband
+impinvar                Impulse invariance method for A/D filter
+                        conversion
+impz                    Impulse response of digital filter
+interp                  Interpolation
+invfreq                 Inverse Frequency Response
+invimpinvar             Inverse impulse invariance method
+kaiser                  Kaiser window
+kaiserord               Kaiser filter order and cutoff frequency
+levinson                Durbin-Levinson Recursion
+marcumq                 Marcum Q function
+medfilt1                1-D median filtering
+mexihat                 Mexicat Hat
+meyeraux                Meyer wavelet auxiliary function
+morlet                  Morlet Wavelet
+movingrms               Moving Root Mean Square
+mpoles                  Multiplicity of poles
+mscohere                Magnitude-squared coherence
+ncauer                  ncauer analog filter design
+nuttallwin              Nuttall-defined minimum 4-term Blackman-Harris
+                        window
+pad                     Pad data
+parzenwin               Parzen (de la Vallée Poussin) window
+pburg                   Autoregressive PSD estimate - Burg's method
+peak2peak               Maximum-to-minimum difference
+peak2rms                Peak-magnitude-to-RMS ratio
+pei_tseng_notch         Pei-Tseng notch filter
+poly                    Polynomial with specified roots
+polyreduce              Reduce polynomial
+polystab                Stabilize polynomial
+pow2db                  Power - decibel conversion
+primitive               Primitive
+pulstran                Pulse train
+pwelch                  Welch’s power spectral density estimate
+pyulear                 Autoregressive PSD estimate - Yule-Walker
+                        method
+qp_kaiser               Kaiser FIR filter design
+rceps                   Real cepstrum
+rectpuls                Rectangular pulse
+rectwin                 Rectangular window
+remez                   Parks-McClellan optimal FIR filter design
+resample                Change sampling rate
+residue                 Partial fraction expansion
+residued                delayed z-transform partial fraction expansion
+residuez                Z-transform partial fraction expansion
+rms                     Root-mean-square
+rssq                    Root-sum-of-squares
+sampled2continuous      Signal reconstruction
+sawtooth                Sawtooth or triangle wave
+schtrig                 Schmitt Trigger
+sftrans                 Transform filter band edges
+sgolay                  Savitzky-Golay filter design
+shanwavf                Complex Shannon Wavelet
+shiftdata               Shift data to operate on specified dimension
+sigmoid_train           Sigmoid Train
+signals                 signals
+sinetone                Sine tone
+sinewave                Sine wave
+sos2tf                  Sos to transfer function
+sos2zp                  Sos to zero-pole-gain
+sosfilt                 Second-order sections filtering
+specgram                Spectrogram
+square                  Square wave
+stft                    Short-Term Fourier Transform
+tf2sos                  Transfer function to second-order sections form
+tf2zp                   Transfer function to zero-pole-gain form
+tfestimate              Transfer Function Estimate
+triang                  Triangular window
+tripuls                 Sampled aperiodic triangle
+tukeywin                Tukey (tapered cosine) window
+udecode                 Uniform decoder
+uencode                 Uniform encoder
+ultrwin                 Ultraspherical window
+unshiftdata             Inverse of shiftdata
+unwrap                  Unwrap phase angles
+upfirdn                 Upsample, apply FIR filter, downsample
+upsample                Increase sample rate
+upsamplefill            Upsample and Fill
+wconv                   1-D or 2-D convolution
+welchwin                Welch window
+wkeep                   Keep part of vector or matrix
+xcorr                   Cross-correlation
+xcorr2                  2-D cross-correlation
+xcov                    Cross-covariance
+zerocrossing            Zero Crossing
+zp2sos                  Zero-pole-gain to second-order section format
+zp2tf                   Zero-pole-gain to transfer function
+zplane                  Zero-pole plot

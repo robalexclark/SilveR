@@ -1,8 +1,8 @@
 Package: emmeans
 Type: Package
 Title: Estimated Marginal Means, aka Least-Squares Means
-Version: 1.10.6
-Date: 2024-12-12
+Version: 1.11.2
+Date: 2025-07-11
 Authors@R: c(person("Russell V.", "Lenth", role = c("aut", "cre", "cph"), 
     email = "russell-lenth@uiowa.edu"),
     person("Balazs", "Banfai", role = "ctb"),
@@ -17,14 +17,14 @@ Authors@R: c(person("Russell V.", "Lenth", role = c("aut", "cre", "cph"),
     person("Hannes", "Riebl", role = "ctb"),
     person("Henrik", "Singmann", role = "ctb"))
 Depends: R (>= 4.1.0)
-Imports: estimability (>= 1.4.1), graphics, methods, numDeriv, stats,
-        utils, mvtnorm
+Imports: estimability (>= 1.4.1), graphics, methods, mvtnorm, numDeriv,
+        stats, utils
 Suggests: bayesplot, bayestestR, biglm, brms, car, coda (>= 0.17),
-        compositions, ggplot2, lattice, logspline, mediation, mgcv,
-        multcomp, multcompView, nlme, ordinal (>= 2014.11-12), pbkrtest
-        (>= 0.4-1), lme4, lmerTest (>= 2.0.32), MASS, MuMIn, rsm,
-        knitr, rmarkdown, sandwich, scales, splines, testthat, tibble,
-        xtable (>= 1.8-2)
+        compositions, ggplot2, knitr, lattice, lme4, lmerTest (>=
+        2.0.32), logspline, MASS, mediation, mgcv, multcomp,
+        multcompView, MuMIn, nlme, ordinal (>= 2014.11-12), pbkrtest
+        (>= 0.4-1), rmarkdown, rsm, sandwich, scales, splines,
+        testthat, tibble, xtable (>= 1.8-2)
 Enhances: CARBayes, coxme, gee, geepack, MCMCglmm, MCMCpack, mice,
         nnet, pscl, rstanarm, sommer, survival
 URL:
@@ -44,7 +44,7 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2024-12-12 17:44:58 UTC; rlenth
+Packaged: 2025-07-10 19:33:41 UTC; rlenth
 Author: Russell V. Lenth [aut, cre, cph],
   Balazs Banfai [ctb],
   Ben Bolker [ctb],
@@ -59,5 +59,5 @@ Author: Russell V. Lenth [aut, cre, cph],
   Henrik Singmann [ctb]
 Maintainer: Russell V. Lenth <russell-lenth@uiowa.edu>
 Repository: CRAN
-Date/Publication: 2024-12-12 21:10:02 UTC
-Built: R 4.3.3; ; 2024-12-16 02:11:32 UTC; windows
+Date/Publication: 2025-07-11 15:20:06 UTC
+Built: R 4.5.1; ; 2025-08-04 01:05:53 UTC; windows

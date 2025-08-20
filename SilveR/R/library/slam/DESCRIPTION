@@ -22,5 +22,5 @@ Author: Kurt Hornik [aut, cre] (<https://orcid.org/0000-0003-4198-9911>),
 Maintainer: Kurt Hornik <Kurt.Hornik@R-project.org>
 Repository: CRAN
 Date/Publication: 2024-11-13 07:13:31 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-15 00:51:13 UTC; windows
+Built: R 4.5.0; x86_64-w64-mingw32; 2025-04-08 00:42:38 UTC; windows
 Archs: x64

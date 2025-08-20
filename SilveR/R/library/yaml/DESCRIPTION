@@ -18,5 +18,5 @@ NeedsCompilation: yes
 Packaged: 2024-07-22 15:44:18 UTC; garbetsp
 Repository: CRAN
 Date/Publication: 2024-07-26 15:10:02 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-10-04 00:33:00 UTC; windows
+Built: R 4.5.0; x86_64-w64-mingw32; 2025-06-18 00:26:50 UTC; windows
 Archs: x64

@@ -104,7 +104,6 @@ SEXP RlpSolve_set_var_weights(SEXP Slp, SEXP Sweights);
 SEXP RlpSolve_default_basis(SEXP Slp);
 /*read_basis*/
 SEXP RlpSolve_reset_basis(SEXP Slp);
-/*write_basis*/
 SEXP RlpSolve_guess_basis(SEXP SLP, SEXP Sguessvector);
 /*read_params*/
 /*write_params*/

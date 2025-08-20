@@ -1,6 +1,7 @@
 %nin%                   Find Matching (or Non-Matching) Elements
 Cs                      Character strings from unquoted names
 Ecdf                    Empirical Cumulative Distribution Plot
+Fdebug                  Debug Printing Function Generator
 GiniMd                  Gini's Mean Difference
 HmiscOverview           Overview of Hmisc Library
 Lag                     Lag a Numeric, Character, or Factor Vector
@@ -77,6 +78,7 @@ format.pval             Format P Values
 gbayes                  Gaussian Bayesian Posterior and Predictive
                         Distributions
 gbayesSeqSim            gbayesSeqSim
+geom_stepconfint        Step function confidence intervals for ggplot2
 getHdata                Download and Install Datasets for 'Hmisc',
                         'rms', and Statistical Modeling
 getRs                   Interact with github rscripts Project
@@ -177,6 +179,7 @@ reShape                 Reshape Matrices and Serial Data
 redun                   Redundancy Analysis
 rlegend                 Special Version of legend for R
 rm.boot                 Bootstrap Repeated Measurements Model
+rmClose                 rmClose
 runParallel             runParallel
 runifChanged            runifChanged
 samplesize.bin          Sample Size for 2-sample Binomial

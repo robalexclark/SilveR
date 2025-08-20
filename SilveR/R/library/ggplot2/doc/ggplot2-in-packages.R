@@ -128,9 +128,9 @@ theme_custom <- function(...) {
 mpg_drv_summary() + theme_custom()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  .onLoad <- function(...) {
-#    if (requireNamespace("ggplot2", quietly = TRUE)) {
-#      vctrs::s3_register("ggplot2::autoplot", "discrete_distr")
-#    }
-#  }
+# .onLoad <- function(...) {
+#   if (requireNamespace("ggplot2", quietly = TRUE)) {
+#     vctrs::s3_register("ggplot2::autoplot", "discrete_distr")
+#   }
+# }
 

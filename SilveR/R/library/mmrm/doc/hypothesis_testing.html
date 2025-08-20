@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Details of Hypothesis Testing</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Details of Hypothesis Testing</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction-to-type-iiiiii-hypothesis-testing" id="toc-introduction-to-type-iiiiii-hypothesis-testing">Introduction to
+Type I/II/III Hypothesis Testing</a></li>
+<li><a href="#contained-effect" id="toc-contained-effect">Contained
+Effect</a></li>
+<li><a href="#type-ii-hypothesis-testing" id="toc-type-ii-hypothesis-testing">Type II Hypothesis Testing</a></li>
+<li><a href="#type-iii-hypothesis-testing" id="toc-type-iii-hypothesis-testing">Type III Hypothesis
+Testing</a></li>
+<li><a href="#hypothesis-testing-in-sas" id="toc-hypothesis-testing-in-sas">Hypothesis Testing in SAS</a>
+<ul>
+<li><a href="#special-considerations" id="toc-special-considerations">Special Considerations</a>
+<ul>
+<li><a href="#reference-levels" id="toc-reference-levels">Reference
+Levels</a></li>
+<li><a href="#why-model-covariate-order-changes-my-testing-in-sas" id="toc-why-model-covariate-order-changes-my-testing-in-sas">Why Model
+Covariate Order Changes My Testing in SAS?</a></li>
+<li><a href="#why-mmrm-gives-more-covariates-than-sas" id="toc-why-mmrm-gives-more-covariates-than-sas">Why <code>mmrm</code>
+Gives More Covariates Than SAS?</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction-to-type-iiiiii-hypothesis-testing" class="section level1">
+<h1>Introduction to Type I/II/III Hypothesis Testing</h1>
+<p>Type I/II/III hypothesis testing originates from analysis of
+variance, however, <span class="citation">Goodnight (1980)</span>
+suggests viewing this issue as hypothesis testing of fixed effects in
+linear models, which avoid the “usual assumptions” and defined three
+types of estimable functions. Given that type I estimable functions are
+dependent on the specific order of used covariates, we focus on the type
+II and III testing here.</p>
+<p>For MMRM, obtaining estimable functions is equivalent to obtaining
+the contrasts for linear hypothesis tests. For more details, see <span class="citation">Goodnight (1980)</span>.</p>
+</div>
+<div id="contained-effect" class="section level1">
+<h1>Contained Effect</h1>
+<p>Before we discuss the testing, it is important that we understand the
+concept of “contained effect”. The definition of “contained effect”
+is:</p>
+<p>For effect <span class="math inline">\(E_2\)</span>, it is said to
+contain <span class="math inline">\(E_1\)</span> if</p>
+<ol style="list-style-type: decimal">
+<li>the involved numerical covariate(s) are identical for these two
+effects</li>
+<li>all the categorical covariate(s) associated with <span class="math inline">\(E_1\)</span> are also associated with <span class="math inline">\(E_2\)</span></li>
+</ol>
+<p>For example, for the following model formula</p>
+<p><span class="math inline">\(Y = A + B + A*B\)</span></p>
+<p>using <span class="math inline">\(E_A\)</span>, <span class="math inline">\(E_B\)</span> and <span class="math inline">\(E_{A*B}\)</span> to denote the effect for <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>
+and <span class="math inline">\(A*B\)</span> respectively, we have</p>
+<ol style="list-style-type: decimal">
+<li>If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are both categorical, then <span class="math inline">\(E_{A*B}\)</span> contains <span class="math inline">\(E_{A}\)</span> and <span class="math inline">\(E_{B}\)</span>.</li>
+<li>If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are both numerical, then <span class="math inline">\(E_{A*B}\)</span> do not contain <span class="math inline">\(E_{A}\)</span> or <span class="math inline">\(E_{B}\)</span>.</li>
+<li>If <span class="math inline">\(A\)</span> is categorical and <span class="math inline">\(B\)</span> is numerical, then <span class="math inline">\(E_{A*B}\)</span> contains <span class="math inline">\(E_{B}\)</span> but not <span class="math inline">\(E_{A}\)</span>.</li>
+</ol>
+</div>
+<div id="type-ii-hypothesis-testing" class="section level1">
+<h1>Type II Hypothesis Testing</h1>
+<p>For type II hypothesis testing, the contrasts can be obtained through
+the following steps:</p>
+<p>Create a contrast matrix <span class="math inline">\(L\)</span>, with
+rows equal to the number of parameters associated with the effect,
+columns equal to the number of all parameters.</p>
+<ol style="list-style-type: decimal">
+<li>All columns of <span class="math inline">\(L\)</span> associated
+with effect not containing <span class="math inline">\(E_1\)</span>
+(except <span class="math inline">\(E_1\)</span>) are set to 0.</li>
+<li>The submatrix of <span class="math inline">\(L\)</span> associated
+with <span class="math inline">\(E_1\)</span> is set to <span class="math inline">\((X_1^\top M X_1)^{-}X_1^\top M X_1\)</span></li>
+<li>Each of the remaining submatrices of L associated with an effect
+<span class="math inline">\(E_2\)</span> that contains <span class="math inline">\(E_1\)</span> is <span class="math inline">\((X_1^\top M X_1)^{-}X_1^\top M X_2\)</span></li>
+</ol>
+<p>where <span class="math inline">\(X_0\)</span> stands for columns of
+<span class="math inline">\(X\)</span> whose associated effect do not
+contain <span class="math inline">\(E_1\)</span>, <span class="math inline">\(X_1\)</span> stands for columns of <span class="math inline">\(X\)</span> associated with <span class="math inline">\(E_1\)</span>, <span class="math inline">\(X_2\)</span> stands for columns of <span class="math inline">\(X\)</span> whose associated effect contains <span class="math inline">\(E_1\)</span>, <span class="math inline">\(M = I -
+X_0(X_0^\top X_0)^{-}X_0^\top\)</span>, and <span class="math inline">\(Z^{-}\)</span> stands for the <a href="https://blogs.sas.com/content/iml/2018/11/21/generalized-inverses-for-matrices.html">g2
+inverse</a> of <span class="math inline">\(Z\)</span>.</p>
+<p>Note: Here we do not allow for singularity in general, so the g2
+inverse is just the usual inverse. Thus we can use an identity matrix as
+the submatrix in step 2.</p>
+<p>Using <code>fev_data</code> to create our example, we have</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(mmrm)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(FEV1 <span class="sc">~</span> ARMCD <span class="sc">+</span> RACE <span class="sc">+</span> ARMCD <span class="sc">*</span> RACE <span class="sc">+</span> <span class="fu">ar1</span>(AVISIT <span class="sc">|</span> USUBJID), <span class="at">data =</span> fev_data)</span></code></pre></div>
+<p>For this given example, we would like to test the effect of
+<code>RACE</code>, <span class="math inline">\(E_{RACE}\)</span>. We
+initialize the contrast matrix with</p>
+<p><span class="math display">\[
+\begin{matrix}
+\mu &amp; ARMCD &amp; RACE &amp; RACE &amp; ARMCD:RACE &amp;
+ARMCD:RACE\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+\end{matrix}
+\]</span></p>
+<p>Please note that this is a <span class="math inline">\(2\times
+6\)</span> matrix, the rows is the number of coefficients that is
+associated with <code>RACE</code>, and the columns is the total number
+of coefficients 6.</p>
+<p>Then following step 2, we filled in the identity matrix in the
+corresponding submatrix</p>
+<p><span class="math display">\[
+\begin{matrix}
+\mu &amp; ARMCD &amp; RACE &amp; RACE &amp; ARMCD:RACE &amp;
+ARMCD:RACE\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0\\
+\end{matrix}
+\]</span></p>
+<p>In the last step, for the last 2 columns, we fill the values with the
+calculated result.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">component</span>(fit, <span class="st">&quot;x_matrix&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> x[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> x[, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)]</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> x[, <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>)]</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(x))) <span class="sc">-</span> x0 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(x0) <span class="sc">%*%</span> x0) <span class="sc">%*%</span> <span class="fu">t</span>(x0) <span class="co"># solve is used because the matrix is inversible</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>sub_mat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x1) <span class="sc">%*%</span> m <span class="sc">%*%</span> x1) <span class="sc">%*%</span> <span class="fu">t</span>(x1) <span class="sc">%*%</span> m <span class="sc">%*%</span> x2</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>sub_mat</span></code></pre></div>
+<pre><code>##                               ARMCDTRT:RACEBlack or African American
+## RACEBlack or African American                             0.42618692
+## RACEWhite                                                -0.04372702
+##                               ARMCDTRT:RACEWhite
+## RACEBlack or African American         0.02751985
+## RACEWhite                             0.58570969</code></pre>
+<p><span class="math display">\[
+\begin{matrix}
+\mu &amp; ARMCD &amp; RACE &amp; RACE &amp; ARMCD:RACE &amp;
+ARMCD:RACE\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0.42618692 &amp; 0.02751985\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; -0.04372702 &amp; 0.58570969\\
+\end{matrix}
+\]</span></p>
+</div>
+<div id="type-iii-hypothesis-testing" class="section level1">
+<h1>Type III Hypothesis Testing</h1>
+<p>For type III hypothesis testing, we assume that the hypothesis tested
+should be the same for all designs with the same general form of
+estimable functions. It can be defined with the following steps:</p>
+<p>Create a contrast matrix <span class="math inline">\(L\)</span>, with
+rows equal to the number of parameters associated with the effect,
+columns equal to the number of all parameters.</p>
+<ol style="list-style-type: decimal">
+<li>All columns of <span class="math inline">\(L\)</span> associated
+with effect not containing <span class="math inline">\(E_1\)</span>
+(except <span class="math inline">\(E_1\)</span>) are set to 0.</li>
+<li>The submatrix of <span class="math inline">\(L\)</span> associated
+with <span class="math inline">\(E_1\)</span> is set to identity
+matrix.</li>
+<li>For each of the remaining submatrices of L associated with an effect
+<span class="math inline">\(E_2\)</span> that contains <span class="math inline">\(E_1\)</span>, equate the values.</li>
+</ol>
+<p>Here equate the values means that, given that the coefficients in
+step 2 are all 1 (diagonal), in step 3 this 1 is divided by the total
+number of new levels.</p>
+<p>Using the same example for type II testing, we also would like to
+test the effect of <code>RACE</code>, <span class="math inline">\(E_{RACE}\)</span>. We initialize the contrast
+matrix with</p>
+<p><span class="math display">\[
+\begin{matrix}
+\mu &amp; ARMCD &amp; RACE &amp; RACE &amp; ARMCD:RACE &amp;
+ARMCD:RACE\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
+\end{matrix}
+\]</span></p>
+<p>Then following step 2, we filled in the identity matrix in the
+corresponding submatrix</p>
+<p><span class="math display">\[
+\begin{matrix}
+\mu &amp; ARMCD &amp; RACE &amp; RACE &amp; ARMCD:RACE &amp;
+ARMCD:RACE\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0\\
+\end{matrix}
+\]</span></p>
+<p>In the last step, for the last 2 columns, we fill the values to
+equate the coefficients in the sub matrix. We use the coefficients for
+<code>RACE</code>, and divide it by the additional levels (there is
+interaction between <code>ARMCD</code> and <code>RACE</code>, the
+additional covariate <code>ARMCD</code> has 2 levels) and we get 0.5 for
+the coefficients.</p>
+<p><span class="math display">\[
+\begin{matrix}
+\mu &amp; ARMCD &amp; RACE &amp; RACE &amp; ARMCD:RACE &amp;
+ARMCD:RACE\\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0.5 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0.5\\
+\end{matrix}
+\]</span></p>
+<p>Similarly, if we are testing the effect of <code>ARMCD</code> we will
+have the following contrast because <code>RACE</code> has 3 levels.</p>
+<p><span class="math display">\[
+\begin{matrix}
+\mu &amp; ARMCD &amp; RACE &amp; RACE &amp; ARMCD:RACE &amp;
+ARMCD:RACE\\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; \frac{1}{3} &amp; \frac{1}{3}\\
+\end{matrix}
+\]</span></p>
+</div>
+<div id="hypothesis-testing-in-sas" class="section level1">
+<h1>Hypothesis Testing in SAS</h1>
+<p>In <code>PROC MIXED</code> we can specify <code>HTYPE=1,2,3</code> to
+enable these hypothesis testings, and we can use option
+<code>e1 e2 e3</code> to view the estimable functions.</p>
+<div id="special-considerations" class="section level2">
+<h2>Special Considerations</h2>
+<div id="reference-levels" class="section level3">
+<h3>Reference Levels</h3>
+<p>For <code>PROC MIXED</code>, it is important that the categorical
+values have the correct order, especially for structured covariance
+(otherwise the correlation between visits can be messed up). We usually
+use <code>CLASS variable(REF=)</code> to define the reference level.
+However, SAS will put the reference level in the last, so if the visit
+variable is included in fixed effect, there can be issues with the
+comparison between SAS and R, as in R we still use the first level as
+our reference.</p>
+<p>When we conduct the hypothesis testing, we will also face this issue.
+If reference level is different, the testing we have can be different,
+e.g. if we have 3 levels, <span class="math inline">\(l_1\)</span>,
+<span class="math inline">\(l_2\)</span> and <span class="math inline">\(l_3\)</span>. In theory we can test either <span class="math inline">\(l_2 - l_1\)</span>, <span class="math inline">\(l_3 - l_1\)</span> (using <span class="math inline">\(l_1\)</span> as reference), or test <span class="math inline">\(l_1 - l_3\)</span>, <span class="math inline">\(l_2 - l_3\)</span> (using <span class="math inline">\(l_3\)</span> as reference). But the result will be
+slightly different. However, if we have identical tests the result will
+be closer. The following example illustrate this.</p>
+<div id="example-of-reference-levels" class="section level4">
+<h4>Example of Reference Levels</h4>
+<p>Assume in SAS we have the following model</p>
+<pre><code>PROC MIXED DATA = fev cl method=reml;
+  CLASS AVISIT(ref = &#39;VIS4&#39;) ARMCD(ref = &#39;PBO&#39;) USUBJID;
+  MODEL FEV1 = ARMCD AVISIT ARMCD*AVISIT / ddfm=satterthwaite htype=3;
+  REPEATED AVISIT / subject=USUBJID type=ar(1);
+RUN;</code></pre>
+<p>And in R we have the following model</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(FEV1 <span class="sc">~</span> ARMCD <span class="sc">+</span> AVISIT <span class="sc">+</span> ARMCD <span class="sc">*</span> AVISIT <span class="sc">+</span> <span class="fu">ar1</span>(AVISIT <span class="sc">|</span> USUBJID), <span class="at">data =</span> fev_data)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">Anova</span>(fit)</span></code></pre></div>
+<p>Note that for <code>AVISIT</code> there are 4 levels,
+<code>VIS1</code>, <code>VIS2</code>, <code>VIS3</code> and
+<code>VIS4</code>. In SAS <code>VIS4</code> is the reference, while in R
+<code>VIS1</code> is the reference.</p>
+<p>They both use the following matrix to test the effect of
+<code>AVISIT</code> (ignoring other part of contrasts that is not
+associated with <code>AVISIT</code>)</p>
+<p><span class="math display">\[
+\begin{matrix}
+1 &amp; 0 &amp; 0\\
+0 &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 1\\
+\end{matrix}
+\]</span></p>
+<p>But given that the reference level is different, we are testing
+different things. In SAS we are testing <code>VIS1 - VIS4</code>,
+<code>VIS2 - VIS4</code> and <code>VIS3 - VIS4</code>, while in R we are
+testing <code>VIS2 - VIS1</code>, <code>VIS3 - VIS1</code> and
+<code>VIS4 - VIS1</code>.</p>
+<p>To correctly test <code>VIS1 - VIS4</code>, <code>VIS2 - VIS4</code>
+and <code>VIS3 - VIS4</code> in R, we need to update the contrast to the
+following matrix (ignoring the other part) to get a closer result.</p>
+<p><span class="math display">\[
+\begin{matrix}
+0 &amp; 1 &amp; 0\\
+0 &amp; 0 &amp; 1\\
+-1 &amp; -1 &amp; -1\\
+\end{matrix}
+\]</span></p>
+</div>
+</div>
+<div id="why-model-covariate-order-changes-my-testing-in-sas" class="section level3">
+<h3>Why Model Covariate Order Changes My Testing in SAS?</h3>
+<p>For type II/III testing, it is true that the order of covariate
+should not affect the result. However, if there is an interaction term,
+the reference level can be changed. With different reference levels the
+result will be slightly different.</p>
+</div>
+<div id="why-mmrm-gives-more-covariates-than-sas" class="section level3">
+<h3>Why <code>mmrm</code> Gives More Covariates Than SAS?</h3>
+<p>For <code>PROC MIXED</code>, if a model is specified as follows</p>
+<pre><code>MODEL FEV1 = ARMCD SEX ARMCD * SEX ARMCD * FEV1_BL</code></pre>
+<p>Then it is equivalent to the following <code>mmrm</code> model</p>
+<pre><code>FEV1 ~ ARMCD * SEX + ARMCD * FEV1_BL - FEV1_BL</code></pre>
+<p>or</p>
+<pre><code>FEV1 ~ ARMCD * SEX + ARMCD:FEV1_BL</code></pre>
+<p>Because SAS will not include the covariate <code>FEV1_BL</code> by
+default, unless manually added. However in R we will add
+<code>FEV1_BL</code> by default. Please note that in this example we
+exclude the covariance structure part.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="ref-goodnight1980tests" class="csl-entry">
+Goodnight JH (1980). <span>“Tests of Hypotheses in Fixed Effects Linear
+Models.”</span> <em>Communications in Statistics-Theory and
+Methods</em>, <strong>9</strong>(2), 167–180.
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

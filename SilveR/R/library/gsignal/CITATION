@@ -1,0 +1,6 @@
+bibentry(bibtype = "Manual",
+         header = "To cite package ‘gsignal’ in publications use:",
+         title = "gsignal: Signal Processing",
+         author = person("Van Boxtel, G.J.M., et al."),
+         year = "2021",
+         url = "https://github.com/gjmvanboxtel/gsignal")

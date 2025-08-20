@@ -29,8 +29,10 @@ is_root_criterion	root_criterion
 is_rstudio_project	criteria
 is_r_package	criteria
 is_svn_root	criteria
+is_targets_project	criteria
 is_testthat	criteria
 is_vcs_root	criteria
+is_vscode_project	criteria
 root_criterion	root_criterion
 rprojroot	rprojroot-package
 thisfile	thisfile

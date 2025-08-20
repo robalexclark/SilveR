@@ -1,3 +1,23 @@
+# pkgbuild 1.4.8
+
+* New `Config/build/never-clean` `DESCRIPTION` option to avoid adding
+  `--preclean` to `R CMD INSTALL` (e.g., when header files have changed)
+  (@krlmlr, #204).
+
+* `has_rtools()` & co. now work correctly on aarch64 Windows, when
+  `RTOOLS45_AARCH64_HOME` is not set (@remlapmot, #203).
+
+* `pkg_build()` and `pkgbuild_process` now work corrently when building
+  binary packages from non-standard file names (#208).
+
+# pkgbuild 1.4.7
+
+* pkgbuild now supports R 4.5.x and Rtools45.
+
+* `has_build_tools()` (and related functions) now do not explicitly check
+  for Rtools on Windows and R 4.3.0 and later, but rather they try to
+  compile a simple package, like on Unix, for #199.
+
 # pkgbuild 1.4.6
 
 * No changes.

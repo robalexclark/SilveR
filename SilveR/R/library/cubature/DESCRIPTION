@@ -1,7 +1,7 @@
 Package: cubature
 Type: Package
 Title: Adaptive Multivariate Integration over Hypercubes
-Version: 2.1.1
+Version: 2.1.4
 VignetteBuilder: knitr
 SystemRequirements: GNU make and USE_C17
 URL: https://bnaras.github.io/cubature/
@@ -10,6 +10,8 @@ Authors@R: c(person("Balasubramanian", "Narasimhan", role=c("aut", "cre"),
 	   	   email = "naras@stat.stanford.edu"),
 	     person("Manuel", "Koller", role=c("ctb"),
 	           email = "koller.manuel@gmail.com"),
+	     person("Dirk", "Eddelbuettel", role=c("ctb"),
+	           email = "edd@debian.org"),		   
              person(c("Steven", "G."), "Johnson", role=c("aut")),
              person("Thomas", "Hahn", role=c("aut")),
 	     person("Annie", "Bouvier", role=c("aut")),
@@ -30,9 +32,10 @@ Imports: Rcpp
 NeedsCompilation: yes
 RoxygenNote: 7.3.2
 Suggests: testthat, knitr, mvtnorm, benchr, rmarkdown
-Packaged: 2024-07-11 18:43:50 UTC; naras
+Packaged: 2025-06-02 17:34:44 UTC; naras
 Author: Balasubramanian Narasimhan [aut, cre],
   Manuel Koller [ctb],
+  Dirk Eddelbuettel [ctb],
   Steven G. Johnson [aut],
   Thomas Hahn [aut],
   Annie Bouvier [aut],
@@ -40,6 +43,6 @@ Author: Balasubramanian Narasimhan [aut, cre],
   Simen Gaure [ctb]
 Maintainer: Balasubramanian Narasimhan <naras@stat.stanford.edu>
 Repository: CRAN
-Date/Publication: 2024-07-14 15:30:02 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-24 01:25:25 UTC; windows
+Date/Publication: 2025-06-02 18:30:01 UTC
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 00:20:54 UTC; windows
 Archs: x64

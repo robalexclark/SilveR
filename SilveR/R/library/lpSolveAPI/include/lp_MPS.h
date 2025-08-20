@@ -23,7 +23,6 @@ MYBOOL MPS_writehandle(lprec *lp, int typeMPS, FILE *output);
 
 /* Read and write BAS files */
 MYBOOL MPS_readBAS(lprec *lp, int typeMPS, char *filename, char *info);
-MYBOOL MPS_writeBAS(lprec *lp, int typeMPS, char *filename);
 
 #ifdef __cplusplus
  }

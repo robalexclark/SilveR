@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jelmer Ypma, Aymeric Stamm, and Avraham Adler" />
 
-<meta name="date" content="2024-06-24" />
+<meta name="date" content="2025-03-16" />
 
 <title>nloptr</title>
 
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -363,7 +363,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">nloptr</h1>
 <h4 class="author">Jelmer Ypma, Aymeric Stamm, and Avraham Adler</h4>
-<h4 class="date">2024-06-24</h4>
+<h4 class="date">2025-03-16</h4>
 
 
 
@@ -493,7 +493,7 @@ using</p>
 ## 
 ## 
 ## 
-## Minimization using NLopt version 2.7.1 
+## Minimization using NLopt version 2.10.0 
 ## 
 ## NLopt solver status: 1 ( NLOPT_SUCCESS: Generic success 
 ## return value. )
@@ -502,7 +502,7 @@ using</p>
 ## Termination conditions:  xtol_rel: 1e-08 
 ## Number of inequality constraints:  0 
 ## Number of equality constraints:    0 
-## Optimal value of objective function:  5.6213401034694e-23 
+## Optimal value of objective function:  7.35727226897802e-23 
 ## Optimal value of controls: 1 1</code></pre>
 <p>Sometimes the objective function and its gradient contain common
 terms. To economize on calculations, we can return the objective and its
@@ -525,7 +525,7 @@ instance:</p>
 ## nloptr(x0 = x0, eval_f = eval_f_list, opts = opts)
 ## 
 ## 
-## Minimization using NLopt version 2.7.1 
+## Minimization using NLopt version 2.10.0 
 ## 
 ## NLopt solver status: 1 ( NLOPT_SUCCESS: Generic success 
 ## return value. )
@@ -534,7 +534,7 @@ instance:</p>
 ## Termination conditions:  xtol_rel: 1e-08 
 ## Number of inequality constraints:  0 
 ## Number of equality constraints:    0 
-## Optimal value of objective function:  5.6213401034694e-23 
+## Optimal value of objective function:  7.35727226897802e-23 
 ## Optimal value of controls: 1 1</code></pre>
 <p>This gives the same results as before.</p>
 </div>
@@ -647,7 +647,7 @@ following command:</p>
 ##  g(x) = (-2.676263, -2.761136)
 ## iteration: 6
 ##  f(x) = 1.404206
-##  g(x) = (-1.674056, -1.676216)
+##  g(x) = (-1.674055, -1.676216)
 ## iteration: 7
 ##  f(x) = 1.022295
 ##  g(x) = (-0.748790, -0.748792)
@@ -665,23 +665,32 @@ following command:</p>
 ##  g(x) = (0.000000, 0.000000)
 ## iteration: 12
 ##  f(x) = 0.544331
-##  g(x) = (0.000000, 0.000000)
+##  g(x) = (-0.000000, 0.000000)
 ## iteration: 13
 ##  f(x) = 0.544331
-##  g(x) = (0.000000, 0.000000)
+##  g(x) = (-0.000000, 0.000000)
 ## iteration: 14
 ##  f(x) = 0.544331
-##  g(x) = (0.000000, 0.000000)
+##  g(x) = (-0.000000, 0.000000)
 ## iteration: 15
 ##  f(x) = 0.544331
-##  g(x) = (0.000000, 0.000000)
+##  g(x) = (-0.000000, 0.000000)
 ## iteration: 16
 ##  f(x) = 0.544331
-##  g(x) = (0.000000, 0.000000)
+##  g(x) = (-0.000000, 0.000000)
 ## iteration: 17
 ##  f(x) = 0.544331
-##  g(x) = (0.000000, 0.000000)
+##  g(x) = (-0.000000, 0.000000)
 ## iteration: 18
+##  f(x) = 0.544331
+##  g(x) = (-0.000000, 0.000000)
+## iteration: 19
+##  f(x) = 0.544331
+##  g(x) = (0.000000, 0.000000)
+## iteration: 20
+##  f(x) = 0.544331
+##  g(x) = (-0.000000, -0.000000)
+## iteration: 21
 ##  f(x) = 0.544331
 ##  g(x) = (0.000000, 0.000000)</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">print</span>(res0)</span></code></pre></div>
@@ -695,17 +704,17 @@ following command:</p>
 ##         check_derivatives_print = &quot;all&quot;), a = a, b = b)
 ## 
 ## 
-## Minimization using NLopt version 2.7.1 
+## Minimization using NLopt version 2.10.0 
 ## 
 ## NLopt solver status: 4 ( NLOPT_XTOL_REACHED: Optimization 
 ## stopped because xtol_rel or xtol_abs (above) was reached. 
 ## )
 ## 
-## Number of Iterations....: 18 
+## Number of Iterations....: 21 
 ## Termination conditions:  xtol_rel: 1e-08 
 ## Number of inequality constraints:  2 
 ## Number of equality constraints:    0 
-## Optimal value of objective function:  0.544331047591509 
+## Optimal value of objective function:  0.54433104762009 
 ## Optimal value of controls: 0.3333333 0.2962963</code></pre>
 <p>Here we supplied lower bounds for <span class="math inline">\(x_2\)</span> in <code>lb</code>. There are no
 upper bounds for both control variables, so we supply <code>Inf</code>
@@ -759,7 +768,7 @@ that doesn’t need gradient information <span class="citation">(Powell
 ##         xtol_rel = 1e-08), a = a, b = b)
 ## 
 ## 
-## Minimization using NLopt version 2.7.1 
+## Minimization using NLopt version 2.10.0 
 ## 
 ## NLopt solver status: 4 ( NLOPT_XTOL_REACHED: Optimization 
 ## stopped because xtol_rel or xtol_abs (above) was reached. 
@@ -894,9 +903,8 @@ problem.</p>
 ##           NLOPT_GN_DIRECT_L_RAND_NOSCAL,
 ##           NLOPT_GN_ORIG_DIRECT, NLOPT_GN_ORIG_DIRECT_L,
 ##           NLOPT_GD_STOGO, NLOPT_GD_STOGO_RAND,
-##           NLOPT_LD_SLSQP, NLOPT_LD_LBFGS_NOCEDAL,
-##           NLOPT_LD_LBFGS, NLOPT_LN_PRAXIS, NLOPT_LD_VAR1,
-##           NLOPT_LD_VAR2, NLOPT_LD_TNEWTON,
+##           NLOPT_LD_SLSQP, NLOPT_LD_LBFGS, NLOPT_LN_PRAXIS,
+##           NLOPT_LD_VAR1, NLOPT_LD_VAR2, NLOPT_LD_TNEWTON,
 ##           NLOPT_LD_TNEWTON_RESTART,
 ##           NLOPT_LD_TNEWTON_PRECOND,
 ##           NLOPT_LD_TNEWTON_PRECOND_RESTART,

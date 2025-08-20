@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Prediction and Simulation</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Prediction and Simulation</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#prediction-of-conditional-mean" id="toc-prediction-of-conditional-mean">Prediction of conditional
+mean</a>
+<ul>
+<li><a href="#mathematical-derivations" id="toc-mathematical-derivations">Mathematical Derivations</a></li>
+<li><a href="#implementation-of-predict" id="toc-implementation-of-predict">Implementation of
+<code>predict</code></a></li>
+<li><a href="#parametric-sampling-for-prediction-interval" id="toc-parametric-sampling-for-prediction-interval">Parametric Sampling
+for Prediction Interval</a></li>
+<li><a href="#prediction-of-conditional-mean-for-new-subjects" id="toc-prediction-of-conditional-mean-for-new-subjects">Prediction of
+Conditional Mean for New Subjects</a></li>
+</ul></li>
+<li><a href="#simulate-response" id="toc-simulate-response">Simulate
+response</a>
+<ul>
+<li><a href="#conditional-simulation" id="toc-conditional-simulation">Conditional Simulation</a></li>
+<li><a href="#marginal-simulation" id="toc-marginal-simulation">Marginal
+Simulation</a></li>
+<li><a href="#implementation-of-simulate" id="toc-implementation-of-simulate">Implementation of
+<code>simulate</code></a></li>
+</ul></li>
+<li><a href="#relationship-between-predict-and-simulate-results" id="toc-relationship-between-predict-and-simulate-results">Relationship
+Between <code>predict</code> and <code>simulate</code> Results</a>
+<ul>
+<li><a href="#predict-options" id="toc-predict-options"><code>predict</code> options</a></li>
+<li><a href="#simulate-options" id="toc-simulate-options"><code>simulate</code> options</a></li>
+</ul></li>
+<li><a href="#comparison-with-sas" id="toc-comparison-with-sas">Comparison with <code>SAS</code></a></li>
+</ul>
+</div>
+
+<div id="prediction-of-conditional-mean" class="section level2">
+<h2>Prediction of conditional mean</h2>
+<div id="mathematical-derivations" class="section level3">
+<h3>Mathematical Derivations</h3>
+<p>Since residuals can be correlated, potentially existing observed
+outcomes of the same individual can be informative for predicting the
+unobserved valued of the same individual.</p>
+<p>Assume that the data is sorted such that <span class="math inline">\(Y_{ij} = y_{ij}, j = k+1, k+2, \dots, p\)</span>
+are observed and <span class="math inline">\(Y_{ij}, j = 1, 2, \dots,
+k\)</span> are not. The special case of all outcomes being unobserved
+(new individual) is covered with <span class="math inline">\(k=p\)</span>.</p>
+<p>Let further <span class="math display">\[
+\Sigma_i(X_i, \theta) = \begin{pmatrix} \Sigma_i^{new,new}(X_i,\theta)
+&amp; \Sigma_i^{new,old}(X_i,\theta)\\ \Sigma_i^{old,new}(X_i,\theta)
+&amp; \Sigma_i^{old,old}(X_i,\theta)\end{pmatrix}
+\]</span></p>
+<p>be a block decomposition where <span class="math inline">\(\Sigma_i^{new,new}(X_i,\theta) =
+\Big(\big(\Sigma_i(X_i,\theta)\big)_{j,l}\Big)_{j = 1\dots k,\, l =
+1\ldots k}\)</span> and similarly for the other blocks.</p>
+<p>Predictions can then be made based on the conditional distribution
+<span class="math display">\[
+Y_{i, 1\ldots k}\,|\,X_i,Y_{i,k+1\ldots p}=y_{i, k+1\ldots
+p}\sim\mathcal{N}(\mu_i, A_i)
+\]</span></p>
+<p>with</p>
+<p><span class="math display">\[
+\mu_i(\beta,\theta) = (X_i \ \beta)_{1\ldots k}
++  \Sigma_i^{new,old}(X_i,\theta) \,
+\Big(\big(\Sigma_i^{old,old}(X_i,\theta)\big)^{-1} \big(y_i^{k+1\ldots
+p} -  (X_i \ \beta)_{k+1\ldots p}\big)\Big)
+\]</span> and</p>
+<p><span class="math display">\[
+A_i(\beta, \theta) = \Sigma_i^{new,new}(X_i,\theta) -
+\Sigma_i^{old,new}(X_i,\theta)
+\Big(\Sigma_i^{old,old}(X_i,\theta)\Big)^{-1}
+\Sigma_i^{new,old}(X_i,\theta) \ .
+\]</span> Note that <span class="math inline">\(A_i\)</span> does not
+depend on <span class="math inline">\(\beta\)</span>.</p>
+</div>
+<div id="implementation-of-predict" class="section level3">
+<h3>Implementation of <code>predict</code></h3>
+<p>For implementing <code>predict()</code>, only <span class="math inline">\(\widehat{\mu}_i:=\mu_i(\widehat{\beta},\widehat{\theta})\)</span>
+is required.</p>
+<p>For <code>predict(interval = &quot;confidence&quot;)</code> additionally
+standard errors are required. These could be derived using the delta
+methods since <span class="math inline">\(\mu_i\)</span> is a function
+of the estimated model parameters <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\theta\)</span>. This would require the Jacobian
+<span class="math inline">\(\nabla\mu_i(\beta,\theta)|_{\big(\widehat{\beta},\widehat{\theta}\big)}\)</span>
+in addition to the estimated variance covariance matrix of the parameter
+estimate <span class="math inline">\(\big(\widehat{\beta},\widehat{\theta}\big)\)</span>,
+<span class="math inline">\(\widehat{S}\)</span>. Standard errors for
+<span class="math inline">\(\widehat{\mu}^{\,(i)}\)</span> are then
+given by the square root of the diagonal elements of <span class="math display">\[
+\Big(\nabla\mu_i(\beta,\theta)|_{\big(\widehat{\beta},\widehat{\theta}\big)}\Big)^\top\quad
+\widehat{S} \quad
+\Big(\nabla\mu_i(\beta,\theta)|_{\big(\widehat{\beta},\widehat{\theta}\big)}\Big)
+\]</span> For <code>predict(interval = &quot;prediction&quot;)</code> one would
+use the square root of the diagonal elements of <span class="math inline">\(A_i\big(\widehat{\beta},\widehat{\theta}\big)\)</span>
+instead. The delta method could again be used to make upper and lower
+boundaries reflect parameter estimation uncertainty.</p>
+<p>Alternatively, both intervals can be derived using a parametric
+bootstrap sample of the unrestricted parameters <span class="math inline">\(\theta\)</span>. This would probably also be
+easier for the <code>interval = &quot;prediction&quot;</code> case.</p>
+<p>Please note that for these intervals, we assume that the distribution
+is approximately normal: we use <span class="math inline">\(\mu_{i,j}(\hat\beta, \hat\theta) \pm Z_{\alpha} *
+sqrt(A_{i, j, j}(\hat\beta, \hat\theta))\)</span> to construct it, where
+<span class="math inline">\(\mu_{i,j}(\hat\beta, \hat\theta)\)</span> is
+the <span class="math inline">\(j\)</span>th element of <span class="math inline">\(\mu_i(\hat\beta, \hat\theta)\)</span>, and <span class="math inline">\(A_{i, j, j}(\hat\beta, \hat\theta)\)</span> is the
+<span class="math inline">\(j,j\)</span> element of <span class="math inline">\(A_i(\hat\beta, \hat\theta)\)</span>.</p>
+</div>
+<div id="parametric-sampling-for-prediction-interval" class="section level3">
+<h3>Parametric Sampling for Prediction Interval</h3>
+<p>With the conditional variance formula</p>
+<p><span class="math display">\[
+Var(Y_i) = Var(E(Y_i|\theta)) + E(Var(Y_i|\theta))
+\]</span></p>
+<p>and the conditional expectation <span class="math inline">\(E(Y_i|\theta)\)</span> and the conditional
+variance <span class="math inline">\(Var(Y_i|\theta)\)</span> being
+already described as</p>
+<p><span class="math display">\[
+E(Y_i|\theta) = \mu_i(\beta, \theta)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Var(Y_i|\theta) = A_i(\beta, \theta),
+\]</span></p>
+<p>we can sample on <span class="math inline">\(\theta\)</span> and
+obtain <span class="math inline">\(\beta\)</span>, then calculate the
+variance of conditional mean and the mean of conditional variance.</p>
+</div>
+<div id="prediction-of-conditional-mean-for-new-subjects" class="section level3">
+<h3>Prediction of Conditional Mean for New Subjects</h3>
+<p>If there are no observations for a subject, then the prediction is
+quite simple:</p>
+<p><span class="math display">\[
+  Y_i = X_i \hat\beta
+\]</span></p>
+</div>
+</div>
+<div id="simulate-response" class="section level2">
+<h2>Simulate response</h2>
+<p>To create simulation of responses from a fitted model, we have
+multiple situations: whether this simulation is conditional on both
+<span class="math inline">\(\theta\)</span> and <span class="math inline">\(\beta\)</span> estimates, or it is marginal?</p>
+<div id="conditional-simulation" class="section level3">
+<h3>Conditional Simulation</h3>
+<p>Under conditional simulation setting, the variance-covariance matrix,
+and the expectation of <span class="math inline">\(Y_i\)</span> are
+already given in <a href="#mathematical-derivations">Mathematical
+Derivations</a>.</p>
+<p>Please note that in implementation of <code>predict</code> function,
+we only use the diagonal elements of <span class="math inline">\(A_i\)</span>, however, here we need to make use of
+the full matrix <span class="math inline">\(A_i\)</span> to obtain
+correctly correlated simulated observations.</p>
+</div>
+<div id="marginal-simulation" class="section level3">
+<h3>Marginal Simulation</h3>
+<p>To simulate marginally, we take the variance of <span class="math inline">\(\hat\theta\)</span> and <span class="math inline">\(\hat\beta\)</span> into consideration. For each
+simulation, we first generate <span class="math inline">\(\theta\)</span> assuming it approximately follows
+a multivariate normal distribution. Then, conditional on the <span class="math inline">\(\theta\)</span> we sampled, we generate <span class="math inline">\(\beta\)</span> also assuming it approximately
+follows a multivariate normal distribution.</p>
+<p>Now we have <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\beta\)</span> estimates, and we just follow the
+<a href="#conditional-simulation">conditional simulation</a>.</p>
+</div>
+<div id="implementation-of-simulate" class="section level3">
+<h3>Implementation of <code>simulate</code></h3>
+<p>To implement <code>simulate</code> function, we first ensure that the
+expectation (<span class="math inline">\(\mu\)</span>) and
+variance-covariance matrix (<span class="math inline">\(A\)</span>) are
+generated in <code>predict</code> function, for each of the
+subjects.</p>
+<p>For <code>simulate(method = &quot;conditional&quot;)</code>, we use the
+estimated <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\beta\)</span> to construct the <span class="math inline">\(\mu\)</span> and <span class="math inline">\(A\)</span> directly, and generate response with
+<span class="math inline">\(N(\mu, A)\)</span> distribution.</p>
+<p>For <code>simulate(method = &quot;marginal&quot;)</code>, for each repetition
+of simulation, we generate <span class="math inline">\(\theta_{new}\)</span> from the mmrm fit, where the
+estimate of <span class="math inline">\(\theta\)</span> and
+variance-covariance matrix of <span class="math inline">\(\theta\)</span> are provided. Using the generated
+<span class="math inline">\(\theta_{new}\)</span>, we then obtain the
+<span class="math inline">\(\beta_{new}\)</span> and its
+variance-covariance matrix, with <span class="math inline">\(\theta_{new}\)</span> and the data used in
+fit.</p>
+<p>Then we sample <span class="math inline">\(\beta\)</span> as follows.
+We note that on the <code>C++</code> side we already have the robust
+Cholesky decomposition of the inverse of its asymptotic covariance
+matrix: <span class="math display">\[
+cov(\hat\beta) = (X^\top W X)^{-1} = (LDL^\top)^{-1}
+\]</span> Hence we make sure to report the lower triangular matrix <span class="math inline">\(L\)</span> and the diagonal matrix <span class="math inline">\(D\)</span> back to the <code>R</code> side, and
+afterwards we can generate <span class="math inline">\(\beta\)</span>
+samples as follows: <span class="math display">\[
+\beta_{sample} = \beta_{new} + L^{-\top}D^{-1/2}z_{sample}
+\]</span> where <span class="math inline">\(z_{sample}\)</span> is drawn
+from the standard multivariate normal distribution, since <span class="math display">\[
+cov(L^{-\top}D^{-1/2}z_{sample})
+= L^{-\top}D^{-1/2} I_p D^{-1/2} L^{-1}
+= L^{-\top}D^{-1}L^{-1}
+= (LDL^\top)^{-1}
+= cov(\hat\beta)
+\]</span> We note that calculating <span class="math inline">\(w =
+L^{-\top}D^{-1/2}z_{sample}\)</span> is efficient via backwards solving
+<span class="math display">\[
+L^\top w = D^{-1/2}z_{sample}
+\]</span> since <span class="math inline">\(L^\top\)</span> is upper
+right triangular.</p>
+<p>Then we simulate the observations once with
+<code>simulate(method = &quot;conditional&quot;, beta = beta_sample, theta = theta_new)</code>.
+We pool all the repetitions together and thus obtain the marginal
+simulation results.</p>
+</div>
+</div>
+<div id="relationship-between-predict-and-simulate-results" class="section level2">
+<h2>Relationship Between <code>predict</code> and <code>simulate</code>
+Results</h2>
+<p>We summarize the different options for <code>predict</code> and
+<code>simulate</code> methods and explain how they relate to each
+other.</p>
+<div id="predict-options" class="section level3">
+<h3><code>predict</code> options</h3>
+<ol style="list-style-type: decimal">
+<li><code>predict(type = &quot;confidence&quot;)</code> gives the variance of the
+predictions conditional on the <span class="math inline">\(\theta\)</span> estimate, taking into account the
+uncertainty of estimating <span class="math inline">\(\beta\)</span>. So
+here we ignore the uncertainty in estimating <span class="math inline">\(\theta\)</span>. It also does not add measurement
+error <span class="math inline">\(\epsilon\)</span>. We can use this
+prediction when we are only interested in predicting the mean of the
+unobserved <span class="math inline">\(y_i\)</span>, assuming the
+estimated <span class="math inline">\(\theta\)</span> as the true
+variance parameters.</li>
+<li><code>predict(type = &quot;prediction&quot;)</code> in contrast takes into
+account the full uncertainty, including the variance of <span class="math inline">\(\theta\)</span> and the measurement error <span class="math inline">\(\epsilon\)</span>. We can use this prediction when
+we are interested in reliable confidence intervals for the unobserved
+<span class="math inline">\(y_i\)</span> as well as the observed <span class="math inline">\(y_i\)</span>, assuming we would like to predict
+repeated observations from the same subjects and time points.</li>
+</ol>
+</div>
+<div id="simulate-options" class="section level3">
+<h3><code>simulate</code> options</h3>
+<ol style="list-style-type: decimal">
+<li><code>simulate(type = &quot;conditional&quot;)</code> simulates observations
+while keeping the <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\beta\)</span> estimates fixed. It adds
+measurement errors <span class="math inline">\(\epsilon\)</span> when
+generating the simulated values. Hence the mean of the simulated values
+will be within the confidence intervals from
+<code>predict(type = &quot;conditional&quot;)</code>.</li>
+<li><code>simulate(type = &quot;marginal&quot;)</code> simulates observations
+while taking into account the uncertainty of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\theta\)</span> through sampling from their
+asymptotic frequentist distributions. On top of that, it also adds
+measurement errors <span class="math inline">\(\epsilon\)</span>. This
+hence is using the same distribution as
+<code>predict(type = &quot;prediction&quot;)</code>.</li>
+</ol>
+</div>
+</div>
+<div id="comparison-with-sas" class="section level2">
+<h2>Comparison with <code>SAS</code></h2>
+<p>In <code>SAS</code>, from <code>proc mixed</code>, we are able to
+generate predictions using the <code>outp</code> argument in the
+<code>model</code> statement. For example:</p>
+<pre class="sas"><code>PROC MIXED DATA = fev_data method=reml;
+  CLASS RACE(ref = &#39;Asian&#39;) AVISIT(ref = &#39;VIS4&#39;) SEX(ref = &#39;Male&#39;) ARMCD(ref = &#39;PBO&#39;) USUBJID;
+  MODEL FEV1 = ARMCD / ddfm=Satterthewaite solution chisq outp=pred;
+  REPEATED AVISIT / subject=USUBJID type=un r rcorr;
+  LSMEANS ARMCD / pdiff=all cl alpha=0.05 slice=AVISIT;
+RUN;</code></pre>
+<p>However, there are some differences between the <code>SAS</code>
+implementation and our <code>mmrm</code> package, described as
+follows:</p>
+<ol style="list-style-type: decimal">
+<li>While <code>mmrm</code> and <code>SAS</code> both provide predicted
+means (conditional on other observations) for unobserved records,
+<code>SAS</code> also provides predicted means for observed records
+while <code>mmrm</code> does not. The rationale is that in the
+<code>mmrm</code> package we want to be consistent with the notion of
+predictions conditional on the observed records - which means that
+observed records are observed and therefore there is no prediction
+uncertainty anymore.</li>
+<li>The prediction standard error is different between <code>mmrm</code>
+and <code>SAS</code>. While in <code>SAS</code> the prediction standard
+error is conditional on the estimated variance parameters <span class="math inline">\(\theta\)</span>, in <code>mmrm</code> the marginal
+prediction standard error is provided. The rationale is that in the
+<code>mmrm</code> package we want to take into account the full
+uncertainty about parameter estimates including <span class="math inline">\(\theta\)</span>.</li>
+<li>The prediction intervals in <code>SAS</code> are based on the t
+distribution, while currently in <code>mmrm</code> we use the normal
+distribution. We will be considering an extension towards using the t
+distribution in the future and welcome feedback on this detail.</li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

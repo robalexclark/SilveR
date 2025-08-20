@@ -45,4 +45,4 @@ p.adjust(p, "hochberg")
 ###################################################
 p.adjust(p, "hommel") 
 
-
+sessionInfo()

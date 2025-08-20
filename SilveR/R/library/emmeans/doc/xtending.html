@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.10.6" />
+<meta name="author" content="emmeans package, Version 1.11.2" />
 
 
 <title>For developers: Extending emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">For developers: Extending
 <strong>emmeans</strong></h1>
-<h4 class="author">emmeans package, Version 1.10.6</h4>
+<h4 class="author">emmeans package, Version 1.11.2</h4>
 
 
 
@@ -183,7 +183,7 @@ method. Look at the one for <code>lm</code> objects:</p>
 ##     recover_data(fcall, delete.response(terms(object)), object$na.action, 
 ##         frame = frame, pwts = weights(object), ...)
 ## }
-## &lt;bytecode: 0x0000029ba3c61b58&gt;
+## &lt;bytecode: 0x0000024ce678dd90&gt;
 ## &lt;environment: namespace:emmeans&gt;</code></pre>
 <p>Note that all it does is obtain the <code>call</code> component and
 call the method for class <code>call</code>, with additional arguments
@@ -295,7 +295,7 @@ Following this advice, let’s take a look at it:</p>
 ##     X &lt;- model.matrix(Terms, m, contrasts.arg = object$contrasts)
 ##     drop(X %*% object$coefficients)
 ## }
-## &lt;bytecode: 0x0000029bae26b420&gt;
+## &lt;bytecode: 0x0000024ce0aa9578&gt;
 ## &lt;environment: namespace:MASS&gt;</code></pre>
 <div id="eblqs" class="section level6">
 <h6></h6>
@@ -456,7 +456,7 @@ matrix of those predictions. In those cases, we recommend also setting
 for checking whether the <code>nuisance</code> argument can be used in
 <code>ref_grid()</code>, and it is not absolutely necessary because we
 also check to see if <code>X</code> is the identity. But it provides a
-more efficient and reliable check. The code for nuisamce factors relies
+more efficient and reliable check. The code for nuisance factors relies
 on the structure of model matrices where columns are associated with
 model terms. So it is not possible to process nuisance factors with a
 re-gridded basis.</p>

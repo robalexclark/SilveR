@@ -6,6 +6,7 @@
 #ifdef WIN32
   #include <windows.h>
 #endif
+#include <R.h>
 
 /* static char SpaceChars[3] = {" " "\7"}; */
 /* static char NumChars[14]  = {"0123456789-+."}; */
@@ -122,24 +123,24 @@
 #ifndef CALLOC
 #define CALLOC(ptr, nr)\
   if(!((void *) ptr = calloc((size_t)(nr), sizeof(*ptr))) && nr) {\
-    printf("calloc of %d bytes failed on line %d of file %s\n",\
-           (size_t) nr * sizeof(*ptr), __LINE__, __FILE__);\
+    Rprintf("calloc of %d bytes failed on line %d of file %s\n",\
+            (size_t) nr * sizeof(*ptr), __LINE__, __FILE__);\
   }
 #endif
 
 #ifndef MALLOC
 #define MALLOC(ptr, nr)\
   if(!((void *) ptr = malloc((size_t)((size_t) (nr) * sizeof(*ptr)))) && nr) {\
-    printf("malloc of %d bytes failed on line %d of file %s\n",\
-           (size_t) nr * sizeof(*ptr), __LINE__, __FILE__);\
+    Rprintf("malloc of %d bytes failed on line %d of file %s\n",\
+            (size_t) nr * sizeof(*ptr), __LINE__, __FILE__);\
   }
 #endif
 
 #ifndef REALLOC
 #define REALLOC(ptr, nr)\
   if(!((void *) ptr = realloc(ptr, (size_t)((size_t) (nr) * sizeof(*ptr)))) && nr) {\
-    printf("realloc of %d bytes failed on line %d of file %s\n",\
-           (size_t) nr * sizeof(*ptr), __LINE__, __FILE__);\
+    Rprintf("realloc of %d bytes failed on line %d of file %s\n",\
+            (size_t) nr * sizeof(*ptr), __LINE__, __FILE__);\
   }
 #endif
 

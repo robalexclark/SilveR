@@ -1,4 +1,4 @@
-require(rms); require(MASS)
+require(rms); require(MASS); require(lattice)
 
 set.seed(1)
 n <- 100
@@ -6,33 +6,32 @@ y <- sample(1:8, n, TRUE)
 #y <- runif(n)
 x1 <- sample(c(-1,0,1), n, TRUE)
 x2 <- sample(c(-1,0,1), n, TRUE)
-system.time(f <- lrm(y ~ x1 + x2, eps=1e-5, trace=TRUE))
+f <- lrm(y ~ x1 + x2, eps=1e-5, trace=TRUE)
 fkeep <- f
 
 # xless(solve(vcov(f)))
 predict(f, data.frame(x1=0,x2=0), type='fitted.ind')
 
-h <- polr(as.factor(y) ~ x1 + x2, Hess=TRUE)
-v <- solve(vcov(h))
-s <- c(3:ncol(v),1:2)
-v[s,s]
-v[s,s] / solve(vcov(f))
+h <- polr(as.factor(y) ~ x1 + x2, control=list(reltol=1e-18))
+v <- vcov(h)
+s <- c(3:9, 1:2)   # put intercepts first
+v[s, s] - vcov(f)
 
+g <- orm(y ~ x1 + x2, trace=TRUE)
 
-g <- orm(y ~ x1 + x2, eps=1e-5, trace=TRUE)
-
-system.time(g <- orm(y ~ x1 + x2, eps=.001)) #, trace=TRUE)
+g <- orm(y ~ x1 + x2)
 coef(g) - coef(f)
 w <- vcov(g, intercepts='all') / vcov(f) - 1
 max(abs(w))
 
-
+if(FALSE) {
 m <- Mean(g)
-formals(m) <- list(lp=NULL, intercepts=runif(30000), values=runif(30001),
+formals(m) <- list(lp=NULL, X=NULL, intercepts=runif(30000), values=runif(30001),
                    conf.int=0, interceptRef=3, cumprob=function(x) 1 / (1 + exp(-x)))
 system.time(m(1))
 system.time(m(1:100))
 system.time(m(1:1000))
+}
 
 set.seed(1)
 n <- 1000
@@ -99,7 +98,8 @@ set.seed(3)
 n <- 300
 x1 <- runif(n)
 ddist <- datadist(x1); options(datadist='ddist')
-y  <- x1 + runif(n)
+yo  <- x1 + runif(n)
+y <- round(ordGroupBoot(yo, aprob=0.9995, B=1000), 3)
 x1[1:35] <- NA
 dat <- data.frame(x1, y)
 f <- orm(y ~ x1, x=TRUE, y=TRUE)
@@ -141,20 +141,33 @@ Ecdf(~ age, groups=is.na(sub), data=w)
 with(w, table(is.na(sub), gh))
 length(unique(w$gh))
 with(w, tapply(gh, is.na(sub), function(x) length(unique(x))))
+set.seed(3)
+w$ghr <- ordGroupBoot(w$gh)   # m=11 with B=0, 10 with slower B=1000
+# m=11 did not work with bootcov, use 12
+w$ghr <- cutGn(w$gh, 12)
+with(w, plot(ghr, gh))
+cutGn(w$gh, m=12, what='summary')
+
 w2 <- subset(w, !is.na(sub))
 wdata <- 2
+
+# Value of m is not sufficient for the smaller subset.  Re-do.
+w2$ghr <- ordGroupBoot(w2$gh) # B=2000: m=10
+
 ## If substitute ghr for gh, boot problem goes away for w2
-g <- orm(gh ~ age, family='loglog', data=if(wdata == 1) w else w2,
+
+g <- orm(ghr ~ age, family='loglog', data=if(wdata == 1) w else w2,
          x=TRUE, y=TRUE)
 set.seed(2)
 gb <- bootcov(g, B=100, pr=TRUE)
 ages <- seq(25, 80, by=5)
-bootcl  <- Predict(gb, age=ages, boot.type=c('percentile','basic')[2])
+bootcl    <- Predict(gb, age=ages, boot.type=c('percentile','basic')[2])
 bootclcov <- Predict(gb, age=ages, usebootcoef=FALSE)
 X <- predict(gb, newdata=bootcl, type='x')
-br <- gb$boot.Coef[,1] + X %*% t(gb$boot.Coef[,-1])
+i <- gb$interceptRef
+br <- gb$boot.Coef[, i] + X %*% t(gb$boot.Coef[, 'age'])
 if(wdata == 1) br1 <- br else br2 <- br
-z <- quantile(br[1,], c(.025,.975))
+z <- quantile(br[1,], c(.025, .975))
 plot(Predict(g, age=ages), ylim=c(-1.5,1.5), addpanel=function(...) {
   lpoints(23, z, col='red')
   for(j in 1:12) lpoints(ages[j], br[j,], col=gray(.9))
@@ -174,7 +187,7 @@ xb <- Function(g)(age=70)
 intercepts <- coef(f)[1 : num.intercepts(f)]
 # Compute Prob(Y <= y) from Prob(Y >= y) by shifting one level
 # Prob(Y > y) = Prob(Y >= y + epsilon)
-cumprob <- f$trans$cumprob
+cumprob <- eval(g$famfunctions[1])
 # xless(cumprob(intercepts + xb))
 names(intercepts) <- Lag(names(intercepts))
 names(intercepts) <- gsub('>=', '>', names(intercepts))
@@ -209,9 +222,9 @@ set.seed(1)
 n <- 1000
 x1 <- runif(n)
 y <- 30 + x1 + rnorm(n)
-f <- orm(y ~ x1, family=probit)
+f <- orm(y ~ x1, family='probit')
 y2 <- y + 20
-f2 <- orm(y2 ~ x1, family=probit)
+f2 <- orm(y2 ~ x1, family='probit')
 plot(coef(f), coef(f2)) # unaffected by shift
 
 g  <- ols(y ~ x1)
@@ -226,7 +239,7 @@ text(-32, 2, paste('Slope:', round(co[2], 4)))
 abline(a=co[1], b=co[2], col='gray70')
 
 ## Compare coefficients with those from partial likelihood (Cox model)
-orm(y ~ pol(x1,2), family=loglog)
+orm(y ~ pol(x1,2), family='loglog')
 require(survival)
 cph(Surv(y) ~ pol(x1,2))
 

@@ -26,6 +26,7 @@ This vignette contains answers to questions received from users or posted on dis
  2. [I have three (or two or four) factors that interact](#interactions)
  3. [I have covariate(s) that interact(s) with factor(s)](#trends)
  3. [I have covariate(s) and am fitting a polynomial model](#polys)
+ 3. [I have transformed covariate(s)](#trancovs)
  3. [Some "significant" comparisons have overlapping confidence intervals](#CIerror)
  4. [All my pairwise comparisons have the same *P* value](#notfactor)
  5. [emmeans() doesn't work as expected](#numeric)
@@ -40,6 +41,7 @@ This vignette contains answers to questions received from users or posted on dis
  12. [`emmeans()` completely ignores my P-value adjustments](#noadjust)
  13. [`emmeans()` gives me pooled *t* tests, but I expected Welch's *t*](#nowelch)
  14. [I want to see more digits](#rounding)
+ 15. [I want to reproduce results from Stata's `margins` command](#stata)
 
 
 [Index of all vignette topics](vignette-topics.html)
@@ -128,6 +130,38 @@ the default reference grid uses the mean of each covariate -- and `mean(xsq)` is
 usually not the same as `mean(x)^2`. So you need to use `at` to ensure that the
 covariates are set consistently with respect to the model. See [this subsection
 of the "basics" vignette](basics.html#depcovs) for an example.
+
+## I have transformed covariate(s) {#trancovs}
+Suppose you have this code:
+```
+mod <- lm(log(strength) ~ machine + sqrt(diameter), data = fiber)
+emmeans(mod, "machine")
+```
+This yields adjusted means of `log(strength)` for each machine. But be aware that
+these results are predictions at the mean `diameter`, not at the mean `sqrt(diameter)`.
+That is because **emmeans** determines the variables in a model via `all.vars()`:
+```
+all.vars(formula(mod))
+## [1] "strength" "machine"  "diameter"
+```
+... and note that this includes `diameter`, not `sqrt(diameter)`.
+
+It is quite reasonable to want the adjusted means computed at `mean(sqrt(diameter))`,
+and if you want that to be done, your options are:
+
+  1. Create a separate variable for `sqrt(diameter)` and use that in fitting the model
+  2. Use `at = list(diameter = mean(sqrt(fiber$diameter))^2)`
+  3. Use `cov.reduce = \(x) mean(sqrt(x))^2` (but this will be used for *all* covariates)
+
+In (2) and (3), be careful that the transformed means be back-transformed.
+
+Why can't we just use the means of the transformed predictors automatically?
+Because in **R**, lots of model formulas include function calls for lots of
+different reasons, and it would be very difficult to identify which are intended
+to be treated as transformed predictors.
+
+[Back to Contents](#contents)
+
 
 ## Some "significant" comparisons have overlapping confidence intervals {#CIerror}
 <!-- @index Confidence intervals!Overlapping; Comparisons!with overlapping CIs@over -->
@@ -427,6 +461,20 @@ routine that shows only relevant digits. If you temporarily want to see more
 digits, add `|> as.data.frame()` to the code line. In addition, piping
 `|> data.frame()` will disable formatting of test statistics and P values (but 
 unfortunately will also suppress messages below the tabular output).
+
+
+## I want to reproduce results from Stata's `margins` command {#stata}
+**Stata** is oriented towards observational data, and its `margins` command
+takes a counterfactuals approach. Thus, try adding a `counterfactuals`
+argument (see help for `ref_grid`). For example, to reproduce the results
+in Stata's Example 6 for `margins`, do:
+```r
+margex <- haven::read_dta("https://www.stata-press.com/data/r18/margex.dta")
+margex.glm <- glm(outcome ~ sex * factor(group) + age, data = margex,
+                  family = binomial)
+emmeans(margex.glm, "sex", counterfactuals = "sex")
+```
+
 
 [Index of all vignette topics](vignette-topics.html)
 

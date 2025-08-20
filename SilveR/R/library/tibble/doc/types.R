@@ -1,8 +1,11 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
+  eval = rlang::is_installed(c("dplyr", "tidyr", "purrr")),
   comment = "#>"
 )
+
+## ----include = FALSE----------------------------------------------------------
 library(dplyr)
 library(tidyr)
 library(purrr)
@@ -12,24 +15,24 @@ requireNamespace("hms", quietly = TRUE)
 library(tibble)
 
 ## ----howto, echo = FALSE, eval = FALSE----------------------------------------
-#  library(tidyverse)
-#  library(tidymodels)
-#  library(vctrs)
-#  library(pillar)
-#  
-#  all_methods <-
-#    c("vec_ptype_abbr", "vec_ptype_full", "type_sum") %>%
-#    map(methods) %>%
-#    map(as.character) %>%
-#    map(~ gsub("^.*[.]", "", .x)) %>%
-#    unlist() %>%
-#    unique()
-#  
-#  set_names(rep_along(all_methods, list("")), all_methods) %>%
-#    dput()
+# library(tidyverse)
+# library(tidymodels)
+# library(vctrs)
+# library(pillar)
+# 
+# all_methods <-
+#   c("vec_ptype_abbr", "vec_ptype_full", "type_sum") %>%
+#   map(methods) %>%
+#   map(as.character) %>%
+#   map(~ gsub("^.*[.]", "", .x)) %>%
+#   unlist() %>%
+#   unique()
+# 
+# set_names(rep_along(all_methods, list("")), all_methods) %>%
+#   dput()
 
 ## ----data, echo = FALSE-------------------------------------------------------
-data <- list(
+data <- compact(list(
   "Atomic" = rlang::quos(
     logical = TRUE,
     integer = 1L,
@@ -49,7 +52,7 @@ data <- list(
     difftime = vctrs::new_duration(1)
   ),
 
-  "Objects from other packages" = rlang::quos(
+  "Objects from other packages" = if (rlang::is_installed(c("bit64", "blob", "hms"))) rlang::quos(
     hms = hms::hms(1),
     integer64 = bit64::as.integer64(1e10),
     blob = blob::blob(raw(1))
@@ -80,7 +83,7 @@ data <- list(
     expression = parse(text = "a <- 1\nb<- 2"),
     quosures = rlang::quos(a = 1)
   )
-)
+))
 
 ## ----table, echo = FALSE------------------------------------------------------
 tbl <-

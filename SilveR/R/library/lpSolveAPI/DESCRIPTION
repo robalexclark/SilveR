@@ -1,11 +1,19 @@
 Package: lpSolveAPI
-Version: 5.5.2.0-17.12
+Version: 5.5.2.0-17.14
 Title: R Interface to 'lp_solve' Version 5.5.2.0
-Author: lp_solve <https://lpsolve.sourceforge.net/> [aut],
-        Kjell Konis [aut],
-        Florian Schwendinger [aut, cre],
-        Kurt Hornik [ctb]
-Maintainer: Florian Schwendinger <FlorianSchwendinger@gmx.at>
+Authors@R: c(person(family = "lp_solve",
+                    role = "aut",
+                    email = "https://lpsolve.sourceforge.net/"),
+             person(given = "Kjell",
+                    family = "Konis",
+                    role = "aut"),
+             person(given = "Florian",
+                    family = "Schwendinger",
+                    role = c("aut", "cre"),
+                    email = "FlorianSchwendinger@gmx.at"),
+             person(given = "Kurt",
+                    family = "Hornik",
+                    role = "ctb"))
 Description: The lpSolveAPI package provides an R interface to 'lp_solve',
     a Mixed Integer Linear Programming (MILP) solver with support for pure
     linear, (mixed) integer/binary, semi-continuous and special ordered sets
@@ -13,8 +21,13 @@ Description: The lpSolveAPI package provides an R interface to 'lp_solve',
 License: LGPL-2
 RoxygenNote: 7.2.0
 NeedsCompilation: yes
-Packaged: 2024-07-19 06:13:53 UTC; f
+Packaged: 2025-04-14 07:42:48 UTC; f
+Author: lp_solve [aut],
+  Kjell Konis [aut],
+  Florian Schwendinger [aut, cre],
+  Kurt Hornik [ctb]
+Maintainer: Florian Schwendinger <FlorianSchwendinger@gmx.at>
 Repository: CRAN
-Date/Publication: 2024-07-19 06:40:01 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-07-20 23:51:08 UTC; windows
+Date/Publication: 2025-04-14 08:10:02 UTC
+Built: R 4.5.0; x86_64-w64-mingw32; 2025-04-15 23:50:55 UTC; windows
 Archs: x64

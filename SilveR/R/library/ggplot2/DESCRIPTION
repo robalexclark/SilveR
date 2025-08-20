@@ -1,5 +1,5 @@
 Package: ggplot2
-Version: 3.5.1
+Version: 3.5.2
 Title: Create Elegant Data Visualisations Using the Grammar of Graphics
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@posit.co", role = "aut",
@@ -44,7 +44,7 @@ Config/Needs/website: ggtext, tidyr, forcats, tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 Collate: 'ggproto.R' 'ggplot-global.R' 'aaa-.R'
         'aes-colour-fill-alpha.R' 'aes-evaluation.R'
         'aes-group-order.R' 'aes-linetype-size-shape.R'
@@ -108,7 +108,7 @@ Collate: 'ggproto.R' 'ggplot-global.R' 'aaa-.R'
         'utilities-resolution.R' 'utilities-tidy-eval.R' 'zxx.R'
         'zzz.R'
 NeedsCompilation: no
-Packaged: 2024-04-22 10:39:16 UTC; thomas
+Packaged: 2025-04-08 10:58:01 UTC; thomas
 Author: Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),
   Winston Chang [aut] (<https://orcid.org/0000-0002-1576-2126>),
   Lionel Henry [aut],
@@ -123,5 +123,5 @@ Author: Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),
   Posit, PBC [cph, fnd]
 Maintainer: Thomas Lin Pedersen <thomas.pedersen@posit.co>
 Repository: CRAN
-Date/Publication: 2024-04-23 08:00:08 UTC
-Built: R 4.3.3; ; 2024-11-24 03:14:14 UTC; windows
+Date/Publication: 2025-04-09 09:40:10 UTC
+Built: R 4.5.1; ; 2025-08-04 01:58:33 UTC; windows

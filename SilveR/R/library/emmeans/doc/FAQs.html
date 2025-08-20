@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.10.6" />
+<meta name="author" content="emmeans package, Version 1.11.2" />
 
 
 <title>FAQs for emmeans</title>
@@ -57,7 +57,7 @@ ul.task-list{list-style: none;}
 
 
 <h1 class="title toc-ignore">FAQs for emmeans</h1>
-<h4 class="author">emmeans package, Version 1.10.6</h4>
+<h4 class="author">emmeans package, Version 1.11.2</h4>
 
 
 
@@ -80,6 +80,7 @@ interact</a></li>
 factor(s)</a></li>
 <li><a href="#polys">I have covariate(s) and am fitting a polynomial
 model</a></li>
+<li><a href="#trancovs">I have transformed covariate(s)</a></li>
 <li><a href="#CIerror">Some “significant” comparisons have overlapping
 confidence intervals</a></li>
 <li><a href="#notfactor">All my pairwise comparisons have the same
@@ -105,6 +106,8 @@ P-value adjustments</a></li>
 <li><a href="#nowelch"><code>emmeans()</code> gives me pooled <em>t</em>
 tests, but I expected Welch’s <em>t</em></a></li>
 <li><a href="#rounding">I want to see more digits</a></li>
+<li><a href="#stata">I want to reproduce results from Stata’s
+<code>margins</code> command</a></li>
 </ol>
 <p><a href="vignette-topics.html">Index of all vignette topics</a></p>
 </div>
@@ -203,6 +206,40 @@ reference grid uses the mean of each covariate – and
 that the covariates are set consistently with respect to the model. See
 <a href="basics.html#depcovs">this subsection of the “basics”
 vignette</a> for an example.</p>
+</div>
+<div id="trancovs" class="section level2">
+<h2>I have transformed covariate(s)</h2>
+<p>Suppose you have this code:</p>
+<pre><code>mod &lt;- lm(log(strength) ~ machine + sqrt(diameter), data = fiber)
+emmeans(mod, &quot;machine&quot;)</code></pre>
+<p>This yields adjusted means of <code>log(strength)</code> for each
+machine. But be aware that these results are predictions at the mean
+<code>diameter</code>, not at the mean <code>sqrt(diameter)</code>. That
+is because <strong>emmeans</strong> determines the variables in a model
+via <code>all.vars()</code>:</p>
+<pre><code>all.vars(formula(mod))
+## [1] &quot;strength&quot; &quot;machine&quot;  &quot;diameter&quot;</code></pre>
+<p>… and note that this includes <code>diameter</code>, not
+<code>sqrt(diameter)</code>.</p>
+<p>It is quite reasonable to want the adjusted means computed at
+<code>mean(sqrt(diameter))</code>, and if you want that to be done, your
+options are:</p>
+<ol style="list-style-type: decimal">
+<li>Create a separate variable for <code>sqrt(diameter)</code> and use
+that in fitting the model</li>
+<li>Use
+<code>at = list(diameter = mean(sqrt(fiber$diameter))^2)</code></li>
+<li>Use <code>cov.reduce = \(x) mean(sqrt(x))^2</code> (but this will be
+used for <em>all</em> covariates)</li>
+</ol>
+<p>In (2) and (3), be careful that the transformed means be
+back-transformed.</p>
+<p>Why can’t we just use the means of the transformed predictors
+automatically? Because in <strong>R</strong>, lots of model formulas
+include function calls for lots of different reasons, and it would be
+very difficult to identify which are intended to be treated as
+transformed predictors.</p>
+<p><a href="#contents">Back to Contents</a></p>
 </div>
 <div id="CIerror" class="section level2">
 <h2>Some “significant” comparisons have overlapping confidence
@@ -331,9 +368,9 @@ emmeans(pg.lm, consec ~ percent)</code></pre>
 ## 
 ## $contrasts
 ##  contrast              estimate     SE df t.ratio p.value
-##  percent12 - percent9    0.1796 0.0561 23   3.202  0.0110
+##  percent12 - percent9    0.1796 0.0561 23   3.202  0.0111
 ##  percent15 - percent12   0.0378 0.0582 23   0.650  0.8613
-##  percent18 - percent15   0.0825 0.0691 23   1.194  0.5201
+##  percent18 - percent15   0.0825 0.0691 23   1.194  0.5200
 ## 
 ## Results are averaged over the levels of: source 
 ## Results are given on the log (not the response) scale. 
@@ -533,6 +570,19 @@ temporarily want to see more digits, add
 <code>|&gt; data.frame()</code> will disable formatting of test
 statistics and P values (but unfortunately will also suppress messages
 below the tabular output).</p>
+</div>
+<div id="stata" class="section level2">
+<h2>I want to reproduce results from Stata’s <code>margins</code>
+command</h2>
+<p><strong>Stata</strong> is oriented towards observational data, and
+its <code>margins</code> command takes a counterfactuals approach. Thus,
+try adding a <code>counterfactuals</code> argument (see help for
+<code>ref_grid</code>). For example, to reproduce the results in Stata’s
+Example 6 for <code>margins</code>, do:</p>
+<pre class="r"><code>margex &lt;- haven::read_dta(&quot;https://www.stata-press.com/data/r18/margex.dta&quot;)
+margex.glm &lt;- glm(outcome ~ sex * factor(group) + age, data = margex,
+                  family = binomial)
+emmeans(margex.glm, &quot;sex&quot;, counterfactuals = &quot;sex&quot;)</code></pre>
 <p><a href="vignette-topics.html">Index of all vignette topics</a></p>
 </div>
 

@@ -1060,7 +1060,6 @@ typedef MYBOOL (__WINAPI write_MPS_func)(lprec *lp, FILE *output);
 typedef MYBOOL (__WINAPI write_freemps_func)(lprec *lp, char *filename);
 typedef MYBOOL (__WINAPI write_freeMPS_func)(lprec *lp, FILE *output);
 typedef MYBOOL (__WINAPI write_XLI_func)(lprec *lp, char *filename, char *options, MYBOOL results);
-typedef MYBOOL (__WINAPI write_basis_func)(lprec *lp, char *filename);
 typedef MYBOOL (__WINAPI write_params_func)(lprec *lp, char *filename, char *options);
 
 
@@ -1357,7 +1356,6 @@ struct _lprec
   write_freemps_func            *write_freemps;
   write_freeMPS_func            *write_freeMPS;
   write_XLI_func                *write_XLI;
-  write_basis_func              *write_basis;
   write_params_func             *write_params;
 
   /* Spacer */
@@ -1959,7 +1957,6 @@ lprec __EXPORT_TYPE * __WINAPI read_lp(FILE *filename, int verbose, char *lp_nam
 lprec __EXPORT_TYPE * __WINAPI read_LP(char *filename, int verbose, char *lp_name);
 /* Old-style lp format file parser */
 
-MYBOOL __EXPORT_TYPE __WINAPI write_basis(lprec *lp, char *filename);
 MYBOOL __EXPORT_TYPE __WINAPI read_basis(lprec *lp, char *filename, char *info);
 /* Read and write basis from/to file in CPLEX BAS format */
 

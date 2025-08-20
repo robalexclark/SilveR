@@ -1,5 +1,5 @@
 Package: doBy
-Version: 4.6.24
+Version: 4.7.0
 Title: Groupwise Statistics, LSmeans, Linear Estimates, Utilities
 Authors@R: c(
     person(given = "Ulrich", family = "Halekoh",
@@ -7,13 +7,7 @@ Authors@R: c(
     person(given = "Søren", family = "Højsgaard",
         email = "sorenh@math.aau.dk", role = c("aut", "cre", "cph"))
   )
-Maintainer: Søren Højsgaard <sorenh@math.aau.dk>
-Description: Utility package containing:
-    1) Facilities for working with grouped data: 'do' something to data
-    stratified 'by' some variables.
-    2) LSmeans (least-squares means), general linear estimates.
-    3) Restrict functions to a smaller domain.
-    4) Miscellaneous other utilities.
+Description: Utility package containing: Main categories: Working with grouped data: 'do' something to data when  stratified 'by' some variables.  General linear estimates. Data handling utilities. Functional programming, in particular restrict functions to a smaller domain. Miscellaneous functions for data handling. Model stability in connection with model selection. Miscellaneous other tools. 
 Encoding: UTF-8
 VignetteBuilder: knitr
 LazyData: true
@@ -27,9 +21,10 @@ Suggests: geepack, knitr, lme4, markdown, multcomp, pbkrtest (>=
         0.5.2), survival, testthat (>= 2.1.0)
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-10-07 19:46:33 UTC; sorenh
+Packaged: 2025-06-29 20:24:22 UTC; sorenh
 Author: Ulrich Halekoh [aut, cph],
   Søren Højsgaard [aut, cre, cph]
+Maintainer: Søren Højsgaard <sorenh@math.aau.dk>
 Repository: CRAN
-Date/Publication: 2024-10-07 23:20:12 UTC
-Built: R 4.3.3; ; 2024-11-24 04:47:54 UTC; windows
+Date/Publication: 2025-06-29 20:50:02 UTC
+Built: R 4.5.1; ; 2025-08-04 03:14:33 UTC; windows

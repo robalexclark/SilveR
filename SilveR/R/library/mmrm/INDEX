@@ -1,0 +1,24 @@
+as.cov_struct           Coerce into a Covariance Structure Definition
+bcva_data               Example Data on BCVA
+component               Component Access for 'mmrm_tmb' Objects
+cov_struct              Define a Covariance Structure
+covariance_types        Covariance Types
+df_1d                   Calculation of Degrees of Freedom for
+                        One-Dimensional Contrast
+df_md                   Calculation of Degrees of Freedom for
+                        Multi-Dimensional Contrast
+emmeans_support         Support for 'emmeans'
+emp_start               Empirical Starting Value
+fev_data                Example Data on FEV1
+fit_mmrm                Low-Level Fitting Function for MMRM
+fit_single_optimizer    Fitting an MMRM with Single Optimizer
+format.cov_struct       Format Covariance Structure Object
+mmrm                    Fit an MMRM
+mmrm-package            'mmrm' Package
+mmrm_control            Control Parameters for Fitting an MMRM
+mmrm_tidiers            Tidying Methods for 'mmrm' Objects
+mmrm_tmb_methods        Methods for 'mmrm_tmb' Objects
+print.cov_struct        Print a Covariance Structure Object
+refit_multiple_optimizers
+                        Refitting MMRM with Multiple Optimizers
+std_start               Standard Starting Value

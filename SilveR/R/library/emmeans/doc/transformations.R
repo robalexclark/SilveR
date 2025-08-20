@@ -26,10 +26,10 @@ remm.src <- emmeans(regrid(pigs.rg), "source")
 summary(remm.src, infer = TRUE, null = 35)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  remm.src <- emmeans(pigs.lm, "source", regrid = "response")
+# remm.src <- emmeans(pigs.lm, "source", regrid = "response")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  emmeans(pigs.lm, "source", type = "response")
+# emmeans(pigs.lm, "source", type = "response")
 
 ## -------------------------------------------------------------------------------------------------
 neuralgia.glm <- glm(Pain ~ Treatment * Sex + Age, family = binomial(), data = neuralgia)
@@ -70,19 +70,19 @@ emmeans(warp.glm, ~ tension | wool, type = "response")
 emmeans(warp.glm, ~ tension | wool, type = "unlink")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  tran <- make.tran("asin.sqrt", 100)
-#  my.model <- with(tran,
-#      lmer(linkfun(percent) ~ treatment + (1|Block), data = mydata))
+# tran <- make.tran("asin.sqrt", 100)
+# my.model <- with(tran,
+#     lmer(linkfun(percent) ~ treatment + (1|Block), data = mydata))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  mydata <- transform(mydata, logy.5 = log(yield + 0.5))
-#  my.model <- lmer(logy.5 ~ treatment + (1|Block), data = mydata)
+# mydata <- transform(mydata, logy.5 = log(yield + 0.5))
+# my.model <- lmer(logy.5 ~ treatment + (1|Block), data = mydata)
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  my.rg <- update(ref_grid(my.model), tran = make.tran("genlog", .5))
+# my.rg <- update(ref_grid(my.model), tran = make.tran("genlog", .5))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  model.rg <- update(ref_grid(model), tran = "sqrt")
+# model.rg <- update(ref_grid(model), tran = "sqrt")
 
 ## -------------------------------------------------------------------------------------------------
 pigroot.lm <- lm(sqrt(conc) ~ source + factor(percent), data = pigs)
@@ -91,7 +91,7 @@ confint(logemm.src, type = "response")
 pairs(logemm.src, type = "response")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  regrid(emm, transform = "probit")
+# regrid(emm, transform = "probit")
 
 ## -------------------------------------------------------------------------------------------------
 log.emm <- regrid(neuralgia.emm, "log")
@@ -140,14 +140,14 @@ emtrends(fiber.lm, "machine", var = "scale(diameter, 24.133, 4.324)")
 coef(fiber.lm)[4:6]
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  mod <- some.fcn(scale(RT) ~ group + (1|subject), data = mydata)
-#  emmeans(mod, "group", type = "response",
-#          tran = make.tran("scale", y = mydata$RT))
+# mod <- some.fcn(scale(RT) ~ group + (1|subject), data = mydata)
+# emmeans(mod, "group", type = "response",
+#         tran = make.tran("scale", y = mydata$RT))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  mod <- with(make.tran("scale", y = mydata$RT),
-#              some.fcn(linkfun(RT) ~ group + (1|subject), data = mydata))
-#  emmeans(mod, "group", type = "response")
+# mod <- with(make.tran("scale", y = mydata$RT),
+#             some.fcn(linkfun(RT) ~ group + (1|subject), data = mydata))
+# emmeans(mod, "group", type = "response")
 
 ## ----message = FALSE------------------------------------------------------------------------------
 fib.lm <- lm(strength ~ machine * diameter, data = fiber)
@@ -170,7 +170,7 @@ ismod <- glm(count ~ spray, data = InsectSprays, family = poisson())
 emmeans(ismod, "spray", type = "response")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  emmeans(ismod, "spray", type = "response", bias.adj = TRUE)
+# emmeans(ismod, "spray", type = "response", bias.adj = TRUE)
 
 ## -------------------------------------------------------------------------------------------------
 with(InsectSprays, tapply(count, spray, mean))

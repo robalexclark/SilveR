@@ -10,7 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="author" content="emmeans package, Version 1.10.6" />
+<meta name="author" content="emmeans package, Version 1.11.2" />
 
 
 <title>Confidence intervals and tests in emmeans</title>
@@ -58,7 +58,7 @@ ul.task-list{list-style: none;}
 
 <h1 class="title toc-ignore">Confidence intervals and tests in
 emmeans</h1>
-<h4 class="author">emmeans package, Version 1.10.6</h4>
+<h4 class="author">emmeans package, Version 1.11.2</h4>
 
 
 
@@ -398,19 +398,19 @@ RG5 &lt;- ref_grid(mod5)
 contrast(RG5, &quot;consec&quot;, simple = &quot;percent&quot;)</code></pre>
 <pre class="ro"><code>## source = fish:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -6.64e-03 0.00285 17  -2.328  0.0831
+##  percent12 - percent9  -6.64e-03 0.00285 17  -2.328  0.0835
 ##  percent15 - percent12 -6.68e-05 0.00285 17  -0.023  1.0000
 ##  percent18 - percent15 -1.40e-03 0.00285 17  -0.489  0.9283
 ## 
 ## source = soy:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -4.01e-03 0.00255 17  -1.572  0.3171
+##  percent12 - percent9  -4.01e-03 0.00255 17  -1.572  0.3173
 ##  percent15 - percent12  2.61e-04 0.00255 17   0.102  0.9993
-##  percent18 - percent15 -2.18e-03 0.00361 17  -0.605  0.8873
+##  percent18 - percent15 -2.18e-03 0.00361 17  -0.605  0.8872
 ## 
 ## source = skim:
 ##  contrast               estimate      SE df t.ratio p.value
-##  percent12 - percent9  -5.26e-03 0.00255 17  -2.061  0.1398
+##  percent12 - percent9  -5.26e-03 0.00255 17  -2.061  0.1395
 ##  percent15 - percent12 -2.86e-03 0.00285 17  -1.001  0.6526
 ##  percent18 - percent15 -3.76e-03 0.00383 17  -0.982  0.6650
 ## 
@@ -498,10 +498,10 @@ example.</p>
 </div>
 <div id="equiv" class="section level2">
 <h2>Testing equivalence, noninferiority, and nonsuperiority</h2>
-<!-- @index Tests!Equivalence; Tests!Noninferiority; `test()`!`delta` -->
+<!-- @index Tests!Equivalence; Tests!Non-inferiority; `test()`!`delta` -->
 <p>The <code>delta</code> argument in <code>summary()</code> or
 <code>test()</code> allows the user to specify a threshold value to use
-in a test of equivalence, noninferiority, or nonsuperiority. An
+in a test of equivalence, non-inferiority, or non-superiority. An
 equivalence test is kind of a backwards significance test, where small
 <em>P</em> values are associated with small differences relative to a
 specified threshold value <code>delta</code>. The help page for

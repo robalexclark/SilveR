@@ -2610,8 +2610,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -2622,7 +2623,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -2946,8 +2947,8 @@ characters printed, and be “fast enough”.</p></li>
 below. Boxes are functions and methods. Solid lines are function calls.
 Dotted lines represent information that a function obtains via argument
 or (in the case of options) queries actively.</p>
-<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-7f92e75415d0eb9ec18a" style="width:288px;height:288px;"></div>
-<script type="application/json" data-for="htmlwidget-7f92e75415d0eb9ec18a">{"x":{"diagram":"graph TD\n  print.tbl[\"print.tbl()\"] --> format.tbl[\"format.tbl()\"]\n  format.tbl --> tbl_format_setup[\"tbl_format_setup()\"]\n  options(Options: n and n_extra) -.-> tbl_format_setup\n  format.tbl --> tbl_format_header[\"tbl_format_header()\"]\n  format.tbl --> tbl_format_body[\"tbl_format_body()\"]\n  format.tbl --> tbl_format_footer[\"tbl_format_footer()\"]\n  tbl_format_setup -.-> tbl_sum[\"tbl_sum()\"]\n  tbl_sum -.-> setup(Setup object)\n  tbl_format_setup -.-> ctl_new_compound_pillar[\"ctl_new_compound_pillar()\"]\n  ctl_new_compound_pillar -.-> ctl_new_pillar[\"ctl_new_pillar()\"]\n  ctl_new_pillar -.-> setup(Setup object)\n  setup -.-> tbl_format_header\n  setup -.-> tbl_format_body\n  setup -.-> tbl_format_footer\n  tbl_format_header -.-> print(Printed output)\n  tbl_format_body -.-> print\n  tbl_format_footer -.-> print"},"evals":[],"jsHooks":[]}</script>
+<div class="DiagrammeR html-widget html-fill-item" id="htmlwidget-82f390a8a069953e3d3f" style="width:288px;height:288px;"></div>
+<script type="application/json" data-for="htmlwidget-82f390a8a069953e3d3f">{"x":{"diagram":"graph TD\n  print.tbl[\"print.tbl()\"] --> format.tbl[\"format.tbl()\"]\n  format.tbl --> tbl_format_setup[\"tbl_format_setup()\"]\n  options(Options: n and n_extra) -.-> tbl_format_setup\n  format.tbl --> tbl_format_header[\"tbl_format_header()\"]\n  format.tbl --> tbl_format_body[\"tbl_format_body()\"]\n  format.tbl --> tbl_format_footer[\"tbl_format_footer()\"]\n  tbl_format_setup -.-> tbl_sum[\"tbl_sum()\"]\n  tbl_sum -.-> setup(Setup object)\n  tbl_format_setup -.-> ctl_new_compound_pillar[\"ctl_new_compound_pillar()\"]\n  ctl_new_compound_pillar -.-> ctl_new_pillar[\"ctl_new_pillar()\"]\n  ctl_new_pillar -.-> setup(Setup object)\n  setup -.-> tbl_format_header\n  setup -.-> tbl_format_body\n  setup -.-> tbl_format_footer\n  tbl_format_header -.-> print(Printed output)\n  tbl_format_body -.-> print\n  tbl_format_footer -.-> print"},"evals":[],"jsHooks":[]}</script>
 <p>The pillar package uses debugme for debugging. Activating debugging
 for pillar is another way to track the control flow, see
 <code>vignette(&quot;debugme&quot;)</code> for details.</p>
@@ -3076,46 +3077,48 @@ Source code of <code>pillar:::tbl_format_setup.tbl()</code>
 <span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    rows <span class="ot">&lt;-</span> <span class="fu">tbl_nrow</span>(x)</span>
 <span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    lazy <span class="ot">&lt;-</span> <span class="fu">is.na</span>(rows)</span>
 <span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>    <span class="cf">if</span> (lazy) {</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">head</span>(x, n <span class="sc">+</span> <span class="dv">1</span>))</span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">nrow</span>(df) <span class="sc">&lt;=</span> n) {</span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>            rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>        }</span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>        <span class="cf">else</span> {</span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">vec_head</span>(df, n)</span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>        }</span>
-<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>    }</span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">df_head</span>(x, n)</span>
-<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>    }</span>
-<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(rows)) {</span>
-<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(df) <span class="sc">&gt;=</span> n)</span>
-<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>    }</span>
-<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (rows <span class="sc">&gt;</span> n)</span>
-<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>    }</span>
-<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>    <span class="cf">if</span> (needs_dots) {</span>
-<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> rows <span class="sc">-</span> n</span>
-<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>    }</span>
-<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>    }</span>
-<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a>    <span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a>    colonnade <span class="ot">&lt;-</span> <span class="fu">ctl_colonnade</span>(df, <span class="at">has_row_id =</span> <span class="cf">if</span> (<span class="sc">!</span>lazy <span class="sc">&amp;&amp;</span> </span>
-<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>        <span class="fu">.row_names_info</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
-<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a>        <span class="st">&quot;*&quot;</span></span>
-<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>    <span class="cf">else</span> <span class="cn">TRUE</span>, <span class="at">width =</span> width, <span class="at">controller =</span> x, <span class="at">focus =</span> focus)</span>
-<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a>    body <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>body</span>
-<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>    extra_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>extra_cols</span>
-<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a>    extra_cols_total <span class="ot">&lt;-</span> <span class="fu">length</span>(extra_cols)</span>
-<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a>    <span class="cf">if</span> (extra_cols_total <span class="sc">&gt;</span> max_extra_cols) {</span>
-<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a>        <span class="fu">length</span>(extra_cols) <span class="ot">&lt;-</span> max_extra_cols</span>
-<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a>    }</span>
-<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a>    abbrev_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>abbrev_cols</span>
-<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>    <span class="fu">new_tbl_format_setup</span>(<span class="at">x =</span> x, <span class="at">df =</span> df, <span class="at">width =</span> width, <span class="at">tbl_sum =</span> tbl_sum, </span>
-<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>        <span class="at">body =</span> body, <span class="at">rows_missing =</span> rows_missing, <span class="at">rows_total =</span> rows, </span>
-<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>        <span class="at">extra_cols =</span> extra_cols, <span class="at">extra_cols_total =</span> extra_cols_total, </span>
-<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines, <span class="at">abbrev_cols =</span> abbrev_cols)</span>
-<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>        max <span class="ot">&lt;-</span> <span class="fu">attr</span>(n, <span class="st">&quot;max&quot;</span>) <span class="sc">%||%</span> n</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">head</span>(x, max <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">nrow</span>(df) <span class="sc">&lt;=</span> max) {</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>            rows <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df)</span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>            n <span class="ot">&lt;-</span> rows</span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>        }</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>        <span class="cf">else</span> {</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">vec_head</span>(df, n)</span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>        }</span>
+<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>    }</span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">df_head</span>(x, n)</span>
+<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>    }</span>
+<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(rows)) {</span>
+<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(df) <span class="sc">&gt;=</span> n)</span>
+<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a>    }</span>
+<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>        needs_dots <span class="ot">&lt;-</span> (rows <span class="sc">&gt;</span> n)</span>
+<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a>    }</span>
+<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a>    <span class="cf">if</span> (needs_dots) {</span>
+<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> rows <span class="sc">-</span> n</span>
+<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a>    }</span>
+<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a>        rows_missing <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a>    }</span>
+<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>    <span class="fu">rownames</span>(df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a>    colonnade <span class="ot">&lt;-</span> <span class="fu">ctl_colonnade</span>(df, <span class="at">has_row_id =</span> <span class="cf">if</span> (<span class="sc">!</span>lazy <span class="sc">&amp;&amp;</span> </span>
+<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>        <span class="fu">.row_names_info</span>(x) <span class="sc">&gt;</span> <span class="dv">0</span>) </span>
+<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a>        <span class="st">&quot;*&quot;</span></span>
+<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a>    <span class="cf">else</span> <span class="cn">TRUE</span>, <span class="at">width =</span> width, <span class="at">controller =</span> x, <span class="at">focus =</span> focus)</span>
+<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a>    body <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>body</span>
+<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a>    extra_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>extra_cols</span>
+<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a>    extra_cols_total <span class="ot">&lt;-</span> <span class="fu">length</span>(extra_cols)</span>
+<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a>    <span class="cf">if</span> (extra_cols_total <span class="sc">&gt;</span> max_extra_cols) {</span>
+<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a>        <span class="fu">length</span>(extra_cols) <span class="ot">&lt;-</span> max_extra_cols</span>
+<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>    }</span>
+<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>    abbrev_cols <span class="ot">&lt;-</span> colonnade<span class="sc">$</span>abbrev_cols</span>
+<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>    <span class="fu">new_tbl_format_setup</span>(<span class="at">x =</span> x, <span class="at">df =</span> df, <span class="at">width =</span> width, <span class="at">tbl_sum =</span> tbl_sum, </span>
+<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a>        <span class="at">body =</span> body, <span class="at">rows_missing =</span> rows_missing, <span class="at">rows_total =</span> rows, </span>
+<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>        <span class="at">extra_cols =</span> extra_cols, <span class="at">extra_cols_total =</span> extra_cols_total, </span>
+<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a>        <span class="at">max_footer_lines =</span> max_footer_lines, <span class="at">abbrev_cols =</span> abbrev_cols)</span>
+<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>At the core, the internal function <code>ctl_colonnade()</code>
 composes the body. Its functionality and the customization points it

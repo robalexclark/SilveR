@@ -257,3 +257,4 @@ print(plot(res, complData = TRUE, clinRel = TRUE, CI = TRUE,
       doseEst = TRUE, lty = 1, colors = c("black", "gray", "black", "gray", "black")))
 
 
+sessionInfo()

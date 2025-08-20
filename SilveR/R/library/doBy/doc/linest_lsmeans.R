@@ -15,12 +15,18 @@ options("digits"=4, "width"=90, "prompt"="> ", "continue"="  ")
 options(useFancyQuotes="UTF-8")
 library(ggplot2)
 
-## ----eval=F-----------------------------------------------------------------------------
-#  lm( y ~ treat + block + year)
+## ----include=FALSE----------------------------------------------------------------------
+library(knitr)
+opts_chunk$set(
+concordance=TRUE
+)
 
 ## ----eval=F-----------------------------------------------------------------------------
-#  library(lme4)
-#  lmer( y ~ treat + (1|block) + (1|year))
+# lm( y ~ treat + block + year)
+
+## ----eval=F-----------------------------------------------------------------------------
+# library(lme4)
+# lmer( y ~ treat + (1|block) + (1|year))
 
 ## ---------------------------------------------------------------------------------------
 library(doBy)

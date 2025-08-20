@@ -166,45 +166,36 @@ mod <- multinom(
   data = hec,
   weights = hec$Freq
 )
-ggcoef_multinom(
-  mod,
-  exponentiate = TRUE
-)
-ggcoef_multinom(
-  mod,
-  exponentiate = TRUE,
-  type = "faceted"
-)
 
 ## ----fig.height=9, fig.width=6------------------------------------------------
-ggcoef_multinom(
-  mod,
-  exponentiate = TRUE,
-  type = "table"
-)
+mod |> ggcoef_model(exponentiate = TRUE)
+mod |> ggcoef_table(exponentiate = TRUE)
+
+## ----fig.height=4, fig.width=6------------------------------------------------
+mod |> ggcoef_dodged(exponentiate = TRUE)
+mod |> ggcoef_faceted(exponentiate = TRUE)
 
 ## -----------------------------------------------------------------------------
-ggcoef_multinom(
-  mod,
-  type = "faceted",
-  y.level_label = c("Brown" = "Brown\n(ref: Black)"),
-  exponentiate = TRUE
-)
+mod |>
+  ggcoef_faceted(
+    group_labels = c("Brown" = "Brown\n(ref: Black)"),
+    exponentiate = TRUE
+  )
 
 ## -----------------------------------------------------------------------------
 library(pscl)
 data("bioChemists", package = "pscl")
 mod <- zeroinfl(art ~ fem * mar | fem + mar, data = bioChemists)
 
-ggcoef_multicomponents(mod)
-ggcoef_multicomponents(mod, type = "f")
+## ----fig.height=9, fig.width=6------------------------------------------------
+mod |> ggcoef_model()
+mod |> ggcoef_table()
 
-## ----fig.height=7, fig.width=6------------------------------------------------
-ggcoef_multicomponents(mod, type = "t")
-ggcoef_multicomponents(
-  mod,
-  type = "t",
-  component_label = c(conditional = "Count", zero_inflated = "Zero-inflated")
+## ----fig.height=4, fig.width=6------------------------------------------------
+mod |> ggcoef_dodged(exponentiate = TRUE)
+mod |> ggcoef_faceted(
+  exponentiate = TRUE,
+  group_labels = c(conditional = "Count", zero_inflated = "Zero-inflated")
 )
 
 ## -----------------------------------------------------------------------------

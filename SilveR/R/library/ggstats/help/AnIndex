@@ -18,9 +18,11 @@ geom_stripped_cols	geom_stripped_rows
 geom_stripped_rows	geom_stripped_rows
 ggcascade	ggcascade
 ggcoef_compare	ggcoef_model
+ggcoef_dodged	ggcoef_model
+ggcoef_faceted	ggcoef_model
 ggcoef_model	ggcoef_model
-ggcoef_multicomponents	ggcoef_model
-ggcoef_multinom	ggcoef_model
+ggcoef_multicomponents	ggcoef_multicomponents
+ggcoef_multinom	ggcoef_multicomponents
 ggcoef_plot	ggcoef_model
 ggcoef_table	ggcoef_model
 gglikert	gglikert

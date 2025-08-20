@@ -11,7 +11,7 @@
 
 <meta name="author" content="Balasubramanian Narasimhan" />
 
-<meta name="date" content="2024-07-11" />
+<meta name="date" content="2025-06-02" />
 
 <title>Version 2.0 Notes</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Version 2.0 Notes</h1>
 <h4 class="author">Balasubramanian Narasimhan</h4>
-<h4 class="date">2024-07-11</h4>
+<h4 class="date">2025-06-02</h4>
 
 </div>
 
@@ -431,6 +431,74 @@ the help on <code>cuhre</code>. Such arguments can be directly passed to
 <pre class="r"><code>cubintegrate(f = my_dmvnorm, lower = rep(-0.5, 3), upper = c(1, 4, 2), method = &quot;cuhre&quot;,
              mean = rep(0, m), sigma = sigma, logdet = logdet,
              flags = list(verbose = 2))</code></pre>
+<pre><code>## Cuhre input parameters:
+##   ndim 3
+##   ncomp 1
+##   nvec 1
+##   epsrel 1e-05
+##   epsabs 1e-12
+##   flags 6
+##   mineval 0
+##   maxeval 1000000
+##   key 0
+##   statefile &quot;(null)&quot;
+## 
+## Iteration 1:  127 integrand evaluations so far
+## [1] 0.330292 +- 0.16199      chisq 0 (0 df)
+## 
+## Iteration 2:  381 integrand evaluations so far
+## [1] 0.334551 +- 0.0726708    chisq 0.000575398 (1 df)
+## 
+## Iteration 3:  635 integrand evaluations so far
+## [1] 0.334084 +- 0.0126583    chisq 0.000588724 (2 df)
+## 
+## Iteration 4:  889 integrand evaluations so far
+## [1] 0.334093 +- 0.00467064   chisq 0.000590497 (3 df)
+## 
+## Iteration 5:  1143 integrand evaluations so far
+## [1] 0.33411 +- 0.00213905    chisq 0.00060536 (4 df)
+## 
+## Iteration 6:  1397 integrand evaluations so far
+## [1] 0.334113 +- 0.000658593      chisq 0.000616501 (5 df)
+## 
+## Iteration 7:  1651 integrand evaluations so far
+## [1] 0.334113 +- 0.000290809      chisq 0.000617561 (6 df)
+## 
+## Iteration 8:  1905 integrand evaluations so far
+## [1] 0.334113 +- 4.6551e-05   chisq 0.000617624 (7 df)
+## 
+## Iteration 9:  2159 integrand evaluations so far
+## [1] 0.334113 +- 3.69574e-05      chisq 0.000617628 (8 df)
+## 
+## Iteration 10:  2413 integrand evaluations so far
+## [1] 0.334113 +- 6.66791e-05      chisq 0.000623038 (9 df)
+## 
+## Iteration 11:  2667 integrand evaluations so far
+## [1] 0.334113 +- 2.65953e-05      chisq 0.000637044 (10 df)
+## 
+## Iteration 12:  2921 integrand evaluations so far
+## [1] 0.334113 +- 3.88133e-05      chisq 0.000639547 (11 df)
+## 
+## Iteration 13:  3175 integrand evaluations so far
+## [1] 0.334113 +- 2.10511e-05      chisq 0.000643648 (12 df)
+## 
+## Iteration 14:  3429 integrand evaluations so far
+## [1] 0.334113 +- 1.31307e-05      chisq 0.000650986 (13 df)
+## 
+## Iteration 15:  3683 integrand evaluations so far
+## [1] 0.334113 +- 8.69938e-06      chisq 0.000654881 (14 df)
+## 
+## Iteration 16:  3937 integrand evaluations so far
+## [1] 0.334113 +- 1.88417e-05      chisq 0.000655658 (15 df)
+## 
+## Iteration 17:  4191 integrand evaluations so far
+## [1] 0.334113 +- 1.59906e-05      chisq 0.000656618 (16 df)
+## 
+## Iteration 18:  4445 integrand evaluations so far
+## [1] 0.334113 +- 4.85581e-06      chisq 0.000660585 (17 df)
+## 
+## Iteration 19:  4699 integrand evaluations so far
+## [1] 0.334113 +- 2.22627e-06      chisq 0.000668304 (18 df)</code></pre>
 <pre><code>## $integral
 ## [1] 0.3341125
 ## 
@@ -572,13 +640,13 @@ The Cuba C library on the other hand, will use the actual value of
 <div id="session-info" class="section level2">
 <h2>Session Info</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 4.4.1 (2024-06-14)
-## Platform: x86_64-apple-darwin20
-## Running under: macOS Sonoma 14.5
+<pre><code>## R version 4.5.0 (2025-04-11)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Sequoia 15.5
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRblas.0.dylib 
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -590,15 +658,15 @@ The Cuba C library on the other hand, will use the actual value of
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] mvtnorm_1.2-5  cubature_2.1.1 benchr_0.2.5  
+## [1] mvtnorm_1.3-3  cubature_2.1.4 benchr_0.2.5  
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.36      R6_2.5.1           fastmap_1.2.0      xfun_0.45         
-##  [5] cachem_1.1.0       knitr_1.48         htmltools_0.5.8.1  rmarkdown_2.27    
-##  [9] lifecycle_1.0.4    cli_3.6.3          RcppProgress_0.4.2 sass_0.4.9        
-## [13] jquerylib_0.1.4    compiler_4.4.1     tools_4.4.1        evaluate_0.24.0   
-## [17] bslib_0.7.0        Rcpp_1.0.12        yaml_2.3.9         rlang_1.1.4       
-## [21] jsonlite_1.8.8</code></pre>
+##  [1] digest_0.6.37      R6_2.6.1           fastmap_1.2.0      xfun_0.52         
+##  [5] cachem_1.1.0       knitr_1.50         htmltools_0.5.8.1  rmarkdown_2.29    
+##  [9] lifecycle_1.0.4    cli_3.6.5          RcppProgress_0.4.2 sass_0.4.10       
+## [13] jquerylib_0.1.4    compiler_4.5.0     tools_4.5.0        evaluate_1.0.3    
+## [17] bslib_0.9.0        Rcpp_1.0.14.12     yaml_2.3.10        rlang_1.1.6       
+## [21] jsonlite_2.0.0</code></pre>
 </div>
 
 

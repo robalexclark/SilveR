@@ -1,10 +1,12 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  eval = rlang::is_installed(c("dplyr", "formattable", "ggplot2", "tidyr")),
   error = (Sys.getenv("IN_PKGDOWN") == "")
 )
 
+## ----include = FALSE----------------------------------------------------------
 library(tibble)
 library(formattable)
 library(dplyr)
@@ -61,7 +63,7 @@ stocks <-
 stocks %>%
   pivot_wider(id_cols = id, names_from = year, values_from = stock)
 
-## ---- eval = (Sys.getenv("IN_GALLEY") == "")----------------------------------
+## ----eval = (Sys.getenv("IN_GALLEY") == ""), fig.alt="Example plot showing stock over time, separated by id"----
 library(ggplot2)
 
 # Needs https://github.com/tidyverse/ggplot2/pull/4065 or similar

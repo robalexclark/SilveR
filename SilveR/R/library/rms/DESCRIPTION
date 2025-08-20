@@ -1,15 +1,19 @@
 Package: rms
-Version: 6.7-1
-Date: 2023-09-09
+Version: 8.0-0
+Date: 2025-04-04
 Title: Regression Modeling Strategies
-Author: Frank E Harrell Jr <fh@fharrell.com>
+Authors@R: person(given = c("Frank", "E"),
+                  family = "Harrell Jr",
+                  role = c("aut", "cre"),
+                  email = "fh@fharrell.com")
 Maintainer: Frank E Harrell Jr <fh@fharrell.com>
-Depends: R (>= 3.5.0), Hmisc (>= 5.1-0)
-Imports: methods, survival, quantreg, ggplot2, SparseM, rpart, nlme (>=
-        3.1-123), polspline, multcomp, htmlTable (>= 1.11.0),
-        htmltools, MASS, cluster, digest, colorspace, knitr, grDevices
-Suggests: boot, tcltk, plotly (>= 4.5.6), mice, rmsb, nnet, VGAM,
-        lattice, kableExtra
+Depends: R (>= 4.4.0), Hmisc (>= 5.2-3)
+Imports: methods, survival, quantreg, ggplot2, Matrix, SparseM, rpart,
+        nlme (>= 3.1-123), polspline, multcomp, htmlTable (>= 1.11.0),
+        htmltools, MASS, cluster, digest, colorspace, knitr, grDevices,
+        scales
+Suggests: boot, tcltk, plotly (>= 4.5.6), mice, icenReg, rmsb, nnet,
+        VGAM, lattice, kableExtra
 Description: Regression modeling, testing, estimation, validation,
 	graphics, prediction, and typesetting by storing enhanced model design
 	attributes in the fit.  'rms' is a collection of functions that
@@ -27,10 +31,11 @@ Description: Regression modeling, testing, estimation, validation,
 License: GPL (>= 2)
 URL: https://hbiostat.org/R/rms/, https://github.com/harrelfe/rms
 LazyLoad: yes
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 NeedsCompilation: yes
-Packaged: 2023-09-11 23:40:19 UTC; harrelfe
+Packaged: 2025-04-04 13:43:57 UTC; harrelfe
+Author: Frank E Harrell Jr [aut, cre]
 Repository: CRAN
-Date/Publication: 2023-09-12 03:50:02 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-24 03:49:48 UTC; windows
+Date/Publication: 2025-04-04 15:50:02 UTC
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 02:59:58 UTC; windows
 Archs: x64

@@ -291,4 +291,4 @@ warpbreaks.cld <- cld(warpbreaks.mc)
 ###################################################
 plot(warpbreaks.cld)
 
-
+sessionInfo()

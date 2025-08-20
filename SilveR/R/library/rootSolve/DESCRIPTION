@@ -35,5 +35,5 @@ NeedsCompilation: yes
 Packaged: 2023-09-21 07:48:18 UTC; karlines
 Repository: CRAN
 Date/Publication: 2023-09-21 12:10:02 UTC
-Built: R 4.3.1; x86_64-w64-mingw32; 2023-10-20 00:52:06 UTC; windows
+Built: R 4.5.0; x86_64-w64-mingw32; 2025-04-08 00:43:33 UTC; windows
 Archs: x64

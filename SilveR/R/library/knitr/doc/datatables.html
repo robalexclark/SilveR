@@ -3,25 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="generator" content="litedown 0.4">
-<title>Display Tables with the JavaScript Library DataTables</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.13.44/css/prism-xcode.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.13.44/css/default.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<meta name="generator" content="litedown 0.6">
+<title>Display Tables with the JavaScript Library simple-datatables</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/css/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@10.0.0/dist/style.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/css/prism-xcode.min.css">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@10.0.0/dist/umd/simple-datatables.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
 </head>
 <body>
 <div class="frontmatter">
-<div class="title"><h1>Display Tables with the JavaScript Library DataTables</h1></div>
+<div class="title"><h1>Display Tables with the JavaScript Library simple-datatables</h1></div>
 <div class="author"><h2>Yihui Xie</h2></div>
-<div class="date"><h3>2024-11-06</h3></div>
+<div class="date"><h3>2025-03-15</h3></div>
 </div>
 <div class="body">
 <!--
 %\VignetteEngine{litedown::vignette}
-%\VignetteIndexEntry{Display Tables with the JavaScript Library DataTables}
+%\VignetteIndexEntry{Display Tables with the JavaScript Library simple-datatables}
 -->
-<h2 id="sec:jquery-datatables">jQuery DataTables</h2>
-<p>We can use the JavaScript library <a href="https://datatables.net"><strong>DataTables</strong></a> to generate enhanced tables in HTML. In the example below, we create a table for the <code>mtcars</code> data:</p>
+<p>We can use the JavaScript library <a href="https://github.com/fiduswriter/simple-datatables/"><strong>simple-datatables</strong></a> to generate enhanced tables in HTML. In the example below, we create a table for the <code>mtcars</code> data:</p>
 <div id="mtcars-table">
 <pre><code class="language-r">mtcars
 </code></pre>
@@ -496,14 +498,12 @@
 </div>
 <p>Note we assigned an <code>id</code> to the table, and next we use the <strong>DataTables</strong> library to initialize the table and you will get an interactive table.</p>
 <pre><code class="language-js">window.addEventListener('load', () =&gt; {
-  $('#mtcars-table &gt; table').DataTable();
+  new simpleDatatables.DataTable('#mtcars-table &gt; table');
 });
 </code></pre>
-<script>
-window.addEventListener('load', () => {
-  $('#mtcars-table > table').DataTable();
-});
-</script>
+<script>window.addEventListener('load', () => {
+  new simpleDatatables.DataTable('#mtcars-table > table');
+});</script>
 <p>By comparison, below is an ordinary table:</p>
 <pre><code class="language-r">mtcars
 </code></pre>
@@ -681,11 +681,6 @@ window.addEventListener('load', () => {
 </tr>
 </tbody>
 </table>
-<p>This vignette is only a toy example. I’d recommend you to use the <strong>DT</strong> package instead: <a href="https://github.com/rstudio/DT">https://github.com/rstudio/DT</a></p>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" defer></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" defer></script>
 </body>
 </html>

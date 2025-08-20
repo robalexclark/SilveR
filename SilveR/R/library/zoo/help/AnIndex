@@ -113,7 +113,6 @@ frequency<-	frequency
 frequency<-.zoo	frequency
 frequency<-.zooreg	frequency
 ggplot2.zoo	ggplot2.zoo
-head.ts	zoo
 head.zoo	zoo
 ifelse.zoo	zoo
 index	index
@@ -289,12 +288,12 @@ summary.zoo	zoo
 Sys.yearmon	yearmon
 Sys.yearqtr	yearqtr
 t.zoo	zoo
-tail.ts	zoo
 tail.zoo	zoo
 time.zoo	index
 time<-	index
 time<-.zoo	index
 time<-.zooreg	zooreg
+tinyplot.zoo	tinyplot.zoo
 transform.zoo	zoo
 unique.yearmon	yearmon
 unique.yearqtr	yearqtr

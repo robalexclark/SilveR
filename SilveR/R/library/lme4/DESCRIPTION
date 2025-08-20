@@ -1,5 +1,5 @@
 Package: lme4
-Version: 1.1-36
+Version: 1.1-37
 Title: Linear Mixed-Effects Models using 'Eigen' and S4
 Authors@R: c(
     person("Douglas","Bates", role="aut",
@@ -27,7 +27,9 @@ Authors@R: c(
     person("Emi", "Tanaka", role = "ctb",
       comment = c(ORCID="0000-0002-1455-259X")),
       person("Mikael", "Jagan", role = "ctb",
-      comment = c(ORCID="0000-0002-3542-2938"))
+      comment = c(ORCID="0000-0002-3542-2938")),
+    person("Ross D.", "Boylan", email="ross.boylan@ucsf.edu", role=("ctb"),
+        comment = c(ORCID="0009-0003-4123-8090"))
       )
 Description: Fit linear and generalized linear mixed-effects models.
     The models and their components are represented using S4 classes and
@@ -50,7 +52,7 @@ URL: https://github.com/lme4/lme4/
 BugReports: https://github.com/lme4/lme4/issues
 Encoding: UTF-8
 NeedsCompilation: yes
-Packaged: 2025-01-10 22:13:57 UTC; bolker
+Packaged: 2025-03-25 00:19:18 UTC; bolker
 Author: Douglas Bates [aut] (<https://orcid.org/0000-0001-8316-9503>),
   Martin Maechler [aut] (<https://orcid.org/0000-0002-8685-9910>),
   Ben Bolker [aut, cre] (<https://orcid.org/0000-0002-2127-0443>),
@@ -67,9 +69,10 @@ Author: Douglas Bates [aut] (<https://orcid.org/0000-0001-8316-9503>),
   Pavel N. Krivitsky [ctb, cph] (<https://orcid.org/0000-0002-9101-3362>,
     shared copyright on simulate.formula),
   Emi Tanaka [ctb] (<https://orcid.org/0000-0002-1455-259X>),
-  Mikael Jagan [ctb] (<https://orcid.org/0000-0002-3542-2938>)
+  Mikael Jagan [ctb] (<https://orcid.org/0000-0002-3542-2938>),
+  Ross D. Boylan [ctb] (<https://orcid.org/0009-0003-4123-8090>)
 Maintainer: Ben Bolker <bbolker+lme4@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-01-11 15:40:06 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2025-01-18 03:04:14 UTC; windows
+Date/Publication: 2025-03-26 05:40:02 UTC
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 01:38:44 UTC; windows
 Archs: x64

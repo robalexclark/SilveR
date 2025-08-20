@@ -41,7 +41,7 @@ ref_grid(mod5)
 (RG5 <- ref_grid(mod5, at = list(percent = c(9, 12, 15, 18))))
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  (RG5 <- ref_grid(mod5, cov.reduce = FALSE)
+# (RG5 <- ref_grid(mod5, cov.reduce = FALSE)
 
 ## ----fig.alt = "interaction-style plots of 'RG4' and 'RG5'. These show parallel trends along 'percent' for each 'source'. The one for 'RG5' consists of parallel straigt lines. The values plotted here can be obtained via 'summary(RG4)' and 'summary(RG5)'"----
 emmip(RG4, source ~ percent, style = "factor")
@@ -51,8 +51,8 @@ emmip(RG5, source ~ percent, style = "factor")
 emmeans(RG5, "source")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  emmeans(mod5, "source", at = list(percent = c(9, 12, 15, 18)))
-#  ## (same results as above)
+# emmeans(mod5, "source", at = list(percent = c(9, 12, 15, 18)))
+# ## (same results as above)
 
 ## ----fig.alt = "interaction-style plots for 'RG4' after back-transforming. Compared to the plots of 'RG4' without back-transforming, these trends increase rather than decrease (due to the inverse transformation) and they fan-out somewhat as 'percent' increases. The values plotted here are obtainable via 'summary(RG4, type = \"response\")'"----
 emmeans(RG4, "source", type = "response")
@@ -76,11 +76,11 @@ ref_grid(mcmod2)
 emmeans(mcmod2, "cyl", at = list(disp = 230.72, dispsq = 230.72^2))
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  deg <- 2
-#  mod <- lm(y ~ treat * poly(x, degree = deg), data = mydata)
+# deg <- 2
+# mod <- lm(y ~ treat * poly(x, degree = deg), data = mydata)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  emmeans(mod, ~ treat | x, at = list(x = 1:3), params = "deg")
+# emmeans(mod, ~ treat | x, at = list(x = 1:3), params = "deg")
 
 ## -----------------------------------------------------------------------------
 mcmod3 <- lm(mpg ~ disp * cyl, data = mtcars)
@@ -104,12 +104,12 @@ emmip(mod4, ~ percent | source, CIs = TRUE, type = "response") +
     geom_point(aes(x = percent, y = conc), data = pigs, pch = 2, color = "blue")
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  ci <- confint(mcrg, level = 0.90, adjust = "scheffe")
-#  xport <- print(ci, export = TRUE)
-#  cat("<font color = 'blue'>\n")
-#  knitr::kable(xport$summary, align = "r")
-#  for (a in xport$annotations) cat(paste(a, "<br>"))
-#  cat("</font>\n")
+# ci <- confint(mcrg, level = 0.90, adjust = "scheffe")
+# xport <- print(ci, export = TRUE)
+# cat("<font color = 'blue'>\n")
+# knitr::kable(xport$summary, align = "r")
+# for (a in xport$annotations) cat(paste(a, "<br>"))
+# cat("</font>\n")
 
 ## ----results = "asis", echo = FALSE-------------------------------------------
 ci <- confint(mcrg, level = 0.90, adjust = "scheffe")

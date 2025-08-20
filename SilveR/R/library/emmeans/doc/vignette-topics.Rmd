@@ -125,6 +125,7 @@ vignette: >
       * [Custom](comparisons.html#linfcns)
       * [Formula](comparisons.html#formulas)
       * [Multivariate](interactions.html#multiv)
+      * [Normalized](comparisons.html#nrmlze)
       * [Pairwise](comparisons.html#pairwise)
       * [Polynomial](comparisons.html#contrasts)
       * Tests of
@@ -207,7 +208,7 @@ vignette: >
       * [in *interactions: covariates*](interactions.html#covariates)
       * [in *interactions: oranges*](interactions.html#oranges)
   * [`estHook`](xtending.html#hooks)
-  * [Estimability](messy-data.html#nonestex)
+  * [Estimability](messy-data.html#nonest)
   * [Estimability issues](FAQs.html#NAs)
   * [Estimable functions](xplanations.html#joint_tests)
   * Estimated marginal means
@@ -461,10 +462,12 @@ vignette: >
       * [Auto-detection](messy-data.html#nest-trap)
   * Nesting factors
       * [Creating](utilities.html#groups)
-  * [Non-estimability](messy-data.html#nonestex)
+  * [Non-estimability](messy-data.html#nonest)
   * [`non.nuisance`](messy-data.html#nuisance)
   * [`NonEst` values](FAQs.html#NAs)
+  * [Normalized contrasts](comparisons.html#nrmlze)
   * [`(nothing)` in output](FAQs.html#nopairs)
+  * [`nrmlz.emmc`](comparisons.html#nrmlze)
   * [`nuisance`](messy-data.html#nuisance)
   * [Nuisance factors](messy-data.html#nuisance)
 
@@ -606,7 +609,7 @@ vignette: >
   * [Registering `recover_data` and `emm_basis` methods](xtending.html#exporting)
   * [`regrid` argument](transformations.html#stdize)
   * [`regrid()`](transformations.html#regrid)
-      * [probit or other lon-logit models](transformations.html#not-logit)
+      * [probit or other non-logit models](transformations.html#not-logit)
       * [`regrid` vs. `type`](transformations.html#regrid2)
       * [to obtain risk ratios](transformations.html#riskrats)
       * [`transform = "log"`](transformations.html#logs)
@@ -690,7 +693,7 @@ vignette: >
       * [`joint = TRUE`](confidence-intervals.html#joint)
   * Tests
       * [Equivalence](confidence-intervals.html#equiv)
-      * [Noninferiority](confidence-intervals.html#equiv)
+      * [Non-inferiority](confidence-intervals.html#equiv)
       * [Nonzero null](confidence-intervals.html#summary)
       * [One- and two-sided](confidence-intervals.html#summary)
   * [Too few means](AQuickStart.html#covar)

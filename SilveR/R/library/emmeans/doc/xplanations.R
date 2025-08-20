@@ -30,9 +30,11 @@ foo6@V <- mkmat(foo6@V, 0.6)
 plot(foo6, CIs = FALSE, comparisons = TRUE)
 
 ## ----message = FALSE, error = TRUE----------------------------------------------------------------
+try({
 foo8 = foo
 foo8@V <- mkmat(foo8@V, 0.8)
 plot(foo8, CIs = FALSE, comparisons = TRUE)
+})
 
 ## ----message = FALSE, fig.alt = "Plot D - foo8, separate panels for each B. This is a nicely behaved plot because we are not mixing together between-B and within-B SEs."----
 plot(foo8, CIs = FALSE, comparisons = TRUE, by = "B")

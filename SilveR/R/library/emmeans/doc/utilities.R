@@ -14,8 +14,8 @@ pigs.emm.s <- update(pigs.emm, infer = c(TRUE, TRUE), null = log(35),
 pigs.emm.s
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  emmeans(pigs.lm, "source", infer = c(TRUE, TRUE), null = log(35),
-#          calc = c(n = ".wgt."))
+# emmeans(pigs.lm, "source", infer = c(TRUE, TRUE), null = log(35),
+#         calc = c(n = ".wgt."))
 
 ## -------------------------------------------------------------------------------------------------
 get_emm_option("emmeans")
@@ -43,8 +43,8 @@ pigs.emm
 emm_options(opt.digits = TRUE)  # revert to optimal digits
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  options(emmeans = list(lmer.df = "satterthwaite",
-#                         contrast = list(infer = c(TRUE, FALSE))))
+# options(emmeans = list(lmer.df = "satterthwaite",
+#                        contrast = list(infer = c(TRUE, FALSE))))
 
 ## -------------------------------------------------------------------------------------------------
 rbind(pairs(pigs.emm.s), pigs.anal.p[[2]])

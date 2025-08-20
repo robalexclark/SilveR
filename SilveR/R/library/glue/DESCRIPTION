@@ -37,5 +37,5 @@ Author: Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>),
 Maintainer: Jennifer Bryan <jenny@posit.co>
 Repository: CRAN
 Date/Publication: 2024-09-30 22:30:01 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-24 01:24:20 UTC; windows
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 00:19:43 UTC; windows
 Archs: x64

@@ -2,7 +2,7 @@ Rscript                 Run the commands 'Rscript' and 'R CMD'
 Rscript_call            Call a function in a new R session via
                         'Rscript()'
 alnum_id                Generate ID strings
-attr                    Obtain an attribute of an object without
+attr2                   Obtain an attribute of an object without
                         partial matching
 base64_encode           Encode/decode data into/from base64 encoding.
 base64_uri              Generate the Data URI for a file
@@ -12,8 +12,6 @@ broken_packages         Find out broken packages and reinstall them
 bump_version            Bump version numbers
 cache_exec              Cache the execution of an expression in memory
                         or on disk
-cache_rds               Cache the value of an R expression to an RDS
-                        file
 crandalf_check          Submit check jobs to crandalf
 csv_options             Parse comma-separated chunk options
 decimal_dot             Evaluate an expression after forcing the
@@ -87,6 +85,8 @@ prose_index             Find the indices of lines in Markdown that are
                         prose (not code blocks)
 protect_math            Protect math expressions in pairs of backticks
                         in Markdown
+rand_unit               Pseudo-random numbers on [0, 1) based on a
+                        linear congruential generator
 raw_string              Print a character vector in its raw form
 read_all                Read all text files and concatenate their
                         content
@@ -130,6 +130,7 @@ try_silent              Try to evaluate an expression silently
 upload_ftp              Upload to an FTP server via 'curl'
 upload_imgur            Upload an image to imgur.com
 url_accessible          Test if a URL is accessible
+url_destination         Get the final destination of a URL
 url_filename            Extract filenames from a URLs
 valid_syntax            Check if the syntax of the code is valid
 yaml_body               Partition the YAML metadata and the body in a

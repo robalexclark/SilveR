@@ -8,6 +8,9 @@ knitr::opts_chunk$set(echo = TRUE)
 options("warn"=-1)  ## FIXME Fragile; issue with rankMatrix(, method="qr.R")
 
 ## -----------------------------------------------------------------------------
+library(broom)
+
+## -----------------------------------------------------------------------------
 data(shoes, package="MASS")
 shoes
 

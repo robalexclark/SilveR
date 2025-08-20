@@ -252,8 +252,8 @@ print(bwplot(lp ~ pos.x, data=immer2.cld,
 ### chunk number 32: immer-9
 ###################################################
 library("HH")
-immer.mmc <- glht(immer.aov, linfct = mcp(Var = "Tukey"), 
-                  focus = "Var", lmat.rows = 2:5)
+immer.mmc <- mmc(immer.aov, linfct = mcp(Var = "Tukey"), 
+                 focus = "Var", lmat.rows = 2:5)
 
 
 ###################################################
@@ -308,8 +308,8 @@ row.names(immer.lmat) <- c("M","P","S","T","V")
 ###################################################
 ### chunk number 39: immer-12
 ###################################################
-immer.mmc2 <- glht(immer.aov, linfct = mcp(Var = "Tukey"), 
-                   focus.lmat = immer.lmat)
+immer.mmc2 <- mmc(immer.aov, linfct = mcp(Var = "Tukey"), 
+                  focus.lmat = immer.lmat)
 
 
 ###################################################
@@ -842,4 +842,4 @@ trees513.ci$confint[, 2:3] <- trees513.ci$confint[, 3:2]
 ###################################################
 plot(trees513.ci, main = "", xlab = "Probability of browsing damage" )
 
-
+sessionInfo()

@@ -2,6 +2,74 @@
 title: "NEWS for the emmeans package"
 ---
 
+## emmeans 1.11.2
+  * In ordinal-model support, changed all estimator names to match mode names
+    (this was true for `"prob"` and `"exc.prob"`, but not `"cum.prob"`)
+    (postponed from CRAN version 1.11.1 to allow time for other package(s) to adapt)
+  * Fix to coding errors that prevented more than one counterfactual factor
+    from being used.
+
+## emmeans 1.11.1
+  * Modified `as.data.frame.summary_emm` so it can't loop infinitely (#525)
+  * Added documentation to `ref_grid` and `FAQs` vignette to clarify how we
+    use `all.vars()` to identify predictors, e.g. if a model formula contains 
+    `log(dose)`, the covariate is `dose`, not `log(dose)` (#523)
+  * **UPCOMING:** In ordinal-model support, changed all estimator names to match mode names
+    (this was true for `"prob"` and `"exc.prob"`, but not `"cum.prob"`).
+    [This change is on hold as it breaks another package.]
+  * Added a contrast function `opoly.emmc()` that does not rescale the coefficients
+    to integers, and allows unequally-spaced levels to be specified as `scores` 
+    (#527). In addition, unlike `poly.emmc`, `opoly.emmc` supports the
+    `exclude` and `include` arguments.
+  * Also added contrast functions `helmert.emmc` and `nrmlz.emmc`. The latter is
+    a wrapper that can be used to normalize the contrast coefficients from any
+    other `.emmc` function.
+  * Fixed a scoping issue in `contrast.emmGrid` to make a custom `.emmc` function
+    easier to find. This bug prevented some examples from being rendered correctly
+    in all contexts.
+  * Restored the `joint_tests()` code that was omitted in 1.11.0 because apparently
+    it was right the first time. (#528)
+  * Added an argument `npts` to `make.meanint()` and `make.symmint()` to facilitate
+    generating an interval with more than two points. 
+  * Fix to `test()` for situations with non-estimability and infinite df (#528)
+  * Added `linfct.emm_list())` method
+  * Made `emmobj()` less rigid (so that `as.emmGrid(as.list(obj))` more faithfully
+    reproduces `obj`)
+  * Added an optional `drop` argument (`TRUE` by default) to the `emm_list` methods.
+  * Added optional arguments `se.bhat` and `se.diff` to `emmobj()` (#529)
+  
+## emmeans 1.11.0
+  * Added a `linfct()` generic and default method that returns `object@linfct`
+  * Removed some code in `joint_tests()` that prevented some terms from
+    being tested in nested models. Alas, this is still not perfect.
+  * Added the possibility of specifying `.` in the `specs` argument of
+    `emmeans()` -- e.g., `emmeans(mod, ".")`, `emmeans(mod, pairwise ~ . | drug)`.
+    (#522).
+    This creates a list of all sets of means (and contrasts), thus creating 
+    an `emm_list` object. This also works in `emtrends()`.
+  * In certain `emm_list` methods, we changed the default for `which` from
+    `1` to to `NULL`
+
+## emmeans 1.10.7
+  * Spelling changes in several vignettes
+  * We have completely revamped the design of reference grids involving
+    counterfactuals. Now, if we specify counterfactuals `A` and `B`, the
+    reference grid comprises combinations of `A`, `B`, `actual_A`, and `actual_B`
+    the latter two used to track the original settings of `A` and `B` in the dataset.
+    We always average over combinations of these factors. The previous code was
+    a memory hog, and we have made it much more efficient for large datasets.
+  * `emmeans()` has also been revised to do special handling of counterfactual
+    reference grids. Whenever we average over a counterfactual `B`, we only
+    use the cases where `B == actual_B`, thus obtaining the same results as 
+    would be obtained when `B` is not regarded as a counterfactual.
+  * Tweaks to `regrid()` to create `@post.beta` slot correctly when there are 
+    non-estimable cases.
+  * Bug fix for scoping in `subset.emmGrid()` (#518)
+  * Changed `print.emmGrid()` so that it calls `show()` unless `export = TRUE`.
+    This change was made because I noticed that **pkgdown** uses `print()` rather 
+    than `show()` to display example results.
+  
+
 ## emmeans 1.10.6
   * Added new `add_submodels()` function that allows for comparison od estimates
     from different submodels (when supported)

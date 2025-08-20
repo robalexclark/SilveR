@@ -1,2 +1,2 @@
-CC=clang
+CC=gcc
 CFLAGS=-g -O2

@@ -12,9 +12,9 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;rms&rsquo; version 6.7-1</h2>
+</div><h2>Documentation for package &lsquo;rms&rsquo; version 8.0-0</h2>
 
-<ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
+<ul><li><a href="../DESCRIPTION" type="text/plain">DESCRIPTION file</a>.</li>
 <li><a href="../demo">Code demos</a>.  Use <a href="../../utils/help/demo">demo()</a> to run them.</li>
 <li><a href="../NEWS">Package NEWS</a>.</li>
 </ul>
@@ -55,6 +55,8 @@
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="anova.rms.html">anova.rms</a></td>
 <td>Analysis of Variance (Wald, LR, and F Statistics)</td></tr>
+<tr><td style="width: 25%;"><a href="as.data.frame.Ocens.html">as.data.frame.Ocens</a></td>
+<td>Convert 'Ocens' Object to Data Frame to Facilitate Subset</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">asis</a></td>
 <td>rms Special Transformation Functions</td></tr>
 </table>
@@ -88,6 +90,8 @@
 <tr><td style="width: 25%;"><a href="calibrate.html">calibrate.cph</a></td>
 <td>Resampling Model Calibration</td></tr>
 <tr><td style="width: 25%;"><a href="calibrate.html">calibrate.default</a></td>
+<td>Resampling Model Calibration</td></tr>
+<tr><td style="width: 25%;"><a href="calibrate.html">calibrate.orm</a></td>
 <td>Resampling Model Calibration</td></tr>
 <tr><td style="width: 25%;"><a href="calibrate.html">calibrate.psm</a></td>
 <td>Resampling Model Calibration</td></tr>
@@ -130,9 +134,9 @@
 <tr><td style="width: 25%;"><a href="pentrace.html">effective.df</a></td>
 <td>Trace AIC and BIC vs. Penalty</td></tr>
 <tr><td style="width: 25%;"><a href="ExProb.html">ExProb</a></td>
-<td>Function Generator For Exceedance Probabilities</td></tr>
+<td>Function Generators For Exceedance and Survival Probabilities</td></tr>
 <tr><td style="width: 25%;"><a href="ExProb.html">ExProb.orm</a></td>
-<td>Function Generator For Exceedance Probabilities</td></tr>
+<td>Function Generators For Exceedance and Survival Probabilities</td></tr>
 </table>
 
 <h2><a id="F">-- F --</a></h2>
@@ -159,6 +163,8 @@
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="importexport.html">ggplot</a></td>
 <td>Exported Functions That Were Imported From Other Packages</td></tr>
+<tr><td style="width: 25%;"><a href="ggplot.npsurv.html">ggplot.npsurv</a></td>
+<td>Title Plot npsurv Nonparametric Survival Curves Using ggplot2</td></tr>
 <tr><td style="width: 25%;"><a href="ggplot.Predict.html">ggplot.Predict</a></td>
 <td>Plot Effects of Variables Estimated by a Regression Model Fit Using ggplot2</td></tr>
 <tr><td style="width: 25%;"><a href="gIndex.html">gIndex</a></td>
@@ -201,8 +207,14 @@
 <td>Intervening Event Setup</td></tr>
 <tr><td style="width: 25%;"><a href="impactPO.html">impactPO</a></td>
 <td>Impact of Proportional Odds Assumpton</td></tr>
+<tr><td style="width: 25%;"><a href="infoMxop.html">infoMxop</a></td>
+<td>Operate on Information Matrices</td></tr>
+<tr><td style="width: 25%;"><a href="intCalibration.html">intCalibration</a></td>
+<td>Check Parallelism Assumption of Ordinal Semiparametric Models</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">interactions.containing</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
+<tr><td style="width: 25%;"><a href="is.na.Ocens.html">is.na.Ocens</a></td>
+<td>is.na Method for Ocens Objects</td></tr>
 </table>
 
 <h2><a id="L">-- L --</a></h2>
@@ -251,9 +263,7 @@
 <tr><td style="width: 25%;"><a href="lrm.html">lrm</a></td>
 <td>Logistic Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="lrm.fit.html">lrm.fit</a></td>
-<td>Logistic Model Fitter</td></tr>
-<tr><td style="width: 25%;"><a href="lrm.fit.bare.html">lrm.fit.bare</a></td>
-<td>lrm.fit.bare</td></tr>
+<td>lrm.fit</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">lrtest</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="LRupdate.html">LRupdate</a></td>
@@ -305,6 +315,14 @@
 <h2><a id="O">-- O --</a></h2>
 
 <table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="Ocens.html">Ocens</a></td>
+<td>Censored Ordinal Variable</td></tr>
+<tr><td style="width: 25%;"><a href="Ocens2ord.html">Ocens2ord</a></td>
+<td>Recode Censored Ordinal Variable</td></tr>
+<tr><td style="width: 25%;"><a href="Ocens2Surv.html">Ocens2Surv</a></td>
+<td>Ocens2Surv</td></tr>
+<tr><td style="width: 25%;"><a href="Olinks.html">Olinks</a></td>
+<td>Likehood-Based Statistics for Other Links for orm Fits</td></tr>
 <tr><td style="width: 25%;"><a href="ols.html">ols</a></td>
 <td>Linear Model Estimation Using Ordinary Least Squares</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">oos.loglik</a></td>
@@ -319,6 +337,10 @@
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">oos.loglik.psm</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
+<tr><td style="width: 25%;"><a href="ordESS.html">ordESS</a></td>
+<td>ordESS</td></tr>
+<tr><td style="width: 25%;"><a href="ordParallel.html">ordParallel</a></td>
+<td>Check Parallelism Assumption of Ordinal Semiparametric Models</td></tr>
 <tr><td style="width: 25%;"><a href="orm.html">orm</a></td>
 <td>Ordinal Regression Model</td></tr>
 <tr><td style="width: 25%;"><a href="orm.fit.html">orm.fit</a></td>
@@ -351,7 +373,7 @@
 <tr><td style="width: 25%;"><a href="plot.contrast.rms.html">plot.contrast.rms</a></td>
 <td>plot.contrast.rms</td></tr>
 <tr><td style="width: 25%;"><a href="ExProb.html">plot.ExProb</a></td>
-<td>Function Generator For Exceedance Probabilities</td></tr>
+<td>Function Generators For Exceedance and Survival Probabilities</td></tr>
 <tr><td style="width: 25%;"><a href="gIndex.html">plot.gIndex</a></td>
 <td>Calculate Total and Partial g-indexes for an rms Fit</td></tr>
 <tr><td style="width: 25%;"><a href="residuals.lrm.html">plot.lrm.partial</a></td>
@@ -362,6 +384,8 @@
 <td>Trace AIC and BIC vs. Penalty</td></tr>
 <tr><td style="width: 25%;"><a href="plot.Predict.html">plot.Predict</a></td>
 <td>Plot Effects of Variables Estimated by a Regression Model Fit</td></tr>
+<tr><td style="width: 25%;"><a href="plot.rexVar.html">plot.rexVar</a></td>
+<td>plot.rexVar</td></tr>
 <tr><td style="width: 25%;"><a href="sensuc.html">plot.sensuc</a></td>
 <td>Sensitivity to Unmeasured Covariables</td></tr>
 <tr><td style="width: 25%;"><a href="summary.rms.html">plot.summary.rms</a></td>
@@ -376,6 +400,8 @@
 <td>Dxy and Mean Squared Error by Cross-validating a Tree Sequence</td></tr>
 <tr><td style="width: 25%;"><a href="plot.xmean.ordinaly.html">plot.xmean.ordinaly</a></td>
 <td>Plot Mean X vs. Ordinal Y</td></tr>
+<tr><td style="width: 25%;"><a href="plotIntercepts.html">plotIntercepts</a></td>
+<td>Plot Intercepts</td></tr>
 <tr><td style="width: 25%;"><a href="plotp.Predict.html">plotp.Predict</a></td>
 <td>Plot Effects of Variables Estimated by a Regression Model Fit Using plotly</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">pol</a></td>
@@ -440,6 +466,8 @@
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="nomogram.html">print.nomogram</a></td>
 <td>Draw a Nomogram Representing a Regression Fit</td></tr>
+<tr><td style="width: 25%;"><a href="print.Ocens.html">print.Ocens</a></td>
+<td>print Method for Ocens Objects</td></tr>
 <tr><td style="width: 25%;"><a href="print.ols.html">print.ols</a></td>
 <td>Print ols</td></tr>
 <tr><td style="width: 25%;"><a href="orm.html">print.orm</a></td>
@@ -452,6 +480,8 @@
 <td>Compute Predicted Values and Confidence Limits</td></tr>
 <tr><td style="width: 25%;"><a href="psm.html">print.psm</a></td>
 <td>Parametric Survival Model</td></tr>
+<tr><td style="width: 25%;"><a href="print.rexVar.html">print.rexVar</a></td>
+<td>print.rexVar</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">print.rms</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="Rq.html">print.Rq</a></td>
@@ -482,6 +512,8 @@
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="psm.html">psm</a></td>
 <td>Parametric Survival Model</td></tr>
+<tr><td style="width: 25%;"><a href="Punits.html">Punits</a></td>
+<td>Prepare units for Printing and Plotting</td></tr>
 </table>
 
 <h2><a id="Q">-- Q --</a></h2>
@@ -502,6 +534,8 @@
 <td>Compute Predicted Values and Confidence Limits</td></tr>
 <tr><td style="width: 25%;"><a href="rms.trans.html">rcs</a></td>
 <td>rms Special Transformation Functions</td></tr>
+<tr><td style="width: 25%;"><a href="recode2integer.html">recode2integer</a></td>
+<td>recode2integer</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">related.predictors</a></td>
 <td>Miscellaneous Design Attributes and Utility Functions</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">reListclean</a></td>
@@ -522,6 +556,8 @@
 <td>Residuals from an 'lrm' or 'orm' Fit</td></tr>
 <tr><td style="width: 25%;"><a href="psm.html">residuals.psm</a></td>
 <td>Parametric Survival Model</td></tr>
+<tr><td style="width: 25%;"><a href="rexVar.html">rexVar</a></td>
+<td>rexVar</td></tr>
 <tr><td style="width: 25%;"><a href="rms.html">rms</a></td>
 <td>rms Methods and Generic Functions</td></tr>
 <tr><td style="width: 25%;"><a href="zzzrmsOverview.html">rms.Overview</a></td>
@@ -571,6 +607,8 @@
 <td>Cox Survival Estimates</td></tr>
 <tr><td style="width: 25%;"><a href="survest.cph.html">survest.cph</a></td>
 <td>Cox Survival Estimates</td></tr>
+<tr><td style="width: 25%;"><a href="survest.orm.html">survest.orm</a></td>
+<td>Title survest.orm</td></tr>
 <tr><td style="width: 25%;"><a href="survest.psm.html">survest.psm</a></td>
 <td>Parametric Survival Estimates</td></tr>
 <tr><td style="width: 25%;"><a href="rmsMisc.html">survest.rms</a></td>
@@ -581,12 +619,16 @@
 <td>Parametric Survival Model</td></tr>
 <tr><td style="width: 25%;"><a href="cph.html">Survival.cph</a></td>
 <td>Cox Proportional Hazards Model and Extensions</td></tr>
+<tr><td style="width: 25%;"><a href="ExProb.html">Survival.orm</a></td>
+<td>Function Generators For Exceedance and Survival Probabilities</td></tr>
 <tr><td style="width: 25%;"><a href="psm.html">Survival.psm</a></td>
 <td>Parametric Survival Model</td></tr>
 <tr><td style="width: 25%;"><a href="survplot.html">survplot</a></td>
 <td>Plot Survival Curves and Hazard Functions</td></tr>
 <tr><td style="width: 25%;"><a href="survplot.html">survplot.npsurv</a></td>
 <td>Plot Survival Curves and Hazard Functions</td></tr>
+<tr><td style="width: 25%;"><a href="survplot.orm.html">survplot.orm</a></td>
+<td>Title Survival Curve Plotting</td></tr>
 <tr><td style="width: 25%;"><a href="psm.html">survplot.residuals.psm.censored.normalized</a></td>
 <td>Parametric Survival Model</td></tr>
 <tr><td style="width: 25%;"><a href="survplot.html">survplot.rms</a></td>
@@ -670,5 +712,7 @@
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="rms.trans.html">%ia%</a></td>
 <td>rms Special Transformation Functions</td></tr>
+<tr><td style="width: 25%;"><a href="sub-.Ocens.html">[.Ocens</a></td>
+<td>Ocens</td></tr>
 </table>
 </div></body></html>

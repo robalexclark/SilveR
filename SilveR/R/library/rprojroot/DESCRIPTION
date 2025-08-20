@@ -1,6 +1,6 @@
 Package: rprojroot
 Title: Finding Files in Project Subdirectories
-Version: 2.0.4
+Version: 2.1.0
 Authors@R: 
     person(given = "Kirill",
            family = "M\u00fcller",
@@ -14,16 +14,20 @@ License: MIT + file LICENSE
 URL: https://rprojroot.r-lib.org/, https://github.com/r-lib/rprojroot
 BugReports: https://github.com/r-lib/rprojroot/issues
 Depends: R (>= 3.0.0)
-Suggests: covr, knitr, lifecycle, mockr, rlang, rmarkdown, testthat (>=
-        3.0.0), withr
+Suggests: covr, knitr, lifecycle, rlang, rmarkdown, testthat (>=
+        3.2.0), withr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2.9000
+Config/autostyle/scope: line_breaks
+Config/autostyle/strict: true
+Config/Needs/website: tidyverse/tidytemplate
 NeedsCompilation: no
-Packaged: 2023-11-05 06:47:23 UTC; kirill
-Author: Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>)
+Packaged: 2025-07-12 07:59:07 UTC; kirill
+Author: Kirill Müller [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-1416-3412>)
 Maintainer: Kirill Müller <kirill@cynkra.com>
 Repository: CRAN
-Date/Publication: 2023-11-05 10:20:02 UTC
-Built: R 4.3.2; ; 2024-01-18 01:55:37 UTC; windows
+Date/Publication: 2025-07-12 09:00:02 UTC
+Built: R 4.5.1; ; 2025-08-04 00:20:26 UTC; windows

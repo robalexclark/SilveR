@@ -1,3 +1,11 @@
+# waldo 0.6.2
+
+* `compare()` now goes into more details if you're comparing an S3 object with 
+  a base object of the same type (#218).
+* `compare()` ignores read-only S7 properties, only comparing the underlying data
+  stored in attributes (#219).
+* `compare()` can compare weakrefs.
+
 # waldo 0.6.1
 
 * Only use special bit64 comparison if package is installed.

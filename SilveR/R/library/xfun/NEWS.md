@@ -1,3 +1,31 @@
+# CHANGES IN xfun VERSION 0.52
+
+- `xfun::attr()` is deprecated (to avoid masking `base::attr()`). Please use `xfun::attr2()` or `base::attr(exact = TRUE)` instead.
+
+- Added an argument `date` to `pkg_bib()` to optionally include the date of retrieval in the bib entries (thanks, @HedvigS, #99).
+
+- Added a new function `url_destination()` to get the destination of a redirected URL.
+
+- Added a new function `rand_unit()` to generate pseudo-random numbers on `[0, 1)` based on a linear congruential generator.
+
+- Fixed a bug in `taml_load()` that would convert character values in arrays to lowercase.
+
+- Added arguments `strict` and `...` to `divide_chunk()` (thanks, @cderv, yihui/knitr#2225).
+
+- The function `cache_rds()` is no longer recommended. Please consider using `cache_exec()` instead (thanks, @lenz99, #100).
+
+- Removed the `solaris` argument from `upload_win_builder()`.
+
+# CHANGES IN xfun VERSION 0.51
+
+- `tojson()` supports more types of data now, and will indent sub-elements for lists. See the help page [`?xfun::tojson`](https://git.yihui.org/xfun/manual.html#sec:man-tojson) for details.
+
+- Updated the default API key for `upload_imgur()` since the previous default key stopped working for some reason (thanks, @camille-s @jennybc, #97).
+
+- `upload_imgur()` shows the error message instead of the error code when it fails to upload the image, which is more informative.
+
+- `download_file()` returns the path of the file downloaded instead of the command status code now.
+
 # CHANGES IN xfun VERSION 0.50
 
 - The function `isFALSE()` has been removed from this package. The deprecation notice was given two years ago: https://yihui.org/en/2023/02/xfun-isfalse/

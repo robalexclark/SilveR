@@ -429,7 +429,7 @@ R:</p>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>add</span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; function (x, y, z) </span></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; {</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;     .Call(&quot;_code_8f55301c00cc_add&quot;, x, y, z, PACKAGE = &quot;code_8f55301c00cc&quot;)</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;     .Call(&quot;_code_679540f4c4f1_add&quot;, x, y, z, PACKAGE = &quot;code_679540f4c4f1&quot;)</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; }</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="fu">add</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; [1] 6</span></span></code></pre></div>
@@ -579,9 +579,9 @@ while <code>sum_r()</code> is several orders of magnitude slower.</p>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 1 sum(x)       1.56µs    1.8µs   526493.        0B      0  </span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 2 sum_cpp(x)   1.44µs   1.64µs   541943.        0B     54.2</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 3 sum_r(x)    17.26µs  17.51µs    55794.      18KB      0</span></span></code></pre></div>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt; 1 sum(x)       1.64µs   1.89µs   485202.        0B        0</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 2 sum_cpp(x)   1.48µs   1.64µs   545707.        0B        0</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 3 sum_r(x)    17.26µs  17.38µs    56039.      18KB        0</span></span></code></pre></div>
 </div>
 <div id="vector-input-vector-output" class="section level3">
 <h3>Vector input, vector output</h3>
@@ -625,8 +625,8 @@ going to be fast.</p>
 <span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt;   expression             min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt;        &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; 1 pdist_r(0.5, y)     1.95ms   2.06ms      466.    7.63MB     216.</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; 2 pdist_cpp(0.5, y) 898.47µs 933.94µs     1052.    7.63MB     264.</span></span></code></pre></div>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; 1 pdist_r(0.5, y)     1.98ms   2.06ms      470.    7.63MB     224.</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; 2 pdist_cpp(0.5, y) 902.21µs 944.43µs     1031.    7.63MB     258.</span></span></code></pre></div>
 <p>On my computer, it takes around 5 ms with a 1 million element
 <code>y</code> vector. The C++ function is about 2.5 times faster, ~2
 ms, but assuming it took you 10 minutes to write the C++ function, you’d
@@ -1366,8 +1366,8 @@ running the loops in C++:</p>
 <span id="cb39-13"><a href="#cb39-13" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span id="cb39-14"><a href="#cb39-14" tabindex="-1"></a><span class="co">#&gt;   expression   min median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb39-15"><a href="#cb39-15" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co">#&gt; 1 r           14.8   14.7       1        32.3      Inf</span></span>
-<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="co">#&gt; 2 cpp          1      1        14.8       1        NaN</span></span></code></pre></div>
+<span id="cb39-16"><a href="#cb39-16" tabindex="-1"></a><span class="co">#&gt; 1 r           15.0   14.9       1        32.3      Inf</span></span>
+<span id="cb39-17"><a href="#cb39-17" tabindex="-1"></a><span class="co">#&gt; 2 cpp          1      1        15.0       1        NaN</span></span></code></pre></div>
 </div>
 <div id="r-vectorisation-versus-c-vectorisation" class="section level3">
 <h3>R vectorisation versus C++ vectorisation</h3>
@@ -1460,9 +1460,9 @@ Finally, we can benchmark our three approaches:</p>
 <span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 6</span></span>
 <span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
 <span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
-<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a><span class="co">#&gt; 1 vacc1      710.49µs 736.52µs     1328.    7.86KB     69.6</span></span>
-<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a><span class="co">#&gt; 2 vacc2       24.93µs  30.26µs    32210.  146.67KB     45.2</span></span>
-<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a><span class="co">#&gt; 3 vacc3        4.39µs   4.92µs   197034.   14.02KB     19.7</span></span></code></pre></div>
+<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a><span class="co">#&gt; 1 vacc1      719.26µs 776.99µs     1238.    7.86KB     61.7</span></span>
+<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a><span class="co">#&gt; 2 vacc2        24.6µs   30.3µs    31798.  146.68KB     44.6</span></span>
+<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a><span class="co">#&gt; 3 vacc3        4.39µs   4.88µs   191256.   14.02KB     19.1</span></span></code></pre></div>
 <p>Not surprisingly, our original approach with loops is very slow.
 Vectorising in R gives a huge speedup, and we can eke out even more
 performance (about ten times) with the C++ loop. I was a little
@@ -1527,8 +1527,7 @@ notes.)</p></li>
 <p>Writing performant code may also require you to rethink your basic
 approach: a solid understanding of basic data structures and algorithms
 is very helpful here. That’s beyond the scope of this vignette, but I’d
-suggest the <a href="https://www.algorist.com/"><em>Algorithm Design
-Manual</em></a> MIT’s <a href="https://web.archive.org/web/20200604134756/https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/"><em>Introduction
+suggest the <em>Algorithm Design Manual</em>, MIT’s <a href="https://web.archive.org/web/20200604134756/https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/"><em>Introduction
 to Algorithms</em></a>, <em>Algorithms</em> by Robert Sedgewick and
 Kevin Wayne which has a free <a href="http://algs4.cs.princeton.edu/home/">online textbook</a> and a
 matching <a href="https://www.coursera.org/learn/algorithms-part1">Coursera

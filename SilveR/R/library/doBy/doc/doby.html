@@ -3,72 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="generator" content="litedown 0.7">
 <title>doby: Groupwise computations and miscellaneous utilities</title>
-<style type="text/css">
-/**
- * Prism.s theme ported from highlight.js's xcode style
- */
-pre code {
-  padding: 1em;
-}
-.token.comment {
-  color: #007400;
-}
-.token.punctuation {
-  color: #999;
-}
-.token.tag,
-.token.selector {
-  color: #aa0d91;
-}
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol {
-  color: #1c00cf;
-}
-.token.property,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin {
-  color: #c41a16;
-}
-.token.inserted {
-  background-color: #ccffd8;
-}
-.token.deleted {
-  background-color: #ffebe9;
-}
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-  color: #9a6e3a;
-}
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-  color: #836c28;
-}
-.token.function,
-.token.class-name {
-  color: #DD4A68;
-}
-.token.regex,
-.token.important,
-.token.variable {
-  color: #5c2699;
-}
-.token.important,
-.token.bold {
-  font-weight: bold;
-}
-.token.italic {
-  font-style: italic;
-}
-</style>
 <style type="text/css">
 body {
   font-family: sans-serif;
@@ -76,76 +12,138 @@ body {
   margin: auto;
   padding: 1em;
   line-height: 1.5;
-  box-sizing: border-box;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
 }
-body, .footnotes, code { font-size: .9em; }
+body, .abstract, code, .footnotes, footer, #refs, .caption { font-size: .9em; }
 li li { font-size: .95em; }
-*, *:before, *:after {
-  box-sizing: inherit;
-}
+ul:has(li > input[type="checkbox"]) { list-style: none; padding-left: 1em; }
+*, :before, :after { box-sizing: border-box; }
+a { color: steelblue; }
 pre, img { max-width: 100%; }
-pre, pre:hover {
-  white-space: pre-wrap;
-  word-break: break-all;
-}
-pre code {
-  display: block;
-  overflow-x: auto;
-}
+pre { white-space: pre-wrap; word-break: break-word; }
+pre code { display: block; padding: 1em; overflow-x: auto; }
 code { font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace; }
-:not(pre) > code, code[class] { background-color: #F8F8F8; }
-code.language-undefined, pre > code:not([class]) {
-  background-color: inherit;
-  border: 1px solid #eee;
+:not(pre, th) > code, code[class], div > .caption { background: #f8f8f8; }
+pre > code:is(:not([class]), .language-plain, .language-none, .plain), .box, .figure, .table { background: inherit; border: 1px solid #eee; }
+pre > code {
+  &.message { border-color: #9eeaf9; }
+  &.warning { background: #fff3cd; border-color: #fff3cd; }
+  &.error { background: #f8d7da; border-color: #f8d7da; }
 }
+.fenced-chunk { border-left: 1px solid #666; }
+.code-fence {
+  opacity: .4;
+  border: 1px dashed #666;
+  border-left: 2px solid;
+  &:hover { opacity: inherit; }
+}
+.box, .figure, .table, table { margin: 1em auto; }
+div > .caption { padding: 1px 1em; }
+.figure { p:has(img, svg), pre:has(svg) { text-align: center; } }
+.flex-col { display: flex; justify-content: space-between; }
 table {
-  margin: auto;
-  border-top: 1px solid #666;
+  &:only-child:not(.table > *) { margin: auto; }
+  th, td { padding: 5px; font-variant-numeric: tabular-nums; }
+  thead, tfoot, tr:nth-child(even) { background: whitesmoke; }
+  thead th { border-bottom: 1px solid #ddd; }
+  &:not(.datatable-table) {
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+  }
 }
-table thead th { border-bottom: 1px solid #ddd; }
-th, td { padding: 5px; }
-thead, tfoot, tr:nth-child(even) { background: #eee; }
 blockquote {
   color: #666;
   margin: 0;
-  padding-left: 1em;
-  border-left: 0.5em solid #eee;
+  padding: 1px 1em;
+  border-left: .5em solid #eee;
 }
 hr, .footnotes::before { border: 1px dashed #ddd; }
 .frontmatter { text-align: center; }
-#TOC .numbered li { list-style: none; }
-#TOC .numbered { padding-left: 0; }
-#TOC .numbered ul { padding-left: 1em; }
-table, .body h2 { border-bottom: 1px solid #666; }
+#TOC {
+  a { text-decoration: none; }
+  ul { list-style: none; padding-left: 1em; }
+  & > ul { padding: 0; }
+  ul ul { border-left: 1px solid lightsteelblue; }
+}
+.body h2 { border-bottom: 1px solid #666; }
 .body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
-.footnote-ref a::before { content: "["; }
-.footnote-ref a::after { content: "]"; }
-section.footnotes::before {
-  content: "";
-  display: block;
-  max-width: 20em;
+.main-number::after { content: "."; }
+span[class^="ref-number-"] { font-weight: bold; }
+.ref-number-fig::after, .ref-number-tab::after { content: ":"; }
+.cross-ref-chp::before { content: "Chapter "; }
+.cross-ref-sec::before { content: "Section "; }
+.cross-ref-fig::before, .ref-number-fig::before { content: "Figure "; }
+.cross-ref-tab::before, .ref-number-tab::before { content: "Table "; }
+.cross-ref-eqn::before, .MathJax_ref:has(mjx-mtext > mjx-c + mjx-c)::before { content: "Equation "; }
+.abstract, #refs {
+  &::before { display: block; margin: 1em auto; font-weight: bold; }
+}
+.abstract::before { content: "Abstract"; text-align: center; }
+#refs::before { content: "Bibliography"; font-size: 1.5em; }
+.ref-paren-open::before { content: "("; }
+.ref-paren-close::after { content: ")"; }
+.ref-semicolon::after { content: "; "; }
+.ref-and::after { content: " and "; }
+.ref-et-al::after { content: " et al."; font-style: italic; }
+.footnote-ref a {
+  &::before { content: "["; }
+  &::after { content: "]"; }
+}
+section.footnotes {
+  margin-top: 2em;
+  &::before { content: ""; display: block; max-width: 20em; }
+}
+.fade {
+  background: repeating-linear-gradient(135deg, white, white 30px, #ddd 32px, #ddd 32px);
+  opacity: 0.6;
 }
 
 @media print {
-  body {
-    font-size: 12pt;
-    max-width: 100%;
-  }
-  tr, img { page-break-inside: avoid; }
+  body { max-width: 100%; }
+  tr, img { break-inside: avoid; }
 }
 @media only screen and (min-width: 992px) {
-  pre { white-space: pre; }
+  body:not(.pagesjs) pre:has(.line-numbers):not(:hover) { white-space: pre; }
 }
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/css/prism-xcode.min.css">
+<script src="https://cdn.jsdelivr.net/combine/npm/katex@0.16.21/dist/katex.min.js,npm/katex@0.16.21/dist/contrib/auto-render.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@xiee/utils@1.14.11/js/render-katex.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
 </head>
 <body>
 <div class="frontmatter">
 <div class="title"><h1>doby: Groupwise computations and miscellaneous utilities</h1></div>
 <div class="author"><h2>Søren Højsgaard</h2></div>
-<div class="date"><h3></h3></div>
 </div>
 <div class="body">
+<div id="TOC">
+<ul class="numbered">
+<li><a href="#chp:groupwise-computations"><span class="section-number main-number">1</span> Groupwise computations</a>
+<ul>
+<li><a href="#sec:summaryby-and-summary-by"><span class="section-number">1.1</span> summaryBy()  and summary_by()</a></li>
+<li><a href="#sec:orderby-and-order-by"><span class="section-number">1.2</span> orderBy() and order_by()</a></li>
+<li><a href="#sec:splitby-and-split-by"><span class="section-number">1.3</span> splitBy() and split_by()</a></li>
+<li><a href="#sec:subsetby-and-subset-by"><span class="section-number">1.4</span> subsetBy() and subset_by()</a></li>
+<li><a href="#sec:transformby-and-transform-by"><span class="section-number">1.5</span> transformBy() and transform_by()</a></li>
+<li><a href="#sec:lapplyby-and-lapply-by"><span class="section-number">1.6</span> lapplyBy() and lapply_by()</a></li>
+</ul>
+</li>
+<li><a href="#chp:miscellaneous-utilities"><span class="section-number main-number">2</span> Miscellaneous utilities</a>
+<ul>
+<li><a href="#sec:firstobs-and-lastobs"><span class="section-number">2.1</span> firstobs() and lastobs()</a></li>
+<li><a href="#sec:subsequences-subseq"><span class="section-number">2.2</span> Subsequences - subSeq()</a></li>
+<li><a href="#sec:recoding-values-of-a-vector-recodevar"><span class="section-number">2.3</span> Recoding values of a vector - recodeVar()</a></li>
+<li><a href="#sec:renaming-columns-of-a-dataframe-or-matrix-renamecol"><span class="section-number">2.4</span> Renaming columns of a dataframe or matrix - renameCol()</a></li>
+<li><a href="#sec:time-since-an-event-timesinceevent"><span class="section-number">2.5</span> Time since an event - timeSinceEvent()</a></li>
+<li><a href="#sec:example-using-subseq-and-timesinceevent"><span class="section-number">2.6</span> Example: Using subSeq() and timeSinceEvent()</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <p>The \doby{} package contains a variety of utility functions. This
 working document describes some of these functions. The package
 originally grew out of a need to calculate groupwise summary
@@ -175,12 +173,12 @@ tail(mtcars)
 #&gt; Maserati Bora  15.0   8 301.0 335 3.54 3.57 14.6  0  1    5    8
 #&gt; Volvo 142E     21.4   4 121.0 109 4.11 2.78 18.6  1  1    4    2
 </code></pre>
-<h1 id="groupwise-computations">Groupwise computations</h1>
-<h2 id="summaryby-and-summary-by">summaryBy()  and summary_by()</h2>
+<h1 id="chp:groupwise-computations"><span class="section-number main-number">1</span> Groupwise computations</h1>
+<h2 id="sec:summaryby-and-summary-by"><span class="section-number">1.1</span> summaryBy()  and summary_by()</h2>
 <p>\label{sec:summaryBy}</p>
 <p>The \summaryby{} function is used for calculating quantities like
-``the mean and variance of numerical variables \(x\) and `eO(y)eO` for
-each combination of two factors `eO(A)eO` and `eO(B)eO`’’.
+``the mean and variance of numerical variables \(x\) and \(y\) for
+each combination of two factors \(A\) and \(B\)’’.
 Notice: A functionality similar to \summaryby\ is provided by
 \code{aggregate()} from base \R.</p>
 <pre><code class="language-r">myfun1 &lt;- function(x){
@@ -217,7 +215,7 @@ that one may write</p>
 #&gt; 1  0  16.6  3.86  7.44 1.149 5.20 0.330
 #&gt; 2  1  24.6  5.38  4.57 0.938 4.48 0.289
 </code></pre>
-<h2 id="orderby-and-order-by">orderBy() and order_by()</h2>
+<h2 id="sec:orderby-and-order-by"><span class="section-number">1.2</span> orderBy() and order_by()</h2>
 <p>Ordering (or sorting) a data frame is possible with the \code{orderBy}
 function. For example, we order the rows according to \code{gear} and \code{carb} (within \code{gear}):</p>
 <pre><code class="language-r">x1 &lt;- orderBy(~ gear + carb, data=mtcars)
@@ -244,33 +242,33 @@ x4 &lt;- orderBy(c(&quot;-gear&quot;, &quot;carb&quot;), data=mtcars)
 x5 &lt;- mtcars |&gt; order_by(c(&quot;gear&quot;, &quot;carb&quot;))
 x6 &lt;- mtcars |&gt; order_by(~ -gear + carb)
 </code></pre>
-<h2 id="splitby-and-split-by">splitBy() and split_by()</h2>
+<h2 id="sec:splitby-and-split-by"><span class="section-number">1.3</span> splitBy() and split_by()</h2>
 <p>Suppose we want to split the \code{airquality} data into a list of dataframes, e.g.\ one
 dataframe for each month. This can be achieved by:</p>
 <pre><code class="language-r">x &lt;- splitBy(~ Month, data=airquality)
 x &lt;- splitBy(~ vs, data=mtcars)
 lapply(x, head, 4)
 #&gt; $`0`
-#&gt;                    mpg cyl disp  hp drat   wt qsec vs am gear carb
-#&gt; Mazda RX4         21.0   6  160 110 3.90 2.62 16.5  0  1    4    4
-#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.88 17.0  0  1    4    4
-#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.44 17.0  0  0    3    2
-#&gt; Duster 360        14.3   8  360 245 3.21 3.57 15.8  0  0    3    4
+#&gt;                    mpg cyl disp  hp drat   wt qsec am gear carb
+#&gt; Mazda RX4         21.0   6  160 110 3.90 2.62 16.5  1    4    4
+#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.88 17.0  1    4    4
+#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.44 17.0  0    3    2
+#&gt; Duster 360        14.3   8  360 245 3.21 3.57 15.8  0    3    4
 #&gt; 
 #&gt; $`1`
-#&gt;                 mpg cyl disp  hp drat   wt qsec vs am gear carb
-#&gt; Datsun 710     22.8   4  108  93 3.85 2.32 18.6  1  1    4    1
-#&gt; Hornet 4 Drive 21.4   6  258 110 3.08 3.21 19.4  1  0    3    1
-#&gt; Valiant        18.1   6  225 105 2.76 3.46 20.2  1  0    3    1
-#&gt; Merc 240D      24.4   4  147  62 3.69 3.19 20.0  1  0    4    2
+#&gt;                 mpg cyl disp  hp drat   wt qsec am gear carb
+#&gt; Datsun 710     22.8   4  108  93 3.85 2.32 18.6  1    4    1
+#&gt; Hornet 4 Drive 21.4   6  258 110 3.08 3.21 19.4  0    3    1
+#&gt; Valiant        18.1   6  225 105 2.76 3.46 20.2  0    3    1
+#&gt; Merc 240D      24.4   4  147  62 3.69 3.19 20.0  0    4    2
 attributes(x)
 #&gt; $names
 #&gt; [1] &quot;0&quot; &quot;1&quot;
 #&gt; 
 #&gt; $groupid
-#&gt;   vs
-#&gt; 1  0
-#&gt; 2  1
+#&gt;            vs
+#&gt; Mazda RX4   0
+#&gt; Datsun 710  1
 #&gt; 
 #&gt; $idxvec
 #&gt; $idxvec$`0`
@@ -281,35 +279,49 @@ attributes(x)
 #&gt; 
 #&gt; 
 #&gt; $grps
-#&gt;  [1] &quot;0&quot; &quot;0&quot; &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;1&quot; &quot;0&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;1&quot; &quot;1&quot;
-#&gt; [20] &quot;1&quot; &quot;1&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;1&quot; &quot;0&quot; &quot;1&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;1&quot;
+#&gt;           Mazda RX4       Mazda RX4 Wag          Datsun 710      Hornet 4 Drive 
+#&gt;                 &quot;0&quot;                 &quot;0&quot;                 &quot;1&quot;                 &quot;1&quot; 
+#&gt;   Hornet Sportabout             Valiant          Duster 360           Merc 240D 
+#&gt;                 &quot;0&quot;                 &quot;1&quot;                 &quot;0&quot;                 &quot;1&quot; 
+#&gt;            Merc 230            Merc 280           Merc 280C          Merc 450SE 
+#&gt;                 &quot;1&quot;                 &quot;1&quot;                 &quot;1&quot;                 &quot;0&quot; 
+#&gt;          Merc 450SL         Merc 450SLC  Cadillac Fleetwood Lincoln Continental 
+#&gt;                 &quot;0&quot;                 &quot;0&quot;                 &quot;0&quot;                 &quot;0&quot; 
+#&gt;   Chrysler Imperial            Fiat 128         Honda Civic      Toyota Corolla 
+#&gt;                 &quot;0&quot;                 &quot;1&quot;                 &quot;1&quot;                 &quot;1&quot; 
+#&gt;       Toyota Corona    Dodge Challenger         AMC Javelin          Camaro Z28 
+#&gt;                 &quot;1&quot;                 &quot;0&quot;                 &quot;0&quot;                 &quot;0&quot; 
+#&gt;    Pontiac Firebird           Fiat X1-9       Porsche 914-2        Lotus Europa 
+#&gt;                 &quot;0&quot;                 &quot;1&quot;                 &quot;0&quot;                 &quot;1&quot; 
+#&gt;      Ford Pantera L        Ferrari Dino       Maserati Bora          Volvo 142E 
+#&gt;                 &quot;0&quot;                 &quot;0&quot;                 &quot;0&quot;                 &quot;1&quot; 
 #&gt; 
 #&gt; $class
 #&gt; [1] &quot;splitByData&quot; &quot;list&quot;
 </code></pre>
 <p>Alternative forms are:</p>
 <pre><code class="language-r">splitBy(&quot;vs&quot;, data=mtcars)
-#&gt;   listentry vs
-#&gt; 1         0  0
-#&gt; 2         1  1
+#&gt;            listentry vs
+#&gt; Mazda RX4          0  0
+#&gt; Datsun 710         1  1
 mtcars |&gt; split_by(~ vs)
-#&gt;   listentry vs
-#&gt; 1         0  0
-#&gt; 2         1  1
+#&gt;            listentry vs
+#&gt; Mazda RX4          0  0
+#&gt; Datsun 710         1  1
 </code></pre>
-<h2 id="subsetby-and-subset-by">subsetBy() and subset_by()</h2>
+<h2 id="sec:subsetby-and-subset-by"><span class="section-number">1.4</span> subsetBy() and subset_by()</h2>
 <p>Suppose we want to select those rows within each month for which the the
 wind speed is larger than the mean wind speed (within the month). This
 is achieved by:</p>
 <pre><code class="language-r">x &lt;- subsetBy(~am, subset=mpg &gt; mean(mpg), data=mtcars)
 head(x)
-#&gt;                   mpg cyl  disp  hp drat   wt qsec vs am gear carb
-#&gt; 1.Fiat 128       32.4   4  78.7  66 4.08 2.20 19.5  1  1    4    1
-#&gt; 1.Honda Civic    30.4   4  75.7  52 4.93 1.61 18.5  1  1    4    2
-#&gt; 1.Toyota Corolla 33.9   4  71.1  65 4.22 1.83 19.9  1  1    4    1
-#&gt; 1.Fiat X1-9      27.3   4  79.0  66 4.08 1.94 18.9  1  1    4    1
-#&gt; 1.Porsche 914-2  26.0   4 120.3  91 4.43 2.14 16.7  0  1    5    2
-#&gt; 1.Lotus Europa   30.4   4  95.1 113 3.77 1.51 16.9  1  1    5    2
+#&gt;                      mpg cyl disp  hp drat   wt qsec vs gear carb
+#&gt; 0.Hornet 4 Drive    21.4   6  258 110 3.08 3.21 19.4  1    3    1
+#&gt; 0.Hornet Sportabout 18.7   8  360 175 3.15 3.44 17.0  0    3    2
+#&gt; 0.Valiant           18.1   6  225 105 2.76 3.46 20.2  1    3    1
+#&gt; 0.Merc 240D         24.4   4  147  62 3.69 3.19 20.0  1    4    2
+#&gt; 0.Merc 230          22.8   4  141  95 3.92 3.15 22.9  1    4    2
+#&gt; 0.Merc 280          19.2   6  168 123 3.92 3.44 18.3  1    4    4
 </code></pre>
 <p>Note that the statement \code{Wind &gt; mean(Wind)} is evaluated within
 each month.</p>
@@ -318,27 +330,27 @@ each month.</p>
 x &lt;- mtcars  |&gt; subset_by(&quot;vs&quot;, subset=mpg &gt; mean(mpg))
 x &lt;- mtcars  |&gt; subset_by(~vs, subset=mpg &gt; mean(mpg))
 </code></pre>
-<h2 id="transformby-and-transform-by">transformBy() and transform_by()</h2>
+<h2 id="sec:transformby-and-transform-by"><span class="section-number">1.5</span> transformBy() and transform_by()</h2>
 <p>The \code{transformBy} function is analogous to the \code{transform}
 function except that it works within groups. For example:</p>
 <pre><code class="language-r">head(x)
-#&gt;                      mpg cyl disp  hp drat   wt qsec vs am gear carb
-#&gt; 0.Mazda RX4         21.0   6  160 110 3.90 2.62 16.5  0  1    4    4
-#&gt; 0.Mazda RX4 Wag     21.0   6  160 110 3.90 2.88 17.0  0  1    4    4
-#&gt; 0.Hornet Sportabout 18.7   8  360 175 3.15 3.44 17.0  0  0    3    2
-#&gt; 0.Merc 450SL        17.3   8  276 180 3.07 3.73 17.6  0  0    3    3
-#&gt; 0.Pontiac Firebird  19.2   8  400 175 3.08 3.85 17.1  0  0    3    2
-#&gt; 0.Porsche 914-2     26.0   4  120  91 4.43 2.14 16.7  0  1    5    2
+#&gt;                      mpg cyl disp  hp drat   wt qsec am gear carb
+#&gt; 0.Mazda RX4         21.0   6  160 110 3.90 2.62 16.5  1    4    4
+#&gt; 0.Mazda RX4 Wag     21.0   6  160 110 3.90 2.88 17.0  1    4    4
+#&gt; 0.Hornet Sportabout 18.7   8  360 175 3.15 3.44 17.0  0    3    2
+#&gt; 0.Merc 450SL        17.3   8  276 180 3.07 3.73 17.6  0    3    3
+#&gt; 0.Pontiac Firebird  19.2   8  400 175 3.08 3.85 17.1  0    3    2
+#&gt; 0.Porsche 914-2     26.0   4  120  91 4.43 2.14 16.7  1    5    2
 x &lt;- transformBy(~vs, data=mtcars, 
                  min.mpg=min(mpg), max.mpg=max(mpg))
 head(x)
-#&gt;    mpg cyl disp  hp drat   wt qsec vs am gear carb min.mpg max.mpg
-#&gt; 1 21.0   6  160 110 3.90 2.62 16.5  0  1    4    4    10.4      26
-#&gt; 2 21.0   6  160 110 3.90 2.88 17.0  0  1    4    4    10.4      26
-#&gt; 3 18.7   8  360 175 3.15 3.44 17.0  0  0    3    2    10.4      26
-#&gt; 4 14.3   8  360 245 3.21 3.57 15.8  0  0    3    4    10.4      26
-#&gt; 5 16.4   8  276 180 3.07 4.07 17.4  0  0    3    3    10.4      26
-#&gt; 6 17.3   8  276 180 3.07 3.73 17.6  0  0    3    3    10.4      26
+#&gt;    mpg cyl disp  hp drat   wt qsec am gear carb min.mpg max.mpg
+#&gt; 1 21.0   6  160 110 3.90 2.62 16.5  1    4    4    10.4      26
+#&gt; 2 21.0   6  160 110 3.90 2.88 17.0  1    4    4    10.4      26
+#&gt; 3 18.7   8  360 175 3.15 3.44 17.0  0    3    2    10.4      26
+#&gt; 4 14.3   8  360 245 3.21 3.57 15.8  0    3    4    10.4      26
+#&gt; 5 16.4   8  276 180 3.07 4.07 17.4  0    3    3    10.4      26
+#&gt; 6 17.3   8  276 180 3.07 3.73 17.6  0    3    3    10.4      26
 </code></pre>
 <p>Alternative forms:</p>
 <pre><code class="language-r">x &lt;- transformBy(&quot;vs&quot;, data=mtcars, 
@@ -346,7 +358,7 @@ head(x)
 x &lt;- mtcars |&gt; transform_by(&quot;vs&quot;,
                              min.mpg=min(mpg), max.mpg=max(mpg))
 </code></pre>
-<h2 id="lapplyby-and-lapply-by">lapplyBy() and lapply_by()</h2>
+<h2 id="sec:lapplyby-and-lapply-by"><span class="section-number">1.6</span> lapplyBy() and lapply_by()</h2>
 <p>This \code{lapplyBy} function is a wrapper for first splitting data
 into a list according to the formula (using splitBy) and then applying
 a function to each element of the list (using lapply).</p>
@@ -362,8 +374,8 @@ a function to each element of the list (using lapply).</p>
 #&gt; (Intercept)     41.9       5.78    7.26  0.00001
 #&gt; cyl             -3.8       1.24   -3.07  0.00978
 </code></pre>
-<h1 id="miscellaneous-utilities">Miscellaneous utilities</h1>
-<h2 id="firstobs-and-lastobs">firstobs() and lastobs()</h2>
+<h1 id="chp:miscellaneous-utilities"><span class="section-number main-number">2</span> Miscellaneous utilities</h1>
+<h2 id="sec:firstobs-and-lastobs"><span class="section-number">2.1</span> firstobs() and lastobs()</h2>
 <p>To obtain the indices of the first/last occurences of an item in a
 vector do:</p>
 <pre><code class="language-r">x &lt;- c(1, 1, 1, 2, 2, 2, 1, 1, 1, 3)
@@ -388,7 +400,7 @@ which.maxn(x, 3)
 which.minn(x, 5)
 #&gt; [1] 5 1 6 2 7
 </code></pre>
-<h2 id="subsequences-subseq">Subsequences - subSeq()</h2>
+<h2 id="sec:subsequences-subseq"><span class="section-number">2.2</span> Subsequences - subSeq()</h2>
 <p>Find (sub) sequences in a vector:</p>
 <pre><code class="language-r">x &lt;- c(1, 1, 2, 2, 2, 1, 1, 3, 3, 3, 3, 1, 1, 1)
 subSeq(x)
@@ -416,14 +428,14 @@ subSeq(letters[x], item=&quot;a&quot;)
 #&gt; 2     6    7       2        7     a
 #&gt; 3    12   14       3       13     a
 </code></pre>
-<h2 id="recoding-values-of-a-vector-recodevar">Recoding values of a vector - recodeVar()</h2>
+<h2 id="sec:recoding-values-of-a-vector-recodevar"><span class="section-number">2.3</span> Recoding values of a vector - recodeVar()</h2>
 <pre><code class="language-r">x &lt;- c(&quot;dec&quot;, &quot;jan&quot;, &quot;feb&quot;, &quot;mar&quot;, &quot;apr&quot;, &quot;may&quot;)
 src1 &lt;- list(c(&quot;dec&quot;, &quot;jan&quot;, &quot;feb&quot;), c(&quot;mar&quot;, &quot;apr&quot;, &quot;may&quot;))
 tgt1 &lt;- list(&quot;winter&quot;, &quot;spring&quot;)
 recodeVar(x, src=src1, tgt=tgt1)
 #&gt; [1] &quot;winter&quot; &quot;winter&quot; &quot;winter&quot; &quot;spring&quot; &quot;spring&quot; &quot;spring&quot;
 </code></pre>
-<h2 id="renaming-columns-of-a-dataframe-or-matrix-renamecol">Renaming columns of a dataframe or matrix - renameCol()</h2>
+<h2 id="sec:renaming-columns-of-a-dataframe-or-matrix-renamecol"><span class="section-number">2.4</span> Renaming columns of a dataframe or matrix - renameCol()</h2>
 <pre><code class="language-r">head(renameCol(mtcars, c(&quot;vs&quot;, &quot;mpg&quot;), c(&quot;vs_&quot;, &quot;mpg_&quot;)))
 #&gt;                   mpg_ cyl disp  hp drat   wt qsec vs_ am gear carb
 #&gt; Mazda RX4         21.0   6  160 110 3.90 2.62 16.5   0  1    4    4
@@ -433,7 +445,7 @@ recodeVar(x, src=src1, tgt=tgt1)
 #&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.44 17.0   0  0    3    2
 #&gt; Valiant           18.1   6  225 105 2.76 3.46 20.2   1  0    3    1
 </code></pre>
-<h2 id="time-since-an-event-timesinceevent">Time since an event - timeSinceEvent()</h2>
+<h2 id="sec:time-since-an-event-timesinceevent"><span class="section-number">2.5</span> Time since an event - timeSinceEvent()</h2>
 <p>Consider the vector</p>
 <pre><code class="language-r">yvar &lt;- c(0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0)
 </code></pre>
@@ -444,6 +456,9 @@ equidistant but for illustration we define time time variable</p>
 </code></pre>
 <p>Now we find time since event as</p>
 <pre><code class="language-r">tse &lt;- timeSinceEvent(yvar, tvar)
+#&gt; Warning: 'timeSinceEvent' is deprecated.
+#&gt; Use 'time_since_event' instead.
+#&gt; See help(&quot;Deprecated&quot;)
 tse
 #&gt;    yvar tvar abs.tse sign.tse ewin run tae  tbe
 #&gt; 1     0  1.1     3.1     -3.1    1  NA  NA -3.1
@@ -468,7 +483,15 @@ tse
 #&gt; 20    0 20.2     5.1      5.1    4   4 5.1   NA
 </code></pre>
 <p>The output reads as follows:
-\begin{itemize} \item \verb&quot;abs.tse&quot;: Absolute time since (nearest) event. \item \verb&quot;sign.tse&quot;: Signed time since (nearest) event. \item \verb&quot;ewin&quot;: Event window: Gives a symmetric window around each event. \item \verb&quot;run&quot;: The value of \verb&quot;run&quot; is set to </code>eO(1)eO<code>when the first event occurs and is increased by</code>eO(1)eO<code> at each subsequent event. \item \verb&quot;tae&quot;: Time after event. \item \verb&quot;tbe&quot;: Time before event. \end{itemize}</p>
+\begin{itemize}
+\item \verb"abs.tse": Absolute time since (nearest) event.
+\item \verb"sign.tse": Signed time since (nearest) event.
+\item \verb"ewin": Event window: Gives a symmetric window around each event.
+\item \verb"run": The value of \verb"run" is set to \(1\) when the first
+event occurs and is increased by \(1\) at each subsequent event.
+\item \verb”tae”: Time after event.
+\item \verb”tbe”: Time before event.
+\end{itemize}CG;O3`</p>
 <pre><code class="language-r">plot(sign.tse ~ tvar, data=tse, type=&quot;b&quot;)
 grid()
 rug(tse$tvar[tse$yvar == 1], col=&quot;blue&quot;,lwd=4)
@@ -489,11 +512,12 @@ grid()
 lines(run ~ tvar, data=tse, col=&quot;red&quot;)
 </code></pre>
 <p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-29" /></p>
-<p>We may now find times for which time since an event is at most 1 as</p>
+<p>We may now f
+ind times for which time since an event is at most 1 as</p>
 <pre><code class="language-r">tse$tvar[tse$abs &lt;= 1]
 #&gt; [1]  4.2  5.1 10.2 11.1 14.2 15.1
 </code></pre>
-<h2 id="example-using-subseq-and-timesinceevent">Example: Using subSeq() and timeSinceEvent()</h2>
+<h2 id="sec:example-using-subseq-and-timesinceevent"><span class="section-number">2.6</span> Example: Using subSeq() and timeSinceEvent()</h2>
 <p>Consider the \verb|lynx| data:</p>
 <pre><code class="language-r">lynx &lt;- as.numeric(lynx)
 tvar &lt;- 1821:1934
@@ -532,6 +556,9 @@ str(yvar)
 #&gt;  num [1:114] 0 0 0 0 0 0 0 1 0 0 ...
 </code></pre>
 <pre><code class="language-r">tse &lt;- timeSinceEvent(yvar,tvar)
+#&gt; Warning: 'timeSinceEvent' is deprecated.
+#&gt; Use 'time_since_event' instead.
+#&gt; See help(&quot;Deprecated&quot;)
 head(tse, 20)
 #&gt;    yvar tvar abs.tse sign.tse ewin run tae tbe
 #&gt; 1     0 1821       7       -7    1  NA  NA  -7
@@ -903,8 +930,5 @@ functionality in the \doby{} package.</p>
 <!-- %%```  -->
 <!-- %% -->
 </div>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/combine/npm/katex/dist/katex.min.js,npm/katex/dist/contrib/auto-render.min.js,npm/@xiee/utils/js/render-katex.js" defer></script>
 </body>
 </html>

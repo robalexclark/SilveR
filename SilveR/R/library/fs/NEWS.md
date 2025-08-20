@@ -1,3 +1,7 @@
+# fs 1.6.6
+
+* No changes.
+
 # fs 1.6.5
 
 * `path_ext()` and `path_ext_remove()` return correct extension and path, respectively, when multiple dots are present in file name (@IndrajeetPatil, #452, #453).

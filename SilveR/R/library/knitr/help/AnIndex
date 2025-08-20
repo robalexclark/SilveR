@@ -104,7 +104,6 @@ raw_latex	raw_block
 raw_output	raw_output
 read_chunk	read_chunk
 read_demo	read_chunk
-read_rforge	read_rforge
 render_asciidoc	output_hooks
 render_html	output_hooks
 render_jekyll	output_hooks

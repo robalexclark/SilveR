@@ -68,6 +68,8 @@ nutrimouse              Nutrimouse Dataset
 pca                     Principal Components Analysis
 perf                    Compute evaluation criteria for PLS, sPLS,
                         PLS-DA, sPLS-DA, MINT and DIABLO
+perf.assess             Compute evaluation criteria for PLS, sPLS,
+                        PLS-DA, sPLS-DA, MINT and DIABLO
 plot.pca                Show (s)pca explained variance plots
 plot.perf               Plot for model performance for PSLDA analyses
 plot.perf.pls           Plot for model performance for PLS analyses
@@ -101,17 +103,23 @@ study_split             divides a data matrix in a list of matrices
                         defined by a factor
 summary                 Summary Methods for CCA and PLS objects
 tune                    Wrapper function to tune pls-derived methods.
+tune.block.plsda        Tuning function for block.plsda method
+                        (N-integration with Discriminant Analysis)
 tune.block.splsda       Tuning function for block.splsda method
                         (N-integration with sparse Discriminant
                         Analysis)
+tune.mint.plsda         Estimate the parameters of mint.plsda method
 tune.mint.splsda        Estimate the parameters of mint.splsda method
 tune.pca                Tune the number of principal components in PCA
+tune.pls                Tuning functions for PLS method
+tune.plsda              Tuning functions for PLS-DA method
 tune.rcc                Estimate the parameters of regularization for
                         Regularized CCA
 tune.spca               Tune number of selected variables for spca
-tune.spls               Tuning functions for sPLS and PLS functions
+tune.spls               Tuning functions for sPLS method
 tune.splsda             Tuning functions for sPLS-DA method
-tune.splslevel          Tuning functions for multilevel sPLS method
+tune.splslevel          Parallelized Tuning function for multilevel
+                        sPLS method using BiocParallel
 unmap                   Dummy matrix for an outcome factor
 vac18                   Vaccine study Data
 vac18.simulated         Simulated data based on the vac18 study for

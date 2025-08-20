@@ -70,11 +70,5 @@ n2w(1e+11 + 12345678)
 n2w(-987654321)
 n2w(1e+15 - 1)
 
-res = xfun::cache_rds({
-  # pretend the computing here is a time-consuming
-  Sys.sleep(2)
-  1:10
-})
-
 xfun::session_info(c('xfun', 'litedown', 'tinytex'), dependencies = FALSE)
 

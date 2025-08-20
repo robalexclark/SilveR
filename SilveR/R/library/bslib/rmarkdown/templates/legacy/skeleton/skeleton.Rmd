@@ -39,7 +39,7 @@ ggplot(mpg, aes(displ, hwy)) +
 ### lattice
 
 ```{r}
-lattice::show.settings()
+# lattice::show.settings()
 ```
 
 ### base

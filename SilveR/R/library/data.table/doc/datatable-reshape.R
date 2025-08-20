@@ -58,7 +58,7 @@ DT.m1[, c("variable", "child") := tstrsplit(variable, "_", fixed = TRUE)]
 DT.c1 = dcast(DT.m1, family_id + age_mother + child ~ variable, value.var = "value")
 DT.c1
 
-str(DT.c1) ## gender column is character type now!
+str(DT.c1) ## gender column is class IDate now!
 
 ## -------------------------------------------------------------------------------------------------
 colA = paste0("dob_child", 1:3)

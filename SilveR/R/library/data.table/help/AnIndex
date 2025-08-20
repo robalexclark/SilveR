@@ -143,7 +143,6 @@ ITime	IDateTime
 ITime-class	IDateTime
 J	J
 key	setkey
-key<-	deprecated
 lag	shift
 last	last
 Last.updated	last.updated
@@ -196,6 +195,7 @@ round.ITime	IDateTime
 rounding	datatable-optimize
 rowid	rowid
 rowidv	rowid
+rowwiseDT	rowwiseDT
 second	IDateTime
 seq.IDate	IDateTime
 seq.ITime	IDateTime

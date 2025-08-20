@@ -28,6 +28,7 @@ layout_column_wrap      Column-first uniform grid layouts
 layout_columns          Responsive 12-column grid layouts
 nav-items               Navigation items
 nav_select              Dynamically update nav containers
+navbar_options          Create a set of navbar options
 navset                  Navigation containers
 page                    Modern Bootstrap page layouts
 page_fillable           A screen-filling page layout

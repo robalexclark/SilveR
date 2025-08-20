@@ -124,6 +124,7 @@ event.convert	event.convert
 event.history	event.history
 expr.tree	Hmisc-internal
 extractlabs	extractlabs
+Fdebug	Fdebug
 fillin	Hmisc-internal
 fImport	fImport
 find.matches	find.matches
@@ -165,6 +166,7 @@ gbayesMixPost	gbayes
 gbayesMixPowerNP	gbayes
 gbayesMixPredNoData	gbayes
 gbayesSeqSim	gbayesSeqSim
+geom_stepconfint	geom_stepconfint
 get2rowHeads	Hmisc-internal
 getabd	getabd
 getHdata	getHdata
@@ -492,6 +494,7 @@ restoreHattrib	Misc
 rlegend	rlegend
 rlegendg	rlegend
 rm.boot	rm.boot
+rmClose	rmClose
 rMultinom	rMultinom
 roundN	dataRep
 roundPOSIXt	trunc.POSIXt

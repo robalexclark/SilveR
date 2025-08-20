@@ -18,6 +18,7 @@ diffDeparse,ANY-method	diffDeparse
 diffFile	diffFile
 diffFile,ANY-method	diffFile
 diffObj	diffObj
+diffobj	diffobj-package
 diffobj_css	webfiles
 diffobj_js	webfiles
 diffobj_s4method_doc	diffobj_s4method_doc

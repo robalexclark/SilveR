@@ -69,10 +69,10 @@ EMM@grid
 emmeans(ins.glm, "size", type = "response", offset = log(1))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  emmeans(ins.glm, "size", type = "response", at = list(n = 1))
+# emmeans(ins.glm, "size", type = "response", at = list(n = 1))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  emmeans(ins.glm, "size", type = "response", offset = log(100))
+# emmeans(ins.glm, "size", type = "response", offset = log(100))
 
 ## -------------------------------------------------------------------------------------------------
 require("ordinal")
@@ -102,17 +102,17 @@ emmeans(wine.clm, "temp", mode = "mean.class")
 summary(ref_grid(wine.clm, mode = "scale"), type = "response")
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  cbpp <- transform(lme4::cbpp, unit = 1:56)
-#  require("bayestestR")
-#  options(contrasts = c("contr.bayes", "contr.poly"))
-#  cbpp.rstan <- rstanarm::stan_glmer(
-#      cbind(incidence, size - incidence) ~ period + (1|herd) + (1|unit),
-#      data = cbpp, family = binomial,
-#      prior = student_t(df = 5, location = 0, scale = 2, autoscale = FALSE),
-#      chains = 2, cores = 1, seed = 2021.0120, iter = 1000)
-#  cbpp_prior.rstan <- update(cbpp.rstan, prior_PD = TRUE)
-#  cbpp.rg <- ref_grid(cbpp.rstan)
-#  cbpp_prior.rg <- ref_grid(cbpp_prior.rstan)
+# cbpp <- transform(lme4::cbpp, unit = 1:56)
+# require("bayestestR")
+# options(contrasts = c("contr.bayes", "contr.poly"))
+# cbpp.rstan <- rstanarm::stan_glmer(
+#     cbind(incidence, size - incidence) ~ period + (1|herd) + (1|unit),
+#     data = cbpp, family = binomial,
+#     prior = student_t(df = 5, location = 0, scale = 2, autoscale = FALSE),
+#     chains = 2, cores = 1, seed = 2021.0120, iter = 1000)
+# cbpp_prior.rstan <- update(cbpp.rstan, prior_PD = TRUE)
+# cbpp.rg <- ref_grid(cbpp.rstan)
+# cbpp_prior.rg <- ref_grid(cbpp_prior.rstan)
 
 ## ----echo = FALSE---------------------------------------------------------------------------------
 cbpp.rg <- do.call(emmobj, 
@@ -136,7 +136,7 @@ bayestestR::bayesfactor_parameters(pairs(cbpp.rg), prior = pairs(cbpp_prior.rg))
 bayestestR::p_rope(pairs(cbpp.rg), range = c(-0.25, 0.25))
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
-#  cbpp.sigma = as.matrix(cbpp.rstan$stanfit)[, 78:79]
+# cbpp.sigma = as.matrix(cbpp.rstan$stanfit)[, 78:79]
 
 ## -------------------------------------------------------------------------------------------------
 head(cbpp.sigma)

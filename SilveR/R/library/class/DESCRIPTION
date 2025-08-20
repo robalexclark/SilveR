@@ -20,5 +20,5 @@ Author: Brian Ripley [aut, cre, cph],
 Maintainer: Brian Ripley <Brian.Ripley@R-project.org>
 Repository: CRAN
 Date/Publication: 2025-01-01 10:25:33 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2025-01-18 01:39:21 UTC; windows
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-06-13 07:58:39 UTC; windows
 Archs: x64

@@ -1,0 +1,111 @@
+---
+title: "Using RGL in pkgdown web sites"
+author: "Duncan Murdoch"
+output:
+  rmarkdown::html_vignette:
+    fig_height: 5
+    fig_width: 5
+    toc: true
+  pdf_document:
+    fig_height: 5
+    fig_width: 5
+    toc: true
+  html_document:
+    default
+vignette: >
+  %\VignetteIndexEntry{Using RGL in pkgdown web sites}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include=FALSE}
+if (!requireNamespace("rmarkdown", quietly = TRUE) ||
+    !rmarkdown::pandoc_available("1.14")) {
+  warning(call. = FALSE, "These vignettes assume rmarkdown and Pandoc
+          version 1.14.  These were not found. Older versions will not work.")
+  knitr::knit_exit()
+}
+knitr::opts_chunk$set(echo = TRUE, snapshot = FALSE, screenshot.force = FALSE)
+library(rgl)
+options(rgl.useNULL = TRUE)
+setupKnitr(autoprint = TRUE)
+```
+
+
+## What is the problem?
+
+[pkgdown](https://pkgdown.r-lib.org/) is an R package that
+makes it easy to build a web site for your package.  However, the previous version 1.6.1 on CRAN didn't work so well for
+packages whose examples use RGL or other packages like [leaflet](http://rstudio.github.io/leaflet/) that use
+[htmlwidgets](http://www.htmlwidgets.org).  This document
+described changes that support both of these.  The changes
+are now incorporated into `pkgdown` 2.0.0, so everything but
+user instructions has been removed.
+
+## Using `RGL in examples.
+
+If you use RGL in example code, they should
+appear automatically in examples.
+The RGL output is set up to mimic what would happen in a
+`knitr` document that uses 
+```{r eval=FALSE}
+setupKnitr(autoprint = TRUE)
+```
+i.e. the output RGL commands will automatically be 
+included in the display.  Low-level changes will be collected
+into a single display:
+```{r}
+# Show regression plane with z as dependent variable
+library(rgl)
+open3d()
+x <- rnorm(100)
+y <- rnorm(100)
+z <- 0.2*x - 0.3*y + rnorm(100, sd = 0.3)
+fit <- lm(z ~ x + y)
+
+plot3d(x, y, z, type = "s", col = "red", size = 1)
+
+# No plot here, because of the planes3d() call below
+
+coefs <- coef(fit)
+a <- coefs["x"]
+b <- coefs["y"]
+c <- -1
+d <- coefs["(Intercept)"]
+planes3d(a, b, c, d, alpha = 0.5)
+```
+
+## Specifying the size of figures
+
+By default, pkgdown generates standard plots which are wider
+than they are high (according to the golden ratio).  Often
+RGL plots look better with equal width and height, since
+the contents may be rotated by the user.
+
+To specify the size of plots in pkgdown, you use the `figures`
+entry in `_pkgdown.yml`.  The defaults are similar to
+```
+figures:
+  dev: ragg::agg_png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+  fig.width: 7
+  fig.height: ~
+  fig.retina: 2
+  fig.asp: 1.618
+  bg: NA
+  other.parameters: []
+```
+
+By default RGL uses these parameters as well, but allows you 
+to override any of `fig.width`, `fig.height` and `fig.asp` by
+specifying an `rgl` entry in `other.parameters`.  For example:
+```
+figures:
+  fig.width: 5
+  other.parameters:
+    rgl:
+      fig.asp: 1
+```
+This will make all plots have a width of 5 inches
+and will make RGL plots square.

@@ -6,6 +6,8 @@ geom_prop_bar           Convenient geometries for proportion bar plots
 geom_stripped_rows      Alternating Background Color
 ggcascade               Cascade plot
 ggcoef_model            Plot model coefficients
+ggcoef_multicomponents
+                        Deprecated functions
 gglikert                Plotting Likert-type items
 ggsurvey                Easy ggplot2 with survey objects
 hex_bw                  Identify a suitable font color (black or white)

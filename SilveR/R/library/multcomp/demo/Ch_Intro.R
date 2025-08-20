@@ -74,4 +74,4 @@ legend(-4, 1, c("m = 1", "m = 2", "m = 5", "m = 10", "m = 100"),
        lty = 1:5, bty = "n")
 abline(v = 0, col = "lightgray")
 
-
+sessionInfo()

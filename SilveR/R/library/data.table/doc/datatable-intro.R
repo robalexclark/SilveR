@@ -211,6 +211,22 @@ DT[, print(c(a,b)), by = ID] # (1)
 ## and
 DT[, print(list(c(a,b))), by = ID] # (2)
 
+## -------------------------------------------------------------------------------------------------
+## Do long distance flights cover up departure delay more than short distance flights?
+## Does cover up vary by month?
+flights[, `:=`(makeup = dep_delay - arr_delay)]
+
+makeup.models <- flights[, .(fit = list(lm(makeup ~ distance))), by = .(month)]
+makeup.models[, .(coefdist = coef(fit[[1]])[2], rsq = summary(fit[[1]])$r.squared), by = .(month)]
+
+## -------------------------------------------------------------------------------------------------
+setDF(flights)
+flights.split <- split(flights, f = flights$month)
+makeup.models.list <- lapply(flights.split, function(df) c(month = df$month[1], fit = list(lm(makeup ~ distance, data = df))))
+makeup.models.df <- do.call(rbind, makeup.models.list)
+sapply(makeup.models.df[, "fit"], function(model) c(coefdist = coef(model)[2], rsq =  summary(model)$r.squared)) |> t() |> data.frame()
+setDT(flights)
+
 ## ----eval = FALSE---------------------------------------------------------------------------------
 # DT[i, j, by]
 

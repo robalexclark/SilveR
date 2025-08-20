@@ -12,7 +12,7 @@
 
 <meta name="author" content="Kirill Müller" />
 
-<meta name="date" content="2023-11-05" />
+<meta name="date" content="2025-07-12" />
 
 <title>Finding files in project subdirectories</title>
 
@@ -50,6 +50,7 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -341,7 +342,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Finding files in project
 subdirectories</h1>
 <h4 class="author">Kirill Müller</h4>
-<h4 class="date">2023-11-05</h4>
+<h4 class="date">2025-07-12</h4>
 
 
 
@@ -386,7 +387,7 @@ function. In this example here, we’re starting in the
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">readLines</span>(root<span class="sc">$</span><span class="fu">find_file</span>(<span class="st">&quot;DESCRIPTION&quot;</span>), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Package: rprojroot&quot;                            
 ## [2] &quot;Title: Finding Files in Project Subdirectories&quot;
-## [3] &quot;Version: 2.0.4&quot;</code></pre>
+## [3] &quot;Version: 2.1.0&quot;</code></pre>
 <p>There is one exception: if the first component passed to
 <code>find_file()</code> is already an absolute path. This allows safely
 applying this function to paths that may be absolute or relative:</p>
@@ -394,7 +395,7 @@ applying this function to paths that may be absolute or relative:</p>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">readLines</span>(root<span class="sc">$</span><span class="fu">find_file</span>(path, <span class="st">&quot;DESCRIPTION&quot;</span>), <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Package: rprojroot&quot;                            
 ## [2] &quot;Title: Finding Files in Project Subdirectories&quot;
-## [3] &quot;Version: 2.0.4&quot;</code></pre>
+## [3] &quot;Version: 2.1.0&quot;</code></pre>
 <p>You can also construct an accessor to your root using the
 <code>root$make_fix_file()</code> function:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>root_file <span class="ot">&lt;-</span> root<span class="sc">$</span><span class="fu">make_fix_file</span>()</span></code></pre></div>
@@ -407,7 +408,7 @@ current working directory is outside your project:</p>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## [1] &quot;Package: rprojroot&quot;                            
 ## [2] &quot;Title: Finding Files in Project Subdirectories&quot;
-## [3] &quot;Version: 2.0.4&quot;</code></pre>
+## [3] &quot;Version: 2.1.0&quot;</code></pre>
 <p>If you know the absolute path of some directory below your project,
 but cannot be sure of your current working directory, pass that absolute
 path to <code>root$make_fix_file()</code>:</p>
@@ -447,11 +448,8 @@ with a specific name and specific contents.</p>
 <span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co"># List all files and directories below the root</span></span>
 <span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="fu">dir</span>(<span class="fu">find_root</span>(<span class="fu">has_file</span>(<span class="st">&quot;DESCRIPTION&quot;</span>)))</span></code></pre></div>
-<pre><code>##  [1] &quot;DESCRIPTION&quot;      &quot;LICENSE&quot;          &quot;LICENSE.md&quot;       &quot;NAMESPACE&quot;       
-##  [5] &quot;NEWS.md&quot;          &quot;R&quot;                &quot;README.Rmd&quot;       &quot;README.md&quot;       
-##  [9] &quot;TODO.md&quot;          &quot;_pkgdown.yml&quot;     &quot;codecov.yml&quot;      &quot;cran-comments.md&quot;
-## [13] &quot;inst&quot;             &quot;man&quot;              &quot;revdep&quot;           &quot;rprojroot.Rcheck&quot;
-## [17] &quot;rprojroot.Rproj&quot;  &quot;tests&quot;            &quot;vignettes&quot;</code></pre>
+<pre><code>##  [1] &quot;DESCRIPTION&quot; &quot;LICENSE&quot;     &quot;NAMESPACE&quot;   &quot;NEWS.md&quot;     &quot;R&quot;          
+##  [6] &quot;README.md&quot;   &quot;inst&quot;        &quot;man&quot;         &quot;tests&quot;       &quot;vignettes&quot;</code></pre>
 <div id="relative-paths-to-a-stable-root" class="section level4">
 <h4>Relative paths to a stable root</h4>
 <p>Here we illustrate the power of <em>rprojroot</em> by demonstrating
@@ -469,13 +467,13 @@ can access the <code>rrmake.R</code> file by:</p>
 ways to do that:</li>
 </ol>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>rel_path_from_vignettes <span class="ot">&lt;-</span> <span class="st">&quot;../R/rrmake.R&quot;</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>rel_path_from_vignettes <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;..&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;rrmake.R&quot;</span>) <span class="do">##identical</span></span></code></pre></div>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>rel_path_from_vignettes <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;..&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="st">&quot;rrmake.R&quot;</span>) <span class="do">## identical</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Supplying a pathname to the file relative from the root of the
 package, e.g.,</li>
 </ol>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>rel_path_from_root <span class="ot">&lt;-</span> <span class="st">&quot;R/rrmake.R&quot;</span></span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>rel_path_from_root <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;rrmake.R&quot;</span>) <span class="do">##identical</span></span></code></pre></div>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>rel_path_from_root <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;rrmake.R&quot;</span>) <span class="do">## identical</span></span></code></pre></div>
 <p>This second method requires finding the root of the package, which
 can be done with the <code>has_file()</code> function:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">has_file</span>(<span class="st">&quot;DESCRIPTION&quot;</span>)</span></code></pre></div>
@@ -540,10 +538,13 @@ example.)</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">as_root_criterion</span>(<span class="st">&quot;DESCRIPTION&quot;</span>)</span></code></pre></div>
 <pre><code>## Root criterion: contains a file &quot;DESCRIPTION&quot;</code></pre>
 <p>The return value of these functions can be stored and reused; in
-fact, the package provides 12 such criteria:</p>
+fact, the package provides 13 such criteria:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>criteria</span></code></pre></div>
 <pre><code>## $is_rstudio_project
 ## Root criterion: contains a file matching &quot;[.]Rproj$&quot; with contents matching &quot;^Version: &quot; in the first line
+## 
+## $is_vscode_project
+## Root criterion: contains a directory &quot;.vscode&quot;
 ## 
 ## $is_r_package
 ## Root criterion: contains a file &quot;DESCRIPTION&quot; with contents matching &quot;^Package: &quot;
@@ -556,7 +557,9 @@ fact, the package provides 12 such criteria:</p>
 ## - contains a file &quot;_pkgdown.yml&quot;
 ## - contains a file &quot;_pkgdown.yaml&quot;
 ## - contains a file &quot;pkgdown/_pkgdown.yml&quot;
+## - contains a file &quot;pkgdown/_pkgdown.yaml&quot;
 ## - contains a file &quot;inst/_pkgdown.yml&quot;
+## - contains a file &quot;inst/_pkgdown.yaml&quot;
 ## 
 ## $is_renv_project
 ## Root criterion: contains a file &quot;renv.lock&quot; with contents matching &quot;&quot;Packages&quot;:\s*\{&quot;
@@ -633,10 +636,10 @@ error:</p>
 ## {
 ##     find_root_file(..., criterion = criterion, path = path)
 ## }
-## &lt;environment: 0x135adac48&gt;</code></pre>
+## &lt;environment: 0x126681ce0&gt;</code></pre>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="co"># Our package does not have a LICENSE file, trying to find the root results in an error</span></span>
 <span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="fu">R</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;/private/var/folders/dj/yhk9rkx97wn_ykqtnmk18xvc0000gn/T/RtmpDwUyx7/Rbuildf23e3bfc9008/rprojroot&quot;</code></pre>
+<pre><code>## [1] &quot;/private/var/folders/dj/yhk9rkx97wn_ykqtnmk18xvc0000gn/T/RtmpzmzODz/Rbuild7cfb72be1d7a/rprojroot&quot;</code></pre>
 </div>
 <div id="fixed-root" class="section level3">
 <h3>Fixed root</h3>
@@ -736,7 +739,7 @@ data files by using the function within your test scripts!</p>
 <span id="cb60-5"><a href="#cb60-5" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> path_to_my_args_file)</span>
 <span id="cb60-6"><a href="#cb60-6" tabindex="-1"></a></span>
 <span id="cb60-7"><a href="#cb60-7" tabindex="-1"></a><span class="do">## Run the function with those arguments</span></span>
-<span id="cb60-8"><a href="#cb60-8" tabindex="-1"></a>my_fun_run <span class="ot">&lt;-</span> <span class="fu">do.call</span>(my_fun,my_args)</span>
+<span id="cb60-8"><a href="#cb60-8" tabindex="-1"></a>my_fun_run <span class="ot">&lt;-</span> <span class="fu">do.call</span>(my_fun, my_args)</span>
 <span id="cb60-9"><a href="#cb60-9" tabindex="-1"></a></span>
 <span id="cb60-10"><a href="#cb60-10" tabindex="-1"></a><span class="do">## Load the historical expectation with the helper</span></span>
 <span id="cb60-11"><a href="#cb60-11" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="fu">get_my_path</span>(<span class="st">&quot;expected_output.Rdata&quot;</span>))</span>

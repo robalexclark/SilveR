@@ -27,5 +27,5 @@ Packaged: 2024-09-04 15:01:56 UTC; dietze2
 Author: Jarek Tuszynski [aut],
   Michael Dietze [cre]
 Date/Publication: 2024-09-04 17:00:02 UTC
-Built: R 4.3.3; x86_64-w64-mingw32; 2024-11-24 01:24:21 UTC; windows
+Built: R 4.5.1; x86_64-w64-mingw32; 2025-08-04 00:19:59 UTC; windows
 Archs: x64

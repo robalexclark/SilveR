@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -45,7 +45,7 @@ str(samples)
 ## -----------------------------------------------------------------------------
 samples <- Map(function(...) rnorm(..., n = 5), mean = means, sd = sds)
 
-## ---- eval = modern_r---------------------------------------------------------
+## ----eval = modern_r----------------------------------------------------------
 samples <- Map(\(...) rnorm(..., n = 5), mean = means, sd = sds)
 
 ## -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ medians <- sapply(samples, median)
 medians <- map_dbl(samples, median)
 medians
 
-## ---- fig.show='hide'---------------------------------------------------------
+## ----fig.show='hide'----------------------------------------------------------
 # for loop
 for (s in samples) {
   hist(s, xlab = "value", main = "")
@@ -89,25 +89,19 @@ invisible(lapply(samples, function(s) {
   hist(s, xlab = "value", main = "")
 }))
 
-## ---- fig.show='hide'---------------------------------------------------------
+## ----fig.show='hide'----------------------------------------------------------
 walk(samples, ~ hist(.x, xlab = "value", main = ""))
 
 ## -----------------------------------------------------------------------------
 set.seed(2020)
-means %>%
-  map(rnorm, n = 5, sd = 1) %>%
+means |>
+  map(rnorm, n = 5, sd = 1) |>
   map_dbl(median)
 
-## ---- eval = modern_r---------------------------------------------------------
-set.seed(2020)
-means |> 
-  lapply(rnorm, n = 5, sd = 1) |> 
-  sapply(median)
-
-## ---- eval = modern_r---------------------------------------------------------
-mtcars %>% 
-  split(mtcars$cyl) %>% 
-  map(\(df) lm(mpg ~ wt, data = df)) %>% 
-  map(coef) %>% 
+## ----eval = modern_r----------------------------------------------------------
+mtcars |>
+  split(mtcars$cyl) |> 
+  map(\(df) lm(mpg ~ wt, data = df))|> 
+  map(coef) |> 
   map_dbl(1)
 

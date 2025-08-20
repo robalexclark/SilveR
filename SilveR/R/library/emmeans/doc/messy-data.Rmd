@@ -63,7 +63,7 @@ those two factors, along with their counts:
 emmeans(nutr.lm, ~ group * race, calc = c(n = ".wgt."))
 ```
 
-####### {#nonestex}
+####### {#nonest}
 <!-- @index Non-estimability; Estimability -->
 Hmmmm. The EMMs
 when `race` is "Hispanic" are not given; instead they are flagged as 
@@ -274,10 +274,10 @@ And let's construct two different reference grids:
 ```{r}
 rg.usual <- ref_grid(mtcars.lm)
 rg.usual
-nrow(rg.usual@linfct)
+nrow(linfct(rg.usual))
 rg.nuis = ref_grid(mtcars.lm, non.nuisance = "cyl")
 rg.nuis
-nrow(rg.nuis@linfct)
+nrow(linfct(rg.nuis))
 ```
 Notice that we left `am` out of `non.nuisance` and hence included it in `nuisance`.
 However, it interacts with `cyl`, so it was not allowed as a nuisance factor.
