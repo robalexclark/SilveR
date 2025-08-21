@@ -7,7 +7,7 @@ jobs:
 - job: Test
   timeoutInMinutes: 0
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-latest'
 
   steps:
 
@@ -39,12 +39,14 @@ jobs:
 
   - task: PowerShell@2
     displayName: Summarize test failures
+    condition: always()
     inputs:
       targetType: 'filePath'
       filePath: 'build/summarize-trx.ps1'
       arguments: '-SearchRoot $(Agent.TempDirectory) -OutPath $(Build.ArtifactStagingDirectory)/test-failures-summary.txt'
 
   - task: ArchiveFiles@2
+    condition: always()
     inputs:
       rootFolderOrFile: '$(Build.SourcesDirectory)/SilveR.IntegrationTests/bin/Debug/net8.0/ActualResults/*'
       archiveFile: '$(Build.ArtifactStagingDirectory)/Test-Results.zip'
@@ -53,28 +55,77 @@ jobs:
 # BUILD LITE VERSION
   - script: 'dotnet clean'
     displayName: Clean Build
+    condition: always()
 
   - task: DotNetCoreCLI@2
     displayName: dotnet publish
+    condition: always()
     inputs:
       command: 'publish'
       arguments: '--output $(Build.ArtifactStagingDirectory) -r win-x64'
       zipAfterPublish: true
 
   - task: CopyFiles@2
+    condition: always()
     inputs:
       contents: '*.zip'
       targetFolder: '$(Build.ArtifactStagingDirectory)/'
 
   - task: CmdLine@2
+    condition: always()
     inputs:
       script: 'ren $(Build.ArtifactStagingDirectory)\SilveR.zip InVivoStat-win-x64-test-only.zip'
 
   - task: PublishBuildArtifacts@1
+    condition: always()
     inputs:
       ArtifactName: 'drop'
 
+  # Delete all existing assets from the GitHub release before uploading new ones
+  - task: PowerShell@2
+    displayName: Remove existing GitHub release assets
+    condition: always()
+    env:
+      GITHUB_TOKEN: $(GITHUB_TOKEN)
+    inputs:
+      targetType: 'inline'
+      script: |
+        $ErrorActionPreference = 'Stop'
+        $owner = 'robalexclark'
+        $repo  = 'SilveR'
+        $tag   = '4.11.0'
+
+        if (-not $env:GITHUB_TOKEN) {
+          Write-Host "GITHUB_TOKEN not set; skipping asset delete."
+          exit 0
+        }
+
+        $headers = @{
+          Authorization = "Bearer $($env:GITHUB_TOKEN)"
+          'User-Agent'  = 'azure-devops-pipeline'
+          Accept        = 'application/vnd.github+json'
+        }
+
+        try {
+          $release = Invoke-RestMethod -Headers $headers -Uri "https://api.github.com/repos/$owner/$repo/releases/tags/$tag" -Method Get
+        }
+        catch {
+          Write-Host "Release with tag '$tag' not found; skipping asset delete."
+          exit 0
+        }
+
+        if ($null -ne $release.assets -and $release.assets.Count -gt 0) {
+          foreach ($asset in $release.assets) {
+            Write-Host ("Deleting asset {0} (ID {1})" -f $asset.name, $asset.id)
+            Invoke-RestMethod -Headers $headers -Uri "https://api.github.com/repos/$owner/$repo/releases/assets/$($asset.id)" -Method Delete
+          }
+        }
+        else {
+          Write-Host "No existing assets to delete."
+        }
+
   - task: GitHubRelease@0
+    condition: always()
     inputs:
       gitHubConnection: github
       repositoryName: robalexclark/SilveR
