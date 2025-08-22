@@ -44,6 +44,7 @@ jobs:
       targetType: 'filePath'
       filePath: 'build/summarize-trx.ps1'
       arguments: '-SearchRoot $(Agent.TempDirectory) -OutPath $(Build.ArtifactStagingDirectory)/test-failures-summary.txt'
+      pwsh: false
 
   - task: ArchiveFiles@2
     condition: always()
@@ -81,50 +82,7 @@ jobs:
     inputs:
       ArtifactName: 'drop'
 
-  # Delete all existing assets from the GitHub release before uploading new ones
-  - task: PowerShell@2
-    displayName: Remove existing GitHub release assets
-    condition: always()
-    env:
-      GITHUB_TOKEN: $(GITHUB_TOKEN)
-    inputs:
-      targetType: 'inline'
-      script: |
-        $ErrorActionPreference = 'Stop'
-        $owner = 'robalexclark'
-        $repo  = 'SilveR'
-        $tag   = '4.11.0'
-
-        if (-not $env:GITHUB_TOKEN) {
-          Write-Host "GITHUB_TOKEN not set; skipping asset delete."
-          exit 0
-        }
-
-        $headers = @{
-          Authorization = "Bearer $($env:GITHUB_TOKEN)"
-          'User-Agent'  = 'azure-devops-pipeline'
-          Accept        = 'application/vnd.github+json'
-        }
-
-        try {
-          $release = Invoke-RestMethod -Headers $headers -Uri "https://api.github.com/repos/$owner/$repo/releases/tags/$tag" -Method Get
-        }
-        catch {
-          Write-Host "Release with tag '$tag' not found; skipping asset delete."
-          exit 0
-        }
-
-        if ($null -ne $release.assets -and $release.assets.Count -gt 0) {
-          foreach ($asset in $release.assets) {
-            Write-Host ("Deleting asset {0} (ID {1})" -f $asset.name, $asset.id)
-            Invoke-RestMethod -Headers $headers -Uri "https://api.github.com/repos/$owner/$repo/releases/assets/$($asset.id)" -Method Delete
-          }
-        }
-        else {
-          Write-Host "No existing assets to delete."
-        }
-
-  - task: GitHubRelease@0
+  - task: GitHubRelease@1
     condition: always()
     inputs:
       gitHubConnection: github
@@ -141,9 +99,10 @@ jobs:
       
 
 - job: Windows
-  dependsOn: Test
+  # Removed dependsOn so Windows can start immediately
+  condition: always()
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-latest'
 
   steps:
 
@@ -179,7 +138,7 @@ jobs:
       PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.11.0.exe'
       ArtifactName: 'drop'
 
-  - task: GitHubRelease@0
+  - task: GitHubRelease@1
     inputs:
       gitHubConnection: github
       repositoryName: robalexclark/SilveR
@@ -195,7 +154,7 @@ jobs:
 
 
 - job: Linux
-  dependsOn: Test
+  condition: always()
   pool:
     vmImage: 'ubuntu-latest'
 
@@ -236,7 +195,7 @@ jobs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.AppImage'
       ArtifactName: 'drop'
 
-  - task: GitHubRelease@0
+  - task: GitHubRelease@1
     inputs:
       gitHubConnection: github
       repositoryName: robalexclark/SilveR
@@ -252,7 +211,7 @@ jobs:
 
 
 - job: MacOS
-  dependsOn: Test
+  condition: always()
   pool:
     vmImage: 'macOS-latest'
 
@@ -290,7 +249,7 @@ jobs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.dmg'
       ArtifactName: 'drop'
 
-  - task: GitHubRelease@0
+  - task: GitHubRelease@1
     inputs:
       gitHubConnection: github
       repositoryName: robalexclark/SilveR
