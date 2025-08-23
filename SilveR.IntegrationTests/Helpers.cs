@@ -1,4 +1,4 @@
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 using Newtonsoft.Json.Linq;
 using SilveR.StatsModels;
 using System;
@@ -159,8 +159,6 @@ namespace SilveR.IntegrationTests
 
         public static string SanitizeHtml(string html, bool stripImages = true)
         {
-            //if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            //{
             HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(html);
 
@@ -189,29 +187,26 @@ namespace SilveR.IntegrationTests
             // Fix the pound signs
             html = html.Replace("Â£", "£");
 
-            return html;
-            //}
-
             //always remove references as these change all the time
-            //if (html.Contains("R references"))
-            //{
-            //    string[] textLines = html.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-            //    StringBuilder linesToReturn = new StringBuilder();
+            if (html.Contains("R references"))
+            {
+                string[] textLines = html.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                StringBuilder linesToReturn = new StringBuilder();
 
-            //    foreach (string line in textLines)
-            //    {
-            //        if (line.Contains("R references"))
-            //            break;
+                foreach (string line in textLines)
+                {
+                    if (line.Contains("R references"))
+                        break;
 
-            //        linesToReturn.AppendLine(line);
-            //    }
+                    linesToReturn.AppendLine(line);
+                }
 
-            //    return linesToReturn.ToString();
-            //}
-            //else
-            //{
-            //return html;
-            //}
+                return linesToReturn.ToString();
+            }
+            else
+            {
+                return html;
+            }
         }
     }
 

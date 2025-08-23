@@ -93,6 +93,7 @@ jobs:
       tag: '4.11.0'
       title: '4.11.0'
       assetUploadMode: 'replace'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-win-x64-test-only.zip'
       isPreRelease: true
       isDraft: false
       
@@ -130,12 +131,17 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for Win-x64
 
-  - script: 'xcopy $(Build.SourcesDirectory)\SilveR\bin\Desktop\"InVivoStat Setup 4.11.0.exe" $(Build.ArtifactStagingDirectory)'
+  - task: CopyFiles@2
     displayName: Copy InVivoStat Setup 4.11.0.exe
+    inputs:
+      sourceFolder: '$(Build.SourcesDirectory)/SilveR/bin/Desktop'
+      contents: 'InVivoStat Setup 4.11.0.exe'
+      targetFolder: '$(Build.ArtifactStagingDirectory)'
+      overWrite: true
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)\SilveR\bin\Desktop\InVivoStat Setup 4.11.0.exe'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 4.11.0.exe'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@1
@@ -148,6 +154,7 @@ jobs:
       tag: '4.11.0'
       title: '4.11.0'
       assetUploadMode: 'replace'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 4.11.0.exe'
       isPreRelease: true
       isDraft: false
 
@@ -205,6 +212,7 @@ jobs:
       tag: '4.11.0'
       title: '4.11.0'
       assetUploadMode: 'replace'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.AppImage'
       isPreRelease: true
       isDraft: false
 
@@ -259,5 +267,6 @@ jobs:
       tag: '4.11.0'
       title: '4.11.0'
       assetUploadMode: 'replace'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.dmg'
       isPreRelease: true
       isDraft: false
