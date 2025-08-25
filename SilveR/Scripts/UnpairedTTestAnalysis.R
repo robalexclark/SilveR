@@ -1,4 +1,4 @@
-#===================================================================================================================
+﻿#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(multcomp))
@@ -163,7 +163,7 @@ if (equalCase == "Y") {
 	HTML.title("Unpaired t-test result", HR=3, align="left")
 
 #STB - July 2012 rename response variable
-	eqtest<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~statdata$mainEffect, paired = FALSE, var.equal= TRUE, conf.level= sig)
+	eqtest<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~statdata$mainEffect, var.equal= TRUE, conf.level= sig)
 
 	col1<-format(round(as.numeric(eqtest[1]), 3), nsmall=3, scientific=FALSE)
 	col2<-format(round(as.numeric(eqtest[2]), 0), nsmall=0, scientific=FALSE)
@@ -536,8 +536,8 @@ if (unequalCase == "Y") {
 	HTML.title("Unpaired t-test result", HR=3, align="left")
 
 	#STB - July 2012 rename response variable
-	# eqtest<-t.test(formula = eval(parse(text = paste("statdata$", response)))~eval(parse(text = paste("statdata$", treatFactor))), paired = FALSE, var.equal= FALSE, conf.level= sig)
-	eqtest<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
+	# eqtest<-t.test(formula = eval(parse(text = paste("statdata$", response)))~eval(parse(text = paste("statdata$", treatFactor))), var.equal= FALSE, conf.level= sig)
+	eqtest<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, var.equal= FALSE, conf.level= sig)
 
 	col1<-format(round(as.numeric(eqtest[1]), 3), nsmall=3, scientific=FALSE)
 	col2<-format(round(as.numeric(eqtest[2]), 2), nsmall=2, scientific=FALSE)
@@ -727,7 +727,7 @@ if (unequalCase == "Y") {
 	#Required to generate table label only
 	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 	multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
-	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
+	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, var.equal= FALSE, conf.level= sig)
 
 	pvals<-mult2$p.value
 	meandiff<- mult2$estimate[1] - mult2$estimate[2]
@@ -828,7 +828,7 @@ if(unequalCase == "Y" && (responseTransform =="log10"||responseTransform =="loge
 		mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 		multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
 	
-		mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, paired = FALSE, var.equal= FALSE, conf.level= sig)
+		mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, var.equal= FALSE, conf.level= sig)
 	
 		meandiff<- mult2$estimate[1] - mult2$estimate[2]
 		lowerdiff<- mult2$conf.int[1]
