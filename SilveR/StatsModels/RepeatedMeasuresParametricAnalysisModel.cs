@@ -1,5 +1,4 @@
-﻿using Combinatorics;
-using Combinatorics.Collections;
+﻿using Combinatorics.Collections;
 using SilveR.Helpers;
 using SilveR.Models;
 using SilveR.Validators;
@@ -336,11 +335,11 @@ namespace SilveR.StatsModels
 
             model.Append(String.Join('+', Treatments) + '+');
 
-            model.Append("Timezzz+"); //Time model needs zzz adding on the end for R to be able to recognise Time var
+            model.Append("Time_IVS+"); //Time model needs zzz adding on the end for R to be able to recognise Time var
 
             //determine the interactions
             List<string> factors = new List<string>(Treatments);
-            factors.Add("Timezzz"); //add in time to the factors PLUS the zzz's
+            factors.Add("Time_IVS"); //add in time to the factors PLUS the zzz's
 
             List<string> fullInteractions = DetermineInteractions(factors);
 
