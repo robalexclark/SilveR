@@ -254,7 +254,7 @@ namespace SilveR.StatsModels
 
             if (Treatment != null)
             {
-                model.Append("Timezzz"); //Time model needs zzz adding on the end for R to be able to recognise Time var
+                model.Append("Time_IVS"); //Time model needs zzz adding on the end for R to be able to recognise Time var
             }
 
             return model.ToString().TrimEnd('+');

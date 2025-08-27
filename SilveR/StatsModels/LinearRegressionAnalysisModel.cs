@@ -52,6 +52,8 @@ namespace SilveR.StatsModels
         [DisplayName("Covariate transformation")]
         public string CovariateTransformation { get; set; } = "None";
 
+        [DisplayName("Regression sums of squares table")]
+        public bool ShowRegANOVA { get; set; }
 
         [DisplayName("ANOVA table")]
         public bool ANOVASelected { get; set; } = true;
@@ -188,19 +190,20 @@ namespace SilveR.StatsModels
 
             arguments.Append(" " + argFormatter.GetFormattedArgument(OtherDesignFactors)); //12
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //13
-            arguments.Append(" " + argFormatter.GetFormattedArgument(Coefficients)); //14
-            arguments.Append(" " + argFormatter.GetFormattedArgument(AdjustedRSquared)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ShowRegANOVA)); //13
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ANOVASelected)); //14
+            arguments.Append(" " + argFormatter.GetFormattedArgument(Coefficients)); //15
+            arguments.Append(" " + argFormatter.GetFormattedArgument(AdjustedRSquared)); //16
 
-            arguments.Append(" " + Significance); //16
+            arguments.Append(" " + Significance); //17
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(ResidualsVsPredictedPlot)); //17
+            arguments.Append(" " + argFormatter.GetFormattedArgument(ResidualsVsPredictedPlot)); //18
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlot)); //18
+            arguments.Append(" " + argFormatter.GetFormattedArgument(NormalProbabilityPlot)); //19
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(CooksDistancePlot)); //19
+            arguments.Append(" " + argFormatter.GetFormattedArgument(CooksDistancePlot)); //20
 
-            arguments.Append(" " + argFormatter.GetFormattedArgument(LeveragePlot)); //20
+            arguments.Append(" " + argFormatter.GetFormattedArgument(LeveragePlot)); //21
 
             return arguments.ToString().Trim();
         }
@@ -218,6 +221,7 @@ namespace SilveR.StatsModels
             this.Covariates = argHelper.LoadIEnumerableArgument(nameof(Covariates));
             this.PrimaryFactor = argHelper.LoadStringArgument(nameof(PrimaryFactor));
             this.CovariateTransformation = argHelper.LoadStringArgument(nameof(CovariateTransformation));
+            this.ShowRegANOVA = argHelper.LoadBooleanArgument(nameof(ShowRegANOVA));
             this.ANOVASelected = argHelper.LoadBooleanArgument(nameof(ANOVASelected));
             this.Coefficients = argHelper.LoadBooleanArgument(nameof(Coefficients));
             this.AdjustedRSquared = argHelper.LoadBooleanArgument(nameof(AdjustedRSquared));
@@ -241,6 +245,7 @@ namespace SilveR.StatsModels
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Covariates), Covariates));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(PrimaryFactor), PrimaryFactor));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(CovariateTransformation), CovariateTransformation));
+            args.Add(ArgumentHelper.ArgumentFactory(nameof(ShowRegANOVA), ShowRegANOVA));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(ANOVASelected), ANOVASelected));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(Coefficients), Coefficients));
             args.Add(ArgumentHelper.ArgumentFactory(nameof(AdjustedRSquared), AdjustedRSquared));
@@ -252,7 +257,6 @@ namespace SilveR.StatsModels
 
             return args;
         }
-
 
 
         private string GetModel()

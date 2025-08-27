@@ -1,11 +1,9 @@
-﻿#===================================================================================================================
+#===================================================================================================================
 #R Libraries
-
-suppressWarnings(library(multcomp))
 suppressWarnings(library(R2HTML))
-suppressWarnings(library(nlme))
-suppressWarnings(library(contrast))
-suppressWarnings(library("emmeans"))
+suppressWarnings(library(emmeans))
+suppressWarnings(library(mmrm))
+suppressWarnings(library(car))
 
 #===================================================================================================================
 # retrieve args
@@ -37,12 +35,32 @@ showLSMeans <- Args[21]
 pairwiseTest <- tolower(Args[22])
 genpvals <- Args[23]
 
-#source(paste(getwd(),"/Common_Functions.R", sep=""))
-
 #Print args
 if (Diplayargs == "Y"){
 	print(Args)
 }
+
+
+
+
+
+
+
+# Model formula has Timezzz but sleectedEffect is Time_IVS
+#need to replace Timezzz with Time_IVS in the formula then the code needs sorting!
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #===================================================================================================================
 #Setup the html file and associated css file
@@ -57,12 +75,24 @@ HTMLCSS(CSSfile = cssFile)
 
 #STB 14OCT2015
 #Set contrast options for Marginal overall tests
-options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
+#options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
+
+# Setting up the factor names
+resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
+statdata$Animal_IVS<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
+statdata$Time_IVS<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
+statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
+statdata$yvarrr_IVS <- eval(parse(text = paste("statdata$", resp)))
+
+#Re-ordering data for analysis and plots
+statdata<-statdata[order(statdata$Animal_IVS, statdata$Time_IVS), ]
+
+#Creating dataset for plotting
+graphdata<-statdata
 
 #Graphics parameter setup
-graphdata<-statdata
 if (FirstCatFactor != "NULL") {
-	Gr_palette<-palette_FUN(FirstCatFactor)
+  Gr_palette<-palette_FUN(FirstCatFactor)
 }
 Labelz_IVS_ <- "N"
 Line_size2 <- Line_size
@@ -73,22 +103,27 @@ XLimHigh <- "NULL"
 YLimLow <- "NULL"
 YLimHigh <- "NULL"
 
-# Setting up the parameters
-resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
-statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
-statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
-statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
+#STB June 2015 - Taking a copy of the dataset - try to remove this dataset, required in pairwis etests zzz
+#statdata_temp <-statdata
 
-#calculating number of block factors
+#Block factors
 noblockfactors=0
 if (blocklist !="NULL") {
-	tempblockChanges <-strsplit(blocklist, ",")
+
+  #calculating number of block factors
+  tempblockChanges <-strsplit(blocklist, ",")
 	blocklistx <- c("")
 	for(i in 1:length(tempblockChanges[[1]]))  {
 		blocklistx [length(blocklistx )+1]=(tempblockChanges[[1]][i]) 
 	}
 	blocklistsep <- blocklistx[-1]
 	noblockfactors<-length(blocklistsep)
+	
+	#Defining blocks as factors
+	for (i in 1:length(blocklistsep)) {
+	  colname <- blocklistsep[i]
+	  statdata[[colname]] <- as.factor(statdata[[colname]])
+	}	
 }
 
 #calculating number of treatment factors
@@ -99,6 +134,12 @@ for(i in 1:length(tempChanges[[1]])) {
 }
 treatlistsep <- txtexpectedChanges[-1]
 notreatlist<-length(treatlistsep)
+
+#Defining treatments as factors
+for (i in 1:length(treatlistsep)) {
+  colname <- treatlistsep[i]
+  statdata[[colname]] <- as.factor(statdata[[colname]])
+}
 
 #calculating number of covariates
 if (covariatelist !="NULL") {
@@ -111,16 +152,23 @@ if (covariatelist !="NULL") {
 	nocovlist<-length(covlistsep)
 }
 
+#Counting Treatment factors in selected Effect
+selectedEffect2<-gsub("*", " * ",selectedEffect,fixed=TRUE) 
+tempseChanges <-strsplit(selectedEffect2, " * ")
+txtexpectedseChanges <- c("")
+for(i in 1:length(tempseChanges[[1]]))  {
+  txtexpectedseChanges [length(txtexpectedseChanges )+1]=(tempseChanges[[1]][i]) 
+}
+nosefactors<-(length(txtexpectedseChanges)-2)/2
+
+#Defining titles
 YAxisTitle <-resp
 if(covariatelist !="NULL") {
 	XAxisTitleCov<-covlistsep
 }
 CPXAxisTitle <-timeFactor
 
-#STB June 2015 - Takign a copy of the dataset
-statdata_temp <-statdata
-
-#Removing illegal characters
+#Removing illegal characters from titles
 for (i in 1:10) {
 	YAxisTitle<-namereplace(YAxisTitle)
 	CPXAxisTitle<-namereplace(CPXAxisTitle)
@@ -155,22 +203,6 @@ selectedEffectname <-selectedEffect
 selectedEffect<-gsub(eval(timeFactor), "Timezzz",selectedEffect) 
 selectedEffect<-gsub("ivs_sp_ivs*ivs_sp_ivs", "*",selectedEffect,fixed=TRUE) 
 
-# Testing the factorial combinations, stop if not all present
-intindex<-length(unique(statdata$betweenwithin))
-timeindex<-length(unique(eval(parse(text = paste("statdata$", timeFactor)))))
-ind<-1
-for (i in 1:notreatlist) {
-	ind=ind*length(unique(eval(parse(text = paste("statdata$", txtexpectedChanges[i+1])))))
-}
-ind=ind*timeindex
-
-emodel <-strsplit(effectModel2, "+", fixed = TRUE)
-emodelChanges <- c("")
-for(i in 1:length(emodel[[1]])) { 
-	emodelChanges [length(emodelChanges )+1]=(emodel[[1]][i]) 
-}
-noeffects<-length(emodelChanges)-2
-
 #===================================================================================================================
 # Titles and description
 #===================================================================================================================
@@ -178,19 +210,32 @@ noeffects<-length(emodelChanges)-2
 Title <-paste(branding, " Repeated Measures Parametric Analysis", sep="")
 HTML.title(Title, HR = 1, align = "left")
 
-#Software developement version warning
+#Software development version warning
 if (Betawarn == "Y") {
 	HTML.title("Warning", HR=2, align="left")
 	HTML(BetaMessage, align="left")
 }
 
-#Testing if full factorial design is being analysed
+# Testing the factorial combinations, stop if not all present
+intindex<-length(unique(statdata$betweenwithin))
+timeindex<-length(unique(eval(parse(text = paste("statdata$", timeFactor)))))
+ind<-1
+for (i in 1:notreatlist) {
+  ind=ind*length(unique(eval(parse(text = paste("statdata$", txtexpectedChanges[i+1])))))
+}
+ind=ind*timeindex
+
+emodel <-strsplit(effectModel2, "+", fixed = TRUE)
+emodelChanges <- c("")
+for(i in 1:length(emodel[[1]])) { 
+  emodelChanges [length(emodelChanges )+1]=(emodel[[1]][i]) 
+}
+noeffects<-length(emodelChanges)-2
+
 if(intindex != ind) {
 	HTML.title("Unfortunately not all combinations of the levels of the treatment factors are present, or not all combinations are present at each level of the repeated factor, in the experimental design. We recommend you manually create a new factor corresponding to the combinations of the levels of the treatment factors or remove the incomplete levels of the repeated factors from the analysis.", align="left")
 	quit()
 }
-
-
 
 #Response and covariate title
 title<-c("Response")
@@ -251,6 +296,9 @@ if(covariance=="unstructured") {
 	HTML("The repeated measures mixed model analysis is using the unstructured covariance structure to model the within-subject correlations. When using this structure you are estimating many parameters. If the numbers of subject used is small then these estimates may be unreliable, see Pinherio and Bates (2002).", align="left")
 }
 
+add5<-paste("The analysis implements the Kenward-Roger approximation of the degress of freedom, Kenward and Roger (1997).", sep= "")
+HTML(add5, align="left")
+
 #===================================================================================================================
 #Case profiles plot
 #===================================================================================================================
@@ -269,9 +317,6 @@ plotFilepdf1 <- sub(".html", "scatterPlot.pdf", htmlFile)
 dev.control("enable") 
 
 #Parameter setup
-graphdata$Time_IVS <- as.factor(eval(parse(text = paste("graphdata$", timeFactor))))
-graphdata$yvarrr_IVS <- eval(parse(text = paste("graphdata$", resp)))
-graphdata$Animal_IVS <- as.factor(eval(parse(text = paste("graphdata$", subjectFactor))))
 graphdata$l_l <-graphdata$between
 XAxisTitle<-CPXAxisTitle
 MainTitle2 <-""
@@ -329,10 +374,7 @@ if(covariatelist != "NULL") {
 		dev.control("enable") 
 
 		#Graphical parameters
-		graphdata<-statdata
 		graphdata$xvarrr_IVS <- eval(parse(text = paste("graphdata$", covlistsep[i] )))
-		graphdata$yvarrr_IVS <- eval(parse(text = paste("graphdata$",resp)))
-		graphdata$Time_IVS <- as.factor(eval(parse(text = paste("graphdata$", timeFactor))))
 		graphdata$tempvariable_ivs <- paste(eval(parse(text = paste("graphdata$",FirstCatFactor))), graphdata$Time_IVS, sep = " ")
 		graphdata$l_l <- graphdata$tempvariable_ivs
 		graphdata$catfact <-graphdata$tempvariable_ivs
@@ -408,8 +450,9 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 	}
 
 	#Test to see if there are 0 df, in which case end module
-	modelxx <- paste(CovIntModel , " + ", subjectFactor , sep = "")
+	modelxx <- paste(CovIntModel , " + Animal_IVS", sep = "")
 	threewayfullxx<-lm(as.formula(modelxx) , data=statdata, na.action = (na.omit))
+
 	if (df.residual(threewayfullxx) < 1) {
 		HTML.title("Table of overall tests of model effects, for assessing covariate interactions", HR=2, align="left")
 		HTML("When the covariate interactions are included in the statistical model there are not enough degrees of freedom to estimate all the effects, hence no table of overall tests of model effects (including the covariate interactions) has been produced.", align="left")	
@@ -417,49 +460,45 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 
 		#Creating the analysis including covariates
 		if(covariance=="compound symmetric") {
-			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
+		  modelxx <- paste(CovIntModel , " + cs(Timezzz | Animal_IVS)", sep = "")
+			threewayfullx<-mmrm(formula=as.formula(modelxx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 		}
 		if(covariance=="autoregressive(1)") {
-			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
+		  modelxx <- paste(CovIntModel , " + ar1(Timezzz | Animal_IVS)", sep = "")
+		  threewayfullx<-mmrm(formula=as.formula(modelxx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 		}
 		if(covariance=="unstructured") {
-			threewayfullx<-lme(as.formula(CovIntModel), random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+		  modelxx <- paste(CovIntModel , " + us(Timezzz | Animal_IVS)", sep = "")
+		  threewayfullx<-mmrm(formula=as.formula(modelxx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 		}
 
-		#STB Aug 2014 add in marginal sums of squares
-		#tempx<-anova(threewayfullx, type="sequential")
-		tempx<-anova(threewayfullx, type="marginal")
-	
-		if (min(tempx[2], na.rm=TRUE) >= 1) {
-			col3x<-format(round(tempx[3], 2), nsmall=2, scientific=FALSE)
-			col4x<-format(round(tempx[4], 4), nsmall=4, scientific=FALSE)
+	  tempx1<-car::Anova(threewayfullx,ddf = "Kenward-Roger", type = "III")
+	  tempx <- row.names(tempx1)
+	  tempx <- cbind(tempx, tempx1)	  
+	  
+		if (min(tempx[3], na.rm=TRUE) >= 1) {
+		  col2x<-format(round(tempx[3], 2), nsmall=2, scientific=FALSE)
+			col3x<-format(round(tempx[4], 2), nsmall=2, scientific=FALSE)
+			col4x<-format(round(tempx[5], 4), nsmall=4, scientific=FALSE)
 
 			# Sort out effects list
-			source2x<-rownames(tempx)
-			tempyx<-gsub(pattern="Timezzz", replacement=timeFactor, source2x)
-			#STB March 2014 - Replacing : with * in ANOVA table
-			for (q in 1:length(tempyx)) {
-				tempyx<-sub(":"," * ", tempyx) 
+			for (q in 1:length(tempx[1])) {
+			  tempx[[1]]<-sub(":"," * ", tempx[[1]]) 
+			  tempx[[1]]<-sub("Timezzz",timeFactor, tempx[[1]]) 
 			}
 
-			ivsanovax<-cbind(tempyx, tempx[1], tempx[2], col3x, col4x)
-
+			ivsanovax<-cbind(tempx[1], tempx[2], col2x, col3x, col4x)
 			headx<-c("Effect", "Num. degrees of freedom", "Denom. degrees of freedom", "F-value", "p-value")
 			colnames(ivsanovax)<-headx
 
-			# Correction to code to ammend lowest p-value: STB Oct 2010
-			# for (i in 1:(dim(ivsanovax)[1]-1)) 
+			# Correction to code to amend lowest p-value
 			for (i in 1:(dim(ivsanovax)[1]))  {
-				if (tempx[i,4]<0.0001) {
+				if (tempx[i,5]<0.0001) {
 					#STB - Mar 2011 formatting p<0.0001
-					# ivsanovax[i,5]<-0.0001
 					ivsanovax[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
 					ivsanovax[i,5]<- paste("<",ivsanovax[i,5])
 				}
 			}
-
-			#Remove intercept row
-			ivsanovax <- ivsanovax[-c(1), ] 
 
 			#STB July 2013 Change title
 			HTML.title("Table of overall tests of model effects, for assessing covariate interactions", HR=2, align="left")
@@ -468,8 +507,8 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 		}
 	
 		if (min(tempx[2], na.rm=TRUE) <= 0) {
-			HTML("The covariate interactions have not been calculated as there are zero residual degrees of freedom when all terms are included in the statistical model.", align="left")
-			
+		  HTML.title("Table of overall tests of model effects, for assessing covariate interactions", HR=2, align="left")
+		  HTML("The covariate interactions have not been calculated as there are zero residual degrees of freedom when all terms are included in the statistical model.", align="left")
 		}
 	}
 }
@@ -479,8 +518,12 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 #===================================================================================================================
 
 #Test to see if there are 0 df, in which case end module
-model2 <- paste(Args[4] , " + ", subjectFactor , sep = "")
-threewayfullxxx<-lm(as.formula(model2) , data=statdata, na.action = (na.omit))
+
+#Creating the list of model terms
+model2 <- c(model)
+
+model3 <- paste(model2 , " + ", subjectFactor , sep = "")
+threewayfullxxx<-lm(as.formula(model3) , data=statdata, na.action = (na.omit))
 
 if (df.residual(threewayfullxxx) < 1) {	
 	HTML.title("Table of overall tests of model effects", HR=2, align="left")
@@ -489,15 +532,18 @@ if (df.residual(threewayfullxxx) < 1) {
 } 
 
 if(covariance=="compound symmetric") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
+	modelx <- paste(model2 , " + cs(Timezzz | Animal_IVS)", sep = "")
+	threewayfull<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 }
 
 if(covariance=="autoregressive(1)") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
+  modelx <- paste(model2 , " + ar1(Timezzz | Animal_IVS)", sep = "")
+  threewayfull<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 }
 
 if(covariance=="unstructured") {
-	threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+  modelx <- paste(model2 , " + us(Timezzz | Animal_IVS)", sep = "")
+  threewayfull<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 }
 
 #===================================================================================================================
@@ -506,41 +552,44 @@ if(covariance=="unstructured") {
 if(compareCovarianceModels == "Y" ) {
 
 	#Set contrast options for Marginal overall tests
-	options(contrasts=c(unordered="contr.treatment", ordered="contr.poly"))
+#	options(contrasts=c(unordered="contr.treatment", ordered="contr.poly"))
 
-	threewayfullCS<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
-	threewayfullAR<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
-	threewayfullUN<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
+  
+  modelx <- paste(model2 , " + cs(Timezzz | Animal_IVS)", sep = "")
+  threewayfullCS<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
+  modely <- paste(model2 , " + ar1(Timezzz | Animal_IVS)", sep = "")
+  threewayfullAR<-mmrm(formula=as.formula(modely), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
+  modelz <- paste(model2 , " + us(Timezzz | Animal_IVS)", sep = "")
+  threewayfullUN<-mmrm(formula=as.formula(modelz), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 
-	AIC_Out<-data.frame(AIC(threewayfullCS , threewayfullUN,threewayfullAR))
-	BIC_Out<-data.frame(BIC(threewayfullCS , threewayfullUN,threewayfullAR))
+  AICCS<- AIC(threewayfullCS) 
+  AICAR<- AIC(threewayfullAR)  
+  AICUN<- AIC(threewayfullUN)  
+  AIC_Out<-c(AICCS , AICAR, AICUN)
+  
+  BICCS<- BIC(threewayfullCS) 
+  BICAR<- BIC(threewayfullAR)  
+  BICUN<- BIC(threewayfullUN)  
+  BIC_Out<-c(BICCS , BICAR, BICUN)
 
 	temp<-c(
 		format(round(logLik(threewayfullCS, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
-		format(round(logLik(threewayfullUN, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
-		format(round(logLik(threewayfullAR, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE)
+		format(round(logLik(threewayfullAR, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
+		format(round(logLik(threewayfullUN, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE)
 		)
 
 	#Set contrast options for Marginal overall tests
-	options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
+#	options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
 
-	Critnames <- c("Compound Symmetric", "Unstructured", "Autoregressive (1)")
+	Critnames <- c("Compound Symmetric", "Autoregressive (1)", "Unstructured")
 
-	#AIC Manipulation
-	AIC_Out <- cbind (Critnames, AIC_Out)
-	AICtemp<- AIC_Out[,3]
-	col3<-format(round(AICtemp, 3), nsmall=3, scientific=FALSE)
-	AIC_Out<- AIC_Out[,-3]
-	AIC_Out<-cbind(AIC_Out, col3)
-	
-	#BIC Manipulation
-	BICtemp<- BIC_Out[,2]
-	col3<-format(round(BICtemp, 3), nsmall=3, scientific=FALSE)
-	
-       
+	#Rounding Manipulation
+	col1<-format(round(AIC_Out, 3), nsmall=3, scientific=FALSE)
+	col2<-format(round(BIC_Out, 3), nsmall=3, scientific=FALSE)
+
 	#Combine results
-	ModelComp<-cbind(AIC_Out, col3, temp)
- 	colnames(ModelComp) <- c("Covariance Structure", "Degrees of freedom", "Akaike information criterion (AIC)", "Bayesian information criterion (BIC)", "Log-Likelihood")
+	ModelComp<-cbind(Critnames, col1, col2, temp)
+ 	colnames(ModelComp) <- c("Covariance Structure",  "Akaike information criterion (AIC)", "Bayesian information criterion (BIC)", "Log-Likelihood")
 
 	HTML.title("Comparing models with different covariance structures", HR=2, align="left")
 	HTML(ModelComp, classfirstline="second", align="left", row.names = "FALSE")
@@ -549,53 +598,59 @@ if(compareCovarianceModels == "Y" ) {
 
 #===================================================================================================================
 #ANOVA Table
+#HTML(summary(threewayfull), classfirstline="second", align="left", row.names = "FALSE")
+jointz=data.frame(joint_tests(threewayfull,cov.reduce = symmint(0)))
+HTML.title("Table of joint tests overall tests of model effects", HR=2, align="left")
+HTML(jointz, classfirstline="second", align="left", row.names = "FALSE")
+
+jointz2=data.frame(joint_tests(threewayfull))
+HTML.title("Table of joint tests overall tests of model effects without option", HR=2, align="left")
+HTML(jointz2, classfirstline="second", align="left", row.names = "FALSE")
+
+library(lmerTest)
+jointz3=data.frame(car::Anova(threewayfull))
+HTML.title("Table of lmerTest overall tests of model effects without option", HR=2, align="left")
+HTML(jointz3, classfirstline="second", align="left", row.names = "FALSE")
+
+
 #===================================================================================================================
-#STB Aug 2014 add in marginal sums of squares
-#temp<-anova(threewayfull, type="sequential")
-temp<-anova(threewayfull, type="marginal")
-col3<-format(round(temp[3], 2), nsmall=2, scientific=FALSE)
-col4<-format(round(temp[4], 4), nsmall=4, scientific=FALSE)
 
-#Sorting out Effects column
-source2<-rownames(temp)
-tempy<-gsub(pattern="Timezzz", replacement=timeFactor, source2)
-#STB March 2014 - Replacing : with * in ANOVA table
-for (q in 1:notreatlist) {
-	tempy<-sub(":"," * ", tempy) 
+temp1<-car::Anova(threewayfull, ddf = "Kenward-Roger", type = "III")
+temp <- row.names(temp1)
+temp <- cbind(temp, temp1)
+
+col2<-format(round(temp[3], 2), nsmall=2, scientific=FALSE)
+col3<-format(round(temp[4], 2), nsmall=2, scientific=FALSE)
+col4<-format(round(temp[5], 4), nsmall=4, scientific=FALSE)
+  
+# Sort out effects list
+for (q in 1:length(temp[1])) {
+  temp[[1]]<-sub(":"," * ", temp[[1]]) 
+  temp[[1]]<-sub("Timezzz",timeFactor, temp[[1]]) 
 }
-
-ivsanova<-cbind(tempy, temp[1], temp[2], col3, col4)
+tempy <- temp[[1]]
+ivsanova<-cbind(temp[1], temp[2], col2, col3, col4)
 head<-c("Effect", "Num. degrees of freedom", "Denom. degrees of freedom", "F-value", "p-value")
 colnames(ivsanova)<-head
-
-# Correction to code to ammend lowest p-value: STB Oct 2010
-for (i in 1:(dim(ivsanova)[1])) {
-	if (temp[i,4]<0.0001)  {
-		#STB - Mar 2011 formatting p<0.0001
-		# ivsanova[i,5]<-0.0001
-		ivsanova[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-		ivsanova[i,5]<- paste("<",ivsanova[i,5])
-	}
+  
+# Correction to code to amend lowest p-value: STB Oct 2010
+for (i in 1:(dim(ivsanova)[1]))  {
+  if (temp[i,5]<0.0001) {
+    #STB - Mar 2011 formatting p<0.0001
+    ivsanova[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
+    ivsanova[i,5]<- paste("<",ivsanova[i,5])
+  }
 }
 
-#Remove intercept row
-ivsanova <- ivsanova[-c(1), ] 
-temp <- temp[-c(1), ] 
-
 if(showANOVA=="Y") {
-	#STB July 2013 Change title
 	HTML.title("Table of overall tests of model effects", HR=2, align="left")
 	HTML(ivsanova, classfirstline="second", align="left", row.names = "FALSE")
-
-	#STB August 2014 change in message
 	HTML("Comment: The overall tests in this table are marginal likelihood ratio tests, where the order they appear in the table does not influence the results.", align="left")
 
-
-
-	#Number of signficiant terms 
+	#Number of significant terms 
 	nosigs <- 0
 	for(i in 1:(dim(ivsanova)[1]))	{
-		if (temp[i,4]<= (1-sig)) {
+		if (temp[i,5]<= (1-sig)) {
 			nosigs <- nosigs+1
 		}
 	}
@@ -603,19 +658,19 @@ if(showANOVA=="Y") {
 	add<-"Conclusion"
 	index <- 0
 	for(i in 1:(dim(ivsanova)[1]))	{
-	#STB May 2012 correcting table reference
-		if (temp[i,4]<= (1-sig)) {
+	  if (temp[i,5]<= (1-sig)) {
 			index <- index+1
 			if (index == 1) {
-				add<-paste(add, ": At the ", 100*(1-sig), "% level", " there is a statistically significant overall difference between the levels of ", tempy[i+1], sep="")
+				add<-paste(add, ": At the ", 100*(1-sig), "% level", " there is a statistically significant overall difference between the levels of ", tempy[i], sep="")
 			} 
 			if (index > 1 && index < nosigs) {
-				add<-paste(add, ", ", tempy[i+1], sep="")
+				add<-paste(add, ", ", tempy[i], sep="")
 			} else if (index > 1 && index == nosigs) {
-				add<-paste(add, " and ", tempy[i+1], sep="")
+				add<-paste(add, " and ", tempy[i], sep="")
 			}
 		} 
 	}
+
 	if (nosigs==0) {
 		if (dim(ivsanova)[1]>2) {
 			add<-paste(add, ": There are no statistically significant overall differences, at the ", 100*(1-sig), "% level, ", "between the levels of any of the terms in the table of overall tests", sep="")
@@ -629,7 +684,7 @@ if(showANOVA=="Y") {
 
 	#STB May 2012 correcting table
 	# Warning message for degrees of freedom
-	if (min(ivsanova[3])<5) {
+	if (min(unlist(temp[[3]]))<5) {
 		HTML.title("Warning", HR=2, align="left")
 		HTML("Unfortunately one or more of the residual degrees of freedom in the above table are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.", align="left")
 	}
@@ -645,18 +700,20 @@ if (CovariateRegressionCoefficients == "Y"  && covariatelist != "NULL") {
 		HTML.title("Covariate regression coefficients", HR=2, align="left")
 	}
 
-	covtable_1<-summary(threewayfull)$tTable
-	covtable<-data.frame(covtable_1)[c(2:(nocovlist+1)),]
-	names <- rownames(covtable)
-	Estimate <-format(round(covtable$Value, 3), nsmall=3, scientific=FALSE) 
-	StdError <-format(round(covtable$Std.Error, 3), nsmall=3, scientific=FALSE) 
-	tvalue <-format(round(covtable$t.value, 2), nsmall=2, scientific=FALSE) 
-	Prt <-format(round(covtable$p.value, 4), nsmall=4, scientific=FALSE) 
+  covtable_1 <-  data.frame(tidy(threewayfull, conf.int = TRUE, conf.level = sig))
+  covtable_2 <-  covtable_1[c(2:(nocovlist+1)),]
+#  covtable_3 <-  covtable_2[, c("term", "estimate", "std.error", "statistic", "p.value")]
+
+	names <- covtable_2$term
+	Estimate <-format(round(covtable_2$estimate, 3), nsmall=3, scientific=FALSE) 
+	StdError <-format(round(covtable_2$std.error, 3), nsmall=3, scientific=FALSE) 
+	tvalue <-format(round(covtable_2$statistic, 2), nsmall=2, scientific=FALSE) 
+	Prt <-format(round(covtable_2$p.value, 4), nsmall=4, scientific=FALSE) 
 	
 	covtable2 <-cbind(names, Estimate, StdError, tvalue, Prt)
 
 	for (k in 1:(dim(covtable2)[1])) {
-		if (as.numeric(covtable[k,5])<0.0001)  {
+		if (as.numeric(covtable_2[k,6])<0.0001)  {
 			#STB March 2011 formatting p-values p<0.0001
 			#ivsanova[i,9]<-0.0001
 			covtable2[k,5]= "<0.0001"
@@ -803,82 +860,61 @@ if(showNormPlot=="Y") {
 # Plot and table of LS Means
 #===================================================================================================================
 if(showLSMeans=="Y") {
-	#Counting Treatment factors in selected Effect
-	selectedEffect2<-gsub("*", " * ",selectedEffect,fixed=TRUE) 
-	tempseChanges <-strsplit(selectedEffect2, " * ")
 
-	txtexpectedseChanges <- c("")
-	for(i in 1:length(tempseChanges[[1]]))  {
-		txtexpectedseChanges [length(txtexpectedseChanges )+1]=(tempseChanges[[1]][i]) 
-	}
-	nosefactors<-(length(txtexpectedseChanges)-2)/2
-	
-	#Identify within animal degrees of freedom
-	df<-anova(threewayfull)[dim(anova(threewayfull))[1],2]
-	
-	#Calculate LS Means
-	tabs<-emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), data=statdata)
-	x<-summary(tabs)
-	LSM<-data.frame(x)
-	leng<-dim(LSM)[1]
-	
-	for (i in 1:leng) {
-		LSM$DDF[i]<-df
-	}
-	
-	LSM$Mean<-LSM$emmean
-	LSM$Lower=LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE
-	LSM$Upper=LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE
-	LSDATA<-data.frame(LSM)
-
+  #Calculate LS Means
+  LSDATA<-data.frame(emmeans(threewayfull,eval(parse(text = paste("~",selectedEffect))), level=sig))
+  LSDATA$Meanp<-format(round(LSDATA$emmean,3),nsmall=3)
+  LSDATA$Lowerp<-format(round(LSDATA$lower.CL,3),nsmall=3)
+  LSDATA$Upperp<-format(round(LSDATA$upper.CL,3),nsmall=3)
+  
+  LSDATA$Mean  <- as.numeric(LSDATA$emmean)
+  LSDATA$Lower <- as.numeric(LSDATA$lower.CL)
+  LSDATA$Upper <- as.numeric(LSDATA$upper.CL)
+  
 #===================================================================================================================
 # Table of LS Means
 #===================================================================================================================
 	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+	  
+	  CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
+	  HTML.title(CITitle2, HR=2, align="left")
 
-		CITitle2<-paste("Table of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
-		HTML.title(CITitle2, HR=2, align="left")
-
-		LSDATA$Mean<-format(round(LSM$emmean,3),nsmall=3)
-		LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
-		LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
-		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean)) 	
-
-		observ <- data.frame(c(1:dim(LSDATA2)[1]))
-		LSDATA3 <- cbind(observ, LSDATA2)
-
-		names <- c()
-		for (l in 1:nosefactors) {
-			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
-		}
-
-		names[1]<-"Mean ID"
-		names[nosefactors+2]<-timeFactor
-		names[nosefactors+3]<-"Mean"
-		names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
-		names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
-	
-		colnames(LSDATA3)<-names
-		rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
-		HTML(LSDATA3, classfirstline="second", align="left", row.names = "FALSE")
+	  LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,df, emmean, Mean, Upper, Lower)) 	
+	  observ <- data.frame(c(1:dim(LSDATA2)[1]))
+	  LSDATA2 <- cbind(observ, LSDATA2)
+	  
+	  names <- c()
+	  for (l in 1:nosefactors) {
+	    names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
+	  }
+	  
+	  names[1]<-"Mean ID"
+	  names[nosefactors+2]<-timeFactor
+	  names[nosefactors+3]<-"Mean"
+	  names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
+	  names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
+	  
+	  colnames(LSDATA2)<-names
+	  rownames(LSDATA2)<-c("ID",1:(dim(LSDATA2)[1]-1))
+	  HTML(LSDATA2, classfirstline="second", align="left", row.names = "FALSE")
 
 #===================================================================================================================
 # Plot of LS Means
 #===================================================================================================================
-		#Creating the final datasset to plot
-		LSDATA<-data.frame(LSM)	
-		LSDATA$Group_IVSq_<-LSM[,1]
+
+	  
+	  #Creating the final dataset to plot
+	  graphdata<- LSDATA
+	  graphdata$jj_1<- graphdata$Timezzz
+	  graphdata$Group_IVSq_<-graphdata[,1]
 		if (nosefactors > 1) {
 			for (i in 2:nosefactors) {
-				LSDATA$Group_IVSq_ <- paste(LSDATA$Group_IVSq_, " , " , LSDATA[,i] , sep="")
+			  graphdata$Group_IVSq_ <- paste(graphdata$Group_IVSq_, " , " , graphdata[,i] , sep="")
 			}
 		}
 
-		Line_size <- Line_size2
-
 		CITitle<-paste("Plot of the least square (predicted) means with ",(sig*100),"% confidence intervals",sep="")
 		HTML.title(CITitle, HR=2, align="left")
-
 
 		meanPlot <- sub(".html", "meanplot.png", htmlFile)
 		png(meanPlot,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
@@ -888,8 +924,7 @@ if(showLSMeans=="Y") {
 		dev.control("enable") 
 
 		#Parameters
-		graphdata<- LSDATA
-		graphdata$jj_1<- graphdata$Timezzz
+		Line_size <- Line_size2
 		Gr_alpha <- 0
 		if (bandw != "N") {
 			Gr_fill <- BW_fill
@@ -903,15 +938,16 @@ if(showLSMeans=="Y") {
 
 		#GGPLOT2 code
 		if (nosefactors == 1) {
-			graphdata$jj_2 <- graphdata[,1]
+
+		  #Defining the jj_2 - the categorisation factor
 			txtseChanges <- txtexpectedseChanges[2]
 			for (i in 1:20) {
 				txtseChanges<- namereplace(txtseChanges)
 			}
 			graphdata$catzz <- txtseChanges
 			graphdata$jj_2 <- paste(graphdata$catzz, "=",graphdata[,1], sep = "") 
-	
 			Gr_palette<- palette_FUN("jj_2")
+
 			LSMPLOT_2("none")
 		}
 
@@ -1080,16 +1116,15 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 	if ( (responseTransform == "log10" && GeomDisplay != "notdisplayed") || (responseTransform == "loge" && GeomDisplay != "notdisplayed") ) {
 
 		if (responseTransform =="log10") {
-				LSM$Mean<-10^(LSM$emmean)
-				LSM$Lower=10^(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
-				LSM$Upper=10^(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
+		    LSDATA$Mean  <- 10^(as.numeric(LSDATA$emmean))
+		    LSDATA$Lower <- 10^(as.numeric(LSDATA$lower.CL))
+		    LSDATA$Upper <- 10^(as.numeric(LSDATA$upper.CL))
 		}
 		if (responseTransform =="loge") {
-				LSM$Mean<-exp(LSM$emmean)
-				LSM$Lower=exp(LSM$emmean-qt(1-(1-sig)/2,df)*LSM$SE)
-				LSM$Upper=exp(LSM$emmean+qt(1-(1-sig)/2,df)*LSM$SE)
+		    LSDATA$Mean  <- exp(as.numeric(LSDATA$emmean))
+		    LSDATA$Lower <- exp(as.numeric(LSDATA$lower.CL))
+        LSDATA$Upper <- exp(as.numeric(LSDATA$upper.CL))
 		}
-		LSDATA<-data.frame(LSM)
 
 #===================================================================================================================
 #Table of back transformed plot
@@ -1105,20 +1140,19 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 		}
 	
 		if (responseTransform =="log10") {
-			LSDATA$Mean<-format(round(LSM$Mean,3),nsmall=3)
-			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
-			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
+			LSDATA$Meanp<-format(round(LSDATA$Mean,3),nsmall=3)
+			LSDATA$Lowerp<-format(round(LSDATA$Lower,3),nsmall=3)
+			LSDATA$Upperp<-format(round(LSDATA$Upper,3),nsmall=3)
 		}
 		if (responseTransform =="loge") {
-			LSDATA$Mean<-format(round(LSM$Mean,3),nsmall=3)
-			LSDATA$Lower<-format(round(LSM$Lower,3),nsmall=3)
-			LSDATA$Upper<-format(round(LSM$Upper,3),nsmall=3)
+			LSDATA$Meanp<-format(round(LSDATA$Mean,3),nsmall=3)
+			LSDATA$Lowerp<-format(round(LSDATA$Lower,3),nsmall=3)
+			LSDATA$Upperp<-format(round(LSDATA$Upper,3),nsmall=3)
 		}
-		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,DDF, emmean)) 
+		LSDATA2<-subset(LSDATA, select = -c(df, SE, lower.CL, upper.CL,df, emmean, Mean, Lower, Upper)) 
 
 		observ <- data.frame(c(1:dim(LSDATA2)[1]))
-		LSDATA3 <- cbind(observ, LSDATA2)
-
+		LSDATA2 <- cbind(observ, LSDATA2)
 		names <- c()
 		for (l in 1:nosefactors) {
 			names[l+1] <- paste(unique (strsplit(selectedEffect, "*",fixed = TRUE)[[1]])[l], " ", sep = "")
@@ -1129,10 +1163,10 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 		names[nosefactors+3]<-"Geometric mean"
 		names[nosefactors+4]<-paste("Lower ",(sig*100),"% CI",sep="")
 		names[nosefactors+5]<-paste("Upper ",(sig*100),"% CI",sep="")
-		colnames(LSDATA3)<-names
-		rownames(LSDATA3)<-c("ID",1:(dim(LSDATA3)[1]-1))
+		colnames(LSDATA2)<-names
+		rownames(LSDATA2)<-c("ID",1:(dim(LSDATA2)[1]-1))
 	
-		HTML(LSDATA3, classfirstline="second", align="left", row.names = "FALSE")
+		HTML(LSDATA2, classfirstline="second", align="left", row.names = "FALSE")
 
 #===================================================================================================================
 #Back transformed geometric means plot 
@@ -1141,14 +1175,16 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 		HTML.title(CITitle, HR=2, align="left")
 
 		#CreatinG the final datasset to plot
-		LSDATA<-data.frame(LSM)		
-		LSDATA$Group_IVSq_<-LSM[,1]
+		graphdata<- LSDATA
+		graphdata$jj_1<- graphdata$Timezzz
+		graphdata$Group_IVSq_<-graphdata[,1]
 		if (nosefactors > 1) {
-			for (i in 2:nosefactors) {
-				LSDATA$Group_IVSq_ <- paste(LSDATA$Group_IVSq_, " , " , LSDATA[,i] , sep="")
-			}
+		  for (i in 2:nosefactors) {
+		    graphdata$Group_IVSq_ <- paste(graphdata$Group_IVSq_, " , " , graphdata[,i] , sep="")
+		  }
 		}
-		Line_size <- Line_size2
+
+
 	
 		meanPlotd <- sub(".html", "meanplotd.png", htmlFile)
 		png(meanPlotd,width = jpegwidth, height = jpegheight, units="in", res=PlotResolution)
@@ -1158,8 +1194,7 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 		dev.control("enable") 
 
 		#Parameters
-		graphdata<- LSDATA
-		graphdata$jj_1<- graphdata$Timezzz
+		Line_size <- Line_size2
 		Gr_alpha <- 0
 		if (bandw != "N") {
 			Gr_fill <- BW_fill
@@ -1346,202 +1381,125 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 }
 
 #===================================================================================================================
-#All pairwise tests general code
+#Pairwise tests general code
 #===================================================================================================================
 if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswithinselected") {
 
-	#Denominator degrees of freedom
-	dendf<-ivsanova[dim(ivsanova)[1],3]
+  #Define CI limits for tables
+  lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
+  upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
+  
+  #Creating a dataset without any dashes or spaces in factor levels
+  statdata_num<- statdata[,sapply(statdata,is.numeric)]
+  statdata_char<- statdata[,!sapply(statdata,is.numeric)]
+  statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="xxxivsdashivsxxx"))
+  statdata_char3 <- as.data.frame(sapply(statdata_char2,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
+  statdata_comp<- data.frame(cbind(statdata_num, statdata_char3)) 
+  statdata_comp$Animal_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", subjectFactor))))
+  statdata_comp$Time_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  statdata_comp$Timezzz<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  for (i in 1:length(treatlistsep)) {
+    colname <- treatlistsep[i]
+    statdata_comp[[colname]] <- as.factor(statdata_comp[[colname]])
+  }
+  
+  #Re-fit the model using the dataset without spaces
+  if(covariance=="compound symmetric") {
+    modelx <- paste(model2 , " + cs(Timezzz | Animal_IVS)", sep = "")
+    threewayfull_comp<-mmrm(formula=as.formula(modelx), data=statdata_comp,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
+  }
+  if(covariance=="autoregressive(1)") {
+    modelx <- paste(model2 , " + ar1(Timezzz | Animal_IVS)", sep = "")
+    threewayfull_comp<-mmrm(formula=as.formula(modelx), data=statdata_comp,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
+  }
+  if(covariance=="unstructured") {
+    modelx <- paste(model2 , " + us(Timezzz | Animal_IVS)", sep = "")
+    threewayfull_comp<-mmrm(formula=as.formula(modelx), data=statdata_comp,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
+  }  
 
-	#STB Jun 2015
-	#Creating dataset without dashes in
+  #Calculate all pairwise comparisons
+  comps<-emmeans(threewayfull_comp,eval(parse(text = paste("~",selectedEffect))), level=sig)
+  comparisons<-data.frame(pairs(comps, adjust="none", infer = c(TRUE, TRUE) ))
+  namescomp <- colnames(comparisons)
+  
+  #Separating out levels
+  out <- strsplit(comparisons$contrast, "-")
+  comparisonsx <- trimws(do.call(rbind, out))
+  comparisons <- cbind(comparisons, comparisonsx)
+  colnames(comparisons) <-c(namescomp, "FirstGPIVS", "SecondGPIVS")
+  comparisons$FirstGPIVS <- gsub(" " , " , ",comparisons$FirstGPIVS, fixed=TRUE)
+  comparisons$SecondGPIVS <- gsub(" " , " , ",comparisons$SecondGPIVS, fixed=TRUE)
+  
+  #Isolate First Day
+  out1 <- strsplit(comparisons$FirstGPIVS, " ")
+  comparisonsx <- do.call(rbind, out1)
+  comparisons <- cbind(comparisons, comparisonsx)
+  colnames(comparisons)[dim(comparisons)[2]] <- "Day1"
+  
+  #Isolate  Second Day
+  out2 <- strsplit(comparisons$SecondGPIVS, " ")
+  comparisonsx <- do.call(rbind, out2)
+  comparisons <- cbind(comparisons, comparisonsx)
+  colnames(comparisons)[dim(comparisons)[2]] <- "Day2"
+  
+  #Define Group variables for tables, logs and conclusion
+  comparisons$comparison <- paste("(", comparisons$FirstGPIVS, ") - (", comparisons$SecondGPIVS, ")") 
+  comparisons$comparison <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparison, fixed=TRUE) 
+  comparisons$comparison <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparison, fixed=TRUE) 
 
-	ivs_num_ivs <- rep(1:dim(statdata)[1])
-	ivs_char_ivs <- rep(factor(LETTERS[1:dim(statdata)[1]]), 1)
-	statdata_temp2<- data.frame(cbind(statdata_temp, ivs_num_ivs,ivs_char_ivs ))
-	statdata_num<- statdata_temp2[,sapply(statdata_temp2,is.numeric)]
-	statdata_char<- statdata_temp2[,!sapply(statdata_temp2,is.numeric)]
-	statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="xxxivsdashivsxxx"))
-	statdata_char3 <- as.data.frame(sapply(statdata_char2,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
-
-	statdata<- data.frame(cbind(statdata_num, statdata_char3))
-	statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
-	statdata$subjectzzzzzz<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
-	statdata<-statdata[order(statdata$subjectzzzzzz, statdata$Timezzz), ]
-
-	#Re-generate analysis using new dataset without dashes or spaces
-	if(covariance=="compound symmetric") {
-		threewayfull<-lme(model, random=~1|subjectzzzzzz, data=statdata,correlation=corCompSymm(),  na.action = (na.omit), method = "REML")
-	}
-	if(covariance=="autoregressive(1)") {
-		threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation=corAR1(value=0.999, form=~as.numeric(Timezzz)|subjectzzzzzz, fixed =FALSE), data=statdata, na.action = (na.omit), method = "REML")
-	}
-	if(covariance=="unstructured") {
-		threewayfull<-lme(model, random=~1|subjectzzzzzz, correlation= corSymm(form = ~ as.numeric(Timezzz) | subjectzzzzzz), weights=varIdent(form=~ 1 |as.numeric(Timezzz)), data=statdata, na.action = (na.omit), method = "REML")
-	}
-
-	if (covariance == "unstructured") {
-		#Generating the differences and SEMs for the unstructured covariance
-		mult.lsm <- emmeans(threewayfull, eval(parse(text = paste("~",selectedEffect))), data=statdata, df=dendf)
-		multc<-contrast(mult.lsm, method="pairwise" , adjust = "none")
-		mult<-data.frame(summary(multc))
-		mult$ratio <- abs(mult$estimate / mult$SE)
-		mult$pvals <- 2*pt(mult$ratio, dendf, lower=FALSE)
-		mult$tval<- abs(qt((1-sig)/2, dendf))
-		mult$lower <- mult$estimate - mult$tval * mult$SE
-		mult$upper <- mult$estimate + mult$tval * mult$SE
-	
-		#Creating the rownames for the splitting below
-		rows1 <-data.frame(mult$contrast)
-		rows2 <-mult$contrast
-		rownames(rows1)<-rows2
-		rows<-rownames(rows1)
-
-		tablen<-dim(mult)[1]
-		tabs<-data.frame(matrix(NA, nrow = tablen, ncol = 1))
-		for (i in 1:tablen) {
-			tabs$V1[i]=mult$estimate[i]
-		}
-		for (i in 1:tablen) {
-			tabs$V2[i]=mult$lower[i]
-		}
-		for (i in 1:tablen) {
-			tabs$V3[i]=mult$upper[i]
-		}
-		for (i in 1:tablen) {
-			tabs$V4[i]=mult$SE[i]
-		}
-		for (i in 1:tablen) {
-			tabs$V7[i]=rows[i]
-		}
-		for (i in 1:tablen) {
-			tabs$V5[i]=format(round(mult$pvals[i], 4), nsmall=4, scientific=FALSE)
-		}
-		for (i in 1:tablen) {
-			tabs$V6[i]=mult$pvals[i]
-		}
-		for (i in 1:tablen)  {
-			if (mult$pvals[i]<0.0001) {
-				# STB - March 2011 formatting p<0.0001
-				tabs$V5[i]<-0.0001
-				tabs$V5[i]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				tabs$V5[i]<- paste("<",tabs$V5[i])
-			}
-		}
-	tabs<- tabs[,-1]
-	} else {
-		#Creating the table of differences and SEMs for the AR(1) and CS structure and the tabs dataset
-		mult<-glht(threewayfull, linfct=lsm(eval(parse(text = paste("pairwise ~",selectedEffect)))),df=dendf)
-		multci<-confint(mult, level=sig, calpha = univariate_calpha())
-
-		multp<-summary(mult, test=adjusted("none"))
-		rows<-rownames(multci$confint)
-
-		pvals<-multp$test$pvalues
-		sigma<-multp$test$sigma
-		tablen<-length(unique(rownames(multci$confint)))
-		tabs<-data.frame(nrow=tablen, ncol=7)
-	
-		for (i in 1:tablen) {
-			#STB Dec 2011 formatting 3dp
-			tabs[i,1]=multci$confint[i]
-		}
-		for (i in 1:tablen) {
-			tabs[i,2]=multci$confint[i+tablen]
-		}
-		for (i in 1:tablen) {
-			tabs[i,3]=multci$confint[i+2*tablen]
-		}
-		for (i in 1:tablen) {
-			tabs[i,4]=format(round(sigma[i], 3), nsmall=3, scientific=FALSE)
-		}
-		for (i in 1:tablen) {
-			tabs[i,5]=format(round(pvals[i], 4), nsmall=4, scientific=FALSE)
-		}
-		for (i in 1:tablen) {
-			tabs[i,6]=pvals[i]
-		}
-		for (i in 1:tablen) {
-			if (pvals[i]<0.0001) {
-			# STB - March 2011 formatting p<0.0001
-				# tabs[i,5]<-0.0001
-				tabs[i,5]=format(round(0.0001, 4), nsmall=4, scientific=FALSE)
-				tabs[i,5]<- paste("<",tabs[i,5])
-			}
-		}
-		for (i in 1:tablen) {
-			tabs[i,7] <- rows[i]
-		}
-	}
-
-#Create variables with the factor levels in
-	tabs$V8 <- tabs$V7
-	tabs$V8 <- gsub(" - ","xxxcomparisonxxx", rows, fixed=TRUE)
-	tabs$V8 <- gsub(" ","xxxlevelgapxxx", tabs$V8, fixed=TRUE)
-
-#Seperating out the two sets of factors
-	tabs2 <- data.frame(do.call("rbind", strsplit(as.character(tabs$V8), "xxxcomparisonxxx", fixed = TRUE)))
-	colnames(tabs2)<- c("xxxfirstcompxxx", "xxxsecondcompxxx")
-
-#Pulling out the time variable
-	tabs3 <- data.frame(do.call("rbind", strsplit(as.character(tabs2$xxxfirstcompxxx), "xxxlevelgapxxx", fixed = TRUE)))
-	tabs4<-tabs3[ , ncol(tabs3), drop = FALSE]
-
-	tabs5 <- data.frame(do.call("rbind", strsplit(as.character(tabs2$xxxsecondcompxxx), "xxxlevelgapxxx", fixed = TRUE)))
-	tabs6<-tabs5[ , ncol(tabs5), drop = FALSE]
-
-	tabs7 <- cbind(tabs4, tabs6)
-	colnames(tabs7) <- c("xxxTime1xxx", "xxxTime2xxx")
-	tabs<-cbind(tabs, tabs7)
+  comparisons$comparisonL <- paste("(", comparisons$FirstGPIVS, ") / (", comparisons$SecondGPIVS, ")") 
+  comparisons$comparisonL <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonL, fixed=TRUE) 
+  comparisons$comparisonL <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonL, fixed=TRUE) 
+  
+  comparisons$comparisonC <- paste("(", comparisons$FirstGPIVS, ") vs. (", comparisons$SecondGPIVS, ")") 
+  comparisons$comparisonC <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonC, fixed=TRUE) 
+  comparisons$comparisonC <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonC, fixed=TRUE) 
+  
+  #Adjusting p-values
+  comparisons$pval<- format(round(comparisons$p.value, 4), nsmall=4, scientific=FALSE)
+  for (i in 1:dim(comparisons)[1])  {
+    if (comparisons$p.value[i] <0.0001) {
+        comparisons$pval[i]="<0.0001"
+    }
+  }
+  
+  #Back transforming logged results
+  if (responseTransform =="log10") {
+    comparisons$Lestimate=format(round(10^comparisons$estimate, 3), nsmall=3, scientific=FALSE) 
+    comparisons$Llower.CL=format(round(10^comparisons$lower.CL, 3), nsmall=3, scientific=FALSE) 
+    comparisons$Lupper.CL=format(round(10^comparisons$upper.CL, 3), nsmall=3, scientific=FALSE) 
+  }
+    
+  if (responseTransform =="loge") {
+    comparisons$Lestimate=format(round(exp(comparisons$estimate), 3), nsmall=3, scientific=FALSE) 
+    comparisons$Llower.CL=format(round(exp(comparisons$lower.CL), 3), nsmall=3, scientific=FALSE) 
+    comparisons$Lupper.CL=format(round(exp(comparisons$upper.CL), 3), nsmall=3, scientific=FALSE) 
+  } 
+  
+  comparisons$estimate=format(round(comparisons$estimate, 3), nsmall=3, scientific=FALSE) 
+  comparisons$lower.CL=format(round(comparisons$lower.CL, 3), nsmall=3, scientific=FALSE) 
+  comparisons$upper.CL=format(round(comparisons$upper.CL, 3), nsmall=3, scientific=FALSE) 
+  
 }
 
 #===================================================================================================================
-#All pairwise tests 
+#All pairwise tests general code
 #===================================================================================================================
 if(pairwiseTest == "allpairwisecomparisons") {
-	#Title
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML.title("All pairwise comparisons, without adjustment for multiplicity", HR=2, align="left")
-	}
-
-	#Creating dataset for printing
-	tabs_final <- data.frame(tabs$V8)
-	tabs_final$V2=format(round(tabs[1], 3), nsmall=3, scientific=FALSE)
-	tabs_final$V3=format(round(tabs[2], 3), nsmall=3, scientific=FALSE)
-	tabs_final$V4=format(round(tabs[3], 3), nsmall=3, scientific=FALSE)
-	tabs_final$V5=tabs$V4
-	tabs_final$V6=tabs$V5
-
-	for (i in 1:100) {
-		tabs_final$tabs.V8<-sub("xxxlevelgapxxx",", ", tabs_final$tabs.V8, fixed=TRUE)
-	}
-	#STB June 2015	
-	for (i in 1:100) {
-		tabs_final$tabs.V8<-sub("xxxivsdashivsxxx","-", tabs_final$tabs.V8, fixed=TRUE)
-	}
-
-	#STB June 2015	
-	for (i in 1:100) {
-		tabs_final$tabs.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final$tabs.V8, fixed=TRUE)
-	}
-	for (i in 1:100) {
-		tabs_final$tabs.V8<-sub("xxxcomparisonxxx"," - ", tabs_final$tabs.V8, fixed=TRUE)
-	}
-
-	#Replacing the Timezzz label from the dataset
-	for (i in 1:dim(tabs_final)[1]){
-		tabs_final$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final$tabs.V8[i], fixed=TRUE)
-		tabs_final$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final$tabs.V8[i], fixed=TRUE)
-	}
-
-	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-	colnames(tabs_final)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
-
-	#print table
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML(tabs_final, classfirstline="second", align="left", row.names = "FALSE")
-	}
+  
+  #Title
+  if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+    HTML.title("All pairwise comparisons, without adjustment for multiplicity", HR=2, align="left")
+  }
+  
+  #Create all pairwise tests dataset
+  AllP <- subset(comparisons, select = c(comparison,estimate, lower.CL, upper.CL , SE, pval))
+  colnames(AllP)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
+  
+  #print table
+  if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+    HTML(AllP, classfirstline="second", align="left", row.names = "FALSE")
+  }
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1558,51 +1516,17 @@ if(pairwiseTest == "allpairwisecomparisons") {
 			}
 		}
 
-		#Creating dataset for printing
-		tabs_final_log <- data.frame(tabs$V8)
+	 #Create all pairwise tests dataset
+	  AllPL <- subset(comparisons, select = c(comparisonL,Lestimate, Llower.CL, Lupper.CL , pval))
+	  colnames(AllPL)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
+	  
+	  if ( GeomDisplay != "notdisplayed") {
+	    #print table
+	    HTML(AllPL, classfirstline="second", align="left", row.names = "FALSE")
+	  }
 
-		if (responseTransform =="log10") {
-			tabs_final_log$V2=format(round(10^tabs[1], 3), nsmall=3, scientific=FALSE)
-			tabs_final_log$V3=format(round(10^tabs[2], 3), nsmall=3, scientific=FALSE)
-			tabs_final_log$V4=format(round(10^tabs[3], 3), nsmall=3, scientific=FALSE)
-			tabs_final_log$V5=tabs$V5
-		}
+  }
 
-		if (responseTransform =="loge") {
-			tabs_final_log$V2=format(round(exp(tabs[1]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log$V3=format(round(exp(tabs[2]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log$V4=format(round(exp(tabs[3]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_log$V5=tabs$V5
-		}
-
-		for (i in 1:100) {
-			tabs_final_log$tabs.V8<-sub("xxxlevelgapxxx",", ", tabs_final_log$tabs.V8, fixed=TRUE)
-		}
-		for (i in 1:100) {
-			tabs_final_log$tabs.V8<-sub("xxxivsdashivsxxx","-", tabs_final_log$tabs.V8, fixed=TRUE)
-		}
-		for (i in 1:100) {
-			tabs_final_log$tabs.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_log$tabs.V8, fixed=TRUE)
-		}
-		for (i in 1:100) {
-			tabs_final_log$tabs.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_log$tabs.V8, fixed=TRUE)
-		}
-
-		#Replacing the Timezzz label from the dataset
-		for (i in 1:dim(tabs_final_log)[1]){
-			tabs_final_log$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final_log$tabs.V8[i], fixed=TRUE)
-			tabs_final_log$tabs.V8[i] <- gsub("Timezzz"," ", tabs_final_log$tabs.V8[i], fixed=TRUE)
-		}
-
-		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-		colnames(tabs_final_log)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
-
-		if ( GeomDisplay != "notdisplayed") {
-			#print table
-			HTML(tabs_final_log, classfirstline="second", align="left", row.names = "FALSE")
-		}
-	}
 #===================================================================================================================
 #Conclusion
 #===================================================================================================================
@@ -1610,32 +1534,23 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	add<-paste(c("Conclusion"))
 	inte<-1
 
-	for(i in 1:(dim(tabs)[1])) {
-#		if (tabs$V6[i] <= (1-sig)) {
-		if (pvals[i] <= (1-sig)) {
+	for(i in 1:(dim(comparisons)[1])) {
+		if (comparisons$p.value[i] <= (1-sig)) {
 			if (inte==1) {
 				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
 				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: (", inte , ") ", sep="")
-				if(responseTransform =="log10"||responseTransform =="loge") {
-					add<-paste(add, tabs_final_log$Comparison[i], sep="")
-				} else {
-					add<-paste(add, tabs_final$Comparison[i], sep="")
-				}
+				add<-paste(add, "% level: [", inte , "] ", sep="")
+				add<-paste(add, comparisons$comparisonC[i], sep="")
 				inte<-inte+1
 			} else {
-				add<-paste(add, " (", inte , ") ", sep="")
-				if(responseTransform =="log10"||responseTransform =="loge") {
-					add<-paste(add, tabs_final_log$Comparison[i], sep="")
-				} else {
-					add<-paste(add, tabs_final$Comparison[i], sep="")
-				}
+				add<-paste(add, " [", inte , "] ", sep="")
+				add<-paste(add, comparisons$comparisonC[i], sep="")
 				inte<-inte+1
 			}
 		} 
 	}
 	if (inte==1) {
-		if (tablen >1) {
+		if (dim(comparisons)[1] >1) {
 			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
 		} else {
 			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
@@ -1647,6 +1562,8 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 }
 
+
+  
 #===================================================================================================================
 #All comparisons within time factor
 #===================================================================================================================
@@ -1656,54 +1573,17 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 		HTML.title("Pairwise comparisons within the levels of the repeated factor, without adjustment for multiplicity", HR=2, align="left")
 	}
 
-#STB2025
-	#Adding in the numerical pvalues
-	tabs <- cbind(tabs, pvals)
-	tabs_temp<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
-	pvalsred<-tabs_temp$pvals
+  #Creating the subsetted version of tabs dataset
+  comparisons_red<-subset(comparisons, Day1==Day2)
 
-	#Creating the subsetted version of tabs dataset
-	tabs_red<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
+  #Create all pairwise tests dataset
+  RedP <- subset(comparisons_red, select = c(comparison,estimate, lower.CL, upper.CL , SE, pval))
+  colnames(RedP)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
 
-	#Creating dataset for printing
-	tabs_final_red <- data.frame(tabs_red$V8)
-	tabs_final_red$V2=format(round(tabs_red[1], 3), nsmall=3, scientific=FALSE)
-	tabs_final_red$V3=format(round(tabs_red[2], 3), nsmall=3, scientific=FALSE)
-	tabs_final_red$V4=format(round(tabs_red[3], 3), nsmall=3, scientific=FALSE)
-	tabs_final_red$V5=tabs_red$V4
-	tabs_final_red$V6=tabs_red$V5
-
-	for (i in 1:100) {
-		tabs_final_red$tabs_red.V8<-sub("xxxlevelgapxxx",", ", tabs_final_red$tabs_red.V8, fixed=TRUE)
-	}
-	#STB June 2015	
-	for (i in 1:100) {
-		tabs_final_red$tabs_red.V8<-sub("xxxivsdashivsxxx","-", tabs_final_red$tabs_red.V8, fixed=TRUE)
-	}
-
-	#STB June 2015	
-	for (i in 1:100) {
-		tabs_final_red$tabs_red.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_red$tabs_red.V8, fixed=TRUE)
-	}
-	for (i in 1:100) {
-		tabs_final_red$tabs_red.V8<-sub("xxxcomparisonxxx"," - ", tabs_final_red$tabs_red.V8, fixed=TRUE)
-	}
-
-	#Replacing the Timezzz label from the dataset
-	for (i in 1:dim(tabs_final_red)[1]){
-		tabs_final_red$tabs_red.V8[i] <- gsub("Timezzz"," ", tabs_final_red$tabs_red.V8[i], fixed=TRUE)
-		tabs_final_red$tabs_red.V8[i] <- gsub("Timezzz"," ", tabs_final_red$tabs_red.V8[i], fixed=TRUE)
-	}
-
-	lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-	upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-	colnames(tabs_final_red)<-c("Comparison", "Difference", lowerCI, upperCI, "Std error", "p-value")
-
-
-	#print table
-	if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
-		HTML(tabs_final_red, classfirstline="second", align="left", row.names = "FALSE")
-	}
+  #print table
+  if ( (responseTransform != "log10" && responseTransform != "loge") || (responseTransform == "log10" && GeomDisplay != "geometricmeansonly") || (responseTransform == "loge" && GeomDisplay != "geometricmeansonly") ) {
+    HTML(RedP, classfirstline="second", align="left", row.names = "FALSE") 
+  }    
 
 #===================================================================================================================
 #Back transformed geometric means table 
@@ -1720,120 +1600,66 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 			}
 		}
 
-		#Creating the subsetted version of tabs dataset
-		tabs_redl<-subset(tabs, xxxTime1xxx==xxxTime2xxx)
-
-		#Creating dataset for printing
-		tabs_final_redl <- data.frame(tabs_redl$V8)
-		if (responseTransform =="log10") {
-			tabs_final_redl$V2=format(round(10^tabs_redl[1], 3), nsmall=3, scientific=FALSE)
-			tabs_final_redl$V3=format(round(10^tabs_redl[2], 3), nsmall=3, scientific=FALSE)
-			tabs_final_redl$V4=format(round(10^tabs_redl[3], 3), nsmall=3, scientific=FALSE)
-			tabs_final_redl$V5=tabs_redl$V5
-		}
-
-		if (responseTransform =="loge") {
-			tabs_final_redl$V2=format(round(exp(tabs_redl[1]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_redl$V3=format(round(exp(tabs_redl[2]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_redl$V4=format(round(exp(tabs_redl[3]), 3), nsmall=3, scientific=FALSE)
-			tabs_final_redl$V5=tabs_redl$V5
-		}
-
-		for (i in 1:100) {
-			tabs_final_redl$tabs_redl.V8<-sub("xxxlevelgapxxx",", ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-		}
-
-		for (i in 1:100) {
-			tabs_final_redl$tabs_redl.V8<-sub("xxxivsdashivsxxx","-", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-		}
-		for (i in 1:100) {
-			tabs_final_redl$tabs_redl.V8<-sub("xxxivsspaceivsxxx"," ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-		}
-		for (i in 1:100) {
-			tabs_final_redl$tabs_redl.V8<-sub("xxxcomparisonxxx"," / ", tabs_final_redl$tabs_redl.V8, fixed=TRUE)
-		}
-
-		#Replacing the Timezzz label from the dataset
-		for (i in 1:dim(tabs_final_redl)[1]){
-			tabs_final_redl$tabs_redl.V8[i] <- gsub("Timezzz"," ", tabs_final_redl$tabs_redl.V8[i], fixed=TRUE)
-			tabs_final_redl$tabs_redl.V8[i] <- gsub("Timezzz"," ", tabs_final_redl$tabs_redl.V8[i], fixed=TRUE)
-		}
-
-		lowerCI<-paste("Lower ",(sig*100),"% CI",sep="")
-		upperCI<-paste("Upper ",(sig*100),"% CI",sep="")
-		colnames(tabs_final_redl)<-c("Comparison", "Difference", lowerCI, upperCI, "p-value")
-
-		#print table
-		if (GeomDisplay != "notdisplayed" ) {
-			HTML(tabs_final_redl, classfirstline="second", align="left", row.names = "FALSE")
-		}
-	}
+	  #Create all pairwise tests dataset
+	  RedPL <- subset(comparisons_red, select = c(comparisonL,Lestimate, Llower.CL, Lupper.CL , pval))
+	  colnames(RedPL)<-c("Comparison","Ratio", lowerCI, upperCI, "p-value")
+	  
+	  if ( GeomDisplay != "notdisplayed") {
+	    #print table
+	    HTML(RedPL, classfirstline="second", align="left", row.names = "FALSE")
+	  }
 
 #===================================================================================================================
 #Conclusion
 #===================================================================================================================
 
-	add<-paste(c("Conclusion"))
-	inte<-1
-
-	for(i in 1:(dim(tabs_red)[1])) {
-#		if (tabs_red$V6[i] <= (1-sig)) {
-		if (pvalsred[i] <= (1-sig)) {
-			if (inte==1) {
-				add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
-				add<-paste(add, 100*(1-sig), sep="")
-				add<-paste(add, "% level: (", inte , ") ", sep="")
-				if((responseTransform =="log10"||responseTransform =="loge") && (GeomDisplay != "notdisplayed")) {
-					add<-paste(add, tabs_final_redl$Comparison[i], sep="")
-				} else {
-					add<-paste(add, tabs_final_red$Comparison[i], sep="")
-				}
-				inte<-inte+1
-			} else {
-				add<-paste(add, " (", inte , ") ", sep="")
-				if(responseTransform =="log10"||responseTransform =="loge") {
-					add<-paste(add, tabs_final_redl$Comparison[i], sep="")
-				} else {
-					add<-paste(add, tabs_final_red$Comparison[i], sep="")
-				}
-				inte<-inte+1
-			}
-		} 
+	  add<-paste(c("Conclusion"))
+	  inte<-1
+	  
+	  for(i in 1:(dim(comparisons_red)[1])) {
+	    if (comparisons_red$p.value[i] <= (1-sig)) {
+	      if (inte==1) {
+	        add<-paste(add, ": The following pairwise comparisons are statistically significant at the  ", sep="")
+	        add<-paste(add, 100*(1-sig), sep="")
+	        add<-paste(add, "% level: (", inte , ") ", sep="")
+	        add<-paste(add, comparisons_red$comparisonC[i], sep="")
+	        inte<-inte+1
+	      } else {
+	        add<-paste(add, " (", inte , ") ", sep="")
+	        add<-paste(add, comparisons_red$comparisonC[i], sep="")
+	        inte<-inte+1
+	      }
+	    } 
+	  }
+	  if (inte==1) {
+	    if (dim(comparisons_red)[1] >1) {
+	      add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
+	    } else {
+	      add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
+	    }
+	  } else {
+	    add<-paste(add, ". ", sep="")
+	  }
+	  HTML(add, align="left")
+	  HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 	}
-	if (inte==1) {
-		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
-		} else {
-			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
-		}
-	} else {
-		add<-paste(add, ". ", sep="")
-	}
-	HTML(add, align="left")
-	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 }
-
 #===================================================================================================================
 #STB March 2014 - Creating a dataset of p-values
 if (genpvals == "Y" && pairwiseTest == "allpairwisecomparisons") {
-
-	comparisons <- sub(".csv", "comparisons.csv",  Args[3])
-	tabsx<- data.frame(tabs$V6)
-	row <-data.frame(tabs_final$Comparison)
-	tabsx2<-cbind(row, tabsx)
-	colnames(tabsx2)<-c("Comparison", "p-value")
-	row.names(tabsx2) <- seq(nrow(tabsx2)) 
-	write.csv(tabsx2, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
+  komparisons <- sub(".csv", "comparisons.csv",  Args[3])
+	komp <- subset(comparisons, select = c(comparison, p.value))
+	colnames(komp)<-c("Comparison","p-value")
+	row.names(komp) <- seq(nrow(komp)) 
+	write.csv(komp, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", komparisons), row.names=FALSE)
 }
-if (genpvals == "Y" && pairwiseTest == "allcomparisonswithinselected" ) {
 
-	comparisons <- sub(".csv", "comparisons.csv",  Args[3])
-	tabsx<- data.frame(tabs_red$V6)
-	row <-data.frame(tabs_final_red$Comparison)
-	tabsx2<-cbind(row, tabsx)
-	colnames(tabsx2)<-c("Comparison", "p-value")
-	row.names(tabsx2) <- seq(nrow(tabsx2)) 
-	write.csv(tabsx2, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", comparisons), row.names=FALSE)
+if (genpvals == "Y" && pairwiseTest == "allcomparisonswithinselected" ) {
+  komparisons <- sub(".csv", "comparisons.csv",  Args[3])
+  komp <- subset(comparisons_red, select = c(comparison, p.value))
+  colnames(komp)<-c("Comparison","p-value")
+  row.names(komp) <- seq(nrow(komp)) 
+  write.csv(komp, file = sub("[A-Z0-9a-z,:,\\\\]*App_Data[\\\\]","", komparisons), row.names=FALSE)
 }
 
 #===================================================================================================================
@@ -1927,20 +1753,21 @@ HTML(add, align="left")
 
 if(covariance=="compound symmetric") {
 	add2<-paste("The compound symmetric covariance structure was used to model the within-subject correlations. When using this structure we assumed that the variability of the responses was the same at each level of ", timeFactor, " and the correlation between responses from any pair of levels of ", timeFactor, "  is the same." , sep="")
-	HTML(add2, align="left")
 }
 
 if(covariance=="autoregressive(1)") {
 	add2<-paste("The first order autoregressive covariance structure was used to model the within-subject correlations. When using this structure we assumed that the variability of the responses was the same at each level of ", timeFactor, ". We also assumed that the correlation between responses from any pair of levels of ", timeFactor, " was related to the distance between them." , sep="")
-	HTML(add2, align="left")
 }
 
 if(covariance=="unstructured") {
 	add2<-paste("The unstructured covariance structure allowed the variability of the responses to be different, depending on the level of ", timeFactor, ". This structure also allowed the correlation between responses from any pair of levels of ", timeFactor, " to be different. While this approach is the most general it should be used with care when there are few subjects, as many parameters are required to be estimated. These estimates may not be very reliable." , sep="")
- 	HTML(add2, align="left")
 }
+HTML(add2, align="left")
 
-add<-paste("A full description of mixed model theory, including information on the R nlme package used by ", branding , ", can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
+add3<-paste("The analysis implements the Kenward-Roger adjustment to the degrees of freedom, Kenward and Roger (1997).", sep="")
+HTML(add3, align="left")
+
+add<-paste("A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
 HTML(add, align="left")
 
 #===================================================================================================================
@@ -1960,6 +1787,7 @@ if(FirstCatFactor != "NULL") {
 }
 
 HTML("Pinherio, J.C. and Bates, D.M. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.", align="left")
+HTML("Kenward, M.G. and Roger J.H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics. 983-997.", align="left")
 
 if (pairwiseTest != "none") {
 	HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.", align="left")
@@ -1978,16 +1806,17 @@ HTML(reference("plyr"))
 HTML(reference("scales"))
 HTML(reference("proto"))
 
-HTML(reference("multcomp"))
-HTML(reference("nlme"))
-HTML(reference("contrast"))
+#HTML(reference("multcomp"))
+#HTML(reference("nlme"))
+#HTML(reference("contrast"))
 HTML(reference("emmeans"))
+HTML(reference("mmrm"))
 
 #===================================================================================================================
 #Show dataset
 #===================================================================================================================
 if (showdataset=="Y") {
-	statdata_temp2<-subset(statdata_temp, select = -c(between, betweenwithin, mainEffect, subjectzzzzzz, Timezzz))
+	statdata_temp2<-subset(statdata_temp, select = -c(between, betweenwithin, mainEffect, Animal_IVS, Time_IVS))
 	observ <- data.frame(c(1:dim(statdata_temp2)[1]))
 	colnames(observ) <- c("Observation")
 	statdata_temp22 <- cbind(observ, statdata_temp2)
@@ -2037,7 +1866,7 @@ if (OutputAnalysisOps == "Y") {
 	HTML(paste("Significance level: ", 1-sig, sep=""),  align="left")
 
 	if (showLSMeans != "N" && Args[19] != "NULL" ) {
-		selectedEffectXX<-gsub("Timezzz",eval(timeFactor),selectedEffect) 
+		selectedEffectXX<-gsub("Time_IVS",eval(timeFactor),selectedEffect) 
 		HTML(paste("Selected effect (for pairwise mean comparisons): ", selectedEffectXX, sep=""),  align="left")
 	}
 

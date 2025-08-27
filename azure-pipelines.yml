@@ -90,8 +90,8 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.11.0'
-      title: '4.11.0'
+      tag: '5.0.0'
+      title: '5.0.0'
       assetUploadMode: 'replace'
       assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-win-x64-test-only.zip'
       isPreRelease: true
@@ -132,16 +132,16 @@ jobs:
     displayName: Build for Win-x64
 
   - task: CopyFiles@2
-    displayName: Copy InVivoStat Setup 4.11.0.exe
+    displayName: Copy InVivoStat Setup 5.0.0.exe
     inputs:
       sourceFolder: '$(Build.SourcesDirectory)/SilveR/bin/Desktop'
-      contents: 'InVivoStat Setup 4.11.0.exe'
+      contents: 'InVivoStat Setup 5.0.0.exe'
       targetFolder: '$(Build.ArtifactStagingDirectory)'
       overWrite: true
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 4.11.0.exe'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 5.0.0.exe'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@1
@@ -151,10 +151,10 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.11.0'
-      title: '4.11.0'
+      tag: '5.0.0'
+      title: '5.0.0'
       assetUploadMode: 'replace'
-      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 4.11.0.exe'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat Setup 5.0.0.exe'
       isPreRelease: true
       isDraft: false
 
@@ -194,12 +194,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for Linux
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.11.0.AppImage $(Build.ArtifactStagingDirectory)'  
-    displayName: Copy InVivoStat Setup 4.11.0.AppImage
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-5.0.0.AppImage $(Build.ArtifactStagingDirectory)'  
+    displayName: Copy InVivoStat Setup 5.0.0.AppImage
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.AppImage'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-5.0.0.AppImage'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@1
@@ -209,10 +209,10 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.11.0'
-      title: '4.11.0'
+      tag: '5.0.0'
+      title: '5.0.0'
       assetUploadMode: 'replace'
-      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.AppImage'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-5.0.0.AppImage'
       isPreRelease: true
       isDraft: false
 
@@ -249,12 +249,12 @@ jobs:
     workingDirectory: ./SilveR
     displayName: Build for MacOS
 
-  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-4.11.0.dmg $(Build.ArtifactStagingDirectory)'
-    displayName: Copy InVivoStat Setup 4.11.0.dmg
+  - script: 'cp $(Build.SourcesDirectory)/SilveR/bin/Desktop/InVivoStat-5.0.0.dmg $(Build.ArtifactStagingDirectory)'
+    displayName: Copy InVivoStat Setup 5.0.0.dmg
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.dmg'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/InVivoStat-5.0.0.dmg'
       ArtifactName: 'drop'
 
   - task: GitHubRelease@1
@@ -264,9 +264,9 @@ jobs:
       action: edit
       target: 'master'
       tagSource: manual
-      tag: '4.11.0'
-      title: '4.11.0'
+      tag: '5.0.0'
+      title: '5.0.0'
       assetUploadMode: 'replace'
-      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-4.11.0.dmg'
+      assets: '$(Build.ArtifactStagingDirectory)/InVivoStat-5.0.0.dmg'
       isPreRelease: true
       isDraft: false

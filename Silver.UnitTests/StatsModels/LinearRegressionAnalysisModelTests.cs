@@ -1,4 +1,4 @@
-using Moq;
+﻿using Moq;
 using SilveR.Models;
 using SilveR.StatsModels;
 using System;
@@ -161,11 +161,12 @@ namespace SilveR.UnitTests.StatsModels
             arguments.Add(new Argument { Name = "OtherDesignFactors", Value = "Block1" });
             arguments.Add(new Argument { Name = "ResponseTransformation", Value = "None" });
             arguments.Add(new Argument { Name = "PrimaryFactor", Value = "Cat1" });
+            arguments.Add(new Argument { Name = "ShowRegANOVA", Value = "True" });
             arguments.Add(new Argument { Name = "ANOVASelected", Value = "True" });
             arguments.Add(new Argument { Name = "ResidualsVsPredictedPlot", Value = "False" });
             arguments.Add(new Argument { Name = "Significance", Value = "0.05" });
 
-            Assert.Equal(17, arguments.Count);
+            Assert.Equal(18, arguments.Count);
 
             //Act
             sut.LoadArguments(arguments);
@@ -185,11 +186,11 @@ namespace SilveR.UnitTests.StatsModels
             Assert.Equal(new List<string> { "Block1" }, sut.OtherDesignFactors);
             Assert.Equal("None", sut.ResponseTransformation);
             Assert.Equal("Cat1", sut.PrimaryFactor);
+            Assert.True(sut.ShowRegANOVA);
             Assert.True(sut.ANOVASelected);
             Assert.False(sut.ResidualsVsPredictedPlot);
             Assert.Equal("0.05", sut.Significance);
         }
-
 
         [Fact]
         public void GetCommandLineArguments_ReturnsCorrectString()
@@ -202,7 +203,7 @@ namespace SilveR.UnitTests.StatsModels
             string result = sut.GetCommandLineArguments();
 
             //Assert
-            Assert.Equal("Response1~Cat1+Block1 Covariate None None Cat1 Cat1 Cont1 None Block1 Y Y N 0.05 N N N N", result);
+            Assert.Equal("Response1~Cat1+Block1 Covariate None None Cat1 Cat1 Cont1 None Block1 N Y Y N 0.05 N N N N", result);
         }
 
 
@@ -210,6 +211,7 @@ namespace SilveR.UnitTests.StatsModels
         {
             var model = new LinearRegressionAnalysisModel(dataset)
             {
+                ShowRegANOVA = false,
                 ANOVASelected = true,
                 AdjustedRSquared = false,
 
