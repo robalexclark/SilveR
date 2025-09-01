@@ -2,8 +2,8 @@
 #R Libraries
 suppressWarnings(library(R2HTML))
 suppressWarnings(library(emmeans))
-suppressWarnings(library(mmrm))
 suppressWarnings(library(car))
+suppressWarnings(library(mmrm))
 
 #===================================================================================================================
 # retrieve args
@@ -40,28 +40,6 @@ if (Diplayargs == "Y"){
 	print(Args)
 }
 
-
-
-
-
-
-
-# Model formula has Timezzz but sleectedEffect is Time_IVS
-#need to replace Timezzz with Time_IVS in the formula then the code needs sorting!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #===================================================================================================================
 #Setup the html file and associated css file
 htmlFile <- sub(".csv", ".html", Args[3]); #determine the file name of the html file
@@ -81,7 +59,7 @@ HTMLCSS(CSSfile = cssFile)
 resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
 statdata$Animal_IVS<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
 statdata$Time_IVS<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
-statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
+#statdata$Timezzz<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
 statdata$yvarrr_IVS <- eval(parse(text = paste("statdata$", resp)))
 
 #Re-ordering data for analysis and plots
@@ -200,7 +178,7 @@ LS_YAxisTitle<-YAxisTitle
 
 #Tidying up the selectedEffect
 selectedEffectname <-selectedEffect
-selectedEffect<-gsub(eval(timeFactor), "Timezzz",selectedEffect) 
+selectedEffect<-gsub(eval(timeFactor), "Time_IVS",selectedEffect) 
 selectedEffect<-gsub("ivs_sp_ivs*ivs_sp_ivs", "*",selectedEffect,fixed=TRUE) 
 
 #===================================================================================================================
@@ -445,7 +423,7 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 			CovIntModel <- paste(CovIntModel, " + ",  treatlistsep[i], " * ", covlistsep[j], sep="")
 		}
 		for (j in 1: nocovlist) {
-			CovIntModel <- paste(CovIntModel, " + ",   "Timezzz", " * ", covlistsep[j], sep="")
+			CovIntModel <- paste(CovIntModel, " + ",   "Time_IVS", " * ", covlistsep[j], sep="")
 		}
 	}
 
@@ -460,19 +438,19 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 
 		#Creating the analysis including covariates
 		if(covariance=="compound symmetric") {
-		  modelxx <- paste(CovIntModel , " + cs(Timezzz | Animal_IVS)", sep = "")
+		  modelxx <- paste(CovIntModel , " + cs(Time_IVS | Animal_IVS)", sep = "")
 			threewayfullx<-mmrm(formula=as.formula(modelxx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 		}
 		if(covariance=="autoregressive(1)") {
-		  modelxx <- paste(CovIntModel , " + ar1(Timezzz | Animal_IVS)", sep = "")
+		  modelxx <- paste(CovIntModel , " + ar1(Time_IVS | Animal_IVS)", sep = "")
 		  threewayfullx<-mmrm(formula=as.formula(modelxx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 		}
 		if(covariance=="unstructured") {
-		  modelxx <- paste(CovIntModel , " + us(Timezzz | Animal_IVS)", sep = "")
+		  modelxx <- paste(CovIntModel , " + us(Time_IVS | Animal_IVS)", sep = "")
 		  threewayfullx<-mmrm(formula=as.formula(modelxx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 		}
 
-	  tempx1<-car::Anova(threewayfullx,ddf = "Kenward-Roger", type = "III")
+	  tempx1<- Anova(threewayfullx,ddf = "Kenward-Roger", type = "III")
 	  tempx <- row.names(tempx1)
 	  tempx <- cbind(tempx, tempx1)	  
 	  
@@ -484,7 +462,7 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 			# Sort out effects list
 			for (q in 1:length(tempx[1])) {
 			  tempx[[1]]<-sub(":"," * ", tempx[[1]]) 
-			  tempx[[1]]<-sub("Timezzz",timeFactor, tempx[[1]]) 
+			  tempx[[1]]<-sub("Time_IVS",timeFactor, tempx[[1]]) 
 			}
 
 			ivsanovax<-cbind(tempx[1], tempx[2], col2x, col3x, col4x)
@@ -532,17 +510,17 @@ if (df.residual(threewayfullxxx) < 1) {
 } 
 
 if(covariance=="compound symmetric") {
-	modelx <- paste(model2 , " + cs(Timezzz | Animal_IVS)", sep = "")
+	modelx <- paste(model2 , " + cs(Time_IVS | Animal_IVS)", sep = "")
 	threewayfull<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 }
 
 if(covariance=="autoregressive(1)") {
-  modelx <- paste(model2 , " + ar1(Timezzz | Animal_IVS)", sep = "")
+  modelx <- paste(model2 , " + ar1(Time_IVS | Animal_IVS)", sep = "")
   threewayfull<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 }
 
 if(covariance=="unstructured") {
-  modelx <- paste(model2 , " + us(Timezzz | Animal_IVS)", sep = "")
+  modelx <- paste(model2 , " + us(Time_IVS | Animal_IVS)", sep = "")
   threewayfull<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 }
 
@@ -551,15 +529,11 @@ if(covariance=="unstructured") {
 #===================================================================================================================
 if(compareCovarianceModels == "Y" ) {
 
-	#Set contrast options for Marginal overall tests
-#	options(contrasts=c(unordered="contr.treatment", ordered="contr.poly"))
-
-  
-  modelx <- paste(model2 , " + cs(Timezzz | Animal_IVS)", sep = "")
+  modelx <- paste(model2 , " + cs(Time_IVS | Animal_IVS)", sep = "")
   threewayfullCS<-mmrm(formula=as.formula(modelx), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
-  modely <- paste(model2 , " + ar1(Timezzz | Animal_IVS)", sep = "")
+  modely <- paste(model2 , " + ar1(Time_IVS | Animal_IVS)", sep = "")
   threewayfullAR<-mmrm(formula=as.formula(modely), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
-  modelz <- paste(model2 , " + us(Timezzz | Animal_IVS)", sep = "")
+  modelz <- paste(model2 , " + us(Time_IVS | Animal_IVS)", sep = "")
   threewayfullUN<-mmrm(formula=as.formula(modelz), data=statdata,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
 
   AICCS<- AIC(threewayfullCS) 
@@ -577,9 +551,6 @@ if(compareCovarianceModels == "Y" ) {
 		format(round(logLik(threewayfullAR, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE), 
 		format(round(logLik(threewayfullUN, REML=TRUE)[1], 3), nsmall=3, scientific=FALSE)
 		)
-
-	#Set contrast options for Marginal overall tests
-#	options(contrasts=c(unordered="contr.sum", ordered="contr.poly"))
 
 	Critnames <- c("Compound Symmetric", "Autoregressive (1)", "Unstructured")
 
@@ -599,23 +570,18 @@ if(compareCovarianceModels == "Y" ) {
 #===================================================================================================================
 #ANOVA Table
 #HTML(summary(threewayfull), classfirstline="second", align="left", row.names = "FALSE")
-jointz=data.frame(joint_tests(threewayfull,cov.reduce = symmint(0)))
-HTML.title("Table of joint tests overall tests of model effects", HR=2, align="left")
-HTML(jointz, classfirstline="second", align="left", row.names = "FALSE")
+#jointz=data.frame(joint_tests(threewayfull,cov.reduce = symmint(0)))
+#HTML.title("Table of joint_tests overall tests of model effects", HR=2, align="left")
+#HTML(jointz, classfirstline="second", align="left", row.names = "FALSE")
 
-jointz2=data.frame(joint_tests(threewayfull))
-HTML.title("Table of joint tests overall tests of model effects without option", HR=2, align="left")
-HTML(jointz2, classfirstline="second", align="left", row.names = "FALSE")
-
-library(lmerTest)
-jointz3=data.frame(car::Anova(threewayfull))
-HTML.title("Table of lmerTest overall tests of model effects without option", HR=2, align="left")
-HTML(jointz3, classfirstline="second", align="left", row.names = "FALSE")
+#jointz3=data.frame(car::Anova(threewayfull))
+#HTML.title("Table of car overall tests of model effects without option", HR=2, align="left")
+#HTML(jointz3, classfirstline="second", align="left", row.names = "FALSE")
 
 
 #===================================================================================================================
 
-temp1<-car::Anova(threewayfull, ddf = "Kenward-Roger", type = "III")
+temp1<- Anova(threewayfull, ddf = "Kenward-Roger", type = "III")
 temp <- row.names(temp1)
 temp <- cbind(temp, temp1)
 
@@ -626,7 +592,7 @@ col4<-format(round(temp[5], 4), nsmall=4, scientific=FALSE)
 # Sort out effects list
 for (q in 1:length(temp[1])) {
   temp[[1]]<-sub(":"," * ", temp[[1]]) 
-  temp[[1]]<-sub("Timezzz",timeFactor, temp[[1]]) 
+  temp[[1]]<-sub("Time_IVS",timeFactor, temp[[1]]) 
 }
 tempy <- temp[[1]]
 ivsanova<-cbind(temp[1], temp[2], col2, col3, col4)
@@ -905,7 +871,7 @@ if(showLSMeans=="Y") {
 	  
 	  #Creating the final dataset to plot
 	  graphdata<- LSDATA
-	  graphdata$jj_1<- graphdata$Timezzz
+	  graphdata$jj_1<- graphdata$Time_IVS
 	  graphdata$Group_IVSq_<-graphdata[,1]
 		if (nosefactors > 1) {
 			for (i in 2:nosefactors) {
@@ -1176,7 +1142,7 @@ if(showLSMeans =="Y" && (responseTransform =="log10"||responseTransform =="loge"
 
 		#CreatinG the final datasset to plot
 		graphdata<- LSDATA
-		graphdata$jj_1<- graphdata$Timezzz
+		graphdata$jj_1<- graphdata$Time_IVS
 		graphdata$Group_IVSq_<-graphdata[,1]
 		if (nosefactors > 1) {
 		  for (i in 2:nosefactors) {
@@ -1397,7 +1363,7 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
   statdata_comp<- data.frame(cbind(statdata_num, statdata_char3)) 
   statdata_comp$Animal_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", subjectFactor))))
   statdata_comp$Time_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
-  statdata_comp$Timezzz<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  #statdata_comp$Timezzz<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
   for (i in 1:length(treatlistsep)) {
     colname <- treatlistsep[i]
     statdata_comp[[colname]] <- as.factor(statdata_comp[[colname]])
@@ -1405,15 +1371,15 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
   
   #Re-fit the model using the dataset without spaces
   if(covariance=="compound symmetric") {
-    modelx <- paste(model2 , " + cs(Timezzz | Animal_IVS)", sep = "")
+    modelx <- paste(model2 , " + cs(Time_IVS | Animal_IVS)", sep = "")
     threewayfull_comp<-mmrm(formula=as.formula(modelx), data=statdata_comp,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
   }
   if(covariance=="autoregressive(1)") {
-    modelx <- paste(model2 , " + ar1(Timezzz | Animal_IVS)", sep = "")
+    modelx <- paste(model2 , " + ar1(Time_IVS | Animal_IVS)", sep = "")
     threewayfull_comp<-mmrm(formula=as.formula(modelx), data=statdata_comp,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
   }
   if(covariance=="unstructured") {
-    modelx <- paste(model2 , " + us(Timezzz | Animal_IVS)", sep = "")
+    modelx <- paste(model2 , " + us(Time_IVS | Animal_IVS)", sep = "")
     threewayfull_comp<-mmrm(formula=as.formula(modelx), data=statdata_comp,  method = "Kenward-Roger", vcov="Kenward-Roger-Linear")
   }  
 

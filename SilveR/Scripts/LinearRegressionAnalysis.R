@@ -1,8 +1,3 @@
-
-showRegANOVA<-"Y"
-
-
-
 #===================================================================================================================
 #R Libraries
 
@@ -26,14 +21,16 @@ treatFactors <- Args[9]
 contFactors <- Args[10]
 contFactorTransform <- tolower(Args[11])
 blocklist <- Args[12]
-showANOVA <- Args[13]
-showCoefficients <- Args[14]
-showAdjustedRSquared <- Args[15]
-sig <- 1 - as.numeric(Args[16])
-showPRPlot <- Args[17]
-showNormPlot <- Args[18]
-cooksDistancePlot <- Args[19]
-leveragesPlot <- Args[20]
+showRegANOVA <- Args[13]
+showANOVA <- Args[14]
+showCoefficients <- Args[15]
+showAdjustedRSquared <- Args[16]
+sig <- 1 - as.numeric(Args[17])
+showPRPlot <- Args[18]
+showNormPlot <- Args[19]
+cooksDistancePlot <- Args[20]
+leveragesPlot <- Args[21]
+
 
 #source(paste(getwd(),"/Common_Functions.R", sep=""))
 
