@@ -30,7 +30,6 @@ suppressWarnings(library(reshape))
 suppressWarnings(library(GGally))
 suppressWarnings(library(proto))
 suppressWarnings(library(grid))
-#suppressWarnings(library(extrafont))
 
 #===================================================================================================================
 #User option parameters
@@ -2416,7 +2415,7 @@ refxx <- c("For more information on the theoretical approaches that are implemen
 
 
 R_refs <- function() {
-	R_ref <- "R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/."
+	R_ref <- "R Core Team (2025). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/."
 	BateClark_ref <- "Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press."
 	IVS_ref <- paste("When referring to InVivoStat, please cite 'InVivoStat, version ", IVS_version, "'.", sep = "")
 
@@ -2429,35 +2428,36 @@ R_refs <- function() {
 }
 
 reference <- function (name) {
-  if (name == "cluster") 	  {reference <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2022).  cluster: Cluster Analysis Basics and Extensions. R package version 2.1.4."}
-  if (name == "R2HTML") 	  {reference <- "Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria."}
-  if (name == "GGally")  	  {reference <- "Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E, Elberg A, Crowley J (2023). GGally: Extension to ggplot2. R  package version 2.2.0, https://CRAN.R-project.org/package=GGally."}
-  if (name == "RColorBrewer") 	  {reference <- "Neuwirth E (2022). RColorBrewer: ColorBrewer Palettes. R package version 1.1-3, https://CRAN.R-project.org/package=RColorBrewer."}
-  if (name == "ggplot2") 	  {reference <- "H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016."}
-  if (name == "ggrepel") 	  {reference <- "Slowikowski K (2024). ggrepel: Automatically Position Non-Overlapping Text Labels with ggplot2. R package version 0.9.5, https://CRAN.R-project.org/package=ggrepel."}
-  if (name == "reshape") 	  {reference <- "H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007."}
-  if (name == "plyr") 		  {reference <- "Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. URL https://www.jstatsoft.org/v40/i01/."}
-  if (name == "scales") 	  {reference <- "Wickham H, Pedersen T, Seidel D (2023). scales: Scale Functions for Visualization. R package version 1.3.0, https://CRAN.R-project.org/package=scales."}
-  if (name == "proto") 		  {reference <- "Grothendieck G, Kates L, Petzoldt T (2016). proto: Prototype Object-Based Programming. R package version 1.0.0, https://CRAN.R-project.org/package=proto."}
-  if (name == "mvtnorm") 	  {reference <- "Genz A, Bretz F (2009). Computation of Multivariate Normal and t Probabilities, series Lecture Notes in Statistics. Springer-Verlag, Heidelberg. ISBN 978-3-642-01688-2."}
-  if (name == "ggdendro") 	  {reference <- "de Vries A, Ripley BD (2022). ggdendro: Create Dendrograms and Tree Diagrams Using ggplot2. R package version 0.1.23, https://CRAN.R-project.org/package=ggdendro."}
-  if (name == "mixOmics") 	  {reference <- "Rohart F, Gautier B, Singh A, and Le Cao K-A (2017) mixOmics: An R package for 'omics feature selection and multiple data integration. PLoS computational biology 13(11):e1005752"}
-  if (name == "Exact") 		  {reference <- "Calhoun P (2022). Exact: Unconditional Exact Test. R package version 3.2, https://CRAN.R-project.org/package=Exact."}
-  if (name == "Hmisc") 		  {reference <- "Harrell Jr F (2023). Hmisc: Harrell Miscellaneous. R package version 5.1-1, https://CRAN.R-project.org/package=Hmisc."}
-  if (name == "PowerTOST") 	  {reference <-"Labes D, Schutz H, Lang B (2022). PowerTOST: Power and Sample Size for (Bio)Equivalence Studies. R package version 1.5-4, https://CRAN.R-project.org/package=PowerTOST."}
-  if (name == "multcomp") 	  {reference <- "Hothorn T, Bretz F, Westfall P (2008). Simultaneous Inference in General Parametric Models. Biometrical Journal, *50*(3), 346-363."}
-  if (name == "multcompView") 	  {reference <- "Graves S, Piepho H, Dorai-Raj LSwhfS (2023). multcompView: Visualizations of Paired Comparisons. R package version 0.1-9, https://CRAN.R-project.org/package=multcompView."}
+
   if (name == "car") 		  {reference <- "Fox J, Weisberg S (2019). An R Companion to Applied Regression, Third edition. Sage, Thousand Oaks CA. https://socialsciences.mcmaster.ca/jfox/Books/Companion/."}
-  if (name == "emmeans") 	  {reference <- "Lenth R (2024). emmeans: Estimated Marginal Means, aka Least-Squares Means. R package version 1.10.0, https://CRAN.R-project.org/package=emmeans."}
-  if (name == "dplyr") 		  {reference <-"Wickham H, Francois R, Henry L, Muller K, Vaughan D (2023). dplyr: A Grammar of Data Manipulation. R package version 1.1.4, <https://CRAN.R-project.org/package=dplyr>."}
-  if (name == "ROCR") 		  {reference <-"Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). ROCR: visualizing classifier performance in R. Bioinformatics, *21*(20), 7881. <http://rocr.bioinf.mpi-sb.mpg.de>."}
-  if (name == "detectseparation") {reference <-"Kosmidis I, Schumacher D, Schwendinger F (2022). detectseparation: Detect and Check for Separation and Infinite Maximum Likelihood Estimates. R package version 0.3, <https://CRAN.R-project.org/package=detectseparation>."}
-  if (name == "nlme") 		  {reference <-"Pinheiro J, Bates D, R Core Team (2023). nlme: Linear and Nonlinear Mixed Effects Models. R package version 3.1-164, <https://CRAN.R-project.org/package=nlme>."}
-  if (name == "coin") 		  {reference <-"Hothorn T, Hornik K, van de Wiel MA, Zeileis A (2008). Implementing a class of permutation tests: The coin package. Journal of Statistical Software, *28*(8), 1-23. doi:10.18637/jss.v028.i08 <https://doi.org/10.18637/jss.v028.i08>."}
-  if (name == "contrast") 	  {reference <-"Kuhn M, Weston S, Wing J, Forester J, Thaler T (2022). contrast: A Collection of Contrast Methods. R package version 0.24.2, <https://CRAN.R-project.org/package=contrast>."}
-  if (name == "survival") 	  {reference <-"Therneau T (2023). A Package for Survival Analysis in R. R package version 3.5-7, <https://CRAN.R-project.org/package=survival>."}
-  if (name == "gridExtra") 	  {reference <-"Auguie B (2017). gridExtra: Miscellaneous Functions for \"Grid\" Graphics. R package version 2.3, <https://CRAN.R-project.org/package=gridExtra>."}
-  if (name == "mmrm") 	  {reference <-"  Sabanes Bove D, Li L, Dedic J, Kelkhoff D, Kunzmann K, Lang B, Stock C, Wang Y, James D, Sidi J, Leibovitz D, Sjoberg D (2024). _mmrm: Mixed Models for Repeated Measures_. R package version 0.3.14, https://CRAN.R-project.org/package=mmrm.  "}
+  if (name == "cluster") 	  {reference <- "Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., Hornik, K.(2025).  cluster: Cluster Analysis Basics and Extensions. R package version 2.1.8.1."}
+  if (name == "coin") 		  {reference <- "Hothorn T, Hornik K, van de Wiel MA, Zeileis A (2006). A Lego system for conditional inference. The American Statistician, 60(3), 257-263. doi:10.1198/000313006X118430."}
+  if (name == "contrast") 	  {reference <- "Kuhn M, Weston S, Wing J, Forester J, Thaler T (2022). contrast: A Collection of Contrast Methods.  doi:10.32614/CRAN.package.contrast, R package version 0.24.2, https://CRAN.R-project.org/package=contrast."}
+  if (name == "detectseparation") {reference <- "Kosmidis I, Schumacher D, Schwendinger F (2022). detectseparation: Detect and Check for Separation and Infinite Maximum Likelihood Estimates. doi:10.32614/CRAN.package.detectseparation, R package version 0.3, https://CRAN.R-project.org/package=detectseparation."}
+  if (name == "dplyr") 		  {reference <- "Wickham H, Francois R, Henry L, Muller K, Vaughan D (2023). dplyr: A Grammar of Data Manipulation. doi:10.32614/CRAN.package.dplyr, R package version 1.1.4, https://CRAN.R-project.org/package=dplyr."}
+  if (name == "emmeans") 	  {reference <- "Lenth R (2025). emmeans: Estimated Marginal Means, aka Least-Squares Means. doi:10.32614/CRAN.package.emmeans, R package version 1.11.1, https://CRAN.R-project.org/package=emmeans."}
+  if (name == "Exact") 		  {reference <- "Calhoun P (2024). Exact: Unconditional Exact Test. doi:10.32614/CRAN.package.Exact, R package version 3.3, https://CRAN.R-project.org/package=Exact."}
+  if (name == "Hmisc") 		  {reference <- "Harrell Jr F (2025). Hmisc: Harrell Miscellaneous.  doi:10.32614/CRAN.package.Hmisc, R package version 5.2-3, https://CRAN.R-project.org/package=Hmisc."}
+  if (name == "GGally")  	  {reference <- "Schloerke B, Cook D, Larmarange J, Briatte F, Marbach M, Thoen E, Elberg A, Crowley J (2024). GGally: Extension to ggplot2. doi:10.32614/CRAN.package.GGally, R  package version 2.2.1, https://CRAN.R-project.org/package=GGally."}
+  if (name == "ggdendro") 	  {reference <- "de Vries A, Ripley BD (2024). ggdendro: Create Dendrograms and Tree Diagrams Using ggplot2. doi:10.32614/CRAN.package.ggdendro, R package version 0.2.0, https://CRAN.R-project.org/package=ggdendro."}
+  if (name == "ggplot2") 	  {reference <- "H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016."}
+  if (name == "ggrepel") 	  {reference <- "Slowikowski K (2024). ggrepel: Automatically Position Non-Overlapping Text Labels with ggplot2. doi:10.32614/CRAN.package.ggrepel, R package version 0.9.6, https://CRAN.R-project.org/package=ggrepel."}
+  if (name == "gridExtra") 	  {reference <- "Auguie B (2017). gridExtra: Miscellaneous Functions for \"Grid\" Graphics. doi:10.32614/CRAN.package.gridExtra, R package version 2.3, https://CRAN.R-project.org/package=gridExtra."}
+  if (name == "mixOmics") 	  {reference <- "Rohart F, Gautier B, Singh A, and Le Cao K-A (2017) mixOmics: An R package for 'omics feature selection and multiple data integration. PLoS computational biology 13(11):e1005752"}
+  if (name == "mmrm") 	  	  {reference <- "Sabanes Bove D, Li L, Dedic J, Kelkhoff D, Kunzmann K, Lang B, Stock C, Wang Y, James D, Sidi J, Leibovitz D, Sjoberg D (2024). mmrm: Mixed Models for Repeated Measures. doi:10.32614/CRAN.package.mmrm, R package version 0.3.14, https://CRAN.R-project.org/package=mmrm.  "}
+  if (name == "multcomp") 	  {reference <- "Hothorn T, Bretz F, Westfall P (2008). Simultaneous Inference in General Parametric Models. Biometrical Journal, *50*(3), 346-363."}
+  if (name == "multcompView") 	  {reference <- "Graves S, Piepho H, Dorai-Raj LSwhfS (2024). multcompView: Visualizations of Paired Comparisons.  doi:10.32614/CRAN.package.multcompView, R package version 0.1-10, https://CRAN.R-project.org/package=multcompView."}
+  if (name == "mvtnorm") 	  {reference <- "Genz A, Bretz F (2009). Computation of Multivariate Normal and t Probabilities, series Lecture Notes in Statistics. Springer-Verlag, Heidelberg. ISBN 978-3-642-01688-2."}
+  if (name == "nlme") 		  {reference <- "Pinheiro J, Bates D, R Core Team (2025). nlme: Linear and Nonlinear Mixed Effects Models. doi:10.32614/CRAN.package.nlme, R package version 3.1-168, https://CRAN.R-project.org/package=nlme."}
+  if (name == "RColorBrewer") 	  {reference <- "Neuwirth E (2022). RColorBrewer: ColorBrewer Palettes. doi:10.32614/CRAN.package.RColorBrewer, R package version 1.1-3, https://CRAN.R-project.org/package=RColorBrewer."}
+  if (name == "R2HTML") 	  {reference <- "Lecoutre, Eric (2003). The R2HTML Package. R News, Vol 3. N. 3, Vienna, Austria."}
+  if (name == "reshape") 	  {reference <- "H. Wickham. Reshaping data with the reshape package. Journal of Statistical Software, 21(12), 2007."}
+  if (name == "ROCR") 		  {reference <- "Sing T, Sander O, Beerenwinkel N, Lengauer T (2005). ROCR: visualizing classifier performance in R. Bioinformatics, *21*(20), 7881. http://rocr.bioinf.mpi-sb.mpg.de."}
+  if (name == "plyr") 		  {reference <- "Hadley Wickham (2011). The Split-Apply-Combine Strategy for Data Analysis. Journal of Statistical Software, 40(1), 1-29. https://www.jstatsoft.org/v40/i01/."}
+  if (name == "PowerTOST") 	  {reference <- "Labes D, Schutz H, Lang B (2024). PowerTOST: Power and Sample Size for (Bio)Equivalence Studies. doi:10.32614/CRAN.package.PowerTOST, R package version 1.5-6, https://CRAN.R-project.org/package=PowerTOST."}
+  if (name == "proto") 		  {reference <- "Grothendieck G, Kates L, Petzoldt T (2016). proto: Prototype Object-Based Programming.  doi:10.32614/CRAN.package.proto, R package version 1.0.0, https://CRAN.R-project.org/package=proto."}
+  if (name == "scales") 	  {reference <- "Wickham H, Pedersen T, Seidel D (2023). scales: Scale Functions for Visualization. doi:10.32614/CRAN.package.scales, R package version 1.4.0, https://CRAN.R-project.org/package=scales."}
+  if (name == "survival") 	  {reference <- "Therneau T (2024). A Package for Survival Analysis in R. R package version 3.8-3, <https://CRAN.R-project.org/package=survival>."}
   
   
   

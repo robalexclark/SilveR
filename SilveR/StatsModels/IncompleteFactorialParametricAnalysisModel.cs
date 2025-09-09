@@ -366,14 +366,14 @@ namespace SilveR.StatsModels
 
         public static List<string> DetermineSelectedEffectsList(List<string> selectedTreatments)
         {
-            //get a list and add in the highest order interaction
-            List<string> effects = new List<string>();
+            //assemble a complete list of main and interaction effects
+            List<string> effects = new List<string>(selectedTreatments);
 
+            //add in the interactions
             List<string> interactions = DetermineInteractions(selectedTreatments);
-
-            if (interactions.Any())
+            foreach (string interaction in interactions)
             {
-                effects.Add(interactions.Last());
+                effects.Add(interaction);
             }
 
             return effects;

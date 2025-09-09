@@ -67,9 +67,18 @@ namespace SilveR.UnitTests.Controllers
             IActionResult result = sut.GetSMPASelectedEffectsList(new List<string> { "Treat1", "Treat2", "Treat3" });
 
             //Assert
-            JsonResult jsonResult = Assert.IsType<JsonResult>(result);
+            var jsonResult = Assert.IsType<JsonResult>(result);
+            var actual = Assert.IsAssignableFrom<IEnumerable<string>>(jsonResult.Value);
 
-            Assert.Equal(new List<string> { "Treat1", "Treat2", "Treat3", "Treat1 * Treat2", "Treat1 * Treat3", "Treat2 * Treat3", "Treat1 * Treat2 * Treat3" }, jsonResult.Value);
+            var expected = new[]
+            {
+                "Treat1 * Treat2",
+                "Treat1 * Treat3",
+                "Treat2 * Treat3",
+                "Treat1 * Treat2 * Treat3"
+            };
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -137,15 +146,24 @@ namespace SilveR.UnitTests.Controllers
             IActionResult result = sut.GetIncompleteFactorialSelectedEffectsList(new List<string> { "Treat1", "Treat2", "Treat3" });
 
             //Assert
-            JsonResult jsonResult = Assert.IsType<JsonResult>(result);
+            var jsonResult = Assert.IsType<JsonResult>(result);
+            var actual = Assert.IsAssignableFrom<IEnumerable<string>>(jsonResult.Value);
 
-            Assert.Equal(new List<string> { "Treat1 * Treat2 * Treat3" }, jsonResult.Value);
+            var expected = new[]
+            {
+                "Treat1 * Treat2",
+                "Treat1 * Treat3",
+                "Treat2 * Treat3",
+                "Treat1 * Treat2 * Treat3"
+            };
+
+            Assert.Equal(expected, actual);
         }
 
 
         private Dataset GetDataset()
         {
-            var dataset = new Dataset
+            Dataset dataset = new Dataset
             {
                 DatasetID = 6,
                 DatasetName = "_test dataset.xlsx [unpairedttest]",

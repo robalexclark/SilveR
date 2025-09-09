@@ -431,9 +431,9 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 	modelxx <- paste(CovIntModel , " + Animal_IVS", sep = "")
 	threewayfullxx<-lm(as.formula(modelxx) , data=statdata, na.action = (na.omit))
 
-	if (df.residual(threewayfullxx) < 1) {
+	if (df.residual(threewayfullxx) < 2) {
 		HTML.title("Table of overall tests of model effects, for assessing covariate interactions", HR=2, align="left")
-		HTML("When the covariate interactions are included in the statistical model there are not enough degrees of freedom to estimate all the effects, hence no table of overall tests of model effects (including the covariate interactions) has been produced.", align="left")	
+		HTML("When the covariate interactions are included in the statistical model there are not enough degrees of freedom to reliably estimate all the effects, hence the table of overall tests of model effects (including the covariate interactions) has not been produced.", align="left")	
 	} else {
 
 		#Creating the analysis including covariates
@@ -1635,10 +1635,10 @@ HTML.title("Analysis description", HR=2, align="left")
 
 add<-c("The data were analysed using a ")
 if (notreatlist==1)  {
-	add<-paste(add, "2-way repeated measures mixed model approach, with ", treatlist, " as the treatment factor", sep="")
+	add<-paste(add, "2-way repeated measures mixed model approach utilizing the mmrm R package, with ", treatlist, " as the treatment factor", sep="")
 } else {
 	factorz<-notreatlist+1
-	add<-paste(add, factorz, "-way repeated measures mixed model approach, with ", sep="")
+	add<-paste(add, factorz, "-way repeated measures mixed model approach utilizing the mmrm R package, with ", sep="")
 	for (i in 1:notreatlist) {
 		if (i<notreatlist-1) {
 			add<-paste(add, txtexpectedChanges[i+1], ", ", sep="")
@@ -1762,21 +1762,19 @@ HTML("Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref ,  align="left")
-HTML(reference("R2HTML"))
+HTML(reference("car"))
+HTML(reference("emmeans"))
 HTML(reference("GGally"))
-HTML(reference("RColorBrewer"))
 HTML(reference("ggplot2"))
 HTML(reference("ggrepel"))
+HTML(reference("mmrm"))
+HTML(reference("R2HTML"))
+HTML(reference("RColorBrewer"))
 HTML(reference("reshape"))
 HTML(reference("plyr"))
-HTML(reference("scales"))
 HTML(reference("proto"))
+HTML(reference("scales"))
 
-#HTML(reference("multcomp"))
-#HTML(reference("nlme"))
-#HTML(reference("contrast"))
-HTML(reference("emmeans"))
-HTML(reference("mmrm"))
 
 #===================================================================================================================
 #Show dataset

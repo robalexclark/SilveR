@@ -2,8 +2,9 @@
 #R Libraries
 suppressWarnings(library(R2HTML))
 suppressWarnings(library(emmeans))
-suppressWarnings(library(mmrm))
 suppressWarnings(library(car))
+suppressWarnings(library(mmrm))
+
 
 #===================================================================================================================
 # retrieve args
@@ -54,7 +55,7 @@ HTMLCSS(CSSfile = cssFile)
 resp <- unlist(strsplit(Args[4],"~"))[1] #get the response variable from the main model
 statdata$Animal_IVS<-as.factor(eval(parse(text = paste("statdata$", subjectFactor))))
 statdata$Time_IVS<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
-statdata$Time_IVS<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
+#statdata$Time_IVS<-as.factor(eval(parse(text = paste("statdata$", timeFactor))))
 statdata$yvarrr_IVS <- eval(parse(text = paste("statdata$", resp)))
 
 #Re-ordering factor levels based on control group
@@ -474,9 +475,9 @@ if (AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
   modelxx <- paste(CovIntModel , " + Animal_IVS", sep = "")
   threewayfullxx<-lm(as.formula(modelxx) , data=statdata, na.action = (na.omit))
   
-  if (df.residual(threewayfullxx) < 1) {
+  if (df.residual(threewayfullxx) < 2) {
     HTML.title("Table of overall tests of model effects, for assessing covariate interactions", HR=2, align="left")
-    HTML("When the covariate interactions are included in the statistical model there are not enough degrees of freedom to estimate all the effects, hence no table of overall tests of model effects (including the covariate interactions) has been produced.", align="left")	
+    HTML("When the covariate interactions are included in the statistical model there are not enough degrees of freedom to reliably estimate all the effects, hence the table of overall tests of model effects (including the covariate interactions) has not been produced.", align="left")	
   } else {
     
     #Creating the analysis including covariates
@@ -1242,7 +1243,7 @@ comparisons <- rbind(tempcomps1, tempcomps2)
   }
   
   if (inte==1) {
-    if (tablen >1) {
+    if (dim(comparisons)[1] >1) {
       add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
     } else {
       add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
@@ -1263,9 +1264,9 @@ HTML.title("Analysis description", HR=2, align="left")
 add<-c("The data were analysed using ")
 
 if (dimfact ==2 ) { #&& covariatelist == "NULL") {
-  add<-paste(add, "an extended paired t-test, with treatment factor ", timeFactor, sep="")
+  add<-paste(add, "an extended paired t-test utilizing the mmrm R package, with treatment factor ", timeFactor, sep="")
 } else {
-  add<-paste(add, "a repeated measures mixed model approach, with treatment factor ", timeFactor, sep="")
+  add<-paste(add, "a repeated measures mixed model approach utilizing the mmrm R package, with treatment factor ", timeFactor, sep="")
 }
 
 if (blocklist != "NULL" && covariatelist != "NULL")  {
@@ -1350,7 +1351,7 @@ if(dimfact > 2) {
   }
 } 
 
-add<-paste("A full description of mixed model theory, including information on the R nlme package used by ", branding , ", can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
+add<-paste("A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
 HTML(add, align="left")
 
 #===================================================================================================================
@@ -1384,21 +1385,18 @@ HTML("Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 
 
 HTML.title("R references", HR=4, align="left")
 HTML(Ref_list$R_ref , align="left")
-HTML(reference("R2HTML"))
+HTML(reference("car"))
+HTML(reference("emmeans"))
 HTML(reference("GGally"))
-HTML(reference("RColorBrewer"))
 HTML(reference("ggplot2"))
 HTML(reference("ggrepel"))
+HTML(reference("mmrm"))
+HTML(reference("R2HTML"))
+HTML(reference("RColorBrewer"))
 HTML(reference("reshape"))
 HTML(reference("plyr"))
-HTML(reference("scales"))
 HTML(reference("proto"))
-
-HTML(reference("multcomp"))
-HTML(reference("nlme"))
-HTML(reference("contrast"))
-HTML(reference("emmeans"))
-
+HTML(reference("scales"))
 
 #===================================================================================================================
 #Show dataset

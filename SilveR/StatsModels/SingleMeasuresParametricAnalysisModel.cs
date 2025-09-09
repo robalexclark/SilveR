@@ -384,25 +384,13 @@ namespace SilveR.StatsModels
         public static List<string> DetermineSelectedEffectsList(List<string> selectedTreatments)
         {
             //assemble a complete list of main and interaction effects
-            List<string> effects = new List<string>();
-            effects.AddRange(selectedTreatments);
+            List<string> effects = new List<string>(selectedTreatments);
 
-
-            List<string> interactions = DetermineInteractions(effects);
-
-            effects.AddRange(interactions);
-
-            //if the number of interaction effects is 4 or greater,
-            //then only the main effects and highest order effect are to be available
-            if (selectedTreatments.Count >= 4)
+            //add in the interactions
+            List<string> interactions = DetermineInteractions(selectedTreatments);
+            foreach (string interaction in interactions)
             {
-                //remove any effect that is an interaction effect
-                for (int i = effects.Count - 1; i >= 0; i = i - 1)
-                {
-                    if (effects[i].Contains("*")) effects.Remove(effects[i]);
-                }
-                //add in the highest order interaction again
-                effects.Add(interactions[interactions.Count - 1].ToString());
+                effects.Add(interaction);
             }
 
             return effects;

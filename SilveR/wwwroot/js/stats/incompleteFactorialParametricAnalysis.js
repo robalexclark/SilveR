@@ -1,3 +1,5 @@
+let selectHighestInteractionOnNextBindIF = false;
+
 $(function () {
     jQuery.ajaxSettings.traditional = true
 
@@ -58,7 +60,13 @@ $(function () {
         }
     }).data("kendoDropDownList");
     selectedEffect.bind("dataBound", function (e) {
-        if (selectedEffect.select() === -1) {
+        if (selectHighestInteractionOnNextBindIF) {
+            const items = selectedEffect.dataSource.data();
+            if (items && items.length > 0) {
+                selectedEffect.select(items.length - 1);
+            }
+            selectHighestInteractionOnNextBindIF = false;
+        } else if (selectedEffect.select() === -1) {
             if (theModel.selectedEffect) {
                 selectedEffect.value(theModel.selectedEffect);
             }
@@ -103,6 +111,8 @@ function treatmentsChanged() {
 
     //...and the selected effect
     const selectedEffectDropDown = $("#SelectedEffect").data("kendoDropDownList");
+    // Ensure the highest order interaction is selected by default after refresh
+    selectHighestInteractionOnNextBindIF = true;
     selectedEffectDropDown.dataSource.read({
         selectedTreatments: $("#Treatments").data("kendoMultiSelect").dataItems()
     });
