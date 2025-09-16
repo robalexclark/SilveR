@@ -1,4 +1,4 @@
-using SilveR.StatsModels;
+﻿using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -220,13 +220,14 @@ namespace SilveR.IntegrationTests
             model.CategoricalFactors = new string[] { "Cat6" };
             model.Covariates = new string[] { "Resp5" };
             model.PrimaryFactor = "Cat6";
+            model.ShowRegANOVA = true;
 
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/LinearRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Covariate (Resp3) contains missing data.", warnings);
+            Assert.Contains("The Covariate (Resp5) contains missing data.", warnings);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
         }
 

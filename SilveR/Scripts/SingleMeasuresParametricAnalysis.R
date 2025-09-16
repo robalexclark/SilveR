@@ -655,7 +655,7 @@ if(showANOVA=="Y") {
 		for(i in 1:(dim(ivsanova)[1]-1)) {
 			if (temp[i,4] <= (1-sig)) {
 				if (inte==1) {
-					add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
+					add<-paste(add, ": At the ", 100*(1-sig), "% level, there is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
 					inte<-inte+1
 				} else {
 					add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
@@ -668,7 +668,7 @@ if(showANOVA=="Y") {
 		for(i in 1:(dim(ivsanova)[1]-1)) {
 			if (temp[i,5] <= (1-sig)) {
 				if (inte==1) {
-					add<-paste(add, ": There is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
+					add<-paste(add, ": At the ", 100*(1-sig), "% level, there is a statistically significant overall difference between the levels of ", rownames(ivsanova)[i], sep="")
 					inte<-inte+1
 				} else {
 					add<-paste(add, ", ", rownames(ivsanova)[i],  sep="")
@@ -683,13 +683,13 @@ if(showANOVA=="Y") {
 			if(FirstCatFactor != "NULL") {
 
 			#STB July 2013 change wording to remove effects
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANCOVA table", sep="")
+			add<-paste(add, ": At the ", 100*(1-sig), "% level, there are no statistically significant overall differences between the levels of any of the terms in the ANCOVA table", sep="")
 			} else {
-			add<-paste(add, ": There are no statistically significant overall differences between the levels of any of the terms in the ANOVA table", sep="")
+			add<-paste(add, ": At the ", 100*(1-sig), "% level, there are no statistically significant overall differences between the levels of any of the terms in the ANOVA table", sep="")
 			}
 		} 
 	if (dim(ivsanova)[1]<=2) {
-			add<-paste(add, ": There is no statistically significant overall difference between the levels of the treatment factor", sep="")
+			add<-paste(add, ": At the ", 100*(1-sig), "% level, there is no statistically significant overall difference between the levels of the treatment factor", sep="")
 		}
 	} 
 
@@ -1645,9 +1645,9 @@ if(allPairwiseTest != "null") {
 	}
 	if (inte==1) {
 		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
+			add<-paste(add, ": At the ", 100*(1-sig), "% level, there are no statistically significant pairwise comparisons.", sep="")
 		} else {
-			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
+			add<-paste(add, ": At the ", 100*(1-sig), "% level, the pairwise comparison is not statistically significant.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")
@@ -2036,9 +2036,9 @@ if(backToControlTest != "null") {
 	}
 	if (inte==1) {
 		if (tablen >1) {
-			add<-paste(add, ": There are no statistically significant pairwise comparisons.", sep="")
+			add<-paste(add, ": At the ", 100*(1-sig), "% level, there are no statistically significant pairwise comparisons.", sep="")
 		} else {
-			add<-paste(add, ": The pairwise comparison is not statistically significant.", sep="")
+			add<-paste(add, ": At the ", 100*(1-sig), "% level, the pairwise comparison is not statistically significant.", sep="")
 		}
 	} else {
 		add<-paste(add, ". ", sep="")

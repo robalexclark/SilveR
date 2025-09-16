@@ -160,9 +160,16 @@ namespace SilveR.Validators
                     //check that the "response" contains data for each "treatment" (not fatal)
                     if (!String.IsNullOrEmpty(categoricalRow[i]) && String.IsNullOrEmpty(continuousRow[i]))
                     {
-                        string mess = "The " + responseType + " (" + lrVariables.Response + ") contains missing data.";
+                        string mess = null;
+                        if (responseType == "response")
+                        {
+                            mess = "The responseType (" + lrVariables.Response + ") contains missing data.";
+                            mess = mess + Environment.NewLine + "Any treatment that does not have a corresponding response will be excluded from the analysis.";
+                        }
+                        else
                         if (responseType == "covariate")
                         {
+                            mess = "The covariate (" + lrVariables.Response + ") contains missing data.";
                             mess = mess + Environment.NewLine + "Any response that does not have a corresponding covariate will be excluded from the analysis.";
                         }
 

@@ -12,6 +12,7 @@ Args <- commandArgs(TRUE)
 
 #Read in data
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
+statdataprint <- statdata
 
 #Copy Args
 model <- as.formula(Args[4])
@@ -217,16 +218,16 @@ if (covariatelist !="NULL" &&  covariateTransform != "none") {
 HTML(add, align="left")
 
 if(covariance=="compound symmetric" && dimfact >2) {
-  add4<-paste("The repeated measures mixed model analysis is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
+  add4<-paste("The analysis, which is an implementation of a repeated measures mixed model, is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
   HTML(add4, align="left")
 }
 if(covariance=="autoregressive(1)" && dimfact >2) {
-  add4<-paste("The repeated measures mixed model analysis is using the first order autoregressive covariance structure to model the within-subject correlations. When using this structure you are assuming the levels of ", timeFactor, " are equally spaced and also that the variability of responses are the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
+  add4<-paste("The analysis, which is an implementation of a repeated measures mixed model, is using the first order autoregressive covariance structure to model the within-subject correlations. When using this structure you are assuming the levels of ", timeFactor, " are equally spaced and also that the variability of responses are the same at each level of ", timeFactor, ", see Pinherio and Bates (2002). These assumptions may not hold in practice.", sep= "")
   HTML(add4, align="left")
   HTML("Warning: Make sure that the levels of the treatment factor occur in the correct order in the least square (predicted) means table. If they do not then this analysis may not be valid. The autoregressive covariance structure assumes that the order of the treatment factor levels is as defined in the least square (predicted) means table.", align="left")
 }
 if(covariance=="unstructured" && dimfact >2) {
-  HTML("The repeated measures mixed model analysis is using the unstructured covariance structure to model the within-subject correlations. When using this structure you are estimating many parameters. If the numbers of subjects used is small then these estimates may be unreliable, see Pinherio and Bates (2002).", align="left")
+  HTML("The analysis, which is an implementation of a repeated measures mixed model, is using the unstructured covariance structure to model the within-subject correlations. When using this structure you are estimating many parameters. If the numbers of subjects used is small then these estimates may be unreliable, see Pinherio and Bates (2002).", align="left")
 }
 
 #===================================================================================================================
@@ -1067,10 +1068,13 @@ if (showComps == "Y") {
   statdata_char<- statdata[,!sapply(statdata,is.numeric)]
   statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="xxxivsdashivsxxx"))
   statdata_char3 <- as.data.frame(sapply(statdata_char2,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
-  statdata_comp<- data.frame(cbind(statdata_num, statdata_char3)) 
+  statdata_char4 <- as.data.frame(sapply(statdata_char3,gsub,pattern="/",replacement="xxxivsslashivsxxx"))
+  statdata_comp<- data.frame(cbind(statdata_num, statdata_char4)) 
   statdata_comp$Animal_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", subjectFactor))))
-  statdata_comp$Time_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
-  statdata_comp$Time_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  statdata_comp$Time_IVSx<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  statdata_comp$Time_IVSxx <- sapply(statdata_comp$Time_IVSx,gsub,pattern="-",replacement="xxxivsdashivsxxx")
+  statdata_comp$Time_IVSxxx <- as.factor(sapply(statdata_comp$Time_IVSxx,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
+  statdata_comp$Time_IVS <- as.factor(sapply(statdata_comp$Time_IVSxxx,gsub,pattern="/",replacement="xxxivsslashivsxxx"))
 
   #Re-fit the model using the dataset without spaces
   if(covariance=="compound symmetric") {
@@ -1140,15 +1144,21 @@ comparisons <- rbind(tempcomps1, tempcomps2)
   comparisons$comparison <- paste("(", comparisons$FirstGPIVSx, ") - (", comparisons$SecondGPIVSx, ")") 
   comparisons$comparison <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparison, fixed=TRUE) 
   comparisons$comparison <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparison, fixed=TRUE) 
-
+  comparisons$comparison <- gsub("xxxivsslashivsxxx","/",comparisons$comparison, fixed=TRUE) 
+  comparisons$comparison <- gsub("Time_IVS"," ",comparisons$comparison, fixed=TRUE) 
+  
   comparisons$comparisonL <- paste("(", comparisons$FirstGPIVSx, ") / (", comparisons$SecondGPIVSx, ")") 
   comparisons$comparisonL <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonL, fixed=TRUE) 
   comparisons$comparisonL <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonL, fixed=TRUE) 
-
+  comparisons$comparisonL <- gsub("xxxivsslashivsxxx","/",comparisons$comparisonL, fixed=TRUE) 
+  comparisons$comparisonL <- gsub("Time_IVS"," ",comparisons$comparisonL, fixed=TRUE) 
+  
   comparisons$comparisonC <- paste("(", comparisons$FirstGPIVSx, ") vs. (", comparisons$SecondGPIVSx, ")") 
   comparisons$comparisonC <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonC, fixed=TRUE) 
   comparisons$comparisonC <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonC, fixed=TRUE) 
-
+  comparisons$comparisonC <- gsub("xxxivsslashivsxxx","/",comparisons$comparisonC, fixed=TRUE) 
+  comparisons$comparisonC <- gsub("Time_IVS"," ",comparisons$comparisonC, fixed=TRUE)   
+  
   #Adjusting p-values
   comparisons$pval<- format(round(comparisons$p.value, 4), nsmall=4, scientific=FALSE)
   for (i in 1:dim(comparisons)[1])  {
@@ -1351,6 +1361,9 @@ if(dimfact > 2) {
   }
 } 
 
+add3<-paste("The analysis implements the Kenward-Roger adjustment to the degrees of freedom, see Kenward and Roger (1997).", sep="")
+HTML(add3, align="left")
+
 add<-paste("A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
 HTML(add, align="left")
 
@@ -1376,6 +1389,7 @@ if(covariatelist != "NULL") {
 }
 
 HTML("Pinherio, J.C. and Bates, D.M. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.", align="left")
+HTML("Kenward, M.G. and Roger J.H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics. 983-997.", align="left")
 
 if (dimfact > 2) {
   HTML("Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.", align="left")

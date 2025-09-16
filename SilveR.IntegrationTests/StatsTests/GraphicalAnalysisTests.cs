@@ -1,4 +1,4 @@
-using SilveR.StatsModels;
+﻿using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -373,7 +373,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
         }
 
@@ -397,7 +397,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
         }
 
@@ -1073,7 +1073,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1115,7 +1115,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1157,7 +1157,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1198,7 +1198,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1239,7 +1239,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1341,7 +1341,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1382,7 +1382,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1578,7 +1578,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1619,7 +1619,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1757,7 +1757,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1799,7 +1799,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1840,7 +1840,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -1881,7 +1881,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2065,7 +2065,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2106,7 +2106,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2147,7 +2147,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2187,7 +2187,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2300,7 +2300,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2342,7 +2342,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2383,7 +2383,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2427,7 +2427,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2614,7 +2614,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2656,7 +2656,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2698,7 +2698,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -2740,7 +2740,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3570,7 +3570,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3606,7 +3606,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3642,7 +3642,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3677,7 +3677,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3714,7 +3714,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3751,7 +3751,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3787,7 +3787,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3823,7 +3823,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -3972,7 +3972,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4011,7 +4011,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4049,7 +4049,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4087,7 +4087,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4127,7 +4127,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4166,7 +4166,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4204,7 +4204,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4242,7 +4242,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4592,7 +4592,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4689,7 +4689,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4728,7 +4728,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4767,7 +4767,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4921,7 +4921,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -4961,7 +4961,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5000,7 +5000,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5039,7 +5039,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5080,7 +5080,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5120,7 +5120,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5159,7 +5159,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5198,7 +5198,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5560,7 +5560,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5660,7 +5660,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5700,7 +5700,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5740,7 +5740,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5853,7 +5853,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5895,7 +5895,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5936,7 +5936,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -5980,7 +5980,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -6167,7 +6167,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -6209,7 +6209,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -6251,7 +6251,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -6293,7 +6293,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -7110,7 +7110,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -7156,7 +7156,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -7509,7 +7509,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -7555,7 +7555,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 2nd categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -7647,7 +7647,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -7694,7 +7694,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -8264,7 +8264,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings
@@ -8308,7 +8308,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will consitute a category.", warnings);
+            Assert.Contains("The 1st categorisation factor is numerical. Each numerical value present will constitute a category.", warnings);
             Helpers.SaveOutput("GraphicalAnalysis", testName, warnings);
 
             //Act - ignore warnings

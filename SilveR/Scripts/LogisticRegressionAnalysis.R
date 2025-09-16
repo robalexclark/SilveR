@@ -259,6 +259,10 @@ if (septest[4] == TRUE) {
 and may produce infinite estimates for some model coefficients, see Mansournia et al. (2018). Care should be taken when reviewing this analysis as 
 the results in the analysis of deviance table, odds ratios, confidence intervals and model predictions may not be reliable. You could try simplifying the statistical model to avoid this issue.", align="left")
 
+HTML.title("References", HR=2, align="left")
+HTML("Mansournia, M.A., Geroldinger, A., Greenland, S. and Heinze, G. (2018) Separation in Logistic Regression: Causes, Consequences, and Control. American Journal of Epidemiology, 187(4), 864-870. https://doi.org/10.1093/aje/kwx299", align = "left")
+
+
 quit()
 }
 #===================================================================================================================
@@ -1026,9 +1030,6 @@ HTML.title("References", HR=2, align="left")
 HTML(Ref_list$IVS_ref, align="left")
 #HTML(Ref_list$BateClark_ref, align="left")
 
-if (separation == "Y"){
-	HTML("Mansournia, M.A., Geroldinger, A., Greenland, S. and Heinze, G. (2018) Separation in Logistic Regression: Causes, Consequences, and Control. American Journal of Epidemiology, 187(4), 864â€“870. https://doi.org/10.1093/aje/kwx299", allign = "left")
-}
 if(goodnessOfFitTest  == "Y") {
 	HTML("McFadden, D. (1974) Conditional Logit Analysis of Qualitative Choice Behavior. In: Zarembka, P., Ed., Frontiers in Econometrics, Academic Press, 105-142.", align="left")
 }

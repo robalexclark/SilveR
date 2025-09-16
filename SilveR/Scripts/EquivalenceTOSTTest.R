@@ -39,9 +39,6 @@ showLSMeans <- Args[20]
 backToControlTest <- tolower(Args[21])
 cntrlGroup <- Args[22]
 
-
-#source(paste(getwd(),"/Common_Functions.R", sep=""))
-print(Args)
 #Print args
 if (Diplayargs == "Y"){
 	print(Args)
@@ -217,8 +214,6 @@ if (is.numeric(statdata$mainEffect) == TRUE) {
 tempdata$temp <- paste("T'", tempdata$mainEffect, "'",sep="")
 }
 
-print(temocont)
-print(head(tempdata))
 		controldata <-  subset(tempdata, tempdata$temp == temocont)
 		overallmean <- mean(eval(parse(text = paste("controldata$", resp))), na.rm = TRUE)
 	}

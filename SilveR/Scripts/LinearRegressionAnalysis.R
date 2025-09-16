@@ -670,48 +670,6 @@ if(AssessCovariateInteractions == "Y" && covariatelist != "NULL") {
 }
 
 #===================================================================================================================
-#Overall Model effects table
-#===================================================================================================================
-if(showRegANOVA=="Y") {
-  HTML.title("Regression sum of squares table", HR=2, align="left")
-
-  temp <-Anova(threewayfull, type=c("III"))[-1,]
-  SSE  <- temp[dim(temp)[1], 1]
-  SSreg <- sum((threewayfull$fitted.values - mean(eval(parse(text = paste("threewayfull$model$",resp)))))^2)
-  dfE   <- threewayfull$df.residual
-  dfReg <- nrow(statdata) - 1 - dfE
-  MSreg <- SSreg / dfReg
-  MSE   <- SSE / dfE
-  Fstat <- MSreg / MSE
-  pval  <- pf( Fstat , dfReg, dfE , lower.tail=FALSE )
-
-  if (pval<0.0001) {
-    pval2 <- "<0.0001" } else {
-    pval2  <- format(round(pf( Fstat , dfReg, dfE , lower.tail=FALSE ),4), nsmall=3, scientific=FALSE)
-    } 
-
-  SSreg2 <- format(round(SSreg,2), nsmall=2, scientific=FALSE)
-  SSE2 <- format(round(SSE,2), nsmall=2, scientific=FALSE)
-  dfReg2 <- dfReg
-  dfE2 <- dfE
-  MSreg2 <- format(round(MSreg,3), nsmall=3, scientific=FALSE)
-  MSE2 <- format(round(MSE,3), nsmall=3, scientific=FALSE)
-  Fstat2 <- format(round(Fstat,2), nsmall=2, scientific=FALSE)
-
-  Regtable0 <- c("Model", "Residual")
-  Regtable1 <- c(SSreg2, SSE2)
-  Regtable2 <- c(dfReg2, dfE2)
-  Regtable3 <- c(MSreg2, MSE2)
-  Regtable4 <- c(Fstat2, " ")
-  Regtable5 <- c(pval2, " ")
-  
-  Regtable <- cbind(Regtable0, Regtable1, Regtable2, Regtable3, Regtable4, Regtable5)
-  colnames(Regtable) <- c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
-
-
-  HTML(Regtable, classfirstline="second", align="left", row.names = "FALSE")
-}
-#===================================================================================================================
 #ANOVA table
 #===================================================================================================================
 if(showANOVA=="Y") {
@@ -842,6 +800,50 @@ if(class(test)[1] == "try-error"){
 	HTML("Unfortunately there are aliased parameters in the statistical model. This can be caused if a best-fit regression line cannot be fitted for one or more combinations of the categorical factor levels in the above scatterplots. In order to perform an analysis, the model may need to be simplified.", align="left")
 	quit()
 }
+
+#===================================================================================================================
+#Overall Model effects table
+#===================================================================================================================
+if(showRegANOVA=="Y") {
+  HTML.title("Regression sum of squares table", HR=2, align="left")
+  
+  temp <-Anova(threewayfull, type=c("III"))[-1,]
+  SSE  <- temp[dim(temp)[1], 1]
+  SSreg <- sum((threewayfull$fitted.values - mean(eval(parse(text = paste("threewayfull$model$",resp)))))^2)
+  dfE   <- threewayfull$df.residual
+  dfReg <- nrow(statdata) - 1 - dfE
+  MSreg <- SSreg / dfReg
+  MSE   <- SSE / dfE
+  Fstat <- MSreg / MSE
+  pval  <- pf( Fstat , dfReg, dfE , lower.tail=FALSE )
+  
+  if (pval<0.0001) {
+    pval2 <- "<0.0001" } else {
+      pval2  <- format(round(pf( Fstat , dfReg, dfE , lower.tail=FALSE ),4), nsmall=3, scientific=FALSE)
+    } 
+  
+  SSreg2 <- format(round(SSreg,2), nsmall=2, scientific=FALSE)
+  SSE2 <- format(round(SSE,2), nsmall=2, scientific=FALSE)
+  dfReg2 <- dfReg
+  dfE2 <- dfE
+  MSreg2 <- format(round(MSreg,3), nsmall=3, scientific=FALSE)
+  MSE2 <- format(round(MSE,3), nsmall=3, scientific=FALSE)
+  Fstat2 <- format(round(Fstat,2), nsmall=2, scientific=FALSE)
+  
+  Regtable0 <- c("Model", "Residual")
+  Regtable1 <- c(SSreg2, SSE2)
+  Regtable2 <- c(dfReg2, dfE2)
+  Regtable3 <- c(MSreg2, MSE2)
+  Regtable4 <- c(Fstat2, " ")
+  Regtable5 <- c(pval2, " ")
+  
+  Regtable <- cbind(Regtable0, Regtable1, Regtable2, Regtable3, Regtable4, Regtable5)
+  colnames(Regtable) <- c("Effect", "Sums of squares", "Degrees of freedom", "Mean square", "F-value", "p-value")
+  
+  
+  HTML(Regtable, classfirstline="second", align="left", row.names = "FALSE")
+}
+
 #===================================================================================================================
 #Table of regression coefficients
 #===================================================================================================================
@@ -852,9 +854,9 @@ if (showCoefficients == "Y") {
 	HTML.title("Table of model coefficients", HR=2, align="left")
 
 	temp1<-coefficients(threewayfull2) # model coefficients
-	temp1<-format(round(temp1, 3), nsmall=3, scientific=FALSE)
+	temp1<-format(round(temp1, 4), nsmall=4, scientific=FALSE)
 
-	temp2<- format(round(confint(threewayfull2, level=sig), 3), nsmall=3, scientific=FALSE) # CIs for model parameters 
+	temp2<- format(round(confint(threewayfull2, level=sig), 4), nsmall=4, scientific=FALSE) # CIs for model parameters 
 	temp3<- cbind(temp1, temp2)
 	tablenames<-rownames(temp3)
 

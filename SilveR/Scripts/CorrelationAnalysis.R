@@ -1,4 +1,4 @@
-﻿#===================================================================================================================
+#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(R2HTML))
@@ -521,10 +521,19 @@ if (k>1) {
 	corp2<-dim(correlationTablep)[2]
 
 	add<-paste(c("Conclusion"))
-	inte<-1
+	
+	tot <- 1
 	for(i in 1:(dim(correlationTable2)[1])) {
+	  if (correlationTablep[i,corp2] <= (1-CIval)) {
+	    tot <-tot+1
+	  }
+	}
+	inte<-1
+	
+	if (tot > 2 ) {
+		for(i in 1:(dim(correlationTable2)[1])) {
 #		if (correlationTable2[i,corp] <= (1-CIval)|| correlationTable2[i,corp] == "< 0.0001" ) {
-		if (correlationTablep[i,corp2] <= (1-CIval) ) {
+		if (correlationTablep[i,corp2] <= (1-CIval) &&  dim(correlationTable2)[1] > 1 ) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": The following pairwise correlations are statistically significantly at the  ", sep="")
@@ -537,9 +546,61 @@ if (k>1) {
 				add<-paste(add, correlationTable2[i,2], " vs. ", correlationTable2[i,4], sep="")
 			}
 		} 
+	  if (correlationTablep[i,corp2] <= (1-CIval) &&  dim(correlationTable2)[1] == 1 ) {
+	    if (inte==1) {
+	      inte<-inte+1
+	      add<-paste(add, ": The pairwise correlation is statistically significantly at the  ", sep="")
+	      add<-paste(add, CIval3, sep="")
+	      add<-paste(add, "% level", sep="")
+	    } else {
+	      inte<-inte+1
+	      add<-paste(add, ", ", sep="")
+	      add<-paste(add, correlationTable2[i,2], " vs. ", correlationTable2[i,4], sep="")
+	    }
+	  } 
 	}
-	if (inte==1) {
-	add<-paste(add, ": There are no statistically significant correlations", sep="")
+	}
+	
+	if (tot == 2 ) {
+	  for(i in 1:(dim(correlationTable2)[1])) {
+	    #		if (correlationTable2[i,corp] <= (1-CIval)|| correlationTable2[i,corp] == "< 0.0001" ) {
+	    if (correlationTablep[i,corp2] <= (1-CIval) &&  dim(correlationTable2)[1] > 1 ) {
+	      if (inte==1) {
+	        inte<-inte+1
+	        add<-paste(add, ": The following pairwise correlation is statistically significantly at the  ", sep="")
+	        add<-paste(add, CIval3, sep="")
+	        add<-paste(add, "% level: ", sep="")
+	        add<-paste(add, correlationTable2[i,2], " vs. ", correlationTable2[i,4], sep="")
+	      } else {
+	        inte<-inte+1
+	        add<-paste(add, ", ", sep="")
+	        add<-paste(add, correlationTable2[i,2], " vs. ", correlationTable2[i,4], sep="")
+	      }
+	    } 
+	    if (correlationTablep[i,corp2] <= (1-CIval) &&  dim(correlationTable2)[1] == 1 ) {
+	      if (inte==1) {
+	        inte<-inte+1
+	        add<-paste(add, ": The pairwise correlation is statistically significantly at the  ", sep="")
+	        add<-paste(add, CIval3, sep="")
+	        add<-paste(add, "% level", sep="")
+	      } else {
+	        inte<-inte+1
+	        add<-paste(add, ", ", sep="")
+	        add<-paste(add, correlationTable2[i,2], " vs. ", correlationTable2[i,4], sep="")
+	      }
+	    } 
+	  }
+	}	
+	
+	if (inte==1 &&  dim(correlationTable2)[1] > 1 ) {
+	add<-paste(add, ": There are no statistically significant correlations at the ", sep="")
+	add<-paste(add, CIval3, sep="")
+	add<-paste(add, "% level", sep="")
+	} 
+	if (inte==1 &&  dim(correlationTable2)[1] == 1 ) {
+	  add<-paste(add, ": The correlation is not statistically significant at the ", sep="")
+	  add<-paste(add, CIval3, sep="")
+	  add<-paste(add, "% level", sep="")
 	} 
 	add<-paste(add, ".", sep="")
 	HTML(add, align="left")
@@ -1009,28 +1070,62 @@ if (k>2) {
 	corp2<-dim(correlationTablep)[2]
 
 	add<-paste(c("Conclusion"))
-	inte<-1
+	tot <- 1
 	for(i in 1:(dim(correlationTable2)[1])) {
-		if (correlationTablep[i,corp2] <= (1-CIval) ) {
+	  if (correlationTablep[i,corp2] <= (1-CIval)) {
+	      tot <-tot+1
+	  }
+  }
+	      
+	
+	inte<-1
+	if (tot  > 2) {
+	for(i in 1:(dim(correlationTable2)[1])) {
+		if (correlationTablep[i,corp2] <= (1-CIval)) {
 			if (inte==1) {
 				inte<-inte+1
 				add<-paste(add, ": The following pairwise correlations are statistically significantly at the  ", CIval3, "% level: ", correlationTable2[i,3], " vs. ", correlationTable2[i,5], " (categorisation factor(s) level ", correlationTable2[i,2], ")",sep="")
 			} else {
 				inte<-inte+1
 				add<-paste(add, ", ", correlationTable2[i,3], " vs. ", correlationTable2[i,5], " (categorisation factor(s) level ", correlationTable2[i,2], ")", sep="")
-			}
-		} 
-	}
+		  	}
+	  	} 
+   }
+  }
 
-	if (inte==1) {
-		add<-paste(add, ": There are no statistically significant correlations", sep="")
+	if (tot  == 2) {
+	  for(i in 1:(dim(correlationTable2)[1])) {
+	    if (correlationTablep[i,corp2] <= (1-CIval)) {
+	      if (inte==1) {
+	        inte<-inte+1
+	        add<-paste(add, ": The pairwise correlation ", correlationTable2[i,3], " vs. ", correlationTable2[i,5], " (categorisation factor(s) level ", correlationTable2[i,2], ") is statistically significantly at the  ", CIval3, "% level",sep="")
+	      } 
+	    } 
+	  }
+	 }
+	
+	if (inte==1 && dim(correlationTable2)[1] > 2) {
+	  add<-paste(add, ": There are no statistically significant correlations at the ", sep="")
+	  add<-paste(add, CIval3, sep="")
+	  add<-paste(add, "% level", sep="")
+  	
 	} 
+
+  if (inte==1 && dim(correlationTable2)[1] == 1) {
+    add<-paste(add, ": The correlation is not statistically significant at the ", sep="")
+    add<-paste(add, CIval3, sep="")
+    add<-paste(add, "% level", sep="")
+  } 
+
+	
+	
 	add<-paste(add, ".", sep="")
+	
 	
 	HTML(add, align="left")
 
 	if (testcomb == 2) {
-		HTML("Note that there is only one or two pairs of responses available for one or more of the level(s) of the categorisation factor(s) and hence no correlation analysis can be performed for the level(s) of the categorisation factor(s). ", align="left")
+		HTML("Note that there is only one or two pairs of responses available for one or more of the level(s) of the categorisation factor(s) and hence no correlation analysis can be performed for these level(s) of the categorisation factor(s). ", align="left")
 	}
 } else {
 	HTML.title("Warning", HR=2, align="left")

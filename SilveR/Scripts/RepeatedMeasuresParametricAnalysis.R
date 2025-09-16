@@ -11,6 +11,7 @@ Args <- commandArgs(TRUE)
 
 #Read in data
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
+statdata_temp <- statdata
 
 #Copy Args
 model <- as.formula(Args[4])
@@ -49,6 +50,7 @@ cssFile <- paste("'",cssFile,"'", sep="") #need to enclose in quotes when path h
 HTMLCSS(CSSfile = cssFile)
 
 #===================================================================================================================
+
 #Parameter setup
 
 #STB 14OCT2015
@@ -1360,10 +1362,14 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
   statdata_char<- statdata[,!sapply(statdata,is.numeric)]
   statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="xxxivsdashivsxxx"))
   statdata_char3 <- as.data.frame(sapply(statdata_char2,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
-  statdata_comp<- data.frame(cbind(statdata_num, statdata_char3)) 
+  statdata_char4 <- as.data.frame(sapply(statdata_char3,gsub,pattern="/",replacement="xxxivsslashivsxxx"))
+  statdata_comp<- data.frame(cbind(statdata_num, statdata_char4)) 
   statdata_comp$Animal_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", subjectFactor))))
-  statdata_comp$Time_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
-  #statdata_comp$Timezzz<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  statdata_comp$Time_IVSx<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  statdata_comp$Time_IVSxx <- sapply(statdata_comp$Time_IVSx,gsub,pattern="-",replacement="xxxivsdashivsxxx")
+  statdata_comp$Time_IVSxxx <- as.factor(sapply(statdata_comp$Time_IVSxx,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
+  statdata_comp$Time_IVS <- as.factor(sapply(statdata_comp$Time_IVSxxx,gsub,pattern="/",replacement="xxxivsslashivsxxx"))
+  
   for (i in 1:length(treatlistsep)) {
     colname <- treatlistsep[i]
     statdata_comp[[colname]] <- as.factor(statdata_comp[[colname]])
@@ -1387,7 +1393,7 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
   comps<-emmeans(threewayfull_comp,eval(parse(text = paste("~",selectedEffect))), level=sig)
   comparisons<-data.frame(pairs(comps, adjust="none", infer = c(TRUE, TRUE) ))
   namescomp <- colnames(comparisons)
-  
+
   #Separating out levels
   out <- strsplit(comparisons$contrast, "-")
   comparisonsx <- trimws(do.call(rbind, out))
@@ -1412,14 +1418,20 @@ if(pairwiseTest == "allpairwisecomparisons" || pairwiseTest == "allcomparisonswi
   comparisons$comparison <- paste("(", comparisons$FirstGPIVS, ") - (", comparisons$SecondGPIVS, ")") 
   comparisons$comparison <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparison, fixed=TRUE) 
   comparisons$comparison <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparison, fixed=TRUE) 
-
+  comparisons$comparison <- gsub("xxxivsslashivsxxx","/",comparisons$comparison, fixed=TRUE) 
+  comparisons$comparison <- gsub("Time_IVS"," ",comparisons$comparison, fixed=TRUE) 
+  
   comparisons$comparisonL <- paste("(", comparisons$FirstGPIVS, ") / (", comparisons$SecondGPIVS, ")") 
   comparisons$comparisonL <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonL, fixed=TRUE) 
   comparisons$comparisonL <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonL, fixed=TRUE) 
+  comparisons$comparisonL <- gsub("xxxivsslashivsxxx","/",comparisons$comparisonL, fixed=TRUE) 
+  comparisons$comparisonL <- gsub("Time_IVS"," ",comparisons$comparisonL, fixed=TRUE) 
   
   comparisons$comparisonC <- paste("(", comparisons$FirstGPIVS, ") vs. (", comparisons$SecondGPIVS, ")") 
   comparisons$comparisonC <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonC, fixed=TRUE) 
   comparisons$comparisonC <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonC, fixed=TRUE) 
+  comparisons$comparisonC <- gsub("xxxivsslashivsxxx","/",comparisons$comparisonC, fixed=TRUE) 
+  comparisons$comparisonC <- gsub("Time_IVS"," ",comparisons$comparisonC, fixed=TRUE) 
   
   #Adjusting p-values
   comparisons$pval<- format(round(comparisons$p.value, 4), nsmall=4, scientific=FALSE)
@@ -1528,8 +1540,6 @@ if(pairwiseTest == "allpairwisecomparisons") {
 	HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
 }
 
-
-  
 #===================================================================================================================
 #All comparisons within time factor
 #===================================================================================================================
@@ -1574,11 +1584,10 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 	    #print table
 	    HTML(RedPL, classfirstline="second", align="left", row.names = "FALSE")
 	  }
-
+	}
 #===================================================================================================================
 #Conclusion
 #===================================================================================================================
-
 	  add<-paste(c("Conclusion"))
 	  inte<-1
 	  
@@ -1608,7 +1617,6 @@ if(pairwiseTest == "allcomparisonswithinselected") {
 	  }
 	  HTML(add, align="left")
 	  HTML("Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.", align="left")
-	}
 }
 #===================================================================================================================
 #STB March 2014 - Creating a dataset of p-values
@@ -1730,7 +1738,7 @@ if(covariance=="unstructured") {
 }
 HTML(add2, align="left")
 
-add3<-paste("The analysis implements the Kenward-Roger adjustment to the degrees of freedom, Kenward and Roger (1997).", sep="")
+add3<-paste("The analysis implements the Kenward-Roger adjustment to the degrees of freedom, see Kenward and Roger (1997).", sep="")
 HTML(add3, align="left")
 
 add<-paste("A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")
@@ -1780,7 +1788,7 @@ HTML(reference("scales"))
 #Show dataset
 #===================================================================================================================
 if (showdataset=="Y") {
-	statdata_temp2<-subset(statdata_temp, select = -c(between, betweenwithin, mainEffect, Animal_IVS, Time_IVS))
+	statdata_temp2<-subset(statdata_temp, select = -c(between, betweenwithin, mainEffect))
 	observ <- data.frame(c(1:dim(statdata_temp2)[1]))
 	colnames(observ) <- c("Observation")
 	statdata_temp22 <- cbind(observ, statdata_temp2)

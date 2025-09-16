@@ -1880,7 +1880,7 @@ HTML(reference("proto"))
 #===================================================================================================================
 #Show dataset
 #===================================================================================================================
-graphdata <- Printdata
+#graphdata <- Printdata
 
 graphdata2 <- data.frame(graphdata$yvarrr_IVS)
 names <- c(YAxisVars)
@@ -1913,7 +1913,6 @@ if (CaseProfilesPlot == "Y") {
     names <- c(names, CaseIDFactor)
     colnames(graphdata2) <- names
 }
-
 
 if (showdataset == "Y") {
     observ <- data.frame(c(1:dim(graphdata2)[1]))

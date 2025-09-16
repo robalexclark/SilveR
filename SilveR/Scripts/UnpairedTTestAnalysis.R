@@ -1,4 +1,4 @@
-﻿#===================================================================================================================
+#===================================================================================================================
 #R Libraries
 
 suppressWarnings(library(multcomp))
@@ -190,7 +190,7 @@ if (equalCase == "Y") {
 	if (as.numeric(col4[i])<= (1-sig)) {
 		add<-paste(add, ": There is a statistically significant difference between the levels of ", xxxresponsexxx, " at the ", 100*(1-sig) , "% level" , ".",  sep="")
 	} else {
-		add<-paste(add, ": The difference between the levels of ", xxxresponsexxx, " is not statistically significant.", sep="")
+		add<-paste(add, ": At the ", 100*(1-sig), "% level, the difference between the levels of ", xxxresponsexxx, " is not statistically significant.", sep="")
 	}
 	HTML(add, align="left")
 }
@@ -565,7 +565,7 @@ if (unequalCase == "Y") {
 	if (as.numeric(col4[i]) <= (1-sig)) {
 		add<-paste(add, ": There is a statistically significant difference between the levels of ", xxxresponsexxx, " at the ", 100*(1-sig) , "% level" , ".", sep="")
 	} else {
-		add<-paste(add, ": The difference between the levels of ", xxxresponsexxx, " is not statistically significant.", sep="")
+		add<-paste(add, ": At the ", 100*(1-sig), "% level, the difference between the levels of ", xxxresponsexxx, " is not statistically significant.", sep="")
 	}
 	HTML(add, align="left")
 }
