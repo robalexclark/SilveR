@@ -852,9 +852,9 @@ if (showCoefficients == "Y") {
 	HTML.title("Table of model coefficients", HR=2, align="left")
 
 	temp1<-coefficients(threewayfull2) # model coefficients
-	temp1<-format(round(temp1, 3), nsmall=3, scientific=FALSE)
+	temp1<-format(round(temp1, 4), nsmall=4, scientific=FALSE)
 
-	temp2<- format(round(confint(threewayfull2, level=sig), 3), nsmall=3, scientific=FALSE) # CIs for model parameters 
+	temp2<- format(round(confint(threewayfull2, level=sig), 4), nsmall=4, scientific=FALSE) # CIs for model parameters 
 	temp3<- cbind(temp1, temp2)
 	tablenames<-rownames(temp3)
 
