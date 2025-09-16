@@ -12,6 +12,7 @@ Args <- commandArgs(TRUE)
 
 #Read in data
 statdata <- read.csv(Args[3], header=TRUE, sep=",")
+statdataprint <- statdata
 
 #Copy Args
 model <- as.formula(Args[4])
@@ -1067,10 +1068,13 @@ if (showComps == "Y") {
   statdata_char<- statdata[,!sapply(statdata,is.numeric)]
   statdata_char2 <- as.data.frame(sapply(statdata_char,gsub,pattern="-",replacement="xxxivsdashivsxxx"))
   statdata_char3 <- as.data.frame(sapply(statdata_char2,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
-  statdata_comp<- data.frame(cbind(statdata_num, statdata_char3)) 
+  statdata_char4 <- as.data.frame(sapply(statdata_char3,gsub,pattern="/",replacement="xxxivsslashivsxxx"))
+  statdata_comp<- data.frame(cbind(statdata_num, statdata_char4)) 
   statdata_comp$Animal_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", subjectFactor))))
-  statdata_comp$Time_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
-  statdata_comp$Time_IVS<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  statdata_comp$Time_IVSx<-as.factor(eval(parse(text = paste("statdata_comp$", timeFactor))))
+  statdata_comp$Time_IVSxx <- sapply(statdata_comp$Time_IVSx,gsub,pattern="-",replacement="xxxivsdashivsxxx")
+  statdata_comp$Time_IVSxxx <- as.factor(sapply(statdata_comp$Time_IVSxx,gsub,pattern=" ",replacement="xxxivsspaceivsxxx"))
+  statdata_comp$Time_IVS <- as.factor(sapply(statdata_comp$Time_IVSxxx,gsub,pattern="/",replacement="xxxivsslashivsxxx"))
 
   #Re-fit the model using the dataset without spaces
   if(covariance=="compound symmetric") {
@@ -1140,15 +1144,21 @@ comparisons <- rbind(tempcomps1, tempcomps2)
   comparisons$comparison <- paste("(", comparisons$FirstGPIVSx, ") - (", comparisons$SecondGPIVSx, ")") 
   comparisons$comparison <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparison, fixed=TRUE) 
   comparisons$comparison <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparison, fixed=TRUE) 
-
+  comparisons$comparison <- gsub("xxxivsslashivsxxx","/",comparisons$comparison, fixed=TRUE) 
+  comparisons$comparison <- gsub("Time_IVS"," ",comparisons$comparison, fixed=TRUE) 
+  
   comparisons$comparisonL <- paste("(", comparisons$FirstGPIVSx, ") / (", comparisons$SecondGPIVSx, ")") 
   comparisons$comparisonL <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonL, fixed=TRUE) 
   comparisons$comparisonL <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonL, fixed=TRUE) 
-
+  comparisons$comparisonL <- gsub("xxxivsslashivsxxx","/",comparisons$comparisonL, fixed=TRUE) 
+  comparisons$comparisonL <- gsub("Time_IVS"," ",comparisons$comparisonL, fixed=TRUE) 
+  
   comparisons$comparisonC <- paste("(", comparisons$FirstGPIVSx, ") vs. (", comparisons$SecondGPIVSx, ")") 
   comparisons$comparisonC <- gsub("xxxivsspaceivsxxx"," ",comparisons$comparisonC, fixed=TRUE) 
   comparisons$comparisonC <- gsub("xxxivsdashivsxxx"," - ",comparisons$comparisonC, fixed=TRUE) 
-
+  comparisons$comparisonC <- gsub("xxxivsslashivsxxx","/",comparisons$comparisonC, fixed=TRUE) 
+  comparisons$comparisonC <- gsub("Time_IVS"," ",comparisons$comparisonC, fixed=TRUE)   
+  
   #Adjusting p-values
   comparisons$pval<- format(round(comparisons$p.value, 4), nsmall=4, scientific=FALSE)
   for (i in 1:dim(comparisons)[1])  {

@@ -975,7 +975,7 @@ NONCAT_SEM <- function() {
 	}
 
 	if (DisplaySEMlines == "Y" && SEMPlotType != "column" ) {
-		g3 <- g2 + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line) 
+		g3 <- g2 + stat_summary(fun = mean, geom = 'line', aes(group = 1), colour = Gr_line) 
 	} else {
 		g3 <- g2
 	}
@@ -1041,7 +1041,7 @@ ONECATSEP_SEM <- function() {
 			facet_wrap(~l_l)
 	}
 	if (DisplaySEMlines == "Y" && SEMPlotType != "column") {
-		g3 <- g2 +stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+		g3 <- g2 +stat_summary(fun = mean, geom = 'line', aes(group = 1), colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -1107,7 +1107,7 @@ TWOCATSEP_SEM <- function() {
 	}
 
 	if (DisplaySEMlines == "Y" && SEMPlotType != "column") {
-		g3 <- g2 +  stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+		g3 <- g2 +  stat_summary(fun = mean, geom = 'line', aes(group = 1), colour = Gr_line)
 	} else {
 		g3 <- g2
 	}
@@ -1173,7 +1173,7 @@ OVERLAID_SEM <- function() {
 	}
 	
 	if (DisplaySEMlines == "Y" && SEMPlotType != "column") {
-		g3 <- g2 +  stat_summary(data = graphdataSEM, fun.y = mean, geom = 'line', aes(group = l_l, colour = l_l), pos = position_dodge(w = 0.1))
+		g3 <- g2 +  stat_summary(data = graphdataSEM, fun = mean, geom = 'line', aes(group = l_l, colour = l_l), pos = position_dodge(w = 0.1))
 	} else {
 		g3 <- g2
 	}
@@ -1883,7 +1883,7 @@ LSMPLOT_1 <- function() {
 		geom_point(size = Point_size, shape = Point_shape, color = "black", fill = Gr_fill) 
 
 	if (DisplayLSMeanslines == "Y") {
-		g1 <- g + stat_summary(fun.y = mean, geom = 'line', aes(group = 1), linewidth = Line_size, colour = Gr_fill, lty = Line_type_solid) 
+		g1 <- g + stat_summary(fun = mean, geom = 'line', aes(group = 1), linewidth = Line_size, colour = Gr_fill, lty = Line_type_solid) 
 	} else {
 		g1 <- g
 	}
@@ -2177,7 +2177,7 @@ NONCAT_SEMx <- function() {
 		xlab(XAxisTitle) +
 		ggtitle(MainTitle2) +
 
-	stat_summary(fun.y = mean, geom = 'line', aes(group = 1), colour = Gr_line)
+	stat_summary(fun = mean, geom = 'line', aes(group = 1), colour = Gr_line)
 	g1 <- g + geom_point(fill = Gr_line, colour = "black", size = Point_size, shape = Point_shape)
 	suppressWarnings(print(g1))
 }
