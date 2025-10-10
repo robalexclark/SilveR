@@ -1,4 +1,4 @@
-using SilveR.StatsModels;
+﻿using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -200,6 +200,7 @@ namespace SilveR.IntegrationTests
             //Act
             HttpResponseMessage response = await client.PostAsync("Analyses/LogisticRegressionAnalysis", new FormUrlEncodedContent(model.ToKeyValue()));
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
+            var x = await Helpers.ExtractErrors(response);
 
             //Assert
             Assert.Contains("The Covariate (Covariate4) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);

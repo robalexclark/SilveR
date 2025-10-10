@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -129,6 +130,8 @@ namespace SilveR.Validators
     //P-VALUE ADJUSTMENT
     public class CheckPValueAttribute : ValidationAttribute
     {
+        private static readonly char[] PValueSeparators = new[] { ',', ' ', '\t', '\r', '\n' };
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             PValueAdjustmentUserBasedInputsModel model = (PValueAdjustmentUserBasedInputsModel)validationContext.ObjectInstance;
@@ -139,11 +142,24 @@ namespace SilveR.Validators
             }
             else //check to ensure that values in list are all numbers and are all comma separated and >0
             {
-                string[] pValues = model.PValues.Replace(" ", "").Split(','); //split list by comma
-
-                foreach (string p in pValues)//go through list and check that is a number and is greater than 0
+                string[] tokens = model.PValues.Split(PValueSeparators, StringSplitOptions.RemoveEmptyEntries);
+                if (tokens.Length == 0)
                 {
-                    if (!Double.TryParse(p, out double number) && p != "<0.001" && p != "<0.0001") //n.b. remove < sign when checking
+                    return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
+                }
+
+                bool containsComma = model.PValues.Contains(",");
+
+                foreach (string token in tokens)//go through list and check that is a number and is greater than 0
+                {
+                    string trimmedToken = token.Trim();
+
+                    if (trimmedToken == "<0.001" || trimmedToken == "<0.0001") //n.b. remove < sign when checking
+                    {
+                        continue;
+                    }
+
+                    if (!Double.TryParse(trimmedToken, NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
                     {
                         return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
                     }
@@ -155,6 +171,11 @@ namespace SilveR.Validators
                     {
                         return new ValidationResult("All p-values must be less than 1.");
                     }
+                }
+
+                if (tokens.Length > 1 && !containsComma)
+                {
+                    return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
                 }
 
                 return ValidationResult.Success;

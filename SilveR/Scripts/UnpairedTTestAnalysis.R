@@ -284,6 +284,7 @@ if (equalCase == "Y") {
 
 	for (i in 1:100) {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+		rows<-sub("mainEffect"," ", rows, fixed=TRUE)
 	}
 	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 	upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
@@ -384,6 +385,7 @@ if(equalCase == "Y" && (responseTransform =="log10"||responseTransform =="loge")
 		#STB June 2015	
 		for (i in 1:100) {
 			rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+			rows<-sub("mainEffect"," ", rows, fixed=TRUE)
 		}
 		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
 		upperCI<-paste("   Upper ",(sig*100),"% CI   ",sep="")
@@ -727,6 +729,7 @@ if (unequalCase == "Y") {
 	#Required to generate table label only
 	mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 	multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
+
 	mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, var.equal= FALSE, conf.level= sig)
 
 	pvals<-mult2$p.value
@@ -756,12 +759,10 @@ if (unequalCase == "Y") {
 
 	rows<-rownames(multci3$confint)
 
-#STB2019
-#	rows<-sub(" - "," vs. ", rows, fixed=TRUE)
-
 	#STB June 2015	
 	for (i in 1:100) {
 		rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+		rows<-sub("mainEffect"," ", rows, fixed=TRUE)
 	}
 
 	lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")
@@ -827,7 +828,7 @@ if(unequalCase == "Y" && (responseTransform =="log10"||responseTransform =="loge
 		#Required to generate table label only
 		mult3<-glht(lm(eval(parse(text = paste("statdata$", xxxresponsexxx)))~ mainEffect, data=statdata, na.action = na.omit), linfct=lsm(pairwise ~mainEffect))
 		multci3<-confint(mult3, level=sig, calpha = univariate_calpha())
-	
+
 		mult2<-t.test(formula = eval(parse(text = paste("statdata$", xxxresponsexxx)))~ statdata$mainEffect, var.equal= FALSE, conf.level= sig)
 	
 		meandiff<- mult2$estimate[1] - mult2$estimate[2]
@@ -860,6 +861,7 @@ if(unequalCase == "Y" && (responseTransform =="log10"||responseTransform =="loge
 		#STB June 2015	
 		for (i in 1:100) {
 			rows<-sub("_ivs_dash_ivs_"," - ", rows, fixed=TRUE)
+			rows<-sub("mainEffect"," ", rows, fixed=TRUE)
 		}
 	
 		lowerCI<-paste("   Lower ",(sig*100),"% CI   ",sep="")

@@ -1,4 +1,4 @@
-using SilveR.StatsModels;
+﻿using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -54,7 +54,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("P values contains non-numeric values detected or values are not comma separated.", errors);
+            Assert.Contains("All p-values must be less than 1.", errors);
             Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, errors);
         }
 

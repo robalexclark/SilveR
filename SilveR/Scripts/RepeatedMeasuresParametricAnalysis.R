@@ -276,7 +276,7 @@ if(covariance=="unstructured") {
 	HTML("The repeated measures mixed model analysis is using the unstructured covariance structure to model the within-subject correlations. When using this structure you are estimating many parameters. If the numbers of subject used is small then these estimates may be unreliable, see Pinherio and Bates (2002).", align="left")
 }
 
-add5<-paste("The analysis implements the Kenward-Roger approximation of the degress of freedom, Kenward and Roger (1997).", sep= "")
+add5<-paste("The analysis implements the Kenward-Roger approximation of the degress of freedom, see Kenward and Roger (1997).", sep= "")
 HTML(add5, align="left")
 
 #===================================================================================================================

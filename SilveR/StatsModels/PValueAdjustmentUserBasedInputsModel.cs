@@ -65,7 +65,7 @@ namespace SilveR.StatsModels
         {
             StringBuilder arguments = new StringBuilder();
 
-            string formattedPValues = PValues.Replace(" ", "");
+            string formattedPValues = string.Join(",", PValues.Split(new[] { ',', ' ', '\t', '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries));
 
             //need to escape the < symbol on windows (linux ok)
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
