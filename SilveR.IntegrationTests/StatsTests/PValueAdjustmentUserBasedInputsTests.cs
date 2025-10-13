@@ -33,7 +33,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> errors = await Helpers.ExtractErrors(response);
 
             //Assert
-            Assert.Contains("P values contains non-numeric values detected or values are not comma separated.", errors);
+            Assert.Contains("Non-numeric p-values detected or p-values are not comma separated.", errors);
             Helpers.SaveOutput("PValueAdjustmentUserBasedInputs", testName, errors);
         }
 

@@ -1,4 +1,4 @@
-using SilveR.StatsModels;
+﻿using SilveR.StatsModels;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -324,7 +324,7 @@ namespace SilveR.IntegrationTests
             model.Response = "Resp 1";
             model.Treatments = new string[] { "Treat1" };
             model.Covariates = new string[] { "Cov2" };
-            model.CovariateTransformation = "Loge";
+            model.CovariateTransformation = "Log10";
             model.PrimaryFactor = "Treat1";
 
             //Act
@@ -332,7 +332,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("You have Loge transformed the Cov2 variable. Unfortunately some of the Cov2 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
+            Assert.Contains("You have Log10 transformed the Cov2 variable. Unfortunately some of the Cov2 values are zero and/or negative. These values have been ignored in the analysis as it is not possible to transform them. Any response where the covariate has been removed will also be excluded from the analysis.", warnings);
             Helpers.SaveOutput("SingleMeasuresParametricAnalysis", testName, warnings);
         }
 
@@ -2790,12 +2790,12 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
             model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat 20" };
+            model.Treatments = new string[] { "Treat 24" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat 20";
+            model.SelectedEffect = "Treat 24";
             model.LSMeansSelected = true;
             model.AllPairwise = "Unadjusted (LSD)";
 
@@ -2830,12 +2830,12 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
             model.Response = "Resp16";
             model.ResponseTransformation = "Log10";
-            model.Treatments = new string[] { "Treat 20" };
+            model.Treatments = new string[] { "Treat 24" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat 20";
+            model.SelectedEffect = "Treat 24";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
             model.ComparisonsBackToControl = "Dunnett";
@@ -2872,12 +2872,12 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
             model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat 20" };
+            model.Treatments = new string[] { "Treat 24" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat 20";
+            model.SelectedEffect = "Treat 24";
             model.LSMeansSelected = true;
             model.AllPairwise = "Holm";
             model.ComparisonsBackToControl = "Holm";
@@ -2914,12 +2914,12 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
             model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat 20", "Treat 21" };
+            model.Treatments = new string[] { "Treat 24", "Treat 25" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat 20";
+            model.SelectedEffect = "Treat 24";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hochberg";
             model.ComparisonsBackToControl = "Hochberg";
@@ -2956,12 +2956,12 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
             model.Response = "Resp16";
             model.ResponseTransformation = "Log10";
-            model.Treatments = new string[] { "Treat 20", "Treat 21" };
+            model.Treatments = new string[] { "Treat 24", "Treat 25" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat 20 * Treat 21";
+            model.SelectedEffect = "Treat 24 * Treat 25";
             model.LSMeansSelected = true;
             model.AllPairwise = "Hommel";
 
@@ -2996,12 +2996,12 @@ namespace SilveR.IntegrationTests
             model.DatasetID = _factory.SheetNames.Single(x => x.Value == "Single Measures Parametric").Key;
             model.Response = "Resp16";
             model.ResponseTransformation = "None";
-            model.Treatments = new string[] { "Treat 20", "Treat 21" };
+            model.Treatments = new string[] { "Treat 24", "Treat 25" };
             model.Significance = "0.05";
             model.ANOVASelected = true;
             model.PRPlotSelected = true;
             model.NormalPlotSelected = true;
-            model.SelectedEffect = "Treat 20 * Treat 21";
+            model.SelectedEffect = "Treat 24 * Treat 25";
             model.LSMeansSelected = true;
             model.AllPairwise = "Tukey";
 

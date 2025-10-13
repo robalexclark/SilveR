@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +35,16 @@ namespace SilveR.IntegrationTests
             optionsBuilder.UseSqlite("Data Source=SilveR.db");
             SilveRContext silverContext = new SilveRContext(optionsBuilder.Options);
 
+            //if(silverContext.UserOptions.Any() == false)
+            //{
+            //    silverContext.UserOptions.Add(new UserOption()
+            //    {
+            //        //UserOptionID = 1
+            //    });
+
+            //    silverContext.SaveChanges();
+            //}
+
             if (silverContext.UserOptions.Single().GraphicsHeightJitter != 0 || silverContext.UserOptions.Single().GraphicsWidthJitter != 0)
             {
                 silverContext.UserOptions.Single().GraphicsHeightJitter = 0;
@@ -45,6 +55,11 @@ namespace SilveR.IntegrationTests
 
 
             SheetNames = silverContext.Datasets.Select(x => new KeyValuePair<int, string>(x.DatasetID, x.DatasetName)).ToDictionary(x => x.Key, x => x.Value);
+
+            if(SheetNames == null || SheetNames.Count == 0)
+            {
+                throw new System.Exception("No datasets found in SilveR database. Please add datasets before running integration tests.");
+            }
         }
     }
 }

@@ -72,6 +72,9 @@ namespace SilveR.UnitTests.Controllers
 
             var expected = new[]
             {
+                "Treat1",
+                "Treat2",
+                "Treat3",
                 "Treat1 * Treat2",
                 "Treat1 * Treat3",
                 "Treat2 * Treat3",
@@ -151,6 +154,9 @@ namespace SilveR.UnitTests.Controllers
 
             var expected = new[]
             {
+                "Treat1",
+                "Treat2",
+                "Treat3",
                 "Treat1 * Treat2",
                 "Treat1 * Treat3",
                 "Treat2 * Treat3",

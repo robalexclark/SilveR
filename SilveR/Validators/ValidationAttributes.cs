@@ -145,7 +145,7 @@ namespace SilveR.Validators
                 string[] tokens = model.PValues.Split(PValueSeparators, StringSplitOptions.RemoveEmptyEntries);
                 if (tokens.Length == 0)
                 {
-                    return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
+                    return new ValidationResult("Non-numeric p-values detected or p-values are not comma separated.");
                 }
 
                 bool containsComma = model.PValues.Contains(",");
@@ -161,7 +161,7 @@ namespace SilveR.Validators
 
                     if (!Double.TryParse(trimmedToken, NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
                     {
-                        return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
+                        return new ValidationResult("Non-numeric p-values detected or p-values are not comma separated.");
                     }
                     else if (number < 0)
                     {
@@ -175,7 +175,7 @@ namespace SilveR.Validators
 
                 if (tokens.Length > 1 && !containsComma)
                 {
-                    return new ValidationResult("P values contains non-numeric values detected or values are not comma separated.");
+                    return new ValidationResult("Non-numeric p-values detected or p-values are not comma separated.");
                 }
 
                 return ValidationResult.Success;
