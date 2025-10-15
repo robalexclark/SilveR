@@ -1361,7 +1361,7 @@ if(dimfact > 2) {
   }
 } 
 
-add3<-paste("The analysis implements the Kenward-Roger adjustment to the degrees of freedom, see Kenward and Roger (1997).", sep="")
+add3<-paste("The analysis implements the Kenward-Roger approximation of the degrees of freedom, see Kenward and Roger (1997).", sep="")
 HTML(add3, align="left")
 
 add<-paste("A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")

@@ -201,7 +201,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Response (Resp5) contains missing data.", warnings);
+            Assert.Contains("The Response (Resp5) contains missing data. Any treatment that does not have a corresponding response will be excluded from the analysis.", warnings);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
         }
 
@@ -227,7 +227,7 @@ namespace SilveR.IntegrationTests
             IEnumerable<string> warnings = await Helpers.ExtractWarnings(response);
 
             //Assert
-            Assert.Contains("The Covariate (Resp5) contains missing data.", warnings);
+            Assert.Contains("The Covariate (Resp5) contains missing data. Any response that does not have a corresponding covariate will be excluded from the analysis.", warnings);
             Helpers.SaveOutput("LinearRegressionAnalysis", testName, warnings);
         }
 
