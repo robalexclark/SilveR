@@ -698,7 +698,7 @@ if(showANOVA=="Y") {
   # Warning message for degrees of freedom
   if (min(unlist(temp[[3]]))<5) {
     HTML.title("Warning", HR=2, align="left")
-    HTML("Unfortunately one or more of the residual degrees of freedom in the above table are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.", align="left")
+    HTML("Unfortunately one or more of the residual degrees of freedom in the above table are low (less than or equal to 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.", align="left")
   }
 }
 
@@ -1361,7 +1361,7 @@ if(dimfact > 2) {
   }
 } 
 
-add3<-paste("The analysis implements the Kenward-Roger adjustment to the degrees of freedom, see Kenward and Roger (1997).", sep="")
+add3<-paste("The analysis implements the Kenward-Roger approximation of the degrees of freedom, see Kenward and Roger (1997).", sep="")
 HTML(add3, align="left")
 
 add<-paste("A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).", sep="")

@@ -10,6 +10,7 @@ using SilveR.Models;
 using SilveR.Services;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -132,11 +133,59 @@ namespace SilveR
         }
 
 
+        private static void EnsureMigrationHistoryTable(SilveRContext context)
+        {
+            var connection = context.Database.GetDbConnection();
+            bool openedHere = connection.State != ConnectionState.Open;
+
+            if (openedHere)
+            {
+                connection.Open();
+            }
+
+            try
+            {
+                bool datasetsTableExists;
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='Datasets';";
+                    datasetsTableExists = Convert.ToInt32(command.ExecuteScalar()) > 0;
+                }
+
+                if (!datasetsTableExists)
+                {
+                    return;
+                }
+
+                bool migrationsTableExists;
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='__EFMigrationsHistory';";
+                    migrationsTableExists = Convert.ToInt32(command.ExecuteScalar()) > 0;
+                }
+
+                if (!migrationsTableExists)
+                {
+                    context.Database.ExecuteSqlRaw("CREATE TABLE IF NOT EXISTS \"__EFMigrationsHistory\" (\"MigrationId\" TEXT NOT NULL CONSTRAINT \"PK___EFMigrationsHistory\" PRIMARY KEY, \"ProductVersion\" TEXT NOT NULL);");
+                    context.Database.ExecuteSqlRaw("INSERT OR IGNORE INTO \"__EFMigrationsHistory\" (\"MigrationId\", \"ProductVersion\") VALUES ('20210908204311_InitialCreate', '5.0.9');");
+                }
+            }
+            finally
+            {
+                if (openedHere && connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
+        }
+
         private void ProvisionDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 SilveRContext context = serviceScope.ServiceProvider.GetRequiredService<SilveRContext>();
+
+                EnsureMigrationHistoryTable(context);
 
                 bool retry = false;
             retry:

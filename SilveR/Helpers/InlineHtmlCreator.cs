@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SilveR.Helpers
 {
@@ -40,22 +41,45 @@ namespace SilveR.Helpers
 
                 string imageFile = resultsFiles.Single(x => Path.GetFileName(x) == Path.GetFileName(src));
 
-                using (var image = Image.Load(imageFile))
-                {
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        image.SaveAsPng(ms);
-                        byte[] imageBytes = ms.ToArray();
+                byte[] imageBytes = LoadImageAsPngBytes(imageFile);
 
-                        // Convert byte[] to Base64 String
-                        string base64String = Convert.ToBase64String(imageBytes);
+                // Convert byte[] to Base64 String so the image can be embedded inline
+                string base64String = Convert.ToBase64String(imageBytes);
 
-                        d.SetAttributeValue("src", "data:image/png;base64," + base64String);
-                    }
-                }
+                d.SetAttributeValue("src", "data:image/png;base64," + base64String);
             }
 
             return document;
+        }
+
+        private const int MaxImageLoadAttempts = 5;
+        private const int ImageLoadRetryDelayMs = 100;
+
+        private static byte[] LoadImageAsPngBytes(string imageFile)
+        {
+            for (int attempt = 0; attempt < MaxImageLoadAttempts; attempt++)
+            {
+                try
+                {
+                    using (FileStream stream = new FileStream(imageFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (Image image = Image.Load(stream))
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        image.SaveAsPng(ms);
+                        return ms.ToArray();
+                    }
+                }
+                catch (IOException) when (attempt < MaxImageLoadAttempts - 1)
+                {
+                    Thread.Sleep(ImageLoadRetryDelayMs);
+                }
+                catch (UnauthorizedAccessException) when (attempt < MaxImageLoadAttempts - 1)
+                {
+                    Thread.Sleep(ImageLoadRetryDelayMs);
+                }
+            }
+
+            throw new IOException($"Unable to load image '{imageFile}' after {MaxImageLoadAttempts} attempts.");
         }
     }
 }
