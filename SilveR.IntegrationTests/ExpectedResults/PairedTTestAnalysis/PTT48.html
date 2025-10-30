@@ -10,7 +10,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>The  Resp 1 response is currently being analysed by the Extended Paired t-test Analysis and Within-Subject Analysis module. The response has been loge transformed prior to analysis. </p>
 
-<p class='character'>The repeated measures mixed model analysis is using the first order autoregressive covariance structure to model the within-subject correlations. When using this structure you are assuming the levels of Day4 are equally spaced and also that the variability of responses are the same at each level of Day4, see Pinherio and Bates (2002). These assumptions may not hold in practice.</p>
+<p class='character'>The analysis, which is an implementation of a repeated measures mixed model, is using the first order autoregressive covariance structure to model the within-subject correlations. When using this structure you are assuming the levels of Day4 are equally spaced and also that the variability of responses are the same at each level of Day4, see Pinherio and Bates (2002). These assumptions may not hold in practice.</p>
 
 <p class='character'>Warning: Make sure that the levels of the treatment factor occur in the correct order in the least square (predicted) means table. If they do not then this analysis may not be valid. The autoregressive covariance structure assumes that the order of the treatment factor levels is as defined in the least square (predicted) means table.</p>
 
@@ -419,11 +419,13 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Analysis description</h2>
 
-<p class='character'>The data were analysed using a repeated measures mixed model approach, with treatment factor Day4 and Block1 as the blocking factor. This was followed by planned comparisons on the predicted means to compare the levels of the Day4.  The response was loge transformed prior to analysis to stabilise the variance.</p>
+<p class='character'>The data were analysed using a repeated measures mixed model approach utilizing the mmrm R package, with treatment factor Day4 and Block1 as the blocking factor. This was followed by planned comparisons on the predicted means to compare the levels of the Day4.  The response was loge transformed prior to analysis to stabilise the variance.</p>
 
 <p class='character'>The first order autoregressive covariance structure was used to model the within-subject correlations. When using this structure we assumed that the variability of the responses was the same at each level of Day4. We also assumed that the correlation between responses from any pair of levels of Day4 was related to the distance between them.</p>
 
-<p class='character'>A full description of mixed model theory, including information on the R nlme package used by InVivoStat, can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).</p>
+<p class='character'>The analysis implements the Kenward-Roger approximation of the degrees of freedom, see Kenward and Roger (1997).</p>
+
+<p class='character'>A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).</p>
 
 <p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
 
@@ -434,6 +436,8 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 <p class='character'>Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
 
 <p class='character'>Pinherio, J.C. and Bates, D.M. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.</p>
+
+<p class='character'>Kenward, M.G. and Roger J.H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics. 983-997.</p>
 
 <p class='character'>Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.</p>
 

@@ -33,7 +33,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Table of overall tests of model effects, for assessing covariate interactions</h2>
 
-<p class='character'>When the covariate interactions are included in the statistical model there are not enough degrees of freedom to estimate all the effects, hence no table of overall tests of model effects (including the covariate interactions) has been produced.</p>
+<p class='character'>When the covariate interactions are included in the statistical model there are not enough degrees of freedom to reliably estimate all the effects, hence the table of overall tests of model effects (including the covariate interactions) has not been produced.</p>
 
  <h2> Table of overall tests of model effects</h2>
 
@@ -88,7 +88,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Warning</h2>
 
-<p class='character'>Unfortunately one or more of the residual degrees of freedom in the above table are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.</p>
+<p class='character'>Unfortunately one or more of the residual degrees of freedom in the above table are low (less than or equal to 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.</p>
 
  <h2> Covariate regression coefficient</h2>
 
@@ -204,3 +204,32 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </table>
  </td></tr></table>
  <br>
+
+<p class='character'>Conclusion: The pairwise comparison is not statistically significant.</p>
+
+ <h2> Analysis description</h2>
+
+<p class='character'>The data were analysed using an extended paired t-test utilizing the mmrm R package, with treatment factor Day7 and Cov9 as the covariate.</p>
+
+<p class='character'>The paired t-test performed by InVivoStat is defined as an extended paired t-test because the data is analysed using a repeated measures mixed model approach. This allows for any additional blocking factors and/or covariates to be taken into account as well as the pairing within the design.</p>
+
+<p class='character'>The analysis implements the Kenward-Roger approximation of the degrees of freedom, see Kenward and Roger (1997).</p>
+
+<p class='character'>A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).</p>
+
+<p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
+
+ <h2> References</h2>
+
+<p class='character'>When referring to InVivoStat, please cite 'InVivoStat, version 5.0'.</p>
+
+<p class='character'>Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+
+<p class='character'>Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).</p>
+
+<p class='character'>Pinherio, J.C. and Bates, D.M. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.</p>
+
+<p class='character'>Kenward, M.G. and Roger J.H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics. 983-997.</p>
+
+<p class='character'>Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 4th Edition; Springer. New York, Inc.</p>
+

@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
 html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-break:break-all}.dropdown-submenu{position:relative}.dropdown-submenu a::after{transform:rotate(-90deg);position:absolute;right:6px;top:.8em}.dropdown-submenu .dropdown-menu{top:0;left:100%;margin-left:.1rem;margin-right:.1rem}.checkbox-fix{margin-top:15px}#grid{height:calc(75vh)}#spreadsheet{width:100%;height:calc(75vh)}.text-block{padding-top:10px;padding-bottom:10px;text-align:justify;line-height:150%;font-size:16px}table.dataframe{border:1px solid #808080;background-color:#fff;width:100%;text-align:center;border-collapse:collapse}table.dataframe td,table.dataframe th{border:1px solid #808080;padding:3px 13px}table.dataframe tbody td{font-size:13px;text-align:center;padding:3px 13px}td:nth-child(1){background:#ccc}table.dataframe th{font-size:15px;background-color:#ccc;text-align:center}.k-button{color:#fff;background-color:#5cb85c;border-color:#4cae4c}.k-button:focus,.k-button.focus{color:#fff;background-color:#449d44;border-color:#255625}.k-button:hover{color:#fff;background-color:#449d44;border-color:#398439}.k-button:active,.k-button.active,.open>.dropdown-toggle.k-button{color:#fff;background-color:#449d44;border-color:#398439}.k-button:active:hover,.k-button.active:hover,.open>.dropdown-toggle.k-button:hover,.k-button:active:focus,.k-button.active:focus,.open>.dropdown-toggle.k-button:focus,.k-button:active.focus,.k-button.active.focus,.open>.dropdown-toggle.k-button.focus{color:#fff;background-color:#398439;border-color:#255625}.k-button:active,.k-button.active,.open>.dropdown-toggle.k-button{background-image:none}.k-button.disabled:hover,.k-button[disabled]:hover,fieldset[disabled] .k-button:hover,.k-button.disabled:focus,.k-button[disabled]:focus,fieldset[disabled] .k-button:focus,.k-button.disabled.focus,.k-button[disabled].focus,fieldset[disabled] .k-button.focus{background-color:#5cb85c;border-color:#4cae4c}.k-button .badge{color:#5cb85c;background-color:#fff}.k-numeric-wrap{width:100px}.disabledpanel{pointer-events:none;opacity:.4}
 </style>
@@ -32,98 +32,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Table of overall tests of model effects, for assessing covariate interactions</h2>
 
-
-<p align=left>
-<table cellspacing=0 border=1>
-<caption align=bottom class=captiondataframe></caption>
-<tr><td>
-	<table border=0 class=dataframe>
-	<tbody> 
-	<tr class=second> 
-		<th>Effect  </th>
-		<th>Num. degrees of freedom  </th>
-		<th>Denom. degrees of freedom  </th>
-		<th>F-value  </th>
-		<th>p-value</th> 
-	</tr> 
-<tr> 
-<td class=cellinside>PVTestCOV1b
-</td>
-<td class=cellinside>1
-</td>
-<td class=cellinside>3.21
-</td>
-<td class=cellinside>12.28
-</td>
-<td class=cellinside>0.0353
-</td></tr>
- 
-<tr> 
-<td class=cellinside>PVTestTreat1
-</td>
-<td class=cellinside>2
-</td>
-<td class=cellinside>2.66
-</td>
-<td class=cellinside> 0.01
-</td>
-<td class=cellinside>0.9888
-</td></tr>
- 
-<tr> 
-<td class=cellinside>PVTestDay1
-</td>
-<td class=cellinside>2
-</td>
-<td class=cellinside>2.16
-</td>
-<td class=cellinside> 1.23
-</td>
-<td class=cellinside>0.4391
-</td></tr>
- 
-<tr> 
-<td class=cellinside>PVTestTreat1 * PVTestDay1
-</td>
-<td class=cellinside>4
-</td>
-<td class=cellinside>1.02
-</td>
-<td class=cellinside> 0.27
-</td>
-<td class=cellinside>0.8713
-</td></tr>
- 
-<tr> 
-<td class=cellinside>PVTestCOV1b * PVTestTreat1
-</td>
-<td class=cellinside>2
-</td>
-<td class=cellinside>2.46
-</td>
-<td class=cellinside> 0.06
-</td>
-<td class=cellinside>0.9428
-</td></tr>
- 
-<tr> 
-<td class=cellinside>PVTestCOV1b * PVTestDay1
-</td>
-<td class=cellinside>2
-</td>
-<td class=cellinside>2.17
-</td>
-<td class=cellinside> 0.35
-</td>
-<td class=cellinside>0.7390
-</td></tr>
- 
-	</tbody>
-</table>
- </td></tr></table>
- <br>
-
-<p class='character'>Note: This table should only be used to assess the covariate interactions. The statistical model used to generate all the remaining results in this output does not include the covariate interactions.</p>
+<p class='character'>When the covariate interactions are included in the statistical model there are not enough degrees of freedom to reliably estimate all the effects, hence the table of overall tests of model effects (including the covariate interactions) has not been produced.</p>
 
  <h2> Table of overall tests of model effects</h2>
 
@@ -202,7 +111,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
  <h2> Warning</h2>
 
-<p class='character'>Unfortunately one or more of the residual degrees of freedom in the above table are low (less than 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.</p>
+<p class='character'>Unfortunately one or more of the residual degrees of freedom in the above table are low (less than or equal to 5). This may make the estimation of the underlying variability, and hence the results of the statistical tests, unreliable. This can be caused by attempting to fit too many factors, and their interactions, in the statistical model. Where appropriate we recommend you fit some of the 'Treatment' factors as 'Other design' factors. This will remove their interactions from the statistical model and therefore increase the residual degrees of freedom.</p>
 
  <h2> Covariate regression coefficient</h2>
 
@@ -409,7 +318,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 		<th>p-value</th> 
 	</tr> 
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( B , Time_IVS1 )
+<td class=cellinside>( A ,  1 ) - ( B ,  1 )
 </td>
 <td class=cellinside>-0.419
 </td>
@@ -423,7 +332,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( C , Time_IVS1 )
+<td class=cellinside>( A ,  1 ) - ( C ,  1 )
 </td>
 <td class=cellinside>-0.572
 </td>
@@ -437,7 +346,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( A , Time_IVS2 )
+<td class=cellinside>( A ,  1 ) - ( A ,  2 )
 </td>
 <td class=cellinside> 1.866
 </td>
@@ -451,7 +360,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( B , Time_IVS2 )
+<td class=cellinside>( A ,  1 ) - ( B ,  2 )
 </td>
 <td class=cellinside>-0.193
 </td>
@@ -465,7 +374,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( C , Time_IVS2 )
+<td class=cellinside>( A ,  1 ) - ( C ,  2 )
 </td>
 <td class=cellinside>-0.044
 </td>
@@ -479,7 +388,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( A , Time_IVS3 )
+<td class=cellinside>( A ,  1 ) - ( A ,  3 )
 </td>
 <td class=cellinside>-0.613
 </td>
@@ -493,7 +402,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( B , Time_IVS3 )
+<td class=cellinside>( A ,  1 ) - ( B ,  3 )
 </td>
 <td class=cellinside>-0.705
 </td>
@@ -507,7 +416,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS1 ) - ( C , Time_IVS3 )
+<td class=cellinside>( A ,  1 ) - ( C ,  3 )
 </td>
 <td class=cellinside>-0.035
 </td>
@@ -521,7 +430,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS1 ) - ( C , Time_IVS1 )
+<td class=cellinside>( B ,  1 ) - ( C ,  1 )
 </td>
 <td class=cellinside>-0.153
 </td>
@@ -535,7 +444,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS1 ) - ( A , Time_IVS2 )
+<td class=cellinside>( B ,  1 ) - ( A ,  2 )
 </td>
 <td class=cellinside> 2.285
 </td>
@@ -549,7 +458,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS1 ) - ( B , Time_IVS2 )
+<td class=cellinside>( B ,  1 ) - ( B ,  2 )
 </td>
 <td class=cellinside> 0.226
 </td>
@@ -563,7 +472,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS1 ) - ( C , Time_IVS2 )
+<td class=cellinside>( B ,  1 ) - ( C ,  2 )
 </td>
 <td class=cellinside> 0.375
 </td>
@@ -577,7 +486,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS1 ) - ( A , Time_IVS3 )
+<td class=cellinside>( B ,  1 ) - ( A ,  3 )
 </td>
 <td class=cellinside>-0.194
 </td>
@@ -591,7 +500,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS1 ) - ( B , Time_IVS3 )
+<td class=cellinside>( B ,  1 ) - ( B ,  3 )
 </td>
 <td class=cellinside>-0.286
 </td>
@@ -605,7 +514,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS1 ) - ( C , Time_IVS3 )
+<td class=cellinside>( B ,  1 ) - ( C ,  3 )
 </td>
 <td class=cellinside> 0.384
 </td>
@@ -619,7 +528,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS1 ) - ( A , Time_IVS2 )
+<td class=cellinside>( C ,  1 ) - ( A ,  2 )
 </td>
 <td class=cellinside> 2.438
 </td>
@@ -633,7 +542,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS1 ) - ( B , Time_IVS2 )
+<td class=cellinside>( C ,  1 ) - ( B ,  2 )
 </td>
 <td class=cellinside> 0.379
 </td>
@@ -647,7 +556,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS1 ) - ( C , Time_IVS2 )
+<td class=cellinside>( C ,  1 ) - ( C ,  2 )
 </td>
 <td class=cellinside> 0.527
 </td>
@@ -661,7 +570,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS1 ) - ( A , Time_IVS3 )
+<td class=cellinside>( C ,  1 ) - ( A ,  3 )
 </td>
 <td class=cellinside>-0.041
 </td>
@@ -675,7 +584,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS1 ) - ( B , Time_IVS3 )
+<td class=cellinside>( C ,  1 ) - ( B ,  3 )
 </td>
 <td class=cellinside>-0.133
 </td>
@@ -689,7 +598,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS1 ) - ( C , Time_IVS3 )
+<td class=cellinside>( C ,  1 ) - ( C ,  3 )
 </td>
 <td class=cellinside> 0.537
 </td>
@@ -703,7 +612,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS2 ) - ( B , Time_IVS2 )
+<td class=cellinside>( A ,  2 ) - ( B ,  2 )
 </td>
 <td class=cellinside>-2.059
 </td>
@@ -717,7 +626,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS2 ) - ( C , Time_IVS2 )
+<td class=cellinside>( A ,  2 ) - ( C ,  2 )
 </td>
 <td class=cellinside>-1.910
 </td>
@@ -731,7 +640,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS2 ) - ( A , Time_IVS3 )
+<td class=cellinside>( A ,  2 ) - ( A ,  3 )
 </td>
 <td class=cellinside>-2.479
 </td>
@@ -745,7 +654,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS2 ) - ( B , Time_IVS3 )
+<td class=cellinside>( A ,  2 ) - ( B ,  3 )
 </td>
 <td class=cellinside>-2.571
 </td>
@@ -759,7 +668,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS2 ) - ( C , Time_IVS3 )
+<td class=cellinside>( A ,  2 ) - ( C ,  3 )
 </td>
 <td class=cellinside>-1.901
 </td>
@@ -773,7 +682,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS2 ) - ( C , Time_IVS2 )
+<td class=cellinside>( B ,  2 ) - ( C ,  2 )
 </td>
 <td class=cellinside> 0.149
 </td>
@@ -787,7 +696,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS2 ) - ( A , Time_IVS3 )
+<td class=cellinside>( B ,  2 ) - ( A ,  3 )
 </td>
 <td class=cellinside>-0.420
 </td>
@@ -801,7 +710,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS2 ) - ( B , Time_IVS3 )
+<td class=cellinside>( B ,  2 ) - ( B ,  3 )
 </td>
 <td class=cellinside>-0.512
 </td>
@@ -815,7 +724,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS2 ) - ( C , Time_IVS3 )
+<td class=cellinside>( B ,  2 ) - ( C ,  3 )
 </td>
 <td class=cellinside> 0.158
 </td>
@@ -829,7 +738,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS2 ) - ( A , Time_IVS3 )
+<td class=cellinside>( C ,  2 ) - ( A ,  3 )
 </td>
 <td class=cellinside>-0.568
 </td>
@@ -843,7 +752,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS2 ) - ( B , Time_IVS3 )
+<td class=cellinside>( C ,  2 ) - ( B ,  3 )
 </td>
 <td class=cellinside>-0.661
 </td>
@@ -857,7 +766,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( C , Time_IVS2 ) - ( C , Time_IVS3 )
+<td class=cellinside>( C ,  2 ) - ( C ,  3 )
 </td>
 <td class=cellinside> 0.009
 </td>
@@ -871,7 +780,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS3 ) - ( B , Time_IVS3 )
+<td class=cellinside>( A ,  3 ) - ( B ,  3 )
 </td>
 <td class=cellinside>-0.092
 </td>
@@ -885,7 +794,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( A , Time_IVS3 ) - ( C , Time_IVS3 )
+<td class=cellinside>( A ,  3 ) - ( C ,  3 )
 </td>
 <td class=cellinside> 0.578
 </td>
@@ -899,7 +808,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </td></tr>
  
 <tr> 
-<td class=cellinside>( B , Time_IVS3 ) - ( C , Time_IVS3 )
+<td class=cellinside>( B ,  3 ) - ( C ,  3 )
 </td>
 <td class=cellinside> 0.670
 </td>
@@ -917,17 +826,17 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
  </td></tr></table>
  <br>
 
-<p class='character'>Conclusion: The following pairwise comparisons are statistically significant at the  5% level: [1] ( C , Time_IVS1 ) vs. ( A , Time_IVS2 ) [2] ( A , Time_IVS2 ) vs. ( B , Time_IVS3 ). </p>
+<p class='character'>Conclusion: The following pairwise comparisons are statistically significant at the  5% level: [1] ( C ,  1 ) vs. ( A ,  2 ) [2] ( A ,  2 ) vs. ( B ,  3 ). </p>
 
 <p class='character'>Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparisons you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.</p>
 
  <h2> Analysis description</h2>
 
-<p class='character'>The data were analysed using a 2-way repeated measures mixed model approach, with PVTestTreat1 as the treatment factor, PVTestDay1 as the repeated factor and PVTestCOV1b as the covariate.This was followed by Planned Comparisons on the predicted means to compare the levels of the effect PVTestTreat1 * PVTestDay1. </p>
+<p class='character'>The data were analysed using a 2-way repeated measures mixed model approach utilizing the mmrm R package, with PVTestTreat1 as the treatment factor, PVTestDay1 as the repeated factor and PVTestCOV1b as the covariate.This was followed by Planned Comparisons on the predicted means to compare the levels of the effect PVTestTreat1 * PVTestDay1. </p>
 
 <p class='character'>The compound symmetric covariance structure was used to model the within-subject correlations. When using this structure we assumed that the variability of the responses was the same at each level of PVTestDay1 and the correlation between responses from any pair of levels of PVTestDay1  is the same.</p>
 
-<p class='character'>The analysis implements the Kenward-Roger adjustment to the degrees of freedom, Kenward and Roger (1997).</p>
+<p class='character'>The analysis implements the Kenward-Roger approximation of the degrees of freedom, see Kenward and Roger (1997).</p>
 
 <p class='character'>A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).</p>
 

@@ -10,7 +10,7 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 
 <p class='character'>The  PVtestResp1 response is currently being analysed by the Extended Paired t-test Analysis and Within-Subject Analysis module, with PVTestCOV1a fitted as a covariate. </p>
 
-<p class='character'>The repeated measures mixed model analysis is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of PVTestDay1, see Pinherio and Bates (2002). These assumptions may not hold in practice.</p>
+<p class='character'>The analysis, which is an implementation of a repeated measures mixed model, is using the compound symmetric covariance structure to model the within-subject correlations. When using this structure you are assuming sphericity and also that the variability of responses is the same at each level of PVTestDay1, see Pinherio and Bates (2002). These assumptions may not hold in practice.</p>
 
  <h2> Case profiles plot of the observed data</h2>
 
@@ -290,3 +290,36 @@ html{font-size:14px}a.navbar-brand{white-space:normal;text-align:center;word-bre
 </table>
  </td></tr></table>
  <br>
+
+<p class='character'>Conclusion: There are no statistically significant pairwise comparisons.</p>
+
+<p class='character'>Warning: As these tests are not adjusted for multiplicity there is a risk of false positive results. Only use the pairwise comparison you planned to make a-priori, these are the so called Planned Comparisons, see Snedecor and Cochran (1989). No options are available in this module to make multiple comparison adjustments. If you wish to apply a multiple comparison adjustment to these results then use the P-value Adjustment module.</p>
+
+ <h2> Analysis description</h2>
+
+<p class='character'>The data were analysed using a repeated measures mixed model approach utilizing the mmrm R package, with treatment factor PVTestDay1 and PVTestCOV1a as the covariate.This was followed by planned comparisons on the predicted means to compare the levels of the PVTestDay1. </p>
+
+<p class='character'>The compound symmetric covariance structure was used to model the within-subject correlations. When using this structure we assumed that the variability of the responses was the same at each level of PVTestDay1 and the correlation between responses from any pair of levels of PVTestDay1  is the same.</p>
+
+<p class='character'>The analysis implements the Kenward-Roger approximation of the degrees of freedom, see Kenward and Roger (1997).</p>
+
+<p class='character'>A full description of mixed model theory can be found in Venables and Ripley (2003) and Pinherio and Bates (2002).</p>
+
+<p class='character'>For more information on the theoretical approaches that are implemented within this module, see Bate and Clark (2014).</p>
+
+ <h2> References</h2>
+
+<p class='character'>When referring to InVivoStat, please cite 'InVivoStat, version 5.0'.</p>
+
+<p class='character'>Bate, S.T. and Clark, R.A. (2014). The Design and Statistical Analysis of Animal Experiments. Cambridge University Press.</p>
+
+<p class='character'>Morris, T.R. (1999). Experimental Design and Analysis in Animal Sciences. CABI publishing. Wallingford, Oxon (UK).</p>
+
+<p class='character'>Pinherio, J.C. and Bates, D.M. (2000). Mixed Effects Models in S and S-Plus. Springer-Verlag. New York, Inc.</p>
+
+<p class='character'>Kenward, M.G. and Roger J.H. (1997). Small sample inference for fixed effects from restricted maximum likelihood. Biometrics. 983-997.</p>
+
+<p class='character'>Snedecor, G.W. and Cochran, W.G. (1989). Statistical Methods. 8th edition;  Iowa State University Press, Iowa, USA.</p>
+
+<p class='character'>Venables, W.N. and Ripley, B.D. (2003). Modern Applied Statistics with S. 4th Edition; Springer. New York, Inc.</p>
+
