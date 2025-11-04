@@ -65,13 +65,13 @@ For details on how to build with the electron.net wrapper see https://github.com
 
 ### Running with Docker
 
-SilveR is also available as a Docker container, under the invivostat brand, providing a convenient way to deploy and run the application without manual setup. Follow the instructions below to pull and run the Docker image.
+SilveR can also be hosted in Docker (under the InVivoStat branding) to avoid installing the .NET, R and Electron dependencies locally. You can either pull the published image or build the container from this repository.
 
 #### **Prerequisites**
 
 **Docker** must be installed on your system. You can download it from [Docker's official website](https://www.docker.com/get-started).
 
-#### **Pull the Invivostat Docker Image**
+#### **Option 1 – Pull the InVivoStat Image**
 
 Pull the latest Docker image from Docker Hub:
 
@@ -79,16 +79,30 @@ Pull the latest Docker image from Docker Hub:
 docker pull robalexclark/invivostat:latest
 ```
 
-Run the Docker Container
-Once the image is pulled, run the container using the following command (or use the Docker Desktop gui):
+Then start the container (or use the Docker Desktop UI):
 
 ```
-docker run -d -p 32777:5000 --name invivostat-container robalexclark/invivostat:latest
+docker run -d -p 5000:5000 --name invivostat-container robalexclark/invivostat:latest
 ```
 
-This will run the container locally and allow it to be accessible via port 32777. You can of course run the container with a different unused port if you wish.
+The container listens on port 5000 internally, so you only need to choose an available host port (5000 in the example above). Browse to `http://localhost:5000/` to use the application.
 
-Then you can open a browser window and navigate to http://localhost:32777/ to run the system.
+#### **Option 2 – Build the Image Locally**
+
+If you want to build from the current source (for example after making local changes), run the following commands from the repository root:
+
+```
+docker build -t silver:latest SilveR
+docker run -d -p 5000:5000 --name silver-web silver:latest
+```
+
+The Dockerfile now exports `ASPNETCORE_URLS=http://0.0.0.0:5000`, so the app is reachable from the host without extra configuration.
+
+When you are finished, stop the container with:
+
+```
+docker stop invivostat-container    # or silver-web
+```
 
 
 ### Architecture

@@ -1,4 +1,4 @@
-﻿install.packages("R2HTML", dependencies = TRUE, ask = FALSE)
+install.packages("R2HTML", dependencies = TRUE, ask = FALSE)
 install.packages("https://cran.r-project.org/src/contrib/Archive/Matrix/Matrix_1.6-0.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
 install.packages("https://cran.r-project.org/src/contrib/Archive/MASS/MASS_7.3-59.tar.gz", repos = NULL, type = "source", dependencies = TRUE, ask = FALSE)
 install.packages("ggplot2", dependencies = TRUE, ask = FALSE) 
