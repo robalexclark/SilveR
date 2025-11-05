@@ -76,13 +76,13 @@ SilveR can also be hosted in Docker (under the InVivoStat branding) to avoid ins
 Pull the latest Docker image from Docker Hub:
 
 ```
-docker pull robalexclark/invivostat:latest
+docker pull invivostat/invivostat:latest
 ```
 
 Then start the container (or use the Docker Desktop UI):
 
 ```
-docker run -d -p 5000:5000 --name invivostat-container robalexclark/invivostat:latest
+docker run -d -p 5000:5000 --name invivostat-container invivostat/invivostat:latest
 ```
 
 The container listens on port 5000 internally, so you only need to choose an available host port (5000 in the example above). Browse to `http://localhost:5000/` to use the application.
